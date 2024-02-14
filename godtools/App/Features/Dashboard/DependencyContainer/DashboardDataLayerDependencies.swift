@@ -31,7 +31,7 @@ class DashboardDataLayerDependencies {
         return FavoritedToolsLatestToolDownloader(
             favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository(),
             resourcesRepository: coreDataLayer.getResourcesRepository(),
-            translationsRepository: coreDataLayer.getTranslationsRepository()
+            toolDownloader: coreDataLayer.getToolDownloader()
         )
     }
 }

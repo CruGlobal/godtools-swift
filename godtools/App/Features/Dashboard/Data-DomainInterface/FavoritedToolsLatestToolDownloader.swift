@@ -13,13 +13,13 @@ class FavoritedToolsLatestToolDownloader: FavoritedToolsLatestToolDownloaderInte
     
     private let favoritedResourcesRepository: FavoritedResourcesRepository
     private let resourcesRepository: ResourcesRepository
-    private let translationsRepository: TranslationsRepository
+    private let toolDownloader: ToolDownloader
     
-    init(favoritedResourcesRepository: FavoritedResourcesRepository, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository) {
+    init(favoritedResourcesRepository: FavoritedResourcesRepository, resourcesRepository: ResourcesRepository, toolDownloader: ToolDownloader) {
         
         self.favoritedResourcesRepository = favoritedResourcesRepository
         self.resourcesRepository = resourcesRepository
-        self.translationsRepository = translationsRepository
+        self.toolDownloader = toolDownloader
     }
     
     func downloadLatestToolsPublisher(inLanguages: [BCP47LanguageIdentifier]) -> AnyPublisher<Void, Never> {
@@ -35,38 +35,22 @@ class FavoritedToolsLatestToolDownloader: FavoritedToolsLatestToolDownloaderInte
             return Just(favoritedTools)
                 .eraseToAnyPublisher()
         })
-        .flatMap({ (favoritedTools: [FavoritedResourceDataModel]) -> AnyPublisher<[TranslationModel], Never> in
+        .flatMap({ (favoritedTools: [FavoritedResourceDataModel]) -> AnyPublisher<[DownloadToolDataModel], Never> in
             
-            var translations: [TranslationModel] = Array()
+            let tools: [DownloadToolDataModel] = favoritedTools.map({
+                DownloadToolDataModel(
+                    toolId: $0.id,
+                    languages: inLanguages
+                )
+            })
             
-            guard !favoritedTools.isEmpty && !inLanguages.isEmpty else {
-                return Just(translations)
-                    .eraseToAnyPublisher()
-            }
-           
-            for favoritedTool in favoritedTools {
-                
-                for languageIdentifier in inLanguages {
-                    
-                    guard let translation = self.translationsRepository.getLatestTranslation(resourceId: favoritedTool.id, languageCode: languageIdentifier) else {
-                        continue
-                    }
-                    
-                    translations.append(translation)
-                }
-            }
-            
-            return Just(translations)
+            return Just(tools)
                 .eraseToAnyPublisher()
         })
-        .flatMap({ (translations: [TranslationModel]) -> AnyPublisher<Void, Never> in
+        .flatMap({ (tools: [DownloadToolDataModel]) -> AnyPublisher<Void, Never> in
                         
-            return self.translationsRepository
-                .downloadAndCacheTranslationsFiles(translations: translations)
-                .catch { _ in
-                    return Just([])
-                        .eraseToAnyPublisher()
-                }
+            return self.toolDownloader
+                .downloadToolsPublisher(tools: tools)
                 .map { _ in
                     return Void()
                 }
