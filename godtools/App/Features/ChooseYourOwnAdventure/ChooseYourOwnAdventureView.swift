@@ -89,9 +89,7 @@ class ChooseYourOwnAdventureView: MobileContentPagesView {
     }
     
     @objc private func backTapped() {
-        
-        pageNavigationView.scrollToPreviousPage(animated: true)
-        
+                
         viewModel.navBackTapped()
     }
 }

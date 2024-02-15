@@ -93,6 +93,9 @@ extension StarscreamWebSocket {
         case .error( _):
             isConnected = false
             break
+            
+        case .peerClosed:
+            break
         }
     }
 }

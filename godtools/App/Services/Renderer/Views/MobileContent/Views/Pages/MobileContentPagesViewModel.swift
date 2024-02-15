@@ -212,6 +212,23 @@ class MobileContentPagesViewModel: NSObject {
         return pageModels.count
     }
     
+    func getPages() -> [Page] {
+        return pageModels
+    }
+    
+    func setPages(pages: [Page]) {
+        pageModels = pages
+    }
+    
+    func getCurrentPage() -> Page? {
+        
+        guard currentRenderedPageNumber >= 0 && currentRenderedPageNumber < pageModels.count else {
+            return nil
+        }
+        
+        return pageModels[currentRenderedPageNumber]
+    }
+    
     // MARK: - Page Life Cycle
     
     func pageWillAppear(page: Int) -> MobileContentView? {

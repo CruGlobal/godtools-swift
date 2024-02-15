@@ -91,8 +91,46 @@ extension ChooseYourOwnAdventureViewModel {
         
         let isFirstPage: Bool = currentRenderedPageNumber == 0
         
-        if isFirstPage {
+        guard !isFirstPage else {
             flowDelegate?.navigate(step: FlowStep.backTappedFromChooseYourOwnAdventure)
+            return
+        }
+        
+        let pages: [Page] = getPages()
+        
+        if let currentPage = getCurrentPage(),
+           let parentPage = currentPage.parentPage,
+           let parentPageIndex = pages.firstIndex(of: parentPage) {
+
+            var newPages: [Page] = Array()
+            
+            for index in 0 ... parentPageIndex {
+                newPages.append(pages[index])
+            }
+            
+            newPages.append(currentPage)
+            
+            super.setPages(pages: newPages)
+            
+            let navigateToParentPage = MobileContentPagesNavigateToPageModel(
+                reloadPagesCollectionViewNeeded: true,
+                page: parentPageIndex,
+                pagePositions: nil,
+                animated: true
+            )
+            
+            navigatePageSignal.accept(value: navigateToParentPage)
+        }
+        else {
+            
+            let navigateToPreviousPage = MobileContentPagesNavigateToPageModel(
+                reloadPagesCollectionViewNeeded: false,
+                page: currentRenderedPageNumber - 1,
+                pagePositions: nil,
+                animated: true
+            )
+            
+            navigatePageSignal.accept(value: navigateToPreviousPage)
         }
     }
     
