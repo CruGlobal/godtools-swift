@@ -11,4 +11,5 @@ import Foundation
 struct  ViewFavoritesDomainModel {
     
     let interfaceStrings: FavoritesInterfaceStringsDomainModel
+    let yourFavoritedTools: [YourFavoritedToolDomainModel]
 }

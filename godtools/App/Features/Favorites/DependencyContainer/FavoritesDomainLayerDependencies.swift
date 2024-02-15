@@ -17,9 +17,16 @@ class FavoritesDomainLayerDependencies {
         self.dataLayer = dataLayer
     }
     
+    func getViewConfirmRemoveToolFromFavoritesUseCase() -> ViewConfirmRemoveToolFromFavoritesUseCase {
+        return ViewConfirmRemoveToolFromFavoritesUseCase(
+            interfaceStringsRepository: dataLayer.getConfirmRemoveToolFromFavoritesInterfaceStringsRepository()
+        )
+    }
+    
     func getViewFavoritesUseCase() -> ViewFavoritesUseCase {
         return ViewFavoritesUseCase(
-            getInterfaceStringsRepository: dataLayer.getFavoritesInterfaceStringsRepositoryInterface()
+            getInterfaceStringsRepository: dataLayer.getFavoritesInterfaceStringsRepositoryInterface(),
+            getFavoritedToolsRepository: dataLayer.getYourFavoritedToolsRepositoryInterface()
         )
     }
 }

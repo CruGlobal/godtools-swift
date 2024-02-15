@@ -46,10 +46,10 @@ enum FlowStep {
     // favorites
     case featuredLessonTappedFromFavorites(featuredLesson: FeaturedLessonDomainModel)
     case viewAllFavoriteToolsTappedFromFavorites
-    case toolDetailsTappedFromFavorites(tool: ToolDomainModel)
-    case openToolTappedFromFavorites(tool: ToolDomainModel)
-    case toolTappedFromFavorites(tool: ToolDomainModel)
-    case unfavoriteToolTappedFromFavorites(tool: ToolDomainModel)
+    case toolDetailsTappedFromFavorites(tool: YourFavoritedToolDomainModel)
+    case openToolTappedFromFavorites(tool: YourFavoritedToolDomainModel)
+    case toolTappedFromFavorites(tool: YourFavoritedToolDomainModel)
+    case unfavoriteToolTappedFromFavorites(tool: YourFavoritedToolDomainModel)
     case goToToolsTappedFromFavorites
     
     // allYourFavoritedTools

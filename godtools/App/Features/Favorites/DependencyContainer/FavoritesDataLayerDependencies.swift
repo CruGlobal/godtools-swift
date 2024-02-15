@@ -21,9 +21,25 @@ class FavoritesDataLayerDependencies {
     
     // MARK: - Domain Interface
     
+    func getConfirmRemoveToolFromFavoritesInterfaceStringsRepository() -> GetConfirmRemoveToolFromFavoritesInterfaceStringsRepositoryInterface {
+        return GetConfirmRemoveToolFromFavoritesInterfaceStringsRepository(
+            localizationServices: coreDataLayer.getLocalizationServices(),
+            getTranslatedToolName: coreDataLayer.getTranslatedToolName()
+        )
+    }
+    
     func getFavoritesInterfaceStringsRepositoryInterface() -> GetFavoritesInterfaceStringsRepositoryInterface {
         return GetFavoritesInterfaceStringsRepository(
             localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
+    
+    func getYourFavoritedToolsRepositoryInterface() -> GetYourFavoritedToolsRepositoryInterface {
+        return GetYourFavoritedToolsRepository(
+            favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository(),
+            resourcesRepository: coreDataLayer.getResourcesRepository(),
+            getTranslatedToolName: coreDataLayer.getTranslatedToolName(),
+            getTranslatedToolCategory: coreDataLayer.getTranslatedToolCategory()
         )
     }
 }

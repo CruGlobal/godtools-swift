@@ -12,22 +12,27 @@ import Combine
 class ViewFavoritesUseCase {
     
     private let getInterfaceStringsRepository: GetFavoritesInterfaceStringsRepositoryInterface
+    private let getFavoritedToolsRepository: GetYourFavoritedToolsRepositoryInterface
     
-    init(getInterfaceStringsRepository: GetFavoritesInterfaceStringsRepositoryInterface) {
+    init(getInterfaceStringsRepository: GetFavoritesInterfaceStringsRepositoryInterface, getFavoritedToolsRepository: GetYourFavoritedToolsRepositoryInterface) {
         
         self.getInterfaceStringsRepository = getInterfaceStringsRepository
+        self.getFavoritedToolsRepository = getFavoritedToolsRepository
     }
     
     func viewPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewFavoritesDomainModel, Never> {
         
-        return getInterfaceStringsRepository
-            .getStringsPublisher(translateInLanguage: appLanguage)
-            .map {
-                
-                ViewFavoritesDomainModel(
-                    interfaceStrings: $0
-                )
-            }
-            .eraseToAnyPublisher()
+        return Publishers.CombineLatest(
+            getInterfaceStringsRepository.getStringsPublisher(translateInLanguage: appLanguage),
+            getFavoritedToolsRepository.getToolsPublisher(translateInLanguage: appLanguage)
+        )
+        .map {
+            
+            ViewFavoritesDomainModel(
+                interfaceStrings: $0,
+                yourFavoritedTools: $1
+            )
+        }
+        .eraseToAnyPublisher()
     }
 }

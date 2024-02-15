@@ -17,7 +17,6 @@ class FavoritesViewModel: ObservableObject {
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let attachmentsRepository: AttachmentsRepository
     private let disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase
-    private let getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase
     private let getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase
     private let getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase
     private let getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase
@@ -25,7 +24,6 @@ class FavoritesViewModel: ObservableObject {
     private let getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
-    private let maxNumberOfYourFavoriteToolsToDisplay: Int = 5
     
     private var cancellables: Set<AnyCancellable> = Set()
     
@@ -41,13 +39,13 @@ class FavoritesViewModel: ObservableObject {
     @Published var featuredLessons: [FeaturedLessonDomainModel] = Array()
     @Published var yourFavoriteToolsTitle: String = ""
     @Published var viewAllFavoriteToolsButtonTitle: String = ""
-    @Published var yourFavoriteTools: [ToolDomainModel] = Array()
+    @Published var yourFavoritedTools: [YourFavoritedToolDomainModel] = Array()
     @Published var isLoadingYourFavoritedTools: Bool = true
     @Published var noFavoriteToolsTitle: String = ""
     @Published var noFavoriteToolsDescription: String = ""
     @Published var noFavoriteToolsButtonText: String = ""
     
-    init(flowDelegate: FlowDelegate, resourcesRepository: ResourcesRepository, viewFavoritesUseCase: ViewFavoritesUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, attachmentsRepository: AttachmentsRepository, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(flowDelegate: FlowDelegate, resourcesRepository: ResourcesRepository, viewFavoritesUseCase: ViewFavoritesUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, attachmentsRepository: AttachmentsRepository, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
         self.viewFavoritesUseCase = viewFavoritesUseCase
@@ -55,7 +53,6 @@ class FavoritesViewModel: ObservableObject {
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.attachmentsRepository = attachmentsRepository
         self.disableOptInOnboardingBannerUseCase = disableOptInOnboardingBannerUseCase
-        self.getAllFavoritedToolsUseCase = getAllFavoritedToolsUseCase
         self.getFeaturedLessonsUseCase = getFeaturedLessonsUseCase
         self.getLanguageAvailabilityUseCase = getLanguageAvailabilityUseCase
         self.getOptInOnboardingBannerEnabledUseCase = getOptInOnboardingBannerEnabledUseCase
@@ -69,14 +66,16 @@ class FavoritesViewModel: ObservableObject {
             .assign(to: &$appLanguage)
         
         $appLanguage.eraseToAnyPublisher()
-            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewFavoritesDomainModel, Never> in
+            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<(ViewFavoritesDomainModel, [FeaturedLessonDomainModel]), Never> in
                 
-                return viewFavoritesUseCase
-                    .viewPublisher(appLanguage: appLanguage)
-                    .eraseToAnyPublisher()
+                return Publishers.CombineLatest(
+                    viewFavoritesUseCase.viewPublisher(appLanguage: appLanguage),
+                    getFeaturedLessonsUseCase.getFeaturedLessonsPublisher(appLanguage: appLanguage)
+                )
+                .eraseToAnyPublisher()
             })
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (domainModel: ViewFavoritesDomainModel) in
+            .sink { [weak self] (domainModel: ViewFavoritesDomainModel, featuredLessons: [FeaturedLessonDomainModel]) in
                 
                 self?.openTutorialBannerMessage = domainModel.interfaceStrings.tutorialMessage
                 self?.openTutorialBannerButtonTitle = domainModel.interfaceStrings.openTutorialActionTitle
@@ -87,6 +86,11 @@ class FavoritesViewModel: ObservableObject {
                 self?.noFavoriteToolsTitle = domainModel.interfaceStrings.noFavoritedToolsTitle
                 self?.noFavoriteToolsDescription = domainModel.interfaceStrings.noFavoritedToolsDescription
                 self?.noFavoriteToolsButtonText = domainModel.interfaceStrings.noFavoritedToolsActionTitle
+                
+                self?.featuredLessons = featuredLessons
+                self?.yourFavoritedTools = domainModel.yourFavoritedTools
+                
+                self?.isLoadingYourFavoritedTools = false
             }
             .store(in: &cancellables)
         
@@ -99,41 +103,6 @@ class FavoritesViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (isEnabled: Bool) in
                 self?.showsOpenTutorialBanner = isEnabled
-            }
-            .store(in: &cancellables)
-        
-        $appLanguage.eraseToAnyPublisher()
-            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<[FeaturedLessonDomainModel], Never> in
-                
-                return getFeaturedLessonsUseCase
-                    .getFeaturedLessonsPublisher(appLanguage: appLanguage)
-                    .eraseToAnyPublisher()
-            })
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (featuredLessons: [FeaturedLessonDomainModel]) in
-                
-                self?.featuredLessons = featuredLessons
-            }
-            .store(in: &cancellables)
-        
-        getAllFavoritedToolsUseCase.getAllFavoritedToolsPublisher()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (yourFavoriteTools: [ToolDomainModel]) in
-                
-                let maxNumberOfYourFavoriteToolsToDisplay: Int = self?.maxNumberOfYourFavoriteToolsToDisplay ?? 0
-                var maxYourFavoritesToDisplay: [ToolDomainModel] = Array()
-                
-                for index in 0 ..< maxNumberOfYourFavoriteToolsToDisplay {
-                    if index < yourFavoriteTools.count {
-                        maxYourFavoritesToDisplay.append(yourFavoriteTools[index])
-                    }
-                }
-                
-                withAnimation {
-                    self?.yourFavoriteTools = maxYourFavoritesToDisplay
-                }
-                
-                self?.isLoadingYourFavoritedTools = false
             }
             .store(in: &cancellables)
     }
@@ -193,7 +162,7 @@ class FavoritesViewModel: ObservableObject {
         )
     }
     
-    private func trackOpenFavoritedToolButtonAnalytics(for tool: ResourceModel) {
+    private func trackOpenFavoritedToolButtonAnalytics(tool: YourFavoritedToolDomainModel) {
         
         trackActionAnalyticsUseCase.trackAction(
             screenName: analyticsScreenName,
@@ -205,12 +174,12 @@ class FavoritesViewModel: ObservableObject {
             url: nil,
             data: [
                 AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.favoriteTools,
-                AnalyticsConstants.Keys.tool: tool.abbreviation
+                AnalyticsConstants.Keys.tool: tool.analyticsToolAbbreviation
             ]
         )
     }
     
-    private func trackFavoritedToolDetailsButtonAnalytics(for tool: ResourceModel) {
+    private func trackFavoritedToolDetailsButtonAnalytics(tool: YourFavoritedToolDomainModel) {
        
         trackActionAnalyticsUseCase.trackAction(
             screenName: analyticsScreenName,
@@ -222,7 +191,7 @@ class FavoritesViewModel: ObservableObject {
             url: nil,
             data: [
                 AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.favoriteTools,
-                AnalyticsConstants.Keys.tool: tool.abbreviation
+                AnalyticsConstants.Keys.tool: tool.analyticsToolAbbreviation
             ]
         )
     }
@@ -299,7 +268,7 @@ extension FavoritesViewModel {
         trackFeaturedLessonTappedAnalytics(featuredLesson: featuredLesson)
     }
     
-    func getYourFavoriteToolViewModel(tool: ToolDomainModel) -> ToolCardViewModel {
+    func getYourFavoriteToolViewModel(tool: YourFavoritedToolDomainModel) -> ToolCardViewModel {
                 
         return ToolCardViewModel(
             tool: tool,
@@ -315,28 +284,28 @@ extension FavoritesViewModel {
         flowDelegate?.navigate(step: .viewAllFavoriteToolsTappedFromFavorites)
     }
     
-    func toolDetailsTapped(tool: ToolDomainModel) {
+    func toolDetailsTapped(tool: YourFavoritedToolDomainModel) {
         
-        trackFavoritedToolDetailsButtonAnalytics(for: tool.resource)
+        trackFavoritedToolDetailsButtonAnalytics(tool: tool)
         
         flowDelegate?.navigate(step: .toolDetailsTappedFromFavorites(tool: tool))
     }
     
-    func openToolTapped(tool: ToolDomainModel) {
+    func openToolTapped(tool: YourFavoritedToolDomainModel) {
         
-        trackOpenFavoritedToolButtonAnalytics(for: tool.resource)
+        trackOpenFavoritedToolButtonAnalytics(tool: tool)
         
         flowDelegate?.navigate(step: .openToolTappedFromFavorites(tool: tool))
     }
     
-    func toolFavoriteTapped(tool: ToolDomainModel) {
+    func toolFavoriteTapped(tool: YourFavoritedToolDomainModel) {
         
         flowDelegate?.navigate(step: .unfavoriteToolTappedFromFavorites(tool: tool))
     }
     
-    func toolTapped(tool: ToolDomainModel) {
+    func toolTapped(tool: YourFavoritedToolDomainModel) {
         
-        trackOpenFavoritedToolButtonAnalytics(for: tool.resource)
+        trackOpenFavoritedToolButtonAnalytics(tool: tool)
         
         flowDelegate?.navigate(step: .toolTappedFromFavorites(tool: tool))
     }

@@ -204,13 +204,18 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
         case .toolDetailsTappedFromFavorites(let tool):
             
+            // TODO: Implement back in. ~Levi
+            
+            break
+            
+            /*
             let toolDetails = getToolDetails(
                 tool: tool,
                 parallelLanguage: nil,
                 selectedLanguageIndex: nil
             )
             
-            navigationController.pushViewController(toolDetails, animated: true)
+            navigationController.pushViewController(toolDetails, animated: true)*/
         
         case .openToolTappedFromFavorites(let tool):
             navigateToToolInAppLanguage(toolDataModelId: tool.dataModelId, trainingTipsEnabled: false)
@@ -219,7 +224,12 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             navigateToToolInAppLanguage(toolDataModelId: tool.dataModelId, trainingTipsEnabled: false)
             
         case .unfavoriteToolTappedFromFavorites(let tool):
-            navigationController.present(getConfirmRemoveToolFromFavoritesAlertView(tool: tool, didConfirmToolRemovalSubject: nil), animated: true)
+            
+            presentConfirmRemoveToolFromFavoritesAlertView(
+                toolId: tool.dataModelId,
+                didConfirmToolRemovalSubject: nil, 
+                animated: true
+            )
             
         case .goToToolsTappedFromFavorites:
             navigateToDashboard(startingTab: .tools)
@@ -244,7 +254,12 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             navigateToToolInAppLanguage(toolDataModelId: tool.dataModelId, trainingTipsEnabled: false)
         
         case .unfavoriteToolTappedFromAllYourFavoritedTools(let tool, let didConfirmToolRemovalSubject):
-            navigationController.present(getConfirmRemoveToolFromFavoritesAlertView(tool: tool, didConfirmToolRemovalSubject: didConfirmToolRemovalSubject), animated: true)
+            
+            presentConfirmRemoveToolFromFavoritesAlertView(
+                toolId: tool.dataModelId,
+                didConfirmToolRemovalSubject: didConfirmToolRemovalSubject,
+                animated: true
+            )
             
         case .backTappedFromToolDetails:
             configureNavBarForDashboard()
@@ -876,11 +891,11 @@ extension AppFlow {
 
 extension AppFlow {
     
-    private func getConfirmRemoveToolFromFavoritesAlertView(tool: ToolDomainModel, didConfirmToolRemovalSubject: PassthroughSubject<Void, Never>?) -> UIViewController {
+    private func getConfirmRemoveToolFromFavoritesAlertView(toolId: String, domainModel: ViewConfirmRemoveToolFromFavoritesDomainModel, didConfirmToolRemovalSubject: PassthroughSubject<Void, Never>?) -> UIViewController {
         
         let viewModel = ConfirmRemoveToolFromFavoritesAlertViewModel(
-            tool: tool,
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
+            toolId: toolId,
+            viewConfirmRemoveToolFromFavoritesDomainModel: domainModel,
             removeToolFromFavoritesUseCase: appDiContainer.domainLayer.getRemoveToolFromFavoritesUseCase(),
             didConfirmToolRemovalSubject: didConfirmToolRemovalSubject
         )
@@ -888,6 +903,29 @@ extension AppFlow {
         let view = ConfirmRemoveToolFromFavoritesAlertView(viewModel: viewModel)
         
         return view.controller
+    }
+    
+    private func presentConfirmRemoveToolFromFavoritesAlertView(toolId: String, didConfirmToolRemovalSubject: PassthroughSubject<Void, Never>?, animated: Bool) {
+        
+        appDiContainer.feature.favorites.domainLayer
+            .getViewConfirmRemoveToolFromFavoritesUseCase()
+            .viewPublisher(toolId: toolId, appLanguage: appLanguage)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (domainModel: ViewConfirmRemoveToolFromFavoritesDomainModel) in
+                
+                guard let weakSelf = self else {
+                    return
+                }
+                
+                let view = weakSelf.getConfirmRemoveToolFromFavoritesAlertView(
+                    toolId: toolId,
+                    domainModel: domainModel,
+                    didConfirmToolRemovalSubject: didConfirmToolRemovalSubject
+                )
+                
+                weakSelf.navigationController.present(view, animated: animated)
+            }
+            .store(in: &cancellables)
     }
 }
 
