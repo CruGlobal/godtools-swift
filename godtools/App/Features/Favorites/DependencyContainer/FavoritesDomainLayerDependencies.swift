@@ -16,4 +16,10 @@ class FavoritesDomainLayerDependencies {
         
         self.dataLayer = dataLayer
     }
+    
+    func getViewFavoritesUseCase() -> ViewFavoritesUseCase {
+        return ViewFavoritesUseCase(
+            getInterfaceStringsRepository: dataLayer.getFavoritesInterfaceStringsRepositoryInterface()
+        )
+    }
 }

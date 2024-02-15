@@ -20,4 +20,10 @@ class FavoritesDataLayerDependencies {
     // MARK: - Data Layer Classes
     
     // MARK: - Domain Interface
+    
+    func getFavoritesInterfaceStringsRepositoryInterface() -> GetFavoritesInterfaceStringsRepositoryInterface {
+        return GetFavoritesInterfaceStringsRepository(
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
 }

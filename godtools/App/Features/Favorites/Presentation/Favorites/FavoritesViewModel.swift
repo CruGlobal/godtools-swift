@@ -13,6 +13,7 @@ import Combine
 class FavoritesViewModel: ObservableObject {
             
     private let resourcesRepository: ResourcesRepository
+    private let viewFavoritesUseCase: ViewFavoritesUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let attachmentsRepository: AttachmentsRepository
     private let disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase
@@ -46,9 +47,10 @@ class FavoritesViewModel: ObservableObject {
     @Published var noFavoriteToolsDescription: String = ""
     @Published var noFavoriteToolsButtonText: String = ""
     
-    init(flowDelegate: FlowDelegate, resourcesRepository: ResourcesRepository, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, attachmentsRepository: AttachmentsRepository, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(flowDelegate: FlowDelegate, resourcesRepository: ResourcesRepository, viewFavoritesUseCase: ViewFavoritesUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, attachmentsRepository: AttachmentsRepository, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
+        self.viewFavoritesUseCase = viewFavoritesUseCase
         self.resourcesRepository = resourcesRepository
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.attachmentsRepository = attachmentsRepository
@@ -66,41 +68,27 @@ class FavoritesViewModel: ObservableObject {
             .getLanguagePublisher()
             .assign(to: &$appLanguage)
         
-        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "openTutorial.showTutorialLabel.text")
+        $appLanguage.eraseToAnyPublisher()
+            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewFavoritesDomainModel, Never> in
+                
+                return viewFavoritesUseCase
+                    .viewPublisher(appLanguage: appLanguage)
+                    .eraseToAnyPublisher()
+            })
             .receive(on: DispatchQueue.main)
-            .assign(to: &$openTutorialBannerMessage)
-        
-        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "openTutorial.openTutorialButton.title")
-            .receive(on: DispatchQueue.main)
-            .assign(to: &$openTutorialBannerButtonTitle)
-        
-        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "favorites.pageTitle")
-            .receive(on: DispatchQueue.main)
-            .assign(to: &$welcomeTitle)
-        
-        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "favorites.favoriteLessons.title")
-            .receive(on: DispatchQueue.main)
-            .assign(to: &$featuredLessonsTitle)
-        
-        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "favorites.favoriteTools.title")
-            .receive(on: DispatchQueue.main)
-            .assign(to: &$yourFavoriteToolsTitle)
-        
-        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "favorites.favoriteTools.viewAll")
-            .receive(on: DispatchQueue.main)
-            .assign(to: &$viewAllFavoriteToolsButtonTitle)
-        
-        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "favorites.noTools.title")
-            .receive(on: DispatchQueue.main)
-            .assign(to: &$noFavoriteToolsTitle)
-        
-        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "favorites.noTools.description")
-            .receive(on: DispatchQueue.main)
-            .assign(to: &$noFavoriteToolsDescription)
-        
-        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "favorites.noTools.button")
-            .receive(on: DispatchQueue.main)
-            .assign(to: &$noFavoriteToolsButtonText)
+            .sink { [weak self] (domainModel: ViewFavoritesDomainModel) in
+                
+                self?.openTutorialBannerMessage = domainModel.interfaceStrings.tutorialMessage
+                self?.openTutorialBannerButtonTitle = domainModel.interfaceStrings.openTutorialActionTitle
+                self?.welcomeTitle = domainModel.interfaceStrings.pageTitle
+                self?.featuredLessonsTitle = domainModel.interfaceStrings.featuredLessonsTitle
+                self?.yourFavoriteToolsTitle = domainModel.interfaceStrings.favoriteToolsTitle
+                self?.viewAllFavoriteToolsButtonTitle = domainModel.interfaceStrings.viewAllFavoritesActionTitle
+                self?.noFavoriteToolsTitle = domainModel.interfaceStrings.noFavoritedToolsTitle
+                self?.noFavoriteToolsDescription = domainModel.interfaceStrings.noFavoritedToolsDescription
+                self?.noFavoriteToolsButtonText = domainModel.interfaceStrings.noFavoritedToolsActionTitle
+            }
+            .store(in: &cancellables)
         
         $appLanguage.eraseToAnyPublisher()
             .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<Bool, Never> in
