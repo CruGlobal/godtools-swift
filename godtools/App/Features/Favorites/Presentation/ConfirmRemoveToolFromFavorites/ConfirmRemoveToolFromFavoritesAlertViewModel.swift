@@ -13,8 +13,8 @@ class ConfirmRemoveToolFromFavoritesAlertViewModel: AlertMessageViewModelType {
     
     private static var removeToolFromFavoritesCancellable: AnyCancellable?
     
-    private let tool: ToolDomainModel
-    private let localizationServices: LocalizationServices
+    private let toolId: String
+    private let viewConfirmRemoveToolFromFavoritesDomainModel: ViewConfirmRemoveToolFromFavoritesDomainModel
     private let removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase
     private let didConfirmToolRemovalSubject: PassthroughSubject<Void, Never>?
     
@@ -23,17 +23,17 @@ class ConfirmRemoveToolFromFavoritesAlertViewModel: AlertMessageViewModelType {
     let cancelTitle: String?
     let acceptTitle: String
     
-    init(tool: ToolDomainModel, localizationServices: LocalizationServices, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, didConfirmToolRemovalSubject: PassthroughSubject<Void, Never>?) {
+    init(toolId: String, viewConfirmRemoveToolFromFavoritesDomainModel: ViewConfirmRemoveToolFromFavoritesDomainModel, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, didConfirmToolRemovalSubject: PassthroughSubject<Void, Never>?) {
         
-        self.tool = tool
-        self.localizationServices = localizationServices
+        self.toolId = toolId
+        self.viewConfirmRemoveToolFromFavoritesDomainModel = viewConfirmRemoveToolFromFavoritesDomainModel
         self.removeToolFromFavoritesUseCase = removeToolFromFavoritesUseCase
         self.didConfirmToolRemovalSubject = didConfirmToolRemovalSubject
         
-        title = localizationServices.stringForSystemElseEnglish(key: "remove_from_favorites_title")
-        message = localizationServices.stringForSystemElseEnglish(key: "remove_from_favorites_message").replacingOccurrences(of: "%@", with: tool.name)
-        acceptTitle = localizationServices.stringForSystemElseEnglish(key: "yes")
-        cancelTitle = localizationServices.stringForSystemElseEnglish(key: "no")
+        title = viewConfirmRemoveToolFromFavoritesDomainModel.interfaceStrings.title
+        message = viewConfirmRemoveToolFromFavoritesDomainModel.interfaceStrings.message
+        acceptTitle = viewConfirmRemoveToolFromFavoritesDomainModel.interfaceStrings.confirmRemoveActionTitle
+        cancelTitle = viewConfirmRemoveToolFromFavoritesDomainModel.interfaceStrings.cancelRemoveActionTitle
     }
     
     deinit {
@@ -44,7 +44,7 @@ class ConfirmRemoveToolFromFavoritesAlertViewModel: AlertMessageViewModelType {
         
         didConfirmToolRemovalSubject?.send(Void())
         
-        ConfirmRemoveToolFromFavoritesAlertViewModel.removeToolFromFavoritesCancellable = removeToolFromFavoritesUseCase.removeToolFromFavoritesPublisher(id: tool.dataModelId)
+        ConfirmRemoveToolFromFavoritesAlertViewModel.removeToolFromFavoritesCancellable = removeToolFromFavoritesUseCase.removeToolFromFavoritesPublisher(id: toolId)
             .sink { _ in
                 
             }
