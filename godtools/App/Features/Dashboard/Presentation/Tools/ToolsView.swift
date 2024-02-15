@@ -112,7 +112,7 @@ struct AllToolsView_Preview: PreviewProvider {
         
         let viewModel = ToolsViewModel(
             flowDelegate: MockFlowDelegate(),
-            dataDownloader: appDiContainer.dataLayer.getInitialDataDownloader(),
+            resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
             favoritingToolMessageCache: appDiContainer.dataLayer.getFavoritingToolMessageCache(),
             getAllToolsUseCase: appDiContainer.domainLayer.getAllToolsUseCase(),
             getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),

@@ -14,7 +14,7 @@ class ToolsViewModel: ObservableObject {
     
     private static var toggleToolFavoriteCancellable: AnyCancellable?
     
-    private let dataDownloader: InitialDataDownloader
+    private let resourcesRepository: ResourcesRepository
     private let favoritingToolMessageCache: FavoritingToolMessageCache
     private let getAllToolsUseCase: GetAllToolsUseCase
     private let getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase
@@ -43,10 +43,10 @@ class ToolsViewModel: ObservableObject {
     @Published var allTools: [ToolDomainModel] = Array()
     @Published var isLoadingAllTools: Bool = true
         
-    init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, favoritingToolMessageCache: FavoritingToolMessageCache, getAllToolsUseCase: GetAllToolsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getToolFilterCategoriesUseCase: GetToolFilterCategoriesUseCase, getToolFilterLanguagesUseCase: GetToolFilterLanguagesUseCase, getUserFiltersUseCase: GetUserFiltersUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, attachmentsRepository: AttachmentsRepository) {
+    init(flowDelegate: FlowDelegate, resourcesRepository: ResourcesRepository, favoritingToolMessageCache: FavoritingToolMessageCache, getAllToolsUseCase: GetAllToolsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getToolFilterCategoriesUseCase: GetToolFilterCategoriesUseCase, getToolFilterLanguagesUseCase: GetToolFilterLanguagesUseCase, getUserFiltersUseCase: GetUserFiltersUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, attachmentsRepository: AttachmentsRepository) {
         
         self.flowDelegate = flowDelegate
-        self.dataDownloader = dataDownloader
+        self.resourcesRepository = resourcesRepository
         self.favoritingToolMessageCache = favoritingToolMessageCache
         self.getAllToolsUseCase = getAllToolsUseCase
         self.getLanguageAvailabilityUseCase = getLanguageAvailabilityUseCase
@@ -219,7 +219,13 @@ extension ToolsViewModel {
     
     func pullToRefresh() {
         
-        dataDownloader.downloadInitialData()
+        resourcesRepository.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments()
+            .sink(receiveCompletion: { completed in
+
+            }, receiveValue: { (result: RealmResourcesCacheSyncResult) in
+                
+            })
+            .store(in: &cancellables)
     }
     
     func pageViewed() {

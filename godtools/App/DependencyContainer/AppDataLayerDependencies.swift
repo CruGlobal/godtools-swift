@@ -150,12 +150,6 @@ class AppDataLayerDependencies {
         return sharedInfoPlist
     }
     
-    func getInitialDataDownloader() -> InitialDataDownloader {
-        return InitialDataDownloader(
-            resourcesRepository: getResourcesRepository()
-        )
-    }
-    
     func getLanguageSettingsRepository() -> LanguageSettingsRepository {
         return LanguageSettingsRepository(
             cache: LanguageSettingsCache()

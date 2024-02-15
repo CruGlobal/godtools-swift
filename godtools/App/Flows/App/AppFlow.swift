@@ -15,7 +15,8 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
     
     private static let defaultStartingDashboardTab: DashboardTabTypeDomainModel = .favorites
     
-    private let dataDownloader: InitialDataDownloader
+    private let resourcesRepository: ResourcesRepository
+    private let toolLanguageDownloader: ToolLanguageDownloader
     private let followUpsService: FollowUpsService
     private let resourceViewsService: ResourceViewsService
     private let deepLinkingService: DeepLinkingService
@@ -59,7 +60,8 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         
         self.appDiContainer = appDiContainer
         self.navigationController = AppNavigationController(navigationBarAppearance: navigationBarAppearance)
-        self.dataDownloader = appDiContainer.dataLayer.getInitialDataDownloader()
+        self.resourcesRepository = appDiContainer.dataLayer.getResourcesRepository()
+        self.toolLanguageDownloader = appDiContainer.feature.appLanguage.dataLayer.getToolLanguageDownloader()
         self.followUpsService = appDiContainer.dataLayer.getFollowUpsService()
         self.resourceViewsService = appDiContainer.dataLayer.getResourceViewsService()
         self.deepLinkingService = appDeepLinkingService
@@ -430,7 +432,18 @@ extension AppFlow {
     
     private func loadInitialData() {
         
-        dataDownloader.downloadInitialData()
+        resourcesRepository
+            .syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsIgnoringErrorPublisher()
+            .flatMap({ _ -> AnyPublisher<Void, Never> in
+                
+                return self.toolLanguageDownloader
+                    .syncDownloadedLanguagesPublisher()
+                    .eraseToAnyPublisher()
+            })
+            .sink { _ in
+                
+            }
+            .store(in: &cancellables)
         
         _ = followUpsService.postFailedFollowUpsIfNeeded()
         

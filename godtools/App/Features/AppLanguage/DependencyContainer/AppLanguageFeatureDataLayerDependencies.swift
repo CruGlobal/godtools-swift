@@ -31,6 +31,15 @@ class AppLanguageFeatureDataLayerDependencies {
         return DownloadedLanguagesRepository(cache: getRealmDownloadedLanguagesCache())
     }
     
+    func getToolLanguageDownloader() -> ToolLanguageDownloader {
+        return ToolLanguageDownloader(
+            resourcesRepository: coreDataLayer.getResourcesRepository(),
+            languagesRepository: coreDataLayer.getLanguagesRepository(),
+            toolDownloader: coreDataLayer.getToolDownloader(),
+            downloadedLanguagesRepository: getDownloadedLanguagesRepository()
+        )
+    }
+    
     func getUserAppLanguageCache() -> RealmUserAppLanguageCache {
         return RealmUserAppLanguageCache(
             realmDatabase: coreDataLayer.getSharedRealmDatabase()
@@ -115,7 +124,7 @@ class AppLanguageFeatureDataLayerDependencies {
         return DownloadToolLanguageRepository(
             downloadedLanguagesRepository: getDownloadedLanguagesRepository(),
             resourcesRepository: coreDataLayer.getResourcesRepository(),
-            translationsRepository: coreDataLayer.getTranslationsRepository()
+            toolLanguageDownloader: getToolLanguageDownloader()
         )
     }
     

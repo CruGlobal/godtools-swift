@@ -44,7 +44,7 @@ class DashboardPresentationLayerDependencies {
         
         return LessonsViewModel(
             flowDelegate: unwrappedFlowDelegate,
-            initialDataDownloader: appDiContainer.dataLayer.getInitialDataDownloader(),
+            resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             viewLessonsUseCase: appDiContainer.feature.lessons.domainLayer.getViewLessonsUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
@@ -57,7 +57,7 @@ class DashboardPresentationLayerDependencies {
         
         return FavoritesViewModel(
             flowDelegate: unwrappedFlowDelegate,
-            dataDownloader: appDiContainer.dataLayer.getInitialDataDownloader(),
+            resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository(),
             disableOptInOnboardingBannerUseCase: appDiContainer.domainLayer.getDisableOptInOnboardingBannerUseCase(),
@@ -76,7 +76,7 @@ class DashboardPresentationLayerDependencies {
         
         return ToolsViewModel(
             flowDelegate: unwrappedFlowDelegate,
-            dataDownloader: appDiContainer.dataLayer.getInitialDataDownloader(),
+            resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
             favoritingToolMessageCache: appDiContainer.dataLayer.getFavoritingToolMessageCache(),
             getAllToolsUseCase: appDiContainer.domainLayer.getAllToolsUseCase(),
             getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),

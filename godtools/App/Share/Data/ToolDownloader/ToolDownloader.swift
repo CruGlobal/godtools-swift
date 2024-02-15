@@ -69,7 +69,7 @@ class ToolDownloader {
                     .eraseToAnyPublisher()
             }
         
-        let requests: [AnyPublisher<Void, Never>] = [translationsRequest] + attachmentsRequests
+        let requests: [AnyPublisher<Void, Never>] = attachmentsRequests + [translationsRequest]
         
         var downloadCount: Double = 0
         
