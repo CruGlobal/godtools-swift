@@ -323,6 +323,20 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getTranslatedToolCategory() -> GetTranslatedToolCategory {
+        return GetTranslatedToolCategory(
+            localizationServices: getLocalizationServices(),
+            resourcesRepository: getResourcesRepository()
+        )
+    }
+    
+    func getTranslatedToolName() -> GetTranslatedToolName {
+        return GetTranslatedToolName(
+            resourcesRepository: getResourcesRepository(),
+            translationsRepository: getTranslationsRepository()
+        )
+    }
+    
     func getTranslationsRepository() -> TranslationsRepository {        
         return TranslationsRepository(
             infoPlist: getInfoPlist(),
