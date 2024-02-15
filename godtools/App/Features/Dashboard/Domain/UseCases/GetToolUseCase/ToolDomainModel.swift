@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ToolDomainModel {
+struct ToolDomainModel: ToolListItemDomainModelInterface {
     
     let abbreviation: String
     let bannerImageId: String

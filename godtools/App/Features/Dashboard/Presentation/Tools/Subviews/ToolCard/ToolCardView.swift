@@ -100,7 +100,7 @@ struct ToolCardView: View {
                     
                     HStack(alignment: .center, spacing: 0) {
                         
-                        Text(viewModel.title)
+                        Text(viewModel.name)
                             .font(FontLibrary.sfProTextBold.font(size: 17))
                             .foregroundColor(ColorPalette.gtGrey.color)
                             .lineLimit(2)

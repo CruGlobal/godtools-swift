@@ -20,17 +20,17 @@ class ToolCardViewModel: ObservableObject {
     private var getBannerImageCancellable: AnyCancellable?
     private var cancellables = Set<AnyCancellable>()
     
-    let tool: ToolDomainModel
+    let tool: ToolListItemDomainModelInterface
     
     @Published var bannerImageData: OptionalImageData?
     @Published var isFavorited = false
-    @Published var title: String = ""
+    @Published var name: String = ""
     @Published var category: String = ""
     @Published var languageAvailability: String = ""
     @Published var detailsButtonTitle: String = ""
     @Published var openButtonTitle: String = ""
             
-    init(tool: ToolDomainModel, alternateLanguage: LanguageDomainModel? = nil, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, attachmentsRepository: AttachmentsRepository) {
+    init(tool: ToolListItemDomainModelInterface, alternateLanguage: LanguageDomainModel? = nil, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, attachmentsRepository: AttachmentsRepository) {
         
         self.tool = tool
         self.getLanguageAvailabilityUseCase = getLanguageAvailabilityUseCase
@@ -38,8 +38,10 @@ class ToolCardViewModel: ObservableObject {
         self.getInterfaceStringInAppLanguageUseCase = getInterfaceStringInAppLanguageUseCase
         self.attachmentsRepository = attachmentsRepository
                         
-        title = tool.name
+        name = tool.name
         
+        // TODO: Implement back in. ~Levi
+        /*
         getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "tool_category_\(tool.category)")
             .receive(on: DispatchQueue.main)
             .assign(to: &$category)
@@ -54,7 +56,7 @@ class ToolCardViewModel: ObservableObject {
                 
         getToolIsFavoritedUseCase.getToolIsFavoritedPublisher(id: tool.id)
             .receive(on: DispatchQueue.main)
-            .assign(to: &$isFavorited)
+            .assign(to: &$isFavorited)*/
         
         downloadBannerImage()
         setLanguageAvailabilityText(language: alternateLanguage)
@@ -82,6 +84,9 @@ class ToolCardViewModel: ObservableObject {
     
     private func setLanguageAvailabilityText(language: LanguageDomainModel?) {
         
+        // TODO: Implement back in. ~Levi
+        
+        /*
         let getLanguageAvailability = getLanguageAvailabilityUseCase.getLanguageAvailability(for: tool, language: language)
         
         if getLanguageAvailability.isAvailable {
@@ -90,6 +95,6 @@ class ToolCardViewModel: ObservableObject {
             
         } else {
             languageAvailability = ""
-        }
+        }*/
     }
 }
