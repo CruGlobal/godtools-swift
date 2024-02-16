@@ -1174,7 +1174,6 @@
 		45DBE6022ACD9EAB008A93BF /* ToggleToolFavoritedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DBE5E02ACD9EAA008A93BF /* ToggleToolFavoritedUseCase.swift */; };
 		45DBE6032ACD9EAB008A93BF /* GetAllToolsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DBE5E22ACD9EAA008A93BF /* GetAllToolsUseCase.swift */; };
 		45DBE6082ACD9EAB008A93BF /* AddToolToFavoritesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DBE5EA2ACD9EAA008A93BF /* AddToolToFavoritesUseCase.swift */; };
-		45DBE6092ACD9EAB008A93BF /* GetAllFavoritedToolsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DBE5EC2ACD9EAA008A93BF /* GetAllFavoritedToolsUseCase.swift */; };
 		45DBE60A2ACD9EAB008A93BF /* GetToolIsFavoritedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DBE5EE2ACD9EAA008A93BF /* GetToolIsFavoritedUseCase.swift */; };
 		45DBE60B2ACD9EAB008A93BF /* RemoveToolFromFavoritesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DBE5F02ACD9EAA008A93BF /* RemoveToolFromFavoritesUseCase.swift */; };
 		45DBE60C2ACD9EAB008A93BF /* GetOptInOnboardingBannerEnabledUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DBE5F22ACD9EAA008A93BF /* GetOptInOnboardingBannerEnabledUseCase.swift */; };
@@ -2643,7 +2642,6 @@
 		45DBE5E02ACD9EAA008A93BF /* ToggleToolFavoritedUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToggleToolFavoritedUseCase.swift; sourceTree = "<group>"; };
 		45DBE5E22ACD9EAA008A93BF /* GetAllToolsUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetAllToolsUseCase.swift; sourceTree = "<group>"; };
 		45DBE5EA2ACD9EAA008A93BF /* AddToolToFavoritesUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddToolToFavoritesUseCase.swift; sourceTree = "<group>"; };
-		45DBE5EC2ACD9EAA008A93BF /* GetAllFavoritedToolsUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetAllFavoritedToolsUseCase.swift; sourceTree = "<group>"; };
 		45DBE5EE2ACD9EAA008A93BF /* GetToolIsFavoritedUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetToolIsFavoritedUseCase.swift; sourceTree = "<group>"; };
 		45DBE5F02ACD9EAA008A93BF /* RemoveToolFromFavoritesUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoveToolFromFavoritesUseCase.swift; sourceTree = "<group>"; };
 		45DBE5F22ACD9EAA008A93BF /* GetOptInOnboardingBannerEnabledUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetOptInOnboardingBannerEnabledUseCase.swift; sourceTree = "<group>"; };
@@ -9012,7 +9010,6 @@
 				45DBE5E92ACD9EAA008A93BF /* AddToolToFavoritesUseCase */,
 				45DBE5D72ACD9EAA008A93BF /* DisableOptInOnboardingBannerUseCase */,
 				452F6E7F2B69A1C40012AF9C /* DownloadLatestToolsForFavoritedToolsUseCase */,
-				45DBE5EB2ACD9EAA008A93BF /* GetAllFavoritedToolsUseCase */,
 				45DBE5E12ACD9EAA008A93BF /* GetAllToolsUseCase */,
 				45DBE5F12ACD9EAA008A93BF /* GetOptInOnboardingBannerEnabledUseCase */,
 				45DBE5D42ACD9EAA008A93BF /* GetShouldShowLanguageSettingsBarButtonUseCase */,
@@ -9073,14 +9070,6 @@
 				45DBE5EA2ACD9EAA008A93BF /* AddToolToFavoritesUseCase.swift */,
 			);
 			path = AddToolToFavoritesUseCase;
-			sourceTree = "<group>";
-		};
-		45DBE5EB2ACD9EAA008A93BF /* GetAllFavoritedToolsUseCase */ = {
-			isa = PBXGroup;
-			children = (
-				45DBE5EC2ACD9EAA008A93BF /* GetAllFavoritedToolsUseCase.swift */,
-			);
-			path = GetAllFavoritedToolsUseCase;
 			sourceTree = "<group>";
 		};
 		45DBE5ED2ACD9EAA008A93BF /* GetToolIsFavoritedUseCase */ = {
@@ -12065,7 +12054,6 @@
 				4512D4BF2B28F25300DFAFB3 /* StoreToolSettingsParallelLanguageRepository.swift in Sources */,
 				D409F2B1292BEC3300D9D2FE /* UserDetailsRepository.swift in Sources */,
 				45FB160D27DBDDB60009DF8E /* TractFlow.swift in Sources */,
-				45DBE6092ACD9EAB008A93BF /* GetAllFavoritedToolsUseCase.swift in Sources */,
 				458B91B42B7D5D6800785C6F /* AllYourFavoriteToolsView.swift in Sources */,
 				4534F9332AE9AF2C00A7A071 /* LessonFeedbackAnalytics.swift in Sources */,
 				45F71631290A12D70019B715 /* MailViewModel.swift in Sources */,
