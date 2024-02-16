@@ -21,6 +21,12 @@ class FavoritesDataLayerDependencies {
     
     // MARK: - Domain Interface
     
+    func getAllYourFavoritedToolsInterfaceStringsRepository() -> GetAllYourFavoritedToolsInterfaceStringsRepositoryInterface {
+        return GetAllYourFavoritedToolsInterfaceStringsRepository(
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
+    
     func getConfirmRemoveToolFromFavoritesInterfaceStringsRepository() -> GetConfirmRemoveToolFromFavoritesInterfaceStringsRepositoryInterface {
         return GetConfirmRemoveToolFromFavoritesInterfaceStringsRepository(
             localizationServices: coreDataLayer.getLocalizationServices(),
@@ -28,18 +34,19 @@ class FavoritesDataLayerDependencies {
         )
     }
     
-    func getFavoritesInterfaceStringsRepositoryInterface() -> GetFavoritesInterfaceStringsRepositoryInterface {
+    func getFavoritesInterfaceStringsRepository() -> GetFavoritesInterfaceStringsRepositoryInterface {
         return GetFavoritesInterfaceStringsRepository(
             localizationServices: coreDataLayer.getLocalizationServices()
         )
     }
     
-    func getYourFavoritedToolsRepositoryInterface() -> GetYourFavoritedToolsRepositoryInterface {
+    func getYourFavoritedToolsRepository() -> GetYourFavoritedToolsRepositoryInterface {
         return GetYourFavoritedToolsRepository(
             favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository(),
             resourcesRepository: coreDataLayer.getResourcesRepository(),
             getTranslatedToolName: coreDataLayer.getTranslatedToolName(),
-            getTranslatedToolCategory: coreDataLayer.getTranslatedToolCategory()
+            getTranslatedToolCategory: coreDataLayer.getTranslatedToolCategory(),
+            getToolListItemInterfaceStringsRepository: coreDataLayer.getToolListItemInterfaceStringsRepository()
         )
     }
 }

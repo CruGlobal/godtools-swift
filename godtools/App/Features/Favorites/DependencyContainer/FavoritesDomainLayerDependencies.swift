@@ -17,6 +17,13 @@ class FavoritesDomainLayerDependencies {
         self.dataLayer = dataLayer
     }
     
+    func getViewAllYourFavoritedToolsUseCase() -> ViewAllYourFavoritedToolsUseCase {
+        return ViewAllYourFavoritedToolsUseCase(
+            getInterfaceStringsRepository: dataLayer.getAllYourFavoritedToolsInterfaceStringsRepository(),
+            getFavoritedToolsRepository: dataLayer.getYourFavoritedToolsRepository()
+        )
+    }
+    
     func getViewConfirmRemoveToolFromFavoritesUseCase() -> ViewConfirmRemoveToolFromFavoritesUseCase {
         return ViewConfirmRemoveToolFromFavoritesUseCase(
             interfaceStringsRepository: dataLayer.getConfirmRemoveToolFromFavoritesInterfaceStringsRepository()
@@ -25,8 +32,8 @@ class FavoritesDomainLayerDependencies {
     
     func getViewFavoritesUseCase() -> ViewFavoritesUseCase {
         return ViewFavoritesUseCase(
-            getInterfaceStringsRepository: dataLayer.getFavoritesInterfaceStringsRepositoryInterface(),
-            getFavoritedToolsRepository: dataLayer.getYourFavoritedToolsRepositoryInterface()
+            getInterfaceStringsRepository: dataLayer.getFavoritesInterfaceStringsRepository(),
+            getFavoritedToolsRepository: dataLayer.getYourFavoritedToolsRepository()
         )
     }
 }

@@ -38,7 +38,7 @@ struct AllYourFavoriteToolsView: View {
                                         
                     LazyVStack(alignment: .center, spacing: toolCardSpacing) {
                         
-                        ForEach(viewModel.favoritedTools) { (tool: ToolDomainModel) in
+                        ForEach(viewModel.favoritedTools) { (tool: YourFavoritedToolDomainModel) in
                             
                             ToolCardView(
                                 viewModel: viewModel.getToolViewModel(tool: tool),
@@ -90,11 +90,11 @@ struct AllYourFavoriteToolsView_Preview: PreviewProvider {
         
         let viewModel = AllYourFavoriteToolsViewModel(
             flowDelegate: MockFlowDelegate(),
-            getAllFavoritedToolsUseCase: appDiContainer.domainLayer.getAllFavoritedToolsUseCase(),
+            viewAllYourFavoritedToolsUseCase: appDiContainer.feature.favorites.domainLayer.getViewAllYourFavoritedToolsUseCase(),
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
             attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository(),
-            getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
         )
