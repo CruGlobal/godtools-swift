@@ -142,8 +142,13 @@ class ToolDetailsViewModel: ObservableObject {
         })
         .store(in: &cancellables)
         
-        getToolDetailsMediaUseCase
-            .getMediaPublisher(toolChangedPublisher: $tool.eraseToAnyPublisher())
+        $tool.eraseToAnyPublisher()
+            .flatMap({ (tool: ToolDomainModel) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> in
+                
+                return getToolDetailsMediaUseCase
+                    .getMediaPublisher(tool: tool)
+                    .eraseToAnyPublisher()
+            })
             .receive(on: DispatchQueue.main)
             .assign(to: &$mediaType)
         
