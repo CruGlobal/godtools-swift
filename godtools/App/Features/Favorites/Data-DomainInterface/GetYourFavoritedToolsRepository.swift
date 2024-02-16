@@ -15,27 +15,31 @@ class GetYourFavoritedToolsRepository: GetYourFavoritedToolsRepositoryInterface 
     private let resourcesRepository: ResourcesRepository
     private let getTranslatedToolName: GetTranslatedToolName
     private let getTranslatedToolCategory: GetTranslatedToolCategory
-    private let maxNumberOfYourFavoritedToolsToDisplay: Int = 5
+    private let getToolListItemInterfaceStringsRepository: GetToolListItemInterfaceStringsRepository
     
-    init(favoritedResourcesRepository: FavoritedResourcesRepository, resourcesRepository: ResourcesRepository, getTranslatedToolName: GetTranslatedToolName, getTranslatedToolCategory: GetTranslatedToolCategory) {
+    init(favoritedResourcesRepository: FavoritedResourcesRepository, resourcesRepository: ResourcesRepository, getTranslatedToolName: GetTranslatedToolName, getTranslatedToolCategory: GetTranslatedToolCategory, getToolListItemInterfaceStringsRepository: GetToolListItemInterfaceStringsRepository) {
         
         self.favoritedResourcesRepository = favoritedResourcesRepository
         self.resourcesRepository = resourcesRepository
         self.getTranslatedToolName = getTranslatedToolName
         self.getTranslatedToolCategory = getTranslatedToolCategory
+        self.getToolListItemInterfaceStringsRepository = getToolListItemInterfaceStringsRepository
     }
     
-    func getToolsPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<[YourFavoritedToolDomainModel], Never> {
+    func getToolsPublisher(translateInLanguage: AppLanguageDomainModel, maxCount: Int?) -> AnyPublisher<[YourFavoritedToolDomainModel], Never> {
         
-        return Publishers.CombineLatest(
+        return Publishers.CombineLatest3(
             favoritedResourcesRepository.getFavoritedResourcesChangedPublisher(),
-            resourcesRepository.getResourcesChangedPublisher()
+            resourcesRepository.getResourcesChangedPublisher(),
+            getToolListItemInterfaceStringsRepository.getStringsPublisher(translateInLanguage: translateInLanguage)
         )
-        .flatMap({ (favoritedResourcesChanged: Void, resourcesChanged: Void) -> AnyPublisher<[YourFavoritedToolDomainModel], Never> in
+        .flatMap({ (favoritedResourcesChanged: Void, resourcesChanged: Void, interfaceStrings: ToolListItemInterfaceStringsDomainModel) -> AnyPublisher<[YourFavoritedToolDomainModel], Never> in
           
+            let numberOfFavoritedTools: Int = self.favoritedResourcesRepository.getNumberOfFavoritedResources()
+            
             let favoritedResources: [ResourceModel] = self.favoritedResourcesRepository
                 .getFavoritedResourcesSortedByCreatedAt(ascendingOrder: false)
-                .prefix(self.maxNumberOfYourFavoritedToolsToDisplay)
+                .prefix(maxCount ?? numberOfFavoritedTools)
                 .compactMap({
                     self.resourcesRepository.getResource(id: $0.id)
                 })
@@ -48,7 +52,8 @@ class GetYourFavoritedToolsRepository: GetYourFavoritedToolsRepositoryInterface 
                         bannerImageId: $0.attrBanner,
                         name: self.getTranslatedToolName.getToolName(resource: $0, translateInLanguage: translateInLanguage),
                         category: self.getTranslatedToolCategory.getTranslatedCategory(resource: $0, translateInLanguage: translateInLanguage),
-                        isFavorited: true
+                        isFavorited: true,
+                        interfaceStrings: interfaceStrings
                     )
                 })
             

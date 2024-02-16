@@ -24,7 +24,7 @@ class ViewFavoritesUseCase {
         
         return Publishers.CombineLatest(
             getInterfaceStringsRepository.getStringsPublisher(translateInLanguage: appLanguage),
-            getFavoritedToolsRepository.getToolsPublisher(translateInLanguage: appLanguage)
+            getFavoritedToolsRepository.getToolsPublisher(translateInLanguage: appLanguage, maxCount: 5)
         )
         .map {
             

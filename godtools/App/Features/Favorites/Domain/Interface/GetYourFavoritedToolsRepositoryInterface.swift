@@ -11,5 +11,5 @@ import Combine
 
 protocol GetYourFavoritedToolsRepositoryInterface {
     
-    func getToolsPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<[YourFavoritedToolDomainModel], Never>
+    func getToolsPublisher(translateInLanguage: AppLanguageDomainModel, maxCount: Int?) -> AnyPublisher<[YourFavoritedToolDomainModel], Never>
 }
