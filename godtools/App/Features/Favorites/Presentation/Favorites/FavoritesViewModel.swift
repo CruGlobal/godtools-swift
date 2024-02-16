@@ -29,7 +29,7 @@ class FavoritesViewModel: ObservableObject {
     
     private weak var flowDelegate: FlowDelegate?
     
-    @Published private var appLanguage: AppLanguageDomainModel = ""
+    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
         
     @Published var openTutorialBannerMessage: String = ""
     @Published var openTutorialBannerButtonTitle: String = ""
@@ -274,7 +274,6 @@ extension FavoritesViewModel {
             tool: tool,
             getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
             getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
-            getInterfaceStringInAppLanguageUseCase: getInterfaceStringInAppLanguageUseCase,
             attachmentsRepository: attachmentsRepository
         )
     }

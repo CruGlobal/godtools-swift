@@ -14,4 +14,5 @@ protocol ToolListItemDomainModelInterface {
     var name: String { get }
     var category: String { get }
     var isFavorited: Bool { get }
+    var interfaceStrings: ToolListItemInterfaceStringsDomainModel { get }
 }

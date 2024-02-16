@@ -16,6 +16,7 @@ struct YourFavoritedToolDomainModel: ToolListItemDomainModelInterface {
     let name: String
     let category: String
     let isFavorited: Bool
+    let interfaceStrings: ToolListItemInterfaceStringsDomainModel
 }
 
 extension YourFavoritedToolDomainModel: Identifiable {

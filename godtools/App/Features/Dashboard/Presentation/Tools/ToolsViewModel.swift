@@ -249,7 +249,6 @@ extension ToolsViewModel {
             alternateLanguage: toolFilterLanguageSelectionPublisher.value.language,
             getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
             getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
-            getInterfaceStringInAppLanguageUseCase: getInterfaceStringInAppLanguageUseCase,
             attachmentsRepository: attachmentsRepository
         )
     }

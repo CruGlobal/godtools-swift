@@ -14,7 +14,6 @@ class ToolCardViewModel: ObservableObject {
         
     private let getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
-    private let getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase
     private let attachmentsRepository: AttachmentsRepository
             
     private var getBannerImageCancellable: AnyCancellable?
@@ -30,33 +29,18 @@ class ToolCardViewModel: ObservableObject {
     @Published var detailsButtonTitle: String = ""
     @Published var openButtonTitle: String = ""
             
-    init(tool: ToolListItemDomainModelInterface, alternateLanguage: LanguageDomainModel? = nil, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, attachmentsRepository: AttachmentsRepository) {
+    init(tool: ToolListItemDomainModelInterface, alternateLanguage: LanguageDomainModel? = nil, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, attachmentsRepository: AttachmentsRepository) {
         
         self.tool = tool
         self.getLanguageAvailabilityUseCase = getLanguageAvailabilityUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
-        self.getInterfaceStringInAppLanguageUseCase = getInterfaceStringInAppLanguageUseCase
         self.attachmentsRepository = attachmentsRepository
                         
         name = tool.name
-        
-        // TODO: Implement back in. ~Levi
-        /*
-        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "tool_category_\(tool.category)")
-            .receive(on: DispatchQueue.main)
-            .assign(to: &$category)
-        
-        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "favorites.favoriteLessons.details")
-            .receive(on: DispatchQueue.main)
-            .assign(to: &$detailsButtonTitle)
-        
-        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "open")
-            .receive(on: DispatchQueue.main)
-            .assign(to: &$openButtonTitle)
-                
-        getToolIsFavoritedUseCase.getToolIsFavoritedPublisher(id: tool.id)
-            .receive(on: DispatchQueue.main)
-            .assign(to: &$isFavorited)*/
+        category = tool.category
+        isFavorited = tool.isFavorited
+        openButtonTitle = tool.interfaceStrings.openToolActionTitle
+        detailsButtonTitle = tool.interfaceStrings.openToolDetailsActionTitle
         
         downloadBannerImage()
         setLanguageAvailabilityText(language: alternateLanguage)

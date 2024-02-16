@@ -297,6 +297,12 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getToolListItemInterfaceStringsRepository() -> GetToolListItemInterfaceStringsRepository {
+        return GetToolListItemInterfaceStringsRepository(
+            localizationServices: getLocalizationServices()
+        )
+    }
+    
     func getTrackDownloadedTranslationsRepository() -> TrackDownloadedTranslationsRepository {
         return TrackDownloadedTranslationsRepository(
             cache: TrackDownloadedTranslationsCache(realmDatabase: sharedRealmDatabase)
