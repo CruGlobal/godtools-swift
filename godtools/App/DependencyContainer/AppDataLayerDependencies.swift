@@ -343,6 +343,15 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getTranslatedToolLanguageAvailability() -> GetTranslatedToolLanguageAvailability {
+        return GetTranslatedToolLanguageAvailability(
+            localizationServices: getLocalizationServices(),
+            resourcesRepository: getResourcesRepository(),
+            languagesRepository: getLanguagesRepository(),
+            translatedLanguageNameRepository: getTranslatedLanguageNameRepository()
+        )
+    }
+    
     func getTranslationsRepository() -> TranslationsRepository {        
         return TranslationsRepository(
             infoPlist: getInfoPlist(),

@@ -10,9 +10,10 @@ import Foundation
 
 protocol ToolListItemDomainModelInterface {
     
+    var interfaceStrings: ToolListItemInterfaceStringsDomainModel { get }
     var bannerImageId: String { get }
     var name: String { get }
     var category: String { get }
     var isFavorited: Bool { get }
-    var interfaceStrings: ToolListItemInterfaceStringsDomainModel { get }
+    var languageAvailability: ToolLanguageAvailabilityDomainModel { get }
 }

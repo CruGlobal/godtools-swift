@@ -14,7 +14,6 @@ class AllYourFavoriteToolsViewModel: ObservableObject {
         
     private let viewAllYourFavoritedToolsUseCase: ViewAllYourFavoritedToolsUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
-    private let getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
     private let attachmentsRepository: AttachmentsRepository
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
@@ -30,12 +29,11 @@ class AllYourFavoriteToolsViewModel: ObservableObject {
     @Published var sectionTitle: String = ""
     @Published var favoritedTools: [YourFavoritedToolDomainModel] = Array()
         
-    init(flowDelegate: FlowDelegate?, viewAllYourFavoritedToolsUseCase: ViewAllYourFavoritedToolsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, attachmentsRepository: AttachmentsRepository, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(flowDelegate: FlowDelegate?, viewAllYourFavoritedToolsUseCase: ViewAllYourFavoritedToolsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, attachmentsRepository: AttachmentsRepository, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
         self.viewAllYourFavoritedToolsUseCase = viewAllYourFavoritedToolsUseCase
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
-        self.getLanguageAvailabilityUseCase = getLanguageAvailabilityUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
         self.attachmentsRepository = attachmentsRepository
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
@@ -157,7 +155,6 @@ extension AllYourFavoriteToolsViewModel {
                 
         return ToolCardViewModel(
             tool: tool,
-            getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
             getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
             attachmentsRepository: attachmentsRepository
         )

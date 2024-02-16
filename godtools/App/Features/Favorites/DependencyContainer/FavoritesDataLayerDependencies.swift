@@ -46,7 +46,8 @@ class FavoritesDataLayerDependencies {
             resourcesRepository: coreDataLayer.getResourcesRepository(),
             getTranslatedToolName: coreDataLayer.getTranslatedToolName(),
             getTranslatedToolCategory: coreDataLayer.getTranslatedToolCategory(),
-            getToolListItemInterfaceStringsRepository: coreDataLayer.getToolListItemInterfaceStringsRepository()
+            getToolListItemInterfaceStringsRepository: coreDataLayer.getToolListItemInterfaceStringsRepository(),
+            getTranslatedToolLanguageAvailability: coreDataLayer.getTranslatedToolLanguageAvailability()
         )
     }
 }

@@ -16,14 +16,16 @@ class GetYourFavoritedToolsRepository: GetYourFavoritedToolsRepositoryInterface 
     private let getTranslatedToolName: GetTranslatedToolName
     private let getTranslatedToolCategory: GetTranslatedToolCategory
     private let getToolListItemInterfaceStringsRepository: GetToolListItemInterfaceStringsRepository
+    private let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability
     
-    init(favoritedResourcesRepository: FavoritedResourcesRepository, resourcesRepository: ResourcesRepository, getTranslatedToolName: GetTranslatedToolName, getTranslatedToolCategory: GetTranslatedToolCategory, getToolListItemInterfaceStringsRepository: GetToolListItemInterfaceStringsRepository) {
+    init(favoritedResourcesRepository: FavoritedResourcesRepository, resourcesRepository: ResourcesRepository, getTranslatedToolName: GetTranslatedToolName, getTranslatedToolCategory: GetTranslatedToolCategory, getToolListItemInterfaceStringsRepository: GetToolListItemInterfaceStringsRepository, getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability) {
         
         self.favoritedResourcesRepository = favoritedResourcesRepository
         self.resourcesRepository = resourcesRepository
         self.getTranslatedToolName = getTranslatedToolName
         self.getTranslatedToolCategory = getTranslatedToolCategory
         self.getToolListItemInterfaceStringsRepository = getToolListItemInterfaceStringsRepository
+        self.getTranslatedToolLanguageAvailability = getTranslatedToolLanguageAvailability
     }
     
     func getToolsPublisher(translateInLanguage: AppLanguageDomainModel, maxCount: Int?) -> AnyPublisher<[YourFavoritedToolDomainModel], Never> {
@@ -47,13 +49,14 @@ class GetYourFavoritedToolsRepository: GetYourFavoritedToolsRepositoryInterface 
             let yourFavoritedTools: [YourFavoritedToolDomainModel] = favoritedResources
                 .map({
                     YourFavoritedToolDomainModel(
+                        interfaceStrings: interfaceStrings,
                         analyticsToolAbbreviation: $0.abbreviation,
                         dataModelId: $0.id,
                         bannerImageId: $0.attrBanner,
                         name: self.getTranslatedToolName.getToolName(resource: $0, translateInLanguage: translateInLanguage),
                         category: self.getTranslatedToolCategory.getTranslatedCategory(resource: $0, translateInLanguage: translateInLanguage),
                         isFavorited: true,
-                        interfaceStrings: interfaceStrings
+                        languageAvailability: self.getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(resource: $0, translateInLanguage: translateInLanguage)
                     )
                 })
             

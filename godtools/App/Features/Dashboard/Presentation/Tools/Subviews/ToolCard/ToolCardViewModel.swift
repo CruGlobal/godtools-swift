@@ -12,12 +12,10 @@ import Combine
 
 class ToolCardViewModel: ObservableObject {
         
-    private let getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
     private let attachmentsRepository: AttachmentsRepository
             
     private var getBannerImageCancellable: AnyCancellable?
-    private var cancellables = Set<AnyCancellable>()
     
     let tool: ToolListItemDomainModelInterface
     
@@ -29,21 +27,20 @@ class ToolCardViewModel: ObservableObject {
     @Published var detailsButtonTitle: String = ""
     @Published var openButtonTitle: String = ""
             
-    init(tool: ToolListItemDomainModelInterface, alternateLanguage: LanguageDomainModel? = nil, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, attachmentsRepository: AttachmentsRepository) {
+    init(tool: ToolListItemDomainModelInterface, alternateLanguage: LanguageDomainModel? = nil, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, attachmentsRepository: AttachmentsRepository) {
         
         self.tool = tool
-        self.getLanguageAvailabilityUseCase = getLanguageAvailabilityUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
         self.attachmentsRepository = attachmentsRepository
                         
         name = tool.name
         category = tool.category
+        languageAvailability = tool.languageAvailability.availabilityString
         isFavorited = tool.isFavorited
         openButtonTitle = tool.interfaceStrings.openToolActionTitle
         detailsButtonTitle = tool.interfaceStrings.openToolDetailsActionTitle
         
         downloadBannerImage()
-        setLanguageAvailabilityText(language: alternateLanguage)
     }
     
     private func downloadBannerImage() {
@@ -64,21 +61,5 @@ class ToolCardViewModel: ObservableObject {
                     self?.bannerImageData = OptionalImageData(image: image, imageIdForAnimationChange: attachmentId)
                 }
         }
-    }
-    
-    private func setLanguageAvailabilityText(language: LanguageDomainModel?) {
-        
-        // TODO: Implement back in. ~Levi
-        
-        /*
-        let getLanguageAvailability = getLanguageAvailabilityUseCase.getLanguageAvailability(for: tool, language: language)
-        
-        if getLanguageAvailability.isAvailable {
-            
-            languageAvailability = getLanguageAvailability.availabilityString
-            
-        } else {
-            languageAvailability = ""
-        }*/
     }
 }

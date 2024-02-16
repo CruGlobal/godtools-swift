@@ -39,6 +39,7 @@ class GetToolUseCase {
         let currentToolTranslation: (language: LanguageDomainModel, translation: TranslationModel?) = getCurrentToolTranslation(for: resource, language: primaryLanguage)
         
         return ToolDomainModel(
+            interfaceStrings: ToolListItemInterfaceStringsDomainModel(openToolActionTitle: "implement", openToolDetailsActionTitle: "implement"),
             abbreviation: resource.abbreviation,
             bannerImageId: resource.attrBanner,
             category: resource.attrCategory,
@@ -46,6 +47,7 @@ class GetToolUseCase {
             dataModelId: resource.id,
             languageIds: resource.languageIds,
             name: currentToolTranslation.translation?.translatedName ?? resource.name,
+            languageAvailability: ToolLanguageAvailabilityDomainModel(availabilityString: "", isAvailable: false),
             resource: resource
         )
     }

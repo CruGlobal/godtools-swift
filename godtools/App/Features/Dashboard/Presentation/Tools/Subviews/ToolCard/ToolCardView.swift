@@ -194,7 +194,6 @@ struct ToolCardView_Previews: PreviewProvider {
         
         return ToolCardViewModel(
             tool: tool,
-            getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
             attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository()
         )

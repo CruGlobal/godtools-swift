@@ -13,20 +13,20 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
     
     private let resourcesRepository: ResourcesRepository
     private let languagesRepository: LanguagesRepository
-    private let translationsRepository: TranslationsRepository
-    private let localizationServices: LocalizationServices
-    private let localeLanguageName: LocaleLanguageName
+    private let getTranslatedToolName: GetTranslatedToolName
+    private let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability
     
-    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, translationsRepository: TranslationsRepository, localizationServices: LocalizationServices, localeLanguageName: LocaleLanguageName) {
+    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, getTranslatedToolName: GetTranslatedToolName, getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability) {
         
         self.resourcesRepository = resourcesRepository
         self.languagesRepository = languagesRepository
-        self.translationsRepository = translationsRepository
-        self.localizationServices = localizationServices
-        self.localeLanguageName = localeLanguageName
+        self.getTranslatedToolName = getTranslatedToolName
+        self.getTranslatedToolLanguageAvailability = getTranslatedToolLanguageAvailability
     }
     
     func getLessonsListPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[LessonListItemDomainModel], Never> {
+        
+        let language: LanguageModel? = languagesRepository.getLanguage(code: appLanguage)
         
         return resourcesRepository
             .getResourcesChangedPublisher()
@@ -35,46 +35,22 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
                 let lessons: [ResourceModel] = self.resourcesRepository.getAllLessons(sorted: true)
                 
                 let lessonListItems: [LessonListItemDomainModel] = lessons.map { (resource: ResourceModel) in
+
+                    let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel
                     
-                    let lessonIsAvailableInAppLanguage: Bool
-                    let lessonNameInAppLanguage: String
-                    
-                    if let translation = self.translationsRepository.getLatestTranslation(resourceId: resource.id, languageCode: appLanguage) {
-                        lessonNameInAppLanguage = translation.translatedName
+                    if let language = language {
+                        toolLanguageAvailability = self.getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(resource: resource, language: language, translateInLanguage: appLanguage)
                     }
                     else {
-                        lessonNameInAppLanguage = ""
+                        toolLanguageAvailability = ToolLanguageAvailabilityDomainModel(availabilityString: "", isAvailable: false)
                     }
-                    
-                    if let appLanguage = self.languagesRepository.getLanguage(code: appLanguage) {
-                        lessonIsAvailableInAppLanguage = resource.supportsLanguage(languageId: appLanguage.id)
-                    }
-                    else {
-                        lessonIsAvailableInAppLanguage = false
-                    }
-                    
-                    let availabilityInAppLanguage: String
-                    let appLanguageName: String = self.localeLanguageName.getLanguageName(forLanguageCode: appLanguage, translatedInLanguageId: appLanguage) ?? ""
-                    
-                    if lessonIsAvailableInAppLanguage {
-                        availabilityInAppLanguage = appLanguageName + " ✓"
-                    }
-                    else {
-                        let languageNotAvailable: String = self.localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "lessonCard.languageNotAvailable")
-                        
-                        availabilityInAppLanguage = String(
-                            format: languageNotAvailable,
-                            locale: Locale(identifier: appLanguage),
-                            appLanguageName
-                        ) + " x"
-                    }
-                    
+                
                     return LessonListItemDomainModel(
                         analyticsToolName: resource.abbreviation,
-                        availabilityInAppLanguage: availabilityInAppLanguage,
+                        availabilityInAppLanguage: toolLanguageAvailability,
                         bannerImageId: resource.attrBanner,
                         dataModelId: resource.id,
-                        name: lessonNameInAppLanguage
+                        name: self.getTranslatedToolName.getToolName(resource: resource, translateInLanguage: appLanguage)
                     )
                 }
                 

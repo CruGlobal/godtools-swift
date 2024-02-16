@@ -10,13 +10,14 @@ import Foundation
 
 struct YourFavoritedToolDomainModel: ToolListItemDomainModelInterface {
     
+    let interfaceStrings: ToolListItemInterfaceStringsDomainModel
     let analyticsToolAbbreviation: String
     let dataModelId: String
     let bannerImageId: String
     let name: String
     let category: String
     let isFavorited: Bool
-    let interfaceStrings: ToolListItemInterfaceStringsDomainModel
+    let languageAvailability: ToolLanguageAvailabilityDomainModel
 }
 
 extension YourFavoritedToolDomainModel: Identifiable {

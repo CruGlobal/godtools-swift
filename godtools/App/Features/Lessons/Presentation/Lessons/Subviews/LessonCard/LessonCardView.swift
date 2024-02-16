@@ -85,7 +85,7 @@ struct LessonCardView_Previews: PreviewProvider {
         
         let lessonListItem = LessonListItemDomainModel(
             analyticsToolName: "",
-            availabilityInAppLanguage: "available in language",
+            availabilityInAppLanguage: ToolLanguageAvailabilityDomainModel(availabilityString: "available in language", isAvailable: true),
             bannerImageId: "1",
             dataModelId: "1",
             name: "Five Reasons to be Courageous"

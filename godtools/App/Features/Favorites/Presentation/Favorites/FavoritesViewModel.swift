@@ -18,7 +18,6 @@ class FavoritesViewModel: ObservableObject {
     private let attachmentsRepository: AttachmentsRepository
     private let disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase
     private let getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase
-    private let getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase
     private let getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
     private let getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase
@@ -45,7 +44,7 @@ class FavoritesViewModel: ObservableObject {
     @Published var noFavoriteToolsDescription: String = ""
     @Published var noFavoriteToolsButtonText: String = ""
     
-    init(flowDelegate: FlowDelegate, resourcesRepository: ResourcesRepository, viewFavoritesUseCase: ViewFavoritesUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, attachmentsRepository: AttachmentsRepository, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(flowDelegate: FlowDelegate, resourcesRepository: ResourcesRepository, viewFavoritesUseCase: ViewFavoritesUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, attachmentsRepository: AttachmentsRepository, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
         self.viewFavoritesUseCase = viewFavoritesUseCase
@@ -54,7 +53,6 @@ class FavoritesViewModel: ObservableObject {
         self.attachmentsRepository = attachmentsRepository
         self.disableOptInOnboardingBannerUseCase = disableOptInOnboardingBannerUseCase
         self.getFeaturedLessonsUseCase = getFeaturedLessonsUseCase
-        self.getLanguageAvailabilityUseCase = getLanguageAvailabilityUseCase
         self.getOptInOnboardingBannerEnabledUseCase = getOptInOnboardingBannerEnabledUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
         self.getInterfaceStringInAppLanguageUseCase = getInterfaceStringInAppLanguageUseCase
@@ -272,7 +270,6 @@ extension FavoritesViewModel {
                 
         return ToolCardViewModel(
             tool: tool,
-            getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
             getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
             attachmentsRepository: attachmentsRepository
         )
