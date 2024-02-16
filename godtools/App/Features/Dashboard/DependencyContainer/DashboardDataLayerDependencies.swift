@@ -34,4 +34,10 @@ class DashboardDataLayerDependencies {
             toolDownloader: coreDataLayer.getToolDownloader()
         )
     }
+    
+    func getToolsInterfaceStringsRepository() -> GetToolsInterfaceStringsRepositoryInterface {
+        return GetToolsInterfaceStringsRepository(
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
 }

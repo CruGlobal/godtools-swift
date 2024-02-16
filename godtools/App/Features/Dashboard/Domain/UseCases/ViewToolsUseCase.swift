@@ -11,13 +11,23 @@ import Combine
 
 class ViewToolsUseCase {
     
-    init() {
+    private let getInterfaceStringsRepository: GetToolsInterfaceStringsRepositoryInterface
+    
+    init(getInterfaceStringsRepository: GetToolsInterfaceStringsRepositoryInterface) {
         
+        self.getInterfaceStringsRepository = getInterfaceStringsRepository
     }
     
     func viewPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewToolsDomainModel, Never> {
         
-        return Just(ViewToolsDomainModel())
+        return getInterfaceStringsRepository
+            .getStringsPublisher(translateInLanguage: appLanguage)
+            .map {
+                
+                ViewToolsDomainModel(
+                    interfaceStrings: $0
+                )
+            }
             .eraseToAnyPublisher()
     }
 }

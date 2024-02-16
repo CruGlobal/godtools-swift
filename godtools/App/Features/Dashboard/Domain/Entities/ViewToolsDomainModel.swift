@@ -10,4 +10,5 @@ import Foundation
 
 struct ViewToolsDomainModel {
     
+    let interfaceStrings: ToolsInterfaceStringsDomainModel
 }
