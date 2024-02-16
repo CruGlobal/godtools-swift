@@ -47,7 +47,8 @@ class GetYourFavoritedToolsRepository: GetYourFavoritedToolsRepositoryInterface 
                         dataModelId: $0.id,
                         bannerImageId: $0.attrBanner,
                         name: self.getTranslatedToolName.getToolName(resource: $0, translateInLanguage: translateInLanguage),
-                        category: self.getTranslatedToolCategory.getTranslatedCategory(resource: $0, translateInLanguage: translateInLanguage)
+                        category: self.getTranslatedToolCategory.getTranslatedCategory(resource: $0, translateInLanguage: translateInLanguage),
+                        isFavorited: true
                     )
                 })
             

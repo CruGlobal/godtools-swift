@@ -13,4 +13,5 @@ protocol ToolListItemDomainModelInterface {
     var bannerImageId: String { get }
     var name: String { get }
     var category: String { get }
+    var isFavorited: Bool { get }
 }

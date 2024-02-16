@@ -15,7 +15,7 @@ struct YourFavoriteToolsView: View {
     private let toolCardSpacing: CGFloat
     
     @ObservedObject private var viewModel: FavoritesViewModel
-        
+            
     init(viewModel: FavoritesViewModel, geometry: GeometryProxy, contentHorizontalInsets: CGFloat, toolCardSpacing: CGFloat = DashboardView.toolCardVerticalSpacing) {
         
         self.viewModel = viewModel
@@ -64,6 +64,8 @@ struct YourFavoriteToolsView: View {
                                     viewModel.toolTapped(tool: tool)
                                 }
                             )
+                            .animation(Animation.easeOut(duration: 0.2))
+                            .transition(AnyTransition.opacity.combined(with: .slide))
                         }
                     }
                     .padding([.leading, .trailing], contentHorizontalInsets)

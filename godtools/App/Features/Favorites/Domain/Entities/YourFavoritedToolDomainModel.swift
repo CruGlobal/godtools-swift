@@ -15,6 +15,7 @@ struct YourFavoritedToolDomainModel: ToolListItemDomainModelInterface {
     let bannerImageId: String
     let name: String
     let category: String
+    let isFavorited: Bool
 }
 
 extension YourFavoritedToolDomainModel: Identifiable {
