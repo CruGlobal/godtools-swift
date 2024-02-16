@@ -106,17 +106,14 @@ struct ToolDetailsView_Preview: PreviewProvider {
     static var previews: some View {
         
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
-        
-        let tool: ToolDomainModel = appDiContainer.domainLayer.getToolUseCase().getTool(id: "1")!
-        
+                
         let viewModel = ToolDetailsViewModel(
             flowDelegate: MockFlowDelegate(),
-            tool: tool,
+            toolId: "1",
             primaryLanguage: LanguageCodeDomainModel.english.rawValue,
             parallelLanguage: nil,
             selectedLanguageIndex: nil,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            getToolUseCase: appDiContainer.domainLayer.getToolUseCase(),
             viewToolDetailsUseCase: appDiContainer.feature.toolDetails.domainLayer.getViewToolDetailsUseCase(),
             getToolDetailsMediaUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsMediaUseCase(),
             getToolDetailsLearnToShareToolIsAvailableUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsLearnToShareToolIsAvailableUseCase(),

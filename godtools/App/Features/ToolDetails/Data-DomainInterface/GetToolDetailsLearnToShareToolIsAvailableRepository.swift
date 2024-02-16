@@ -19,9 +19,9 @@ class GetToolDetailsLearnToShareToolIsAvailableRepository: GetToolDetailsLearnTo
         self.translationsRepository = translationsRepository
     }
     
-    func getIsAvailablePublisher(tool: ToolDomainModel, language: BCP47LanguageIdentifier) -> AnyPublisher<Bool, Never> {
+    func getIsAvailablePublisher(toolId: String, language: BCP47LanguageIdentifier) -> AnyPublisher<Bool, Never> {
         
-        guard let translation = translationsRepository.getLatestTranslation(resourceId: tool.dataModelId, languageCode: language) else {
+        guard let translation = translationsRepository.getLatestTranslation(resourceId: toolId, languageCode: language) else {
             return Just(false)
                 .eraseToAnyPublisher()
         }

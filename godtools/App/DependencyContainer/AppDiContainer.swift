@@ -135,7 +135,10 @@ class AppDiContainer {
     
     func getToolTrainingTipsOnboardingViews() -> ToolTrainingTipsOnboardingViewsService {
         return ToolTrainingTipsOnboardingViewsService(
-            cache: ToolTrainingTipsOnboardingViewsUserDefaultsCache(userDefaultsCache: sharedUserDefaultsCache)
+            cache: ToolTrainingTipsOnboardingViewsUserDefaultsCache(
+                userDefaultsCache: sharedUserDefaultsCache,
+                getTranslatedToolName: dataLayer.getTranslatedToolName()
+            )
         )
     }
 }
