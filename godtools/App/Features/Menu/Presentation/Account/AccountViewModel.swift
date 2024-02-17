@@ -13,17 +13,21 @@ import GodToolsToolParser
 
 class AccountViewModel: ObservableObject {
     
+    private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase
     private let getUserActivityUseCase: GetUserActivityUseCase
     private let getGlobalActivityThisWeekUseCase: GetGlobalActivityThisWeekUseCase
     private let getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
+    private let viewAccountUseCase: ViewAccountUseCase
     
     private var globalActivityThisWeekDomainModels: [GlobalActivityThisWeekDomainModel] = Array()
     private var cancellables: Set<AnyCancellable> = Set()
     private var getActivityCancellable: AnyCancellable?
     
     private weak var flowDelegate: FlowDelegate?
+    
+    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     
     @Published var navTitle: String = ""
     @Published var isLoadingProfile: Bool = true
@@ -39,34 +43,35 @@ class AccountViewModel: ObservableObject {
     @Published var numberOfGlobalActivityThisWeekItems: Int = 0
     @Published var stats = [UserActivityStatDomainModel]()
         
-    init(flowDelegate: FlowDelegate, getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase, getUserActivityUseCase: GetUserActivityUseCase, getGlobalActivityThisWeekUseCase: GetGlobalActivityThisWeekUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
+    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase, getUserActivityUseCase: GetUserActivityUseCase, getGlobalActivityThisWeekUseCase: GetGlobalActivityThisWeekUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, viewAccountUseCase: ViewAccountUseCase) {
         
         self.flowDelegate = flowDelegate
+        self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getUserAccountDetailsUseCase = getUserAccountDetailsUseCase
         self.getGlobalActivityThisWeekUseCase = getGlobalActivityThisWeekUseCase
         self.getUserActivityUseCase = getUserActivityUseCase
         self.getInterfaceStringInAppLanguageUseCase = getInterfaceStringInAppLanguageUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
+        self.viewAccountUseCase = viewAccountUseCase
         
-        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: MenuStringKeys.Account.navTitle.rawValue)
+        getCurrentAppLanguageUseCase
+            .getLanguagePublisher()
+            .assign(to: &$appLanguage)
+
+        viewAccountUseCase.viewPublisher(appLanguagePublisher: $appLanguage.eraseToAnyPublisher())
             .receive(on: DispatchQueue.main)
-            .assign(to: &$navTitle)
-        
-        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: MenuStringKeys.Account.activityButtonTitle.rawValue)
-            .receive(on: DispatchQueue.main)
-            .assign(to: &$activityButtonTitle)
-        
-        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: MenuStringKeys.Account.activitySectionTitle.rawValue)
-            .receive(on: DispatchQueue.main)
-            .assign(to: &$myActivitySectionTitle)
-        
-        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: MenuStringKeys.Account.badgesSectionTitle.rawValue)
-            .receive(on: DispatchQueue.main)
-            .assign(to: &$badgesSectionTitle)
-        
-        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: MenuStringKeys.Account.globalActivityButtonTitle.rawValue)
-            .receive(on: DispatchQueue.main)
-            .assign(to: &$globalActivityButtonTitle)
+            .sink { viewAccountDomainModel in
+                
+                let interfaceStrings = viewAccountDomainModel.interfaceStrings
+                
+                self.navTitle = interfaceStrings.navTitle
+                self.activityButtonTitle = interfaceStrings.activityButtonTitle
+                self.myActivitySectionTitle = interfaceStrings.myActivitySectionTitle
+                self.badgesSectionTitle = interfaceStrings.badgesSectionTitle
+                self.globalActivityButtonTitle = interfaceStrings.globalActivityButtonTitle
+                
+            }
+            .store(in: &cancellables)
         
         getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: MenuStringKeys.Account.globalAnalyticsTitle.rawValue)
             .receive(on: DispatchQueue.main)

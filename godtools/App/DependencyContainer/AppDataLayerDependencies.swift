@@ -33,7 +33,13 @@ class AppDataLayerDependencies {
     }
     
     // MARK: - Data Layer Classes
-            
+    
+    func getAccountInterfaceStringsRepositoryInterface() -> GetAccountInterfaceStringsRepositoryInterface {
+        return GetAccountInterfaceStringsRepository(
+            localizationServices: getLocalizationServices()
+        )
+    }
+    
     func getAnalytics() -> AnalyticsContainer {
         return sharedAnalytics
     }
