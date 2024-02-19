@@ -26,7 +26,7 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
     
     func getLessonsListPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[LessonListItemDomainModel], Never> {
         
-        let language: LanguageModel? = languagesRepository.getLanguage(code: appLanguage)
+        let appLanguageModel: LanguageModel? = languagesRepository.getLanguage(code: appLanguage)
         
         return resourcesRepository
             .getResourcesChangedPublisher()
@@ -38,7 +38,7 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
 
                     let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel
                     
-                    if let language = language {
+                    if let language = appLanguageModel {
                         toolLanguageAvailability = self.getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(resource: resource, language: language, translateInLanguage: appLanguage)
                     }
                     else {

@@ -26,7 +26,7 @@ class GetFeaturedLessonsRepository: GetFeaturedLessonsRepositoryInterface {
     
     func getFeaturedLessonsPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[FeaturedLessonDomainModel], Never> {
         
-        let language: LanguageModel? = languagesRepository.getLanguage(code: appLanguage)
+        let appLanguageModel: LanguageModel? = languagesRepository.getLanguage(code: appLanguage)
         
         return resourcesRepository.getResourcesChangedPublisher()
             .flatMap({ (resourcesChanged: Void) -> AnyPublisher<[FeaturedLessonDomainModel], Never> in
@@ -37,7 +37,7 @@ class GetFeaturedLessonsRepository: GetFeaturedLessonsRepositoryInterface {
 
                     let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel
                     
-                    if let language = language {
+                    if let language = appLanguageModel {
                         toolLanguageAvailability = self.getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(resource: resource, language: language, translateInLanguage: appLanguage)
                     }
                     else {
