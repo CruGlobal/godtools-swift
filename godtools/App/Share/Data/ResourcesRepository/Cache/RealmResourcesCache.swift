@@ -127,56 +127,24 @@ extension RealmResourcesCache {
         
         var filterByAttributes: [NSPredicate] = Array()
         
-        if let category = filter.category, !category.isEmpty {
-            
-            let categoryFilter = NSPredicate(format: "\(#keyPath(RealmResource.attrCategory)) == [c] %@", category.lowercased())
-            
-            filterByAttributes.append(categoryFilter)
+        if let categoryPredicate = filter.getCategoryPredicate() {
+            filterByAttributes.append(categoryPredicate)
         }
         
-        if let languageCode = filter.languageCode?.lowercased(), !languageCode.isEmpty {
-            
-            let subQuery: String = "SUBQUERY(languages, $language, $language.code == [c] \"\(languageCode)\").@count > 0"
-            
-            let languageFilter = NSPredicate(format: subQuery)
-            
-            filterByAttributes.append(languageFilter)
+        if let languageCodePredicate = filter.getLanguageCodePredicate() {
+            filterByAttributes.append(languageCodePredicate)
         }
         
-        if let resourceTypes = filter.resourceTypes, !resourceTypes.isEmpty {
-            
-            let resourceTypesValues: [String] = resourceTypes.map({$0.rawValue.lowercased()})
-            
-            let resourceTypeFilter = NSPredicate(format: "\(#keyPath(RealmResource.resourceType)) IN %@", resourceTypesValues)
-            
-            filterByAttributes.append(resourceTypeFilter)
+        if let resourceTypesPredicate = filter.getResourceTypesPredicate() {
+            filterByAttributes.append(resourceTypesPredicate)
         }
         
-        if let variants = filter.variants {
-            
-            switch variants {
-            case .isNotVariant:
-                let isNotVariantFilter = NSPredicate(format: "\(#keyPath(RealmResource.isVariant)) == %@", NSNumber(value: false))
-                filterByAttributes.append(isNotVariantFilter)
-                
-            case .isVariant:
-                let isVariantFilter = NSPredicate(format: "\(#keyPath(RealmResource.isVariant)) == %@", NSNumber(value: true))
-                filterByAttributes.append(isVariantFilter)
-                
-            case .isDefaultVariant:
-                let isVariantFilter = NSPredicate(format: "\(#keyPath(RealmResource.isVariant)) == %@", NSNumber(value: true))
-                let isDefaultVariantFilter = NSPredicate(format: "\(#keyPath(RealmResource.id)) == metatool.defaultVariantId")
-                                                
-                filterByAttributes.append(isVariantFilter)
-                filterByAttributes.append(isDefaultVariantFilter)
-            }
+        if let variantsPredicate = filter.getVariantsPredicate() {
+            filterByAttributes.append(variantsPredicate)
         }
         
-        if let isHidden = filter.isHidden {
-            
-            let isHiddenFilter = NSPredicate(format: "\(#keyPath(RealmResource.isHidden)) == %@", NSNumber(value: isHidden))
-            
-            filterByAttributes.append(isHiddenFilter)
+        if let isHiddenPredicate = filter.getIsHiddenPredicate() {
+            filterByAttributes.append(isHiddenPredicate)
         }
         
         let filterPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: filterByAttributes)
@@ -217,7 +185,7 @@ extension RealmResourcesCache {
 extension RealmResourcesCache {
     
     func getAllToolsList(filterByCategory: String?, filterByLanguageCode: BCP47LanguageIdentifier?, sortByDefaultOrder: Bool) -> [ResourceModel] {
-        
+                
         let filter = ResourcesFilter(
             category: filterByCategory,
             languageCode: filterByLanguageCode,
