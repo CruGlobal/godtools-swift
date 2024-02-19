@@ -8,6 +8,7 @@
 
 import Combine
 
+@available(*, deprecated) 
 class GetAllToolsUseCase {
     
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
