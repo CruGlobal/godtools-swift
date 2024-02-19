@@ -142,14 +142,6 @@ class AppDomainLayerDependencies {
         return GetShouldShowLanguageSettingsBarButtonUseCase()
     }
     
-    func getSpotlightToolsUseCase() -> GetSpotlightToolsUseCase {
-        return GetSpotlightToolsUseCase(
-            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
-            getToolUseCase: getToolUseCase(),
-            resourcesRepository: dataLayer.getResourcesRepository()
-        )
-    }
-    
     func getStoreInitialFavoritedToolsUseCase() -> StoreInitialFavoritedToolsUseCase {
         return StoreInitialFavoritedToolsUseCase(
             resourcesRepository: dataLayer.getResourcesRepository(),

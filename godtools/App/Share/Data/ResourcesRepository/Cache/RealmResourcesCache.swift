@@ -110,13 +110,6 @@ class RealmResourcesCache {
             .map { ResourceModel(model: $0) }
     }
     
-    func getSpotlightTools() -> [ResourceModel] {
-        return realmDatabase.openRealm().objects(RealmResource.self)
-            .where { $0.attrSpotlight == true && $0.isHidden == false }
-            .map { ResourceModel(model: $0) }
-            .filter { $0.isToolType }
-    }
-    
     func syncResources(languagesSyncResult: RealmLanguagesCacheSyncResult, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> {
         
         return resourcesSync.syncResources(languagesSyncResult: languagesSyncResult, resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments)
@@ -201,6 +194,33 @@ extension RealmResourcesCache {
             
             filterByAttributes.append(isHiddenFilter)
         }
+        
+        let filterPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: filterByAttributes)
+                
+        let filteredResources = realm.objects(RealmResource.self).filter(filterPredicate)
+        
+        return filteredResources
+            .map {
+                ResourceModel(model: $0)
+            }
+    }
+}
+
+// MARK: - Spotlight Tools
+
+extension RealmResourcesCache {
+    
+    func getSpotlightTools() -> [ResourceModel] {
+        
+        let realm: Realm = realmDatabase.openRealm()
+        
+        let isSpotlightFilter = NSPredicate(format: "\(#keyPath(RealmResource.attrSpotlight)) == %@", NSNumber(value: true))
+        let isNotHiddenFilter = NSPredicate(format: "\(#keyPath(RealmResource.isHidden)) == %@", NSNumber(value: false))
+        
+        let isToolTypesValues: [String] = ResourceType.toolTypes.map({$0.rawValue.lowercased()})
+        let isToolTypeFilter = NSPredicate(format: "\(#keyPath(RealmResource.resourceType)) IN %@", isToolTypesValues)
+        
+        let filterByAttributes: [NSPredicate] = [isSpotlightFilter, isNotHiddenFilter, isToolTypeFilter]
         
         let filterPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: filterByAttributes)
                 
