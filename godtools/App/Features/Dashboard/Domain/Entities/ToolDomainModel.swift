@@ -11,7 +11,7 @@ import Foundation
 struct ToolDomainModel: ToolListItemDomainModelInterface {
     
     let interfaceStrings: ToolListItemInterfaceStringsDomainModel
-    let abbreviation: String
+    let analyticsToolAbbreviation: String
     let bannerImageId: String
     let category: String
     let currentTranslationLanguage: LanguageDomainModel

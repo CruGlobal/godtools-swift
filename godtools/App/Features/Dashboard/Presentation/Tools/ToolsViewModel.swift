@@ -12,13 +12,14 @@ import Combine
 
 class ToolsViewModel: ObservableObject {
     
-    private static var toggleToolFavoriteCancellable: AnyCancellable?
+    typealias ToolId = String
+    
+    private static var favoriteToolCancellables: Dictionary<ToolId, AnyCancellable?> = Dictionary()
     
     private let resourcesRepository: ResourcesRepository
     private let viewToolsUseCase: ViewToolsUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let favoritingToolMessageCache: FavoritingToolMessageCache
-    private let getAllToolsUseCase: GetAllToolsUseCase
     private let getSpotlightToolsUseCase: GetSpotlightToolsUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
     private let toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase
@@ -38,21 +39,20 @@ class ToolsViewModel: ObservableObject {
     @Published var showsFavoritingToolBanner: Bool = false
     @Published var toolSpotlightTitle: String = ""
     @Published var toolSpotlightSubtitle: String = ""
-    @Published var spotlightTools: [ToolDomainModel] = Array()
+    @Published var spotlightTools: [SpotlightToolListItemDomainModel] = Array()
     @Published var filterTitle: String = ""
     @Published var categoryFilterButtonTitle: String = ""
     @Published var languageFilterButtonTitle: String = ""
-    @Published var allTools: [ToolDomainModel] = Array()
+    @Published var allTools: [ToolListItemDomainModel] = Array()
     @Published var isLoadingAllTools: Bool = true
         
-    init(flowDelegate: FlowDelegate, resourcesRepository: ResourcesRepository, viewToolsUseCase: ViewToolsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, favoritingToolMessageCache: FavoritingToolMessageCache, getAllToolsUseCase: GetAllToolsUseCase, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getToolFilterCategoriesUseCase: GetToolFilterCategoriesUseCase, getToolFilterLanguagesUseCase: GetToolFilterLanguagesUseCase, getUserFiltersUseCase: GetUserFiltersUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, attachmentsRepository: AttachmentsRepository) {
+    init(flowDelegate: FlowDelegate, resourcesRepository: ResourcesRepository, viewToolsUseCase: ViewToolsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, favoritingToolMessageCache: FavoritingToolMessageCache, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getToolFilterCategoriesUseCase: GetToolFilterCategoriesUseCase, getToolFilterLanguagesUseCase: GetToolFilterLanguagesUseCase, getUserFiltersUseCase: GetUserFiltersUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, attachmentsRepository: AttachmentsRepository) {
         
         self.flowDelegate = flowDelegate
         self.resourcesRepository = resourcesRepository
         self.viewToolsUseCase = viewToolsUseCase
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.favoritingToolMessageCache = favoritingToolMessageCache
-        self.getAllToolsUseCase = getAllToolsUseCase
         self.getSpotlightToolsUseCase = getSpotlightToolsUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
         self.toggleToolFavoritedUseCase = toggleToolFavoritedUseCase
@@ -72,19 +72,26 @@ class ToolsViewModel: ObservableObject {
             .assign(to: &$appLanguage)
         
         $appLanguage.eraseToAnyPublisher()
-            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<(ViewToolsDomainModel), Never> in
+            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<(ViewToolsDomainModel, [SpotlightToolListItemDomainModel]), Never> in
                 
-                return viewToolsUseCase
-                    .viewPublisher(appLanguage: appLanguage)
-                    .eraseToAnyPublisher()
+                return Publishers.CombineLatest(
+                    viewToolsUseCase.viewPublisher(appLanguage: appLanguage),
+                    getSpotlightToolsUseCase.getSpotlightToolsPublisher(appLanguage: appLanguage)
+                )
+                .eraseToAnyPublisher()
             })
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (domainModel: ViewToolsDomainModel) in
+            .sink { [weak self] (domainModel: ViewToolsDomainModel, spotlightTools: [SpotlightToolListItemDomainModel]) in
                     
                 self?.favoritingToolBannerMessage = domainModel.interfaceStrings.favoritingToolBannerMessage
                 self?.toolSpotlightTitle = domainModel.interfaceStrings.toolSpotlightTitle
                 self?.toolSpotlightSubtitle = domainModel.interfaceStrings.toolSpotlightSubtitle
                 self?.filterTitle = domainModel.interfaceStrings.filterTitle
+                
+                self?.spotlightTools = spotlightTools
+                
+                self?.allTools = domainModel.tools
+                self?.isLoadingAllTools = false
             }
             .store(in: &cancellables)
         
@@ -106,26 +113,6 @@ class ToolsViewModel: ObservableObject {
                 if let languageFilter = languageFilter {
                     self.toolFilterLanguageSelectionPublisher.send(languageFilter)
                 }
-            }
-            .store(in: &cancellables)
-        
-        getSpotlightToolsUseCase.getSpotlightToolsPublisher()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (spotlightTools: [ToolDomainModel]) in
-                
-                self?.spotlightTools = spotlightTools
-            }
-            .store(in: &cancellables)
-        
-        getAllToolsUseCase.getToolsForFilterSelectionPublisher(
-            languagefilterSelection: toolFilterLanguageSelectionPublisher,
-            categoryFilterSelection: toolFilterCategorySelectionPublisher
-        )
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (allTools: [ToolDomainModel]) in
-                
-                self?.allTools = allTools
-                self?.isLoadingAllTools = false
             }
             .store(in: &cancellables)
         
@@ -172,7 +159,16 @@ class ToolsViewModel: ObservableObject {
         return ""
     }
     
-    private func trackToolTappedAnalytics(tool: ToolDomainModel, isSpotlight: Bool) {
+    private func trackToolTappedAnalytics(tool: ToolListItemDomainModelInterface) {
+        
+        let source: String
+        
+        if tool is SpotlightToolListItemDomainModel {
+            source = AnalyticsConstants.Sources.spotlight
+        }
+        else {
+            source = AnalyticsConstants.Sources.allTools
+        }
         
         trackActionAnalyticsUseCase.trackAction(
             screenName: analyticsScreenName,
@@ -183,8 +179,8 @@ class ToolsViewModel: ObservableObject {
             contentLanguageSecondary: nil,
             url: nil,
             data: [
-                AnalyticsConstants.Keys.source: isSpotlight ? AnalyticsConstants.Sources.spotlight : AnalyticsConstants.Sources.allTools,
-                AnalyticsConstants.Keys.tool: tool.abbreviation
+                AnalyticsConstants.Keys.source: source,
+                AnalyticsConstants.Keys.tool: tool.analyticsToolAbbreviation
             ]
         )
     }
@@ -211,12 +207,14 @@ class ToolsViewModel: ObservableObject {
         )
     }
     
-    private func toggleToolIsFavorited(tool: ToolDomainModel) {
+    private func toggleToolIsFavorited(toolId: String) {
         
-        ToolsViewModel.toggleToolFavoriteCancellable = toggleToolFavoritedUseCase.toggleToolFavoritedPublisher(id: tool.dataModelId)
-            .sink { _ in
+        ToolsViewModel.favoriteToolCancellables[toolId] = toggleToolFavoritedUseCase
+            .toggleFavoritedPublisher(toolId: toolId)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { (domainModel: ToolIsFavoritedDomainModel) in
                 
-            }
+            })
     }
 }
 
@@ -249,11 +247,18 @@ extension ToolsViewModel {
         favoritingToolMessageCache.disableFavoritingToolMessage()
     }
     
-    func getToolViewModel(tool: ToolDomainModel) -> ToolCardViewModel {
+    func getSpotlightToolViewModel(spotlightTool: SpotlightToolListItemDomainModel) -> ToolCardViewModel {
+        return getToolViewModel(tool: spotlightTool)
+    }
+    
+    func getToolItemViewModel(tool: ToolListItemDomainModel) -> ToolCardViewModel {
+        return getToolViewModel(tool: tool)
+    }
+    
+    private func getToolViewModel(tool: ToolListItemDomainModelInterface) -> ToolCardViewModel {
         
         return ToolCardViewModel(
             tool: tool,
-            alternateLanguage: toolFilterLanguageSelectionPublisher.value.language,
             getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
             attachmentsRepository: attachmentsRepository
         )
@@ -275,26 +280,26 @@ extension ToolsViewModel {
         ))
     }
     
-    func spotlightToolFavorited(spotlightTool: ToolDomainModel) {
+    func spotlightToolFavoriteTapped(spotlightTool: SpotlightToolListItemDomainModel) {
      
-        toggleToolIsFavorited(tool: spotlightTool)
+        toggleToolIsFavorited(toolId: spotlightTool.dataModelId)
     }
     
-    func spotlightToolTapped(spotlightTool: ToolDomainModel) {
+    func spotlightToolTapped(spotlightTool: SpotlightToolListItemDomainModel) {
         
-        trackToolTappedAnalytics(tool: spotlightTool, isSpotlight: true)
+        trackToolTappedAnalytics(tool: spotlightTool)
         
         flowDelegate?.navigate(step: .spotlightToolTappedFromTools(spotlightTool: spotlightTool, toolFilterLanguage: toolFilterLanguageSelectionPublisher.value))
     }
     
-    func toolFavoriteTapped(tool: ToolDomainModel) {
+    func toolFavoriteTapped(tool: ToolListItemDomainModel) {
 
-        toggleToolIsFavorited(tool: tool)
+        toggleToolIsFavorited(toolId: tool.dataModelId)
     }
     
-    func toolTapped(tool: ToolDomainModel) {
+    func toolTapped(tool: ToolListItemDomainModel) {
         
-        trackToolTappedAnalytics(tool: tool, isSpotlight: false)
+        trackToolTappedAnalytics(tool: tool)
         
         flowDelegate?.navigate(step: .toolTappedFromTools(tool: tool, toolFilterLanguage: toolFilterLanguageSelectionPublisher.value))
     }

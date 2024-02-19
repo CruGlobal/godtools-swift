@@ -11,4 +11,5 @@ import Foundation
 struct ViewToolsDomainModel {
     
     let interfaceStrings: ToolsInterfaceStringsDomainModel
+    let tools: [ToolListItemDomainModel]
 }

@@ -40,4 +40,16 @@ class DashboardDataLayerDependencies {
             localizationServices: coreDataLayer.getLocalizationServices()
         )
     }
+    
+    func getToolsRepository() -> GetToolsRepositoryInterface {
+        return GetToolsRepository(
+            resourcesRepository: coreDataLayer.getResourcesRepository(),
+            favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository(),
+            languagesRepository: coreDataLayer.getLanguagesRepository(),
+            getTranslatedToolName: coreDataLayer.getTranslatedToolName(),
+            getTranslatedToolCategory: coreDataLayer.getTranslatedToolCategory(),
+            getToolListItemInterfaceStringsRepository: coreDataLayer.getToolListItemInterfaceStringsRepository(),
+            getTranslatedToolLanguageAvailability: coreDataLayer.getTranslatedToolLanguageAvailability()
+        )
+    }
 }

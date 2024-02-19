@@ -188,9 +188,17 @@ struct ToolCardView_Previews: PreviewProvider {
     static func getPreviewToolCardViewModel() -> ToolCardViewModel {
         
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
-        let resource = appDiContainer.dataLayer.getResourcesRepository().getResource(id: "1")!
-        
-        let tool = appDiContainer.domainLayer.getToolUseCase().getTool(resource: resource)
+            
+        let tool = ToolListItemDomainModel(
+            interfaceStrings: ToolListItemInterfaceStringsDomainModel(openToolActionTitle: "Open", openToolDetailsActionTitle: "Tool Details"),
+            analyticsToolAbbreviation: "",
+            dataModelId: "1",
+            bannerImageId: "1",
+            name: "Tool Name",
+            category: "Tool Category",
+            isFavorited: true,
+            languageAvailability: ToolLanguageAvailabilityDomainModel(availabilityString: "is available", isAvailable: true)
+        )
         
         return ToolCardViewModel(
             tool: tool,

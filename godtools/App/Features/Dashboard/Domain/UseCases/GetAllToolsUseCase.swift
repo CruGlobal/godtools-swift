@@ -11,14 +11,12 @@ import Combine
 class GetAllToolsUseCase {
     
     private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
-    private let getToolUseCase: GetToolUseCase
     private let resourcesRepository: ResourcesRepository
     
     private var allToolsInMem: [ToolDomainModel]?
     
-    init(getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getToolUseCase: GetToolUseCase, resourcesRepository: ResourcesRepository) {
+    init(getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, resourcesRepository: ResourcesRepository) {
         self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
-        self.getToolUseCase = getToolUseCase
         self.resourcesRepository = resourcesRepository
     }
     
@@ -76,8 +74,10 @@ class GetAllToolsUseCase {
     
     private func getTools(sorted: Bool, categoryId: String? = nil, languageId: String? = nil) -> [ToolDomainModel] {
         
+        return Array()
+        /*
         return resourcesRepository.getAllTools(sorted: sorted, category: categoryId, languageId: languageId).map {
             getToolUseCase.getTool(resource: $0)
-        }
+        }*/
     }
 }

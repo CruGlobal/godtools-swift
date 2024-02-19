@@ -11,6 +11,8 @@ import Foundation
 protocol ToolListItemDomainModelInterface {
     
     var interfaceStrings: ToolListItemInterfaceStringsDomainModel { get }
+    var analyticsToolAbbreviation: String { get }
+    var dataModelId: String { get }
     var bannerImageId: String { get }
     var name: String { get }
     var category: String { get }

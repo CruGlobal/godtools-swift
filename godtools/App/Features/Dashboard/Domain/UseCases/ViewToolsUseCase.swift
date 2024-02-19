@@ -12,22 +12,27 @@ import Combine
 class ViewToolsUseCase {
     
     private let getInterfaceStringsRepository: GetToolsInterfaceStringsRepositoryInterface
+    private let getToolsRepository: GetToolsRepositoryInterface
     
-    init(getInterfaceStringsRepository: GetToolsInterfaceStringsRepositoryInterface) {
+    init(getInterfaceStringsRepository: GetToolsInterfaceStringsRepositoryInterface, getToolsRepository: GetToolsRepositoryInterface) {
         
         self.getInterfaceStringsRepository = getInterfaceStringsRepository
+        self.getToolsRepository = getToolsRepository
     }
     
     func viewPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewToolsDomainModel, Never> {
         
-        return getInterfaceStringsRepository
-            .getStringsPublisher(translateInLanguage: appLanguage)
-            .map {
-                
-                ViewToolsDomainModel(
-                    interfaceStrings: $0
-                )
-            }
-            .eraseToAnyPublisher()
+        return Publishers.CombineLatest(
+            getInterfaceStringsRepository.getStringsPublisher(translateInLanguage: appLanguage),
+            getToolsRepository.getToolsPublisher(appLanguage: appLanguage)
+        )
+        .map {
+            
+            ViewToolsDomainModel(
+                interfaceStrings: $0,
+                tools: $1
+            )
+        }
+        .eraseToAnyPublisher()
     }
 }
