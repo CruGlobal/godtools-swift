@@ -42,7 +42,7 @@ class ToolScreenShareFlow: Flow {
         let getToolScreenShareTutorialHasBeenViewedUseCase: GetToolScreenShareTutorialHasBeenViewedUseCase = appDiContainer.feature.toolScreenShare.domainLayer.getToolScreenShareTutorialHasBeenViewedUseCase()
         
         getToolScreenShareTutorialHasBeenViewedUseCase
-            .getViewedPublisher(tool: toolData.renderer.value.resource)
+            .getViewedPublisher(toolId: toolData.renderer.value.resource.id)
             .receive(on: DispatchQueue.main)
             .first()
             .sink { [weak self] (toolScreenShareTutorialViewed: ToolScreenShareTutorialViewedDomainModel) in
@@ -277,7 +277,7 @@ extension ToolScreenShareFlow {
         
         let viewModel = CreatingToolScreenShareSessionViewModel(
             flowDelegate: self,
-            resourceId: toolData.renderer.value.resource.id,
+            toolId: toolData.renderer.value.resource.id,
             getCurrentAppLanguage: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             viewCreatingToolScreenShareSessionUseCase: appDiContainer.feature.toolScreenShare.domainLayer.getViewCreatingToolScreenShareSessionUseCase(),
             tractRemoteSharePublisher: toolData.tractRemoteSharePublisher,

@@ -72,7 +72,7 @@ class ToolSettingsFlow: Flow {
         let getToolScreenShareTutorialHasBeenViewedUseCase: GetToolScreenShareTutorialHasBeenViewedUseCase = appDiContainer.feature.toolScreenShare.domainLayer.getToolScreenShareTutorialHasBeenViewedUseCase()
         
         getToolScreenShareTutorialHasBeenViewedUseCase
-            .getViewedPublisher(tool: toolData.renderer.value.resource)
+            .getViewedPublisher(toolId: toolData.renderer.value.resource.id)
             .assign(to: &$toolScreenShareTutorialHasBeenViewedDomainModel)
         
         Publishers.CombineLatest(

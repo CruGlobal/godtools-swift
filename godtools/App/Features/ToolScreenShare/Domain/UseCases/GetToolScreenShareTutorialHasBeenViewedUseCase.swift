@@ -18,10 +18,9 @@ class GetToolScreenShareTutorialHasBeenViewedUseCase {
         self.tutorialViewedRepositoryInterface = tutorialViewedRepositoryInterface
     }
     
-    // TODO: Eventually ToolDomainModel should be passed in here instead of ResourceModel. ~Levi
-    func getViewedPublisher(tool: ResourceModel) -> AnyPublisher<ToolScreenShareTutorialViewedDomainModel, Never> {
+    func getViewedPublisher(toolId: String) -> AnyPublisher<ToolScreenShareTutorialViewedDomainModel, Never> {
         
-        return tutorialViewedRepositoryInterface.getViewed(tool: tool)
+        return tutorialViewedRepositoryInterface.getViewed(toolId: toolId)
             .eraseToAnyPublisher()
     }
 }

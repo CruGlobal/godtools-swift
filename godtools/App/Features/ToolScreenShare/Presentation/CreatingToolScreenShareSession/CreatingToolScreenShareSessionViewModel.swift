@@ -13,7 +13,7 @@ class CreatingToolScreenShareSessionViewModel: ObservableObject {
     
     private static var incrementScreenShareInBackgroundCancellable: AnyCancellable?
     
-    private let resourceId: String // TODO: Eventually we will want to use ToolDomainModel here. ~Levi
+    private let toolId: String
     private let getCurrentAppLanguage: GetCurrentAppLanguageUseCase
     private let viewCreatingToolScreenShareSessionUseCase: ViewCreatingToolScreenShareSessionUseCase
     private let tractRemoteSharePublisher: TractRemoteSharePublisher
@@ -27,10 +27,10 @@ class CreatingToolScreenShareSessionViewModel: ObservableObject {
     
     @Published var creatingSessionMessage: String = ""
     
-    init(flowDelegate: FlowDelegate, resourceId: String, getCurrentAppLanguage: GetCurrentAppLanguageUseCase, viewCreatingToolScreenShareSessionUseCase: ViewCreatingToolScreenShareSessionUseCase, tractRemoteSharePublisher: TractRemoteSharePublisher, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
+    init(flowDelegate: FlowDelegate, toolId: String, getCurrentAppLanguage: GetCurrentAppLanguageUseCase, viewCreatingToolScreenShareSessionUseCase: ViewCreatingToolScreenShareSessionUseCase, tractRemoteSharePublisher: TractRemoteSharePublisher, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
         
         self.flowDelegate = flowDelegate
-        self.resourceId = resourceId
+        self.toolId = toolId
         self.getCurrentAppLanguage = getCurrentAppLanguage
         self.viewCreatingToolScreenShareSessionUseCase = viewCreatingToolScreenShareSessionUseCase
         self.tractRemoteSharePublisher = tractRemoteSharePublisher
@@ -78,7 +78,7 @@ extension CreatingToolScreenShareSessionViewModel {
     
     func pageViewed() {
         
-        CreatingToolScreenShareSessionViewModel.incrementScreenShareInBackgroundCancellable = incrementUserCounterUseCase.incrementUserCounter(for: .screenShare(tool: resourceId))
+        CreatingToolScreenShareSessionViewModel.incrementScreenShareInBackgroundCancellable = incrementUserCounterUseCase.incrementUserCounter(for: .screenShare(tool: toolId))
             .sink { _ in
                 
             } receiveValue: { _ in
