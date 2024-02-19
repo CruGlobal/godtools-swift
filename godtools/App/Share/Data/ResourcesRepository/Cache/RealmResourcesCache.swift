@@ -185,22 +185,40 @@ extension RealmResourcesCache {
 extension RealmResourcesCache {
     
     func getAllToolsList(filterByCategory: String?, filterByLanguageCode: BCP47LanguageIdentifier?, sortByDefaultOrder: Bool) -> [ResourceModel] {
+                        
+        var andSubpredicates: [NSPredicate] = Array()
+        
+        if let filterByCategory = filterByCategory {
+            andSubpredicates.append(ResourcesFilter.getCategoryPredicate(category: filterByCategory))
+        }
+        
+        if let filterByLanguageCode = filterByLanguageCode {
+            andSubpredicates.append(ResourcesFilter.getLanguageCodePredicate(languageCode: filterByLanguageCode))
+        }
+        
+        andSubpredicates.append(ResourcesFilter.getIsHiddenPredicate(isHidden: false))
+        
+        andSubpredicates.append(ResourcesFilter.getResourceTypesPredicate(resourceTypes: [.article, .chooseYourOwnAdventure, .tract]))
+        
+        andSubpredicates.append(ResourcesFilter.getVariantsPredicate(variants: .isNotVariant))
                 
-        let filter = ResourcesFilter(
-            category: filterByCategory,
-            languageCode: filterByLanguageCode,
-            resourceTypes: [.article, .chooseYourOwnAdventure, .tract]
-        )
+        let andCompoundPredicates: NSCompoundPredicate = NSCompoundPredicate(type: .and, subpredicates: andSubpredicates)
+        
+        let isDefaultVariantPredicate: NSPredicate = ResourcesFilter.getVariantsPredicate(variants: .isDefaultVariant)
+        
+        let filterPredicates: NSCompoundPredicate = NSCompoundPredicate(type: .or, subpredicates: [andCompoundPredicates, isDefaultVariantPredicate])
+        
+        let filteredRealmResources: Results<RealmResource> = realmDatabase.openRealm().objects(RealmResource.self).filter(filterPredicates)
         
         let realmResources: Results<RealmResource>
         
         if sortByDefaultOrder {
             
-            realmResources = getFilteredRealmResources(filter: filter).sorted(byKeyPath: #keyPath(RealmResource.attrDefaultOrder), ascending: true)
+            realmResources = filteredRealmResources.sorted(byKeyPath: #keyPath(RealmResource.attrDefaultOrder), ascending: true)
         }
         else {
             
-            realmResources = getFilteredRealmResources(filter: filter)
+            realmResources = filteredRealmResources
         }
         
         return realmResources

@@ -25,25 +25,20 @@ struct ResourcesFilter {
         self.variants = variants
     }
     
-    static func getCategoryPredicate(category: String?) -> NSPredicate? {
-        
-        guard let category = category, !category.isEmpty else {
-            return nil
-        }
-        
+    static func getCategoryPredicate(category: String) -> NSPredicate {
         return NSPredicate(format: "\(#keyPath(RealmResource.attrCategory)) == [c] %@", category.lowercased())
     }
     
     func getCategoryPredicate() -> NSPredicate? {
         
+        guard let category = category, !category.isEmpty else {
+            return nil
+        }
+        
         return ResourcesFilter.getCategoryPredicate(category: category)
     }
     
-    static func getLanguageCodePredicate(languageCode: BCP47LanguageIdentifier?) -> NSPredicate? {
-        
-        guard let languageCode = languageCode?.lowercased(), !languageCode.isEmpty else {
-            return nil
-        }
+    static func getLanguageCodePredicate(languageCode: BCP47LanguageIdentifier) -> NSPredicate {
         
         let subQuery: String = "SUBQUERY(languages, $language, $language.code == [c] \"\(languageCode)\").@count > 0"
         
@@ -52,14 +47,14 @@ struct ResourcesFilter {
     
     func getLanguageCodePredicate() -> NSPredicate? {
         
+        guard let languageCode = languageCode?.lowercased(), !languageCode.isEmpty else {
+            return nil
+        }
+        
         return ResourcesFilter.getLanguageCodePredicate(languageCode: languageCode)
     }
     
-    static func getResourceTypesPredicate(resourceTypes: [ResourceType]?) -> NSPredicate? {
-        
-        guard let resourceTypes = resourceTypes, !resourceTypes.isEmpty else {
-            return nil
-        }
+    static func getResourceTypesPredicate(resourceTypes: [ResourceType]) -> NSPredicate {
         
         let resourceTypesValues: [String] = resourceTypes.map({$0.rawValue.lowercased()})
         
@@ -68,28 +63,28 @@ struct ResourcesFilter {
     
     func getResourceTypesPredicate() -> NSPredicate? {
         
+        guard let resourceTypes = resourceTypes, !resourceTypes.isEmpty else {
+            return nil
+        }
+        
         return ResourcesFilter.getResourceTypesPredicate(resourceTypes: resourceTypes)
     }
     
-    static func getIsHiddenPredicate(isHidden: Bool?) -> NSPredicate? {
-        
-        guard let isHidden = isHidden else {
-            return nil
-        }
+    static func getIsHiddenPredicate(isHidden: Bool) -> NSPredicate {
         
         return NSPredicate(format: "\(#keyPath(RealmResource.isHidden)) == %@", NSNumber(value: isHidden))
     }
     
     func getIsHiddenPredicate() -> NSPredicate? {
         
+        guard let isHidden = isHidden else {
+            return nil
+        }
+        
         return ResourcesFilter.getIsHiddenPredicate(isHidden: isHidden)
     }
     
-    static func getVariantsPredicate(variants: ResourcesFilterVariant?) -> NSPredicate? {
-        
-        guard let variants = variants else {
-            return nil
-        }
+    static func getVariantsPredicate(variants: ResourcesFilterVariant) -> NSPredicate {
         
         switch variants {
         case .isNotVariant:
@@ -107,6 +102,10 @@ struct ResourcesFilter {
     }
     
     func getVariantsPredicate() -> NSPredicate? {
+        
+        guard let variants = variants else {
+            return nil
+        }
         
         return ResourcesFilter.getVariantsPredicate(variants: variants)
     }
