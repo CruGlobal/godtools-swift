@@ -11,5 +11,5 @@ import Combine
 
 protocol CancelLessonEvaluationRepositoryInterface {
     
-    func cancelPublisher(lesson: ToolDomainModel) -> AnyPublisher<Void, Never>
+    func cancelPublisher(lessonId: String) -> AnyPublisher<Void, Never>
 }

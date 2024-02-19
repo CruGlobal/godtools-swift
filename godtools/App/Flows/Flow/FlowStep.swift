@@ -35,7 +35,7 @@ enum FlowStep {
     case lessonTappedFromLessonsList(lessonListItem: LessonListItemDomainModel)
     
     // lesson
-    case closeTappedFromLesson(lesson: ResourceModel, highestPageNumberViewed: Int)
+    case closeTappedFromLesson(lessonId: String, highestPageNumberViewed: Int)
     case lessonFlowCompleted(state: LessonFlowCompletedState)
     
     // lesson evaluation

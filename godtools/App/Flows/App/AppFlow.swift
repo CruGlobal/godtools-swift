@@ -282,16 +282,16 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
             switch state {
             
-            case .userClosedLesson(let lesson, let highestPageNumberViewed):
+            case .userClosedLesson(let lessonId, let highestPageNumberViewed):
                 
                 let getLessonEvaluatedUseCase: GetLessonEvaluatedUseCase = appDiContainer.feature.lessonEvaluation.domainLayer.getLessonEvaluatedUseCase()
                 
-                getLessonEvaluatedUseCase.getEvaluatedPublisher(lesson: lesson)
+                getLessonEvaluatedUseCase.getEvaluatedPublisher(lessonId: lessonId)
                     .receive(on: DispatchQueue.main)
                     .sink { [weak self] (lessonEvaluated: Bool) in
                         
                         if highestPageNumberViewed > 2 && !lessonEvaluated {
-                            self?.presentLessonEvaluation(lesson: lesson, pageIndexReached: highestPageNumberViewed)
+                            self?.presentLessonEvaluation(lessonId: lessonId, pageIndexReached: highestPageNumberViewed)
                         }
                     }
                     .store(in: &cancellables)
@@ -1097,11 +1097,11 @@ extension AppFlow {
 
 extension AppFlow {
     
-    private func presentLessonEvaluation(lesson: ToolDomainModel, pageIndexReached: Int) {
+    private func presentLessonEvaluation(lessonId: String, pageIndexReached: Int) {
         
         let viewModel = LessonEvaluationViewModel(
             flowDelegate: self,
-            lesson: lesson,
+            lessonId: lessonId,
             pageIndexReached: pageIndexReached,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getLessonEvaluationInterfaceStringsUseCase: appDiContainer.feature.lessonEvaluation.domainLayer.getLessonEvaluationInterfaceStringsUseCase(),

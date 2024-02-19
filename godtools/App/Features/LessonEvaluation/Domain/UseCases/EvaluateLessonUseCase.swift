@@ -18,9 +18,9 @@ class EvaluateLessonUseCase {
         self.evaluateLessonRepositoryInterface = evaluateLessonRepositoryInterface
     }
     
-    func evaluateLessonPublisher(lesson: ToolDomainModel, feedback: TrackLessonFeedbackDomainModel) -> AnyPublisher<Void, Never> {
+    func evaluateLessonPublisher(lessonId: String, feedback: TrackLessonFeedbackDomainModel) -> AnyPublisher<Void, Never> {
         
-        return evaluateLessonRepositoryInterface.evaluateLessonPublisher(lesson: lesson, feedback: feedback)
+        return evaluateLessonRepositoryInterface.evaluateLessonPublisher(lessonId: lessonId, feedback: feedback)
             .eraseToAnyPublisher()
     }
 }

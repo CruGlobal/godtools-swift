@@ -20,9 +20,9 @@ class CancelLessonEvaluationRepository: CancelLessonEvaluationRepositoryInterfac
         self.lessonEvaluationRepository = lessonEvaluationRepository
     }
     
-    func cancelPublisher(lesson: ToolDomainModel) -> AnyPublisher<Void, Never> {
+    func cancelPublisher(lessonId: String) -> AnyPublisher<Void, Never> {
         
-        guard let lessonResource = resourcesRepository.getResource(id: lesson.dataModelId) else {
+        guard let lessonResource = resourcesRepository.getResource(id: lessonId) else {
             return Just(Void())
                 .eraseToAnyPublisher()
         }
