@@ -30,37 +30,6 @@ class RealmResourcesCache {
             .eraseToAnyPublisher()
     }
     
-    func getAllTools(sorted: Bool, category: String? = nil, languageId: String? = nil) -> [ResourceModel] {
-        
-        let metaTools = getResources(with: .metaTool)
-        let defaultVariantIds = metaTools.compactMap { $0.defaultVariantId }
-        let defaultVariants = getResources(ids: defaultVariantIds)
-        
-        let resourcesExcludingVariants = getResources(with: ["", nil])
-        
-        let combinedResourcesAndDefaultVariants = resourcesExcludingVariants + defaultVariants
-   
-        var allTools = combinedResourcesAndDefaultVariants.filter { resource in
-                        
-            if let category = category, resource.attrCategory != category {
-                return false
-            }
-            
-            if let languageId = languageId, resource.languageIds.contains(languageId) == false {
-                return false
-            }
-            
-            return resource.isToolType && resource.isHidden == false
-            
-        }
-        
-        if sorted {
-            allTools = allTools.sorted(by: { $0.attrDefaultOrder < $1.attrDefaultOrder })
-        }
-        
-        return allTools
-    }
-    
     func getResource(id: String) -> ResourceModel? {
         
         guard let realmResource = realmDatabase.openRealm().object(ofType: RealmResource.self, forPrimaryKey: id) else {
@@ -122,7 +91,10 @@ extension RealmResourcesCache {
     
     func getResourcesByFilter(filter: ResourcesFilter) -> [ResourceModel] {
         
-        return getResourcesByFilter(realm: realmDatabase.openRealm(), filter: filter)
+        return getFilteredRealmResources(realm: realmDatabase.openRealm(), filter: filter)
+            .map {
+                ResourceModel(model: $0)
+            }
     }
     
     func getResourcesByFilterPublisher(filter: ResourcesFilter) -> AnyPublisher<[ResourceModel], Never> {
@@ -131,7 +103,11 @@ extension RealmResourcesCache {
             
             self.realmDatabase.background { realm in
                 
-                let resources = self.getResourcesByFilter(realm: realm, filter: filter)
+                let resources: [ResourceModel] = self
+                    .getFilteredRealmResources(realm: realm, filter: filter)
+                    .map {
+                        ResourceModel(model: $0)
+                    }
                 
                 return promise(.success(resources))
             }
@@ -139,7 +115,15 @@ extension RealmResourcesCache {
         .eraseToAnyPublisher()
     }
     
-    private func getResourcesByFilter(realm: Realm, filter: ResourcesFilter) -> [ResourceModel] {
+    private func getFilteredRealmResources(filter: ResourcesFilter) -> Results<RealmResource> {
+        
+        return getFilteredRealmResources(
+            realm: realmDatabase.openRealm(),
+            filter: filter
+        )
+    }
+    
+    private func getFilteredRealmResources(realm: Realm, filter: ResourcesFilter) -> Results<RealmResource> {
         
         var filterByAttributes: [NSPredicate] = Array()
         
@@ -197,12 +181,7 @@ extension RealmResourcesCache {
         
         let filterPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: filterByAttributes)
                 
-        let filteredResources = realm.objects(RealmResource.self).filter(filterPredicate)
-        
-        return filteredResources
-            .map {
-                ResourceModel(model: $0)
-            }
+        return realm.objects(RealmResource.self).filter(filterPredicate)
     }
 }
 
@@ -227,6 +206,36 @@ extension RealmResourcesCache {
         let filteredResources = realm.objects(RealmResource.self).filter(filterPredicate)
         
         return filteredResources
+            .map {
+                ResourceModel(model: $0)
+            }
+    }
+}
+
+// MARK: - All Tools List
+
+extension RealmResourcesCache {
+    
+    func getAllToolsList(filterByCategory: String?, filterByLanguageCode: BCP47LanguageIdentifier?, sortByDefaultOrder: Bool) -> [ResourceModel] {
+        
+        let filter = ResourcesFilter(
+            category: filterByCategory,
+            languageCode: filterByLanguageCode,
+            resourceTypes: [.article, .chooseYourOwnAdventure, .tract]
+        )
+        
+        let realmResources: Results<RealmResource>
+        
+        if sortByDefaultOrder {
+            
+            realmResources = getFilteredRealmResources(filter: filter).sorted(byKeyPath: #keyPath(RealmResource.attrDefaultOrder), ascending: true)
+        }
+        else {
+            
+            realmResources = getFilteredRealmResources(filter: filter)
+        }
+        
+        return realmResources
             .map {
                 ResourceModel(model: $0)
             }

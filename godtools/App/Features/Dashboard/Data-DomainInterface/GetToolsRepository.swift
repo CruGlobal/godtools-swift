@@ -40,7 +40,7 @@ class GetToolsRepository: GetToolsRepositoryInterface {
         )
         .flatMap({ (resourcesChanged: Void, interfaceStrings: ToolListItemInterfaceStringsDomainModel) -> AnyPublisher<[ToolListItemDomainModel], Never> in
         
-            let tools: [ResourceModel] = self.resourcesRepository.getAllTools(sorted: true)
+            let tools: [ResourceModel] = self.resourcesRepository.getAllToolsList()
 
             let toolListItems: [ToolListItemDomainModel] = tools
                 .map({

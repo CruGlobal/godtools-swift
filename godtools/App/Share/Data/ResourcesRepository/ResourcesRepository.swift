@@ -36,10 +36,6 @@ class ResourcesRepository {
         return cache.getResourcesChangedPublisher()
     }
     
-    func getAllTools(sorted: Bool, category: String? = nil, languageId: String? = nil) -> [ResourceModel] {
-        return cache.getAllTools(sorted: sorted, category: category, languageId: languageId)
-    }
-    
     func getResource(id: String) -> ResourceModel? {
         return cache.getResource(id: id)
     }
@@ -58,10 +54,6 @@ class ResourcesRepository {
     
     func getResources(with resourceType: ResourceType) -> [ResourceModel] {
         return cache.getResources(with: resourceType)
-    }
-    
-    func getSpotlightTools() -> [ResourceModel] {
-        return cache.getSpotlightTools()
     }
     
     func getCachedResourcesByFilter(filter: ResourcesFilter) -> [ResourceModel] {
@@ -158,6 +150,29 @@ class ResourcesRepository {
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
+    }
+}
+
+// MARK: - Spotlight Tools
+
+extension ResourcesRepository {
+    
+    func getSpotlightTools() -> [ResourceModel] {
+        return cache.getSpotlightTools()
+    }
+}
+
+// MARK: - All Tools List
+
+extension ResourcesRepository {
+    
+    func getAllToolsList(filterByCategory: String? = nil, filterByLanguageCode: BCP47LanguageIdentifier? = nil, sortByDefaultOrder: Bool = true) -> [ResourceModel] {
+        
+        return cache.getAllToolsList(
+            filterByCategory: filterByCategory,
+            filterByLanguageCode: filterByLanguageCode,
+            sortByDefaultOrder: sortByDefaultOrder
+        )
     }
 }
 
