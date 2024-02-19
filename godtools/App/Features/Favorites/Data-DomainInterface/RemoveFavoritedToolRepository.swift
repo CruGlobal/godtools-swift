@@ -1,15 +1,15 @@
 //
-//  RemoveToolFromFavoritesUseCase.swift
+//  RemoveFavoritedToolRepository.swift
 //  godtools
 //
-//  Created by Levi Eggert on 8/2/22.
-//  Copyright © 2022 Cru. All rights reserved.
+//  Created by Levi Eggert on 2/19/24.
+//  Copyright © 2024 Cru. All rights reserved.
 //
 
 import Foundation
 import Combine
 
-class RemoveToolFromFavoritesUseCase {
+class RemoveFavoritedToolRepository: RemoveFavoritedToolRepositoryInterface {
     
     private let favoritedResourcesRepository: FavoritedResourcesRepository
     
@@ -18,14 +18,13 @@ class RemoveToolFromFavoritesUseCase {
         self.favoritedResourcesRepository = favoritedResourcesRepository
     }
     
-    func removeToolFromFavoritesPublisher(id: String) -> AnyPublisher<Void, Never> {
+    func removeToolPublisher(toolId: String) -> AnyPublisher<Void, Never> {
         
-        return favoritedResourcesRepository.deleteFavoritedResourcePublisher(id: id)
-            .catch({ (error: Error) -> AnyPublisher<Void, Never> in
-              
+        return favoritedResourcesRepository.deleteFavoritedResourcePublisher(id: toolId)
+            .catch { _ in
                 return Just(Void())
                     .eraseToAnyPublisher()
-            })
+            }
             .eraseToAnyPublisher()
     }
 }

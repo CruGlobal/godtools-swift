@@ -53,7 +53,7 @@ struct ToolSpotlightView: View {
                             showsCategory: false,
                             favoriteTappedClosure: {
                                 
-                                viewModel.spotlightToolFavorited(spotlightTool: spotlightTool)
+                                viewModel.spotlightToolFavoriteTapped(spotlightTool: spotlightTool)
                             },
                             toolDetailsTappedClosure: nil,
                             openToolTappedClosure: nil,

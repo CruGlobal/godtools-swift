@@ -174,7 +174,7 @@ extension AllYourFavoriteToolsViewModel {
         flowDelegate?.navigate(step: .openToolTappedFromAllYourFavoriteTools(tool: tool))
     }
     
-    func toolFavoriteTapped(tool: YourFavoritedToolDomainModel) {
+    func unfavoriteToolTapped(tool: YourFavoritedToolDomainModel) {
         
         flowDelegate?.navigate(step: .unfavoriteToolTappedFromAllYourFavoritedTools(tool: tool, didConfirmToolRemovalSubject: didConfirmToolRemovalSubject))
     }

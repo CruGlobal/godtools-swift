@@ -12,7 +12,9 @@ import Combine
 
 class ToolDetailsViewModel: ObservableObject {
     
-    private static var toggleToolFavoriteCancellable: AnyCancellable?
+    typealias ToolId = String
+    
+    private static var toggleToolFavoritedCancellables: Dictionary<ToolId, AnyCancellable?> = Dictionary()
     
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let viewToolDetailsUseCase: ViewToolDetailsUseCase
@@ -269,11 +271,13 @@ extension ToolDetailsViewModel {
     
     func toggleFavorited() {
         
-        ToolDetailsViewModel.toggleToolFavoriteCancellable = toggleToolFavoritedUseCase
-            .toggleToolFavoritedPublisher(id: toolId)
+        let toolId: String = self.toolId
+        
+        ToolDetailsViewModel.toggleToolFavoritedCancellables[toolId] = toggleToolFavoritedUseCase
+            .toggleFavoritedPublisher(toolId: toolId)
             .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] (isFavorited: Bool) in
-                self?.isFavorited = isFavorited
+            .sink(receiveValue: { [weak self] (domainModel: ToolIsFavoritedDomainModel) in
+                self?.isFavorited = domainModel.isFavorited
             })
     }
     

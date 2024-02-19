@@ -15,11 +15,11 @@ class FavoritesViewModel: ObservableObject {
     private let resourcesRepository: ResourcesRepository
     private let viewFavoritesUseCase: ViewFavoritesUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
+    private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
     private let attachmentsRepository: AttachmentsRepository
     private let disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase
     private let getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase
     private let getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase
-    private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     
@@ -43,17 +43,17 @@ class FavoritesViewModel: ObservableObject {
     @Published var noFavoriteToolsDescription: String = ""
     @Published var noFavoriteToolsButtonText: String = ""
     
-    init(flowDelegate: FlowDelegate, resourcesRepository: ResourcesRepository, viewFavoritesUseCase: ViewFavoritesUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, attachmentsRepository: AttachmentsRepository, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(flowDelegate: FlowDelegate, resourcesRepository: ResourcesRepository, viewFavoritesUseCase: ViewFavoritesUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, attachmentsRepository: AttachmentsRepository, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
         self.viewFavoritesUseCase = viewFavoritesUseCase
         self.resourcesRepository = resourcesRepository
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
+        self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
         self.attachmentsRepository = attachmentsRepository
         self.disableOptInOnboardingBannerUseCase = disableOptInOnboardingBannerUseCase
         self.getFeaturedLessonsUseCase = getFeaturedLessonsUseCase
         self.getOptInOnboardingBannerEnabledUseCase = getOptInOnboardingBannerEnabledUseCase
-        self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
                  
@@ -292,7 +292,7 @@ extension FavoritesViewModel {
         flowDelegate?.navigate(step: .openToolTappedFromFavorites(tool: tool))
     }
     
-    func toolFavoriteTapped(tool: YourFavoritedToolDomainModel) {
+    func unfavoriteToolTapped(tool: YourFavoritedToolDomainModel) {
         
         flowDelegate?.navigate(step: .unfavoriteToolTappedFromFavorites(tool: tool))
     }

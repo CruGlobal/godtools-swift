@@ -21,12 +21,6 @@ class AppDomainLayerDependencies {
         return GetAccountCreationIsSupportedUseCase()
     }
     
-    func getAddToolToFavoritesUseCase() -> AddToolToFavoritesUseCase {
-        return AddToolToFavoritesUseCase(
-            favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository()
-        )
-    }
-    
     func getAllToolsUseCase() -> GetAllToolsUseCase {
         return GetAllToolsUseCase(
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
@@ -116,13 +110,7 @@ class AppDomainLayerDependencies {
     func getOptInOnboardingTutorialAvailableUseCase() -> GetOptInOnboardingTutorialAvailableUseCase {
         return GetOptInOnboardingTutorialAvailableUseCase()
     }
-    
-    func getRemoveToolFromFavoritesUseCase() -> RemoveToolFromFavoritesUseCase {
-        return RemoveToolFromFavoritesUseCase(
-            favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository()
-        )
-    }
-    
+
     func getSetCompletedTrainingTipUseCase() -> SetCompletedTrainingTipUseCase {
         return SetCompletedTrainingTipUseCase(
             repository: dataLayer.getCompletedTrainingTipRepository()
@@ -147,20 +135,6 @@ class AppDomainLayerDependencies {
             resourcesRepository: dataLayer.getResourcesRepository(),
             favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository(),
             launchCountRepository: dataLayer.getSharedLaunchCountRepository()
-        )
-    }
-    
-    func getToggleToolFavoritedUseCase() -> ToggleToolFavoritedUseCase {
-        return ToggleToolFavoritedUseCase(
-            favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository(),
-            addToolToFavoritesUseCase: getAddToolToFavoritesUseCase(),
-            removeToolFromFavoritesUseCase: getRemoveToolFromFavoritesUseCase()
-        )
-    }
-    
-    func getToolIsFavoritedUseCase() -> GetToolIsFavoritedUseCase {
-        return GetToolIsFavoritedUseCase(
-            favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository()
         )
     }
     

@@ -27,7 +27,7 @@ class ToolCardViewModel: ObservableObject {
     @Published var detailsButtonTitle: String = ""
     @Published var openButtonTitle: String = ""
             
-    init(tool: ToolListItemDomainModelInterface, alternateLanguage: LanguageDomainModel? = nil, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, attachmentsRepository: AttachmentsRepository) {
+    init(tool: ToolListItemDomainModelInterface, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, attachmentsRepository: AttachmentsRepository) {
         
         self.tool = tool
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
@@ -39,6 +39,12 @@ class ToolCardViewModel: ObservableObject {
         isFavorited = tool.isFavorited
         openButtonTitle = tool.interfaceStrings.openToolActionTitle
         detailsButtonTitle = tool.interfaceStrings.openToolDetailsActionTitle
+        
+        getToolIsFavoritedUseCase
+            .getToolIsFavoritedPublisher(toolId: tool.dataModelId)
+            .map { $0.isFavorited }
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$isFavorited)
         
         downloadBannerImage()
     }

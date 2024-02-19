@@ -40,6 +40,24 @@ class FavoritesDataLayerDependencies {
         )
     }
     
+    func getRemoveFavoritedToolRepository() -> RemoveFavoritedToolRepositoryInterface {
+        return RemoveFavoritedToolRepository(
+            favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository()
+        )
+    }
+    
+    func getToggleToolFavoritedRepository() -> ToggleToolFavoritedRepositoryInterface {
+        return ToggleToolFavoritedRepository(
+            favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository()
+        )
+    }
+    
+    func getToolIsFavoritedRepository() -> GetToolIsFavoritedRepositoryInterface {
+        return GetToolIsFavoritedRepository(
+            favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository()
+        )
+    }
+    
     func getYourFavoritedToolsRepository() -> GetYourFavoritedToolsRepositoryInterface {
         return GetYourFavoritedToolsRepository(
             favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository(),

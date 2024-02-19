@@ -49,7 +49,7 @@ struct YourFavoriteToolsView: View {
                                 showsCategory: true,
                                 favoriteTappedClosure: {
                                     
-                                    viewModel.toolFavoriteTapped(tool: tool)
+                                    viewModel.unfavoriteToolTapped(tool: tool)
                                 },
                                 toolDetailsTappedClosure: {
                                     

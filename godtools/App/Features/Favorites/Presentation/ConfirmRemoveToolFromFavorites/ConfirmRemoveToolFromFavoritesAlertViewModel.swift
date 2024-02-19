@@ -15,7 +15,7 @@ class ConfirmRemoveToolFromFavoritesAlertViewModel: AlertMessageViewModelType {
     
     private let toolId: String
     private let viewConfirmRemoveToolFromFavoritesDomainModel: ViewConfirmRemoveToolFromFavoritesDomainModel
-    private let removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase
+    private let removeFavoritedToolUseCase: RemoveFavoritedToolUseCase
     private let didConfirmToolRemovalSubject: PassthroughSubject<Void, Never>?
     
     let title: String?
@@ -23,11 +23,11 @@ class ConfirmRemoveToolFromFavoritesAlertViewModel: AlertMessageViewModelType {
     let cancelTitle: String?
     let acceptTitle: String
     
-    init(toolId: String, viewConfirmRemoveToolFromFavoritesDomainModel: ViewConfirmRemoveToolFromFavoritesDomainModel, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, didConfirmToolRemovalSubject: PassthroughSubject<Void, Never>?) {
+    init(toolId: String, viewConfirmRemoveToolFromFavoritesDomainModel: ViewConfirmRemoveToolFromFavoritesDomainModel, removeFavoritedToolUseCase: RemoveFavoritedToolUseCase, didConfirmToolRemovalSubject: PassthroughSubject<Void, Never>?) {
         
         self.toolId = toolId
         self.viewConfirmRemoveToolFromFavoritesDomainModel = viewConfirmRemoveToolFromFavoritesDomainModel
-        self.removeToolFromFavoritesUseCase = removeToolFromFavoritesUseCase
+        self.removeFavoritedToolUseCase = removeFavoritedToolUseCase
         self.didConfirmToolRemovalSubject = didConfirmToolRemovalSubject
         
         title = viewConfirmRemoveToolFromFavoritesDomainModel.interfaceStrings.title
@@ -44,7 +44,7 @@ class ConfirmRemoveToolFromFavoritesAlertViewModel: AlertMessageViewModelType {
         
         didConfirmToolRemovalSubject?.send(Void())
         
-        ConfirmRemoveToolFromFavoritesAlertViewModel.removeToolFromFavoritesCancellable = removeToolFromFavoritesUseCase.removeToolFromFavoritesPublisher(id: toolId)
+        ConfirmRemoveToolFromFavoritesAlertViewModel.removeToolFromFavoritesCancellable = removeFavoritedToolUseCase.removeToolPublisher(toolId: toolId)
             .sink { _ in
                 
             }

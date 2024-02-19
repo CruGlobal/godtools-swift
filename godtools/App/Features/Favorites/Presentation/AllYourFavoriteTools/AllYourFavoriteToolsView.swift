@@ -47,7 +47,7 @@ struct AllYourFavoriteToolsView: View {
                                 showsCategory: true,
                                 favoriteTappedClosure: {
                                     
-                                    viewModel.toolFavoriteTapped(tool: tool)
+                                    viewModel.unfavoriteToolTapped(tool: tool)
                                 },
                                 toolDetailsTappedClosure: {
                                     
@@ -92,7 +92,7 @@ struct AllYourFavoriteToolsView_Preview: PreviewProvider {
             flowDelegate: MockFlowDelegate(),
             viewAllYourFavoritedToolsUseCase: appDiContainer.feature.favorites.domainLayer.getViewAllYourFavoritedToolsUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
+            getToolIsFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToolIsFavoritedUseCase(),
             attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
