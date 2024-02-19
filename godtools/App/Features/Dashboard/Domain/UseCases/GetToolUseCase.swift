@@ -40,7 +40,7 @@ class GetToolUseCase {
         
         return ToolDomainModel(
             interfaceStrings: ToolListItemInterfaceStringsDomainModel(openToolActionTitle: "implement", openToolDetailsActionTitle: "implement"),
-            abbreviation: resource.abbreviation,
+            analyticsToolAbbreviation: resource.abbreviation,
             bannerImageId: resource.attrBanner,
             category: resource.attrCategory,
             currentTranslationLanguage: currentToolTranslation.language,
