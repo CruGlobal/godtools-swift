@@ -174,7 +174,7 @@ class ToolScreenShareFlow: Flow {
             return
         }
         
-        let toolScreenShareTutorialView = getToolScreenShareTutorialView(tool: toolData.renderer.value.resource)
+        let toolScreenShareTutorialView = getToolScreenShareTutorialView(toolId: toolData.renderer.value.resource.id)
         
         let modal = ModalNavigationController.defaultModal(
             rootView: toolScreenShareTutorialView,
@@ -231,12 +231,11 @@ class ToolScreenShareFlow: Flow {
 
 extension ToolScreenShareFlow {
     
-    // TODO: Eventually this will need to be ToolDomainModel. ~Levi
-    private func getToolScreenShareTutorialView(tool: ResourceModel) -> UIViewController {
+    private func getToolScreenShareTutorialView(toolId: String) -> UIViewController {
         
         let viewModel = ToolScreenShareTutorialViewModel(
             flowDelegate: self,
-            tool: tool,
+            toolId: toolId,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             viewToolScreenShareTutorialUseCase: appDiContainer.feature.toolScreenShare.domainLayer.getViewToolScreenShareTutorialUseCase(),
             didViewToolScreenShareTutorialUseCase: appDiContainer.feature.toolScreenShare.domainLayer.getDidViewToolScreenShareTutorialUseCase()
