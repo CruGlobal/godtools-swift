@@ -77,6 +77,7 @@ class ToolSettingsDataLayerDependencies {
     
     func getToolSettingsToolLanguagesListRepositoryInterface() -> GetToolSettingsToolLanguagesListRepositoryInterface {
         return GetToolSettingsToolLanguagesListRepository(
+            resourcesRepository: coreDataLayer.getResourcesRepository(),
             languagesRepository: coreDataLayer.getLanguagesRepository(),
             translatedLanguageNameRepository: coreDataLayer.getTranslatedLanguageNameRepository()
         )

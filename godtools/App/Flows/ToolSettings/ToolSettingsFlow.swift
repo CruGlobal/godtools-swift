@@ -355,7 +355,7 @@ extension ToolSettingsFlow {
         let viewModel = ToolSettingsToolLanguagesListViewModel(
             flowDelegate: self,
             listType: listType,
-            tool: toolData.renderer.value.resource,
+            toolId: toolData.renderer.value.resource.id,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getToolSettingsPrimaryLanguageUseCase: appDiContainer.feature.toolSettings.domainLayer.getToolSettingsPrimaryLanguageUseCase(),
             getToolSettingsParallelLanguageUseCase: appDiContainer.feature.toolSettings.domainLayer.getToolSettingsParallelLanguageUseCase(),
