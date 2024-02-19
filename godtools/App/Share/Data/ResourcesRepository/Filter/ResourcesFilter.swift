@@ -11,12 +11,12 @@ import Foundation
 struct ResourcesFilter {
     
     let category: String?
-    let languageCode: String?
+    let languageCode: BCP47LanguageIdentifier?
     let resourceTypes: [ResourceType]?
     let isHidden: Bool?
     let variants: ResourcesFilterVariant?
     
-    init(category: String? = nil, languageCode: String? = nil, resourceTypes: [ResourceType]? = nil, isHidden: Bool? = false, variants: ResourcesFilterVariant? = nil) {
+    init(category: String? = nil, languageCode: BCP47LanguageIdentifier? = nil, resourceTypes: [ResourceType]? = nil, isHidden: Bool? = false, variants: ResourcesFilterVariant? = nil) {
         
         self.category = category
         self.languageCode = languageCode
