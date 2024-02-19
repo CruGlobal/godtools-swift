@@ -42,14 +42,14 @@ class GetTranslatedToolLanguageAvailability {
             return failedToDetermineLanguageAvailability
         }
         
-        return getTranslatedLanguageAvailability(resource: resource, language: language, translateInLanguage: translateInLanguage)
+        return getTranslatedLanguageAvailability(resource: resource, translateInLanguage: language)
     }
     
-    func getTranslatedLanguageAvailability(resource: ResourceModel, language: LanguageModel, translateInLanguage: AppLanguageDomainModel) -> ToolLanguageAvailabilityDomainModel {
+    func getTranslatedLanguageAvailability(resource: ResourceModel, translateInLanguage: LanguageModel) -> ToolLanguageAvailabilityDomainModel {
         
-        let translatedLanguageName: String = translatedLanguageNameRepository.getLanguageName(language: translateInLanguage, translatedInLanguage: translateInLanguage)
+        let translatedLanguageName: String = translatedLanguageNameRepository.getLanguageName(language: translateInLanguage, translatedInLanguage: translateInLanguage.code)
         
-        let resourceSupportsLanguage: Bool = resource.supportsLanguage(languageId: language.id)
+        let resourceSupportsLanguage: Bool = resource.supportsLanguage(languageId: translateInLanguage.id)
         
         let availabilityString: String
         
@@ -59,9 +59,9 @@ class GetTranslatedToolLanguageAvailability {
         }
         else {
             
-            let languageNotAvailable: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "lessonCard.languageNotAvailable")
+            let languageNotAvailable: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage.code, key: "lessonCard.languageNotAvailable")
             
-            availabilityString = String(format: languageNotAvailable, locale: Locale(identifier: translateInLanguage), translatedLanguageName)
+            availabilityString = String(format: languageNotAvailable, locale: Locale(identifier: translateInLanguage.code), translatedLanguageName)
         }
         
         return ToolLanguageAvailabilityDomainModel(

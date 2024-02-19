@@ -48,7 +48,7 @@ class GetToolsRepository: GetToolsRepositoryInterface {
                     let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel
                     
                     if let language = appLanguageModel {
-                        toolLanguageAvailability = self.getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(resource: $0, language: language, translateInLanguage: appLanguage)
+                        toolLanguageAvailability = self.getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(resource: $0, translateInLanguage: language)
                     }
                     else {
                         toolLanguageAvailability = ToolLanguageAvailabilityDomainModel(availabilityString: "", isAvailable: false)
