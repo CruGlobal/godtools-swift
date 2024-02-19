@@ -8,6 +8,7 @@
 
 import Foundation
 
+@available(*, deprecated) 
 struct ToolDomainModel: ToolListItemDomainModelInterface {
     
     let interfaceStrings: ToolListItemInterfaceStringsDomainModel
