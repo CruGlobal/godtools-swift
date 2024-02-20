@@ -1,4 +1,6 @@
 "languageSettings.confirmAppLanguage.message" = "کو ا؛پنی اَیپ زبان%@ آپ نے کے طور پر منتخب کِیا ۔ یہ گاڈ ٹولزکی ساری زبان کو بدل دے گی ۔ کیا آپ چاہتے ہیں ؟";
+"languageSettings.appInterface.languagesAvailable" = "زبانیں دستیاب";
+"languageSettings.toolLanguagesAvailableOffline.title" = "ٹول کی زبانیں جو آف لائن دستیاب ہیں";
 
 /* This About refers to the whole app. */
 "aboutApp.navTitle" = "ہمارے متعلق";

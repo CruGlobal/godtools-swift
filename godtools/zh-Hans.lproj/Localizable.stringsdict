@@ -111,7 +111,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>%d Languages available</string>
+<string>%d 种可用语言</string>
 </dict>
 </dict>
 <key>badges.imagesShared</key>

@@ -125,9 +125,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>1 Language available</string>
+<string>%d भाषा उपलब्ध है</string>
 <key>other</key>
-<string>%d Languages available</string>
+<string>%d भाषाएँ उपलब्ध हैं</string>
 </dict>
 </dict>
 <key>badges.imagesShared</key>
