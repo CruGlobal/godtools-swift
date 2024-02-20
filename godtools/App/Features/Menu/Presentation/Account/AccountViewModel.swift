@@ -82,7 +82,7 @@ class AccountViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        getGlobalActivityThisWeekUseCase.getGlobalActivityPublisher()
+        getGlobalActivityThisWeekUseCase.getGlobalActivityPublisher(appLanguagePublisher: $appLanguage.eraseToAnyPublisher())
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (globalActivityThisWeekDomainModels: [GlobalActivityThisWeekDomainModel]) in
                 
