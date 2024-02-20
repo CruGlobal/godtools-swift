@@ -11,14 +11,16 @@ import Foundation
 struct ResourcesFilter {
     
     let category: String?
+    let languageId: String?
     let languageCode: BCP47LanguageIdentifier?
     let resourceTypes: [ResourceType]?
     let isHidden: Bool?
     let variants: ResourcesFilterVariant?
     
-    init(category: String? = nil, languageCode: BCP47LanguageIdentifier? = nil, resourceTypes: [ResourceType]? = nil, isHidden: Bool? = false, variants: ResourcesFilterVariant? = nil) {
+    init(category: String? = nil, languageId: String? = nil, languageCode: BCP47LanguageIdentifier? = nil, resourceTypes: [ResourceType]? = nil, isHidden: Bool? = false, variants: ResourcesFilterVariant? = nil) {
         
         self.category = category
+        self.languageId = languageId
         self.languageCode = languageCode
         self.resourceTypes = resourceTypes
         self.isHidden = isHidden
@@ -36,6 +38,22 @@ struct ResourcesFilter {
         }
         
         return ResourcesFilter.getCategoryPredicate(category: category)
+    }
+    
+    static func getLanguageIdPredicate(languageId: String) -> NSPredicate {
+        
+        let subQuery: String = "SUBQUERY(languages, $language, $language.id == [c] \"\(languageId)\").@count > 0"
+        
+        return NSPredicate(format: subQuery)
+    }
+    
+    func getLanguageIdPredicate() -> NSPredicate? {
+        
+        guard let languageId = languageId, !languageId.isEmpty else {
+            return nil
+        }
+        
+        return ResourcesFilter.getLanguageIdPredicate(languageId: languageId)
     }
     
     static func getLanguageCodePredicate(languageCode: BCP47LanguageIdentifier) -> NSPredicate {

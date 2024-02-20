@@ -184,7 +184,7 @@ extension RealmResourcesCache {
 
 extension RealmResourcesCache {
     
-    func getAllToolsList(filterByCategory: String?, filterByLanguageCode: BCP47LanguageIdentifier?, sortByDefaultOrder: Bool) -> [ResourceModel] {
+    func getAllToolsList(filterByCategory: String?, filterByLanguageId: String?, sortByDefaultOrder: Bool) -> [ResourceModel] {
                         
         var andSubpredicates: [NSPredicate] = Array()
         
@@ -192,8 +192,8 @@ extension RealmResourcesCache {
             andSubpredicates.append(ResourcesFilter.getCategoryPredicate(category: filterByCategory))
         }
         
-        if let filterByLanguageCode = filterByLanguageCode {
-            andSubpredicates.append(ResourcesFilter.getLanguageCodePredicate(languageCode: filterByLanguageCode))
+        if let filterByLanguageId = filterByLanguageId {
+            andSubpredicates.append(ResourcesFilter.getLanguageIdPredicate(languageId: filterByLanguageId))
         }
         
         andSubpredicates.append(ResourcesFilter.getIsHiddenPredicate(isHidden: false))

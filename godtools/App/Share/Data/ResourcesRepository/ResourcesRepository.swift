@@ -166,11 +166,11 @@ extension ResourcesRepository {
 
 extension ResourcesRepository {
     
-    func getAllToolsList(filterByCategory: String? = nil, filterByLanguageCode: BCP47LanguageIdentifier? = nil, sortByDefaultOrder: Bool = true) -> [ResourceModel] {
+    func getAllToolsList(filterByCategory: String? = nil, filterByLanguageId: String? = nil, sortByDefaultOrder: Bool = true) -> [ResourceModel] {
         
         return cache.getAllToolsList(
             filterByCategory: filterByCategory,
-            filterByLanguageCode: filterByLanguageCode,
+            filterByLanguageId: filterByLanguageId,
             sortByDefaultOrder: sortByDefaultOrder
         )
     }

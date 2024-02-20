@@ -31,7 +31,7 @@ class GetToolFilterCategoriesUseCase {
             .flatMap({ _, primaryLanguage -> AnyPublisher<[CategoryFilterDomainModel], Never> in
                 
                 let categoryIds = self.resourcesRepository
-                    .getAllToolsList(filterByLanguageCode: filteredByLanguageId, sortByDefaultOrder: false)
+                    .getAllToolsList(filterByLanguageId: filteredByLanguageId, sortByDefaultOrder: false)
                     .getUniqueCategoryIds()
                 
                 let categories = self.createCategoryDomainModels(from: categoryIds, withTranslation: primaryLanguage, filteredByLanguageId: filteredByLanguageId)
