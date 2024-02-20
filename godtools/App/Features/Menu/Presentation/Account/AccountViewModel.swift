@@ -89,7 +89,7 @@ class AccountViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        getUserAccountDetailsUseCase.getUserAccountDetailsPublisher()
+        getUserAccountDetailsUseCase.getUserAccountDetailsPublisher(appLanguagePublisher: $appLanguage.eraseToAnyPublisher())
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (userDetails: UserAccountDetailsDomainModel) in
                 

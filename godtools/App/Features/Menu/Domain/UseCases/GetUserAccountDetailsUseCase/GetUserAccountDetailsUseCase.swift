@@ -20,18 +20,18 @@ class GetUserAccountDetailsUseCase {
         self.localizationServices = localizationServices
     }
     
-    
-    func getUserAccountDetailsPublisher() -> AnyPublisher<UserAccountDetailsDomainModel, Never> {
+    func getUserAccountDetailsPublisher(appLanguagePublisher: AnyPublisher<AppLanguageDomainModel, Never>) -> AnyPublisher<UserAccountDetailsDomainModel, Never> {
         
-        return Publishers.CombineLatest(
+        return Publishers.CombineLatest3(
             repository.getAuthUserDetailsFromRemotePublisher().prepend(UserDetailsDataModel.emptyDataModel())
                 .catch({ _ in
                     return Just(UserDetailsDataModel.emptyDataModel())
                         .eraseToAnyPublisher()
                 }),
-            repository.getAuthUserDetailsChangedPublisher().prepend(nil)
+            repository.getAuthUserDetailsChangedPublisher().prepend(nil),
+            appLanguagePublisher
         )
-        .flatMap({ (remoteUserDetails: UserDetailsDataModel, changedUserDetails: UserDetailsDataModel?) -> AnyPublisher<UserAccountDetailsDomainModel, Never> in
+        .flatMap({ (remoteUserDetails: UserDetailsDataModel, changedUserDetails: UserDetailsDataModel?, appLanguage: AppLanguageDomainModel) -> AnyPublisher<UserAccountDetailsDomainModel, Never> in
                             
             let cachedAuthUserDetails: UserDetailsDataModel? = self.repository.getCachedAuthUserDetails()
             
@@ -40,7 +40,7 @@ class GetUserAccountDetailsUseCase {
                     .eraseToAnyPublisher()
             }
             
-            let accountDetails: UserAccountDetailsDomainModel = self.mapUserDetails(userDetails: cachedAuthUserDetails)
+            let accountDetails: UserAccountDetailsDomainModel = self.mapUserDetails(userDetails: cachedAuthUserDetails, translatedInAppLanguage: appLanguage)
                         
             return Just(accountDetails)
                 .eraseToAnyPublisher()
@@ -56,11 +56,11 @@ class GetUserAccountDetailsUseCase {
         )
     }
     
-    private func mapUserDetails(userDetails: UserDetailsDataModel) -> UserAccountDetailsDomainModel {
+    private func mapUserDetails(userDetails: UserDetailsDataModel, translatedInAppLanguage: AppLanguageDomainModel) -> UserAccountDetailsDomainModel {
         
         return UserAccountDetailsDomainModel(
             name: getName(userDetails: userDetails),
-            joinedOnString: getJoinedOnDate(userDetails: userDetails)
+            joinedOnString: getJoinedOnDate(userDetails: userDetails, translatedInAppLanguage: translatedInAppLanguage)
         )
     }
     
@@ -79,7 +79,7 @@ class GetUserAccountDetailsUseCase {
         return ""
     }
     
-    private func getJoinedOnDate(userDetails: UserDetailsDataModel) -> String {
+    private func getJoinedOnDate(userDetails: UserDetailsDataModel, translatedInAppLanguage: AppLanguageDomainModel) -> String {
         
         guard let createdAtDate = userDetails.createdAt else {
             return ""
@@ -91,7 +91,7 @@ class GetUserAccountDetailsUseCase {
         
         let formattedCreatedAtDateString: String = dateFormatter.string(from: createdAtDate)
         
-        let joinedOnString: String = String.localizedStringWithFormat(localizationServices.stringForSystemElseEnglish(key: "account.joinedOn"), formattedCreatedAtDateString)
+        let joinedOnString: String = String.localizedStringWithFormat(localizationServices.stringForLocaleElseEnglish(localeIdentifier: translatedInAppLanguage, key: "account.joinedOn"), formattedCreatedAtDateString)
         
         return joinedOnString
     }
