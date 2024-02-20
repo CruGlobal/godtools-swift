@@ -101,7 +101,7 @@ class AccountViewModel: ObservableObject {
     
     private func refreshUserActivity() {
         
-        getActivityCancellable = getUserActivityUseCase.getUserActivityPublisher()
+        getActivityCancellable = getUserActivityUseCase.getUserActivityPublisher(appLanguagePublisher: $appLanguage.eraseToAnyPublisher())
             .receive(on: DispatchQueue.main)
             .sink { _ in
                 
