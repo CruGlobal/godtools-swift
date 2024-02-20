@@ -96,25 +96,42 @@ extension ChooseYourOwnAdventureViewModel {
             return
         }
         
-        let pages: [Page] = getPages()
+        let currentPages: [Page] = getPages()
         
         if let currentPage = getCurrentPage(),
            let parentPage = currentPage.parentPage,
-           let parentPageIndex = pages.firstIndex(of: parentPage) {
-
+           let parentPageIndex = currentPages.firstIndex(of: parentPage) {
+            
             var newPages: [Page] = Array()
             
             for index in 0 ... parentPageIndex {
-                newPages.append(pages[index])
+                newPages.append(currentPages[index])
             }
-            
+                        
             newPages.append(currentPage)
             
-            super.setPages(pages: newPages)
+            var pagesToRemove: [Int] = Array()
+            
+            for pageIndex in 0 ..< currentPages.count {
+                
+                let page: Page = currentPages[pageIndex]
+                let pageIsInNewPages: Bool = newPages.contains(where: {$0.id == page.id})
+                
+                if !pageIsInNewPages {
+                    pagesToRemove.append(pageIndex)
+                }
+            }
+            
+            var previousPage: Int = newPages.count - 2
+            if previousPage < 0 {
+                previousPage = 0
+            }
+
+            super.removePages(pages: pagesToRemove)
             
             let navigateToParentPage = MobileContentPagesNavigateToPageModel(
-                reloadPagesCollectionViewNeeded: true,
-                page: parentPageIndex,
+                reloadPagesCollectionViewNeeded: false,
+                page: previousPage,
                 pagePositions: nil,
                 animated: true
             )

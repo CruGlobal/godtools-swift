@@ -492,6 +492,33 @@ extension MobileContentPagesViewModel {
         return rendererPageModelsMatchingCurrentRenderedPageModels
     }
     
+    func removePages(pages: [Int]) {
+        
+        guard pages.count > 0 else {
+            return
+        }
+        
+        let sortedPagesByLast: [Int] = pages.sorted(by: {
+            $0 > $1
+        })
+        
+        var indexPaths: [IndexPath] = Array()
+        
+        for page in sortedPagesByLast {
+            
+            let pageIsInArrayBounds: Bool = page >= 0 && page < pageModels.count
+            
+            guard pageIsInArrayBounds else {
+                continue
+            }
+            
+            pageModels.remove(at: page)
+            indexPaths.append(IndexPath(item: page, section: 0))
+        }
+        
+        pagesRemovedSignal.accept(value: indexPaths)
+    }
+    
     private func removePage(page: Int) {
         
         let pageIsInArrayBounds: Bool = page >= 0 && page < pageModels.count
