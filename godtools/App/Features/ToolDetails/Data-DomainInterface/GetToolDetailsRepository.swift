@@ -28,9 +28,10 @@ class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
         self.favoritedResourcesRepository = favoritedResourcesRepository
     }
     
-    func getDetailsPublisher(tool: ToolDomainModel, translateInLanguage: BCP47LanguageIdentifier, toolPrimaryLanguage: BCP47LanguageIdentifier, toolParallelLanguage: BCP47LanguageIdentifier?) -> AnyPublisher<ToolDetailsDomainModel, Never> {
+    func getDetailsPublisher(toolId: String, translateInLanguage: BCP47LanguageIdentifier, toolPrimaryLanguage: BCP47LanguageIdentifier, toolParallelLanguage: BCP47LanguageIdentifier?) -> AnyPublisher<ToolDetailsDomainModel, Never> {
         
         let noToolDomainModel = ToolDetailsDomainModel(
+            analyticsToolAbbreviation: "",
             aboutDescription: "",
             bibleReferences: "",
             conversationStarters: "",
@@ -42,12 +43,12 @@ class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
             versionsDescription: ""
         )
         
-        guard let toolDataModel = resourcesRepository.getResource(id: tool.dataModelId) else {
+        guard let toolDataModel = resourcesRepository.getResource(id: toolId) else {
             return Just(noToolDomainModel)
                 .eraseToAnyPublisher()
         }
         
-        guard let translation = translationsRepository.getLatestTranslation(resourceId: tool.dataModelId, languageCode: translateInLanguage) else {
+        guard let translation = translationsRepository.getLatestTranslation(resourceId: toolId, languageCode: translateInLanguage) else {
             return Just(noToolDomainModel)
                 .eraseToAnyPublisher()
         }
@@ -67,10 +68,11 @@ class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
         let languagesAvailable: String = languageNamesTranslatedInToolLanguage.map({$0}).sorted(by: { $0 < $1 }).joined(separator: ", ")
         
         let toolDetails = ToolDetailsDomainModel(
+            analyticsToolAbbreviation: toolDataModel.abbreviation,
             aboutDescription: translation.translatedDescription,
             bibleReferences: translation.toolDetailsBibleReferences,
             conversationStarters: translation.toolDetailsConversationStarters,
-            isFavorited: favoritedResourcesRepository.getResourceIsFavorited(id: tool.dataModelId),
+            isFavorited: favoritedResourcesRepository.getResourceIsFavorited(id: toolId),
             languagesAvailable: languagesAvailable,
             name: translation.translatedName,
             numberOfViews: numberOfViewsString,
@@ -136,6 +138,7 @@ class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
             }
             
             let toolVersion = ToolVersionDomainModel(
+                analyticsToolAbbreviation: resourceVariant.abbreviation,
                 bannerImageId: resourceVariant.attrBanner,
                 dataModelId: resourceVariant.id,
                 description: description,

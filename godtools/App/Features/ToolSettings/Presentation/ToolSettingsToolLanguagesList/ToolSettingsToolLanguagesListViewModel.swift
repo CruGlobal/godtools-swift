@@ -16,7 +16,7 @@ class ToolSettingsToolLanguagesListViewModel: ObservableObject {
     private static var deleteParallelLanguageCancellable: AnyCancellable?
     
     private let listType: ToolSettingsToolLanguagesListTypeDomainModel
-    private let tool: ResourceModel
+    private let toolId: String
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getToolSettingsPrimaryLanguageUseCase: GetToolSettingsPrimaryLanguageUseCase
     private let getToolSettingsParallelLanguageUseCase: GetToolSettingsParallelLanguageUseCase
@@ -38,11 +38,11 @@ class ToolSettingsToolLanguagesListViewModel: ObservableObject {
     @Published var showsDeleteLanguageButton: Bool = false
     @Published var deleteLanguageActionTitle: String = ""
     
-    init(flowDelegate: FlowDelegate, listType: ToolSettingsToolLanguagesListTypeDomainModel, tool: ResourceModel, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolSettingsPrimaryLanguageUseCase: GetToolSettingsPrimaryLanguageUseCase, getToolSettingsParallelLanguageUseCase: GetToolSettingsParallelLanguageUseCase, viewToolSettingsToolLanguageListUseCase: ViewToolSettingsToolLanguagesListUseCase, setToolSettingsPrimaryLanguageUseCase: SetToolSettingsPrimaryLanguageUseCase, setToolSettingsParallelLanguageUseCase: SetToolSettingsParallelLanguageUseCase, deleteToolSettingsParallelLanguageUseCase: DeleteToolSettingsParallelLanguageUseCase) {
+    init(flowDelegate: FlowDelegate, listType: ToolSettingsToolLanguagesListTypeDomainModel, toolId: String, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolSettingsPrimaryLanguageUseCase: GetToolSettingsPrimaryLanguageUseCase, getToolSettingsParallelLanguageUseCase: GetToolSettingsParallelLanguageUseCase, viewToolSettingsToolLanguageListUseCase: ViewToolSettingsToolLanguagesListUseCase, setToolSettingsPrimaryLanguageUseCase: SetToolSettingsPrimaryLanguageUseCase, setToolSettingsParallelLanguageUseCase: SetToolSettingsParallelLanguageUseCase, deleteToolSettingsParallelLanguageUseCase: DeleteToolSettingsParallelLanguageUseCase) {
         
         self.flowDelegate = flowDelegate
         self.listType = listType
-        self.tool = tool
+        self.toolId = toolId
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getToolSettingsPrimaryLanguageUseCase = getToolSettingsPrimaryLanguageUseCase
         self.getToolSettingsParallelLanguageUseCase = getToolSettingsParallelLanguageUseCase
@@ -87,7 +87,7 @@ class ToolSettingsToolLanguagesListViewModel: ObservableObject {
                     listType: listType,
                     primaryLanguage: primaryLanguage,
                     parallelLanguage: parallelLanguage,
-                    tool: tool,
+                    toolId: toolId,
                     appLanguage: appLanguage
                 )
                 .eraseToAnyPublisher()

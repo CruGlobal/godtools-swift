@@ -50,10 +50,4 @@ class ToolDetailsFeatureDataLayerDependencies {
             favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository()
         )
     }
-    
-    func getToolDetailsToolIsFavoritedRepository() -> GetToolDetailsToolIsFavoritedRepositoryInterface {
-        return GetToolDetailsToolIsFavoritedRepository(
-            favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository()
-        )
-    }
 }

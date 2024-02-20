@@ -10,6 +10,7 @@ import Foundation
 
 struct ToolDetailsDomainModel {
     
+    let analyticsToolAbbreviation: String
     let aboutDescription: String
     let bibleReferences: String
     let conversationStarters: String

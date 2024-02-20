@@ -12,11 +12,10 @@ import SwiftUI
 
 class AllYourFavoriteToolsViewModel: ObservableObject {
         
-    private let getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase
-    private let getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase
+    private let viewAllYourFavoritedToolsUseCase: ViewAllYourFavoritedToolsUseCase
+    private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
     private let attachmentsRepository: AttachmentsRepository
-    private let getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let didConfirmToolRemovalSubject: PassthroughSubject<Void, Never> = PassthroughSubject()
@@ -25,35 +24,41 @@ class AllYourFavoriteToolsViewModel: ObservableObject {
     
     private weak var flowDelegate: FlowDelegate?
     
+    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    
     @Published var sectionTitle: String = ""
-    @Published var favoritedTools: [ToolDomainModel] = Array()
+    @Published var favoritedTools: [YourFavoritedToolDomainModel] = Array()
         
-    init(flowDelegate: FlowDelegate?, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, attachmentsRepository: AttachmentsRepository, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(flowDelegate: FlowDelegate?, viewAllYourFavoritedToolsUseCase: ViewAllYourFavoritedToolsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, attachmentsRepository: AttachmentsRepository, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
-        self.getAllFavoritedToolsUseCase = getAllFavoritedToolsUseCase
-        self.getLanguageAvailabilityUseCase = getLanguageAvailabilityUseCase
+        self.viewAllYourFavoritedToolsUseCase = viewAllYourFavoritedToolsUseCase
+        self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
         self.attachmentsRepository = attachmentsRepository
-        self.getInterfaceStringInAppLanguageUseCase = getInterfaceStringInAppLanguageUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         
-        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: "favorites.favoriteTools.title")
+        getCurrentAppLanguageUseCase
+            .getLanguagePublisher()
+            .assign(to: &$appLanguage)
+        
+        $appLanguage.eraseToAnyPublisher()
+            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<(ViewAllYourFavoritedToolsDomainModel), Never> in
+                
+                return viewAllYourFavoritedToolsUseCase
+                    .viewPublisher(appLanguage: appLanguage)
+                    .eraseToAnyPublisher()
+            })
             .receive(on: DispatchQueue.main)
-            .assign(to: &$sectionTitle)
+            .sink { [weak self] (domainModel: ViewAllYourFavoritedToolsDomainModel) in
                 
-        getAllFavoritedToolsUseCase.getAllFavoritedToolsPublisher()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (favoritedTools: [ToolDomainModel]) in
-                
-                withAnimation {
-                    self?.favoritedTools = favoritedTools
-                }
-                
+                self?.sectionTitle = domainModel.interfaceStrings.sectionTitle
+
+                self?.favoritedTools = domainModel.yourFavoritedTools
             }
             .store(in: &cancellables)
-        
+                
         didConfirmToolRemovalSubject
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (void: Void) in
@@ -94,7 +99,7 @@ class AllYourFavoriteToolsViewModel: ObservableObject {
         )
     }
     
-    private func trackOpenFavoritedToolButtonAnalytics(for tool: ResourceModel) {
+    private func trackOpenFavoritedToolButtonAnalytics(tool: YourFavoritedToolDomainModel) {
        
         trackActionAnalyticsUseCase.trackAction(
             screenName: analyticsScreenName,
@@ -106,12 +111,12 @@ class AllYourFavoriteToolsViewModel: ObservableObject {
             url: nil,
             data: [
                 AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.favoriteTools,
-                AnalyticsConstants.Keys.tool: tool.abbreviation
+                AnalyticsConstants.Keys.tool: tool.analyticsToolAbbreviation
             ]
         )
     }
     
-    private func trackFavoritedToolDetailsButtonAnalytics(for tool: ResourceModel) {
+    private func trackFavoritedToolDetailsButtonAnalytics(tool: YourFavoritedToolDomainModel) {
         
         trackActionAnalyticsUseCase.trackAction(
             screenName: analyticsScreenName,
@@ -123,7 +128,7 @@ class AllYourFavoriteToolsViewModel: ObservableObject {
             url: nil,
             data: [
                 AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.favoriteTools,
-                AnalyticsConstants.Keys.tool: tool.abbreviation
+                AnalyticsConstants.Keys.tool: tool.analyticsToolAbbreviation
             ]
         )
     }
@@ -146,39 +151,37 @@ extension AllYourFavoriteToolsViewModel {
         trackPageView()
     }
     
-    func getToolViewModel(tool: ToolDomainModel) -> ToolCardViewModel {
+    func getToolViewModel(tool: YourFavoritedToolDomainModel) -> ToolCardViewModel {
                 
         return ToolCardViewModel(
             tool: tool,
-            getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
             getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
-            getInterfaceStringInAppLanguageUseCase: getInterfaceStringInAppLanguageUseCase,
             attachmentsRepository: attachmentsRepository
         )
     }
     
-    func toolDetailsTapped(tool: ToolDomainModel) {
+    func toolDetailsTapped(tool: YourFavoritedToolDomainModel) {
         
-        trackFavoritedToolDetailsButtonAnalytics(for: tool.resource)
+        trackFavoritedToolDetailsButtonAnalytics(tool: tool)
         
         flowDelegate?.navigate(step: .toolDetailsTappedFromAllYourFavoriteTools(tool: tool))
     }
     
-    func openToolTapped(tool: ToolDomainModel) {
+    func openToolTapped(tool: YourFavoritedToolDomainModel) {
         
-        trackOpenFavoritedToolButtonAnalytics(for: tool.resource)
+        trackOpenFavoritedToolButtonAnalytics(tool: tool)
         
         flowDelegate?.navigate(step: .openToolTappedFromAllYourFavoriteTools(tool: tool))
     }
     
-    func toolFavoriteTapped(tool: ToolDomainModel) {
+    func unfavoriteToolTapped(tool: YourFavoritedToolDomainModel) {
         
         flowDelegate?.navigate(step: .unfavoriteToolTappedFromAllYourFavoritedTools(tool: tool, didConfirmToolRemovalSubject: didConfirmToolRemovalSubject))
     }
     
-    func toolTapped(tool: ToolDomainModel) {
+    func toolTapped(tool: YourFavoritedToolDomainModel) {
         
-        trackOpenFavoritedToolButtonAnalytics(for: tool.resource)
+        trackOpenFavoritedToolButtonAnalytics(tool: tool)
         
         flowDelegate?.navigate(step: .toolTappedFromAllYourFavoritedTools(tool: tool))
     }

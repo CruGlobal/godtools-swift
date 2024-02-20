@@ -100,7 +100,7 @@ struct ToolCardView: View {
                     
                     HStack(alignment: .center, spacing: 0) {
                         
-                        Text(viewModel.title)
+                        Text(viewModel.name)
                             .font(FontLibrary.sfProTextBold.font(size: 17))
                             .foregroundColor(ColorPalette.gtGrey.color)
                             .lineLimit(2)
@@ -188,15 +188,21 @@ struct ToolCardView_Previews: PreviewProvider {
     static func getPreviewToolCardViewModel() -> ToolCardViewModel {
         
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
-        let resource = appDiContainer.dataLayer.getResourcesRepository().getResource(id: "1")!
-        
-        let tool = appDiContainer.domainLayer.getToolUseCase().getTool(resource: resource)
+            
+        let tool = ToolListItemDomainModel(
+            interfaceStrings: ToolListItemInterfaceStringsDomainModel(openToolActionTitle: "Open", openToolDetailsActionTitle: "Tool Details"),
+            analyticsToolAbbreviation: "",
+            dataModelId: "1",
+            bannerImageId: "1",
+            name: "Tool Name",
+            category: "Tool Category",
+            isFavorited: true,
+            languageAvailability: ToolLanguageAvailabilityDomainModel(availabilityString: "is available", isAvailable: true)
+        )
         
         return ToolCardViewModel(
             tool: tool,
-            getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),
-            getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
-            getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
+            getToolIsFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToolIsFavoritedUseCase(),
             attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository()
         )
     }

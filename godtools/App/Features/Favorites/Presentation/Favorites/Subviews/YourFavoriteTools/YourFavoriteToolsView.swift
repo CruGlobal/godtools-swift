@@ -15,7 +15,7 @@ struct YourFavoriteToolsView: View {
     private let toolCardSpacing: CGFloat
     
     @ObservedObject private var viewModel: FavoritesViewModel
-        
+            
     init(viewModel: FavoritesViewModel, geometry: GeometryProxy, contentHorizontalInsets: CGFloat, toolCardSpacing: CGFloat = DashboardView.toolCardVerticalSpacing) {
         
         self.viewModel = viewModel
@@ -33,14 +33,14 @@ struct YourFavoriteToolsView: View {
                 contentHorizontalInsets: contentHorizontalInsets
             )
             
-            if viewModel.yourFavoriteTools.count > 0 {
+            if viewModel.yourFavoritedTools.count > 0 {
                 
                 ScrollView(.horizontal, showsIndicators: false) {
                     
                     // NOTE: We need HStack here instead of LazyHStack because our card heights have dynamic heights to them and this allows the HStack to wrap the tallest card.
                     HStack(alignment: .top, spacing: toolCardSpacing) {
                         
-                        ForEach(viewModel.yourFavoriteTools) { (tool: ToolDomainModel) in
+                        ForEach(viewModel.yourFavoritedTools) { (tool: YourFavoritedToolDomainModel) in
                             
                             ToolCardView(
                                 viewModel: viewModel.getYourFavoriteToolViewModel(tool: tool),
@@ -49,7 +49,7 @@ struct YourFavoriteToolsView: View {
                                 showsCategory: true,
                                 favoriteTappedClosure: {
                                     
-                                    viewModel.toolFavoriteTapped(tool: tool)
+                                    viewModel.unfavoriteToolTapped(tool: tool)
                                 },
                                 toolDetailsTappedClosure: {
                                     
@@ -64,6 +64,8 @@ struct YourFavoriteToolsView: View {
                                     viewModel.toolTapped(tool: tool)
                                 }
                             )
+                            .animation(Animation.easeOut(duration: 0.2))
+                            .transition(AnyTransition.opacity.combined(with: .slide))
                         }
                     }
                     .padding([.leading, .trailing], contentHorizontalInsets)

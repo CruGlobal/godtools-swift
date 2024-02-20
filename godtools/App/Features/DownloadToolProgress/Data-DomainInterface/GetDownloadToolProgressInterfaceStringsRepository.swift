@@ -11,31 +11,31 @@ import Combine
 
 class GetDownloadToolProgressInterfaceStringsRepository: GetDownloadToolProgressInterfaceStringsRepositoryInterface {
     
+    private let resourcesRepository: ResourcesRepository
     private let localizationServices: LocalizationServices
     private let favoritedResourcesRepository: FavoritedResourcesRepository
     
-    init(localizationServices: LocalizationServices, favoritedResourcesRepository: FavoritedResourcesRepository) {
+    init(resourcesRepository: ResourcesRepository, localizationServices: LocalizationServices, favoritedResourcesRepository: FavoritedResourcesRepository) {
         
+        self.resourcesRepository = resourcesRepository
         self.localizationServices = localizationServices
         self.favoritedResourcesRepository = favoritedResourcesRepository
     }
     
-    func getStringsPublisher(resource: ResourceModel?, translateInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<DownloadToolProgressInterfaceStringsDomainModel, Never> {
+    func getStringsPublisher(toolId: String?, translateInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<DownloadToolProgressInterfaceStringsDomainModel, Never> {
                         
         let localeId: String = translateInAppLanguage
+        
         let toolIsFavorited: Bool?
         
-        let resourceType: ResourceType? = resource?.resourceTypeEnum
-        
-        if resourceType == .article || resourceType == .tract, let resourceId = resource?.id {
-
-            toolIsFavorited = favoritedResourcesRepository.getResourceIsFavorited(id: resourceId)
+        if let toolId = toolId, let resource = resourcesRepository.getResource(id: toolId), (resource.resourceTypeEnum == .article || resource.resourceTypeEnum == .tract) {
+            
+            toolIsFavorited = favoritedResourcesRepository.getResourceIsFavorited(id: toolId)
         }
         else {
-            
-            toolIsFavorited = nil
+            toolIsFavorited = false
         }
-     
+        
         let interfaceStrings = DownloadToolProgressInterfaceStringsDomainModel(
             toolIsFavorited: toolIsFavorited,
             downloadingToolMessage: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "loading_favorited_tool"),

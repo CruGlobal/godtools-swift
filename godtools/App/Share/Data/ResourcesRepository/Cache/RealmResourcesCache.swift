@@ -30,37 +30,6 @@ class RealmResourcesCache {
             .eraseToAnyPublisher()
     }
     
-    func getAllTools(sorted: Bool, category: String? = nil, languageId: String? = nil) -> [ResourceModel] {
-        
-        let metaTools = getResources(with: .metaTool)
-        let defaultVariantIds = metaTools.compactMap { $0.defaultVariantId }
-        let defaultVariants = getResources(ids: defaultVariantIds)
-        
-        let resourcesExcludingVariants = getResources(with: ["", nil])
-        
-        let combinedResourcesAndDefaultVariants = resourcesExcludingVariants + defaultVariants
-   
-        var allTools = combinedResourcesAndDefaultVariants.filter { resource in
-                        
-            if let category = category, resource.attrCategory != category {
-                return false
-            }
-            
-            if let languageId = languageId, resource.languageIds.contains(languageId) == false {
-                return false
-            }
-            
-            return resource.isToolType && resource.isHidden == false
-            
-        }
-        
-        if sorted {
-            allTools = allTools.sorted(by: { $0.attrDefaultOrder < $1.attrDefaultOrder })
-        }
-        
-        return allTools
-    }
-    
     func getResource(id: String) -> ResourceModel? {
         
         guard let realmResource = realmDatabase.openRealm().object(ofType: RealmResource.self, forPrimaryKey: id) else {
@@ -110,13 +79,6 @@ class RealmResourcesCache {
             .map { ResourceModel(model: $0) }
     }
     
-    func getSpotlightTools() -> [ResourceModel] {
-        return realmDatabase.openRealm().objects(RealmResource.self)
-            .where { $0.attrSpotlight == true && $0.isHidden == false }
-            .map { ResourceModel(model: $0) }
-            .filter { $0.isToolType }
-    }
-    
     func syncResources(languagesSyncResult: RealmLanguagesCacheSyncResult, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> {
         
         return resourcesSync.syncResources(languagesSyncResult: languagesSyncResult, resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments)
@@ -129,7 +91,10 @@ extension RealmResourcesCache {
     
     func getResourcesByFilter(filter: ResourcesFilter) -> [ResourceModel] {
         
-        return getResourcesByFilter(realm: realmDatabase.openRealm(), filter: filter)
+        return getFilteredRealmResources(realm: realmDatabase.openRealm(), filter: filter)
+            .map {
+                ResourceModel(model: $0)
+            }
     }
     
     func getResourcesByFilterPublisher(filter: ResourcesFilter) -> AnyPublisher<[ResourceModel], Never> {
@@ -138,7 +103,11 @@ extension RealmResourcesCache {
             
             self.realmDatabase.background { realm in
                 
-                let resources = self.getResourcesByFilter(realm: realm, filter: filter)
+                let resources: [ResourceModel] = self
+                    .getFilteredRealmResources(realm: realm, filter: filter)
+                    .map {
+                        ResourceModel(model: $0)
+                    }
                 
                 return promise(.success(resources))
             }
@@ -146,67 +115,117 @@ extension RealmResourcesCache {
         .eraseToAnyPublisher()
     }
     
-    private func getResourcesByFilter(realm: Realm, filter: ResourcesFilter) -> [ResourceModel] {
+    private func getFilteredRealmResources(filter: ResourcesFilter) -> Results<RealmResource> {
+        
+        return getFilteredRealmResources(
+            realm: realmDatabase.openRealm(),
+            filter: filter
+        )
+    }
+    
+    private func getFilteredRealmResources(realm: Realm, filter: ResourcesFilter) -> Results<RealmResource> {
         
         var filterByAttributes: [NSPredicate] = Array()
         
-        if let category = filter.category, !category.isEmpty {
-            
-            let categoryFilter = NSPredicate(format: "\(#keyPath(RealmResource.attrCategory)) == [c] %@", category.lowercased())
-            
-            filterByAttributes.append(categoryFilter)
+        if let categoryPredicate = filter.getCategoryPredicate() {
+            filterByAttributes.append(categoryPredicate)
         }
         
-        if let languageCode = filter.languageCode?.lowercased(), !languageCode.isEmpty {
-            
-            let subQuery: String = "SUBQUERY(languages, $language, $language.code == [c] \"\(languageCode)\").@count > 0"
-            
-            let languageFilter = NSPredicate(format: subQuery)
-            
-            filterByAttributes.append(languageFilter)
+        if let languageCodePredicate = filter.getLanguageCodePredicate() {
+            filterByAttributes.append(languageCodePredicate)
         }
         
-        if let resourceTypes = filter.resourceTypes, !resourceTypes.isEmpty {
-            
-            let resourceTypesValues: [String] = resourceTypes.map({$0.rawValue.lowercased()})
-            
-            let resourceTypeFilter = NSPredicate(format: "\(#keyPath(RealmResource.resourceType)) IN %@", resourceTypesValues)
-            
-            filterByAttributes.append(resourceTypeFilter)
+        if let resourceTypesPredicate = filter.getResourceTypesPredicate() {
+            filterByAttributes.append(resourceTypesPredicate)
         }
         
-        if let variants = filter.variants {
-            
-            switch variants {
-            case .isNotVariant:
-                let isNotVariantFilter = NSPredicate(format: "\(#keyPath(RealmResource.isVariant)) == %@", NSNumber(value: false))
-                filterByAttributes.append(isNotVariantFilter)
+        if let variantsPredicate = filter.getVariantsPredicate() {
+            filterByAttributes.append(variantsPredicate)
+        }
+        
+        if let isHiddenPredicate = filter.getIsHiddenPredicate() {
+            filterByAttributes.append(isHiddenPredicate)
+        }
+        
+        let filterPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: filterByAttributes)
                 
-            case .isVariant:
-                let isVariantFilter = NSPredicate(format: "\(#keyPath(RealmResource.isVariant)) == %@", NSNumber(value: true))
-                filterByAttributes.append(isVariantFilter)
-                
-            case .isDefaultVariant:
-                let isVariantFilter = NSPredicate(format: "\(#keyPath(RealmResource.isVariant)) == %@", NSNumber(value: true))
-                let isDefaultVariantFilter = NSPredicate(format: "\(#keyPath(RealmResource.id)) == metatool.defaultVariantId")
-                                                
-                filterByAttributes.append(isVariantFilter)
-                filterByAttributes.append(isDefaultVariantFilter)
-            }
-        }
+        return realm.objects(RealmResource.self).filter(filterPredicate)
+    }
+}
+
+// MARK: - Spotlight Tools
+
+extension RealmResourcesCache {
+    
+    func getSpotlightTools() -> [ResourceModel] {
         
-        if let isHidden = filter.isHidden {
-            
-            let isHiddenFilter = NSPredicate(format: "\(#keyPath(RealmResource.isHidden)) == %@", NSNumber(value: isHidden))
-            
-            filterByAttributes.append(isHiddenFilter)
-        }
+        let realm: Realm = realmDatabase.openRealm()
+        
+        let isSpotlightFilter = NSPredicate(format: "\(#keyPath(RealmResource.attrSpotlight)) == %@", NSNumber(value: true))
+        let isNotHiddenFilter = NSPredicate(format: "\(#keyPath(RealmResource.isHidden)) == %@", NSNumber(value: false))
+        
+        let isToolTypesValues: [String] = ResourceType.toolTypes.map({$0.rawValue.lowercased()})
+        let isToolTypeFilter = NSPredicate(format: "\(#keyPath(RealmResource.resourceType)) IN %@", isToolTypesValues)
+        
+        let filterByAttributes: [NSPredicate] = [isSpotlightFilter, isNotHiddenFilter, isToolTypeFilter]
         
         let filterPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: filterByAttributes)
                 
         let filteredResources = realm.objects(RealmResource.self).filter(filterPredicate)
         
         return filteredResources
+            .map {
+                ResourceModel(model: $0)
+            }
+    }
+}
+
+// MARK: - All Tools List
+
+extension RealmResourcesCache {
+    
+    func getAllToolsList(filterByCategory: String?, filterByLanguageId: String?, sortByDefaultOrder: Bool) -> [ResourceModel] {
+                 
+        var filterByANDSubpredicates: [NSPredicate] = Array()
+        
+        if let filterByCategory = filterByCategory {
+            filterByANDSubpredicates.append(ResourcesFilter.getCategoryPredicate(category: filterByCategory))
+        }
+        
+        if let filterByLanguageId = filterByLanguageId {
+            filterByANDSubpredicates.append(ResourcesFilter.getLanguageIdPredicate(languageId: filterByLanguageId))
+        }
+        
+        filterByANDSubpredicates.append(ResourcesFilter.getIsHiddenPredicate(isHidden: false))
+        
+        filterByANDSubpredicates.append(ResourcesFilter.getResourceTypesPredicate(resourceTypes: [.article, .chooseYourOwnAdventure, .tract]))
+                
+        let filterExcludingVariants: [NSPredicate] = filterByANDSubpredicates + [ResourcesFilter.getVariantsPredicate(variants: .isNotVariant)]
+        
+        let filterIncludingDefaultVariantOnly: [NSPredicate] = filterByANDSubpredicates + [ResourcesFilter.getVariantsPredicate(variants: .isDefaultVariant)]
+            
+        let filterPredicates: NSCompoundPredicate = NSCompoundPredicate(
+            type: .or,
+            subpredicates: [
+                NSCompoundPredicate(type: .and, subpredicates: filterExcludingVariants),
+                NSCompoundPredicate(type: .and, subpredicates: filterIncludingDefaultVariantOnly)
+            ]
+        )
+        
+        let filteredRealmResources: Results<RealmResource> = realmDatabase.openRealm().objects(RealmResource.self).filter(filterPredicates)
+        
+        let realmResources: Results<RealmResource>
+        
+        if sortByDefaultOrder {
+            
+            realmResources = filteredRealmResources.sorted(byKeyPath: #keyPath(RealmResource.attrDefaultOrder), ascending: true)
+        }
+        else {
+            
+            realmResources = filteredRealmResources
+        }
+        
+        return realmResources
             .map {
                 ResourceModel(model: $0)
             }

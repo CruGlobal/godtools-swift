@@ -42,7 +42,7 @@ class ToolScreenShareFlow: Flow {
         let getToolScreenShareTutorialHasBeenViewedUseCase: GetToolScreenShareTutorialHasBeenViewedUseCase = appDiContainer.feature.toolScreenShare.domainLayer.getToolScreenShareTutorialHasBeenViewedUseCase()
         
         getToolScreenShareTutorialHasBeenViewedUseCase
-            .getViewedPublisher(tool: toolData.renderer.value.resource)
+            .getViewedPublisher(toolId: toolData.renderer.value.resource.id)
             .receive(on: DispatchQueue.main)
             .first()
             .sink { [weak self] (toolScreenShareTutorialViewed: ToolScreenShareTutorialViewedDomainModel) in
@@ -174,7 +174,7 @@ class ToolScreenShareFlow: Flow {
             return
         }
         
-        let toolScreenShareTutorialView = getToolScreenShareTutorialView(tool: toolData.renderer.value.resource)
+        let toolScreenShareTutorialView = getToolScreenShareTutorialView(toolId: toolData.renderer.value.resource.id)
         
         let modal = ModalNavigationController.defaultModal(
             rootView: toolScreenShareTutorialView,
@@ -231,12 +231,11 @@ class ToolScreenShareFlow: Flow {
 
 extension ToolScreenShareFlow {
     
-    // TODO: Eventually this will need to be ToolDomainModel. ~Levi
-    private func getToolScreenShareTutorialView(tool: ResourceModel) -> UIViewController {
+    private func getToolScreenShareTutorialView(toolId: String) -> UIViewController {
         
         let viewModel = ToolScreenShareTutorialViewModel(
             flowDelegate: self,
-            tool: tool,
+            toolId: toolId,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             viewToolScreenShareTutorialUseCase: appDiContainer.feature.toolScreenShare.domainLayer.getViewToolScreenShareTutorialUseCase(),
             didViewToolScreenShareTutorialUseCase: appDiContainer.feature.toolScreenShare.domainLayer.getDidViewToolScreenShareTutorialUseCase()
@@ -278,7 +277,7 @@ extension ToolScreenShareFlow {
         
         let viewModel = CreatingToolScreenShareSessionViewModel(
             flowDelegate: self,
-            resourceId: toolData.renderer.value.resource.id,
+            toolId: toolData.renderer.value.resource.id,
             getCurrentAppLanguage: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             viewCreatingToolScreenShareSessionUseCase: appDiContainer.feature.toolScreenShare.domainLayer.getViewCreatingToolScreenShareSessionUseCase(),
             tractRemoteSharePublisher: toolData.tractRemoteSharePublisher,

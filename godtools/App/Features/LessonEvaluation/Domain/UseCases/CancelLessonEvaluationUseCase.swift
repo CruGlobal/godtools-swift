@@ -18,9 +18,9 @@ class CancelLessonEvaluationUseCase {
         self.cancelLessonEvaluationRepositoryInterface = cancelLessonEvaluationRepositoryInterface
     }
     
-    func cancelPublisher(lesson: ToolDomainModel) -> AnyPublisher<Void, Never> {
+    func cancelPublisher(lessonId: String) -> AnyPublisher<Void, Never> {
         
-        return cancelLessonEvaluationRepositoryInterface.cancelPublisher(lesson: lesson)
+        return cancelLessonEvaluationRepositoryInterface.cancelPublisher(lessonId: lessonId)
             .eraseToAnyPublisher()
     }
 }

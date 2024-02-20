@@ -11,5 +11,5 @@ import Combine
 
 protocol EvaluateLessonRepositoryInterface {
     
-    func evaluateLessonPublisher(lesson: ToolDomainModel, feedback: TrackLessonFeedbackDomainModel) -> AnyPublisher<Void, Never>
+    func evaluateLessonPublisher(lessonId: String, feedback: TrackLessonFeedbackDomainModel) -> AnyPublisher<Void, Never>
 }

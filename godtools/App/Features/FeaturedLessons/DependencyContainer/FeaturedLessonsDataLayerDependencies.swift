@@ -25,9 +25,8 @@ class FeaturedLessonsDataLayerDependencies {
         return GetFeaturedLessonsRepository(
             resourcesRepository: coreDataLayer.getResourcesRepository(),
             languagesRepository: coreDataLayer.getLanguagesRepository(),
-            translationsRepository: coreDataLayer.getTranslationsRepository(),
-            localizationServices: coreDataLayer.getLocalizationServices(),
-            localeLanguageName: coreDataLayer.getLocaleLanguageName()
+            getTranslatedToolName: coreDataLayer.getTranslatedToolName(),
+            getTranslatedToolLanguageAvailability: coreDataLayer.getTranslatedToolLanguageAvailability()
         )
     }
 }

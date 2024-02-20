@@ -21,26 +21,9 @@ class AppDomainLayerDependencies {
         return GetAccountCreationIsSupportedUseCase()
     }
     
-    func getAddToolToFavoritesUseCase() -> AddToolToFavoritesUseCase {
-        return AddToolToFavoritesUseCase(
-            favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository()
-        )
-    }
-    
-    func getAllFavoritedToolsUseCase() -> GetAllFavoritedToolsUseCase {
-        return GetAllFavoritedToolsUseCase(
-            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
-            getToolUseCase: getToolUseCase(),
-            favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository(),
-            resourcesRepository: dataLayer.getResourcesRepository(),
-            translationsRepository: dataLayer.getTranslationsRepository()
-        )
-    }
-    
     func getAllToolsUseCase() -> GetAllToolsUseCase {
         return GetAllToolsUseCase(
             getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
-            getToolUseCase: getToolUseCase(),
             resourcesRepository: dataLayer.getResourcesRepository()
         )
     }
@@ -89,12 +72,6 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getLanguageAvailabilityUseCase() -> GetLanguageAvailabilityUseCase {
-        return GetLanguageAvailabilityUseCase(
-            localizationServices: dataLayer.getLocalizationServices()
-        )
-    }
-    
     func getLanguageUseCase() -> GetLanguageUseCase {
         return GetLanguageUseCase(
             languagesRepository: dataLayer.getLanguagesRepository(),
@@ -132,13 +109,7 @@ class AppDomainLayerDependencies {
     func getOptInOnboardingTutorialAvailableUseCase() -> GetOptInOnboardingTutorialAvailableUseCase {
         return GetOptInOnboardingTutorialAvailableUseCase()
     }
-    
-    func getRemoveToolFromFavoritesUseCase() -> RemoveToolFromFavoritesUseCase {
-        return RemoveToolFromFavoritesUseCase(
-            favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository()
-        )
-    }
-    
+
     func getSetCompletedTrainingTipUseCase() -> SetCompletedTrainingTipUseCase {
         return SetCompletedTrainingTipUseCase(
             repository: dataLayer.getCompletedTrainingTipRepository()
@@ -158,42 +129,11 @@ class AppDomainLayerDependencies {
         return GetShouldShowLanguageSettingsBarButtonUseCase()
     }
     
-    func getSpotlightToolsUseCase() -> GetSpotlightToolsUseCase {
-        return GetSpotlightToolsUseCase(
-            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
-            getToolUseCase: getToolUseCase(),
-            resourcesRepository: dataLayer.getResourcesRepository()
-        )
-    }
-    
     func getStoreInitialFavoritedToolsUseCase() -> StoreInitialFavoritedToolsUseCase {
         return StoreInitialFavoritedToolsUseCase(
             resourcesRepository: dataLayer.getResourcesRepository(),
             favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository(),
             launchCountRepository: dataLayer.getSharedLaunchCountRepository()
-        )
-    }
-    
-    func getToggleToolFavoritedUseCase() -> ToggleToolFavoritedUseCase {
-        return ToggleToolFavoritedUseCase(
-            favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository(),
-            addToolToFavoritesUseCase: getAddToolToFavoritesUseCase(),
-            removeToolFromFavoritesUseCase: getRemoveToolFromFavoritesUseCase()
-        )
-    }
-    
-    func getToolIsFavoritedUseCase() -> GetToolIsFavoritedUseCase {
-        return GetToolIsFavoritedUseCase(
-            favoritedResourcesRepository: dataLayer.getFavoritedResourcesRepository()
-        )
-    }
-    
-    func getToolUseCase() -> GetToolUseCase {
-        return GetToolUseCase(
-            getLanguageUseCase: getLanguageUseCase(),
-            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
-            resourcesRepository: dataLayer.getResourcesRepository(),
-            translationsRepository: dataLayer.getTranslationsRepository()
         )
     }
     

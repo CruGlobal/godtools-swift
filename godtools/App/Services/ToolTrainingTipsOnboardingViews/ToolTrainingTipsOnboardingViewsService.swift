@@ -17,20 +17,20 @@ class ToolTrainingTipsOnboardingViewsService {
         self.cache = cache
     }
     
-    func getToolTrainingTipReachedMaximumViews(tool: ToolDomainModel) -> Bool {
+    func getToolTrainingTipReachedMaximumViews(toolId: String, primaryLanguage: AppLanguageDomainModel) -> Bool {
         
-        let numberOfViews: Int = getNumberOfToolTrainingTipViews(tool: tool)
+        let numberOfViews: Int = getNumberOfToolTrainingTipViews(toolId: toolId, primaryLanguage: primaryLanguage)
         
         return numberOfViews >= 3
     }
     
-    func getNumberOfToolTrainingTipViews(tool: ToolDomainModel) -> Int {
+    func getNumberOfToolTrainingTipViews(toolId: String, primaryLanguage: AppLanguageDomainModel) -> Int {
         
-        return cache.getNumberOfToolTrainingTipViews(tool: tool)
+        return cache.getNumberOfToolTrainingTipViews(toolId: toolId, primaryLanguage: primaryLanguage)
     }
     
-    func storeToolTrainingTipViewed(tool: ToolDomainModel) {
+    func storeToolTrainingTipViewed(toolId: String, primaryLanguage: AppLanguageDomainModel) {
         
-        cache.storeToolTrainingTipViewed(tool: tool)
+        cache.storeToolTrainingTipViewed(toolId: toolId, primaryLanguage: primaryLanguage)
     }
 }
