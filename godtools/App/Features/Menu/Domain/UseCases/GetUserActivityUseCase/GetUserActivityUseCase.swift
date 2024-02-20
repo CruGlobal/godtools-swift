@@ -68,7 +68,7 @@ class GetUserActivityUseCase {
         
         let userActivity = UserActivity(counters: userCounterDictionary)
         
-        let badges = userActivity.badges.map { self.getUserActivityBadgeUseCase.getBadge(from: $0) }
+        let badges = userActivity.badges.map { self.getUserActivityBadgeUseCase.getBadge(from: $0, translatedInAppLanguage: translatedInAppLanguage) }
         let stats = getUserActivityStatsUseCase.getUserActivityStats(from: userActivity, translatedInAppLanguage: translatedInAppLanguage)
         
         return UserActivityDomainModel(badges: badges, stats: stats)

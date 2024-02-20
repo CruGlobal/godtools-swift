@@ -21,12 +21,12 @@ class GetUserActivityBadgeUseCase {
         self.localizationServices = localizationServices
     }
     
-    func getBadge(from godToolsSharedLibraryBadge: Badge) -> UserActivityBadgeDomainModel {
+    func getBadge(from godToolsSharedLibraryBadge: Badge, translatedInAppLanguage: AppLanguageDomainModel) -> UserActivityBadgeDomainModel {
         
         let badgeType = godToolsSharedLibraryBadge.type
         let variant = Int(godToolsSharedLibraryBadge.variant)
         
-        let badgeText = getBadgeText(badgeType: badgeType, progressTarget: Int(godToolsSharedLibraryBadge.progressTarget))
+        let badgeText = getBadgeText(badgeType: badgeType, progressTarget: Int(godToolsSharedLibraryBadge.progressTarget), translatedInAppLanguage: translatedInAppLanguage)
         let iconName = getIconImageName(badgeType: badgeType, variant: variant)
         
         let iconBackgroundColor = Color(godToolsSharedLibraryBadge.colors.containerColor(mode: .light))
@@ -46,7 +46,7 @@ class GetUserActivityBadgeUseCase {
         )
     }
     
-    private func getBadgeText(badgeType: Badge.BadgeType, progressTarget: Int) -> String {
+    private func getBadgeText(badgeType: Badge.BadgeType, progressTarget: Int, translatedInAppLanguage: AppLanguageDomainModel) -> String {
         
         let stringLocalizationKey: String
         
@@ -78,7 +78,11 @@ class GetUserActivityBadgeUseCase {
 
         }
         
-        let formatString = localizationServices.stringForSystemElseEnglish(key: stringLocalizationKey, fileType: .stringsdict)
+        let formatString = localizationServices.stringForLocaleElseEnglish(
+            localeIdentifier: translatedInAppLanguage,
+            key: stringLocalizationKey,
+            fileType: .stringsdict
+        )
         
         let badgeText: String = String.localizedStringWithFormat(formatString, progressTarget)
         
