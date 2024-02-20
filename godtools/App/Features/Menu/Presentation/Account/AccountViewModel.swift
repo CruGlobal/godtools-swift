@@ -17,7 +17,6 @@ class AccountViewModel: ObservableObject {
     private let getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase
     private let getUserActivityUseCase: GetUserActivityUseCase
     private let getGlobalActivityThisWeekUseCase: GetGlobalActivityThisWeekUseCase
-    private let getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let viewAccountUseCase: ViewAccountUseCase
     
@@ -43,14 +42,13 @@ class AccountViewModel: ObservableObject {
     @Published var numberOfGlobalActivityThisWeekItems: Int = 0
     @Published var stats = [UserActivityStatDomainModel]()
         
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase, getUserActivityUseCase: GetUserActivityUseCase, getGlobalActivityThisWeekUseCase: GetGlobalActivityThisWeekUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, viewAccountUseCase: ViewAccountUseCase) {
+    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase, getUserActivityUseCase: GetUserActivityUseCase, getGlobalActivityThisWeekUseCase: GetGlobalActivityThisWeekUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, viewAccountUseCase: ViewAccountUseCase) {
         
         self.flowDelegate = flowDelegate
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getUserAccountDetailsUseCase = getUserAccountDetailsUseCase
         self.getGlobalActivityThisWeekUseCase = getGlobalActivityThisWeekUseCase
         self.getUserActivityUseCase = getUserActivityUseCase
-        self.getInterfaceStringInAppLanguageUseCase = getInterfaceStringInAppLanguageUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.viewAccountUseCase = viewAccountUseCase
         
@@ -69,23 +67,7 @@ class AccountViewModel: ObservableObject {
                 self.myActivitySectionTitle = interfaceStrings.myActivitySectionTitle
                 self.badgesSectionTitle = interfaceStrings.badgesSectionTitle
                 self.globalActivityButtonTitle = interfaceStrings.globalActivityButtonTitle
-                
-            }
-            .store(in: &cancellables)
-        
-        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: MenuStringKeys.Account.globalAnalyticsTitle.rawValue)
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (localizedGlobalActivityTitle: String) in
-                
-                let todaysDate: Date = Date()
-                let todaysYearComponents: DateComponents = Calendar.current.dateComponents([.year], from: todaysDate)
-                        
-                if let year = todaysYearComponents.year {
-                    self?.globalActivityTitle = "\(year) \(localizedGlobalActivityTitle)"
-                }
-                else {
-                    self?.globalActivityTitle = localizedGlobalActivityTitle
-                }
+                self.globalActivityTitle = interfaceStrings.globalAnalyticsTitle
             }
             .store(in: &cancellables)
         
