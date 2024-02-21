@@ -69,7 +69,7 @@ class GetUserActivityStatsUseCase {
     private func getUserActivityText(stringKey: String, activityCount: Int32, translatedInAppLanguage: AppLanguageDomainModel) -> String {
         
         let formatString = localizationServices.stringForLocaleElseEnglish(
-            localeIdentifier: translatedInAppLanguage,
+            localeIdentifier: translatedInAppLanguage.localeId,
             key: stringKey,
             fileType: .stringsdict
         )

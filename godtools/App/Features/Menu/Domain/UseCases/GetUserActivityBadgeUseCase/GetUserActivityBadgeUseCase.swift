@@ -79,7 +79,7 @@ class GetUserActivityBadgeUseCase {
         }
         
         let formatString = localizationServices.stringForLocaleElseEnglish(
-            localeIdentifier: translatedInAppLanguage,
+            localeIdentifier: translatedInAppLanguage.localeId,
             key: stringLocalizationKey,
             fileType: .stringsdict
         )

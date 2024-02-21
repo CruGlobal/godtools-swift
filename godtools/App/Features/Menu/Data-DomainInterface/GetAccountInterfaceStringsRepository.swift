@@ -19,7 +19,7 @@ class GetAccountInterfaceStringsRepository: GetAccountInterfaceStringsRepository
     
     func getStringsPublisher(translateInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<AccountInterfaceStringsDomainModel, Never> {
         
-        let localeId: String = translateInAppLanguage
+        let localeId: String = translateInAppLanguage.localeId
         
         let interfaceStrings = AccountInterfaceStringsDomainModel(
             navTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.Account.navTitle.rawValue),
