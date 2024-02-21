@@ -18,6 +18,11 @@ class UserAppLanguageRepository {
         self.cache = cache
     }
     
+    func getLanguage() -> UserAppLanguageDataModel? {
+        
+        return cache.getLanguage()
+    }
+    
     func getLanguagePublisher() -> AnyPublisher<UserAppLanguageDataModel?, Never> {
         
         return cache.getLanguagePublisher()

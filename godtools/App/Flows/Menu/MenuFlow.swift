@@ -318,14 +318,16 @@ class MenuFlow: Flow {
     private func getAuthErrorAlertMessage(authError: AuthErrorDomainModel) -> AlertMessageType {
         
         let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
+        let appLanguageLocaleId = appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase().getLanguage().localeId
+        
         let message: String
         
         switch authError {
         case .accountAlreadyExists:
-            message = localizationServices.stringForSystemElseEnglish(key: "authError.userAccountAlreadyExists.message")
+            message = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguageLocaleId, key: "authError.userAccountAlreadyExists.message")
             
         case .accountNotFound:
-            message = localizationServices.stringForSystemElseEnglish(key: "authError.userAccountNotFound.message")
+            message = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguageLocaleId, key: "authError.userAccountNotFound.message")
             
         case .other(let error):
             message = error.localizedDescription

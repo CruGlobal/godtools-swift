@@ -36,4 +36,12 @@ class GetAppLanguageRepository: GetAppLanguageRepositoryInterface {
             })
             .eraseToAnyPublisher()
     }
+    
+    func getLanguage() -> AppLanguageDomainModel {
+        
+        let userLanguage = userAppLanguageRepository.getLanguage()
+        let appLanguage: AppLanguageDomainModel = userLanguage?.languageId ?? LanguageCodeDomainModel.english.rawValue
+        
+        return appLanguage
+    }
 }
