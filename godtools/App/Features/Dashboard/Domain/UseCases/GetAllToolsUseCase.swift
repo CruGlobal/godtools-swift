@@ -75,10 +75,22 @@ class GetAllToolsUseCase {
     
     private func getTools(sorted: Bool, categoryId: String? = nil, languageId: String? = nil) -> [ToolDomainModel] {
         
-        return Array()
-        /*
-        return resourcesRepository.getAllTools(sorted: sorted, category: categoryId, languageId: languageId).map {
-            getToolUseCase.getTool(resource: $0)
-        }*/
+        return resourcesRepository.getAllToolsList(filterByCategory: categoryId, filterByLanguageId: languageId, sortByDefaultOrder: sorted).map {
+            return ToolDomainModel(
+                interfaceStrings: ToolListItemInterfaceStringsDomainModel(
+                    openToolActionTitle: "Open Tool",
+                    openToolDetailsActionTitle: "Tool Details"
+                ),
+                analyticsToolAbbreviation: $0.abbreviation,
+                bannerImageId: $0.attrBanner,
+                category: $0.attrCategory,
+                currentTranslationLanguage: LanguageDomainModel(analyticsContentLanguage: "", dataModelId: "", direction: .leftToRight, localeIdentifier: "", translatedName: ""),
+                dataModelId: $0.id,
+                languageIds: $0.languageIds,
+                name: $0.name,
+                languageAvailability: ToolLanguageAvailabilityDomainModel(availabilityString: "", isAvailable: false),
+                resource: $0
+            )
+        }
     }
 }
