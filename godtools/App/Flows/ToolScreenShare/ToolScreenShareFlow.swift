@@ -20,7 +20,6 @@ class ToolScreenShareFlow: Flow {
     private var creatingToolScreenShareSessionModal: UIViewController?
     private var cancellables: Set<AnyCancellable> = Set()
     
-    // NOTE: I need to keep these stored in the Flow since we use UIAlertController for the TimedOut alert and Share Modal which must set the title and message when allocating those views. ~Levi
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     @Published private var creatingToolScreenShareSessionTimedOutDomainModel: CreatingToolScreenShareSessionTimedOutDomainModel?
     @Published private var shareToolScreenShareSessionDomainModel: ShareToolScreenShareSessionDomainModel?
@@ -50,18 +49,21 @@ class ToolScreenShareFlow: Flow {
             }
             .store(in: &cancellables)
         
-        appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase()
+        appDiContainer.feature.appLanguage.domainLayer
+            .getCurrentAppLanguageUseCase()
             .getLanguagePublisher()
             .assign(to: &$appLanguage)
         
-        appDiContainer.feature.toolScreenShare.domainLayer.getViewCreatingToolScreenShareSessionTimedOutUseCase()
+        appDiContainer.feature.toolScreenShare.domainLayer
+            .getViewCreatingToolScreenShareSessionTimedOutUseCase()
             .viewPublisher(appLanguage: appLanguage)
             .sink { [weak self] (domainModel: CreatingToolScreenShareSessionTimedOutDomainModel) in
                 self?.creatingToolScreenShareSessionTimedOutDomainModel = domainModel
             }
             .store(in: &cancellables)
         
-        appDiContainer.feature.toolScreenShare.domainLayer.getViewShareToolScreenShareSessionUseCase()
+        appDiContainer.feature.toolScreenShare.domainLayer
+            .getViewShareToolScreenShareSessionUseCase()
             .viewPublisher(appLanguage: appLanguage)
             .sink { [weak self] (domainModel: ShareToolScreenShareSessionDomainModel) in
                 self?.shareToolScreenShareSessionDomainModel = domainModel
