@@ -12,28 +12,16 @@ import GodToolsToolParser
 
 class GetShareablesRepository: GetShareablesRepositoryInterface {
     
-    private let resourcesRepository: ResourcesRepository
-    private let languagesRepository: LanguagesRepository
     private let translationsRepository: TranslationsRepository
     
-    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, translationsRepository: TranslationsRepository) {
+    init(translationsRepository: TranslationsRepository) {
         
-        self.resourcesRepository = resourcesRepository
-        self.languagesRepository = languagesRepository
         self.translationsRepository = translationsRepository
     }
     
-    func getShareablesPublisher(toolId: String, toolLanguage: BCP47LanguageIdentifier) -> AnyPublisher<[ShareableDomainModel], Never> {
+    func getShareablesPublisher(toolId: String, toolLanguageId: String) -> AnyPublisher<[ShareableDomainModel], Never> {
         
-        guard let tool = resourcesRepository.getResource(id: toolId),
-              let language = languagesRepository.getLanguage(code: toolLanguage) else {
-            
-            return Just([])
-                .eraseToAnyPublisher()
-        }
-        
-        guard let translation = translationsRepository.getLatestTranslation(resourceId: tool.id, languageCode: language.code) else {
-            
+        guard let translation = translationsRepository.getLatestTranslation(resourceId: toolId, languageId: toolLanguageId) else {
             return Just([])
                 .eraseToAnyPublisher()
         }

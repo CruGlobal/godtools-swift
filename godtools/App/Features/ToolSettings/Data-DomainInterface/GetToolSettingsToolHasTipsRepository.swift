@@ -18,14 +18,9 @@ class GetToolSettingsToolHasTipsRepository: GetToolSettingsToolHasTipsRepository
         self.translationsRepository = translationsRepository
     }
     
-    func getHasTipsPublisher(tool: ResourceModel, toolLanguage: ToolSettingsToolLanguageDomainModel?) -> AnyPublisher<Bool, Never> {
+    func getHasTipsPublisher(toolId: String, toolLanguageId: String) -> AnyPublisher<Bool, Never> {
         
-        guard let languageId = toolLanguage?.dataModelId else {
-            return Just(false)
-                .eraseToAnyPublisher()
-        }
-        
-        guard let translation = translationsRepository.getLatestTranslation(resourceId: tool.id, languageId: languageId) else {
+        guard let translation = translationsRepository.getLatestTranslation(resourceId: toolId, languageId: toolLanguageId) else {
             return Just(false)
                 .eraseToAnyPublisher()
         }
