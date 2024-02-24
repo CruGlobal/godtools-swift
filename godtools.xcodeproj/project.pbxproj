@@ -1452,6 +1452,9 @@
 		D43FC1CA2B6997B600F8310E /* GetDownloadedLanguagesListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43FC1C92B6997B600F8310E /* GetDownloadedLanguagesListRepository.swift */; };
 		D43FC1D82B882A7C00F8310E /* SearchAppLanguageInAppLanguagesListRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43FC1D72B882A7C00F8310E /* SearchAppLanguageInAppLanguagesListRepositoryInterface.swift */; };
 		D43FC1DA2B882AF400F8310E /* SearchAppLanguageInAppLanguagesListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43FC1D92B882AF400F8310E /* SearchAppLanguageInAppLanguagesListRepository.swift */; };
+		D43FC1DC2B893B3400F8310E /* SearchLanguageInDownloadableLanguagesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43FC1DB2B893B3400F8310E /* SearchLanguageInDownloadableLanguagesUseCase.swift */; };
+		D43FC1DE2B893BCA00F8310E /* SearchLanguageInDownloadableLanguagesRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43FC1DD2B893BCA00F8310E /* SearchLanguageInDownloadableLanguagesRepositoryInterface.swift */; };
+		D43FC1E02B893C7100F8310E /* SearchLanguageInDownloadableLanguagesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43FC1DF2B893C7100F8310E /* SearchLanguageInDownloadableLanguagesRepository.swift */; };
 		D455F3ED2977302D009D5F93 /* GetUserActivityUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D455F3EC2977302D009D5F93 /* GetUserActivityUseCase.swift */; };
 		D455F3F0297739F6009D5F93 /* AccountActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D455F3EF297739F6009D5F93 /* AccountActivityView.swift */; };
 		D455F3F229773C1B009D5F93 /* UserActivityDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D455F3F129773C1B009D5F93 /* UserActivityDomainModel.swift */; };
@@ -2994,6 +2997,9 @@
 		D43FC1C92B6997B600F8310E /* GetDownloadedLanguagesListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetDownloadedLanguagesListRepository.swift; sourceTree = "<group>"; };
 		D43FC1D72B882A7C00F8310E /* SearchAppLanguageInAppLanguagesListRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAppLanguageInAppLanguagesListRepositoryInterface.swift; sourceTree = "<group>"; };
 		D43FC1D92B882AF400F8310E /* SearchAppLanguageInAppLanguagesListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAppLanguageInAppLanguagesListRepository.swift; sourceTree = "<group>"; };
+		D43FC1DB2B893B3400F8310E /* SearchLanguageInDownloadableLanguagesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLanguageInDownloadableLanguagesUseCase.swift; sourceTree = "<group>"; };
+		D43FC1DD2B893BCA00F8310E /* SearchLanguageInDownloadableLanguagesRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLanguageInDownloadableLanguagesRepositoryInterface.swift; sourceTree = "<group>"; };
+		D43FC1DF2B893C7100F8310E /* SearchLanguageInDownloadableLanguagesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLanguageInDownloadableLanguagesRepository.swift; sourceTree = "<group>"; };
 		D455F3EC2977302D009D5F93 /* GetUserActivityUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserActivityUseCase.swift; sourceTree = "<group>"; };
 		D455F3EF297739F6009D5F93 /* AccountActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountActivityView.swift; sourceTree = "<group>"; };
 		D455F3F129773C1B009D5F93 /* UserActivityDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserActivityDomainModel.swift; sourceTree = "<group>"; };
@@ -3537,6 +3543,7 @@
 				453D2F7F2AD88C1D001C44E3 /* GetLanguageSettingsInterfaceStringsRepositoryInterface.swift */,
 				453A2EF92B3636E300C8F865 /* RemoveDownloadedToolLanguageRepositoryInterface.swift */,
 				D43FC1D72B882A7C00F8310E /* SearchAppLanguageInAppLanguagesListRepositoryInterface.swift */,
+				D43FC1DD2B893BCA00F8310E /* SearchLanguageInDownloadableLanguagesRepositoryInterface.swift */,
 				4585BF652AC391F100A6D720 /* SetUserPreferredAppLanguageRepositoryInterface.swift */,
 				45CE95872B7C04B000A09340 /* StoreInitialAppLanguageInterface.swift */,
 			);
@@ -8242,6 +8249,7 @@
 				45B3F4382AC3A82E00D61BFD /* SetUserPreferredAppLanguageRepository.swift */,
 				45CE95892B7C053500A09340 /* StoreInitialAppLanguage.swift */,
 				D43FC1D92B882AF400F8310E /* SearchAppLanguageInAppLanguagesListRepository.swift */,
+				D43FC1DF2B893C7100F8310E /* SearchLanguageInDownloadableLanguagesRepository.swift */,
 			);
 			path = "Data-DomainInterface";
 			sourceTree = "<group>";
@@ -9827,6 +9835,7 @@
 				4569C5012AC367BD0004BCDE /* GetInterfaceStringInAppLanguageUseCase.swift */,
 				453A2EF62B3636DA00C8F865 /* RemoveDownloadedToolLanguageUseCase.swift */,
 				45ACEE192AD0492D004B62E4 /* SearchAppLanguageInAppLanguagesListUseCase.swift */,
+				D43FC1DB2B893B3400F8310E /* SearchLanguageInDownloadableLanguagesUseCase.swift */,
 				4585BF632AC391D200A6D720 /* SetAppLanguageUseCase.swift */,
 				454CA1F92B7BC2E6009A3976 /* StoreInitialAppLanguageUseCase.swift */,
 				454CA2032B7BD358009A3976 /* ViewAppLanguagesUseCase.swift */,
@@ -12141,6 +12150,7 @@
 				452486DB2B07C991007AD932 /* LanguageFilterDomainModel.swift in Sources */,
 				458E410B2A9CCE55009769DF /* AppBuildConfiguration.swift in Sources */,
 				45677780287DB21F0044AEB2 /* ToolTrainingTipView.swift in Sources */,
+				D43FC1DE2B893BCA00F8310E /* SearchLanguageInDownloadableLanguagesRepositoryInterface.swift in Sources */,
 				450E64D12B570C2700A74F6D /* RealmTranslatedLanguageName.swift in Sources */,
 				4512D4CE2B29127200DFAFB3 /* ToolSettingsToolLanguageDomainModel.swift in Sources */,
 				45D318FA2AE700A200D74A87 /* AppLanguagesCache.swift in Sources */,
@@ -12451,6 +12461,7 @@
 				45E585222A8E5C7F005B20A6 /* ToolFilterButtonView.swift in Sources */,
 				45C1A43528256B3300B8469A /* ProcessedEventResult.swift in Sources */,
 				45EA5AB02B22482200D9E330 /* ToolSettingsDataLayerDependencies.swift in Sources */,
+				D43FC1E02B893C7100F8310E /* SearchLanguageInDownloadableLanguagesRepository.swift in Sources */,
 				4512C80A2B322D5900D162F3 /* ToolSettingsShareableItemViewModel.swift in Sources */,
 				45039E102B1F5ADD009E1D96 /* ViewToolDetailsUseCase.swift in Sources */,
 				4561AC9A279C4CC6003718C0 /* MobileContentCardCollectionPageView.swift in Sources */,
@@ -12590,6 +12601,7 @@
 				45645C1B2AFE78A200BD233D /* ShareToolScreenShareSessionViewModel.swift in Sources */,
 				450F94DA27A1F0F6009DEA43 /* MobileContentCardCollectionPageCardViewModel.swift in Sources */,
 				45931FFB2B34C1F9008034C8 /* ReviewShareShareableInterfaceStringsDomainModel.swift in Sources */,
+				D43FC1DC2B893B3400F8310E /* SearchLanguageInDownloadableLanguagesUseCase.swift in Sources */,
 				45DB18902AD7907600E9578F /* GetAppLanguagesRepositoryInterface.swift in Sources */,
 				45860A8C29242DC30089C836 /* AccountGlobalActivityAnalyticsItemViewModel.swift in Sources */,
 				45E066D22AE16B93004393CD /* StoreOnboardingTutorialViewedRepositoryInterface.swift in Sources */,

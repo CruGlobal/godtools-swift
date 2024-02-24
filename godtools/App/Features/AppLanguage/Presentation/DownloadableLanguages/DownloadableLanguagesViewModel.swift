@@ -14,6 +14,7 @@ class DownloadableLanguagesViewModel: ObservableObject {
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let viewDownloadableLanguagesUseCase: ViewDownloadableLanguagesUseCase
     private let viewSearchBarUseCase: ViewSearchBarUseCase
+    private let searchLanguageInDownloadableLanguagesUseCase: SearchLanguageInDownloadableLanguagesUseCase
     private let downloadToolLanguageUseCase: DownloadToolLanguageUseCase
     private let removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase
     
@@ -30,12 +31,13 @@ class DownloadableLanguagesViewModel: ObservableObject {
     @Published var displayedDownloadableLanguages: [DownloadableLanguageListItemDomainModel] = Array()
     @Published var navTitle: String = ""
     
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewDownloadableLanguagesUseCase: ViewDownloadableLanguagesUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, downloadToolLanguageUseCase: DownloadToolLanguageUseCase, removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase) {
+    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewDownloadableLanguagesUseCase: ViewDownloadableLanguagesUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, searchLanguageInDownloadableLanguagesUseCase: SearchLanguageInDownloadableLanguagesUseCase, downloadToolLanguageUseCase: DownloadToolLanguageUseCase, removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase) {
         
         self.flowDelegate = flowDelegate
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.viewDownloadableLanguagesUseCase = viewDownloadableLanguagesUseCase
         self.viewSearchBarUseCase = viewSearchBarUseCase
+        self.searchLanguageInDownloadableLanguagesUseCase = searchLanguageInDownloadableLanguagesUseCase
         self.downloadToolLanguageUseCase = downloadToolLanguageUseCase
         self.removeDownloadedToolLanguageUseCase = removeDownloadedToolLanguageUseCase
         
@@ -61,7 +63,10 @@ class DownloadableLanguagesViewModel: ObservableObject {
             .store(in: &cancellables)
         
         Publishers.CombineLatest(
-            $downloadableLanguages.eraseToAnyPublisher(),
+            searchLanguageInDownloadableLanguagesUseCase.getSearchResultsPublisher(
+                for: $searchText.eraseToAnyPublisher(),
+                in: $downloadableLanguages.eraseToAnyPublisher()
+            ),
             $activeDownloads.eraseToAnyPublisher()
         )
         .receive(on: DispatchQueue.main)

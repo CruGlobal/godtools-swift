@@ -148,6 +148,10 @@ class AppLanguageFeatureDataLayerDependencies {
         )
     }
     
+    func getSearchLanguageInDownloadableLanguagesRepositoryInterface() -> SearchLanguageInDownloadableLanguagesRepositoryInterface {
+        return SearchLanguageInDownloadableLanguagesRepository(stringSearcher: StringSearcher())
+    }
+    
     func getSetUserPreferredAppLanguageRepositoryInterface() -> SetUserPreferredAppLanguageRepositoryInterface {
         return SetUserPreferredAppLanguageRepository(
             userAppLanguageRepository: getUserAppLanguageRepository()
