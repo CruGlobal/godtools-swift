@@ -6243,6 +6243,20 @@
 			path = Transitioning;
 			sourceTree = "<group>";
 		};
+		456AC19F2B8D384400169C11 /* tdt.lproj */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = tdt.lproj;
+			sourceTree = "<group>";
+		};
+		456AC1A02B8D384400169C11 /* kek.lproj */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = kek.lproj;
+			sourceTree = "<group>";
+		};
 		456BB02227C583550087CCA4 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -10390,6 +10404,8 @@
 				4F5732981EA69CF00082035C /* LaunchScreen.storyboard */,
 				D4B522DB29D761B700D85213 /* Localizable.stringsdict */,
 				4FAF207A1F02933900C43AFC /* Localizable.strings */,
+				456AC1A02B8D384400169C11 /* kek.lproj */,
+				456AC19F2B8D384400169C11 /* tdt.lproj */,
 				D471CFBF28B3D67100DCE61C /* Preview Content */,
 				45AD174725938A4D00A096A0 /* App */,
 			);
