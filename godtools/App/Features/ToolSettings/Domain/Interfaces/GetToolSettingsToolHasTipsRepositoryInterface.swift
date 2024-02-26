@@ -11,5 +11,5 @@ import Combine
 
 protocol GetToolSettingsToolHasTipsRepositoryInterface {
     
-    func getHasTipsPublisher(tool: ResourceModel, toolLanguage: ToolSettingsToolLanguageDomainModel?) -> AnyPublisher<Bool, Never>
+    func getHasTipsPublisher(toolId: String, toolLanguageId: String) -> AnyPublisher<Bool, Never>
 }

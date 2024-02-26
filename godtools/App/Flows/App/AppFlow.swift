@@ -730,13 +730,13 @@ extension AppFlow {
         
         let languagesRepository: LanguagesRepository = appDiContainer.dataLayer.getLanguagesRepository()
         
-        let languageIds: Set<String>
+        let languageIds: [String]
         
         if let appLanguageModel = languagesRepository.getLanguage(code: appLanguage) {
             languageIds = [appLanguageModel.id]
         }
         else {
-            languageIds = Set()
+            languageIds = Array()
         }
         
         navigateToTool(toolDataModelId: toolDataModelId, languageIds: languageIds, selectedLanguageIndex: nil, trainingTipsEnabled: trainingTipsEnabled)
@@ -746,24 +746,24 @@ extension AppFlow {
         
         let languagesRepository: LanguagesRepository = appDiContainer.dataLayer.getLanguagesRepository()
         
-        var languageIds: Set<String> = Set()
+        var languageIds: [String] = Array()
         
         if let languageModel = languagesRepository.getLanguage(code: primaryLanguage) {
-            languageIds.insert(languageModel.id)
+            languageIds.append(languageModel.id)
         }
         
         if let parallelLanguage = parallelLanguage, let languageModel = languagesRepository.getLanguage(code: parallelLanguage) {
-            languageIds.insert(languageModel.id)
+            languageIds.append(languageModel.id)
         }
         
         navigateToTool(toolDataModelId: toolDataModelId, languageIds: languageIds, selectedLanguageIndex: selectedLanguageIndex, trainingTipsEnabled: trainingTipsEnabled)
     }
         
-    private func navigateToTool(toolDataModelId: String, languageIds: Set<String>, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool) {
+    private func navigateToTool(toolDataModelId: String, languageIds: [String], selectedLanguageIndex: Int?, trainingTipsEnabled: Bool) {
         
         let languagesRepository: LanguagesRepository = appDiContainer.dataLayer.getLanguagesRepository()
         
-        let openToolInLanguages: Set<String>
+        let openToolInLanguages: [String]
         
         if languageIds.isEmpty, let englishLanguage = languagesRepository.getLanguage(code: LanguageCodeDomainModel.english.rawValue) {
             

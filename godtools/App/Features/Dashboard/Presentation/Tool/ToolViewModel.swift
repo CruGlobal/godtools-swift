@@ -161,16 +161,41 @@ extension ToolViewModel {
     
     @objc func toolSettingsTapped() {
         
-        let toolData = ToolSettingsFlowToolData(
-            renderer: renderer,
-            currentPageRenderer: currentPageRenderer,
-            tractRemoteSharePublisher: tractRemoteSharePublisher,
-            selectedLanguage: languages[selectedLanguageIndex],
-            pageNumber: currentRenderedPageNumber,
-            trainingTipsEnabled: trainingTipsEnabled
+        let languages = ToolSettingsLanguages(
+            primaryLanguageId: languages[0].id,
+            parallelLanguageId: languages[safe: 1]?.id,
+            selectedLanguageId: languages[selectedLanguageIndex].id
         )
         
-        flowDelegate?.navigate(step: .toolSettingsTappedFromTool(toolData: toolData))
+        let toolSettingsObserver = ToolSettingsObserver(
+            toolId: renderer.value.resource.id,
+            languages: languages,
+            pageNumber: currentRenderedPageNumber,
+            trainingTipsEnabled: trainingTipsEnabled,
+            tractRemoteSharePublisher: tractRemoteSharePublisher
+        )
+
+        toolSettingsObserver.$languages
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (languages: ToolSettingsLanguages) in
+                
+                self?.setRendererPrimaryLanguage(
+                    primaryLanguageId: languages.primaryLanguageId,
+                    parallelLanguageId: languages.parallelLanguageId,
+                    selectedLanguageId: languages.selectedLanguageId
+                )
+            }
+            .store(in: &cancellables)
+        
+        toolSettingsObserver.$trainingTipsEnabled
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (trainingTipsEnabled: Bool) in
+                
+                self?.setTrainingTipsEnabled(enabled: trainingTipsEnabled)
+            }
+            .store(in: &cancellables)
+        
+        flowDelegate?.navigate(step: .toolSettingsTappedFromTool(toolSettingsObserver: toolSettingsObserver))
     }
     
     func languageTapped(index: Int, page: Int, pagePositions: ToolPagePositions) {

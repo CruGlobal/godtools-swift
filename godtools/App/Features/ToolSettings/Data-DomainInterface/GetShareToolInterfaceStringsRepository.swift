@@ -11,17 +11,28 @@ import Combine
 
 class GetShareToolInterfaceStringsRepository: GetShareToolInterfaceStringsRepositoryInterface {
     
+    private let resourcesRepository: ResourcesRepository
+    private let languagesRepository: LanguagesRepository
     private let localizationServices: LocalizationServices
     
-    init(localizationServices: LocalizationServices) {
+    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, localizationServices: LocalizationServices) {
         
+        self.resourcesRepository = resourcesRepository
+        self.languagesRepository = languagesRepository
         self.localizationServices = localizationServices
     }
     
-    // TODO: Eventually shouldn't depend on ResourceModel here.  Should be a domain model. ~Levi
-    func getStringsPublisher(tool: ResourceModel, toolLanguage: LanguageDomainModel, pageNumber: Int, translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<ShareToolInterfaceStringsDomainModel, Never> {
+    func getStringsPublisher(toolId: String, toolLanguageId: String, pageNumber: Int, translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<ShareToolInterfaceStringsDomainModel, Never> {
         
-        var toolUrl: String = "https://knowgod.com/\(toolLanguage.localeIdentifier)/\(tool.abbreviation)"
+        let localizedShareToolMessage: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "tract_share_message")
+        
+        guard let resource = resourcesRepository.getResource(id: toolId), let toolLanguage = languagesRepository.getLanguage(id: toolLanguageId) else {
+            
+            return Just(ShareToolInterfaceStringsDomainModel(shareMessage: localizedShareToolMessage))
+                .eraseToAnyPublisher()
+        }
+        
+        var toolUrl: String = "https://knowgod.com/\(toolLanguage.code)/\(resource.abbreviation)"
 
         if pageNumber > 0 {
             toolUrl = toolUrl.appending("/").appending("\(pageNumber)")
@@ -29,8 +40,6 @@ class GetShareToolInterfaceStringsRepository: GetShareToolInterfaceStringsReposi
         
         toolUrl = toolUrl.replacingOccurrences(of: " ", with: "").appending("?icid=gtshare ")
 
-        let localizedShareToolMessage: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "tract_share_message")
-        
         let shareMessageWithToolUrl: String = String.localizedStringWithFormat(localizedShareToolMessage, toolUrl)
         
         let interfaceStrings = ShareToolInterfaceStringsDomainModel(

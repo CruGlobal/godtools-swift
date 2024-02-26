@@ -18,10 +18,10 @@ class GetShareablesUseCase {
         self.getShareablesRepository = getShareablesRepository
     }
     
-    func getShareablesPublisher(toolId: String, toolLanguage: BCP47LanguageIdentifier) -> AnyPublisher<[ShareableDomainModel], Never> {
+    func getShareablesPublisher(toolId: String, toolLanguageId: String) -> AnyPublisher<[ShareableDomainModel], Never> {
         
         return getShareablesRepository
-            .getShareablesPublisher(toolId: toolId, toolLanguage: toolLanguage)
+            .getShareablesPublisher(toolId: toolId, toolLanguageId: toolLanguageId)
             .eraseToAnyPublisher()
     }
 }

@@ -20,6 +20,7 @@ class MobileContentRendererNavigation {
     private let appDiContainer: AppDiContainer
     
     private var toolTraining: ToolTrainingView?
+    private var downloadToolTranslationsFlow: DownloadToolTranslationsFlow?
     
     private weak var parentFlow: ToolNavigationFlow?
     private weak var delegate: MobileContentRendererNavigationDelegate?
@@ -85,6 +86,31 @@ class MobileContentRendererNavigation {
     func trainingTipTapped(event: TrainingTipEvent) {
                 
         presentToolTraining(event: event)
+    }
+    
+    func downloadToolLanguages(toolId: String, languageIds: [String], completion: @escaping ((_ result: Result<ToolTranslationsDomainModel, Error>) -> Void)) {
+             
+        guard let flow = parentFlow else {
+            completion(.failure(NSError.errorWithDescription(description: "Failed to download tool languages.  Parent flow is null.")))
+            return
+        }
+        
+        let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(
+            resourceId: toolId,
+            languageIds: languageIds,
+            resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
+            translationsRepository: appDiContainer.dataLayer.getTranslationsRepository()
+        )
+        
+        downloadToolTranslationsFlow = DownloadToolTranslationsFlow(
+            presentInFlow: flow,
+            appDiContainer: appDiContainer,
+            determineToolTranslationsToDownload: determineToolTranslationsToDownload,
+            didDownloadToolTranslations: { [weak self] (result: Result<ToolTranslationsDomainModel, Error>) in
+                self?.downloadToolTranslationsFlow = nil
+                completion(result)
+            }
+        )
     }
     
     private func presentToolTraining(event: TrainingTipEvent) {

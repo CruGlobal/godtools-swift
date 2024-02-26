@@ -20,11 +20,11 @@ class ViewToolSettingsToolLanguagesListUseCase {
         self.getToolLanguagesRepository = getToolLanguagesRepository
     }
     
-    func viewPublisher(listType: ToolSettingsToolLanguagesListTypeDomainModel, primaryLanguage: ToolSettingsToolLanguageDomainModel?, parallelLanguage: ToolSettingsToolLanguageDomainModel?, toolId: String, appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewToolSettingsToolLanguagesListDomainModel, Never> {
+    func viewPublisher(listType: ToolSettingsToolLanguagesListTypeDomainModel, primaryLanguageId: String, parallelLanguageId: String?, toolId: String, appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewToolSettingsToolLanguagesListDomainModel, Never> {
         
         return Publishers.CombineLatest(
             getInterfaceStringsRepository.getStringsPublisher(translateInLanguage: appLanguage),
-            getToolLanguagesRepository.getToolLanguagesPublisher(listType: listType, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, toolId: toolId, translateInLanguage: appLanguage)
+            getToolLanguagesRepository.getToolLanguagesPublisher(listType: listType, primaryLanguageId: primaryLanguageId, parallelLanguageId: parallelLanguageId, toolId: toolId, translateInLanguage: appLanguage)
         )
         .map {
             return ViewToolSettingsToolLanguagesListDomainModel(
