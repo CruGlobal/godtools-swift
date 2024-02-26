@@ -181,17 +181,17 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>zero</key>
-<string/>
+<string>%d لا يوجد لغات متوفرة</string>
 <key>one</key>
-<string>1 Language available</string>
+<string>%d لغة متوفرة</string>
 <key>two</key>
-<string/>
+<string>%d لغتان متوفرتان</string>
 <key>few</key>
-<string/>
+<string>%d بعض اللغات متوفرة</string>
 <key>many</key>
-<string/>
+<string>%d كثير من  اللغات متوفرة</string>
 <key>other</key>
-<string>%d Languages available</string>
+<string>%d لغات متوفرة</string>
 </dict>
 </dict>
 <key>badges.imagesShared</key>
