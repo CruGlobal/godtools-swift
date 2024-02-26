@@ -48,7 +48,7 @@ struct ToolSettingsOptionsView: View {
                         }
                     )
                     
-                    if !viewModel.hidesToggleTrainingTipsButton {
+                    if !viewModel.hidesTrainingTipsButton {
                         
                         ToolSettingsOptionView(
                             viewBackground: .image(image: ImageCatalog.toolSettingsOptionTrainingTipsBackground.image),

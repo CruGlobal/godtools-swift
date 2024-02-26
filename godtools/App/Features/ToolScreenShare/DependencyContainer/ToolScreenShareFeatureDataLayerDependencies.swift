@@ -56,7 +56,10 @@ class ToolScreenShareFeatureDataLayerDependencies {
     }
     
     func getTractRemoteShareURLBuilder() -> TractRemoteShareURLBuilder {
-        return TractRemoteShareURLBuilder()
+        return TractRemoteShareURLBuilder(
+            resourcesRepository: coreDataLayer.getResourcesRepository(),
+            languagesRepository: coreDataLayer.getLanguagesRepository()
+        )
     }
     
     // MARK: - Domain Interface

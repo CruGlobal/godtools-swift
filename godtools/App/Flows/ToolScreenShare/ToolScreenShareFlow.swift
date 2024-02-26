@@ -11,10 +11,8 @@ import SwiftUI
 import Combine
 
 class ToolScreenShareFlow: Flow {
-    
-    private let toolData: ToolSettingsFlowToolData
-    private let primaryLanguage: LanguageDomainModel
-    private let parallelLanguage: LanguageDomainModel?
+
+    private let toolSettingsObserver: ToolSettingsObserver
     
     private var toolScreenShareTutorialModal: UIViewController?
     private var creatingToolScreenShareSessionModal: UIViewController?
@@ -29,19 +27,17 @@ class ToolScreenShareFlow: Flow {
     let appDiContainer: AppDiContainer
     let navigationController: AppNavigationController
     
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, toolData: ToolSettingsFlowToolData, primaryLanguage: LanguageDomainModel, parallelLanguage: LanguageDomainModel?) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, toolSettingsObserver: ToolSettingsObserver) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController
-        self.toolData = toolData
-        self.primaryLanguage = primaryLanguage
-        self.parallelLanguage = parallelLanguage
+        self.toolSettingsObserver = toolSettingsObserver
         
         let getToolScreenShareTutorialHasBeenViewedUseCase: GetToolScreenShareTutorialHasBeenViewedUseCase = appDiContainer.feature.toolScreenShare.domainLayer.getToolScreenShareTutorialHasBeenViewedUseCase()
         
         getToolScreenShareTutorialHasBeenViewedUseCase
-            .getViewedPublisher(toolId: toolData.renderer.value.resource.id)
+            .getViewedPublisher(toolId: toolSettingsObserver.toolId)
             .receive(on: DispatchQueue.main)
             .first()
             .sink { [weak self] (toolScreenShareTutorialViewed: ToolScreenShareTutorialViewedDomainModel) in
@@ -77,20 +73,18 @@ class ToolScreenShareFlow: Flow {
     
     private func navigateToInitialView(toolScreenShareTutorialViewed: ToolScreenShareTutorialViewedDomainModel) {
         
-         let toolScreenShareTutorialHasBeenViewed: Bool = toolScreenShareTutorialViewed.hasBeenViewed
-         
-         if toolData.tractRemoteSharePublisher.webSocketIsConnected, let channel = toolData.tractRemoteSharePublisher.tractRemoteShareChannel {
-         
-             navigate(step: .didCreateSessionFromCreatingToolScreenShareSession(result: .success(channel)))
-         }
-         else if toolScreenShareTutorialHasBeenViewed || (toolData.tractRemoteSharePublisher.webSocketIsConnected && toolData.tractRemoteSharePublisher.tractRemoteShareChannel != nil) {
-         
-             presentCreatingToolScreenShareSession()
-         }
-         else {
-         
-             presentToolScreenShareTutorial()
-         }
+        let toolScreenShareTutorialHasBeenViewed: Bool = toolScreenShareTutorialViewed.hasBeenViewed
+        let tractRemoteSharePublisher: TractRemoteSharePublisher = toolSettingsObserver.tractRemoteSharePublisher
+        
+        if tractRemoteSharePublisher.webSocketIsConnected, let channel = tractRemoteSharePublisher.tractRemoteShareChannel {
+            navigate(step: .didCreateSessionFromCreatingToolScreenShareSession(result: .success(channel)))
+        }
+        else if toolScreenShareTutorialHasBeenViewed || (tractRemoteSharePublisher.webSocketIsConnected && tractRemoteSharePublisher.tractRemoteShareChannel != nil) {
+            presentCreatingToolScreenShareSession()
+        }
+        else {
+            presentToolScreenShareTutorial()
+        }
     }
     
     func navigate(step: FlowStep) {
@@ -121,13 +115,9 @@ class ToolScreenShareFlow: Flow {
             case .success(let channel):
                 
                 let tractRemoteShareURLBuilder: TractRemoteShareURLBuilder = appDiContainer.feature.toolScreenShare.dataLayer.getTractRemoteShareURLBuilder()
-                
-                let resource: ResourceModel = toolData.renderer.value.resource
-                let selectedLanguage: LanguageDomainModel = toolData.selectedLanguage
-                let page: Int = toolData.pageNumber
-                
+                                
                 guard let domainModel = shareToolScreenShareSessionDomainModel,
-                      let remoteShareUrl = tractRemoteShareURLBuilder.buildRemoteShareURL(resource: resource, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, selectedLanguage: selectedLanguage, page: page, subscriberChannelId: channel.subscriberChannelId) else {
+                      let remoteShareUrl = tractRemoteShareURLBuilder.buildRemoteShareURL(toolId: toolSettingsObserver.toolId, primaryLanguageId: toolSettingsObserver.languages.primaryLanguageId, parallelLanguageId: toolSettingsObserver.languages.parallelLanguageId, selectedLanguageId: toolSettingsObserver.languages.selectedLanguageId, page: toolSettingsObserver.pageNumber, subscriberChannelId: channel.subscriberChannelId) else {
                     
                     let viewModel = AlertMessageViewModel(
                         title: "Error",
@@ -176,7 +166,7 @@ class ToolScreenShareFlow: Flow {
             return
         }
         
-        let toolScreenShareTutorialView = getToolScreenShareTutorialView(toolId: toolData.renderer.value.resource.id)
+        let toolScreenShareTutorialView = getToolScreenShareTutorialView(toolId: toolSettingsObserver.toolId)
         
         let modal = ModalNavigationController.defaultModal(
             rootView: toolScreenShareTutorialView,
@@ -279,10 +269,10 @@ extension ToolScreenShareFlow {
         
         let viewModel = CreatingToolScreenShareSessionViewModel(
             flowDelegate: self,
-            toolId: toolData.renderer.value.resource.id,
+            toolId: toolSettingsObserver.toolId,
             getCurrentAppLanguage: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             viewCreatingToolScreenShareSessionUseCase: appDiContainer.feature.toolScreenShare.domainLayer.getViewCreatingToolScreenShareSessionUseCase(),
-            tractRemoteSharePublisher: toolData.tractRemoteSharePublisher,
+            tractRemoteSharePublisher: toolSettingsObserver.tractRemoteSharePublisher,
             incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase()
         )
         

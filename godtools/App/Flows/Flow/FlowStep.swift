@@ -82,7 +82,7 @@ enum FlowStep {
     // tool
     case homeTappedFromTool(isScreenSharing: Bool)
     case backTappedFromTool
-    case toolSettingsTappedFromTool(toolData: ToolSettingsFlowToolData)
+    case toolSettingsTappedFromTool(toolSettingsObserver: ToolSettingsObserver)
     case tractFlowCompleted(state: TractFlowCompletedState)
         
     // tutorial
@@ -174,8 +174,6 @@ enum FlowStep {
     case closeTappedFromToolSettings
     case shareLinkTappedFromToolSettings
     case screenShareTappedFromToolSettings
-    case enableTrainingTipsTappedFromToolSettings
-    case disableTrainingTipsTappedFromToolSettings
     case primaryLanguageTappedFromToolSettings
     case parallelLanguageTappedFromToolSettings
     case shareableTappedFromToolSettings(shareable: ShareableDomainModel)
@@ -185,8 +183,8 @@ enum FlowStep {
     
     // tool settings tool languages list
     case closeTappedFromToolSettingsToolLanguagesList
-    case primaryLanguageTappedFromToolSettingsToolLanguagesList(language: ToolSettingsToolLanguageDomainModel)
-    case parallelLanguageTappedFromToolSettingsToolLanguagesList(language: ToolSettingsToolLanguageDomainModel)
+    case primaryLanguageTappedFromToolSettingsToolLanguagesList
+    case parallelLanguageTappedFromToolSettingsToolLanguagesList
     case deleteParallelLanguageTappedFromToolSettingsToolLanguagesList
     
     // tool screen share

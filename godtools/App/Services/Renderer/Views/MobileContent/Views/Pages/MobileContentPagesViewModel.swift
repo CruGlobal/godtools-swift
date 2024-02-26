@@ -158,6 +158,47 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
         return UISemanticContentAttribute.from(languageDirection: renderer.value.primaryLanguage.direction)
     }
     
+    func setRendererPrimaryLanguage(primaryLanguageId: String, parallelLanguageId: String?, selectedLanguageId: String?) {
+        
+        let currentRenderer: MobileContentRenderer = renderer.value
+        
+        var newLanguageIds: [String] = [primaryLanguageId]
+        
+        if let parallelLanguageId = parallelLanguageId {
+            newLanguageIds.append(parallelLanguageId)
+        }
+        
+        let newSelectedLanguageIndex: Int? = newLanguageIds.firstIndex(where: {$0 == selectedLanguageId})
+        
+        let didDownloadToolTranslationsClosure = { [weak self] (result: Result<ToolTranslationsDomainModel, Error>) in
+                   
+            switch result {
+            
+            case .success(let toolTranslations):
+                
+                let newRenderer: MobileContentRenderer = currentRenderer.copy(toolTranslations: toolTranslations)
+                
+                self?.setRenderer(renderer: newRenderer, pageRendererIndex: newSelectedLanguageIndex, navigationEvent: nil)
+                
+            case .failure( _):
+                break
+            }
+        }
+        
+        currentRenderer.navigation.downloadToolLanguages(
+            toolId: currentRenderer.resource.id,
+            languageIds: newLanguageIds,
+            completion: didDownloadToolTranslationsClosure
+        )
+    }
+    
+    func setRendererTranslations(toolTranslations: ToolTranslationsDomainModel, pageRendererIndex: Int?) {
+        
+        let newRenderer: MobileContentRenderer = renderer.value.copy(toolTranslations: toolTranslations)
+        
+        setRenderer(renderer: newRenderer, pageRendererIndex: pageRendererIndex, navigationEvent: nil)
+    }
+    
     func setRenderer(renderer: MobileContentRenderer, pageRendererIndex: Int?, navigationEvent: MobileContentPagesNavigationEvent?) {
             
         languages = renderer.pageRenderers.map({$0.language})

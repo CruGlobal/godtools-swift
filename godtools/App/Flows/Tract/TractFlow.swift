@@ -59,19 +59,7 @@ class TractFlow: ToolNavigationFlow, Flow {
     deinit {
         print("x deinit: \(type(of: self))")
     }
-    
-    private func getFirstToolViewInFlow() -> ToolView? {
-        
-        for index in 0 ..< navigationController.viewControllers.count {
-            let view: UIViewController = navigationController.viewControllers[index]
-            guard let toolView = view as? ToolView else {
-                continue
-            }
-            return toolView
-        }
-        return nil
-    }
-    
+
     private func configureNavigationBar(shouldAnimateNavigationBarHiddenState: Bool) {
         navigationController.setNavigationBarHidden(false, animated: shouldAnimateNavigationBarHiddenState)
     }
@@ -109,19 +97,13 @@ class TractFlow: ToolNavigationFlow, Flow {
         case .backTappedFromTool:
             closeTool()
             
-        case .toolSettingsTappedFromTool(let toolData):
+        case .toolSettingsTappedFromTool(let toolSettingsObserver):
                     
-            guard let tool = getFirstToolViewInFlow() else {
-                assertionFailure("Failed to fetch ToolSettingsToolType for ToolSettingsFlow in the view hierarchy.  A view with protocol ToolSettingsToolType should exist.")
-                return
-            }
-            
             let toolSettingsFlow = ToolSettingsFlow(
                 flowDelegate: self,
                 appDiContainer: appDiContainer,
                 sharedNavigationController: navigationController,
-                toolData: toolData,
-                tool: tool
+                toolSettingsObserver: toolSettingsObserver
             )
             
             navigationController.present(toolSettingsFlow.getInitialView(), animated: true)

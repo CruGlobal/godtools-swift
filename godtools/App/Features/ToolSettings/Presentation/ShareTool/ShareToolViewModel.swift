@@ -11,7 +11,8 @@ import Combine
 
 class ShareToolViewModel {
         
-    private let resource: ResourceModel
+    private let toolId: String
+    private let toolAnalyticsAbbreviation: String
     private let incrementUserCounterUseCase: IncrementUserCounterUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
@@ -21,9 +22,10 @@ class ShareToolViewModel {
     
     private var cancellables = Set<AnyCancellable>()
     
-    init(viewShareToolDomainModel: ViewShareToolDomainModel, resource: ResourceModel, pageNumber: Int, incrementUserCounterUseCase: IncrementUserCounterUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(viewShareToolDomainModel: ViewShareToolDomainModel, toolId: String, toolAnalyticsAbbreviation: String, pageNumber: Int, incrementUserCounterUseCase: IncrementUserCounterUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
                 
-        self.resource = resource
+        self.toolId = toolId
+        self.toolAnalyticsAbbreviation = toolAnalyticsAbbreviation
         self.incrementUserCounterUseCase = incrementUserCounterUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
@@ -37,11 +39,11 @@ class ShareToolViewModel {
     }
     
     private var analyticsScreenName: String {
-        return resource.abbreviation + "-" + String(pageNumber)
+        return toolAnalyticsAbbreviation + "-" + String(pageNumber)
     }
     
     private var analyticsSiteSection: String {
-        return resource.abbreviation
+        return toolAnalyticsAbbreviation
     }
     
     private var analyticsSiteSubSection: String {
