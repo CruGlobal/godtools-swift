@@ -30,10 +30,15 @@ class GetTranslatedToolName {
     
     func getToolName(resource: ResourceModel, translateInLanguage: BCP47LanguageIdentifier) -> String {
         
-        guard let latestTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageCode: translateInLanguage) else {
-            return resource.name
+        if let languageTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageCode: translateInLanguage) {
+            
+            return languageTranslation.translatedName
+        }
+        else if let defaultLanguageTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageCode: resource.attrDefaultLocale) {
+            
+            return defaultLanguageTranslation.translatedName
         }
         
-        return latestTranslation.translatedName
+        return resource.name
     }
 }
