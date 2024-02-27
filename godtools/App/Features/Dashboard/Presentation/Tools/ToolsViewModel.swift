@@ -144,7 +144,7 @@ class ToolsViewModel: ObservableObject {
     
     private func updateLanguageButtonText() {
         
-        languageFilterButtonTitle = toolFilterLanguageSelectionPublisher.value.searchableText
+        languageFilterButtonTitle = toolFilterLanguageSelectionPublisher.value.languageButtonText
     }
     
     private var analyticsScreenName: String {

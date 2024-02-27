@@ -96,7 +96,7 @@ class GetToolFilterLanguagesUseCase {
             type: .language(languageModel: languageDomainModel),
             languageName: languageName,
             toolsAvailableText: toolsAvailableText,
-            searchableText: languageDomainModel.translatedName
+            languageButtonText: languageDomainModel.translatedName
         )
     }
     
@@ -108,10 +108,10 @@ class GetToolFilterLanguagesUseCase {
         let toolsAvailableText: String = getToolsAvailableText(toolsAvailableCount: toolsAvailableCount, localeId: translationLocaleId)
         
         return LanguageFilterDomainModel(
-            type: .anyLanguage, languageName:
-                anyLanguageTranslation,
+            type: .anyLanguage, 
+            languageName: anyLanguageTranslation,
             toolsAvailableText: toolsAvailableText,
-            searchableText: anyLanguageTranslation
+            languageButtonText: anyLanguageTranslation
         )
     }
     

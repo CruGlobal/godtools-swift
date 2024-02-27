@@ -13,14 +13,19 @@ struct LanguageFilterDomainModel {
     let type: LanguageFilterType
     let languageName: String
     let toolsAvailableText: String
-    let searchableText: String
+    let languageButtonText: String
 }
 
 extension LanguageFilterDomainModel: StringSearchable {
     
-    // TODO: - update this to allow searching from two different translations (GT-2158)
     var searchableStrings: [String] {
-        return [searchableText]
+        var searchableStrings = [languageName]
+        
+        if let translatedName = translatedName {
+            searchableStrings.append(translatedName)
+        }
+       
+        return searchableStrings
     }
 }
 
