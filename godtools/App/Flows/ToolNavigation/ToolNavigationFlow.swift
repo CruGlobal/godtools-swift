@@ -26,7 +26,8 @@ extension ToolNavigationFlow {
             toolDeepLink: toolDeepLink,
             resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
             languagesRepository: appDiContainer.dataLayer.getLanguagesRepository(),
-            translationsRepository: appDiContainer.dataLayer.getTranslationsRepository()
+            translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
+            userAppLanguageRepository: appDiContainer.feature.appLanguage.dataLayer.getUserAppLanguageRepository()
         )
         
         navigateToToolAndDetermineToolTranslationsToDownload(
