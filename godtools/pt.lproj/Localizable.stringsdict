@@ -127,7 +127,7 @@
 <key>one</key>
 <string>Idioma %d disponível</string>
 <key>other</key>
-<string>Idioma %d disponível</string>
+<string>Idiomas %d disponível</string>
 </dict>
 </dict>
 <key>badges.imagesShared</key>
