@@ -27,6 +27,7 @@ protocol ResourceModelType {
     var oneskyProjectId: Int { get }
     var resourceDescription: String { get }
     var resourceType: String { get }
+    var tempDefaultLanguageId: String { get } // TODO: Remove tempDefaultLanguageId once mobile-content-api is consuming the default language from admin tool. ~Levi
     var totalViews: Int { get }
     var type: String { get }
         

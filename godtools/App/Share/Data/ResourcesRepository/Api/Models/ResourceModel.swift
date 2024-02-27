@@ -27,6 +27,7 @@ struct ResourceModel: ResourceModelType, Decodable, Identifiable {
     let oneskyProjectId: Int
     let resourceDescription: String
     let resourceType: String
+    let tempDefaultLanguageId: String = "45"
     let totalViews: Int
     let type: String
     

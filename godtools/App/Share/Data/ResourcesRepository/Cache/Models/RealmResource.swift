@@ -29,6 +29,7 @@ class RealmResource: Object, ResourceModelType {
     @objc dynamic var oneskyProjectId: Int = -1
     @objc dynamic var resourceDescription: String = ""
     @objc dynamic var resourceType: String = ""
+    @objc dynamic var tempDefaultLanguageId: String = ""
     @objc dynamic var totalViews: Int = -1
     @objc dynamic var type: String = ""
 
@@ -67,6 +68,7 @@ class RealmResource: Object, ResourceModelType {
         oneskyProjectId = model.oneskyProjectId
         resourceDescription = model.resourceDescription
         resourceType = model.resourceType
+        tempDefaultLanguageId = model.tempDefaultLanguageId
         totalViews = model.totalViews
         type = model.type
         
