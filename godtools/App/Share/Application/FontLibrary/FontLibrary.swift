@@ -11,7 +11,6 @@ import SwiftUI
 
 enum FontLibrary: String {
     
-    case abyssinicaSIL = "AbyssinicaSIL"
     case notoSansEthiopicBold = "NotoSansEthiopic-Bold"
     case notoSansEthiopic = "NotoSansEthiopic"
     case notoSansMyanmarBold = "NotoSansMyanmarUI-CondensedBold"
