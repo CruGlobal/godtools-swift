@@ -12,17 +12,15 @@ import GodToolsToolParser
 class MobileContentInputViewModel: MobileContentViewModel {
     
     private let inputModel: Input
-    private let fontService: FontService
     
     private var inputValue: String?
     
     let inputLabel: String?
     let placeholder: String?
     
-    init(inputModel: Input, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics, fontService: FontService) {
+    init(inputModel: Input, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
         
         self.inputModel = inputModel
-        self.fontService = fontService
         
         inputLabel = inputModel.label?.text
         placeholder = inputModel.placeholder?.text

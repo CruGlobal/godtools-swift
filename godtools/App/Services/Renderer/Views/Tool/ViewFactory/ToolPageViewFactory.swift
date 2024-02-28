@@ -13,16 +13,14 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
         
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let mobileContentAnalytics: MobileContentRendererAnalytics
-    private let fontService: FontService
     private let localizationServices: LocalizationServices
     private let cardJumpService: CardJumpService
     private let followUpService: FollowUpsService
         
-    init(trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, mobileContentAnalytics: MobileContentRendererAnalytics, fontService: FontService, localizationServices: LocalizationServices, cardJumpService: CardJumpService, followUpService: FollowUpsService) {
+    init(trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, mobileContentAnalytics: MobileContentRendererAnalytics, localizationServices: LocalizationServices, cardJumpService: CardJumpService, followUpService: FollowUpsService) {
         
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.mobileContentAnalytics = mobileContentAnalytics
-        self.fontService = fontService
         self.localizationServices = localizationServices
         self.cardJumpService = cardJumpService
         self.followUpService = followUpService
@@ -37,7 +35,6 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
                 renderedPageContext: renderedPageContext,
                 trackScreenViewAnalyticsUseCase: trackScreenViewAnalyticsUseCase,
                 mobileContentAnalytics: mobileContentAnalytics,
-                fontService: fontService,
                 localizationServices: localizationServices,
                 numberOfVisbleCards: cardModel.numberOfVisibleCards,
                 trainingTipsEnabled: renderedPageContext.trainingTipsEnabled
@@ -160,8 +157,7 @@ class ToolPageViewFactory: MobileContentPageViewFactoryType {
         let viewModel = ToolPageCallToActionViewModel(
             callToActionModel: callToActionModel,
             renderedPageContext: renderedPageContext,
-            mobileContentAnalytics: mobileContentAnalytics,
-            fontService: fontService
+            mobileContentAnalytics: mobileContentAnalytics
         )
         
         let view = ToolPageCallToActionView(viewModel: viewModel)

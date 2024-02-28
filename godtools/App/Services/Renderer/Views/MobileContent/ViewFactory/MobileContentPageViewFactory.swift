@@ -13,13 +13,11 @@ import SwiftUI
 class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
     
     private let mobileContentAnalytics: MobileContentRendererAnalytics
-    private let fontService: FontService
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
         
-    init(mobileContentAnalytics: MobileContentRendererAnalytics, fontService: FontService, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
+    init(mobileContentAnalytics: MobileContentRendererAnalytics, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
         
         self.mobileContentAnalytics = mobileContentAnalytics
-        self.fontService = fontService
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
     }
     
@@ -63,8 +61,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             let viewModel = MobileContentButtonViewModel(
                 buttonModel: buttonModel,
                 renderedPageContext: renderedPageContext,
-                mobileContentAnalytics: mobileContentAnalytics,
-                fontService: fontService
+                mobileContentAnalytics: mobileContentAnalytics
             )
 
             let view = MobileContentButtonView(viewModel: viewModel)
@@ -88,8 +85,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             let viewModel = MobileContentLinkViewModel(
                 linkModel: linkModel,
                 renderedPageContext: renderedPageContext,
-                mobileContentAnalytics: mobileContentAnalytics,
-                fontService: fontService
+                mobileContentAnalytics: mobileContentAnalytics
             )
             
             let view = MobileContentLinkView(viewModel: viewModel)
@@ -214,8 +210,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             let viewModel = MobileContentInputViewModel(
                 inputModel: inputModel,
                 renderedPageContext: renderedPageContext,
-                mobileContentAnalytics: mobileContentAnalytics,
-                fontService: fontService
+                mobileContentAnalytics: mobileContentAnalytics
             )
             
             let view = MobileContentInputView(viewModel: viewModel)
@@ -339,8 +334,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         let viewModel = MobileContentTextViewModel(
             textModel: textModel,
             renderedPageContext: renderedPageContext,
-            mobileContentAnalytics: mobileContentAnalytics,
-            fontService: fontService
+            mobileContentAnalytics: mobileContentAnalytics
         )
         
         let view = MobileContentTextView(

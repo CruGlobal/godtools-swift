@@ -82,10 +82,6 @@ class AppDiContainer {
         return FirebaseDebugArguments()
     }
     
-    func getFontService() -> FontService {
-        return FontService(getSettingsPrimaryLanguageUseCase: domainLayer.getSettingsPrimaryLanguageUseCase())
-    }
-    
     func getMobileContentRenderer(type: MobileContentRendererPageViewFactoriesType, navigation: MobileContentRendererNavigation, toolTranslations: ToolTranslationsDomainModel) -> MobileContentRenderer {
 
         let pageViewFactories: MobileContentRendererPageViewFactories = MobileContentRendererPageViewFactories(

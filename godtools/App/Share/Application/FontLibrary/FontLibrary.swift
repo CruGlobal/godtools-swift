@@ -11,10 +11,6 @@ import SwiftUI
 
 enum FontLibrary: String {
     
-    case notoSansEthiopicBold = "NotoSansEthiopic-Bold"
-    case notoSansEthiopic = "NotoSansEthiopic"
-    case notoSansMyanmarBold = "NotoSansMyanmarUI-CondensedBold"
-    case notoSansMyanmar = "NotoSansMyanmarUI-Condensed"
     case sfProDisplayLight = "SFProDisplay-Light"
     case sfProDisplayRegular = "SFProDisplay-Regular"
     case sfProTextBold = "SFProText-Bold"
@@ -37,6 +33,10 @@ enum FontLibrary: String {
     
     func font(size: CGFloat) -> Font {
         return Font.custom(rawValue, size: size)
+    }
+    
+    static func systemUIFont(size: CGFloat, weight: UIFont.Weight) -> UIFont {
+        return UIFont.systemFont(ofSize: size, weight: weight)
     }
     
     static func logAvailableFonts() {

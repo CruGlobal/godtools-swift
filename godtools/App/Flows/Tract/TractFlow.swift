@@ -177,7 +177,6 @@ extension TractFlow {
             renderer: renderer,
             tractRemoteSharePublisher: appDiContainer.feature.toolScreenShare.dataLayer.getTractRemoteSharePublisher(),
             tractRemoteShareSubscriber: appDiContainer.feature.toolScreenShare.dataLayer.getTractRemoteShareSubscriber(),
-            fontService: appDiContainer.getFontService(),
             resourceViewsService: appDiContainer.dataLayer.getResourceViewsService(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
             resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),

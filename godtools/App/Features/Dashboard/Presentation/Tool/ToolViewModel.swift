@@ -14,7 +14,6 @@ class ToolViewModel: MobileContentPagesViewModel {
     
     private let tractRemoteSharePublisher: TractRemoteSharePublisher
     private let tractRemoteShareSubscriber: TractRemoteShareSubscriber
-    private let fontService: FontService
     private let resourceViewsService: ResourceViewsService
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let toolOpenedAnalytics: ToolOpenedAnalytics
@@ -31,12 +30,11 @@ class ToolViewModel: MobileContentPagesViewModel {
     
     @Published var hidesRemoteShareIsActive: Bool = true
         
-    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, fontService: FontService, resourceViewsService: ResourceViewsService, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, translatedLanguageNameRepository: TranslatedLanguageNameRepository, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, initialPage: MobileContentPagesPage?, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?) {
+    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, resourceViewsService: ResourceViewsService, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, translatedLanguageNameRepository: TranslatedLanguageNameRepository, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, initialPage: MobileContentPagesPage?, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?) {
         
         self.flowDelegate = flowDelegate
         self.tractRemoteSharePublisher = tractRemoteSharePublisher
         self.tractRemoteShareSubscriber = tractRemoteShareSubscriber
-        self.fontService = fontService
         self.resourceViewsService = resourceViewsService
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.toolOpenedAnalytics = toolOpenedAnalytics
@@ -47,12 +45,12 @@ class ToolViewModel: MobileContentPagesViewModel {
         navBarAppearance = AppNavigationBarAppearance(
             backgroundColor: primaryManifest.navBarColor,
             controlColor: primaryManifest.navBarControlColor,
-            titleFont: fontService.getFont(size: 17, weight: .semibold),
+            titleFont: FontLibrary.systemUIFont(size: 17, weight: .semibold),
             titleColor: primaryManifest.navBarControlColor,
             isTranslucent: true
         )
         
-        languageFont = fontService.getFont(size: 14, weight: .regular)
+        languageFont = FontLibrary.systemUIFont(size: 14, weight: .regular)
         
         super.init(renderer: renderer, initialPage: initialPage, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, translatedLanguageNameRepository: translatedLanguageNameRepository, initialPageRenderingType: .visiblePages, trainingTipsEnabled: trainingTipsEnabled, incrementUserCounterUseCase: incrementUserCounterUseCase, selectedLanguageIndex: selectedLanguageIndex)
         

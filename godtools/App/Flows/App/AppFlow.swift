@@ -53,7 +53,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         let navigationBarAppearance = AppNavigationBarAppearance(
             backgroundColor: ColorPalette.gtBlue.uiColor,
             controlColor: .white,
-            titleFont: appDiContainer.getFontService().getFont(size: 17, weight: .semibold),
+            titleFont: FontLibrary.systemUIFont(size: 17, weight: .semibold),
             titleColor: .white,
             isTranslucent: false
         )

@@ -487,8 +487,6 @@
 		4556AECD23E22185002C15E8 /* SF-Pro-Display-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AECA23E22185002C15E8 /* SF-Pro-Display-Light.otf */; };
 		4556AECE23E22185002C15E8 /* SF-Pro-Text-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AECB23E22185002C15E8 /* SF-Pro-Text-Light.otf */; };
 		4556AECF23E22185002C15E8 /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AECC23E22185002C15E8 /* SF-Pro-Text-Regular.otf */; };
-		4556AED823E221FE002C15E8 /* NotoSansEthiopic-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AED323E221FE002C15E8 /* NotoSansEthiopic-Regular.ttf */; };
-		4556AED923E221FE002C15E8 /* NotoSansEthiopic-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AED423E221FE002C15E8 /* NotoSansEthiopic-Bold.ttf */; };
 		4556CEA729F2D57800643BBC /* RealmDatabaseConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556CEA329F2D57800643BBC /* RealmDatabaseConfiguration.swift */; };
 		4556CEA829F2D57800643BBC /* RealmDatabaseProductionConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556CEA429F2D57800643BBC /* RealmDatabaseProductionConfiguration.swift */; };
 		4556CEA929F2D57800643BBC /* RealmDatabaseConfiguration+RealmConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556CEA529F2D57800643BBC /* RealmDatabaseConfiguration+RealmConfig.swift */; };
@@ -894,7 +892,6 @@
 		45AD1BDF25938A4F00A096A0 /* GTSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD18D225938A4E00A096A0 /* GTSegmentedControl.swift */; };
 		45AD1BE025938A4F00A096A0 /* GTSegmentedControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45AD18D325938A4E00A096A0 /* GTSegmentedControl.xib */; };
 		45AD1BE325938A4F00A096A0 /* NibBased.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD18D825938A4E00A096A0 /* NibBased.swift */; };
-		45AD1EEA25938A9800A096A0 /* FontService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1D4325938A9700A096A0 /* FontService.swift */; };
 		45AD1F5D25938A9800A096A0 /* ActionCableChannelSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DD825938A9700A096A0 /* ActionCableChannelSubscriber.swift */; };
 		45AD1F5E25938A9800A096A0 /* StarscreamWebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DD925938A9700A096A0 /* StarscreamWebSocket.swift */; };
 		45AD1F5F25938A9800A096A0 /* WebSocketChannelSubscriberType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DDA25938A9700A096A0 /* WebSocketChannelSubscriberType.swift */; };
@@ -2000,8 +1997,6 @@
 		4556AECA23E22185002C15E8 /* SF-Pro-Display-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Light.otf"; sourceTree = "<group>"; };
 		4556AECB23E22185002C15E8 /* SF-Pro-Text-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Light.otf"; sourceTree = "<group>"; };
 		4556AECC23E22185002C15E8 /* SF-Pro-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Regular.otf"; sourceTree = "<group>"; };
-		4556AED323E221FE002C15E8 /* NotoSansEthiopic-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansEthiopic-Regular.ttf"; sourceTree = "<group>"; };
-		4556AED423E221FE002C15E8 /* NotoSansEthiopic-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansEthiopic-Bold.ttf"; sourceTree = "<group>"; };
 		4556CEA329F2D57800643BBC /* RealmDatabaseConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmDatabaseConfiguration.swift; sourceTree = "<group>"; };
 		4556CEA429F2D57800643BBC /* RealmDatabaseProductionConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmDatabaseProductionConfiguration.swift; sourceTree = "<group>"; };
 		4556CEA529F2D57800643BBC /* RealmDatabaseConfiguration+RealmConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RealmDatabaseConfiguration+RealmConfig.swift"; sourceTree = "<group>"; };
@@ -2384,7 +2379,6 @@
 		45AD18D225938A4E00A096A0 /* GTSegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTSegmentedControl.swift; sourceTree = "<group>"; };
 		45AD18D325938A4E00A096A0 /* GTSegmentedControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GTSegmentedControl.xib; sourceTree = "<group>"; };
 		45AD18D825938A4E00A096A0 /* NibBased.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibBased.swift; sourceTree = "<group>"; };
-		45AD1D4325938A9700A096A0 /* FontService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontService.swift; sourceTree = "<group>"; };
 		45AD1DD825938A9700A096A0 /* ActionCableChannelSubscriber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionCableChannelSubscriber.swift; sourceTree = "<group>"; };
 		45AD1DD925938A9700A096A0 /* StarscreamWebSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarscreamWebSocket.swift; sourceTree = "<group>"; };
 		45AD1DDA25938A9700A096A0 /* WebSocketChannelSubscriberType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocketChannelSubscriberType.swift; sourceTree = "<group>"; };
@@ -2934,8 +2928,6 @@
 		CD35532F620E5D79E5C5E9B9 /* Pods-godtoolsUITests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtoolsUITests.staging.xcconfig"; path = "Pods/Target Support Files/Pods-godtoolsUITests/Pods-godtoolsUITests.staging.xcconfig"; sourceTree = "<group>"; };
 		CEE243B8717B8C5542537AA7 /* Pods-godtoolsUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtoolsUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-godtoolsUITests/Pods-godtoolsUITests.release.xcconfig"; sourceTree = "<group>"; };
 		D115A65D25265813007F11AD /* share_tool_tutorial_mirrored.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = share_tool_tutorial_mirrored.json; sourceTree = "<group>"; };
-		D14F75B825D58B96008749CF /* NotoSansMyanmarUI-Condensed.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansMyanmarUI-Condensed.ttf"; sourceTree = "<group>"; };
-		D14F75B925D58B96008749CF /* NotoSansMyanmarUI-CondensedBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansMyanmarUI-CondensedBold.ttf"; sourceTree = "<group>"; };
 		D163EA95254A00BE00BA4EA9 /* share_tool_tutorial_link.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = share_tool_tutorial_link.json; sourceTree = "<group>"; };
 		D1838478257E86B3004F5674 /* container */ = {isa = PBXFileReference; lastKnownFileType = folder; path = container; sourceTree = "<group>"; };
 		D19EB5DD259BB39300685156 /* training_tip_callout.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = training_tip_callout.json; sourceTree = "<group>"; };
@@ -5723,10 +5715,6 @@
 		4556AEC923E22185002C15E8 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				4556AED423E221FE002C15E8 /* NotoSansEthiopic-Bold.ttf */,
-				4556AED323E221FE002C15E8 /* NotoSansEthiopic-Regular.ttf */,
-				D14F75B825D58B96008749CF /* NotoSansMyanmarUI-Condensed.ttf */,
-				D14F75B925D58B96008749CF /* NotoSansMyanmarUI-CondensedBold.ttf */,
 				4556AECA23E22185002C15E8 /* SF-Pro-Display-Light.otf */,
 				45BE4A7C2AF28788004021DA /* SF-Pro-Display-Regular.otf */,
 				450EF833247EB3D300978926 /* SF-Pro-Text-Bold.otf */,
@@ -7776,7 +7764,6 @@
 				45AD1EE525938A9800A096A0 /* CardJumpService */,
 				45AD1EDF25938A9800A096A0 /* FirebaseConfiguration */,
 				45AD1E5725938A9800A096A0 /* FirebaseDebugArguments */,
-				45AD1D4225938A9700A096A0 /* FontService */,
 				45AD1D4425938A9700A096A0 /* Renderer */,
 				45AD1DE125938A9700A096A0 /* ToolTrainingTipsOnboardingViews */,
 				45AD1EE825938A9800A096A0 /* UserDefaultsCache */,
@@ -7784,14 +7771,6 @@
 				45AD1DD725938A9700A096A0 /* WebSocket */,
 			);
 			path = Services;
-			sourceTree = "<group>";
-		};
-		45AD1D4225938A9700A096A0 /* FontService */ = {
-			isa = PBXGroup;
-			children = (
-				45AD1D4325938A9700A096A0 /* FontService.swift */,
-			);
-			path = FontService;
 			sourceTree = "<group>";
 		};
 		45AD1D4425938A9700A096A0 /* Renderer */ = {
@@ -11104,7 +11083,6 @@
 				458CFE9729D4E0B9007B423C /* ArticleCategoriesView.xib in Resources */,
 				4556AECF23E22185002C15E8 /* SF-Pro-Text-Regular.otf in Resources */,
 				45D48C8329F81082004E92B1 /* Colors.xcassets in Resources */,
-				4556AED923E221FE002C15E8 /* NotoSansEthiopic-Bold.ttf in Resources */,
 				45677781287DB21F0044AEB2 /* ToolTrainingTipView.xib in Resources */,
 				45E998D623FD7B090088DD0C /* SF-Pro-Text-Semibold.otf in Resources */,
 				458CFE8B29D4E0B9007B423C /* ArticlesView.xib in Resources */,
@@ -11151,7 +11129,6 @@
 				458CFE9829D4E0B9007B423C /* ArticleCategoryCell.xib in Resources */,
 				D19EB5E0259BB75900685156 /* training_tip_tips.json in Resources */,
 				458CFE9129D4E0B9007B423C /* ArticleWebView.xib in Resources */,
-				4556AED823E221FE002C15E8 /* NotoSansEthiopic-Regular.ttf in Resources */,
 				4555840F269F2DA500C3FF14 /* MobileContentTextView.xib in Resources */,
 				45B6480A25E581660098BAF1 /* (null) in Resources */,
 				45F7162E290A12D70019B715 /* WebContentView.xib in Resources */,
@@ -11374,7 +11351,6 @@
 				45AE975C27C97A9500C2CB33 /* CardCollectionPage+MobileContentRenderableModel.swift in Sources */,
 				450DB5622AC3552700B2FE3A /* GetAppLanguagesListUseCase.swift in Sources */,
 				4564E20A2B1E181000DA4040 /* ToolShortcutLinksView.swift in Sources */,
-				45AD1EEA25938A9800A096A0 /* FontService.swift in Sources */,
 				456D44322AF28CD7008F61B9 /* GetSocialCreateAccountInterfaceStringsUseCase.swift in Sources */,
 				45B338332AF4370700D18C63 /* TutorialPageDomainModel.swift in Sources */,
 				45BF6EBA27050A29003596A4 /* TransparentModalView.swift in Sources */,
