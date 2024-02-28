@@ -12,13 +12,15 @@ import Combine
 class GetUserFiltersRepository: GetUserFiltersRepositoryInterface {
     
     private let userFiltersRepository: UserFiltersRepository
+    private let getToolFilterLanguagesRepository: GetToolFilterLanguagesRepository
     
-    init(userFiltersRepository: UserFiltersRepository) {
+    init(userFiltersRepository: UserFiltersRepository, getToolFilterLanguagesRepository: GetToolFilterLanguagesRepository) {
         
         self.userFiltersRepository = userFiltersRepository
+        self.getToolFilterLanguagesRepository = getToolFilterLanguagesRepository
     }
     
-    func getUserCategoryFilterPublisher() -> AnyPublisher<String?, Never> {
+    func getUserCategoryFilterPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<String?, Never> {
         
         let categoryId = userFiltersRepository.getUserCategoryFilter()
         
@@ -26,11 +28,13 @@ class GetUserFiltersRepository: GetUserFiltersRepositoryInterface {
             .eraseToAnyPublisher()
     }
     
-    func getUserLanguageFilterPublisher() -> AnyPublisher<String?, Never> {
+    func getUserLanguageFilterPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<LanguageFilterDomainModel?, Never> {
         
         let languageId = userFiltersRepository.getUserLanguageFilter()
         
-        return Just(languageId)
+        let languageFilter = getToolFilterLanguagesRepository.getLanguageFilter(from: languageId, translatedInAppLanguage: translatedInAppLanguage)
+        
+        return Just(languageFilter)
             .eraseToAnyPublisher()
     }
 }

@@ -11,6 +11,6 @@ import Combine
 
 protocol GetUserFiltersRepositoryInterface {
     
-    func getUserCategoryFilterPublisher() -> AnyPublisher<String?, Never>
-    func getUserLanguageFilterPublisher() -> AnyPublisher<String?, Never>
+    func getUserCategoryFilterPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<String?, Never>   // TODO: - return CategoryFilterDomainModel? instead of String? here
+    func getUserLanguageFilterPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<LanguageFilterDomainModel?, Never>
 }

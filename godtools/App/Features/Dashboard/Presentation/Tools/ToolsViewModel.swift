@@ -46,7 +46,7 @@ class ToolsViewModel: ObservableObject {
     @Published var allTools: [ToolListItemDomainModel] = Array()
     @Published var isLoadingAllTools: Bool = true
         
-    init(flowDelegate: FlowDelegate, resourcesRepository: ResourcesRepository, viewToolsUseCase: ViewToolsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, favoritingToolMessageCache: FavoritingToolMessageCache, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getToolFilterCategoriesUseCase: GetToolFilterCategoriesUseCase, getToolFilterLanguagesUseCase: GetToolFilterLanguagesUseCase, getUserFiltersUseCase: GetUserFiltersUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, attachmentsRepository: AttachmentsRepository) {
+    init(flowDelegate: FlowDelegate, resourcesRepository: ResourcesRepository, viewToolsUseCase: ViewToolsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, favoritingToolMessageCache: FavoritingToolMessageCache, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getToolFilterCategoriesUseCase: GetToolFilterCategoriesUseCase, getUserFiltersUseCase: GetUserFiltersUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, attachmentsRepository: AttachmentsRepository) {
         
         self.flowDelegate = flowDelegate
         self.resourcesRepository = resourcesRepository
@@ -62,10 +62,10 @@ class ToolsViewModel: ObservableObject {
         
         showsFavoritingToolBanner = !favoritingToolMessageCache.favoritingToolMessageDisabled
         
-        let anyLanguageSelection = getToolFilterLanguagesUseCase.getAnyLanguageFilterDomainModel()
-        let anyCategorySelection = getToolFilterCategoriesUseCase.getAnyCategoryDomainModel()
-        toolFilterLanguageSelectionPublisher = CurrentValueSubject(anyLanguageSelection)
-        toolFilterCategorySelectionPublisher = CurrentValueSubject(anyCategorySelection)
+        let temporaryLanguageFilterValue = LanguageFilterDomainModel.anyLanguage(text: "Any language", toolsAvailableText: "")
+        let temporaryCategoryFilterValue = CategoryFilterDomainModel.anyCategory(text: "Any category", toolsAvailableText: "")
+        toolFilterLanguageSelectionPublisher = CurrentValueSubject(temporaryLanguageFilterValue)
+        toolFilterCategorySelectionPublisher = CurrentValueSubject(temporaryCategoryFilterValue)
         
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
@@ -95,23 +95,20 @@ class ToolsViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        getUserFiltersUseCase.getUserFiltersPublisher()
+        getUserFiltersUseCase.getUserFiltersPublisher(translatedInAppLanguage: appLanguage)
             .flatMap { userFilters in
                 
-                return Publishers.CombineLatest(
-                    getToolFilterCategoriesUseCase.getCategoryFilterPublisher(with: userFilters.categoryFilterId),
-                    getToolFilterLanguagesUseCase.getLanguageFilterPublisher(from: userFilters.languageFilterId)
-                )
-                .eraseToAnyPublisher()
+                if let languageFilter = userFilters.languageFilter {
+                    self.toolFilterLanguageSelectionPublisher.send(languageFilter)
+                }
+                
+                // TODO: - update category filter to behave the same as language
+                return getToolFilterCategoriesUseCase.getCategoryFilterPublisher(with: userFilters.categoryFilterId)
             }
-            .sink { categoryFilter, languageFilter in
+            .sink { categoryFilter in
                 
                 if let categoryFilter = categoryFilter {
                     self.toolFilterCategorySelectionPublisher.send(categoryFilter)
-                }
-                
-                if let languageFilter = languageFilter {
-                    self.toolFilterLanguageSelectionPublisher.send(languageFilter)
                 }
             }
             .store(in: &cancellables)
@@ -139,7 +136,7 @@ class ToolsViewModel: ObservableObject {
     
     private func updateCategoryButtonText() {
         
-        categoryFilterButtonTitle = toolFilterCategorySelectionPublisher.value.translatedName
+        categoryFilterButtonTitle = toolFilterCategorySelectionPublisher.value.categoryButtonText
     }
     
     private func updateLanguageButtonText() {

@@ -29,7 +29,7 @@ struct ToolFilterCategorySelectionRowView: View {
                     
                     let titleFont = isSelected ? FontLibrary.sfProTextBold : FontLibrary.sfProTextRegular
                     
-                    Text(category.translatedName)
+                    Text(category.primaryText)
                         .font(titleFont.font(size: 15))
                         .foregroundColor(ColorPalette.gtGrey.color)
                 }

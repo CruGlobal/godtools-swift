@@ -18,17 +18,17 @@ class GetUserFiltersUseCase {
         self.getUserFiltersRepositoryInterface = getUserFiltersRepositoryInterface
     }
     
-    func getUserFiltersPublisher() -> AnyPublisher<UserFiltersDomainModel, Never> {
+    func getUserFiltersPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<UserFiltersDomainModel, Never> {
         
         return Publishers.CombineLatest(
-            getUserFiltersRepositoryInterface.getUserCategoryFilterPublisher(),
-            getUserFiltersRepositoryInterface.getUserLanguageFilterPublisher()
+            getUserFiltersRepositoryInterface.getUserCategoryFilterPublisher(translatedInAppLanguage: translatedInAppLanguage),
+            getUserFiltersRepositoryInterface.getUserLanguageFilterPublisher(translatedInAppLanguage: translatedInAppLanguage)
         )
-        .flatMap { categoryFilterId, languageFilterId in
+        .flatMap { categoryFilterId, languageFilter in
             
             let userFilters = UserFiltersDomainModel(
                 categoryFilterId: categoryFilterId,
-                languageFilterId: languageFilterId
+                languageFilter: languageFilter
             )
             
             return Just(userFilters)

@@ -94,11 +94,10 @@ class GetToolFilterCategoriesUseCase {
         
         let toolsAvailableText: String = getToolsAvailableText(toolsAvailableCount: toolsAvailableCount, localeId: translationLocaleId)
         
-        return CategoryFilterDomainModel(
-            type: .category(id: categoryId),
+        return .category(
+            categoryId: categoryId,
             translatedName: translatedName,
-            toolsAvailableText: toolsAvailableText,
-            searchableText: translatedName
+            toolsAvailableText: toolsAvailableText
         )
     }
     
@@ -109,11 +108,9 @@ class GetToolFilterCategoriesUseCase {
         let toolsAvailableCount: Int = getToolsAvailableCount(for: nil, filteredByLanguageId: filteredByLanguageId)
         let toolsAvailableText: String = getToolsAvailableText(toolsAvailableCount: toolsAvailableCount, localeId: translationLocaleId)
         
-        return CategoryFilterDomainModel(
-            type: .anyCategory,
-            translatedName: anyCategoryTranslation,
-            toolsAvailableText: toolsAvailableText,
-            searchableText: anyCategoryTranslation
+        return .anyCategory(
+            text: anyCategoryTranslation,
+            toolsAvailableText: toolsAvailableText
         )
     }
     

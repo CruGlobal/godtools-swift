@@ -30,17 +30,6 @@ class ToolsFilterFeatureDomainLayerDependencies {
         )
     }
     
-    func getToolFilterLanguagesUseCase() -> GetToolFilterLanguagesUseCase {
-        return GetToolFilterLanguagesUseCase(
-            getAllToolsUseCase: coreDomainLayer.getAllToolsUseCase(),
-            getLanguageUseCase: coreDomainLayer.getLanguageUseCase(),
-            getSettingsPrimaryLanguageUseCase: coreDomainLayer.getSettingsPrimaryLanguageUseCase(),
-            languagesRepository: coreDataLayer.getLanguagesRepository(),
-            localeLanguageName: coreDataLayer.getLocaleLanguageName(),
-            localizationServices: coreDataLayer.getLocalizationServices()
-        )
-    }
-    
     func getUserFiltersUseCase() -> GetUserFiltersUseCase {
         return GetUserFiltersUseCase(
             getUserFiltersRepositoryInterface: dataLayer.getUserFiltersRepositoryInterface()
@@ -58,6 +47,12 @@ class ToolsFilterFeatureDomainLayerDependencies {
     func getStoreUserFiltersUseCase() -> StoreUserFiltersUseCase {
         return StoreUserFiltersUseCase(
             storeUserFiltersRepositoryInterface: dataLayer.getStoreUserFiltersRepositoryInterface()
+        )
+    }
+    
+    func getViewToolFilterLanguagesUseCase() -> ViewToolFilterLanguagesUseCase {
+        return ViewToolFilterLanguagesUseCase(
+            getToolFilterLanguagesRepository: dataLayer.getToolFilterLanguagesRepositoryInterface()
         )
     }
 }
