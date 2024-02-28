@@ -14,15 +14,13 @@ class MobileContentTextViewModel: MobileContentViewModel {
     private static let numberFormatter: NumberFormatter = NumberFormatter()
     
     private let textModel: Text
-    private let fontService: FontService
     private let fontSize: CGFloat = 18
         
     let textColor: UIColor
     
-    init(textModel: Text, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics, fontService: FontService) {
+    init(textModel: Text, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
         
         self.textModel = textModel
-        self.fontService = fontService
         
         self.textColor = textModel.textColor
         
@@ -147,9 +145,6 @@ class MobileContentTextViewModel: MobileContentViewModel {
     
     func getScaledFont(fontSizeToScale: CGFloat, fontWeightElseUseTextDefault: UIFont.Weight?) -> UIFont {
                 
-        return fontService.getFont(
-            size: fontSizeToScale * getFontScale(),
-            weight: fontWeightElseUseTextDefault ?? getFontWeight()
-        )
+        return FontLibrary.systemUIFont(size: fontSizeToScale * getFontScale(), weight: fontWeightElseUseTextDefault ?? getFontWeight())
     }
 }

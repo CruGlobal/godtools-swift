@@ -19,7 +19,6 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
         
         let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase = appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase()
         let mobileContentAnalytics: MobileContentRendererAnalytics = appDiContainer.getMobileContentRendererAnalytics()
-        let fontService: FontService = appDiContainer.getFontService()
         let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
         let followUpsService: FollowUpsService = appDiContainer.dataLayer.getFollowUpsService()
         let cardJumpService: CardJumpService = appDiContainer.getCardJumpService()
@@ -47,7 +46,6 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
             let toolPageViewFactory = ToolPageViewFactory(
                 trackScreenViewAnalyticsUseCase: trackScreenViewAnalyticsUseCase,
                 mobileContentAnalytics: mobileContentAnalytics,
-                fontService: fontService,
                 localizationServices: localizationServices,
                 cardJumpService: cardJumpService,
                 followUpService: followUpsService
@@ -65,7 +63,6 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
             let toolPageViewFactory = ToolPageViewFactory(
                 trackScreenViewAnalyticsUseCase: trackScreenViewAnalyticsUseCase,
                 mobileContentAnalytics: mobileContentAnalytics,
-                fontService: fontService,
                 localizationServices: localizationServices,
                 cardJumpService: cardJumpService,
                 followUpService: followUpsService
@@ -90,7 +87,6 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
         
         let mobileContentPageViewFactory = MobileContentPageViewFactory(
             mobileContentAnalytics: mobileContentAnalytics,
-            fontService: fontService,
             trackScreenViewAnalyticsUseCase: trackScreenViewAnalyticsUseCase
         )
         
