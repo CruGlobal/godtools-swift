@@ -141,6 +141,49 @@ class ToolViewModel: MobileContentPagesViewModel {
         toolOpenedAnalytics.trackFirstToolOpenedIfNeeded(resource: resource)
         toolOpenedAnalytics.trackToolOpened(resource: resource)
     }
+    
+    private func trackLanguageTapped(tappedLanguage: LanguageDomainModel) {
+        
+        let primaryLanguage: LanguageDomainModel = languages[0]
+        let parallelLanguage: LanguageDomainModel? = languages[safe: 1]
+        
+        let contentLanguage: LanguageDomainModel
+        let secondaryLanguage: LanguageDomainModel?
+        
+        let trackTappedLanguageData: [String: Any]?
+        
+        if let parallelLanguage = parallelLanguage {
+            
+            let parallelLanguageToggled: Bool = tappedLanguage.id == parallelLanguage.id
+            
+            contentLanguage = parallelLanguageToggled ? parallelLanguage : primaryLanguage
+            secondaryLanguage = parallelLanguageToggled ? primaryLanguage : parallelLanguage
+            
+            var data: [String: Any] = Dictionary()
+            
+            data[AnalyticsConstants.Keys.contentLanguageSecondary] = secondaryLanguage?.localeIdentifier
+            data[AnalyticsConstants.ActionNames.parallelLanguageToggled] = parallelLanguageToggled
+            
+            trackTappedLanguageData = data
+        }
+        else {
+            
+            contentLanguage = primaryLanguage
+            secondaryLanguage = nil
+            trackTappedLanguageData = nil
+        }
+        
+        trackActionAnalyticsUseCase.trackAction(
+            screenName: analyticsScreenName,
+            actionName: AnalyticsConstants.ActionNames.parallelLanguageToggled,
+            siteSection: analyticsSiteSection,
+            siteSubSection: "",
+            contentLanguage: contentLanguage.localeIdentifier,
+            contentLanguageSecondary: secondaryLanguage?.localeIdentifier,
+            url: nil,
+            data: trackTappedLanguageData
+        )
+    }
 }
 
 // MARK: - Inputs
@@ -200,9 +243,9 @@ extension ToolViewModel {
     
     func languageTapped(index: Int, page: Int, pagePositions: ToolPagePositions) {
                 
-        let language: LanguageDomainModel = languages[index]
+        let tappedLanguage: LanguageDomainModel = languages[index]
         
-        if let pageRenderer = getPageRenderer(language: language) {
+        if let pageRenderer = getPageRenderer(language: tappedLanguage) {
             setPageRenderer(pageRenderer: pageRenderer, navigationEvent: nil, pagePositions: pagePositions)
         }
         
@@ -211,21 +254,7 @@ extension ToolViewModel {
             pagePositions: pagePositions
         )
         
-        let data: [String: String] = [
-            AnalyticsConstants.ActionNames.parallelLanguageToggled: "",
-            AnalyticsConstants.Keys.contentLanguageSecondary: language.localeIdentifier,
-        ]
-        
-        trackActionAnalyticsUseCase.trackAction(
-            screenName: analyticsScreenName,
-            actionName: AnalyticsConstants.ActionNames.parallelLanguageToggled,
-            siteSection: analyticsSiteSection,
-            siteSubSection: "",
-            contentLanguage: language.localeIdentifier,
-            contentLanguageSecondary: nil,
-            url: nil,
-            data: data
-        )
+        trackLanguageTapped(tappedLanguage: tappedLanguage)
     }
     
     func subscribedForRemoteSharePublishing(page: Int, pagePositions: ToolPagePositions) {
