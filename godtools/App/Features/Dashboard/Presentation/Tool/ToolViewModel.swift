@@ -321,7 +321,8 @@ extension ToolViewModel {
                 page: page ?? super.currentRenderedPageNumber,
                 animated: animated,
                 reloadCollectionViewDataNeeded: navBarLanguageChanged,
-                insertPages: nil
+                insertPages: nil,
+                deletePages: nil
             ),
             pagePositions: pagePositions
         )

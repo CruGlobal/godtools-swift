@@ -148,6 +148,23 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
         setPageRenderer(pageRenderer: currentPageRenderer.value, navigationEvent: nil, pagePositions: nil)
     }
     
+    func getPages() -> [Page] {
+        return pageModels
+    }
+    
+    func setPages(pages: [Page]) {
+        pageModels = pages
+    }
+
+    func getCurrentPage() -> Page? {
+
+        guard currentRenderedPageNumber >= 0 && currentRenderedPageNumber < pageModels.count else {
+            return nil
+        }
+
+        return pageModels[currentRenderedPageNumber]
+    }
+    
     // MARK: - Renderer / Page Renderer
     
     var primaryPageRenderer: MobileContentPageRenderer {
@@ -260,7 +277,8 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
                     page: currentRenderedPageNumber,
                     animated: false,
                     reloadCollectionViewDataNeeded: true,
-                    insertPages: nil
+                    insertPages: nil,
+                    deletePages: nil
                 ),
                 pagePositions: pagePositions
             )
@@ -272,7 +290,8 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
                 page: navigationEventToSend.pageNavigation.page,
                 animated: navigationEventToSend.pageNavigation.animated,
                 reloadCollectionViewDataNeeded: navigationEventToSend.pageNavigation.reloadCollectionViewDataNeeded,
-                insertPages: nil
+                insertPages: nil,
+                deletePages: nil
             ),
             pagePositions: navigationEventToSend.pagePositions
         )
@@ -499,7 +518,8 @@ extension MobileContentPagesViewModel {
                     page: pageIndex,
                     animated: animated,
                     reloadCollectionViewDataNeeded: reloadCollectionViewDataNeeded,
-                    insertPages: nil
+                    insertPages: nil,
+                    deletePages: nil
                 ),
                 pagePositions: nil
             )
@@ -532,7 +552,8 @@ extension MobileContentPagesViewModel {
                     page: insertAtIndex,
                     animated: animated,
                     reloadCollectionViewDataNeeded: reloadCollectionViewDataNeeded,
-                    insertPages: [insertAtIndex]
+                    insertPages: [insertAtIndex],
+                    deletePages: nil
                 ),
                 pagePositions: nil
             )
