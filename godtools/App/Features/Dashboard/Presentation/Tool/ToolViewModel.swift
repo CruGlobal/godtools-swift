@@ -146,30 +146,22 @@ class ToolViewModel: MobileContentPagesViewModel {
         
         let primaryLanguage: LanguageDomainModel = languages[0]
         let parallelLanguage: LanguageDomainModel? = languages[safe: 1]
-        
-        let contentLanguage: LanguageDomainModel
-        let secondaryLanguage: LanguageDomainModel?
-        
+                
         let trackTappedLanguageData: [String: Any]?
         
         if let parallelLanguage = parallelLanguage {
             
             let parallelLanguageToggled: Bool = tappedLanguage.id == parallelLanguage.id
-            
-            contentLanguage = parallelLanguageToggled ? parallelLanguage : primaryLanguage
-            secondaryLanguage = parallelLanguageToggled ? primaryLanguage : parallelLanguage
-            
+                        
             var data: [String: Any] = Dictionary()
             
-            data[AnalyticsConstants.Keys.contentLanguageSecondary] = secondaryLanguage?.localeIdentifier
+            data[AnalyticsConstants.Keys.contentLanguageSecondary] = parallelLanguage.localeIdentifier
             data[AnalyticsConstants.ActionNames.parallelLanguageToggled] = parallelLanguageToggled
             
             trackTappedLanguageData = data
         }
         else {
             
-            contentLanguage = primaryLanguage
-            secondaryLanguage = nil
             trackTappedLanguageData = nil
         }
         
@@ -178,8 +170,8 @@ class ToolViewModel: MobileContentPagesViewModel {
             actionName: AnalyticsConstants.ActionNames.parallelLanguageToggled,
             siteSection: analyticsSiteSection,
             siteSubSection: "",
-            contentLanguage: contentLanguage.localeIdentifier,
-            contentLanguageSecondary: secondaryLanguage?.localeIdentifier,
+            contentLanguage: primaryLanguage.localeIdentifier,
+            contentLanguageSecondary: parallelLanguage?.localeIdentifier,
             url: nil,
             data: trackTappedLanguageData
         )
