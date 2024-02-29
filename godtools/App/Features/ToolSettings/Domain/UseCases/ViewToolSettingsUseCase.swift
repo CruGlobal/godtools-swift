@@ -24,13 +24,13 @@ class ViewToolSettingsUseCase {
         self.getParallelLanguageRepository = getParallelLanguageRepository
     }
     
-    func viewPublisher(appLanguage: AppLanguageDomainModel, tool: ResourceModel, toolLanguage: ToolSettingsToolLanguageDomainModel?) -> AnyPublisher<ViewToolSettingsDomainModel, Never> {
+    func viewPublisher(appLanguage: AppLanguageDomainModel, toolId: String, toolLanguageId: String, toolPrimaryLanguageId: String, toolParallelLanguageId: String?) -> AnyPublisher<ViewToolSettingsDomainModel, Never> {
         
         return Publishers.CombineLatest4(
             getInterfaceStringsRepository.getStringsPublisher(translateInLanguage: appLanguage),
-            getToolHasTipsRepository.getHasTipsPublisher(tool: tool, toolLanguage: toolLanguage),
-            getPrimaryLanguageRepository.getLanguagePublisher(translateInLanguage: appLanguage),
-            getParallelLanguageRepository.getLanguagePublisher(translateInLanguage: appLanguage)
+            getToolHasTipsRepository.getHasTipsPublisher(toolId: toolId, toolLanguageId: toolLanguageId),
+            getPrimaryLanguageRepository.getLanguagePublisher(primaryLanguageId: toolPrimaryLanguageId, translateInLanguage: appLanguage),
+            getParallelLanguageRepository.getLanguagePublisher(parallelLanguageId: toolParallelLanguageId, translateInLanguage: appLanguage)
         )
         .map {
             

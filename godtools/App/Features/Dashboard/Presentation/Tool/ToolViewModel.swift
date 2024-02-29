@@ -14,7 +14,6 @@ class ToolViewModel: MobileContentPagesViewModel {
     
     private let tractRemoteSharePublisher: TractRemoteSharePublisher
     private let tractRemoteShareSubscriber: TractRemoteShareSubscriber
-    private let fontService: FontService
     private let resourceViewsService: ResourceViewsService
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let toolOpenedAnalytics: ToolOpenedAnalytics
@@ -31,12 +30,11 @@ class ToolViewModel: MobileContentPagesViewModel {
     
     @Published var hidesRemoteShareIsActive: Bool = true
         
-    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, fontService: FontService, resourceViewsService: ResourceViewsService, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, translatedLanguageNameRepository: TranslatedLanguageNameRepository, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, initialPage: MobileContentPagesPage?, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?) {
+    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, resourceViewsService: ResourceViewsService, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, translatedLanguageNameRepository: TranslatedLanguageNameRepository, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, initialPage: MobileContentPagesPage?, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?) {
         
         self.flowDelegate = flowDelegate
         self.tractRemoteSharePublisher = tractRemoteSharePublisher
         self.tractRemoteShareSubscriber = tractRemoteShareSubscriber
-        self.fontService = fontService
         self.resourceViewsService = resourceViewsService
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.toolOpenedAnalytics = toolOpenedAnalytics
@@ -47,12 +45,12 @@ class ToolViewModel: MobileContentPagesViewModel {
         navBarAppearance = AppNavigationBarAppearance(
             backgroundColor: primaryManifest.navBarColor,
             controlColor: primaryManifest.navBarControlColor,
-            titleFont: fontService.getFont(size: 17, weight: .semibold),
+            titleFont: FontLibrary.systemUIFont(size: 17, weight: .semibold),
             titleColor: primaryManifest.navBarControlColor,
             isTranslucent: true
         )
         
-        languageFont = fontService.getFont(size: 14, weight: .regular)
+        languageFont = FontLibrary.systemUIFont(size: 14, weight: .regular)
         
         super.init(renderer: renderer, initialPage: initialPage, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, translatedLanguageNameRepository: translatedLanguageNameRepository, initialPageRenderingType: .visiblePages, trainingTipsEnabled: trainingTipsEnabled, incrementUserCounterUseCase: incrementUserCounterUseCase, selectedLanguageIndex: selectedLanguageIndex)
         
@@ -141,6 +139,28 @@ class ToolViewModel: MobileContentPagesViewModel {
         toolOpenedAnalytics.trackFirstToolOpenedIfNeeded(resource: resource)
         toolOpenedAnalytics.trackToolOpened(resource: resource)
     }
+    
+    private func trackLanguageTapped(tappedLanguage: LanguageDomainModel) {
+        
+        let primaryLanguage: LanguageDomainModel = languages[0]
+        let parallelLanguage: LanguageDomainModel? = languages[safe: 1]
+                
+        let trackTappedLanguageData: [String: Any] = [
+            AnalyticsConstants.Keys.contentLanguageSecondary: parallelLanguage?.localeIdentifier ?? "",
+            AnalyticsConstants.ActionNames.parallelLanguageToggled: tappedLanguage.id == parallelLanguage?.id
+        ]
+        
+        trackActionAnalyticsUseCase.trackAction(
+            screenName: analyticsScreenName,
+            actionName: AnalyticsConstants.ActionNames.parallelLanguageToggled,
+            siteSection: analyticsSiteSection,
+            siteSubSection: "",
+            contentLanguage: primaryLanguage.localeIdentifier,
+            contentLanguageSecondary: parallelLanguage?.localeIdentifier,
+            url: nil,
+            data: trackTappedLanguageData
+        )
+    }
 }
 
 // MARK: - Inputs
@@ -161,23 +181,48 @@ extension ToolViewModel {
     
     @objc func toolSettingsTapped() {
         
-        let toolData = ToolSettingsFlowToolData(
-            renderer: renderer,
-            currentPageRenderer: currentPageRenderer,
-            tractRemoteSharePublisher: tractRemoteSharePublisher,
-            selectedLanguage: languages[selectedLanguageIndex],
-            pageNumber: currentRenderedPageNumber,
-            trainingTipsEnabled: trainingTipsEnabled
+        let languages = ToolSettingsLanguages(
+            primaryLanguageId: languages[0].id,
+            parallelLanguageId: languages[safe: 1]?.id,
+            selectedLanguageId: languages[selectedLanguageIndex].id
         )
         
-        flowDelegate?.navigate(step: .toolSettingsTappedFromTool(toolData: toolData))
+        let toolSettingsObserver = ToolSettingsObserver(
+            toolId: renderer.value.resource.id,
+            languages: languages,
+            pageNumber: currentRenderedPageNumber,
+            trainingTipsEnabled: trainingTipsEnabled,
+            tractRemoteSharePublisher: tractRemoteSharePublisher
+        )
+
+        toolSettingsObserver.$languages
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (languages: ToolSettingsLanguages) in
+                
+                self?.setRendererPrimaryLanguage(
+                    primaryLanguageId: languages.primaryLanguageId,
+                    parallelLanguageId: languages.parallelLanguageId,
+                    selectedLanguageId: languages.selectedLanguageId
+                )
+            }
+            .store(in: &cancellables)
+        
+        toolSettingsObserver.$trainingTipsEnabled
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (trainingTipsEnabled: Bool) in
+                
+                self?.setTrainingTipsEnabled(enabled: trainingTipsEnabled)
+            }
+            .store(in: &cancellables)
+        
+        flowDelegate?.navigate(step: .toolSettingsTappedFromTool(toolSettingsObserver: toolSettingsObserver))
     }
     
     func languageTapped(index: Int, page: Int, pagePositions: ToolPagePositions) {
                 
-        let language: LanguageDomainModel = languages[index]
+        let tappedLanguage: LanguageDomainModel = languages[index]
         
-        if let pageRenderer = getPageRenderer(language: language) {
+        if let pageRenderer = getPageRenderer(language: tappedLanguage) {
             setPageRenderer(pageRenderer: pageRenderer, navigationEvent: nil, pagePositions: pagePositions)
         }
         
@@ -186,21 +231,7 @@ extension ToolViewModel {
             pagePositions: pagePositions
         )
         
-        let data: [String: String] = [
-            AnalyticsConstants.ActionNames.parallelLanguageToggled: "",
-            AnalyticsConstants.Keys.contentLanguageSecondary: language.localeIdentifier,
-        ]
-        
-        trackActionAnalyticsUseCase.trackAction(
-            screenName: analyticsScreenName,
-            actionName: AnalyticsConstants.ActionNames.parallelLanguageToggled,
-            siteSection: analyticsSiteSection,
-            siteSubSection: "",
-            contentLanguage: language.localeIdentifier,
-            contentLanguageSecondary: nil,
-            url: nil,
-            data: data
-        )
+        trackLanguageTapped(tappedLanguage: tappedLanguage)
     }
     
     func subscribedForRemoteSharePublishing(page: Int, pagePositions: ToolPagePositions) {
@@ -296,7 +327,8 @@ extension ToolViewModel {
                 page: page ?? super.currentRenderedPageNumber,
                 animated: animated,
                 reloadCollectionViewDataNeeded: navBarLanguageChanged,
-                insertPages: nil
+                insertPages: nil,
+                deletePages: nil
             ),
             pagePositions: pagePositions
         )

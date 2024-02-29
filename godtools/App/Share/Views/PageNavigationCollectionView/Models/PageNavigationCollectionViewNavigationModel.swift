@@ -16,6 +16,7 @@ struct PageNavigationCollectionViewNavigationModel {
     let animated: Bool
     let reloadCollectionViewDataNeeded: Bool
     let insertPages: [Int]?
+    let deletePages: [Int]?
     
     var hasPagesToInsert: Bool {
         
@@ -24,5 +25,14 @@ struct PageNavigationCollectionViewNavigationModel {
         }
         
         return !insertPages.isEmpty
+    }
+    
+    var hasPagesToDelete: Bool {
+        
+        guard let deletePages = self.deletePages else {
+            return false
+        }
+        
+        return !deletePages.isEmpty
     }
 }

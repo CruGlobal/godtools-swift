@@ -23,7 +23,7 @@ class LearnToShareToolFlow: Flow {
     let appDiContainer: AppDiContainer
     let navigationController: AppNavigationController
     
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, tool: ToolDomainModel, toolPrimaryLanguage: AppLanguageDomainModel, toolParallelLanguage: AppLanguageDomainModel?, toolSelectedLanguageIndex: Int?) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, toolId: String, toolPrimaryLanguage: AppLanguageDomainModel, toolParallelLanguage: AppLanguageDomainModel?, toolSelectedLanguageIndex: Int?) {
         
         let navigationBarAppearance = AppNavigationBarAppearance(backgroundColor: .clear, controlColor: ColorPalette.gtBlue.uiColor, titleFont: nil, titleColor: nil, isTranslucent: true)
         
@@ -38,7 +38,7 @@ class LearnToShareToolFlow: Flow {
         
         navigationController.setNavigationBarHidden(false, animated: false)
         
-        navigationController.setViewControllers([getLearnToShareToolView(tool: tool)], animated: false)
+        navigationController.setViewControllers([getLearnToShareToolView(toolId: toolId)], animated: false)
     }
     
     deinit {
@@ -49,22 +49,22 @@ class LearnToShareToolFlow: Flow {
         
         switch step {
             
-        case .continueTappedFromLearnToShareTool(let tool, let primaryLanguage, let parallelLanguage, let selectedLanguageIndex):
-            flowDelegate?.navigate(step: .continueTappedFromLearnToShareTool(tool: tool, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, selectedLanguageIndex: selectedLanguageIndex))
+        case .continueTappedFromLearnToShareTool(let toolId, let primaryLanguage, let parallelLanguage, let selectedLanguageIndex):
+            flowDelegate?.navigate(step: .continueTappedFromLearnToShareTool(toolId: toolId, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, selectedLanguageIndex: selectedLanguageIndex))
             
-        case .closeTappedFromLearnToShareTool(let tool, let primaryLanguage, let parallelLanguage, let selectedLanguageIndex):
-            flowDelegate?.navigate(step: .closeTappedFromLearnToShareTool(tool: tool, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, selectedLanguageIndex: selectedLanguageIndex))
+        case .closeTappedFromLearnToShareTool(let toolId, let primaryLanguage, let parallelLanguage, let selectedLanguageIndex):
+            flowDelegate?.navigate(step: .closeTappedFromLearnToShareTool(toolId: toolId, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, selectedLanguageIndex: selectedLanguageIndex))
             
         default:
             break
         }
     }
     
-    private func getLearnToShareToolView(tool: ToolDomainModel) -> UIViewController {
+    private func getLearnToShareToolView(toolId: String) -> UIViewController {
         
         let viewModel = LearnToShareToolViewModel(
             flowDelegate: self,
-            tool: tool,
+            toolId: toolId,
             toolPrimaryLanguage: toolPrimaryLanguage,
             toolParallelLanguage: toolParallelLanguage,
             toolSelectedLanguageIndex: toolSelectedLanguageIndex,

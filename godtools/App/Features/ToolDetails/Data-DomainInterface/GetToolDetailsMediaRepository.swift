@@ -20,9 +20,9 @@ class GetToolDetailsMediaRepository: GetToolDetailsMediaRepositoryInterface {
         self.attachmentsRepository = attachmentsRepository
     }
     
-    func getMediaPublisher(tool: ToolDomainModel) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> {
+    func getMediaPublisher(toolId: String) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> {
                 
-        guard let resource = resourcesRepository.getResource(id: tool.dataModelId) else {
+        guard let resource = resourcesRepository.getResource(id: toolId) else {
             return Just(.empty)
                 .eraseToAnyPublisher()
         }

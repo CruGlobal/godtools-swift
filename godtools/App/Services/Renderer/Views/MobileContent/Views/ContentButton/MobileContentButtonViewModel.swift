@@ -14,7 +14,6 @@ class MobileContentButtonViewModel: MobileContentViewModel {
     private let maxAllowedIconSize = 40
     
     private let buttonModel: Button
-    private let fontService: FontService
     private let fontSize: CGFloat = 18
     private let fontWeight: UIFont.Weight = .regular
     
@@ -28,11 +27,10 @@ class MobileContentButtonViewModel: MobileContentViewModel {
     let visibilityState: ObservableValue<MobileContentViewVisibilityState> = ObservableValue(value: .visible)
     let icon: MobileContentButtonIcon?
     
-    init(buttonModel: Button, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics, fontService: FontService) {
+    init(buttonModel: Button, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
         
         self.buttonModel = buttonModel
         self.mobileContentAnalytics = mobileContentAnalytics
-        self.fontService = fontService
         
         buttonWidth = MobileContentViewWidth(dimension: buttonModel.width)
         
@@ -107,10 +105,7 @@ class MobileContentButtonViewModel: MobileContentViewModel {
                 
         let fontScale = CGFloat(textScale)
         
-        return fontService.getFont(
-            size: fontSize * fontScale,
-            weight: fontWeight
-        )
+        return FontLibrary.systemUIFont(size: fontSize * fontScale, weight: fontWeight)
     }
     
     var title: String? {

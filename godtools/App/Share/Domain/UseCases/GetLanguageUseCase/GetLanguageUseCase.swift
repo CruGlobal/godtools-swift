@@ -9,6 +9,7 @@
 import Foundation
 import Combine
 
+@available(*, deprecated)
 class GetLanguageUseCase {
     
     private let languagesRepository: LanguagesRepository

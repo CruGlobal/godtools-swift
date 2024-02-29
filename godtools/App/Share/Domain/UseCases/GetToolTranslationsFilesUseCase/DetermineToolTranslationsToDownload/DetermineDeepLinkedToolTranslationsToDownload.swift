@@ -14,15 +14,15 @@ class DetermineDeepLinkedToolTranslationsToDownload: DetermineToolTranslationsTo
     private let resourcesRepository: ResourcesRepository
     private let languagesRepository: LanguagesRepository
     private let translationsRepository: TranslationsRepository
-    private let primaryLanguage: LanguageDomainModel?
+    private let userAppLanguageRepository: UserAppLanguageRepository
         
-    required init(toolDeepLink: ToolDeepLink, resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, translationsRepository: TranslationsRepository, primaryLanguage: LanguageDomainModel?) {
+    init(toolDeepLink: ToolDeepLink, resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, translationsRepository: TranslationsRepository, userAppLanguageRepository: UserAppLanguageRepository) {
         
         self.toolDeepLink = toolDeepLink
         self.resourcesRepository = resourcesRepository
         self.languagesRepository = languagesRepository
         self.translationsRepository = translationsRepository
-        self.primaryLanguage = primaryLanguage
+        self.userAppLanguageRepository = userAppLanguageRepository
     }
     
     func getResource() -> ResourceModel? {
@@ -57,11 +57,13 @@ class DetermineDeepLinkedToolTranslationsToDownload: DetermineToolTranslationsTo
         let primaryTranslation: TranslationModel? = getFirstAvailableTranslation(resourceId: resource.id, languageIds: supportedPrimaryLanguageIds)
         
         if let primaryTranslation = primaryTranslation {
-            return primaryTranslation
-        }
-        else if let primaryLanguageId = primaryLanguage?.dataModelId, let primaryTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageId: primaryLanguageId) {
             
             return primaryTranslation
+        }
+        else if let appLanguage = userAppLanguageRepository.getCachedLanguage(),
+                let appLanguageTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageCode: appLanguage.languageId) {
+            
+            return appLanguageTranslation
         }
         else if let englishTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageCode: LanguageCodeDomainModel.english.value) {
             

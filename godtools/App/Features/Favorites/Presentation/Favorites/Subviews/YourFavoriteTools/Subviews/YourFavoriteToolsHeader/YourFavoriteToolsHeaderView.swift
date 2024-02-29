@@ -30,7 +30,7 @@ struct YourFavoriteToolsHeaderView: View {
                 .fixedSize(horizontal: false, vertical: true) // This is necessary for multiline text to push HStack height.
                 .padding(.leading, contentHorizontalInsets)
                             
-            if viewModel.yourFavoriteTools.count > 0 {
+            if viewModel.yourFavoritedTools.count > 0 {
                 
                 Spacer()
                 

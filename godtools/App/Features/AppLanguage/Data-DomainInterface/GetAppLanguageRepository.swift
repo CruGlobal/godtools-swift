@@ -39,7 +39,7 @@ class GetAppLanguageRepository: GetAppLanguageRepositoryInterface {
     
     func getLanguage() -> AppLanguageDomainModel {
         
-        let userLanguage = userAppLanguageRepository.getLanguage()
+        let userLanguage = userAppLanguageRepository.getCachedLanguage()
         let appLanguage: AppLanguageDomainModel = userLanguage?.languageId ?? LanguageCodeDomainModel.english.rawValue
         
         return appLanguage

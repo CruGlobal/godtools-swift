@@ -18,8 +18,7 @@ class UserAppLanguageRepository {
         self.cache = cache
     }
     
-    func getLanguage() -> UserAppLanguageDataModel? {
-        
+    func getCachedLanguage() -> UserAppLanguageDataModel? {
         return cache.getLanguage()
     }
     

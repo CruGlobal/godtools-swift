@@ -14,7 +14,7 @@ class LessonEvaluationViewModel: ObservableObject {
     private static var evaluateLessonInBackgroundCancellable: AnyCancellable?
     private static var cancelLessonEvaluationInBackgroundCancellable: AnyCancellable?
     
-    private let lesson: ToolDomainModel
+    private let lessonId: String
     private let pageIndexReached: Int
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getLessonEvaluationInterfaceStringsUseCase: GetLessonEvaluationInterfaceStringsUseCase
@@ -39,10 +39,10 @@ class LessonEvaluationViewModel: ObservableObject {
     @Published var shareFaithReadiness: String = ""
     @Published var sendFeedbackButtonTitle: String = ""
     
-    init(flowDelegate: FlowDelegate, lesson: ToolDomainModel, pageIndexReached: Int, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLessonEvaluationInterfaceStringsUseCase: GetLessonEvaluationInterfaceStringsUseCase, evaluateLessonUseCase: EvaluateLessonUseCase, cancelLessonEvaluationUseCase: CancelLessonEvaluationUseCase) {
+    init(flowDelegate: FlowDelegate, lessonId: String, pageIndexReached: Int, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLessonEvaluationInterfaceStringsUseCase: GetLessonEvaluationInterfaceStringsUseCase, evaluateLessonUseCase: EvaluateLessonUseCase, cancelLessonEvaluationUseCase: CancelLessonEvaluationUseCase) {
         
         self.flowDelegate = flowDelegate
-        self.lesson = lesson
+        self.lessonId = lessonId
         self.pageIndexReached = pageIndexReached
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getLessonEvaluationInterfaceStringsUseCase = getLessonEvaluationInterfaceStringsUseCase
@@ -85,7 +85,7 @@ extension LessonEvaluationViewModel {
     func closeTapped() {
         
         LessonEvaluationViewModel.cancelLessonEvaluationInBackgroundCancellable = cancelLessonEvaluationUseCase
-            .cancelPublisher(lesson: lesson)
+            .cancelPublisher(lessonId: lessonId)
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { _ in
                 
@@ -127,7 +127,7 @@ extension LessonEvaluationViewModel {
         )
         
         LessonEvaluationViewModel.evaluateLessonInBackgroundCancellable = evaluateLessonUseCase
-            .evaluateLessonPublisher(lesson: lesson, feedback: feedback)
+            .evaluateLessonPublisher(lessonId: lessonId, feedback: feedback)
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { _ in
                 

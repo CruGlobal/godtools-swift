@@ -11,7 +11,7 @@ import Combine
 
 class LearnToShareToolViewModel: ObservableObject {
     
-    private let tool: ToolDomainModel
+    private let toolId: String
     private let toolPrimaryLanguage: AppLanguageDomainModel
     private let toolParallelLanguage: AppLanguageDomainModel?
     private let toolSelectedLanguageIndex: Int?
@@ -30,10 +30,10 @@ class LearnToShareToolViewModel: ObservableObject {
     @Published var continueTitle: String = ""
     @Published var currentPage: Int = 0
     
-    init(flowDelegate: FlowDelegate, tool: ToolDomainModel, toolPrimaryLanguage: AppLanguageDomainModel, toolParallelLanguage: AppLanguageDomainModel?, toolSelectedLanguageIndex: Int?, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewLearnToShareToolUseCase: ViewLearnToShareToolUseCase) {
+    init(flowDelegate: FlowDelegate, toolId: String, toolPrimaryLanguage: AppLanguageDomainModel, toolParallelLanguage: AppLanguageDomainModel?, toolSelectedLanguageIndex: Int?, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewLearnToShareToolUseCase: ViewLearnToShareToolUseCase) {
         
         self.flowDelegate = flowDelegate
-        self.tool = tool
+        self.toolId = toolId
         self.toolPrimaryLanguage = toolPrimaryLanguage
         self.toolParallelLanguage = toolParallelLanguage
         self.toolSelectedLanguageIndex = toolSelectedLanguageIndex
@@ -125,13 +125,13 @@ extension LearnToShareToolViewModel {
     }
     
     @objc func closeTapped() {
-        flowDelegate?.navigate(step: .closeTappedFromLearnToShareTool(tool: tool, primaryLanguage: toolPrimaryLanguage, parallelLanguage: toolParallelLanguage, selectedLanguageIndex: toolSelectedLanguageIndex))
+        flowDelegate?.navigate(step: .closeTappedFromLearnToShareTool(toolId: toolId, primaryLanguage: toolPrimaryLanguage, parallelLanguage: toolParallelLanguage, selectedLanguageIndex: toolSelectedLanguageIndex))
     }
     
     func continueTapped() {
         
         if isOnLastPage {
-            flowDelegate?.navigate(step: .continueTappedFromLearnToShareTool(tool: tool, primaryLanguage: toolPrimaryLanguage, parallelLanguage: toolParallelLanguage, selectedLanguageIndex: toolSelectedLanguageIndex))
+            flowDelegate?.navigate(step: .continueTappedFromLearnToShareTool(toolId: toolId, primaryLanguage: toolPrimaryLanguage, parallelLanguage: toolParallelLanguage, selectedLanguageIndex: toolSelectedLanguageIndex))
         }
         else {
             currentPage = currentPage + 1

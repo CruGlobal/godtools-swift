@@ -303,6 +303,12 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getToolListItemInterfaceStringsRepository() -> GetToolListItemInterfaceStringsRepository {
+        return GetToolListItemInterfaceStringsRepository(
+            localizationServices: getLocalizationServices()
+        )
+    }
+    
     func getTrackDownloadedTranslationsRepository() -> TrackDownloadedTranslationsRepository {
         return TrackDownloadedTranslationsRepository(
             cache: TrackDownloadedTranslationsCache(realmDatabase: sharedRealmDatabase)
@@ -326,6 +332,29 @@ class AppDataLayerDependencies {
             languagesRepository: getLanguagesRepository(),
             getTranslatedLanguageName: getTranslatedLanguageName(),
             cache: getTranslatedLanguageNameCache()
+        )
+    }
+    
+    func getTranslatedToolCategory() -> GetTranslatedToolCategory {
+        return GetTranslatedToolCategory(
+            localizationServices: getLocalizationServices(),
+            resourcesRepository: getResourcesRepository()
+        )
+    }
+    
+    func getTranslatedToolName() -> GetTranslatedToolName {
+        return GetTranslatedToolName(
+            resourcesRepository: getResourcesRepository(),
+            translationsRepository: getTranslationsRepository()
+        )
+    }
+    
+    func getTranslatedToolLanguageAvailability() -> GetTranslatedToolLanguageAvailability {
+        return GetTranslatedToolLanguageAvailability(
+            localizationServices: getLocalizationServices(),
+            resourcesRepository: getResourcesRepository(),
+            languagesRepository: getLanguagesRepository(),
+            translatedLanguageNameRepository: getTranslatedLanguageNameRepository()
         )
     }
     

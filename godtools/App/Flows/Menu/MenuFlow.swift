@@ -25,13 +25,11 @@ class MenuFlow: Flow {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
-        
-        let fontService: FontService = appDiContainer.getFontService()
-        
+                
         let navigationBarAppearance = AppNavigationBarAppearance(
             backgroundColor: ColorPalette.gtBlue.uiColor,
             controlColor: .white,
-            titleFont: fontService.getFont(size: 17, weight: .semibold),
+            titleFont: FontLibrary.systemUIFont(size: 17, weight: .semibold),
             titleColor: .white,
             isTranslucent: false
         )

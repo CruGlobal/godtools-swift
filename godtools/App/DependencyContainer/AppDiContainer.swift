@@ -38,6 +38,7 @@ class AppDiContainer {
         let featuredLessonsDiContainer = FeaturedLessonsDiContainer(coreDataLayer: dataLayer, appLanguageFeatureDomainLayer: appLanguageDiContainer.domainLayer, lessonsFeatureDomainLayer: lessonsDiContainer.domainLayer)
         let onboardingDiContainer = OnboardingDiContainer(coreDataLayer: dataLayer, appDomainLayer: domainLayer, appLanguageFeatureDomainLayer: appLanguageDiContainer.domainLayer)
         let shareablesDiContainer: ShareablesDiContainer = ShareablesDiContainer(coreDataLayer: dataLayer)
+        let spotlightToolsDiContainer = SpotlightToolsDiContainer(coreDataLayer: dataLayer)
         let toolDetailsDiContainer = ToolDetailsFeatureDiContainer(coreDataLayer: dataLayer, appLanguageFeatureDiContainer: appLanguageDiContainer)
         let toolScreenShareDiContainer = ToolScreenShareFeatureDiContainer(coreDataLayer: dataLayer)
         let toolSettingsDiContainer = ToolSettingsDiContainer(coreDataLayer: dataLayer)
@@ -57,6 +58,7 @@ class AppDiContainer {
             lessons: lessonsDiContainer,
             onboarding: onboardingDiContainer,
             shareables: shareablesDiContainer,
+            spotlightTools: spotlightToolsDiContainer,
             toolDetails: toolDetailsDiContainer,
             toolScreenShare: toolScreenShareDiContainer,
             toolSettings: toolSettingsDiContainer,
@@ -78,10 +80,6 @@ class AppDiContainer {
     
     func getFirebaseDebugArguments() -> FirebaseDebugArguments {
         return FirebaseDebugArguments()
-    }
-    
-    func getFontService() -> FontService {
-        return FontService(getSettingsPrimaryLanguageUseCase: domainLayer.getSettingsPrimaryLanguageUseCase())
     }
     
     func getMobileContentRenderer(type: MobileContentRendererPageViewFactoriesType, navigation: MobileContentRendererNavigation, toolTranslations: ToolTranslationsDomainModel) -> MobileContentRenderer {
@@ -135,7 +133,10 @@ class AppDiContainer {
     
     func getToolTrainingTipsOnboardingViews() -> ToolTrainingTipsOnboardingViewsService {
         return ToolTrainingTipsOnboardingViewsService(
-            cache: ToolTrainingTipsOnboardingViewsUserDefaultsCache(userDefaultsCache: sharedUserDefaultsCache)
+            cache: ToolTrainingTipsOnboardingViewsUserDefaultsCache(
+                userDefaultsCache: sharedUserDefaultsCache,
+                getTranslatedToolName: dataLayer.getTranslatedToolName()
+            )
         )
     }
 }

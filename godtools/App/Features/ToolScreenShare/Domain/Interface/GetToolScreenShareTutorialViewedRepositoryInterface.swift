@@ -11,6 +11,5 @@ import Combine
 
 protocol GetToolScreenShareTutorialViewedRepositoryInterface {
     
-    // TODO: Eventually ToolDomainModel should be passed here instead of ResourceModel. ~Levi
-    func getViewed(tool: ResourceModel) -> AnyPublisher<ToolScreenShareTutorialViewedDomainModel, Never>
+    func getViewed(toolId: String) -> AnyPublisher<ToolScreenShareTutorialViewedDomainModel, Never>
 }

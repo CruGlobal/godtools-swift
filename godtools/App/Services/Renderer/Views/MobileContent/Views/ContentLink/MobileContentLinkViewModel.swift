@@ -12,18 +12,16 @@ import GodToolsToolParser
 class MobileContentLinkViewModel: MobileContentViewModel {
     
     private let linkModel: Link
-    private let fontService: FontService
     private let fontSize: CGFloat = 18
     private let fontWeight: UIFont.Weight = .regular
     
     let mobileContentAnalytics: MobileContentRendererAnalytics
     let titleColor: UIColor
     
-    init(linkModel: Link, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics, fontService: FontService) {
+    init(linkModel: Link, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
         
         self.linkModel = linkModel
         self.mobileContentAnalytics = mobileContentAnalytics
-        self.fontService = fontService
         self.titleColor = linkModel.text.textColor
         
         super.init(baseModel: linkModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
@@ -34,7 +32,7 @@ class MobileContentLinkViewModel: MobileContentViewModel {
     }
     
     var font: UIFont {
-        return fontService.getFont(size: fontSize, weight: fontWeight)
+        return FontLibrary.systemUIFont(size: fontSize, weight: fontWeight)
     }
     
     var title: String? {

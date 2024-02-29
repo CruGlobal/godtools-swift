@@ -53,7 +53,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         let navigationBarAppearance = AppNavigationBarAppearance(
             backgroundColor: ColorPalette.gtBlue.uiColor,
             controlColor: .white,
-            titleFont: appDiContainer.getFontService().getFont(size: 17, weight: .semibold),
+            titleFont: FontLibrary.systemUIFont(size: 17, weight: .semibold),
             titleColor: .white,
             isTranslucent: false
         )
@@ -173,7 +173,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         case .spotlightToolTappedFromTools(let spotlightTool, let toolFilterLanguage):
             
             let toolDetails = getToolDetails(
-                tool: spotlightTool,
+                toolId: spotlightTool.dataModelId,
                 parallelLanguage: toolFilterLanguage?.language?.localeIdentifier,
                 selectedLanguageIndex: 1
             )
@@ -183,15 +183,15 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         case .toolTappedFromTools(let tool, let toolFilterLanguage):
             
             let toolDetails = getToolDetails(
-                tool: tool,
+                toolId: tool.dataModelId,
                 parallelLanguage: toolFilterLanguage?.language?.localeIdentifier,
                 selectedLanguageIndex: 1
             )
             
             navigationController.pushViewController(toolDetails, animated: true)
                                     
-        case .openToolTappedFromToolDetails(let tool, let primaryLanguage, let parallelLanguage, let selectedLanguageIndex):
-            navigateToTool(toolDataModelId: tool.dataModelId, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, selectedLanguageIndex: selectedLanguageIndex, trainingTipsEnabled: false)
+        case .openToolTappedFromToolDetails(let toolId, let primaryLanguage, let parallelLanguage, let selectedLanguageIndex):
+            navigateToTool(toolDataModelId: toolId, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, selectedLanguageIndex: selectedLanguageIndex, trainingTipsEnabled: false)
             
         case .lessonTappedFromLessonsList(let lessonListItem):
             navigateToToolInAppLanguage(toolDataModelId: lessonListItem.dataModelId, trainingTipsEnabled: false)
@@ -205,7 +205,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         case .toolDetailsTappedFromFavorites(let tool):
             
             let toolDetails = getToolDetails(
-                tool: tool,
+                toolId: tool.dataModelId,
                 parallelLanguage: nil,
                 selectedLanguageIndex: nil
             )
@@ -219,7 +219,12 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             navigateToToolInAppLanguage(toolDataModelId: tool.dataModelId, trainingTipsEnabled: false)
             
         case .unfavoriteToolTappedFromFavorites(let tool):
-            navigationController.present(getConfirmRemoveToolFromFavoritesAlertView(tool: tool, didConfirmToolRemovalSubject: nil), animated: true)
+            
+            presentConfirmRemoveToolFromFavoritesAlertView(
+                toolId: tool.dataModelId,
+                didConfirmToolRemovalSubject: nil, 
+                animated: true
+            )
             
         case .goToToolsTappedFromFavorites:
             navigateToDashboard(startingTab: .tools)
@@ -228,9 +233,9 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             navigationController.popViewController(animated: true)
             
         case .toolDetailsTappedFromAllYourFavoriteTools(let tool):
-            
+
             let toolDetails = getToolDetails(
-                tool: tool,
+                toolId: tool.dataModelId,
                 parallelLanguage: nil,
                 selectedLanguageIndex: nil
             )
@@ -244,7 +249,12 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             navigateToToolInAppLanguage(toolDataModelId: tool.dataModelId, trainingTipsEnabled: false)
         
         case .unfavoriteToolTappedFromAllYourFavoritedTools(let tool, let didConfirmToolRemovalSubject):
-            navigationController.present(getConfirmRemoveToolFromFavoritesAlertView(tool: tool, didConfirmToolRemovalSubject: didConfirmToolRemovalSubject), animated: true)
+            
+            presentConfirmRemoveToolFromFavoritesAlertView(
+                toolId: tool.dataModelId,
+                didConfirmToolRemovalSubject: didConfirmToolRemovalSubject,
+                animated: true
+            )
             
         case .backTappedFromToolDetails:
             configureNavBarForDashboard()
@@ -272,16 +282,16 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
             switch state {
             
-            case .userClosedLesson(let lesson, let highestPageNumberViewed):
+            case .userClosedLesson(let lessonId, let highestPageNumberViewed):
                 
                 let getLessonEvaluatedUseCase: GetLessonEvaluatedUseCase = appDiContainer.feature.lessonEvaluation.domainLayer.getLessonEvaluatedUseCase()
                 
-                getLessonEvaluatedUseCase.getEvaluatedPublisher(lesson: lesson)
+                getLessonEvaluatedUseCase.getEvaluatedPublisher(lessonId: lessonId)
                     .receive(on: DispatchQueue.main)
                     .sink { [weak self] (lessonEvaluated: Bool) in
                         
                         if highestPageNumberViewed > 2 && !lessonEvaluated {
-                            self?.presentLessonEvaluation(lesson: lesson, pageIndexReached: highestPageNumberViewed)
+                            self?.presentLessonEvaluation(lessonId: lessonId, pageIndexReached: highestPageNumberViewed)
                         }
                     }
                     .store(in: &cancellables)
@@ -378,17 +388,17 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                 UIApplication.shared.open(url)
             }
             
-        case .learnToShareToolTappedFromToolDetails(let tool, let primaryLanguage, let parallelLanguage, let selectedLanguageIndex):
-            navigateToLearnToShareTool(tool: tool, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, selectedLanguageIndex: selectedLanguageIndex)
+        case .learnToShareToolTappedFromToolDetails(let toolId, let primaryLanguage, let parallelLanguage, let selectedLanguageIndex):
+            navigateToLearnToShareTool(toolId: toolId, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, selectedLanguageIndex: selectedLanguageIndex)
             
-        case .continueTappedFromLearnToShareTool(let tool, let primaryLanguage, let parallelLanguage, let selectedLanguageIndex):
+        case .continueTappedFromLearnToShareTool(let toolId, let primaryLanguage, let parallelLanguage, let selectedLanguageIndex):
             dismissLearnToShareToolFlow {
-                self.navigateToTool(toolDataModelId: tool.dataModelId, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, selectedLanguageIndex: selectedLanguageIndex, trainingTipsEnabled: true)
+                self.navigateToTool(toolDataModelId: toolId, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, selectedLanguageIndex: selectedLanguageIndex, trainingTipsEnabled: true)
             }
             
-        case .closeTappedFromLearnToShareTool(let tool, let primaryLanguage, let parallelLanguage, let selectedLanguageIndex):
+        case .closeTappedFromLearnToShareTool(let toolId, let primaryLanguage, let parallelLanguage, let selectedLanguageIndex):
             dismissLearnToShareToolFlow {
-                self.navigateToTool(toolDataModelId: tool.dataModelId, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, selectedLanguageIndex: selectedLanguageIndex, trainingTipsEnabled: true)
+                self.navigateToTool(toolDataModelId: toolId, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, selectedLanguageIndex: selectedLanguageIndex, trainingTipsEnabled: true)
             }
             
         case .closeTappedFromLessonEvaluation:
@@ -720,13 +730,13 @@ extension AppFlow {
         
         let languagesRepository: LanguagesRepository = appDiContainer.dataLayer.getLanguagesRepository()
         
-        let languageIds: Set<String>
+        let languageIds: [String]
         
         if let appLanguageModel = languagesRepository.getLanguage(code: appLanguage) {
             languageIds = [appLanguageModel.id]
         }
         else {
-            languageIds = Set()
+            languageIds = Array()
         }
         
         navigateToTool(toolDataModelId: toolDataModelId, languageIds: languageIds, selectedLanguageIndex: nil, trainingTipsEnabled: trainingTipsEnabled)
@@ -736,24 +746,24 @@ extension AppFlow {
         
         let languagesRepository: LanguagesRepository = appDiContainer.dataLayer.getLanguagesRepository()
         
-        var languageIds: Set<String> = Set()
+        var languageIds: [String] = Array()
         
         if let languageModel = languagesRepository.getLanguage(code: primaryLanguage) {
-            languageIds.insert(languageModel.id)
+            languageIds.append(languageModel.id)
         }
         
         if let parallelLanguage = parallelLanguage, let languageModel = languagesRepository.getLanguage(code: parallelLanguage) {
-            languageIds.insert(languageModel.id)
+            languageIds.append(languageModel.id)
         }
         
         navigateToTool(toolDataModelId: toolDataModelId, languageIds: languageIds, selectedLanguageIndex: selectedLanguageIndex, trainingTipsEnabled: trainingTipsEnabled)
     }
         
-    private func navigateToTool(toolDataModelId: String, languageIds: Set<String>, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool) {
+    private func navigateToTool(toolDataModelId: String, languageIds: [String], selectedLanguageIndex: Int?, trainingTipsEnabled: Bool) {
         
         let languagesRepository: LanguagesRepository = appDiContainer.dataLayer.getLanguagesRepository()
         
-        let openToolInLanguages: Set<String>
+        let openToolInLanguages: [String]
         
         if languageIds.isEmpty, let englishLanguage = languagesRepository.getLanguage(code: LanguageCodeDomainModel.english.rawValue) {
             
@@ -841,11 +851,10 @@ extension AppFlow {
         
         let viewModel = AllYourFavoriteToolsViewModel(
             flowDelegate: self,
-            getAllFavoritedToolsUseCase: appDiContainer.domainLayer.getAllFavoritedToolsUseCase(),
-            getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),
-            getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
+            viewAllYourFavoritedToolsUseCase: appDiContainer.feature.favorites.domainLayer.getViewAllYourFavoritedToolsUseCase(),
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            getToolIsFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToolIsFavoritedUseCase(),
             attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository(),
-            getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
         )
@@ -876,18 +885,41 @@ extension AppFlow {
 
 extension AppFlow {
     
-    private func getConfirmRemoveToolFromFavoritesAlertView(tool: ToolDomainModel, didConfirmToolRemovalSubject: PassthroughSubject<Void, Never>?) -> UIViewController {
+    private func getConfirmRemoveToolFromFavoritesAlertView(toolId: String, domainModel: ViewConfirmRemoveToolFromFavoritesDomainModel, didConfirmToolRemovalSubject: PassthroughSubject<Void, Never>?) -> UIViewController {
         
         let viewModel = ConfirmRemoveToolFromFavoritesAlertViewModel(
-            tool: tool,
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-            removeToolFromFavoritesUseCase: appDiContainer.domainLayer.getRemoveToolFromFavoritesUseCase(),
+            toolId: toolId,
+            viewConfirmRemoveToolFromFavoritesDomainModel: domainModel,
+            removeFavoritedToolUseCase: appDiContainer.feature.favorites.domainLayer.getRemoveFavoritedToolUseCase(),
             didConfirmToolRemovalSubject: didConfirmToolRemovalSubject
         )
         
         let view = ConfirmRemoveToolFromFavoritesAlertView(viewModel: viewModel)
         
         return view.controller
+    }
+    
+    private func presentConfirmRemoveToolFromFavoritesAlertView(toolId: String, didConfirmToolRemovalSubject: PassthroughSubject<Void, Never>?, animated: Bool) {
+        
+        appDiContainer.feature.favorites.domainLayer
+            .getViewConfirmRemoveToolFromFavoritesUseCase()
+            .viewPublisher(toolId: toolId, appLanguage: appLanguage)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (domainModel: ViewConfirmRemoveToolFromFavoritesDomainModel) in
+                
+                guard let weakSelf = self else {
+                    return
+                }
+                
+                let view = weakSelf.getConfirmRemoveToolFromFavoritesAlertView(
+                    toolId: toolId,
+                    domainModel: domainModel,
+                    didConfirmToolRemovalSubject: didConfirmToolRemovalSubject
+                )
+                
+                weakSelf.navigationController.present(view, animated: animated)
+            }
+            .store(in: &cancellables)
     }
 }
 
@@ -970,20 +1002,19 @@ extension AppFlow {
 
 extension AppFlow {
     
-    private func getToolDetails(tool: ToolDomainModel, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?) -> UIViewController {
+    private func getToolDetails(toolId: String, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?) -> UIViewController {
         
         let viewModel = ToolDetailsViewModel(
             flowDelegate: self,
-            tool: tool,
+            toolId: toolId,
             primaryLanguage: appLanguage,
             parallelLanguage: parallelLanguage,
             selectedLanguageIndex: selectedLanguageIndex,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            getToolUseCase: appDiContainer.domainLayer.getToolUseCase(),
             viewToolDetailsUseCase: appDiContainer.feature.toolDetails.domainLayer.getViewToolDetailsUseCase(),
             getToolDetailsMediaUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsMediaUseCase(),
             getToolDetailsLearnToShareToolIsAvailableUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsLearnToShareToolIsAvailableUseCase(),
-            toggleToolFavoritedUseCase: appDiContainer.domainLayer.getToggleToolFavoritedUseCase(),
+            toggleToolFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToggleFavoritedToolUseCase(),
             attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
@@ -1015,20 +1046,20 @@ extension AppFlow {
 
 extension AppFlow {
     
-    private func navigateToLearnToShareTool(tool: ToolDomainModel, primaryLanguage: AppLanguageDomainModel, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?) {
+    private func navigateToLearnToShareTool(toolId: String, primaryLanguage: AppLanguageDomainModel, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?) {
         
         let toolTrainingTipsOnboardingViews: ToolTrainingTipsOnboardingViewsService = appDiContainer.getToolTrainingTipsOnboardingViews()
                     
-        let toolTrainingTipReachedMaximumViews: Bool = toolTrainingTipsOnboardingViews.getToolTrainingTipReachedMaximumViews(tool: tool)
+        let toolTrainingTipReachedMaximumViews: Bool = toolTrainingTipsOnboardingViews.getToolTrainingTipReachedMaximumViews(toolId: toolId, primaryLanguage: primaryLanguage)
         
         if !toolTrainingTipReachedMaximumViews {
             
-            toolTrainingTipsOnboardingViews.storeToolTrainingTipViewed(tool: tool)
+            toolTrainingTipsOnboardingViews.storeToolTrainingTipViewed(toolId: toolId, primaryLanguage: primaryLanguage)
             
             let learnToShareToolFlow = LearnToShareToolFlow(
                 flowDelegate: self,
                 appDiContainer: appDiContainer,
-                tool: tool,
+                toolId: toolId,
                 toolPrimaryLanguage: primaryLanguage,
                 toolParallelLanguage: parallelLanguage,
                 toolSelectedLanguageIndex: selectedLanguageIndex
@@ -1041,7 +1072,7 @@ extension AppFlow {
         else {
             
             navigateToTool(
-                toolDataModelId: tool.dataModelId,
+                toolDataModelId: toolId,
                 primaryLanguage: primaryLanguage,
                 parallelLanguage: parallelLanguage,
                 selectedLanguageIndex: selectedLanguageIndex,
@@ -1066,11 +1097,11 @@ extension AppFlow {
 
 extension AppFlow {
     
-    private func presentLessonEvaluation(lesson: ToolDomainModel, pageIndexReached: Int) {
+    private func presentLessonEvaluation(lessonId: String, pageIndexReached: Int) {
         
         let viewModel = LessonEvaluationViewModel(
             flowDelegate: self,
-            lesson: lesson,
+            lessonId: lessonId,
             pageIndexReached: pageIndexReached,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getLessonEvaluationInterfaceStringsUseCase: appDiContainer.feature.lessonEvaluation.domainLayer.getLessonEvaluationInterfaceStringsUseCase(),
