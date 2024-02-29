@@ -28,13 +28,15 @@ class GetUserFiltersRepository: GetUserFiltersRepositoryInterface {
             .eraseToAnyPublisher()
     }
     
-    func getUserLanguageFilterPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<LanguageFilterDomainModel?, Never> {
+    func getUserLanguageFilterPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<LanguageFilterDomainModel, Never> {
         
         let languageId = userFiltersRepository.getUserLanguageFilter()
         
         let languageFilter = getToolFilterLanguagesRepository.getLanguageFilter(from: languageId, translatedInAppLanguage: translatedInAppLanguage)
         
-        return Just(languageFilter)
+        let defaultLanguageFilterValue = getToolFilterLanguagesRepository.getAnyLanguageFilterDomainModel(translatedInAppLanguage: translatedInAppLanguage)
+        
+        return Just(languageFilter ?? defaultLanguageFilterValue)
             .eraseToAnyPublisher()
     }
 }

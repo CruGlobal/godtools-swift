@@ -98,9 +98,7 @@ class ToolsViewModel: ObservableObject {
         getUserFiltersUseCase.getUserFiltersPublisher(translatedInAppLanguage: appLanguage)
             .flatMap { userFilters in
                 
-                if let languageFilter = userFilters.languageFilter {
-                    self.toolFilterLanguageSelectionPublisher.send(languageFilter)
-                }
+                self.toolFilterLanguageSelectionPublisher.send(userFilters.languageFilter)
                 
                 // TODO: - update category filter to behave the same as language
                 return getToolFilterCategoriesUseCase.getCategoryFilterPublisher(with: userFilters.categoryFilterId)
