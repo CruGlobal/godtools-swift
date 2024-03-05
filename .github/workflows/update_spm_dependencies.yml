@@ -59,6 +59,12 @@ jobs:
       - name: Pod install
         run: bundle exec pod install --repo-update
 
+      - name: Import App Store Connect API Key
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        env:
+          APP_STORE_CONNECT_API_JSON_PAYLOAD: ${{ secrets.APP_STORE_CONNECT_API_JSON_PAYLOAD }}
+        run: echo $APP_STORE_CONNECT_API_JSON_PAYLOAD > fastlane/AppleAppStoreApi.json
+
       - name: Build Xcode Project
         env:
           MATCH_GIT_BASIC_AUTHORIZATION_PAT: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION_PAT }}
