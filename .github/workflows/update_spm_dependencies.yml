@@ -68,7 +68,7 @@ jobs:
 
       - name: Create Pull Request
         if: steps.resolution.outputs.dependenciesChanged == 'true'
-        uses: peter-evans/create-pull-request@v3
+        uses: peter-evans/create-pull-request@v6
         with:
           branch: 'dependencies/ios'
           delete-branch: true
