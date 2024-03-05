@@ -59,8 +59,11 @@ jobs:
       - name: Pod install
         run: bundle exec pod install --repo-update
 
-      - name: Build XCode Project
-        run: bundle exec fastlane gym --workspace "godtools.xcworkspace" --scheme "GodTools-Production" --clean
+      - name: Build Xcode Project
+        env:
+          MATCH_GIT_BASIC_AUTHORIZATION_PAT: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION_PAT }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+        run: bundle exec fastlane cru_shared_lane_build_and_deploy_for_testflight_release is_running_in_ci:true distribute_to_testflight:false gym_skip_archive:true 
 
       - name: Resolve Dependencies
         id: resolution
@@ -69,7 +72,7 @@ jobs:
           forceResolution: true
           failWhenOutdated: false
           workspace: 'godtools.xcworkspace'
-          scheme: 'GodTools-Production'
+          scheme: 'GodTools-Release'
 
       - name: Create Pull Request
         if: steps.resolution.outputs.dependenciesChanged == 'true'
