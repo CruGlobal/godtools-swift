@@ -1,0 +1,35 @@
+name: Update SPM Dependencies
+
+on: 
+  schedule:
+    - cron: '0 6 * * 1' # Monday at 06:00 UTC
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  dependencies:
+    runs-on: macos-13
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Resolve Dependencies
+        id: resolution
+        uses: GetSidetrack/action-xcodeproj-spm-update@main
+        with:
+          forceResolution: true
+          failWhenOutdated: false
+
+      - name: Create Pull Request
+        if: steps.resolution.outputs.dependenciesChanged == 'true'
+        uses: peter-evans/create-pull-request@v3
+        with:
+          branch: 'dependencies/ios'
+          delete-branch: true
+          commit-message: 'Update SPM Dependencies'
+          title: 'Updated SPM Dependencies'
