@@ -59,8 +59,8 @@ jobs:
       - name: Pod install
         run: bundle exec pod install --repo-update
 
-      - name: Build App
-        run: fastlane gym --workspace "godtools.xcworkspace" --scheme "GodTools-Production" --clean
+      - name: Build XCode Project
+        run: bundle exec fastlane gym --workspace "godtools.xcworkspace" --scheme "GodTools-Production" --clean
 
       - name: Resolve Dependencies
         id: resolution
