@@ -62,10 +62,14 @@ class AppLanguagesViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        searchAppLanguageInAppLanguagesListUseCase.getSearchResultsPublisher(
-            for: $searchText.eraseToAnyPublisher(),
-            in: $appLanguagesList.eraseToAnyPublisher()
+        Publishers.CombineLatest(
+            $searchText.eraseToAnyPublisher(),
+            $appLanguagesList.eraseToAnyPublisher()
         )
+        .flatMap { (searchText: String, appLanguagesList: [AppLanguageListItemDomainModel]) in
+            
+            return searchAppLanguageInAppLanguagesListUseCase.getSearchResultsPublisher(for: searchText, in: appLanguagesList)
+        }
         .receive(on: DispatchQueue.main)
         .assign(to: &$appLanguageSearchResults)
     }

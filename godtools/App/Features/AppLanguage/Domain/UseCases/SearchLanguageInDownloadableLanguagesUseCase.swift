@@ -18,16 +18,8 @@ class SearchLanguageInDownloadableLanguagesUseCase {
         self.searchLanguageInDownloadableLanguagesRepository = searchLanguageInDownloadableLanguagesRepository
     }
     
-    func getSearchResultsPublisher(for searchTextPublisher: AnyPublisher<String, Never>, in downloadableLanguagesPublisher: AnyPublisher<[DownloadableLanguageListItemDomainModel], Never>) -> AnyPublisher<[DownloadableLanguageListItemDomainModel], Never> {
+    func getSearchResultsPublisher(for searchText: String, in downloadableLanguages: [DownloadableLanguageListItemDomainModel]) -> AnyPublisher<[DownloadableLanguageListItemDomainModel], Never> {
         
-        return Publishers.CombineLatest(
-            searchTextPublisher,
-            downloadableLanguagesPublisher
-        )
-        .flatMap { searchText, downloadableLanguagesList in
-        
-            return self.searchLanguageInDownloadableLanguagesRepository.getSearchResultsPublisher(searchText: searchText, appLanguagesList: downloadableLanguagesList)
-        }
-        .eraseToAnyPublisher()
+        return searchLanguageInDownloadableLanguagesRepository.getSearchResultsPublisher(searchText: searchText, appLanguagesList: downloadableLanguages)
     }
 }

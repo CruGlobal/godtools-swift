@@ -46,6 +46,12 @@ class ToolsFilterFeatureDataLayerDependencies {
     
     // MARK: - Domain Interface
     
+    func getSearchToolFilterCategoriesRepositoryInterface() -> SearchToolFilterCategoriesRepositoryInterface {
+        return SearchToolFilterCategoriesRepository(
+            stringSearcher: StringSearcher()
+        )
+    }
+    
     func getStoreUserFiltersRepositoryInterface() -> StoreUserFiltersRepositoryInterface {
         return StoreUserFiltersRepository(userFiltersRepository: getUserFiltersRepository())
     }

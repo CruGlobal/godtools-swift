@@ -66,13 +66,16 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .assign(to: &$navTitle)
         
-        searchToolFilterCategoriesUseCase
-            .getSearchResultsPublisher(
-                for: $searchText.eraseToAnyPublisher(),
-                in: $allCategories.eraseToAnyPublisher()
-            )
-            .receive(on: DispatchQueue.main)
-            .assign(to: &$categorySearchResults)
+        Publishers.CombineLatest(
+            $searchText.eraseToAnyPublisher(),
+            $allCategories.eraseToAnyPublisher()
+        )
+        .flatMap { searchText, allCategories in
+            
+            self.searchToolFilterCategoriesUseCase.getSearchResultsPublisher(for: searchText, in: allCategories)
+        }
+        .receive(on: DispatchQueue.main)
+        .assign(to: &$categorySearchResults)
     }
     
     deinit {

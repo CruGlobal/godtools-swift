@@ -18,16 +18,8 @@ class SearchAppLanguageInAppLanguagesListUseCase {
         self.searchAppLanguageInAppLanguageListRepository = searchAppLanguageInAppLanguageListRepository
     }
     
-    func getSearchResultsPublisher(for searchTextPublisher: AnyPublisher<String, Never>, in appLanguagesListPublisher: AnyPublisher<[AppLanguageListItemDomainModel], Never>) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> {
+    func getSearchResultsPublisher(for searchText: String, in appLanguagesList: [AppLanguageListItemDomainModel]) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> {
         
-        return Publishers.CombineLatest(
-            searchTextPublisher,
-            appLanguagesListPublisher
-        )
-        .flatMap { searchText, appLanguagesList in
-        
-            return self.searchAppLanguageInAppLanguageListRepository.getSearchResultsPublisher(searchText: searchText, appLanguagesList: appLanguagesList)
-        }
-        .eraseToAnyPublisher()
+        return searchAppLanguageInAppLanguageListRepository.getSearchResultsPublisher(searchText: searchText, appLanguagesList: appLanguagesList)
     }
 }

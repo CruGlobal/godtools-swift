@@ -58,6 +58,9 @@ extension DownloadableLanguageListItemDomainModel: Identifiable {
 extension DownloadableLanguageListItemDomainModel: StringSearchable {
     
     var searchableStrings: [String] {
-        return [languageNameInAppLanguage, languageNameInOwnLanguage]
+        return [
+            languageNameInAppLanguage,
+            languageNameInOwnLanguage
+        ]
     }
 }
