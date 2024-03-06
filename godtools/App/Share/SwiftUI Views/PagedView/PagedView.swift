@@ -11,6 +11,7 @@ import SwiftUI
 // NOTE: This view is a wrapper around TabView and was created to fix a bug specifically to iOS 16 where a TabView page index would get reversed when the device settings is using a right to left language.
 // This would cause the TabBar tied to the TabView to reverse as well and navigation was also reversed when tapping Tabs to navigate the TabView. ~Levi
 
+@available(iOS, obsoleted: 14.0, message: "Marking as obsoleted due to a retain cycle happening in @ViewBuilder content: @escaping (_ page: Int) -> Content that was unable to be resolved.")
 struct PagedView<Content: View>: View {
     
     private let numberOfPages: Int
