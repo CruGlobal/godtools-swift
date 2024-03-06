@@ -29,13 +29,33 @@ struct ToolScreenShareTutorialView: View {
                 
                 FixedVerticalSpacer(height: 50)
                 
-                PagedView(numberOfPages: viewModel.tutorialPages.count, currentPage: $viewModel.currentPage) { (index: Int) in
+                TabView(selection: $viewModel.currentPage) {
                     
-                    ToolScreenShareTutorialPageView(
-                        tutorialPage: viewModel.tutorialPages[index],
-                        geometry: geometry
-                    )
+                    Group {
+                        
+                        if ApplicationLayout.shared.layoutDirection == .rightToLeft {
+                            
+                            ForEach((0 ..< viewModel.tutorialPages.count).reversed(), id: \.self) { index in
+                                
+                                getToolScreenShareTutorialPage(index: index, geometry: geometry)
+                                    .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
+                                    .tag(index)
+                            }
+                        }
+                        else {
+                            
+                            ForEach(0 ..< viewModel.tutorialPages.count, id: \.self) { index in
+                                
+                                getToolScreenShareTutorialPage(index: index, geometry: geometry)
+                                    .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
+                                    .tag(index)
+                            }
+                        }
+                    }
                 }
+                .environment(\.layoutDirection, .leftToRight)
+                .tabViewStyle(.page(indexDisplayMode: .never))
+                .animation(.easeOut, value: viewModel.currentPage)
                 
                 GTBlueButton(title: viewModel.continueTitle, font: FontLibrary.sfProTextRegular.font(size: 18), width: geometry.size.width - (continueButtonHorizontalPadding * 2), height: continueButtonHeight) {
                     
@@ -52,5 +72,13 @@ struct ToolScreenShareTutorialView: View {
             .frame(maxWidth: .infinity)
         }
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
+    }
+    
+    private func getToolScreenShareTutorialPage(index: Int, geometry: GeometryProxy) -> ToolScreenShareTutorialPageView {
+        
+        return ToolScreenShareTutorialPageView(
+            tutorialPage: viewModel.tutorialPages[index],
+            geometry: geometry
+        )
     }
 }
