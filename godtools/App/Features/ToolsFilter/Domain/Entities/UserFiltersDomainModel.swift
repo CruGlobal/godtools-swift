@@ -10,6 +10,6 @@ import Foundation
 
 struct UserFiltersDomainModel {
     
-    let categoryFilterId: String? // TODO: - update this to use CategoryFilterDomainModel? as the type instead
+    let categoryFilter: CategoryFilterDomainModel
     let languageFilter: LanguageFilterDomainModel
 }

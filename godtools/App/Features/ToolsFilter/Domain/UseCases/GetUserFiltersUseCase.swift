@@ -24,10 +24,10 @@ class GetUserFiltersUseCase {
             getUserFiltersRepositoryInterface.getUserCategoryFilterPublisher(translatedInAppLanguage: translatedInAppLanguage),
             getUserFiltersRepositoryInterface.getUserLanguageFilterPublisher(translatedInAppLanguage: translatedInAppLanguage)
         )
-        .flatMap { categoryFilterId, languageFilter in
+        .flatMap { categoryFilter, languageFilter in
             
             let userFilters = UserFiltersDomainModel(
-                categoryFilterId: categoryFilterId,
+                categoryFilter: categoryFilter,
                 languageFilter: languageFilter
             )
             
