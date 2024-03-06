@@ -777,8 +777,8 @@
 		459BF7812AFEE0320053BA09 /* ToolScreenShareTutorialViewsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459BF77D2AFEE0320053BA09 /* ToolScreenShareTutorialViewsRepository.swift */; };
 		459C526F289418EB00DA9E95 /* TranslationManifestFileDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459C526E289418EB00DA9E95 /* TranslationManifestFileDataModel.swift */; };
 		459C527128941A5B00DA9E95 /* TranslationFilesDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459C527028941A5B00DA9E95 /* TranslationFilesDataModel.swift */; };
-		459C56D225FF954F00F15967 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		459C56D325FF954F00F15967 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		459C56D225FF954F00F15967 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		459C56D325FF954F00F15967 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
 		459E27FA2AD8280D008275B3 /* DeleteUserCountersUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E27F92AD8280D008275B3 /* DeleteUserCountersUseCase.swift */; };
 		459E3A062A30BC2600070934 /* MenuItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E3A032A30BC2600070934 /* MenuItemView.swift */; };
 		459E3A072A30BC2600070934 /* MenuSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E3A042A30BC2600070934 /* MenuSectionView.swift */; };
@@ -1013,15 +1013,15 @@
 		45B54C572A2641FE0042CD0E /* RealmDatabase+Read.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B54C542A2641FE0042CD0E /* RealmDatabase+Read.swift */; };
 		45B54C582A2641FE0042CD0E /* RealmDatabase+Write.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B54C552A2641FE0042CD0E /* RealmDatabase+Write.swift */; };
 		45B54C592A2641FE0042CD0E /* RealmDatabase+Delete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B54C562A2641FE0042CD0E /* RealmDatabase+Delete.swift */; };
-		45B6480925E581660098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		45B6480A25E581660098BAF1 /* (null) in Resources */ = {isa = PBXBuildFile; };
-		45B6480B25E581660098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		45B6480C25E581660098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		45B6481625E58ECC0098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		45B6482025E58EE70098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		45B6482825E593110098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		45B6482925E593110098BAF1 /* (null) in Resources */ = {isa = PBXBuildFile; };
-		45B6482A25E593110098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		45B6480925E581660098BAF1 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		45B6480A25E581660098BAF1 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
+		45B6480B25E581660098BAF1 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		45B6480C25E581660098BAF1 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		45B6481625E58ECC0098BAF1 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		45B6482025E58EE70098BAF1 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		45B6482825E593110098BAF1 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		45B6482925E593110098BAF1 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
+		45B6482A25E593110098BAF1 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
 		45B778AF27C5351500BAAF1E /* ToolPageHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45B778AE27C5351500BAAF1E /* ToolPageHeaderView.xib */; };
 		45B8C1A52AEA9FBC0099F8C2 /* GetLessonEvaluatedRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B8C1A42AEA9FBC0099F8C2 /* GetLessonEvaluatedRepositoryInterface.swift */; };
 		45B8C1A72AEA9FC80099F8C2 /* GetLessonEvaluatedRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B8C1A62AEA9FC80099F8C2 /* GetLessonEvaluatedRepository.swift */; };
@@ -11096,7 +11096,7 @@
 				451A17522756C10400D35D78 /* tutorial_screenshare.json in Resources */,
 				D4B522D929D761B700D85213 /* Localizable.stringsdict in Resources */,
 				1737DFDF22FDB48000223CB0 /* GoogleService-Info.plist in Resources */,
-				45B6482925E593110098BAF1 /* (null) in Resources */,
+				45B6482925E593110098BAF1 /* BuildFile in Resources */,
 				458CFE9329D4E0B9007B423C /* ArticlesErrorMessageView.xib in Resources */,
 				455583FC269F2DA500C3FF14 /* MobileContentInputView.xib in Resources */,
 				451A17542756C10400D35D78 /* tutorial_tooltip.json in Resources */,
@@ -11130,7 +11130,7 @@
 				D19EB5E0259BB75900685156 /* training_tip_tips.json in Resources */,
 				458CFE9129D4E0B9007B423C /* ArticleWebView.xib in Resources */,
 				4555840F269F2DA500C3FF14 /* MobileContentTextView.xib in Resources */,
-				45B6480A25E581660098BAF1 /* (null) in Resources */,
+				45B6480A25E581660098BAF1 /* BuildFile in Resources */,
 				45F7162E290A12D70019B715 /* WebContentView.xib in Resources */,
 				45DEF22E2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json in Resources */,
 				45BE4A7D2AF28788004021DA /* SF-Pro-Display-Regular.otf in Resources */,
@@ -11341,7 +11341,7 @@
 				45D63E56288F67F8009B4610 /* IgnoreCacheSession.swift in Sources */,
 				458B91C32B7D676900785C6F /* ViewFavoritesDomainModel.swift in Sources */,
 				459E86DD28EDA86C00E197A5 /* DeepLinkUrlParserType.swift in Sources */,
-				459C56D225FF954F00F15967 /* (null) in Sources */,
+				459C56D225FF954F00F15967 /* BuildFile in Sources */,
 				45D63E86288F75B0009B4610 /* RealmAttachment.swift in Sources */,
 				45C649C22B31E212000249E0 /* GetShareToolInterfaceStringsRepositoryInterface.swift in Sources */,
 				45A8BDE32ACC9F47007A1EBB /* LessonsViewModel.swift in Sources */,
@@ -11372,7 +11372,7 @@
 				459E86EE28EDA86C00E197A5 /* DeepLinkingParserManifestUrl.swift in Sources */,
 				45D00A1A2B1FD0E3007D2B65 /* String+ParseUrls.swift in Sources */,
 				456D445C2AF2A617008F61B9 /* AuthenticationProviderResponse.swift in Sources */,
-				45B6481625E58ECC0098BAF1 /* (null) in Sources */,
+				45B6481625E58ECC0098BAF1 /* BuildFile in Sources */,
 				4533C4D028AC2ED200F9628B /* LaunchCountCache.swift in Sources */,
 				45F3AF062B5EC0A600CE8D41 /* PageNavigationCollectionViewFlowLayout.swift in Sources */,
 				45F71629290A12D70019B715 /* WebContentType.swift in Sources */,
@@ -11429,7 +11429,7 @@
 				4556CEA729F2D57800643BBC /* RealmDatabaseConfiguration.swift in Sources */,
 				D4BC79E829B130970040651B /* SetCompletedTrainingTipUseCase.swift in Sources */,
 				45B3382F2AF42A6400D18C63 /* TutorialInterfaceStringsDomainModel.swift in Sources */,
-				45B6480B25E581660098BAF1 /* (null) in Sources */,
+				45B6480B25E581660098BAF1 /* BuildFile in Sources */,
 				458B91B12B7D5D6800785C6F /* ConfirmRemoveToolFromFavoritesAlertViewModel.swift in Sources */,
 				4512D4D32B29127C00DFAFB3 /* GetToolSettingsToolLanguagesListInterfaceStringsRepository.swift in Sources */,
 				4534F93B2AE9B11600A7A071 /* RealmLessonEvaluation.swift in Sources */,
@@ -11529,7 +11529,7 @@
 				45EB9B7229F16CF200CA74A8 /* UILabel+AttributedString.swift in Sources */,
 				45B54C572A2641FE0042CD0E /* RealmDatabase+Read.swift in Sources */,
 				45C152A52A44896C00F2A1E8 /* ToolViewModel.swift in Sources */,
-				45B6482025E58EE70098BAF1 /* (null) in Sources */,
+				45B6482025E58EE70098BAF1 /* BuildFile in Sources */,
 				45645C162AFE774900BD233D /* GetShareToolScreenShareSessionInterfaceStringsRepository.swift in Sources */,
 				45AD1BD925938A4F00A096A0 /* AlertMessageView.swift in Sources */,
 				4512D4DD2B29129100DFAFB3 /* ToolSettingsToolLanguagesListItemView.swift in Sources */,
@@ -11685,7 +11685,7 @@
 				45C8835D2A93EDDF00F33E6D /* DashboardTabBarItemView.swift in Sources */,
 				4504BA282AF3EE67001151E5 /* GetTutorialUseCase.swift in Sources */,
 				459F86862AC51A9A00B4E5CA /* ChooseAppLanguageNavigationFlow.swift in Sources */,
-				45B6480925E581660098BAF1 /* (null) in Sources */,
+				45B6480925E581660098BAF1 /* BuildFile in Sources */,
 				45EB9B8329F16CF200CA74A8 /* Color+RGB.swift in Sources */,
 				454365B028B4F2F900CC97C1 /* Flow+NetworkErrorAlert.swift in Sources */,
 				45558407269F2DA500C3FF14 /* MobileContentPagesViewModel.swift in Sources */,
@@ -11886,7 +11886,7 @@
 				45BE4A812AF287D2004021DA /* ConfirmAppLanguageViewModel.swift in Sources */,
 				45AE975527C97A9500C2CB33 /* Input+MobileContentRenderableModel.swift in Sources */,
 				452D355A2A8FB9EB00BC4F97 /* FavoritedResourceDataModel.swift in Sources */,
-				459C56D325FF954F00F15967 /* (null) in Sources */,
+				459C56D325FF954F00F15967 /* BuildFile in Sources */,
 				451CCF1427A9AA4700E8D2D3 /* MobileContentViewPositionState.swift in Sources */,
 				451C84972AF1C65D0003BF1A /* AccountCreationFeatureDiContainer.swift in Sources */,
 				45F71623290A12D70019B715 /* WebContentViewModel.swift in Sources */,
@@ -11953,7 +11953,7 @@
 				45369ADA2AFA7FA500BD10F0 /* ToolScreenShareFeatureDataLayerDependencies.swift in Sources */,
 				45EB9B7329F16CF200CA74A8 /* UIButton+ImageColor.swift in Sources */,
 				45F378FC2B23642600EEF039 /* GetLearnToShareToolTutorialItemsRepository.swift in Sources */,
-				45B6482A25E593110098BAF1 /* (null) in Sources */,
+				45B6482A25E593110098BAF1 /* BuildFile in Sources */,
 				D42FEBD62875D8D50002FAD9 /* GetOptInOnboardingTutorialAvailableUseCase.swift in Sources */,
 				4534F92C2AE9A99200A7A071 /* TrackLessonFeedbackDomainModel.swift in Sources */,
 				D40D77BF2AB36766008D3642 /* SearchBarViewModel.swift in Sources */,
@@ -12032,7 +12032,7 @@
 				458B91B02B7D5D6800785C6F /* YourFavoriteToolsView.swift in Sources */,
 				452DFB372B7FAAE5003A4A59 /* GetToolListItemInterfaceStringsRepository.swift in Sources */,
 				45369AD72AFA7FA500BD10F0 /* ToolScreenShareTutorialView.swift in Sources */,
-				45B6480C25E581660098BAF1 /* (null) in Sources */,
+				45B6480C25E581660098BAF1 /* BuildFile in Sources */,
 				45723DF72ABA24CE00C697E6 /* MobileContentApiErrorCodableCode.swift in Sources */,
 				45369AD42AFA7FA500BD10F0 /* ToolScreenShareTutorialPageDomainModel.swift in Sources */,
 				45DB188E2AD7906900E9578F /* GetAppLanguagesRepository.swift in Sources */,
@@ -12165,7 +12165,7 @@
 				4585BF662AC391F100A6D720 /* SetUserPreferredAppLanguageRepositoryInterface.swift in Sources */,
 				45F378FF2B23642600EEF039 /* LearnToShareToolDataLayerDependencies.swift in Sources */,
 				45B3F44A2AC3A86100D61BFD /* UserAppLanguageRepository.swift in Sources */,
-				45B6482825E593110098BAF1 /* (null) in Sources */,
+				45B6482825E593110098BAF1 /* BuildFile in Sources */,
 				45A835102AD1A40D004F5593 /* GetToolDetailsMediaUseCase.swift in Sources */,
 				4534F9462AE9B8E700A7A071 /* GetLessonEvaluatedUseCase.swift in Sources */,
 				45F378FD2B23642600EEF039 /* LearnToShareToolDomainLayerDependencies.swift in Sources */,
@@ -12968,8 +12968,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "GodTools Production";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "GodTools Production";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.cru.godtools";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore org.cru.godtools";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -13166,8 +13166,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools.beta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "GodTools Beta";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "GodTools Beta";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.cru.godtools";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore org.cru.godtools";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -13559,8 +13559,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "GodTools Production";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "GodTools Production";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.cru.godtools";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore org.cru.godtools";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -13793,8 +13793,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "GodTools Release Profile";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "GodTools Release Profile";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.cru.godtools";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore org.cru.godtools";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
