@@ -23,6 +23,8 @@ struct PagedView<Content: View>: View {
         self.numberOfPages = numberOfPages
         self._currentPage = currentPage
         self.content = content
+        
+        assertionFailure("Don't allocate PagedView directly.  There is a possible retain cycle happening with @ViewBuilder content: @escaping (_ page: Int) -> Content.  Instead copy the TabView portion (be sure to include modifiers when copying) and paste into desired location of custom paged view.")
     }
     
     var body: some View {
