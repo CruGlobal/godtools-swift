@@ -27,7 +27,7 @@ extension ToolNavigationFlow {
             resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
             languagesRepository: appDiContainer.dataLayer.getLanguagesRepository(),
             translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
-            primaryLanguage: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase().getPrimaryLanguage()
+            userAppLanguageRepository: appDiContainer.feature.appLanguage.dataLayer.getUserAppLanguageRepository()
         )
         
         navigateToToolAndDetermineToolTranslationsToDownload(
@@ -39,7 +39,7 @@ extension ToolNavigationFlow {
         )
     }
     
-    func navigateToTool(resourceId: String, languageIds: Set<String>, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?) {
+    func navigateToTool(resourceId: String, languageIds: [String], liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?) {
         
         let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(
             resourceId: resourceId,

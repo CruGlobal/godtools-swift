@@ -13,12 +13,14 @@ import Combine
 
 class ReviewShareShareableViewModel: ObservableObject {
     
-    private let resource: ResourceModel
+    private static var backgroundCancellables: Set<AnyCancellable> = Set()
+    
+    private let toolId: String
     private let shareable: ShareableDomainModel
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let viewReviewShareShareableUseCase: ViewReviewShareShareableUseCase
     private let getShareableImageUseCase: GetShareableImageUseCase
-    private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
+    private let trackShareShareableTapUseCase: TrackShareShareableTapUseCase
    
     private var imageToShare: UIImage?
     private var cancellables: Set<AnyCancellable> = Set()
@@ -30,15 +32,15 @@ class ReviewShareShareableViewModel: ObservableObject {
     @Published var imagePreviewData: OptionalImageData?
     @Published var shareImageButtonTitle: String = ""
     
-    init(flowDelegate: FlowDelegate, resource: ResourceModel, shareable: ShareableDomainModel, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewReviewShareShareableUseCase: ViewReviewShareShareableUseCase, getShareableImageUseCase: GetShareableImageUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(flowDelegate: FlowDelegate, toolId: String, shareable: ShareableDomainModel, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewReviewShareShareableUseCase: ViewReviewShareShareableUseCase, getShareableImageUseCase: GetShareableImageUseCase, trackShareShareableTapUseCase: TrackShareShareableTapUseCase) {
         
         self.flowDelegate = flowDelegate
-        self.resource = resource
+        self.toolId = toolId
         self.shareable = shareable
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.viewReviewShareShareableUseCase = viewReviewShareShareableUseCase
         self.getShareableImageUseCase = getShareableImageUseCase
-        self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
+        self.trackShareShareableTapUseCase = trackShareShareableTapUseCase
         
         $appLanguage.eraseToAnyPublisher()
             .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewReviewShareShareableDomainModel, Never> in
@@ -75,16 +77,12 @@ class ReviewShareShareableViewModel: ObservableObject {
     
     private func trackShareImageTappedAnalytics() {
         
-        trackActionAnalyticsUseCase.trackAction(
-            screenName: "",
-            actionName: AnalyticsConstants.ActionNames.shareShareable,
-            siteSection: resource.abbreviation,
-            siteSubSection: "",
-            contentLanguage: nil,
-            contentLanguageSecondary: nil,
-            url: nil,
-            data: [AnalyticsConstants.Keys.shareableId: shareable.dataModelId]
-        )
+        trackShareShareableTapUseCase
+            .trackPublisher(toolId: "", shareableId: shareable.dataModelId)
+            .sink { _ in
+                
+            }
+            .store(in: &ReviewShareShareableViewModel.backgroundCancellables)
     }
 }
 

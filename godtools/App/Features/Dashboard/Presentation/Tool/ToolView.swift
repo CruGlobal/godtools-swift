@@ -104,14 +104,3 @@ extension ToolView: ToolPageViewDelegate {
         pageNavigationView.scrollToNextPage(animated: true)
     }
 }
-
-extension ToolView: ToolSettingsToolType {
-    
-    func setRenderer(renderer: MobileContentRenderer) {
-        viewModel.setRenderer(renderer: renderer, pageRendererIndex: nil, navigationEvent: nil)
-    }
-    
-    func setTrainingTipsEnabled(enabled: Bool) {
-        viewModel.setTrainingTipsEnabled(enabled: enabled)
-    }
-}

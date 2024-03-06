@@ -11,40 +11,33 @@ import Combine
 
 class GetToolSettingsPrimaryLanguageRepository: GetToolSettingsPrimaryLanguageRepositoryInterface {
     
-    private let toolSettingsRepository: ToolSettingsRepository
     private let languagesRepository: LanguagesRepository
     private let translatedLanguageNameRepository: TranslatedLanguageNameRepository
     
-    init(toolSettingsRepository: ToolSettingsRepository, languagesRepository: LanguagesRepository, translatedLanguageNameRepository: TranslatedLanguageNameRepository) {
+    init(languagesRepository: LanguagesRepository, translatedLanguageNameRepository: TranslatedLanguageNameRepository) {
         
-        self.toolSettingsRepository = toolSettingsRepository
         self.languagesRepository = languagesRepository
         self.translatedLanguageNameRepository = translatedLanguageNameRepository
     }
     
-    func getLanguagePublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolSettingsToolLanguageDomainModel?, Never> {
+    func getLanguagePublisher(primaryLanguageId: String, translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolSettingsToolLanguageDomainModel?, Never> {
         
-        return toolSettingsRepository
-            .getToolSettingsChangedPublisher()
-            .map { _ in
-                
-                guard let toolSettings = self.toolSettingsRepository.getSharedToolSettings(),
-                      let primaryLanguageId = toolSettings.primaryLanguageId,
-                      let language = self.languagesRepository.getLanguage(id: primaryLanguageId) else {
-                    
-                    return nil
-                }
-                
-                let languageName: String = self.translatedLanguageNameRepository.getLanguageName(
-                    language: language,
-                    translatedInLanguage: translateInLanguage
-                )
-                
-                return ToolSettingsToolLanguageDomainModel(
-                    dataModelId: language.id,
-                    languageName: languageName
-                )
-            }
+        guard let language = languagesRepository.getLanguage(id: primaryLanguageId) else {
+            return Just(nil)
+                .eraseToAnyPublisher()
+        }
+        
+        let languageName: String = translatedLanguageNameRepository.getLanguageName(
+            language: language,
+            translatedInLanguage: translateInLanguage
+        )
+        
+        let toolSettingsLanguage = ToolSettingsToolLanguageDomainModel(
+            dataModelId: language.id,
+            languageName: languageName
+        )
+        
+        return Just(toolSettingsLanguage)
             .eraseToAnyPublisher()
     }
 }

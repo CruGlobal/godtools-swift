@@ -22,20 +22,18 @@ class GetToolSettingsToolLanguagesListRepository: GetToolSettingsToolLanguagesLi
         self.translatedLanguageNameRepository = translatedLanguageNameRepository
     }
     
-    func getToolLanguagesPublisher(listType: ToolSettingsToolLanguagesListTypeDomainModel, primaryLanguage: ToolSettingsToolLanguageDomainModel?, parallelLanguage: ToolSettingsToolLanguageDomainModel?, toolId: String, translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<[ToolSettingsToolLanguageDomainModel], Never> {
+    func getToolLanguagesPublisher(listType: ToolSettingsToolLanguagesListTypeDomainModel, primaryLanguageId: String, parallelLanguageId: String?, toolId: String, translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<[ToolSettingsToolLanguageDomainModel], Never> {
         
         var filterOutLanguageIds: [String] = Array()
         
         switch listType {
         case .choosePrimaryLanguage:
-            if let parallelLanguage = parallelLanguage {
-                filterOutLanguageIds.append(parallelLanguage.dataModelId)
+            if let parallelLanguageId = parallelLanguageId {
+                filterOutLanguageIds.append(parallelLanguageId)
             }
             
         case .chooseParallelLanguage:
-            if let primaryLanguage = primaryLanguage {
-                filterOutLanguageIds.append(primaryLanguage.dataModelId)
-            }
+            filterOutLanguageIds.append(primaryLanguageId)
         }
         
         let languageIds: [String]

@@ -153,13 +153,13 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>1 Language available</string>
+<string>%d доступный язык</string>
 <key>few</key>
-<string/>
+<string>%d доступных языков</string>
 <key>many</key>
-<string/>
+<string>%d доступных языков</string>
 <key>other</key>
-<string>%d Languages available</string>
+<string>%d доступные языки</string>
 </dict>
 </dict>
 <key>badges.imagesShared</key>

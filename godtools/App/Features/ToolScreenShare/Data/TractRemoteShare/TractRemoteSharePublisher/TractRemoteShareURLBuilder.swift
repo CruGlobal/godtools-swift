@@ -12,15 +12,29 @@ import Foundation
 
 class TractRemoteShareURLBuilder {
     
-    init() {
+    private let resourcesRepository: ResourcesRepository
+    private let languagesRepository: LanguagesRepository
+    
+    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository) {
         
+        self.resourcesRepository = resourcesRepository
+        self.languagesRepository = languagesRepository
     }
     
-    func buildRemoteShareURL(resource: ResourceModel, primaryLanguage: LanguageDomainModel, parallelLanguage: LanguageDomainModel?, selectedLanguage: LanguageDomainModel, page: Int?, subscriberChannelId: String) -> String? {
+    func buildRemoteShareURL(toolId: String, primaryLanguageId: String, parallelLanguageId: String?, selectedLanguageId: String, page: Int?, subscriberChannelId: String) -> String? {
                 
+        let resource: ResourceModel? = resourcesRepository.getResource(id: toolId)
+        let selectedLanguage: LanguageModel? = languagesRepository.getLanguage(id: selectedLanguageId)
+        
         var urlPath: String = ""
-        urlPath += "/" + selectedLanguage.localeIdentifier
-        urlPath += "/" + resource.abbreviation
+        
+        if let languageCode = selectedLanguage?.code {
+            urlPath += "/" + languageCode
+        }
+        
+        if let abbreviation = resource?.abbreviation {
+            urlPath += "/" + abbreviation
+        }
         
         if let page = page {
             urlPath += "/" + String(page)
@@ -33,11 +47,17 @@ class TractRemoteShareURLBuilder {
         urlComponents.path = urlPath
         
         var queryItems: [URLQueryItem] = Array()
-        if let parallelLanguage = parallelLanguage {
-            queryItems.append(URLQueryItem(name: "parallelLanguage", value: parallelLanguage.localeIdentifier))
+        
+        if let parallelLanguageId = parallelLanguageId, let parallelLanguage = languagesRepository.getLanguage(id: parallelLanguageId) {
+            queryItems.append(URLQueryItem(name: "parallelLanguage", value: parallelLanguage.code))
         }
+        
         queryItems.append(URLQueryItem(name: "icid", value: "gtshare"))
-        queryItems.append(URLQueryItem(name: "primaryLanguage", value: primaryLanguage.localeIdentifier))
+        
+        if let primaryLanguage = languagesRepository.getLanguage(id: primaryLanguageId) {
+            queryItems.append(URLQueryItem(name: "primaryLanguage", value: primaryLanguage.code))
+        }
+        
         queryItems.append(URLQueryItem(name: "liveShareStream", value: subscriberChannelId))
         
         urlComponents.queryItems = queryItems

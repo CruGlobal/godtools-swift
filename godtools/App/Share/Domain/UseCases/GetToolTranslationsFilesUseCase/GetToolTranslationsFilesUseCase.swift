@@ -105,9 +105,11 @@ class GetToolTranslationsFilesUseCase {
                     )
                 })
                 
+                let sortedLanguageManifests: [MobileContentRendererLanguageTranslationManifest] = self.sortLanguageTranslationManifestsByTranslationOrder(translationOrder: translationOrder, languageTranslationManifests: languageManifets)
+                
                 let domainModel = ToolTranslationsDomainModel(
                     tool: resource,
-                    languageTranslationManifests: self.sortLanguageTranslationManifestsByTranslationOrder(translationOrder: translationOrder, languageTranslationManifests: languageManifets)
+                    languageTranslationManifests: sortedLanguageManifests
                 )
                 
                 return Just(domainModel).setFailureType(to: Error.self)

@@ -12,12 +12,10 @@ import GodToolsToolParser
 class ToolPageCallToActionViewModel: MobileContentViewModel {
     
     private let callToActionModel: CallToAction?
-    private let fontService: FontService
         
-    init(callToActionModel: CallToAction?, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics, fontService: FontService) {
+    init(callToActionModel: CallToAction?, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
         
         self.callToActionModel = callToActionModel
-        self.fontService = fontService
         
         super.init(baseModel: callToActionModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }
@@ -31,7 +29,7 @@ class ToolPageCallToActionViewModel: MobileContentViewModel {
     }
     
     var titleFont: UIFont {
-        return fontService.getFont(size: 18, weight: .regular)
+        return FontLibrary.systemUIFont(size: 18, weight: .regular)
     }
     
     var titleTextAlignment: NSTextAlignment {

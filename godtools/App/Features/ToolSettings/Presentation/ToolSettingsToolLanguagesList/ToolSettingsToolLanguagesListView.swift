@@ -49,9 +49,9 @@ struct ToolSettingsToolLanguagesListView: View {
                                                        
                             ToolSettingsToolLanguagesListItemView(
                                 title: language.languageName,
-                                isSelected: language == viewModel.selectedLanguage,
+                                isSelected: language.dataModelId == viewModel.selectedLanguageId,
                                 tappedClosure: {
-                                    viewModel.languageTapped(language: language)
+                                    viewModel.languageTapped(languageId: language.dataModelId)
                                 }
                             )
                         }
