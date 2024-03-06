@@ -11,7 +11,7 @@ import Combine
 
 class SearchLanguageInDownloadableLanguagesRepository: SearchLanguageInDownloadableLanguagesRepositoryInterface {
     
-    let stringSearcher: StringSearcher
+    private let stringSearcher: StringSearcher
     
     init(stringSearcher: StringSearcher) {
         

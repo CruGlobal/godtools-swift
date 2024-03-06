@@ -83,7 +83,7 @@ extension GetToolFilterLanguagesRepository {
         let languages: [LanguageFilterDomainModel] = languagesRepository.getLanguages(ids: languageIds)
             .compactMap { languageModel in
                 
-                let toolsAvailableCount: Int = getToolsAvailableCount(for: languageModel.id, filteredByCategoryId: filteredByCategoryId)
+                let toolsAvailableCount: Int = getToolsAvailableCount(for: languageModel.code, filteredByCategoryId: filteredByCategoryId)
                 
                 guard toolsAvailableCount > 0 else {
                     return nil
@@ -101,7 +101,7 @@ extension GetToolFilterLanguagesRepository {
     
     private func createLanguageFilterDomainModel(with languageModel: LanguageModel, translatedInAppLanguage: AppLanguageDomainModel, filteredByCategoryId: String?) -> LanguageFilterDomainModel {
         
-        let toolsAvailableCount: Int = getToolsAvailableCount(for: languageModel.id, filteredByCategoryId: filteredByCategoryId)
+        let toolsAvailableCount: Int = getToolsAvailableCount(for: languageModel.code, filteredByCategoryId: filteredByCategoryId)
         
         let languageName = self.localeLanguageName.getLanguageName(forLanguageCode: languageModel.code, translatedInLanguageId: languageModel.code) ?? ""
         let translatedLanguageName = self.localeLanguageName.getLanguageName(forLanguageCode: languageModel.code, translatedInLanguageId: translatedInAppLanguage) ?? ""
@@ -140,7 +140,7 @@ extension GetToolFilterLanguagesRepository {
         
         let filter = ResourcesFilter(
             category: filteredByCategoryId,
-            languageId: languageCode,
+            languageCode: languageCode,
             resourceTypes: ResourceType.toolTypes
         )
         

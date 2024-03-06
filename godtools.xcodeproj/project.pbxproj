@@ -8202,10 +8202,10 @@
 				D43FC1C92B6997B600F8310E /* GetDownloadedLanguagesListRepository.swift */,
 				453D2F812AD88C2B001C44E3 /* GetLanguageSettingsInterfaceStringsRepository.swift */,
 				453A2F012B3636EC00C8F865 /* RemoveDownloadedToolLanguageRepository.swift */,
-				45B3F4382AC3A82E00D61BFD /* SetUserPreferredAppLanguageRepository.swift */,
-				45CE95892B7C053500A09340 /* StoreInitialAppLanguage.swift */,
 				D43FC1D92B882AF400F8310E /* SearchAppLanguageInAppLanguagesListRepository.swift */,
 				D43FC1DF2B893C7100F8310E /* SearchLanguageInDownloadableLanguagesRepository.swift */,
+				45B3F4382AC3A82E00D61BFD /* SetUserPreferredAppLanguageRepository.swift */,
+				45CE95892B7C053500A09340 /* StoreInitialAppLanguage.swift */,
 			);
 			path = "Data-DomainInterface";
 			sourceTree = "<group>";
