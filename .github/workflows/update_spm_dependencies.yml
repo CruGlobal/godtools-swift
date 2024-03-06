@@ -73,11 +73,15 @@ jobs:
       - name: Resolve Dependencies
         id: resolution
         uses: GetSidetrack/action-xcodeproj-spm-update@main
-        with:
-          forceResolution: true
-          failWhenOutdated: false
-          workspace: 'godtools.xcworkspace'
-          scheme: 'GodTools-Release'
+
+      # - name: Resolve Dependencies
+      #   id: resolution
+      #   uses: GetSidetrack/action-xcodeproj-spm-update@main
+      #   with:
+      #     forceResolution: true
+      #     failWhenOutdated: false
+      #     workspace: 'godtools.xcworkspace'
+      #     scheme: 'GodTools-Release'
 
       - name: Create Pull Request
         if: steps.resolution.outputs.dependenciesChanged == 'true'
