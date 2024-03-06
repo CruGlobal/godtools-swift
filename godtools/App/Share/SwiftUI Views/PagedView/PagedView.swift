@@ -62,25 +62,3 @@ struct PagedView<Content: View>: View {
         }
     }
 }
-
-struct PagedView_Previews: PreviewProvider {
-       
-    @State private static var currentPage: Int = 1
-    
-    static var previews: some View {
-                
-        PagedView(numberOfPages: 5, currentPage: $currentPage) { page in
-            
-            ZStack(alignment: .center) {
-                
-                Rectangle()
-                    .fill(Color.red)
-                    .frame(width: 100, height: 100)
-                
-                Text("Item: \(page)")
-                    .foregroundColor(Color.black)
-            }
-            .frame(width: 100, height: 100)
-        }
-    }
-}
