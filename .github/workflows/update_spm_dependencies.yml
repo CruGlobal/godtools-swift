@@ -68,7 +68,7 @@ jobs:
         env:
           MATCH_GIT_BASIC_AUTHORIZATION_PAT: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION_PAT }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-        run: bundle exec fastlane cru_shared_lane_build_and_deploy_for_testflight_release is_running_in_ci:true distribute_to_testflight:false gym_skip_archive:true gym_configuration:'Debug' gym_export_method:'development' gym_scheme:'GodTools-Production' gym_bundle_identifier:'org.cru.godtools' gym_provisioning_profile:'match Production org.cru.godtools' match_type:'development' 
+        run: bundle exec fastlane cru_shared_lane_build_and_deploy_for_testflight_release is_running_in_ci:true distribute_to_testflight:false gym_skip_archive:true gym_configuration:'Debug' gym_export_method:'development' gym_scheme:'GodTools-Production' gym_bundle_identifier:'org.cru.godtools' gym_provisioning_profile:'match Development org.cru.godtools' match_type:'development' 
 
       - name: Resolve Dependencies
         id: resolution
