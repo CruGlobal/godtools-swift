@@ -34,7 +34,9 @@ class ToolsFilterFeatureDomainLayerDependencies {
     }
     
     func getSearchToolFilterLanguagesUseCase() -> SearchToolFilterLanguagesUseCase {
-        return SearchToolFilterLanguagesUseCase(stringSearcher: StringSearcher())
+        return SearchToolFilterLanguagesUseCase(
+            searchToolFilterLanguagesRepository: dataLayer.getSearchToolFilterLanguagesRepositoryInterface()
+        )
     }
     
     func getStoreUserFiltersUseCase() -> StoreUserFiltersUseCase {

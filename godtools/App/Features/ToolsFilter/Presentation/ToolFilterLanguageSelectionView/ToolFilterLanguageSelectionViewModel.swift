@@ -61,19 +61,21 @@ class ToolFilterLanguageSelectionViewModel: ObservableObject {
             }
             .store(in: &cancellables)
 
-        
         getInterfaceStringInAppLanguageUseCase
             .getStringPublisher(id: ToolStringKeys.ToolFilter.languageFilterNavTitle.rawValue)
             .receive(on: DispatchQueue.main)
             .assign(to: &$navTitle)
         
-        searchToolFilterLanguagesUseCase
-            .getSearchResultsPublisher(
-                for: $searchText.eraseToAnyPublisher(),
-                in: $allLanguages.eraseToAnyPublisher()
-            )
-            .receive(on: DispatchQueue.main)
-            .assign(to: &$languageSearchResults)
+        Publishers.CombineLatest(
+            $searchText.eraseToAnyPublisher(),
+            $allLanguages.eraseToAnyPublisher()
+        )
+        .flatMap { searchText, allLanguages in
+            
+            return self.searchToolFilterLanguagesUseCase.getSearchResultsPublisher(for: searchText, in: allLanguages)
+        }
+        .receive(on: DispatchQueue.main)
+        .assign(to: &$languageSearchResults)
     }
     
     deinit {

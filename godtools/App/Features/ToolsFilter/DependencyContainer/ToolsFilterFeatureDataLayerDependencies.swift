@@ -52,6 +52,12 @@ class ToolsFilterFeatureDataLayerDependencies {
         )
     }
     
+    func getSearchToolFilterLanguagesRepositoryInterface() -> SearchToolFilterLanguagesRepositoryInterface {
+        return SearchToolFilterLanguagesRepository(
+            stringSearcher: StringSearcher()
+        )
+    }
+    
     func getStoreUserFiltersRepositoryInterface() -> StoreUserFiltersRepositoryInterface {
         return StoreUserFiltersRepository(userFiltersRepository: getUserFiltersRepository())
     }

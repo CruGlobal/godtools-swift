@@ -1466,6 +1466,8 @@
 		D4997E0E28D4CED800205B4C /* YouTubeiOSPlayerHelper in Frameworks */ = {isa = PBXBuildFile; productRef = D4997E0D28D4CED800205B4C /* YouTubeiOSPlayerHelper */; };
 		D4AFA43D2B990F5B00318023 /* SearchToolFilterCategoriesRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4AFA43C2B990F5B00318023 /* SearchToolFilterCategoriesRepositoryInterface.swift */; };
 		D4AFA43F2B990F9000318023 /* SearchToolFilterCategoriesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4AFA43E2B990F9000318023 /* SearchToolFilterCategoriesRepository.swift */; };
+		D4AFA4412B9A96CC00318023 /* SearchToolFilterLanguagesRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4AFA4402B9A96CC00318023 /* SearchToolFilterLanguagesRepositoryInterface.swift */; };
+		D4AFA4432B9A972900318023 /* SearchToolFilterLanguagesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4AFA4422B9A972900318023 /* SearchToolFilterLanguagesRepository.swift */; };
 		D4B05FF529106212005852D0 /* MobileContentAuthTokenRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B05FF429106212005852D0 /* MobileContentAuthTokenRepository.swift */; };
 		D4B05FF929106462005852D0 /* MobileContentAuthTokenAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B05FF829106462005852D0 /* MobileContentAuthTokenAPI.swift */; };
 		D4B05FFF2911BAE2005852D0 /* MobileContentAuthTokenDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B05FFE2911BAE2005852D0 /* MobileContentAuthTokenDecodable.swift */; };
@@ -2999,6 +3001,8 @@
 		D496B90D2A9FD39500CBEA19 /* ToolFilterSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolFilterSelection.swift; sourceTree = "<group>"; };
 		D4AFA43C2B990F5B00318023 /* SearchToolFilterCategoriesRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchToolFilterCategoriesRepositoryInterface.swift; sourceTree = "<group>"; };
 		D4AFA43E2B990F9000318023 /* SearchToolFilterCategoriesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchToolFilterCategoriesRepository.swift; sourceTree = "<group>"; };
+		D4AFA4402B9A96CC00318023 /* SearchToolFilterLanguagesRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchToolFilterLanguagesRepositoryInterface.swift; sourceTree = "<group>"; };
+		D4AFA4422B9A972900318023 /* SearchToolFilterLanguagesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchToolFilterLanguagesRepository.swift; sourceTree = "<group>"; };
 		D4B05FF429106212005852D0 /* MobileContentAuthTokenRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentAuthTokenRepository.swift; sourceTree = "<group>"; };
 		D4B05FF829106462005852D0 /* MobileContentAuthTokenAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentAuthTokenAPI.swift; sourceTree = "<group>"; };
 		D4B05FFE2911BAE2005852D0 /* MobileContentAuthTokenDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentAuthTokenDecodable.swift; sourceTree = "<group>"; };
@@ -4129,6 +4133,7 @@
 				D43FC1E32B8E6C1900F8310E /* GetToolFilterLanguagesRepository.swift */,
 				452486DE2B07C9A5007AD932 /* GetUserFiltersRepository.swift */,
 				D4AFA43E2B990F9000318023 /* SearchToolFilterCategoriesRepository.swift */,
+				D4AFA4422B9A972900318023 /* SearchToolFilterLanguagesRepository.swift */,
 				452486DF2B07C9A5007AD932 /* StoreUserFiltersRepository.swift */,
 			);
 			path = "Data-DomainInterface";
@@ -4151,6 +4156,7 @@
 				D43FC1E12B8E6C0300F8310E /* GetToolFilterLanguagesRepositoryInterface.swift */,
 				452486D02B07C98B007AD932 /* GetUserFiltersRepositoryInterface.swift */,
 				D4AFA43C2B990F5B00318023 /* SearchToolFilterCategoriesRepositoryInterface.swift */,
+				D4AFA4402B9A96CC00318023 /* SearchToolFilterLanguagesRepositoryInterface.swift */,
 				452486D12B07C98B007AD932 /* StoreUserFiltersRepositoryInterface.swift */,
 			);
 			path = Interface;
@@ -12299,6 +12305,7 @@
 				4564E2052B1E181000DA4040 /* GetToolShortcutLinksRepository.swift in Sources */,
 				45D7CAEE2A9BA47200913E12 /* FirebaseInAppMessaging.swift in Sources */,
 				454BFDA42AFD8CD200104BC8 /* TractRemoteSharePublisher.swift in Sources */,
+				D4AFA4432B9A972900318023 /* SearchToolFilterLanguagesRepository.swift in Sources */,
 				454B47E02AE0225200C7B5E7 /* GetOnboardingTutorialInterfaceStringsRepositoryInterface.swift in Sources */,
 				45BDA5C22954F605007E259B /* ResourceViewModel.swift in Sources */,
 				45AD208625938B6A00A096A0 /* KeyboardStateChange.swift in Sources */,
@@ -12347,6 +12354,7 @@
 				4534F9402AE9B65900A7A071 /* CancelLessonEvaluationUseCase.swift in Sources */,
 				45AE974527C97A9400C2CB33 /* CallToAction+MobileContentRenderableModel.swift in Sources */,
 				458CFE9529D4E0B9007B423C /* ArticleCategoriesView.swift in Sources */,
+				D4AFA4412B9A96CC00318023 /* SearchToolFilterLanguagesRepositoryInterface.swift in Sources */,
 				45369AD02AFA7FA500BD10F0 /* ViewToolScreenShareTutorialUseCase.swift in Sources */,
 				45D5433728B4001400C4E70F /* GetResourcesAndLanguagesData.swift in Sources */,
 				45F378FE2B23642600EEF039 /* LearnToShareToolDiContainer.swift in Sources */,
