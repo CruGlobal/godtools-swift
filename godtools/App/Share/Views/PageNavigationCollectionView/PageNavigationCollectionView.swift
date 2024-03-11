@@ -72,6 +72,10 @@ class PageNavigationCollectionView: UIView, NibBased {
         initialize()
     }
     
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
     private func initialize() {
         
         loadNib()
@@ -617,7 +621,12 @@ extension PageNavigationCollectionView: UICollectionViewDelegateFlowLayout, UICo
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return delegate?.pageNavigationNumberOfPages(pageNavigation: self) ?? 0
+        
+        let numberOfItems: Int = delegate?.pageNavigationNumberOfPages(pageNavigation: self) ?? 0
+        
+        logMessage(message: "number of items: \(numberOfItems)")
+        
+        return numberOfItems
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -668,7 +677,11 @@ extension PageNavigationCollectionView: UICollectionViewDelegateFlowLayout, UICo
     }
         
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return getPageSize()
+        let pageSize: CGSize = getPageSize()
+        
+        logMessage(message: "page size \(pageSize) for item: \(indexPath.row)")
+        
+        return pageSize
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
