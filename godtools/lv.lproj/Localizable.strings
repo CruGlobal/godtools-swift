@@ -29,7 +29,7 @@
 "deleteAccount.confirmButton.title" = "Izdzēst manu kontu";
 "deleteAccount.cancelButton.title" = "Paturēt manu kontu";
 "signIn.title" = "Pierakstīties";
-"signIn.subtitle" = "Leej savā kontā, lai būtu pieejami patiesi stāsti, iedrošinājums un praktiski padomi.";
+"signIn.subtitle" = "Ieej savā kontā, lai būtu pieejami patiesi stāsti, iedrošinājums un praktiski padomi.";
 "signIn.google" = "Pierakstīties ar Google";
 "signIn.facebook" = "Ienākt, izmantojot Facebook";
 "signIn.apple" = "Turpināt, izmantojot Apple";
