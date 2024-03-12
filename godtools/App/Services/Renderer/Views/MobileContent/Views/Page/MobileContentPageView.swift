@@ -18,7 +18,6 @@ class MobileContentPageView: MobileContentView, NibBased {
     
     private let viewModel: MobileContentPageViewModel
     
-    private var backgroundImageParent: UIView?
     private var backgroundImageView: MobileContentBackgroundImageView?
     
     private weak var delegate: MobileContentPageViewDelegate?
@@ -42,11 +41,31 @@ class MobileContentPageView: MobileContentView, NibBased {
     
     deinit {
         
-        print("x deinit: MobileContentPageView")
+        removeBackgroubdImageBoundsChangeObserving()
+    }
+    
+    var backgroundImageParent: UIView {
+        return self
+    }
+    
+    override func willMove(toSuperview newSuperview: UIView?) {
         
-        if let backgroundImageParent = self.backgroundImageParent {
-            backgroundImageView?.removeParentBoundsChangeObserver(parentView: backgroundImageParent)
+        if newSuperview == nil {
+            removeBackgroubdImageBoundsChangeObserving()
         }
+        else {
+            addBackgroundImageBoundsChangeObserving()
+        }
+    }
+    
+    private func addBackgroundImageBoundsChangeObserving() {
+        
+        backgroundImageView?.addParentBoundsChangeObserver(parentView: backgroundImageParent)
+    }
+    
+    private func removeBackgroubdImageBoundsChangeObserving() {
+        
+        backgroundImageView?.removeParentBoundsChangeObserver(parentView: backgroundImageParent)
     }
     
     func setupLayout() {
@@ -61,14 +80,12 @@ class MobileContentPageView: MobileContentView, NibBased {
         // backgroundImageView
         if let backgroundImageViewModel = viewModel.backgroundImageWillAppear() {
             
-            let backgroundImageParent: UIView = self
             let backgroundImageView: MobileContentBackgroundImageView = MobileContentBackgroundImageView()
             
-            self.backgroundImageParent = backgroundImageParent
             self.backgroundImageView = backgroundImageView
             
             backgroundImageView.configure(viewModel: backgroundImageViewModel, parentView: backgroundImageParent)
-            backgroundImageView.addParentBoundsChangeObserver(parentView: backgroundImageParent)
+            addBackgroundImageBoundsChangeObserving()
         }
     }
     
