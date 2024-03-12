@@ -63,6 +63,10 @@ class ToolPageCardViewModel: MobileContentViewModel {
         super.init(baseModel: cardModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }
     
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
     private var analyticsScreenName: String {
         
         let resource: ResourceModel = renderedPageContext.resource

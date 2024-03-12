@@ -42,6 +42,8 @@ class MobileContentPageView: MobileContentView, NibBased {
     
     deinit {
         
+        print("x deinit: MobileContentPageView")
+        
         if let backgroundImageParent = self.backgroundImageParent {
             backgroundImageView?.removeParentBoundsChangeObserver(parentView: backgroundImageParent)
         }

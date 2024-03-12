@@ -25,6 +25,10 @@ class MobileContentCardCollectionPageViewModel: MobileContentPageViewModel {
         super.init(pageModel: cardCollectionPage, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics, hidesBackgroundImage: false)
     }
     
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
     var layoutDirection: ApplicationLayoutDirection {
         return renderedPageContext.primaryLanguageLayoutDirection
     }
