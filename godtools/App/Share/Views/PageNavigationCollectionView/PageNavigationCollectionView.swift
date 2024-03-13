@@ -22,9 +22,9 @@ import UIKit
 
 class PageNavigationCollectionView: UIView, NibBased {
     
-    private static var defaultFlowLayout: UICollectionViewFlowLayout = {
+    private static func getDefaultFlowLayout() -> UICollectionViewFlowLayout {
         return PageNavigationCollectionViewFlowLayout()
-    }()
+    }
     
     struct CurrentNavigation {
         let pageNavigation: PageNavigationCollectionViewNavigationModel
@@ -34,7 +34,7 @@ class PageNavigationCollectionView: UIView, NibBased {
     private let layoutType: PageNavigationCollectionViewLayoutType
     private let loggingEnabled: Bool = true
     
-    private var layout: UICollectionViewFlowLayout = PageNavigationCollectionView.defaultFlowLayout
+    private var layout: UICollectionViewFlowLayout = PageNavigationCollectionView.getDefaultFlowLayout()
     private var currentPageNavigation: PageNavigationCollectionView.CurrentNavigation?
     private var pageNavigationCompletedClosure: ((_ completed: PageNavigationCollectionViewNavigationCompleted) -> Void)?
     private var internalCurrentChangedPage: Int = -1
@@ -56,15 +56,25 @@ class PageNavigationCollectionView: UIView, NibBased {
             self.layout = PageNavigationCollectionViewCenteredLayout(layoutType: layoutType, pageNavigationCollectionView: self)
             
         case .fullScreen:
-            self.layout = PageNavigationCollectionView.defaultFlowLayout
+            self.layout = PageNavigationCollectionView.getDefaultFlowLayout()
         }
         
         initialize()
     }
     
+    override init(frame: CGRect) {
+        
+        assertionFailure("init(frame:) not supported")
+        
+        self.layout = PageNavigationCollectionView.getDefaultFlowLayout()
+        self.layoutType =  .fullScreen
+        
+        super.init(frame: frame)
+    }
+    
     required init?(coder: NSCoder) {
         
-        self.layout = PageNavigationCollectionView.defaultFlowLayout
+        self.layout = PageNavigationCollectionView.getDefaultFlowLayout()
         self.layoutType =  .fullScreen
         
         super.init(coder: coder)
