@@ -52,6 +52,9 @@ class MobileContentRendererNavigation {
             
             case .favoritedToolsList:
                 break
+                
+            case .languageSettings:
+                break
             
             case .lessonsList:
                
