@@ -13,6 +13,7 @@ struct OnboardingTutorialInterfaceStringsDomainModel {
     let chooseAppLanguageButtonTitle: String
     let beginTutorialButtonTitle: String
     let nextTutorialPageButtonTitle: String
+    let endTutorialButtonTitle: String
     let readyForEveryConversationTitle: String
     let readyForEveryConversationVideoLinkTitle: String
     let prepareForMomentsThatMatterTitle: String
