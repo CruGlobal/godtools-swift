@@ -43,10 +43,6 @@ class MobileContentCardCollectionPageView: MobileContentPageView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    deinit {
-        print("x deinit: \(type(of: self))")
-    }
-    
     override func setupLayout() {
         super.setupLayout()
                         

@@ -18,10 +18,6 @@ class MobileContentRendererManifestResourcesCache {
         self.resourcesFileCache = resourcesFileCache
     }
     
-    deinit {
-        print("x deinit: \(type(of: self))")
-    }
-    
     private func getSHA256FileLocation(resource: Resource) -> FileCacheLocation? {
         
         guard let localName = resource.localName else {

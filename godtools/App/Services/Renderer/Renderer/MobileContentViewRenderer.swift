@@ -17,10 +17,6 @@ class MobileContentViewRenderer {
         self.pageViewFactories = pageViewFactories
     }
     
-    deinit {
-        print("x deinit: \(type(of: self))")
-    }
-    
     func recurseAndRender(renderableModel: AnyObject, renderableModelParent: AnyObject?, renderedPageContext: MobileContentRenderedPageContext) -> MobileContentView? {
                    
         let mobileContentView: MobileContentView? = pageViewFactories.viewForRenderableModel(

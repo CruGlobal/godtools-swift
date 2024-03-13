@@ -22,10 +22,6 @@ class MobileContentPageViewDataCache {
         pagePosition = page.position
     }
     
-    deinit {
-        print("x deinit: \(type(of: self))")
-    }
-    
     var isEmpty: Bool {
         return dataCache.isEmpty
     }
