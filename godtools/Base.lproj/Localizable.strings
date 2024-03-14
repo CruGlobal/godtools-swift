@@ -152,7 +152,7 @@
 "parallelLanguage.yesButton.title" = "Yes";
 "parallelLanguage.noButton.title" = "No thanks";
 "parallelLanguage.selectButton.title" = "Select";
-"parallelLanguage.getStartedButton.title" = "Get Started";
+"parallelLanguage.getStartedButton.title" = "Get started";
 "parallelLanguage.selectLanguageButton.title" = "Select a language";
 "parellelLanguage.prompt" = "Would you like to set a secondary language?";
 
@@ -378,7 +378,7 @@ The app can be downloaded from https://godtoolsapp.com";
 "cancel" = "Cancel";
 "required_field_missing" = "\"%@\" is a required field.";
 
-"onboardingTutorial.getStartedButton.title" = "Get Started";
+"onboardingTutorial.getStartedButton.title" = "Get started";
 
 // About
 "general_about_1" = "GodTools helps you share your faith in an easy and clear way.";
