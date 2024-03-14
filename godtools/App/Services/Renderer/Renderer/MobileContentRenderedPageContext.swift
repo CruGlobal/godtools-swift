@@ -51,6 +51,10 @@ class MobileContentRenderedPageContext {
         self.pageViewDataCache = pageViewDataCache
     }
     
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
     var window: UIViewController {
         
         guard let window = self.weakWindow else {

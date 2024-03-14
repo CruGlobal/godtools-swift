@@ -36,6 +36,10 @@ class MobileContentPageRenderer {
         self.navigation = navigation
     }
     
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
     func getAllPageModels() -> [Page] {
         return manifest.pages
     }

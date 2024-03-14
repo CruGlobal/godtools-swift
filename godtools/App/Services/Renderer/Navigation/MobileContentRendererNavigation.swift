@@ -32,6 +32,10 @@ class MobileContentRendererNavigation {
         self.appDiContainer = appDiContainer
     }
     
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
     func buttonWithUrlTapped(url: URL, screenName: String, siteSection: String, siteSubSection: String, contentLanguage: String?) {
         
         let deepLinkingService: DeepLinkingService = appDiContainer.dataLayer.getDeepLinkingService()
