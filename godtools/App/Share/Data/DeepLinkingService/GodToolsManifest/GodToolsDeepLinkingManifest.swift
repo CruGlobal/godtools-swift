@@ -69,6 +69,12 @@ class GodToolsDeepLinkingManifest: DeepLinkingManifestType {
                 path: "settings/language",
                 parserClass: LanguageSettingsDeepLinkParser.self
             ),
+            DeepLinkingParserManifestUrl(
+                scheme: "https",
+                host: "godtoolsapp.com",
+                path: "deeplink/settings/language",
+                parserClass: LanguageSettingsDeepLinkParser.self
+            ),
             DeepLinkingParserManifestAppsFlyer(
                 parserClass: AppsFlyerDeepLinkValueParser.self
             ),
