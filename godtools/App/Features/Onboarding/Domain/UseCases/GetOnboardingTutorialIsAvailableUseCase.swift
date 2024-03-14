@@ -11,28 +11,17 @@ import Combine
 
 class GetOnboardingTutorialIsAvailableUseCase {
     
-    private let getLaunchCountUseCase: GetLaunchCountUseCase
-    private let getViewedRepositoryInterface: GetOnboardingTutorialViewedRepositoryInterface
-    
-    init(getLaunchCountUseCase: GetLaunchCountUseCase, getViewedRepositoryInterface: GetOnboardingTutorialViewedRepositoryInterface) {
+    private let onboardingTutorialIsAvailable: GetOnboardingTutorialIsAvailableInterface
         
-        self.getLaunchCountUseCase = getLaunchCountUseCase
-        self.getViewedRepositoryInterface = getViewedRepositoryInterface
+    init(onboardingTutorialIsAvailable: GetOnboardingTutorialIsAvailableInterface) {
+        
+        self.onboardingTutorialIsAvailable = onboardingTutorialIsAvailable
     }
     
     func getAvailablePublisher() -> AnyPublisher<Bool, Never> {
-                        
-        Publishers.CombineLatest(
-            getLaunchCountUseCase.getCountPublisher(),
-            getViewedRepositoryInterface.getViewedPublisher()
-        )
-        .flatMap({ (launchCount: Int, tutorialViewed: Bool) -> AnyPublisher<Bool, Never> in
-            
-            let isAvailable = launchCount == 1 && !tutorialViewed
-            
-            return Just(isAvailable)
-                .eraseToAnyPublisher()
-        })
-        .eraseToAnyPublisher()
+          
+        return onboardingTutorialIsAvailable
+            .isAvailablePublisher()
+            .eraseToAnyPublisher()
     }
 }

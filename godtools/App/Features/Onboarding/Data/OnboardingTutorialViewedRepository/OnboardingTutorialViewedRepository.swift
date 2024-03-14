@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 class OnboardingTutorialViewedRepository {
     
@@ -20,6 +21,14 @@ class OnboardingTutorialViewedRepository {
     func getOnboardingTutorialViewed() -> Bool {
        
         return cache.getOnboardingTutorialViewed()
+    }
+    
+    func getOnboardingTutorialViewedPublisher() -> AnyPublisher<Bool, Never> {
+        
+        let cachedValue: Bool = cache.getOnboardingTutorialViewed()
+        
+        return Just(cachedValue)
+            .eraseToAnyPublisher()
     }
     
     func storeOnboardingTutorialViewed(viewed: Bool) {
