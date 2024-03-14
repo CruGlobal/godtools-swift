@@ -11,10 +11,10 @@ import Combine
 
 class GetOnboardingTutorialIsAvailable: GetOnboardingTutorialIsAvailableInterface {
     
-    private let launchCountRepository: LaunchCountRepository
-    private let onboardingTutorialViewedRepository: OnboardingTutorialViewedRepository
+    private let launchCountRepository: LaunchCountRepositoryInterface
+    private let onboardingTutorialViewedRepository: OnboardingTutorialViewedRepositoryInterface
     
-    init(launchCountRepository: LaunchCountRepository, onboardingTutorialViewedRepository: OnboardingTutorialViewedRepository) {
+    init(launchCountRepository: LaunchCountRepositoryInterface, onboardingTutorialViewedRepository: OnboardingTutorialViewedRepositoryInterface) {
         
         self.launchCountRepository = launchCountRepository
         self.onboardingTutorialViewedRepository = onboardingTutorialViewedRepository

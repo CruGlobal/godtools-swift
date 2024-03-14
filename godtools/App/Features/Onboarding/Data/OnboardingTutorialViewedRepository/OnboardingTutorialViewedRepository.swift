@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class OnboardingTutorialViewedRepository {
+class OnboardingTutorialViewedRepository: OnboardingTutorialViewedRepositoryInterface {
     
     private let cache: OnboardingTutorialViewedUserDefaultsCache
     
