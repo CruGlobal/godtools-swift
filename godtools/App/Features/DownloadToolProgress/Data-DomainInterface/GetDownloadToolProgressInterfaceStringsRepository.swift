@@ -36,7 +36,7 @@ class GetDownloadToolProgressInterfaceStringsRepository: GetDownloadToolProgress
             resource = nil
         }
         
-        let toolCanBeFavorited: Bool = (resource?.resourceTypeEnum == .article || resource?.resourceTypeEnum == .tract)
+        let toolCanBeFavorited: Bool = (resource?.resourceTypeEnum == .article || resource?.resourceTypeEnum == .tract || resource?.resourceTypeEnum == .chooseYourOwnAdventure)
         let toolIsFavorited: Bool
         
         if let resource = resource {
