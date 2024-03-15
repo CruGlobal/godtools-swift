@@ -27,14 +27,15 @@ class ToolsViewModel: ObservableObject {
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let attachmentsRepository: AttachmentsRepository
-    private let toolFilterLanguageSelectionPublisher: CurrentValueSubject<LanguageFilterDomainModel, Never>
-    private let toolFilterCategorySelectionPublisher: CurrentValueSubject<CategoryFilterDomainModel, Never>
     
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
 
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    
+    @Published var toolFilterLanguage: LanguageFilterDomainModel = LanguageFilterDomainModel.anyLanguage(text: "Any language", toolsAvailableText: "")
+    @Published var toolFilterCategory: CategoryFilterDomainModel = CategoryFilterDomainModel.anyCategory(text: "Any category", toolsAvailableText: "")
     
     @Published var favoritingToolBannerMessage: String = ""
     @Published var showsFavoritingToolBanner: Bool = false
@@ -63,12 +64,7 @@ class ToolsViewModel: ObservableObject {
         self.attachmentsRepository = attachmentsRepository
         
         showsFavoritingToolBanner = !favoritingToolMessageCache.favoritingToolMessageDisabled
-        
-        let temporaryLanguageFilterValue = LanguageFilterDomainModel.anyLanguage(text: "Any language", toolsAvailableText: "")
-        let temporaryCategoryFilterValue = CategoryFilterDomainModel.anyCategory(text: "Any category", toolsAvailableText: "")
-        toolFilterLanguageSelectionPublisher = CurrentValueSubject(temporaryLanguageFilterValue)
-        toolFilterCategorySelectionPublisher = CurrentValueSubject(temporaryCategoryFilterValue)
-        
+                
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
             .assign(to: &$appLanguage)
@@ -104,42 +100,34 @@ class ToolsViewModel: ObservableObject {
                     .eraseToAnyPublisher()
             }
             .receive(on: DispatchQueue.main)
-            .sink { userFilters in
+            .sink { [weak self] userFilters in
               
-                self.toolFilterCategorySelectionPublisher.send(userFilters.categoryFilter)
-                self.toolFilterLanguageSelectionPublisher.send(userFilters.languageFilter)
+                self?.toolFilterCategory = userFilters.categoryFilter
+                self?.toolFilterLanguage = userFilters.languageFilter
             }
             .store(in: &cancellables)
         
-        toolFilterCategorySelectionPublisher
+        $toolFilterCategory
+            .eraseToAnyPublisher()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] selectedCategory in
                 
-                self?.updateCategoryButtonText()
+                self?.categoryFilterButtonTitle = selectedCategory.categoryButtonText
             }
             .store(in: &cancellables)
         
-        toolFilterLanguageSelectionPublisher
+        $toolFilterLanguage
+            .eraseToAnyPublisher()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] filterSelection in
                 
-                self?.updateLanguageButtonText()
+                self?.languageFilterButtonTitle = filterSelection.languageButtonText
             }
             .store(in: &cancellables)
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
-    }
-    
-    private func updateCategoryButtonText() {
-        
-        categoryFilterButtonTitle = toolFilterCategorySelectionPublisher.value.categoryButtonText
-    }
-    
-    private func updateLanguageButtonText() {
-        
-        languageFilterButtonTitle = toolFilterLanguageSelectionPublisher.value.languageButtonText
     }
     
     private var analyticsScreenName: String {
@@ -261,17 +249,21 @@ extension ToolsViewModel {
     
     func toolCategoryFilterTapped() {
         
+        // TODO: See if I can pass a smaller observable object to encapsulate toolFilterLanguage and toolFilterCategory. ~Levi
+        
         flowDelegate?.navigate(step: .toolCategoryFilterTappedFromTools(
-            categoryFilterSelectionPublisher: toolFilterCategorySelectionPublisher,
-            selectedLanguage: toolFilterLanguageSelectionPublisher.value
+            toolsViewModel: self,
+            selectedLanguage: toolFilterLanguage
         ))
     }
     
     func toolLanguageFilterTapped() {
         
+        // TODO: See if I can pass a smaller observable object to encapsulate toolFilterLanguage and toolFilterCategory. ~Levi
+        
         flowDelegate?.navigate(step: .toolLanguageFilterTappedFromTools(
-            languageFilterSelectionPublisher: toolFilterLanguageSelectionPublisher,
-            selectedCategory: toolFilterCategorySelectionPublisher.value
+            toolsViewModel: self,
+            selectedCategory: toolFilterCategory
         ))
     }
     
@@ -284,7 +276,7 @@ extension ToolsViewModel {
         
         trackToolTappedAnalytics(tool: spotlightTool)
         
-        flowDelegate?.navigate(step: .spotlightToolTappedFromTools(spotlightTool: spotlightTool, toolFilterLanguage: toolFilterLanguageSelectionPublisher.value))
+        flowDelegate?.navigate(step: .spotlightToolTappedFromTools(spotlightTool: spotlightTool, toolFilterLanguage: toolFilterLanguage))
     }
     
     func toolFavoriteTapped(tool: ToolListItemDomainModel) {
@@ -296,6 +288,6 @@ extension ToolsViewModel {
         
         trackToolTappedAnalytics(tool: tool)
         
-        flowDelegate?.navigate(step: .toolTappedFromTools(tool: tool, toolFilterLanguage: toolFilterLanguageSelectionPublisher.value))
+        flowDelegate?.navigate(step: .toolTappedFromTools(tool: tool, toolFilterLanguage: toolFilterLanguage))
     }
 }
