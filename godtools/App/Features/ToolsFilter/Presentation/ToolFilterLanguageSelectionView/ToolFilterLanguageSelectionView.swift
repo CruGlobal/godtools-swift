@@ -13,7 +13,7 @@ struct ToolFilterLanguageSelectionView: View {
     private static let ultraLightGrey = Color.getColorWithRGB(red: 246, green: 246, blue: 246, opacity: 1)
     
     @ObservedObject private var viewModel: ToolFilterLanguageSelectionViewModel
-    
+        
     init(viewModel: ToolFilterLanguageSelectionViewModel) {
         
         self.viewModel = viewModel
@@ -36,7 +36,7 @@ struct ToolFilterLanguageSelectionView: View {
                         
                         ToolFilterLanguageSelectionRowView(
                             language: language,
-                            isSelected: viewModel.selectedLanguage.id == language.id
+                            isSelected: viewModel.selectedLanguage.value.id == language.id
                         )
                     }
                 }

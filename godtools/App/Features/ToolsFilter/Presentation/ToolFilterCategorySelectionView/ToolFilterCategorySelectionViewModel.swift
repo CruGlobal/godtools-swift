@@ -28,9 +28,10 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
     @Published var searchText: String = ""
     @Published var navTitle: String = ""
     @Published var categorySearchResults: [CategoryFilterDomainModel] = [CategoryFilterDomainModel]()
-    @Published var selectedCategory: CategoryFilterDomainModel = .anyCategory(text: "", toolsAvailableText: "")
     
-    init(viewToolFilterCategoriesUseCase: ViewToolFilterCategoriesUseCase, searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase, storeUserFiltersUseCase: StoreUserFiltersUseCase, toolsViewModel: ToolsViewModel, selectedLanguage: LanguageFilterDomainModel, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, flowDelegate: FlowDelegate?) {
+    let selectedCategory: CombineObservableValue<CategoryFilterDomainModel>
+    
+    init(viewToolFilterCategoriesUseCase: ViewToolFilterCategoriesUseCase, searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase, storeUserFiltersUseCase: StoreUserFiltersUseCase, selectedCategoryObserver: CombineObservableValue<CategoryFilterDomainModel>, selectedLanguage: LanguageFilterDomainModel, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, flowDelegate: FlowDelegate?) {
         
         self.viewToolFilterCategoriesUseCase = viewToolFilterCategoriesUseCase
         self.searchToolFilterCategoriesUseCase = searchToolFilterCategoriesUseCase
@@ -41,15 +42,12 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
         self.selectedLanguage = selectedLanguage
         self.flowDelegate = flowDelegate
         
+        selectedCategory = selectedCategoryObserver
+        
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
             .assign(to: &$appLanguage)
-        
-        selectedCategory = toolsViewModel.toolFilterCategory
-        
-        $selectedCategory
-            .assign(to: &toolsViewModel.$toolFilterCategory)
-                
+                        
         $appLanguage.eraseToAnyPublisher()
             .flatMap { appLanguage in
                 
@@ -98,7 +96,7 @@ extension ToolFilterCategorySelectionViewModel {
     
     func rowTapped(with category: CategoryFilterDomainModel) {
                 
-        selectedCategory = category
+        selectedCategory.value = category
         
         storeUserFiltersUseCase.storeCategoryFilterPublisher(with: category.id)
             .sink { _ in

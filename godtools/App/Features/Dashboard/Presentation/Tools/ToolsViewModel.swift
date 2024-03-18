@@ -27,15 +27,14 @@ class ToolsViewModel: ObservableObject {
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let attachmentsRepository: AttachmentsRepository
+    private let toolFilterSelectedLanguage: CombineObservableValue<LanguageFilterDomainModel> = CombineObservableValue(value: .anyLanguage(text: "Any language", toolsAvailableText: ""))
+    private let toolFilterSelectedCategory: CombineObservableValue<CategoryFilterDomainModel> = CombineObservableValue(value: .anyCategory(text: "Any category", toolsAvailableText: ""))
     
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
 
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
-    
-    @Published var toolFilterLanguage: LanguageFilterDomainModel = LanguageFilterDomainModel.anyLanguage(text: "Any language", toolsAvailableText: "")
-    @Published var toolFilterCategory: CategoryFilterDomainModel = CategoryFilterDomainModel.anyCategory(text: "Any category", toolsAvailableText: "")
     
     @Published var favoritingToolBannerMessage: String = ""
     @Published var showsFavoritingToolBanner: Bool = false
@@ -102,12 +101,12 @@ class ToolsViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] userFilters in
               
-                self?.toolFilterCategory = userFilters.categoryFilter
-                self?.toolFilterLanguage = userFilters.languageFilter
+                self?.toolFilterSelectedCategory.value = userFilters.categoryFilter
+                self?.toolFilterSelectedLanguage.value = userFilters.languageFilter
             }
             .store(in: &cancellables)
         
-        $toolFilterCategory
+        toolFilterSelectedCategory.$value
             .eraseToAnyPublisher()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] selectedCategory in
@@ -116,7 +115,7 @@ class ToolsViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        $toolFilterLanguage
+        toolFilterSelectedLanguage.$value
             .eraseToAnyPublisher()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] filterSelection in
@@ -252,8 +251,8 @@ extension ToolsViewModel {
         // TODO: See if I can pass a smaller observable object to encapsulate toolFilterLanguage and toolFilterCategory. ~Levi
         
         flowDelegate?.navigate(step: .toolCategoryFilterTappedFromTools(
-            toolsViewModel: self,
-            selectedLanguage: toolFilterLanguage
+            selectedCategoryObserver: toolFilterSelectedCategory,
+            selectedLanguage: toolFilterSelectedLanguage.value
         ))
     }
     
@@ -262,8 +261,8 @@ extension ToolsViewModel {
         // TODO: See if I can pass a smaller observable object to encapsulate toolFilterLanguage and toolFilterCategory. ~Levi
         
         flowDelegate?.navigate(step: .toolLanguageFilterTappedFromTools(
-            toolsViewModel: self,
-            selectedCategory: toolFilterCategory
+            selectedLanguageObserver: toolFilterSelectedLanguage,
+            selectedCategory: toolFilterSelectedCategory.value
         ))
     }
     
@@ -276,7 +275,7 @@ extension ToolsViewModel {
         
         trackToolTappedAnalytics(tool: spotlightTool)
         
-        flowDelegate?.navigate(step: .spotlightToolTappedFromTools(spotlightTool: spotlightTool, toolFilterLanguage: toolFilterLanguage))
+        flowDelegate?.navigate(step: .spotlightToolTappedFromTools(spotlightTool: spotlightTool, toolFilterLanguage: toolFilterSelectedLanguage.value))
     }
     
     func toolFavoriteTapped(tool: ToolListItemDomainModel) {
@@ -288,6 +287,6 @@ extension ToolsViewModel {
         
         trackToolTappedAnalytics(tool: tool)
         
-        flowDelegate?.navigate(step: .toolTappedFromTools(tool: tool, toolFilterLanguage: toolFilterLanguage))
+        flowDelegate?.navigate(step: .toolTappedFromTools(tool: tool, toolFilterLanguage: toolFilterSelectedLanguage.value))
     }
 }

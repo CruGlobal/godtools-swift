@@ -36,7 +36,7 @@ struct ToolFilterCategorySelectionView: View {
                         
                         ToolFilterCategorySelectionRowView(
                             category: category,
-                            isSelected: viewModel.selectedCategory.id == category.id
+                            isSelected: viewModel.selectedCategory.value.id == category.id
                         )
                     }
                 }
