@@ -18,6 +18,8 @@ class MenuFlow: Flow {
     
     private weak var flowDelegate: FlowDelegate?
     
+    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    
     let appDiContainer: AppDiContainer
     let navigationController: AppNavigationController
     
@@ -40,6 +42,11 @@ class MenuFlow: Flow {
         let view: UIViewController = getMenuView()
         
         navigationController.setViewControllers([view], animated: false)
+        
+        appDiContainer.feature.appLanguage.domainLayer
+            .getCurrentAppLanguageUseCase()
+            .getLanguagePublisher()
+            .assign(to: &$appLanguage)
     }
     
     deinit {
@@ -316,7 +323,7 @@ class MenuFlow: Flow {
     private func getAuthErrorAlertMessage(authError: AuthErrorDomainModel) -> AlertMessageType {
         
         let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
-        let appLanguageLocaleId = appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase().getLanguage().localeId
+        let appLanguageLocaleId = appLanguage.localeId
         
         let message: String
         

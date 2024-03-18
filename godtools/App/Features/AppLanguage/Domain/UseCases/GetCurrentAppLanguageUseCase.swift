@@ -24,9 +24,4 @@ class GetCurrentAppLanguageUseCase {
             .getLanguagePublisher()
             .eraseToAnyPublisher()
     }
-    
-    func getLanguage() -> AppLanguageDomainModel {
-        
-        return getAppLanguageRepository.getLanguage()
-    }
 }
