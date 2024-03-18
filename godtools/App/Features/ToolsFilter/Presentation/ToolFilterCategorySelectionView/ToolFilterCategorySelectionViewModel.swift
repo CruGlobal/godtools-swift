@@ -22,14 +22,14 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
     private var cancellables: Set<AnyCancellable> = Set()
     private weak var flowDelegate: FlowDelegate?
         
+    let selectedCategory: CombineObservableValue<CategoryFilterDomainModel>
+    
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     
     @Published private var allCategories: [CategoryFilterDomainModel] = [CategoryFilterDomainModel]()
     @Published var searchText: String = ""
     @Published var navTitle: String = ""
     @Published var categorySearchResults: [CategoryFilterDomainModel] = [CategoryFilterDomainModel]()
-    
-    let selectedCategory: CombineObservableValue<CategoryFilterDomainModel>
     
     init(viewToolFilterCategoriesUseCase: ViewToolFilterCategoriesUseCase, searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase, storeUserFiltersUseCase: StoreUserFiltersUseCase, selectedCategoryObserver: CombineObservableValue<CategoryFilterDomainModel>, selectedLanguage: LanguageFilterDomainModel, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, flowDelegate: FlowDelegate?) {
         
