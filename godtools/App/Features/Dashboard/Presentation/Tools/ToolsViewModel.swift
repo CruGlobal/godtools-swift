@@ -247,9 +247,7 @@ extension ToolsViewModel {
     }
     
     func toolCategoryFilterTapped() {
-        
-        // TODO: See if I can pass a smaller observable object to encapsulate toolFilterLanguage and toolFilterCategory. ~Levi
-        
+                
         flowDelegate?.navigate(step: .toolCategoryFilterTappedFromTools(
             selectedCategoryObserver: toolFilterSelectedCategory,
             selectedLanguage: toolFilterSelectedLanguage.value
@@ -257,9 +255,7 @@ extension ToolsViewModel {
     }
     
     func toolLanguageFilterTapped() {
-        
-        // TODO: See if I can pass a smaller observable object to encapsulate toolFilterLanguage and toolFilterCategory. ~Levi
-        
+                
         flowDelegate?.navigate(step: .toolLanguageFilterTappedFromTools(
             selectedLanguageObserver: toolFilterSelectedLanguage,
             selectedCategory: toolFilterSelectedCategory.value
