@@ -79,12 +79,6 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getLaunchCountUseCase() -> GetLaunchCountUseCase {
-        return GetLaunchCountUseCase(
-            getLaunchCountRepositoryInterface: dataLayer.getLaunchCountRepositoryInterface()
-        )
-    }
-        
     func getLogOutUserUseCase() -> LogOutUserUseCase {
         return LogOutUserUseCase(
             userAuthentication: dataLayer.getUserAuthentication(),

@@ -699,6 +699,10 @@ extension AppFlow {
                 weakSelf.articleDeepLinkFlow = articleDeepLinkFlow
             })
             
+        case .languageSettings:
+            navigateToDashboard(startingTab: .favorites)
+            navigateToLanguageSettings()
+            
         case .lessonsList:
             navigateToDashboard(startingTab: .lessons)
             

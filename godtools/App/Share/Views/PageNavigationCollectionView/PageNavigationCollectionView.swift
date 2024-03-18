@@ -22,9 +22,9 @@ import UIKit
 
 class PageNavigationCollectionView: UIView, NibBased {
     
-    private static var defaultFlowLayout: UICollectionViewFlowLayout = {
+    private static func getDefaultFlowLayout() -> UICollectionViewFlowLayout {
         return PageNavigationCollectionViewFlowLayout()
-    }()
+    }
     
     struct CurrentNavigation {
         let pageNavigation: PageNavigationCollectionViewNavigationModel
@@ -34,7 +34,7 @@ class PageNavigationCollectionView: UIView, NibBased {
     private let layoutType: PageNavigationCollectionViewLayoutType
     private let loggingEnabled: Bool = true
     
-    private var layout: UICollectionViewFlowLayout = PageNavigationCollectionView.defaultFlowLayout
+    private var layout: UICollectionViewFlowLayout = PageNavigationCollectionView.getDefaultFlowLayout()
     private var currentPageNavigation: PageNavigationCollectionView.CurrentNavigation?
     private var pageNavigationCompletedClosure: ((_ completed: PageNavigationCollectionViewNavigationCompleted) -> Void)?
     private var internalCurrentChangedPage: Int = -1
@@ -56,20 +56,34 @@ class PageNavigationCollectionView: UIView, NibBased {
             self.layout = PageNavigationCollectionViewCenteredLayout(layoutType: layoutType, pageNavigationCollectionView: self)
             
         case .fullScreen:
-            self.layout = PageNavigationCollectionView.defaultFlowLayout
+            self.layout = PageNavigationCollectionView.getDefaultFlowLayout()
         }
         
         initialize()
     }
     
+    override init(frame: CGRect) {
+        
+        assertionFailure("init(frame:) not supported")
+        
+        self.layout = PageNavigationCollectionView.getDefaultFlowLayout()
+        self.layoutType =  .fullScreen
+        
+        super.init(frame: frame)
+    }
+    
     required init?(coder: NSCoder) {
         
-        self.layout = PageNavigationCollectionView.defaultFlowLayout
+        self.layout = PageNavigationCollectionView.getDefaultFlowLayout()
         self.layoutType =  .fullScreen
         
         super.init(coder: coder)
         
         initialize()
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
     }
     
     private func initialize() {
@@ -617,7 +631,12 @@ extension PageNavigationCollectionView: UICollectionViewDelegateFlowLayout, UICo
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return delegate?.pageNavigationNumberOfPages(pageNavigation: self) ?? 0
+        
+        let numberOfItems: Int = delegate?.pageNavigationNumberOfPages(pageNavigation: self) ?? 0
+        
+        logMessage(message: "number of items: \(numberOfItems)")
+        
+        return numberOfItems
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -668,7 +687,11 @@ extension PageNavigationCollectionView: UICollectionViewDelegateFlowLayout, UICo
     }
         
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return getPageSize()
+        let pageSize: CGSize = getPageSize()
+        
+        logMessage(message: "page size \(pageSize) for item: \(indexPath.row)")
+        
+        return pageSize
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

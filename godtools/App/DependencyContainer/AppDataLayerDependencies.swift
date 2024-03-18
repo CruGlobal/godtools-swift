@@ -451,13 +451,7 @@ class AppDataLayerDependencies {
             localizationServices: getLocalizationServices()
         )
     }
-    
-    func getLaunchCountRepositoryInterface() -> GetLaunchCountRepositoryInterface {
-        return GetLaunchCountRepository(
-            launchCountRepository: getSharedLaunchCountRepository()
-        )
-    }
-    
+
     private func getTranslatedLanguageName() -> GetTranslatedLanguageName {
         return GetTranslatedLanguageName(
             localizationServices: getLocalizationServices(),

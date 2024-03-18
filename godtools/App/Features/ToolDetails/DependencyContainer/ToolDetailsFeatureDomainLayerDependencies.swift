@@ -11,13 +11,11 @@ import Foundation
 class ToolDetailsFeatureDomainLayerDependencies {
     
     private let dataLayer: ToolDetailsFeatureDataLayerDependencies
-    private let appLanguageFeatureDiContainer: AppLanguageFeatureDiContainer
     private let coreDataLayer: AppDataLayerDependencies
     
-    init(dataLayer: ToolDetailsFeatureDataLayerDependencies, appLanguageFeatureDiContainer: AppLanguageFeatureDiContainer, coreDataLayer: AppDataLayerDependencies) {
+    init(dataLayer: ToolDetailsFeatureDataLayerDependencies, coreDataLayer: AppDataLayerDependencies) {
         
         self.dataLayer = dataLayer
-        self.appLanguageFeatureDiContainer = appLanguageFeatureDiContainer
         self.coreDataLayer = coreDataLayer
     }
     

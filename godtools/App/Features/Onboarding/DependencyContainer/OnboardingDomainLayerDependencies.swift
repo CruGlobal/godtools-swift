@@ -11,14 +11,10 @@ import Foundation
 class OnboardingDomainLayerDependencies {
     
     private let dataLayer: OnboardingDataLayerDependencies
-    private let appDomainLayer: AppDomainLayerDependencies
-    private let appLanguageFeatureDomainLayer: AppLanguageFeatureDomainLayerDependencies
     
-    init(dataLayer: OnboardingDataLayerDependencies, appDomainLayer: AppDomainLayerDependencies, appLanguageFeatureDomainLayer: AppLanguageFeatureDomainLayerDependencies) {
+    init(dataLayer: OnboardingDataLayerDependencies) {
         
         self.dataLayer = dataLayer
-        self.appDomainLayer = appDomainLayer
-        self.appLanguageFeatureDomainLayer = appLanguageFeatureDomainLayer
     }
     
     func getOnboardingTutorialInterfaceStringsUseCase() -> GetOnboardingTutorialInterfaceStringsUseCase {
@@ -29,8 +25,7 @@ class OnboardingDomainLayerDependencies {
     
     func getOnboardingTutorialIsAvailableUseCase() -> GetOnboardingTutorialIsAvailableUseCase {
         return GetOnboardingTutorialIsAvailableUseCase(
-            getLaunchCountUseCase: appDomainLayer.getLaunchCountUseCase(),
-            getViewedRepositoryInterface: dataLayer.getOnboardingTutorialViewedRepositoryInterface()
+            onboardingTutorialIsAvailable: dataLayer.getOnboardingTutorialIsAvailable()
         )
     }
     

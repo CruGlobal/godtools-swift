@@ -11,12 +11,10 @@ import Foundation
 class LessonsFeatureDomainLayerDependencies {
     
     private let dataLayer: LessonsFeatureDataLayerDependencies
-    private let appLanguageFeatureDomainLayer: AppLanguageFeatureDomainLayerDependencies
     
-    init(dataLayer: LessonsFeatureDataLayerDependencies, appLanguageFeatureDomainLayer: AppLanguageFeatureDomainLayerDependencies) {
+    init(dataLayer: LessonsFeatureDataLayerDependencies) {
         
         self.dataLayer = dataLayer
-        self.appLanguageFeatureDomainLayer = appLanguageFeatureDomainLayer
     }
     
     func getViewLessonsUseCase() -> ViewLessonsUseCase {
