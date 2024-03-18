@@ -567,7 +567,6 @@
 		456BB02A27C588E80087CCA4 /* MobileContentHeadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456BB02727C588E80087CCA4 /* MobileContentHeadingView.swift */; };
 		456BB02B27C588E80087CCA4 /* MobileContentHeadingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456BB02827C588E80087CCA4 /* MobileContentHeadingViewModel.swift */; };
 		456BD2CC27020C75004D7B19 /* MobileContentViewHeightConstraintType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456BD2CB27020C75004D7B19 /* MobileContentViewHeightConstraintType.swift */; };
-		456C1E4A2BA865180057EE62 /* ToolFilterCategorySelectionObservableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456C1E492BA865180057EE62 /* ToolFilterCategorySelectionObservableObject.swift */; };
 		456C1E4C2BA865A70057EE62 /* CombineObservableValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456C1E4B2BA865A70057EE62 /* CombineObservableValue.swift */; };
 		456D442E2AF28C4D008F61B9 /* SocialCreateAccountInterfaceStringsDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456D442D2AF28C4D008F61B9 /* SocialCreateAccountInterfaceStringsDomainModel.swift */; };
 		456D44302AF28CA6008F61B9 /* GetSocialCreateAccountInterfaceStringsRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456D442F2AF28CA6008F61B9 /* GetSocialCreateAccountInterfaceStringsRepositoryInterface.swift */; };
@@ -2092,7 +2091,6 @@
 		456BB02727C588E80087CCA4 /* MobileContentHeadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentHeadingView.swift; sourceTree = "<group>"; };
 		456BB02827C588E80087CCA4 /* MobileContentHeadingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentHeadingViewModel.swift; sourceTree = "<group>"; };
 		456BD2CB27020C75004D7B19 /* MobileContentViewHeightConstraintType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentViewHeightConstraintType.swift; sourceTree = "<group>"; };
-		456C1E492BA865180057EE62 /* ToolFilterCategorySelectionObservableObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolFilterCategorySelectionObservableObject.swift; sourceTree = "<group>"; };
 		456C1E4B2BA865A70057EE62 /* CombineObservableValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineObservableValue.swift; sourceTree = "<group>"; };
 		456D442D2AF28C4D008F61B9 /* SocialCreateAccountInterfaceStringsDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialCreateAccountInterfaceStringsDomainModel.swift; sourceTree = "<group>"; };
 		456D442F2AF28CA6008F61B9 /* GetSocialCreateAccountInterfaceStringsRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSocialCreateAccountInterfaceStringsRepositoryInterface.swift; sourceTree = "<group>"; };
@@ -4231,7 +4229,6 @@
 			children = (
 				452486AF2B07C894007AD932 /* ToolFilterCategorySelectionView.swift */,
 				452486C02B07C8CE007AD932 /* ToolFilterCategorySelectionViewModel.swift */,
-				456C1E492BA865180057EE62 /* ToolFilterCategorySelectionObservableObject.swift */,
 				452486B02B07C894007AD932 /* Subviews */,
 			);
 			path = ToolFilterCategorySelectionView;
@@ -11812,7 +11809,6 @@
 				45D5433628B4001400C4E70F /* GetResourcesAttachments.swift in Sources */,
 				4555849A269F2F9E00C3FF14 /* TrainingTipEvent.swift in Sources */,
 				455583F1269F2DA500C3FF14 /* MobileContentTabView.swift in Sources */,
-				456C1E4A2BA865180057EE62 /* ToolFilterCategorySelectionObservableObject.swift in Sources */,
 				450D63B22AC8A87200B90319 /* TrackScreenViewAnalyticsInterface.swift in Sources */,
 				459E86EB28EDA86C00E197A5 /* DeepLinkingParserManifestType.swift in Sources */,
 				453F84BC2A029FC00005101E /* ArticleAemWebArchiveFileCacheLocation.swift in Sources */,
