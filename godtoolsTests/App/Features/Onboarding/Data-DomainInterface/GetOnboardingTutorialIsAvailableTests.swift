@@ -1,9 +1,9 @@
 //
-//  GetOnboardingTutorialIsAvailableUseCaseTests.swift
+//  GetOnboardingTutorialIsAvailableTests.swift
 //  godtoolsTests
 //
-//  Created by Levi Eggert on 10/19/23.
-//  Copyright © 2023 Cru. All rights reserved.
+//  Created by Levi Eggert on 3/14/24.
+//  Copyright © 2024 Cru. All rights reserved.
 //
 
 import Foundation
@@ -12,7 +12,7 @@ import Combine
 import Quick
 import Nimble
 
-class GetOnboardingTutorialIsAvailableUseCaseTests: QuickSpec {
+class GetOnboardingTutorialIsAvailableTests: QuickSpec {
     
     override class func spec() {
         
@@ -20,11 +20,9 @@ class GetOnboardingTutorialIsAvailableUseCaseTests: QuickSpec {
          
             context("When the app is launched for the first time and the onboarding tutorial has not been viewed.") {
                 
-                let getOnboardingTutorialIsAvailableUseCase = GetOnboardingTutorialIsAvailableUseCase(
-                    getLaunchCountUseCase: GetLaunchCountUseCase(
-                        getLaunchCountRepositoryInterface: TestsGetLaunchCountRepository(launchCount: 1)
-                    ),
-                    getViewedRepositoryInterface: TestsGetOnboardingTutorialViewedRepository(tutorialViewed: false)
+                let getOnboardingIsAvailable = GetOnboardingTutorialIsAvailable(
+                    launchCountRepository: MockLaunchCountRepository(launchCount: 1),
+                    onboardingTutorialViewedRepository: MockOnboardingTutorialViewedRepository(tutorialViewed: false)
                 )
                 
                 it("The onboarding tutorial should be available.") {
@@ -34,8 +32,8 @@ class GetOnboardingTutorialIsAvailableUseCaseTests: QuickSpec {
                     
                     waitUntil { done in
                           
-                        _ = getOnboardingTutorialIsAvailableUseCase
-                            .getAvailablePublisher()
+                        _ = getOnboardingIsAvailable
+                            .isAvailablePublisher()
                             .sink { (isAvailable: Bool) in
                                 
                                 guard !sinkCompleted else {
@@ -57,11 +55,9 @@ class GetOnboardingTutorialIsAvailableUseCaseTests: QuickSpec {
             
             context("When the app is launched for the second time and the onboarding tutorial has been viewed.") {
                 
-                let getOnboardingTutorialIsAvailableUseCase = GetOnboardingTutorialIsAvailableUseCase(
-                    getLaunchCountUseCase: GetLaunchCountUseCase(
-                        getLaunchCountRepositoryInterface: TestsGetLaunchCountRepository(launchCount: 2)
-                    ),
-                    getViewedRepositoryInterface: TestsGetOnboardingTutorialViewedRepository(tutorialViewed: true)
+                let getOnboardingIsAvailable = GetOnboardingTutorialIsAvailable(
+                    launchCountRepository: MockLaunchCountRepository(launchCount: 2),
+                    onboardingTutorialViewedRepository: MockOnboardingTutorialViewedRepository(tutorialViewed: true)
                 )
                 
                 it("The onboarding tutorial should not be available.") {
@@ -71,8 +67,8 @@ class GetOnboardingTutorialIsAvailableUseCaseTests: QuickSpec {
                     
                     waitUntil { done in
                           
-                        _ = getOnboardingTutorialIsAvailableUseCase
-                            .getAvailablePublisher()
+                        _ = getOnboardingIsAvailable
+                            .isAvailablePublisher()
                             .sink { (isAvailable: Bool) in
                                 
                                 guard !sinkCompleted else {
@@ -94,11 +90,9 @@ class GetOnboardingTutorialIsAvailableUseCaseTests: QuickSpec {
             
             context("When the app is launched for the second time and the onboarding tutorial has not been viewed.") {
                 
-                let getOnboardingTutorialIsAvailableUseCase = GetOnboardingTutorialIsAvailableUseCase(
-                    getLaunchCountUseCase: GetLaunchCountUseCase(
-                        getLaunchCountRepositoryInterface: TestsGetLaunchCountRepository(launchCount: 2)
-                    ),
-                    getViewedRepositoryInterface: TestsGetOnboardingTutorialViewedRepository(tutorialViewed: false)
+                let getOnboardingIsAvailable = GetOnboardingTutorialIsAvailable(
+                    launchCountRepository: MockLaunchCountRepository(launchCount: 2),
+                    onboardingTutorialViewedRepository: MockOnboardingTutorialViewedRepository(tutorialViewed: false)
                 )
                 
                 it("The onboarding tutorial should be available.") {
@@ -108,8 +102,8 @@ class GetOnboardingTutorialIsAvailableUseCaseTests: QuickSpec {
                     
                     waitUntil { done in
                           
-                        _ = getOnboardingTutorialIsAvailableUseCase
-                            .getAvailablePublisher()
+                        _ = getOnboardingIsAvailable
+                            .isAvailablePublisher()
                             .sink { (isAvailable: Bool) in
                                 
                                 guard !sinkCompleted else {
@@ -131,4 +125,3 @@ class GetOnboardingTutorialIsAvailableUseCaseTests: QuickSpec {
         }
     }
 }
-

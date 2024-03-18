@@ -1,9 +1,9 @@
 //
-//  GetOnboardingTutorialInterfaceStringsUseCaseTests.swift
+//  GetOnboardingTutorialInterfaceStringsRepositoryTests.swift
 //  godtoolsTests
 //
-//  Created by Levi Eggert on 10/19/23.
-//  Copyright © 2023 Cru. All rights reserved.
+//  Created by Levi Eggert on 3/14/24.
+//  Copyright © 2024 Cru. All rights reserved.
 //
 
 import Foundation
@@ -12,7 +12,7 @@ import Combine
 import Quick
 import Nimble
 
-class GetOnboardingTutorialInterfaceStringsUseCaseTests: QuickSpec {
+class GetOnboardingTutorialInterfaceStringsRepositoryTests: QuickSpec {
     
     override class func spec() {
         
@@ -20,8 +20,24 @@ class GetOnboardingTutorialInterfaceStringsUseCaseTests: QuickSpec {
          
             context("When the app language is switched from English to Spanish.") {
                 
-                let getOnboardingTutorialInterfaceStringsUseCase = GetOnboardingTutorialInterfaceStringsUseCase(
-                    getStringsRepositoryInterface: TestsGetOnboardingTutorialInterfaceStringsRepository()
+                let chooseLanguageButtonTitleKey: String = "onboardingTutorial.chooseLanguageButton.title"
+                let beginButtonTitleKey: String = "onboardingTutorial.beginButton.title"
+                
+                let localizableStrings: [MockLocalizationServices.LocaleId: [MockLocalizationServices.StringKey: String]] = [
+                    LanguageCodeDomainModel.english.value: [
+                        chooseLanguageButtonTitleKey: "Choose Language",
+                        beginButtonTitleKey: "Begin"
+                    ],
+                    LanguageCodeDomainModel.spanish.value: [
+                        chooseLanguageButtonTitleKey: "Elige lengua",
+                        beginButtonTitleKey: "Comenzar"
+                    ]
+                ]
+                
+                let getOnboardingTutorialInterfaceStringsRepository =  GetOnboardingTutorialInterfaceStringsRepository(
+                    localizationServices: MockLocalizationServices(
+                        localizableStrings: localizableStrings
+                    )
                 )
                 
                 it("The interface strings should be translated into Spanish.") {
@@ -36,8 +52,13 @@ class GetOnboardingTutorialInterfaceStringsUseCaseTests: QuickSpec {
                     
                     waitUntil { done in
                         
-                        _ = getOnboardingTutorialInterfaceStringsUseCase
-                            .getStringsPublisher(appLanguagePublisher: appLanguagePublisher.eraseToAnyPublisher())
+                        _ = appLanguagePublisher
+                            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<OnboardingTutorialInterfaceStringsDomainModel, Never> in
+                                
+                                return getOnboardingTutorialInterfaceStringsRepository
+                                    .getStringsPublisher(appLanguage: appLanguage)
+                                    .eraseToAnyPublisher()
+                            })
                             .sink { (interfaceStrings: OnboardingTutorialInterfaceStringsDomainModel) in
                                 
                                 guard !sinkCompleted else {
