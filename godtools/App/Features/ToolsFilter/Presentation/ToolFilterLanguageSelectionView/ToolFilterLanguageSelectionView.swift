@@ -13,10 +13,12 @@ struct ToolFilterLanguageSelectionView: View {
     private static let ultraLightGrey = Color.getColorWithRGB(red: 246, green: 246, blue: 246, opacity: 1)
     
     @ObservedObject private var viewModel: ToolFilterLanguageSelectionViewModel
+    @ObservedObject private var selectedLanguage: CombineObservableValue<LanguageFilterDomainModel>
         
-    init(viewModel: ToolFilterLanguageSelectionViewModel) {
+    init(viewModel: ToolFilterLanguageSelectionViewModel, selectedLanguage: CombineObservableValue<LanguageFilterDomainModel>) {
         
         self.viewModel = viewModel
+        self.selectedLanguage = selectedLanguage
     }
     
     var body: some View {
@@ -30,13 +32,15 @@ struct ToolFilterLanguageSelectionView: View {
                     
                     Button {
                         
+                        selectedLanguage.value = language
+                        
                         viewModel.rowTapped(with: language)
                         
                     } label: {
                         
                         ToolFilterLanguageSelectionRowView(
                             language: language,
-                            isSelected: viewModel.selectedLanguage.value.id == language.id
+                            isSelected: selectedLanguage.value.id == language.id
                         )
                     }
                 }

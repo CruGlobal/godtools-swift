@@ -13,10 +13,12 @@ struct ToolFilterCategorySelectionView: View {
     private static let ultraLightGrey = Color.getColorWithRGB(red: 246, green: 246, blue: 246, opacity: 1)
     
     @ObservedObject private var viewModel: ToolFilterCategorySelectionViewModel
+    @ObservedObject private var selectedCategory: CombineObservableValue<CategoryFilterDomainModel>
     
-    init(viewModel: ToolFilterCategorySelectionViewModel) {
+    init(viewModel: ToolFilterCategorySelectionViewModel, selectedCategory: CombineObservableValue<CategoryFilterDomainModel>) {
         
         self.viewModel = viewModel
+        self.selectedCategory = selectedCategory
     }
     
     var body: some View {
@@ -30,13 +32,15 @@ struct ToolFilterCategorySelectionView: View {
                     
                     Button {
                         
+                        selectedCategory.value = category
+                        
                         viewModel.rowTapped(with: category)
                         
                     } label: {
                         
                         ToolFilterCategorySelectionRowView(
                             category: category,
-                            isSelected: viewModel.selectedCategory.value.id == category.id
+                            isSelected: selectedCategory.value.id == category.id
                         )
                     }
                 }

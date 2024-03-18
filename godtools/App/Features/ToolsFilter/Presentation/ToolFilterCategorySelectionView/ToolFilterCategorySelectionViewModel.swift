@@ -21,9 +21,7 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
     
     private var cancellables: Set<AnyCancellable> = Set()
     private weak var flowDelegate: FlowDelegate?
-        
-    let selectedCategory: CombineObservableValue<CategoryFilterDomainModel>
-    
+            
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     
     @Published private var allCategories: [CategoryFilterDomainModel] = [CategoryFilterDomainModel]()
@@ -31,7 +29,7 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
     @Published var navTitle: String = ""
     @Published var categorySearchResults: [CategoryFilterDomainModel] = [CategoryFilterDomainModel]()
     
-    init(viewToolFilterCategoriesUseCase: ViewToolFilterCategoriesUseCase, searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase, storeUserFiltersUseCase: StoreUserFiltersUseCase, selectedCategoryObserver: CombineObservableValue<CategoryFilterDomainModel>, selectedLanguage: LanguageFilterDomainModel, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, flowDelegate: FlowDelegate?) {
+    init(viewToolFilterCategoriesUseCase: ViewToolFilterCategoriesUseCase, searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase, storeUserFiltersUseCase: StoreUserFiltersUseCase, selectedLanguage: LanguageFilterDomainModel, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, flowDelegate: FlowDelegate?) {
         
         self.viewToolFilterCategoriesUseCase = viewToolFilterCategoriesUseCase
         self.searchToolFilterCategoriesUseCase = searchToolFilterCategoriesUseCase
@@ -41,9 +39,7 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
         self.viewSearchBarUseCase = viewSearchBarUseCase
         self.selectedLanguage = selectedLanguage
         self.flowDelegate = flowDelegate
-        
-        selectedCategory = selectedCategoryObserver
-        
+                
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
             .assign(to: &$appLanguage)
@@ -95,9 +91,7 @@ extension ToolFilterCategorySelectionViewModel {
     }
     
     func rowTapped(with category: CategoryFilterDomainModel) {
-                
-        selectedCategory.value = category
-        
+                        
         storeUserFiltersUseCase.storeCategoryFilterPublisher(with: category.id)
             .sink { _ in
                 
