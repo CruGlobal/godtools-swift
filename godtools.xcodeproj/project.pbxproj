@@ -287,6 +287,7 @@
 		45369ADA2AFA7FA500BD10F0 /* ToolScreenShareFeatureDataLayerDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45369AC02AFA7FA500BD10F0 /* ToolScreenShareFeatureDataLayerDependencies.swift */; };
 		45369ADB2AFA7FA500BD10F0 /* ToolScreenShareFeatureDiContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45369AC12AFA7FA500BD10F0 /* ToolScreenShareFeatureDiContainer.swift */; };
 		45369ADC2AFA7FA500BD10F0 /* ToolScreenShareFeatureDomainLayerDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45369AC22AFA7FA500BD10F0 /* ToolScreenShareFeatureDomainLayerDependencies.swift */; };
+		4537EBF12BA1ECF90024793C /* LanguageSettingsDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4537EBF02BA1ECF90024793C /* LanguageSettingsDeepLinkParser.swift */; };
 		453A2EF72B3636DA00C8F865 /* DownloadToolLanguageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453A2EF52B3636D900C8F865 /* DownloadToolLanguageUseCase.swift */; };
 		453A2EF82B3636DA00C8F865 /* RemoveDownloadedToolLanguageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453A2EF62B3636DA00C8F865 /* RemoveDownloadedToolLanguageUseCase.swift */; };
 		453A2EFC2B3636E400C8F865 /* RemoveDownloadedToolLanguageRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453A2EF92B3636E300C8F865 /* RemoveDownloadedToolLanguageRepositoryInterface.swift */; };
@@ -1795,6 +1796,7 @@
 		45369AC02AFA7FA500BD10F0 /* ToolScreenShareFeatureDataLayerDependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolScreenShareFeatureDataLayerDependencies.swift; sourceTree = "<group>"; };
 		45369AC12AFA7FA500BD10F0 /* ToolScreenShareFeatureDiContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolScreenShareFeatureDiContainer.swift; sourceTree = "<group>"; };
 		45369AC22AFA7FA500BD10F0 /* ToolScreenShareFeatureDomainLayerDependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolScreenShareFeatureDomainLayerDependencies.swift; sourceTree = "<group>"; };
+		4537EBF02BA1ECF90024793C /* LanguageSettingsDeepLinkParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSettingsDeepLinkParser.swift; sourceTree = "<group>"; };
 		453A2EF52B3636D900C8F865 /* DownloadToolLanguageUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadToolLanguageUseCase.swift; sourceTree = "<group>"; };
 		453A2EF62B3636DA00C8F865 /* RemoveDownloadedToolLanguageUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoveDownloadedToolLanguageUseCase.swift; sourceTree = "<group>"; };
 		453A2EF92B3636E300C8F865 /* RemoveDownloadedToolLanguageRepositoryInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoveDownloadedToolLanguageRepositoryInterface.swift; sourceTree = "<group>"; };
@@ -4754,6 +4756,14 @@
 			path = DependencyContainer;
 			sourceTree = "<group>";
 		};
+		4537EBEF2BA1ECE40024793C /* LanguageSettings */ = {
+			isa = PBXGroup;
+			children = (
+				4537EBF02BA1ECF90024793C /* LanguageSettingsDeepLinkParser.swift */,
+			);
+			path = LanguageSettings;
+			sourceTree = "<group>";
+		};
 		453A9EEF2A044FF6007BB892 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
@@ -7123,6 +7133,7 @@
 				450EE28029A6648900524F64 /* DashboardPath */,
 				450EE2A829A6719500524F64 /* GodToolsApp */,
 				450EE28A29A6680800524F64 /* KnowGod */,
+				4537EBEF2BA1ECE40024793C /* LanguageSettings */,
 				459E86BD28EDA86C00E197A5 /* Legacy */,
 				45A415FB2A9942ED0030E2C7 /* Onboarding */,
 				450EE27D29A6648900524F64 /* ToolPath */,
@@ -11966,6 +11977,7 @@
 				458D017F2B1E4CDA0029523C /* ViewLessonsUseCase.swift in Sources */,
 				453F84CA2A029FC00005101E /* ArticleAemDownloadOperation.swift in Sources */,
 				4569C5022AC367BD0004BCDE /* GetInterfaceStringInAppLanguageUseCase.swift in Sources */,
+				4537EBF12BA1ECF90024793C /* LanguageSettingsDeepLinkParser.swift in Sources */,
 				456AC19E2B8CEE6200169C11 /* ToolSettingsLanguages.swift in Sources */,
 				45D63E73288F698C009B4610 /* LanguageModel.swift in Sources */,
 				45B3F4662AC3B1B800D61BFD /* GetAppInterfaceLayoutDirectionInterface.swift in Sources */,

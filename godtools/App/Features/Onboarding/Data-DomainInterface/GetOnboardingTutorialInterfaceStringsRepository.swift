@@ -27,6 +27,7 @@ class GetOnboardingTutorialInterfaceStringsRepository: GetOnboardingTutorialInte
             chooseAppLanguageButtonTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "onboardingTutorial.chooseLanguageButton.title", fileType: stringsFileType),
             beginTutorialButtonTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "onboardingTutorial.beginButton.title", fileType: stringsFileType),
             nextTutorialPageButtonTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "onboardingTutorial.nextButton.title", fileType: stringsFileType),
+            endTutorialButtonTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "onboardingTutorial.getStartedButton.title", fileType: stringsFileType),
             readyForEveryConversationTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "onboardingTutorial.0.title", fileType: stringsFileType),
             readyForEveryConversationVideoLinkTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "onboardingTutorial.0.videoLink.title", fileType: stringsFileType),
             prepareForMomentsThatMatterTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "onboardingTutorial.2.title", fileType: stringsFileType),
