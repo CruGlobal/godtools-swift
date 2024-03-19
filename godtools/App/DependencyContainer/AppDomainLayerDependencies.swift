@@ -200,6 +200,12 @@ class AppDomainLayerDependencies {
         )
     }
     
+    func getViewAccountUseCase() -> ViewAccountUseCase {
+        return ViewAccountUseCase(
+            getInterfaceStringsRepository: dataLayer.getAccountInterfaceStringsRepositoryInterface()
+        )
+    }
+    
     func getViewSearchBarUseCase() -> ViewSearchBarUseCase {
         return ViewSearchBarUseCase(
             getInterfaceStringsRepository: dataLayer.getSearchBarInterfaceStringsRepositoryInterface()

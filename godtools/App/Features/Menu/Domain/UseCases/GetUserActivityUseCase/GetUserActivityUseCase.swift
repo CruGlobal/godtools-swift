@@ -25,14 +25,17 @@ class GetUserActivityUseCase {
         self.completedTrainingTipRepository = completedTrainingTipRepository
     }
     
-    func getUserActivityPublisher() -> AnyPublisher<UserActivityDomainModel, Never> {
+    func getUserActivityPublisher(appLanguagePublisher: AnyPublisher<AppLanguageDomainModel, Never>) -> AnyPublisher<UserActivityDomainModel, Never> {
         
-        return userCounterRepository.getUserCountersChanged(reloadFromRemote: true)
-            .flatMap { _ in
+        return Publishers.CombineLatest(
+            userCounterRepository.getUserCountersChanged(reloadFromRemote: true),
+            appLanguagePublisher
+        )
+        .flatMap { _, appLanguage in
                 
                 let allUserCounters = self.getAllUserCounters()
                 
-                let userActivityDomainModel = self.getUserActivityDomainModel(from: allUserCounters)
+            let userActivityDomainModel = self.getUserActivityDomainModel(from: allUserCounters, translatedInAppLanguage: appLanguage)
                 
                 return Just(userActivityDomainModel)
                 
@@ -59,14 +62,14 @@ class GetUserActivityUseCase {
         )
     }
     
-    private func getUserActivityDomainModel(from counters: [UserCounterDomainModel]) -> UserActivityDomainModel {
+    private func getUserActivityDomainModel(from counters: [UserCounterDomainModel], translatedInAppLanguage: AppLanguageDomainModel) -> UserActivityDomainModel {
         
         let userCounterDictionary = buildUserCounterDictionary(from: counters)
         
         let userActivity = UserActivity(counters: userCounterDictionary)
         
-        let badges = userActivity.badges.map { self.getUserActivityBadgeUseCase.getBadge(from: $0) }
-        let stats = getUserActivityStatsUseCase.getUserActivityStats(from: userActivity)
+        let badges = userActivity.badges.map { self.getUserActivityBadgeUseCase.getBadge(from: $0, translatedInAppLanguage: translatedInAppLanguage) }
+        let stats = getUserActivityStatsUseCase.getUserActivityStats(from: userActivity, translatedInAppLanguage: translatedInAppLanguage)
         
         return UserActivityDomainModel(badges: badges, stats: stats)
     }
