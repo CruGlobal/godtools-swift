@@ -933,6 +933,7 @@ extension AppFlow {
             viewToolFilterCategoriesUseCase: appDiContainer.feature.toolsFilter.domainLayer.getViewToolFilterCategoriesUseCase(),
             searchToolFilterCategoriesUseCase: appDiContainer.feature.toolsFilter.domainLayer.getSearchToolFilterCategoriesUseCase(),
             storeUserFiltersUseCase: appDiContainer.feature.toolsFilter.domainLayer.getStoreUserFiltersUseCase(),
+            selectedCategory: selectedCategoryObserver,
             selectedLanguage: selectedLanguage,
             getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
@@ -940,7 +941,7 @@ extension AppFlow {
             flowDelegate: self
          )
         
-        let view = ToolFilterCategorySelectionView(viewModel: viewModel, selectedCategory: selectedCategoryObserver)
+        let view = ToolFilterCategorySelectionView(viewModel: viewModel)
         
         let backButton = AppBackBarItem(
             target: viewModel,
@@ -970,11 +971,12 @@ extension AppFlow {
             getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             viewSearchBarUseCase: appDiContainer.domainLayer.getViewSearchBarUseCase(),
+            selectedLanguage: selectedLanguageObserver,
             selectedCategory: selectedCategory,
             flowDelegate: self
         )
         
-        let view = ToolFilterLanguageSelectionView(viewModel: viewModel, selectedLanguage: selectedLanguageObserver)
+        let view = ToolFilterLanguageSelectionView(viewModel: viewModel)
         
         let backButton = AppBackBarItem(
             target: viewModel,
