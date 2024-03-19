@@ -29,7 +29,7 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
     @Published var navTitle: String = ""
     @Published var categorySearchResults: [CategoryFilterDomainModel] = [CategoryFilterDomainModel]()
     
-    init(viewToolFilterCategoriesUseCase: ViewToolFilterCategoriesUseCase, searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase, storeUserFiltersUseCase: StoreUserFiltersUseCase, selectedLanguage: LanguageFilterDomainModel, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, flowDelegate: FlowDelegate?) {
+    init(viewToolFilterCategoriesUseCase: ViewToolFilterCategoriesUseCase, searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase, storeUserFiltersUseCase: StoreUserFiltersUseCase, selectedLanguage: LanguageFilterDomainModel, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, flowDelegate: FlowDelegate) {
         
         self.viewToolFilterCategoriesUseCase = viewToolFilterCategoriesUseCase
         self.searchToolFilterCategoriesUseCase = searchToolFilterCategoriesUseCase
@@ -50,9 +50,9 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
                 return viewToolFilterCategoriesUseCase.viewPublisher(filteredByLanguageId: selectedLanguage.id, translatedInAppLanguage: appLanguage)
             }
             .receive(on: DispatchQueue.main)
-            .sink { viewCategoryFiltersDomainModel in
+            .sink { [weak self] viewCategoryFiltersDomainModel in
                 
-                self.allCategories = viewCategoryFiltersDomainModel.categoryFilters
+                self?.allCategories = viewCategoryFiltersDomainModel.categoryFilters
             }
             .store(in: &cancellables)
         
@@ -67,7 +67,7 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
         )
         .flatMap { searchText, allCategories in
             
-            self.searchToolFilterCategoriesUseCase.getSearchResultsPublisher(for: searchText, in: allCategories)
+            searchToolFilterCategoriesUseCase.getSearchResultsPublisher(for: searchText, in: allCategories)
         }
         .receive(on: DispatchQueue.main)
         .assign(to: &$categorySearchResults)

@@ -29,7 +29,7 @@ class ToolFilterLanguageSelectionViewModel: ObservableObject {
     @Published var searchText: String = ""
     @Published var navTitle: String = ""
     
-    init(viewToolFilterLanguagesUseCase: ViewToolFilterLanguagesUseCase,  searchToolFilterLanguagesUseCase: SearchToolFilterLanguagesUseCase, storeUserFilterUseCase: StoreUserFiltersUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, selectedCategory: CategoryFilterDomainModel, flowDelegate: FlowDelegate?) {
+    init(viewToolFilterLanguagesUseCase: ViewToolFilterLanguagesUseCase,  searchToolFilterLanguagesUseCase: SearchToolFilterLanguagesUseCase, storeUserFilterUseCase: StoreUserFiltersUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, selectedCategory: CategoryFilterDomainModel, flowDelegate: FlowDelegate) {
         
         self.viewToolFilterLanguagesUseCase = viewToolFilterLanguagesUseCase
         self.searchToolFilterLanguagesUseCase = searchToolFilterLanguagesUseCase
@@ -50,9 +50,9 @@ class ToolFilterLanguageSelectionViewModel: ObservableObject {
                 return viewToolFilterLanguagesUseCase.viewPublisher(filteredByCategoryId: selectedCategory.id, translatedInAppLanguage: appLanguage)
             }
             .receive(on: DispatchQueue.main)
-            .sink { viewLanguageFiltersDomainModel in
+            .sink { [weak self] viewLanguageFiltersDomainModel in
                 
-                self.allLanguages = viewLanguageFiltersDomainModel.languageFilters
+                self?.allLanguages = viewLanguageFiltersDomainModel.languageFilters
             }
             .store(in: &cancellables)
 
@@ -67,7 +67,7 @@ class ToolFilterLanguageSelectionViewModel: ObservableObject {
         )
         .flatMap { searchText, allLanguages in
             
-            return self.searchToolFilterLanguagesUseCase.getSearchResultsPublisher(for: searchText, in: allLanguages)
+            return searchToolFilterLanguagesUseCase.getSearchResultsPublisher(for: searchText, in: allLanguages)
         }
         .receive(on: DispatchQueue.main)
         .assign(to: &$languageSearchResults)
