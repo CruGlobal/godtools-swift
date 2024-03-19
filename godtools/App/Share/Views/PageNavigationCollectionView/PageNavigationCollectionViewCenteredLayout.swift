@@ -44,20 +44,19 @@ class PageNavigationCollectionViewCenteredLayout: UICollectionViewFlowLayout {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func prepare() {
             
         if !layoutInitialized {
             layoutInitialized = true
             
-            addPanGestureIfNeeded()
-            
             if let collectionView = collectionView {
                             
                 collectionView.isPagingEnabled = false
                 collectionView.decelerationRate = UIScrollView.DecelerationRate.fast
-                collectionView.addGestureRecognizer(panGesture)
             }
+            
+            addPanGestureIfNeeded()
         }
         
         super.prepare()

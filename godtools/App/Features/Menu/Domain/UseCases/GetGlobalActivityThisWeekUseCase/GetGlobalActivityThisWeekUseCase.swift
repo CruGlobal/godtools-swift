@@ -21,43 +21,48 @@ class GetGlobalActivityThisWeekUseCase {
         self.localizationServices = localizationServices
     }
     
-    func getGlobalActivityPublisher() -> AnyPublisher<[GlobalActivityThisWeekDomainModel], Never> {
+    func getGlobalActivityPublisher(appLanguagePublisher: AnyPublisher<AppLanguageDomainModel, Never>) -> AnyPublisher<[GlobalActivityThisWeekDomainModel], Never> {
         
-        return globalAnalyticsRepository.getGlobalAnalyticsChangedPublisher()
-            .flatMap({ (dataModel: GlobalAnalyticsDataModel?) -> AnyPublisher<[GlobalActivityThisWeekDomainModel], Never> in
+        return Publishers.CombineLatest(
+            globalAnalyticsRepository.getGlobalAnalyticsChangedPublisher(),
+            appLanguagePublisher
+        )
+        .flatMap({ (dataModel: GlobalAnalyticsDataModel?, appLanguage: AppLanguageDomainModel) -> AnyPublisher<[GlobalActivityThisWeekDomainModel], Never> in
+            
+            guard let dataModel = dataModel else {
                 
-                guard let dataModel = dataModel else {
-                    
-                    return Just([])
-                        .eraseToAnyPublisher()
-                }
-                
-                let usersAnalytics = GlobalActivityThisWeekDomainModel(
-                    count: self.getFormattedCount(count: dataModel.users),
-                    label: self.localizationServices.stringForSystemElseEnglish(key: "accountActivity.globalAnalytics.users.title")
-                )
-                
-                let gospelPresentationAnalytics = GlobalActivityThisWeekDomainModel(
-                    count: self.getFormattedCount(count: dataModel.gospelPresentations),
-                    label: self.localizationServices.stringForSystemElseEnglish(key: "accountActivity.globalAnalytics.gospelPresentation.title")
-                )
-                
-                let launchesAnalytics = GlobalActivityThisWeekDomainModel(
-                    count: self.getFormattedCount(count: dataModel.launches),
-                    label: self.localizationServices.stringForSystemElseEnglish(key: "accountActivity.globalAnalytics.launches.title")
-                )
-                
-                let countriesAnalytics = GlobalActivityThisWeekDomainModel(
-                    count: self.getFormattedCount(count: dataModel.countries),
-                    label: self.localizationServices.stringForSystemElseEnglish(key: "accountActivity.globalAnalytics.countries.title")
-                )
-                
-                let activityThisWeek: [GlobalActivityThisWeekDomainModel] = [usersAnalytics, gospelPresentationAnalytics, launchesAnalytics, countriesAnalytics]
-                
-                return Just(activityThisWeek)
+                return Just([])
                     .eraseToAnyPublisher()
-            })
-            .eraseToAnyPublisher()
+            }
+            
+            let localeId = appLanguage
+            
+            let usersAnalytics = GlobalActivityThisWeekDomainModel(
+                count: self.getFormattedCount(count: dataModel.users),
+                label: self.localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "accountActivity.globalAnalytics.users.title")
+            )
+            
+            let gospelPresentationAnalytics = GlobalActivityThisWeekDomainModel(
+                count: self.getFormattedCount(count: dataModel.gospelPresentations),
+                label: self.localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "accountActivity.globalAnalytics.gospelPresentation.title")
+            )
+            
+            let launchesAnalytics = GlobalActivityThisWeekDomainModel(
+                count: self.getFormattedCount(count: dataModel.launches),
+                label: self.localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "accountActivity.globalAnalytics.launches.title")
+            )
+            
+            let countriesAnalytics = GlobalActivityThisWeekDomainModel(
+                count: self.getFormattedCount(count: dataModel.countries),
+                label: self.localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "accountActivity.globalAnalytics.countries.title")
+            )
+            
+            let activityThisWeek: [GlobalActivityThisWeekDomainModel] = [usersAnalytics, gospelPresentationAnalytics, launchesAnalytics, countriesAnalytics]
+            
+            return Just(activityThisWeek)
+                .eraseToAnyPublisher()
+        })
+        .eraseToAnyPublisher()
     }
     
     private func getFormattedCount(count: Int) -> String {

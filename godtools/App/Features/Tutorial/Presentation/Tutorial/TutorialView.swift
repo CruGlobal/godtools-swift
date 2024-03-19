@@ -29,16 +29,33 @@ struct TutorialView: View {
                 
                 FixedVerticalSpacer(height: 50)
                 
-                PagedView(numberOfPages: viewModel.tutorialPages.count, currentPage: $viewModel.currentPage) { (index: Int) in
+                TabView(selection: $viewModel.currentPage) {
                     
-                    TutorialItemView(
-                        tutorialPage: viewModel.tutorialPages[index],
-                        geometry: geometry,
-                        videoPlayingClosure: {
-                            viewModel.tutorialVideoPlayTapped(tutorialPageIndex: index)
+                    Group {
+                        
+                        if ApplicationLayout.shared.layoutDirection == .rightToLeft {
+                            
+                            ForEach((0 ..< viewModel.tutorialPages.count).reversed(), id: \.self) { index in
+                                
+                                getTutorialItemView(index: index, geometry: geometry)
+                                    .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
+                                    .tag(index)
+                            }
                         }
-                    )
+                        else {
+                            
+                            ForEach(0 ..< viewModel.tutorialPages.count, id: \.self) { index in
+                                
+                                getTutorialItemView(index: index, geometry: geometry)
+                                    .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
+                                    .tag(index)
+                            }
+                        }
+                    }
                 }
+                .environment(\.layoutDirection, .leftToRight)
+                .tabViewStyle(.page(indexDisplayMode: .never))
+                .animation(.easeOut, value: viewModel.currentPage)
                 
                 GTBlueButton(title: viewModel.continueTitle, font: FontLibrary.sfProTextRegular.font(size: 18), width: geometry.size.width - (continueButtonHorizontalPadding * 2), height: continueButtonHeight) {
                     
@@ -54,5 +71,16 @@ struct TutorialView: View {
             }
             .frame(maxWidth: .infinity)
         }
+    }
+    
+    private func getTutorialItemView(index: Int, geometry: GeometryProxy) -> TutorialItemView {
+        
+        return TutorialItemView(
+            tutorialPage: viewModel.tutorialPages[index],
+            geometry: geometry,
+            videoPlayingClosure: {
+                viewModel.tutorialVideoPlayTapped(tutorialPageIndex: index)
+            }
+        )
     }
 }

@@ -33,7 +33,13 @@ class AppDataLayerDependencies {
     }
     
     // MARK: - Data Layer Classes
-            
+    
+    func getAccountInterfaceStringsRepositoryInterface() -> GetAccountInterfaceStringsRepositoryInterface {
+        return GetAccountInterfaceStringsRepository(
+            localizationServices: getLocalizationServices()
+        )
+    }
+    
     func getAnalytics() -> AnalyticsContainer {
         return sharedAnalytics
     }
@@ -445,13 +451,7 @@ class AppDataLayerDependencies {
             localizationServices: getLocalizationServices()
         )
     }
-    
-    func getLaunchCountRepositoryInterface() -> GetLaunchCountRepositoryInterface {
-        return GetLaunchCountRepository(
-            launchCountRepository: getSharedLaunchCountRepository()
-        )
-    }
-    
+
     private func getTranslatedLanguageName() -> GetTranslatedLanguageName {
         return GetTranslatedLanguageName(
             localizationServices: getLocalizationServices(),

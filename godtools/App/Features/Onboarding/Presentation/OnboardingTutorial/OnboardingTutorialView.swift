@@ -30,46 +30,33 @@ struct OnboardingTutorialView: View {
 
             VStack(alignment: .center, spacing: 0) {
                    
-                PagedView(numberOfPages: viewModel.pages.count, currentPage: $viewModel.currentPage) { (page: Int) in
+                TabView(selection: $viewModel.currentPage) {
                     
-                    switch viewModel.pages[page] {
+                    Group {
                         
-                    case .readyForEveryConversation:
-                       
-                        OnboardingTutorialReadyForEveryConversationView(
-                            viewModel: viewModel.getOnboardingTutorialReadyForEveryConversationViewModel(),
-                            geometry: geometry,
-                            screenAccessibility: .onboardingTutorialPage1,
-                            watchVideoTappedClosure: {
-                                viewModel.watchReadyForEveryConversationVideoTapped()
+                        if ApplicationLayout.shared.layoutDirection == .rightToLeft {
+                            
+                            ForEach((0 ..< viewModel.pages.count).reversed(), id: \.self) { index in
+                                
+                                getOnboardingTutorialView(index: index, geometry: geometry)
+                                    .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
+                                    .tag(index)
                             }
-                        )
-                        
-                    case .talkAboutGodWithAnyone:
-                        
-                        OnboardingTutorialMediaView(
-                            viewModel: viewModel.getOnboardingTutorialTalkAboutGodWithAnyoneViewModel(),
-                            geometry: geometry,
-                            screenAccessibility: .onboardingTutorialPage2
-                        )
-                        
-                    case .prepareForTheMomentsThatMatter:
-                        
-                        OnboardingTutorialMediaView(
-                            viewModel: viewModel.getOnboardingTutorialPrepareForTheMomentsThatMatterViewModel(),
-                            geometry: geometry,
-                            screenAccessibility: .onboardingTutorialPage3
-                        )
-                        
-                    case .helpSomeoneDiscoverJesus:
-                        
-                        OnboardingTutorialMediaView(
-                            viewModel: viewModel.getOnboardingTutorialHelpSomeoneDiscoverJesusViewModel(),
-                            geometry: geometry,
-                            screenAccessibility: .onboardingTutorialPage4
-                        )
+                        }
+                        else {
+                            
+                            ForEach(0 ..< viewModel.pages.count, id: \.self) { index in
+                                
+                                getOnboardingTutorialView(index: index, geometry: geometry)
+                                    .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
+                                    .tag(index)
+                            }
+                        }
                     }
                 }
+                .environment(\.layoutDirection, .leftToRight)
+                .tabViewStyle(.page(indexDisplayMode: .never))
+                .animation(.easeOut, value: viewModel.currentPage)
                 
                 OnboardingTutorialPrimaryButton(geometry: geometry, title: viewModel.continueButtonTitle, accessibility: .nextOnboardingTutorial) {
                     viewModel.continueTapped()
@@ -91,6 +78,47 @@ struct OnboardingTutorialView: View {
             .animation(.interpolatingSpring(stiffness: 80, damping: 10), value: chooseAppLanguageButtonPosition)
         }
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
+    }
+    
+    @ViewBuilder private func getOnboardingTutorialView(index: Int, geometry: GeometryProxy) -> some View {
+        
+        switch viewModel.pages[index] {
+            
+        case .readyForEveryConversation:
+           
+            OnboardingTutorialReadyForEveryConversationView(
+                viewModel: viewModel.getOnboardingTutorialReadyForEveryConversationViewModel(),
+                geometry: geometry,
+                screenAccessibility: .onboardingTutorialPage1,
+                watchVideoTappedClosure: {
+                    viewModel.watchReadyForEveryConversationVideoTapped()
+                }
+            )
+            
+        case .talkAboutGodWithAnyone:
+            
+            OnboardingTutorialMediaView(
+                viewModel: viewModel.getOnboardingTutorialTalkAboutGodWithAnyoneViewModel(),
+                geometry: geometry,
+                screenAccessibility: .onboardingTutorialPage2
+            )
+            
+        case .prepareForTheMomentsThatMatter:
+            
+            OnboardingTutorialMediaView(
+                viewModel: viewModel.getOnboardingTutorialPrepareForTheMomentsThatMatterViewModel(),
+                geometry: geometry,
+                screenAccessibility: .onboardingTutorialPage3
+            )
+            
+        case .helpSomeoneDiscoverJesus:
+            
+            OnboardingTutorialMediaView(
+                viewModel: viewModel.getOnboardingTutorialHelpSomeoneDiscoverJesusViewModel(),
+                geometry: geometry,
+                screenAccessibility: .onboardingTutorialPage4
+            )
+        }
     }
 }
 

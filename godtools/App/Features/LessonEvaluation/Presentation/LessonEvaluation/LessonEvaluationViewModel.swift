@@ -21,7 +21,6 @@ class LessonEvaluationViewModel: ObservableObject {
     private let evaluateLessonUseCase: EvaluateLessonUseCase
     private let cancelLessonEvaluationUseCase: CancelLessonEvaluationUseCase
     
-    private var currentAppLanguageSubject: CurrentValueSubject<AppLanguageDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
     private var cancellables: Set<AnyCancellable> = Set()
         
     private weak var flowDelegate: FlowDelegate?
@@ -29,6 +28,8 @@ class LessonEvaluationViewModel: ObservableObject {
     let readyToShareFaithMinimumScaleValue: Int = 1
     let readyToShareFaithMaximumScaleValue: Int = 10
             
+    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
+    
     @Published var readyToShareFaithScale: Int = 6
     @Published var title: String = ""
     @Published var wasThisHelpful: String = ""
@@ -51,15 +52,15 @@ class LessonEvaluationViewModel: ObservableObject {
         
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (appLanguage: AppLanguageDomainModel) in
-                
-                self?.currentAppLanguageSubject.send(appLanguage)
-            }
-            .store(in: &cancellables)
+            .assign(to: &$appLanguage)
         
-        getLessonEvaluationInterfaceStringsUseCase
-            .getStringsPublisher(appLanguagePublisher: currentAppLanguageSubject.eraseToAnyPublisher())
+        $appLanguage.eraseToAnyPublisher()
+            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<LessonEvaluationInterfaceStringsDomainModel, Never> in
+                
+                return getLessonEvaluationInterfaceStringsUseCase
+                    .getStringsPublisher(appLanguage: appLanguage)
+                    .eraseToAnyPublisher()
+            })
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (interfaceStrings: LessonEvaluationInterfaceStringsDomainModel) in
                 
