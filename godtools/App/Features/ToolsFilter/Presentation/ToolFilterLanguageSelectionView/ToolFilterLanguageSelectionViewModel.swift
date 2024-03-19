@@ -55,9 +55,9 @@ class ToolFilterLanguageSelectionViewModel: ObservableObject {
                 return viewToolFilterLanguagesUseCase.viewPublisher(filteredByCategoryId: selectedCategory.id, translatedInAppLanguage: appLanguage)
             }
             .receive(on: DispatchQueue.main)
-            .sink { viewLanguageFiltersDomainModel in
+            .sink { [weak self] viewLanguageFiltersDomainModel in
                 
-                self.allLanguages = viewLanguageFiltersDomainModel.languageFilters
+                self?.allLanguages = viewLanguageFiltersDomainModel.languageFilters
             }
             .store(in: &cancellables)
 
@@ -72,7 +72,7 @@ class ToolFilterLanguageSelectionViewModel: ObservableObject {
         )
         .flatMap { searchText, allLanguages in
             
-            return self.searchToolFilterLanguagesUseCase.getSearchResultsPublisher(for: searchText, in: allLanguages)
+            return searchToolFilterLanguagesUseCase.getSearchResultsPublisher(for: searchText, in: allLanguages)
         }
         .receive(on: DispatchQueue.main)
         .assign(to: &$languageSearchResults)

@@ -62,16 +62,17 @@ class DownloadableLanguagesViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        Publishers.CombineLatest(
+        Publishers.CombineLatest3(
             $searchText.eraseToAnyPublisher(),
-            $downloadableLanguages.eraseToAnyPublisher()
+            $downloadableLanguages.eraseToAnyPublisher(),
+            $activeDownloads.eraseToAnyPublisher()
         )
-        .flatMap({ searchText, downloadableLanguages in
+        .flatMap({ searchText, downloadableLanguages, activeDownloads in
             
-            return Publishers.CombineLatest(
-                self.searchLanguageInDownloadableLanguagesUseCase.getSearchResultsPublisher(for: searchText, in: downloadableLanguages),
-                self.$activeDownloads.eraseToAnyPublisher()
-            )
+            return searchLanguageInDownloadableLanguagesUseCase.getSearchResultsPublisher(for: searchText, in: downloadableLanguages)
+                .map { downloadableLanguages in
+                    return (downloadableLanguages, activeDownloads)
+                }
         })
         .receive(on: DispatchQueue.main)
         .sink(receiveValue: { [weak self] downloadableLanguages, activeDownloads in

@@ -100,14 +100,14 @@ class ToolsViewModel: ObservableObject {
         $appLanguage.eraseToAnyPublisher()
             .flatMap { appLanguage in
                 
-                return self.getUserFiltersUseCase.getUserFiltersPublisher(translatedInAppLanguage: appLanguage)
+                return getUserFiltersUseCase.getUserFiltersPublisher(translatedInAppLanguage: appLanguage)
                     .eraseToAnyPublisher()
             }
             .receive(on: DispatchQueue.main)
-            .sink { userFilters in
+            .sink { [weak self] userFilters in
               
-                self.toolFilterCategorySelectionPublisher.send(userFilters.categoryFilter)
-                self.toolFilterLanguageSelectionPublisher.send(userFilters.languageFilter)
+                self?.toolFilterCategorySelectionPublisher.send(userFilters.categoryFilter)
+                self?.toolFilterLanguageSelectionPublisher.send(userFilters.languageFilter)
             }
             .store(in: &cancellables)
         
