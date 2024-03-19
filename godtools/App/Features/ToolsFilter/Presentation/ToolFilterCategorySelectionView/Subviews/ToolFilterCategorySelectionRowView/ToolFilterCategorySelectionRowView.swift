@@ -45,7 +45,7 @@ struct ToolFilterCategorySelectionRowView: View {
             
             Spacer()
         }
-        .contentShape(Rectangle()) // This fixes tap area not taking entire card into account.  Noticeable in iOS 14.
+        .contentShape(Rectangle())
         .onTapGesture {
             
             selectedCategory = category
