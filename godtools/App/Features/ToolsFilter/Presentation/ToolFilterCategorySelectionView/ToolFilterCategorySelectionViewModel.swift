@@ -23,13 +23,12 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
     private var cancellables: Set<AnyCancellable> = Set()
     private weak var flowDelegate: FlowDelegate?
     
-    let selectedCategory: CategoryFilterDomainModel
-    
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     
     @Published private var allCategories: [CategoryFilterDomainModel] = [CategoryFilterDomainModel]()
     @Published var searchText: String = ""
     @Published var navTitle: String = ""
+    @Published var selectedCategory: CategoryFilterDomainModel
     @Published var categorySearchResults: [CategoryFilterDomainModel] = [CategoryFilterDomainModel]()
     
     init(viewToolFilterCategoriesUseCase: ViewToolFilterCategoriesUseCase, searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase, storeUserFiltersUseCase: StoreUserFiltersUseCase, categoryFilterSelectionPublisher: CurrentValueSubject<CategoryFilterDomainModel, Never>, selectedLanguage: LanguageFilterDomainModel, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, flowDelegate: FlowDelegate) {
@@ -76,6 +75,14 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
         }
         .receive(on: DispatchQueue.main)
         .assign(to: &$categorySearchResults)
+        
+        $selectedCategory
+            .eraseToAnyPublisher()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] value in
+                self?.categoryFilterSelectionPublisher.send(value)
+            }
+            .store(in: &cancellables)
     }
     
     deinit {
@@ -95,10 +102,8 @@ extension ToolFilterCategorySelectionViewModel {
         )
     }
     
-    func rowTapped(with category: CategoryFilterDomainModel) {
-                
-        categoryFilterSelectionPublisher.send(category)
-        
+    func categoryTapped(with category: CategoryFilterDomainModel) {
+                        
         storeUserFiltersUseCase.storeCategoryFilterPublisher(with: category.id)
             .sink { _ in
                 

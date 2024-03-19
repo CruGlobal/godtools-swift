@@ -13,11 +13,14 @@ struct ToolFilterCategorySelectionRowView: View {
     private static let lightGrey = Color.getColorWithRGB(red: 151, green: 151, blue: 151, opacity: 1)
     
     private let category: CategoryFilterDomainModel
-    private let isSelected: Bool
+    private let tappedClosure: (() -> Void)?
     
-    init(category: CategoryFilterDomainModel, isSelected: Bool) {
+    @Binding private var selectedCategory: CategoryFilterDomainModel
+    
+    init(category: CategoryFilterDomainModel, selectedCategory: Binding<CategoryFilterDomainModel>, tappedClosure: (() -> Void)?) {
         self.category = category
-        self.isSelected = isSelected
+        self._selectedCategory = selectedCategory
+        self.tappedClosure = tappedClosure
     }
     
     var body: some View {
@@ -42,6 +45,17 @@ struct ToolFilterCategorySelectionRowView: View {
             
             Spacer()
         }
+        .contentShape(Rectangle()) // This fixes tap area not taking entire card into account.  Noticeable in iOS 14.
+        .onTapGesture {
+            
+            selectedCategory = category
+            
+            tappedClosure?()
+        }
+    }
+    
+    private var isSelected: Bool {
+        return selectedCategory.id == category.id
     }
 }
 

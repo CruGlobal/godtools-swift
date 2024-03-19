@@ -23,14 +23,13 @@ class ToolFilterLanguageSelectionViewModel: ObservableObject {
     private var cancellables: Set<AnyCancellable> = Set()
     private weak var flowDelegate: FlowDelegate?
     
-    let selectedLanguage: LanguageFilterDomainModel
-    
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     
     @Published private var allLanguages: [LanguageFilterDomainModel] = [LanguageFilterDomainModel]()
     @Published var languageSearchResults: [LanguageFilterDomainModel] = [LanguageFilterDomainModel]()
     @Published var searchText: String = ""
     @Published var navTitle: String = ""
+    @Published var selectedLanguage: LanguageFilterDomainModel
     
     init(viewToolFilterLanguagesUseCase: ViewToolFilterLanguagesUseCase,  searchToolFilterLanguagesUseCase: SearchToolFilterLanguagesUseCase, storeUserFilterUseCase: StoreUserFiltersUseCase, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, languageFilterSelectionPublisher: CurrentValueSubject<LanguageFilterDomainModel, Never>, selectedCategory: CategoryFilterDomainModel, flowDelegate: FlowDelegate) {
         
@@ -76,6 +75,14 @@ class ToolFilterLanguageSelectionViewModel: ObservableObject {
         }
         .receive(on: DispatchQueue.main)
         .assign(to: &$languageSearchResults)
+        
+        $selectedLanguage
+            .eraseToAnyPublisher()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] value in
+                self?.languageFilterSelectionPublisher.send(value)
+            }
+            .store(in: &cancellables)
     }
     
     deinit {
@@ -95,10 +102,8 @@ extension ToolFilterLanguageSelectionViewModel {
         )
     }
         
-    func rowTapped(with language: LanguageFilterDomainModel) {
-                
-        languageFilterSelectionPublisher.send(language)
-        
+    func languageTapped(with language: LanguageFilterDomainModel) {
+                        
         storeUserFilterUseCase.storeLanguageFilterPublisher(with: language.id)
             .sink { _ in
                 

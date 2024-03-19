@@ -13,11 +13,14 @@ struct ToolFilterLanguageSelectionRowView: View {
     private static let lightGrey = Color.getColorWithRGB(red: 151, green: 151, blue: 151, opacity: 1)
     
     private let language: LanguageFilterDomainModel
-    private let isSelected: Bool
+    private let tappedClosure: (() -> Void)?
     
-    init(language: LanguageFilterDomainModel, isSelected: Bool) {
+    @Binding private var selectedLanguage: LanguageFilterDomainModel
+    
+    init(language: LanguageFilterDomainModel, selectedLanguage: Binding<LanguageFilterDomainModel>, tappedClosure: (() -> Void)?) {
         self.language = language
-        self.isSelected = isSelected
+        self._selectedLanguage = selectedLanguage
+        self.tappedClosure = tappedClosure
     }
     
     var body: some View {
@@ -49,5 +52,16 @@ struct ToolFilterLanguageSelectionRowView: View {
             
             Spacer()
         }
+        .contentShape(Rectangle()) // This fixes tap area not taking entire card into account.  Noticeable in iOS 14.
+        .onTapGesture {
+            
+            selectedLanguage = language
+            
+            tappedClosure?()
+        }
+    }
+    
+    private var isSelected: Bool {
+        return selectedLanguage.id == language.id
     }
 }

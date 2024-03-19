@@ -28,17 +28,13 @@ struct ToolFilterCategorySelectionView: View {
             List {
                 ForEach(viewModel.categorySearchResults, id: \.filterId) { category in
                     
-                    Button {
-                        
-                        viewModel.rowTapped(with: category)
-                        
-                    } label: {
-                        
-                        ToolFilterCategorySelectionRowView(
-                            category: category,
-                            isSelected: viewModel.selectedCategory.id == category.id
-                        )
-                    }
+                    ToolFilterCategorySelectionRowView(
+                        category: category,
+                        selectedCategory: $viewModel.selectedCategory,
+                        tappedClosure: {
+                            viewModel.categoryTapped(with: category)
+                        }
+                    )
                 }
             }
             .listStyle(.inset)
