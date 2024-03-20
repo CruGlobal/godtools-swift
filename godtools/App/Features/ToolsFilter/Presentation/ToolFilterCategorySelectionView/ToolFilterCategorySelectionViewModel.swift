@@ -21,6 +21,7 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
     private let selectedLanguage: LanguageFilterDomainModel
     
     private var cancellables: Set<AnyCancellable> = Set()
+    private static var staticCancellables: Set<AnyCancellable> = Set()
     private weak var flowDelegate: FlowDelegate?
     
     let selectedCategory: CategoryFilterDomainModel
@@ -103,7 +104,7 @@ extension ToolFilterCategorySelectionViewModel {
             .sink { _ in
                 
             }
-            .store(in: &cancellables)
+            .store(in: &ToolFilterCategorySelectionViewModel.staticCancellables)
         
         flowDelegate?.navigate(step: .categoryTappedFromToolCategoryFilter)
     }
