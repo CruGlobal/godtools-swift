@@ -24,12 +24,11 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
     private static var staticCancellables: Set<AnyCancellable> = Set()
     private weak var flowDelegate: FlowDelegate?
     
-    let selectedCategory: CategoryFilterDomainModel
-    
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
-    
     @Published private var allCategories: [CategoryFilterDomainModel] = [CategoryFilterDomainModel]()
+    
     @Published var searchText: String = ""
+    @Published var selectedCategory: CategoryFilterDomainModel
     @Published var navTitle: String = ""
     @Published var categorySearchResults: [CategoryFilterDomainModel] = [CategoryFilterDomainModel]()
     
@@ -97,7 +96,8 @@ extension ToolFilterCategorySelectionViewModel {
     }
     
     func rowTapped(with category: CategoryFilterDomainModel) {
-                
+        
+        selectedCategory = category
         categoryFilterSelectionPublisher.send(category)
         
         storeUserFiltersUseCase.storeCategoryFilterPublisher(with: category.id)
