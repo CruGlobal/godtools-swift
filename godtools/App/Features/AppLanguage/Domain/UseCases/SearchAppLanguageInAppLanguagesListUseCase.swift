@@ -10,31 +10,16 @@ import Foundation
 import Combine
 
 class SearchAppLanguageInAppLanguagesListUseCase {
+    
+    private let searchAppLanguageInAppLanguageListRepository: SearchAppLanguageInAppLanguagesListRepositoryInterface
+    
+    init(searchAppLanguageInAppLanguageListRepository: SearchAppLanguageInAppLanguagesListRepositoryInterface) {
         
-    init() {
-
+        self.searchAppLanguageInAppLanguageListRepository = searchAppLanguageInAppLanguageListRepository
     }
     
-    func getSearchResultsPublisher(searchText: String, appLanguagesList: [AppLanguageListItemDomainModel]) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> {
+    func getSearchResultsPublisher(for searchText: String, in appLanguagesList: [AppLanguageListItemDomainModel]) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> {
         
-        if searchText.isEmpty {
-            
-            return Just(appLanguagesList)
-                .eraseToAnyPublisher()
-            
-        } else {
-            
-            let lowercasedSearchText = searchText.lowercased()
-            
-            let filteredItems = appLanguagesList.filter { languageItem in
-                
-                let lowercasedLanguageName = languageItem.languageNameTranslatedInCurrentAppLanguage.lowercased()
-                
-                return lowercasedLanguageName.contains(lowercasedSearchText)
-            }
-            
-            return Just(filteredItems)
-                .eraseToAnyPublisher()
-        }
+        return searchAppLanguageInAppLanguageListRepository.getSearchResultsPublisher(searchText: searchText, appLanguagesList: appLanguagesList)
     }
 }

@@ -934,7 +934,7 @@ extension AppFlow {
     private func getToolCategoryFilterSelection(categoryFilterSelectionPublisher: CurrentValueSubject<CategoryFilterDomainModel, Never>, selectedLanguage: LanguageFilterDomainModel) -> UIViewController {
         
         let viewModel = ToolFilterCategorySelectionViewModel(
-            getToolFilterCategoriesUseCase: appDiContainer.feature.toolsFilter.domainLayer.getToolFilterCategoriesUseCase(),
+            viewToolFilterCategoriesUseCase: appDiContainer.feature.toolsFilter.domainLayer.getViewToolFilterCategoriesUseCase(),
             searchToolFilterCategoriesUseCase: appDiContainer.feature.toolsFilter.domainLayer.getSearchToolFilterCategoriesUseCase(),
             storeUserFiltersUseCase: appDiContainer.feature.toolsFilter.domainLayer.getStoreUserFiltersUseCase(),
             categoryFilterSelectionPublisher: categoryFilterSelectionPublisher,
@@ -969,7 +969,7 @@ extension AppFlow {
     private func getToolLanguageFilterSelection(toolFilterLanguageSelectionPublisher: CurrentValueSubject<LanguageFilterDomainModel, Never>, selectedCategory: CategoryFilterDomainModel) -> UIViewController {
         
         let viewModel = ToolFilterLanguageSelectionViewModel(
-            getToolFilterLanguagesUseCase: appDiContainer.feature.toolsFilter.domainLayer.getToolFilterLanguagesUseCase(),
+            viewToolFilterLanguagesUseCase: appDiContainer.feature.toolsFilter.domainLayer.getViewToolFilterLanguagesUseCase(),
             searchToolFilterLanguagesUseCase: appDiContainer.feature.toolsFilter.domainLayer.getSearchToolFilterLanguagesUseCase(),
             storeUserFilterUseCase: appDiContainer.feature.toolsFilter.domainLayer.getStoreUserFiltersUseCase(),
             getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),

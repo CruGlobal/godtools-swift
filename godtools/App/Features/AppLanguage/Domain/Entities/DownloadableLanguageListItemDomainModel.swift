@@ -54,3 +54,13 @@ extension DownloadableLanguageListItemDomainModel: Identifiable {
         return downloadedAt < date
     }
 }
+
+extension DownloadableLanguageListItemDomainModel: StringSearchable {
+    
+    var searchableStrings: [String] {
+        return [
+            languageNameInAppLanguage,
+            languageNameInOwnLanguage
+        ]
+    }
+}

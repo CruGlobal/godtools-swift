@@ -11,7 +11,7 @@ import Combine
 
 class ToolFilterCategorySelectionViewModel: ObservableObject {
     
-    private let getToolFilterCategoriesUseCase: GetToolFilterCategoriesUseCase
+    private let viewToolFilterCategoriesUseCase: ViewToolFilterCategoriesUseCase
     private let searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase
     private let storeUserFiltersUseCase: StoreUserFiltersUseCase
     private let getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase
@@ -25,14 +25,16 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
     
     let selectedCategory: CategoryFilterDomainModel
     
+    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    
     @Published private var allCategories: [CategoryFilterDomainModel] = [CategoryFilterDomainModel]()
     @Published var searchText: String = ""
     @Published var navTitle: String = ""
     @Published var categorySearchResults: [CategoryFilterDomainModel] = [CategoryFilterDomainModel]()
     
-    init(getToolFilterCategoriesUseCase: GetToolFilterCategoriesUseCase, searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase, storeUserFiltersUseCase: StoreUserFiltersUseCase, categoryFilterSelectionPublisher: CurrentValueSubject<CategoryFilterDomainModel, Never>, selectedLanguage: LanguageFilterDomainModel, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, flowDelegate: FlowDelegate?) {
+    init(viewToolFilterCategoriesUseCase: ViewToolFilterCategoriesUseCase, searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase, storeUserFiltersUseCase: StoreUserFiltersUseCase, categoryFilterSelectionPublisher: CurrentValueSubject<CategoryFilterDomainModel, Never>, selectedLanguage: LanguageFilterDomainModel, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, flowDelegate: FlowDelegate) {
         
-        self.getToolFilterCategoriesUseCase = getToolFilterCategoriesUseCase
+        self.viewToolFilterCategoriesUseCase = viewToolFilterCategoriesUseCase
         self.searchToolFilterCategoriesUseCase = searchToolFilterCategoriesUseCase
         self.storeUserFiltersUseCase = storeUserFiltersUseCase
         self.getInterfaceStringInAppLanguageUseCase = getInterfaceStringInAppLanguageUseCase
@@ -43,22 +45,37 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
         self.selectedCategory = categoryFilterSelectionPublisher.value
         self.flowDelegate = flowDelegate
         
+        getCurrentAppLanguageUseCase
+            .getLanguagePublisher()
+            .assign(to: &$appLanguage)
+        
+        $appLanguage.eraseToAnyPublisher()
+            .flatMap { appLanguage in
+                
+                return viewToolFilterCategoriesUseCase.viewPublisher(filteredByLanguageId: selectedLanguage.id, translatedInAppLanguage: appLanguage)
+            }
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] viewCategoryFiltersDomainModel in
+                
+                self?.allCategories = viewCategoryFiltersDomainModel.categoryFilters
+            }
+            .store(in: &cancellables)
+        
         getInterfaceStringInAppLanguageUseCase
             .getStringPublisher(id: ToolStringKeys.ToolFilter.categoryFilterNavTitle.rawValue)
             .receive(on: DispatchQueue.main)
             .assign(to: &$navTitle)
         
-        getToolFilterCategoriesUseCase.getToolFilterCategoriesPublisher(filteredByLanguageId: selectedLanguage.id)
-            .receive(on: DispatchQueue.main)
-            .assign(to: &$allCategories)
-        
-        searchToolFilterCategoriesUseCase
-            .getSearchResultsPublisher(
-                for: $searchText.eraseToAnyPublisher(),
-                in: $allCategories.eraseToAnyPublisher()
-            )
-            .receive(on: DispatchQueue.main)
-            .assign(to: &$categorySearchResults)
+        Publishers.CombineLatest(
+            $searchText.eraseToAnyPublisher(),
+            $allCategories.eraseToAnyPublisher()
+        )
+        .flatMap { searchText, allCategories in
+            
+            searchToolFilterCategoriesUseCase.getSearchResultsPublisher(for: searchText, in: allCategories)
+        }
+        .receive(on: DispatchQueue.main)
+        .assign(to: &$categorySearchResults)
     }
     
     deinit {
