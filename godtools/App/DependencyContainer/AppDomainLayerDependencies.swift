@@ -21,13 +21,6 @@ class AppDomainLayerDependencies {
         return GetAccountCreationIsSupportedUseCase()
     }
     
-    func getAllToolsUseCase() -> GetAllToolsUseCase {
-        return GetAllToolsUseCase(
-            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
-            resourcesRepository: dataLayer.getResourcesRepository()
-        )
-    }
-    
     func getAppUIDebuggingIsEnabledUseCase() -> GetAppUIDebuggingIsEnabledUseCase {
         return GetAppUIDebuggingIsEnabledUseCase(
             appBuild: dataLayer.getAppBuild()
@@ -107,15 +100,6 @@ class AppDomainLayerDependencies {
     func getSetCompletedTrainingTipUseCase() -> SetCompletedTrainingTipUseCase {
         return SetCompletedTrainingTipUseCase(
             repository: dataLayer.getCompletedTrainingTipRepository()
-        )
-    }
-    
-    func getSettingsPrimaryLanguageUseCase() -> GetSettingsPrimaryLanguageUseCase {
-        return GetSettingsPrimaryLanguageUseCase(
-            languagesRepository: dataLayer.getLanguagesRepository(),
-            languageSettingsRepository: dataLayer.getLanguageSettingsRepository(),
-            getDeviceLanguageUseCase: getDeviceLanguageUseCase(),
-            getLanguageUseCase: getLanguageUseCase()
         )
     }
     
