@@ -40,12 +40,6 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getDeviceLanguageUseCase() -> GetDeviceLanguageUseCase {
-        return GetDeviceLanguageUseCase(
-            getDeviceLanguageRepositoryInterface: dataLayer.getDeviceLanguageRepositoryInterface()
-        )
-    }
-    
     func getDisableOptInOnboardingBannerUseCase() -> DisableOptInOnboardingBannerUseCase {
         return DisableOptInOnboardingBannerUseCase(
             optInOnboardingBannerEnabledRepository: dataLayer.getOptInOnboardingBannerEnabledRepository()
