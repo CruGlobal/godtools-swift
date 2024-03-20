@@ -121,6 +121,15 @@ The domain layer is responsible for the business rules of the application and is
 
 Use cases make up the domain layer.  Use cases should be responsible for a single task and named to reflect that task.  For example: AuthenticateUserUseCase, GetSpotlightToolsUseCase.
 
+UseCase Best Practices:
+
+- Should have a single exposed method (public, internal) that takes zero or more inputs and produces a single output that is an AnyPublisher. 
+- UseCases can have private methods, however, as we move to dependency inversion I think private methods will become less and less.
+- Inputs should not be publisher types. Instead the ViewModel should react to changes which then triggers the UseCase.
+- Should not depend on UseCases. If specific Output from a UseCase is needed, instead inject that Output as an Input from the ViewModel.
+- Should depend only on interfaces. Most of the time we depend on some type of Repository Interface where a Repository is simply a data storage and data access.
+- Would prefer that UseCases return a non Swift type and instead some type of DomainModel that encapsulates attributes related to the business requirements.
+
 Responsibilities:
 
 - Operates on the data layer classes and other use cases to perform a single task and applies the business rules.
