@@ -28,6 +28,10 @@ class LanguageSettingsFlow: Flow, ChooseAppLanguageNavigationFlow {
         sharedNavigationController.pushViewController(getLanguageSettingsView(), animated: true)
     }
     
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
     func navigate(step: FlowStep) {
         
         switch step {
@@ -40,6 +44,16 @@ class LanguageSettingsFlow: Flow, ChooseAppLanguageNavigationFlow {
             
         case .chooseAppLanguageFlowCompleted(let state):
             navigateBackFromChooseAppLanguageFlow()
+        
+        case .editDownloadedLanguagesTappedFromLanguageSettings:
+            navigationController.pushViewController(getDownloadableLanguagesView(), animated: true)
+            
+        case .backTappedFromDownloadedLanguages:
+            navigationController.popViewController(animated: true)
+            
+        case .showLanguageDownloadErrorAlert(let error):
+            let alertView = getLanguageDownloadErrorAlertView(error: error)
+            navigationController.present(alertView, animated: true)
             
         default:
             break
@@ -54,7 +68,7 @@ extension LanguageSettingsFlow {
         let viewModel = LanguageSettingsViewModel(
             flowDelegate: self,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            getLanguageSettingsInterfaceStringsUseCase: appDiContainer.feature.appLanguage.domainLayer.getLanguageSettingsInterfaceStringsUseCase(),
+            viewLanguageSettingsUseCase: appDiContainer.feature.appLanguage.domainLayer.getViewLanguageSettingsUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase()
         )
         
@@ -77,5 +91,45 @@ extension LanguageSettingsFlow {
         )
 
         return hostingView
+    }
+    
+    func getDownloadableLanguagesView() -> UIViewController {
+        
+        let viewModel = DownloadableLanguagesViewModel(
+            flowDelegate: self,
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            viewDownloadableLanguagesUseCase: appDiContainer.feature.appLanguage.domainLayer.getViewDownloadableLanguagesUseCase(),
+            viewSearchBarUseCase: appDiContainer.domainLayer.getViewSearchBarUseCase(),
+            downloadToolLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getDownloadToolLanguageUseCase(),
+            removeDownloadedToolLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getRemoveDownloadedToolLanguageUseCase()
+        )
+        
+        let view = DownloadableLanguagesView(viewModel: viewModel)
+        
+        let backButton = AppBackBarItem(
+            target: viewModel,
+            action: #selector(viewModel.backTapped),
+            accessibilityIdentifier: nil
+        )
+        
+        let hostingView = AppHostingController<DownloadableLanguagesView>(
+            rootView: view,
+            navigationBar: AppNavigationBar(
+                appearance: nil,
+                backButton: backButton,
+                leadingItems: [],
+                trailingItems: []
+            )
+        )
+        
+        return hostingView
+    }
+    
+    func getLanguageDownloadErrorAlertView(error: Error) -> UIViewController {
+        
+        let viewModel = LanguageDownloadErrorAlertViewModel(error: error)
+        let view = LanguageDownloadErrorAlertView(viewModel: viewModel)
+        
+        return view.controller
     }
 }

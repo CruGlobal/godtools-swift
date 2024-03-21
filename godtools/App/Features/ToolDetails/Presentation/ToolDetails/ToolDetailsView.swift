@@ -106,21 +106,18 @@ struct ToolDetailsView_Preview: PreviewProvider {
     static var previews: some View {
         
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
-        
-        let tool: ToolDomainModel = appDiContainer.domainLayer.getToolUseCase().getTool(id: "1")!
-        
+                
         let viewModel = ToolDetailsViewModel(
             flowDelegate: MockFlowDelegate(),
-            tool: tool,
-            toolLanguage: nil,
+            toolId: "1",
+            primaryLanguage: LanguageCodeDomainModel.english.rawValue,
+            parallelLanguage: nil,
+            selectedLanguageIndex: nil,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            getToolUseCase: appDiContainer.domainLayer.getToolUseCase(),
-            getToolDetailsInterfaceStringsUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsInterfaceStringsUseCase(),
+            viewToolDetailsUseCase: appDiContainer.feature.toolDetails.domainLayer.getViewToolDetailsUseCase(),
             getToolDetailsMediaUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsMediaUseCase(),
-            getToolDetailsUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsUseCase(),
-            getToolDetailsToolIsFavoritedUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsToolIsFavoritedUseCase(),
             getToolDetailsLearnToShareToolIsAvailableUseCase: appDiContainer.feature.toolDetails.domainLayer.getToolDetailsLearnToShareToolIsAvailableUseCase(),
-            toggleToolFavoritedUseCase: appDiContainer.domainLayer.getToggleToolFavoritedUseCase(),
+            toggleToolFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToggleFavoritedToolUseCase(),
             attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()

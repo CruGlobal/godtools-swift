@@ -1,3 +1,78 @@
+"onboardingTutorial.chooseLanguageButton.title" = "زبان منتخب کریں";
+"languageSettings.confirmAppLanguage.message" = "کو ا؛پنی اَیپ زبان%@ آپ نے کے طور پر منتخب کِیا ۔ یہ گاڈ ٹولزکی ساری زبان کو بدل دے گی ۔ کیا آپ چاہتے ہیں ؟";
+"languageSettings.confirmAppLanguage.changeLanguageButton.title" = "زبان تبدیل کریں";
+"languageSettings.confirmAppLanguage.nevermindButton.title" = "کوئی بات نہیں";
+"languageSettings.appInterface.title" = "اَیپ انٹر فیس کی زبان";
+"languageSettings.appInterface.message" = "زبان منتخب کریں جس میں آپ پوری اَیپ کو ڈسپلے کرنا چاہتے ہیں۔";
+"languageSettings.appInterface.languagesAvailable" = "زبانیں دستیاب";
+"languageSettings.toolLanguagesAvailableOffline.title" = "ٹول کی زبانیں جو آف لائن دستیاب ہیں";
+"languageSettings.toolLanguagesAvailableOffline.message" = "تمام ٹول کو ڈاؤن لوڈ کریں تاکہ وہ تب بھی دستیاب ہوں جب آپ وائی فائی سیل سروس سے دور ہوں ۔ ٹول کے اندر آپشن بٹن کے ذریعے ٹول کی زبان سیٹ کریں۔";
+"languageSettings.toolLanguagesAvailableOffline.editDownloadedLanguagesButton.title" = "ڈاؤن لوڈ کی ہُوئی زبان کو ایڈٹ کریں";
+"allTools.filter.title" = "فلٹر";
+"allTools.filter.anyCategory" = "کوئی بھی زمرہ";
+"allTools.filter.anyLanguage" = "کوئی بھی زبان";
+"languageSettings.appLanguage.title" = "اَیپ کی زبان";
+"createAccount.title" = "اکاؤنٹ بنائیں";
+"createAccount.subtitle" = "اپنی انگلی کے اشارے پر حقیقی کہانیاں، حوصلہ افزائی، اور عملی تجاویز حاصل کرنے کے لیے ایک اکاؤنٹ بنائیں۔";
+"signIn.title" = "سائن اِن";
+"signIn.subtitle" = "اپنی انگلی کے اشارے پر حقیقی کہانیاں، حوصلہ افزائی، اور عملی تجاویز حاصل کرنے کے لیے اپنے اکاؤنٹ میں لاگ ان کریں۔";
+"menu_getStarted" = "شروع کریں";
+"menu_support" = "مدد";
+"menu_about" = "ہمارے متعلق";
+"menu.sendFeedback" = "ردعمل بھیجیں";
+"menu.reportABug" = "وائرس کی اطلاع کریں";
+"menu.askAQuestion" = "سوال پوچھیں";
+"menu.leaveAReview" = "ایک جائزہ چھوڑیں";
+"account.badges.sectionTitle" = "آپ کےنشانات";
+"account.activity.sectionTitle" = "آپ کی سرگرمی";
+
+/* This is a title on a dashboard that will show the Number of Times a person has opened a tool */
+"account.activity.toolOpens" = "طریقہ  کھلتا ہے";
+
+/* This is a title on a dashboard that will show the Number of Times a person has completed a lesson */
+"account.activity.lessonCompletion" = "سبق کی تکمیل";
+
+/* This is a title on a dashboard that will show the Number of Times a person has used the screen share function */
+"account.activity.screenShares" = "سکرین شئیرز";
+
+/* This is a title on a dashboard that will show the Number of Times a person has shared a link */
+"account.activity.linksShared" = "شئیر کئے گئےلِنکس";
+
+/* This is a title on a dashboard that will show the Number of different languages they have used */
+"account.activity.languagesUsed" = "استعمال کی گئی زبانیں";
+
+"account.activity.sessions" = "سیشنز";
+"badges.tipsCompleted.singular" = " فی صد تربیتی تجاویز 1";
+
+/* leave %d in phrase - this is the number of images that the user has shared */
+"badges.imagesShared.plural" = "فی صد تصاوی شئیر کی گئیں%d";
+
+"badges.imagesShared.singular" = "فی صد تصاوی شئیر کی گئیں%d";
+
+/* leave %d in phrase - this is the number of lessons that the user has completed */
+"badges.lessonsCompleted.plural" = "فی صداسباق مکمل کئے گئے%d";
+
+"badges.lessonsCompleted.singular" = "فی صداسباق مکمل کئے گئے%d";
+
+/* leave %d in phrase - this is the number of tools that the user has opened */
+"badges.toolsOpened.plural" = "فیصد ٹول کھولے گئے%d";
+
+"badges.toolsOpened.singular" = "فیصد ٹول کھولے گئے%d";
+
+/* leave %d in phrase - this is the number of tips that the user has completed */
+"badges.tipsCompleted.plural" = " فی صد تربیتی تجاویز %d";
+
+/* Just translate "Joined" - leave the %@ - this is the date they started using GodTools */
+"account.joinedOn" = " فی صد تربیتی تجاویز %@";
+
+"account.globalActivity.title" = "عالمگیر سرگرمی";
+"toolDetails.conversationStarters.title" = "گفتگو کا آغاز";
+
+/* A list of the main points of the tool will live behind a section called "Outline" */
+"toolDetails.outline.title" = "خاکہ";
+
+"toolDetails.bibleReferences.title" = "بائبل کے حوالہ جات";
+
 /* This About refers to the whole app. */
 "aboutApp.navTitle" = "ہمارے متعلق";
 
@@ -45,6 +120,13 @@
 "parallelLanguage.getStartedButton.title" = "شروعات";
 "parallelLanguage.selectLanguageButton.title" = "کوئی زبان منتخب کریں";
 "parellelLanguage.prompt" = "کیا آپ کوئی ثانوی زبان سیٹ کرنا چاہیں گے؟";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.tool.title" = "ٹولز";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.lesson.title" = "اسباق";
+
 "onboardingTutorial.beginButton.title" = "شروع کریں";
 "onboardingQuickStart.2.title" = "میں کسی کے ساتھ انجیل ساجھا کرنا چاہتا ہوں";
 "onboardingQuickStart.2.button.title" = "ہمارے ٹولز میں سے کسی ایک کا انتخاب کریں";
@@ -74,6 +156,10 @@
 "share_tool_remote_link_message" = "ہیلو، GodTools میں سکرین شیئرنگ کے ذریعے میری پیروی کریں۔ ربط یہ رہا: %@ اگر آپ کو دیر تک یہ پیغام موصول نہیں ہوتا تو شاید ربط بھی کام نہ کرتا ہو۔ ہم کسی اور وقت دوبارہ کوشش کر سکتے ہیں۔";
 "exit_tract_remote_share_session.message" = "ابھی ریموٹ سکرین شیئرنگ سیشن سے نکلیں؟";
 "load_tool_remote_session.message" = "سکرین شیئرنگ شروع ہو رہی ہے۔۔۔";
+"lesson_evaluation.title" = "جائزہ لیں";
+"lesson_evaluation.wasThisHelpful" = "کیا یہ سبق آپ کے لئے مددگار تھا ؟";
+"lesson_evaluation.shareFaith" = "آپ خود کو روحانی گفتگو شروع کرنے کے لئے کتنے تیار ہیں؟";
+"lesson_evaluation.sendButtonTitle" = "ردعمل بھیجیں";
 "onboardingTutorial.0.title" = "ہر گفتگو کے لیے تیار";
 "onboardingTutorial.0.videoLink.title" = "ویڈیو دیکھیں";
 "onboardingTutorial.1.title" = "کسی کے بھی ساتھ خدا کے بارے میں بات کریں";
@@ -135,9 +221,11 @@
 "okay" = "اوکے";
 // Menu
 "menu_general" = "جنرل";
+"menu_account" = "اکاؤنٹ";
 "menu_share" = "شیئر کریں";
 "menu_legal" = "لِیگل";
 "language_settings" = "زبان سیٹِنگز";
+"menu.tutorial" = "تربیت";
 // Login
 "login" = "لاگ اِن کریں";
 "logout" = "لاگ آؤٹ کریں";
@@ -232,6 +320,15 @@ https://godtoolsapp.com";
 "card_status1" = "پچھلا";
 "card_status2" = "اگلا";
 
+"account.activity.title" = "سرگرمی";
+
 // Language Name Strings
 "language_name_fa" = "فارسی";
+
+// Account Activity
+"accountActivity.globalAnalytics.header.title" = "عالمگیر سرگرمی";
+"accountActivity.globalAnalytics.users.title" = "منفرد صارفین";
+"accountActivity.globalAnalytics.gospelPresentation.title" = "انجیل کی پیشکشیں";
+"accountActivity.globalAnalytics.launches.title" = "سیشنز";
+"accountActivity.globalAnalytics.countries.title" = "ممالک";
 

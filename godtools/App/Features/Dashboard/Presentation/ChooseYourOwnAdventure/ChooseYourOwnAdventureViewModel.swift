@@ -8,95 +8,147 @@
 
 import UIKit
 import GodToolsToolParser
+import Combine
 
 class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
-    
-    private static let navHomeImage: UIImage? = ImageCatalog.navHome.uiImage
-    
-    private let fontService: FontService
+                
+    private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
     
-    let backButtonImage: ObservableValue<UIImage?>
-    let navBarColors: ObservableValue<ChooseYourOwnAdventureNavBarModel>
-    let navBarTitleType: ChooseYourOwnAdventureNavBarTitleType
+    let navBarAppearance: AppNavigationBarAppearance
+    let languageFont: UIFont?
     
-    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, initialPage: MobileContentPagesPage?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, fontService: FontService, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
+    @Published var hidesHomeButton: Bool = false
+    @Published var hidesBackButton: Bool = true
+        
+    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, initialPage: MobileContentPagesPage?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, translatedLanguageNameRepository: TranslatedLanguageNameRepository, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?) {
         
         self.flowDelegate = flowDelegate
-        self.fontService = fontService
-        
-        backButtonImage = ObservableValue(value: ChooseYourOwnAdventureViewModel.navHomeImage)
-        
-        let navBarColor: UIColor
-        let navBarControlColor: UIColor
-
+                        
         let primaryManifest: Manifest = renderer.pageRenderers[0].manifest
-        
-        navBarColor = primaryManifest.navBarColor
-        navBarControlColor = primaryManifest.navBarControlColor
-        
-        let navBarModel = ChooseYourOwnAdventureNavBarModel(
-            barColor: navBarColor,
-            controlColor: navBarControlColor,
-            titleFont: fontService.getFont(size: 17, weight: .semibold),
-            languageToggleBorderColor: navBarControlColor,
-            languageToggleSelectedColor: navBarControlColor,
-            languageToggleDeselectedColor: navBarColor
+                     
+        navBarAppearance = AppNavigationBarAppearance(
+            backgroundColor: primaryManifest.navBarColor,
+            controlColor: primaryManifest.navBarControlColor,
+            titleFont: FontLibrary.systemUIFont(size: 17, weight: .semibold),
+            titleColor: primaryManifest.navBarControlColor,
+            isTranslucent: false
         )
         
-        navBarColors = ObservableValue(value: navBarModel)
+        languageFont = FontLibrary.systemUIFont(size: 14, weight: .regular)
         
-        if renderer.pageRenderers.count > 1 {
-            navBarTitleType = .languageToggle
-        }
-        else {
-            navBarTitleType = .title(title: "GodTools")
-        }
-        
-        super.init(renderer: renderer, initialPage: initialPage, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, initialPageRenderingType: .chooseYourOwnAdventure, trainingTipsEnabled: trainingTipsEnabled, incrementUserCounterUseCase: incrementUserCounterUseCase)
+        super.init(renderer: renderer, initialPage: initialPage, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, translatedLanguageNameRepository: translatedLanguageNameRepository, initialPageRenderingType: .chooseYourOwnAdventure, trainingTipsEnabled: trainingTipsEnabled, incrementUserCounterUseCase: incrementUserCounterUseCase, selectedLanguageIndex: selectedLanguageIndex)
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
     }
     
     override func pageDidAppear(page: Int) {
         super.pageDidAppear(page: page)
         
         let isFirstPage: Bool = page == 0
-        let navBackImage: UIImage?
         
         if isFirstPage {
-            navBackImage = ChooseYourOwnAdventureViewModel.navHomeImage
+            hidesHomeButton = false
+            hidesBackButton = true
         }
         else {
-            navBackImage = ImageCatalog.navBack.uiImage
+            hidesHomeButton = true
+            hidesBackButton = false
         }
-        
-        backButtonImage.accept(value: navBackImage)
-    }
-    
-    func getNavBarLanguageTitles() -> [String] {
-        
-        let languageTitles: [String] = renderer.value.pageRenderers.map({$0.language.translatedName})
-        guard languageTitles.count > 1 else {
-            return Array()
-        }
-        return languageTitles
     }
 }
 
-// MARK: - Inpits
+// MARK: - Inputs
 
 extension ChooseYourOwnAdventureViewModel {
     
-    func navBackTapped() {
-        
-        let isFirstPage: Bool = currentRenderedPageNumber == 0
-        
-        if isFirstPage {
-            flowDelegate?.navigate(step: FlowStep.backTappedFromChooseYourOwnAdventure)
-        }
+    @objc func homeTapped() {
+        flowDelegate?.navigate(step: FlowStep.backTappedFromChooseYourOwnAdventure)
     }
     
-    func navLanguageTapped(index: Int) {
+    @objc func backTapped() {
+        
+        guard currentRenderedPageNumber > 0 else {
+            return
+        }
+        
+        let navigationEvent: MobileContentPagesNavigationEvent
+        
+        let currentPages: [Page] = getPages()
+
+        if let currentPage = getCurrentPage(),
+           let parentPage = currentPage.parentPage,
+           let parentPageIndex = currentPages.firstIndex(of: parentPage) {
+
+            var newPages: [Page] = Array()
+
+            for index in 0 ... parentPageIndex {
+                newPages.append(currentPages[index])
+            }
+
+            newPages.append(currentPage)
+
+            var pageIndexesToRemove: [Int] = Array()
+
+            for pageIndex in 0 ..< currentPages.count {
+
+                let page: Page = currentPages[pageIndex]
+                let pageIsInNewPages: Bool = newPages.contains(where: {$0.id == page.id})
+
+                if !pageIsInNewPages {
+                    pageIndexesToRemove.append(pageIndex)
+                }
+            }
+
+            let lastPageIndexInNewPages: Int = newPages.count - 1
+            var parentPageIndexInNewPagesList: Int = lastPageIndexInNewPages - 1
+            if parentPageIndexInNewPagesList < 0 {
+                parentPageIndexInNewPagesList = 0
+            }
+            
+            // NOTE: May revisit this later, but we need to make sure to update the ViewModel pages before triggering the navigation event for MobileContentPagesNavigationEvent.
+            //  Once the navigation event is triggered with deletePages: [Int] then those pages will be removed from the UICollectionView.
+            //  It would be nice if possible to somehow keep this logic more closely together when inserting/deleting items from the ViewModel and UICollectionView. ~Levi
+            super.setPages(pages: newPages)
+            
+            let goToParentPageEvent = MobileContentPagesNavigationEvent(
+                pageNavigation: PageNavigationCollectionViewNavigationModel(
+                    navigationDirection: nil,
+                    page: parentPageIndexInNewPagesList,
+                    animated: true,
+                    reloadCollectionViewDataNeeded: false,
+                    insertPages: nil,
+                    deletePages: pageIndexesToRemove
+                ),
+                pagePositions: nil
+            )
+                        
+            navigationEvent = goToParentPageEvent
+        }
+        else {
+            
+            let goToPreviousPageEvent = MobileContentPagesNavigationEvent(
+                pageNavigation: PageNavigationCollectionViewNavigationModel(
+                    navigationDirection: nil,
+                    page: currentRenderedPageNumber - 1,
+                    animated: true,
+                    reloadCollectionViewDataNeeded: false,
+                    insertPages: nil,
+                    deletePages: nil
+                ),
+                pagePositions: nil
+            )
+            
+            navigationEvent = goToPreviousPageEvent
+        }
+        
+        pageNavigationEventSignal.accept(value: navigationEvent)
+    }
+    
+    func languageTapped(index: Int) {
         
         let pageRenderer: MobileContentPageRenderer = renderer.value.pageRenderers[index]
         setPageRenderer(pageRenderer: pageRenderer, navigationEvent: nil, pagePositions: nil)

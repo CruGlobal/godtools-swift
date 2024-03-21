@@ -40,4 +40,8 @@ class LearnToShareToolItemViewModel: ObservableObject {
             assetContent = .none
         }
     }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
 }

@@ -1,3 +1,7 @@
+"onboardingTutorial.chooseLanguageButton.title" = "ভাষা মনোনয়ন";
+"languageSettings.appInterface.languagesAvailable" = "যে ভাষা গুলো পাওয়া যায়";
+"languageSettings.toolLanguagesAvailableOffline.title" = "অফলাইনে প্রাপ্ত সাধনের ভাষা";
+
 /* This About refers to the whole app. */
 "aboutApp.navTitle" = "বিষয়ে";
 

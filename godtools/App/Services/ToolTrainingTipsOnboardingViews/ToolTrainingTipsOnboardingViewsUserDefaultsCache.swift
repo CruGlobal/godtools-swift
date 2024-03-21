@@ -11,29 +11,33 @@ import Foundation
 class ToolTrainingTipsOnboardingViewsUserDefaultsCache {
     
     private let userDefaultsCache: SharedUserDefaultsCache
+    private let getTranslatedToolName: GetTranslatedToolName
     
-    required init(userDefaultsCache: SharedUserDefaultsCache) {
+    init(userDefaultsCache: SharedUserDefaultsCache, getTranslatedToolName: GetTranslatedToolName) {
         
         self.userDefaultsCache = userDefaultsCache
+        self.getTranslatedToolName = getTranslatedToolName
     }
     
-    private func getNumberOfViewsKey(tool: ToolDomainModel) -> String {
+    private func getNumberOfViewsKey(toolId: String, primaryLanguage: AppLanguageDomainModel) -> String {
         
-        return "ToolTrainingTipsOnboardingViewsService." + tool.name + "_" + tool.dataModelId
+        let toolName: String = getTranslatedToolName.getToolName(toolId: toolId, translateInLanguage: primaryLanguage)
+        
+        return "ToolTrainingTipsOnboardingViewsService." + toolName + "_" + toolId
     }
     
-    func getNumberOfToolTrainingTipViews(tool: ToolDomainModel) -> Int {
+    func getNumberOfToolTrainingTipViews(toolId: String, primaryLanguage: AppLanguageDomainModel) -> Int {
         
-        if let number = userDefaultsCache.getValue(key: getNumberOfViewsKey(tool: tool)) as? NSNumber {
+        if let number = userDefaultsCache.getValue(key: getNumberOfViewsKey(toolId: toolId, primaryLanguage: primaryLanguage)) as? NSNumber {
             return number.intValue
         }
         
         return 0
     }
     
-    func storeToolTrainingTipViewed(tool: ToolDomainModel) {
+    func storeToolTrainingTipViewed(toolId: String, primaryLanguage: AppLanguageDomainModel) {
         
-        let numberOfViews: Int = getNumberOfToolTrainingTipViews(tool: tool)
+        let numberOfViews: Int = getNumberOfToolTrainingTipViews(toolId: toolId, primaryLanguage: primaryLanguage)
         
         if numberOfViews < Int.max {
             
@@ -41,7 +45,7 @@ class ToolTrainingTipsOnboardingViewsUserDefaultsCache {
             
             userDefaultsCache.cache(
                 value: NSNumber(value: newNumberOfViews),
-                forKey: getNumberOfViewsKey(tool: tool)
+                forKey: getNumberOfViewsKey(toolId: toolId, primaryLanguage: primaryLanguage)
             )
             
             userDefaultsCache.commitChanges()

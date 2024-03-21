@@ -8,7 +8,6 @@
 
 import Foundation
 import FirebaseAnalytics
-import GoogleAnalytics
 import FirebaseCore
 
 class FirebaseAnalytics {
@@ -36,16 +35,7 @@ class FirebaseAnalytics {
         if !loggingEnabled {
             FirebaseCore.FirebaseConfiguration.shared.setLoggerLevel(.min)
         }
-        
-        // gai
-        if let gai = GAI.sharedInstance() {
-            if appBuild.configuration == .analyticsLogging {
-                gai.dispatchInterval = 1
-            }
-            
-            gai.logger.logLevel = loggingEnabled ? .verbose : .none
-        }
-                        
+                     
         setUserProperty(
             key: AnalyticsConstants.Keys.debug,
             value: appBuild.isDebug ? AnalyticsConstants.Values.debugIsTrue : AnalyticsConstants.Values.debugIsFalse

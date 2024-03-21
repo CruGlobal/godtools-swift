@@ -62,8 +62,11 @@ class RealmLanguagesCache {
         return languageCodes.compactMap({getLanguage(code:$0)})
     }
     
-    func getLanguages() -> [LanguageModel] {
-        return realmDatabase.openRealm().objects(RealmLanguage.self)
+    func getLanguages(realm: Realm? = nil) -> [LanguageModel] {
+        
+        let realmInstance: Realm = realm ?? realmDatabase.openRealm()
+        
+        return realmInstance.objects(RealmLanguage.self)
             .map({LanguageModel(model: $0)})
     }
         

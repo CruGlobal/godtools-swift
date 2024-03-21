@@ -9,56 +9,53 @@
 import UIKit
 import Combine
 
+protocol NavBarItemControllerDelegate: AnyObject {
+    
+    func didChangeBarButtonItemState(controller: NavBarItemController)
+}
+
 class NavBarItemController {
         
-    private var toggleVisibilityPublisher: AnyPublisher<Bool, Never>?
+    private var hidesBarItemPublisher: AnyPublisher<Bool, Never>?
     private var barButtonItem: UIBarButtonItem?
-    private var currentIsHidden: Bool = true
     private var cancellables: Set<AnyCancellable> = Set()
     
-    private weak var viewController: UIViewController?
+    private(set) var barButtonItemIsHidden: Bool = true
+    
+    private weak var delegate: NavBarItemControllerDelegate?
     
     let navBarItem: NavBarItem
     let itemBarPosition: BarButtonItemBarPosition
     let itemIndex: Int
     
-    init(viewController: UIViewController, navBarItem: NavBarItem, itemBarPosition: BarButtonItemBarPosition, itemIndex: Int) {
+    init(delegate: NavBarItemControllerDelegate, navBarItem: NavBarItem, itemBarPosition: BarButtonItemBarPosition, itemIndex: Int) {
         
-        self.viewController = viewController
+        self.delegate = delegate
         self.navBarItem = navBarItem
         self.itemBarPosition = itemBarPosition
         self.itemIndex = itemIndex
         
         let newBarButtonItem: UIBarButtonItem = navBarItem.itemData.getNewBarButtonItem()
         
-        self.toggleVisibilityPublisher = navBarItem.toggleVisibilityPublisher
+        self.hidesBarItemPublisher = navBarItem.hidesBarItemPublisher
         self.barButtonItem = newBarButtonItem
                 
-        if let toggleVisibilityPublisher = navBarItem.toggleVisibilityPublisher {
+        if let hidesBarItemPublisher = navBarItem.hidesBarItemPublisher {
             
-            toggleVisibilityPublisher
+            hidesBarItemPublisher
                 .receive(on: DispatchQueue.main)
                 .sink { [weak self] (hidden: Bool) in
-                    
-                    let shouldToggleVisibility: Bool = self?.currentIsHidden != hidden
-                    
-                    if shouldToggleVisibility {
-                        
-                        self?.setHidden(hidden: hidden)
-                    }
-                    
-                    self?.currentIsHidden = hidden
+                    self?.setHidden(hidden: hidden)
                 }
                 .store(in: &cancellables)
         }
         else {
             
-            currentIsHidden = false
-            viewController.addBarButtonItem(item: newBarButtonItem, barPosition: itemBarPosition, index: itemIndex)
+            setHidden(hidden: false)
         }
     }
     
-    static func newNavBarItemController(controllerType: NavBarItemControllerType, viewController: UIViewController, navBarItem: NavBarItem, itemBarPosition: BarButtonItemBarPosition, itemIndex: Int) -> NavBarItemController {
+    static func newNavBarItemController(controllerType: NavBarItemControllerType, delegate: NavBarItemControllerDelegate, navBarItem: NavBarItem, itemBarPosition: BarButtonItemBarPosition, itemIndex: Int) -> NavBarItemController {
         
         let navBarItemController: NavBarItemController?
         
@@ -69,7 +66,7 @@ class NavBarItemController {
             if let interfaceStringBarItem = navBarItem as? AppInterfaceStringBarItem {
                 
                 navBarItemController = AppInterfaceStringNavBarItemController(
-                    viewController: viewController,
+                    delegate: delegate,
                     navBarItem: interfaceStringBarItem,
                     itemBarPosition: itemBarPosition,
                     itemIndex: itemIndex,
@@ -83,15 +80,16 @@ class NavBarItemController {
                 navBarItemController = nil
             }
             
-        case .appLayoutDirection:
+        case .appLayoutDirection(let layoutDirectionPublisher):
             
             if let layoutDirectionBasedNavBarItem = navBarItem as? AppLayoutDirectionBasedBarItem {
                 
                 navBarItemController = AppLayoutDirectionNavBarItemController(
-                    viewController: viewController,
+                    delegate: delegate,
                     navBarItem: layoutDirectionBasedNavBarItem,
                     itemBarPosition: itemBarPosition,
-                    itemIndex: itemIndex
+                    itemIndex: itemIndex,
+                    layoutDirectionPublisher: layoutDirectionPublisher
                 )
             }
             else {
@@ -110,7 +108,7 @@ class NavBarItemController {
         }
         
         return NavBarItemController(
-            viewController: viewController,
+            delegate: delegate,
             navBarItem: navBarItem,
             itemBarPosition: itemBarPosition,
             itemIndex: itemIndex
@@ -123,41 +121,15 @@ class NavBarItemController {
     
     func reDrawBarButtonItem(barButtonItem: UIBarButtonItem) {
         
-        guard let viewController = self.viewController else {
-            return
-        }
-        
-        guard let currentBarButtonItem = self.barButtonItem else {
-            return
-        }
-        
         self.barButtonItem = barButtonItem
-        
-        if !currentIsHidden {
-            
-            viewController.removeBarButtonItem(item: currentBarButtonItem)
-            
-            viewController.addBarButtonItem(item: barButtonItem, barPosition: itemBarPosition, index: itemIndex)
-        }
+                    
+        delegate?.didChangeBarButtonItemState(controller: self)
     }
     
     private func setHidden(hidden: Bool) {
         
-        guard let viewController = self.viewController else {
-            return
-        }
+        barButtonItemIsHidden = hidden
         
-        guard let barButtonItem = self.barButtonItem else {
-            return
-        }
-        
-        if hidden {
-            
-            viewController.removeBarButtonItem(item: barButtonItem)
-        }
-        else {
-            
-            viewController.addBarButtonItem(item: barButtonItem, barPosition: itemBarPosition, index: itemIndex)
-        }
+        delegate?.didChangeBarButtonItemState(controller: self)
     }
 }

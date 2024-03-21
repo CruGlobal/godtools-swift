@@ -27,39 +27,19 @@ extension ToolNavigationFlow {
             resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
             languagesRepository: appDiContainer.dataLayer.getLanguagesRepository(),
             translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
-            primaryLanguage: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase().getPrimaryLanguage()
+            userAppLanguageRepository: appDiContainer.feature.appLanguage.dataLayer.getUserAppLanguageRepository()
         )
         
         navigateToToolAndDetermineToolTranslationsToDownload(
             determineToolTranslationsToDownload: determineDeepLinkedToolTranslationsToDownload,
             liveShareStream: toolDeepLink.liveShareStream,
+            selectedLanguageIndex: toolDeepLink.selectedLanguageIndex,
             trainingTipsEnabled: false,
             initialPage: toolDeepLink.mobileContentPage
         )
     }
     
-    func navigateToTool(resourceId: String, trainingTipsEnabled: Bool) {
-                
-        var languageIds: [String] = Array()
-        
-        if let primaryLanguageId = appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase().getPrimaryLanguage()?.dataModelId {
-            languageIds.append(primaryLanguageId)
-        }
-        
-        if let parallelLanguageId = appDiContainer.domainLayer.getSettingsParallelLanguageUseCase().getParallelLanguage()?.dataModelId {
-            languageIds.append(parallelLanguageId)
-        }
-                        
-        navigateToTool(
-            resourceId: resourceId,
-            languageIds: languageIds,
-            liveShareStream: nil,
-            trainingTipsEnabled: trainingTipsEnabled,
-            initialPage: nil
-        )
-    }
-    
-    func navigateToTool(resourceId: String, languageIds: [String], liveShareStream: String?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?) {
+    func navigateToTool(resourceId: String, languageIds: [String], liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?) {
         
         let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(
             resourceId: resourceId,
@@ -71,12 +51,13 @@ extension ToolNavigationFlow {
         navigateToToolAndDetermineToolTranslationsToDownload(
             determineToolTranslationsToDownload: determineToolTranslationsToDownload,
             liveShareStream: liveShareStream,
+            selectedLanguageIndex: selectedLanguageIndex,
             trainingTipsEnabled: trainingTipsEnabled,
             initialPage: initialPage
         )
     }
     
-    private func navigateToToolAndDetermineToolTranslationsToDownload(determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, liveShareStream: String?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?) {
+    private func navigateToToolAndDetermineToolTranslationsToDownload(determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?) {
         
         let didDownloadToolTranslationsClosure = { [weak self] (result: Result<ToolTranslationsDomainModel, Error>) in
                         
@@ -87,6 +68,7 @@ extension ToolNavigationFlow {
                 self?.navigateToTool(
                     toolTranslations: toolTranslations,
                     liveShareStream: liveShareStream,
+                    selectedLanguageIndex: selectedLanguageIndex,
                     trainingTipsEnabled: trainingTipsEnabled,
                     initialPage: initialPage
                 )
@@ -108,7 +90,7 @@ extension ToolNavigationFlow {
         self.downloadToolTranslationFlow = downloadToolTranslationFlow
     }
     
-    private func navigateToTool(toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?) {
+    private func navigateToTool(toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?) {
         
         let resourceType: ResourceType = toolTranslations.tool.resourceTypeEnum
         
@@ -142,6 +124,7 @@ extension ToolNavigationFlow {
                 sharedNavigationController: navigationController,
                 toolTranslations: toolTranslations,
                 liveShareStream: liveShareStream,
+                selectedLanguageIndex: selectedLanguageIndex,
                 trainingTipsEnabled: trainingTipsEnabled,
                 initialPage: initialPage
             )
@@ -153,7 +136,8 @@ extension ToolNavigationFlow {
                 appDiContainer: appDiContainer,
                 sharedNavigationController: navigationController,
                 toolTranslations: toolTranslations,
-                initialPage: initialPage
+                initialPage: initialPage,
+                selectedLanguageIndex: selectedLanguageIndex
             )
             
         case .metaTool:

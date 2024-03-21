@@ -36,7 +36,7 @@ class MobileContentCardCollectionPageView: MobileContentPageView {
         previousCardButton.addTarget(self, action: #selector(previousCardButtonTapped), for: .touchUpInside)
         nextCardButton.addTarget(self, action: #selector(nextCardButtonTapped), for: .touchUpInside)
         
-        cardPageNavigationView.delegate = self
+        cardPageNavigationView.setDelegate(delegate: self)
     }
     
     required init?(coder: NSCoder) {
@@ -45,32 +45,49 @@ class MobileContentCardCollectionPageView: MobileContentPageView {
     
     override func setupLayout() {
         super.setupLayout()
-                
+                        
         // cardCollectionView
         addSubview(cardPageNavigationView)
         cardPageNavigationView.translatesAutoresizingMaskIntoConstraints = false
         cardPageNavigationView.constrainEdgesToView(view: self)
+        
+        cardPageNavigationView.setSemanticContentAttribute(semanticContentAttribute: viewModel.layoutDirection.semanticContentAttribute)
     
         cardPageNavigationView.pageBackgroundColor = .clear
         cardPageNavigationView.registerPageCell(classClass: MobileContentCardCollectionPageItemView.self, cellReuseIdentifier: MobileContentCardCollectionPageItemView.reuseIdentifier)
         
         // previousCardButton
         addSubview(previousCardButton)
-        previousCardButton.setImage(ImageCatalog.previousCard.uiImage, for: .normal)
         previousCardButton.translatesAutoresizingMaskIntoConstraints = false
-        previousCardButton.constrainLeadingToView(view: self, constant: previousAndNextButtonInsets)
+        
         _ = previousCardButton.constrainBottomToView(view: self, constant: previousAndNextButtonInsets)
         _ = previousCardButton.addWidthConstraint(constant: previousAndNextButtonSize)
         _ = previousCardButton.addHeightConstraint(constant: previousAndNextButtonSize)
         
         // nextButton
         addSubview(nextCardButton)
-        nextCardButton.setImage(ImageCatalog.nextCard.uiImage, for: .normal)
         nextCardButton.translatesAutoresizingMaskIntoConstraints = false
-        nextCardButton.constrainTrailingToView(view: self, constant: previousAndNextButtonInsets)
+        
         _ = nextCardButton.constrainBottomToView(view: self, constant: previousAndNextButtonInsets)
         _ = nextCardButton.addWidthConstraint(constant: previousAndNextButtonSize)
         _ = nextCardButton.addHeightConstraint(constant: previousAndNextButtonSize)
+        
+        if viewModel.layoutDirection.semanticContentAttribute == .forceRightToLeft {
+            
+            previousCardButton.setImage(ImageCatalog.nextCard.uiImage, for: .normal)
+            nextCardButton.setImage(ImageCatalog.previousCard.uiImage, for: .normal)
+            
+            previousCardButton.constrainRightToView(view: self, constant: previousAndNextButtonInsets)
+            nextCardButton.constrainLeftToView(view: self, constant: previousAndNextButtonInsets)
+        }
+        else {
+            
+            previousCardButton.setImage(ImageCatalog.previousCard.uiImage, for: .normal)
+            nextCardButton.setImage(ImageCatalog.nextCard.uiImage, for: .normal)
+            
+            previousCardButton.constrainLeftToView(view: self, constant: previousAndNextButtonInsets)
+            nextCardButton.constrainRightToView(view: self, constant: previousAndNextButtonInsets)
+        }
         
         updatePreviousAndNextButtonVisibility(page: 0)
     }
@@ -166,7 +183,7 @@ extension MobileContentCardCollectionPageView: PageNavigationCollectionViewDeleg
         else {
             assertionFailure("Failed to render MobileContentCardCollectionPageCardView.")
         }
-                        
+                                
         return cell
     }
     

@@ -44,23 +44,31 @@ class PageNavigationCollectionViewCenteredLayout: UICollectionViewFlowLayout {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func prepare() {
             
         if !layoutInitialized {
             layoutInitialized = true
             
-            addPanGestureIfNeeded()
-            
             if let collectionView = collectionView {
                             
                 collectionView.isPagingEnabled = false
                 collectionView.decelerationRate = UIScrollView.DecelerationRate.fast
-                collectionView.addGestureRecognizer(panGesture)
             }
+            
+            addPanGestureIfNeeded()
         }
         
         super.prepare()
+    }
+    
+    override var flipsHorizontallyInOppositeLayoutDirection: Bool {
+        
+        // NOTE: Settings this to true will cause the coordinate system to flip when the device system language is right to left.  Meaning the contentOffset will flip.
+        // Without setting this to true, when the device language is right to left, the collection view will correctly call cellForRow at 0 and scroll right to left correctly.  However,
+        // the contentOffset wouldn't start at 0 and would instead start at the end as if the collectionView were scrolling left to right. ~Levi
+        
+        return true
     }
     
     private func addPanGestureIfNeeded() {

@@ -12,6 +12,7 @@ struct LanguageSettingsInterfaceStringsDomainModel {
     
     let navTitle: String
     let appInterfaceLanguageTitle: String
+    let numberOfAppLanguagesAvailable: String
     let setAppLanguageMessage: String
     let chooseAppLanguageButtonTitle: String
     let toolLanguagesAvailableOfflineTitle: String

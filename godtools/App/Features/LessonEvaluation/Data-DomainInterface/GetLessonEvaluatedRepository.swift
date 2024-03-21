@@ -18,9 +18,9 @@ class GetLessonEvaluatedRepository: GetLessonEvaluatedRepositoryInterface {
         self.lessonEvaluationRepository = lessonEvaluationRepository
     }
     
-    func getLessonEvaluatedPublisher(lesson: ToolDomainModel) -> AnyPublisher<Bool, Never> {
+    func getLessonEvaluatedPublisher(lessonId: String) -> AnyPublisher<Bool, Never> {
         
-        guard let lessonEvaluation = lessonEvaluationRepository.getLessonEvaluation(lessonId: lesson.dataModelId) else {
+        guard let lessonEvaluation = lessonEvaluationRepository.getLessonEvaluation(lessonId: lessonId) else {
             return Just(false)
                 .eraseToAnyPublisher()
         }

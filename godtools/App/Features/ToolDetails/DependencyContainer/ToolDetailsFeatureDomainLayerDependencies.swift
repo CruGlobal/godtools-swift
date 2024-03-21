@@ -11,20 +11,12 @@ import Foundation
 class ToolDetailsFeatureDomainLayerDependencies {
     
     private let dataLayer: ToolDetailsFeatureDataLayerDependencies
-    private let appLanguageFeatureDiContainer: AppLanguageFeatureDiContainer
     private let coreDataLayer: AppDataLayerDependencies
     
-    init(dataLayer: ToolDetailsFeatureDataLayerDependencies, appLanguageFeatureDiContainer: AppLanguageFeatureDiContainer, coreDataLayer: AppDataLayerDependencies) {
+    init(dataLayer: ToolDetailsFeatureDataLayerDependencies, coreDataLayer: AppDataLayerDependencies) {
         
         self.dataLayer = dataLayer
-        self.appLanguageFeatureDiContainer = appLanguageFeatureDiContainer
         self.coreDataLayer = coreDataLayer
-    }
-    
-    func getToolDetailsInterfaceStringsUseCase() -> GetToolDetailsInterfaceStringsUseCase {
-        return GetToolDetailsInterfaceStringsUseCase(
-            getToolDetailsInterfaceStringsRepository: dataLayer.getToolDetailsInterfaceStringsRepository()
-        )
     }
     
     func getToolDetailsLearnToShareToolIsAvailableUseCase() -> GetToolDetailsLearnToShareToolIsAvailableUseCase {
@@ -38,15 +30,10 @@ class ToolDetailsFeatureDomainLayerDependencies {
             getToolDetailsMediaRepository: dataLayer.getToolDetailsMediaRepository()
         )
     }
-    
-    func getToolDetailsToolIsFavoritedUseCase() -> GetToolDetailsToolIsFavoritedUseCase {
-        return GetToolDetailsToolIsFavoritedUseCase(
-            getToolDetailsToolIsFavoritedRepository: dataLayer.getToolDetailsToolIsFavoritedRepository()
-        )
-    }
-    
-    func getToolDetailsUseCase() -> GetToolDetailsUseCase {
-        return GetToolDetailsUseCase(
+
+    func getViewToolDetailsUseCase() -> ViewToolDetailsUseCase {
+        return ViewToolDetailsUseCase(
+            getInterfaceStringsRepository: dataLayer.getToolDetailsInterfaceStringsRepository(),
             getToolDetailsRepository: dataLayer.getToolDetailsRepository()
         )
     }

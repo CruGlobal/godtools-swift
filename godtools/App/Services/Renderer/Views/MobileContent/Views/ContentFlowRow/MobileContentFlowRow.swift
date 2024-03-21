@@ -12,14 +12,16 @@ import GodToolsToolParser
 class MobileContentFlowRow: MobileContentView {
     
     private let rowGravity: Gravity.Horizontal
+    private let layoutDirection: UISemanticContentAttribute
     
     private var didLayoutHorizontalConstraints: Bool = false
     
     private var flowItems: [MobileContentFlowRowItem] = Array()
     
-    init(frame: CGRect, rowGravity: Gravity.Horizontal) {
+    init(frame: CGRect, rowGravity: Gravity.Horizontal, layoutDirection: UISemanticContentAttribute) {
         
         self.rowGravity = rowGravity
+        self.layoutDirection = layoutDirection
         
         super.init(viewModel: nil, frame: frame)
         
@@ -169,26 +171,55 @@ class MobileContentFlowRow: MobileContentView {
             if nextIndex < flowItems.count {
                 
                 let nextItem: MobileContentFlowRowItem = flowItems[nextIndex]
-                
-                let leading: NSLayoutConstraint = NSLayoutConstraint(
-                    item: nextItem,
-                    attribute: .leading,
-                    relatedBy: .equal,
-                    toItem: currentItem,
-                    attribute: .trailing,
-                    multiplier: 1,
-                    constant: spacingBetweenItems
-                )
-                
-                addConstraint(leading)
+                       
+                if layoutDirection == .forceRightToLeft {
+                    
+                    let right: NSLayoutConstraint = NSLayoutConstraint(
+                        item: nextItem,
+                        attribute: .right,
+                        relatedBy: .equal,
+                        toItem: currentItem,
+                        attribute: .left,
+                        multiplier: 1,
+                        constant: spacingBetweenItems
+                    )
+                    
+                    addConstraint(right)
+                }
+                else {
+                 
+                    let left: NSLayoutConstraint = NSLayoutConstraint(
+                        item: nextItem,
+                        attribute: .left,
+                        relatedBy: .equal,
+                        toItem: currentItem,
+                        attribute: .right,
+                        multiplier: 1,
+                        constant: spacingBetweenItems
+                    )
+                    
+                    addConstraint(left)
+                }
             }
         }
         
-        if let firstItem = flowItems.first {
-            firstItem.constrainLeadingToView(view: self, constant: itemsLeadingToRow)
+        if layoutDirection == .forceRightToLeft {
+            
+            if let firstItem = flowItems.first {
+                firstItem.constrainRightToView(view: self, constant: itemsLeadingToRow)
+            }
+            if let lastItem = flowItems.last {
+                lastItem.constrainLeftToView(view: self, constant: itemsTrailingToRow)
+            }
         }
-        if let lastItem = flowItems.last {
-            lastItem.constrainTrailingToView(view: self, constant: itemsTrailingToRow)
+        else {
+            
+            if let firstItem = flowItems.first {
+                firstItem.constrainLeftToView(view: self, constant: itemsLeadingToRow)
+            }
+            if let lastItem = flowItems.last {
+                lastItem.constrainRightToView(view: self, constant: itemsTrailingToRow)
+            }
         }
     }
 }

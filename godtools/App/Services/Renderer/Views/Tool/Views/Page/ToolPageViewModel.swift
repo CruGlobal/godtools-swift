@@ -34,6 +34,10 @@ class ToolPageViewModel: MobileContentPageViewModel {
         super.init(pageModel: pageModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics, hidesBackgroundImage: false)
     }
     
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
     override var analyticsScreenName: String {
         
         let resource: ResourceModel = renderedPageContext.resource

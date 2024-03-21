@@ -48,11 +48,13 @@ class LessonFlow: ToolNavigationFlow, Flow {
             resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
             translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
             mobileContentEventAnalytics: appDiContainer.getMobileContentRendererEventAnalyticsTracking(),
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            translatedLanguageNameRepository: appDiContainer.dataLayer.getTranslatedLanguageNameRepository(),
             trainingTipsEnabled: trainingTipsEnabled,
             incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase()
         )
         
-        let view = LessonView(viewModel: viewModel)
+        let view = LessonView(viewModel: viewModel, navigationBar: nil)
                 
         navigationController.pushViewController(view, animated: true)
         
@@ -74,8 +76,8 @@ class LessonFlow: ToolNavigationFlow, Flow {
         case .deepLink( _):
             break
         
-        case .closeTappedFromLesson(let lesson, let highestPageNumberViewed):
-            closeTool(lesson: lesson, highestPageNumberViewed: highestPageNumberViewed)
+        case .closeTappedFromLesson(let lessonId, let highestPageNumberViewed):
+            closeTool(lessonId: lessonId, highestPageNumberViewed: highestPageNumberViewed)
                                                 
         case .articleFlowCompleted( _):
             
@@ -115,12 +117,9 @@ class LessonFlow: ToolNavigationFlow, Flow {
         }
     }
     
-    private func closeTool(lesson: ResourceModel, highestPageNumberViewed: Int) {
-        
-        // TODO: Eventually ResourceModel should not be passed into the closeTool method.  Should be a domain model. ~Levi
-        let lessonDomainModel = appDiContainer.domainLayer.getToolUseCase().getTool(resource: lesson)
-        
-        flowDelegate?.navigate(step: .lessonFlowCompleted(state: .userClosedLesson(lesson: lessonDomainModel, highestPageNumberViewed: highestPageNumberViewed)))
+    private func closeTool(lessonId: String, highestPageNumberViewed: Int) {
+                
+        flowDelegate?.navigate(step: .lessonFlowCompleted(state: .userClosedLesson(lessonId: lessonId, highestPageNumberViewed: highestPageNumberViewed)))
     }
 }
 
@@ -128,7 +127,7 @@ extension LessonFlow: MobileContentRendererNavigationDelegate {
     
     func mobileContentRendererNavigationDismissRenderer(navigation: MobileContentRendererNavigation, event: DismissToolEvent) {
         
-        closeTool(lesson: event.resource, highestPageNumberViewed: event.highestPageNumberViewed)
+        closeTool(lessonId: event.resource.id, highestPageNumberViewed: event.highestPageNumberViewed)
     }
     
     func mobileContentRendererNavigationDeepLink(navigation: MobileContentRendererNavigation, deepLink: MobileContentRendererNavigationDeepLinkType) {

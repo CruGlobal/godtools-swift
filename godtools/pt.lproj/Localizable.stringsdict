@@ -29,9 +29,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Lesson completion</string>
+<string>Conclusões de liçõe</string>
 <key>other</key>
-<string>Lesson completions</string>
+<string>Conclusões de lições</string>
 </dict>
 </dict>
 <key>account.activity.screenShares</key>
@@ -45,9 +45,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Screen share</string>
+<string>Compartilhamento de tela</string>
 <key>other</key>
-<string>Screen shares</string>
+<string>Compartilhamentos de tela</string>
 </dict>
 </dict>
 <key>account.activity.linksShared</key>
@@ -77,9 +77,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Language used</string>
+<string>Idioma usados</string>
 <key>other</key>
-<string>Languages used</string>
+<string>Idiomas usados</string>
 </dict>
 </dict>
 <key>account.activity.sessions</key>
@@ -93,9 +93,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Session</string>
+<string>Sessõe</string>
 <key>other</key>
-<string>Sessions</string>
+<string>Sessões</string>
 </dict>
 </dict>
 <key>tools.filter.toolsAvailable</key>
@@ -109,9 +109,25 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>1 Tool available</string>
+<string>Ferramenta 1 disponível</string>
 <key>other</key>
-<string>%d Tools available</string>
+<string>Ferramenta %d disponível</string>
+</dict>
+</dict>
+<key>languageSettings.appLanguage.numberAvailable</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@appLanguageCount@</string>
+<key>appLanguageCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>Idioma %d disponível</string>
+<key>other</key>
+<string>Idiomas %d disponível</string>
 </dict>
 </dict>
 <key>badges.imagesShared</key>
@@ -125,9 +141,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Shared 1 image</string>
+<string>Compartilhou 1 imagen</string>
 <key>other</key>
-<string>Shared %d images</string>
+<string>Compartilhou %d imagens</string>
 </dict>
 </dict>
 <key>badges.articlesOpened</key>
@@ -157,9 +173,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Completed 1 lesson</string>
+<string>Concluiu 1 liçõe</string>
 <key>other</key>
-<string>Completed %d lessons</string>
+<string>Concluiu %d lições</string>
 </dict>
 </dict>
 <key>badges.toolsOpened</key>
@@ -173,9 +189,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Opened 1 tool</string>
+<string>Abriu 1 ferramenta</string>
 <key>other</key>
-<string>Opened %d tools</string>
+<string>Abriu %d ferramentas</string>
 </dict>
 </dict>
 <key>badges.tipsCompleted</key>
@@ -189,9 +205,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Completed 1 training tip</string>
+<string>Concluiu 1 dica de treinamento</string>
 <key>other</key>
-<string>Completed %d training tips</string>
+<string>Concluiu %d dicas de treinamento</string>
 </dict>
 </dict>
 </dict>

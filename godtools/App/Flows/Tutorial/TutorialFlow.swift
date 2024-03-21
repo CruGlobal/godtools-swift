@@ -19,31 +19,32 @@ class TutorialFlow: Flow {
     let appDiContainer: AppDiContainer
     let navigationController: AppNavigationController
     
-    deinit {
-        print("x deinit: \(type(of: self))")
-    }
-    
     init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController?) {
         print("init: \(type(of: self))")
         
-        self.flowDelegate = flowDelegate
-        self.appDiContainer = appDiContainer
-        self.navigationController = sharedNavigationController ?? AppNavigationController(navigationBarAppearance: nil)
-             
-        navigationController.modalPresentationStyle = .fullScreen
-        navigationController.setNavigationBarHidden(false, animated: false)
-        navigationController.navigationBar.setupNavigationBarAppearance(
+        let navigationBarAppearance = AppNavigationBarAppearance(
             backgroundColor: .white,
             controlColor: ColorPalette.gtBlue.uiColor,
             titleFont: nil,
             titleColor: nil,
             isTranslucent: false
         )
+        
+        self.flowDelegate = flowDelegate
+        self.appDiContainer = appDiContainer
+        self.navigationController = sharedNavigationController ?? AppNavigationController(navigationBarAppearance: navigationBarAppearance)
+             
+        navigationController.modalPresentationStyle = .fullScreen
+        navigationController.setNavigationBarHidden(false, animated: false)
                
         navigationController.setViewControllers(
             [getTutorialView()],
             animated: sharedNavigationController != nil
         )
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
     }
     
     func navigate(step: FlowStep) {
@@ -81,7 +82,7 @@ extension TutorialFlow {
             target: viewModel,
             action: #selector(viewModel.backTapped),
             accessibilityIdentifier: nil,
-            toggleVisibilityPublisher: viewModel.hidesBackButtonPublisher
+            hidesBarItemPublisher: viewModel.$hidesBackButton.eraseToAnyPublisher()
         )
         
         let closeButton = AppCloseBarItem(

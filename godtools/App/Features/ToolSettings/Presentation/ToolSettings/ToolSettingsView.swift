@@ -1,8 +1,9 @@
 //
 //  ToolSettingsView.swift
-//  ToolSettings
+//  godtools
 //
 //  Created by Levi Eggert on 5/10/22.
+//  Copyright © 2022 Cru. All rights reserved.
 //
 
 import SwiftUI
@@ -53,7 +54,7 @@ struct ToolSettingsView: View {
                             trailingInset: contentInsets.trailing
                         )
                         
-                        if !viewModel.hidesShareables {
+                        if viewModel.shareables.count > 0 {
                             
                             ToolSettingsSeparatorView(
                                 separatorSpacing: separatorLineSpacing,
@@ -69,7 +70,7 @@ struct ToolSettingsView: View {
                         }
                         
                         Rectangle()
-                            .frame(maxWidth: .infinity, minHeight: bottomSpace, maxHeight: bottomSpace)
+                            .frame(width: geometry.size.width, height: bottomSpace)
                             .foregroundColor(.clear)
                     }
                 }
@@ -78,5 +79,6 @@ struct ToolSettingsView: View {
         .padding(EdgeInsets(top: contentInsets.top, leading: 0, bottom: 0, trailing: 0))
         .background(Color.white)
         .cornerRadius(12)
+        .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
     }
 }

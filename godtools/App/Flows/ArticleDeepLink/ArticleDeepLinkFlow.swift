@@ -23,26 +23,19 @@ class ArticleDeepLinkFlow: Flow {
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController
         self.aemUri = aemUri
-        
-        let articleAemRepository: ArticleAemRepository = appDiContainer.dataLayer.getArticleAemRepository()
-        
-        if let aemCacheObject = articleAemRepository.getAemCacheObject(aemUri: aemUri) {
+                
+        if let aemCacheObject = appDiContainer.dataLayer.getArticleAemRepository().getAemCacheObject(aemUri: aemUri) {
             
             navigateToArticleWebView(aemCacheObject: aemCacheObject, animated: true)
         }
         else {
             
-            let viewModel = LoadingArticleViewModel(
-                flowDelegate: self,
-                aemUri: aemUri,
-                articleAemRepository: articleAemRepository,
-                localizationServices: appDiContainer.dataLayer.getLocalizationServices()
-            )
-            
-            let view = LoadingArticleView(viewModel: viewModel)
-            
-            sharedNavigationController.present(view, animated: true, completion: nil)
+            sharedNavigationController.present(getLoadingArticleView(), animated: true, completion: nil)
         }
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
     }
     
     func navigate(step: FlowStep) {
@@ -84,6 +77,30 @@ class ArticleDeepLinkFlow: Flow {
 }
 
 extension ArticleDeepLinkFlow {
+    
+    private func getLoadingArticleView() -> UIViewController {
+        
+        let viewModel = LoadingArticleViewModel(
+            flowDelegate: self,
+            aemUri: aemUri,
+            articleAemRepository: appDiContainer.dataLayer.getArticleAemRepository(),
+            localizationServices: appDiContainer.dataLayer.getLocalizationServices()
+        )
+        
+        let navigationBar = AppNavigationBar(
+            appearance: nil,
+            backButton: nil,
+            leadingItems: [],
+            trailingItems: []
+        )
+        
+        let view = LoadingArticleView(
+            viewModel: viewModel,
+            navigationBar: navigationBar
+        )
+        
+        return view
+    }
     
     private func getArticleWebView(aemCacheObject: ArticleAemCacheObject) -> UIViewController {
         

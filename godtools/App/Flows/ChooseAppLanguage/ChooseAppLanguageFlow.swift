@@ -28,6 +28,10 @@ class ChooseAppLanguageFlow: Flow {
         sharedNavigationController.pushViewController(getAppLanguagesView(), animated: true)
     }
     
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
     func navigate(step: FlowStep) {
         
         switch step {
@@ -71,9 +75,11 @@ extension ChooseAppLanguageFlow {
         
         let viewModel = AppLanguagesViewModel(
             flowDelegate: self,
+            viewAppLanguagesUseCase: appDiContainer.feature.appLanguage.domainLayer.getViewAppLanguagesUseCase(),
+            searchAppLanguageInAppLanguagesListUseCase: appDiContainer.feature.appLanguage.domainLayer.getSearchAppLanguageInAppLanguagesListUseCase(),
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getAppLanguagesListUseCase: appDiContainer.feature.appLanguage.domainLayer.getAppLanguagesListUseCase(),
-            getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
-            searchAppLanguageInAppLanguagesListUseCase: appDiContainer.feature.appLanguage.domainLayer.getSearchAppLanguageInAppLanguagesListUseCase()
+            viewSearchBarUseCase: appDiContainer.domainLayer.getViewSearchBarUseCase()
         )
         
         let view = AppLanguagesView(viewModel: viewModel)
@@ -101,7 +107,8 @@ extension ChooseAppLanguageFlow {
         
         let viewModel = ConfirmAppLanguageViewModel(
             selectedLanguage: selectedLanguage,
-            getConfirmAppLanguageInterfaceStringsUseCase: appDiContainer.feature.appLanguage.domainLayer.getConfirmAppLanguageInterfaceStringsUseCase(),
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            viewConfirmAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getViewConfirmAppLanguageUseCase(),
             flowDelegate: self
         )
         

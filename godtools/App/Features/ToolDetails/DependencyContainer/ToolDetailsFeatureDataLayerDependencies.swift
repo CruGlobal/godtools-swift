@@ -17,6 +17,10 @@ class ToolDetailsFeatureDataLayerDependencies {
         self.coreDataLayer = coreDataLayer
     }
     
+    // MARK: - Data Layer Classes
+    
+    // MARK: - Domain Interface
+    
     func getToolDetailsInterfaceStringsRepository() -> GetToolDetailsInterfaceStringsRepositoryInterface {
         return GetToolDetailsInterfaceStringsRepository(
             localizationServices: coreDataLayer.getLocalizationServices()
@@ -42,12 +46,7 @@ class ToolDetailsFeatureDataLayerDependencies {
             languagesRepository: coreDataLayer.getLanguagesRepository(),
             translationsRepository: coreDataLayer.getTranslationsRepository(),
             localizationServices: coreDataLayer.getLocalizationServices(),
-            localeLanguageName: coreDataLayer.getLocaleLanguageName()
-        )
-    }
-    
-    func getToolDetailsToolIsFavoritedRepository() -> GetToolDetailsToolIsFavoritedRepositoryInterface {
-        return GetToolDetailsToolIsFavoritedRepository(
+            translatedLanguageNameRepository: coreDataLayer.getTranslatedLanguageNameRepository(),
             favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository()
         )
     }

@@ -11,35 +11,52 @@ import Combine
 
 class GetDownloadToolProgressInterfaceStringsRepository: GetDownloadToolProgressInterfaceStringsRepositoryInterface {
     
-    private let localizationServices: LocalizationServices
+    private let resourcesRepository: ResourcesRepository
+    private let localizationServices: LocalizationServicesInterface
     private let favoritedResourcesRepository: FavoritedResourcesRepository
     
-    init(localizationServices: LocalizationServices, favoritedResourcesRepository: FavoritedResourcesRepository) {
+    init(resourcesRepository: ResourcesRepository, localizationServices: LocalizationServicesInterface, favoritedResourcesRepository: FavoritedResourcesRepository) {
         
+        self.resourcesRepository = resourcesRepository
         self.localizationServices = localizationServices
         self.favoritedResourcesRepository = favoritedResourcesRepository
     }
     
-    func getStringsPublisher(resource: ResourceModel?, translateInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<DownloadToolProgressInterfaceStringsDomainModel, Never> {
+    func getStringsPublisher(toolId: String?, translateInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<DownloadToolProgressInterfaceStringsDomainModel, Never> {
                         
         let localeId: String = translateInAppLanguage
-        let toolIsFavorited: Bool?
+        let stringsFileType: LocalizableStringsFileType = .strings
         
-        let resourceType: ResourceType? = resource?.resourceTypeEnum
+        let resource: ResourceModel?
         
-        if resourceType == .article || resourceType == .tract, let resourceId = resource?.id {
-
-            toolIsFavorited = favoritedResourcesRepository.getResourceIsFavorited(id: resourceId)
+        if let toolId = toolId, let resourceModel = resourcesRepository.getResource(id: toolId) {
+            resource = resourceModel
         }
         else {
-            
-            toolIsFavorited = nil
+            resource = nil
         }
-     
+        
+        let toolCanBeFavorited: Bool = (resource?.resourceTypeEnum == .article || resource?.resourceTypeEnum == .tract || resource?.resourceTypeEnum == .chooseYourOwnAdventure)
+        let toolIsFavorited: Bool
+        
+        if let resource = resource {
+            toolIsFavorited = favoritedResourcesRepository.getResourceIsFavorited(id: resource.id)
+        }
+        else {
+            toolIsFavorited = false
+        }
+        
+        let downloadMessage: String
+        
+        if toolCanBeFavorited && !toolIsFavorited {
+            downloadMessage = localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "loading_unfavorited_tool", fileType: stringsFileType)
+        }
+        else {
+            downloadMessage = localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "loading_favorited_tool", fileType: stringsFileType)
+        }
+        
         let interfaceStrings = DownloadToolProgressInterfaceStringsDomainModel(
-            toolIsFavorited: toolIsFavorited,
-            downloadingToolMessage: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "loading_favorited_tool"),
-            favoriteThisToolForOfflineUseMessage: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "loading_unfavorited_tool")
+            downloadMessage:  downloadMessage
         )
         
         return Just(interfaceStrings)

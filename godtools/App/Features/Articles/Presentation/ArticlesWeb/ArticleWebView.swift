@@ -14,9 +14,6 @@ class ArticleWebView: AppViewController {
     private let viewModel: ArticleWebViewModel
         
     private var webView: WKWebView!
-    private var shareButton: UIBarButtonItem?
-    private var debugButton: UIBarButtonItem?
-    private var rightBarButtonItems: [UIBarButtonItem] = Array()
     private var currentViewState: ArticleWebViewState?
     
     @IBOutlet weak private var loadingView: UIActivityIndicatorView!
@@ -58,32 +55,6 @@ class ArticleWebView: AppViewController {
     
     private func setupLayout() {
         
-        // right bar button items
-        let shareButton: UIBarButtonItem = addBarButtonItem(
-            barPosition: .trailing,
-            index: nil,
-            image: ImageCatalog.navShare.uiImage,
-            color: .white,
-            target: self,
-            action: #selector(shareButtonTapped)
-        )
-        
-        self.shareButton = shareButton
-                
-        let debugButton: UIBarButtonItem = addBarButtonItem(
-            barPosition: .trailing,
-            index: nil,
-            image: ImageCatalog.navDebug.uiImage,
-            color: .white,
-            target: self,
-            action: #selector(debugButtonTapped)
-        )
-        
-        self.debugButton = debugButton
-        
-        rightBarButtonItems = [shareButton, debugButton]
-        removeRightBarButtonItems()
-        
         // loadingView
         loadingView.stopAnimating()
         
@@ -112,16 +83,7 @@ class ArticleWebView: AppViewController {
             self?.title = navTitle
         }
         
-        viewModel.hidesShareButton.addObserver(self) { [weak self] (hidesShareButton) in
-            self?.reloadRightBarButtonItems()
-        }
-        
-        viewModel.hidesDebugButton.addObserver(self) { [weak self] (hidesDebugButton: Bool) in
-            self?.reloadRightBarButtonItems()
-        }
-        
         viewModel.viewState.addObserver(self) { [weak self] (viewState: ArticleWebViewState) in
-            
             self?.setViewState(viewState: viewState)
         }
     }
@@ -164,36 +126,9 @@ class ArticleWebView: AppViewController {
         }
     }
     
-    private func reloadRightBarButtonItems() {
-        
-        removeRightBarButtonItems()
-        
-        if !viewModel.hidesShareButton.value, let shareButton = self.shareButton {
-            addBarButtonItem(item: shareButton, barPosition: .trailing, index: nil)
-        }
-        
-        if !viewModel.hidesDebugButton.value, let debugButton = self.debugButton {
-            addBarButtonItem(item: debugButton, barPosition: .trailing, index: nil)
-        }
-    }
-    
     private func setErrorViewHidden(hidden: Bool) {
         errorMessageView.isHidden = hidden
         reloadArticleButton.isHidden = hidden
-    }
-    
-    private func removeRightBarButtonItems() {
-        for buttonItem in rightBarButtonItems {
-            removeBarButtonItem(item: buttonItem)
-        }
-    }
-    
-    @objc private func debugButtonTapped() {
-        viewModel.debugTapped()
-    }
-    
-    @objc private func shareButtonTapped() {
-        viewModel.sharedTapped()
     }
     
     @objc private func reloadArticleButtonTapped() {

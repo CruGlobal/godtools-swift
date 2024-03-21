@@ -8,9 +8,12 @@
 
 import UIKit
 import GodToolsToolParser
+import Combine
 
 class ChooseYourOwnAdventureFlow: ToolNavigationFlow {
         
+    private var cancellables: Set<AnyCancellable> = Set()
+    
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
@@ -22,38 +25,16 @@ class ChooseYourOwnAdventureFlow: ToolNavigationFlow {
     var tractFlow: TractFlow?
     var downloadToolTranslationFlow: DownloadToolTranslationsFlow?
     
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, toolTranslations: ToolTranslationsDomainModel, initialPage: MobileContentPagesPage?) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, toolTranslations: ToolTranslationsDomainModel, initialPage: MobileContentPagesPage?, selectedLanguageIndex: Int?) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController
-                 
-        let navigation: MobileContentRendererNavigation = appDiContainer.getMobileContentRendererNavigation(
-            parentFlow: self,
-            navigationDelegate: self
+        
+        sharedNavigationController.pushViewController(
+            getChooseYourOwnAdventureView(toolTranslations: toolTranslations, initialPage: initialPage, selectedLanguageIndex: selectedLanguageIndex),
+            animated: true
         )
-        
-        let renderer: MobileContentRenderer = appDiContainer.getMobileContentRenderer(
-            type: .chooseYourOwnAdventure,
-            navigation: navigation,
-            toolTranslations: toolTranslations
-        )
-        
-        let viewModel = ChooseYourOwnAdventureViewModel(
-            flowDelegate: self,
-            renderer: renderer,
-            initialPage: initialPage,
-            resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
-            translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
-            mobileContentEventAnalytics: appDiContainer.getMobileContentRendererEventAnalyticsTracking(),
-            fontService: appDiContainer.getFontService(),
-            trainingTipsEnabled: false,
-            incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase()
-        )
-        
-        let view = ChooseYourOwnAdventureView(viewModel: viewModel)
-        
-        sharedNavigationController.pushViewController(view, animated: true)
     }
     
     deinit {
@@ -73,6 +54,118 @@ class ChooseYourOwnAdventureFlow: ToolNavigationFlow {
     
     private func closeTool() {
         flowDelegate?.navigate(step: .chooseYourOwnAdventureFlowCompleted(state: .userClosedTool))
+    }
+}
+
+extension ChooseYourOwnAdventureFlow {
+    
+    private func getChooseYourOwnAdventureView(toolTranslations: ToolTranslationsDomainModel, initialPage: MobileContentPagesPage?, selectedLanguageIndex: Int?) -> UIViewController {
+        
+        let navigation: MobileContentRendererNavigation = appDiContainer.getMobileContentRendererNavigation(
+            parentFlow: self,
+            navigationDelegate: self
+        )
+        
+        let renderer: MobileContentRenderer = appDiContainer.getMobileContentRenderer(
+            type: .chooseYourOwnAdventure,
+            navigation: navigation,
+            toolTranslations: toolTranslations
+        )
+        
+        let navBarLayoutDirection: UISemanticContentAttribute = ApplicationLayout.shared.currentDirection.semanticContentAttribute
+        
+        let viewModel = ChooseYourOwnAdventureViewModel(
+            flowDelegate: self,
+            renderer: renderer,
+            initialPage: initialPage,
+            resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
+            translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
+            mobileContentEventAnalytics: appDiContainer.getMobileContentRendererEventAnalyticsTracking(),
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            translatedLanguageNameRepository: appDiContainer.dataLayer.getTranslatedLanguageNameRepository(),
+            trainingTipsEnabled: false,
+            incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase(),
+            selectedLanguageIndex: selectedLanguageIndex
+        )
+        
+        navigationController.setSemanticContentAttribute(semanticContentAttribute: navBarLayoutDirection)
+                
+        let homeButton = AppHomeBarItem(
+            color: nil,
+            target: viewModel,
+            action: #selector(viewModel.homeTapped),
+            accessibilityIdentifier: nil,
+            hidesBarItemPublisher: viewModel.$hidesHomeButton.eraseToAnyPublisher()
+        )
+        
+        let backButton = AppBackBarItem(
+            target: viewModel,
+            action: #selector(viewModel.backTapped),
+            accessibilityIdentifier: nil,
+            hidesBarItemPublisher: viewModel.$hidesBackButton.eraseToAnyPublisher(),
+            layoutDirectionPublisher: Just(navBarLayoutDirection).eraseToAnyPublisher()
+        )
+                
+        var chooseYourOwnAdventureView: ChooseYourOwnAdventureView?
+        
+        let navigationBar = AppNavigationBar(
+            appearance: viewModel.navBarAppearance,
+            backButton: nil,
+            leadingItems: [homeButton, backButton],
+            trailingItems: [],
+            titleView: nil,
+            title: nil
+        )
+        
+        let view = ChooseYourOwnAdventureView(viewModel: viewModel, navigationBar: navigationBar)
+        
+        chooseYourOwnAdventureView = view
+        
+        viewModel.$languageNames.eraseToAnyPublisher()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (languageNames: [String]) in
+                                
+                if languageNames.count > 1 {
+                    navigationBar.setTitleView(
+                        titleView: self?.getNewLanguageSelectorView(view: chooseYourOwnAdventureView, viewModel: viewModel, navBarLayoutDirection: navBarLayoutDirection)
+                    )
+                }
+                else {
+                    navigationBar.setTitle(title: "GodTools")
+                }
+            }
+            .store(in: &cancellables)
+        
+        viewModel.$selectedLanguageIndex.eraseToAnyPublisher()
+            .receive(on: DispatchQueue.main)
+            .sink { (index: Int) in
+                
+                (navigationBar.getTitleView() as? NavBarSelectorView)?.setSelectedIndex(index: index)
+            }
+            .store(in: &cancellables)
+        
+        return view
+    }
+    
+    private func getNewLanguageSelectorView(view: ChooseYourOwnAdventureView?, viewModel: ChooseYourOwnAdventureViewModel, navBarLayoutDirection: UISemanticContentAttribute) -> NavBarSelectorView {
+        
+        let barColor: UIColor = viewModel.navBarAppearance.backgroundColor
+        let controlColor: UIColor = viewModel.navBarAppearance.controlColor ?? .white
+        
+        return NavBarSelectorView(
+            selectorButtonTitles: viewModel.languageNames,
+            layoutDirection: navBarLayoutDirection,
+            selectedIndex: viewModel.selectedLanguageIndex,
+            borderColor: controlColor,
+            selectedColor: controlColor,
+            deselectedColor: UIColor.clear,
+            selectedTitleColor: barColor.withAlphaComponent(1),
+            deselectedTitleColor: controlColor,
+            titleFont: viewModel.languageFont,
+            selectorTappedClosure: { (index: Int) in
+                view?.languageTapped(index: index)
+            }
+        )
     }
 }
 

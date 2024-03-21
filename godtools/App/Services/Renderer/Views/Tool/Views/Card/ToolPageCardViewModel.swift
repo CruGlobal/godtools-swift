@@ -13,7 +13,6 @@ class ToolPageCardViewModel: MobileContentViewModel {
     
     private let cardModel: TractPage.Card
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
-    private let fontService: FontService
     private let localizationServices: LocalizationServices
     private let trainingTipsEnabled: Bool
     private let visibleAnalyticsEventsObjects: [MobileContentRendererAnalyticsEvent]
@@ -25,11 +24,10 @@ class ToolPageCardViewModel: MobileContentViewModel {
     let hidesNextButton: Bool
     let isHiddenCard: Bool
     
-    init(cardModel: TractPage.Card, renderedPageContext: MobileContentRenderedPageContext, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, mobileContentAnalytics: MobileContentRendererAnalytics, fontService: FontService, localizationServices: LocalizationServices, numberOfVisbleCards: Int, trainingTipsEnabled: Bool) {
+    init(cardModel: TractPage.Card, renderedPageContext: MobileContentRenderedPageContext, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, mobileContentAnalytics: MobileContentRendererAnalytics, localizationServices: LocalizationServices, numberOfVisbleCards: Int, trainingTipsEnabled: Bool) {
                         
         self.cardModel = cardModel
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
-        self.fontService = fontService
         self.localizationServices = localizationServices
         self.trainingTipsEnabled = trainingTipsEnabled
         self.numberOfVisbleCards = numberOfVisbleCards
@@ -65,6 +63,10 @@ class ToolPageCardViewModel: MobileContentViewModel {
         super.init(baseModel: cardModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }
     
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
     private var analyticsScreenName: String {
         
         let resource: ResourceModel = renderedPageContext.resource
@@ -93,7 +95,7 @@ class ToolPageCardViewModel: MobileContentViewModel {
     }
     
     var titleFont: UIFont {
-        return fontService.getFont(size: 19, weight: .regular)
+        return FontLibrary.systemUIFont(size: 19, weight: .regular)
     }
     
     var titleAlignment: NSTextAlignment {
@@ -114,7 +116,7 @@ class ToolPageCardViewModel: MobileContentViewModel {
     }
     
     var cardPositionLabelFont: UIFont {
-        return fontService.getFont(size: 18, weight: .regular)
+        return FontLibrary.systemUIFont(size: 18, weight: .regular)
     }
     
     var previousButtonTitle: String? {
@@ -126,7 +128,7 @@ class ToolPageCardViewModel: MobileContentViewModel {
     }
     
     var previousButtonTitleFont: UIFont {
-        return fontService.getFont(size: 18, weight: .regular)
+        return FontLibrary.systemUIFont(size: 18, weight: .regular)
     }
     
     var nextButtonTitle: String? {
@@ -138,7 +140,7 @@ class ToolPageCardViewModel: MobileContentViewModel {
     }
     
     var nextButtonTitleFont: UIFont {
-        return fontService.getFont(size: 18, weight: .regular)
+        return FontLibrary.systemUIFont(size: 18, weight: .regular)
     }
     
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {

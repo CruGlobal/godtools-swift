@@ -13,9 +13,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Tool open</string>
+<string>Herramienta abierta</string>
 <key>other</key>
-<string>Tool opens</string>
+<string>Herramientas abiertas</string>
 </dict>
 </dict>
 <key>account.activity.lessonCompletions</key>
@@ -29,9 +29,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Lesson completion</string>
+<string>Leccion completada</string>
 <key>other</key>
-<string>Lesson completions</string>
+<string>Lecciones completada</string>
 </dict>
 </dict>
 <key>account.activity.screenShares</key>
@@ -45,9 +45,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Screen share</string>
+<string>Pantalla compartida</string>
 <key>other</key>
-<string>Screen shares</string>
+<string>Pantalla compartidas</string>
 </dict>
 </dict>
 <key>account.activity.linksShared</key>
@@ -61,9 +61,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Link share</string>
+<string>Enlace compartido</string>
 <key>other</key>
-<string>Link shares</string>
+<string>Enlaces compartidos</string>
 </dict>
 </dict>
 <key>account.activity.languagesUsed</key>
@@ -77,9 +77,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Language used</string>
+<string>Idioma utilizados</string>
 <key>other</key>
-<string>Languages used</string>
+<string>Idioma utilizados</string>
 </dict>
 </dict>
 <key>account.activity.sessions</key>
@@ -93,9 +93,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Session</string>
+<string>Sesion</string>
 <key>other</key>
-<string>Sessions</string>
+<string>Sesiones</string>
 </dict>
 </dict>
 <key>tools.filter.toolsAvailable</key>
@@ -109,9 +109,25 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>1 Tool available</string>
+<string>1 herramineta disponsibles</string>
 <key>other</key>
-<string>%d Tools available</string>
+<string>%d herramientas disponibles</string>
+</dict>
+</dict>
+<key>languageSettings.appLanguage.numberAvailable</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@appLanguageCount@</string>
+<key>appLanguageCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>%d Idioma disponible</string>
+<key>other</key>
+<string>%d Idiomas disponibles</string>
 </dict>
 </dict>
 <key>badges.imagesShared</key>
@@ -125,9 +141,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Shared 1 image</string>
+<string>Imagen 1 compartida</string>
 <key>other</key>
-<string>Shared %d images</string>
+<string>Imagen %d compartida</string>
 </dict>
 </dict>
 <key>badges.articlesOpened</key>
@@ -141,9 +157,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Read 1 article</string>
+<string>Leer 1 artículo</string>
 <key>other</key>
-<string>Read %d articles</string>
+<string>Leer %d artículos</string>
 </dict>
 </dict>
 <key>badges.lessonsCompleted</key>
@@ -157,9 +173,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Completed 1 lesson</string>
+<string>Lección 1 completada</string>
 <key>other</key>
-<string>Completed %d lessons</string>
+<string>Lección %d completada</string>
 </dict>
 </dict>
 <key>badges.toolsOpened</key>
@@ -173,9 +189,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Opened 1 tool</string>
+<string>Herramienta 1 abierta</string>
 <key>other</key>
-<string>Opened %d tools</string>
+<string>Herramientas %d abierta</string>
 </dict>
 </dict>
 <key>badges.tipsCompleted</key>
@@ -189,9 +205,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Completed 1 training tip</string>
+<string>Tips de entrenamiento 1 completado</string>
 <key>other</key>
-<string>Completed %d training tips</string>
+<string>Tips de entrenamiento %d completado</string>
 </dict>
 </dict>
 </dict>

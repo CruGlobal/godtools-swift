@@ -17,13 +17,13 @@ class AppInterfaceStringNavBarItemController: NavBarItemController {
     private var currentInterfaceString: String?
     private var cancellables: Set<AnyCancellable> = Set()
     
-    init(viewController: UIViewController, navBarItem: AppInterfaceStringBarItem, itemBarPosition: BarButtonItemBarPosition, itemIndex: Int, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase) {
+    init(delegate: NavBarItemControllerDelegate, navBarItem: AppInterfaceStringBarItem, itemBarPosition: BarButtonItemBarPosition, itemIndex: Int, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase) {
                
         self.interfaceStringBarItem = navBarItem
         self.getInterfaceStringInAppLanguageUseCase = getInterfaceStringInAppLanguageUseCase
         
         super.init(
-            viewController: viewController,
+            delegate: delegate,
             navBarItem: navBarItem,
             itemBarPosition: itemBarPosition,
             itemIndex: itemIndex

@@ -1,8 +1,9 @@
 //
 //  ToolSettingsOptionsView.swift
-//  ToolSettings
+//  godtools
 //
 //  Created by Levi Eggert on 5/10/22.
+//  Copyright © 2022 Cru. All rights reserved.
 //
 
 import SwiftUI
@@ -27,37 +28,37 @@ struct ToolSettingsOptionsView: View {
             ScrollView (.horizontal, showsIndicators: false) {
                 HStack {
                     
-                    ToolSettingsOptionsItemView(
-                        backgroundType: .color(color: Color(.sRGB, red: 59 / 256, green: 164 / 256, blue: 219 / 256, opacity: 1)),
-                        iconImage: Image(ImageCatalog.toolSettingsOptionShareLink.name),
+                    ToolSettingsOptionView(
+                        viewBackground: .color(color: Color(.sRGB, red: 59 / 256, green: 164 / 256, blue: 219 / 256, opacity: 1)),
                         title: viewModel.shareLinkTitle,
-                        titleColorStyle: .darkBackground
-                    )
-                    .onTapGesture {
-                        viewModel.shareLinkTapped()
-                    }
-                    
-                    ToolSettingsOptionsItemView(
-                        backgroundType: .color(color: Color(.sRGB, red: 245 / 256, green: 245 / 256, blue: 245 / 256, opacity: 1)),
-                        iconImage: Image(ImageCatalog.toolSettingsOptionScreenShare.name),
-                        title: viewModel.screenShareTitle,
-                        titleColorStyle: .lightBackground
-                    )
-                    .onTapGesture {
-                        viewModel.screenShareTapped()
-                    }
-                    
-                    if !viewModel.hidesToggleTrainingTipsButton {
-                        
-                        ToolSettingsOptionsItemView(
-                            backgroundType: .image(image: Image(ImageCatalog.toolSettingsOptionTrainingTipsBackground.name)),
-                            iconImage: viewModel.trainingTipsIcon,
-                            title: viewModel.trainingTipsTitle,
-                            titleColorStyle: .lightBackground
-                        )
-                        .onTapGesture {
-                            viewModel.trainingTipsTapped()
+                        titleColorStyle: .darkBackground,
+                        iconImage: ImageCatalog.toolSettingsOptionShareLink.image,
+                        tappedClosure: {
+                            viewModel.shareLinkTapped()
                         }
+                    )
+                    
+                    ToolSettingsOptionView(
+                        viewBackground: .color(color: Color(.sRGB, red: 245 / 256, green: 245 / 256, blue: 245 / 256, opacity: 1)),
+                        title: viewModel.screenShareTitle,
+                        titleColorStyle: .lightBackground,
+                        iconImage: ImageCatalog.toolSettingsOptionScreenShare.image,
+                        tappedClosure: {
+                            viewModel.screenShareTapped()
+                        }
+                    )
+                    
+                    if !viewModel.hidesTrainingTipsButton {
+                        
+                        ToolSettingsOptionView(
+                            viewBackground: .image(image: ImageCatalog.toolSettingsOptionTrainingTipsBackground.image),
+                            title: viewModel.trainingTipsTitle,
+                            titleColorStyle: .lightBackground,
+                            iconImage: viewModel.trainingTipsIcon,
+                            tappedClosure: {
+                                viewModel.trainingTipsTapped()
+                            }
+                        )
                     }
                 }
                 .padding(EdgeInsets(top: 0, leading: leadingInset, bottom: 0, trailing: trailingInset))

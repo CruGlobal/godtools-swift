@@ -10,6 +10,7 @@ import Foundation
 
 struct ToolVersionDomainModel {
     
+    let analyticsToolAbbreviation: String
     let bannerImageId: String
     let dataModelId: String
     let description: String
@@ -17,6 +18,8 @@ struct ToolVersionDomainModel {
     let numberOfLanguages: String
     let toolLanguageName: String?
     let toolLanguageNameIsSupported: Bool
+    let toolParallelLanguageName: String?
+    let toolParallelLanguageNameIsSupported: Bool?
 }
 
 extension ToolVersionDomainModel: Identifiable {

@@ -13,7 +13,7 @@ class ToolScreenShareTutorialViewModel: ObservableObject {
     
     private static var didViewToolScreenShareTutorialCancellable: AnyCancellable?
     
-    private let tool: ResourceModel // TODO: Eventually this will need to be ToolDomainModel. ~Levi
+    private let toolId: String
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let viewToolScreenShareTutorialUseCase: ViewToolScreenShareTutorialUseCase
     private let didViewToolScreenShareTutorialUseCase: DidViewToolScreenShareTutorialUseCase
@@ -30,10 +30,10 @@ class ToolScreenShareTutorialViewModel: ObservableObject {
     @Published var continueTitle: String = ""
     @Published var currentPage: Int = 0
     
-    init(flowDelegate: FlowDelegate, tool: ResourceModel, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewToolScreenShareTutorialUseCase: ViewToolScreenShareTutorialUseCase, didViewToolScreenShareTutorialUseCase: DidViewToolScreenShareTutorialUseCase) {
+    init(flowDelegate: FlowDelegate, toolId: String, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewToolScreenShareTutorialUseCase: ViewToolScreenShareTutorialUseCase, didViewToolScreenShareTutorialUseCase: DidViewToolScreenShareTutorialUseCase) {
         
         self.flowDelegate = flowDelegate
-        self.tool = tool
+        self.toolId = toolId
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.viewToolScreenShareTutorialUseCase = viewToolScreenShareTutorialUseCase
         self.didViewToolScreenShareTutorialUseCase = didViewToolScreenShareTutorialUseCase
@@ -71,6 +71,10 @@ class ToolScreenShareTutorialViewModel: ObservableObject {
                 self?.pageDidChange(page: page)
             }
             .store(in: &cancellables)
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
     }
     
     private var analyticsScreenName: String {
@@ -122,7 +126,7 @@ extension ToolScreenShareTutorialViewModel {
     private func shareLinkTapped() {
         
         ToolScreenShareTutorialViewModel.didViewToolScreenShareTutorialCancellable = didViewToolScreenShareTutorialUseCase
-            .didViewPublisher(tool: tool)
+            .didViewPublisher(toolId: toolId)
             .sink { _ in
                 
             }

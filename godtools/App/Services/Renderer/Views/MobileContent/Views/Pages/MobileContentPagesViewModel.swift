@@ -10,13 +10,16 @@ import UIKit
 import GodToolsToolParser
 import Combine
 
-class MobileContentPagesViewModel: NSObject {
+class MobileContentPagesViewModel: NSObject, ObservableObject {
     
     private let resourcesRepository: ResourcesRepository
     private let translationsRepository: TranslationsRepository
     private let mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking
+    private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
+    private let translatedLanguageNameRepository: TranslatedLanguageNameRepository
     private let initialPageRenderingType: MobileContentPagesInitialPageRenderingType
     private let initialPage: MobileContentPagesPage
+    private let initialSelectedLanguageIndex: Int
     
     private var safeArea: UIEdgeInsets?
     private var pageModels: [Page] = Array()
@@ -31,12 +34,17 @@ class MobileContentPagesViewModel: NSObject {
     
     private(set) weak var window: UIViewController?
     
+    @Published private(set) var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    @Published private(set) var languages: [LanguageDomainModel] = Array()
+    @Published private(set) var languageNames: [String] = Array()
+    @Published private(set) var selectedLanguageIndex: Int
+    
     let rendererWillChangeSignal: Signal = Signal()
     let pageNavigationEventSignal: SignalValue<MobileContentPagesNavigationEvent> = SignalValue()
     let pagesRemovedSignal: SignalValue<[Int]> = SignalValue()
     let incrementUserCounterUseCase: IncrementUserCounterUseCase
     
-    init(renderer: MobileContentRenderer, initialPage: MobileContentPagesPage?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, initialPageRenderingType: MobileContentPagesInitialPageRenderingType, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
+    init(renderer: MobileContentRenderer, initialPage: MobileContentPagesPage?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, translatedLanguageNameRepository: TranslatedLanguageNameRepository, initialPageRenderingType: MobileContentPagesInitialPageRenderingType, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?) {
         
         self.renderer = CurrentValueSubject(renderer)
         self.currentPageRenderer = CurrentValueSubject(renderer.pageRenderers[0])
@@ -44,11 +52,32 @@ class MobileContentPagesViewModel: NSObject {
         self.resourcesRepository = resourcesRepository
         self.translationsRepository = translationsRepository
         self.mobileContentEventAnalytics = mobileContentEventAnalytics
+        self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
+        self.translatedLanguageNameRepository = translatedLanguageNameRepository
         self.initialPageRenderingType = initialPageRenderingType
         self.trainingTipsEnabled = trainingTipsEnabled
         self.incrementUserCounterUseCase = incrementUserCounterUseCase
+        self.initialSelectedLanguageIndex = selectedLanguageIndex ?? 0
+        self.selectedLanguageIndex = initialSelectedLanguageIndex
                 
         super.init()
+        
+        getCurrentAppLanguageUseCase
+            .getLanguagePublisher()
+            .assign(to: &$appLanguage)
+        
+        Publishers.CombineLatest(
+            $languages.eraseToAnyPublisher(),
+            $appLanguage.eraseToAnyPublisher()
+        )
+        .receive(on: DispatchQueue.main)
+        .sink { [weak self] (languages: [LanguageDomainModel], appLanguage: AppLanguageDomainModel) in
+            
+            self?.languageNames = languages.map({ (language: LanguageDomainModel) in
+                translatedLanguageNameRepository.getLanguageName(language: language.localeIdentifier, translatedInLanguage: appLanguage)
+            })
+        }
+        .store(in: &cancellables)
               
         resourcesRepository.getResourcesChangedPublisher()
             .receive(on: DispatchQueue.main)
@@ -64,6 +93,15 @@ class MobileContentPagesViewModel: NSObject {
         return renderer.value.resource
     }
     
+    func getSelectedLanguage() -> LanguageDomainModel? {
+        
+        guard selectedLanguageIndex >= 0 && selectedLanguageIndex < languages.count else {
+            return nil
+        }
+        
+        return languages[selectedLanguageIndex]
+    }
+    
     func viewDidFinishLayout(window: UIViewController, safeArea: UIEdgeInsets) {
         
         self.window = window
@@ -71,7 +109,7 @@ class MobileContentPagesViewModel: NSObject {
         
         incrementToolOpenUserCounter()
         
-        setRenderer(renderer: renderer.value, pageRendererIndex: nil, navigationEvent: nil)
+        setRenderer(renderer: renderer.value, pageRendererIndex: selectedLanguageIndex, navigationEvent: nil)
     }
     
     func handleDismissToolEvent() {
@@ -110,21 +148,82 @@ class MobileContentPagesViewModel: NSObject {
         setPageRenderer(pageRenderer: currentPageRenderer.value, navigationEvent: nil, pagePositions: nil)
     }
     
+    func getPages() -> [Page] {
+        return pageModels
+    }
+    
+    func setPages(pages: [Page]) {
+        pageModels = pages
+    }
+
+    func getCurrentPage() -> Page? {
+
+        guard currentRenderedPageNumber >= 0 && currentRenderedPageNumber < pageModels.count else {
+            return nil
+        }
+
+        return pageModels[currentRenderedPageNumber]
+    }
+    
     // MARK: - Renderer / Page Renderer
     
     var primaryPageRenderer: MobileContentPageRenderer {
         return renderer.value.pageRenderers[0]
     }
     
-    private func getRendererLanguageDirection() -> UISemanticContentAttribute {
+    var layoutDirection: UISemanticContentAttribute {
         return UISemanticContentAttribute.from(languageDirection: renderer.value.primaryLanguage.direction)
+    }
+    
+    func setRendererPrimaryLanguage(primaryLanguageId: String, parallelLanguageId: String?, selectedLanguageId: String?) {
+        
+        let currentRenderer: MobileContentRenderer = renderer.value
+        
+        var newLanguageIds: [String] = [primaryLanguageId]
+        
+        if let parallelLanguageId = parallelLanguageId {
+            newLanguageIds.append(parallelLanguageId)
+        }
+        
+        let newSelectedLanguageIndex: Int? = newLanguageIds.firstIndex(where: {$0 == selectedLanguageId})
+        
+        let didDownloadToolTranslationsClosure = { [weak self] (result: Result<ToolTranslationsDomainModel, Error>) in
+                   
+            switch result {
+            
+            case .success(let toolTranslations):
+                
+                let newRenderer: MobileContentRenderer = currentRenderer.copy(toolTranslations: toolTranslations)
+                
+                self?.setRenderer(renderer: newRenderer, pageRendererIndex: newSelectedLanguageIndex, navigationEvent: nil)
+                
+            case .failure( _):
+                break
+            }
+        }
+        
+        currentRenderer.navigation.downloadToolLanguages(
+            toolId: currentRenderer.resource.id,
+            languageIds: newLanguageIds,
+            completion: didDownloadToolTranslationsClosure
+        )
+    }
+    
+    func setRendererTranslations(toolTranslations: ToolTranslationsDomainModel, pageRendererIndex: Int?) {
+        
+        let newRenderer: MobileContentRenderer = renderer.value.copy(toolTranslations: toolTranslations)
+        
+        setRenderer(renderer: newRenderer, pageRendererIndex: pageRendererIndex, navigationEvent: nil)
     }
     
     func setRenderer(renderer: MobileContentRenderer, pageRendererIndex: Int?, navigationEvent: MobileContentPagesNavigationEvent?) {
             
-        let pageRenderer: MobileContentPageRenderer?
+        languages = renderer.pageRenderers.map({$0.language})
         
-        if let pageRendererIndex = pageRendererIndex, pageRendererIndex >= 0 && pageRendererIndex < renderer.pageRenderers.count {
+        let pageRenderer: MobileContentPageRenderer?
+        let pageRendererIndex: Int = pageRendererIndex ?? selectedLanguageIndex
+        
+        if pageRendererIndex >= 0 && pageRendererIndex < renderer.pageRenderers.count {
             pageRenderer = renderer.pageRenderers[pageRendererIndex]
         }
         else if let firstPageRenderer = renderer.pageRenderers.first {
@@ -174,11 +273,12 @@ class MobileContentPagesViewModel: NSObject {
             
             navigationEventToSend = MobileContentPagesNavigationEvent(
                 pageNavigation: PageNavigationCollectionViewNavigationModel(
-                    navigationDirection: getRendererLanguageDirection(),
+                    navigationDirection: layoutDirection,
                     page: currentRenderedPageNumber,
                     animated: false,
                     reloadCollectionViewDataNeeded: true,
-                    insertPages: nil
+                    insertPages: nil,
+                    deletePages: nil
                 ),
                 pagePositions: pagePositions
             )
@@ -186,16 +286,22 @@ class MobileContentPagesViewModel: NSObject {
                 
         let eventWithCorrectLanguageDirection: MobileContentPagesNavigationEvent = MobileContentPagesNavigationEvent(
             pageNavigation: PageNavigationCollectionViewNavigationModel(
-                navigationDirection: getRendererLanguageDirection(),
+                navigationDirection: layoutDirection,
                 page: navigationEventToSend.pageNavigation.page,
                 animated: navigationEventToSend.pageNavigation.animated,
                 reloadCollectionViewDataNeeded: navigationEventToSend.pageNavigation.reloadCollectionViewDataNeeded,
-                insertPages: nil
+                insertPages: nil,
+                deletePages: nil
             ),
             pagePositions: navigationEventToSend.pagePositions
         )
         
         sendPageNavigationEvent(navigationEvent: eventWithCorrectLanguageDirection)
+        
+        let pageRenderers: [MobileContentPageRenderer] = renderer.value.pageRenderers
+        let pageRendererIndex: Int = pageRenderers.firstIndex(where: { $0.language.id == pageRenderer.language.id }) ?? 0
+        
+        selectedLanguageIndex = pageRendererIndex
     }
     
     func getNumberOfRenderedPages() -> Int {
@@ -412,7 +518,8 @@ extension MobileContentPagesViewModel {
                     page: pageIndex,
                     animated: animated,
                     reloadCollectionViewDataNeeded: reloadCollectionViewDataNeeded,
-                    insertPages: nil
+                    insertPages: nil,
+                    deletePages: nil
                 ),
                 pagePositions: nil
             )
@@ -445,7 +552,8 @@ extension MobileContentPagesViewModel {
                     page: insertAtIndex,
                     animated: animated,
                     reloadCollectionViewDataNeeded: reloadCollectionViewDataNeeded,
-                    insertPages: [insertAtIndex]
+                    insertPages: [insertAtIndex],
+                    deletePages: nil
                 ),
                 pagePositions: nil
             )

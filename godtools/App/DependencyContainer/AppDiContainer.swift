@@ -29,25 +29,41 @@ class AppDiContainer {
         
         let accountCreationDiContainer = AccountCreationFeatureDiContainer(coreDataLayer: dataLayer)
         let appLanguageDiContainer = AppLanguageFeatureDiContainer(coreDataLayer: dataLayer)
+        let dashboardDiContainer = DashboardDiContainer(coreDataLayer: dataLayer)
         let downloadToolProgressDiContainer = DownloadToolProgressFeatureDiContainer(coreDataLayer: dataLayer)
+        let learnToShareToolDiContainer = LearnToShareToolDiContainer(coreDataLayer: dataLayer)
         let lessonEvaluationDiContainer = LessonEvaluationFeatureDiContainer(coreDataLayer: dataLayer)
-        let lessonsDiContainer = LessonsFeatureDiContainer(coreDataLayer: dataLayer, appLanguageFeatureDiContainer: appLanguageDiContainer)
-        let featuredLessonsDiContainer = FeaturedLessonsDiContainer(coreDataLayer: dataLayer, appLanguageFeatureDomainLayer: appLanguageDiContainer.domainLayer, lessonsFeatureDomainLayer: lessonsDiContainer.domainLayer)
-        let onboardingDiContainer = OnboardingDiContainer(coreDataLayer: dataLayer, appDomainLayer: domainLayer, appLanguageFeatureDomainLayer: appLanguageDiContainer.domainLayer)
-        let toolDetailsDiContainer = ToolDetailsFeatureDiContainer(coreDataLayer: dataLayer, appLanguageFeatureDiContainer: appLanguageDiContainer)
+        let lessonsDiContainer = LessonsFeatureDiContainer(coreDataLayer: dataLayer)
+        let favoritesDiContainer = FavoritesDiContainer(coreDataLayer: dataLayer)
+        let featuredLessonsDiContainer = FeaturedLessonsDiContainer(coreDataLayer: dataLayer)
+        let onboardingDiContainer = OnboardingDiContainer(coreDataLayer: dataLayer)
+        let shareablesDiContainer: ShareablesDiContainer = ShareablesDiContainer(coreDataLayer: dataLayer)
+        let spotlightToolsDiContainer = SpotlightToolsDiContainer(coreDataLayer: dataLayer)
+        let toolDetailsDiContainer = ToolDetailsFeatureDiContainer(coreDataLayer: dataLayer)
         let toolScreenShareDiContainer = ToolScreenShareFeatureDiContainer(coreDataLayer: dataLayer)
+        let toolSettingsDiContainer = ToolSettingsDiContainer(coreDataLayer: dataLayer)
+        let toolsFilterDiContainer = ToolsFilterFeatureDiContainer(coreDataLayer: dataLayer, coreDomainLayer: domainLayer)
+        let toolShortcutLinks = ToolShortcutLinksDiContainer(coreDataLayer: dataLayer)
         let tutorialDiContainer = TutorialFeatureDiContainer(coreDataLayer: dataLayer)
         
         feature = AppFeatureDiContainer(
             accountCreation: accountCreationDiContainer,
             appLanguage: appLanguageDiContainer,
+            dashboard: dashboardDiContainer,
             downloadToolProgress: downloadToolProgressDiContainer,
+            favorites: favoritesDiContainer,
             featuredLessons: featuredLessonsDiContainer,
+            learnToShareTool: learnToShareToolDiContainer,
             lessonEvaluation: lessonEvaluationDiContainer,
             lessons: lessonsDiContainer,
             onboarding: onboardingDiContainer,
+            shareables: shareablesDiContainer,
+            spotlightTools: spotlightToolsDiContainer,
             toolDetails: toolDetailsDiContainer,
             toolScreenShare: toolScreenShareDiContainer,
+            toolSettings: toolSettingsDiContainer,
+            toolsFilter: toolsFilterDiContainer,
+            toolShortcutLinks: toolShortcutLinks,
             tutorial: tutorialDiContainer
         )
                                                                 
@@ -64,14 +80,6 @@ class AppDiContainer {
     
     func getFirebaseDebugArguments() -> FirebaseDebugArguments {
         return FirebaseDebugArguments()
-    }
-    
-    func getFontService() -> FontService {
-        return FontService(getSettingsPrimaryLanguageUseCase: domainLayer.getSettingsPrimaryLanguageUseCase())
-    }
-    
-    func getGoogleAdwordsAnalytics() -> GoogleAdwordsAnalytics {
-        return GoogleAdwordsAnalytics(config: dataLayer.getAppConfig())
     }
     
     func getMobileContentRenderer(type: MobileContentRendererPageViewFactoriesType, navigation: MobileContentRendererNavigation, toolTranslations: ToolTranslationsDomainModel) -> MobileContentRenderer {
@@ -125,7 +133,10 @@ class AppDiContainer {
     
     func getToolTrainingTipsOnboardingViews() -> ToolTrainingTipsOnboardingViewsService {
         return ToolTrainingTipsOnboardingViewsService(
-            cache: ToolTrainingTipsOnboardingViewsUserDefaultsCache(userDefaultsCache: sharedUserDefaultsCache)
+            cache: ToolTrainingTipsOnboardingViewsUserDefaultsCache(
+                userDefaultsCache: sharedUserDefaultsCache,
+                getTranslatedToolName: dataLayer.getTranslatedToolName()
+            )
         )
     }
 }

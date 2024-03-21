@@ -18,6 +18,8 @@ class MenuFlow: Flow {
     
     private weak var flowDelegate: FlowDelegate?
     
+    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    
     let appDiContainer: AppDiContainer
     let navigationController: AppNavigationController
     
@@ -25,23 +27,26 @@ class MenuFlow: Flow {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
-        
-        let fontService: FontService = appDiContainer.getFontService()
-        
-        navigationController = AppNavigationController(navigationBarAppearance: nil)
-        navigationController.setNavigationBarHidden(false, animated: false)
-        
-        navigationController.navigationBar.setupNavigationBarAppearance(
+                
+        let navigationBarAppearance = AppNavigationBarAppearance(
             backgroundColor: ColorPalette.gtBlue.uiColor,
             controlColor: .white,
-            titleFont: fontService.getFont(size: 17, weight: .semibold),
+            titleFont: FontLibrary.systemUIFont(size: 17, weight: .semibold),
             titleColor: .white,
             isTranslucent: false
         )
         
+        navigationController = AppNavigationController(navigationBarAppearance: navigationBarAppearance)
+        navigationController.setNavigationBarHidden(false, animated: false)
+        
         let view: UIViewController = getMenuView()
         
         navigationController.setViewControllers([view], animated: false)
+        
+        appDiContainer.feature.appLanguage.domainLayer
+            .getCurrentAppLanguageUseCase()
+            .getLanguagePublisher()
+            .assign(to: &$appLanguage)
     }
     
     deinit {
@@ -318,14 +323,16 @@ class MenuFlow: Flow {
     private func getAuthErrorAlertMessage(authError: AuthErrorDomainModel) -> AlertMessageType {
         
         let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
+        let appLanguageLocaleId = appLanguage.localeId
+        
         let message: String
         
         switch authError {
         case .accountAlreadyExists:
-            message = localizationServices.stringForSystemElseEnglish(key: "authError.userAccountAlreadyExists.message")
+            message = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguageLocaleId, key: "authError.userAccountAlreadyExists.message")
             
         case .accountNotFound:
-            message = localizationServices.stringForSystemElseEnglish(key: "authError.userAccountNotFound.message")
+            message = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguageLocaleId, key: "authError.userAccountNotFound.message")
             
         case .other(let error):
             message = error.localizedDescription
@@ -341,11 +348,12 @@ class MenuFlow: Flow {
         
         let viewModel = AccountViewModel(
             flowDelegate: self,
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getUserAccountDetailsUseCase: appDiContainer.domainLayer.getUserAccountDetailsUseCase(),
             getUserActivityUseCase: appDiContainer.domainLayer.getUserActivityUseCase(),
             getGlobalActivityThisWeekUseCase: appDiContainer.domainLayer.getGlobalActivityThisWeekUseCase(),
-            getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
-            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase()
+            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(), 
+            viewAccountUseCase: appDiContainer.domainLayer.getViewAccountUseCase()
         )
         
         let view = AccountView(viewModel: viewModel)

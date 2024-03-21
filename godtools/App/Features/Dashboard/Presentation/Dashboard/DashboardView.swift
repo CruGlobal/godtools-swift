@@ -27,20 +27,33 @@ struct DashboardView: View {
             
             VStack(alignment: .center, spacing: 0) {
                 
-                PagedView(numberOfPages: viewModel.numberOfTabs, currentPage: $viewModel.currentTab) { (index: Int) in
+                TabView(selection: $viewModel.currentTab) {
                     
-                    switch viewModel.getTab(tabIndex: index) {
+                    Group {
                         
-                    case .lessons:
-                        LessonsView(viewModel: viewModel.getLessonsViewModel())
-                        
-                    case .favorites:
-                        FavoritesView(viewModel: viewModel.getFavoritesViewModel())
-                        
-                    case .tools:
-                        ToolsView(viewModel: viewModel.getToolsViewModel())
+                        if ApplicationLayout.shared.layoutDirection == .rightToLeft {
+                            
+                            ForEach((0 ..< viewModel.tabs.count).reversed(), id: \.self) { index in
+                                
+                                getDashboardPageView(index: index)
+                                    .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
+                                    .tag(index)
+                            }
+                        }
+                        else {
+                            
+                            ForEach(0 ..< viewModel.tabs.count, id: \.self) { index in
+                                
+                                getDashboardPageView(index: index)
+                                    .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
+                                    .tag(index)
+                            }
+                        }
                     }
                 }
+                .environment(\.layoutDirection, .leftToRight)
+                .tabViewStyle(.page(indexDisplayMode: .never))
+                .animation(.easeOut, value: viewModel.currentTab)
                 
                 DashboardTabBarView(
                     viewModel: viewModel
@@ -49,12 +62,27 @@ struct DashboardView: View {
         }
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
     }
+    
+    @ViewBuilder private func getDashboardPageView(index: Int) -> some View {
+        
+        switch viewModel.tabs[index] {
+            
+        case .lessons:
+            LessonsView(viewModel: viewModel.getLessonsViewModel())
+            
+        case .favorites:
+            FavoritesView(viewModel: viewModel.getFavoritesViewModel())
+            
+        case .tools:
+            ToolsView(viewModel: viewModel.getToolsViewModel())
+        }
+    }
 }
     
 extension DashboardView {
     
     func getCurrentTab() -> DashboardTabTypeDomainModel {
-        return viewModel.getTab(tabIndex: viewModel.currentTab)
+        return viewModel.getTab(tabIndex: viewModel.currentTab) ?? .favorites
     }
     
     func navigateToTab(tab: DashboardTabTypeDomainModel) {
@@ -77,8 +105,8 @@ struct DashboardView_Previews: PreviewProvider {
             startingTab: .favorites,
             flowDelegate: MockFlowDelegate(),
             dashboardPresentationLayerDependencies: DashboardPresentationLayerDependencies(appDiContainer: appDiContainer, flowDelegate: MockFlowDelegate()),
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-            hidesLanguagesSettingsButton: CurrentValueSubject<Bool, Never>(false)
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            viewDashboardUseCase: appDiContainer.feature.dashboard.domainLayer.getViewDashboardUseCase()
         )
         
         return viewModel

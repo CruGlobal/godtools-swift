@@ -23,6 +23,7 @@ class DownloadToolProgressFeatureDataLayerDependencies {
     
     func getDownloadToolProgressInterfaceStringsRepositoryInterface() -> GetDownloadToolProgressInterfaceStringsRepositoryInterface {
         return GetDownloadToolProgressInterfaceStringsRepository(
+            resourcesRepository: coreDataLayer.getResourcesRepository(),
             localizationServices: coreDataLayer.getLocalizationServices(),
             favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository()
         )

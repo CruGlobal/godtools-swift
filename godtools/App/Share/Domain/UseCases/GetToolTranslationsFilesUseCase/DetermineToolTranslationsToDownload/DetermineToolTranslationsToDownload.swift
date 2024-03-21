@@ -15,7 +15,7 @@ class DetermineToolTranslationsToDownload: DetermineToolTranslationsToDownloadTy
     private let resourcesRepository: ResourcesRepository
     private let translationsRepository: TranslationsRepository
         
-    required init(resourceId: String, languageIds: [String], resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository) {
+    init(resourceId: String, languageIds: [String], resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository) {
         
         self.resourceId = resourceId
         self.languageIds = languageIds

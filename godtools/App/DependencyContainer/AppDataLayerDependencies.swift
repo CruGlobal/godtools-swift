@@ -33,7 +33,13 @@ class AppDataLayerDependencies {
     }
     
     // MARK: - Data Layer Classes
-            
+    
+    func getAccountInterfaceStringsRepositoryInterface() -> GetAccountInterfaceStringsRepositoryInterface {
+        return GetAccountInterfaceStringsRepository(
+            localizationServices: getLocalizationServices()
+        )
+    }
+    
     func getAnalytics() -> AnalyticsContainer {
         return sharedAnalytics
     }
@@ -150,12 +156,6 @@ class AppDataLayerDependencies {
         return sharedInfoPlist
     }
     
-    func getInitialDataDownloader() -> InitialDataDownloader {
-        return InitialDataDownloader(
-            resourcesRepository: getResourcesRepository()
-        )
-    }
-    
     func getLanguageSettingsRepository() -> LanguageSettingsRepository {
         return LanguageSettingsRepository(
             cache: LanguageSettingsCache()
@@ -164,8 +164,6 @@ class AppDataLayerDependencies {
     
     func getLanguagesRepository() -> LanguagesRepository {
         
-        let sync = RealmLanguagesCacheSync(realmDatabase: sharedRealmDatabase)
-        
         let api = MobileContentLanguagesApi(
             config: getAppConfig(),
             ignoreCacheSession: sharedIgnoreCacheSession
@@ -173,7 +171,7 @@ class AppDataLayerDependencies {
         
         let cache = RealmLanguagesCache(
             realmDatabase: sharedRealmDatabase,
-            languagesSync: sync
+            languagesSync: RealmLanguagesCacheSync(realmDatabase: sharedRealmDatabase)
         )
         
         return LanguagesRepository(
@@ -184,6 +182,10 @@ class AppDataLayerDependencies {
     
     func getLocaleLanguageName() -> LocaleLanguageName {
         return LocaleLanguageName()
+    }
+    
+    func getLocaleLanguageRegionName() -> LocaleLanguageRegionName {
+        return LocaleLanguageRegionName()
     }
     
     func getLocaleLanguageScriptName() -> LocaleLanguageScriptName {
@@ -270,6 +272,12 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getSearchBarInterfaceStringsRepositoryInterface() -> GetSearchBarInterfaceStringsRepositoryInterface {
+        return GetSearchBarInterfaceStringsRepository(
+            localizationServices: getLocalizationServices()
+        )
+    }
+    
     func getSharedAppsFlyer() -> AppsFlyer {
         return AppsFlyer.shared
     }
@@ -286,9 +294,67 @@ class AppDataLayerDependencies {
         return sharedUserDefaultsCache
     }
     
+    func getToolDownloader() -> ToolDownloader {
+        return ToolDownloader(
+            resourcesRepository: getResourcesRepository(),
+            languagesRepository: getLanguagesRepository(),
+            translationsRepository: getTranslationsRepository(),
+            attachmentsRepository: getAttachmentsRepository()
+        )
+    }
+    
+    func getToolListItemInterfaceStringsRepository() -> GetToolListItemInterfaceStringsRepository {
+        return GetToolListItemInterfaceStringsRepository(
+            localizationServices: getLocalizationServices()
+        )
+    }
+    
     func getTrackDownloadedTranslationsRepository() -> TrackDownloadedTranslationsRepository {
         return TrackDownloadedTranslationsRepository(
             cache: TrackDownloadedTranslationsCache(realmDatabase: sharedRealmDatabase)
+        )
+    }
+    
+    private func getTranslatedLanguageNameCache() -> RealmTranslatedLanguageNameCache {
+        return RealmTranslatedLanguageNameCache(realmDatabase: sharedRealmDatabase)
+    }
+    
+    func getTranslatedLanguageNameRepository() -> TranslatedLanguageNameRepository {
+        return TranslatedLanguageNameRepository(
+            getTranslatedLanguageName: getTranslatedLanguageName(),
+            cache: getTranslatedLanguageNameCache()
+        )
+    }
+    
+    func getTranslatedLanguageNameRepositorySync() -> TranslatedLanguageNameRepositorySync {
+        return TranslatedLanguageNameRepositorySync(
+            realmDatabase: sharedRealmDatabase,
+            languagesRepository: getLanguagesRepository(),
+            getTranslatedLanguageName: getTranslatedLanguageName(),
+            cache: getTranslatedLanguageNameCache()
+        )
+    }
+    
+    func getTranslatedToolCategory() -> GetTranslatedToolCategory {
+        return GetTranslatedToolCategory(
+            localizationServices: getLocalizationServices(),
+            resourcesRepository: getResourcesRepository()
+        )
+    }
+    
+    func getTranslatedToolName() -> GetTranslatedToolName {
+        return GetTranslatedToolName(
+            resourcesRepository: getResourcesRepository(),
+            translationsRepository: getTranslationsRepository()
+        )
+    }
+    
+    func getTranslatedToolLanguageAvailability() -> GetTranslatedToolLanguageAvailability {
+        return GetTranslatedToolLanguageAvailability(
+            localizationServices: getLocalizationServices(),
+            resourcesRepository: getResourcesRepository(),
+            languagesRepository: getLanguagesRepository(),
+            translatedLanguageNameRepository: getTranslatedLanguageNameRepository()
         )
     }
     
@@ -385,10 +451,13 @@ class AppDataLayerDependencies {
             localizationServices: getLocalizationServices()
         )
     }
-    
-    func getLaunchCountRepositoryInterface() -> GetLaunchCountRepositoryInterface {
-        return GetLaunchCountRepository(
-            launchCountRepository: getSharedLaunchCountRepository()
+
+    private func getTranslatedLanguageName() -> GetTranslatedLanguageName {
+        return GetTranslatedLanguageName(
+            localizationServices: getLocalizationServices(),
+            localeLanguageName: getLocaleLanguageName(),
+            localeRegionName: getLocaleLanguageRegionName(),
+            localeScriptName: getLocaleLanguageScriptName()
         )
     }
 }

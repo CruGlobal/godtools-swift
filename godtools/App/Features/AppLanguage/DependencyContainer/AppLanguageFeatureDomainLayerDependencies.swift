@@ -21,26 +21,19 @@ class AppLanguageFeatureDomainLayerDependencies {
             
     func getAppLanguagesListUseCase() -> GetAppLanguagesListUseCase {
         return GetAppLanguagesListUseCase(
-            getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase(),
-            getAppLanguagesListRepositoryInterface: dataLayer.getAppLanguagesListRepositoryInterface(),
-            getUserPreferredAppLanguageRepositoryInterface: dataLayer.getUserPreferredAppLanguageRepositoryInterface()
+            getAppLanguagesListRepository: dataLayer.getAppLanguagesListRepositoryInterface()
         )
     }
     
     func getCurrentAppLanguageUseCase() -> GetCurrentAppLanguageUseCase {
         return GetCurrentAppLanguageUseCase(
-            getAppLanguagesRepositoryInterface: dataLayer.getAppLanguagesRepositoryInterface(),
-            getUserPreferredAppLanguageRepositoryInterface: dataLayer.getUserPreferredAppLanguageRepositoryInterface(),
-            getDeviceAppLanguageRepositoryInterface: dataLayer.getDeviceAppLanguageRepositoryInterface()
+            getAppLanguageRepository: dataLayer.getAppLanguageRepository()
         )
     }
     
-    func getConfirmAppLanguageInterfaceStringsUseCase() -> GetConfirmAppLanguageInterfaceStringsUseCase {
-        return GetConfirmAppLanguageInterfaceStringsUseCase(
-            getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase(),
-            getInterfaceStringInAppLanguageUseCase: getInterfaceStringInAppLanguageUseCase(),
-            getInterfaceStringRepositoryInterface: coreDataLayer.getInterfaceStringForLanguageRepositoryInterface(),
-            localeLanguageName: coreDataLayer.getLocaleLanguageName()
+    func getDownloadToolLanguageUseCase() -> DownloadToolLanguageUseCase {
+        return DownloadToolLanguageUseCase(
+            downloadToolLanguageRepository: dataLayer.getDownloadToolLanguageRepositoryInterface()
         )
     }
     
@@ -57,21 +50,51 @@ class AppLanguageFeatureDomainLayerDependencies {
         )
     }
     
-    func getLanguageSettingsInterfaceStringsUseCase() -> GetLanguageSettingsInterfaceStringsUseCase {
-        return GetLanguageSettingsInterfaceStringsUseCase(
-            getLanguageSettingsInterfaceStringsRepositoryInterface: dataLayer.getLanguageSettingsInterfaceStringsRepositoryInterface()
+    func getRemoveDownloadedToolLanguageUseCase() -> RemoveDownloadedToolLanguageUseCase {
+        return RemoveDownloadedToolLanguageUseCase(
+            removeDownloadedToolLanguageRepository: dataLayer.getRemoveDownloadedToolLanguageRepositoryInterface()
         )
     }
     
     func getSearchAppLanguageInAppLanguagesListUseCase() -> SearchAppLanguageInAppLanguagesListUseCase {
-        return SearchAppLanguageInAppLanguagesListUseCase(
-            getAppLanguagesListUseCase: getAppLanguagesListUseCase()
-        )
+        return SearchAppLanguageInAppLanguagesListUseCase()
     }
     
     func getSetAppLanguageUseCase() -> SetAppLanguageUseCase {
         return SetAppLanguageUseCase(
             setUserPreferredAppLanguageRepositoryInterface: dataLayer.getSetUserPreferredAppLanguageRepositoryInterface()
+        )
+    }
+    
+    func getStoreInitialAppLanguageUseCase() -> StoreInitialAppLanguageUseCase {
+        return StoreInitialAppLanguageUseCase(
+            storeInitialAppLanguage: dataLayer.getStoreInitialAppLanguage()
+        )
+    }
+    
+    func getViewAppLanguagesUseCase() -> ViewAppLanguagesUseCase {
+        return ViewAppLanguagesUseCase(
+            getInterfaceStringsRepository: dataLayer.getAppLanguagesInterfaceStringsRepositoryInterface()
+        )
+    }
+    
+    func getViewConfirmAppLanguageUseCase() -> ViewConfirmAppLanguageUseCase {
+        return ViewConfirmAppLanguageUseCase(
+            getConfirmAppLanguageInterfaceStringsRepository: dataLayer.getConfirmAppLanguageInterfaceStringsRepositoryInterface()
+        )
+    }
+    
+    func getViewDownloadableLanguagesUseCase() -> ViewDownloadableLanguagesUseCase {
+        return ViewDownloadableLanguagesUseCase(
+            getDownloadableLanguagesListRepository: dataLayer.getDownloadableLanguagesListRepositoryInterface(),
+            getInterfaceStringsRepository: dataLayer.getDownloadableLanguagesInterfaceStringsRepositoryInterface()
+        )
+    }
+    
+    func getViewLanguageSettingsUseCase() -> ViewLanguageSettingsUseCase {
+        return ViewLanguageSettingsUseCase(
+            getInterfaceStringsRepository: dataLayer.getLanguageSettingsInterfaceStringsRepositoryInterface(), 
+            getDownloadedLanguagesListRepositoryInterface: dataLayer.getDownloadedLanguagesListRepositoryInterface()
         )
     }
 }

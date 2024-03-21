@@ -9,7 +9,7 @@
 import UIKit
 import GodToolsToolParser
 
-class MobileContentPagesView: UIViewController {
+class MobileContentPagesView: AppViewController {
     
     typealias PageNumber = Int
     
@@ -20,11 +20,15 @@ class MobileContentPagesView: UIViewController {
     private var didLayoutSubviews: Bool = false
           
     @IBOutlet weak private(set) var safeAreaView: UIView!
-    @IBOutlet weak private(set) var pageNavigationView: PageNavigationCollectionView!
+    
+    let pageNavigationView: PageNavigationCollectionView
         
-    init(viewModel: MobileContentPagesViewModel) {
+    init(viewModel: MobileContentPagesViewModel, navigationBar: AppNavigationBar?) {
+        
         self.viewModel = viewModel
-        super.init(nibName: String(describing: MobileContentPagesView.self), bundle: nil)
+        self.pageNavigationView = PageNavigationCollectionView(layoutType: .fullScreen)
+        
+        super.init(nibName: String(describing: MobileContentPagesView.self), bundle: nil, navigationBar: navigationBar)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -74,7 +78,7 @@ class MobileContentPagesView: UIViewController {
             right: 0
         )
         
-        pageNavigationView.delegate = self
+        pageNavigationView.setDelegate(delegate: self)
         
         viewModel.viewDidFinishLayout(
             window: navigationController ?? self,
@@ -85,6 +89,12 @@ class MobileContentPagesView: UIViewController {
     func setupLayout() {
                        
         // pageNavigationView
+        view.addSubview(pageNavigationView)
+        pageNavigationView.translatesAutoresizingMaskIntoConstraints = false
+        pageNavigationView.constrainEdgesToView(view: view)
+        
+        pageNavigationView.setSemanticContentAttribute(semanticContentAttribute: viewModel.layoutDirection)
+        
         pageNavigationView.pageBackgroundColor = .clear
         pageNavigationView.registerPageCell(
             nib: UINib(nibName: MobileContentPageCell.nibName, bundle: nil),
@@ -239,7 +249,7 @@ extension MobileContentPagesView: PageNavigationCollectionViewDelegate {
         pageView.setDelegate(delegate: self)
         
         didConfigurePageView(pageView: pageView)
-                
+                        
         return cell
     }
     

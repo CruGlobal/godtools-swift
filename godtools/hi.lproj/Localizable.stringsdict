@@ -13,9 +13,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Tool open</string>
+<string>टूल खुले</string>
 <key>other</key>
-<string>Tool opens</string>
+<string>टूल खुले</string>
 </dict>
 </dict>
 <key>account.activity.lessonCompletions</key>
@@ -29,9 +29,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Lesson completion</string>
+<string>पाठ पूरे किए</string>
 <key>other</key>
-<string>Lesson completions</string>
+<string>पाठ पूरे किए</string>
 </dict>
 </dict>
 <key>account.activity.screenShares</key>
@@ -45,9 +45,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Screen share</string>
+<string>स्क्रीन शेयर किए</string>
 <key>other</key>
-<string>Screen shares</string>
+<string>स्क्रीन शेयर किए</string>
 </dict>
 </dict>
 <key>account.activity.linksShared</key>
@@ -77,9 +77,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Language used</string>
+<string>भाषाएँ प्रयोग किए</string>
 <key>other</key>
-<string>Languages used</string>
+<string>भाषाएँ प्रयोग किए</string>
 </dict>
 </dict>
 <key>account.activity.sessions</key>
@@ -93,9 +93,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Session</string>
+<string>सत्र</string>
 <key>other</key>
-<string>Sessions</string>
+<string>सत्र</string>
 </dict>
 </dict>
 <key>tools.filter.toolsAvailable</key>
@@ -109,9 +109,25 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>1 Tool available</string>
+<string>1 टूल्स उपलब्ध हैं</string>
 <key>other</key>
-<string>%d Tools available</string>
+<string>%d टूल्स उपलब्ध हैं</string>
+</dict>
+</dict>
+<key>languageSettings.appLanguage.numberAvailable</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@appLanguageCount@</string>
+<key>appLanguageCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>%d भाषा उपलब्ध है</string>
+<key>other</key>
+<string>%d भाषाएँ उपलब्ध हैं</string>
 </dict>
 </dict>
 <key>badges.imagesShared</key>
@@ -125,9 +141,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Shared 1 image</string>
+<string>1 चित्र शेयर किए</string>
 <key>other</key>
-<string>Shared %d images</string>
+<string>%d चित्र शेयर किए</string>
 </dict>
 </dict>
 <key>badges.articlesOpened</key>
@@ -157,9 +173,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Completed 1 lesson</string>
+<string>1 पाठ पूरे किए</string>
 <key>other</key>
-<string>Completed %d lessons</string>
+<string>%d पाठ पूरे किए</string>
 </dict>
 </dict>
 <key>badges.toolsOpened</key>
@@ -173,9 +189,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Opened 1 tool</string>
+<string>1 टूल्स खोले</string>
 <key>other</key>
-<string>Opened %d tools</string>
+<string>%d टूल्स खोले</string>
 </dict>
 </dict>
 <key>badges.tipsCompleted</key>

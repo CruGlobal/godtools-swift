@@ -22,7 +22,6 @@ class OnboardingTutorialViewModel: ObservableObject {
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let readyForEveryConversationYoutubeVideoId: String = "RvhZ_wuxAgE"
-    private let hidesSkipButtonSubject: CurrentValueSubject<Bool, Never> = CurrentValueSubject(true)
     private let showsChooseAppLanguageButtonOnPages: [Int] = [0]
     
     private var interfaceStrings: OnboardingTutorialInterfaceStringsDomainModel?
@@ -32,6 +31,7 @@ class OnboardingTutorialViewModel: ObservableObject {
     
     @Published private var appLanguage: AppLanguageDomainModel = ""
     
+    @Published var hidesSkipButton: Bool = true
     @Published var currentPage: Int = 0 {
         
         didSet {
@@ -94,6 +94,10 @@ class OnboardingTutorialViewModel: ObservableObject {
         }
     }
     
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
     private func getOnboardingTutorialPageAnalyticsProperties(page: OnboardingTutorialPage) -> OnboardingTutorialPageAnalyticsProperties {
         
         let pageOffset: Int = 2
@@ -115,17 +119,31 @@ class OnboardingTutorialViewModel: ObservableObject {
     private func didSetPage(page: Int) {
                 
         updateShowsChooseLanguageButtonState(page: page)
-                
-        switch page {
         
-        case 0:
-            hidesSkipButtonSubject.send(true)
+        let isFirstPage: Bool = page == 0
+        let isLastPage: Bool = pages.count > 0 && page == pages.count - 1
+        
+        let hidesSkipButton: Bool
+        let continueButtonTitle: String
+                
+        if isFirstPage {
+            
+            hidesSkipButton = true
             continueButtonTitle = interfaceStrings?.beginTutorialButtonTitle ?? ""
-       
-        default:
-            hidesSkipButtonSubject.send(false)
+        }
+        else if isLastPage {
+            
+            hidesSkipButton = true
+            continueButtonTitle = interfaceStrings?.endTutorialButtonTitle ?? ""
+        }
+        else {
+         
+            hidesSkipButton = false
             continueButtonTitle = interfaceStrings?.nextTutorialPageButtonTitle ?? ""
         }
+        
+        self.hidesSkipButton = hidesSkipButton
+        self.continueButtonTitle = continueButtonTitle
         
         let pageAnalytics: OnboardingTutorialPageAnalyticsProperties = getOnboardingTutorialPageAnalyticsProperties(page: pages[page])
         
@@ -136,11 +154,6 @@ class OnboardingTutorialViewModel: ObservableObject {
             contentLanguage: pageAnalytics.contentLanguage,
             contentLanguageSecondary: pageAnalytics.contentLanguageSecondary
         )
-    }
-    
-    var hidesSkipButtonPublisher: AnyPublisher<Bool, Never> {
-        return hidesSkipButtonSubject
-            .eraseToAnyPublisher()
     }
     
     func getOnboardingTutorialReadyForEveryConversationViewModel() -> OnboardingTutorialReadyForEveryConversationViewModel {

@@ -64,10 +64,10 @@ struct ToolsView: View {
                         
                         LazyVStack(alignment: .center, spacing: toolCardSpacing) {
                             
-                            ForEach(viewModel.allTools) { (tool: ToolDomainModel) in
+                            ForEach(viewModel.allTools) { (tool: ToolListItemDomainModel) in
                                                                 
                                 ToolCardView(
-                                    viewModel: viewModel.getToolViewModel(tool: tool),
+                                    viewModel: viewModel.getToolItemViewModel(tool: tool),
                                     geometry: geometry,
                                     layout: .landscape,
                                     showsCategory: true,
@@ -112,16 +112,16 @@ struct AllToolsView_Preview: PreviewProvider {
         
         let viewModel = ToolsViewModel(
             flowDelegate: MockFlowDelegate(),
-            dataDownloader: appDiContainer.dataLayer.getInitialDataDownloader(),
+            resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
+            viewToolsUseCase: appDiContainer.feature.dashboard.domainLayer.getViewToolsUseCase(),
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             favoritingToolMessageCache: appDiContainer.dataLayer.getFavoritingToolMessageCache(),
-            getAllToolsUseCase: appDiContainer.domainLayer.getAllToolsUseCase(),
-            getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),
-            getSpotlightToolsUseCase: appDiContainer.domainLayer.getSpotlightToolsUseCase(),
-            getToolFilterCategoriesUseCase: appDiContainer.domainLayer.getToolFilterCategoriesUseCase(),
-            getToolFilterLanguagesUseCase: appDiContainer.domainLayer.getToolFilterLanguagesUseCase(),
-            getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
-            toggleToolFavoritedUseCase: appDiContainer.domainLayer.getToggleToolFavoritedUseCase(),
-            getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
+            getSpotlightToolsUseCase: appDiContainer.feature.spotlightTools.domainLayer.getSpotlightToolsUseCase(),
+            getToolFilterCategoriesUseCase: appDiContainer.feature.toolsFilter.domainLayer.getToolFilterCategoriesUseCase(),
+            getToolFilterLanguagesUseCase: appDiContainer.feature.toolsFilter.domainLayer.getToolFilterLanguagesUseCase(),
+            getUserFiltersUseCase: appDiContainer.feature.toolsFilter.domainLayer.getUserFiltersUseCase(),
+            getToolIsFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToolIsFavoritedUseCase(),
+            toggleToolFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToggleFavoritedToolUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
             attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository()

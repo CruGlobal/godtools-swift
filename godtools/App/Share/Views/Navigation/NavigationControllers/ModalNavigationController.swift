@@ -29,18 +29,18 @@ class ModalNavigationController: AppNavigationController {
         self.rootView = rootView
         self.statusBarStyle = statusBarStyle
         
-        super.init(navigationBarAppearance: nil)
-        
-        modalPresentationStyle = .fullScreen
-        
-        navigationBar.setupNavigationBarAppearance(
+        let navigationBarAppearance = AppNavigationBarAppearance(
             backgroundColor: navBarColor,
             controlColor: controlColor,
             titleFont: nil,
             titleColor: nil,
             isTranslucent: navBarIsTranslucent
         )
-                                
+        
+        super.init(navigationBarAppearance: navigationBarAppearance)
+        
+        modalPresentationStyle = .fullScreen
+                            
         setViewControllers([rootView], animated: false)
     }
     

@@ -9,31 +9,30 @@
 import Foundation
 import YouTubeiOSPlayerHelper
 
-class VideoViewCoordinator: NSObject, YTPlayerViewDelegate {
+class VideoViewCoordinator: NSObject {
     
-    private let videoView: VideoView
-    
-    init(videoView: VideoView) {
+    private let videoPlayerDidBecomeReady: ((_ playerView: YTPlayerView) -> Void)?
+    private let videoStateChanged: ((_ playerView: YTPlayerView, _ playerState: YTPlayerState) -> Void)?
         
-        self.videoView = videoView
+    init(videoPlayerDidBecomeReady: ((_ playerView: YTPlayerView) -> Void)?, videoStateChanged: ((_ playerView: YTPlayerView, _ playerState: YTPlayerState) -> Void)?) {
+        
+        self.videoPlayerDidBecomeReady = videoPlayerDidBecomeReady
+        self.videoStateChanged = videoStateChanged
         
         super.init()
     }
+}
+
+extension VideoViewCoordinator: YTPlayerViewDelegate {
     
     func playerViewDidBecomeReady(_ playerView: YTPlayerView) {
         
-        videoView.videoPlayerViewDidBecomeReady()
+        videoPlayerDidBecomeReady?(playerView)
     }
     
     func playerView(_ playerView: YTPlayerView, didChangeTo state: YTPlayerState) {
         
-        if state == .playing {
-            videoView.videoPlaying()
-        }
-        
-        if state == .ended {
-            videoView.videoEnded()
-        }
+        videoStateChanged?(playerView, state)
     }
     
     func playerView(_ playerView: YTPlayerView, didChangeTo quality: YTPlaybackQuality) {

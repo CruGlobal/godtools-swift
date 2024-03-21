@@ -35,10 +35,10 @@ jobs:
 
       # Required for KotlinMultiplatform
       - name: Setup Java
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
-          distribution: 'adopt'
-          java-version: '11'
+          distribution: "temurin"
+          java-version-file: ".java-version"
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -46,17 +46,17 @@ jobs:
           bundler-cache: true
 
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v3
 
       - name: Cache Cocoapods
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.cocoapods/repos
           key: ${{ runner.os }}-cocoapods-${{ github.sha }}
           restore-keys: ${{ runner.os }}-cocoapods-
 
       - name: Cache Konan
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.konan
           key: ${{ runner.os }}-konan-${{ github.sha }}
@@ -72,7 +72,7 @@ jobs:
         run: bundle exec fastlane cru_shared_lane_run_tests output_directory:fastlane_scan_output_directory result_bundle:true
 
       - name: Upload Xcode Code Coverage Report to CodeCov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
         with:
           fail_ci_if_error: true
           token: ${{ secrets.CODECOV_TOKEN }}
@@ -89,7 +89,7 @@ jobs:
 
       - name: Import OneSky Keys
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-        uses: dkershner6/aws-ssm-getparameters-action@v1
+        uses: dkershner6/aws-ssm-getparameters-action@v2
         with:
           parameterPairs: |
             /shared/onesky/PUBLIC_KEY = ONESKY_PUBLIC_KEY,
@@ -122,14 +122,14 @@ jobs:
 
       - name: Archive XCode Logs
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: xcode-logs
           path: "/Users/runner/Library/Developer/Xcode/DerivedData/Logs/godtools-*/**"
 
       - name: Archive Fastlane Gym Logs
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: fastlane-gym-logs
           path: "/Users/runner/Library/Logs/gym/godtools-*/**"

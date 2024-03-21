@@ -18,11 +18,10 @@ class GetToolScreenShareTutorialViewedRepository: GetToolScreenShareTutorialView
         self.tutorialViewsRepository = tutorialViewsRepository
     }
     
-    // TODO: Eventually ToolDomainModel should be passed here instead of ResourceModel. ~Levi
-    func getViewed(tool: ResourceModel) -> AnyPublisher<ToolScreenShareTutorialViewedDomainModel, Never> {
+    func getViewed(toolId: String) -> AnyPublisher<ToolScreenShareTutorialViewedDomainModel, Never> {
         
         return tutorialViewsRepository
-            .getToolScreenShareTutorialViewPublisher(id: tool.id)
+            .getToolScreenShareTutorialViewPublisher(id: toolId)
             .map { (toolScreenShare: ToolScreenShareTutorialViewDataModel?) in
                 
                 let numberOfViews: Int = toolScreenShare?.numberOfViews ?? 0

@@ -59,14 +59,6 @@ class AppConfig: AppConfigInterface {
         }
     }
     
-    func getGoogleAdwordsConversionId() -> String {
-        return "uYJUCLG6tmoQ4cGaoAM"
-    }
-    
-    func getGoogleAdwordsLabel() -> String {
-        return "872849633"
-    }
-    
     func getGoogleAuthenticationConfiguration() -> GoogleAuthenticationConfiguration {
         
         return AppConfig.getGoogleAuthenticationConfiguration(environment: appBuild.environment)

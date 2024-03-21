@@ -25,6 +25,8 @@ class ToolDetailsVersionsCardViewModel: ObservableObject {
     let languages: String
     let toolLanguageName: String?
     let toolLanguageNameIsSupported: Bool
+    let toolParallelLanguageName: String?
+    let toolParallelLanguageNameIsSupported: Bool?
     
     init(toolVersion: ToolVersionDomainModel, attachmentsRepository: AttachmentsRepository, isSelected: Bool) {
         
@@ -37,6 +39,8 @@ class ToolDetailsVersionsCardViewModel: ObservableObject {
         languages = toolVersion.numberOfLanguages
         toolLanguageName = toolVersion.toolLanguageName
         toolLanguageNameIsSupported = toolVersion.toolLanguageNameIsSupported
+        toolParallelLanguageName = toolVersion.toolParallelLanguageName
+        toolParallelLanguageNameIsSupported = toolVersion.toolParallelLanguageNameIsSupported
         
         downloadBannerImage()
     }

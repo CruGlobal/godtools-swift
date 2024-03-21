@@ -12,7 +12,6 @@ import Combine
 
 class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
     
-    @Published private var quickStartIsAvailable: Bool = false
     @Published private var currentAppLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     
     private var cancellables: Set<AnyCancellable> = Set()
@@ -48,12 +47,6 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
         navigationController.setViewControllers([getInitialView()], animated: false)
         
         let getCurrentAppLanguageUseCase = appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase()
-        let getOnboardingQuickStartIsAvailableUseCase = appDiContainer.feature.onboarding.domainLayer.getOnboardingQuickStartIsAvailableUseCase()
-        
-        getOnboardingQuickStartIsAvailableUseCase
-            .getAvailablePublisher(appLanguagePublisher: getCurrentAppLanguageUseCase.getLanguagePublisher())
-            .receive(on: DispatchQueue.main)
-            .assign(to: &$quickStartIsAvailable)
         
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
@@ -86,25 +79,10 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
             dismissVideoModal(animated: true, completion: nil)
             
         case .skipTappedFromOnboardingTutorial:
-            navigateToQuickLinksIfAvailableElseCompleteOnboarding()
+            flowDelegate?.navigate(step: .onboardingFlowCompleted(onboardingFlowCompletedState: nil))
             
         case .endTutorialFromOnboardingTutorial:
-            navigateToQuickLinksIfAvailableElseCompleteOnboarding()
-
-        case .skipTappedFromOnboardingQuickStart:
-            completeOnboardingFlow(onboardingFlowCompletedState: nil)
-
-        case .endTutorialFromOnboardingQuickStart:
-            completeOnboardingFlow(onboardingFlowCompletedState: nil)
-
-        case .readArticlesTappedFromOnboardingQuickStart:
-            completeOnboardingFlow(onboardingFlowCompletedState: .readArticles)
-        
-        case .tryLessonsTappedFromOnboardingQuickStart:
-            completeOnboardingFlow(onboardingFlowCompletedState: .tryLessons)
-            
-        case .chooseToolTappedFromOnboardingQuickStart:
-            completeOnboardingFlow(onboardingFlowCompletedState: .chooseTool)
+            flowDelegate?.navigate(step: .onboardingFlowCompleted(onboardingFlowCompletedState: nil))
         
         default:
             break
@@ -126,16 +104,6 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
         )
         
         presentVideoModal(viewModel: viewModel, screenAccessibility: .watchOnboardingTutorialVideo, closeVideoButtonAccessibility: .closeOnboardingTutorialVideo)
-    }
-    
-    private func navigateToQuickLinksIfAvailableElseCompleteOnboarding() {
-        
-        if quickStartIsAvailable {
-            navigationController.setViewControllers([getOnboardingQuickStartView()], animated: true)
-        }
-        else {
-            flowDelegate?.navigate(step: .onboardingFlowCompleted(onboardingFlowCompletedState: nil))
-        }
     }
     
     private func completeOnboardingFlow(onboardingFlowCompletedState: OnboardingFlowCompletedState?) {
@@ -167,7 +135,7 @@ extension OnboardingFlow {
             target: viewModel,
             action: #selector(viewModel.skipTapped),
             accessibilityIdentifier: AccessibilityStrings.Button.skipOnboardingTutorial.id,
-            toggleVisibilityPublisher: viewModel.hidesSkipButtonPublisher
+            hidesBarItemPublisher: viewModel.$hidesSkipButton.eraseToAnyPublisher()
         )
         
         let hostingView = AppHostingController<OnboardingTutorialView>(
@@ -183,38 +151,6 @@ extension OnboardingFlow {
             )
         )
                         
-        return hostingView
-    }
-    
-    private func getOnboardingQuickStartView() -> UIViewController {
-        
-        let viewModel = OnboardingQuickStartViewModel(
-            flowDelegate: self,
-            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            getOnboardingQuickStartInterfaceStringsUseCase: appDiContainer.feature.onboarding.domainLayer.getOnboardingQuickStartInterfaceStringsUseCase(),
-            getOnboardingQuickStartLinksUseCase: appDiContainer.feature.onboarding.domainLayer.getOnboardingQuickStartLinksUseCase(),
-            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
-        )
-        
-        let view = OnboardingQuickStartView(viewModel: viewModel)
-        
-        let skipButton = AppSkipBarItem(
-            getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
-            target: viewModel,
-            action: #selector(viewModel.skipTapped),
-            accessibilityIdentifier: nil
-        )
-        
-        let hostingView = AppHostingController<OnboardingQuickStartView>(
-            rootView: view,
-            navigationBar: AppNavigationBar(
-                appearance: nil,
-                backButton: nil,
-                leadingItems: [],
-                trailingItems: [skipButton]
-            )
-        )
-        
         return hostingView
     }
 }

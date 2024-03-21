@@ -11,69 +11,98 @@ import Combine
 
 class LearnToShareToolViewModel: ObservableObject {
     
-    private let tool: ToolDomainModel
-    private let getLearnToShareToolItemsUseCase: GetLearnToShareToolItemsUseCase
-    private let localizationServices: LocalizationServices
-    private let hidesBackButtonSubject: CurrentValueSubject<Bool, Never> = CurrentValueSubject(true)
+    private let toolId: String
+    private let toolPrimaryLanguage: AppLanguageDomainModel
+    private let toolParallelLanguage: AppLanguageDomainModel?
+    private let toolSelectedLanguageIndex: Int?
+    private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
+    private let viewLearnToShareToolUseCase: ViewLearnToShareToolUseCase
     
-    private var learnToShareToolItems: [LearnToShareToolItemDomainModel] = Array()
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
     
-    @Published var numberOfLearnToShareToolItems: Int = 0
-    @Published var continueTitle: String = ""
-    @Published var currentPage: Int = 0 {
-        didSet {
-            currentPageDidChange(page: currentPage)
-        }
-    }
+    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    @Published private var viewLearnToShareToolDomainModel: ViewLearnToShareToolDomainModel?
     
-    init(flowDelegate: FlowDelegate, tool: ToolDomainModel, getLearnToShareToolItemsUseCase: GetLearnToShareToolItemsUseCase, localizationServices: LocalizationServices) {
+    @Published var hidesBackButton: Bool = true
+    @Published var learnToShareToolItems: [LearnToShareToolItemDomainModel] = Array()
+    @Published var continueTitle: String = ""
+    @Published var currentPage: Int = 0
+    
+    init(flowDelegate: FlowDelegate, toolId: String, toolPrimaryLanguage: AppLanguageDomainModel, toolParallelLanguage: AppLanguageDomainModel?, toolSelectedLanguageIndex: Int?, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewLearnToShareToolUseCase: ViewLearnToShareToolUseCase) {
         
         self.flowDelegate = flowDelegate
-        self.tool = tool
-        self.getLearnToShareToolItemsUseCase = getLearnToShareToolItemsUseCase
-        self.localizationServices = localizationServices
+        self.toolId = toolId
+        self.toolPrimaryLanguage = toolPrimaryLanguage
+        self.toolParallelLanguage = toolParallelLanguage
+        self.toolSelectedLanguageIndex = toolSelectedLanguageIndex
+        self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
+        self.viewLearnToShareToolUseCase = viewLearnToShareToolUseCase
+              
+        getCurrentAppLanguageUseCase
+            .getLanguagePublisher()
+            .assign(to: &$appLanguage)
+        
+        $appLanguage
+            .eraseToAnyPublisher()
+            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewLearnToShareToolDomainModel, Never> in
                 
-        getLearnToShareToolItemsUseCase.getItemsPublisher()
+                return viewLearnToShareToolUseCase
+                    .viewPublisher(appLanguage: appLanguage)
+                    .eraseToAnyPublisher()
+            })
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (items: [LearnToShareToolItemDomainModel]) in
+            .sink { [weak self] (domainModel: ViewLearnToShareToolDomainModel) in
                 
-                self?.learnToShareToolItems = items
-                self?.numberOfLearnToShareToolItems = items.count
-                self?.currentPageDidChange(page: self?.currentPage ?? 0)
+                self?.viewLearnToShareToolDomainModel = domainModel
+                self?.learnToShareToolItems = domainModel.tutorialItems
+            }
+            .store(in: &cancellables)
+        
+        Publishers.CombineLatest(
+            $viewLearnToShareToolDomainModel.eraseToAnyPublisher(),
+            $currentPage.eraseToAnyPublisher()
+        )
+        .receive(on: DispatchQueue.main)
+        .sink { [weak self] (viewLearnToShareToolDomainModel: ViewLearnToShareToolDomainModel?, currentPage: Int) in
+            
+            guard let weakSelf = self, let domainModel = viewLearnToShareToolDomainModel else {
+                return
+            }
+            
+            let isOnLastPage: Bool = weakSelf.isOnLastPage
+            
+            weakSelf.continueTitle = isOnLastPage ? domainModel.interfaceStrings.startTrainingActionTitle : domainModel.interfaceStrings.nextTutorialItemActionTitle
+        }
+        .store(in: &cancellables)
+        
+        $currentPage
+            .eraseToAnyPublisher()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (currentPage: Int) in
+                self?.hidesBackButton = currentPage == 0
             }
             .store(in: &cancellables)
     }
     
-    private func currentPageDidChange(page: Int) {
-        
-        let localizedKey: String = isOnLastPage ? "start_training" : "tutorial.continueButton.title.continue"
-                
-        self.continueTitle = localizationServices.stringForSystemElseEnglish(key: localizedKey)
-        
-        hidesBackButtonSubject.send(page == 0)
+    deinit {
+        print("x deinit: \(type(of: self))")
     }
-    
+
     private var isOnFirstPage: Bool {
         return currentPage == 0
     }
     
     private var isOnLastPage: Bool {
         
-        guard numberOfLearnToShareToolItems > 0 else {
-            return false
+        guard learnToShareToolItems.count > 0 else {
+            return true
         }
         
-        return currentPage >= numberOfLearnToShareToolItems - 1
+        return currentPage >= learnToShareToolItems.count - 1
     }
     
-    var hidesBackButtonPublisher: AnyPublisher<Bool, Never> {
-        return hidesBackButtonSubject
-            .eraseToAnyPublisher()
-    }
-
     func getLearnToShareToolItemViewModel(index: Int) -> LearnToShareToolItemViewModel {
         
         return LearnToShareToolItemViewModel(
@@ -96,13 +125,13 @@ extension LearnToShareToolViewModel {
     }
     
     @objc func closeTapped() {
-        flowDelegate?.navigate(step: .closeTappedFromLearnToShareTool(tool: tool))
+        flowDelegate?.navigate(step: .closeTappedFromLearnToShareTool(toolId: toolId, primaryLanguage: toolPrimaryLanguage, parallelLanguage: toolParallelLanguage, selectedLanguageIndex: toolSelectedLanguageIndex))
     }
     
     func continueTapped() {
         
         if isOnLastPage {
-            flowDelegate?.navigate(step: .continueTappedFromLearnToShareTool(tool: tool))
+            flowDelegate?.navigate(step: .continueTappedFromLearnToShareTool(toolId: toolId, primaryLanguage: toolPrimaryLanguage, parallelLanguage: toolParallelLanguage, selectedLanguageIndex: toolSelectedLanguageIndex))
         }
         else {
             currentPage = currentPage + 1

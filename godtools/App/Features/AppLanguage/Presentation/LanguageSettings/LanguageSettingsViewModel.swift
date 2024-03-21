@@ -12,7 +12,7 @@ import Combine
 class LanguageSettingsViewModel: ObservableObject {
     
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
-    private let getLanguageSettingsInterfaceStringsUseCase: GetLanguageSettingsInterfaceStringsUseCase
+    private let viewLanguageSettingsUseCase: ViewLanguageSettingsUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     
     private var cancellables = Set<AnyCancellable>()
@@ -22,33 +22,53 @@ class LanguageSettingsViewModel: ObservableObject {
     @Published private var appLanguage: AppLanguageDomainModel = ""
     
     @Published var navTitle: String = ""
-    @Published var appInterfaceLanguageTitle: String = "App "
-    @Published var numberOfLanguagesAvailable: String = "Number of languages available need to implement."
-    @Published var setLanguageYouWouldLikeAppDisplayedInLabel: String = "Set the language you'd like the whole app displayed in."
+    @Published var appInterfaceLanguageTitle: String = " "
+    @Published var numberOfLanguagesAvailable: String = ""
+    @Published var setLanguageYouWouldLikeAppDisplayedInLabel: String = ""
     @Published var appInterfaceLanguageButtonTitle: String = ""
+    @Published var toolLanguagesAvailableOfflineTitle: String = ""
+    @Published var downloadToolsForOfflineMessage: String = ""
+    @Published var editDownloadedLanguagesButtonTitle: String = ""
+    @Published var downloadedLanguages: [DownloadedLanguageListItemDomainModel] = []
     
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLanguageSettingsInterfaceStringsUseCase: GetLanguageSettingsInterfaceStringsUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
+    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewLanguageSettingsUseCase: ViewLanguageSettingsUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
-        self.getLanguageSettingsInterfaceStringsUseCase = getLanguageSettingsInterfaceStringsUseCase
+        self.viewLanguageSettingsUseCase = viewLanguageSettingsUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         
         getCurrentAppLanguageUseCase.getLanguagePublisher()
-            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
-        getLanguageSettingsInterfaceStringsUseCase.getStringsPublisher(appLanguagePublisher: $appLanguage.eraseToAnyPublisher())
+        $appLanguage.eraseToAnyPublisher()
+            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewLanguageSettingsDomainModel, Never> in
+                
+                return viewLanguageSettingsUseCase
+                    .viewPublisher(appLanguage: appLanguage)
+                    .eraseToAnyPublisher()
+            })
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (interfaceStrings: LanguageSettingsInterfaceStringsDomainModel) in
+            .sink { [weak self] (domainModel: ViewLanguageSettingsDomainModel) in
+                
+                let interfaceStrings: LanguageSettingsInterfaceStringsDomainModel = domainModel.interfaceStrings
                 
                 self?.navTitle = interfaceStrings.navTitle
                 self?.appInterfaceLanguageTitle = interfaceStrings.appInterfaceLanguageTitle
+                self?.numberOfLanguagesAvailable = interfaceStrings.numberOfAppLanguagesAvailable
                 self?.setLanguageYouWouldLikeAppDisplayedInLabel = interfaceStrings.setAppLanguageMessage
                 self?.appInterfaceLanguageButtonTitle = interfaceStrings.chooseAppLanguageButtonTitle
+                self?.toolLanguagesAvailableOfflineTitle = interfaceStrings.toolLanguagesAvailableOfflineTitle
+                self?.downloadToolsForOfflineMessage = interfaceStrings.downloadToolsForOfflineMessage
+                self?.editDownloadedLanguagesButtonTitle = interfaceStrings.editDownloadedLanguagesButtonTitle
                 
+                self?.downloadedLanguages = domainModel.downloadedLanguages
             }
             .store(in: &cancellables)
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
     }
 }
 
@@ -64,6 +84,11 @@ extension LanguageSettingsViewModel {
     func chooseAppLanguageTapped() {
         
         flowDelegate?.navigate(step: .chooseAppLanguageTappedFromLanguageSettings)
+    }
+    
+    func editDownloadedLanguagesTapped() {
+        
+        flowDelegate?.navigate(step: .editDownloadedLanguagesTappedFromLanguageSettings)
     }
     
     func pageViewed() {

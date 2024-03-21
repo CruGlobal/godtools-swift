@@ -16,7 +16,6 @@ class TutorialViewModel: ObservableObject {
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let tutorialVideoAnalytics: TutorialVideoAnalytics
-    private let hidesBackButtonSubject: CurrentValueSubject<Bool, Never> = CurrentValueSubject(true)
     
     private var trackedAnalyticsForYouTubeVideoIds: [String] = Array()
     private var cancellables: Set<AnyCancellable> = Set()
@@ -26,6 +25,7 @@ class TutorialViewModel: ObservableObject {
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     @Published private var interfaceStrings: TutorialInterfaceStringsDomainModel?
     
+    @Published var hidesBackButton: Bool = true
     @Published var tutorialPages: [TutorialPageDomainModel] = Array()
     @Published var continueTitle: String = ""
     @Published var currentPage: Int = 0
@@ -43,8 +43,13 @@ class TutorialViewModel: ObservableObject {
             .getLanguagePublisher()
             .assign(to: &$appLanguage)
         
-        getTutorialUseCase
-            .getTutorialPublisher(appLanguagePublisher: $appLanguage.eraseToAnyPublisher())
+        $appLanguage.eraseToAnyPublisher()
+            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<TutorialDomainModel, Never> in
+                
+                return getTutorialUseCase
+                    .getTutorialPublisher(appLanguage: appLanguage)
+                    .eraseToAnyPublisher()
+            })
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (tutorial: TutorialDomainModel) in
                 
@@ -74,6 +79,10 @@ class TutorialViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
     private func getAnalyticsScreenName(tutorialItemIndex: Int) -> String {
         return "tutorial-\(tutorialItemIndex + 1)"
     }
@@ -101,7 +110,7 @@ class TutorialViewModel: ObservableObject {
     
     private func pageDidChange(page: Int) {
                 
-        hidesBackButtonSubject.send(isOnFirstPage)
+        hidesBackButton = isOnFirstPage
                                 
         let analyticsScreenName = getAnalyticsScreenName(tutorialItemIndex: page)
         let analyticsSiteSection = analyticsSiteSection
@@ -125,11 +134,6 @@ class TutorialViewModel: ObservableObject {
             url: nil,
             data: nil
         )
-    }
-    
-    var hidesBackButtonPublisher: AnyPublisher<Bool, Never> {
-        return hidesBackButtonSubject
-            .eraseToAnyPublisher()
     }
     
     private func refreshContinueTitle(interfaceStrings: TutorialInterfaceStringsDomainModel) {

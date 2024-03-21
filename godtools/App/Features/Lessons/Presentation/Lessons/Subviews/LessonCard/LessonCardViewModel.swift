@@ -27,7 +27,7 @@ class LessonCardViewModel: ObservableObject {
         self.lessonListItem = lessonListItem
         self.attachmentsRepository = attachmentsRepository
         self.title = lessonListItem.name
-        self.appLanguageAvailability = lessonListItem.availabilityInAppLanguage
+        self.appLanguageAvailability = lessonListItem.availabilityInAppLanguage.availabilityString
         
         downloadBannerImage()
     }

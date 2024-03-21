@@ -11,11 +11,10 @@ import UIKit
 class ToolView: MobileContentPagesView {
     
     private let viewModel: ToolViewModel
-    private let navBarView: ToolNavBarView = ToolNavBarView()
                     
-    required init(viewModel: ToolViewModel) {
+    init(viewModel: ToolViewModel, navigationBar: AppNavigationBar?) {
         self.viewModel = viewModel
-        super.init(viewModel: viewModel)
+        super.init(viewModel: viewModel, navigationBar: navigationBar)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -38,15 +37,6 @@ class ToolView: MobileContentPagesView {
     override func setupBinding() {
         super.setupBinding()
         
-        viewModel.navBarViewModel.addObserver(self) { [weak self] (navBarViewModel: ToolNavBarViewModel) in
-            
-            guard let weakSelf = self else {
-                return
-            }
-            
-            weakSelf.navBarView.configure(parentViewController: weakSelf, viewModel: navBarViewModel, delegate: weakSelf)
-        }
-        
         viewModel.didSubscribeForRemoteSharePublishing.addObserver(self) { [weak self] (didSubscribeForRemoteSharePublishing: Bool) in
             guard let toolView = self else {
                 return
@@ -64,8 +54,6 @@ class ToolView: MobileContentPagesView {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        navBarView.reloadAppearance()
     }
     
     override func didConfigurePageView(pageView: MobileContentPageView) {
@@ -85,25 +73,9 @@ class ToolView: MobileContentPagesView {
         
         viewModel.pageChanged(page: page, pagePositions: toolPagePositions)
     }
-}
-
-// MARK: - ToolNavBarViewDelegate
-
-extension ToolView: ToolNavBarViewDelegate {
     
-    func navBarHomeTapped(navBar: ToolNavBarView, remoteShareIsActive: Bool) {
-        viewModel.navHomeTapped(remoteShareIsActive: remoteShareIsActive)
-    }
-    
-    func navBarToolSettingsTapped(navBar: ToolNavBarView, selectedLanguage: LanguageDomainModel) {
+    func languageTapped(index: Int) {
         
-        let page: Int = pageNavigationView.getCurrentPage()
-        
-        viewModel.navToolSettingsTapped(page: page, selectedLanguage: selectedLanguage)
-    }
-    
-    func navBarLanguageChanged(navBar: ToolNavBarView) {
-
         let page: Int = pageNavigationView.getCurrentPage()
         let pagePositions: MobileContentViewPositionState? = getCurrentPagePositions()
         
@@ -111,7 +83,7 @@ extension ToolView: ToolNavBarViewDelegate {
             return
         }
         
-        viewModel.navLanguageChanged(page: page, pagePositions: toolPagePositions)
+        viewModel.languageTapped(index: index, page: page, pagePositions: toolPagePositions)
     }
 }
 
@@ -130,16 +102,5 @@ extension ToolView: ToolPageViewDelegate {
     
     func toolPageCallToActionNextButtonTapped(pageView: ToolPageView, page: Int) {
         pageNavigationView.scrollToNextPage(animated: true)
-    }
-}
-
-extension ToolView: ToolSettingsToolType {
-    
-    func setRenderer(renderer: MobileContentRenderer) {
-        viewModel.setRenderer(renderer: renderer, pageRendererIndex: nil, navigationEvent: nil)
-    }
-    
-    func setTrainingTipsEnabled(enabled: Bool) {
-        viewModel.setTrainingTipsEnabled(enabled: enabled)
     }
 }

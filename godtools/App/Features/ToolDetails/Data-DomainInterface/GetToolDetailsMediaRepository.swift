@@ -20,9 +20,9 @@ class GetToolDetailsMediaRepository: GetToolDetailsMediaRepositoryInterface {
         self.attachmentsRepository = attachmentsRepository
     }
     
-    func getMediaPublisher(tool: ToolDomainModel) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> {
+    func getMediaPublisher(toolId: String) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> {
                 
-        guard let resource = resourcesRepository.getResource(id: tool.dataModelId) else {
+        guard let resource = resourcesRepository.getResource(id: toolId) else {
             return Just(.empty)
                 .eraseToAnyPublisher()
         }
@@ -71,7 +71,7 @@ class GetToolDetailsMediaRepository: GetToolDetailsMediaRepositoryInterface {
     
     private func getImageMediaElseEmpty(resource: ResourceModel) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> {
         
-        return attachmentsRepository.getAttachmentImagePublisher(id: resource.attrBanner)
+        return attachmentsRepository.getAttachmentImagePublisher(id: resource.attrBannerAbout)
             .flatMap({ image -> AnyPublisher<ToolDetailsMediaDomainModel, Never> in
                 
                 guard let image = image else {

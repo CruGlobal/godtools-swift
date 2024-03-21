@@ -36,7 +36,7 @@ jobs:
           aws-region: us-east-1
 
       - name: Import OneSky Keys
-        uses: dkershner6/aws-ssm-getparameters-action@v1
+        uses: dkershner6/aws-ssm-getparameters-action@v2
         with:
           parameterPairs: |
             /shared/onesky/PUBLIC_KEY = ONESKY_PUBLIC_KEY,
@@ -46,7 +46,7 @@ jobs:
         run: bundle exec fastlane cru_shared_lane_download_and_commit_latest_one_sky_localizations
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v5
+        uses: peter-evans/create-pull-request@v6
         with:
           branch: 'latest-onesky-translations'
           token: ${{ secrets.CREATE_PULL_REQUEST_ACCESS_TOKEN }}

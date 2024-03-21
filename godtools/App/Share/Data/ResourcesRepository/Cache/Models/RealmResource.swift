@@ -17,11 +17,13 @@ class RealmResource: Object, ResourceModelType {
     @objc dynamic var attrBanner: String = ""
     @objc dynamic var attrBannerAbout: String = ""
     @objc dynamic var attrCategory: String = ""
+    @objc dynamic var attrDefaultLocale: String = ""
     @objc dynamic var attrDefaultOrder: Int = -1
     @objc dynamic var attrSpotlight: Bool = false
     @objc dynamic var defaultVariantId: String?
     @objc dynamic var id: String = ""
     @objc dynamic var isHidden: Bool = false
+    @objc dynamic var isVariant: Bool = false
     @objc dynamic var manifest: String = ""
     @objc dynamic var metatoolId: String?
     @objc dynamic var name: String = ""
@@ -31,24 +33,31 @@ class RealmResource: Object, ResourceModelType {
     @objc dynamic var totalViews: Int = -1
     @objc dynamic var type: String = ""
 
-    let latestTranslationIds = List<String>()
-    let attachmentIds = List<String>()
+    // relationships
     
-    let latestTranslations = List<RealmTranslation>()
-    let languages = List<RealmLanguage>()
+    @objc dynamic private var defaultVariant: RealmResource?
+    @objc dynamic private var metatool: RealmResource?
+    
+    private let attachmentIds = List<String>()
+    private let languages = List<RealmLanguage>()
+    private let latestTranslationIds = List<String>()
+    private let latestTranslations = List<RealmTranslation>()
+    private let variantIds = List<String>()
+    private let variants = List<RealmResource>()
     
     override static func primaryKey() -> String? {
         return "id"
     }
     
     func mapFrom(model: ResourceModel) {
-        
+                
         abbreviation = model.abbreviation
         attrAboutBannerAnimation = model.attrAboutBannerAnimation
         attrAboutOverviewVideoYoutube = model.attrAboutOverviewVideoYoutube
         attrBanner = model.attrBanner
         attrBannerAbout = model.attrBannerAbout
         attrCategory = model.attrCategory
+        attrDefaultLocale = model.attrDefaultLocale
         attrDefaultOrder = model.attrDefaultOrder
         attrSpotlight = model.attrSpotlight
         defaultVariantId = model.defaultVariantId
@@ -68,17 +77,91 @@ class RealmResource: Object, ResourceModelType {
         
         attachmentIds.removeAll()
         attachmentIds.append(objectsIn: model.getAttachmentIds())
+        
+        variantIds.removeAll()
+        variantIds.append(objectsIn: model.getVariantIds())
+    }
+}
+
+// MARK: - Attachments
+
+extension RealmResource {
+    
+    func getAttachmentIds() -> [String] {
+        return Array(attachmentIds)
+    }
+}
+
+// MARK: - Languages
+
+extension RealmResource {
+    
+    func addLanguage(language: RealmLanguage) {
+        
+        if !languages.contains(language) {
+            languages.append(language)
+        }
+    }
+    
+    func getLanguageIds() -> [String] {
+        return languages.map({$0.id})
+    }
+    
+    func getLanguages() -> List<RealmLanguage> {
+        return languages
+    }
+}
+
+// MARK: - Latest Translations
+
+extension RealmResource {
+    
+    func addLatestTranslation(translation: RealmTranslation) {
+        
+        if !latestTranslations.contains(translation) {
+            latestTranslations.append(translation)
+        }
     }
     
     func getLatestTranslationIds() -> [String] {
         return Array(latestTranslationIds)
     }
     
-    func getAttachmentIds() -> [String] {
-        return Array(attachmentIds)
+    func getLatestTranslations() -> List<RealmTranslation> {
+        return latestTranslations
+    }
+}
+
+// MARK: - Variants
+
+extension RealmResource {
+    
+    func getDefaultVariant() -> RealmResource? {
+        return defaultVariant
     }
     
-    func getLanguageIds() -> [String] {
-        return languages.map({$0.id})
+    func setDefaultVariant(variant: RealmResource?) {
+        
+        variant?.isVariant = true
+        
+        defaultVariant = variant
+    }
+    
+    func addVariant(variant: RealmResource) {
+        
+        variant.metatool = self
+        variant.isVariant = true
+        
+        if !variants.contains(variant) {
+            variants.append(variant)
+        }
+    }
+    
+    func getVariantIds() -> [String] {
+        return Array(variantIds)
+    }
+    
+    func getVariants() -> List<RealmResource> {
+        return variants
     }
 }

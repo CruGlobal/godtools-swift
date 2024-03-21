@@ -18,8 +18,6 @@ class AppHostingController<Content: View>: UIHostingController<Content> {
         self.navigationBar = navigationBar
         
         super.init(rootView: rootView)
-        
-        navigationBar?.configure(viewController: self)
     }
     
     @MainActor required dynamic init?(coder aDecoder: NSCoder) {
@@ -28,7 +26,7 @@ class AppHostingController<Content: View>: UIHostingController<Content> {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        navigationBar?.willAppear(animated: animated)
+                
+        navigationBar?.willAppear(viewController: self, animated: animated)
     }
 }

@@ -47,7 +47,7 @@ class RealmUserAppLanguageCache {
             .eraseToAnyPublisher()
     }
     
-    func storeLanguage(languageId: String) {
+    func storeLanguage(languageId: BCP47LanguageIdentifier) {
         
         let realm: Realm = realmDatabase.openRealm()
         

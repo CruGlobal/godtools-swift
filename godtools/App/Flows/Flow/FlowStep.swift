@@ -30,17 +30,12 @@ enum FlowStep {
     case videoEndedOnOnboardingTutorial
     case skipTappedFromOnboardingTutorial
     case endTutorialFromOnboardingTutorial
-    case skipTappedFromOnboardingQuickStart
-    case endTutorialFromOnboardingQuickStart
-    case readArticlesTappedFromOnboardingQuickStart
-    case tryLessonsTappedFromOnboardingQuickStart
-    case chooseToolTappedFromOnboardingQuickStart
     
     // lessons list
     case lessonTappedFromLessonsList(lessonListItem: LessonListItemDomainModel)
     
     // lesson
-    case closeTappedFromLesson(lesson: ResourceModel, highestPageNumberViewed: Int)
+    case closeTappedFromLesson(lessonId: String, highestPageNumberViewed: Int)
     case lessonFlowCompleted(state: LessonFlowCompletedState)
     
     // lesson evaluation
@@ -51,40 +46,43 @@ enum FlowStep {
     // favorites
     case featuredLessonTappedFromFavorites(featuredLesson: FeaturedLessonDomainModel)
     case viewAllFavoriteToolsTappedFromFavorites
-    case toolDetailsTappedFromFavorites(tool: ToolDomainModel)
-    case openToolTappedFromFavorites(tool: ToolDomainModel)
-    case toolTappedFromFavorites(tool: ToolDomainModel)
-    case unfavoriteToolTappedFromFavorites(tool: ToolDomainModel)
+    case toolDetailsTappedFromFavorites(tool: YourFavoritedToolDomainModel)
+    case openToolTappedFromFavorites(tool: YourFavoritedToolDomainModel)
+    case toolTappedFromFavorites(tool: YourFavoritedToolDomainModel)
+    case unfavoriteToolTappedFromFavorites(tool: YourFavoritedToolDomainModel)
     case goToToolsTappedFromFavorites
     
     // allYourFavoritedTools
     case backTappedFromAllYourFavoriteTools
-    case toolDetailsTappedFromAllYourFavoriteTools(tool: ToolDomainModel)
-    case openToolTappedFromAllYourFavoriteTools(tool: ToolDomainModel)
-    case toolTappedFromAllYourFavoritedTools(tool: ToolDomainModel)
-    case unfavoriteToolTappedFromAllYourFavoritedTools(tool: ToolDomainModel, didConfirmToolRemovalSubject: PassthroughSubject<Void, Never>)
+    case toolDetailsTappedFromAllYourFavoriteTools(tool: YourFavoritedToolDomainModel)
+    case openToolTappedFromAllYourFavoriteTools(tool: YourFavoritedToolDomainModel)
+    case toolTappedFromAllYourFavoritedTools(tool: YourFavoritedToolDomainModel)
+    case unfavoriteToolTappedFromAllYourFavoritedTools(tool: YourFavoritedToolDomainModel, didConfirmToolRemovalSubject: PassthroughSubject<Void, Never>)
     
     // tools
     case toolCategoryFilterTappedFromTools(categoryFilterSelectionPublisher: CurrentValueSubject<CategoryFilterDomainModel, Never>, selectedLanguage: LanguageFilterDomainModel)
     case toolLanguageFilterTappedFromTools(languageFilterSelectionPublisher: CurrentValueSubject<LanguageFilterDomainModel, Never>, selectedCategory: CategoryFilterDomainModel)
+    case categoryTappedFromToolCategoryFilter
+    case languageTappedFromToolLanguageFilter
     case backTappedFromToolCategoryFilter
     case backTappedFromToolLanguageFilter
-    case spotlightToolTappedFromTools(spotlightTool: ToolDomainModel)
-    case toolTappedFromTools(tool: ToolDomainModel, toolFilterLanguage: LanguageFilterDomainModel?)
+    case spotlightToolTappedFromTools(spotlightTool: SpotlightToolListItemDomainModel, toolFilterLanguage: LanguageFilterDomainModel?)
+    case toolTappedFromTools(tool: ToolListItemDomainModel, toolFilterLanguage: LanguageFilterDomainModel?)
     
     // toolDetails
     case backTappedFromToolDetails
-    case openToolTappedFromToolDetails(tool: ToolDomainModel)
-    case learnToShareToolTappedFromToolDetails(tool: ToolDomainModel)
+    case openToolTappedFromToolDetails(toolId: String, primaryLanguage: AppLanguageDomainModel, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?)
+    case learnToShareToolTappedFromToolDetails(toolId: String, primaryLanguage: AppLanguageDomainModel, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?)
     case urlLinkTappedFromToolDetail(url: URL, screenName: String, siteSection: String, siteSubSection: String, contentLanguage: String?, contentLanguageSecondary: String?)
     
     // learnToShareTool
-    case closeTappedFromLearnToShareTool(tool: ToolDomainModel)
-    case continueTappedFromLearnToShareTool(tool: ToolDomainModel)
+    case closeTappedFromLearnToShareTool(toolId: String, primaryLanguage: AppLanguageDomainModel, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?)
+    case continueTappedFromLearnToShareTool(toolId: String, primaryLanguage: AppLanguageDomainModel, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?)
             
     // tool
     case homeTappedFromTool(isScreenSharing: Bool)
-    case toolSettingsTappedFromTool(toolData: ToolSettingsFlowToolData)
+    case backTappedFromTool
+    case toolSettingsTappedFromTool(toolSettingsObserver: ToolSettingsObserver)
     case tractFlowCompleted(state: TractFlowCompletedState)
         
     // tutorial
@@ -139,6 +137,7 @@ enum FlowStep {
     case backTappedFromLanguageSettings
     case languageSettingsFlowCompleted(state: LanguageSettingsFlowCompletedState)
     case chooseAppLanguageTappedFromLanguageSettings
+    case editDownloadedLanguagesTappedFromLanguageSettings
     
     // choose app language
     case backTappedFromAppLanguages
@@ -147,6 +146,10 @@ enum FlowStep {
     case nevermindTappedFromConfirmAppLanguageChange
     case backTappedFromConfirmAppLanguageChange
     case chooseAppLanguageFlowCompleted(state: ChooseAppLanguageFlowCompleted)
+    
+    // downloaded languages
+    case backTappedFromDownloadedLanguages
+    case showLanguageDownloadErrorAlert(error: Error)
     
     // article
     case backTappedFromArticleCategories
@@ -171,15 +174,18 @@ enum FlowStep {
     case closeTappedFromToolSettings
     case shareLinkTappedFromToolSettings
     case screenShareTappedFromToolSettings
-    case enableTrainingTipsTappedFromToolSettings
-    case disableTrainingTipsTappedFromToolSettings
     case primaryLanguageTappedFromToolSettings
     case parallelLanguageTappedFromToolSettings
-    case swapLanguagesTappedFromToolSettings
-    case shareableTappedFromToolSettings(shareableImageDomainModel: ShareableImageDomainModel)
+    case shareableTappedFromToolSettings(shareable: ShareableDomainModel)
     case closeTappedFromReviewShareShareable
     case shareImageTappedFromReviewShareShareable(shareImage: UIImage)
     case toolSettingsFlowCompleted(state: ToolSettingsFlowCompletedState)
+    
+    // tool settings tool languages list
+    case closeTappedFromToolSettingsToolLanguagesList
+    case primaryLanguageTappedFromToolSettingsToolLanguagesList
+    case parallelLanguageTappedFromToolSettingsToolLanguagesList
+    case deleteParallelLanguageTappedFromToolSettingsToolLanguagesList
     
     // tool screen share
     case closeTappedFromToolScreenShareTutorial

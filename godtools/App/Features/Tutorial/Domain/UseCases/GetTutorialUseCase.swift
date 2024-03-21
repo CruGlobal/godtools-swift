@@ -20,24 +20,19 @@ class GetTutorialUseCase {
         self.getTutorialRepositoryInterface = getTutorialRepositoryInterface
     }
     
-    func getTutorialPublisher(appLanguagePublisher: AnyPublisher<AppLanguageDomainModel, Never>) -> AnyPublisher<TutorialDomainModel, Never> {
+    func getTutorialPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<TutorialDomainModel, Never> {
         
-        return appLanguagePublisher
-            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<(TutorialInterfaceStringsDomainModel, [TutorialPageDomainModel]), Never> in
-                
-                return Publishers.CombineLatest(
-                    self.getInterfaceStringsRepositoryInterface.getStringsPublisher(translateInLanguage: appLanguage),
-                    self.getTutorialRepositoryInterface.getTutorialPublisher(translateInLanguage: appLanguage)
-                )
+        return Publishers.CombineLatest(
+            self.getInterfaceStringsRepositoryInterface.getStringsPublisher(translateInLanguage: appLanguage),
+            self.getTutorialRepositoryInterface.getTutorialPublisher(translateInLanguage: appLanguage)
+        )
+        .flatMap({ (interfaceStrings: TutorialInterfaceStringsDomainModel, pages: [TutorialPageDomainModel]) -> AnyPublisher<TutorialDomainModel, Never> in
+            
+            let tutorial = TutorialDomainModel(interfaceStrings: interfaceStrings, pages: pages)
+            
+            return Just(tutorial)
                 .eraseToAnyPublisher()
-            })
-            .flatMap({ (interfaceStrings: TutorialInterfaceStringsDomainModel, pages: [TutorialPageDomainModel]) -> AnyPublisher<TutorialDomainModel, Never> in
-                
-                let tutorial = TutorialDomainModel(interfaceStrings: interfaceStrings, pages: pages)
-                
-                return Just(tutorial)
-                    .eraseToAnyPublisher()
-            })
-            .eraseToAnyPublisher()
+        })
+        .eraseToAnyPublisher()
     }
 }

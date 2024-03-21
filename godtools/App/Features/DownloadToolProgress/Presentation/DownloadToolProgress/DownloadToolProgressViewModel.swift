@@ -26,7 +26,7 @@ class DownloadToolProgressViewModel: ObservableObject {
     
     @Published var message: String = ""
     
-    init(flowDelegate: FlowDelegate, resource: ResourceModel?, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getDownloadToolProgressInterfaceStringsUseCase: GetDownloadToolProgressInterfaceStringsUseCase) {
+    init(flowDelegate: FlowDelegate, toolId: String?, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getDownloadToolProgressInterfaceStringsUseCase: GetDownloadToolProgressInterfaceStringsUseCase) {
                 
         self.flowDelegate = flowDelegate
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
@@ -44,7 +44,7 @@ class DownloadToolProgressViewModel: ObservableObject {
         })
         
         getDownloadToolProgressInterfaceStringsUseCase
-            .getStringsPublisher(resource: resource, appLanguagePublisher: $appLanguage.eraseToAnyPublisher())
+            .getStringsPublisher(toolId: toolId, appLanguagePublisher: $appLanguage.eraseToAnyPublisher())
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (interfaceStrings: DownloadToolProgressInterfaceStringsDomainModel) in
                 
@@ -54,6 +54,7 @@ class DownloadToolProgressViewModel: ObservableObject {
     }
     
     deinit {
+        print("x deinit: \(type(of: self))")
         progressTimer.stop()
     }
     

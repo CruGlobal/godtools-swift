@@ -14,13 +14,13 @@ class AppLayoutDirectionBasedBarItem: NavBarItem {
     let leftToRightImage: UIImage?
     let rightToLeftImage: UIImage?
     
-    init(leftToRightImage: UIImage?, rightToLeftImage: UIImage?, style: UIBarButtonItem.Style?, color: UIColor?, target: AnyObject, action: Selector, accessibilityIdentifier: String?, toggleVisibilityPublisher: AnyPublisher<Bool, Never>? = nil) {
+    init(leftToRightImage: UIImage?, rightToLeftImage: UIImage?, style: UIBarButtonItem.Style?, color: UIColor?, target: AnyObject, action: Selector, accessibilityIdentifier: String?, hidesBarItemPublisher: AnyPublisher<Bool, Never>? = nil, layoutDirectionPublisher: AnyPublisher<UISemanticContentAttribute, Never>? = nil) {
         
         self.leftToRightImage = leftToRightImage
         self.rightToLeftImage = rightToLeftImage
         
         super.init(
-            controllerType: .appLayoutDirection,
+            controllerType: .appLayoutDirection(layoutDirectionPublisher: layoutDirectionPublisher),
             itemData: NavBarItemData(
                 contentType: .image(value: leftToRightImage),
                 style: style,
@@ -29,7 +29,7 @@ class AppLayoutDirectionBasedBarItem: NavBarItem {
                 action: action,
                 accessibilityIdentifier: accessibilityIdentifier
             ),
-            toggleVisibilityPublisher: toggleVisibilityPublisher
+            hidesBarItemPublisher: hidesBarItemPublisher
         )
     }
 }

@@ -170,6 +170,30 @@
 <string>%d Tools available</string>
 </dict>
 </dict>
+<key>languageSettings.appLanguage.numberAvailable</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@appLanguageCount@</string>
+<key>appLanguageCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>zero</key>
+<string>%d لا يوجد لغات متوفرة</string>
+<key>one</key>
+<string>%d لغة متوفرة</string>
+<key>two</key>
+<string>%d لغتان متوفرتان</string>
+<key>few</key>
+<string>%d بعض اللغات متوفرة</string>
+<key>many</key>
+<string>%d كثير من  اللغات متوفرة</string>
+<key>other</key>
+<string>%d لغات متوفرة</string>
+</dict>
+</dict>
 <key>badges.imagesShared</key>
 <dict>
 <key>NSStringLocalizedFormatKey</key>

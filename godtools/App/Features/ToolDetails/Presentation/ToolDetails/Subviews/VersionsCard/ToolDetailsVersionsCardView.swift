@@ -73,6 +73,10 @@ struct ToolDetailsVersionsCardView: View {
                                 if let toolLanguageName = viewModel.toolLanguageName, !toolLanguageName.isEmpty {
                                     LanguageSupportedText(languageName: toolLanguageName, isSupported: viewModel.toolLanguageNameIsSupported)
                                 }
+                                
+                                if let toolParallelLanguageName = viewModel.toolParallelLanguageName, !toolParallelLanguageName.isEmpty, let toolParallelLanguageNameIsSupported = viewModel.toolParallelLanguageNameIsSupported {
+                                    LanguageSupportedText(languageName: toolParallelLanguageName, isSupported: toolParallelLanguageNameIsSupported)
+                                }
                             }
                             .foregroundColor(ColorPalette.gtLightGrey.color)
                             .font(FontLibrary.sfProTextRegular.font(size: 13))
@@ -94,13 +98,16 @@ struct ToolDetailsVersionsCardView_Preview: PreviewProvider {
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         
         let toolVersion = ToolVersionDomainModel(
+            analyticsToolAbbreviation: "",
             bannerImageId: "1",
             dataModelId: "1",
             description: "Tool description",
             name: "Tool name",
             numberOfLanguages: "45 languages",
             toolLanguageName: "Spanish",
-            toolLanguageNameIsSupported: true
+            toolLanguageNameIsSupported: true,
+            toolParallelLanguageName: "English",
+            toolParallelLanguageNameIsSupported: true
         )
         
         let viewModel = ToolDetailsVersionsCardViewModel(

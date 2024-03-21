@@ -1,4 +1,7 @@
 "onboardingTutorial.chooseLanguageButton.title" = "اختر اللغة";
+"languageSettings.confirmAppLanguage.message" = "لقد حددت %@  كلغة تطبيقك. سيؤدي هذا إلى تغيير لغة تطبيق GodTools بالكامل. هل أنت متأكد؟";
+"languageSettings.confirmAppLanguage.changeLanguageButton.title" = "تغيير اللغة";
+"languageSettings.confirmAppLanguage.nevermindButton.title" = "لا تهتم";
 "languageSettings.appInterface.title" = "لغة واجهة التطبيق";
 "languageSettings.appInterface.message" = "عيّن اللغة التي تريد أن يظهر بها التطبيق بالكامل.";
 "languageSettings.appInterface.languagesAvailable" = "اللغات المتاحة";
@@ -8,10 +11,27 @@
 "allTools.filter.title" = "فلتر";
 "allTools.filter.anyCategory" = "أي فئة:";
 "allTools.filter.anyLanguage" = "أي لغة:";
+"allTools.filter.navBar.language" = "فلترة حسب اللغة";
+"allTools.filter.navBar.category" = "فلترة حسب الفئة";
 "languageSettings.appLanguage.title" = "لغة التطبيق";
+"authError.userAccountAlreadyExists.message" = "حساب المستخدم موجود مسبقا.";
+"authError.userAccountNotFound.message" = "لم يتم العثور على حساب هذا المستخدم.";
 "createAccount.title" = "إنشاء حساب";
 "createAccount.subtitle" = "قم بإنشاء حساب للحصول على قصص حقيقية وتشجيع ونصائح عملية في متناول يدك.";
+"deleteAccountProgress.title" = "جارٍ حذف الحساب...";
+"confirmDeleteAccount.title" = "هل أنت متأكد؟";
+"confirmDeleteAccount.confirmButton.title" = "حذف الحساب";
+"accountDeletedAlert.title" = "تم حذف الحساب";
+"accountDeletedAlert.message" = "لقد تم حذف حسابك.";
+"deleteAccount.title" = "لا تغادرنا سريعا";
+"deleteAccount.subtitle" = "إذا حذفت حسابك فلن تتمكن من الوصول إلى أدواتك المفضلة ولا نشاط حسابك.";
+"deleteAccount.confirmButton.title" = "احذف حسابي";
+"deleteAccount.cancelButton.title" = "أبق على حسابي";
 "signIn.title" = "تسجيل دخول";
+"signIn.subtitle" = "قم بتسجيل الدخول لحسابك للحصول على قصص حقيقية وتشجيع ونصائح عملية في متناول يدك.";
+"signIn.google" = "تسجيل الدخول بغوغل.";
+"signIn.facebook" = "تسجيل الدخول بفيسبوك.";
+"signIn.apple" = "الاستمرار بآبل";
 "menu_getStarted" = "ابدأ";
 "menu_support" = "دعم";
 "menu_about" = "حول";
@@ -38,6 +58,35 @@
 "account.activity.languagesUsed" = "اللغات المستخدمة";
 
 "account.activity.sessions" = "الجلسات";
+"badges.tipsCompleted.singular" = "تم إتمام نصيحة تدريبية 1";
+
+/* leave %d in phrase - this is the number of articles that the user has read */
+"badges.articlesOpened.plural" = "تمت قراءة %d مقالات";
+
+/* when they have read only 1 articles */
+"badges.articlesOpened.singular" = "تمت قراءة مقال 1";
+
+/* leave %d in phrase - this is the number of images that the user has shared */
+"badges.imagesShared.plural" = "صور مشاركة  %d";
+
+"badges.imagesShared.singular" = "تمت مشاركة صورة 1";
+
+/* leave %d in phrase - this is the number of lessons that the user has completed */
+"badges.lessonsCompleted.plural" = "%d دروس مكتملة";
+
+"badges.lessonsCompleted.singular" = "درس 1 مكتمل";
+
+/* leave %d in phrase - this is the number of tools that the user has opened */
+"badges.toolsOpened.plural" = "%d أدوات مفتوحة";
+
+"badges.toolsOpened.singular" = "أداة 1 مفتوحة";
+
+/* leave %d in phrase - this is the number of tips that the user has completed */
+"badges.tipsCompleted.plural" = "%d نصائح تدريبية مكتملة";
+
+/* Just translate "Joined" - leave the %@ - this is the date they started using GodTools */
+"account.joinedOn" = "تم الانضمام في %@";
+
 "account.globalActivity.title" = "النشاط العالمي";
 "toolDetails.conversationStarters.title" = "بدايات المحادثة";
 
@@ -55,6 +104,9 @@
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "غير متاحة في غضون %@";
 
+"menu.deleteAccount" = "حذف حساب";
+"alert.mailAppUnavailable.title" = "تطبيق المراسلة غير متوفر";
+"alert.mailAppUnavailable.message" = "تطبيق المراسلة الداخلي غير معد أو غير متوفر على هذا الجهاز. ";
 "tool_menu_item.tools" = "أدوات";
 "lessons.pageTitle" = "الدروس المُعدة لأجلك";
 "lessons.pageSubtitle" = "أفكار عملية لبناء علاقات وبدء محادثات هادفة.";
@@ -68,6 +120,11 @@
 "favorites.favoriteLessons.title" = "الدرس المميّز";
 "favorites.favoriteTools.title" = "أدواتك المفضلة";
 "favorites.favoriteTools.viewAll" = "مشاهدة الكل";
+"favorites.favoriteLessons.details" = "التفاصيل";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
+"toolSettings.languagesList.deleteLanguage.title" = "لا شيء";
+
 "toolSettings.chooseLanguage.toggleMessage" = "قم بالتبديل بين لغتين مختلفتين في هذه الأداة.";
 "toolDetails.versions.title" = "الإصدارات";
 "toolDetails.learnToShareToolButton.title" = "تعلم مشاركة هذه الأداة";
@@ -88,12 +145,17 @@
 "training_tip_quote" = "إقتباس";
 "training_tip_tip" = "فكرة عملية";
 "start_training" = "ابدأ التدريب";
+"close" = "إغلاق";
 "tool_menu_item.lessons" = "الدروس";
 "parallelLanguage.yesButton.title" = "نعم";
 "parallelLanguage.noButton.title" = "لا شكراً";
+"parallelLanguage.selectButton.title" = "تحديد";
 "parallelLanguage.getStartedButton.title" = "ابدأ";
 "parallelLanguage.selectLanguageButton.title" = "تحديد اللغة";
 "parellelLanguage.prompt" = "هل ترغب في تعيين لغة ثانوية؟";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.continueButton.title.closeTutorial" = "إغلاق البرنامج التعليمي";
 
 /* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.tool.title" = "الأدوات";
@@ -127,6 +189,7 @@
 "onboardingQuickStart.2.button.title" = "اختر أحد أدواتنا";
 "onboardingTutorial.nextButton.title" = "التالي";
 "onboardingQuickStart.title" = "روابط بداية سريعة";
+"onboardingQuickStart.0.title" = "أريد معرفة المزيد عن يسوع.";
 "onboardingQuickStart.0.button.title" = "اقرأ مقالاتنا";
 "onboardingQuickStart.1.title" = "أريد أن أتعلم كيفية إجراء حوارًا باستخدام الكتاب المقدس";
 "onboardingQuickStart.1.button.title" = "جرّب دروسنا";
@@ -153,7 +216,9 @@
 "learn_to_share_tool.learn_to_share.title" = "تعلم مشاركة هذه الأداة مع أي شخص";
 "learn_to_share_tool.learn_to_share.message" = "تدرب على استخدام العديد من النصائح التي تحتاجها لتشعر بالثقة عند مشاركة هذه الأداة مع الآخرين.";
 "learn_to_share_tool.tips_light_the_way.title" = "نصائح لترشد الطريق";
+"learn_to_share_tool.tips_light_the_way.message" = "في اختيارات الشاشات لهذا البرنامج التدريبي ، سترى مجموعة متنوعة من الرموز. اضغط على الأيقونة للكشف عن نصيحة ستساعدك على التحدث عن محتوى الشاشة. إذا لم يكن للشاشة أيقونة، عندها اقرأ المحتوى فقط وناقش بقدر الحاجة.";
 "learn_to_share_tool.light_up_the_tips.title" = "أضئ النصائح.";
+"learn_to_share_tool.light_up_the_tips.message" = "عندما تضيء إحدى النصائح ، تكون قد أكملت هذا الجزء من التدريب. تدرب باستخدام نصائح بقدر ما تريد كي تصبح واثقا من شرح الأداة";
 "lesson_evaluation.title" = "مراجعة";
 "lesson_evaluation.wasThisHelpful" = "هل كان هذا الدرس مفيدًا لك؟";
 "lesson_evaluation.shareFaith" = "ما مدى استعدادك لبدء محادثة روحية؟";
@@ -198,6 +263,8 @@
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "المقالات";
 
+"articles.downloadArticlesButton.title.retryDownload" = "إعادة محاولة تنزيل";
+
 /* This is to let users know which version of the app is installed on their phone */
 "menu_version" = "إصدار";
 "language_onboard" = "أكثر من 90 لغة";
@@ -227,6 +294,8 @@
 "menu_legal" = "قانوني";
 "language_settings" = "إعدادات اللغة";
 "menu.tutorial" = "شرح";
+"menu.my_account" = "حسابي";
+
 // Login
 "login" = "تسجيل الدخول";
 "logout" = "تسجيل الخروج";
@@ -278,7 +347,9 @@ https://godtoolsapp.com
 "no" = "لا";
 
 // Tract - Sharing
-"tract_share_message" ="هذا الرابط يأخذك إلى إصدار الويب من الصفحة التي كنا نستعرضها معًا مؤخرًا: %@. فلنتحدث أكثر! 
+"tract_share_message" ="هذا الرابط سيأخذك إلى إصدار الويب عما كنا نتحدث عنه هذا اليوم: %@.
+
+فلنتحدث أكثر! 
 
 يمكن تنزيل التطبيق من https://godtoolsapp.com";
 
@@ -301,15 +372,20 @@ https://godtoolsapp.com
 
 // About
 "general_about_1" = "GodTools يساعدك على مشاركة إيمانك بطريقة سهلة وواضحة.";
+// Tutorial
+"tutorial.tutorialItem.0.title" = "مشاهدة";
 "general_about_2" = "هذه الأدوات تساعدك على الشرح لشخص ما كيفية بدئهم علاقة مع الرب عبر يسوع المسيح، حتى و لو لم تشارك إيمانك من قبل أو كانوا يتحدثون لغة مختلفة.";
 "general_about_3" = "اختر من عدة أدوات استناداً على تفضيلاتك و جمهورك. ليست كل الأدوات متوفرة في كل لغة.";
 "general_about_4" = "الروابط للمصادر الأخرى يتم إدراجها في نهاية كل أداة.";
 "general_about_5" = "الاتصال بالشبكة ضروري لتحميل كل أداة و/ أو لغة جديدة. بمجرد تحميلها، يمكن استعمالها خارج الشبكة.";
 "general_about_6" = "ألديك أسئلة؟ اقتراحات؟ طلبات؟ اتصل بنا على support@godtoolsapp.com";
 "general_about_7" = "إصدار عبر الشبكة لهذه الأدوات يمكن إيجاده على knowgod.com. أدرجه على موقعك الخاص!";
+"tutorial.tutorialItem.3.title" = "هذا البرنامج التعليمي متاح كي ليُرى مجددا في القائمة";
 "general_about_8" = "زر موقع godtoolsapp.com لمزيد من المعلومات.";
 "tutorial.continueButton.title.continue" = "استمرار";
 "general_about_9" = "بمجرد المبادرة في مشاركة إيمانك، تذكر بأن الرب هو الذي يغير القلب. امنح حبك لكل واحد جيداً بالإستماع من أجل الفهم.";
+"tutorial.continueButton.title.startUsingGodTools" = "ابدأ باستخدام GodTools";
+
 "general_about_10" = "\"اجعل محادثتك دائماً ملأى بالنعم، متبلة بالملح، بحيث يمكنك معرفة كيفية إجابة كل واحد.\" كولوسي 4:6";
 
 // OpenTutorial
@@ -317,8 +393,12 @@ https://godtoolsapp.com
 // Downloads
 "Download in progress" = "التنزيل قيد التقدم";
 
+"openTutorial.openTutorialButton.title" = "افتح البرنامج التعليمي";
+
 // Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "السابق";
+// Account
+"account.navTitle" = "حسابي الشخصي";
 "card_status2" = "التالي";
 
 "account.activity.title" = "الحركة";
@@ -328,3 +408,12 @@ https://godtoolsapp.com
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "النشاط العالمي";
+"accountActivity.globalAnalytics.users.title" = "المستخدمون\nالفريدون";
+"onboardingWelcome.titleLabel.tagline" = "يُساعدك على مشاركة إيمانك";
+"accountActivity.globalAnalytics.gospelPresentation.title" = "الإنجيل\nالعروض التقديمية";
+"accountActivity.globalAnalytics.launches.title" = "الجلسات";
+// OnboardingTutorial
+"onboardingTutorial.aboutAppItem.0.title" = "المشاركة مع الآخرين";
+"accountActivity.globalAnalytics.countries.title" = "البلدان";
+
+"onboardingTutorial.showMoreButton.title" = "أعرض لي المزيد";

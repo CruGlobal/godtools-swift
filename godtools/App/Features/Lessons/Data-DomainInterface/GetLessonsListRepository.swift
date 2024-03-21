@@ -13,73 +13,50 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
     
     private let resourcesRepository: ResourcesRepository
     private let languagesRepository: LanguagesRepository
-    private let translationsRepository: TranslationsRepository
-    private let localizationServices: LocalizationServices
-    private let localeLanguageName: LocaleLanguageName
+    private let getTranslatedToolName: GetTranslatedToolName
+    private let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability
     
-    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, translationsRepository: TranslationsRepository, localizationServices: LocalizationServices, localeLanguageName: LocaleLanguageName) {
+    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, getTranslatedToolName: GetTranslatedToolName, getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability) {
         
         self.resourcesRepository = resourcesRepository
         self.languagesRepository = languagesRepository
-        self.translationsRepository = translationsRepository
-        self.localizationServices = localizationServices
-        self.localeLanguageName = localeLanguageName
+        self.getTranslatedToolName = getTranslatedToolName
+        self.getTranslatedToolLanguageAvailability = getTranslatedToolLanguageAvailability
     }
     
     func getLessonsListPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[LessonListItemDomainModel], Never> {
         
-        let lessons: [ResourceModel] = resourcesRepository.getAllLessons(sorted: true)
+        let appLanguageModel: LanguageModel? = languagesRepository.getLanguage(code: appLanguage)
         
-        let lessonListItems: [LessonListItemDomainModel] = lessons.map { (resource: ResourceModel) in
-            
-            let lessonIsAvailableInAppLanguage: Bool
-            let lessonNameInAppLanguage: String
-            
-            if let translation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageCode: appLanguage) {
-                lessonNameInAppLanguage = translation.translatedName
-            }
-            else {
-                lessonNameInAppLanguage = ""
-            }
-            
-            if let appLanguage = languagesRepository.getLanguage(code: appLanguage) {
-                lessonIsAvailableInAppLanguage = resource.supportsLanguage(languageId: appLanguage.id)
-            }
-            else {
-                lessonIsAvailableInAppLanguage = false
-            }
-             
-            let availabilityInAppLanguage: String
-            let appLanguageName: String = localeLanguageName.getLanguageName(forLanguageCode: appLanguage, translatedInLanguageId: appLanguage) ?? ""
-            
-            if lessonIsAvailableInAppLanguage {
-                availabilityInAppLanguage = appLanguageName + " ✓"
-            }
-            else {
-                let languageNotAvailable: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "lessonCard.languageNotAvailable")
+        return resourcesRepository
+            .getResourcesChangedPublisher()
+            .flatMap({ (resourcesDidChange: Void) -> AnyPublisher<[LessonListItemDomainModel], Never> in
                 
-                availabilityInAppLanguage = String(
-                    format: languageNotAvailable,
-                    locale: Locale(identifier: appLanguage),
-                    appLanguageName
-                ) + " x"
-            }
- 
-            return LessonListItemDomainModel(
-                analyticsToolName: resource.abbreviation,
-                availabilityInAppLanguage: availabilityInAppLanguage,
-                bannerImageId: resource.attrBanner,
-                dataModelId: resource.id,
-                name: lessonNameInAppLanguage
-            )
-        }
-        
-        return Just(lessonListItems)
-            .eraseToAnyPublisher()
-    }
-    
-    func observeLessonsChangedPublisher() -> AnyPublisher<Void, Never> {
-        return resourcesRepository.getResourcesChangedPublisher()
+                let lessons: [ResourceModel] = self.resourcesRepository.getAllLessons(sorted: true)
+                
+                let lessonListItems: [LessonListItemDomainModel] = lessons.map { (resource: ResourceModel) in
+
+                    let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel
+                    
+                    if let language = appLanguageModel {
+                        toolLanguageAvailability = self.getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(resource: resource, translateInLanguage: language)
+                    }
+                    else {
+                        toolLanguageAvailability = ToolLanguageAvailabilityDomainModel(availabilityString: "", isAvailable: false)
+                    }
+                
+                    return LessonListItemDomainModel(
+                        analyticsToolName: resource.abbreviation,
+                        availabilityInAppLanguage: toolLanguageAvailability,
+                        bannerImageId: resource.attrBanner,
+                        dataModelId: resource.id,
+                        name: self.getTranslatedToolName.getToolName(resource: resource, translateInLanguage: appLanguage)
+                    )
+                }
+                
+                return Just(lessonListItems)
+                    .eraseToAnyPublisher()
+            })
             .eraseToAnyPublisher()
     }
 }
