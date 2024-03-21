@@ -27,15 +27,54 @@ class ToolsFilterFeatureDataLayerDependencies {
         )
     }
     
+    func getToolFilterCategoriesRepository() -> GetToolFilterCategoriesRepository {
+        return GetToolFilterCategoriesRepository(
+            resourcesRepository: coreDataLayer.getResourcesRepository(),
+            localizationServices: coreDataLayer.getLocalizationServices(),
+            localeLanguageName: coreDataLayer.getLocaleLanguageName()
+        )
+    }
+    
+    func getToolFilterLanguagesRepository() -> GetToolFilterLanguagesRepository {
+        return GetToolFilterLanguagesRepository(
+            resourcesRepository: coreDataLayer.getResourcesRepository(),
+            languagesRepository: coreDataLayer.getLanguagesRepository(),
+            localeLanguageName: coreDataLayer.getLocaleLanguageName(),
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
+    
     // MARK: - Domain Interface
+    
+    func getSearchToolFilterCategoriesRepositoryInterface() -> SearchToolFilterCategoriesRepositoryInterface {
+        return SearchToolFilterCategoriesRepository(
+            stringSearcher: StringSearcher()
+        )
+    }
+    
+    func getSearchToolFilterLanguagesRepositoryInterface() -> SearchToolFilterLanguagesRepositoryInterface {
+        return SearchToolFilterLanguagesRepository(
+            stringSearcher: StringSearcher()
+        )
+    }
     
     func getStoreUserFiltersRepositoryInterface() -> StoreUserFiltersRepositoryInterface {
         return StoreUserFiltersRepository(userFiltersRepository: getUserFiltersRepository())
     }
     
+    func getToolFilterCategoriesRepositoryInterface() -> GetToolFilterCategoriesRepositoryInterface {
+        return getToolFilterCategoriesRepository()
+    }
+    
+    func getToolFilterLanguagesRepositoryInterface() -> GetToolFilterLanguagesRepositoryInterface {
+        return getToolFilterLanguagesRepository()
+    }
+    
     func getUserFiltersRepositoryInterface() -> GetUserFiltersRepositoryInterface {
         return GetUserFiltersRepository(
-            userFiltersRepository: getUserFiltersRepository()
+            userFiltersRepository: getUserFiltersRepository(), 
+            getToolFilterCategoriesRepository: getToolFilterCategoriesRepository(),
+            getToolFilterLanguagesRepository: getToolFilterLanguagesRepository()
         )
     }
 }

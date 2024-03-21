@@ -66,11 +66,10 @@ class AppLanguagesViewModel: ObservableObject {
             $searchText.eraseToAnyPublisher(),
             $appLanguagesList.eraseToAnyPublisher()
         )
-        .flatMap({ (searchText: String, appLanguagesList: [AppLanguageListItemDomainModel]) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> in
-            return searchAppLanguageInAppLanguagesListUseCase
-                .getSearchResultsPublisher(searchText: searchText, appLanguagesList: appLanguagesList)
-                .eraseToAnyPublisher()
-        })
+        .flatMap { (searchText: String, appLanguagesList: [AppLanguageListItemDomainModel]) in
+            
+            return searchAppLanguageInAppLanguagesListUseCase.getSearchResultsPublisher(for: searchText, in: appLanguagesList)
+        }
         .receive(on: DispatchQueue.main)
         .assign(to: &$appLanguageSearchResults)
     }
