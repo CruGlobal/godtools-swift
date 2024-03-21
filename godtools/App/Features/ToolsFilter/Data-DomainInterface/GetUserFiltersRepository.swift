@@ -12,25 +12,49 @@ import Combine
 class GetUserFiltersRepository: GetUserFiltersRepositoryInterface {
     
     private let userFiltersRepository: UserFiltersRepository
+    private let getToolFilterCategoriesRepository: GetToolFilterCategoriesRepository
+    private let getToolFilterLanguagesRepository: GetToolFilterLanguagesRepository
     
-    init(userFiltersRepository: UserFiltersRepository) {
+    init(userFiltersRepository: UserFiltersRepository, getToolFilterCategoriesRepository: GetToolFilterCategoriesRepository, getToolFilterLanguagesRepository: GetToolFilterLanguagesRepository) {
         
         self.userFiltersRepository = userFiltersRepository
+        self.getToolFilterCategoriesRepository = getToolFilterCategoriesRepository
+        self.getToolFilterLanguagesRepository = getToolFilterLanguagesRepository
     }
     
-    func getUserCategoryFilterPublisher() -> AnyPublisher<String?, Never> {
+    func getUserCategoryFilterPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<CategoryFilterDomainModel, Never> {
         
         let categoryId = userFiltersRepository.getUserCategoryFilter()
         
-        return Just(categoryId)
-            .eraseToAnyPublisher()
+        if let categoryFilter = getToolFilterCategoriesRepository.getCategoryFilter(from: categoryId, translatedInAppLanguage: translatedInAppLanguage) {
+            
+            return Just(categoryFilter)
+                .eraseToAnyPublisher()
+            
+        } else {
+            
+            let defaultCategoryFilterValue = getToolFilterCategoriesRepository.getAnyCategoryFilterDomainModel(translatedInAppLanguage: translatedInAppLanguage)
+            
+            return Just(defaultCategoryFilterValue)
+                .eraseToAnyPublisher()
+        }
     }
     
-    func getUserLanguageFilterPublisher() -> AnyPublisher<String?, Never> {
+    func getUserLanguageFilterPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<LanguageFilterDomainModel, Never> {
         
         let languageId = userFiltersRepository.getUserLanguageFilter()
         
-        return Just(languageId)
-            .eraseToAnyPublisher()
+        if let languageFilter = getToolFilterLanguagesRepository.getLanguageFilter(from: languageId, translatedInAppLanguage: translatedInAppLanguage) {
+            
+            return Just(languageFilter)
+                .eraseToAnyPublisher()
+            
+        } else {
+            
+            let defaultLanguageFilterValue = getToolFilterLanguagesRepository.getAnyLanguageFilterDomainModel(translatedInAppLanguage: translatedInAppLanguage)
+            
+            return Just(defaultLanguageFilterValue)
+                .eraseToAnyPublisher()
+        }
     }
 }

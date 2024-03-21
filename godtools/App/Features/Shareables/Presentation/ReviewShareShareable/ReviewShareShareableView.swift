@@ -78,17 +78,15 @@ struct ReviewShareShareableViewPreview: PreviewProvider {
     static func getReviewShareShareableViewModel() -> ReviewShareShareableViewModel {
                 
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
-        
-        let resource: ResourceModel = appDiContainer.dataLayer.getResourcesRepository().getResource(id: "1")!
-                
+                        
         return ReviewShareShareableViewModel(
             flowDelegate: MockFlowDelegate(),
-            resource: resource,
+            toolId: "1",
             shareable: ShareableDomainModel(dataModelId: "", imageName: "", title: ""),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             viewReviewShareShareableUseCase: appDiContainer.feature.shareables.domainLayer.getViewReviewShareShareableUseCase(),
             getShareableImageUseCase: appDiContainer.feature.shareables.domainLayer.getShareableImageUseCase(),
-            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
+            trackShareShareableTapUseCase: appDiContainer.feature.shareables.domainLayer.getTrackShareShareableTapUseCase()
         )
     }
 }

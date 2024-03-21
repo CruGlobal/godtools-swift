@@ -126,7 +126,7 @@ class AttachmentsRepository {
 
 extension AttachmentsRepository {
     
-    private func getAttachmentModel(id: String) -> AttachmentModel? {
+    func getAttachmentModel(id: String) -> AttachmentModel? {
         return cache.getAttachmentModel(id: id)
     }
     
@@ -232,6 +232,16 @@ extension AttachmentsRepository {
                     .setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             })
+            .eraseToAnyPublisher()
+    }
+    
+    func downloadAndCacheAttachmentIfNeeded(attachment: AttachmentModel) -> AnyPublisher<AttachmentDataModel, Error> {
+        
+        return getAttachmentFromCachePublisher(attachment: attachment)
+            .catch { (error: Error) in
+                return self.downloadAndCacheAttachment(attachment: attachment)
+                    .eraseToAnyPublisher()
+            }
             .eraseToAnyPublisher()
     }
 }

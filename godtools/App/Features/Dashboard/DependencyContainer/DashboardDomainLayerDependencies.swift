@@ -28,4 +28,11 @@ class DashboardDomainLayerDependencies {
             getInterfaceStringsRepository: dataLayer.getDashboardInterfaceStringsRepositoryInterface()
         )
     }
+    
+    func getViewToolsUseCase() -> ViewToolsUseCase {
+        return ViewToolsUseCase(
+            getInterfaceStringsRepository: dataLayer.getToolsInterfaceStringsRepository(),
+            getToolsRepository: dataLayer.getToolsRepository()
+        )
+    }
 }

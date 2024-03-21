@@ -11,6 +11,7 @@ import SwiftUI
 // NOTE: This view is a wrapper around TabView and was created to fix a bug specifically to iOS 16 where a TabView page index would get reversed when the device settings is using a right to left language.
 // This would cause the TabBar tied to the TabView to reverse as well and navigation was also reversed when tapping Tabs to navigate the TabView. ~Levi
 
+@available(iOS, obsoleted: 14.0, message: "Marking as obsoleted due to a retain cycle happening in @ViewBuilder content: @escaping (_ page: Int) -> Content that was unable to be resolved.")
 struct PagedView<Content: View>: View {
     
     private let numberOfPages: Int
@@ -23,6 +24,8 @@ struct PagedView<Content: View>: View {
         self.numberOfPages = numberOfPages
         self._currentPage = currentPage
         self.content = content
+        
+        assertionFailure("Don't allocate PagedView directly.  There is a possible retain cycle happening with @ViewBuilder content: @escaping (_ page: Int) -> Content.  Instead copy the TabView portion (be sure to include modifiers when copying) and paste into desired location of custom paged view.")
     }
     
     var body: some View {
@@ -56,28 +59,6 @@ struct PagedView<Content: View>: View {
             .environment(\.layoutDirection, .leftToRight)
             .tabViewStyle(.page(indexDisplayMode: .never))
             .animation(.easeOut, value: currentPage)
-        }
-    }
-}
-
-struct PagedView_Previews: PreviewProvider {
-       
-    @State private static var currentPage: Int = 1
-    
-    static var previews: some View {
-                
-        PagedView(numberOfPages: 5, currentPage: $currentPage) { page in
-            
-            ZStack(alignment: .center) {
-                
-                Rectangle()
-                    .fill(Color.red)
-                    .frame(width: 100, height: 100)
-                
-                Text("Item: \(page)")
-                    .foregroundColor(Color.black)
-            }
-            .frame(width: 100, height: 100)
         }
     }
 }

@@ -12,7 +12,7 @@ import RealmSwift
 class RealmUserAppLanguage: Object {
     
     @objc dynamic var id: String = ""
-    @objc dynamic var languageId: String = ""
+    @objc dynamic var languageId: BCP47LanguageIdentifier = ""
     
     override static func primaryKey() -> String? {
         return "id"

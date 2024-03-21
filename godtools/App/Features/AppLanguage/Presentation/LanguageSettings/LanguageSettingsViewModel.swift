@@ -29,6 +29,7 @@ class LanguageSettingsViewModel: ObservableObject {
     @Published var toolLanguagesAvailableOfflineTitle: String = ""
     @Published var downloadToolsForOfflineMessage: String = ""
     @Published var editDownloadedLanguagesButtonTitle: String = ""
+    @Published var downloadedLanguages: [DownloadedLanguageListItemDomainModel] = []
     
     init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewLanguageSettingsUseCase: ViewLanguageSettingsUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
         
@@ -38,7 +39,6 @@ class LanguageSettingsViewModel: ObservableObject {
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         
         getCurrentAppLanguageUseCase.getLanguagePublisher()
-            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
         $appLanguage.eraseToAnyPublisher()
@@ -62,6 +62,7 @@ class LanguageSettingsViewModel: ObservableObject {
                 self?.downloadToolsForOfflineMessage = interfaceStrings.downloadToolsForOfflineMessage
                 self?.editDownloadedLanguagesButtonTitle = interfaceStrings.editDownloadedLanguagesButtonTitle
                 
+                self?.downloadedLanguages = domainModel.downloadedLanguages
             }
             .store(in: &cancellables)
     }

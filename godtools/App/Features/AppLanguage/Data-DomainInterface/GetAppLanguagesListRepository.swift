@@ -20,7 +20,7 @@ class GetAppLanguagesListRepository: GetAppLanguagesListRepositoryInterface {
         self.translatedLanguageNameRepository = translatedLanguageNameRepository
     }
     
-    func getLanguagesPublisher(currentAppLanguage: AppLanguageDomainModel) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> {
+    func getLanguagesPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> {
         
         return appLanguagesRepository.getLanguagesPublisher()
             .flatMap({ (languages: [AppLanguageDataModel]) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> in
@@ -28,7 +28,7 @@ class GetAppLanguagesListRepository: GetAppLanguagesListRepositoryInterface {
                 let appLanguagesList: [AppLanguageListItemDomainModel] = languages.map { (languageDataModel: AppLanguageDataModel) in
                                                             
                     let languageNameTranslatedInOwnLanguage: String = self.translatedLanguageNameRepository.getLanguageName(language: languageDataModel, translatedInLanguage: languageDataModel.languageId)
-                    let languageNameTranslatedInCurrentAppLanguage: String = self.translatedLanguageNameRepository.getLanguageName(language: languageDataModel, translatedInLanguage: currentAppLanguage)
+                    let languageNameTranslatedInCurrentAppLanguage: String = self.translatedLanguageNameRepository.getLanguageName(language: languageDataModel, translatedInLanguage: appLanguage)
                     
                     return AppLanguageListItemDomainModel(
                         language: languageDataModel.languageId,
@@ -36,16 +36,13 @@ class GetAppLanguagesListRepository: GetAppLanguagesListRepositoryInterface {
                         languageNameTranslatedInCurrentAppLanguage: languageNameTranslatedInCurrentAppLanguage
                     )
                 }
+                .sorted { (thisAppLanguage: AppLanguageListItemDomainModel, thatAppLanguage: AppLanguageListItemDomainModel) in
+                    return thisAppLanguage.languageNameTranslatedInCurrentAppLanguage < thatAppLanguage.languageNameTranslatedInCurrentAppLanguage
+                }
                 
                 return Just(appLanguagesList)
                     .eraseToAnyPublisher()
             })
-            .eraseToAnyPublisher()
-    }
-    
-    func observeLanguagesChangedPublisher() -> AnyPublisher<Void, Never> {
-        
-        return appLanguagesRepository.getLanguagesChangedPublisher()
             .eraseToAnyPublisher()
     }
 }

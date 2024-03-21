@@ -31,7 +31,25 @@ class DashboardDataLayerDependencies {
         return FavoritedToolsLatestToolDownloader(
             favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository(),
             resourcesRepository: coreDataLayer.getResourcesRepository(),
-            translationsRepository: coreDataLayer.getTranslationsRepository()
+            toolDownloader: coreDataLayer.getToolDownloader()
+        )
+    }
+    
+    func getToolsInterfaceStringsRepository() -> GetToolsInterfaceStringsRepositoryInterface {
+        return GetToolsInterfaceStringsRepository(
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
+    
+    func getToolsRepository() -> GetToolsRepositoryInterface {
+        return GetToolsRepository(
+            resourcesRepository: coreDataLayer.getResourcesRepository(),
+            favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository(),
+            languagesRepository: coreDataLayer.getLanguagesRepository(),
+            getTranslatedToolName: coreDataLayer.getTranslatedToolName(),
+            getTranslatedToolCategory: coreDataLayer.getTranslatedToolCategory(),
+            getToolListItemInterfaceStringsRepository: coreDataLayer.getToolListItemInterfaceStringsRepository(),
+            getTranslatedToolLanguageAvailability: coreDataLayer.getTranslatedToolLanguageAvailability()
         )
     }
 }

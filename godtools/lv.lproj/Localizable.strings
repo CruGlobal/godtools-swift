@@ -1,7 +1,9 @@
+"language_name_sid" = "sidamas";
 "onboardingTutorial.chooseLanguageButton.title" = "Izvēlies valodu";
 "languageSettings.confirmAppLanguage.message" = "Tu izvēlējies %@ valodu – līdz ar to mainīsies lietotnes 'GodTools' valoda kopumā. Vai esi drošs, ka to vēlies?";
 "languageSettings.confirmAppLanguage.changeLanguageButton.title" = "Mainīt valodu";
 "languageSettings.confirmAppLanguage.nevermindButton.title" = "Atcelt";
+"languageSettings.downloadableLanguages.title" = "Lejupielādējamās valodas";
 "languageSettings.appInterface.title" = "Lietotnes valoda";
 "languageSettings.appInterface.message" = "Iestati sev vēlamo valodu.";
 "languageSettings.appInterface.languagesAvailable" = "Pieejamās valodas";
@@ -28,7 +30,7 @@
 "deleteAccount.confirmButton.title" = "Izdzēst manu kontu";
 "deleteAccount.cancelButton.title" = "Paturēt manu kontu";
 "signIn.title" = "Pierakstīties";
-"signIn.subtitle" = "Leej savā kontā, lai būtu pieejami patiesi stāsti, iedrošinājums un praktiski padomi.";
+"signIn.subtitle" = "Ieej savā kontā, lai būtu pieejami patiesi stāsti, iedrošinājums un praktiski padomi.";
 "signIn.google" = "Pierakstīties ar Google";
 "signIn.facebook" = "Ienākt, izmantojot Facebook";
 "signIn.apple" = "Turpināt, izmantojot Apple";

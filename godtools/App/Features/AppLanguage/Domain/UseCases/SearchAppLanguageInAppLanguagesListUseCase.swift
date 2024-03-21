@@ -11,38 +11,15 @@ import Combine
 
 class SearchAppLanguageInAppLanguagesListUseCase {
     
-    private let getAppLanguagesListUseCase: GetAppLanguagesListUseCase
+    private let searchAppLanguageInAppLanguageListRepository: SearchAppLanguageInAppLanguagesListRepositoryInterface
     
-    init(getAppLanguagesListUseCase: GetAppLanguagesListUseCase) {
-        self.getAppLanguagesListUseCase = getAppLanguagesListUseCase
+    init(searchAppLanguageInAppLanguageListRepository: SearchAppLanguageInAppLanguagesListRepositoryInterface) {
+        
+        self.searchAppLanguageInAppLanguageListRepository = searchAppLanguageInAppLanguageListRepository
     }
     
-    func getSearchResultsPublisher(for searchTextPublisher: AnyPublisher<String, Never>) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> {
+    func getSearchResultsPublisher(for searchText: String, in appLanguagesList: [AppLanguageListItemDomainModel]) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> {
         
-        return Publishers.CombineLatest(
-            searchTextPublisher,
-            getAppLanguagesListUseCase.getAppLanguagesListPublisher()
-        )
-            .flatMap { searchText, languageItems in
-                
-                if searchText.isEmpty {
-                    
-                    return Just(languageItems)
-                    
-                } else {
-                    
-                    let lowercasedSearchText = searchText.lowercased()
-                    
-                    let filteredItems = languageItems.filter { languageItem in
-                        
-                        let lowercasedLanguageName = languageItem.languageNameTranslatedInCurrentAppLanguage.lowercased()
-                        
-                        return lowercasedLanguageName.contains(lowercasedSearchText)
-                    }
-                    
-                    return Just(filteredItems)
-                }
-            }
-            .eraseToAnyPublisher()
+        return searchAppLanguageInAppLanguageListRepository.getSearchResultsPublisher(searchText: searchText, appLanguagesList: appLanguagesList)
     }
 }

@@ -21,26 +21,6 @@ class ToolsFilterFeatureDomainLayerDependencies {
         self.coreDomainLayer = coreDomainLayer
     }
     
-    func getToolFilterCategoriesUseCase() -> GetToolFilterCategoriesUseCase {
-        return GetToolFilterCategoriesUseCase(
-            getAllToolsUseCase: coreDomainLayer.getAllToolsUseCase(),
-            getSettingsPrimaryLanguageUseCase: coreDomainLayer.getSettingsPrimaryLanguageUseCase(),
-            localizationServices: coreDataLayer.getLocalizationServices(),
-            resourcesRepository: coreDataLayer.getResourcesRepository()
-        )
-    }
-    
-    func getToolFilterLanguagesUseCase() -> GetToolFilterLanguagesUseCase {
-        return GetToolFilterLanguagesUseCase(
-            getAllToolsUseCase: coreDomainLayer.getAllToolsUseCase(),
-            getLanguageUseCase: coreDomainLayer.getLanguageUseCase(),
-            getSettingsPrimaryLanguageUseCase: coreDomainLayer.getSettingsPrimaryLanguageUseCase(),
-            languagesRepository: coreDataLayer.getLanguagesRepository(),
-            localeLanguageName: coreDataLayer.getLocaleLanguageName(),
-            localizationServices: coreDataLayer.getLocalizationServices()
-        )
-    }
-    
     func getUserFiltersUseCase() -> GetUserFiltersUseCase {
         return GetUserFiltersUseCase(
             getUserFiltersRepositoryInterface: dataLayer.getUserFiltersRepositoryInterface()
@@ -48,16 +28,32 @@ class ToolsFilterFeatureDomainLayerDependencies {
     }
     
     func getSearchToolFilterCategoriesUseCase() -> SearchToolFilterCategoriesUseCase {
-        return SearchToolFilterCategoriesUseCase(stringSearcher: StringSearcher())
+        return SearchToolFilterCategoriesUseCase(
+            searchToolFilterCategoriesRepository: dataLayer.getSearchToolFilterCategoriesRepositoryInterface()
+        )
     }
     
     func getSearchToolFilterLanguagesUseCase() -> SearchToolFilterLanguagesUseCase {
-        return SearchToolFilterLanguagesUseCase(stringSearcher: StringSearcher())
+        return SearchToolFilterLanguagesUseCase(
+            searchToolFilterLanguagesRepository: dataLayer.getSearchToolFilterLanguagesRepositoryInterface()
+        )
     }
     
     func getStoreUserFiltersUseCase() -> StoreUserFiltersUseCase {
         return StoreUserFiltersUseCase(
             storeUserFiltersRepositoryInterface: dataLayer.getStoreUserFiltersRepositoryInterface()
+        )
+    }
+    
+    func getViewToolFilterCategoriesUseCase() -> ViewToolFilterCategoriesUseCase {
+        return ViewToolFilterCategoriesUseCase(
+            getToolFilterCategoriesRepository: dataLayer.getToolFilterCategoriesRepositoryInterface()
+        )
+    }
+    
+    func getViewToolFilterLanguagesUseCase() -> ViewToolFilterLanguagesUseCase {
+        return ViewToolFilterLanguagesUseCase(
+            getToolFilterLanguagesRepository: dataLayer.getToolFilterLanguagesRepositoryInterface()
         )
     }
 }

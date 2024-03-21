@@ -22,9 +22,9 @@ class EvaluateLessonRepository: EvaluateLessonRepositoryInterface {
         self.lessonFeedbackAnalytics = lessonFeedbackAnalytics
     }
     
-    func evaluateLessonPublisher(lesson: ToolDomainModel, feedback: TrackLessonFeedbackDomainModel) -> AnyPublisher<Void, Never> {
+    func evaluateLessonPublisher(lessonId: String, feedback: TrackLessonFeedbackDomainModel) -> AnyPublisher<Void, Never> {
         
-        guard let lessonResource = resourcesRepository.getResource(id: lesson.dataModelId) else {
+        guard let lessonResource = resourcesRepository.getResource(id: lessonId) else {
             return Just(Void())
                 .eraseToAnyPublisher()
         }

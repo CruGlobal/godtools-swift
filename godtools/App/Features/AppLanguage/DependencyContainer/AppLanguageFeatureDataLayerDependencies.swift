@@ -31,6 +31,15 @@ class AppLanguageFeatureDataLayerDependencies {
         return DownloadedLanguagesRepository(cache: getRealmDownloadedLanguagesCache())
     }
     
+    func getToolLanguageDownloader() -> ToolLanguageDownloader {
+        return ToolLanguageDownloader(
+            resourcesRepository: coreDataLayer.getResourcesRepository(),
+            languagesRepository: coreDataLayer.getLanguagesRepository(),
+            toolDownloader: coreDataLayer.getToolDownloader(),
+            downloadedLanguagesRepository: getDownloadedLanguagesRepository()
+        )
+    }
+    
     func getUserAppLanguageCache() -> RealmUserAppLanguageCache {
         return RealmUserAppLanguageCache(
             realmDatabase: coreDataLayer.getSharedRealmDatabase()
@@ -41,7 +50,7 @@ class AppLanguageFeatureDataLayerDependencies {
         return RealmDownloadedLanguagesCache(realmDatabase: coreDataLayer.getSharedRealmDatabase())
     }
     
-    private func getUserAppLanguageRepository() -> UserAppLanguageRepository {
+    func getUserAppLanguageRepository() -> UserAppLanguageRepository {
         return UserAppLanguageRepository(
             cache: getUserAppLanguageCache()
         )
@@ -62,6 +71,18 @@ class AppLanguageFeatureDataLayerDependencies {
         )
     }
     
+    func getAppLanguageRepository() -> GetAppLanguageRepositoryInterface {
+        return GetAppLanguageRepository(
+            userAppLanguageRepository: getUserAppLanguageRepository()
+        )
+    }
+    
+    func getAppLanguagesInterfaceStringsRepositoryInterface() -> GetAppLanguagesInterfaceStringsRepositoryInterface {
+        return GetAppLanguagesInterfaceStringsRepository(
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
+    
     func getAppLanguagesRepositoryInterface() -> GetAppLanguagesRepositoryInterface {
         return GetAppLanguagesRepository(
             appLanguagesRepository: getAppLanguagesRepository()
@@ -72,12 +93,6 @@ class AppLanguageFeatureDataLayerDependencies {
         return GetConfirmAppLanguageInterfaceStringsRepository(
             localizationServices: coreDataLayer.getLocalizationServices(),
             localeLanguageName: coreDataLayer.getLocaleLanguageName()
-        )
-    }
-    
-    func getDeviceAppLanguageRepositoryInterface() -> GetDeviceAppLanguageRepositoryInterface {
-        return GetDeviceAppLanguageRepository(
-            deviceSystemLanguage: coreDataLayer.getDeviceSystemLanguage()
         )
     }
     
@@ -97,11 +112,19 @@ class AppLanguageFeatureDataLayerDependencies {
         )
     }
     
+    func getDownloadedLanguagesListRepositoryInterface() -> GetDownloadedLanguagesListRepositoryInterface {
+        return GetDownloadedLanguagesListRepository(
+            languagesRepository: coreDataLayer.getLanguagesRepository(),
+            downloadedLanguagesRepository: getDownloadedLanguagesRepository(),
+            translatedLanguageNameRepository: coreDataLayer.getTranslatedLanguageNameRepository()
+        )
+    }
+    
     func getDownloadToolLanguageRepositoryInterface() -> DownloadToolLanguageRepositoryInterface {
         return DownloadToolLanguageRepository(
             downloadedLanguagesRepository: getDownloadedLanguagesRepository(),
             resourcesRepository: coreDataLayer.getResourcesRepository(),
-            translationsRepository: coreDataLayer.getTranslationsRepository()
+            toolLanguageDownloader: getToolLanguageDownloader()
         )
     }
     
@@ -119,15 +142,29 @@ class AppLanguageFeatureDataLayerDependencies {
         )
     }
     
+    func getSearchAppLanguageInAppLanguageListRepository() -> SearchAppLanguageInAppLanguagesListRepositoryInterface {
+        return SearchAppLanguageInAppLanguagesListRepository(
+            stringSearcher: StringSearcher()
+        )
+    }
+    
+    func getSearchLanguageInDownloadableLanguagesRepositoryInterface() -> SearchLanguageInDownloadableLanguagesRepositoryInterface {
+        return SearchLanguageInDownloadableLanguagesRepository(
+            stringSearcher: StringSearcher()
+        )
+    }
+    
     func getSetUserPreferredAppLanguageRepositoryInterface() -> SetUserPreferredAppLanguageRepositoryInterface {
         return SetUserPreferredAppLanguageRepository(
             userAppLanguageRepository: getUserAppLanguageRepository()
         )
     }
     
-    func getUserPreferredAppLanguageRepositoryInterface() -> GetUserPreferredAppLanguageRepositoryInterface {
-        return GetUserPreferredAppLanguageRepository(
-            userAppLanguageRepository: getUserAppLanguageRepository()
+    func getStoreInitialAppLanguage() -> StoreInitialAppLanguageInterface {
+        return StoreInitialAppLanguage(
+            deviceSystemLanguage: coreDataLayer.getDeviceSystemLanguage(),
+            userAppLanguageRepository: getUserAppLanguageRepository(),
+            appLanguagesRepository: getAppLanguagesRepository()
         )
     }
 }

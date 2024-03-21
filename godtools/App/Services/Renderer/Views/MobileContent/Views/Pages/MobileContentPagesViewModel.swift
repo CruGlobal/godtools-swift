@@ -148,6 +148,23 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
         setPageRenderer(pageRenderer: currentPageRenderer.value, navigationEvent: nil, pagePositions: nil)
     }
     
+    func getPages() -> [Page] {
+        return pageModels
+    }
+    
+    func setPages(pages: [Page]) {
+        pageModels = pages
+    }
+
+    func getCurrentPage() -> Page? {
+
+        guard currentRenderedPageNumber >= 0 && currentRenderedPageNumber < pageModels.count else {
+            return nil
+        }
+
+        return pageModels[currentRenderedPageNumber]
+    }
+    
     // MARK: - Renderer / Page Renderer
     
     var primaryPageRenderer: MobileContentPageRenderer {
@@ -156,6 +173,47 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
     
     var layoutDirection: UISemanticContentAttribute {
         return UISemanticContentAttribute.from(languageDirection: renderer.value.primaryLanguage.direction)
+    }
+    
+    func setRendererPrimaryLanguage(primaryLanguageId: String, parallelLanguageId: String?, selectedLanguageId: String?) {
+        
+        let currentRenderer: MobileContentRenderer = renderer.value
+        
+        var newLanguageIds: [String] = [primaryLanguageId]
+        
+        if let parallelLanguageId = parallelLanguageId {
+            newLanguageIds.append(parallelLanguageId)
+        }
+        
+        let newSelectedLanguageIndex: Int? = newLanguageIds.firstIndex(where: {$0 == selectedLanguageId})
+        
+        let didDownloadToolTranslationsClosure = { [weak self] (result: Result<ToolTranslationsDomainModel, Error>) in
+                   
+            switch result {
+            
+            case .success(let toolTranslations):
+                
+                let newRenderer: MobileContentRenderer = currentRenderer.copy(toolTranslations: toolTranslations)
+                
+                self?.setRenderer(renderer: newRenderer, pageRendererIndex: newSelectedLanguageIndex, navigationEvent: nil)
+                
+            case .failure( _):
+                break
+            }
+        }
+        
+        currentRenderer.navigation.downloadToolLanguages(
+            toolId: currentRenderer.resource.id,
+            languageIds: newLanguageIds,
+            completion: didDownloadToolTranslationsClosure
+        )
+    }
+    
+    func setRendererTranslations(toolTranslations: ToolTranslationsDomainModel, pageRendererIndex: Int?) {
+        
+        let newRenderer: MobileContentRenderer = renderer.value.copy(toolTranslations: toolTranslations)
+        
+        setRenderer(renderer: newRenderer, pageRendererIndex: pageRendererIndex, navigationEvent: nil)
     }
     
     func setRenderer(renderer: MobileContentRenderer, pageRendererIndex: Int?, navigationEvent: MobileContentPagesNavigationEvent?) {
@@ -219,7 +277,8 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
                     page: currentRenderedPageNumber,
                     animated: false,
                     reloadCollectionViewDataNeeded: true,
-                    insertPages: nil
+                    insertPages: nil,
+                    deletePages: nil
                 ),
                 pagePositions: pagePositions
             )
@@ -231,7 +290,8 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
                 page: navigationEventToSend.pageNavigation.page,
                 animated: navigationEventToSend.pageNavigation.animated,
                 reloadCollectionViewDataNeeded: navigationEventToSend.pageNavigation.reloadCollectionViewDataNeeded,
-                insertPages: nil
+                insertPages: nil,
+                deletePages: nil
             ),
             pagePositions: navigationEventToSend.pagePositions
         )
@@ -458,7 +518,8 @@ extension MobileContentPagesViewModel {
                     page: pageIndex,
                     animated: animated,
                     reloadCollectionViewDataNeeded: reloadCollectionViewDataNeeded,
-                    insertPages: nil
+                    insertPages: nil,
+                    deletePages: nil
                 ),
                 pagePositions: nil
             )
@@ -491,7 +552,8 @@ extension MobileContentPagesViewModel {
                     page: insertAtIndex,
                     animated: animated,
                     reloadCollectionViewDataNeeded: reloadCollectionViewDataNeeded,
-                    insertPages: [insertAtIndex]
+                    insertPages: [insertAtIndex],
+                    deletePages: nil
                 ),
                 pagePositions: nil
             )

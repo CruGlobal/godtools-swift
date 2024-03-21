@@ -20,6 +20,7 @@ class MobileContentRendererNavigation {
     private let appDiContainer: AppDiContainer
     
     private var toolTraining: ToolTrainingView?
+    private var downloadToolTranslationsFlow: DownloadToolTranslationsFlow?
     
     private weak var parentFlow: ToolNavigationFlow?
     private weak var delegate: MobileContentRendererNavigationDelegate?
@@ -29,6 +30,10 @@ class MobileContentRendererNavigation {
         self.parentFlow = parentFlow
         self.delegate = delegate
         self.appDiContainer = appDiContainer
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
     }
     
     func buttonWithUrlTapped(url: URL, screenName: String, siteSection: String, siteSubSection: String, contentLanguage: String?) {
@@ -50,6 +55,9 @@ class MobileContentRendererNavigation {
                 break
             
             case .favoritedToolsList:
+                break
+                
+            case .languageSettings:
                 break
             
             case .lessonsList:
@@ -85,6 +93,31 @@ class MobileContentRendererNavigation {
     func trainingTipTapped(event: TrainingTipEvent) {
                 
         presentToolTraining(event: event)
+    }
+    
+    func downloadToolLanguages(toolId: String, languageIds: [String], completion: @escaping ((_ result: Result<ToolTranslationsDomainModel, Error>) -> Void)) {
+             
+        guard let flow = parentFlow else {
+            completion(.failure(NSError.errorWithDescription(description: "Failed to download tool languages.  Parent flow is null.")))
+            return
+        }
+        
+        let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(
+            resourceId: toolId,
+            languageIds: languageIds,
+            resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
+            translationsRepository: appDiContainer.dataLayer.getTranslationsRepository()
+        )
+        
+        downloadToolTranslationsFlow = DownloadToolTranslationsFlow(
+            presentInFlow: flow,
+            appDiContainer: appDiContainer,
+            determineToolTranslationsToDownload: determineToolTranslationsToDownload,
+            didDownloadToolTranslations: { [weak self] (result: Result<ToolTranslationsDomainModel, Error>) in
+                self?.downloadToolTranslationsFlow = nil
+                completion(result)
+            }
+        )
     }
     
     private func presentToolTraining(event: TrainingTipEvent) {

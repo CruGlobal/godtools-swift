@@ -11,19 +11,16 @@ import Foundation
 class FeaturedLessonsDomainLayerDependencies {
     
     private let dataLayer: FeaturedLessonsDataLayerDependencies
-    private let appLanguageFeatureDomainLayer: AppLanguageFeatureDomainLayerDependencies
     
-    init(dataLayer: FeaturedLessonsDataLayerDependencies, appLanguageFeatureDomainLayer: AppLanguageFeatureDomainLayerDependencies) {
+    init(dataLayer: FeaturedLessonsDataLayerDependencies) {
         
         self.dataLayer = dataLayer
-        self.appLanguageFeatureDomainLayer = appLanguageFeatureDomainLayer
     }
     
     func getFeaturedLessonsUseCase() -> GetFeaturedLessonsUseCase {
         
         return GetFeaturedLessonsUseCase(
-            getCurrentAppLanguageUseCase: appLanguageFeatureDomainLayer.getCurrentAppLanguageUseCase(),
-            getFeaturedLessonsRepositoryInterface: dataLayer.getFeaturedLessonsRepositoryInterface()
+            getFeaturedLessonsRepository: dataLayer.getFeaturedLessonsRepositoryInterface()
         )
     }
 }

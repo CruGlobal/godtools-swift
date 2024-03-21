@@ -35,9 +35,14 @@ class ShareablesDataLayerDependencies {
     
     func getShareablesRepositoryInterface() -> GetShareablesRepositoryInterface {
         return GetShareablesRepository(
-            resourcesRepository: coreDataLayer.getResourcesRepository(),
-            languagesRepository: coreDataLayer.getLanguagesRepository(),
             translationsRepository: coreDataLayer.getTranslationsRepository()
+        )
+    }
+    
+    func getTrackShareShareableTap() -> TrackShareShareableTapInterface {
+        return TrackShareShareableTap(
+            trackActionAnalytics: coreDataLayer.getAnalytics().trackActionAnalytics,
+            resourcesRepository: coreDataLayer.getResourcesRepository()
         )
     }
 }

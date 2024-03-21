@@ -18,11 +18,10 @@ class DidViewToolScreenShareTutorialUseCase {
         self.incrementNumberOfViewsRepositoryInterface = incrementNumberOfViewsRepositoryInterface
     }
     
-    // TODO: Eventually ToolDomainModel should be passed here instead of ResourceModel. ~Levi
-    func didViewPublisher(tool: ResourceModel) -> AnyPublisher<Void, Never> {
+    func didViewPublisher(toolId: String) -> AnyPublisher<Void, Never> {
         
         return incrementNumberOfViewsRepositoryInterface
-            .incrementNumberOfViewsForTool(tool: tool, incrementBy: 1)
+            .incrementNumberOfViewsForTool(toolId: toolId, incrementBy: 1)
             .eraseToAnyPublisher()
     }
 }

@@ -11,26 +11,17 @@ import Combine
 
 class GetFeaturedLessonsUseCase {
     
-    private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
-    private let getFeaturedLessonsRepositoryInterface: GetFeaturedLessonsRepositoryInterface
+    private let getFeaturedLessonsRepository: GetFeaturedLessonsRepositoryInterface
     
-    init(getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getFeaturedLessonsRepositoryInterface: GetFeaturedLessonsRepositoryInterface) {
+    init(getFeaturedLessonsRepository: GetFeaturedLessonsRepositoryInterface) {
        
-        self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
-        self.getFeaturedLessonsRepositoryInterface = getFeaturedLessonsRepositoryInterface
+        self.getFeaturedLessonsRepository = getFeaturedLessonsRepository
     }
     
-    func getFeaturedLessonsPublisher() -> AnyPublisher<[FeaturedLessonDomainModel], Never> {
+    func getFeaturedLessonsPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[FeaturedLessonDomainModel], Never> {
         
-        return Publishers.CombineLatest(
-            getFeaturedLessonsRepositoryInterface.observeFeaturedLessonsChangedPublisher(),
-            getCurrentAppLanguageUseCase.getLanguagePublisher()
-        )
-        .flatMap({ (featuredLessonsChanged: Void, appLanguage: AppLanguageDomainModel) -> AnyPublisher<[FeaturedLessonDomainModel], Never> in
-
-            return self.getFeaturedLessonsRepositoryInterface.getFeaturedLessonsPublisher(appLanguage: appLanguage)
-                .eraseToAnyPublisher()
-        })
-        .eraseToAnyPublisher()
+        return getFeaturedLessonsRepository
+            .getFeaturedLessonsPublisher(appLanguage: appLanguage)
+            .eraseToAnyPublisher()
     }
 }

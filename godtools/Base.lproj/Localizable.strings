@@ -1,7 +1,9 @@
+"language_name_sid" = "Sidama";
 "onboardingTutorial.chooseLanguageButton.title" = "Choose language";
 "languageSettings.confirmAppLanguage.message" = "You have selected %@ as your app language. This will change the language of the whole GodTools app. Are you sure?";
 "languageSettings.confirmAppLanguage.changeLanguageButton.title" = "Change language";
 "languageSettings.confirmAppLanguage.nevermindButton.title" = "Nevermind";
+"languageSettings.downloadableLanguages.title" = "Downloadable languages";
 "languageSettings.appInterface.title" = "App interface language";
 "languageSettings.appInterface.message" = "Set the language you'd like the whole app to be displayed in.";
 "languageSettings.appInterface.languagesAvailable" = "Languages available";
@@ -151,7 +153,7 @@
 "parallelLanguage.yesButton.title" = "Yes";
 "parallelLanguage.noButton.title" = "No thanks";
 "parallelLanguage.selectButton.title" = "Select";
-"parallelLanguage.getStartedButton.title" = "Get Started";
+"parallelLanguage.getStartedButton.title" = "Get started";
 "parallelLanguage.selectLanguageButton.title" = "Select a language";
 "parellelLanguage.prompt" = "Would you like to set a secondary language?";
 
@@ -377,7 +379,7 @@ The app can be downloaded from https://godtoolsapp.com";
 "cancel" = "Cancel";
 "required_field_missing" = "\"%@\" is a required field.";
 
-"onboardingTutorial.getStartedButton.title" = "Get Started";
+"onboardingTutorial.getStartedButton.title" = "Get started";
 
 // About
 "general_about_1" = "GodTools helps you share your faith in an easy and clear way.";

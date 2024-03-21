@@ -18,9 +18,9 @@ class GetLessonEvaluatedUseCase {
         self.getLessonEvaluatedRepositoryInterface = getLessonEvaluatedRepositoryInterface
     }
     
-    func getEvaluatedPublisher(lesson: ToolDomainModel) -> AnyPublisher<Bool, Never> {
+    func getEvaluatedPublisher(lessonId: String) -> AnyPublisher<Bool, Never> {
         
-        return getLessonEvaluatedRepositoryInterface.getLessonEvaluatedPublisher(lesson: lesson)
+        return getLessonEvaluatedRepositoryInterface.getLessonEvaluatedPublisher(lessonId: lessonId)
             .eraseToAnyPublisher()
     }
 }

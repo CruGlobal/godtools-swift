@@ -10,7 +10,7 @@ import Foundation
 import Combine
 import UIKit
 
-class LaunchCountRepository {
+class LaunchCountRepository: LaunchCountRepositoryInterface {
     
     static let shared: LaunchCountRepository = LaunchCountRepository()
     
@@ -40,13 +40,6 @@ class LaunchCountRepository {
         let newLaunchCount: Int = launchCount + 1
         
         cache.storeLaunchCount(launchCount: newLaunchCount)
-    }
-    
-    func getLaunchCount() -> Int {
-        
-        incrementLaunchCountForAppLaunchIfNeeded()
-        
-        return cache.getLaunchCountValue()
     }
     
     func getLaunchCountPublisher() -> AnyPublisher<Int, Never> {

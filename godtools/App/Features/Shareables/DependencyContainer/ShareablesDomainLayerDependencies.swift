@@ -29,6 +29,12 @@ class ShareablesDomainLayerDependencies {
         )
     }
     
+    func getTrackShareShareableTapUseCase() -> TrackShareShareableTapUseCase {
+        return TrackShareShareableTapUseCase(
+            trackTap: dataLayer.getTrackShareShareableTap()
+        )
+    }
+    
     func getViewReviewShareShareableUseCase() -> ViewReviewShareShareableUseCase {
         return ViewReviewShareShareableUseCase(
             getInterfaceStringsRepository: dataLayer.getReviewShareShareableInterfaceStringsRepositoryInterface()

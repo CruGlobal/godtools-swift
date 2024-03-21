@@ -11,35 +11,42 @@ import Combine
 
 class GetToolSettingsToolLanguagesListRepository: GetToolSettingsToolLanguagesListRepositoryInterface {
     
+    private let resourcesRepository: ResourcesRepository
     private let languagesRepository: LanguagesRepository
     private let translatedLanguageNameRepository: TranslatedLanguageNameRepository
     
-    init(languagesRepository: LanguagesRepository, translatedLanguageNameRepository: TranslatedLanguageNameRepository) {
+    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, translatedLanguageNameRepository: TranslatedLanguageNameRepository) {
         
+        self.resourcesRepository = resourcesRepository
         self.languagesRepository = languagesRepository
         self.translatedLanguageNameRepository = translatedLanguageNameRepository
     }
     
-    func getToolLanguagesPublisher(listType: ToolSettingsToolLanguagesListTypeDomainModel, primaryLanguage: ToolSettingsToolLanguageDomainModel?, parallelLanguage: ToolSettingsToolLanguageDomainModel?, tool: ResourceModel, translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<[ToolSettingsToolLanguageDomainModel], Never> {
+    func getToolLanguagesPublisher(listType: ToolSettingsToolLanguagesListTypeDomainModel, primaryLanguageId: String, parallelLanguageId: String?, toolId: String, translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<[ToolSettingsToolLanguageDomainModel], Never> {
         
         var filterOutLanguageIds: [String] = Array()
         
         switch listType {
         case .choosePrimaryLanguage:
-            if let parallelLanguage = parallelLanguage {
-                filterOutLanguageIds.append(parallelLanguage.dataModelId)
+            if let parallelLanguageId = parallelLanguageId {
+                filterOutLanguageIds.append(parallelLanguageId)
             }
             
         case .chooseParallelLanguage:
-            if let primaryLanguage = primaryLanguage {
-                filterOutLanguageIds.append(primaryLanguage.dataModelId)
-            }
+            filterOutLanguageIds.append(primaryLanguageId)
         }
-            
-        let languageIds: [String] = tool.languageIds.filter({
-            !filterOutLanguageIds.contains($0)
-        })
         
+        let languageIds: [String]
+        
+        if let resource = resourcesRepository.getResource(id: toolId) {
+            languageIds = resource.languageIds.filter({
+                !filterOutLanguageIds.contains($0)
+            })
+        }
+        else {
+            languageIds = Array()
+        }
+                    
         let toolLanguages: [ToolSettingsToolLanguageDomainModel] = languagesRepository
             .getLanguages(ids: languageIds)
             .map { (language: LanguageModel) in

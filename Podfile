@@ -17,17 +17,12 @@ def shared_pods
 end
 
 target 'godtools' do
-        
-    pod 'GoogleConversionTracking', '~> 3.4.0'
-    
+            
     shared_pods
 end
 
 target 'godtoolsTests' do
-    
-  pod 'Quick', '~> 7.4.0'
-  pod 'Nimble', '~> 13.0.0'
-  
+      
   shared_pods
 end
 

@@ -22,7 +22,7 @@ class TrackDownloadedTranslationsRepository {
         return cache.getLatestDownloadedTranslation(resourceId: resourceId, languageId: languageId)
     }
     
-    func trackTranslationDownloaded(translation: TranslationModel) -> AnyPublisher<DownloadedTranslationDataModel, Error> {
+    func trackTranslationDownloaded(translation: TranslationModel) -> AnyPublisher<[DownloadedTranslationDataModel], Error> {
         return cache.trackTranslationDownloaded(translation: translation)
     }
 }

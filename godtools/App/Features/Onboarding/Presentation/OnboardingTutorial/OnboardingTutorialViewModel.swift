@@ -119,17 +119,31 @@ class OnboardingTutorialViewModel: ObservableObject {
     private func didSetPage(page: Int) {
                 
         updateShowsChooseLanguageButtonState(page: page)
-                
-        switch page {
         
-        case 0:
+        let isFirstPage: Bool = page == 0
+        let isLastPage: Bool = pages.count > 0 && page == pages.count - 1
+        
+        let hidesSkipButton: Bool
+        let continueButtonTitle: String
+                
+        if isFirstPage {
+            
             hidesSkipButton = true
             continueButtonTitle = interfaceStrings?.beginTutorialButtonTitle ?? ""
-       
-        default:
+        }
+        else if isLastPage {
+            
+            hidesSkipButton = true
+            continueButtonTitle = interfaceStrings?.endTutorialButtonTitle ?? ""
+        }
+        else {
+         
             hidesSkipButton = false
             continueButtonTitle = interfaceStrings?.nextTutorialPageButtonTitle ?? ""
         }
+        
+        self.hidesSkipButton = hidesSkipButton
+        self.continueButtonTitle = continueButtonTitle
         
         let pageAnalytics: OnboardingTutorialPageAnalyticsProperties = getOnboardingTutorialPageAnalyticsProperties(page: pages[page])
         

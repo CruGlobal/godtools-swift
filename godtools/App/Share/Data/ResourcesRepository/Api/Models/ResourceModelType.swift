@@ -16,6 +16,7 @@ protocol ResourceModelType {
     var attrBanner: String { get }
     var attrBannerAbout: String { get }
     var attrCategory: String { get }
+    var attrDefaultLocale: String { get }
     var attrDefaultOrder: Int { get }
     var attrSpotlight: Bool { get }
     var defaultVariantId: String? { get }

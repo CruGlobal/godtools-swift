@@ -12,7 +12,7 @@ import RealmSwift
 class RealmDatabaseProductionConfiguration: RealmDatabaseConfiguration {
     
     private static let diskFileName: String = "godtools_realm"
-    private static let schemaVersion: UInt64 = 29
+    private static let schemaVersion: UInt64 = 30
     
     init() {
         

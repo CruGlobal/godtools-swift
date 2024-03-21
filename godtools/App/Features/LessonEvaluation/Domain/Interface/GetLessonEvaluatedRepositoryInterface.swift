@@ -11,5 +11,5 @@ import Combine
 
 protocol GetLessonEvaluatedRepositoryInterface {
     
-    func getLessonEvaluatedPublisher(lesson: ToolDomainModel) -> AnyPublisher<Bool, Never>
+    func getLessonEvaluatedPublisher(lessonId: String) -> AnyPublisher<Bool, Never>
 }

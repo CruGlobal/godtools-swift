@@ -40,45 +40,32 @@ class TrackDownloadedTranslationsCache {
         return getDownloadedTranslationsSortedByLatestVersion(resourceId: resourceId, languageId: languageId).first
     }
     
-    func trackTranslationDownloaded(translation: TranslationModel) -> AnyPublisher<DownloadedTranslationDataModel, Error> {
+    func trackTranslationDownloaded(translation: TranslationModel) -> AnyPublisher<[DownloadedTranslationDataModel], Error> {
         
-        return Future() { promise in
+        return realmDatabase.writeObjectsPublisher { realm in
+            
+            let downloadedTranslation: RealmDownloadedTranslation = RealmDownloadedTranslation()
+            
+            guard let languageId = translation.language?.id, !languageId.isEmpty,
+                  let resourceId = translation.resource?.id, !resourceId.isEmpty else {
                 
-            return self.realmDatabase.background { (realm: Realm) in
-                
-                let downloadedTranslation: RealmDownloadedTranslation = RealmDownloadedTranslation()
-                
-                guard let languageId = translation.language?.id, !languageId.isEmpty,
-                      let resourceId = translation.resource?.id, !resourceId.isEmpty else {
-                    
-                    let error: Error = NSError.errorWithDescription(description: "Tracking downloaded translations requires a relationship to a resourceId and languageId.")
-                    
-                    assertionFailure(error.localizedDescription)
-                    
-                    promise(.failure(error))
-                    
-                    return
-                }
-                
-                downloadedTranslation.languageId = languageId
-                downloadedTranslation.manifestAndRelatedFilesPersistedToDevice = true
-                downloadedTranslation.resourceId = resourceId
-                downloadedTranslation.translationId = translation.id
-                downloadedTranslation.version = translation.version
-                
-                do {
-                    
-                    try realm.write {
-                        realm.add(downloadedTranslation, update: .all)
-                    }
-                                        
-                    promise(.success(DownloadedTranslationDataModel(model: downloadedTranslation)))
-                }
-                catch let error {
-                    
-                    promise(.failure(error))
-                }
+                return []
             }
+            
+            downloadedTranslation.languageId = languageId
+            downloadedTranslation.manifestAndRelatedFilesPersistedToDevice = true
+            downloadedTranslation.resourceId = resourceId
+            downloadedTranslation.translationId = translation.id
+            downloadedTranslation.version = translation.version
+            
+            let objects: [RealmDownloadedTranslation] = [downloadedTranslation]
+            
+            return objects
+        }
+        .map { (realmDownloadedTranslations: [RealmDownloadedTranslation]) in
+            realmDownloadedTranslations.map({
+                DownloadedTranslationDataModel(model: $0)
+            })
         }
         .eraseToAnyPublisher()
     }

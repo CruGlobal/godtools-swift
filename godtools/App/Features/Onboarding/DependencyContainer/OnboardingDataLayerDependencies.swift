@@ -33,8 +33,9 @@ class OnboardingDataLayerDependencies {
         )
     }
     
-    func getOnboardingTutorialViewedRepositoryInterface() -> GetOnboardingTutorialViewedRepositoryInterface {
-        return GetOnboardingTutorialViewedRepository(
+    func getOnboardingTutorialIsAvailable() -> GetOnboardingTutorialIsAvailableInterface {
+        return GetOnboardingTutorialIsAvailable(
+            launchCountRepository: coreDataLayer.getSharedLaunchCountRepository(),
             onboardingTutorialViewedRepository: getOnboardingTutorialViewedRepository()
         )
     }

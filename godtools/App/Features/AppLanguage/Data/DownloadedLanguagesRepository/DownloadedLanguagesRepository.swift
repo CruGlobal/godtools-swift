@@ -23,9 +23,9 @@ class DownloadedLanguagesRepository {
         return cache.getDownloadedLanguagesChangedPublisher()
     }
     
-    func getDownloadedLanguagesPublisher() -> AnyPublisher<[DownloadedLanguageDataModel], Never> {
+    func getDownloadedLanguagesPublisher(completedDownloadsOnly: Bool) -> AnyPublisher<[DownloadedLanguageDataModel], Never> {
         
-        return cache.getDownloadedLanguagesPublisher()
+        return cache.getDownloadedLanguagesPublisher(completedDownloadsOnly: completedDownloadsOnly)
     }
     
     func getDownloadedLanguage(languageId: String) -> DownloadedLanguageDataModel? {

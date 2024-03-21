@@ -16,6 +16,7 @@ struct ResourceModel: ResourceModelType, Decodable, Identifiable {
     let attrBanner: String
     let attrBannerAbout: String
     let attrCategory: String
+    let attrDefaultLocale: String
     let attrDefaultOrder: Int
     let attrSpotlight: Bool
     let defaultVariantId: String?
@@ -49,6 +50,7 @@ struct ResourceModel: ResourceModelType, Decodable, Identifiable {
         case attrBanner = "attr-banner"
         case attrBannerAbout = "attr-banner-about"
         case attrCategory = "attr-category"
+        case attrDefaultLocale = "attr-default-locale"
         case attrDefaultOrder = "attr-default-order"
         case attrSpotlight = "attr-spotlight"
         case description = "description"
@@ -80,6 +82,7 @@ struct ResourceModel: ResourceModelType, Decodable, Identifiable {
         attrBanner = model.attrBanner
         attrBannerAbout = model.attrBannerAbout
         attrCategory = model.attrCategory
+        attrDefaultLocale = model.attrDefaultLocale
         attrDefaultOrder = model.attrDefaultOrder
         attrSpotlight = model.attrSpotlight
         defaultVariantId = model.defaultVariantId
@@ -131,6 +134,7 @@ struct ResourceModel: ResourceModelType, Decodable, Identifiable {
         attrCategory = try attributesContainer?.decodeIfPresent(String.self, forKey: .attrCategory) ?? ""
         let attrSpotlightString: String = try attributesContainer?.decodeIfPresent(String.self, forKey: .attrSpotlight) ?? "false"
         attrSpotlight = attrSpotlightString == "true" ? true : false
+        attrDefaultLocale = try attributesContainer?.decodeIfPresent(String.self, forKey: .attrDefaultLocale) ?? "en"
         let attrDefaultOrderString: String? = try attributesContainer?.decodeIfPresent(String.self, forKey: .attrDefaultOrder) ?? ""
         if let attrDefaultOrderString = attrDefaultOrderString, let attrDefaultOrderIntValue = Int(attrDefaultOrderString) {
             attrDefaultOrder = attrDefaultOrderIntValue

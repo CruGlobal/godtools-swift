@@ -29,6 +29,11 @@ class TranslationsRepository {
         self.resourcesFileCache = resourcesFileCache
         self.trackDownloadedTranslationsRepository = trackDownloadedTranslationsRepository
     }
+}
+
+// MARK: - Translations
+
+extension TranslationsRepository {
     
     func getTranslation(id: String) -> TranslationModel? {
         return cache.getTranslation(id: id)
@@ -44,22 +49,6 @@ class TranslationsRepository {
     
     func getLatestTranslation(resourceId: String, languageCode: String) -> TranslationModel? {
         return cache.getTranslationsSortedByLatestVersion(resourceId: resourceId, languageCode: languageCode).first
-    }
-    
-    func getTranslationManifestFromCacheElseRemote(translation: TranslationModel, manifestParserType: TranslationManifestParserType, includeRelatedFiles: Bool, shouldFallbackToLatestDownloadedTranslationIfRemoteFails: Bool) -> AnyPublisher<TranslationManifestFileDataModel, Error> {
-        
-        return getTranslationManifestFromCache(translation: translation, manifestParserType: manifestParserType, includeRelatedFiles: includeRelatedFiles)
-            .catch({ (error: Error) -> AnyPublisher<TranslationManifestFileDataModel, Error> in
-                
-                return self.getTranslationManifestFromRemote(
-                    translation: translation,
-                    manifestParserType: manifestParserType,
-                    includeRelatedFiles: includeRelatedFiles,
-                    shouldFallbackToLatestDownloadedTranslationIfRemoteFails: shouldFallbackToLatestDownloadedTranslationIfRemoteFails
-                )
-                .eraseToAnyPublisher()
-            })
-            .eraseToAnyPublisher()
     }
 }
 
@@ -104,6 +93,22 @@ extension TranslationsRepository {
                         return TranslationManifestFileDataModel(manifest: manifest, relatedFiles: relatedFiles, translation: translation)
                     }
                     .eraseToAnyPublisher()
+            })
+            .eraseToAnyPublisher()
+    }
+    
+    func getTranslationManifestFromCacheElseRemote(translation: TranslationModel, manifestParserType: TranslationManifestParserType, includeRelatedFiles: Bool, shouldFallbackToLatestDownloadedTranslationIfRemoteFails: Bool) -> AnyPublisher<TranslationManifestFileDataModel, Error> {
+        
+        return getTranslationManifestFromCache(translation: translation, manifestParserType: manifestParserType, includeRelatedFiles: includeRelatedFiles)
+            .catch({ (error: Error) -> AnyPublisher<TranslationManifestFileDataModel, Error> in
+                
+                return self.getTranslationManifestFromRemote(
+                    translation: translation,
+                    manifestParserType: manifestParserType,
+                    includeRelatedFiles: includeRelatedFiles,
+                    shouldFallbackToLatestDownloadedTranslationIfRemoteFails: shouldFallbackToLatestDownloadedTranslationIfRemoteFails
+                )
+                .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
     }
@@ -290,10 +295,26 @@ extension TranslationsRepository {
 
 extension TranslationsRepository {
     
-    func downloadAndCacheTranslationsFiles(translations: [TranslationModel]) -> AnyPublisher<[TranslationFilesDataModel], Error> {
+    func downloadAndCacheFilesForTranslations(translations: [TranslationModel]) -> AnyPublisher<[TranslationFilesDataModel], Error> {
         
         let requests = translations.map {
             self.downloadAndCacheTranslationFiles(translation: $0)
+        }
+        
+        return Publishers.MergeMany(requests)
+            .collect()
+            .eraseToAnyPublisher()
+    }
+    
+    func downloadAndCacheFilesForTranslationsIgnoringError(translations: [TranslationModel]) -> AnyPublisher<[TranslationFilesDataModel], Never> {
+        
+        let requests = translations.map { (translation: TranslationModel) in
+            self.downloadAndCacheTranslationFiles(translation: translation)
+                .catch({ (error: Error) in
+                    return Just(TranslationFilesDataModel(files: [], translation: translation))
+                        .eraseToAnyPublisher()
+                })
+                .eraseToAnyPublisher()
         }
         
         return Publishers.MergeMany(requests)
@@ -311,7 +332,7 @@ extension TranslationsRepository {
                 return manifestParser.parsePublisher(manifestName: translation.manifestName)
                     .eraseToAnyPublisher()
             })
-            .flatMap({ manifest -> AnyPublisher<TranslationFilesDataModel, Error> in
+            .flatMap({ (manifest: Manifest) -> AnyPublisher<TranslationFilesDataModel, Error> in
                 
                 let requests = manifest.relatedFiles.map {
                     self.getTranslationFileFromCacheElseRemote(translation: translation, fileName: $0)

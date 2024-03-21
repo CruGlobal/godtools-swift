@@ -28,7 +28,7 @@ struct DownloadableLanguagesView: View {
                     
                     DownloadableLanguageItemView(downloadableLanguage: downloadableLanguage) {
                         
-                        viewModel.downloadableLanguageTapped(downloadableLanguage: downloadableLanguage)
+                        downloadableLanguageTapped(downloadableLanguage: downloadableLanguage)
                     }
                     .listRowBackground(Color.clear)
                 }
@@ -40,5 +40,19 @@ struct DownloadableLanguagesView: View {
         .navigationBarBackButtonHidden(true)
         .navigationTitle(viewModel.navTitle)
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
+    }
+    
+    private func downloadableLanguageTapped(downloadableLanguage: DownloadableLanguageListItemDomainModel) {
+        
+        switch downloadableLanguage.downloadStatus {
+        case .notDownloaded:
+            viewModel.downloadLanguage(downloadableLanguage)
+            
+        case .downloading:
+            break
+            
+        case .downloaded:
+            viewModel.removeDownloadedLanguage(downloadableLanguage)
+        }
     }
 }

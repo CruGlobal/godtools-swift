@@ -11,6 +11,5 @@ import Combine
 
 protocol IncrementNumberOfToolScreenShareTutorialViewsRepositoryInterface {
     
-    // TODO: Eventually ToolDomainModel should be passed here instead of ResourceModel. ~Levi
-    func incrementNumberOfViewsForTool(tool: ResourceModel, incrementBy: Int) -> AnyPublisher<Void, Never>
+    func incrementNumberOfViewsForTool(toolId: String, incrementBy: Int) -> AnyPublisher<Void, Never>
 }

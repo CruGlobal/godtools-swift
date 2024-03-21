@@ -52,6 +52,10 @@ class MobileContentRenderer {
         self.pageRenderers = pageRenderers
     }
     
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
     func copy(toolTranslations: ToolTranslationsDomainModel) -> MobileContentRenderer {
         
         return MobileContentRenderer(
