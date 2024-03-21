@@ -134,7 +134,7 @@ Below are some helpful references to GitHub Actions Workflows and Fastlane Files
 - [Classes](#classes)
 - [Project Folder Structure](#project-folder-structure)
 
-#### Classes
+##### Classes
 
 - Class / Struct attributes should always be declared with the type.
 - Class level attributes should also be grouped by constant vs instance as well as by access level and mutability. Where constants are at the top and grouped by private first, then internal, then public.  Instance variables follow constants and are grouped by private first, then internal, then public.   
@@ -161,7 +161,7 @@ For example the GodTools App/Features/ folder currently contains the following f
 
 Each Feature Folder is broken into views that make up that feature.  Typically each view that makes up a feature represents an entire screen area of the app and are navigated between.  Each of these views that make up a feature should be placed in a directory that matches the name of the view.  These would fall under Features/{FeatureName}/Presentation/.
 
-For example in this screenshot the following features LanguageSettings and ToolDetails are expanded.  The views that make up the LanguageSettings feature are ChooseLanguage and LanguageSettings.  The views that make up the ToolDetails feature are ToolDetails.
+For example in this screenshot the following features AppLanguage and LearnToShareTool are expanded.  The views that make up the AppLanguage feature are ChooseLanguage and LanguageSettings.  The views that make up the LearnToShareTool feature are ToolDetails.
 
 ![alt text](ReadMeAssets/features_presentation.png)
 
