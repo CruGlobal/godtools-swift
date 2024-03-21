@@ -14,6 +14,7 @@ struct LanguageDomainModel {
     let dataModelId: String
     let direction: LanguageDirectionDomainModel
     let localeIdentifier: BCP47LanguageIdentifier
+    @available(*, deprecated) // Deprecating translatedName as language name translations should now come through TranslatedLanguageNameRepository. ~Levi
     let translatedName: String
 }
 
