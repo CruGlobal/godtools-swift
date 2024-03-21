@@ -21,14 +21,14 @@ class ToolFilterLanguageSelectionViewModel: ObservableObject {
     private let selectedCategory: CategoryFilterDomainModel
     
     private var cancellables: Set<AnyCancellable> = Set()
+    private static var staticCancellables: Set<AnyCancellable> = Set()
     private weak var flowDelegate: FlowDelegate?
-    
-    let selectedLanguage: LanguageFilterDomainModel
-    
+        
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
-    
     @Published private var allLanguages: [LanguageFilterDomainModel] = [LanguageFilterDomainModel]()
+    
     @Published var languageSearchResults: [LanguageFilterDomainModel] = [LanguageFilterDomainModel]()
+    @Published var selectedLanguage: LanguageFilterDomainModel
     @Published var searchText: String = ""
     @Published var navTitle: String = ""
     
@@ -96,14 +96,15 @@ extension ToolFilterLanguageSelectionViewModel {
     }
         
     func rowTapped(with language: LanguageFilterDomainModel) {
-                
+        
+        selectedLanguage = language
         languageFilterSelectionPublisher.send(language)
         
         storeUserFilterUseCase.storeLanguageFilterPublisher(with: language.id)
             .sink { _ in
                 
             }
-            .store(in: &cancellables)
+            .store(in: &ToolFilterLanguageSelectionViewModel.staticCancellables)
         
         flowDelegate?.navigate(step: .languageTappedFromToolLanguageFilter)
     }
