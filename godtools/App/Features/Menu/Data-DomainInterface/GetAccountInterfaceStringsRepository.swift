@@ -38,8 +38,11 @@ class GetAccountInterfaceStringsRepository: GetAccountInterfaceStringsRepository
     
         let localizedGlobalActivityTitle = localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.Account.globalAnalyticsTitle.rawValue)
         
+        var calendar: Calendar = Calendar.current
+        calendar.locale = Locale(identifier: localeId)
+        
         let todaysDate: Date = Date()
-        let todaysYearComponents: DateComponents = Calendar.current.dateComponents([.year], from: todaysDate)
+        let todaysYearComponents: DateComponents = calendar.dateComponents([.year], from: todaysDate)
                 
         if let year = todaysYearComponents.year {
             return "\(year) \(localizedGlobalActivityTitle)"
