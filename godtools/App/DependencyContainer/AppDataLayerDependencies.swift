@@ -440,12 +440,6 @@ class AppDataLayerDependencies {
     
     // MARK: - Domain Interface
     
-    func getDeviceLanguageRepositoryInterface() -> GetDeviceLanguageRepositoryInterface {
-        return GetDeviceLanguageRepository(
-            deviceSystemLanguage: getDeviceSystemLanguage()
-        )
-    }
-    
     func getInterfaceStringForLanguageRepositoryInterface() -> GetInterfaceStringForLanguageRepositoryInterface {
         return GetInterfaceStringForLanguageRepository(
             localizationServices: getLocalizationServices()
