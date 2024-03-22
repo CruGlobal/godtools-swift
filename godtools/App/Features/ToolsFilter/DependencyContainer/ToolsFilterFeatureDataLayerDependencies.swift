@@ -44,6 +44,12 @@ class ToolsFilterFeatureDataLayerDependencies {
         )
     }
     
+    func getToolFilterLanguagesInterfaceStringsRepository() -> GetToolFilterLanguagesInterfaceStringsRepository {
+        return GetToolFilterLanguagesInterfaceStringsRepository(
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
+    
     // MARK: - Domain Interface
     
     func getSearchToolFilterCategoriesRepositoryInterface() -> SearchToolFilterCategoriesRepositoryInterface {
@@ -68,6 +74,10 @@ class ToolsFilterFeatureDataLayerDependencies {
     
     func getToolFilterLanguagesRepositoryInterface() -> GetToolFilterLanguagesRepositoryInterface {
         return getToolFilterLanguagesRepository()
+    }
+    
+    func getToolFilterLanguagesInterfaceStringsRepositoryInterface() ->  GetToolFilterLanguagesInterfaceStringsRepositoryInterface {
+        return getToolFilterLanguagesInterfaceStringsRepository()
     }
     
     func getUserFiltersRepositoryInterface() -> GetUserFiltersRepositoryInterface {

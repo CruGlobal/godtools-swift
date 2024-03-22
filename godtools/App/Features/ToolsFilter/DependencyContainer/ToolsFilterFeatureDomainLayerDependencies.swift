@@ -53,7 +53,8 @@ class ToolsFilterFeatureDomainLayerDependencies {
     
     func getViewToolFilterLanguagesUseCase() -> ViewToolFilterLanguagesUseCase {
         return ViewToolFilterLanguagesUseCase(
-            getToolFilterLanguagesRepository: dataLayer.getToolFilterLanguagesRepositoryInterface()
+            getToolFilterLanguagesRepository: dataLayer.getToolFilterLanguagesRepositoryInterface(),
+            getInterfaceStringsRepository: dataLayer.getToolFilterLanguagesInterfaceStringsRepositoryInterface()
         )
     }
 }

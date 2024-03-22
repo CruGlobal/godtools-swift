@@ -12,5 +12,4 @@ import Combine
 protocol GetToolFilterLanguagesRepositoryInterface {
     
     func getToolFilterLanguagesPublisher(translatedInAppLanguage: AppLanguageDomainModel, filteredByCategoryId: String?) -> AnyPublisher<[LanguageFilterDomainModel], Never>
-    func getAnyLanguageFilterDomainModel(translatedInAppLanguage: AppLanguageDomainModel) -> LanguageFilterDomainModel
 }
