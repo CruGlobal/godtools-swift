@@ -12991,7 +12991,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 927;
+				CURRENT_PROJECT_VERSION = 1041;
 				DEVELOPMENT_ASSET_PATHS = "godtools/Preview\\ Content godtools/Preview\\ Content/Preview\\ Assets.xcassets";
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQ48D9BF2V;
@@ -13003,7 +13003,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 6.0.7;
+				MARKETING_VERSION = 6.3.0;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -13188,7 +13188,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 927;
+				CURRENT_PROJECT_VERSION = 1041;
 				DEVELOPMENT_ASSET_PATHS = "godtools/Preview\\ Content godtools/Preview\\ Content/Preview\\ Assets.xcassets";
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQ48D9BF2V;
@@ -13201,7 +13201,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 6.0.7;
+				MARKETING_VERSION = 6.3.0;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools.beta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -13386,7 +13386,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 927;
+				CURRENT_PROJECT_VERSION = 1041;
 				DEVELOPMENT_ASSET_PATHS = "godtools/Preview\\ Content godtools/Preview\\ Content/Preview\\ Assets.xcassets";
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				DISPLAY_NAME = "GodTools-Stage";
@@ -13397,7 +13397,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 6.0.7;
+				MARKETING_VERSION = 6.3.0;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools.beta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -13581,7 +13581,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 927;
+				CURRENT_PROJECT_VERSION = 1041;
 				DEVELOPMENT_ASSET_PATHS = "godtools/Preview\\ Content godtools/Preview\\ Content/Preview\\ Assets.xcassets";
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQ48D9BF2V;
@@ -13594,7 +13594,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 6.0.7;
+				MARKETING_VERSION = 6.3.0;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -13816,7 +13816,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 927;
+				CURRENT_PROJECT_VERSION = 1041;
 				DEVELOPMENT_ASSET_PATHS = "godtools/Preview\\ Content godtools/Preview\\ Content/Preview\\ Assets.xcassets";
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQ48D9BF2V;
@@ -13828,7 +13828,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 6.0.7;
+				MARKETING_VERSION = 6.3.0;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DRELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
