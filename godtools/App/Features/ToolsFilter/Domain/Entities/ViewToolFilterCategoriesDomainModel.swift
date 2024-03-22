@@ -10,5 +10,6 @@ import Foundation
 
 struct ViewToolFilterCategoriesDomainModel {
     
+    let interfaceStrings: ToolFilterCategoriesInterfaceStringsDomainModel
     let categoryFilters: [CategoryFilterDomainModel]
 }

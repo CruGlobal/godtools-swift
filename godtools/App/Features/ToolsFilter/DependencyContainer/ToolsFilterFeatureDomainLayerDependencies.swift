@@ -47,13 +47,15 @@ class ToolsFilterFeatureDomainLayerDependencies {
     
     func getViewToolFilterCategoriesUseCase() -> ViewToolFilterCategoriesUseCase {
         return ViewToolFilterCategoriesUseCase(
+            getInterfaceStringsRepository: dataLayer.getToolFilterCategoriesInterfaceStringsRepositoryInterface(), 
             getToolFilterCategoriesRepository: dataLayer.getToolFilterCategoriesRepositoryInterface()
         )
     }
     
     func getViewToolFilterLanguagesUseCase() -> ViewToolFilterLanguagesUseCase {
         return ViewToolFilterLanguagesUseCase(
-            getToolFilterLanguagesRepository: dataLayer.getToolFilterLanguagesRepositoryInterface()
+            getToolFilterLanguagesRepository: dataLayer.getToolFilterLanguagesRepositoryInterface(),
+            getInterfaceStringsRepository: dataLayer.getToolFilterLanguagesInterfaceStringsRepositoryInterface()
         )
     }
 }

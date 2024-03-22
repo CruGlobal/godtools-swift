@@ -11,22 +11,28 @@ import Combine
 
 class ViewToolFilterCategoriesUseCase {
     
+    private let getInterfaceStringsRepository: GetToolFilterCategoriesInterfaceStringsRepositoryInterface
     private let getToolFilterCategoriesRepository: GetToolFilterCategoriesRepositoryInterface
     
-    init(getToolFilterCategoriesRepository: GetToolFilterCategoriesRepositoryInterface) {
+    init(getInterfaceStringsRepository: GetToolFilterCategoriesInterfaceStringsRepositoryInterface, getToolFilterCategoriesRepository: GetToolFilterCategoriesRepositoryInterface) {
         
+        self.getInterfaceStringsRepository = getInterfaceStringsRepository
         self.getToolFilterCategoriesRepository = getToolFilterCategoriesRepository
     }
     
     func viewPublisher(filteredByLanguageId: String?, translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewToolFilterCategoriesDomainModel, Never> {
         
-        return getToolFilterCategoriesRepository.getToolFilterCategoriesPublisher(translatedInAppLanguage: translatedInAppLanguage, filteredByLanguageId: filteredByLanguageId)
-            .map { categoryFilters in
+        return Publishers.CombineLatest(
+            getInterfaceStringsRepository.getStringsPublisher(translateInAppLanguage: translatedInAppLanguage),
+            getToolFilterCategoriesRepository.getToolFilterCategoriesPublisher(translatedInAppLanguage: translatedInAppLanguage, filteredByLanguageId: filteredByLanguageId)
+        )
+        .map { interfaceStrings, categoryFilters in
             
-                return ViewToolFilterCategoriesDomainModel(
-                    categoryFilters: categoryFilters
-                )
-            }
-            .eraseToAnyPublisher()
+            return ViewToolFilterCategoriesDomainModel(
+                interfaceStrings: interfaceStrings,
+                categoryFilters: categoryFilters
+            )
+        }
+        .eraseToAnyPublisher()
     }
 }
