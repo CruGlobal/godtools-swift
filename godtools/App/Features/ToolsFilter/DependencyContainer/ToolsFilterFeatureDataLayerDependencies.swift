@@ -35,6 +35,12 @@ class ToolsFilterFeatureDataLayerDependencies {
         )
     }
     
+    func getToolFilterCategoriesInterfaceStringsRepository() -> GetToolFilterCategoriesInterfaceStringsRepository {
+        return GetToolFilterCategoriesInterfaceStringsRepository(
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
+    
     func getToolFilterLanguagesRepository() -> GetToolFilterLanguagesRepository {
         return GetToolFilterLanguagesRepository(
             resourcesRepository: coreDataLayer.getResourcesRepository(),
@@ -70,6 +76,10 @@ class ToolsFilterFeatureDataLayerDependencies {
     
     func getToolFilterCategoriesRepositoryInterface() -> GetToolFilterCategoriesRepositoryInterface {
         return getToolFilterCategoriesRepository()
+    }
+    
+    func getToolFilterCategoriesInterfaceStringsRepositoryInterface() ->  GetToolFilterCategoriesInterfaceStringsRepositoryInterface {
+        return getToolFilterCategoriesInterfaceStringsRepository()
     }
     
     func getToolFilterLanguagesRepositoryInterface() -> GetToolFilterLanguagesRepositoryInterface {

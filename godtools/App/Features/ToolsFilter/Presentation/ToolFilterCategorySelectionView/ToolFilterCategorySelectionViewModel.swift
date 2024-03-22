@@ -14,7 +14,6 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
     private let viewToolFilterCategoriesUseCase: ViewToolFilterCategoriesUseCase
     private let searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase
     private let storeUserFiltersUseCase: StoreUserFiltersUseCase
-    private let getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let viewSearchBarUseCase: ViewSearchBarUseCase
     private let categoryFilterSelectionPublisher: CurrentValueSubject<CategoryFilterDomainModel, Never>
@@ -32,12 +31,11 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
     @Published var navTitle: String = ""
     @Published var categorySearchResults: [CategoryFilterDomainModel] = [CategoryFilterDomainModel]()
     
-    init(viewToolFilterCategoriesUseCase: ViewToolFilterCategoriesUseCase, searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase, storeUserFiltersUseCase: StoreUserFiltersUseCase, categoryFilterSelectionPublisher: CurrentValueSubject<CategoryFilterDomainModel, Never>, selectedLanguage: LanguageFilterDomainModel, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, flowDelegate: FlowDelegate) {
+    init(viewToolFilterCategoriesUseCase: ViewToolFilterCategoriesUseCase, searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase, storeUserFiltersUseCase: StoreUserFiltersUseCase, categoryFilterSelectionPublisher: CurrentValueSubject<CategoryFilterDomainModel, Never>, selectedLanguage: LanguageFilterDomainModel, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, flowDelegate: FlowDelegate) {
         
         self.viewToolFilterCategoriesUseCase = viewToolFilterCategoriesUseCase
         self.searchToolFilterCategoriesUseCase = searchToolFilterCategoriesUseCase
         self.storeUserFiltersUseCase = storeUserFiltersUseCase
-        self.getInterfaceStringInAppLanguageUseCase = getInterfaceStringInAppLanguageUseCase
         self.categoryFilterSelectionPublisher = categoryFilterSelectionPublisher
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.viewSearchBarUseCase = viewSearchBarUseCase
@@ -56,15 +54,14 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
             }
             .receive(on: DispatchQueue.main)
             .sink { [weak self] viewCategoryFiltersDomainModel in
+                guard let self = self else { return }
                 
-                self?.allCategories = viewCategoryFiltersDomainModel.categoryFilters
+                let interfaceStrings = viewCategoryFiltersDomainModel.interfaceStrings
+                
+                self.navTitle = interfaceStrings.navTitle
+                self.allCategories = viewCategoryFiltersDomainModel.categoryFilters
             }
             .store(in: &cancellables)
-        
-        getInterfaceStringInAppLanguageUseCase
-            .getStringPublisher(id: ToolStringKeys.ToolFilter.categoryFilterNavTitle.rawValue)
-            .receive(on: DispatchQueue.main)
-            .assign(to: &$navTitle)
         
         Publishers.CombineLatest(
             $searchText.eraseToAnyPublisher(),

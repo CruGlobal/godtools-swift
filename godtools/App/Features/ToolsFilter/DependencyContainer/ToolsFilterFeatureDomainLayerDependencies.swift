@@ -47,6 +47,7 @@ class ToolsFilterFeatureDomainLayerDependencies {
     
     func getViewToolFilterCategoriesUseCase() -> ViewToolFilterCategoriesUseCase {
         return ViewToolFilterCategoriesUseCase(
+            getInterfaceStringsRepository: dataLayer.getToolFilterCategoriesInterfaceStringsRepositoryInterface(), 
             getToolFilterCategoriesRepository: dataLayer.getToolFilterCategoriesRepositoryInterface()
         )
     }

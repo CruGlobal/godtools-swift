@@ -939,7 +939,6 @@ extension AppFlow {
             storeUserFiltersUseCase: appDiContainer.feature.toolsFilter.domainLayer.getStoreUserFiltersUseCase(),
             categoryFilterSelectionPublisher: categoryFilterSelectionPublisher,
             selectedLanguage: selectedLanguage,
-            getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             viewSearchBarUseCase: appDiContainer.domainLayer.getViewSearchBarUseCase(),
             flowDelegate: self
