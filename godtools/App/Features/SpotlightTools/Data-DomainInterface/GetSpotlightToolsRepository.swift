@@ -48,7 +48,7 @@ class GetSpotlightToolsRepository: GetSpotlightToolsRepositoryInterface {
                     let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel
                     
                     if let language = appLanguageModel {
-                        toolLanguageAvailability = self.getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(resource: $0, translateInLanguage: language)
+                        toolLanguageAvailability = self.getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(resource: $0, language: language, translateInLanguage: language)
                     }
                     else {
                         toolLanguageAvailability = ToolLanguageAvailabilityDomainModel(availabilityString: "", isAvailable: false)

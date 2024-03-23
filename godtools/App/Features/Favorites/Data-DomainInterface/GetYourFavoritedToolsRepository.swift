@@ -56,7 +56,7 @@ class GetYourFavoritedToolsRepository: GetYourFavoritedToolsRepositoryInterface 
                         name: self.getTranslatedToolName.getToolName(resource: $0, translateInLanguage: translateInLanguage),
                         category: self.getTranslatedToolCategory.getTranslatedCategory(resource: $0, translateInLanguage: translateInLanguage),
                         isFavorited: true,
-                        languageAvailability: self.getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(resource: $0, translateInLanguage: translateInLanguage)
+                        languageAvailability: self.getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(resource: $0, language: translateInLanguage, translateInLanguage: translateInLanguage)
                     )
                 })
             
