@@ -92,7 +92,7 @@ class AppLanguageFeatureDataLayerDependencies {
     func getConfirmAppLanguageInterfaceStringsRepositoryInterface() -> GetConfirmAppLanguageInterfaceStringsRepositoryInterface {
         return GetConfirmAppLanguageInterfaceStringsRepository(
             localizationServices: coreDataLayer.getLocalizationServices(),
-            localeLanguageName: coreDataLayer.getLocaleLanguageName()
+            translatedLanguageNameRepository: coreDataLayer.getTranslatedLanguageNameRepository()
         )
     }
     
@@ -131,7 +131,7 @@ class AppLanguageFeatureDataLayerDependencies {
     func getLanguageSettingsInterfaceStringsRepositoryInterface() -> GetLanguageSettingsInterfaceStringsRepositoryInterface {
         return GetLanguageSettingsInterfaceStringsRepository(
             localizationServices: coreDataLayer.getLocalizationServices(),
-            localeLanguageName: coreDataLayer.getLocaleLanguageName(),
+            translatedLanguageNameRepository: coreDataLayer.getTranslatedLanguageNameRepository(),
             appLanguagesRepository: getAppLanguagesRepository()
         )
     }
