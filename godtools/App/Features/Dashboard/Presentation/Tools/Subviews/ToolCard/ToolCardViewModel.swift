@@ -35,7 +35,7 @@ class ToolCardViewModel: ObservableObject {
                         
         name = tool.name
         category = tool.category
-        languageAvailability = tool.languageAvailability.availabilityString
+        languageAvailability = tool.languageAvailability?.availabilityString ?? ""
         isFavorited = tool.isFavorited
         openButtonTitle = tool.interfaceStrings.openToolActionTitle
         detailsButtonTitle = tool.interfaceStrings.openToolDetailsActionTitle
