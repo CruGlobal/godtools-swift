@@ -39,6 +39,7 @@ struct AnalyticsConstants {
         static let tutorialVideo = "cru.tutorial_video"
         static let tutorialVideoId = "video_id"
         static let onboardingStart = "cru.onboarding_start"
+        static let onboardingSkip = "cru.onboarding_skip"
         static let toolOpenedShortcutCountKey = "cru.tool-opened-shortcut"
         static let shareScreenEngagedCountKey = "cru.sharescreenengaged"
         static let shareScreenOpenedCountKey = "cru.share_screen_opened"
