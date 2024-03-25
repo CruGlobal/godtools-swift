@@ -127,8 +127,6 @@ Below are some helpful references to GitHub Actions Workflows and Fastlane Files
 
 - GitHub Actions OneSky Workflow Dependency Plugin: https://github.com/thekie/fastlane-plugin-onesky
 
-// TODO: Complete here on down.
-
 #### Conventions
 
 - [Classes](#classes)
@@ -141,52 +139,36 @@ Below are some helpful references to GitHub Actions Workflows and Fastlane Files
 
 #### Project Folder Structure
 
-##### Presentation Layer
+There are 3 primary folders to be aware about in the project folder structure.  Those are the Features, Flows, and Share folders.
 
-The presentation layer makes up the Views and ViewModels.  In the GodTools app Views and ViewModels are organized by Feature in the Features folder.  Below will explain how presentation files are named and organized and conventions for Views and ViewModels.
+##### Features Folder
 
-- [File Naming and Organization](#file-naming-and-organization)
-- [Views](#views)
-- [ViewModels](#viewmodels)
+The features folder should consist of sub folders named according to a feature in the app.  As new features are added into the app, new feature folders should be created.  
 
-###### Features Folder
+The idea of a feature folder is to isolate code for that specific feature.  Think of it as it's own module.  The primary goal for this is scalability. As the app continues to grow and new features are added, we can keep a flat hierarchy of features and their dependencies.
 
-The presentation layer will make up Views and ViewModels and those are stored in the App/Features folder.  The Features folder attempts to group presentation files by feature type. 
+Within a feature folder are 5 folders.  Data, Data-DomainInterface, DependencyContainer, Domain, Presentation.
 
-For example the GodTools App/Features/ folder currently contains the following features:
+###### Feature/Data/ Folder
 
-![alt text](ReadMeAssets/features.png)
+This folder will contain the data layer specific code needed for the feature. 
 
-###### Feature Folder
+###### Feature/Data-DomainInterface/ Folder
 
-Each Feature Folder is broken into views that make up that feature.  Typically each view that makes up a feature represents an entire screen area of the app and are navigated between.  Each of these views that make up a feature should be placed in a directory that matches the name of the view.  These would fall under Features/{FeatureName}/Presentation/.
+This folder will contain the domain interface implementation code needed for the feature. 
 
-For example in this screenshot the following features AppLanguage and LearnToShareTool are expanded.  The views that make up the AppLanguage feature are ChooseLanguage and LanguageSettings.  The views that make up the LearnToShareTool feature are ToolDetails.
+###### Feature/DependencyContainer/ Folder
 
-![alt text](ReadMeAssets/features_presentation.png)
+This folder will contain the dependency container, data layer container, and domain layer container classes for creating the dependencies (dependency injection) needed for the feature.
 
-Any smaller view components that help in creating the parent view should go in a Subviews directory. 
+###### Feature/Domain/ Folder
 
-For example in this screenshot the ToolDetails view folder contains a Subviews folder containing all the subviews that help make up ToolDetailsView.swift.
+This folder will contain the domain layer specific code needed for the feature. 
 
-![alt text](ReadMeAssets/features_view_subviews.png)
+###### Feature/Presentation/ Folder
 
-##### Views
+This folder will contain the presentation layer specific code needed for the feature. 
 
-File Naming and Organization:
-- All newly created views should be created in SwiftUI.
-- Views should have only 1 ViewModel.
-- Subviews that are static and help make up a screen (View) can point to the parent screen (View) ViewModel or they can have their own ViewModel.
-- Subviews that are dynamic such as views in collections (lists, stacks, etc.) should have there own ViewModel and only 1 ViewModel.
+##### Flows Folder
 
-##### UseCases
-
-File Naming and Organization:
-- Use cases are typically stored by feature under Features/Domain/UseCases/ folder.  Use cases should be specific to the business use case for a feature. 
-
-In this screenshot the ToolDetails feature Use cases are expanded.  These are all of the Use cases that make up that feature.  Each Use case is in a directory that matches the Use case name and contains a domain model with DomainModel suffix.
-
-![alt text](ReadMeAssets/features_domain_use_cases.png)
-
-
-
+##### Share Folder
