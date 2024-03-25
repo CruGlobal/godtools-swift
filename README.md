@@ -145,7 +145,7 @@ There are 3 primary folders to be aware about in the project folder structure.  
 
 The features folder should consist of sub folders named according to a feature in the app.  As new features are added into the app, new feature folders should be created.  
 
-The idea of a feature folder is to isolate code for that specific feature.  Think of it as it's own module.  The primary goal for this is scalability. As the app continues to grow and new features are added, we can keep a flat hierarchy of features and their dependencies.
+The idea of a feature folder is to isolate code specific to that feature.  Think of it as it's own module.  The primary goal for this is scalability. As the app continues to grow and new features are added, we can keep a flat hierarchy of features and their dependencies.
 
 Within a feature folder are 5 folders.  Data, Data-DomainInterface, DependencyContainer, Domain, Presentation.
 
