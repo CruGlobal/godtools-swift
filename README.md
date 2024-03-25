@@ -21,8 +21,9 @@ The GodTools app architecture consists of 3 layers (Presentation Layer, Domain L
 
 #### Clean Architecture Pattern:
 - Presentation Layer: (View and ViewModel)
-- Domain Layer (Use Cases, Domain Models, and Data Layer Interfaces)
-- Data Layer (Implements domain layer interfaces and consists of Repositories, Networking, Peristence, and other Data Connectivity)
+- Domain Layer: (Use Cases, Domain Models, and Data Layer Interfaces)
+- Data Layer: (Implements domain layer interfaces and consists of Repositories, Networking, Peristence, and other Data Connectivity)
+- Data-DomainInterface: (In GodTools we have this additional layer which holds all the business logic.  These classes will implement the domain interfaces and operate on the raw data layer classes and apply business rules)
 
 #### Purpose of this Architecture:
 - Creates a clear separation of concerns and responsibilities.
@@ -82,6 +83,9 @@ The GodTools app architecture consists of 3 layers (Presentation Layer, Domain L
 
 ##### Domain Models
 - These will model app specific data or business specific data.  This is typically data users will visually see and interact with.
+
+#### Data-DomainInterface
+- Classes that implement the domain interfaces to achieve dependency inversion.  These classes operate on the raw data layer classes and these classes contain all the business formatting, logic, and rules.
 
 #### Data Layer
 
