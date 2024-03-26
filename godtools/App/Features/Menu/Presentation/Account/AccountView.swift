@@ -53,7 +53,7 @@ struct AccountView_Preview: PreviewProvider {
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getUserAccountDetailsUseCase: appDiContainer.domainLayer.getUserAccountDetailsUseCase(),
             getUserActivityUseCase: appDiContainer.domainLayer.getUserActivityUseCase(),
-            getGlobalActivityThisWeekUseCase: appDiContainer.domainLayer.getGlobalActivityThisWeekUseCase(),
+            viewGlobalActivityThisWeekUseCase: appDiContainer.feature.globalActivity.domainLayer.getViewGlobalActivityThisWeekUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             viewAccountUseCase: appDiContainer.domainLayer.getViewAccountUseCase()
         )

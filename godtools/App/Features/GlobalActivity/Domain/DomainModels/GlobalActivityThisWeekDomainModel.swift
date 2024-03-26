@@ -13,3 +13,10 @@ struct GlobalActivityThisWeekDomainModel {
     let count: String
     let label: String
 }
+
+extension GlobalActivityThisWeekDomainModel: Identifiable {
+    
+    var id: String {
+        return label
+    }
+}
