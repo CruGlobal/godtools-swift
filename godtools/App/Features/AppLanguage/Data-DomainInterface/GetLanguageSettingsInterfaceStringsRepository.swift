@@ -12,13 +12,13 @@ import Combine
 class GetLanguageSettingsInterfaceStringsRepository: GetLanguageSettingsInterfaceStringsRepositoryInterface {
     
     private let localizationServices: LocalizationServices
-    private let localeLanguageName: LocaleLanguageName
+    private let translatedLanguageNameRepository: TranslatedLanguageNameRepository
     private let appLanguagesRepository: AppLanguagesRepository
     
-    init(localizationServices: LocalizationServices, localeLanguageName: LocaleLanguageName, appLanguagesRepository: AppLanguagesRepository) {
+    init(localizationServices: LocalizationServices, translatedLanguageNameRepository: TranslatedLanguageNameRepository, appLanguagesRepository: AppLanguagesRepository) {
         
         self.localizationServices = localizationServices
-        self.localeLanguageName = localeLanguageName
+        self.translatedLanguageNameRepository = translatedLanguageNameRepository
         self.appLanguagesRepository = appLanguagesRepository
     }
     
@@ -31,7 +31,7 @@ class GetLanguageSettingsInterfaceStringsRepository: GetLanguageSettingsInterfac
             appInterfaceLanguageTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "languageSettings.appInterface.title"),
             numberOfAppLanguagesAvailable: getNumberOfAppLanguagesAvailableString(translateInAppLanguage: translateInAppLanguage),
             setAppLanguageMessage: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "languageSettings.appInterface.message"),
-            chooseAppLanguageButtonTitle: localeLanguageName.getLanguageName(forLanguageCode: translateInAppLanguage, translatedInLanguageId: translateInAppLanguage) ?? "",
+            chooseAppLanguageButtonTitle: translatedLanguageNameRepository.getLanguageName(language: translateInAppLanguage, translatedInLanguage: translateInAppLanguage),
             toolLanguagesAvailableOfflineTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "languageSettings.toolLanguagesAvailableOffline.title"),
             downloadToolsForOfflineMessage: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "languageSettings.toolLanguagesAvailableOffline.message"),
             editDownloadedLanguagesButtonTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "languageSettings.toolLanguagesAvailableOffline.editDownloadedLanguagesButton.title")

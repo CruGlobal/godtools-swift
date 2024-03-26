@@ -13,14 +13,14 @@ class GetToolFilterLanguagesRepository: GetToolFilterLanguagesRepositoryInterfac
     
     private let resourcesRepository: ResourcesRepository
     private let languagesRepository: LanguagesRepository
-    private let localeLanguageName: LocaleLanguageName
+    private let translatedLanguageNameRepository: TranslatedLanguageNameRepository
     private let localizationServices: LocalizationServices
     
-    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, localeLanguageName: LocaleLanguageName, localizationServices: LocalizationServices) {
+    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, translatedLanguageNameRepository: TranslatedLanguageNameRepository, localizationServices: LocalizationServices) {
         
         self.resourcesRepository = resourcesRepository
         self.languagesRepository = languagesRepository
-        self.localeLanguageName = localeLanguageName
+        self.translatedLanguageNameRepository = translatedLanguageNameRepository
         self.localizationServices = localizationServices
     }
     
@@ -103,8 +103,8 @@ extension GetToolFilterLanguagesRepository {
         
         let toolsAvailableCount: Int = getToolsAvailableCount(for: languageModel.code, filteredByCategoryId: filteredByCategoryId)
         
-        let languageName = self.localeLanguageName.getLanguageName(forLanguageCode: languageModel.code, translatedInLanguageId: languageModel.code) ?? ""
-        let translatedLanguageName = self.localeLanguageName.getLanguageName(forLanguageCode: languageModel.code, translatedInLanguageId: translatedInAppLanguage) ?? ""
+        let languageName = translatedLanguageNameRepository.getLanguageName(language: languageModel.code, translatedInLanguage: languageModel.code)
+        let translatedLanguageName = translatedLanguageNameRepository.getLanguageName(language: languageModel.code, translatedInLanguage: translatedInAppLanguage)
         
         let languageDomainModel = LanguageDomainModel(
             analyticsContentLanguage: languageModel.code,
@@ -155,7 +155,11 @@ extension GetToolFilterLanguagesRepository {
             fileType: .stringsdict
         )
         
-        return String.localizedStringWithFormat(formatString, toolsAvailableCount)
+        return String.localizedStringWithFormat(
+            format: formatString,
+            localeIdentifier: translatedInAppLanguage,
+            arguments: toolsAvailableCount
+        )
     }
 }
 

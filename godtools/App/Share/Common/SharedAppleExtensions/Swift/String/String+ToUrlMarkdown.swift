@@ -11,7 +11,7 @@ import Foundation
 @available(iOS 15.0, *)
 extension String {
     
-    func toUrlMarkdown() -> Result<AttributedString, Error> {
+    func toUrlMarkdown(attributedStringOptions: AttributedString.MarkdownParsingOptions? = nil) -> Result<AttributedString, Error> {
         
         let originalString: String = self
         
@@ -42,7 +42,14 @@ extension String {
                     
             do {
                 
-                let markdown = try AttributedString(markdown: textWithLinks)
+                let markdown: AttributedString
+                
+                if let options = attributedStringOptions {
+                    markdown = try AttributedString(markdown: textWithLinks, options: options)
+                }
+                else {
+                    markdown = try AttributedString(markdown: textWithLinks)
+                }
                 
                 return .success(markdown)
             }

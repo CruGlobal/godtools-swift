@@ -13,13 +13,11 @@ class GetToolFilterCategoriesRepository: GetToolFilterCategoriesRepositoryInterf
     
     private let resourcesRepository: ResourcesRepository
     private let localizationServices: LocalizationServices
-    private let localeLanguageName: LocaleLanguageName
 
-    init(resourcesRepository: ResourcesRepository, localizationServices: LocalizationServices, localeLanguageName: LocaleLanguageName) {
+    init(resourcesRepository: ResourcesRepository, localizationServices: LocalizationServices) {
         
         self.resourcesRepository = resourcesRepository
         self.localizationServices = localizationServices
-        self.localeLanguageName = localeLanguageName
     }
     
     func getToolFilterCategoriesPublisher(translatedInAppLanguage: AppLanguageDomainModel, filteredByLanguageId: BCP47LanguageIdentifier?) -> AnyPublisher<[CategoryFilterDomainModel], Never> {
@@ -124,7 +122,11 @@ extension GetToolFilterCategoriesRepository {
             fileType: .stringsdict
         )
         
-        return String.localizedStringWithFormat(formatString, toolsAvailableCount)
+        return String.localizedStringWithFormat(
+            format: formatString,
+            localeIdentifier: translatedInAppLanguage,
+            arguments: toolsAvailableCount
+        )
     }
 }
 

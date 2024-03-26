@@ -30,8 +30,13 @@ class ToolsFilterFeatureDataLayerDependencies {
     func getToolFilterCategoriesRepository() -> GetToolFilterCategoriesRepository {
         return GetToolFilterCategoriesRepository(
             resourcesRepository: coreDataLayer.getResourcesRepository(),
-            localizationServices: coreDataLayer.getLocalizationServices(),
-            localeLanguageName: coreDataLayer.getLocaleLanguageName()
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
+    
+    func getToolFilterCategoriesInterfaceStringsRepository() -> GetToolFilterCategoriesInterfaceStringsRepository {
+        return GetToolFilterCategoriesInterfaceStringsRepository(
+            localizationServices: coreDataLayer.getLocalizationServices()
         )
     }
     
@@ -39,7 +44,13 @@ class ToolsFilterFeatureDataLayerDependencies {
         return GetToolFilterLanguagesRepository(
             resourcesRepository: coreDataLayer.getResourcesRepository(),
             languagesRepository: coreDataLayer.getLanguagesRepository(),
-            localeLanguageName: coreDataLayer.getLocaleLanguageName(),
+            translatedLanguageNameRepository: coreDataLayer.getTranslatedLanguageNameRepository(),
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
+    
+    func getToolFilterLanguagesInterfaceStringsRepository() -> GetToolFilterLanguagesInterfaceStringsRepository {
+        return GetToolFilterLanguagesInterfaceStringsRepository(
             localizationServices: coreDataLayer.getLocalizationServices()
         )
     }
@@ -66,8 +77,16 @@ class ToolsFilterFeatureDataLayerDependencies {
         return getToolFilterCategoriesRepository()
     }
     
+    func getToolFilterCategoriesInterfaceStringsRepositoryInterface() ->  GetToolFilterCategoriesInterfaceStringsRepositoryInterface {
+        return getToolFilterCategoriesInterfaceStringsRepository()
+    }
+    
     func getToolFilterLanguagesRepositoryInterface() -> GetToolFilterLanguagesRepositoryInterface {
         return getToolFilterLanguagesRepository()
+    }
+    
+    func getToolFilterLanguagesInterfaceStringsRepositoryInterface() ->  GetToolFilterLanguagesInterfaceStringsRepositoryInterface {
+        return getToolFilterLanguagesInterfaceStringsRepository()
     }
     
     func getUserFiltersRepositoryInterface() -> GetUserFiltersRepositoryInterface {

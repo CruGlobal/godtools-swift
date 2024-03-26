@@ -142,16 +142,6 @@ class AppDataLayerDependencies {
         )
     }
     
-    func getGlobalAnalyticsRepository() -> GlobalAnalyticsRepository {
-        return GlobalAnalyticsRepository(
-            api:  MobileContentGlobalAnalyticsApi(
-                baseUrl: getAppConfig().getMobileContentApiBaseUrl(),
-                ignoreCacheSession: sharedIgnoreCacheSession
-            ),
-            cache: RealmGlobalAnalyticsCache(realmDatabase: sharedRealmDatabase)
-        )
-    }
-    
     func getInfoPlist() -> InfoPlist {
         return sharedInfoPlist
     }
@@ -178,18 +168,6 @@ class AppDataLayerDependencies {
             api: api,
             cache: cache
         )
-    }
-    
-    func getLocaleLanguageName() -> LocaleLanguageName {
-        return LocaleLanguageName()
-    }
-    
-    func getLocaleLanguageRegionName() -> LocaleLanguageRegionName {
-        return LocaleLanguageRegionName()
-    }
-    
-    func getLocaleLanguageScriptName() -> LocaleLanguageScriptName {
-        return LocaleLanguageScriptName()
     }
     
     func getLocalizationServices() -> LocalizationServices {
@@ -282,6 +260,10 @@ class AppDataLayerDependencies {
         return AppsFlyer.shared
     }
     
+    func getSharedIgnoreCacheSession() -> IgnoreCacheSession {
+        return sharedIgnoreCacheSession
+    }
+    
     func getSharedLaunchCountRepository() -> LaunchCountRepository {
         return LaunchCountRepository.shared
     }
@@ -332,6 +314,15 @@ class AppDataLayerDependencies {
             languagesRepository: getLanguagesRepository(),
             getTranslatedLanguageName: getTranslatedLanguageName(),
             cache: getTranslatedLanguageNameCache()
+        )
+    }
+    
+    private func getTranslatedLanguageName() -> GetTranslatedLanguageName {
+        return GetTranslatedLanguageName(
+            localizationServices: getLocalizationServices(),
+            localeLanguageName: LocaleLanguageName(),
+            localeRegionName: LocaleLanguageRegionName(),
+            localeScriptName: LocaleLanguageScriptName()
         )
     }
     
@@ -440,24 +431,9 @@ class AppDataLayerDependencies {
     
     // MARK: - Domain Interface
     
-    func getDeviceLanguageRepositoryInterface() -> GetDeviceLanguageRepositoryInterface {
-        return GetDeviceLanguageRepository(
-            deviceSystemLanguage: getDeviceSystemLanguage()
-        )
-    }
-    
     func getInterfaceStringForLanguageRepositoryInterface() -> GetInterfaceStringForLanguageRepositoryInterface {
         return GetInterfaceStringForLanguageRepository(
             localizationServices: getLocalizationServices()
-        )
-    }
-
-    private func getTranslatedLanguageName() -> GetTranslatedLanguageName {
-        return GetTranslatedLanguageName(
-            localizationServices: getLocalizationServices(),
-            localeLanguageName: getLocaleLanguageName(),
-            localeRegionName: getLocaleLanguageRegionName(),
-            localeScriptName: getLocaleLanguageScriptName()
         )
     }
 }

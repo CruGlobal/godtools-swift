@@ -21,13 +21,6 @@ class AppDomainLayerDependencies {
         return GetAccountCreationIsSupportedUseCase()
     }
     
-    func getAllToolsUseCase() -> GetAllToolsUseCase {
-        return GetAllToolsUseCase(
-            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase(),
-            resourcesRepository: dataLayer.getResourcesRepository()
-        )
-    }
-    
     func getAppUIDebuggingIsEnabledUseCase() -> GetAppUIDebuggingIsEnabledUseCase {
         return GetAppUIDebuggingIsEnabledUseCase(
             appBuild: dataLayer.getAppBuild()
@@ -47,22 +40,9 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getDeviceLanguageUseCase() -> GetDeviceLanguageUseCase {
-        return GetDeviceLanguageUseCase(
-            getDeviceLanguageRepositoryInterface: dataLayer.getDeviceLanguageRepositoryInterface()
-        )
-    }
-    
     func getDisableOptInOnboardingBannerUseCase() -> DisableOptInOnboardingBannerUseCase {
         return DisableOptInOnboardingBannerUseCase(
             optInOnboardingBannerEnabledRepository: dataLayer.getOptInOnboardingBannerEnabledRepository()
-        )
-    }
-    
-    func getGlobalActivityThisWeekUseCase() -> GetGlobalActivityThisWeekUseCase {
-        return GetGlobalActivityThisWeekUseCase(
-            globalAnalyticsRepository: dataLayer.getGlobalAnalyticsRepository(),
-            localizationServices: dataLayer.getLocalizationServices()
         )
     }
     
@@ -107,15 +87,6 @@ class AppDomainLayerDependencies {
     func getSetCompletedTrainingTipUseCase() -> SetCompletedTrainingTipUseCase {
         return SetCompletedTrainingTipUseCase(
             repository: dataLayer.getCompletedTrainingTipRepository()
-        )
-    }
-    
-    func getSettingsPrimaryLanguageUseCase() -> GetSettingsPrimaryLanguageUseCase {
-        return GetSettingsPrimaryLanguageUseCase(
-            languagesRepository: dataLayer.getLanguagesRepository(),
-            languageSettingsRepository: dataLayer.getLanguageSettingsRepository(),
-            getDeviceLanguageUseCase: getDeviceLanguageUseCase(),
-            getLanguageUseCase: getLanguageUseCase()
         )
     }
     
