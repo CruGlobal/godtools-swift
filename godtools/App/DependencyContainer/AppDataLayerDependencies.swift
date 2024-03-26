@@ -180,18 +180,6 @@ class AppDataLayerDependencies {
         )
     }
     
-    func getLocaleLanguageName() -> LocaleLanguageName {
-        return LocaleLanguageName()
-    }
-    
-    func getLocaleLanguageRegionName() -> LocaleLanguageRegionName {
-        return LocaleLanguageRegionName()
-    }
-    
-    func getLocaleLanguageScriptName() -> LocaleLanguageScriptName {
-        return LocaleLanguageScriptName()
-    }
-    
     func getLocalizationServices() -> LocalizationServices {
         return LocalizationServices(localizableStringsFilesBundle: Bundle.main)
     }
@@ -335,6 +323,15 @@ class AppDataLayerDependencies {
         )
     }
     
+    private func getTranslatedLanguageName() -> GetTranslatedLanguageName {
+        return GetTranslatedLanguageName(
+            localizationServices: getLocalizationServices(),
+            localeLanguageName: LocaleLanguageName(),
+            localeRegionName: LocaleLanguageRegionName(),
+            localeScriptName: LocaleLanguageScriptName()
+        )
+    }
+    
     func getTranslatedToolCategory() -> GetTranslatedToolCategory {
         return GetTranslatedToolCategory(
             localizationServices: getLocalizationServices(),
@@ -443,15 +440,6 @@ class AppDataLayerDependencies {
     func getInterfaceStringForLanguageRepositoryInterface() -> GetInterfaceStringForLanguageRepositoryInterface {
         return GetInterfaceStringForLanguageRepository(
             localizationServices: getLocalizationServices()
-        )
-    }
-
-    private func getTranslatedLanguageName() -> GetTranslatedLanguageName {
-        return GetTranslatedLanguageName(
-            localizationServices: getLocalizationServices(),
-            localeLanguageName: getLocaleLanguageName(),
-            localeRegionName: getLocaleLanguageRegionName(),
-            localeScriptName: getLocaleLanguageScriptName()
         )
     }
 }

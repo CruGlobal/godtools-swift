@@ -12,12 +12,12 @@ import Combine
 class GetConfirmAppLanguageInterfaceStringsRepository: GetConfirmAppLanguageInterfaceStringsRepositoryInterface {
     
     private let localizationServices: LocalizationServices
-    private let localeLanguageName: LocaleLanguageName
+    private let translatedLanguageNameRepository: TranslatedLanguageNameRepository
     
-    init(localizationServices: LocalizationServices, localeLanguageName: LocaleLanguageName) {
+    init(localizationServices: LocalizationServices, translatedLanguageNameRepository: TranslatedLanguageNameRepository) {
         
         self.localizationServices = localizationServices
-        self.localeLanguageName = localeLanguageName
+        self.translatedLanguageNameRepository = translatedLanguageNameRepository
     }
     
     func getStringsPublisher(translateInAppLanguage: AppLanguageDomainModel, selectedLanguage: AppLanguageDomainModel) -> AnyPublisher<ConfirmAppLanguageInterfaceStringsDomainModel, Never> {
@@ -39,7 +39,7 @@ class GetConfirmAppLanguageInterfaceStringsRepository: GetConfirmAppLanguageInte
         
         let formatString = localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "languageSettings.confirmAppLanguage.message")
         
-        let languageName = self.localeLanguageName.getLanguageName(forLanguageCode: selectedLanguage, translatedInLanguageId: localeId) ?? ""
+        let languageName = translatedLanguageNameRepository.getLanguageName(language: selectedLanguage, translatedInLanguage: localeId)
         let languageNameAttributed = NSAttributedString(
             string: languageName,
             attributes: [NSAttributedString.Key.foregroundColor: ColorPalette.gtBlue.uiColor]
