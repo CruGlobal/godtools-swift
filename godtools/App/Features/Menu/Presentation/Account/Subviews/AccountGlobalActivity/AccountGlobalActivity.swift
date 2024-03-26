@@ -59,7 +59,9 @@ struct AccountGlobalActivity: View {
                 
                 VStack(alignment: .leading, spacing: itemSpacing) {
                  
-                    ForEach(0 ..< viewModel.numberOfGlobalActivityThisWeekItems, id: \.self) { index in
+                    ForEach(viewModel.globalActivitiesThisWeek) { (activity: GlobalActivityThisWeekDomainModel) in
+                        
+                        let index: Int = viewModel.globalActivitiesThisWeek.firstIndex(where: {$0.id == activity.id}) ?? 0
                         
                         let isNewColumn: Bool = index % 2 == 0
                         
@@ -70,13 +72,17 @@ struct AccountGlobalActivity: View {
                                 let leftIndex: Int = index
                                 let rightIndex: Int = index + 1
                                 
-                                AccountGlobalActivityAnalyticsItemView(viewModel: viewModel.getGlobalActivityAnalyticsItem(index: leftIndex))
-                                    .frame(width: itemSize.width, height: itemSize.height)
+                                AccountGlobalActivityAnalyticsItemView(
+                                    viewModel: viewModel.getGlobalActivityAnalyticsItemViewModel(index: leftIndex)
+                                )
+                                .frame(width: itemSize.width, height: itemSize.height)
                                                             
-                                if rightIndex < viewModel.numberOfGlobalActivityThisWeekItems {
+                                if rightIndex < viewModel.globalActivitiesThisWeek.count {
                                     
-                                    AccountGlobalActivityAnalyticsItemView(viewModel: viewModel.getGlobalActivityAnalyticsItem(index: rightIndex))
-                                        .frame(width: itemSize.width, height: itemSize.height)
+                                    AccountGlobalActivityAnalyticsItemView(
+                                        viewModel: viewModel.getGlobalActivityAnalyticsItemViewModel(index: rightIndex)
+                                    )
+                                    .frame(width: itemSize.width, height: itemSize.height)
                                 }
                             }
                         }

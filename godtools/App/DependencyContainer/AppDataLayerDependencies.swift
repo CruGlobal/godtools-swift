@@ -142,16 +142,6 @@ class AppDataLayerDependencies {
         )
     }
     
-    func getGlobalAnalyticsRepository() -> GlobalAnalyticsRepository {
-        return GlobalAnalyticsRepository(
-            api:  MobileContentGlobalAnalyticsApi(
-                baseUrl: getAppConfig().getMobileContentApiBaseUrl(),
-                ignoreCacheSession: sharedIgnoreCacheSession
-            ),
-            cache: RealmGlobalAnalyticsCache(realmDatabase: sharedRealmDatabase)
-        )
-    }
-    
     func getInfoPlist() -> InfoPlist {
         return sharedInfoPlist
     }
@@ -268,6 +258,10 @@ class AppDataLayerDependencies {
     
     func getSharedAppsFlyer() -> AppsFlyer {
         return AppsFlyer.shared
+    }
+    
+    func getSharedIgnoreCacheSession() -> IgnoreCacheSession {
+        return sharedIgnoreCacheSession
     }
     
     func getSharedLaunchCountRepository() -> LaunchCountRepository {

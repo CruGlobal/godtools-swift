@@ -24,15 +24,27 @@ class RealmGlobalAnalyticsCache {
         return realmDatabase.openRealm().objects(RealmGlobalAnalytics.self).objectWillChange
             .map { _ in
                 
-                let realmObject: RealmGlobalAnalytics? = self.realmDatabase.readObject(primaryKey: id)
-                
-                if let realmObject = realmObject {
-                    return GlobalAnalyticsDataModel(realmGlobalAnalytics: realmObject)
-                }
-                
-                return nil
+                return self.getGlobalAnalytics(id: id)
             }
             .eraseToAnyPublisher()
+    }
+    
+    private func getGlobalAnalytics(id: String) -> GlobalAnalyticsDataModel? {
+        
+        let realmObject: RealmGlobalAnalytics? = realmDatabase.readObject(primaryKey: id)
+        
+        let dataModel: GlobalAnalyticsDataModel?
+        
+        if let realmObject = realmObject {
+            
+            dataModel = GlobalAnalyticsDataModel(realmGlobalAnalytics: realmObject)
+        }
+        else {
+            
+            dataModel = nil
+        }
+        
+        return dataModel
     }
     
     func storeGlobalAnalyticsPublisher(globalAnalytics: MobileContentGlobalAnalyticsDecodable) -> AnyPublisher<GlobalAnalyticsDataModel, Error> {
