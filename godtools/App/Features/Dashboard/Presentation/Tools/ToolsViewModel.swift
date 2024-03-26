@@ -79,9 +79,11 @@ class ToolsViewModel: ObservableObject {
         )
         .flatMap({ (appLanguage: AppLanguageDomainModel, toolFilterLanguage) -> AnyPublisher<(ViewToolsDomainModel, [SpotlightToolListItemDomainModel]), Never> in
             
+            let selectedLanguageFilter = toolFilterLanguage.language
+            
             return Publishers.CombineLatest(
-                viewToolsUseCase.viewPublisher(translatedInAppLanguage: appLanguage, languageForAvailabilityText: toolFilterLanguage.language),
-                getSpotlightToolsUseCase.getSpotlightToolsPublisher(appLanguage: appLanguage)
+                viewToolsUseCase.viewPublisher(translatedInAppLanguage: appLanguage, languageForAvailabilityText: selectedLanguageFilter),
+                getSpotlightToolsUseCase.getSpotlightToolsPublisher(translatedInAppLanguage: appLanguage, languageForAvailabilityText: selectedLanguageFilter)
             )
             .eraseToAnyPublisher()
         })

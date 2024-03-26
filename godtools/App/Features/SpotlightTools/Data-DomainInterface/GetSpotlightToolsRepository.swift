@@ -30,13 +30,19 @@ class GetSpotlightToolsRepository: GetSpotlightToolsRepositoryInterface {
         self.getTranslatedToolLanguageAvailability = getTranslatedToolLanguageAvailability
     }
     
-    func getSpotlightToolsPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[SpotlightToolListItemDomainModel], Never> {
+    func getSpotlightToolsPublisher(translatedInAppLanguage: AppLanguageDomainModel, languageForAvailabilityText: LanguageDomainModel?) -> AnyPublisher<[SpotlightToolListItemDomainModel], Never> {
         
-        let appLanguageModel: LanguageModel? = languagesRepository.getLanguage(code: appLanguage)
+        let languageForAvailabilityTextModel: LanguageModel?
+        
+        if let languageForAvailabilityTextId = languageForAvailabilityText?.id {
+            languageForAvailabilityTextModel = languagesRepository.getLanguage(id: languageForAvailabilityTextId)
+        } else {
+            languageForAvailabilityTextModel = nil
+        }
         
         return Publishers.CombineLatest(
             resourcesRepository.getResourcesChangedPublisher(),
-            getToolListItemInterfaceStringsRepository.getStringsPublisher(translateInLanguage: appLanguage)
+            getToolListItemInterfaceStringsRepository.getStringsPublisher(translateInLanguage: translatedInAppLanguage)
         )
         .flatMap({ (resourcesChanged: Void, interfaceStrings: ToolListItemInterfaceStringsDomainModel) -> AnyPublisher<[SpotlightToolListItemDomainModel], Never> in
         
@@ -47,8 +53,9 @@ class GetSpotlightToolsRepository: GetSpotlightToolsRepositoryInterface {
                     
                     let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel
                     
-                    if let language = appLanguageModel {
-                        toolLanguageAvailability = self.getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(resource: $0, language: language, translateInLanguage: language)
+                    if let language = languageForAvailabilityTextModel {
+                        
+                        toolLanguageAvailability = self.getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(resource: $0, language: language, translateInLanguage: translatedInAppLanguage)
                     }
                     else {
                         toolLanguageAvailability = ToolLanguageAvailabilityDomainModel(availabilityString: "", isAvailable: false)
@@ -59,8 +66,8 @@ class GetSpotlightToolsRepository: GetSpotlightToolsRepositoryInterface {
                         analyticsToolAbbreviation: $0.abbreviation,
                         dataModelId: $0.id,
                         bannerImageId: $0.attrBanner,
-                        name: self.getTranslatedToolName.getToolName(resource: $0, translateInLanguage: appLanguage),
-                        category: self.getTranslatedToolCategory.getTranslatedCategory(resource: $0, translateInLanguage: appLanguage),
+                        name: self.getTranslatedToolName.getToolName(resource: $0, translateInLanguage: translatedInAppLanguage),
+                        category: self.getTranslatedToolCategory.getTranslatedCategory(resource: $0, translateInLanguage: translatedInAppLanguage),
                         isFavorited: self.favoritedResourcesRepository.getResourceIsFavorited(id: $0.id),
                         languageAvailability: toolLanguageAvailability
                     )
