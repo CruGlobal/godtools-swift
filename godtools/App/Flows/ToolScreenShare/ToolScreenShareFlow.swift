@@ -317,11 +317,7 @@ extension ToolScreenShareFlow {
         
         let interfaceStrings: ShareToolScreenShareSessionInterfaceStringsDomainModel = domainModel.interfaceStrings
         
-        let shareMessage: String = String.localizedStringWithFormat(
-            format: interfaceStrings.shareMessage, 
-            localeIdentifier: appLanguage,
-            arguments: shareUrl
-        )
+        let shareMessage: String = String.localizedStringWithFormat(interfaceStrings.shareMessage, shareUrl)
 
         let viewModel = ShareToolScreenShareSessionViewModel(
             shareMessage: shareMessage,
