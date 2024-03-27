@@ -84,11 +84,7 @@ class GetUserActivityBadgeUseCase {
             fileType: .stringsdict
         )
         
-        let badgeText: String = String.localizedStringWithFormat(
-            format: formatString,
-            localeIdentifier: translatedInAppLanguage,
-            arguments: progressTarget
-        )
+        let badgeText: String = String.localizedStringWithFormat(formatString, progressTarget)
 
         return badgeText
     }

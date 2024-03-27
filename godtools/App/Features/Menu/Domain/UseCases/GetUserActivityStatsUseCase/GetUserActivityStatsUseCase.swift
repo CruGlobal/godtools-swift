@@ -74,10 +74,6 @@ class GetUserActivityStatsUseCase {
             fileType: .stringsdict
         )
         
-        return String.localizedStringWithFormat(
-            format: formatString,
-            localeIdentifier: translatedInAppLanguage,
-            arguments: activityCount
-        )
+        return String.localizedStringWithFormat(formatString, activityCount)
     }
 }
