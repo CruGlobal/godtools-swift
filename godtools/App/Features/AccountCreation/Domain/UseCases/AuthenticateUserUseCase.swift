@@ -29,7 +29,7 @@ class AuthenticateUserUseCase {
                 
                 if let authUser = authUser {
                     self.postEmailSignUp(authUser: authUser)
-                    self.setAnalyticsUserProperties(authUser: authUser)
+                    self.setAnalyticsUserProperties(authUser: authUser, authPlatform: authPlatform)
                 }
                 
                 return Just(true).setFailureType(to: AuthErrorDomainModel.self)
@@ -49,11 +49,26 @@ class AuthenticateUserUseCase {
         _ = emailSignUpService.postNewEmailSignUpIfNeeded(emailSignUp: emailSignUp)
     }
     
-    private func setAnalyticsUserProperties(authUser: AuthUserDomainModel) {
+    private func setAnalyticsUserProperties(authUser: AuthUserDomainModel, authPlatform: AuthenticateUserAuthPlatformDomainModel) {
+        
+        let loginProvider: String
+        
+        switch authPlatform {
+        case .apple:
+            loginProvider = AnalyticsConstants.UserProperties.loginProviderApple
+        case .facebook:
+            loginProvider = AnalyticsConstants.UserProperties.loginProviderFacebook
+        case .google:
+            loginProvider = AnalyticsConstants.UserProperties.loginProviderGoogle
+        }
         
         firebaseAnalytics.setLoggedInStateUserProperties(
             isLoggedIn: true,
-            loggedInUserProperties: FirebaseAnalyticsLoggedInUserProperties(grMasterPersonId: authUser.grMasterPersonId, ssoguid: authUser.ssoGuid)
+            loggedInUserProperties: FirebaseAnalyticsLoggedInUserProperties(
+                grMasterPersonId: authUser.grMasterPersonId,
+                loginProvider: loginProvider,
+                ssoguid: authUser.ssoGuid
+            )
         )
     }
 }
