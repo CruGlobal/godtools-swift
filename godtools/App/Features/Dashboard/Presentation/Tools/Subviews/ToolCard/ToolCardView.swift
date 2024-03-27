@@ -105,12 +105,12 @@ struct ToolCardView: View {
                             .foregroundColor(ColorPalette.gtGrey.color)
                             .lineLimit(2)
                         
-                        if layout == .landscape {
+                        if layout == .landscape, let languageAvailability = viewModel.languageAvailability {
                             
                             Spacer()
                             
                             ToolCardLanguageAvailabilityView(
-                                languageAvailability: viewModel.languageAvailability
+                                languageAvailability: languageAvailability
                             )
                         }
                     }
@@ -123,10 +123,10 @@ struct ToolCardView: View {
                         .padding([.top], 2)
                     }
                     
-                    if layout == .thumbnail {
+                    if layout == .thumbnail, let languageAvailability = viewModel.languageAvailability {
                         
                         ToolCardLanguageAvailabilityView(
-                            languageAvailability: viewModel.languageAvailability
+                            languageAvailability: languageAvailability
                         )
                         .padding([.top], 5)
                     }
