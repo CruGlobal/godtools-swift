@@ -215,6 +215,18 @@ extension ToolViewModel {
             }
             .store(in: &cancellables)
         
+        trackActionAnalyticsUseCase
+            .trackAction(
+                screenName: analyticsScreenName,
+                actionName: "Tool Settings",
+                siteSection: analyticsSiteSection,
+                siteSubSection: "",
+                contentLanguage: nil,
+                contentLanguageSecondary: nil,
+                url: nil,
+                data: [ToolAnalyticsActionNames.shared.ACTION_SETTINGS: 1]
+            )
+        
         flowDelegate?.navigate(step: .toolSettingsTappedFromTool(toolSettingsObserver: toolSettingsObserver))
     }
     
