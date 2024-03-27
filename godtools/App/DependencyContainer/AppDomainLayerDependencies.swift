@@ -46,13 +46,6 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getGlobalActivityThisWeekUseCase() -> GetGlobalActivityThisWeekUseCase {
-        return GetGlobalActivityThisWeekUseCase(
-            globalAnalyticsRepository: dataLayer.getGlobalAnalyticsRepository(),
-            localizationServices: dataLayer.getLocalizationServices()
-        )
-    }
-    
     func getIncrementUserCounterUseCase() -> IncrementUserCounterUseCase {
         return IncrementUserCounterUseCase(
             userCountersRepository: dataLayer.getUserCountersRepository()

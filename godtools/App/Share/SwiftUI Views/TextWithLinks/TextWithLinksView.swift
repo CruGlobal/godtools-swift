@@ -20,7 +20,12 @@ struct TextWithLinksView: View {
     
     init(stringContainingUrls: String, textColor: Color, font: Font, lineSpacing: CGFloat? = nil, textAlignment: TextAlignment? = nil, handleUrlClosure: ((_ url: URL) -> Void)? = nil) {
         
-        switch stringContainingUrls.toUrlMarkdown() {
+        let options = AttributedString.MarkdownParsingOptions(
+            allowsExtendedAttributes: false,
+            interpretedSyntax: .inlineOnlyPreservingWhitespace
+        )
+        
+        switch stringContainingUrls.toUrlMarkdown(attributedStringOptions: options) {
         case .success(let markdown):
             markdownText = markdown
         case .failure( _):

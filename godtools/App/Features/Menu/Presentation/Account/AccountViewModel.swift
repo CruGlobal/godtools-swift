@@ -16,11 +16,10 @@ class AccountViewModel: ObservableObject {
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase
     private let getUserActivityUseCase: GetUserActivityUseCase
-    private let getGlobalActivityThisWeekUseCase: GetGlobalActivityThisWeekUseCase
+    private let viewGlobalActivityThisWeekUseCase: ViewGlobalActivityThisWeekUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let viewAccountUseCase: ViewAccountUseCase
     
-    private var globalActivityThisWeekDomainModels: [GlobalActivityThisWeekDomainModel] = Array()
     private var cancellables: Set<AnyCancellable> = Set()
     private var getActivityCancellable: AnyCancellable?
     
@@ -39,15 +38,15 @@ class AccountViewModel: ObservableObject {
     @Published var badgesSectionTitle: String = ""
     @Published var globalActivityButtonTitle: String = ""
     @Published var globalActivityTitle: String = ""
-    @Published var numberOfGlobalActivityThisWeekItems: Int = 0
+    @Published var globalActivitiesThisWeek: [GlobalActivityThisWeekDomainModel] = Array()
     @Published var stats = [UserActivityStatDomainModel]()
         
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase, getUserActivityUseCase: GetUserActivityUseCase, getGlobalActivityThisWeekUseCase: GetGlobalActivityThisWeekUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, viewAccountUseCase: ViewAccountUseCase) {
+    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase, getUserActivityUseCase: GetUserActivityUseCase, viewGlobalActivityThisWeekUseCase: ViewGlobalActivityThisWeekUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, viewAccountUseCase: ViewAccountUseCase) {
         
         self.flowDelegate = flowDelegate
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getUserAccountDetailsUseCase = getUserAccountDetailsUseCase
-        self.getGlobalActivityThisWeekUseCase = getGlobalActivityThisWeekUseCase
+        self.viewGlobalActivityThisWeekUseCase = viewGlobalActivityThisWeekUseCase
         self.getUserActivityUseCase = getUserActivityUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.viewAccountUseCase = viewAccountUseCase
@@ -58,16 +57,16 @@ class AccountViewModel: ObservableObject {
 
         viewAccountUseCase.viewPublisher(appLanguagePublisher: $appLanguage.eraseToAnyPublisher())
             .receive(on: DispatchQueue.main)
-            .sink { viewAccountDomainModel in
+            .sink { [weak self] viewAccountDomainModel in
                 
                 let interfaceStrings = viewAccountDomainModel.interfaceStrings
                 
-                self.navTitle = interfaceStrings.navTitle
-                self.activityButtonTitle = interfaceStrings.activityButtonTitle
-                self.myActivitySectionTitle = interfaceStrings.myActivitySectionTitle
-                self.badgesSectionTitle = interfaceStrings.badgesSectionTitle
-                self.globalActivityButtonTitle = interfaceStrings.globalActivityButtonTitle
-                self.globalActivityTitle = interfaceStrings.globalAnalyticsTitle
+                self?.navTitle = interfaceStrings.navTitle
+                self?.activityButtonTitle = interfaceStrings.activityButtonTitle
+                self?.myActivitySectionTitle = interfaceStrings.myActivitySectionTitle
+                self?.badgesSectionTitle = interfaceStrings.badgesSectionTitle
+                self?.globalActivityButtonTitle = interfaceStrings.globalActivityButtonTitle
+                self?.globalActivityTitle = interfaceStrings.globalAnalyticsTitle
             }
             .store(in: &cancellables)
         
@@ -82,13 +81,18 @@ class AccountViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        getGlobalActivityThisWeekUseCase.getGlobalActivityPublisher(appLanguagePublisher: $appLanguage.eraseToAnyPublisher())
+        $appLanguage.eraseToAnyPublisher()
+            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewGlobalActivityThisWeekDomainModel, Never> in
+                
+                return viewGlobalActivityThisWeekUseCase
+                    .viewPublisher(appLanguage: appLanguage)
+                    .eraseToAnyPublisher()
+            })
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (globalActivityThisWeekDomainModels: [GlobalActivityThisWeekDomainModel]) in
+            .sink { [weak self] (domainModel: ViewGlobalActivityThisWeekDomainModel) in
                 
                 self?.isLoadingGlobalActivityThisWeek = false
-                self?.globalActivityThisWeekDomainModels = globalActivityThisWeekDomainModels
-                self?.numberOfGlobalActivityThisWeekItems = globalActivityThisWeekDomainModels.count
+                self?.globalActivitiesThisWeek = domainModel.activityItems
             }
             .store(in: &cancellables)
         
@@ -105,9 +109,9 @@ class AccountViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { _ in
                 
-            } receiveValue: { userActivity in
+            } receiveValue: { [weak self] userActivity in
                 
-                self.updateUserActivityValues(userActivity: userActivity)
+                self?.updateUserActivityValues(userActivity: userActivity)
             }
     }
     
@@ -152,8 +156,10 @@ extension AccountViewModel {
         trackSectionViewedAnalytics(screenName: AnalyticsScreenNames.shared.ACCOUNT_GLOBAL_ACTIVITY)
     }
     
-    func getGlobalActivityAnalyticsItem(index: Int) -> AccountGlobalActivityAnalyticsItemViewModel {
+    func getGlobalActivityAnalyticsItemViewModel(index: Int) -> AccountGlobalActivityAnalyticsItemViewModel {
         
-        return AccountGlobalActivityAnalyticsItemViewModel(globalActivity: globalActivityThisWeekDomainModels[index])
+        return AccountGlobalActivityAnalyticsItemViewModel(
+            globalActivity: globalActivitiesThisWeek[index]
+        )
     }
 }

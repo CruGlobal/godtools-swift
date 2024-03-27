@@ -1,15 +1,15 @@
 //
-//  GetGlobalActivityThisWeekUseCase.swift
+//  GetGlobalActivityThisWeekRepository.swift
 //  godtools
 //
-//  Created by Levi Eggert on 11/15/22.
-//  Copyright © 2022 Cru. All rights reserved.
+//  Created by Levi Eggert on 3/26/24.
+//  Copyright © 2024 Cru. All rights reserved.
 //
 
 import Foundation
 import Combine
 
-class GetGlobalActivityThisWeekUseCase {
+class GetGlobalActivityThisWeekRepository: GetGlobalActivityThisWeekRepositoryInterface {
     
     private let globalAnalyticsRepository: GlobalAnalyticsRepository
     private let localizationServices: LocalizationServices
@@ -21,13 +21,10 @@ class GetGlobalActivityThisWeekUseCase {
         self.localizationServices = localizationServices
     }
     
-    func getGlobalActivityPublisher(appLanguagePublisher: AnyPublisher<AppLanguageDomainModel, Never>) -> AnyPublisher<[GlobalActivityThisWeekDomainModel], Never> {
+    func getActivityPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<[GlobalActivityThisWeekDomainModel], Never> {
         
-        return Publishers.CombineLatest(
-            globalAnalyticsRepository.getGlobalAnalyticsChangedPublisher(),
-            appLanguagePublisher
-        )
-        .flatMap({ (dataModel: GlobalAnalyticsDataModel?, appLanguage: AppLanguageDomainModel) -> AnyPublisher<[GlobalActivityThisWeekDomainModel], Never> in
+        return globalAnalyticsRepository.getGlobalAnalyticsChangedPublisher()
+        .flatMap({ (dataModel: GlobalAnalyticsDataModel?) -> AnyPublisher<[GlobalActivityThisWeekDomainModel], Never> in
             
             guard let dataModel = dataModel else {
                 
@@ -35,25 +32,25 @@ class GetGlobalActivityThisWeekUseCase {
                     .eraseToAnyPublisher()
             }
             
-            let localeId = appLanguage
+            let localeId = translateInLanguage
             
             let usersAnalytics = GlobalActivityThisWeekDomainModel(
-                count: self.getFormattedCount(count: dataModel.users),
+                count: self.getFormattedCount(translateInLanguage: translateInLanguage, count: dataModel.users),
                 label: self.localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "accountActivity.globalAnalytics.users.title")
             )
             
             let gospelPresentationAnalytics = GlobalActivityThisWeekDomainModel(
-                count: self.getFormattedCount(count: dataModel.gospelPresentations),
+                count: self.getFormattedCount(translateInLanguage: translateInLanguage, count: dataModel.gospelPresentations),
                 label: self.localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "accountActivity.globalAnalytics.gospelPresentation.title")
             )
             
             let launchesAnalytics = GlobalActivityThisWeekDomainModel(
-                count: self.getFormattedCount(count: dataModel.launches),
+                count: self.getFormattedCount(translateInLanguage: translateInLanguage, count: dataModel.launches),
                 label: self.localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "accountActivity.globalAnalytics.launches.title")
             )
             
             let countriesAnalytics = GlobalActivityThisWeekDomainModel(
-                count: self.getFormattedCount(count: dataModel.countries),
+                count: self.getFormattedCount(translateInLanguage: translateInLanguage, count: dataModel.countries),
                 label: self.localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "accountActivity.globalAnalytics.countries.title")
             )
             
@@ -65,9 +62,10 @@ class GetGlobalActivityThisWeekUseCase {
         .eraseToAnyPublisher()
     }
     
-    private func getFormattedCount(count: Int) -> String {
+    private func getFormattedCount(translateInLanguage: AppLanguageDomainModel, count: Int) -> String {
         
         formatNumberWithCommas.numberStyle = .decimal
+        formatNumberWithCommas.locale = Locale(identifier: translateInLanguage)
         
         return formatNumberWithCommas.string(from: NSNumber(value: count)) ?? ""
     }

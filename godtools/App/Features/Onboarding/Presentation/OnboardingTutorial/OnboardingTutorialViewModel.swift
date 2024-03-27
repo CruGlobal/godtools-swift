@@ -204,6 +204,19 @@ extension OnboardingTutorialViewModel {
     @objc func skipTapped() {
         
         flowDelegate?.navigate(step: .skipTappedFromOnboardingTutorial)
+        
+        let pageAnalytics: OnboardingTutorialPageAnalyticsProperties = getOnboardingTutorialPageAnalyticsProperties(page: pages[currentPage])
+        
+        trackActionAnalyticsUseCase.trackAction(
+            screenName: pageAnalytics.screenName,
+            actionName: "Onboarding Skip",
+            siteSection: pageAnalytics.siteSection,
+            siteSubSection: pageAnalytics.siteSubsection,
+            contentLanguage: pageAnalytics.contentLanguage,
+            contentLanguageSecondary: pageAnalytics.contentLanguageSecondary,
+            url: nil,
+            data: [AnalyticsConstants.Keys.onboardingSkip: 1]
+        )
     }
     
     func continueTapped() {

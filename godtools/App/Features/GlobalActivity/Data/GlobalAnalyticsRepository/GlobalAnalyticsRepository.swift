@@ -23,12 +23,13 @@ class GlobalAnalyticsRepository {
     }
     
     func getGlobalAnalyticsChangedPublisher() -> AnyPublisher<GlobalAnalyticsDataModel?, Never> {
-        
-        getGlobalAnalyticsFromRemote()
-            .sink { _ in
                 
-            } receiveValue: { _ in
+        getGlobalAnalyticsFromRemotePublisher()
+            .sink { value in
                 
+                
+            } receiveValue: { value in
+                                
             }
             .store(in: &cancellables)
             
@@ -36,7 +37,7 @@ class GlobalAnalyticsRepository {
             .eraseToAnyPublisher()
     }
     
-    func getGlobalAnalyticsFromRemote() -> AnyPublisher<GlobalAnalyticsDataModel, Error> {
+    private func getGlobalAnalyticsFromRemotePublisher() -> AnyPublisher<GlobalAnalyticsDataModel, Error> {
         
         return api.getGlobalAnalyticsPublisher()
             .flatMap({ (globalAnalytics: MobileContentGlobalAnalyticsDecodable) -> AnyPublisher<GlobalAnalyticsDataModel, Error> in
