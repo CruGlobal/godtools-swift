@@ -11,6 +11,7 @@ import SwiftUI
 struct AppInterfaceLanguageButtonView: View {
     
     private let backgroundColor: Color = Color.getColorWithRGB(red: 239, green: 239, blue: 239, opacity: 1)
+    private let accessibility: AccessibilityStrings.Button = .chooseAppLanguage
     private let title: String
     private let width: CGFloat
     private let height: CGFloat
@@ -61,6 +62,7 @@ struct AppInterfaceLanguageButtonView: View {
                     }
                 }
             }
+            .accessibilityIdentifier(accessibility.id)
             .frame(width: width, height: height, alignment: .center)
             .background(backgroundColor)
             .cornerRadius(cornerRadius)

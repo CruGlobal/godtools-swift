@@ -24,6 +24,14 @@ class UITestsDeepLinkParser: DeepLinkUrlParserType {
             
             return .onboarding(appLanguage: appLanguage)
         }
+        else if screenPath == "settings" && pathComponents[safe: 2] == "language" {
+            
+            return .languageSettings
+        }
+        else if screenPath == "settings" && pathComponents[safe: 2] == "app_languages" {
+            
+            return .appLanguagesList
+        }
         
         return nil
     }
