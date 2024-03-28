@@ -23,6 +23,8 @@ struct LanguageSettingsView: View {
         
         GeometryReader { geometry in
             
+            AccessibilityScreenElementView(screenAccessibility: .languageSettings)
+            
             VStack(alignment: .leading, spacing: 0) {
                 
                 LanguageSettingsAppInterfaceLanguageView(

@@ -375,7 +375,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             closeMenu(animated: true)
             
         case .languageSettingsTappedFromTools:
-            navigateToLanguageSettings()
+            navigateToLanguageSettings(deepLink: nil)
             
         case .languageSettingsFlowCompleted( _):
             closeLanguageSettings()
@@ -701,7 +701,11 @@ extension AppFlow {
             
         case .languageSettings:
             navigateToDashboard(startingTab: .favorites)
-            navigateToLanguageSettings()
+            navigateToLanguageSettings(deepLink: nil)
+            
+        case .appLanguagesList:
+            navigateToDashboard(startingTab: .favorites)
+            navigateToLanguageSettings(deepLink: .appLanguagesList)
             
         case .lessonsList:
             navigateToDashboard(startingTab: .lessons)
@@ -793,12 +797,13 @@ extension AppFlow {
 
 extension AppFlow {
     
-    private func navigateToLanguageSettings() {
+    private func navigateToLanguageSettings(deepLink: ParsedDeepLinkType?) {
         
         let languageSettingsFlow = LanguageSettingsFlow(
             flowDelegate: self,
             appDiContainer: appDiContainer,
-            sharedNavigationController: navigationController
+            sharedNavigationController: navigationController,
+            deepLink: deepLink
         )
         
         self.languageSettingsFlow = languageSettingsFlow

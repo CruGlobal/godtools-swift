@@ -68,6 +68,7 @@ struct ToolLanguagesAvailableOfflineView: View {
                         font: FontLibrary.sfProTextRegular.font(size: 14),
                         width: geometry.size.width - (contentHorizontalInsets * 2),
                         height: buttonHeight,
+                        accessibility: .editDownloadedLanguages,
                         action: {
                             
                             viewModel.editDownloadedLanguagesTapped()

@@ -20,6 +20,8 @@ struct DownloadableLanguagesView: View {
     var body: some View {
         
         VStack(spacing: 0) {
+            
+            AccessibilityScreenElementView(screenAccessibility: .downloadableLanguages)
                                     
             SearchBarView(viewModel: viewModel.getSearchBarViewModel(), searchText: $viewModel.searchText)
             

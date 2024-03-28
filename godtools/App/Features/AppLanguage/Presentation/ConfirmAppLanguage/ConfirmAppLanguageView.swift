@@ -23,6 +23,8 @@ struct ConfirmAppLanguageView: View {
         
         GeometryReader { geometry in
             
+            AccessibilityScreenElementView(screenAccessibility: .confirmAppLanguage)
+            
             VStack(alignment: .leading, spacing: 16) {
                 
                 HStack {
