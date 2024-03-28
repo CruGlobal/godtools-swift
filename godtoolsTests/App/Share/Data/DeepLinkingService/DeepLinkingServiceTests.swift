@@ -20,7 +20,7 @@ class DeepLinkingServiceTests: XCTestCase {
         case godtoolsCustomUrlSchemeTractPowerOverFearEnglish = "godtools://org.cru.godtools/tool/tract/poweroverfear/en"
         case godtoolsCustomUrlSchemeLessonLessonConvoEnglish = "godtools://org.cru.godtools/tool/lesson/lessonconvo/en"
         case godtoolsCustomUrlSchemeArticleESEnglish = "godtools://org.cru.godtools/tool/article/es/en"
-        case godtoolsCustomUrlSchemeOnboarding = "godtools://org.cru.godtools/onboarding"
+        case godtoolsCustomUrlSchemeUITestsOnboarding = "godtools://org.cru.godtools/ui_tests/onboarding"
         
         case godtoolsAppDeepLinkDashboard = "https://godtoolsapp.com/deeplink/dashboard"
         case godtoolsAppDeepLinkDashboardLessons = "https://godtoolsapp.com/deeplink/dashboard/lessons"
@@ -378,7 +378,7 @@ class DeepLinkingServiceTests: XCTestCase {
     
     func testOnboardingDeepLinkFromGodToolsCustomUrlScheme() {
         
-        let parsedDeepLink: ParsedDeepLinkType? = deepLinkingService.parseDeepLink(incomingDeepLink: DeepLinkUrl.godtoolsCustomUrlSchemeOnboarding.incomingDeepLinkUrl)
+        let parsedDeepLink: ParsedDeepLinkType? = deepLinkingService.parseDeepLink(incomingDeepLink: DeepLinkUrl.godtoolsCustomUrlSchemeUITestsOnboarding.incomingDeepLinkUrl)
         
         XCTAssertTrue(parsedDeepLink == .onboarding(appLanguage: "en"))
     }

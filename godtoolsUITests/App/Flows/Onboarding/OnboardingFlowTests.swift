@@ -14,7 +14,7 @@ import Combine
 
 class OnboardingFlowTests: XCTestCase {
     
-    private let onboardingDeepLinkUrl: String = "godtools://org.cru.godtools/onboarding"
+    private let onboardingDeepLinkUrl: String = "godtools://org.cru.godtools/ui_tests/onboarding"
     
     private var app: XCUIApplication = XCUIApplication()
     
@@ -129,5 +129,26 @@ class OnboardingFlowTests: XCTestCase {
         nextTutorialPageButton.tap()
         
         assertIfScreenDoesNotExist(app: app, screenAccessibility: .onboardingTutorialPage4)
+    }
+    
+    func testSkippingOnboardingNavigatesToDashboardFavorites() {
+     
+        launchApp()
+        
+        let nextTutorialPageButton = getNextTutorialPageButton(app: app)
+        
+        XCTAssertTrue(nextTutorialPageButton.exists)
+        
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .onboardingTutorialPage1)
+        
+        nextTutorialPageButton.tap()
+        
+        let skipTutorialButton = getSkipTutorialButton(app: app)
+        
+        XCTAssertTrue(skipTutorialButton.exists)
+        
+        skipTutorialButton.tap()
+        
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .dashboardFavorites)
     }
 }
