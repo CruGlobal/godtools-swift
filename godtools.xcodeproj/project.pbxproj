@@ -13095,12 +13095,12 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1041;
+				CURRENT_PROJECT_VERSION = 1043;
 				DEVELOPMENT_ASSET_PATHS = "godtools/Preview\\ Content godtools/Preview\\ Content/Preview\\ Assets.xcassets";
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQ48D9BF2V;
-				DISPLAY_NAME = GodTools;
-				"EXCLUDED_ARCHS[sdk=*]" = arm64;
+				DISPLAY_NAME = "GT-Analytics";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = godtools/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -13293,11 +13293,11 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1041;
+				CURRENT_PROJECT_VERSION = 1043;
 				DEVELOPMENT_ASSET_PATHS = "godtools/Preview\\ Content godtools/Preview\\ Content/Preview\\ Assets.xcassets";
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQ48D9BF2V;
-				DISPLAY_NAME = "GodTools-Stage";
+				DISPLAY_NAME = "GT-Stage";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = godtools/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -13491,10 +13491,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1041;
+				CURRENT_PROJECT_VERSION = 1043;
 				DEVELOPMENT_ASSET_PATHS = "godtools/Preview\\ Content godtools/Preview\\ Content/Preview\\ Assets.xcassets";
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
-				DISPLAY_NAME = "GodTools-Stage";
+				DISPLAY_NAME = "GT-Debug";
 				INFOPLIST_FILE = godtools/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -13686,11 +13686,11 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1041;
+				CURRENT_PROJECT_VERSION = 1043;
 				DEVELOPMENT_ASSET_PATHS = "godtools/Preview\\ Content godtools/Preview\\ Content/Preview\\ Assets.xcassets";
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQ48D9BF2V;
-				DISPLAY_NAME = GodTools;
+				DISPLAY_NAME = "GT-Production";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = godtools/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -13921,7 +13921,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1041;
+				CURRENT_PROJECT_VERSION = 1043;
 				DEVELOPMENT_ASSET_PATHS = "godtools/Preview\\ Content godtools/Preview\\ Content/Preview\\ Assets.xcassets";
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQ48D9BF2V;
