@@ -34,4 +34,20 @@ extension XCUIApplication {
         
         return buttons[buttonAccessibility.id]
     }
+    
+    func queryFirstButtonMatching(buttonAccessibility: AccessibilityStrings.Button) -> XCUIElement {
+        
+        let matchingButtons = buttons.matching(identifier: buttonAccessibility.id)
+        
+        if matchingButtons.count > 0 {
+            
+            return matchingButtons.element(boundBy: 0)
+        }
+        else {
+            
+            XCTAssertFalse(matchingButtons.count == 0)
+            
+            return queryButton(buttonAccessibility: buttonAccessibility)
+        }
+    }
 }

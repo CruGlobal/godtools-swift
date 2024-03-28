@@ -14,6 +14,7 @@ struct AppLanguageItemView: View {
     
     private let appLanguage: AppLanguageListItemDomainModel
     private let tappedClosure: (() -> Void)?
+    private let accessibility: AccessibilityStrings.Button = .appLanguageListItem
     
     init(appLanguage: AppLanguageListItemDomainModel, tappedClosure: (() -> Void)?) {
         
@@ -47,5 +48,6 @@ struct AppLanguageItemView: View {
                 Spacer()
             }
         }
+        .accessibilityIdentifier(accessibility.id)
     }
 }
