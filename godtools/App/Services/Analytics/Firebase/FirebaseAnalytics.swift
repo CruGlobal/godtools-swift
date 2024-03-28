@@ -50,7 +50,8 @@ class FirebaseAnalytics {
         let userId: String? = loggedInUserProperties?.grMasterPersonId ?? loggedInUserProperties?.ssoguid
         
         Analytics.setUserID(isLoggedIn ? userId : nil)
-        setUserProperty(key: AnalyticsConstants.Keys.loggedInStatus, value: isLoggedIn ? AnalyticsConstants.Values.isLoggedIn : AnalyticsConstants.Values.notLoggedIn)
+        setUserProperty(key: AnalyticsConstants.UserProperties.loggedInStatus, value: isLoggedIn ? AnalyticsConstants.Values.isLoggedIn : AnalyticsConstants.Values.notLoggedIn)
+        setUserProperty(key: AnalyticsConstants.UserProperties.loginProvider, value: isLoggedIn ? loggedInUserProperties?.loginProvider : nil)
         setUserProperty(key: AnalyticsConstants.Keys.grMasterPersonID, value: isLoggedIn ? loggedInUserProperties?.grMasterPersonId : nil)
         setUserProperty(key: AnalyticsConstants.Keys.ssoguid, value: isLoggedIn ? loggedInUserProperties?.ssoguid : nil)
     }
