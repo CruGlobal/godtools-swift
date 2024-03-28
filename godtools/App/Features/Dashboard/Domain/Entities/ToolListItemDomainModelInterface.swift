@@ -17,5 +17,5 @@ protocol ToolListItemDomainModelInterface {
     var name: String { get }
     var category: String { get }
     var isFavorited: Bool { get }
-    var languageAvailability: ToolLanguageAvailabilityDomainModel { get }
+    var languageAvailability: ToolLanguageAvailabilityDomainModel? { get }
 }

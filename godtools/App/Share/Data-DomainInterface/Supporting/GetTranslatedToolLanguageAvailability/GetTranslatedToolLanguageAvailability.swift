@@ -27,29 +27,38 @@ class GetTranslatedToolLanguageAvailability {
         return ToolLanguageAvailabilityDomainModel(availabilityString: "", isAvailable: false)
     }
     
-    func getTranslatedLanguageAvailability(toolId: String, translateInLanguage: AppLanguageDomainModel) -> ToolLanguageAvailabilityDomainModel {
+    func getTranslatedLanguageAvailability(toolId: String, language: LanguageModel, translateInLanguage: AppLanguageDomainModel) -> ToolLanguageAvailabilityDomainModel {
         
         guard let resource = resourcesRepository.getResource(id: toolId) else {
             return failedToDetermineLanguageAvailability
         }
         
-        return getTranslatedLanguageAvailability(resource: resource, translateInLanguage: translateInLanguage)
+        return getTranslatedLanguageAvailability(resource: resource, language: language, translateInLanguage: translateInLanguage)
     }
     
-    func getTranslatedLanguageAvailability(resource: ResourceModel, translateInLanguage: AppLanguageDomainModel) -> ToolLanguageAvailabilityDomainModel {
+    func getTranslatedLanguageAvailability(resource: ResourceModel, language: AppLanguageDomainModel, translateInLanguage: AppLanguageDomainModel) -> ToolLanguageAvailabilityDomainModel {
         
-        guard let language = languagesRepository.getLanguage(code: translateInLanguage) else {
+        guard let languageModel = languagesRepository.getLanguage(code: language) else {
             return failedToDetermineLanguageAvailability
         }
         
-        return getTranslatedLanguageAvailability(resource: resource, translateInLanguage: language)
+        return getTranslatedLanguageAvailability(resource: resource, language: languageModel, translateInLanguage: translateInLanguage)
     }
     
-    func getTranslatedLanguageAvailability(resource: ResourceModel, translateInLanguage: LanguageModel) -> ToolLanguageAvailabilityDomainModel {
+    func getTranslatedLanguageAvailability(resource: ResourceModel, language: LanguageModel, translateInLanguage: AppLanguageDomainModel) -> ToolLanguageAvailabilityDomainModel {
         
-        let translatedLanguageName: String = translatedLanguageNameRepository.getLanguageName(language: translateInLanguage, translatedInLanguage: translateInLanguage.code)
+        guard let translateInLanguageModel = languagesRepository.getLanguage(code: translateInLanguage) else {
+            return failedToDetermineLanguageAvailability
+        }
         
-        let resourceSupportsLanguage: Bool = resource.supportsLanguage(languageId: translateInLanguage.id)
+        return getTranslatedLanguageAvailability(resource: resource, language: language, translateInLanguage: translateInLanguageModel)
+    }
+    
+    func getTranslatedLanguageAvailability(resource: ResourceModel, language: LanguageModel, translateInLanguage: LanguageModel) -> ToolLanguageAvailabilityDomainModel {
+        
+        let translatedLanguageName: String = translatedLanguageNameRepository.getLanguageName(language: language, translatedInLanguage: translateInLanguage.code)
+        
+        let resourceSupportsLanguage: Bool = resource.supportsLanguage(languageId: language.id)
         
         let availabilityString: String
         

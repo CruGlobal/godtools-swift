@@ -20,7 +20,7 @@ struct ToolDomainModel: ToolListItemDomainModelInterface {
     let languageIds: [String]
     let name: String
     let isFavorited: Bool = false
-    let languageAvailability: ToolLanguageAvailabilityDomainModel
+    let languageAvailability: ToolLanguageAvailabilityDomainModel?
     
     // TODO: - Remove this once we're done refactoring to pass ToolDomainModels around instead of ResourceModels. See GT-2100. ~Levi
     @available(*, deprecated)

@@ -17,7 +17,7 @@ struct SpotlightToolListItemDomainModel: ToolListItemDomainModelInterface {
     let name: String
     let category: String
     let isFavorited: Bool
-    let languageAvailability: ToolLanguageAvailabilityDomainModel
+    let languageAvailability: ToolLanguageAvailabilityDomainModel?
 }
 
 extension SpotlightToolListItemDomainModel: Identifiable {
