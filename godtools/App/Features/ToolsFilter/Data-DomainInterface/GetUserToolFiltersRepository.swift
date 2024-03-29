@@ -1,5 +1,5 @@
 //
-//  GetUserFiltersRepository.swift
+//  GetUserToolFiltersRepository.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 11/14/23.
@@ -9,22 +9,22 @@
 import Foundation
 import Combine
 
-class GetUserFiltersRepository: GetUserFiltersRepositoryInterface {
+class GetUserToolFiltersRepository: GetUserToolFiltersRepositoryInterface {
     
-    private let userFiltersRepository: UserFiltersRepository
+    private let userToolFiltersRepository: UserToolFiltersRepository
     private let getToolFilterCategoriesRepository: GetToolFilterCategoriesRepository
     private let getToolFilterLanguagesRepository: GetToolFilterLanguagesRepository
     
-    init(userFiltersRepository: UserFiltersRepository, getToolFilterCategoriesRepository: GetToolFilterCategoriesRepository, getToolFilterLanguagesRepository: GetToolFilterLanguagesRepository) {
+    init(userToolFiltersRepository: UserToolFiltersRepository, getToolFilterCategoriesRepository: GetToolFilterCategoriesRepository, getToolFilterLanguagesRepository: GetToolFilterLanguagesRepository) {
         
-        self.userFiltersRepository = userFiltersRepository
+        self.userToolFiltersRepository = userToolFiltersRepository
         self.getToolFilterCategoriesRepository = getToolFilterCategoriesRepository
         self.getToolFilterLanguagesRepository = getToolFilterLanguagesRepository
     }
     
     func getUserCategoryFilterPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<CategoryFilterDomainModel, Never> {
         
-        let categoryId = userFiltersRepository.getUserCategoryFilter()
+        let categoryId = userToolFiltersRepository.getUserCategoryFilter()
         
         if let categoryFilter = getToolFilterCategoriesRepository.getCategoryFilter(from: categoryId, translatedInAppLanguage: translatedInAppLanguage) {
             
@@ -42,7 +42,7 @@ class GetUserFiltersRepository: GetUserFiltersRepositoryInterface {
     
     func getUserLanguageFilterPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<LanguageFilterDomainModel, Never> {
         
-        let languageId = userFiltersRepository.getUserLanguageFilter()
+        let languageId = userToolFiltersRepository.getUserLanguageFilter()
         
         if let languageFilter = getToolFilterLanguagesRepository.getLanguageFilter(from: languageId, translatedInAppLanguage: translatedInAppLanguage) {
             

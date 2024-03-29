@@ -1,5 +1,5 @@
 //
-//  GetUserFiltersRepositoryInterface.swift
+//  GetUserToolFiltersRepositoryInterface.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 11/13/23.
@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-protocol GetUserFiltersRepositoryInterface {
+protocol GetUserToolFiltersRepositoryInterface {
     
     func getUserCategoryFilterPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<CategoryFilterDomainModel, Never>
     func getUserLanguageFilterPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<LanguageFilterDomainModel, Never>

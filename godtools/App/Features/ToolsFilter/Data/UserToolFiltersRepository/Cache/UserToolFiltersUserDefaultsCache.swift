@@ -8,7 +8,7 @@
 
 import Foundation
 
-class UserFiltersUserDefaultsCache {
+class UserToolFiltersUserDefaultsCache {
     
     private let sharedUserDefaultsCache: SharedUserDefaultsCache
     

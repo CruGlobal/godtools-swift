@@ -1,5 +1,5 @@
 //
-//  UserFiltersRepository.swift
+//  UserToolFiltersRepository.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 11/8/23.
@@ -8,11 +8,11 @@
 
 import Foundation
 
-class UserFiltersRepository {
+class UserToolFiltersRepository {
     
-    private let cache: UserFiltersUserDefaultsCache
+    private let cache: UserToolFiltersUserDefaultsCache
     
-    init(cache: UserFiltersUserDefaultsCache) {
+    init(cache: UserToolFiltersUserDefaultsCache) {
         
         self.cache = cache
     }

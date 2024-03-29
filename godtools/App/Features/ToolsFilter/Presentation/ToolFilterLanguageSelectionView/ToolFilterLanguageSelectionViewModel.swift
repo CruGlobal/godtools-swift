@@ -13,7 +13,7 @@ class ToolFilterLanguageSelectionViewModel: ObservableObject {
     
     private let viewToolFilterLanguagesUseCase: ViewToolFilterLanguagesUseCase
     private let searchToolFilterLanguagesUseCase: SearchToolFilterLanguagesUseCase
-    private let storeUserFilterUseCase: StoreUserFiltersUseCase
+    private let storeUserToolFilterUseCase: StoreUserToolFiltersUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let viewSearchBarUseCase: ViewSearchBarUseCase
     private let languageFilterSelectionPublisher: CurrentValueSubject<LanguageFilterDomainModel, Never>
@@ -31,11 +31,11 @@ class ToolFilterLanguageSelectionViewModel: ObservableObject {
     @Published var searchText: String = ""
     @Published var navTitle: String = ""
     
-    init(viewToolFilterLanguagesUseCase: ViewToolFilterLanguagesUseCase,  searchToolFilterLanguagesUseCase: SearchToolFilterLanguagesUseCase, storeUserFilterUseCase: StoreUserFiltersUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, languageFilterSelectionPublisher: CurrentValueSubject<LanguageFilterDomainModel, Never>, selectedCategory: CategoryFilterDomainModel, flowDelegate: FlowDelegate) {
+    init(viewToolFilterLanguagesUseCase: ViewToolFilterLanguagesUseCase,  searchToolFilterLanguagesUseCase: SearchToolFilterLanguagesUseCase, storeUserToolFilterUseCase: StoreUserToolFiltersUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, languageFilterSelectionPublisher: CurrentValueSubject<LanguageFilterDomainModel, Never>, selectedCategory: CategoryFilterDomainModel, flowDelegate: FlowDelegate) {
         
         self.viewToolFilterLanguagesUseCase = viewToolFilterLanguagesUseCase
         self.searchToolFilterLanguagesUseCase = searchToolFilterLanguagesUseCase
-        self.storeUserFilterUseCase = storeUserFilterUseCase
+        self.storeUserToolFilterUseCase = storeUserToolFilterUseCase
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.viewSearchBarUseCase = viewSearchBarUseCase
         self.languageFilterSelectionPublisher = languageFilterSelectionPublisher
@@ -98,7 +98,7 @@ extension ToolFilterLanguageSelectionViewModel {
         selectedLanguage = language
         languageFilterSelectionPublisher.send(language)
         
-        storeUserFilterUseCase.storeLanguageFilterPublisher(with: language.id)
+        storeUserToolFilterUseCase.storeLanguageFilterPublisher(with: language.id)
             .sink { _ in
                 
             }

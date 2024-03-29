@@ -13,7 +13,7 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
     
     private let viewToolFilterCategoriesUseCase: ViewToolFilterCategoriesUseCase
     private let searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase
-    private let storeUserFiltersUseCase: StoreUserFiltersUseCase
+    private let storeUserToolFiltersUseCase: StoreUserToolFiltersUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let viewSearchBarUseCase: ViewSearchBarUseCase
     private let categoryFilterSelectionPublisher: CurrentValueSubject<CategoryFilterDomainModel, Never>
@@ -31,11 +31,11 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
     @Published var navTitle: String = ""
     @Published var categorySearchResults: [CategoryFilterDomainModel] = [CategoryFilterDomainModel]()
     
-    init(viewToolFilterCategoriesUseCase: ViewToolFilterCategoriesUseCase, searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase, storeUserFiltersUseCase: StoreUserFiltersUseCase, categoryFilterSelectionPublisher: CurrentValueSubject<CategoryFilterDomainModel, Never>, selectedLanguage: LanguageFilterDomainModel, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, flowDelegate: FlowDelegate) {
+    init(viewToolFilterCategoriesUseCase: ViewToolFilterCategoriesUseCase, searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase, storeUserToolFiltersUseCase: StoreUserToolFiltersUseCase, categoryFilterSelectionPublisher: CurrentValueSubject<CategoryFilterDomainModel, Never>, selectedLanguage: LanguageFilterDomainModel, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, flowDelegate: FlowDelegate) {
         
         self.viewToolFilterCategoriesUseCase = viewToolFilterCategoriesUseCase
         self.searchToolFilterCategoriesUseCase = searchToolFilterCategoriesUseCase
-        self.storeUserFiltersUseCase = storeUserFiltersUseCase
+        self.storeUserToolFiltersUseCase = storeUserToolFiltersUseCase
         self.categoryFilterSelectionPublisher = categoryFilterSelectionPublisher
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.viewSearchBarUseCase = viewSearchBarUseCase
@@ -97,7 +97,7 @@ extension ToolFilterCategorySelectionViewModel {
         selectedCategory = category
         categoryFilterSelectionPublisher.send(category)
         
-        storeUserFiltersUseCase.storeCategoryFilterPublisher(with: category.id)
+        storeUserToolFiltersUseCase.storeCategoryFilterPublisher(with: category.id)
             .sink { _ in
                 
             }

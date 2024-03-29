@@ -22,7 +22,7 @@ class ToolsViewModel: ObservableObject {
     private let favoritingToolMessageCache: FavoritingToolMessageCache
     private let getSpotlightToolsUseCase: GetSpotlightToolsUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
-    private let getUserFiltersUseCase: GetUserFiltersUseCase
+    private let getUserToolFiltersUseCase: GetUserToolFiltersUseCase
     private let toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
@@ -47,7 +47,7 @@ class ToolsViewModel: ObservableObject {
     @Published var allTools: [ToolListItemDomainModel] = Array()
     @Published var isLoadingAllTools: Bool = true
         
-    init(flowDelegate: FlowDelegate, resourcesRepository: ResourcesRepository, viewToolsUseCase: ViewToolsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, favoritingToolMessageCache: FavoritingToolMessageCache, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getUserFiltersUseCase: GetUserFiltersUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, attachmentsRepository: AttachmentsRepository) {
+    init(flowDelegate: FlowDelegate, resourcesRepository: ResourcesRepository, viewToolsUseCase: ViewToolsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, favoritingToolMessageCache: FavoritingToolMessageCache, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getUserToolFiltersUseCase: GetUserToolFiltersUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, attachmentsRepository: AttachmentsRepository) {
         
         self.flowDelegate = flowDelegate
         self.resourcesRepository = resourcesRepository
@@ -56,7 +56,7 @@ class ToolsViewModel: ObservableObject {
         self.favoritingToolMessageCache = favoritingToolMessageCache
         self.getSpotlightToolsUseCase = getSpotlightToolsUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
-        self.getUserFiltersUseCase = getUserFiltersUseCase
+        self.getUserToolFiltersUseCase = getUserToolFiltersUseCase
         self.toggleToolFavoritedUseCase = toggleToolFavoritedUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
@@ -105,7 +105,7 @@ class ToolsViewModel: ObservableObject {
         $appLanguage.eraseToAnyPublisher()
             .flatMap { appLanguage in
                 
-                return getUserFiltersUseCase.getUserFiltersPublisher(translatedInAppLanguage: appLanguage)
+                return getUserToolFiltersUseCase.getUserToolFiltersPublisher(translatedInAppLanguage: appLanguage)
                     .eraseToAnyPublisher()
             }
             .receive(on: DispatchQueue.main)
