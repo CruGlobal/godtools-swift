@@ -1491,6 +1491,7 @@
 		D4BC79E629AFCE870040651B /* TrainingTipDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BC79E529AFCE870040651B /* TrainingTipDomainModel.swift */; };
 		D4BC79E829B130970040651B /* SetCompletedTrainingTipUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BC79E729B130970040651B /* SetCompletedTrainingTipUseCase.swift */; };
 		D4C14E9229411A35001465F1 /* MobileContentAuthTokenDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C14E9129411A35001465F1 /* MobileContentAuthTokenDataModel.swift */; };
+		D4C759212BB643EF00D6AEB2 /* SearchBarLegacy.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C759202BB643EF00D6AEB2 /* SearchBarLegacy.swift */; };
 		D4E243CC29EDC6A100EA4BB7 /* SendFeedbackWebContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E243CB29EDC6A100EA4BB7 /* SendFeedbackWebContent.swift */; };
 		D4E243CE29EDCA5700EA4BB7 /* ReportABugWebContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E243CD29EDCA5700EA4BB7 /* ReportABugWebContent.swift */; };
 		D4E243D029EDD2E800EA4BB7 /* AskAQuestionWebContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E243CF29EDD2E800EA4BB7 /* AskAQuestionWebContent.swift */; };
@@ -3100,6 +3101,7 @@
 		D4BC79E529AFCE870040651B /* TrainingTipDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingTipDomainModel.swift; sourceTree = "<group>"; };
 		D4BC79E729B130970040651B /* SetCompletedTrainingTipUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCompletedTrainingTipUseCase.swift; sourceTree = "<group>"; };
 		D4C14E9129411A35001465F1 /* MobileContentAuthTokenDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentAuthTokenDataModel.swift; sourceTree = "<group>"; };
+		D4C759202BB643EF00D6AEB2 /* SearchBarLegacy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarLegacy.swift; sourceTree = "<group>"; };
 		D4E243CB29EDC6A100EA4BB7 /* SendFeedbackWebContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendFeedbackWebContent.swift; sourceTree = "<group>"; };
 		D4E243CD29EDCA5700EA4BB7 /* ReportABugWebContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportABugWebContent.swift; sourceTree = "<group>"; };
 		D4E243CF29EDD2E800EA4BB7 /* AskAQuestionWebContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskAQuestionWebContent.swift; sourceTree = "<group>"; };
@@ -10479,6 +10481,7 @@
 			isa = PBXGroup;
 			children = (
 				D496B9052A9E702200CBEA19 /* SearchBar.swift */,
+				D4C759202BB643EF00D6AEB2 /* SearchBarLegacy.swift */,
 				45ACEE1B2AD0493F004B62E4 /* SearchBarView.swift */,
 				D40D77BE2AB36766008D3642 /* SearchBarViewModel.swift */,
 			);
@@ -12470,6 +12473,7 @@
 				455EE83C2AEC586200C3205C /* GetDownloadToolProgressInterfaceStringsUseCase.swift in Sources */,
 				D4B05FF529106212005852D0 /* MobileContentAuthTokenRepository.swift in Sources */,
 				45F7B0B32AF18E3D00A0E7B4 /* GetMenuInterfaceStringsUseCase.swift in Sources */,
+				D4C759212BB643EF00D6AEB2 /* SearchBarLegacy.swift in Sources */,
 				45FE825A2ACE5D8C00930C39 /* NavBarItemController.swift in Sources */,
 				4570C3032ADDC86600F0B83B /* AppNavigationBarAppearance.swift in Sources */,
 				452F6E872B69A3420012AF9C /* FavoritedToolsLatestToolDownloader.swift in Sources */,
