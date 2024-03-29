@@ -22,6 +22,7 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
     private var cancellables: Set<AnyCancellable> = Set()
     private static var staticCancellables: Set<AnyCancellable> = Set()
     private weak var flowDelegate: FlowDelegate?
+    private lazy var searchBarViewModel = SearchBarViewModel(getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, viewSearchBarUseCase: viewSearchBarUseCase)
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     @Published private var allCategories: [CategoryFilterDomainModel] = [CategoryFilterDomainModel]()
@@ -86,10 +87,7 @@ extension ToolFilterCategorySelectionViewModel {
     
     func getSearchBarViewModel() -> SearchBarViewModel {
         
-        return SearchBarViewModel(
-            getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase,
-            viewSearchBarUseCase: viewSearchBarUseCase
-        )
+        return searchBarViewModel
     }
     
     func rowTapped(with category: CategoryFilterDomainModel) {

@@ -22,6 +22,7 @@ class DownloadableLanguagesViewModel: ObservableObject {
     private static var backgrounDownloadCancellables = Set<AnyCancellable>()
     
     private weak var flowDelegate: FlowDelegate?
+    private lazy var searchBarViewModel = SearchBarViewModel(getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, viewSearchBarUseCase: viewSearchBarUseCase)
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     @Published private var downloadableLanguages: [DownloadableLanguageListItemDomainModel] = Array()
@@ -123,7 +124,7 @@ extension DownloadableLanguagesViewModel {
     
     func getSearchBarViewModel() -> SearchBarViewModel {
         
-        return SearchBarViewModel(getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, viewSearchBarUseCase: viewSearchBarUseCase)
+        return searchBarViewModel
     }
     
     func downloadLanguage(_ downloadableLanguage: DownloadableLanguageListItemDomainModel) {
