@@ -15,7 +15,6 @@ struct SearchBar: View {
     
     @ObservedObject private var viewModel: SearchBarViewModel
 
-    @State private var isEditing = false
     @Binding private var searchText: String
     @FocusState private var textFieldIsFocused: Bool
     
