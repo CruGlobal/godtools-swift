@@ -84,7 +84,7 @@ class ArticleCategoriesViewModel {
         
         isLoading.accept(value: true)
         
-        downloadArticlesReceipt = articleManifestAemRepository.downloadAndCacheManifestAemUris(manifest: manifest, languageCode: language.localeIdentifier, forceDownload: forceDownload, completion: { [weak self] (result: ArticleAemRepositoryResult) in
+        downloadArticlesReceipt = articleManifestAemRepository.downloadAndCacheManifestAemUrisReceipt(manifest: manifest, languageCode: language.localeIdentifier, forceDownload: forceDownload, completion: { [weak self] (result: ArticleAemRepositoryResult) in
             
             DispatchQueue.main.async { [weak self] in
                 self?.isLoading.accept(value: false)
