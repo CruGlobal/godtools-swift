@@ -38,7 +38,8 @@ class GlobalActivityDataLayerDependencies {
         
         return GetGlobalActivityThisWeekRepository(
             globalAnalyticsRepository: getGlobalAnalyticsRepository(),
-            localizationServices: coreDataLayer.getLocalizationServices()
+            localizationServices: coreDataLayer.getLocalizationServices(),
+            getTranslatedNumberCount: coreDataLayer.getTranslatedNumberCount()
         )
     }
 }
