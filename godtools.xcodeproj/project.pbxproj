@@ -541,6 +541,7 @@
 		4564E20C2B1E181000DA4040 /* ToolShortcutLinksDataLayerDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4564E2022B1E180F00DA4040 /* ToolShortcutLinksDataLayerDependencies.swift */; };
 		4564E20D2B1E181000DA4040 /* ToolShortcutLinksDomainLayerDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4564E2032B1E180F00DA4040 /* ToolShortcutLinksDomainLayerDependencies.swift */; };
 		4564E20E2B1E181000DA4040 /* ToolShortcutLinksDiContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4564E2042B1E180F00DA4040 /* ToolShortcutLinksDiContainer.swift */; };
+		4565BA9B2BBB3B0E002688C1 /* GetTranslatedNumberCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4565BA9A2BBB3B0E002688C1 /* GetTranslatedNumberCount.swift */; };
 		4566DCAE2A2686C000B989A2 /* RealmMobileContentAuthTokenCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4566DCAD2A2686C000B989A2 /* RealmMobileContentAuthTokenCache.swift */; };
 		4566DCB02A2686C900B989A2 /* RealmMobileContentAuthToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4566DCAF2A2686C900B989A2 /* RealmMobileContentAuthToken.swift */; };
 		456714142B7E9FDC00C6E7A2 /* GetTranslatedToolName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456714132B7E9FDC00C6E7A2 /* GetTranslatedToolName.swift */; };
@@ -2080,6 +2081,7 @@
 		4564E2022B1E180F00DA4040 /* ToolShortcutLinksDataLayerDependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolShortcutLinksDataLayerDependencies.swift; sourceTree = "<group>"; };
 		4564E2032B1E180F00DA4040 /* ToolShortcutLinksDomainLayerDependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolShortcutLinksDomainLayerDependencies.swift; sourceTree = "<group>"; };
 		4564E2042B1E180F00DA4040 /* ToolShortcutLinksDiContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolShortcutLinksDiContainer.swift; sourceTree = "<group>"; };
+		4565BA9A2BBB3B0E002688C1 /* GetTranslatedNumberCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTranslatedNumberCount.swift; sourceTree = "<group>"; };
 		4566DCAD2A2686C000B989A2 /* RealmMobileContentAuthTokenCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmMobileContentAuthTokenCache.swift; sourceTree = "<group>"; };
 		4566DCAF2A2686C900B989A2 /* RealmMobileContentAuthToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmMobileContentAuthToken.swift; sourceTree = "<group>"; };
 		456714132B7E9FDC00C6E7A2 /* GetTranslatedToolName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTranslatedToolName.swift; sourceTree = "<group>"; };
@@ -6223,6 +6225,14 @@
 			path = DependencyContainer;
 			sourceTree = "<group>";
 		};
+		4565BA992BBB3B05002688C1 /* GetTranslatedNumberCount */ = {
+			isa = PBXGroup;
+			children = (
+				4565BA9A2BBB3B0E002688C1 /* GetTranslatedNumberCount.swift */,
+			);
+			path = GetTranslatedNumberCount;
+			sourceTree = "<group>";
+		};
 		4566DCAC2A2686AB00B989A2 /* Realm */ = {
 			isa = PBXGroup;
 			children = (
@@ -10301,6 +10311,7 @@
 			children = (
 				452DFB352B7FAAE5003A4A59 /* GetToolListItemInterfaceStringsRepository */,
 				45DAC8C72B2BBA1200A138C0 /* GetTranslatedLanguageName */,
+				4565BA992BBB3B05002688C1 /* GetTranslatedNumberCount */,
 				456714152B7EA1C900C6E7A2 /* GetTranslatedToolCategory */,
 				452DFB422B7FBB43003A4A59 /* GetTranslatedToolLanguageAvailability */,
 				456714122B7E9FD000C6E7A2 /* GetTranslatedToolName */,
@@ -12088,6 +12099,7 @@
 				45B6FF362BAA39790037B240 /* ViewToolFilterCategoriesDomainModel.swift in Sources */,
 				45965D4B2B4486E1001C9AA5 /* DashboardInterfaceStringsDomainModel.swift in Sources */,
 				45F71679290A13530019B715 /* EmailSignUpApi.swift in Sources */,
+				4565BA9B2BBB3B0E002688C1 /* GetTranslatedNumberCount.swift in Sources */,
 				45FB161027DBDDB60009DF8E /* LearnToShareToolFlow.swift in Sources */,
 				45DAC8C62B2BB9E500A138C0 /* AppLanguageDataModel+TranslatableLanguage.swift in Sources */,
 				45F71625290A12D70019B715 /* CopyrightInfoWebContent.swift in Sources */,
