@@ -22,6 +22,7 @@ class ToolFilterLanguageSelectionViewModel: ObservableObject {
     private var cancellables: Set<AnyCancellable> = Set()
     private static var staticCancellables: Set<AnyCancellable> = Set()
     private weak var flowDelegate: FlowDelegate?
+    private lazy var searchBarViewModel = SearchBarViewModel(getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, viewSearchBarUseCase: viewSearchBarUseCase)
         
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     @Published private var allLanguages: [LanguageFilterDomainModel] = [LanguageFilterDomainModel]()
@@ -87,10 +88,7 @@ extension ToolFilterLanguageSelectionViewModel {
     
     func getSearchBarViewModel() -> SearchBarViewModel {
         
-        return SearchBarViewModel(
-            getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase,
-            viewSearchBarUseCase: viewSearchBarUseCase
-        )
+        return searchBarViewModel
     }
         
     func rowTapped(with language: LanguageFilterDomainModel) {
