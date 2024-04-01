@@ -281,7 +281,8 @@ class AppDataLayerDependencies {
             resourcesRepository: getResourcesRepository(),
             languagesRepository: getLanguagesRepository(),
             translationsRepository: getTranslationsRepository(),
-            attachmentsRepository: getAttachmentsRepository()
+            attachmentsRepository: getAttachmentsRepository(),
+            articleManifestAemRepository: getArticleManifestAemRepository()
         )
     }
     
