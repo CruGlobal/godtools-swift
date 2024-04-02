@@ -36,7 +36,7 @@ class ToolLanguageDownloader {
                 
         let includeToolTypes: [ResourceType] = ResourceType.toolTypes + [.lesson]
         
-        let tools: [ResourceModel] = resourcesRepository.getCachedResourcesByFilter(filter: ResourcesFilter(category: nil, languageCode: languageModel.code, resourceTypes: includeToolTypes))
+        let tools: [ResourceModel] = resourcesRepository.getCachedResourcesByFilter(filter: ResourcesFilter(category: nil, languageModelCode: languageModel.code, resourceTypes: includeToolTypes))
         
         let downloadTools: [DownloadToolDataModel] = tools.map({
             DownloadToolDataModel(toolId: $0.id, languages: [languageModel.code])

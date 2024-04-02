@@ -107,7 +107,7 @@ extension GetToolFilterCategoriesRepository {
         
         let filter = ResourcesFilter(
             category: categoryId,
-            languageId: filteredByLanguageId,
+            languageModelId: filteredByLanguageId,
             resourceTypes: ResourceType.toolTypes
         )
         

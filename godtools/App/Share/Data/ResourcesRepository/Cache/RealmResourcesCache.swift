@@ -131,7 +131,7 @@ extension RealmResourcesCache {
             filterByAttributes.append(categoryPredicate)
         }
         
-        if let languageCodePredicate = filter.getLanguageCodePredicate() {
+        if let languageCodePredicate = filter.getLanguageModelCodePredicate() {
             filterByAttributes.append(languageCodePredicate)
         }
         
@@ -193,7 +193,7 @@ extension RealmResourcesCache {
         }
         
         if let filterByLanguageId = filterByLanguageId {
-            filterByANDSubpredicates.append(ResourcesFilter.getLanguageIdPredicate(languageId: filterByLanguageId))
+            filterByANDSubpredicates.append(ResourcesFilter.getLanguageModelIdPredicate(languageModelId: filterByLanguageId))
         }
         
         filterByANDSubpredicates.append(ResourcesFilter.getIsHiddenPredicate(isHidden: false))
