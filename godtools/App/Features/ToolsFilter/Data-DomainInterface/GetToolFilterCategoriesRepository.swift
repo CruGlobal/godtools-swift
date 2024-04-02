@@ -122,7 +122,7 @@ extension GetToolFilterCategoriesRepository {
             fileType: .stringsdict
         )
         
-        return String.localizedStringWithFormat(formatString, toolsAvailableCount)
+        return String(format: formatString, locale: Locale(identifier: translatedInAppLanguage), toolsAvailableCount)
     }
 }
 

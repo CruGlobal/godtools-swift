@@ -76,7 +76,7 @@ class GetUserActivityStatsUseCase {
             fileType: .stringsdict
         )
         
-        return String.localizedStringWithFormat(formatString, activityCount)
+        return String(format: formatString, locale: Locale(identifier: translatedInAppLanguage), activityCount)
     }
     
     private func getUserActivityFormattedCount(activityCount: Int32, translatedInAppLanguage: AppLanguageDomainModel) -> String {
