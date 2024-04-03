@@ -59,6 +59,91 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
             hidesBackButton = false
         }
     }
+    
+    // MARK: - Page Navigation
+    
+    override func getInitialPages(pageRenderer: MobileContentPageRenderer) -> [Page] {
+            
+        let allPages: [Page] = pageRenderer.getAllPageModels()
+        
+        if let introPage = allPages.first(where: {$0.id.contains("intro")}) {
+            return [introPage]
+        }
+        else if let firstPage = allPages.first {
+            return [firstPage]
+        }
+        
+        return []
+    }
+    
+    override func getPageNavigationEvent(page: Page, animated: Bool, reloadCollectionViewDataNeeded: Bool) -> MobileContentPagesNavigationEvent {
+        
+        var pages: [Page] = super.getPages()
+        
+        if pages.count == 1 && page.id == pages[0].id {
+            
+            return MobileContentPagesNavigationEvent(
+                pageNavigation: PageNavigationCollectionViewNavigationModel(
+                    navigationDirection: nil,
+                    page: 0,
+                    animated: false,
+                    reloadCollectionViewDataNeeded: true,
+                    insertPages: nil,
+                    deletePages: nil
+                ),
+                pagePositions: nil
+            )
+        }
+        
+        let navigationEvent: MobileContentPagesNavigationEvent
+        
+        if let backToPageIndex = pages.firstIndex(of: page) {
+            
+            // Backward Navigation
+            
+            let pageIndexesToRemove: [Int] = Array((backToPageIndex + 1)...(pages.count - 1))
+            
+            let pagesUpToBackToPage: [Page] = Array(pages[0...backToPageIndex])
+            
+            super.setPages(pages: pagesUpToBackToPage)
+            
+            navigationEvent = MobileContentPagesNavigationEvent(
+                pageNavigation: PageNavigationCollectionViewNavigationModel(
+                    navigationDirection: nil,
+                    page: backToPageIndex,
+                    animated: true,
+                    reloadCollectionViewDataNeeded: false,
+                    insertPages: nil,
+                    deletePages: pageIndexesToRemove
+                ),
+                pagePositions: nil
+            )
+        }
+        else {
+            
+            // Forward Navigation
+            
+            let insertAtEndIndex: Int = pages.count
+            
+            pages.append(page)
+            
+            super.setPages(pages: pages)
+            
+            navigationEvent = MobileContentPagesNavigationEvent(
+                pageNavigation: PageNavigationCollectionViewNavigationModel(
+                    navigationDirection: nil,
+                    page: insertAtEndIndex,
+                    animated: true,
+                    reloadCollectionViewDataNeeded: false,
+                    insertPages: [insertAtEndIndex],
+                    deletePages: nil
+                ),
+                pagePositions: nil
+            )
+        }
+        
+        return navigationEvent
+    }
 }
 
 // MARK: - Inputs
