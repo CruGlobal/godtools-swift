@@ -317,12 +317,7 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
         return getPageNavigationEvent(page: initialPage, animated: false, reloadCollectionViewDataNeeded: true)
     }
     
-    func getInitialPages(pageRenderer: MobileContentPageRenderer) -> [Page] {
-            
-        return pageRenderer.getVisiblePageModels()
-    }
-    
-    func getInitialPageModel(pageRenderer: MobileContentPageRenderer) -> Page? {
+    private func getInitialPageModel(pageRenderer: MobileContentPageRenderer) -> Page? {
             
         let allPages: [Page] = pageRenderer.getAllPageModels()
                 
@@ -339,6 +334,11 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
             
             return nil
         }
+    }
+    
+    func getInitialPages(pageRenderer: MobileContentPageRenderer) -> [Page] {
+            
+        return pageRenderer.getVisiblePageModels()
     }
     
     func getPagesFromPageRendererMatchingPages(pages: [Page], pagesFromPageRenderer: MobileContentPageRenderer) -> [Page] {
@@ -492,14 +492,7 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
     }
     
     func pageDidDisappear(page: Int) {
-              
-        let didNavigateBack: Bool = currentRenderedPageNumber < page
-        let shouldRemoveAllFollowingPages: Bool = initialPageRenderingType == .chooseYourOwnAdventure && didNavigateBack
-        
-        if shouldRemoveAllFollowingPages {
-            removeFollowingPagesFromPage(page: currentRenderedPageNumber)
-        }
-        
+                      
         removePageIfHidden(page: page)
     }
     
@@ -648,15 +641,6 @@ extension MobileContentPagesViewModel {
         
         pageModels.remove(at: page)
         pagesRemovedSignal.accept(value: [page])
-    }
-    
-    private func removeFollowingPagesFromPage(page: Int) {
-        
-        let nextPage: Int = currentRenderedPageNumber + 1
-        
-        for index in nextPage ..< pageModels.count {
-            removePage(page: index)
-        }
     }
     
     private func removePageIfHidden(page: Int) {
