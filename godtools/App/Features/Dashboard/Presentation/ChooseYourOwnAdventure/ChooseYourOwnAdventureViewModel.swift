@@ -66,7 +66,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
             
         let allPages: [Page] = pageRenderer.getAllPageModels()
         
-        if let introPage = allPages.first(where: {$0.id.contains("intro")}) {
+        if let introPage = allPages.first(where: {$0.id == "intro"}) {
             return [introPage]
         }
         else if let firstPage = allPages.first {
