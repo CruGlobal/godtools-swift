@@ -165,6 +165,15 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
         return pageModels[currentRenderedPageNumber]
     }
     
+    func getPage(index: Int) -> Page? {
+        
+        guard index >= 0 && index < pageModels.count else {
+            return nil
+        }
+        
+        return pageModels[index]
+    }
+    
     // MARK: - Renderer / Page Renderer
     
     var primaryPageRenderer: MobileContentPageRenderer {
