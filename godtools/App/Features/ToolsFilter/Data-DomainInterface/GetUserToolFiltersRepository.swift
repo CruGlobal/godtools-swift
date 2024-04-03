@@ -24,7 +24,7 @@ class GetUserToolFiltersRepository: GetUserToolFiltersRepositoryInterface {
     
     func getUserCategoryFilterPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<CategoryFilterDomainModel, Never> {
         
-        let categoryId = userToolFiltersRepository.getUserCategoryFilter()
+        let categoryId = userToolFiltersRepository.getUserToolCategoryFilter()?.categoryId
         
         if let categoryFilter = getToolFilterCategoriesRepository.getCategoryFilter(from: categoryId, translatedInAppLanguage: translatedInAppLanguage) {
             
@@ -42,7 +42,7 @@ class GetUserToolFiltersRepository: GetUserToolFiltersRepositoryInterface {
     
     func getUserLanguageFilterPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<LanguageFilterDomainModel, Never> {
         
-        let languageId = userToolFiltersRepository.getUserLanguageFilter()
+        let languageId = userToolFiltersRepository.getUserToolLanguageFilter()?.languageId
         
         if let languageFilter = getToolFilterLanguagesRepository.getLanguageFilter(from: languageId, translatedInAppLanguage: translatedInAppLanguage) {
             

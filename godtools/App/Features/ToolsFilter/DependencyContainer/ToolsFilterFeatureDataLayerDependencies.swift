@@ -21,8 +21,8 @@ class ToolsFilterFeatureDataLayerDependencies {
     
     func getUserToolFiltersRepository() -> UserToolFiltersRepository {
         return UserToolFiltersRepository(
-            cache: UserToolFiltersUserDefaultsCache(
-                sharedUserDefaultsCache: coreDataLayer.getSharedUserDefaultsCache()
+            cache: RealmUserToolFiltersCache(
+                realmDatabase: coreDataLayer.getSharedRealmDatabase()
             )
         )
     }

@@ -20,7 +20,7 @@ class StoreUserToolFiltersRepository: StoreUserToolFiltersRepositoryInterface {
     
     func storeUserCategoryFilterPublisher(with id: String?) -> AnyPublisher<Void, Never> {
         
-        userToolFiltersRepository.storeUserCategoryFilter(with: id)
+        userToolFiltersRepository.storeUserToolCategoryFilter(with: id)
         
         return Just(())
             .eraseToAnyPublisher()
@@ -28,7 +28,7 @@ class StoreUserToolFiltersRepository: StoreUserToolFiltersRepositoryInterface {
     
     func storeUserLanguageFilterPublisher(with id: String?) -> AnyPublisher<Void, Never> {
         
-        userToolFiltersRepository.storeUserLanguageFilter(with: id)
+        userToolFiltersRepository.storeUserToolLanguageFilter(with: id)
         
         return Just(())
             .eraseToAnyPublisher()

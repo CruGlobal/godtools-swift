@@ -10,26 +10,34 @@ import Foundation
 
 class UserToolFiltersRepository {
     
-    private let cache: UserToolFiltersUserDefaultsCache
+    private let cache: RealmUserToolFiltersCache
     
-    init(cache: UserToolFiltersUserDefaultsCache) {
+    init(cache: RealmUserToolFiltersCache) {
         
         self.cache = cache
     }
     
-    func storeUserCategoryFilter(with id: String?) {
-        cache.storeUserCategoryFilter(with: id)
+    func storeUserToolCategoryFilter(with id: String?) {
+        if let categoryId = id {
+            cache.storeUserToolCategoryFilter(categoryId: categoryId)
+        } else {
+            cache.removeUserToolCategoryFilter()
+        }
     }
     
-    func storeUserLanguageFilter(with id: String?) {
-        cache.storeUserLanguageFilter(with: id)
+    func storeUserToolLanguageFilter(with id: String?) {
+        if let languageId = id {
+            cache.storeUserToolLanguageFilter(languageId: languageId)
+        } else {
+            cache.removeUserToolLanguageFilter()
+        }
     }
     
-    func getUserCategoryFilter() -> String? {
-        return cache.getUserCategoryFilter()
+    func getUserToolCategoryFilter() -> UserToolCategoryFilterDataModel? {
+        return cache.getUserToolCategoryFilter()
     }
     
-    func getUserLanguageFilter() -> String? {
-        return cache.getUserLanguageFilter()
+    func getUserToolLanguageFilter() -> UserToolLanguageFilterDataModel? {
+        return cache.getUserToolLanguageFilter()
     }
 }
