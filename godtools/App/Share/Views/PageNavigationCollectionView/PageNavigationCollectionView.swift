@@ -16,7 +16,6 @@ import UIKit
     @objc optional func pageNavigationDidScroll(pageNavigation: PageNavigationCollectionView, page: Int)
     @objc optional func pageNavigationDidChangeMostVisiblePage(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int)
     @objc optional func pageNavigationPageDidAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int)
-    @objc optional func pageNavigationDidScrollToPage(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int)
     @objc optional func pageNavigationPageDidDisappear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int)
 }
 
@@ -419,7 +418,9 @@ extension PageNavigationCollectionView {
         
         logMessage(message: "did scroll to page: \(getCurrentPage())")
         
-        delegate?.pageNavigationDidScrollToPage?(pageNavigation: self, pageCell: pageCell, page: page)
+        // NOTE: Removed pageNavigationDidScrollToPage because it wasn't getting called when navigating while pages are deleted. ~Levi
+        //       UIScrollView delegate method scrollViewDidEndScrollingAnimation( wasn't getting called.
+        //delegate?.pageNavigationDidScrollToPage?(pageNavigation: self, pageCell: pageCell, page: page)
     }
 }
 
