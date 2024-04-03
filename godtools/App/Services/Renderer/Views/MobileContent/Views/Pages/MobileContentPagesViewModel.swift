@@ -41,7 +41,6 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
     
     let rendererWillChangeSignal: Signal = Signal()
     let pageNavigationEventSignal: SignalValue<MobileContentPagesNavigationEvent> = SignalValue()
-    let pagesRemovedSignal: SignalValue<[Int]> = SignalValue()
     let incrementUserCounterUseCase: IncrementUserCounterUseCase
     
     init(renderer: MobileContentRenderer, initialPage: MobileContentPagesPage?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, translatedLanguageNameRepository: TranslatedLanguageNameRepository, initialPageRenderingType: MobileContentPagesInitialPageRenderingType, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?) {
@@ -319,15 +318,6 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
         return pageModels.count
     }
     
-    private func getInitialPageNavigation(pageRenderer: MobileContentPageRenderer) -> MobileContentPagesNavigationEvent? {
-            
-        guard let initialPage = getInitialPageModel(pageRenderer: pageRenderer) else {
-            return nil
-        }
-        
-        return getPageNavigationEvent(page: initialPage, animated: false, reloadCollectionViewDataNeeded: true)
-    }
-    
     private func getInitialPageModel(pageRenderer: MobileContentPageRenderer) -> Page? {
             
         let allPages: [Page] = pageRenderer.getAllPageModels()
@@ -372,6 +362,15 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
     
     // MARK: - Page Navigation
     
+    private func getInitialPageNavigation(pageRenderer: MobileContentPageRenderer) -> MobileContentPagesNavigationEvent? {
+            
+        guard let initialPage = getInitialPageModel(pageRenderer: pageRenderer) else {
+            return nil
+        }
+        
+        return getPageNavigationEvent(page: initialPage, animated: false)
+    }
+    
     private func checkIfEventIsPageListenerAndNavigate(eventId: EventId) -> Bool {
             
         let allPages: [Page] = currentPageRenderer.value.getAllPageModels()
@@ -387,23 +386,23 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
         
     func navigateToPage(page: Page, animated: Bool) {
         
-        let navigationEvent: MobileContentPagesNavigationEvent = getPageNavigationEvent(page: page, animated: animated, reloadCollectionViewDataNeeded: false)
+        let navigationEvent: MobileContentPagesNavigationEvent = getPageNavigationEvent(page: page, animated: animated)
         
         sendPageNavigationEvent(navigationEvent: navigationEvent)
     }
         
-    func getPageNavigationEvent(page: Page, animated: Bool, reloadCollectionViewDataNeeded: Bool) -> MobileContentPagesNavigationEvent {
+    func getPageNavigationEvent(page: Page, animated: Bool) -> MobileContentPagesNavigationEvent {
         
         let navigationEvent: MobileContentPagesNavigationEvent
         
-        if let pageIndex = pageModels.firstIndex(where: {$0.id == page.id}) {
+        if let indexForExistingPageInStack = pageModels.firstIndex(where: {$0.id == page.id}) {
             
             navigationEvent = MobileContentPagesNavigationEvent(
                 pageNavigation: PageNavigationCollectionViewNavigationModel(
                     navigationDirection: nil,
-                    page: pageIndex,
+                    page: indexForExistingPageInStack,
                     animated: animated,
-                    reloadCollectionViewDataNeeded: reloadCollectionViewDataNeeded,
+                    reloadCollectionViewDataNeeded: false,
                     insertPages: nil,
                     deletePages: nil
                 ),
@@ -431,18 +430,19 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
                 }
             }
             
-            pageModels.insert(page, at: insertAtIndex)
-            
+            var pagesWithNewPage: [Page] = pageModels
+            pagesWithNewPage.insert(page, at: insertAtIndex)
+                        
             navigationEvent = MobileContentPagesNavigationEvent(
                 pageNavigation: PageNavigationCollectionViewNavigationModel(
                     navigationDirection: nil,
                     page: insertAtIndex,
                     animated: animated,
-                    reloadCollectionViewDataNeeded: reloadCollectionViewDataNeeded,
+                    reloadCollectionViewDataNeeded: false,
                     insertPages: [insertAtIndex],
                     deletePages: nil
                 ),
-                setPages: nil,
+                setPages: pagesWithNewPage,
                 pagePositions: nil
             )
         }
@@ -510,7 +510,6 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
     
     func pageDidDisappear(page: Int) {
                       
-        removePageIfHidden(page: page)
     }
     
     func didChangeMostVisiblePage(page: Int) {
@@ -646,35 +645,6 @@ extension MobileContentPagesViewModel {
                 self?.setRenderer(renderer: updatedRenderer, pageRendererIndex: pageRendererIndex, navigationEvent: nil)
             }
             .store(in: &cancellables)
-    }
-    
-    private func removePage(page: Int) {
-        
-        let pageIsInArrayBounds: Bool = page >= 0 && page < pageModels.count
-        
-        guard pageIsInArrayBounds else {
-            return
-        }
-        
-        pageModels.remove(at: page)
-        pagesRemovedSignal.accept(value: [page])
-    }
-    
-    private func removePageIfHidden(page: Int) {
-        
-        let indexIsInRange: Bool = page >= 0 && page < pageModels.count
-        
-        guard indexIsInRange else {
-            return
-        }
-        
-        let lastViewedPageModel: Page = pageModels[page]
-        
-        guard lastViewedPageModel.isHidden else {
-            return
-        }
-        
-        removePage(page: page)
     }
     
     private func trackContentEvent(eventId: EventId) {

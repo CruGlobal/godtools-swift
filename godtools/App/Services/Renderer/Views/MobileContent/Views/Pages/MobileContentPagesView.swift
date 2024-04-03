@@ -135,15 +135,6 @@ class MobileContentPagesView: AppViewController {
                 }
             })
         }
-        
-        viewModel.pagesRemovedSignal.addObserver(self) { [weak self] (indexes: [Int]) in
-            
-            guard let weakSelf = self else {
-                return
-            }
-            
-            weakSelf.pageNavigationView.deletePagesAt(indexes: indexes)
-        }
     }
     
     func didConfigurePageView(pageView: MobileContentPageView) {
