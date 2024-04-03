@@ -325,8 +325,11 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
             
             let allPages: [Page] = pageRenderer.getAllPageModels()
             
-            if let introPage = allPages.first {
+            if let introPage = allPages.first(where: {$0.id.contains("intro")}) {
                 return [introPage]
+            }
+            else if let firstPage = allPages.first {
+                return [firstPage]
             }
             
             return []
