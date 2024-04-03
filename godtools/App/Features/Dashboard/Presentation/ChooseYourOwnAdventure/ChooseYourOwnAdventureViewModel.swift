@@ -78,7 +78,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
     
     override func getPageNavigationEvent(page: Page, animated: Bool, reloadCollectionViewDataNeeded: Bool) -> MobileContentPagesNavigationEvent {
         
-        var pages: [Page] = super.getPages()
+        let pages: [Page] = super.getPages()
         
         if pages.count == 1 && page.id == pages[0].id {
             
@@ -91,6 +91,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
                     insertPages: nil,
                     deletePages: nil
                 ),
+                setPages: nil,
                 pagePositions: nil
             )
         }
@@ -105,8 +106,6 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
             
             let pagesUpToBackToPage: [Page] = Array(pages[0...backToPageIndex])
             
-            super.setPages(pages: pagesUpToBackToPage)
-            
             navigationEvent = MobileContentPagesNavigationEvent(
                 pageNavigation: PageNavigationCollectionViewNavigationModel(
                     navigationDirection: nil,
@@ -116,6 +115,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
                     insertPages: nil,
                     deletePages: pageIndexesToRemove
                 ),
+                setPages: pagesUpToBackToPage,
                 pagePositions: nil
             )
         }
@@ -124,11 +124,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
             // Forward Navigation
             
             let insertAtEndIndex: Int = pages.count
-            
-            pages.append(page)
-            
-            super.setPages(pages: pages)
-            
+                        
             navigationEvent = MobileContentPagesNavigationEvent(
                 pageNavigation: PageNavigationCollectionViewNavigationModel(
                     navigationDirection: nil,
@@ -138,6 +134,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
                     insertPages: [insertAtEndIndex],
                     deletePages: nil
                 ),
+                setPages: pages + [page],
                 pagePositions: nil
             )
         }

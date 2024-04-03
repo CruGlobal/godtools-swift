@@ -289,6 +289,7 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
                     insertPages: nil,
                     deletePages: nil
                 ),
+                setPages: nil,
                 pagePositions: pagePositions
             )
         }
@@ -302,6 +303,7 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
                 insertPages: nil,
                 deletePages: nil
             ),
+            setPages: nil,
             pagePositions: navigationEventToSend.pagePositions
         )
         
@@ -405,6 +407,7 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
                     insertPages: nil,
                     deletePages: nil
                 ),
+                setPages: nil,
                 pagePositions: nil
             )
         }
@@ -439,6 +442,7 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
                     insertPages: [insertAtIndex],
                     deletePages: nil
                 ),
+                setPages: nil,
                 pagePositions: nil
             )
         }
@@ -448,6 +452,10 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
     
     func sendPageNavigationEvent(navigationEvent: MobileContentPagesNavigationEvent) {
             
+        if let pages = navigationEvent.setPages, pages.count > 0 {
+            setPages(pages: pages)
+        }
+        
         pageNavigationEventSignal.accept(value: navigationEvent)
     }
     
