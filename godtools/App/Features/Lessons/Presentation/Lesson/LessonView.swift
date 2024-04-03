@@ -75,11 +75,11 @@ class LessonView: MobileContentPagesView {
     }
     
     @objc func previousPageButtonTapped() {
-        pageNavigationView.scrollToPreviousPage(animated: true)
+        viewModel.navigateToPreviousPage(animated: true)
     }
     
     @objc func nextPageButtonTapped() {
-        pageNavigationView.scrollToNextPage(animated: true)
+        viewModel.navigateToNextPage(animated: true)
     }
 }
 

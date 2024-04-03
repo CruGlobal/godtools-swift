@@ -156,12 +156,7 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
     }
 
     func getCurrentPage() -> Page? {
-
-        guard currentRenderedPageNumber >= 0 && currentRenderedPageNumber < pageModels.count else {
-            return nil
-        }
-
-        return pageModels[currentRenderedPageNumber]
+        return getPage(index: currentRenderedPageNumber)
     }
     
     func getPage(index: Int) -> Page? {
@@ -383,6 +378,24 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
         
         return true
     }
+    
+    func navigateToPreviousPage(animated: Bool) {
+        
+        guard let page = getPage(index: currentRenderedPageNumber - 1) else {
+            return
+        }
+        
+        navigateToPage(page: page, animated: animated)
+    }
+    
+    func navigateToNextPage(animated: Bool) {
+        
+        guard let page = getPage(index: currentRenderedPageNumber + 1) else {
+            return
+        }
+        
+        navigateToPage(page: page, animated: animated)
+    }
         
     func navigateToPage(page: Page, animated: Bool) {
         
@@ -392,23 +405,21 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
     }
         
     func getPageNavigationEvent(page: Page, animated: Bool) -> MobileContentPagesNavigationEvent {
+                
+        let hiddenPages: [Page] = pageModels.filter({$0.isHidden})
+        let hiddenPageIndexes: [Int] = hiddenPages.compactMap({pageModels.firstIndex(of: $0)})
+        let visiblePages: [Page] = pageModels.filter({!$0.isHidden})
         
-        let navigationEvent: MobileContentPagesNavigationEvent
+        let pageIndexToNavigateTo: Int
+        let insertPages: [Int]?
+        let deletePages: [Int]? = hiddenPageIndexes
+        let setPages: [Page]?
         
-        if let indexForExistingPageInStack = pageModels.firstIndex(where: {$0.id == page.id}) {
+        if let indexForExistingPageInStack = visiblePages.firstIndex(where: {$0.id == page.id}) {
             
-            navigationEvent = MobileContentPagesNavigationEvent(
-                pageNavigation: PageNavigationCollectionViewNavigationModel(
-                    navigationDirection: nil,
-                    page: indexForExistingPageInStack,
-                    animated: animated,
-                    reloadCollectionViewDataNeeded: false,
-                    insertPages: nil,
-                    deletePages: nil
-                ),
-                setPages: nil,
-                pagePositions: nil
-            )
+            pageIndexToNavigateTo = indexForExistingPageInStack
+            insertPages = nil
+            setPages = visiblePages
         }
         else {
             
@@ -417,9 +428,9 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
             
             var insertAtIndex: Int = lastPageIndex
             
-            for index in 0 ..< pageModels.count {
+            for index in 0 ..< visiblePages.count {
                 
-                let currentPagePosition: Int32 = pageModels[index].position
+                let currentPagePosition: Int32 = visiblePages[index].position
                 
                 if currentPagePosition > pagePosition {
                     insertAtIndex = index
@@ -430,24 +441,26 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
                 }
             }
             
-            var pagesWithNewPage: [Page] = pageModels
+            var pagesWithNewPage: [Page] = visiblePages
             pagesWithNewPage.insert(page, at: insertAtIndex)
-                        
-            navigationEvent = MobileContentPagesNavigationEvent(
-                pageNavigation: PageNavigationCollectionViewNavigationModel(
-                    navigationDirection: nil,
-                    page: insertAtIndex,
-                    animated: animated,
-                    reloadCollectionViewDataNeeded: false,
-                    insertPages: [insertAtIndex],
-                    deletePages: nil
-                ),
-                setPages: pagesWithNewPage,
-                pagePositions: nil
-            )
+
+            pageIndexToNavigateTo = insertAtIndex
+            insertPages = [insertAtIndex]
+            setPages = pagesWithNewPage
         }
-        
-        return navigationEvent
+                
+        return MobileContentPagesNavigationEvent(
+            pageNavigation: PageNavigationCollectionViewNavigationModel(
+                navigationDirection: nil,
+                page: pageIndexToNavigateTo,
+                animated: animated,
+                reloadCollectionViewDataNeeded: false,
+                insertPages: insertPages,
+                deletePages: deletePages
+            ),
+            setPages: setPages,
+            pagePositions: nil
+        )
     }
     
     func sendPageNavigationEvent(navigationEvent: MobileContentPagesNavigationEvent) {
@@ -494,9 +507,7 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
     
     func pageDidAppear(page: Int) {
         
-        if page >= 0 && page < pageModels.count {
-            
-            let currentPage: Page = pageModels[page]
+        if let currentPage = getPage(index: page) {
             
             updateCachedPageDataForPageChange(currentPage: currentPage)
         }
