@@ -8,6 +8,7 @@
 
 import Foundation
 @testable import godtools
+import Combine
 import Quick
 import Nimble
 
