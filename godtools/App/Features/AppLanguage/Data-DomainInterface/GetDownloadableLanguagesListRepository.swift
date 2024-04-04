@@ -81,7 +81,7 @@ extension GetDownloadableLanguagesListRepository {
         
         let filter = ResourcesFilter(
             category: nil,
-            languageCode: languageCode,
+            languageModelCode: languageCode,
             resourceTypes: ResourceType.toolTypes
         )
         

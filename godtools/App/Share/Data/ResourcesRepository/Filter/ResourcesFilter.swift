@@ -11,17 +11,17 @@ import Foundation
 struct ResourcesFilter {
     
     let category: String?
-    let languageId: String?
-    let languageCode: BCP47LanguageIdentifier?
+    let languageModelId: String?
+    let languageModelCode: BCP47LanguageIdentifier?
     let resourceTypes: [ResourceType]?
     let isHidden: Bool?
     let variants: ResourcesFilterVariant?
     
-    init(category: String? = nil, languageId: String? = nil, languageCode: BCP47LanguageIdentifier? = nil, resourceTypes: [ResourceType]? = nil, isHidden: Bool? = false, variants: ResourcesFilterVariant? = nil) {
+    init(category: String? = nil, languageModelId: String? = nil, languageModelCode: BCP47LanguageIdentifier? = nil, resourceTypes: [ResourceType]? = nil, isHidden: Bool? = false, variants: ResourcesFilterVariant? = nil) {
         
         self.category = category
-        self.languageId = languageId
-        self.languageCode = languageCode
+        self.languageModelId = languageModelId
+        self.languageModelCode = languageModelCode
         self.resourceTypes = resourceTypes
         self.isHidden = isHidden
         self.variants = variants
@@ -40,36 +40,36 @@ struct ResourcesFilter {
         return ResourcesFilter.getCategoryPredicate(category: category)
     }
     
-    static func getLanguageIdPredicate(languageId: String) -> NSPredicate {
+    static func getLanguageModelIdPredicate(languageModelId: String) -> NSPredicate {
         
-        let subQuery: String = "SUBQUERY(languages, $language, $language.id == [c] \"\(languageId)\").@count > 0"
-        
-        return NSPredicate(format: subQuery)
-    }
-    
-    func getLanguageIdPredicate() -> NSPredicate? {
-        
-        guard let languageId = languageId, !languageId.isEmpty else {
-            return nil
-        }
-        
-        return ResourcesFilter.getLanguageIdPredicate(languageId: languageId)
-    }
-    
-    static func getLanguageCodePredicate(languageCode: BCP47LanguageIdentifier) -> NSPredicate {
-        
-        let subQuery: String = "SUBQUERY(languages, $language, $language.code == [c] \"\(languageCode)\").@count > 0"
+        let subQuery: String = "SUBQUERY(languages, $language, $language.id == [c] \"\(languageModelId)\").@count > 0"
         
         return NSPredicate(format: subQuery)
     }
     
-    func getLanguageCodePredicate() -> NSPredicate? {
+    func getLanguageModelIdPredicate() -> NSPredicate? {
         
-        guard let languageCode = languageCode?.lowercased(), !languageCode.isEmpty else {
+        guard let languageModelId = languageModelId, !languageModelId.isEmpty else {
             return nil
         }
         
-        return ResourcesFilter.getLanguageCodePredicate(languageCode: languageCode)
+        return ResourcesFilter.getLanguageModelIdPredicate(languageModelId: languageModelId)
+    }
+    
+    static func getLanguageModelCodePredicate(languageModelCode: BCP47LanguageIdentifier) -> NSPredicate {
+        
+        let subQuery: String = "SUBQUERY(languages, $language, $language.code == [c] \"\(languageModelCode)\").@count > 0"
+        
+        return NSPredicate(format: subQuery)
+    }
+    
+    func getLanguageModelCodePredicate() -> NSPredicate? {
+        
+        guard let languageModelCode = languageModelCode?.lowercased(), !languageModelCode.isEmpty else {
+            return nil
+        }
+        
+        return ResourcesFilter.getLanguageModelCodePredicate(languageModelCode: languageModelCode)
     }
     
     static func getResourceTypesPredicate(resourceTypes: [ResourceType]) -> NSPredicate {

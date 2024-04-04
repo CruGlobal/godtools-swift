@@ -140,7 +140,7 @@ extension GetToolFilterLanguagesRepository {
         
         let filter = ResourcesFilter(
             category: filteredByCategoryId,
-            languageCode: languageCode,
+            languageModelCode: languageCode,
             resourceTypes: ResourceType.toolTypes
         )
         
