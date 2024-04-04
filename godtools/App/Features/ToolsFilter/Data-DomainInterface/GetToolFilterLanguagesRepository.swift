@@ -140,7 +140,7 @@ extension GetToolFilterLanguagesRepository {
         
         let filter = ResourcesFilter(
             category: filteredByCategoryId,
-            languageCode: languageCode,
+            languageModelCode: languageCode,
             resourceTypes: ResourceType.toolTypes
         )
         
@@ -155,8 +155,8 @@ extension GetToolFilterLanguagesRepository {
             fileType: .stringsdict
         )
         
-        let localizedString = String.localizedStringWithFormat(formatString, toolsAvailableCount)
-        
+        let localizedString = String(format: formatString, locale: Locale(identifier: translatedInAppLanguage), toolsAvailableCount)
+                
         return localizedString
     }
 }

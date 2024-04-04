@@ -37,7 +37,7 @@ class GetDownloadableLanguagesListRepository: GetDownloadableLanguagesListReposi
             
             return self.languagesRepository.getLanguages().compactMap { language in
                 
-                let numberToolsAvailable = self.getNumberToolsAvailable(for: language.languageCode)
+                let numberToolsAvailable = self.getNumberToolsAvailable(for: language.code)
                 if numberToolsAvailable == 0 {
                     return nil
                 }
@@ -77,11 +77,11 @@ class GetDownloadableLanguagesListRepository: GetDownloadableLanguagesListReposi
 
 extension GetDownloadableLanguagesListRepository {
     
-    private func getNumberToolsAvailable(for languageCode: String) -> Int {
+    private func getNumberToolsAvailable(for languageCode: BCP47LanguageIdentifier) -> Int {
         
         let filter = ResourcesFilter(
             category: nil,
-            languageCode: languageCode,
+            languageModelCode: languageCode,
             resourceTypes: ResourceType.toolTypes
         )
         
@@ -98,7 +98,7 @@ extension GetDownloadableLanguagesListRepository {
             fileType: .stringsdict
         )
         
-        return String.localizedStringWithFormat(formatString, numberOfTools)
+        return String(format: formatString, locale: Locale(identifier: localeId), numberOfTools)
     }
     
     private func getDownloadStatus(for languageId: String) -> LanguageDownloadStatusDomainModel {

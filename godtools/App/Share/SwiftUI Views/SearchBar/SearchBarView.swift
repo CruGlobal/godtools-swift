@@ -28,8 +28,16 @@ struct SearchBarView: View {
             Rectangle()
                 .fill(SearchBarView.ultraLightGrey)
 
-            SearchBar(viewModel: viewModel, searchText: $searchText)
-                .padding(10)
+            if #available(iOS 15.0, *) {
+                
+                SearchBar(viewModel: viewModel, searchText: $searchText)
+                    .padding(10)
+                
+            } else {
+                
+                SearchBarLegacy(viewModel: viewModel, searchText: $searchText)
+                    .padding(10)
+            }
         }
         .fixedSize(horizontal: false, vertical: true)
     }

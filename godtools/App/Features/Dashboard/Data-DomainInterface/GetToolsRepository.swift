@@ -30,13 +30,19 @@ class GetToolsRepository: GetToolsRepositoryInterface {
         self.getTranslatedToolLanguageAvailability = getTranslatedToolLanguageAvailability
     }
     
-    func getToolsPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[ToolListItemDomainModel], Never> {
+    func getToolsPublisher(translatedInAppLanguage: AppLanguageDomainModel, languageForAvailabilityText: LanguageDomainModel?) -> AnyPublisher<[ToolListItemDomainModel], Never> {
         
-        let appLanguageModel: LanguageModel? = languagesRepository.getLanguage(code: appLanguage)
+        let languageForAvailabilityTextModel: LanguageModel? 
+        
+        if let languageForAvailabilityTextId = languageForAvailabilityText?.id {
+            languageForAvailabilityTextModel = languagesRepository.getLanguage(id: languageForAvailabilityTextId)
+        } else {
+            languageForAvailabilityTextModel = nil
+        }
         
         return Publishers.CombineLatest(
             resourcesRepository.getResourcesChangedPublisher(),
-            getToolListItemInterfaceStringsRepository.getStringsPublisher(translateInLanguage: appLanguage)
+            getToolListItemInterfaceStringsRepository.getStringsPublisher(translateInLanguage: translatedInAppLanguage)
         )
         .flatMap({ (resourcesChanged: Void, interfaceStrings: ToolListItemInterfaceStringsDomainModel) -> AnyPublisher<[ToolListItemDomainModel], Never> in
         
@@ -47,8 +53,8 @@ class GetToolsRepository: GetToolsRepositoryInterface {
                     
                     let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel
                     
-                    if let language = appLanguageModel {
-                        toolLanguageAvailability = self.getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(resource: $0, translateInLanguage: language)
+                    if let language = languageForAvailabilityTextModel {
+                        toolLanguageAvailability = self.getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(resource: $0, language: language, translateInLanguage: translatedInAppLanguage)
                     }
                     else {
                         toolLanguageAvailability = ToolLanguageAvailabilityDomainModel(availabilityString: "", isAvailable: false)
@@ -59,8 +65,8 @@ class GetToolsRepository: GetToolsRepositoryInterface {
                         analyticsToolAbbreviation: $0.abbreviation,
                         dataModelId: $0.id,
                         bannerImageId: $0.attrBanner,
-                        name: self.getTranslatedToolName.getToolName(resource: $0, translateInLanguage: appLanguage),
-                        category: self.getTranslatedToolCategory.getTranslatedCategory(resource: $0, translateInLanguage: appLanguage),
+                        name: self.getTranslatedToolName.getToolName(resource: $0, translateInLanguage: translatedInAppLanguage),
+                        category: self.getTranslatedToolCategory.getTranslatedCategory(resource: $0, translateInLanguage: translatedInAppLanguage),
                         isFavorited: self.favoritedResourcesRepository.getResourceIsFavorited(id: $0.id),
                         languageAvailability: toolLanguageAvailability
                     )

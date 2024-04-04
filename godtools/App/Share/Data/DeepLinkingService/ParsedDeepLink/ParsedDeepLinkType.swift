@@ -11,6 +11,7 @@ import Foundation
 enum ParsedDeepLinkType: Equatable {
     
     case allToolsList
+    case appLanguagesList
     case articleAemUri(aemUri: String)
     case dashboard
     case favoritedToolsList

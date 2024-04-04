@@ -20,6 +20,7 @@ class AppLanguagesViewModel: ObservableObject {
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
+    private lazy var searchBarViewModel = SearchBarViewModel(getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, viewSearchBarUseCase: viewSearchBarUseCase)
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     @Published private var appLanguagesList: [AppLanguageListItemDomainModel] = Array()
@@ -95,9 +96,6 @@ extension AppLanguagesViewModel {
     
     func getSearchBarViewModel() -> SearchBarViewModel {
         
-        return SearchBarViewModel(
-            getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase,
-            viewSearchBarUseCase: viewSearchBarUseCase
-        )
+        return searchBarViewModel
     }
 }

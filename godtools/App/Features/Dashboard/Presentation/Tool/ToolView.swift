@@ -101,6 +101,6 @@ extension ToolView: ToolPageViewDelegate {
     }
     
     func toolPageCallToActionNextButtonTapped(pageView: ToolPageView, page: Int) {
-        pageNavigationView.scrollToNextPage(animated: true)
+        viewModel.navigateToNextPage(animated: true)
     }
 }

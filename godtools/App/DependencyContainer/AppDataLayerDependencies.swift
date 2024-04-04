@@ -281,7 +281,8 @@ class AppDataLayerDependencies {
             resourcesRepository: getResourcesRepository(),
             languagesRepository: getLanguagesRepository(),
             translationsRepository: getTranslationsRepository(),
-            attachmentsRepository: getAttachmentsRepository()
+            attachmentsRepository: getAttachmentsRepository(),
+            articleManifestAemRepository: getArticleManifestAemRepository()
         )
     }
     
@@ -324,6 +325,10 @@ class AppDataLayerDependencies {
             localeRegionName: LocaleLanguageRegionName(),
             localeScriptName: LocaleLanguageScriptName()
         )
+    }
+    
+    func getTranslatedNumberCount() -> GetTranslatedNumberCount {
+        return GetTranslatedNumberCount()
     }
     
     func getTranslatedToolCategory() -> GetTranslatedToolCategory {

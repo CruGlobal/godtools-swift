@@ -62,7 +62,7 @@ class MenuFlow: Flow {
         switch step {
             
         case .languageSettingsTappedFromMenu:
-            navigateToLanguageSettings()
+            navigateToLanguageSettings(deepLink: nil)
             
         case .languageSettingsFlowCompleted( _):
             closeLanguageSettings()
@@ -519,12 +519,13 @@ class MenuFlow: Flow {
 
 extension MenuFlow {
     
-    private func navigateToLanguageSettings() {
+    private func navigateToLanguageSettings(deepLink: ParsedDeepLinkType?) {
         
         let languageSettingsFlow = LanguageSettingsFlow(
             flowDelegate: self,
             appDiContainer: appDiContainer,
-            sharedNavigationController: navigationController
+            sharedNavigationController: navigationController,
+            deepLink: deepLink
         )
         
         self.languageSettingsFlow = languageSettingsFlow

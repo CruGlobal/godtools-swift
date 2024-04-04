@@ -17,6 +17,9 @@ class AccessibilityStrings {
         }
         
         case appLanguages = "App Languages"
+        case downloadableLanguages = "Downloadable Languages"
+        case languageSettings = "Language Settings"
+        case confirmAppLanguage = "Confirm App Language"
         case onboardingTutorial = "Onboarding Tutorial Screen"
         case onboardingTutorialPage1 = "Onboarding Tutorial Page 1"
         case onboardingTutorialPage2 = "Onboarding Tutorial Page 2"
@@ -36,9 +39,11 @@ class AccessibilityStrings {
         }
         
         case chooseAppLanguage = "Choose App Language"
+        case appLanguageListItem = "App Language List Item"
         case watchOnboardingTutorialVideo = "Watch Onboarding Tutorial Video Button"
         case closeOnboardingTutorialVideo = "Close Onboarding Tutorial Video Button"
         case nextOnboardingTutorial = "Next Onboarding Tutorial Button"
         case skipOnboardingTutorial = "Skip Onboarding Tutorial Button"
+        case editDownloadedLanguages = "Edit Downloaded Languages"
     }
 }

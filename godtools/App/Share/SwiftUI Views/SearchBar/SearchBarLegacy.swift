@@ -1,22 +1,21 @@
 //
-//  SearchBar.swift
+//  SearchBarLegacy.swift
 //  godtools
 //
-//  Created by Rachael Skeath on 8/29/23.
-//  Copyright © 2023 Cru. All rights reserved.
+//  Created by Rachael Skeath on 3/28/24.
+//  Copyright © 2024 Cru. All rights reserved.
 //
 
 import SwiftUI
 
-// adapted from https://www.appcoda.com/swiftui-search-bar/
-
-@available(iOS 15.0, *)
-struct SearchBar: View {
+// Replaced by SearchBar for iOS 15+
+@available(*, deprecated)
+struct SearchBarLegacy: View {
     
     @ObservedObject private var viewModel: SearchBarViewModel
 
+    @State private var isEditing = false
     @Binding private var searchText: String
-    @FocusState private var textFieldIsFocused: Bool
     
     init(viewModel: SearchBarViewModel, searchText: Binding<String>) {
         
@@ -27,15 +26,18 @@ struct SearchBar: View {
     var body: some View {
         HStack {
          
-            TextField("", text: $searchText)
+            TextField("", text: $searchText, onEditingChanged: { _ in
+                self.isEditing = true
+            }, onCommit: {
+                DispatchQueue.main.async {
+                    
+                    self.isEditing = false
+                }
+            })
             .padding(7)
             .padding(.horizontal, 27)
             .background(Color.white)
             .cornerRadius(6)
-            .focused($textFieldIsFocused)
-            .onTapGesture {
-                textFieldIsFocused = true
-            }
             .overlay(
                 HStack {
                     
@@ -44,7 +46,7 @@ struct SearchBar: View {
                         .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                         .padding(.leading, 10)
                     
-                    if textFieldIsFocused {
+                    if isEditing {
                         Button(action: {
                             self.searchText = ""
                             
@@ -57,11 +59,14 @@ struct SearchBar: View {
                 }
             )
             
-            if textFieldIsFocused {
+            if isEditing {
                 Button(action: {
-                    self.searchText = ""
-                    self.textFieldIsFocused = false
-
+                    DispatchQueue.main.async {
+                        self.isEditing = false
+                        self.searchText = ""
+                    }
+                    
+                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                 }) {
                     Text(viewModel.cancelText)
                 }
@@ -69,3 +74,4 @@ struct SearchBar: View {
         }
     }
 }
+

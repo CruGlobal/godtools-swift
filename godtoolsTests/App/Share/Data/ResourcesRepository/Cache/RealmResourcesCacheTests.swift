@@ -53,35 +53,35 @@ class RealmResourcesCacheTests: XCTestCase {
     func testFilteringResourcesByCategoryAndLanguage() {
         
         let arabicGospelTracts = realmResourcesCache.getResourcesByFilter(
-            filter: ResourcesFilter(category: "gospel", languageCode: "ar", resourceTypes: ResourceType.toolTypes)
+            filter: ResourcesFilter(category: "gospel", languageModelCode: "ar", resourceTypes: ResourceType.toolTypes)
         )
         
         let arabicBahrainGospelTracts = realmResourcesCache.getResourcesByFilter(
-            filter: ResourcesFilter(category: "gospel", languageCode: "ar-BH", resourceTypes: ResourceType.toolTypes)
+            filter: ResourcesFilter(category: "gospel", languageModelCode: "ar-BH", resourceTypes: ResourceType.toolTypes)
         )
         
         let spanishGospelTracts = realmResourcesCache.getResourcesByFilter(
-            filter: ResourcesFilter(category: "gospel", languageCode: "es", resourceTypes: ResourceType.toolTypes)
+            filter: ResourcesFilter(category: "gospel", languageModelCode: "es", resourceTypes: ResourceType.toolTypes)
         )
         
         let englishGospelTracts = realmResourcesCache.getResourcesByFilter(
-            filter: ResourcesFilter(category: "gospel", languageCode: "en", resourceTypes: ResourceType.toolTypes)
+            filter: ResourcesFilter(category: "gospel", languageModelCode: "en", resourceTypes: ResourceType.toolTypes)
         )
         
         let englishConversationStarterTools = realmResourcesCache.getResourcesByFilter(
-            filter: ResourcesFilter(category: "conversation_starter", languageCode: "en", resourceTypes: ResourceType.toolTypes)
+            filter: ResourcesFilter(category: "conversation_starter", languageModelCode: "en", resourceTypes: ResourceType.toolTypes)
         )
         
         let russianConversationStarterTools = realmResourcesCache.getResourcesByFilter(
-            filter: ResourcesFilter(category: "conversation_starter", languageCode: "ru", resourceTypes: ResourceType.toolTypes)
+            filter: ResourcesFilter(category: "conversation_starter", languageModelCode: "ru", resourceTypes: ResourceType.toolTypes)
         )
         
         let chineseSimplifiedConversationStarterTools = realmResourcesCache.getResourcesByFilter(
-            filter: ResourcesFilter(category: "conversation_starter", languageCode: "zh-Hans", resourceTypes: ResourceType.toolTypes)
+            filter: ResourcesFilter(category: "conversation_starter", languageModelCode: "zh-Hans", resourceTypes: ResourceType.toolTypes)
         )
         
         let chineseTraditionalConversationStarterTools = realmResourcesCache.getResourcesByFilter(
-            filter: ResourcesFilter(category: "conversation_starter", languageCode: "zh-Hant", resourceTypes: ResourceType.toolTypes)
+            filter: ResourcesFilter(category: "conversation_starter", languageModelCode: "zh-Hant", resourceTypes: ResourceType.toolTypes)
         )
         
         XCTAssertEqual(arabicGospelTracts.count, 2)

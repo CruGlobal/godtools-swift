@@ -7,15 +7,18 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 class MobileContentPagesNavigationEvent {
     
     let pageNavigation: PageNavigationCollectionViewNavigationModel
+    let setPages: [Page]?
     let pagePositions: MobileContentViewPositionState?
     
-    init(pageNavigation: PageNavigationCollectionViewNavigationModel, pagePositions: MobileContentViewPositionState?) {
+    init(pageNavigation: PageNavigationCollectionViewNavigationModel, setPages: [Page]?, pagePositions: MobileContentViewPositionState?) {
         
         self.pageNavigation = pageNavigation
+        self.setPages = setPages
         self.pagePositions = pagePositions
     }
 }

@@ -84,8 +84,8 @@ class GodToolsDeepLinkingManifest: DeepLinkingManifestType {
             DeepLinkingParserManifestUrl(
                 scheme: "godtools",
                 host: "org.cru.godtools",
-                path: "onboarding",
-                parserClass: OnboardingPathDeepLinkParser.self
+                path: "ui_tests",
+                parserClass: UITestsDeepLinkParser.self
             )
         ]
     }
