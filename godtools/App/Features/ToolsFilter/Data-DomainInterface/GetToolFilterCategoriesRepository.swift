@@ -107,7 +107,7 @@ extension GetToolFilterCategoriesRepository {
         
         let filter = ResourcesFilter(
             category: categoryId,
-            languageId: filteredByLanguageId,
+            languageModelId: filteredByLanguageId,
             resourceTypes: ResourceType.toolTypes
         )
         
@@ -122,7 +122,7 @@ extension GetToolFilterCategoriesRepository {
             fileType: .stringsdict
         )
         
-        return String.localizedStringWithFormat(formatString, toolsAvailableCount)
+        return String(format: formatString, locale: Locale(identifier: translatedInAppLanguage), toolsAvailableCount)
     }
 }
 

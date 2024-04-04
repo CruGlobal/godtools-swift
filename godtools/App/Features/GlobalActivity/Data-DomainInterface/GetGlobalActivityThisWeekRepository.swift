@@ -13,12 +13,13 @@ class GetGlobalActivityThisWeekRepository: GetGlobalActivityThisWeekRepositoryIn
     
     private let globalAnalyticsRepository: GlobalAnalyticsRepository
     private let localizationServices: LocalizationServices
-    private let formatNumberWithCommas: NumberFormatter = NumberFormatter()
+    private let getTranslatedNumberCount: GetTranslatedNumberCount
     
-    init(globalAnalyticsRepository: GlobalAnalyticsRepository, localizationServices: LocalizationServices) {
+    init(globalAnalyticsRepository: GlobalAnalyticsRepository, localizationServices: LocalizationServices, getTranslatedNumberCount: GetTranslatedNumberCount) {
         
         self.globalAnalyticsRepository = globalAnalyticsRepository
         self.localizationServices = localizationServices
+        self.getTranslatedNumberCount = getTranslatedNumberCount
     }
     
     func getActivityPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<[GlobalActivityThisWeekDomainModel], Never> {
@@ -35,22 +36,22 @@ class GetGlobalActivityThisWeekRepository: GetGlobalActivityThisWeekRepositoryIn
             let localeId = translateInLanguage
             
             let usersAnalytics = GlobalActivityThisWeekDomainModel(
-                count: self.getFormattedCount(translateInLanguage: translateInLanguage, count: dataModel.users),
+                count: self.getTranslatedNumberCount.getTranslatedCount(count: dataModel.users, translateInLanguage: translateInLanguage),
                 label: self.localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "accountActivity.globalAnalytics.users.title")
             )
             
             let gospelPresentationAnalytics = GlobalActivityThisWeekDomainModel(
-                count: self.getFormattedCount(translateInLanguage: translateInLanguage, count: dataModel.gospelPresentations),
+                count: self.getTranslatedNumberCount.getTranslatedCount(count: dataModel.gospelPresentations, translateInLanguage: translateInLanguage),
                 label: self.localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "accountActivity.globalAnalytics.gospelPresentation.title")
             )
             
             let launchesAnalytics = GlobalActivityThisWeekDomainModel(
-                count: self.getFormattedCount(translateInLanguage: translateInLanguage, count: dataModel.launches),
+                count: self.getTranslatedNumberCount.getTranslatedCount(count: dataModel.launches, translateInLanguage: translateInLanguage),
                 label: self.localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "accountActivity.globalAnalytics.launches.title")
             )
             
             let countriesAnalytics = GlobalActivityThisWeekDomainModel(
-                count: self.getFormattedCount(translateInLanguage: translateInLanguage, count: dataModel.countries),
+                count: self.getTranslatedNumberCount.getTranslatedCount(count: dataModel.countries, translateInLanguage: translateInLanguage),
                 label: self.localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "accountActivity.globalAnalytics.countries.title")
             )
             
@@ -60,13 +61,5 @@ class GetGlobalActivityThisWeekRepository: GetGlobalActivityThisWeekRepositoryIn
                 .eraseToAnyPublisher()
         })
         .eraseToAnyPublisher()
-    }
-    
-    private func getFormattedCount(translateInLanguage: AppLanguageDomainModel, count: Int) -> String {
-        
-        formatNumberWithCommas.numberStyle = .decimal
-        formatNumberWithCommas.locale = Locale(identifier: translateInLanguage)
-        
-        return formatNumberWithCommas.string(from: NSNumber(value: count)) ?? ""
     }
 }

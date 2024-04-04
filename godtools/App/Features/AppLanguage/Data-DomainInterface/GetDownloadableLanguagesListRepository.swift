@@ -81,7 +81,7 @@ extension GetDownloadableLanguagesListRepository {
         
         let filter = ResourcesFilter(
             category: nil,
-            languageCode: languageCode,
+            languageModelCode: languageCode,
             resourceTypes: ResourceType.toolTypes
         )
         
@@ -98,7 +98,7 @@ extension GetDownloadableLanguagesListRepository {
             fileType: .stringsdict
         )
         
-        return String.localizedStringWithFormat(formatString, numberOfTools)
+        return String(format: formatString, locale: Locale(identifier: localeId), numberOfTools)
     }
     
     private func getDownloadStatus(for languageId: String) -> LanguageDownloadStatusDomainModel {

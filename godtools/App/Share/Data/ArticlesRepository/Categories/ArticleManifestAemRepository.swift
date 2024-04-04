@@ -8,6 +8,7 @@
 
 import Foundation
 import GodToolsToolParser
+import Combine
 
 class ArticleManifestAemRepository: NSObject, ArticleAemRepositoryType {
     
@@ -30,10 +31,34 @@ class ArticleManifestAemRepository: NSObject, ArticleAemRepositoryType {
         return categoryArticlesCache.getCategoryArticles(categoryId: categoryId, languageCode: languageCode)
     }
     
-    func downloadAndCacheManifestAemUris(manifest: Manifest, languageCode: String, forceDownload: Bool, completion: @escaping ((_ result: ArticleAemRepositoryResult) -> Void)) -> ArticleManifestDownloadArticlesReceipt {
+    func downloadAndCacheManifestAemUrisReceipt(manifest: Manifest, languageCode: String, forceDownload: Bool, completion: @escaping ((_ result: ArticleAemRepositoryResult) -> Void)) -> ArticleManifestDownloadArticlesReceipt {
                 
         let receipt = ArticleManifestDownloadArticlesReceipt()
         
+        let downloadQueue = downloadAndCacheManifestAemUrisOperationQueue(manifest: manifest, languageCode: languageCode, forceDownload: forceDownload) { result in
+            
+            receipt.downloadCompleted(result: result)
+        }
+        
+        receipt.downloadStarted(downloadQueue: downloadQueue)
+        
+        return receipt
+    }
+    
+    func downloadAndCacheManifestAemUrisPublisher(manifest: Manifest, languageCode: String, forceDownload: Bool) -> AnyPublisher<ArticleAemRepositoryResult, Never> {
+        
+        return Future() { promise in
+            
+            _ = self.downloadAndCacheManifestAemUrisOperationQueue(manifest: manifest, languageCode: languageCode, forceDownload: forceDownload) { result in
+                
+                promise(.success(result))
+            }
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    private func downloadAndCacheManifestAemUrisOperationQueue(manifest: Manifest, languageCode: String, forceDownload: Bool, completion: @escaping ((_ result: ArticleAemRepositoryResult) -> Void)) -> OperationQueue {
+                
         let aemUris: [String] = manifest.aemImports.map({$0.absoluteString})
         
         let categories: [ArticleCategory] = manifest.categories.map({
@@ -50,13 +75,9 @@ class ArticleManifestAemRepository: NSObject, ArticleAemRepositoryType {
             self?.categoryArticlesCache.storeAemDataObjectsForCategories(categories: categories, languageCode: languageCode, aemDataObjects: aemDataObjects) { (cacheError: [Error]) in
                 
                 completion(result)
-                
-                receipt.downloadCompleted(result: result)
             }
         }
         
-        receipt.downloadStarted(downloadQueue: downloadQueue)
-        
-        return receipt
+        return downloadQueue
     }
 }
