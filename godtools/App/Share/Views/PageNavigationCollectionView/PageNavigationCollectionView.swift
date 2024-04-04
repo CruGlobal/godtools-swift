@@ -16,7 +16,6 @@ import UIKit
     @objc optional func pageNavigationDidScroll(pageNavigation: PageNavigationCollectionView, page: Int)
     @objc optional func pageNavigationDidChangeMostVisiblePage(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int)
     @objc optional func pageNavigationPageDidAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int)
-    @objc optional func pageNavigationDidScrollToPage(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int)
     @objc optional func pageNavigationPageDidDisappear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int)
 }
 
@@ -419,53 +418,9 @@ extension PageNavigationCollectionView {
         
         logMessage(message: "did scroll to page: \(getCurrentPage())")
         
-        delegate?.pageNavigationDidScrollToPage?(pageNavigation: self, pageCell: pageCell, page: page)
-    }
-}
-
-// MARK: - Insert/Delete Pages
-
-extension PageNavigationCollectionView {
-    
-    func insertPagesAt(indexes: [Int]) {
-        
-        logMessage(message: "insert pages at: \(indexes)")
-                
-        let indexPaths: [IndexPath] = indexes.map({IndexPath(item: $0, section: 0)})
-        
-        collectionView.insertItems(at: indexPaths)
-    }
-    
-    func deletePagesAt(indexes: [Int]) {
-        
-        guard indexes.count > 0 else {
-            return
-        }
-        
-        guard getNumberOfPages() > 0 else {
-            return
-        }
-        
-        logMessage(message: "delete pages at: \(indexes)")
-                
-        let indexPaths: [IndexPath] = indexes.map({IndexPath(item: $0, section: 0)})
-        
-        let currentPage: Int = getCurrentPage()
-        var pageNumberForDeletedPages: Int = currentPage
-        
-        for indexPath in indexPaths {
-            if indexPath.item < currentPage {
-                pageNumberForDeletedPages -= 1
-            }
-        }
-                
-        UIView.performWithoutAnimation {
-            collectionView.performBatchUpdates({
-                collectionView.deleteItems(at: indexPaths)
-            }, completion: nil)
-        }
-        
-        scrollToPage(page: pageNumberForDeletedPages, animated: false)
+        // NOTE: Removed pageNavigationDidScrollToPage because it wasn't getting called when navigating while pages are deleted. ~Levi
+        //       UIScrollView delegate method scrollViewDidEndScrollingAnimation( wasn't getting called.
+        //delegate?.pageNavigationDidScrollToPage?(pageNavigation: self, pageCell: pageCell, page: page)
     }
 }
 
@@ -509,6 +464,8 @@ extension PageNavigationCollectionView {
     
     func scrollToPage(pageNavigation: PageNavigationCollectionViewNavigationModel, completion: ((_ completed: PageNavigationCollectionViewNavigationCompleted) -> Void)? = nil) {
              
+        logMessage(message: "scrollToPage for pageNavigation \(pageNavigation)")
+        
         pageNavigationCompletedClosure = completion
                             
         let pageNavigationDirectionChanged: Bool
@@ -576,6 +533,8 @@ extension PageNavigationCollectionView {
     }
     
     private func navigationCompleted(completed: PageNavigationCollectionViewNavigationCompleted) {
+        
+        logMessage(message: "scrollToPage for pageNavigation completed \(completed)")
         
         if !completed.pageNavigation.animated {
             
@@ -764,7 +723,11 @@ extension PageNavigationCollectionView: UIScrollViewDelegate {
         let currentPage: Int = getCurrentPage()
         
         logMessage(message: "did end page scrolling for page: \(currentPage)")
-        logMessage(message: "  contentOffset.x: \(collectionView.contentOffset.x)")
+        if loggingEnabled {
+            print("   contentOffset.x: \(collectionView.contentOffset.x)")
+            print("   internalCurrentStoppedOnPage: \(internalCurrentStoppedOnPage)")
+            print("   currentPage: \(currentPage)")
+        }
                 
         if internalCurrentStoppedOnPage != currentPage {
             

@@ -342,6 +342,7 @@ extension ToolViewModel {
                 insertPages: nil,
                 deletePages: nil
             ),
+            setPages: nil,
             pagePositions: pagePositions
         )
                         
