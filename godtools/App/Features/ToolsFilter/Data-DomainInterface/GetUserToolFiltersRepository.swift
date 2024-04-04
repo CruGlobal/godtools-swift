@@ -24,37 +24,43 @@ class GetUserToolFiltersRepository: GetUserToolFiltersRepositoryInterface {
     
     func getUserCategoryFilterPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<CategoryFilterDomainModel, Never> {
         
-        let categoryId = userToolFiltersRepository.getUserToolCategoryFilter()?.categoryId
-        
-        if let categoryFilter = getToolFilterCategoriesRepository.getCategoryFilter(from: categoryId, translatedInAppLanguage: translatedInAppLanguage) {
-            
-            return Just(categoryFilter)
-                .eraseToAnyPublisher()
-            
-        } else {
-            
-            let defaultCategoryFilterValue = getToolFilterCategoriesRepository.getAnyCategoryFilterDomainModel(translatedInAppLanguage: translatedInAppLanguage)
-            
-            return Just(defaultCategoryFilterValue)
-                .eraseToAnyPublisher()
-        }
+        return userToolFiltersRepository.getUserToolCategoryFilterChangedPublisher()
+            .map {
+                
+                let categoryId = self.userToolFiltersRepository.getUserToolCategoryFilter()?.categoryId
+                
+                if let categoryFilter = self.getToolFilterCategoriesRepository.getCategoryFilter(from: categoryId, translatedInAppLanguage: translatedInAppLanguage) {
+                    
+                    return categoryFilter
+                    
+                } else {
+                    
+                    let defaultCategoryFilterValue = self.getToolFilterCategoriesRepository.getAnyCategoryFilterDomainModel(translatedInAppLanguage: translatedInAppLanguage)
+                    
+                    return defaultCategoryFilterValue
+                }
+                
+            }
+            .eraseToAnyPublisher()
     }
     
     func getUserLanguageFilterPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<LanguageFilterDomainModel, Never> {
         
-        let languageId = userToolFiltersRepository.getUserToolLanguageFilter()?.languageId
-        
-        if let languageFilter = getToolFilterLanguagesRepository.getLanguageFilter(from: languageId, translatedInAppLanguage: translatedInAppLanguage) {
-            
-            return Just(languageFilter)
-                .eraseToAnyPublisher()
-            
-        } else {
-            
-            let defaultLanguageFilterValue = getToolFilterLanguagesRepository.getAnyLanguageFilterDomainModel(translatedInAppLanguage: translatedInAppLanguage)
-            
-            return Just(defaultLanguageFilterValue)
-                .eraseToAnyPublisher()
-        }
+        return userToolFiltersRepository.getUserToolLanguageFilterChangedPublisher()
+            .map {
+                let languageId = self.userToolFiltersRepository.getUserToolLanguageFilter()?.languageId
+                
+                if let languageFilter = self.getToolFilterLanguagesRepository.getLanguageFilter(from: languageId, translatedInAppLanguage: translatedInAppLanguage) {
+                    
+                    return languageFilter
+                    
+                } else {
+                    
+                    let defaultLanguageFilterValue = self.getToolFilterLanguagesRepository.getAnyLanguageFilterDomainModel(translatedInAppLanguage: translatedInAppLanguage)
+                    
+                    return defaultLanguageFilterValue
+                }
+            }
+            .eraseToAnyPublisher()
     }
 }

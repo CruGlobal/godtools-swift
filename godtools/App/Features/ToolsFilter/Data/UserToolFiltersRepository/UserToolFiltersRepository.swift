@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 class UserToolFiltersRepository {
     
@@ -15,6 +16,14 @@ class UserToolFiltersRepository {
     init(cache: RealmUserToolFiltersCache) {
         
         self.cache = cache
+    }
+    
+    func getUserToolCategoryFilterChangedPublisher() -> AnyPublisher<Void, Never> {
+        return cache.getUserToolCategoryFilterChangedPublisher()
+    }
+    
+    func getUserToolLanguageFilterChangedPublisher() -> AnyPublisher<Void, Never> {
+        return cache.getUserToolLanguageFilterChangedPublisher()
     }
     
     func storeUserToolCategoryFilter(with id: String?) {
