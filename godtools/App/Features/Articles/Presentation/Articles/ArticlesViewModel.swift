@@ -118,7 +118,7 @@ class ArticlesViewModel: NSObject {
         
         errorMessage.accept(value: nil)
         
-        downloadArticlesReceipt = articleManifestAemRepository.downloadAndCacheManifestAemUris(manifest: manifest, languageCode: language.localeIdentifier, forceDownload: forceDownload) { [weak self] (result: ArticleAemRepositoryResult) in
+        downloadArticlesReceipt = articleManifestAemRepository.downloadAndCacheManifestAemUrisReceipt(manifest: manifest, languageCode: language.localeIdentifier, forceDownload: forceDownload) { [weak self] (result: ArticleAemRepositoryResult) in
             self?.downloadArticlesReceipt = nil
             DispatchQueue.main.async { [weak self] in
                 self?.handleCompleteArticlesDownload(result: result)
