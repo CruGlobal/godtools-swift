@@ -346,6 +346,7 @@
 		453F84DA2A02A0390005101E /* ArticleManifestAemRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453F84D72A02A0390005101E /* ArticleManifestAemRepository.swift */; };
 		453F84DB2A02A0390005101E /* ArticleManifestDownloadArticlesReceipt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453F84D82A02A0390005101E /* ArticleManifestDownloadArticlesReceipt.swift */; };
 		453F84DC2A02A0390005101E /* ArticleCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453F84D92A02A0390005101E /* ArticleCategory.swift */; };
+		453FE09F2BBEDC770090DED1 /* SearchToolFilterCategoriesRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453FE09E2BBEDC770090DED1 /* SearchToolFilterCategoriesRepositoryTests.swift */; };
 		45430CF12B1FB43E002B94A3 /* TextWithLinksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45430CF02B1FB43E002B94A3 /* TextWithLinksView.swift */; };
 		45430CF62B1FB638002B94A3 /* String+ToUrlMarkdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45430CF52B1FB638002B94A3 /* String+ToUrlMarkdown.swift */; };
 		45430CF82B1FBA2A002B94A3 /* BackwardsCompatibleTextWithLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45430CF72B1FBA2A002B94A3 /* BackwardsCompatibleTextWithLinks.swift */; };
@@ -1886,6 +1887,7 @@
 		453F84D72A02A0390005101E /* ArticleManifestAemRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleManifestAemRepository.swift; sourceTree = "<group>"; };
 		453F84D82A02A0390005101E /* ArticleManifestDownloadArticlesReceipt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleManifestDownloadArticlesReceipt.swift; sourceTree = "<group>"; };
 		453F84D92A02A0390005101E /* ArticleCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleCategory.swift; sourceTree = "<group>"; };
+		453FE09E2BBEDC770090DED1 /* SearchToolFilterCategoriesRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchToolFilterCategoriesRepositoryTests.swift; sourceTree = "<group>"; };
 		45430CF02B1FB43E002B94A3 /* TextWithLinksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWithLinksView.swift; sourceTree = "<group>"; };
 		45430CF52B1FB638002B94A3 /* String+ToUrlMarkdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ToUrlMarkdown.swift"; sourceTree = "<group>"; };
 		45430CF72B1FBA2A002B94A3 /* BackwardsCompatibleTextWithLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackwardsCompatibleTextWithLinks.swift; sourceTree = "<group>"; };
@@ -4564,6 +4566,7 @@
 			children = (
 				45BA7B832AF2E0AC001BAB31 /* DownloadToolProgress */,
 				459DF8E42AE17A350035D97B /* Onboarding */,
+				453FE09C2BBEDBF00090DED1 /* ToolsFilter */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -5026,6 +5029,22 @@
 				453F84B02A029FC00005101E /* ArticleJcrContentType.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		453FE09C2BBEDBF00090DED1 /* ToolsFilter */ = {
+			isa = PBXGroup;
+			children = (
+				453FE09D2BBEDC650090DED1 /* Data-DomainInterface */,
+			);
+			path = ToolsFilter;
+			sourceTree = "<group>";
+		};
+		453FE09D2BBEDC650090DED1 /* Data-DomainInterface */ = {
+			isa = PBXGroup;
+			children = (
+				453FE09E2BBEDC770090DED1 /* SearchToolFilterCategoriesRepositoryTests.swift */,
+			);
+			path = "Data-DomainInterface";
 			sourceTree = "<group>";
 		};
 		45430CF32B1FB619002B94A3 /* Swift */ = {
@@ -12851,6 +12870,7 @@
 				45368A1C2ABB2D850028A570 /* LocalizationServicesTests.swift in Sources */,
 				45CBDA0E2BA394FD0007DEC8 /* MockOnboardingTutorialViewedRepository.swift in Sources */,
 				45CBDA102BA398D90007DEC8 /* GetOnboardingTutorialInterfaceStringsRepositoryTests.swift in Sources */,
+				453FE09F2BBEDC770090DED1 /* SearchToolFilterCategoriesRepositoryTests.swift in Sources */,
 				45CBDA142BA399750007DEC8 /* MockLocalizationServices.swift in Sources */,
 				45368A162ABB2D850028A570 /* LocaleTests.swift in Sources */,
 				45E198662BA47F4400BF14F3 /* GetDownloadToolProgressInterfaceStringsRepositoryTests.swift in Sources */,
