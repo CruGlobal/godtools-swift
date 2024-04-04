@@ -155,8 +155,8 @@ extension GetToolFilterLanguagesRepository {
             fileType: .stringsdict
         )
         
-        let localizedString = String.localizedStringWithFormat(formatString, toolsAvailableCount)
-        
+        let localizedString = String(format: formatString, locale: Locale(identifier: translatedInAppLanguage), toolsAvailableCount)
+                
         return localizedString
     }
 }

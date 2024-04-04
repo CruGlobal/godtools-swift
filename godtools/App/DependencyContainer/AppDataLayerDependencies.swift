@@ -327,6 +327,10 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getTranslatedNumberCount() -> GetTranslatedNumberCount {
+        return GetTranslatedNumberCount()
+    }
+    
     func getTranslatedToolCategory() -> GetTranslatedToolCategory {
         return GetTranslatedToolCategory(
             localizationServices: getLocalizationServices(),

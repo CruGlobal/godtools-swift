@@ -98,7 +98,7 @@ extension GetDownloadableLanguagesListRepository {
             fileType: .stringsdict
         )
         
-        return String.localizedStringWithFormat(formatString, numberOfTools)
+        return String(format: formatString, locale: Locale(identifier: localeId), numberOfTools)
     }
     
     private func getDownloadStatus(for languageId: String) -> LanguageDownloadStatusDomainModel {
