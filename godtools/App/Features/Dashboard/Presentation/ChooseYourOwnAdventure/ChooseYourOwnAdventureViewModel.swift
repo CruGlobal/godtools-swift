@@ -64,13 +64,8 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
     
     override func getInitialPages(pageRenderer: MobileContentPageRenderer) -> [Page] {
             
-        let allPages: [Page] = pageRenderer.getAllPageModels()
-        
-        if let introPage = allPages.first(where: {$0.id == "intro"}) {
-            return [introPage]
-        }
-        else if let firstPage = allPages.first {
-            return [firstPage]
+        if let firstVisiblePage = pageRenderer.getVisiblePageModels().first {
+            return [firstVisiblePage]
         }
         
         return []
