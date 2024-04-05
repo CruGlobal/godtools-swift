@@ -39,16 +39,16 @@ The GodTools app architecture consists of 3 layers (Presentation Layer, Domain L
 - Uses the View / ViewModel pattern.
 - Knows nothing of the data layer.  Only knows about the Domain Layer.
 
-##### View
+##### View Responsibilities
 - Rendering logic (SwiftUI).
 - Animation logic (SwiftUI).
 - References a ViewModel using property wrapper @ObservedObject.
 - Observes ViewModel output via @Published properties.
 - Sends inputs to the ViewModel (button tap, text input, page viewed, etc.).
 
-##### ViewModel
+##### ViewModel Responsibilities
 - Considered a View representation. However, knows nothing of the specific UI elements that structure a View. 
-- Accepts inputs from the View (button tap, text input, page viewed, etc.).
+- Defines the inputs, these are typically user initiated inputs.  The view makes calls to these inputs in order to drive the data.
 - Communicates to the Domain Layer via UseCases which are injected upon initialization.  
 - Provides output to the View via @Published properties to update View state by implementing Combine's ObservableObject protocol.
 
@@ -59,13 +59,13 @@ The GodTools app architecture consists of 3 layers (Presentation Layer, Domain L
 - Domain Models will encapsulate business related attributes visually seen and used in the app.
 - Interfaces define how UseCases interact with the DataLayer.  The purpose of the interface is to accomplish the dependency inversion principle. 
 
-##### Use Cases
+##### UseCase  Responsibilities
 - Defines a business scenario in most cases on behalf of a specific user.  Naming should reflect some type of user action in the app.  This aids in Screaming Architecture.  An example in GodTools could be a user viewing a particular screen, or a user searching for an app language in the app languages list, or a user authenticating.
 - Splits the responsibilities of the ViewModel into readable UseCases which reduces ViewModel complexity and also provides better app behaviour readability (Screaming Architecture).
 - Should be responsible for a single task and named to reflect that task.
 - Operates on the data layer utilizing dependency inversion.  This means UseCases should only point to interfaces. 
 - Should define inputs needed to produce the output of the UseCase.  UseCases should typically produce a DomainModel output that encapsulates the business requirements.
-- Once a Use Case is defined, it is then composed of 1 or more interfaces (dependency inversion principle) to complete the Use Case DomainModel.
+- Once a UseCase is defined, it is then composed of 1 or more interfaces (dependency inversion principle) to complete the Use Case DomainModel.
 - By using dependency inversion, concrete implementations can isolate the business rules keeping the data layer free from such responsibilities. 
 
 ##### Use Cases (Best Practices)
@@ -91,7 +91,7 @@ The GodTools app architecture consists of 3 layers (Presentation Layer, Domain L
 
 - Responsible for data retrieval, data storage, and other data connectivity such as sending analytics, communicating to remote databases, web sockets, etc.
 - Typical data storage can include a remote database, disk cache (CoreData, Realm, UserDefaults, NSFileManager), app bundle (.json, .txt, .png, .jpg, etc.), and even hardcoded data in a swift file.
-- Should know nothing of the Presentation Layer and knows of the Domain Layer via Use Case Interfaces.
+- Should know nothing of the Presentation Layer and knows of the Domain Layer via UseCase Interfaces.
 
 ##### Repositories
 
