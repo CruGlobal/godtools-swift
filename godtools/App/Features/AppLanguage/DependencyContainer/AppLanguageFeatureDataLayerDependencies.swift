@@ -83,12 +83,6 @@ class AppLanguageFeatureDataLayerDependencies {
         )
     }
     
-    func getAppLanguagesRepositoryInterface() -> GetAppLanguagesRepositoryInterface {
-        return GetAppLanguagesRepository(
-            appLanguagesRepository: getAppLanguagesRepository()
-        )
-    }
-    
     func getConfirmAppLanguageInterfaceStringsRepositoryInterface() -> GetConfirmAppLanguageInterfaceStringsRepositoryInterface {
         return GetConfirmAppLanguageInterfaceStringsRepository(
             localizationServices: coreDataLayer.getLocalizationServices(),
