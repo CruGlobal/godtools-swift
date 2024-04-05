@@ -20,32 +20,27 @@ class GetAppLanguagesInterfaceStringsRepositoryTests: QuickSpec {
          
             context("When the app language is switched from English to Spanish.") {
                 
-                let chooseLanguageButtonTitleKey: String = "onboardingTutorial.chooseLanguageButton.title"
-                let beginButtonTitleKey: String = "onboardingTutorial.beginButton.title"
+                let navTitleKey: String = "languageSettings.appLanguage.title"
                 
                 let localizableStrings: [MockLocalizationServices.LocaleId: [MockLocalizationServices.StringKey: String]] = [
                     LanguageCodeDomainModel.english.value: [
-                        chooseLanguageButtonTitleKey: "Choose Language",
-                        beginButtonTitleKey: "Begin"
+                        navTitleKey: "App Language"
                     ],
                     LanguageCodeDomainModel.spanish.value: [
-                        chooseLanguageButtonTitleKey: "Elige lengua",
-                        beginButtonTitleKey: "Comenzar"
+                        navTitleKey: "Idioma de la aplicación"
                     ]
                 ]
                 
-                let getOnboardingTutorialInterfaceStringsRepository =  GetOnboardingTutorialInterfaceStringsRepository(
-                    localizationServices: MockLocalizationServices(
-                        localizableStrings: localizableStrings
-                    )
+                let getAppLanguagesInterfaceStringsRepository = GetAppLanguagesInterfaceStringsRepository(
+                    localizationServices: MockLocalizationServices(localizableStrings: localizableStrings)
                 )
                 
                 it("The interface strings should be translated into Spanish.") {
                     
                     let appLanguagePublisher: CurrentValueSubject<AppLanguageDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
                     
-                    var englishInterfaceStringsRef: OnboardingTutorialInterfaceStringsDomainModel?
-                    var spanishInterfaceStringsRef: OnboardingTutorialInterfaceStringsDomainModel?
+                    var englishInterfaceStringsRef: AppLanguagesInterfaceStringsDomainModel?
+                    var spanishInterfaceStringsRef: AppLanguagesInterfaceStringsDomainModel?
                     
                     var sinkCount: Int = 0
                     var sinkCompleted: Bool = false
@@ -53,13 +48,13 @@ class GetAppLanguagesInterfaceStringsRepositoryTests: QuickSpec {
                     waitUntil { done in
                         
                         _ = appLanguagePublisher
-                            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<OnboardingTutorialInterfaceStringsDomainModel, Never> in
+                            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<AppLanguagesInterfaceStringsDomainModel, Never> in
                                 
-                                return getOnboardingTutorialInterfaceStringsRepository
-                                    .getStringsPublisher(appLanguage: appLanguage)
+                                return getAppLanguagesInterfaceStringsRepository
+                                    .getStringsPublisher(translateInLanguage: appLanguage)
                                     .eraseToAnyPublisher()
                             })
-                            .sink { (interfaceStrings: OnboardingTutorialInterfaceStringsDomainModel) in
+                            .sink { (interfaceStrings: AppLanguagesInterfaceStringsDomainModel) in
                                 
                                 guard !sinkCompleted else {
                                     return
@@ -86,11 +81,9 @@ class GetAppLanguagesInterfaceStringsRepositoryTests: QuickSpec {
                             }
                     }
 
-                    expect(englishInterfaceStringsRef?.chooseAppLanguageButtonTitle).to(equal("Choose Language"))
-                    expect(englishInterfaceStringsRef?.beginTutorialButtonTitle).to(equal("Begin"))
+                    expect(englishInterfaceStringsRef?.navTitle).to(equal("App Language"))
                     
-                    expect(spanishInterfaceStringsRef?.chooseAppLanguageButtonTitle).to(equal("Elige lengua"))
-                    expect(spanishInterfaceStringsRef?.beginTutorialButtonTitle).to(equal("Comenzar"))
+                    expect(spanishInterfaceStringsRef?.navTitle).to(equal("Idioma de la aplicación"))
                 }
             }
         }
