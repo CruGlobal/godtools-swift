@@ -11,17 +11,19 @@ import Combine
 
 class GetAppLanguagesInterfaceStringsRepository: GetAppLanguagesInterfaceStringsRepositoryInterface {
     
-    private let localizationServices: LocalizationServices
+    private let localizationServices: LocalizationServicesInterface
     
-    init(localizationServices: LocalizationServices) {
+    init(localizationServices: LocalizationServicesInterface) {
         
         self.localizationServices = localizationServices
     }
     
     func getStringsPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<AppLanguagesInterfaceStringsDomainModel, Never> {
         
+        let stringsFileType: LocalizableStringsFileType = .strings
+        
         let interfaceStrings = AppLanguagesInterfaceStringsDomainModel(
-            navTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: AppLanguageStringKeys.AppLanguages.navTitle.rawValue)
+            navTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: AppLanguageStringKeys.AppLanguages.navTitle.rawValue, fileType: stringsFileType)
         )
         
         return Just(interfaceStrings)
