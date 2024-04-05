@@ -153,30 +153,30 @@ The idea of a feature folder is to isolate code specific to that feature.  Think
 
 Within a feature folder are 5 folders.  Data, Data-DomainInterface, DependencyContainer, Domain, Presentation.
 
-###### Feature/Data/ Folder
+###### App/Feature/Data Folder
 
 This folder will contain the data layer specific code needed for the feature. 
 
-###### Feature/Data-DomainInterface/ Folder
+###### App/Feature/Data-DomainInterface Folder
 
 This folder will contain the domain interface implementation code needed for the feature. 
 
-###### Feature/DependencyContainer/ Folder
+###### App/Feature/DependencyContainer Folder
 
 This folder will contain the dependency container, data layer container, and domain layer container classes for creating the dependencies (dependency injection) needed for the feature.
 
-###### Feature/Domain/ Folder
+###### App/Feature/Domain Folder
 
 This folder will contain the domain layer specific code needed for the feature and will contain subfolders UseCases, Entities (possibly changing to DomainModels), and Interfaces. 
 
-###### Feature/Presentation/ Folder
+###### App/Feature/Presentation Folder
 
 This folder will contain the presentation layer specific code needed for the feature.
 
-###### Flows/ Folder
+###### App/Flows Folder
 
 This folder will contain specific navigation flows in the app to achieve the coordinator pattern.
 
-###### Share/ Folder
+###### App/Share Folder
 
 This folder contains code that is shared across features.  One area to highlight is the /Share/Data-DomainInterface/Supporting/ folder which contains more granular business formatting and rules that can be shared across domain interface implementations.
