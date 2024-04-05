@@ -14,6 +14,7 @@ class DownloadableLanguagesViewModel: ObservableObject {
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let viewDownloadableLanguagesUseCase: ViewDownloadableLanguagesUseCase
     private let viewSearchBarUseCase: ViewSearchBarUseCase
+    private let searchLanguageInDownloadableLanguagesUseCase: SearchLanguageInDownloadableLanguagesUseCase
     private let downloadToolLanguageUseCase: DownloadToolLanguageUseCase
     private let removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase
     
@@ -21,6 +22,7 @@ class DownloadableLanguagesViewModel: ObservableObject {
     private static var backgrounDownloadCancellables = Set<AnyCancellable>()
     
     private weak var flowDelegate: FlowDelegate?
+    private lazy var searchBarViewModel = SearchBarViewModel(getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, viewSearchBarUseCase: viewSearchBarUseCase)
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     @Published private var downloadableLanguages: [DownloadableLanguageListItemDomainModel] = Array()
@@ -30,12 +32,13 @@ class DownloadableLanguagesViewModel: ObservableObject {
     @Published var displayedDownloadableLanguages: [DownloadableLanguageListItemDomainModel] = Array()
     @Published var navTitle: String = ""
     
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewDownloadableLanguagesUseCase: ViewDownloadableLanguagesUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, downloadToolLanguageUseCase: DownloadToolLanguageUseCase, removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase) {
+    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewDownloadableLanguagesUseCase: ViewDownloadableLanguagesUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, searchLanguageInDownloadableLanguagesUseCase: SearchLanguageInDownloadableLanguagesUseCase, downloadToolLanguageUseCase: DownloadToolLanguageUseCase, removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase) {
         
         self.flowDelegate = flowDelegate
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.viewDownloadableLanguagesUseCase = viewDownloadableLanguagesUseCase
         self.viewSearchBarUseCase = viewSearchBarUseCase
+        self.searchLanguageInDownloadableLanguagesUseCase = searchLanguageInDownloadableLanguagesUseCase
         self.downloadToolLanguageUseCase = downloadToolLanguageUseCase
         self.removeDownloadedToolLanguageUseCase = removeDownloadedToolLanguageUseCase
         
@@ -60,10 +63,18 @@ class DownloadableLanguagesViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        Publishers.CombineLatest(
+        Publishers.CombineLatest3(
+            $searchText.eraseToAnyPublisher(),
             $downloadableLanguages.eraseToAnyPublisher(),
             $activeDownloads.eraseToAnyPublisher()
         )
+        .flatMap({ searchText, downloadableLanguages, activeDownloads in
+            
+            return searchLanguageInDownloadableLanguagesUseCase.getSearchResultsPublisher(for: searchText, in: downloadableLanguages)
+                .map { downloadableLanguages in
+                    return (downloadableLanguages, activeDownloads)
+                }
+        })
         .receive(on: DispatchQueue.main)
         .sink(receiveValue: { [weak self] downloadableLanguages, activeDownloads in
             
@@ -113,7 +124,7 @@ extension DownloadableLanguagesViewModel {
     
     func getSearchBarViewModel() -> SearchBarViewModel {
         
-        return SearchBarViewModel(getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, viewSearchBarUseCase: viewSearchBarUseCase)
+        return searchBarViewModel
     }
     
     func downloadLanguage(_ downloadableLanguage: DownloadableLanguageListItemDomainModel) {

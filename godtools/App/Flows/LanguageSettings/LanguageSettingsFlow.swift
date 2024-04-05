@@ -19,13 +19,24 @@ class LanguageSettingsFlow: Flow, ChooseAppLanguageNavigationFlow {
     
     var chooseAppLanguageFlow: ChooseAppLanguageFlow?
     
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, deepLink: ParsedDeepLinkType?) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController
         
-        sharedNavigationController.pushViewController(getLanguageSettingsView(), animated: true)
+        let initialView: UIViewController = getLanguageSettingsView()
+            
+        if deepLink == .appLanguagesList {
+            
+            sharedNavigationController.pushViewController(initialView, animated: false)
+            
+            navigateToChooseAppLanguageFlow(animated: false)
+        }
+        else {
+            
+            sharedNavigationController.pushViewController(initialView, animated: true)
+        }
     }
     
     deinit {
@@ -99,7 +110,7 @@ extension LanguageSettingsFlow {
             flowDelegate: self,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             viewDownloadableLanguagesUseCase: appDiContainer.feature.appLanguage.domainLayer.getViewDownloadableLanguagesUseCase(),
-            viewSearchBarUseCase: appDiContainer.domainLayer.getViewSearchBarUseCase(),
+            viewSearchBarUseCase: appDiContainer.domainLayer.getViewSearchBarUseCase(), searchLanguageInDownloadableLanguagesUseCase: appDiContainer.feature.appLanguage.domainLayer.getSearchLanguageInDownloadableLanguagesUseCase(),
             downloadToolLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getDownloadToolLanguageUseCase(),
             removeDownloadedToolLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getRemoveDownloadedToolLanguageUseCase()
         )

@@ -375,7 +375,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             closeMenu(animated: true)
             
         case .languageSettingsTappedFromTools:
-            navigateToLanguageSettings()
+            navigateToLanguageSettings(deepLink: nil)
             
         case .languageSettingsFlowCompleted( _):
             closeLanguageSettings()
@@ -701,7 +701,11 @@ extension AppFlow {
             
         case .languageSettings:
             navigateToDashboard(startingTab: .favorites)
-            navigateToLanguageSettings()
+            navigateToLanguageSettings(deepLink: nil)
+            
+        case .appLanguagesList:
+            navigateToDashboard(startingTab: .favorites)
+            navigateToLanguageSettings(deepLink: .appLanguagesList)
             
         case .lessonsList:
             navigateToDashboard(startingTab: .lessons)
@@ -793,12 +797,13 @@ extension AppFlow {
 
 extension AppFlow {
     
-    private func navigateToLanguageSettings() {
+    private func navigateToLanguageSettings(deepLink: ParsedDeepLinkType?) {
         
         let languageSettingsFlow = LanguageSettingsFlow(
             flowDelegate: self,
             appDiContainer: appDiContainer,
-            sharedNavigationController: navigationController
+            sharedNavigationController: navigationController,
+            deepLink: deepLink
         )
         
         self.languageSettingsFlow = languageSettingsFlow
@@ -934,12 +939,11 @@ extension AppFlow {
     private func getToolCategoryFilterSelection(categoryFilterSelectionPublisher: CurrentValueSubject<CategoryFilterDomainModel, Never>, selectedLanguage: LanguageFilterDomainModel) -> UIViewController {
         
         let viewModel = ToolFilterCategorySelectionViewModel(
-            getToolFilterCategoriesUseCase: appDiContainer.feature.toolsFilter.domainLayer.getToolFilterCategoriesUseCase(),
+            viewToolFilterCategoriesUseCase: appDiContainer.feature.toolsFilter.domainLayer.getViewToolFilterCategoriesUseCase(),
             searchToolFilterCategoriesUseCase: appDiContainer.feature.toolsFilter.domainLayer.getSearchToolFilterCategoriesUseCase(),
             storeUserFiltersUseCase: appDiContainer.feature.toolsFilter.domainLayer.getStoreUserFiltersUseCase(),
             categoryFilterSelectionPublisher: categoryFilterSelectionPublisher,
             selectedLanguage: selectedLanguage,
-            getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             viewSearchBarUseCase: appDiContainer.domainLayer.getViewSearchBarUseCase(),
             flowDelegate: self
@@ -969,10 +973,9 @@ extension AppFlow {
     private func getToolLanguageFilterSelection(toolFilterLanguageSelectionPublisher: CurrentValueSubject<LanguageFilterDomainModel, Never>, selectedCategory: CategoryFilterDomainModel) -> UIViewController {
         
         let viewModel = ToolFilterLanguageSelectionViewModel(
-            getToolFilterLanguagesUseCase: appDiContainer.feature.toolsFilter.domainLayer.getToolFilterLanguagesUseCase(),
+            viewToolFilterLanguagesUseCase: appDiContainer.feature.toolsFilter.domainLayer.getViewToolFilterLanguagesUseCase(),
             searchToolFilterLanguagesUseCase: appDiContainer.feature.toolsFilter.domainLayer.getSearchToolFilterLanguagesUseCase(),
             storeUserFilterUseCase: appDiContainer.feature.toolsFilter.domainLayer.getStoreUserFiltersUseCase(),
-            getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             viewSearchBarUseCase: appDiContainer.domainLayer.getViewSearchBarUseCase(),
             languageFilterSelectionPublisher: toolFilterLanguageSelectionPublisher,

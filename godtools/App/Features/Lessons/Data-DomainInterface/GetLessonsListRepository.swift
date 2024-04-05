@@ -39,7 +39,7 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
                     let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel
                     
                     if let language = appLanguageModel {
-                        toolLanguageAvailability = self.getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(resource: resource, translateInLanguage: language)
+                        toolLanguageAvailability = self.getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(resource: resource, language: language, translateInLanguage: language)
                     }
                     else {
                         toolLanguageAvailability = ToolLanguageAvailabilityDomainModel(availabilityString: "", isAvailable: false)

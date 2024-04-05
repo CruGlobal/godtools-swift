@@ -135,15 +135,6 @@ class MobileContentPagesView: AppViewController {
                 }
             })
         }
-        
-        viewModel.pagesRemovedSignal.addObserver(self) { [weak self] (indexes: [Int]) in
-            
-            guard let weakSelf = self else {
-                return
-            }
-            
-            weakSelf.pageNavigationView.deletePagesAt(indexes: indexes)
-        }
     }
     
     func didConfigurePageView(pageView: MobileContentPageView) {
@@ -260,7 +251,7 @@ extension MobileContentPagesView: PageNavigationCollectionViewDelegate {
         viewModel.didChangeMostVisiblePage(page: page)
     }
     
-    func pageNavigationDidScrollToPage(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
+    func pageNavigationPageDidAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
         
         if let contentPageCell = pageCell as? MobileContentPageCell {
             

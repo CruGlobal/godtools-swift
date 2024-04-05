@@ -45,31 +45,16 @@ class MobileContentRendererNavigation {
             
             switch deepLink {
             
-            case .dashboard:
-                break
-                
-            case .allToolsList:
-                break
-            
-            case .articleAemUri( _):
-                break
-            
-            case .favoritedToolsList:
-                break
-                
-            case .languageSettings:
-                break
-            
             case .lessonsList:
                
                 delegate?.mobileContentRendererNavigationDeepLink(navigation: self, deepLink: .lessonsList)
-            
-            case .onboarding:
-                break
-                
+                            
             case .tool(let toolDeepLink):
                 
                 parentFlow?.navigateToToolFromToolDeepLink(toolDeepLink: toolDeepLink, didCompleteToolNavigation: nil)
+                
+            default:
+                break
             }
         }
         else {

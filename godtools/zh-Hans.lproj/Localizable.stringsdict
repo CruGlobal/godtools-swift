@@ -139,7 +139,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Read %d articles</string>
+<string>阅读%d篇文章</string>
 </dict>
 </dict>
 <key>badges.lessonsCompleted</key>

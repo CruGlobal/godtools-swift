@@ -131,7 +131,7 @@ extension RealmResourcesCache {
             filterByAttributes.append(categoryPredicate)
         }
         
-        if let languageCodePredicate = filter.getLanguageCodePredicate() {
+        if let languageCodePredicate = filter.getLanguageModelCodePredicate() {
             filterByAttributes.append(languageCodePredicate)
         }
         
@@ -184,8 +184,8 @@ extension RealmResourcesCache {
 
 extension RealmResourcesCache {
     
-    func getAllToolsList(filterByCategory: String?, filterByLanguageId: String?, sortByDefaultOrder: Bool) -> [ResourceModel] {
-                 
+    private func getAllToolsListResults(filterByCategory: String?, filterByLanguageId: String?, sortByDefaultOrder: Bool) -> Results<RealmResource> {
+        
         var filterByANDSubpredicates: [NSPredicate] = Array()
         
         if let filterByCategory = filterByCategory {
@@ -193,7 +193,7 @@ extension RealmResourcesCache {
         }
         
         if let filterByLanguageId = filterByLanguageId {
-            filterByANDSubpredicates.append(ResourcesFilter.getLanguageIdPredicate(languageId: filterByLanguageId))
+            filterByANDSubpredicates.append(ResourcesFilter.getLanguageModelIdPredicate(languageModelId: filterByLanguageId))
         }
         
         filterByANDSubpredicates.append(ResourcesFilter.getIsHiddenPredicate(isHidden: false))
@@ -214,18 +214,23 @@ extension RealmResourcesCache {
         
         let filteredRealmResources: Results<RealmResource> = realmDatabase.openRealm().objects(RealmResource.self).filter(filterPredicates)
         
-        let realmResources: Results<RealmResource>
+        let allToolsListResults: Results<RealmResource>
         
         if sortByDefaultOrder {
             
-            realmResources = filteredRealmResources.sorted(byKeyPath: #keyPath(RealmResource.attrDefaultOrder), ascending: true)
+            allToolsListResults = filteredRealmResources.sorted(byKeyPath: #keyPath(RealmResource.attrDefaultOrder), ascending: true)
         }
         else {
             
-            realmResources = filteredRealmResources
+            allToolsListResults = filteredRealmResources
         }
         
-        return realmResources
+        return allToolsListResults
+    }
+    
+    func getAllToolsList(filterByCategory: String?, filterByLanguageId: String?, sortByDefaultOrder: Bool) -> [ResourceModel] {
+                 
+        return getAllToolsListResults(filterByCategory: filterByCategory, filterByLanguageId: filterByLanguageId, sortByDefaultOrder: sortByDefaultOrder)
             .map {
                 ResourceModel(model: $0)
             }

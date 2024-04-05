@@ -20,6 +20,7 @@ class AppLanguagesViewModel: ObservableObject {
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
+    private lazy var searchBarViewModel = SearchBarViewModel(getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, viewSearchBarUseCase: viewSearchBarUseCase)
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     @Published private var appLanguagesList: [AppLanguageListItemDomainModel] = Array()
@@ -66,11 +67,10 @@ class AppLanguagesViewModel: ObservableObject {
             $searchText.eraseToAnyPublisher(),
             $appLanguagesList.eraseToAnyPublisher()
         )
-        .flatMap({ (searchText: String, appLanguagesList: [AppLanguageListItemDomainModel]) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> in
-            return searchAppLanguageInAppLanguagesListUseCase
-                .getSearchResultsPublisher(searchText: searchText, appLanguagesList: appLanguagesList)
-                .eraseToAnyPublisher()
-        })
+        .flatMap { (searchText: String, appLanguagesList: [AppLanguageListItemDomainModel]) in
+            
+            return searchAppLanguageInAppLanguagesListUseCase.getSearchResultsPublisher(for: searchText, in: appLanguagesList)
+        }
         .receive(on: DispatchQueue.main)
         .assign(to: &$appLanguageSearchResults)
     }
@@ -96,9 +96,6 @@ extension AppLanguagesViewModel {
     
     func getSearchBarViewModel() -> SearchBarViewModel {
         
-        return SearchBarViewModel(
-            getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase,
-            viewSearchBarUseCase: viewSearchBarUseCase
-        )
+        return searchBarViewModel
     }
 }

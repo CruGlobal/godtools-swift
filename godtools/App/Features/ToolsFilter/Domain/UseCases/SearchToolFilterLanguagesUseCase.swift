@@ -11,24 +11,15 @@ import Combine
 
 class SearchToolFilterLanguagesUseCase {
     
-    private let stringSearcher: StringSearcher
+    private let searchToolFilterLanguagesRepository: SearchToolFilterLanguagesRepositoryInterface
     
-    init(stringSearcher: StringSearcher) {
-        self.stringSearcher = stringSearcher
+    init(searchToolFilterLanguagesRepository: SearchToolFilterLanguagesRepositoryInterface) {
+        
+        self.searchToolFilterLanguagesRepository = searchToolFilterLanguagesRepository
     }
     
-    func getSearchResultsPublisher(for searchTextPublisher: AnyPublisher<String, Never>, in toolFilterLanguagesPublisher: AnyPublisher<[LanguageFilterDomainModel], Never>) -> AnyPublisher<[LanguageFilterDomainModel], Never> {
+    func getSearchResultsPublisher(for searchText: String, in toolFilterLanguages: [LanguageFilterDomainModel]) -> AnyPublisher<[LanguageFilterDomainModel], Never> {
         
-        return Publishers.CombineLatest(
-            searchTextPublisher,
-            toolFilterLanguagesPublisher
-        )
-        .flatMap { (searchText, toolFilterLanguages) in
-            
-            let searchResults = self.stringSearcher.search(for: searchText, in: toolFilterLanguages)
-            
-            return Just(searchResults)
-        }
-        .eraseToAnyPublisher()
+        return searchToolFilterLanguagesRepository.getSearchResultsPublisher(for: searchText, in: toolFilterLanguages)
     }
 }

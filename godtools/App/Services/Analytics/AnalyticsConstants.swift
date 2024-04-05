@@ -7,15 +7,25 @@
 //
 
 import Foundation
+import GodToolsToolParser
 
 struct AnalyticsConstants {
+    
+    struct UserProperties {
+        
+        static let loginProvider: String = AnalyticsUserProperties.shared.LOGIN_PROVIDER
+        static let loginProviderApple: String = AnalyticsUserProperties.shared.LOGIN_PROVIDER_APPLE
+        static let loginProviderFacebook: String = AnalyticsUserProperties.shared.LOGIN_PROVIDER_FACEBOOK
+        static let loginProviderGoogle: String = AnalyticsUserProperties.shared.LOGIN_PROVIDER_GOOGLE
+        static let loggedInStatus: String = AnalyticsUserProperties.shared.LOGGED_IN_STATUS
+    }
+    
     struct Keys {
         static let appName = "cru.appname"
         static let contentLanguage = "cru.contentlanguage"
         static let contentLanguageSecondary = "cru.contentlanguagesecondary"
         static let exitLink = "cru.mobileexitlink"
         static let grMasterPersonID = "cru.grmpid"
-        static let loggedInStatus = "cru.loggedinstatus"
         static let previousScreenName = "cru.previousscreenname"
         static let screenName = "cru.screenname"
         static let screenNameFirebase = "screen_name"
@@ -39,6 +49,7 @@ struct AnalyticsConstants {
         static let tutorialVideo = "cru.tutorial_video"
         static let tutorialVideoId = "video_id"
         static let onboardingStart = "cru.onboarding_start"
+        static let onboardingSkip = "cru.onboarding_skip"
         static let toolOpenedShortcutCountKey = "cru.tool-opened-shortcut"
         static let shareScreenEngagedCountKey = "cru.sharescreenengaged"
         static let shareScreenOpenedCountKey = "cru.share_screen_opened"

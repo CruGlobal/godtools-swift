@@ -19,13 +19,13 @@ class ChooseAppLanguageFlow: Flow {
     let appDiContainer: AppDiContainer
     let navigationController: AppNavigationController
     
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, animated: Bool = true) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController
         
-        sharedNavigationController.pushViewController(getAppLanguagesView(), animated: true)
+        sharedNavigationController.pushViewController(getAppLanguagesView(), animated: animated)
     }
     
     deinit {

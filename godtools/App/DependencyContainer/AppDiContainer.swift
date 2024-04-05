@@ -31,11 +31,12 @@ class AppDiContainer {
         let appLanguageDiContainer = AppLanguageFeatureDiContainer(coreDataLayer: dataLayer)
         let dashboardDiContainer = DashboardDiContainer(coreDataLayer: dataLayer)
         let downloadToolProgressDiContainer = DownloadToolProgressFeatureDiContainer(coreDataLayer: dataLayer)
+        let favoritesDiContainer = FavoritesDiContainer(coreDataLayer: dataLayer)
+        let featuredLessonsDiContainer = FeaturedLessonsDiContainer(coreDataLayer: dataLayer)
+        let globalActivityDiContainer = GlobalActivityDiContainer(coreDataLayer: dataLayer)
         let learnToShareToolDiContainer = LearnToShareToolDiContainer(coreDataLayer: dataLayer)
         let lessonEvaluationDiContainer = LessonEvaluationFeatureDiContainer(coreDataLayer: dataLayer)
         let lessonsDiContainer = LessonsFeatureDiContainer(coreDataLayer: dataLayer)
-        let favoritesDiContainer = FavoritesDiContainer(coreDataLayer: dataLayer)
-        let featuredLessonsDiContainer = FeaturedLessonsDiContainer(coreDataLayer: dataLayer)
         let onboardingDiContainer = OnboardingDiContainer(coreDataLayer: dataLayer)
         let shareablesDiContainer: ShareablesDiContainer = ShareablesDiContainer(coreDataLayer: dataLayer)
         let spotlightToolsDiContainer = SpotlightToolsDiContainer(coreDataLayer: dataLayer)
@@ -53,6 +54,7 @@ class AppDiContainer {
             downloadToolProgress: downloadToolProgressDiContainer,
             favorites: favoritesDiContainer,
             featuredLessons: featuredLessonsDiContainer,
+            globalActivity: globalActivityDiContainer,
             learnToShareTool: learnToShareToolDiContainer,
             lessonEvaluation: lessonEvaluationDiContainer,
             lessons: lessonsDiContainer,

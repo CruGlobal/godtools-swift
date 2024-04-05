@@ -11,31 +11,32 @@ import Combine
 
 class ToolFilterCategorySelectionViewModel: ObservableObject {
     
-    private let getToolFilterCategoriesUseCase: GetToolFilterCategoriesUseCase
+    private let viewToolFilterCategoriesUseCase: ViewToolFilterCategoriesUseCase
     private let searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase
     private let storeUserFiltersUseCase: StoreUserFiltersUseCase
-    private let getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let viewSearchBarUseCase: ViewSearchBarUseCase
     private let categoryFilterSelectionPublisher: CurrentValueSubject<CategoryFilterDomainModel, Never>
     private let selectedLanguage: LanguageFilterDomainModel
     
     private var cancellables: Set<AnyCancellable> = Set()
+    private static var staticCancellables: Set<AnyCancellable> = Set()
     private weak var flowDelegate: FlowDelegate?
+    private lazy var searchBarViewModel = SearchBarViewModel(getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, viewSearchBarUseCase: viewSearchBarUseCase)
     
-    let selectedCategory: CategoryFilterDomainModel
-    
+    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     @Published private var allCategories: [CategoryFilterDomainModel] = [CategoryFilterDomainModel]()
+    
     @Published var searchText: String = ""
+    @Published var selectedCategory: CategoryFilterDomainModel
     @Published var navTitle: String = ""
     @Published var categorySearchResults: [CategoryFilterDomainModel] = [CategoryFilterDomainModel]()
     
-    init(getToolFilterCategoriesUseCase: GetToolFilterCategoriesUseCase, searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase, storeUserFiltersUseCase: StoreUserFiltersUseCase, categoryFilterSelectionPublisher: CurrentValueSubject<CategoryFilterDomainModel, Never>, selectedLanguage: LanguageFilterDomainModel, getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, flowDelegate: FlowDelegate?) {
+    init(viewToolFilterCategoriesUseCase: ViewToolFilterCategoriesUseCase, searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase, storeUserFiltersUseCase: StoreUserFiltersUseCase, categoryFilterSelectionPublisher: CurrentValueSubject<CategoryFilterDomainModel, Never>, selectedLanguage: LanguageFilterDomainModel, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, flowDelegate: FlowDelegate) {
         
-        self.getToolFilterCategoriesUseCase = getToolFilterCategoriesUseCase
+        self.viewToolFilterCategoriesUseCase = viewToolFilterCategoriesUseCase
         self.searchToolFilterCategoriesUseCase = searchToolFilterCategoriesUseCase
         self.storeUserFiltersUseCase = storeUserFiltersUseCase
-        self.getInterfaceStringInAppLanguageUseCase = getInterfaceStringInAppLanguageUseCase
         self.categoryFilterSelectionPublisher = categoryFilterSelectionPublisher
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.viewSearchBarUseCase = viewSearchBarUseCase
@@ -43,22 +44,36 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
         self.selectedCategory = categoryFilterSelectionPublisher.value
         self.flowDelegate = flowDelegate
         
-        getInterfaceStringInAppLanguageUseCase
-            .getStringPublisher(id: ToolStringKeys.ToolFilter.categoryFilterNavTitle.rawValue)
-            .receive(on: DispatchQueue.main)
-            .assign(to: &$navTitle)
+        getCurrentAppLanguageUseCase
+            .getLanguagePublisher()
+            .assign(to: &$appLanguage)
         
-        getToolFilterCategoriesUseCase.getToolFilterCategoriesPublisher(filteredByLanguageId: selectedLanguage.id)
+        $appLanguage.eraseToAnyPublisher()
+            .flatMap { appLanguage in
+                
+                return viewToolFilterCategoriesUseCase.viewPublisher(filteredByLanguageId: selectedLanguage.id, translatedInAppLanguage: appLanguage)
+            }
             .receive(on: DispatchQueue.main)
-            .assign(to: &$allCategories)
+            .sink { [weak self] viewCategoryFiltersDomainModel in
+                guard let self = self else { return }
+                
+                let interfaceStrings = viewCategoryFiltersDomainModel.interfaceStrings
+                
+                self.navTitle = interfaceStrings.navTitle
+                self.allCategories = viewCategoryFiltersDomainModel.categoryFilters
+            }
+            .store(in: &cancellables)
         
-        searchToolFilterCategoriesUseCase
-            .getSearchResultsPublisher(
-                for: $searchText.eraseToAnyPublisher(),
-                in: $allCategories.eraseToAnyPublisher()
-            )
-            .receive(on: DispatchQueue.main)
-            .assign(to: &$categorySearchResults)
+        Publishers.CombineLatest(
+            $searchText.eraseToAnyPublisher(),
+            $allCategories.eraseToAnyPublisher()
+        )
+        .flatMap { searchText, allCategories in
+            
+            searchToolFilterCategoriesUseCase.getSearchResultsPublisher(for: searchText, in: allCategories)
+        }
+        .receive(on: DispatchQueue.main)
+        .assign(to: &$categorySearchResults)
     }
     
     deinit {
@@ -72,21 +87,19 @@ extension ToolFilterCategorySelectionViewModel {
     
     func getSearchBarViewModel() -> SearchBarViewModel {
         
-        return SearchBarViewModel(
-            getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase,
-            viewSearchBarUseCase: viewSearchBarUseCase
-        )
+        return searchBarViewModel
     }
     
     func rowTapped(with category: CategoryFilterDomainModel) {
-                
+        
+        selectedCategory = category
         categoryFilterSelectionPublisher.send(category)
         
         storeUserFiltersUseCase.storeCategoryFilterPublisher(with: category.id)
             .sink { _ in
                 
             }
-            .store(in: &cancellables)
+            .store(in: &ToolFilterCategorySelectionViewModel.staticCancellables)
         
         flowDelegate?.navigate(step: .categoryTappedFromToolCategoryFilter)
     }

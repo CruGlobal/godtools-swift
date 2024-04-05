@@ -10,12 +10,13 @@ import SwiftUI
 
 // adapted from https://www.appcoda.com/swiftui-search-bar/
 
+@available(iOS 15.0, *)
 struct SearchBar: View {
     
     @ObservedObject private var viewModel: SearchBarViewModel
 
-    @State private var isEditing = false
     @Binding private var searchText: String
+    @FocusState private var textFieldIsFocused: Bool
     
     init(viewModel: SearchBarViewModel, searchText: Binding<String>) {
         
@@ -26,18 +27,15 @@ struct SearchBar: View {
     var body: some View {
         HStack {
          
-            TextField("", text: $searchText, onEditingChanged: { _ in
-                self.isEditing = true
-            }, onCommit: {
-                DispatchQueue.main.async {
-                    
-                    self.isEditing = false
-                }
-            })
+            TextField("", text: $searchText)
             .padding(7)
             .padding(.horizontal, 27)
             .background(Color.white)
             .cornerRadius(6)
+            .focused($textFieldIsFocused)
+            .onTapGesture {
+                textFieldIsFocused = true
+            }
             .overlay(
                 HStack {
                     
@@ -46,7 +44,7 @@ struct SearchBar: View {
                         .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                         .padding(.leading, 10)
                     
-                    if isEditing {
+                    if textFieldIsFocused {
                         Button(action: {
                             self.searchText = ""
                             
@@ -59,14 +57,11 @@ struct SearchBar: View {
                 }
             )
             
-            if isEditing {
+            if textFieldIsFocused {
                 Button(action: {
-                    DispatchQueue.main.async {
-                        self.isEditing = false
-                        self.searchText = ""
-                    }
-                    
-                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                    self.searchText = ""
+                    self.textFieldIsFocused = false
+
                 }) {
                     Text(viewModel.cancelText)
                 }

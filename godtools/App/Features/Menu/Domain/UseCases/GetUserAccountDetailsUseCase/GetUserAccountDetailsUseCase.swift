@@ -86,12 +86,15 @@ class GetUserAccountDetailsUseCase {
         }
         
         let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: translatedInAppLanguage)
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .none
         
         let formattedCreatedAtDateString: String = dateFormatter.string(from: createdAtDate)
         
-        let joinedOnString: String = String.localizedStringWithFormat(localizationServices.stringForLocaleElseEnglish(localeIdentifier: translatedInAppLanguage.localeId, key: "account.joinedOn"), formattedCreatedAtDateString)
+        let localizedJoinedOn: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: translatedInAppLanguage.localeId, key: "account.joinedOn")
+        
+        let joinedOnString: String = String.localizedStringWithFormat(localizedJoinedOn, formattedCreatedAtDateString)
         
         return joinedOnString
     }

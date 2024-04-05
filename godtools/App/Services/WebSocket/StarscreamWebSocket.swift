@@ -77,6 +77,9 @@ extension StarscreamWebSocket {
         
         case .ping(_):
             break
+            
+        case .peerClosed:
+            break
         
         case .pong(_):
             break

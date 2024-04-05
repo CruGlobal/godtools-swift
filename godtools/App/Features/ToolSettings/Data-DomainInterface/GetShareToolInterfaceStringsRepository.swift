@@ -39,9 +39,9 @@ class GetShareToolInterfaceStringsRepository: GetShareToolInterfaceStringsReposi
         }
         
         toolUrl = toolUrl.replacingOccurrences(of: " ", with: "").appending("?icid=gtshare ")
-
-        let shareMessageWithToolUrl: String = String.localizedStringWithFormat(localizedShareToolMessage, toolUrl)
         
+        let shareMessageWithToolUrl = String.localizedStringWithFormat(localizedShareToolMessage, toolUrl)
+
         let interfaceStrings = ShareToolInterfaceStringsDomainModel(
             shareMessage: shareMessageWithToolUrl
         )

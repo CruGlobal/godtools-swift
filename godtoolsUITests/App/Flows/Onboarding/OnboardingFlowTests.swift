@@ -9,48 +9,17 @@
 import Foundation
 import XCTest
 @testable import godtools
-import SwiftUI
-import Combine
 
-class OnboardingFlowTests: XCTestCase {
-    
-    private let onboardingDeepLinkUrl: String = "godtools://org.cru.godtools/onboarding"
-    
-    private var app: XCUIApplication = XCUIApplication()
-    
-    override func setUp() {
-        super.setUp()
+class OnboardingFlowTests: BaseFlowTests {
         
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-        
-        // In UI tests it is usually best to stop immediately when a failure occurs.
-        continueAfterFailure = false
-        
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
-    }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
-    
     private func launchApp(appLanguageCode: String? = nil) {
         
-        self.app = XCUIApplication()
-        
         let languageCode: String = appLanguageCode ?? LanguageCodeDomainModel.english.value
-        
-        let deepLinkUrl: String = onboardingDeepLinkUrl + "?" + "appLanguageCode=" + languageCode
-        
-        app.launchEnvironment[LaunchEnvironmentKey.urlDeeplink.value] = deepLinkUrl
                 
-        app.launch()
-                
-        checkInitialScreenIsOnboardingTutorial(app: app)
-    }
-    
-    private func checkInitialScreenIsOnboardingTutorial(app: XCUIApplication) {
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .onboardingTutorial)
+        super.launchApp(
+            flowDeepLinkUrl: "godtools://org.cru.godtools/ui_tests/onboarding" + "?" + "appLanguageCode=" + languageCode,
+            initialScreen: .onboardingTutorial
+        )
     }
     
     private func getNextTutorialPageButton(app: XCUIApplication) -> XCUIElement {
@@ -105,7 +74,7 @@ class OnboardingFlowTests: XCTestCase {
         
         closeVideoButton.tap()
         
-        checkInitialScreenIsOnboardingTutorial(app: app)
+        super.checkInitialScreenExists(app: app)
     }
     
     func testNavigationThroughTutorialPagesUsingNextTutorialPageButton() {
@@ -129,5 +98,26 @@ class OnboardingFlowTests: XCTestCase {
         nextTutorialPageButton.tap()
         
         assertIfScreenDoesNotExist(app: app, screenAccessibility: .onboardingTutorialPage4)
+    }
+    
+    func testSkippingOnboardingNavigatesToDashboardFavorites() {
+     
+        launchApp()
+        
+        let nextTutorialPageButton = getNextTutorialPageButton(app: app)
+        
+        XCTAssertTrue(nextTutorialPageButton.exists)
+        
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .onboardingTutorialPage1)
+        
+        nextTutorialPageButton.tap()
+        
+        let skipTutorialButton = getSkipTutorialButton(app: app)
+        
+        XCTAssertTrue(skipTutorialButton.exists)
+        
+        skipTutorialButton.tap()
+        
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .dashboardFavorites)
     }
 }

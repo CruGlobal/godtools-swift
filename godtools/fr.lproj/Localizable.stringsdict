@@ -109,9 +109,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>1 Tool available</string>
+<string>%d Outil disponible</string>
 <key>other</key>
-<string>%d Tools available</string>
+<string>%d Outils disponibles</string>
 </dict>
 </dict>
 <key>languageSettings.appLanguage.numberAvailable</key>

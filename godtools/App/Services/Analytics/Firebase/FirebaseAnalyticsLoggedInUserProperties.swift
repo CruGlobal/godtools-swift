@@ -11,5 +11,6 @@ import Foundation
 struct FirebaseAnalyticsLoggedInUserProperties {
     
     let grMasterPersonId: String?
+    let loginProvider: String?
     let ssoguid: String?
 }

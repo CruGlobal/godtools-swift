@@ -15,6 +15,16 @@ struct AppLanguageListItemDomainModel {
     let languageNameTranslatedInCurrentAppLanguage: String
 }
 
+extension AppLanguageListItemDomainModel: StringSearchable {
+    
+    var searchableStrings: [String] {
+        return [
+            languageNameTranslatedInOwnLanguage,
+            languageNameTranslatedInCurrentAppLanguage
+        ]
+    }
+}
+
 extension AppLanguageListItemDomainModel: Identifiable {
     var id: String {
         return language
