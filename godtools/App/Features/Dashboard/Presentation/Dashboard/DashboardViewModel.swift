@@ -21,7 +21,6 @@ class DashboardViewModel: ObservableObject {
         
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     
-    @Published var hidesLanguagesSettingsButton: Bool = true
     @Published var tabs: [DashboardTabTypeDomainModel] = [.lessons, .favorites, .tools]
     @Published var lessonsButtonTitle: String = ""
     @Published var favoritesButtonTitle: String = ""
@@ -55,13 +54,7 @@ class DashboardViewModel: ObservableObject {
                 
                 self?.reloadTabs() // NOTE: Needed since button title interface strings aren't connected to the View. ~Levi
             }
-            .store(in: &cancellables)
-        
-        $currentTab.eraseToAnyPublisher()
-            .sink { [weak self] (currentTab: Int) in
-                self?.hidesLanguagesSettingsButton = self?.tabs[currentTab] == .lessons
-            }
-            .store(in: &cancellables)
+            .store(in: &cancellables)        
     }
     
     deinit {
@@ -90,10 +83,6 @@ extension DashboardViewModel {
         flowDelegate?.navigate(step: .menuTappedFromTools)
     }
             
-    @objc func languageSettingsTapped() {
-        flowDelegate?.navigate(step: .languageSettingsTappedFromTools)
-    }
-    
     func getLessonsViewModel() -> LessonsViewModel {
         return dashboardPresentationLayerDependencies.lessonsViewModel
     }
