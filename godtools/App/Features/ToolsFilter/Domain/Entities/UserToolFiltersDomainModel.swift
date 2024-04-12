@@ -1,5 +1,5 @@
 //
-//  UserFiltersDomainModel.swift
+//  UserToolFiltersDomainModel.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 11/16/23.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct UserFiltersDomainModel {
+struct UserToolFiltersDomainModel {
     
     let categoryFilter: CategoryFilterDomainModel
     let languageFilter: LanguageFilterDomainModel

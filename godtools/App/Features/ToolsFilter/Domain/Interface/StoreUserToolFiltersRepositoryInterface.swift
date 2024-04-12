@@ -1,5 +1,5 @@
 //
-//  StoreUserFiltersRepositoryInterface.swift
+//  StoreUserToolFiltersRepositoryInterface.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 11/8/23.
@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-protocol StoreUserFiltersRepositoryInterface {
+protocol StoreUserToolFiltersRepositoryInterface {
     
     func storeUserCategoryFilterPublisher(with id: String?) -> AnyPublisher<Void, Never>
     func storeUserLanguageFilterPublisher(with id: String?) -> AnyPublisher<Void, Never>

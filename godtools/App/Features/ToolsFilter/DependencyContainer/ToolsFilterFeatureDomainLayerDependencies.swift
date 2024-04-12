@@ -21,9 +21,9 @@ class ToolsFilterFeatureDomainLayerDependencies {
         self.coreDomainLayer = coreDomainLayer
     }
     
-    func getUserFiltersUseCase() -> GetUserFiltersUseCase {
-        return GetUserFiltersUseCase(
-            getUserFiltersRepositoryInterface: dataLayer.getUserFiltersRepositoryInterface()
+    func getUserToolFiltersUseCase() -> GetUserToolFiltersUseCase {
+        return GetUserToolFiltersUseCase(
+            getUserToolFiltersRepositoryInterface: dataLayer.getUserToolFiltersRepositoryInterface()
         )
     }
     
@@ -39,9 +39,9 @@ class ToolsFilterFeatureDomainLayerDependencies {
         )
     }
     
-    func getStoreUserFiltersUseCase() -> StoreUserFiltersUseCase {
-        return StoreUserFiltersUseCase(
-            storeUserFiltersRepositoryInterface: dataLayer.getStoreUserFiltersRepositoryInterface()
+    func getStoreUserToolFiltersUseCase() -> StoreUserToolFiltersUseCase {
+        return StoreUserToolFiltersUseCase(
+            storeUserToolFiltersRepositoryInterface: dataLayer.getStoreUserToolFiltersRepositoryInterface()
         )
     }
     
