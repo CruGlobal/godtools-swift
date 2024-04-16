@@ -30,7 +30,7 @@ class GetToolFilterLanguagesRepository: GetToolFilterLanguagesRepositoryInterfac
             .flatMap { _ in
                 
                 let languageIds = self.resourcesRepository
-                    .getAllToolsList(filterByCategory: filteredByCategoryId)
+                    .getAllToolsList(filterByCategory: filteredByCategoryId, filterByLanguageId: nil, sortByDefaultOrder: false)
                     .getUniqueLanguageIds()
                 
                 let languages = self.createLanguageFilterDomainModelList(from: Array(languageIds), translatedInAppLanguage: translatedInAppLanguage, filteredByCategoryId: filteredByCategoryId)
@@ -138,13 +138,10 @@ extension GetToolFilterLanguagesRepository {
     
     private func getToolsAvailableCount(for languageCode: BCP47LanguageIdentifier?, filteredByCategoryId: String?) -> Int {
         
-        let filter = ResourcesFilter(
-            category: filteredByCategoryId,
-            languageModelCode: languageCode,
-            resourceTypes: ResourceType.toolTypes
-        )
-        
-        return resourcesRepository.getCachedResourcesByFilter(filter: filter).count
+        return resourcesRepository.getAllToolsList(
+            filterByCategory: filteredByCategoryId,
+            filterByLanguageId: languageCode,
+            sortByDefaultOrder: false).count
     }
     
     private func getToolsAvailableText(toolsAvailableCount: Int, translatedInAppLanguage: AppLanguageDomainModel) -> String {

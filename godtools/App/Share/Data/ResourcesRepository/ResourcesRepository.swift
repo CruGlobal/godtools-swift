@@ -166,7 +166,7 @@ extension ResourcesRepository {
 
 extension ResourcesRepository {
     
-    func getAllToolsList(filterByCategory: String? = nil, filterByLanguageId: String? = nil, sortByDefaultOrder: Bool = true) -> [ResourceModel] {
+    func getAllToolsList(filterByCategory: String?, filterByLanguageId: String?, sortByDefaultOrder: Bool) -> [ResourceModel] {
         
         return cache.getAllToolsList(
             filterByCategory: filterByCategory,

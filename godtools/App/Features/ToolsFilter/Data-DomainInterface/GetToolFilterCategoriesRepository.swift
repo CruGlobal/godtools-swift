@@ -26,7 +26,7 @@ class GetToolFilterCategoriesRepository: GetToolFilterCategoriesRepositoryInterf
             .flatMap { _ in
                 
                 let categoryIds = self.resourcesRepository
-                    .getAllToolsList(filterByLanguageId: filteredByLanguageId, sortByDefaultOrder: false)
+                    .getAllToolsList(filterByCategory: nil, filterByLanguageId: filteredByLanguageId, sortByDefaultOrder: false)
                     .getUniqueCategoryIds()
                 
                 let categories = self.createCategoryDomainModels(from: categoryIds, translatedInAppLanguage: translatedInAppLanguage, filteredByLanguageId: filteredByLanguageId)
@@ -105,13 +105,10 @@ extension GetToolFilterCategoriesRepository {
     
     private func getToolsAvailableCount(for categoryId: String?, filteredByLanguageId: String?) -> Int {
         
-        let filter = ResourcesFilter(
-            category: categoryId,
-            languageModelId: filteredByLanguageId,
-            resourceTypes: ResourceType.toolTypes
-        )
-        
-        return resourcesRepository.getCachedResourcesByFilter(filter: filter).count
+        return resourcesRepository.getAllToolsList(
+            filterByCategory: categoryId,
+            filterByLanguageId: filteredByLanguageId,
+            sortByDefaultOrder: false).count
     }
     
     private func getToolsAvailableText(toolsAvailableCount: Int, translatedInAppLanguage: AppLanguageDomainModel) -> String {
