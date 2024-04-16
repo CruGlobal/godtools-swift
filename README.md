@@ -73,7 +73,7 @@ The GodTools app architecture consists of 3 layers (Presentation Layer, Domain L
 - Should have a single exposed method (public, internal) that takes zero or more inputs and produces a single output that is an AnyPublisher. 
 - UseCases can have private methods, however, as we move to dependency inversion I think private methods will become less and less.
 - Inputs should not be publisher types. Instead the ViewModel should react to changes which then triggers the UseCase.
-- Should not depend on UseCases. If specific Output from a UseCase is needed, instead inject that Output as an Input from the ViewModel.
+- Should not reference or depend on other UseCases.  This particular situation would occur if a UseCase needed the result of the referenced UseCase.  Instead, the result should be injected when envoking the UseCase from the ViewModel.
 - Should depend only on interfaces. Most of the time we depend on some type of Repository Interface where a Repository is simply a data storage and data access.
 - Would prefer that UseCases return a non Swift type and instead some type of DomainModel that encapsulates attributes related to the business requirements.
 
