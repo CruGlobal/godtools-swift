@@ -95,6 +95,13 @@ extension GetToolFilterLanguagesRepository {
                     filteredByCategoryId: filteredByCategoryId
                 )
             }
+            .sorted { language1, language2 in
+                
+                let language1Name = language1.translatedName ?? language1.primaryText
+                let language2Name = language2.translatedName ?? language2.primaryText
+                
+                return language1Name.lowercased() < language2Name.lowercased()
+            }
         
         return [anyLanguage] + languages
     }

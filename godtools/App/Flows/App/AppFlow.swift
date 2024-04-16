@@ -373,10 +373,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
         case .doneTappedFromMenu:
             closeMenu(animated: true)
-            
-        case .languageSettingsTappedFromTools:
-            navigateToLanguageSettings(deepLink: nil)
-            
+                        
         case .languageSettingsFlowCompleted( _):
             closeLanguageSettings()
             
@@ -535,21 +532,13 @@ extension AppFlow {
             accessibilityIdentifier: nil
         )
         
-        let languageSettingsButton = AppLanguageSettingsBarItem(
-            color: .white,
-            target: viewModel,
-            action: #selector(viewModel.languageSettingsTapped),
-            accessibilityIdentifier: nil,
-            hidesBarItemPublisher: viewModel.$hidesLanguagesSettingsButton.eraseToAnyPublisher()
-        )
-        
         let hostingController = AppHostingController<DashboardView>(
             rootView: view,
             navigationBar: AppNavigationBar(
                 appearance: nil,
                 backButton: nil,
                 leadingItems: [menuButton],
-                trailingItems: [languageSettingsButton]
+                trailingItems: []
             )
         )
     

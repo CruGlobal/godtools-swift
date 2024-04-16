@@ -28,8 +28,8 @@ class GodToolsParserLogger {
         
         isStarted = true
                 
-        NapierProxyKt.enableCustomLogging { (logLevel: NapierLogLevel, tag: String?, throwable: KotlinThrowable?, message: String?) in
-            
+        LoggingKt.enableCustomLogging { (logLevel: LogLevel, tag: String?, throwable: KotlinThrowable?, message: String?) in
+
             DispatchQueue.global().async {
                 
                 Crashlytics.crashlytics().log("\(String(describing: tag)): \(String(describing: message))")
