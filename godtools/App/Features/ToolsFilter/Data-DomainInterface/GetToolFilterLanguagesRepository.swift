@@ -83,7 +83,7 @@ extension GetToolFilterLanguagesRepository {
         let languages: [LanguageFilterDomainModel] = languagesRepository.getLanguages(ids: languageIds)
             .compactMap { languageModel in
                 
-                let toolsAvailableCount: Int = getToolsAvailableCount(for: languageModel.code, filteredByCategoryId: filteredByCategoryId)
+                let toolsAvailableCount: Int = getToolsAvailableCount(for: languageModel.id, filteredByCategoryId: filteredByCategoryId)
                 
                 guard toolsAvailableCount > 0 else {
                     return nil
@@ -108,7 +108,7 @@ extension GetToolFilterLanguagesRepository {
     
     private func createLanguageFilterDomainModel(with languageModel: LanguageModel, translatedInAppLanguage: AppLanguageDomainModel, filteredByCategoryId: String?) -> LanguageFilterDomainModel {
         
-        let toolsAvailableCount: Int = getToolsAvailableCount(for: languageModel.code, filteredByCategoryId: filteredByCategoryId)
+        let toolsAvailableCount: Int = getToolsAvailableCount(for: languageModel.id, filteredByCategoryId: filteredByCategoryId)
         
         let languageName = translatedLanguageNameRepository.getLanguageName(language: languageModel.code, translatedInLanguage: languageModel.code)
         let translatedLanguageName = translatedLanguageNameRepository.getLanguageName(language: languageModel.code, translatedInLanguage: translatedInAppLanguage)
@@ -143,11 +143,11 @@ extension GetToolFilterLanguagesRepository {
         )
     }
     
-    private func getToolsAvailableCount(for languageCode: BCP47LanguageIdentifier?, filteredByCategoryId: String?) -> Int {
+    private func getToolsAvailableCount(for languageId: String?, filteredByCategoryId: String?) -> Int {
         
         return resourcesRepository.getAllToolsList(
             filterByCategory: filteredByCategoryId,
-            filterByLanguageId: languageCode,
+            filterByLanguageId: languageId,
             sortByDefaultOrder: false).count
     }
     
