@@ -13176,7 +13176,6 @@
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQ48D9BF2V;
 				DISPLAY_NAME = "GT-Analytics";
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = godtools/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -13374,7 +13373,6 @@
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQ48D9BF2V;
 				DISPLAY_NAME = "GT-Stage";
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = godtools/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -13767,7 +13765,6 @@
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQ48D9BF2V;
 				DISPLAY_NAME = "GT-Production";
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = godtools/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -13801,7 +13798,6 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQ48D9BF2V;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = godtoolsTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -13839,8 +13835,6 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
-				EXCLUDED_ARCHS = "";
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = godtoolsUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
