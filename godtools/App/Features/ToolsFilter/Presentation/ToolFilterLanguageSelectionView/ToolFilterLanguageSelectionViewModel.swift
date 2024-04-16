@@ -60,22 +60,25 @@ class ToolFilterLanguageSelectionViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        $appLanguage.eraseToAnyPublisher()
-            .flatMap { [weak self] appLanguage in
-                
-                return viewToolFilterLanguagesUseCase.viewPublisher(filteredByCategoryId: self?.selectedCategory.id, translatedInAppLanguage: appLanguage)
-            }
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] viewLanguageFiltersDomainModel in
-                guard let self = self else { return }
-                
-                let interfaceStrings = viewLanguageFiltersDomainModel.interfaceStrings
-                
-                self.navTitle = interfaceStrings.navTitle
-                self.allLanguages = viewLanguageFiltersDomainModel.languageFilters
-                
-            }
-            .store(in: &cancellables)
+        Publishers.CombineLatest(
+            $appLanguage.eraseToAnyPublisher(),
+            $selectedCategory.eraseToAnyPublisher()
+        )
+        .flatMap { appLanguage, selectedCategory in
+            
+            return viewToolFilterLanguagesUseCase.viewPublisher(filteredByCategoryId: selectedCategory.id, translatedInAppLanguage: appLanguage)
+        }
+        .receive(on: DispatchQueue.main)
+        .sink { [weak self] viewLanguageFiltersDomainModel in
+            guard let self = self else { return }
+            
+            let interfaceStrings = viewLanguageFiltersDomainModel.interfaceStrings
+            
+            self.navTitle = interfaceStrings.navTitle
+            self.allLanguages = viewLanguageFiltersDomainModel.languageFilters
+            
+        }
+        .store(in: &cancellables)
         
         Publishers.CombineLatest(
             $searchText.eraseToAnyPublisher(),
