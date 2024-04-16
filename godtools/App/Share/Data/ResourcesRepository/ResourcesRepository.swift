@@ -174,6 +174,11 @@ extension ResourcesRepository {
             sortByDefaultOrder: sortByDefaultOrder
         )
     }
+    
+    func getAllToolsListCount(filterByCategory: String?, filterByLanguageId: String?) -> Int {
+        
+        return cache.getAllToolsListCount(filterByCategory: filterByCategory, filterByLanguageId: filterByLanguageId)
+    }
 }
 
 // MARK: - Lessons

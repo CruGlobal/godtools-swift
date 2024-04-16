@@ -235,6 +235,11 @@ extension RealmResourcesCache {
                 ResourceModel(model: $0)
             }
     }
+    
+    func getAllToolsListCount(filterByCategory: String?, filterByLanguageId: String?) -> Int {
+                 
+        return getAllToolsListResults(filterByCategory: filterByCategory, filterByLanguageId: filterByLanguageId, sortByDefaultOrder: false).count
+    }
 }
 
 // MARK: - Lessons
