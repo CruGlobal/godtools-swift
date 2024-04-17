@@ -19,10 +19,10 @@ class ToolsFilterFeatureDataLayerDependencies {
     
     // MARK: - Data Layer Classes
     
-    func getUserFiltersRepository() -> UserFiltersRepository {
-        return UserFiltersRepository(
-            cache: UserFiltersUserDefaultsCache(
-                sharedUserDefaultsCache: coreDataLayer.getSharedUserDefaultsCache()
+    func getUserToolFiltersRepository() -> UserToolFiltersRepository {
+        return UserToolFiltersRepository(
+            cache: RealmUserToolFiltersCache(
+                realmDatabase: coreDataLayer.getSharedRealmDatabase()
             )
         )
     }
@@ -69,8 +69,8 @@ class ToolsFilterFeatureDataLayerDependencies {
         )
     }
     
-    func getStoreUserFiltersRepositoryInterface() -> StoreUserFiltersRepositoryInterface {
-        return StoreUserFiltersRepository(userFiltersRepository: getUserFiltersRepository())
+    func getStoreUserToolFiltersRepositoryInterface() -> StoreUserToolFiltersRepositoryInterface {
+        return StoreUserToolFiltersRepository(userToolFiltersRepository: getUserToolFiltersRepository())
     }
     
     func getToolFilterCategoriesRepositoryInterface() -> GetToolFilterCategoriesRepositoryInterface {
@@ -89,9 +89,9 @@ class ToolsFilterFeatureDataLayerDependencies {
         return getToolFilterLanguagesInterfaceStringsRepository()
     }
     
-    func getUserFiltersRepositoryInterface() -> GetUserFiltersRepositoryInterface {
-        return GetUserFiltersRepository(
-            userFiltersRepository: getUserFiltersRepository(), 
+    func getUserToolFiltersRepositoryInterface() -> GetUserToolFiltersRepositoryInterface {
+        return GetUserToolFiltersRepository(
+            userToolFiltersRepository: getUserToolFiltersRepository(),
             getToolFilterCategoriesRepository: getToolFilterCategoriesRepository(),
             getToolFilterLanguagesRepository: getToolFilterLanguagesRepository()
         )
