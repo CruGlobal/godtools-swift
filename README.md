@@ -139,7 +139,10 @@ Below are some helpful references to GitHub Actions Workflows and Fastlane Files
 ##### Classes
 
 - Class / Struct attributes should always be declared with the type.
-- Class level attributes should also be grouped by constant vs instance as well as by access level and mutability. Where constants are at the top and grouped by private first, then internal, then public.  Instance variables follow constants and are grouped by private first, then internal, then public.   
+- It is also preferred that there is a consistent grouping of Class / Struct attributes.  This way the code we produce has a similar form which can help when quickly reading someone else's code.  Below is a screenshot of the preferred grouping of Class / Struct attributes.  These attributes are broken into 3 high level groupings, static attributes, instance attributes, and special attributes (property wrappers, etc.)  Within those 3 high level groupings, attributes are grouped by access level private, internal, public, and open.  Within the access level grouping, attributes are then grouped by immutable first, then mutable.  
+  
+
+![alt text](ReadMeAssets/attribute_grouping.png)
 
 #### Project Folder Structure
 
