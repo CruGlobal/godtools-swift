@@ -33,7 +33,7 @@ class ToolsViewModel: ObservableObject {
     private weak var flowDelegate: FlowDelegate?
 
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
-    @Published private var toolFilterLanguageSelection: LanguageFilterDomainModel?
+    @Published private var toolFilterLanguageSelection: LanguageFilterDomainModel = .anyLanguage(text: "Any language", toolsAvailableText: "")
     
     @Published var favoritingToolBannerMessage: String = ""
     @Published var showsFavoritingToolBanner: Bool = false
@@ -116,6 +116,7 @@ class ToolsViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] userFilters in
             
+                self?.toolFilterLanguageSelection = userFilters.languageFilter
                 self?.categoryFilterButtonTitle = userFilters.categoryFilter.categoryButtonText
                 self?.languageFilterButtonTitle = userFilters.languageFilter.languageButtonText
             }
