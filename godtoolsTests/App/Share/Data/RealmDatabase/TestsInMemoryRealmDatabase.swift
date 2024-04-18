@@ -11,10 +11,12 @@ import Foundation
 
 class TestsInMemoryRealmDatabase: RealmDatabase {
     
-    init(identifier: String = "godtoolsTests", schemaVersion: UInt64 = 1) {
+    init(schemaVersion: UInt64 = 1) {
+        
+        let uniqueId: String = "godtoolsTests" + UUID().uuidString
         
         super.init(
-            databaseConfiguration: RealmDatabaseConfiguration(cacheType: .inMemory(identifier: identifier), schemaVersion: schemaVersion)
+            databaseConfiguration: RealmDatabaseConfiguration(cacheType: .inMemory(identifier: uniqueId), schemaVersion: schemaVersion)
         )
     }
 }
