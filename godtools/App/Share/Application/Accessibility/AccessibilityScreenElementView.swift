@@ -22,10 +22,8 @@ struct AccessibilityScreenElementView: View {
     }
     
     var body: some View {
-        ZStack {
-            Text("")
-                .frame(width: 0, height: 0)
-                .accessibilityIdentifier(screenAccessibility.id)
-        }
+        Text("")
+            .frame(width: 0, height: 0)
+            .accessibilityIdentifier(screenAccessibility.id)
     }
 }
