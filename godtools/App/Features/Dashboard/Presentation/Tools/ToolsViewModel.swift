@@ -33,6 +33,7 @@ class ToolsViewModel: ObservableObject {
     private weak var flowDelegate: FlowDelegate?
 
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    @Published private var toolFilterCategorySelection: CategoryFilterDomainModel = .anyCategory(text: "Any category", toolsAvailableText: "")
     @Published private var toolFilterLanguageSelection: LanguageFilterDomainModel = .anyLanguage(text: "Any language", toolsAvailableText: "")
     
     @Published var favoritingToolBannerMessage: String = ""
@@ -67,45 +68,41 @@ class ToolsViewModel: ObservableObject {
             .getLanguagePublisher()
             .assign(to: &$appLanguage)
         
-        $appLanguage.eraseToAnyPublisher()
-            .flatMap { (appLanguage: AppLanguageDomainModel) -> AnyPublisher<(AppLanguageDomainModel, UserToolFiltersDomainModel), Never> in
-                
-                return getUserToolFiltersUseCase.getUserToolFiltersPublisher(translatedInAppLanguage: appLanguage)
-                    .map {
-                        (appLanguage, $0)
-                    }
-                    .eraseToAnyPublisher()
-            }
-            .flatMap({ (appLanguage: AppLanguageDomainModel, userToolsFilter: UserToolFiltersDomainModel) -> AnyPublisher<(ViewToolsDomainModel, [SpotlightToolListItemDomainModel]), Never> in
-                                
-                return Publishers.CombineLatest(
-                    viewToolsUseCase.viewPublisher(
-                        translatedInAppLanguage: appLanguage,
-                        languageForAvailabilityText: userToolsFilter.languageFilter.language,
-                        filterToolsByCategory: userToolsFilter.categoryFilter,
-                        filterToolsByLanguage: userToolsFilter.languageFilter
-                    ),
-                    getSpotlightToolsUseCase.getSpotlightToolsPublisher(
-                        translatedInAppLanguage: appLanguage,
-                        languageForAvailabilityText: userToolsFilter.languageFilter.language
-                    )
+        Publishers.CombineLatest3(
+            $appLanguage.eraseToAnyPublisher(),
+            $toolFilterCategorySelection.eraseToAnyPublisher(),
+            $toolFilterLanguageSelection.eraseToAnyPublisher()
+        )
+        .flatMap({ (appLanguage, toolFilterCategory, toolFilterLanguage) -> AnyPublisher<(ViewToolsDomainModel, [SpotlightToolListItemDomainModel]), Never> in
+                                    
+            return Publishers.CombineLatest(
+                viewToolsUseCase.viewPublisher(
+                    translatedInAppLanguage: appLanguage,
+                    languageForAvailabilityText: toolFilterLanguage.language,
+                    filterToolsByCategory: toolFilterCategory,
+                    filterToolsByLanguage: toolFilterLanguage
+                ),
+                getSpotlightToolsUseCase.getSpotlightToolsPublisher(
+                    translatedInAppLanguage: appLanguage,
+                    languageForAvailabilityText: toolFilterLanguage.language
                 )
-                .eraseToAnyPublisher()
-            })
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (domainModel: ViewToolsDomainModel, spotlightTools: [SpotlightToolListItemDomainModel]) in
-                    
-                self?.favoritingToolBannerMessage = domainModel.interfaceStrings.favoritingToolBannerMessage
-                self?.toolSpotlightTitle = domainModel.interfaceStrings.toolSpotlightTitle
-                self?.toolSpotlightSubtitle = domainModel.interfaceStrings.toolSpotlightSubtitle
-                self?.filterTitle = domainModel.interfaceStrings.filterTitle
+            )
+            .eraseToAnyPublisher()
+        })
+        .receive(on: DispatchQueue.main)
+        .sink { [weak self] (domainModel: ViewToolsDomainModel, spotlightTools: [SpotlightToolListItemDomainModel]) in
                 
-                self?.spotlightTools = spotlightTools
-                
-                self?.allTools = domainModel.tools
-                self?.isLoadingAllTools = false
-            }
-            .store(in: &cancellables)
+            self?.favoritingToolBannerMessage = domainModel.interfaceStrings.favoritingToolBannerMessage
+            self?.toolSpotlightTitle = domainModel.interfaceStrings.toolSpotlightTitle
+            self?.toolSpotlightSubtitle = domainModel.interfaceStrings.toolSpotlightSubtitle
+            self?.filterTitle = domainModel.interfaceStrings.filterTitle
+            
+            self?.spotlightTools = spotlightTools
+            
+            self?.allTools = domainModel.tools
+            self?.isLoadingAllTools = false
+        }
+        .store(in: &cancellables)
         
         $appLanguage.eraseToAnyPublisher()
             .flatMap { appLanguage in
@@ -116,6 +113,7 @@ class ToolsViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] userFilters in
             
+                self?.toolFilterCategorySelection = userFilters.categoryFilter
                 self?.toolFilterLanguageSelection = userFilters.languageFilter
                 self?.categoryFilterButtonTitle = userFilters.categoryFilter.categoryButtonText
                 self?.languageFilterButtonTitle = userFilters.languageFilter.languageButtonText
