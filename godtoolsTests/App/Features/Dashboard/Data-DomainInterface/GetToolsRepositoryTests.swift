@@ -223,7 +223,7 @@ class GetToolsRepositoryTests: QuickSpec {
                             }
                     }
                     
-                    expect(toolsList.count).to(equal(allTools.count))
+                    expect(toolsList.map({$0.id}).sorted()).to(equal(allTools.map({$0.id}).sorted()))
                 }
             }
             
@@ -254,7 +254,7 @@ class GetToolsRepositoryTests: QuickSpec {
                             }
                     }
                     
-                    expect(toolsList.count).to(equal(growthTools.count))
+                    expect(toolsList.map({$0.id}).sorted()).to(equal(growthTools.map({$0.id}).sorted()))
                 }
             }
             
@@ -287,7 +287,7 @@ class GetToolsRepositoryTests: QuickSpec {
                             }
                     }
                     
-                    expect(toolsList.count).to(equal(russianTools.count))
+                    expect(toolsList.map({$0.id}).sorted()).to(equal(russianTools.map({$0.id}).sorted()))
                 }
             }
             
@@ -320,7 +320,7 @@ class GetToolsRepositoryTests: QuickSpec {
                             }
                     }
                     
-                    expect(toolsList.count).to(equal(spanishTools.count))
+                    expect(toolsList.map({$0.id}).sorted()).to(equal(spanishTools.map({$0.id}).sorted()))
                 }
             }
         }
