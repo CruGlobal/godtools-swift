@@ -66,10 +66,10 @@ jobs:
         run: bundle exec pod install --repo-update
 
       - name: Run UITests
-        run: bundle exec fastlane cru_shared_lane_run_tests scheme:GodTools-UITests reset_simulator:true
+        run: bundle exec fastlane cru_shared_lane_run_tests scheme:GodTools-UITests reset_simulator:true reinstall_app:true
 
       - name: Run Tests and Generate Code Coverage Report (.xcresult)
-        run: bundle exec fastlane cru_shared_lane_run_tests output_directory:fastlane_scan_output_directory result_bundle:true reset_simulator:true
+        run: bundle exec fastlane cru_shared_lane_run_tests output_directory:fastlane_scan_output_directory result_bundle:true reset_simulator:true reinstall_app:true
 
       - name: Upload Xcode Code Coverage Report to CodeCov
         uses: codecov/codecov-action@v4
