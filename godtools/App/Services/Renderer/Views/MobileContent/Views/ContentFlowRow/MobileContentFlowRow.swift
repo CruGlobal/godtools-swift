@@ -180,7 +180,7 @@ class MobileContentFlowRow: MobileContentView {
                     toItem: currentItem,
                     attribute: .left,
                     multiplier: 1,
-                    constant: spacingBetweenItems
+                    constant: spacingBetweenItems * -1
                 )
                 
                 addConstraint(right)
