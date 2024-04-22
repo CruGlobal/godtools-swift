@@ -249,6 +249,8 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
             
         countLanguageUsageIfLanguageChanged(updatedLanguage: pageRenderer.language)
         
+        rendererWillChangeSignal.accept()
+        
         currentPageRenderer.send(pageRenderer)
         
         let isInitialPageRender: Bool = pageModels.isEmpty

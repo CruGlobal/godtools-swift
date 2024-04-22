@@ -1,5 +1,5 @@
 //
-//  StoreUserFiltersRepository.swift
+//  StoreUserToolFiltersRepository.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 11/8/23.
@@ -9,18 +9,18 @@
 import Foundation
 import Combine
 
-class StoreUserFiltersRepository: StoreUserFiltersRepositoryInterface {
+class StoreUserToolFiltersRepository: StoreUserToolFiltersRepositoryInterface {
     
-    private let userFiltersRepository: UserFiltersRepository
+    private let userToolFiltersRepository: UserToolFiltersRepository
     
-    init(userFiltersRepository: UserFiltersRepository) {
+    init(userToolFiltersRepository: UserToolFiltersRepository) {
         
-        self.userFiltersRepository = userFiltersRepository
+        self.userToolFiltersRepository = userToolFiltersRepository
     }
     
     func storeUserCategoryFilterPublisher(with id: String?) -> AnyPublisher<Void, Never> {
         
-        userFiltersRepository.storeUserCategoryFilter(with: id)
+        userToolFiltersRepository.storeUserToolCategoryFilter(with: id)
         
         return Just(())
             .eraseToAnyPublisher()
@@ -28,7 +28,7 @@ class StoreUserFiltersRepository: StoreUserFiltersRepositoryInterface {
     
     func storeUserLanguageFilterPublisher(with id: String?) -> AnyPublisher<Void, Never> {
         
-        userFiltersRepository.storeUserLanguageFilter(with: id)
+        userToolFiltersRepository.storeUserToolLanguageFilter(with: id)
         
         return Just(())
             .eraseToAnyPublisher()
