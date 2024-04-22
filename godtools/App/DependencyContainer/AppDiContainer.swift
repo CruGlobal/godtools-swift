@@ -39,6 +39,7 @@ class AppDiContainer {
         let lessonsDiContainer = LessonsFeatureDiContainer(coreDataLayer: dataLayer)
         let onboardingDiContainer = OnboardingDiContainer(coreDataLayer: dataLayer)
         let shareablesDiContainer: ShareablesDiContainer = ShareablesDiContainer(coreDataLayer: dataLayer)
+        let shareGodToolsDiContainer = ShareGodToolsDiContainer(coreDataLayer: dataLayer)
         let spotlightToolsDiContainer = SpotlightToolsDiContainer(coreDataLayer: dataLayer)
         let toolDetailsDiContainer = ToolDetailsFeatureDiContainer(coreDataLayer: dataLayer)
         let toolScreenShareDiContainer = ToolScreenShareFeatureDiContainer(coreDataLayer: dataLayer)
@@ -60,6 +61,7 @@ class AppDiContainer {
             lessons: lessonsDiContainer,
             onboarding: onboardingDiContainer,
             shareables: shareablesDiContainer,
+            shareGodTools: shareGodToolsDiContainer,
             spotlightTools: spotlightToolsDiContainer,
             toolDetails: toolDetailsDiContainer,
             toolScreenShare: toolScreenShareDiContainer,
