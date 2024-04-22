@@ -39,8 +39,11 @@ class BaseFlowTests: XCTestCase {
         self.initialScreen = initialScreen
                         
         app.launchEnvironment[LaunchEnvironmentKey.urlDeeplink.value] = flowDeepLinkUrl
-                
-        app.launch()
+          
+        // I noticed the documentated stated "Unlike launch(), a call to activate() will not terminate the existing instance if the application is already running." (https://developer.apple.com/documentation/xctest/xcuiapplication/2873317-activate)
+        // I'm curious if using activate() will resolve the random UITests failing with "The test runner failed to initialize for UI testing. (Underlying Error: Timed out while loading Accessibility".
+        app.activate()
+        //app.launch()
                 
         checkInitialScreenExists(app: app)
     }
