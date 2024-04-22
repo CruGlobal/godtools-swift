@@ -17,7 +17,7 @@ concurrency:
 
 jobs:
   build:
-    runs-on: macos-13
+    runs-on: macos-14
     env:
       FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT: 60
 
