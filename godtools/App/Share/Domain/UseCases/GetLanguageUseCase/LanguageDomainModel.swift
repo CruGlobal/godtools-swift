@@ -8,6 +8,7 @@
 
 import Foundation
 
+@available(*, deprecated) // Deprecating and I think instead we can pass language dataModel ids around. ~Levi
 struct LanguageDomainModel {
 
     let analyticsContentLanguage: String

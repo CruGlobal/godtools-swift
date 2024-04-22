@@ -30,7 +30,7 @@ class GetToolFilterLanguagesRepository: GetToolFilterLanguagesRepositoryInterfac
             .flatMap { _ in
                 
                 let languageIds = self.resourcesRepository
-                    .getAllToolsList(filterByCategory: filteredByCategoryId)
+                    .getAllToolsList(filterByCategory: filteredByCategoryId, filterByLanguageId: nil, sortByDefaultOrder: false)
                     .getUniqueLanguageIds()
                 
                 let languages = self.createLanguageFilterDomainModelList(from: Array(languageIds), translatedInAppLanguage: translatedInAppLanguage, filteredByCategoryId: filteredByCategoryId)
@@ -83,7 +83,7 @@ extension GetToolFilterLanguagesRepository {
         let languages: [LanguageFilterDomainModel] = languagesRepository.getLanguages(ids: languageIds)
             .compactMap { languageModel in
                 
-                let toolsAvailableCount: Int = getToolsAvailableCount(for: languageModel.code, filteredByCategoryId: filteredByCategoryId)
+                let toolsAvailableCount: Int = getToolsAvailableCount(for: languageModel.id, filteredByCategoryId: filteredByCategoryId)
                 
                 guard toolsAvailableCount > 0 else {
                     return nil
@@ -108,7 +108,7 @@ extension GetToolFilterLanguagesRepository {
     
     private func createLanguageFilterDomainModel(with languageModel: LanguageModel, translatedInAppLanguage: AppLanguageDomainModel, filteredByCategoryId: String?) -> LanguageFilterDomainModel {
         
-        let toolsAvailableCount: Int = getToolsAvailableCount(for: languageModel.code, filteredByCategoryId: filteredByCategoryId)
+        let toolsAvailableCount: Int = getToolsAvailableCount(for: languageModel.id, filteredByCategoryId: filteredByCategoryId)
         
         let languageName = translatedLanguageNameRepository.getLanguageName(language: languageModel.code, translatedInLanguage: languageModel.code)
         let translatedLanguageName = translatedLanguageNameRepository.getLanguageName(language: languageModel.code, translatedInLanguage: translatedInAppLanguage)
@@ -143,15 +143,9 @@ extension GetToolFilterLanguagesRepository {
         )
     }
     
-    private func getToolsAvailableCount(for languageCode: BCP47LanguageIdentifier?, filteredByCategoryId: String?) -> Int {
+    private func getToolsAvailableCount(for languageId: String?, filteredByCategoryId: String?) -> Int {
         
-        let filter = ResourcesFilter(
-            category: filteredByCategoryId,
-            languageModelCode: languageCode,
-            resourceTypes: ResourceType.toolTypes
-        )
-        
-        return resourcesRepository.getCachedResourcesByFilter(filter: filter).count
+        return resourcesRepository.getAllToolsListCount(filterByCategory: filteredByCategoryId, filterByLanguageId: languageId)
     }
     
     private func getToolsAvailableText(toolsAvailableCount: Int, translatedInAppLanguage: AppLanguageDomainModel) -> String {
