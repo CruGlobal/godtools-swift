@@ -54,7 +54,7 @@ class LessonView: MobileContentPagesView {
         setPageInsets(pageInsets: UIEdgeInsets(top: progressView.height, left: 0, bottom: 0, right: 0))
         
         // progressView
-        addProgressView(progressView: progressView)
+        progressView.attachToParent(viewController: self, safeAreaView: safeAreaView)
         progressView.setProgress(progress: 0, animated: false)
         
         // navigation buttons
@@ -88,68 +88,6 @@ class LessonView: MobileContentPagesView {
 extension LessonView: LessonProgressViewDelegate {
     func lessonProgressViewCloseTapped(progressView: LessonProgressView) {
         viewModel.closeTapped()
-    }
-}
-
-// MARK: - ProgressView
-
-extension LessonView {
-    
-    private func addProgressView(progressView: LessonProgressView) {
-        
-        let parentView: UIView = view
-        
-        parentView.addSubview(progressView)
-        
-        progressView.translatesAutoresizingMaskIntoConstraints = false
-        
-        let leading: NSLayoutConstraint = NSLayoutConstraint(
-            item: progressView,
-            attribute: .leading,
-            relatedBy: .equal,
-            toItem: parentView,
-            attribute: .leading,
-            multiplier: 1,
-            constant: 0
-        )
-        
-        let trailing: NSLayoutConstraint = NSLayoutConstraint(
-            item: progressView,
-            attribute: .trailing,
-            relatedBy: .equal,
-            toItem: parentView,
-            attribute: .trailing,
-            multiplier: 1,
-            constant: 0
-        )
-        
-        let top: NSLayoutConstraint = NSLayoutConstraint(
-            item: progressView,
-            attribute: .top,
-            relatedBy: .equal,
-            toItem: safeAreaView,
-            attribute: .top,
-            multiplier: 1,
-            constant: 0
-        )
-        
-        parentView.addConstraint(leading)
-        parentView.addConstraint(trailing)
-        parentView.addConstraint(top)
-        
-        let heightConstraint: NSLayoutConstraint = NSLayoutConstraint(
-            item: progressView,
-            attribute: .height,
-            relatedBy: .equal,
-            toItem: nil,
-            attribute: .notAnAttribute,
-            multiplier: 1,
-            constant: progressView.height
-        )
-        
-        heightConstraint.priority = UILayoutPriority(1000)
-        
-        progressView.addConstraint(heightConstraint)
     }
 }
 
