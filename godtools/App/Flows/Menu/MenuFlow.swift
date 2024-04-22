@@ -15,10 +15,12 @@ class MenuFlow: Flow {
     
     private var tutorialFlow: TutorialFlow?
     private var languageSettingsFlow: LanguageSettingsFlow?
+    private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    @Published private var viewShareGodToolsDomainModel: ViewShareGodToolsDomainModel?
     
     let appDiContainer: AppDiContainer
     let navigationController: AppNavigationController
@@ -47,6 +49,18 @@ class MenuFlow: Flow {
             .getCurrentAppLanguageUseCase()
             .getLanguagePublisher()
             .assign(to: &$appLanguage)
+        
+        $appLanguage.eraseToAnyPublisher()
+            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewShareGodToolsDomainModel, Never> in
+                return appDiContainer.feature.shareGodTools.domainLayer
+                    .getViewShareGodToolsUseCase()
+                    .viewPublisher(appLanguage: appLanguage)
+                    .eraseToAnyPublisher()
+            })
+            .sink { [weak self] (domainModel: ViewShareGodToolsDomainModel) in
+                self?.viewShareGodToolsDomainModel = domainModel
+            }
+            .store(in: &cancellables)
     }
     
     deinit {
@@ -116,10 +130,7 @@ class MenuFlow: Flow {
 
         case .shareGodToolsTappedFromMenu:
 
-            let textToShare: String = appDiContainer.dataLayer.getLocalizationServices().stringForSystemElseEnglish(key: "share_god_tools_share_sheet_text")
-            let view = UIActivityViewController(activityItems: [textToShare], applicationActivities: nil)
-
-            navigationController.present(view, animated: true, completion: nil)
+            navigationController.present(getShareGodToolsView(), animated: true, completion: nil)
             
         case .sendFeedbackTappedFromMenu:
             let sendFeedbackWebContent = SendFeedbackWebContent(localizationServices: appDiContainer.dataLayer.getLocalizationServices())
@@ -512,6 +523,25 @@ class MenuFlow: Flow {
         )
         
         navigationController.pushViewController(view, animated: true)
+    }
+}
+
+extension MenuFlow {
+    
+    private func getShareGodToolsView() -> UIViewController {
+        
+        guard let domainModel = viewShareGodToolsDomainModel else {
+            let viewModel = AlertMessageViewModel(title: "Internal Error", message: "Failed to fetch data for share godtools modal.", cancelTitle: nil, acceptTitle: "OK", acceptHandler: nil)
+            return AlertMessageView(viewModel: viewModel).controller
+        }
+        
+        let viewModel = ShareGodToolsViewModel(
+            viewShareGodToolsDomainModel: domainModel
+        )
+        
+        let view = ShareGodToolsView(viewModel: viewModel)
+        
+        return view
     }
 }
 
