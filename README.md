@@ -151,13 +151,38 @@ I also realize there may be cases for attributes that aren't outlined here, exam
 
 There are 3 primary folders to be aware about in the project folder structure.  That is the Features, Flows, and Share folders.
 
-##### Features Folder
+#### Features Folder
 
-The features folder should consist of sub folders named according to a feature in the app.  As new features are added into the app, new feature folders should be created.  
+The features folder is where most of the app code is going to live.  This is code that implements clean architecture (presentation, domain, data, and data-domain interface) layers.
 
-The idea of a feature folder is to isolate code specific to that feature.  Think of it as it's own module.  The primary goal for this is scalability. As the app continues to grow and new features are added, we can keep a flat hierarchy of features and their dependencies.
+Each subfolder in the Features folder is named to reflect a feature in the app.
 
-Within a feature folder are 5 folders.  Data, Data-DomainInterface, DependencyContainer, Domain, Presentation.
+The purpose of adding feature folders in this way is scalability.  It's inevitable that the app will grow in size as product continually comes up with new features they would like to see in the app.  More features means more code and we need to organize code in such a way that it's easy to scale with new features.
+
+Think of a feature folder as its own module.  A feature really should be independent from all other features with some minor overlap where Feature_A might require some data produced by a UseCase in Feature_B.
+
+##### Features Folder Responsibilities
+
+- Should contain subfolders named to reflect a specific feature in the app.
+- Each feature folder should contain the following directories to aid in clean architecture. (Data, Data-DomainInterface, DependencyContainer, Domain, and Presentation).  The code in these folders will be specific to the feature and support the implementation of the feature.
+
+##### Features Folder - Data
+
+The Data folder should contain additional directories for the raw data layer classes.  This will typically be repositories and other services for operating on the raw data layer. 
+
+##### Features Folder - Data-DomainInterface
+
+The Data-DomainInterface folder will contain the implementations for the domain layer interfaces.
+
+##### Features Folder - DependencyContainer
+
+The DependencyContainer will consist of a FeatureDiContainer, FeatureDataLayerContainer, and FeatureDomainLayerContainer.  These classes support the Coordinator (Flow) when injecting dependencies into ViewModels.
+
+##### Features Folder - Domain
+
+The Domain folder will consist of the following folders (Entities, Interface, UseCases).  Entities is where DomainModels should live.  Interfaces is where all the UseCase defined interfaces should live for dependency inversion.  UseCases is were all UseCases for the feature should live.
+
+##### Features Folder - Presentation
 
 ###### App/Feature/Data Folder
 
