@@ -70,6 +70,7 @@ class MobileContentPageView: MobileContentView, NibBased {
     
     func setupLayout() {
         
+        // Intended for subclasses to override. ~Levi
     }
     
     func setupBinding() {
@@ -95,6 +96,7 @@ class MobileContentPageView: MobileContentView, NibBased {
     
     func setSemanticContentAttribute(semanticContentAttribute: UISemanticContentAttribute) {
         
+        // Intended for subclasses to override. ~Levi
     }
         
     // MARK: - MobileContentView
