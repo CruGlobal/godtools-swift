@@ -163,6 +163,13 @@ class MobileContentCardCollectionPageView: MobileContentPageView {
                 
         cardPageNavigationView.scrollToPage(page: currentPage, animated: animated)        
     }
+    
+    override func setSemanticContentAttribute(semanticContentAttribute: UISemanticContentAttribute) {
+        
+        super.setSemanticContentAttribute(semanticContentAttribute: semanticContentAttribute)
+        
+        cardPageNavigationView.setSemanticContentAttribute(semanticContentAttribute: semanticContentAttribute)
+    }
 }
 
 extension MobileContentCardCollectionPageView: PageNavigationCollectionViewDelegate {

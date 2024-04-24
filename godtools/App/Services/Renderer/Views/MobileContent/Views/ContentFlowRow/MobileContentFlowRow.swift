@@ -166,40 +166,38 @@ class MobileContentFlowRow: MobileContentView {
         for index in 0 ..< flowItems.count {
             
             let currentItem: MobileContentFlowRowItem = flowItems[index]
-            let nextIndex: Int = index + 1
             
-            if nextIndex < flowItems.count {
+            guard let nextItem = flowItems[safe: index + 1] else {
+                continue
+            }
+            
+            if layoutDirection == .forceRightToLeft {
                 
-                let nextItem: MobileContentFlowRowItem = flowItems[nextIndex]
-                       
-                if layoutDirection == .forceRightToLeft {
-                    
-                    let right: NSLayoutConstraint = NSLayoutConstraint(
-                        item: nextItem,
-                        attribute: .right,
-                        relatedBy: .equal,
-                        toItem: currentItem,
-                        attribute: .left,
-                        multiplier: 1,
-                        constant: spacingBetweenItems
-                    )
-                    
-                    addConstraint(right)
-                }
-                else {
-                 
-                    let left: NSLayoutConstraint = NSLayoutConstraint(
-                        item: nextItem,
-                        attribute: .left,
-                        relatedBy: .equal,
-                        toItem: currentItem,
-                        attribute: .right,
-                        multiplier: 1,
-                        constant: spacingBetweenItems
-                    )
-                    
-                    addConstraint(left)
-                }
+                let right: NSLayoutConstraint = NSLayoutConstraint(
+                    item: nextItem,
+                    attribute: .right,
+                    relatedBy: .equal,
+                    toItem: currentItem,
+                    attribute: .left,
+                    multiplier: 1,
+                    constant: spacingBetweenItems * -1
+                )
+                
+                addConstraint(right)
+            }
+            else {
+             
+                let left: NSLayoutConstraint = NSLayoutConstraint(
+                    item: nextItem,
+                    attribute: .left,
+                    relatedBy: .equal,
+                    toItem: currentItem,
+                    attribute: .right,
+                    multiplier: 1,
+                    constant: spacingBetweenItems
+                )
+                
+                addConstraint(left)
             }
         }
         
