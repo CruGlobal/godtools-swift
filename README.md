@@ -149,7 +149,7 @@ I also realize there may be cases for attributes that aren't outlined here, exam
 
 #### Project Folder Structure
 
-There are 3 primary folders to be aware about in the project folder structure.  Those are the Features, Flows, and Share folders.
+There are 3 primary folders to be aware about in the project folder structure.  That is the Features, Flows, and Share folders.
 
 ##### Features Folder
 
