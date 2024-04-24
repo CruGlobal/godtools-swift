@@ -11,5 +11,5 @@ import Combine
 
 protocol GetToolsRepositoryInterface {
     
-    func getToolsPublisher(translatedInAppLanguage: AppLanguageDomainModel, languageForAvailabilityText: LanguageDomainModel?) -> AnyPublisher<[ToolListItemDomainModel], Never>
+    func getToolsPublisher(translatedInAppLanguage: AppLanguageDomainModel, languageForAvailabilityText: LanguageDomainModel?, filterToolsByCategory: CategoryFilterDomainModel?, filterToolsByLanguage: LanguageFilterDomainModel?) -> AnyPublisher<[ToolListItemDomainModel], Never>
 }

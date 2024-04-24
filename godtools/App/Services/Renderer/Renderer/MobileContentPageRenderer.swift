@@ -15,6 +15,7 @@ class MobileContentPageRenderer {
     
     let sharedState: State
     let resource: ResourceModel
+    let appLanguage: AppLanguageDomainModel
     let primaryLanguage: LanguageDomainModel
     let manifest: Manifest
     let language: LanguageDomainModel
@@ -23,10 +24,11 @@ class MobileContentPageRenderer {
     let viewRenderer: MobileContentViewRenderer
     let pagesViewDataCache: MobileContentPageRendererPagesViewDataCache = MobileContentPageRendererPagesViewDataCache()
     
-    init(sharedState: State, resource: ResourceModel, primaryLanguage: LanguageDomainModel, languageTranslationManifest: MobileContentRendererLanguageTranslationManifest, pageViewFactories: MobileContentRendererPageViewFactories, navigation: MobileContentRendererNavigation, manifestResourcesCache: MobileContentRendererManifestResourcesCache) {
+    init(sharedState: State, resource: ResourceModel, appLanguage: AppLanguageDomainModel, primaryLanguage: LanguageDomainModel, languageTranslationManifest: MobileContentRendererLanguageTranslationManifest, pageViewFactories: MobileContentRendererPageViewFactories, navigation: MobileContentRendererNavigation, manifestResourcesCache: MobileContentRendererManifestResourcesCache) {
         
         self.sharedState = sharedState
         self.resource = resource
+        self.appLanguage = appLanguage
         self.primaryLanguage = primaryLanguage
         self.manifest = languageTranslationManifest.manifest
         self.language = languageTranslationManifest.language
@@ -91,6 +93,7 @@ class MobileContentPageRenderer {
             manifest: manifest,
             resourcesCache: manifestResourcesCache,
             resource: resource,
+            appLanguage: appLanguage,
             language: language,
             translation: translation,
             viewRenderer: viewRenderer,

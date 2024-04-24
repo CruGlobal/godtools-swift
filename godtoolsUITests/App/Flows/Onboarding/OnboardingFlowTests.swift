@@ -85,19 +85,19 @@ class OnboardingFlowTests: BaseFlowTests {
         
         XCTAssertTrue(nextTutorialPageButton.exists)
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .onboardingTutorialPage1)
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .onboardingTutorialPage1, waitForExistence: 0.5)
         
         nextTutorialPageButton.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .onboardingTutorialPage2)
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .onboardingTutorialPage2, waitForExistence: 0.5)
         
         nextTutorialPageButton.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .onboardingTutorialPage3)
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .onboardingTutorialPage3, waitForExistence: 0.5)
         
         nextTutorialPageButton.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .onboardingTutorialPage4)
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .onboardingTutorialPage4, waitForExistence: 0.5)
     }
     
     func testSkippingOnboardingNavigatesToDashboardFavorites() {

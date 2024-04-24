@@ -10,7 +10,7 @@ import Foundation
 import GodToolsToolParser
 
 protocol ToolNavigationFlow: Flow {
-    
+        
     var articleFlow: ArticleFlow? { get set }
     var chooseYourOwnAdventureFlow: ChooseYourOwnAdventureFlow? { get set }
     var lessonFlow: LessonFlow? { get set }
@@ -20,7 +20,7 @@ protocol ToolNavigationFlow: Flow {
 
 extension ToolNavigationFlow {
         
-    func navigateToToolFromToolDeepLink(toolDeepLink: ToolDeepLink, didCompleteToolNavigation: ((_ resource: ResourceModel) -> Void)?) {
+    func navigateToToolFromToolDeepLink(appLanguage: AppLanguageDomainModel, toolDeepLink: ToolDeepLink, didCompleteToolNavigation: ((_ resource: ResourceModel) -> Void)?) {
         
         let determineDeepLinkedToolTranslationsToDownload = DetermineDeepLinkedToolTranslationsToDownload(
             toolDeepLink: toolDeepLink,
@@ -31,6 +31,7 @@ extension ToolNavigationFlow {
         )
         
         navigateToToolAndDetermineToolTranslationsToDownload(
+            appLanguage: appLanguage,
             determineToolTranslationsToDownload: determineDeepLinkedToolTranslationsToDownload,
             liveShareStream: toolDeepLink.liveShareStream,
             selectedLanguageIndex: toolDeepLink.selectedLanguageIndex,
@@ -39,7 +40,7 @@ extension ToolNavigationFlow {
         )
     }
     
-    func navigateToTool(resourceId: String, languageIds: [String], liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?) {
+    func navigateToTool(appLanguage: AppLanguageDomainModel, resourceId: String, languageIds: [String], liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?) {
         
         let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(
             resourceId: resourceId,
@@ -49,6 +50,7 @@ extension ToolNavigationFlow {
         )
         
         navigateToToolAndDetermineToolTranslationsToDownload(
+            appLanguage: appLanguage,
             determineToolTranslationsToDownload: determineToolTranslationsToDownload,
             liveShareStream: liveShareStream,
             selectedLanguageIndex: selectedLanguageIndex,
@@ -57,7 +59,7 @@ extension ToolNavigationFlow {
         )
     }
     
-    private func navigateToToolAndDetermineToolTranslationsToDownload(determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?) {
+    private func navigateToToolAndDetermineToolTranslationsToDownload(appLanguage: AppLanguageDomainModel, determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?) {
         
         let didDownloadToolTranslationsClosure = { [weak self] (result: Result<ToolTranslationsDomainModel, Error>) in
                         
@@ -66,6 +68,7 @@ extension ToolNavigationFlow {
             case .success(let toolTranslations):
                 
                 self?.navigateToTool(
+                    appLanguage: appLanguage,
                     toolTranslations: toolTranslations,
                     liveShareStream: liveShareStream,
                     selectedLanguageIndex: selectedLanguageIndex,
@@ -90,7 +93,7 @@ extension ToolNavigationFlow {
         self.downloadToolTranslationFlow = downloadToolTranslationFlow
     }
     
-    private func navigateToTool(toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?) {
+    private func navigateToTool(appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?) {
         
         let resourceType: ResourceType = toolTranslations.tool.resourceTypeEnum
         
@@ -111,6 +114,7 @@ extension ToolNavigationFlow {
                 flowDelegate: self,
                 appDiContainer: appDiContainer,
                 sharedNavigationController: navigationController,
+                appLanguage: appLanguage,
                 toolTranslations: toolTranslations,
                 trainingTipsEnabled: trainingTipsEnabled,
                 initialPage: initialPage
@@ -122,6 +126,7 @@ extension ToolNavigationFlow {
                 flowDelegate: self,
                 appDiContainer: appDiContainer,
                 sharedNavigationController: navigationController,
+                appLanguage: appLanguage,
                 toolTranslations: toolTranslations,
                 liveShareStream: liveShareStream,
                 selectedLanguageIndex: selectedLanguageIndex,
@@ -135,6 +140,7 @@ extension ToolNavigationFlow {
                 flowDelegate: self,
                 appDiContainer: appDiContainer,
                 sharedNavigationController: navigationController,
+                appLanguage: appLanguage,
                 toolTranslations: toolTranslations,
                 initialPage: initialPage,
                 selectedLanguageIndex: selectedLanguageIndex

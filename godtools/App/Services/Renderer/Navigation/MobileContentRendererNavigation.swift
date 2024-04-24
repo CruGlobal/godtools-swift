@@ -18,6 +18,7 @@ protocol MobileContentRendererNavigationDelegate: AnyObject {
 class MobileContentRendererNavigation {
     
     private let appDiContainer: AppDiContainer
+    private let appLanguage: AppLanguageDomainModel
     
     private var toolTraining: ToolTrainingView?
     private var downloadToolTranslationsFlow: DownloadToolTranslationsFlow?
@@ -25,11 +26,12 @@ class MobileContentRendererNavigation {
     private weak var parentFlow: ToolNavigationFlow?
     private weak var delegate: MobileContentRendererNavigationDelegate?
     
-    init(parentFlow: ToolNavigationFlow, delegate: MobileContentRendererNavigationDelegate, appDiContainer: AppDiContainer) {
+    init(parentFlow: ToolNavigationFlow, delegate: MobileContentRendererNavigationDelegate, appDiContainer: AppDiContainer, appLanguage: AppLanguageDomainModel) {
         
         self.parentFlow = parentFlow
         self.delegate = delegate
         self.appDiContainer = appDiContainer
+        self.appLanguage = appLanguage
     }
     
     deinit {
@@ -51,7 +53,7 @@ class MobileContentRendererNavigation {
                             
             case .tool(let toolDeepLink):
                 
-                parentFlow?.navigateToToolFromToolDeepLink(toolDeepLink: toolDeepLink, didCompleteToolNavigation: nil)
+                parentFlow?.navigateToToolFromToolDeepLink(appLanguage: appLanguage, toolDeepLink: toolDeepLink, didCompleteToolNavigation: nil)
                 
             default:
                 break
@@ -125,12 +127,14 @@ class MobileContentRendererNavigation {
         let navigation = MobileContentRendererNavigation(
             parentFlow: parentFlow,
             delegate: self,
-            appDiContainer: appDiContainer
+            appDiContainer: appDiContainer,
+            appLanguage: appLanguage
         )
         
         let pageRenderer = MobileContentPageRenderer(
             sharedState: State(),
             resource: event.renderedPageContext.resource,
+            appLanguage: appLanguage,
             primaryLanguage: event.renderedPageContext.primaryRendererLanguage,
             languageTranslationManifest: languageTranslationManifest,
             pageViewFactories: pageViewFactories,

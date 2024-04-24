@@ -47,6 +47,7 @@ class MobileContentEmbeddedVideoViewModel: MobileContentViewModel {
         let playsInFullScreen = 0
         
         return [
+            YoutubePlayerParameters.interfaceLanguage.rawValue: renderedPageContext.appLanguage,
             YoutubePlayerParameters.playsInline.rawValue: playsInFullScreen
         ]
 

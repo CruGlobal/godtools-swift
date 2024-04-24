@@ -67,10 +67,10 @@ jobs:
 
       # (Levi) Disabling UITests until random crash can be resolved.  "godtoolsUITests-Runner (45101) encountered an error (The test runner failed to initialize for UI testing. (Underlying Error: Timed out while loading Accessibility.))"
       #- name: Run UITests
-      #  run: bundle exec fastlane cru_shared_lane_run_tests scheme:GodTools-UITests
+      #  run: bundle exec fastlane cru_shared_lane_run_tests scheme:GodTools-UITests reset_simulator:true should_clear_derived_data:true
 
       - name: Run Tests and Generate Code Coverage Report (.xcresult)
-        run: bundle exec fastlane cru_shared_lane_run_tests output_directory:fastlane_scan_output_directory result_bundle:true
+        run: bundle exec fastlane cru_shared_lane_run_tests output_directory:fastlane_scan_output_directory result_bundle:true reset_simulator:true should_clear_derived_data:true
 
       - name: Upload Xcode Code Coverage Report to CodeCov
         uses: codecov/codecov-action@v4
