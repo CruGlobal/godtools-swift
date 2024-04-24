@@ -239,6 +239,8 @@ extension MobileContentPagesView: PageNavigationCollectionViewDelegate {
         
         pageView.setDelegate(delegate: self)
         
+        pageView.setSemanticContentAttribute(semanticContentAttribute: viewModel.layoutDirection)
+        
         didConfigurePageView(pageView: pageView)
                         
         return cell

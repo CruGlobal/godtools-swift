@@ -39,7 +39,6 @@ class PageNavigationCollectionView: UIView, NibBased {
     private var pageNavigationCompletedClosure: ((_ completed: PageNavigationCollectionViewNavigationCompleted) -> Void)?
     private var internalCurrentChangedPage: Int = -1
     private var internalCurrentStoppedOnPage: Int = -1
-    private var layoutDirectionTransform: CGAffineTransform = CGAffineTransform(scaleX: 1, y: 1)
     
     @IBOutlet weak private var collectionView: UICollectionView!
     
@@ -204,16 +203,12 @@ class PageNavigationCollectionView: UIView, NibBased {
         collectionView.setContentOffset(contentOffset, animated: animated)
     }
     
+    func getSemanticContentAttribute() -> UISemanticContentAttribute {
+        return collectionView.semanticContentAttribute
+    }
+    
     func setSemanticContentAttribute(semanticContentAttribute: UISemanticContentAttribute) {
-              
-        let systemIsRightToLeft: Bool = UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft
-
-        let scaleXForSemantic: CGFloat = semanticContentAttribute == .forceRightToLeft ? -1.0 : 1.0
-        let scaleX: CGFloat = systemIsRightToLeft ? scaleXForSemantic * -1.0 : scaleXForSemantic
-        
-        layoutDirectionTransform = CGAffineTransform(scaleX: scaleX, y: 1.0)
-        
-        collectionView.transform = layoutDirectionTransform
+        collectionView.semanticContentAttribute = semanticContentAttribute
     }
     
     func getIndexPathForPageCell(pageCell: UICollectionViewCell) -> IndexPath? {
@@ -291,28 +286,6 @@ class PageNavigationCollectionView: UIView, NibBased {
         return getPageBasedOnContentOffset(contentOffset: collectionView.contentOffset)
     }
     
-    func convertPageForLanguageDirection(page: Int) -> Int {
-        
-        let numberOfPages: Int = getNumberOfPages()
-        
-        guard numberOfPages > 0 else {
-            return 0
-        }
-        
-        let pageForLanguageDirection: Int
-        
-        if collectionView.semanticContentAttribute == .forceRightToLeft {
-            
-            pageForLanguageDirection = numberOfPages - 1 - page
-        }
-        else {
-            
-            pageForLanguageDirection = page
-        }
-        
-        return pageForLanguageDirection
-    }
-    
     func getPageBasedOnContentOffset(contentOffset: CGPoint) -> Int {
                 
         let numberOfPages: Int = getNumberOfPages()
@@ -338,9 +311,15 @@ class PageNavigationCollectionView: UIView, NibBased {
             page = Int(maxPage)
         }
         
-        let pageForLanguageDirection: Int = convertPageForLanguageDirection(page: page)
+        if loggingEnabled {
+            
+            logMessage(message: "getPageBasedOnContentOffset()")
+            print("  contentOffset: \(contentOffset.x)")
+            print("  numberOfPages: \(numberOfPages)")
+            print("  page: \(page)")
+        }
         
-        return pageForLanguageDirection
+        return page
     }
     
     func getPageContentOffset(page: Int) -> CGPoint {
@@ -605,9 +584,7 @@ extension PageNavigationCollectionView: UICollectionViewDelegateFlowLayout, UICo
         
         cell?.backgroundColor = pageBackgroundColor
         cell?.contentView.backgroundColor = pageBackgroundColor
-        
-        cell?.transform = layoutDirectionTransform
-        
+                
         return cell ?? UICollectionViewCell()
     }
     

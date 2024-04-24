@@ -92,6 +92,10 @@ class MobileContentPageView: MobileContentView, NibBased {
     func setDelegate(delegate: MobileContentPageViewDelegate?) {
         self.delegate = delegate
     }
+    
+    func setSemanticContentAttribute(semanticContentAttribute: UISemanticContentAttribute) {
+        
+    }
         
     // MARK: - MobileContentView
     
