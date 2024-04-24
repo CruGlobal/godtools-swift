@@ -12,6 +12,8 @@ import Combine
 
 class ChooseYourOwnAdventureFlow: ToolNavigationFlow {
         
+    private let appLanguage: AppLanguageDomainModel
+    
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
@@ -25,11 +27,12 @@ class ChooseYourOwnAdventureFlow: ToolNavigationFlow {
     var tractFlow: TractFlow?
     var downloadToolTranslationFlow: DownloadToolTranslationsFlow?
     
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, toolTranslations: ToolTranslationsDomainModel, initialPage: MobileContentPagesPage?, selectedLanguageIndex: Int?) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel, initialPage: MobileContentPagesPage?, selectedLanguageIndex: Int?) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController
+        self.appLanguage = appLanguage
         
         sharedNavigationController.pushViewController(
             getChooseYourOwnAdventureView(toolTranslations: toolTranslations, initialPage: initialPage, selectedLanguageIndex: selectedLanguageIndex),
@@ -63,12 +66,14 @@ extension ChooseYourOwnAdventureFlow {
         
         let navigation: MobileContentRendererNavigation = appDiContainer.getMobileContentRendererNavigation(
             parentFlow: self,
-            navigationDelegate: self
+            navigationDelegate: self,
+            appLanguage: appLanguage
         )
         
         let renderer: MobileContentRenderer = appDiContainer.getMobileContentRenderer(
             type: .chooseYourOwnAdventure,
             navigation: navigation,
+            appLanguage: appLanguage,
             toolTranslations: toolTranslations
         )
         

@@ -10,7 +10,9 @@ import UIKit
 import GodToolsToolParser
 
 class LessonFlow: ToolNavigationFlow, Flow {
-                
+    
+    private let appLanguage: AppLanguageDomainModel
+    
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
@@ -22,20 +24,23 @@ class LessonFlow: ToolNavigationFlow, Flow {
     var tractFlow: TractFlow?
     var downloadToolTranslationFlow: DownloadToolTranslationsFlow?
     
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, toolTranslations: ToolTranslationsDomainModel, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController
+        self.appLanguage = appLanguage
                
         let navigation: MobileContentRendererNavigation = appDiContainer.getMobileContentRendererNavigation(
             parentFlow: self,
-            navigationDelegate: self
+            navigationDelegate: self,
+            appLanguage: appLanguage
         )
         
         let renderer: MobileContentRenderer = appDiContainer.getMobileContentRenderer(
             type: .lesson,
             navigation: navigation,
+            appLanguage: appLanguage,
             toolTranslations: toolTranslations
         )
               

@@ -12,11 +12,11 @@ import Combine
 
 class TractFlow: ToolNavigationFlow, Flow {
         
+    private let appLanguage: AppLanguageDomainModel
+    
     private var toolSettingsFlow: ToolSettingsFlow?
     private var cancellables: Set<AnyCancellable> = Set()
-    
-    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
-    
+        
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
@@ -28,15 +28,12 @@ class TractFlow: ToolNavigationFlow, Flow {
     var tractFlow: TractFlow?
     var downloadToolTranslationFlow: DownloadToolTranslationsFlow?
     
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController?, toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController?, appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController ?? AppNavigationController(navigationBarAppearance: nil)
-        
-        appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase()
-            .getLanguagePublisher()
-            .assign(to: &$appLanguage)
+        self.appLanguage = appLanguage
         
         let toolView = getToolView(
             toolTranslations: toolTranslations,
@@ -159,12 +156,14 @@ extension TractFlow {
         
         let navigation: MobileContentRendererNavigation = appDiContainer.getMobileContentRendererNavigation(
             parentFlow: self,
-            navigationDelegate: self
+            navigationDelegate: self,
+            appLanguage: appLanguage
         )
         
         let renderer: MobileContentRenderer = appDiContainer.getMobileContentRenderer(
             type: .tract,
             navigation: navigation,
+            appLanguage: appLanguage,
             toolTranslations: toolTranslations
         )
         
