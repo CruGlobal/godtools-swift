@@ -23,7 +23,7 @@ The GodTools app architecture consists of 3 layers (Presentation Layer, Domain L
 - Presentation Layer: (View and ViewModel)
 - Domain Layer: (Use Cases, Domain Models, and Data Layer Interfaces)
 - Data Layer: (Implements domain layer interfaces and consists of Repositories, Networking, Peristence, and other Data Connectivity)
-- Data-DomainInterface: (In GodTools we have this additional layer which holds all the business logic.  These classes will implement the domain interfaces and operate on the raw data layer classes and apply business rules)
+- Data-DomainInterface: (In GodTools we have this additional layer which holds all the business logic.  These classes will implement the domain layer interfaces and operate on the raw data layer classes and apply business rules)
 
 #### Purpose of this Architecture:
 - Creates a clear separation of concerns and responsibilities.
@@ -44,10 +44,10 @@ The GodTools app architecture consists of 3 layers (Presentation Layer, Domain L
 - Animation logic (SwiftUI).
 - References a ViewModel using property wrapper @ObservedObject.
 - Observes ViewModel output via @Published properties.
-- Sends inputs to the ViewModel (button tap, text input, page viewed, etc.).
+- Sends inputs to the ViewModel (button tap, text input, page viewed, etc.).  Purpose here is to drive data.
 
 ##### ViewModel Responsibilities
-- Considered a View representation. However, knows nothing of the specific UI elements that structure a View. 
+- Considered a View representation or data backing of the View. However, knows nothing of the specific UI elements that structure a View. 
 - Defines the inputs, these are typically user initiated inputs.  The view makes calls to these inputs in order to drive the data.
 - Communicates to the Domain Layer via UseCases which are injected upon initialization.  
 - Provides output to the View via @Published properties to update View state by implementing Combine's ObservableObject protocol.
@@ -65,7 +65,7 @@ The GodTools app architecture consists of 3 layers (Presentation Layer, Domain L
 - Should be responsible for a single task and named to reflect that task.
 - Operates on the data layer utilizing dependency inversion.  This means UseCases should only point to interfaces. 
 - Should define inputs needed to produce the output of the UseCase.  UseCases should typically produce a DomainModel output that encapsulates the business requirements.
-- Once a UseCase is defined, it is then composed of 1 or more interfaces (dependency inversion principle) to complete the Use Case DomainModel.
+- Once a UseCase is defined, it is then composed of 1 or more interfaces (dependency inversion principle) to complete the UseCase DomainModel.
 - By using dependency inversion, concrete implementations can isolate the business rules keeping the data layer free from such responsibilities. 
 
 ##### Use Cases (Best Practices)
@@ -79,19 +79,19 @@ The GodTools app architecture consists of 3 layers (Presentation Layer, Domain L
 
 ##### Interfaces
 - All use cases will be composed of 1 or more interfaces to accomplish dependency inversion.  In most situations these interfaces will be some type of repository interface for fetching data or an interface to perform some sort of service on the data layer.
-- Interfaces should also define any clear inputs to accomplish the intent and produce a Combine Publisher output.  In most situations the Combine Publisher should produce a Domain Model.  
+- Interfaces should define any clear inputs to accomplish the intent and produce a single AnyPublisher output.  In most situations the AnyPublisher should produce a DomainModel.  
 
 ##### Domain Models
 - These will model app specific data or business specific data.  This is typically data users will visually see and interact with.
 
 #### Data-DomainInterface
-- Classes that implement the domain interfaces to achieve dependency inversion.  These classes operate on the raw data layer classes and these classes contain all the business formatting, logic, and rules.
+- Consists of classes that implement the domain layer interfaces to achieve dependency inversion.  These classes operate on the raw data layer classes and these classes contain all the business formatting, logic, and rules.  The purpose is to isolate the business rules keeping the data layer free from such responsibilities.
 
 #### Data Layer
 
 - Responsible for data retrieval, data storage, and other data connectivity such as sending analytics, communicating to remote databases, web sockets, etc.
 - Typical data storage can include a remote database, disk cache (CoreData, Realm, UserDefaults, NSFileManager), app bundle (.json, .txt, .png, .jpg, etc.), and even hardcoded data in a swift file.
-- Should know nothing of the Presentation Layer and knows of the Domain Layer via UseCase Interfaces.
+- Should know nothing of the Presentation Layer and only knows of the Domain Layer via Domain Layer Interfaces.
 
 ##### Repositories
 
@@ -139,7 +139,10 @@ Below are some helpful references to GitHub Actions Workflows and Fastlane Files
 ##### Classes
 
 - Class / Struct attributes should always be declared with the type.
-- It is also preferred that there is a consistent grouping of Class / Struct attributes.  This way the code we produce has a similar form which can help when quickly reading someone else's code.  Below is a screenshot of the preferred grouping of Class / Struct attributes.  These attributes are broken into 3 high level groupings, static attributes, instance attributes, and special attributes (property wrappers, etc.)  Within those 3 high level groupings, attributes are grouped by access level private, internal, public, and open.  Within the access level grouping, attributes are then grouped by immutable first, then mutable.  
+- It is also preferred that there is a consistent grouping of Class / Struct attributes.  This way the code we produce has a similar form which can help when quickly reading someone else's code.  Below is a screenshot of the preferred grouping of Class / Struct attributes.  These attributes are broken into 3 high level groupings, static attributes, instance attributes, and special attributes (property wrappers, etc.)  Within those 3 high level groupings, attributes are grouped by access level private, internal, public, and open.  Within the access level grouping, attributes are then grouped by immutable first, then mutable.
+
+For the attribute grouping I don't want to get too nit picky in this area. Just as long as we have some consistency that is close to what is outlined here. The main idea is that code is consistent which can be helpful when multiple developers are contributing to a project.
+I also realize there may be cases for attributes that aren't outlined here, example fileprivate and more special attributes such as Binding, State, etc. As long as we hit the 3 main groupings static, instance, special, and from there do the best we can to fill in the inner groupings.
   
 
 ![alt text](ReadMeAssets/attribute_grouping.png)
