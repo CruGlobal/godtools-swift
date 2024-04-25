@@ -118,23 +118,3 @@ extension GetToolFilterCategoriesRepository {
         return String(format: formatString, locale: Locale(identifier: translatedInAppLanguage), toolsAvailableCount)
     }
 }
-
-// MARK: - ResourceModel Array Extension
-
-private extension Array where Element == ResourceModel {
-    
-    func getUniqueCategoryIds() -> [String] {
-        
-        var uniqueCategories = [String]()
-        forEach { resource in
-            
-            let category = resource.attrCategory
-            
-            if uniqueCategories.contains(category) == false {
-                uniqueCategories.append(category)
-            }
-        }
-                
-        return uniqueCategories
-    }
-}
