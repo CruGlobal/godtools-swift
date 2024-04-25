@@ -240,6 +240,13 @@ extension RealmResourcesCache {
                  
         return getAllToolsListResults(filterByCategory: filterByCategory, filterByLanguageId: filterByLanguageId, sortByDefaultOrder: false).count
     }
+    
+    func getAllToolCategoryIds(filteredByLanguageId: String?) -> [String] {
+        
+        return getAllToolsListResults(filterByCategory: nil, filterByLanguageId: filteredByLanguageId, sortByDefaultOrder: false)
+            .distinct(by: [#keyPath(RealmResource.attrCategory)])
+            .map { $0.attrCategory }
+    }
 }
 
 // MARK: - Lessons

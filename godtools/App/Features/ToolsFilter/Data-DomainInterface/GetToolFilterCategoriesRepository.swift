@@ -26,8 +26,7 @@ class GetToolFilterCategoriesRepository: GetToolFilterCategoriesRepositoryInterf
             .flatMap { _ in
                 
                 let categoryIds = self.resourcesRepository
-                    .getAllToolsList(filterByCategory: nil, filterByLanguageId: filteredByLanguageId, sortByDefaultOrder: false)
-                    .getUniqueCategoryIds()
+                    .getAllToolCategoryIds(filteredByLanguageId: filteredByLanguageId)
                 
                 let categories = self.createCategoryDomainModels(from: categoryIds, translatedInAppLanguage: translatedInAppLanguage, filteredByLanguageId: filteredByLanguageId)
                 
