@@ -166,13 +166,18 @@ extension ResourcesRepository {
 
 extension ResourcesRepository {
     
-    func getAllToolsList(filterByCategory: String? = nil, filterByLanguageId: String? = nil, sortByDefaultOrder: Bool = true) -> [ResourceModel] {
+    func getAllToolsList(filterByCategory: String?, filterByLanguageId: String?, sortByDefaultOrder: Bool) -> [ResourceModel] {
         
         return cache.getAllToolsList(
             filterByCategory: filterByCategory,
             filterByLanguageId: filterByLanguageId,
             sortByDefaultOrder: sortByDefaultOrder
         )
+    }
+    
+    func getAllToolsListCount(filterByCategory: String?, filterByLanguageId: String?) -> Int {
+        
+        return cache.getAllToolsListCount(filterByCategory: filterByCategory, filterByLanguageId: filterByLanguageId)
     }
 }
 

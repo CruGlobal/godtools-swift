@@ -86,7 +86,7 @@ class AppDiContainer {
         return FirebaseDebugArguments()
     }
     
-    func getMobileContentRenderer(type: MobileContentRendererPageViewFactoriesType, navigation: MobileContentRendererNavigation, toolTranslations: ToolTranslationsDomainModel) -> MobileContentRenderer {
+    func getMobileContentRenderer(type: MobileContentRendererPageViewFactoriesType, navigation: MobileContentRendererNavigation, appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel) -> MobileContentRenderer {
 
         let pageViewFactories: MobileContentRendererPageViewFactories = MobileContentRendererPageViewFactories(
             type: type,
@@ -95,6 +95,7 @@ class AppDiContainer {
         
         return MobileContentRenderer(
             navigation: navigation,
+            appLanguage: appLanguage,
             toolTranslations: toolTranslations,
             pageViewFactories: pageViewFactories,
             manifestResourcesCache: getMobileContentRendererManifestResourcesCache()
@@ -116,12 +117,13 @@ class AppDiContainer {
         return MobileContentRendererManifestResourcesCache(resourcesFileCache: dataLayer.getResourcesFileCache())
     }
     
-    func getMobileContentRendererNavigation(parentFlow: ToolNavigationFlow, navigationDelegate: MobileContentRendererNavigationDelegate) -> MobileContentRendererNavigation {
+    func getMobileContentRendererNavigation(parentFlow: ToolNavigationFlow, navigationDelegate: MobileContentRendererNavigationDelegate, appLanguage: AppLanguageDomainModel) -> MobileContentRendererNavigation {
         
         return MobileContentRendererNavigation(
             parentFlow: parentFlow,
             delegate: navigationDelegate,
-            appDiContainer: self
+            appDiContainer: self,
+            appLanguage: appLanguage
         )
     }
     
