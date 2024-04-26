@@ -23,13 +23,13 @@ struct ScaleValueSliderView: View {
     private let lineWidth: CGFloat = 1
     private let minScale: ScaleValue
     private let maxScale: ScaleValue
-    private let scale: ScaleValue
+    private let scaleDisplayValue: String
         
     @Binding private var scaleIntValue: Int
     
     @State private var progress: CGFloat
     
-    init(viewWidth: CGFloat, tintColor: Color, minScale: ScaleValue = ScaleValueSliderView.defaultMinScale, maxScale: ScaleValue = ScaleValueSliderView.defaultMaxScale, scaleIntValue: Binding<Int>, scale: ScaleValue) {
+    init(viewWidth: CGFloat, tintColor: Color, minScale: ScaleValue = ScaleValueSliderView.defaultMinScale, maxScale: ScaleValue = ScaleValueSliderView.defaultMaxScale, scaleIntValue: Binding<Int>, scaleDisplayValue: String) {
                 
         self.viewWidth = viewWidth
         self.tintColor = tintColor
@@ -46,7 +46,7 @@ struct ScaleValueSliderView: View {
                 
         self.minScale = minScale
         self.maxScale = maxScale
-        self.scale = scale
+        self.scaleDisplayValue = scaleDisplayValue
         
         self._scaleIntValue = scaleIntValue
         
@@ -97,7 +97,7 @@ struct ScaleValueSliderView: View {
                 tintColor: tintColor,
                 lineWidth: lineWidth,
                 size: CGSize(width: scrubberSize, height: scrubberSize),
-                text: scale.displayValue
+                text: scaleDisplayValue
             )
             .allowsHitTesting(false)
             .padding([.leading], scrubberBarLeading + (progress * scrubberBarWidth) - (scrubberSize / 2))
@@ -178,7 +178,7 @@ struct ScaleValueSliderView_Preview: PreviewProvider {
                 viewWidth: 300,
                 tintColor: ColorPalette.gtBlue.color,
                 scaleIntValue: ScaleValueSliderView_Preview.$scale,
-                scale: ScaleValue(integerValue: ScaleValueSliderView_Preview.scale, displayValue: "\(ScaleValueSliderView_Preview.scale)")
+                scaleDisplayValue: "\(ScaleValueSliderView_Preview.scale)"
             )
         }
     }

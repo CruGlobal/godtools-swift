@@ -93,7 +93,7 @@ struct LessonEvaluationView: View {
                         minScale: ScaleValue(lessonEvaluationScale: viewModel.readyToShareFaithScale.minScale),
                         maxScale: ScaleValue(lessonEvaluationScale: viewModel.readyToShareFaithScale.maxScale),
                         scaleIntValue: $viewModel.readyToShareFaithScaleIntValue,
-                        scale: ScaleValue(lessonEvaluationScale: viewModel.readyToShareFaithScale.scale)
+                        scaleDisplayValue: viewModel.readyToShareFaithScale.scale.valueTranslatedInAppLanguage
                     )
                     .padding([.top], 14)
                     
