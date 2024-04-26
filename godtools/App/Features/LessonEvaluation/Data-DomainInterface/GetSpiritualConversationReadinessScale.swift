@@ -23,10 +23,22 @@ class GetSpiritualConversationReadinessScale: GetSpiritualConversationReadinessS
     
     func getScalePublisher(scale: Int, translateInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<SpiritualConversationReadinessScaleDomainModel, Never> {
         
+        let clampedScale: Int
+        
+        if scale < GetSpiritualConversationReadinessScale.minScaleValue {
+            clampedScale = GetSpiritualConversationReadinessScale.minScaleValue
+        }
+        else if scale > GetSpiritualConversationReadinessScale.maxScaleValue {
+            clampedScale = GetSpiritualConversationReadinessScale.maxScaleValue
+        }
+        else {
+            clampedScale = scale
+        }
+        
         let domainModel = SpiritualConversationReadinessScaleDomainModel(
             minScale: mapScaleToDomainModel(scale: GetSpiritualConversationReadinessScale.minScaleValue, translateInAppLanguage: translateInAppLanguage),
             maxScale: mapScaleToDomainModel(scale: GetSpiritualConversationReadinessScale.maxScaleValue, translateInAppLanguage: translateInAppLanguage),
-            scale: mapScaleToDomainModel(scale: scale, translateInAppLanguage: translateInAppLanguage)
+            scale: mapScaleToDomainModel(scale: clampedScale, translateInAppLanguage: translateInAppLanguage)
         )
         
         return Just(domainModel)

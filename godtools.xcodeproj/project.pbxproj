@@ -220,6 +220,7 @@
 		45308EBD2BDC254400A49D96 /* GetSpiritualConversationReadinessScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45308EBC2BDC254400A49D96 /* GetSpiritualConversationReadinessScale.swift */; };
 		45308EBF2BDC27C800A49D96 /* LessonEvaluationScaleDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45308EBE2BDC27C800A49D96 /* LessonEvaluationScaleDomainModel.swift */; };
 		45308EC12BDC2A4500A49D96 /* ScaleValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45308EC02BDC2A4500A49D96 /* ScaleValue.swift */; };
+		45308EC52BDC317300A49D96 /* GetSpiritualConversationReadinessScaleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45308EC42BDC317300A49D96 /* GetSpiritualConversationReadinessScaleTests.swift */; };
 		45325F23285CF8B40078D932 /* SegmentControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45325F19285CF8B40078D932 /* SegmentControl.swift */; };
 		45325F24285CF8B40078D932 /* Segment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45325F1A285CF8B40078D932 /* Segment.swift */; };
 		45325F25285CF8B40078D932 /* AnimatedSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45325F1C285CF8B40078D932 /* AnimatedSwiftUIView.swift */; };
@@ -1777,6 +1778,7 @@
 		45308EBC2BDC254400A49D96 /* GetSpiritualConversationReadinessScale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSpiritualConversationReadinessScale.swift; sourceTree = "<group>"; };
 		45308EBE2BDC27C800A49D96 /* LessonEvaluationScaleDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonEvaluationScaleDomainModel.swift; sourceTree = "<group>"; };
 		45308EC02BDC2A4500A49D96 /* ScaleValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaleValue.swift; sourceTree = "<group>"; };
+		45308EC42BDC317300A49D96 /* GetSpiritualConversationReadinessScaleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSpiritualConversationReadinessScaleTests.swift; sourceTree = "<group>"; };
 		45325F19285CF8B40078D932 /* SegmentControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentControl.swift; sourceTree = "<group>"; };
 		45325F1A285CF8B40078D932 /* Segment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Segment.swift; sourceTree = "<group>"; };
 		45325F1C285CF8B40078D932 /* AnimatedSwiftUIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedSwiftUIView.swift; sourceTree = "<group>"; };
@@ -4401,6 +4403,22 @@
 			path = MobileContentApi;
 			sourceTree = "<group>";
 		};
+		45308EC22BDC313B00A49D96 /* LessonEvaluation */ = {
+			isa = PBXGroup;
+			children = (
+				45308EC32BDC313B00A49D96 /* Data-DomainInterface */,
+			);
+			path = LessonEvaluation;
+			sourceTree = "<group>";
+		};
+		45308EC32BDC313B00A49D96 /* Data-DomainInterface */ = {
+			isa = PBXGroup;
+			children = (
+				45308EC42BDC317300A49D96 /* GetSpiritualConversationReadinessScaleTests.swift */,
+			);
+			path = "Data-DomainInterface";
+			sourceTree = "<group>";
+		};
 		45325F18285CF8B40078D932 /* SegmentControl */ = {
 			isa = PBXGroup;
 			children = (
@@ -4613,6 +4631,7 @@
 				45B2E7182BC044F70077A3C3 /* AppLanguage */,
 				453E2A0F2BC8C86A0047D4C6 /* Dashboard */,
 				45BA7B832AF2E0AC001BAB31 /* DownloadToolProgress */,
+				45308EC22BDC313B00A49D96 /* LessonEvaluation */,
 				459DF8E42AE17A350035D97B /* Onboarding */,
 				453FE09C2BBEDBF00090DED1 /* ToolsFilter */,
 			);
@@ -13059,6 +13078,7 @@
 				45CBDA0E2BA394FD0007DEC8 /* MockOnboardingTutorialViewedRepository.swift in Sources */,
 				45CBDA102BA398D90007DEC8 /* GetOnboardingTutorialInterfaceStringsRepositoryTests.swift in Sources */,
 				453FE09F2BBEDC770090DED1 /* SearchToolFilterCategoriesRepositoryTests.swift in Sources */,
+				45308EC52BDC317300A49D96 /* GetSpiritualConversationReadinessScaleTests.swift in Sources */,
 				45CBDA142BA399750007DEC8 /* MockLocalizationServices.swift in Sources */,
 				45368A162ABB2D850028A570 /* LocaleTests.swift in Sources */,
 				45E198662BA47F4400BF14F3 /* GetDownloadToolProgressInterfaceStringsRepositoryTests.swift in Sources */,
