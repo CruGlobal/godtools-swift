@@ -10,6 +10,9 @@ import SwiftUI
 
 struct ScaleValueSliderView: View {
     
+    private static let defaultMinScale: ScaleValue = ScaleValue(integerValue: 0, displayValue: "0")
+    private static let defaultMaxScale: ScaleValue = ScaleValue(integerValue: 10, displayValue: "10")
+    
     private let viewWidth: CGFloat
     private let backgroundColor: Color = Color.white
     private let textBoundsWidth: CGFloat = 40
@@ -18,36 +21,40 @@ struct ScaleValueSliderView: View {
     private let scrubberSize: CGFloat = 44
     private let tintColor: Color
     private let lineWidth: CGFloat = 1
-    private let minScaleValue: CGFloat
-    private let maxScaleValue: CGFloat
+    private let minScale: ScaleValue
+    private let maxScale: ScaleValue
+    private let scale: ScaleValue
         
-    @Binding private var scale: Int
+    @Binding private var scaleIntValue: Int
     
     @State private var progress: CGFloat
     
-    init(viewWidth: CGFloat, tintColor: Color, minScaleValue: Int = 0, maxScaleValue: Int = 10, scale: Binding<Int>) {
+    init(viewWidth: CGFloat, tintColor: Color, minScale: ScaleValue = ScaleValueSliderView.defaultMinScale, maxScale: ScaleValue = ScaleValueSliderView.defaultMaxScale, scaleIntValue: Binding<Int>, scale: ScaleValue) {
                 
         self.viewWidth = viewWidth
         self.tintColor = tintColor
         self.scrubberBarLeading = textBoundsWidth
         self.scrubberBarWidth = viewWidth - (textBoundsWidth * 2)
         
-        if minScaleValue < 0 {
+        if minScale.integerValue < 0 {
             assertionFailure("minScaleValue must be greater than or equal to zero.")
         }
         
-        if minScaleValue >= maxScaleValue {
+        if minScale.integerValue >= maxScale.integerValue {
             assertionFailure("minScaleValue must be less than maxScaleValue.")
         }
-        
-        let minScaleFloatValue: CGFloat = CGFloat(minScaleValue)
-        let maxScaleFloatValue: CGFloat = CGFloat(maxScaleValue)
-        
-        self.minScaleValue = minScaleFloatValue
-        self.maxScaleValue = maxScaleFloatValue
                 
-        self._scale = scale
-        self.progress = ScaleValueSliderView.getProgress(scale: scale.wrappedValue, minScaleValue: minScaleFloatValue, maxScaleValue: maxScaleFloatValue)
+        self.minScale = minScale
+        self.maxScale = maxScale
+        self.scale = scale
+        
+        self._scaleIntValue = scaleIntValue
+        
+        self.progress = ScaleValueSliderView.getProgress(
+            scale: scaleIntValue.wrappedValue,
+            minScaleValue: CGFloat(minScale.integerValue),
+            maxScaleValue: CGFloat(maxScale.integerValue)
+        )
     }
     
     var body: some View {
@@ -71,7 +78,7 @@ struct ScaleValueSliderView: View {
             
             HStack(alignment: .center, spacing: 0) {
                 
-                Text("\(Int(minScaleValue))")
+                Text(minScale.displayValue)
                     .foregroundColor(tintColor)
                     .frame(width: textBoundsWidth, alignment: .center)
                 
@@ -79,7 +86,7 @@ struct ScaleValueSliderView: View {
                     .foregroundColor(tintColor)
                     .frame(width: scrubberBarWidth, height: lineWidth)
                 
-                Text("\(Int(maxScaleValue))")
+                Text(maxScale.displayValue)
                     .foregroundColor(tintColor)
                     .frame(width: textBoundsWidth, alignment: .center)
             }
@@ -90,7 +97,7 @@ struct ScaleValueSliderView: View {
                 tintColor: tintColor,
                 lineWidth: lineWidth,
                 size: CGSize(width: scrubberSize, height: scrubberSize),
-                text: "\(scale)"
+                text: scale.displayValue
             )
             .allowsHitTesting(false)
             .padding([.leading], scrubberBarLeading + (progress * scrubberBarWidth) - (scrubberSize / 2))
@@ -123,7 +130,7 @@ struct ScaleValueSliderView: View {
         }
         
         self.progress = progress
-        self.scale = getScale(progress: progress)
+        self.scaleIntValue = getScale(progress: progress)
     }
     
     private static func getProgress(scale: Int, minScaleValue: CGFloat, maxScaleValue: CGFloat) -> CGFloat {
@@ -137,10 +144,18 @@ struct ScaleValueSliderView: View {
         
         return progress
     }
+    
+    private func getMinScaleFloatValue() -> CGFloat {
+        return CGFloat(minScale.integerValue)
+    }
+    
+    private func getMaxScaleFloatValue() -> CGFloat {
+        return CGFloat(maxScale.integerValue)
+    }
 
     private func getScale(progress: CGFloat) -> Int {
         
-        let floatScaleValue: CGFloat = floor(((maxScaleValue - minScaleValue) * progress) + minScaleValue)
+        let floatScaleValue: CGFloat = floor(((getMaxScaleFloatValue() - getMinScaleFloatValue()) * progress) + getMinScaleFloatValue())
         let scaleValue: Int = Int(floatScaleValue)
         
         return scaleValue
@@ -162,7 +177,8 @@ struct ScaleValueSliderView_Preview: PreviewProvider {
             ScaleValueSliderView(
                 viewWidth: 300,
                 tintColor: ColorPalette.gtBlue.color,
-                scale: ScaleValueSliderView_Preview.$scale
+                scaleIntValue: ScaleValueSliderView_Preview.$scale,
+                scale: ScaleValue(integerValue: ScaleValueSliderView_Preview.scale, displayValue: "\(ScaleValueSliderView_Preview.scale)")
             )
         }
     }
