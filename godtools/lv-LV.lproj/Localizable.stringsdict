@@ -13,11 +13,11 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>zero</key>
-<string>Atvērto rīku skaits:</string>
+<string>Atvērtie rīki</string>
 <key>one</key>
-<string>Atvērto rīku skaits:</string>
+<string>Atvērtie rīki</string>
 <key>other</key>
-<string>Atvērto rīku skaits:</string>
+<string>Atvērtie rīki</string>
 </dict>
 </dict>
 <key>account.activity.lessonCompletions</key>
@@ -31,11 +31,11 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>zero</key>
-<string>Pabeigtā(s) nodarbība(s):</string>
+<string>Pabeigtās nodarbības</string>
 <key>one</key>
-<string>Pabeigtā(s) nodarbība(s):</string>
+<string>Pabeigtās nodarbības</string>
 <key>other</key>
-<string>Pabeigtā(s) nodarbība(s):</string>
+<string>Pabeigtās nodarbības</string>
 </dict>
 </dict>
 <key>account.activity.screenShares</key>
@@ -49,11 +49,11 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>zero</key>
-<string>Kopīgoto ekrānu skaits:</string>
+<string>Kopīgotie ekrāni</string>
 <key>one</key>
-<string>Kopīgoto ekrānu skaits:</string>
+<string>Kopīgotie ekrāni</string>
 <key>other</key>
-<string>Kopīgoto ekrānu skaits:</string>
+<string>Kopīgotie ekrāni</string>
 </dict>
 </dict>
 <key>account.activity.linksShared</key>
@@ -67,11 +67,11 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>zero</key>
-<string>Kopīgoto saišu skaits:</string>
+<string>Kopīgotās saites</string>
 <key>one</key>
-<string>Kopīgoto saišu skaits:</string>
+<string>Kopīgotās saites</string>
 <key>other</key>
-<string>Kopīgoto saišu skaits:</string>
+<string>Kopīgotās saites</string>
 </dict>
 </dict>
 <key>account.activity.languagesUsed</key>
@@ -85,11 +85,11 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>zero</key>
-<string>Izmantotā(s) valoda(s):</string>
+<string>Izmantotās valodas</string>
 <key>one</key>
-<string>Izmantotā(s) valoda(s):</string>
+<string>Izmantotās valodas</string>
 <key>other</key>
-<string>Izmantotā(s) valoda(s):</string>
+<string>Izmantotās valodas</string>
 </dict>
 </dict>
 <key>account.activity.sessions</key>
@@ -103,11 +103,11 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>zero</key>
-<string>Sesija(s):</string>
+<string>Sesijas</string>
 <key>one</key>
-<string>Sesija(s):</string>
+<string>Sesijas</string>
 <key>other</key>
-<string>Sesija(s):</string>
+<string>Sesijas</string>
 </dict>
 </dict>
 <key>tools.filter.toolsAvailable</key>

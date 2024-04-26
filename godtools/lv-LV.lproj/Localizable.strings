@@ -1,3 +1,4 @@
+"language_name_fil-x-taglish" = "tagļu";
 "language_name_sid" = "sidamas";
 "onboardingTutorial.chooseLanguageButton.title" = "Izvēlies valodu";
 "languageSettings.confirmAppLanguage.message" = "Tu izvēlējies %@ valodu – līdz ar to mainīsies lietotnes 'GodTools' valoda kopumā. Vai esi drošs, ka to vēlies?";
@@ -7,14 +8,14 @@
 "languageSettings.appInterface.title" = "Lietotnes valoda";
 "languageSettings.appInterface.message" = "Iestati sev vēlamo valodu.";
 "languageSettings.appInterface.languagesAvailable" = "Pieejamās valodas";
-"languageSettings.toolLanguagesAvailableOffline.title" = "Rīka valodas pieejamas bezsaistē.";
-"languageSettings.toolLanguagesAvailableOffline.message" = "Lejupielādē visus rīkus izvēlētā valodā, lai tie būtu pieejami bezsaistē.";
-"languageSettings.toolLanguagesAvailableOffline.editDownloadedLanguagesButton.title" = "Labot lejupielādēto valodu pieejamību.";
+"languageSettings.toolLanguagesAvailableOffline.title" = "Rīka valodas pieejamas bezsaistē";
+"languageSettings.toolLanguagesAvailableOffline.message" = "Lejupielādē visus rīkus izvēlētā valodā, lai tie būtu pieejami bezsaistē. Rīka valodas izvēlei izmanto rīka iestatījumu pogu.";
+"languageSettings.toolLanguagesAvailableOffline.editDownloadedLanguagesButton.title" = "Labot lejupielādēto valodu pieejamību";
 "allTools.filter.title" = "Filtrs";
 "allTools.filter.anyCategory" = "Jebkura kategorija";
 "allTools.filter.anyLanguage" = "Jebkura valoda";
-"allTools.filter.navBar.language" = "Atlasīt pēc valodas";
-"allTools.filter.navBar.category" = "Atlasīt pēc kategorijas";
+"allTools.filter.navBar.language" = "Filtrēt pēc valodas";
+"allTools.filter.navBar.category" = "Filtrēt pēc kategorijas";
 "languageSettings.appLanguage.title" = "Lietotnes valoda";
 "authError.userAccountAlreadyExists.message" = "Lietotāja konts jau pastāv.";
 "authError.userAccountNotFound.message" = "Lietotāja konts nav atrasts.";
@@ -419,7 +420,7 @@ Lai iegūtu vairāk informācijas, nospied pogu \"Apraksts\".";
 "account.activity.title" = "Aktivitāte";
 
 // Language Name Strings
-"language_name_fa" = "persiešu (Farsi)";
+"language_name_fa" = "persiešu (farsi)";
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "Globālā aktivitāte";

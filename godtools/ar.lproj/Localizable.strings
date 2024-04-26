@@ -1,3 +1,5 @@
+"language_name_fil-x-taglish" = "Taglish";
+"language_name_sid" = "Sidama";
 "onboardingTutorial.chooseLanguageButton.title" = "اختر اللغة";
 "languageSettings.confirmAppLanguage.message" = "لقد حددت %@  كلغة تطبيقك. سيؤدي هذا إلى تغيير لغة تطبيق GodTools بالكامل. هل أنت متأكد؟";
 "languageSettings.confirmAppLanguage.changeLanguageButton.title" = "تغيير اللغة";
