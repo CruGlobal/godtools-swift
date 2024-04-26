@@ -18,7 +18,7 @@ class GetSpiritualConversationReadinessScaleTests: QuickSpec {
         
         describe("User is evaluating a lesson.") {
         
-            context("When viewing the ready to share faith scale minimum value.") {
+            context("When viewing the ready to share faith scale minimum and maximum values.") {
             
                 let getSpiritualConversationReadinessScale = GetSpiritualConversationReadinessScale(
                     getTranslatedNumberCount: GetTranslatedNumberCount()
