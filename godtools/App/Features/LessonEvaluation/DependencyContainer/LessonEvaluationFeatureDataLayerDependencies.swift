@@ -59,4 +59,10 @@ class LessonEvaluationFeatureDataLayerDependencies {
             localizationServices: coreDataLayer.getLocalizationServices()
         )
     }
+    
+    func getSpiritualConversationReadinessScale() -> GetSpiritualConversationReadinessScaleInterface {
+        return GetSpiritualConversationReadinessScale(
+            getTranslatedNumberCount: coreDataLayer.getTranslatedNumberCount()
+        )
+    }
 }

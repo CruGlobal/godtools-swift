@@ -25,6 +25,12 @@ class LessonEvaluationFeatureDomainLayerDependencies {
         )
     }
     
+    func getDidChangeScaleForSpiritualConversationReadinessUseCase() -> DidChangeScaleForSpiritualConversationReadinessUseCase {
+        return DidChangeScaleForSpiritualConversationReadinessUseCase(
+            getReadinessScale: dataLayer.getSpiritualConversationReadinessScale()
+        )
+    }
+    
     func getEvaluateLessonUseCase() -> EvaluateLessonUseCase {
         return EvaluateLessonUseCase(
             evaluateLessonRepositoryInterface: dataLayer.getEvaluateLessonRepositoryInterface()
