@@ -59,13 +59,13 @@ class GetSpiritualConversationReadinessScaleTests: QuickSpec {
                 }
             }
             
-            context("When viewing the ready to share faith scale in english.") {
+            context("When viewing the ready to share faith scale and my app language is english.") {
             
                 let getSpiritualConversationReadinessScale = GetSpiritualConversationReadinessScale(
                     getTranslatedNumberCount: GetTranslatedNumberCount()
                 )
                 
-                it("I expect the min, max, and scale values to be translated in english.") {
+                it("I expect the min, max, and scale values to be translated in my app language english.") {
                     
                     var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
                     
@@ -101,13 +101,13 @@ class GetSpiritualConversationReadinessScaleTests: QuickSpec {
                 }
             }
             
-            context("When viewing the ready to share faith scale in arabic.") {
+            context("When viewing the ready to share faith scale and my app language is arabic.") {
             
                 let getSpiritualConversationReadinessScale = GetSpiritualConversationReadinessScale(
                     getTranslatedNumberCount: GetTranslatedNumberCount()
                 )
                 
-                it("I expect the min, max, and scale values to be translated in arabic.") {
+                it("I expect the min, max, and scale values to be translated in my app language arabic.") {
                     
                     var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
                     
