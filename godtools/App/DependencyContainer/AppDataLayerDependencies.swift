@@ -100,7 +100,7 @@ class AppDataLayerDependencies {
         )
     }
     
-    func getDeviceSystemLanguage() -> DeviceSystemLanguage {
+    func getDeviceSystemLanguage() -> DeviceSystemLanguageInterface {
         return DeviceSystemLanguage()
     }
     
