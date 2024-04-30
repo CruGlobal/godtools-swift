@@ -109,7 +109,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Ferramenta 1 disponível</string>
+<string>Ferramenta %d disponível</string>
 <key>other</key>
 <string>Ferramenta %d disponível</string>
 </dict>
