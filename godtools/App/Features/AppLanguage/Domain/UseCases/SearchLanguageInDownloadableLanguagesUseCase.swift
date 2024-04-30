@@ -20,6 +20,6 @@ class SearchLanguageInDownloadableLanguagesUseCase {
     
     func getSearchResultsPublisher(for searchText: String, in downloadableLanguages: [DownloadableLanguageListItemDomainModel]) -> AnyPublisher<[DownloadableLanguageListItemDomainModel], Never> {
         
-        return searchLanguageInDownloadableLanguagesRepository.getSearchResultsPublisher(searchText: searchText, appLanguagesList: downloadableLanguages)
+        return searchLanguageInDownloadableLanguagesRepository.getSearchResultsPublisher(searchText: searchText, downloadableLanguagesList: downloadableLanguages)
     }
 }
