@@ -28,12 +28,12 @@
       }
     },
     {
-      "identity" : "appsflyerframework",
+      "identity" : "appsflyerframework-strict",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/AppsFlyerSDK/AppsFlyerFramework.git",
+      "location" : "https://github.com/AppsFlyerSDK/AppsFlyerFramework-Strict",
       "state" : {
-        "revision" : "dde1f5b04105fa9a27b3ac78b2af88d4164755dc",
-        "version" : "6.4.4"
+        "revision" : "beffb10e977bcf5881c282351772868f43d1fe1a",
+        "version" : "6.14.3"
       }
     },
     {
@@ -68,8 +68,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/firebase/firebase-ios-sdk.git",
       "state" : {
-        "revision" : "888f0b6026e2441a69e3ee2ad5293c7a92031e62",
-        "version" : "10.23.1"
+        "revision" : "42eae77a0af79e9c3f41df04a23c76f05cfdda77",
+        "version" : "10.24.0"
       }
     },
     {
@@ -86,8 +86,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/google/GoogleAppMeasurement.git",
       "state" : {
-        "revision" : "c7a5917ebe48d69f421aadf154ef3969c8b7f12d",
-        "version" : "10.23.1"
+        "revision" : "51ba746a9d51a4bd0774b68499b0c73ef6e8570d",
+        "version" : "10.24.0"
       }
     },
     {
@@ -167,8 +167,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/airbnb/lottie-ios.git",
       "state" : {
-        "revision" : "ab15129d567eda5da0631fcba23de60144a612f4",
-        "version" : "4.4.2"
+        "revision" : "769b88d83a42ca8d5572b020c96f47e3690b3796",
+        "version" : "4.4.3"
       }
     },
     {
@@ -185,8 +185,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Quick/Nimble.git",
       "state" : {
-        "revision" : "371f7d278ba95a5511c248aaeec84f5dbe770491",
-        "version" : "12.0.1"
+        "revision" : "1c49fc1243018f81a7ea99cb5e0985b00096e9f4",
+        "version" : "13.3.0"
       }
     },
     {
@@ -203,8 +203,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Quick/Quick.git",
       "state" : {
-        "revision" : "91132c0fe9a98e76f3d7381a608685aa41770706",
-        "version" : "7.0.2"
+        "revision" : "26529ff2209c40ae50fd642b031f930d9d68ea02",
+        "version" : "7.5.0"
       }
     },
     {
@@ -212,8 +212,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/realm/realm-cocoa.git",
       "state" : {
-        "revision" : "e7f82d1721d99c7149a0af3d0424df9070a1a646",
-        "version" : "10.48.1"
+        "revision" : "a4d731076e6a52f4366d844c78369ac7c9c6b1c0",
+        "version" : "10.49.2"
       }
     },
     {
@@ -221,8 +221,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/realm/realm-core",
       "state" : {
-        "revision" : "a5e87a39cffdcc591f3203c11cfca68100d0b9a6",
-        "version" : "13.26.0"
+        "revision" : "4d815c6e6883bfdcb67cf755d0f0f29a4b399ea7",
+        "version" : "14.5.2"
       }
     },
     {
@@ -239,8 +239,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/CruGlobal/social-authentication-ios.git",
       "state" : {
-        "revision" : "ff29a8ba671d2d869b57d0b57f8c731fef70c0f7",
-        "version" : "0.3.1"
+        "revision" : "8386adf4134e30f640a7d7b7bad92b72473f314d",
+        "version" : "0.3.2"
       }
     },
     {
@@ -275,8 +275,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ZipArchive/ZipArchive.git",
       "state" : {
-        "revision" : "b56f8c605a233fb25fe8d49f1b9ed50912c2d1b7",
-        "version" : "2.5.4"
+        "revision" : "79d4dc9729096c6ad83dd3cee2b9f354d1b4ab7b",
+        "version" : "2.5.5"
       }
     }
   ],
