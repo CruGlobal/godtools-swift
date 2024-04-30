@@ -30,8 +30,7 @@ class GetToolFilterLanguagesRepository: GetToolFilterLanguagesRepositoryInterfac
             .flatMap { _ in
                 
                 let languageIds = self.resourcesRepository
-                    .getAllToolsList(filterByCategory: filteredByCategoryId, filterByLanguageId: nil, sortByDefaultOrder: false)
-                    .getUniqueLanguageIds()
+                    .getAllToolLanguageIds(filteredByCategoryId: filteredByCategoryId)
                 
                 let languages = self.createLanguageFilterDomainModelList(from: Array(languageIds), translatedInAppLanguage: translatedInAppLanguage, filteredByCategoryId: filteredByCategoryId)
                 
@@ -159,17 +158,5 @@ extension GetToolFilterLanguagesRepository {
         let localizedString = String(format: formatString, locale: Locale(identifier: translatedInAppLanguage), toolsAvailableCount)
                 
         return localizedString
-    }
-}
-
-// MARK: - ResourceModel Array Extension
-
-private extension Array where Element == ResourceModel {
-    
-    func getUniqueLanguageIds() -> Set<String> {
-        
-        let languageIds = flatMap { $0.languageIds }
-        
-        return Set(languageIds)
     }
 }

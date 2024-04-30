@@ -247,6 +247,17 @@ extension RealmResourcesCache {
             .distinct(by: [#keyPath(RealmResource.attrCategory)])
             .map { $0.attrCategory }
     }
+    
+    func getAllToolLanguageIds(filteredByCategoryId: String?) -> [String] {
+        
+        let allLanguageIds = getAllToolsListResults(filterByCategory: filteredByCategoryId, filterByLanguageId: nil, sortByDefaultOrder: false)
+            .flatMap { $0.getLanguages() }
+            .map { $0.id }
+        
+        let uniqueLanguageIds = Set(allLanguageIds)
+
+        return Array(uniqueLanguageIds)
+    }
 }
 
 // MARK: - Lessons
