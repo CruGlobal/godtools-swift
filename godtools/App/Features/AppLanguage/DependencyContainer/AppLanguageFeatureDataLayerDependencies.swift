@@ -23,7 +23,7 @@ class AppLanguageFeatureDataLayerDependencies {
         return AppLanguagesCache()
     }
     
-    private func getAppLanguagesRepository() -> AppLanguagesRepository {
+    func getAppLanguagesRepository() -> AppLanguagesRepository {
         return AppLanguagesRepository(cache: getAppLanguagesCache())
     }
     
