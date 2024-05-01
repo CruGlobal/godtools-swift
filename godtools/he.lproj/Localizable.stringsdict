@@ -133,7 +133,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>1 Tool available</string>
+<string>%d Tool available</string>
 <key>two</key>
 <string/>
 <key>many</key>

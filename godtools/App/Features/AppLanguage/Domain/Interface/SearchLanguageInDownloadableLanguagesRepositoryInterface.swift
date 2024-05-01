@@ -11,5 +11,5 @@ import Combine
 
 protocol SearchLanguageInDownloadableLanguagesRepositoryInterface {
     
-    func getSearchResultsPublisher(searchText: String, appLanguagesList: [DownloadableLanguageListItemDomainModel]) -> AnyPublisher<[DownloadableLanguageListItemDomainModel], Never>
+    func getSearchResultsPublisher(searchText: String, downloadableLanguagesList: [DownloadableLanguageListItemDomainModel]) -> AnyPublisher<[DownloadableLanguageListItemDomainModel], Never>
 }

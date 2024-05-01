@@ -18,19 +18,16 @@ class LessonEvaluationViewModel: ObservableObject {
     private let pageIndexReached: Int
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getLessonEvaluationInterfaceStringsUseCase: GetLessonEvaluationInterfaceStringsUseCase
+    private let didChangeScaleForSpiritualConversationReadinessUseCase: DidChangeScaleForSpiritualConversationReadinessUseCase
     private let evaluateLessonUseCase: EvaluateLessonUseCase
     private let cancelLessonEvaluationUseCase: CancelLessonEvaluationUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
         
     private weak var flowDelegate: FlowDelegate?
-    
-    let readyToShareFaithMinimumScaleValue: Int = 1
-    let readyToShareFaithMaximumScaleValue: Int = 10
             
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     
-    @Published var readyToShareFaithScale: Int = 6
     @Published var title: String = ""
     @Published var wasThisHelpful: String = ""
     @Published var yesIsSelected: Bool = false
@@ -39,14 +36,17 @@ class LessonEvaluationViewModel: ObservableObject {
     @Published var noButtonTitle: String = ""
     @Published var shareFaithReadiness: String = ""
     @Published var sendFeedbackButtonTitle: String = ""
+    @Published var readyToShareFaithScale: SpiritualConversationReadinessScaleDomainModel = LessonEvaluationViewModel.getEmptyReadinessScale()
+    @Published var readyToShareFaithScaleIntValue: Int = 6
     
-    init(flowDelegate: FlowDelegate, lessonId: String, pageIndexReached: Int, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLessonEvaluationInterfaceStringsUseCase: GetLessonEvaluationInterfaceStringsUseCase, evaluateLessonUseCase: EvaluateLessonUseCase, cancelLessonEvaluationUseCase: CancelLessonEvaluationUseCase) {
+    init(flowDelegate: FlowDelegate, lessonId: String, pageIndexReached: Int, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLessonEvaluationInterfaceStringsUseCase: GetLessonEvaluationInterfaceStringsUseCase, didChangeScaleForSpiritualConversationReadinessUseCase: DidChangeScaleForSpiritualConversationReadinessUseCase, evaluateLessonUseCase: EvaluateLessonUseCase, cancelLessonEvaluationUseCase: CancelLessonEvaluationUseCase) {
         
         self.flowDelegate = flowDelegate
         self.lessonId = lessonId
         self.pageIndexReached = pageIndexReached
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getLessonEvaluationInterfaceStringsUseCase = getLessonEvaluationInterfaceStringsUseCase
+        self.didChangeScaleForSpiritualConversationReadinessUseCase = didChangeScaleForSpiritualConversationReadinessUseCase
         self.evaluateLessonUseCase = evaluateLessonUseCase
         self.cancelLessonEvaluationUseCase = cancelLessonEvaluationUseCase
         
@@ -72,6 +72,31 @@ class LessonEvaluationViewModel: ObservableObject {
                 self?.sendFeedbackButtonTitle = interfaceStrings.sendButtonTitle
             }
             .store(in: &cancellables)
+        
+        Publishers.CombineLatest(
+            $appLanguage.eraseToAnyPublisher(),
+            $readyToShareFaithScaleIntValue.eraseToAnyPublisher()
+        )
+        .flatMap({ (appLanguage: AppLanguageDomainModel, scale: Int) -> AnyPublisher<SpiritualConversationReadinessScaleDomainModel, Never> in
+                
+            return didChangeScaleForSpiritualConversationReadinessUseCase
+                .changeScalePublisher(scale: scale, translateInAppLanguage: appLanguage)
+                .eraseToAnyPublisher()
+        })
+        .receive(on: DispatchQueue.main)
+        .sink { [weak self] (domainModel: SpiritualConversationReadinessScaleDomainModel) in
+            
+            self?.readyToShareFaithScale = domainModel
+        }
+        .store(in: &cancellables)
+    }
+    
+    private static func getEmptyReadinessScale() -> SpiritualConversationReadinessScaleDomainModel {
+        return SpiritualConversationReadinessScaleDomainModel(
+            minScale: LessonEvaluationScaleDomainModel(integerValue: 0, valueTranslatedInAppLanguage: ""),
+            maxScale: LessonEvaluationScaleDomainModel(integerValue: 0, valueTranslatedInAppLanguage: ""),
+            scale: LessonEvaluationScaleDomainModel(integerValue: 0, valueTranslatedInAppLanguage: "")
+        )
     }
     
     deinit {
@@ -123,7 +148,7 @@ extension LessonEvaluationViewModel {
         
         let feedback = TrackLessonFeedbackDomainModel(
             feedbackHelpful: feedbackHelpful,
-            readinessScaleValue: readyToShareFaithScale,
+            readinessScaleValue: readyToShareFaithScaleIntValue,
             pageIndexReached: pageIndexReached
         )
         

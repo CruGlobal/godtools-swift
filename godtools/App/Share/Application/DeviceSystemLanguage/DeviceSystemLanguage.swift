@@ -8,7 +8,7 @@
 
 import Foundation
 
-class DeviceSystemLanguage {
+class DeviceSystemLanguage: DeviceSystemLanguageInterface {
     
     init() {
         

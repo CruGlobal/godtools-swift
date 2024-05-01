@@ -109,7 +109,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>1 टूल्स उपलब्ध हैं</string>
+<string>%d टूल्स उपलब्ध हैं</string>
 <key>other</key>
 <string>%d टूल्स उपलब्ध हैं</string>
 </dict>
