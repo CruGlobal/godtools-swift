@@ -18,9 +18,9 @@ class SearchLanguageInDownloadableLanguagesRepository: SearchLanguageInDownloada
         self.stringSearcher = stringSearcher
     }
     
-    func getSearchResultsPublisher(searchText: String, appLanguagesList: [DownloadableLanguageListItemDomainModel]) -> AnyPublisher<[DownloadableLanguageListItemDomainModel], Never> {
+    func getSearchResultsPublisher(searchText: String, downloadableLanguagesList: [DownloadableLanguageListItemDomainModel]) -> AnyPublisher<[DownloadableLanguageListItemDomainModel], Never> {
         
-        let searchResults = stringSearcher.search(for: searchText, in: appLanguagesList)
+        let searchResults = stringSearcher.search(for: searchText, in: downloadableLanguagesList)
         
         return Just(searchResults)
             .eraseToAnyPublisher()

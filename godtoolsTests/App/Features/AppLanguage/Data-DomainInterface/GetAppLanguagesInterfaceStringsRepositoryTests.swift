@@ -16,7 +16,7 @@ class GetAppLanguagesInterfaceStringsRepositoryTests: QuickSpec {
     
     override class func spec() {
         
-        describe("When a user is viewing the app languages.") {
+        describe("User is viewing the app languages.") {
          
             context("When the app language is switched from English to Spanish.") {
                 
