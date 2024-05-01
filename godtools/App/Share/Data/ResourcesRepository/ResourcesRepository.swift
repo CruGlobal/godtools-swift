@@ -179,6 +179,16 @@ extension ResourcesRepository {
         
         return cache.getAllToolsListCount(filterByCategory: filterByCategory, filterByLanguageId: filterByLanguageId)
     }
+    
+    func getAllToolCategoryIds(filteredByLanguageId: String?) -> [String] {
+        
+        return cache.getAllToolCategoryIds(filteredByLanguageId: filteredByLanguageId)
+    }
+    
+    func getAllToolLanguageIds(filteredByCategoryId: String?) -> [String] {
+        
+        return cache.getAllToolLanguageIds(filteredByCategoryId: filteredByCategoryId)
+    }
 }
 
 // MARK: - Lessons

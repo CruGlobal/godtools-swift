@@ -26,8 +26,7 @@ class GetToolFilterCategoriesRepository: GetToolFilterCategoriesRepositoryInterf
             .flatMap { _ in
                 
                 let categoryIds = self.resourcesRepository
-                    .getAllToolsList(filterByCategory: nil, filterByLanguageId: filteredByLanguageId, sortByDefaultOrder: false)
-                    .getUniqueCategoryIds()
+                    .getAllToolCategoryIds(filteredByLanguageId: filteredByLanguageId)
                 
                 let categories = self.createCategoryDomainModels(from: categoryIds, translatedInAppLanguage: translatedInAppLanguage, filteredByLanguageId: filteredByLanguageId)
                 
@@ -117,25 +116,5 @@ extension GetToolFilterCategoriesRepository {
         )
         
         return String(format: formatString, locale: Locale(identifier: translatedInAppLanguage), toolsAvailableCount)
-    }
-}
-
-// MARK: - ResourceModel Array Extension
-
-private extension Array where Element == ResourceModel {
-    
-    func getUniqueCategoryIds() -> [String] {
-        
-        var uniqueCategories = [String]()
-        forEach { resource in
-            
-            let category = resource.attrCategory
-            
-            if uniqueCategories.contains(category) == false {
-                uniqueCategories.append(category)
-            }
-        }
-                
-        return uniqueCategories
     }
 }
