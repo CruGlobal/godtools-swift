@@ -13,17 +13,17 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>zero</key>
-<string/>
+<string>لا يوجد اداة مفتوحة</string>
 <key>one</key>
-<string>Tool open</string>
+<string>عدد 1 أداة مفتوحة</string>
 <key>two</key>
-<string/>
+<string>عدد 2 أدوات مفتوحة</string>
 <key>few</key>
-<string/>
+<string>قليل من  الأدوات مفتوحة</string>
 <key>many</key>
-<string/>
+<string>العديد من  الأدوات مفتوحة</string>
 <key>other</key>
-<string>Tool opens</string>
+<string>عدد فتح ادوات</string>
 </dict>
 </dict>
 <key>account.activity.lessonCompletions</key>
@@ -37,17 +37,17 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>zero</key>
-<string/>
+<string>لا يوجد دروس مكتملة</string>
 <key>one</key>
-<string>Lesson completion</string>
+<string>عدد 1 درس  مكتمل</string>
 <key>two</key>
-<string/>
+<string>عدد 2 درس  مكتمل</string>
 <key>few</key>
-<string/>
+<string>بعض  الدروس  مكتملة</string>
 <key>many</key>
-<string/>
+<string>العديد من الدروس مكتملة</string>
 <key>other</key>
-<string>Lesson completions</string>
+<string>دروس مكتملة</string>
 </dict>
 </dict>
 <key>account.activity.screenShares</key>
@@ -61,17 +61,17 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>zero</key>
-<string/>
+<string>لا يوجد شاشات متشاركة</string>
 <key>one</key>
-<string>Screen share</string>
+<string>عدد 1 شاشة مشاركة</string>
 <key>two</key>
-<string/>
+<string>عدد 2 شاشة مشاركة</string>
 <key>few</key>
-<string/>
+<string>بعض الشاشات مشاركة</string>
 <key>many</key>
-<string/>
+<string>العديد من الشاشات مشاركة</string>
 <key>other</key>
-<string>Screen shares</string>
+<string>الشاشات التي تم مشاركاتها</string>
 </dict>
 </dict>
 <key>account.activity.linksShared</key>
@@ -85,17 +85,17 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>zero</key>
-<string/>
+<string>لا يوجد روابط مشاركة</string>
 <key>one</key>
-<string>Link share</string>
+<string>عدد 1 رابط مشارك</string>
 <key>two</key>
-<string/>
+<string>عدد 2 رابط مشارك</string>
 <key>few</key>
-<string/>
+<string>بعض الروابط مشاركة</string>
 <key>many</key>
-<string/>
+<string>العديد من الروابط مشاركة</string>
 <key>other</key>
-<string>Link shares</string>
+<string>عدد مشاركة الروابط</string>
 </dict>
 </dict>
 <key>account.activity.languagesUsed</key>
@@ -109,17 +109,17 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>zero</key>
-<string/>
+<string> لا يوجد لغات مستخدمة</string>
 <key>one</key>
-<string>Language used</string>
+<string>عدد 1 لغة مستخدمة</string>
 <key>two</key>
-<string/>
+<string>عدد 2 لغة مستخدمة</string>
 <key>few</key>
-<string/>
+<string>قليل من اللغات مستخدمة</string>
 <key>many</key>
-<string/>
+<string>العديد من اللغات مستخدمة</string>
 <key>other</key>
-<string>Languages used</string>
+<string>لغات مستخدمة</string>
 </dict>
 </dict>
 <key>account.activity.sessions</key>
@@ -133,17 +133,17 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>zero</key>
-<string/>
+<string>لا يوجد جلسات</string>
 <key>one</key>
-<string>Session</string>
+<string>يوجد جلسة واحدة</string>
 <key>two</key>
-<string/>
+<string>يوجد عدد 2 جلسة</string>
 <key>few</key>
-<string/>
+<string>يوجد القليل من الجلسات</string>
 <key>many</key>
-<string/>
+<string>يوجد العديد من الجلسات</string>
 <key>other</key>
-<string>Sessions</string>
+<string>الجلسات</string>
 </dict>
 </dict>
 <key>tools.filter.toolsAvailable</key>
@@ -157,17 +157,17 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>zero</key>
-<string/>
+<string>لا بوجد أدوات متوفرة</string>
 <key>one</key>
-<string>%d Tool available</string>
+<string>%d أداة متوفرة</string>
 <key>two</key>
-<string/>
+<string>عدد 2 أداة متوفرة</string>
 <key>few</key>
-<string/>
+<string>قليل من الادوات متوفرة</string>
 <key>many</key>
-<string/>
+<string>العديد من الادوات متوفرة</string>
 <key>other</key>
-<string>%d Tools available</string>
+<string>%d من الأدوات متوفرة</string>
 </dict>
 </dict>
 <key>languageSettings.appLanguage.numberAvailable</key>
@@ -207,15 +207,15 @@
 <key>zero</key>
 <string/>
 <key>one</key>
-<string>Shared 1 image</string>
+<string>تم مشاركة صورة واحدة</string>
 <key>two</key>
-<string/>
+<string>تم مشاركة عدد 2 صورة</string>
 <key>few</key>
-<string/>
+<string>تم مشاركة القليل من الصور</string>
 <key>many</key>
-<string/>
+<string>تم مشاركة العديد من الصور</string>
 <key>other</key>
-<string>Shared %d images</string>
+<string>تم مشاركة %d من الصور</string>
 </dict>
 </dict>
 <key>badges.articlesOpened</key>
@@ -229,17 +229,17 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>zero</key>
-<string/>
+<string>لا يوجد مقالات مقروءة</string>
 <key>one</key>
-<string>Read 1 article</string>
+<string>قراءة مقال واحد</string>
 <key>two</key>
-<string/>
+<string>قراءة عدد 2 مقال</string>
 <key>few</key>
-<string/>
+<string>قراءة القليل من المقالات</string>
 <key>many</key>
-<string/>
+<string>قراءة العديد من المقالات</string>
 <key>other</key>
-<string>Read %d articles</string>
+<string>قراءة %d مقالة</string>
 </dict>
 </dict>
 <key>badges.lessonsCompleted</key>
@@ -253,17 +253,17 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>zero</key>
-<string/>
+<string>لا يوجد دروس مكتملة</string>
 <key>one</key>
-<string>Completed 1 lesson</string>
+<string>عدد 1 درس مكتمل</string>
 <key>two</key>
-<string/>
+<string>عدد 2 درس مكتمل</string>
 <key>few</key>
-<string/>
+<string>القليل من الدروس مكتملة</string>
 <key>many</key>
-<string/>
+<string>العديد من الدروس مكتملة</string>
 <key>other</key>
-<string>Completed %d lessons</string>
+<string>تم إكمال %d من الدروس</string>
 </dict>
 </dict>
 <key>badges.toolsOpened</key>
@@ -277,17 +277,17 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>zero</key>
-<string/>
+<string>لا يوجد أدوات مفتوحة</string>
 <key>one</key>
-<string>Opened 1 tool</string>
+<string>تم فتح أداة واحدة</string>
 <key>two</key>
-<string/>
+<string>تم فتح عدد 2 أداة</string>
 <key>few</key>
-<string/>
+<string>تم فتح القليل من الادوات</string>
 <key>many</key>
-<string/>
+<string>تم فتح العديد من الادوات</string>
 <key>other</key>
-<string>Opened %d tools</string>
+<string>تم فتح %d من الأدوات</string>
 </dict>
 </dict>
 <key>badges.tipsCompleted</key>
@@ -301,17 +301,17 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>zero</key>
-<string/>
+<string>لا يوجد نصيحة تدريبية مكتملة</string>
 <key>one</key>
-<string>Completed 1 training tip</string>
+<string>أكملت نصيحة تدريبية واحدة</string>
 <key>two</key>
-<string/>
+<string>أكملت 2 نصيحة تدريبية</string>
 <key>few</key>
-<string/>
+<string>أكمل القليل من النصائح التدريبية</string>
 <key>many</key>
-<string/>
+<string>أكمل العديد من النصائح التدريبية</string>
 <key>other</key>
-<string>Completed %d training tips</string>
+<string>تم إكمال %d من النصائح التدريبية</string>
 </dict>
 </dict>
 </dict>
