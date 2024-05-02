@@ -36,7 +36,7 @@ class LessonEvaluationViewModel: ObservableObject {
     @Published var noButtonTitle: String = ""
     @Published var shareFaithReadiness: String = ""
     @Published var sendFeedbackButtonTitle: String = ""
-    @Published var readyToShareFaithScale: SpiritualConversationReadinessScaleDomainModel = LessonEvaluationViewModel.getEmptyReadinessScale()
+    @Published var readyToShareFaithScale: SpiritualConversationReadinessScaleDomainModel? = nil
     @Published var readyToShareFaithScaleIntValue: Int = 6
     
     init(flowDelegate: FlowDelegate, lessonId: String, pageIndexReached: Int, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLessonEvaluationInterfaceStringsUseCase: GetLessonEvaluationInterfaceStringsUseCase, didChangeScaleForSpiritualConversationReadinessUseCase: DidChangeScaleForSpiritualConversationReadinessUseCase, evaluateLessonUseCase: EvaluateLessonUseCase, cancelLessonEvaluationUseCase: CancelLessonEvaluationUseCase) {
@@ -89,14 +89,6 @@ class LessonEvaluationViewModel: ObservableObject {
             self?.readyToShareFaithScale = domainModel
         }
         .store(in: &cancellables)
-    }
-    
-    private static func getEmptyReadinessScale() -> SpiritualConversationReadinessScaleDomainModel {
-        return SpiritualConversationReadinessScaleDomainModel(
-            minScale: LessonEvaluationScaleDomainModel(integerValue: 0, valueTranslatedInAppLanguage: ""),
-            maxScale: LessonEvaluationScaleDomainModel(integerValue: 0, valueTranslatedInAppLanguage: ""),
-            scale: LessonEvaluationScaleDomainModel(integerValue: 0, valueTranslatedInAppLanguage: "")
-        )
     }
     
     deinit {
