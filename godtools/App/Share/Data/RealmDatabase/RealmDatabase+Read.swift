@@ -63,3 +63,41 @@ extension RealmDatabase {
         .eraseToAnyPublisher()
     }
 }
+
+// MARK: - Read Objects
+
+extension RealmDatabase {
+    
+    func readObjects<T: Object>(realm: Realm) -> Results<T> {
+        return realm.objects(T.self)
+    }
+    
+    func readObjects<T: Object>(primaryKey: String) -> Results<T> {
+          
+        let realm: Realm = openRealm()
+        
+        return readObjects(realm: realm)
+    }
+    
+    func readObjectsInBackground<T: Object>(completion: @escaping ((_ results: Results<T>) -> Void)) {
+        
+        background { realm in
+            
+            let results: Results<T> = self.readObjects(realm: realm)
+
+            completion(results)
+        }
+    }
+    
+    func readObjectsPublisher<T: Object>() -> AnyPublisher<Results<T>, Never> {
+        
+        return Future() { promise in
+            
+            self.readObjectsInBackground() { (results: Results<T>) in
+                
+                promise(.success(results))
+            }
+        }
+        .eraseToAnyPublisher()
+    }
+}
