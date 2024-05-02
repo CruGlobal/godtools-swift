@@ -24,39 +24,45 @@ class StoreInitialAppLanguage: StoreInitialAppLanguageInterface {
     
     func storeInitialAppLanguagePublisher() -> AnyPublisher<AppLanguageDomainModel, Never> {
         
-        return Publishers.CombineLatest(
-            userAppLanguageRepository.getLanguagePublisher(),
-            appLanguagesRepository.getLanguagesPublisher()
-        )
-        .flatMap({ (userAppLanguage: UserAppLanguageDataModel?, appLanguages: [AppLanguageDataModel]) -> AnyPublisher<AppLanguageDomainModel, Never> in
-            
-            if let userAppLanguage = userAppLanguage {
-                return Just(userAppLanguage.languageId)
-                    .eraseToAnyPublisher()
-            }
-            
-            let deviceLocale: Locale = self.deviceSystemLanguage.getLocale()
-            
-            let deviceAppLanguage: AppLanguageDataModel? = appLanguages.first(where: {
-                $0.localeId == deviceLocale.identifier
-            })
-                        
-            let appLanguageToStore: AppLanguageDomainModel
-            
-            if let deviceAppLanguage = deviceAppLanguage {
-                appLanguageToStore = deviceAppLanguage.languageId
-            }
-            else {
-                appLanguageToStore = LanguageCodeDomainModel.english.rawValue
-            }
-            
-            return self.userAppLanguageRepository
-                .storeLanguagePublisher(languageId: appLanguageToStore)
-                .map { (success: Bool) in
-                    appLanguageToStore
-                }
+        return appLanguagesRepository
+            .getLanguagesChangedPublisher()
+            .flatMap({ (appLanguagesChanged: Void) -> AnyPublisher<(UserAppLanguageDataModel?, [AppLanguageDataModel]), Never> in
+                
+                return Publishers.CombineLatest(
+                    self.userAppLanguageRepository.getLanguagePublisher(),
+                    self.appLanguagesRepository.getLanguagesPublisher()
+                )
                 .eraseToAnyPublisher()
-        })
-        .eraseToAnyPublisher()
+            })
+            .flatMap({ (userAppLanguage: UserAppLanguageDataModel?, appLanguages: [AppLanguageDataModel]) -> AnyPublisher<AppLanguageDomainModel, Never> in
+                
+                if let userAppLanguage = userAppLanguage {
+                    return Just(userAppLanguage.languageId)
+                        .eraseToAnyPublisher()
+                }
+                
+                let deviceLocale: Locale = self.deviceSystemLanguage.getLocale()
+                
+                let deviceAppLanguage: AppLanguageDataModel? = appLanguages.first(where: {
+                    $0.localeId == deviceLocale.identifier
+                })
+                            
+                let appLanguageToStore: AppLanguageDomainModel
+                
+                if let deviceAppLanguage = deviceAppLanguage {
+                    appLanguageToStore = deviceAppLanguage.languageId
+                }
+                else {
+                    appLanguageToStore = LanguageCodeDomainModel.english.rawValue
+                }
+                
+                return self.userAppLanguageRepository
+                    .storeLanguagePublisher(languageId: appLanguageToStore)
+                    .map { (success: Bool) in
+                        appLanguageToStore
+                    }
+                    .eraseToAnyPublisher()
+            })
+            .eraseToAnyPublisher()
     }
 }
