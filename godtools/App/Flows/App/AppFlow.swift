@@ -479,6 +479,15 @@ extension AppFlow {
                 
             }
             .store(in: &cancellables)
+        
+        appDiContainer.feature.appLanguage
+            .dataLayer.getAppLanguagesRepository()
+            .syncAllAppLanguages()
+            .sink { _ in
+            } receiveValue: { _ in
+            }
+            .store(in: &cancellables)
+
     }
     
     private func countAppSessionLaunch() {
