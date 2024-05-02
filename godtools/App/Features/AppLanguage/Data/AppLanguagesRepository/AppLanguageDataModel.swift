@@ -22,6 +22,26 @@ struct AppLanguageDataModel {
         
         return languageCode
     }
+    
+    init(languageCode: String, languageDirection: AppLanguageDataModel.Direction, languageScriptCode: String?) {
+        
+        self.languageCode = languageCode
+        self.languageDirection = languageDirection
+        self.languageScriptCode = languageScriptCode
+    }
+    
+    init(realmAppLanguage: RealmAppLanguage) {
+        
+        self.languageCode = realmAppLanguage.languageCode
+        self.languageScriptCode = realmAppLanguage.languageScriptCode
+        
+        switch realmAppLanguage.languageDirection {
+        case .leftToRight:
+            languageDirection = .leftToRight
+        case .rightToLeft:
+            languageDirection = .rightToLeft
+        }
+    }
 }
 
 extension AppLanguageDataModel {
