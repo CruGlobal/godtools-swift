@@ -22,7 +22,13 @@ class GetAppLanguagesListRepository: GetAppLanguagesListRepositoryInterface {
     
     func getLanguagesPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> {
         
-        return appLanguagesRepository.getLanguagesPublisher()
+        return appLanguagesRepository
+            .getLanguagesChangedPublisher()
+            .flatMap({ (appLanguagesChanged: Void) -> AnyPublisher<[AppLanguageDataModel], Never> in
+                
+                return self.appLanguagesRepository.getLanguagesPublisher()
+                    .eraseToAnyPublisher()
+            })
             .flatMap({ (languages: [AppLanguageDataModel]) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> in
                 
                 let appLanguagesList: [AppLanguageListItemDomainModel] = languages.map { (languageDataModel: AppLanguageDataModel) in
