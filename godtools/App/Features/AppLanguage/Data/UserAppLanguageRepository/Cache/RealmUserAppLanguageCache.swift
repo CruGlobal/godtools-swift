@@ -34,7 +34,15 @@ class RealmUserAppLanguageCache {
     
     func getLanguagePublisher() -> AnyPublisher<UserAppLanguageDataModel?, Never> {
         
-        return Just(getLanguage())
+        return realmDatabase.readObjectPublisher(primaryKey: RealmUserAppLanguageCache.sharedUserId)
+            .map { (realmUserAppLanguage: RealmUserAppLanguage?) in
+                
+                guard let realmUserAppLanguage = realmUserAppLanguage else {
+                    return nil
+                }
+                
+                return UserAppLanguageDataModel(realmUserAppLanguage: realmUserAppLanguage)
+            }
             .eraseToAnyPublisher()
     }
     
