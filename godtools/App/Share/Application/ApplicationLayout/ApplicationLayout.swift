@@ -51,11 +51,15 @@ class ApplicationLayout: ObservableObject {
             .getLanguagePublisher()
             .assign(to: &$appLanguage)
         
-        
         let getInterfaceLayoutDirectionUseCase = appLanguageFeatureDiContainer.domainLayer.getInterfaceLayoutDirectionUseCase()
 
-        getInterfaceLayoutDirectionUseCase
-            .getLayoutDirectionPublisher(appLanguagePublisher: $appLanguage.eraseToAnyPublisher())
+        $appLanguage.eraseToAnyPublisher()
+            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<AppInterfaceLayoutDirectionDomainModel, Never> in
+                
+                return getInterfaceLayoutDirectionUseCase
+                    .getLayoutDirectionPublisher(appLanguage: appLanguage)
+                    .eraseToAnyPublisher()
+            })
             .receive(on: DispatchQueue.main)
             .sink { (interfaceLayoutDirection: AppInterfaceLayoutDirectionDomainModel) in
                 
