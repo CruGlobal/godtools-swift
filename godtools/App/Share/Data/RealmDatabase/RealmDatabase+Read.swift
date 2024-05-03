@@ -72,7 +72,7 @@ extension RealmDatabase {
         return realm.objects(T.self)
     }
     
-    func readObjects<T: Object>(primaryKey: String) -> Results<T> {
+    func readObjects<T: Object>() -> Results<T> {
           
         let realm: Realm = openRealm()
         
