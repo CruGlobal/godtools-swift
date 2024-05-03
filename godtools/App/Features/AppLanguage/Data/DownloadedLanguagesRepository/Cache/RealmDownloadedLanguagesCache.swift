@@ -52,12 +52,12 @@ class RealmDownloadedLanguagesCache {
     
     func getDownloadedLanguagePublisher(languageId: String) -> AnyPublisher<DownloadedLanguageDataModel?, Never> {
         
-        return realmDatabase.readAndMapObjectPublisher(primaryKey: languageId) { (object: RealmDownloadedLanguage?) in
+        return realmDatabase.readObjectPublisher(primaryKey: languageId, mapInBackgroundClosure: { (object: RealmDownloadedLanguage?) in
             guard let realmDownloadedLanguage = object else {
                 return nil
             }
             return DownloadedLanguageDataModel(realmDownloadedLanguage: realmDownloadedLanguage)
-        }
+        })
         .flatMap { (dataModel: DownloadedLanguageDataModel?) in
 
             return Just(dataModel)
@@ -106,18 +106,20 @@ class RealmDownloadedLanguagesCache {
     
     func deleteDownloadedLanguagePublisher(languageId: String) -> AnyPublisher<Void, Error> {
         
-        return realmDatabase.readObjectPublisher(primaryKey: languageId)
-            .flatMap { (object: RealmDownloadedLanguage?) -> AnyPublisher<Void, Error> in
-                
-                guard let object = object else {
-                    return Just(Void())
-                        .setFailureType(to: Error.self)
-                        .eraseToAnyPublisher()
-                }
-                
-                return self.realmDatabase.deleteObjectsPublisher(objects: [object])
+        return realmDatabase.readObjectPublisher(primaryKey: languageId, mapInBackgroundClosure: { (object: RealmDownloadedLanguage?) in
+            return object
+        })
+        .flatMap { (object: RealmDownloadedLanguage?) -> AnyPublisher<Void, Error> in
+            
+            guard let object = object else {
+                return Just(Void())
+                    .setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             }
-            .eraseToAnyPublisher()
+            
+            return self.realmDatabase.deleteObjectsPublisher(objects: [object])
+                .eraseToAnyPublisher()
+        }
+        .eraseToAnyPublisher()
     }
 }

@@ -97,17 +97,19 @@ class RealmFavoritedResourcesCache {
     
     func deleteFavoritedResourcePublisher(id: String) -> AnyPublisher<Void, Error> {
         
-        return realmDatabase.readObjectPublisher(primaryKey: id)
-            .flatMap({ (object: RealmFavoritedResource?) -> AnyPublisher<Void, Error> in
-                
-                guard let object = object else {
-                    return Just(Void()).setFailureType(to: Error.self)
-                        .eraseToAnyPublisher()
-                }
-                
-                return self.realmDatabase.deleteObjectsPublisher(objects: [object])
+        return realmDatabase.readObjectPublisher(primaryKey: id, mapInBackgroundClosure: { (object: RealmFavoritedResource?) in
+            return object
+        })
+        .flatMap({ (object: RealmFavoritedResource?) -> AnyPublisher<Void, Error> in
+            
+            guard let object = object else {
+                return Just(Void()).setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
-            })
-            .eraseToAnyPublisher()
+            }
+            
+            return self.realmDatabase.deleteObjectsPublisher(objects: [object])
+                .eraseToAnyPublisher()
+        })
+        .eraseToAnyPublisher()
     }
 }
