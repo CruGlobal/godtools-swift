@@ -87,15 +87,24 @@ struct LessonEvaluationView: View {
                         .padding([.top], 30)
                         .padding([.leading], contentInsets.leading)
                     
-                    ScaleValueSliderView(
-                        viewWidth: geometry.size.width - viewInsets.leading - viewInsets.trailing,
-                        tintColor: ColorPalette.gtBlue.color,
-                        minScale: ScaleValue(lessonEvaluationScale: viewModel.readyToShareFaithScale.minScale),
-                        maxScale: ScaleValue(lessonEvaluationScale: viewModel.readyToShareFaithScale.maxScale),
-                        scaleIntValue: $viewModel.readyToShareFaithScaleIntValue,
-                        scaleDisplayValue: viewModel.readyToShareFaithScale.scale.valueTranslatedInAppLanguage
-                    )
-                    .padding([.top], 14)
+                    if let readyToShareFaithScale = viewModel.readyToShareFaithScale {
+                        
+                        ScaleValueSliderView(
+                            viewWidth: geometry.size.width - viewInsets.leading - viewInsets.trailing,
+                            tintColor: ColorPalette.gtBlue.color,
+                            minScale: ScaleValue(lessonEvaluationScale: readyToShareFaithScale.minScale),
+                            maxScale: ScaleValue(lessonEvaluationScale: readyToShareFaithScale.maxScale),
+                            scaleIntValue: $viewModel.readyToShareFaithScaleIntValue,
+                            scaleDisplayValue: readyToShareFaithScale.scale.valueTranslatedInAppLanguage
+                        )
+                        .padding([.top], 14)
+                    }
+                    else {
+                        
+                        Rectangle()
+                            .fill(Color.clear)
+                            .frame(width: geometry.size.width, height: ScaleValueSliderView.scrubberSize)
+                    }
                     
                     GTBlueButton(
                         title: viewModel.sendFeedbackButtonTitle,

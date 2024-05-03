@@ -13,12 +13,13 @@ struct ScaleValueSliderView: View {
     private static let defaultMinScale: ScaleValue = ScaleValue(integerValue: 0, displayValue: "0")
     private static let defaultMaxScale: ScaleValue = ScaleValue(integerValue: 10, displayValue: "10")
     
+    static let scrubberSize: CGFloat = 44
+    
     private let viewWidth: CGFloat
     private let backgroundColor: Color = Color.white
     private let textBoundsWidth: CGFloat = 40
     private let scrubberBarLeading: CGFloat
     private let scrubberBarWidth: CGFloat
-    private let scrubberSize: CGFloat = 44
     private let tintColor: Color
     private let lineWidth: CGFloat = 1
     private let minScale: ScaleValue
@@ -73,7 +74,7 @@ struct ScaleValueSliderView: View {
             
             Rectangle()
                 .foregroundColor(backgroundColor)
-                .frame(width: viewWidth, height: scrubberSize)
+                .frame(width: viewWidth, height: ScaleValueSliderView.scrubberSize)
                 .gesture(dragGesture)
             
             HStack(alignment: .center, spacing: 0) {
@@ -96,11 +97,11 @@ struct ScaleValueSliderView: View {
                 backgroundColor: .white,
                 tintColor: tintColor,
                 lineWidth: lineWidth,
-                size: CGSize(width: scrubberSize, height: scrubberSize),
+                size: CGSize(width: ScaleValueSliderView.scrubberSize, height: ScaleValueSliderView.scrubberSize),
                 text: scaleDisplayValue
             )
             .allowsHitTesting(false)
-            .padding([.leading], scrubberBarLeading + (progress * scrubberBarWidth) - (scrubberSize / 2))
+            .padding([.leading], scrubberBarLeading + (progress * scrubberBarWidth) - (ScaleValueSliderView.scrubberSize / 2))
         }
         .frame(width: viewWidth)
     }
