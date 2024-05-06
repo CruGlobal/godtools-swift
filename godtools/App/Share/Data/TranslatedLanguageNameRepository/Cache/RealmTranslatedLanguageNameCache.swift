@@ -70,8 +70,8 @@ class RealmTranslatedLanguageNameCache {
             return
         }
         
-        realmDatabase.writeObjectsInBackground { (realm: Realm) in
-                        
+        realmDatabase.writeObjectsInBackground { (realm: Realm) -> [RealmTranslatedLanguageName] in
+            
             let realmObject: RealmTranslatedLanguageName
             
             if let existingObject = self.getTranslatedLanguageName(realm: realm, language: language, languageTranslation: languageTranslation) {
@@ -96,6 +96,10 @@ class RealmTranslatedLanguageNameCache {
             }
 
             return [realmObject]
+            
+        } mapInBackgroundClosure: { (objects: [RealmTranslatedLanguageName]) -> [RealmTranslatedLanguageName] in
+            
+            return objects
             
         } completion: { (result: Result<[RealmTranslatedLanguageName], Error>) in
             

@@ -8,8 +8,9 @@
 
 import Foundation
 import RealmSwift
+@testable import godtools
 
-class TestRealmObject: Object {
+class TestRealmObject: Object, IdentifiableRealmObject {
     
     @objc dynamic var id: String = ""
     @objc dynamic var name: String = ""
