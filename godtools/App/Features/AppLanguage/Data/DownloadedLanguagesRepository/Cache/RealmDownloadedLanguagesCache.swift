@@ -89,15 +89,19 @@ class RealmDownloadedLanguagesCache {
         
         let downloadedLanguage = DownloadedLanguageDataModel(languageId: languageId, downloadComplete: downloadComplete)
         
-        return realmDatabase.writeObjectsPublisher { realm in
+        return realmDatabase.writeObjectsPublisher { (realm: Realm) -> [RealmDownloadedLanguage] in
             
             let realmDownloadedLanguage = RealmDownloadedLanguage()
             realmDownloadedLanguage.mapFrom(dataModel: downloadedLanguage)
             
             return [realmDownloadedLanguage]
+            
+        } mapInBackgroundClosure: { (objects: [RealmDownloadedLanguage]) -> [DownloadedLanguageDataModel] in
+            return objects.map({
+                DownloadedLanguageDataModel(realmDownloadedLanguage: $0)
+            })
         }
         .map { _ in
-            
             return downloadedLanguage
         }
         .eraseToAnyPublisher()
@@ -106,20 +110,11 @@ class RealmDownloadedLanguagesCache {
     
     func deleteDownloadedLanguagePublisher(languageId: String) -> AnyPublisher<Void, Error> {
         
-        return realmDatabase.readObjectPublisher(primaryKey: languageId, mapInBackgroundClosure: { (object: RealmDownloadedLanguage?) in
-            return object
-        })
-        .flatMap { (object: RealmDownloadedLanguage?) -> AnyPublisher<Void, Error> in
-            
-            guard let object = object else {
-                return Just(Void())
-                    .setFailureType(to: Error.self)
-                    .eraseToAnyPublisher()
-            }
-            
-            return self.realmDatabase.deleteObjectsPublisher(objects: [object])
-                .eraseToAnyPublisher()
-        }
+        return realmDatabase.deleteObjectsInBackgroundPublisher(
+            type: RealmDownloadedLanguage.self,
+            primaryKeyPath: #keyPath(RealmDownloadedLanguage.languageId),
+            primaryKeys: [languageId]
+        )
         .eraseToAnyPublisher()
     }
 }
