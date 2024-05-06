@@ -43,7 +43,7 @@ class GetLanguageSettingsInterfaceStringsRepository: GetLanguageSettingsInterfac
     
     private func getNumberOfAppLanguagesAvailableString(translateInAppLanguage: AppLanguageDomainModel) -> String {
         
-        let numberOfAppLanguages: Int = appLanguagesRepository.getNumberOfLanguages()
+        let numberOfAppLanguages: Int = appLanguagesRepository.getNumberOfCachedLanguages()
         
         let localizedNumberOfLanguagesAvailable = localizationServices.stringForLocaleElseSystemElseEnglish(
             localeIdentifier: translateInAppLanguage,

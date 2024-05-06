@@ -18,7 +18,7 @@ class AppLanguagesRepository {
         self.cache = cache
     }
     
-    func getNumberOfLanguages() -> Int {
+    func getNumberOfCachedLanguages() -> Int {
         return cache.getNumberOfLanguages()
     }
     
