@@ -76,7 +76,7 @@ class RealmFavoritedResourcesCache {
             return FavoritedResourceDataModel(id: $0)
         }
         
-        return realmDatabase.writeObjectsPublisher { (realm: Realm) in
+        return realmDatabase.writeObjectsPublisher { (realm: Realm) -> [RealmFavoritedResource] in
             
             let realmFavoritedResources: [RealmFavoritedResource] = newFavoritedResources.map {
                 
@@ -87,27 +87,22 @@ class RealmFavoritedResourcesCache {
             }
             
             return realmFavoritedResources
-        }
-        .map { _ in
             
-            return newFavoritedResources
+        } mapInBackgroundClosure: { (objects: [RealmFavoritedResource]) -> [FavoritedResourceDataModel] in
+            return objects.map({
+                FavoritedResourceDataModel(realmFavoritedResource: $0)
+            })
         }
         .eraseToAnyPublisher()
     }
     
     func deleteFavoritedResourcePublisher(id: String) -> AnyPublisher<Void, Error> {
         
-        return realmDatabase.readObjectPublisher(primaryKey: id)
-            .flatMap({ (object: RealmFavoritedResource?) -> AnyPublisher<Void, Error> in
-                
-                guard let object = object else {
-                    return Just(Void()).setFailureType(to: Error.self)
-                        .eraseToAnyPublisher()
-                }
-                
-                return self.realmDatabase.deleteObjectsPublisher(objects: [object])
-                    .eraseToAnyPublisher()
-            })
-            .eraseToAnyPublisher()
+        return realmDatabase.deleteObjectsInBackgroundPublisher(
+            type: RealmFavoritedResource.self,
+            primaryKeyPath: #keyPath(RealmFavoritedResource.resourceId),
+            primaryKeys: [id]
+        )
+        .eraseToAnyPublisher()
     }
 }
