@@ -54,22 +54,25 @@ class RealmUserAppLanguageCache {
             .eraseToAnyPublisher()
     }
     
-    func storeLanguage(languageId: BCP47LanguageIdentifier) {
+    func storeLanguagePublisher(languageId: BCP47LanguageIdentifier) -> AnyPublisher<UserAppLanguageDataModel?, Error> {
         
-        let realm: Realm = realmDatabase.openRealm()
-        
-        let realmUserAppLanguage = RealmUserAppLanguage()
-        realmUserAppLanguage.id = RealmUserAppLanguageCache.sharedUserId
-        realmUserAppLanguage.languageId = languageId
-        
-        do {
+        return realmDatabase.writeObjectsPublisher { (realm: Realm) -> [RealmUserAppLanguage] in
             
-            try realm.write {
-                realm.add(realmUserAppLanguage, update: .all)
-            }
+            let realmUserAppLanguage = RealmUserAppLanguage()
+            realmUserAppLanguage.id = RealmUserAppLanguageCache.sharedUserId
+            realmUserAppLanguage.languageId = languageId
+            
+            return [realmUserAppLanguage]
+            
+        } mapInBackgroundClosure: { (objects: [RealmUserAppLanguage]) -> [UserAppLanguageDataModel] in
+            
+            return objects.map({
+                return UserAppLanguageDataModel(realmUserAppLanguage: $0)
+            })
         }
-        catch let error {
-            print(error)
+        .map { (objects: [UserAppLanguageDataModel]) in
+            return objects.first
         }
+        .eraseToAnyPublisher()
     }
 }

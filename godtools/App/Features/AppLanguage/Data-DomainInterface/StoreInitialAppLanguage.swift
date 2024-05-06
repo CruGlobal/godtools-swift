@@ -58,8 +58,12 @@ class StoreInitialAppLanguage: StoreInitialAppLanguageInterface {
                 
                 return self.userAppLanguageRepository
                     .storeLanguagePublisher(languageId: appLanguageToStore)
-                    .map { (success: Bool) in
-                        appLanguageToStore
+                    .catch({ (error: Error) in
+                        return Just(nil)
+                            .eraseToAnyPublisher()
+                    })
+                    .map { _ in
+                        return appLanguageToStore
                     }
                     .eraseToAnyPublisher()
             })

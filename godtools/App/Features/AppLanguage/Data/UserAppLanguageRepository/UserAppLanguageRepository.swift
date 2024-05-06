@@ -34,11 +34,9 @@ class UserAppLanguageRepository {
             .eraseToAnyPublisher()
     }
     
-    func storeLanguagePublisher(languageId: BCP47LanguageIdentifier) -> AnyPublisher<Bool, Never> {
+    func storeLanguagePublisher(languageId: BCP47LanguageIdentifier) -> AnyPublisher<UserAppLanguageDataModel?, Error> {
         
-        cache.storeLanguage(languageId: languageId)
-        
-        return Just(true)
+        return cache.storeLanguagePublisher(languageId: languageId)
             .eraseToAnyPublisher()
     }
 }

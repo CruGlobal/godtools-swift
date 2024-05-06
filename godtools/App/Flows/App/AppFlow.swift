@@ -721,7 +721,13 @@ extension AppFlow {
             
             let userAppLanguageCache: RealmUserAppLanguageCache = appDiContainer.feature.appLanguage.dataLayer.getUserAppLanguageCache()
             
-            userAppLanguageCache.storeLanguage(languageId: appLanguage)
+            userAppLanguageCache.storeLanguagePublisher(languageId: appLanguage)
+                .sink { _ in
+                    
+                } receiveValue: { (appLanguageDataModel: UserAppLanguageDataModel?) in
+                    
+                }
+                .store(in: &cancellables)
             
             navigateToOnboarding(animated: true)
         }
