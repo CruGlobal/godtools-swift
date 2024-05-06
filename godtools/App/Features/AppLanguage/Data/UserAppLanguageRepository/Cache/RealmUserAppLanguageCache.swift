@@ -34,16 +34,15 @@ class RealmUserAppLanguageCache {
     
     func getLanguagePublisher() -> AnyPublisher<UserAppLanguageDataModel?, Never> {
         
-        return realmDatabase.readObjectPublisher(primaryKey: RealmUserAppLanguageCache.sharedUserId)
-            .map { (realmUserAppLanguage: RealmUserAppLanguage?) in
-                
-                guard let realmUserAppLanguage = realmUserAppLanguage else {
-                    return nil
-                }
-                
-                return UserAppLanguageDataModel(realmUserAppLanguage: realmUserAppLanguage)
+        return realmDatabase.readObjectPublisher(primaryKey: RealmUserAppLanguageCache.sharedUserId, mapInBackgroundClosure: { (object: RealmUserAppLanguage?) -> UserAppLanguageDataModel? in
+            
+            guard let realmUserAppLanguage = object else {
+                return nil
             }
-            .eraseToAnyPublisher()
+            
+            return UserAppLanguageDataModel(realmUserAppLanguage: realmUserAppLanguage)
+        })
+        .eraseToAnyPublisher()
     }
     
     func getLanguageChangedPublisher() -> AnyPublisher<Void, Never> {

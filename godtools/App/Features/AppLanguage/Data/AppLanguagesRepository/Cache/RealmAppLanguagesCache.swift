@@ -33,36 +33,32 @@ class RealmAppLanguagesCache {
     }
     
     func getLanguagesPublisher() -> AnyPublisher<[AppLanguageDataModel], Never> {
-        return realmDatabase.readObjectsPublisher()
-            .flatMap({ (results: Results<RealmAppLanguage>) -> AnyPublisher<[AppLanguageDataModel], Never> in
-                
-                let objects: [AppLanguageDataModel] = results.map({
-                    AppLanguageDataModel(realmAppLanguage: $0)
-                })
-                
-                return Just(objects)
-                    .eraseToAnyPublisher()
+        
+        return realmDatabase.readObjectsPublisher(mapInBackgroundClosure: { (results: Results<RealmAppLanguage>) -> [AppLanguageDataModel] in
+            
+            return results.map({
+                AppLanguageDataModel(realmAppLanguage: $0)
             })
-            .eraseToAnyPublisher()
+        })
+        .eraseToAnyPublisher()
     }
     
     func getLanguagePublisher(languageId: BCP47LanguageIdentifier) -> AnyPublisher<AppLanguageDataModel?, Never> {
         
-        return realmDatabase.readObjectPublisher(primaryKey: languageId)
-            .map { (realmAppLanguage: RealmAppLanguage?) in
-                
-                guard let realmAppLanguage = realmAppLanguage else {
-                    return nil
-                }
-                
-                return AppLanguageDataModel(realmAppLanguage: realmAppLanguage)
+        return realmDatabase.readObjectPublisher(primaryKey: languageId, mapInBackgroundClosure: { (object: RealmAppLanguage?) -> AppLanguageDataModel? in
+            
+            guard let realmAppLanguage = object else {
+                return nil
             }
-            .eraseToAnyPublisher()
+            
+            return AppLanguageDataModel(realmAppLanguage: realmAppLanguage)
+        })
+        .eraseToAnyPublisher()
     }
     
     func storeLanguagesPublisher(appLanguages: [AppLanguageDataModel]) -> AnyPublisher<[AppLanguageDataModel], Error> {
         
-        return realmDatabase.writeObjectsPublisher { (realm: Realm) in
+        return realmDatabase.writeObjectsPublisher { (realm: Realm) -> [RealmAppLanguage] in
             
             let realmObjects: [RealmAppLanguage] = appLanguages.map({
                 let realmAppLanguage = RealmAppLanguage()
@@ -71,9 +67,12 @@ class RealmAppLanguagesCache {
             })
             
             return realmObjects
-        }
-        .map { _ in
-            return appLanguages
+            
+        } mapInBackgroundClosure: { (objects: [RealmAppLanguage]) -> [AppLanguageDataModel] in
+            
+            return objects.map({
+                AppLanguageDataModel(realmAppLanguage: $0)
+            })
         }
         .eraseToAnyPublisher()
     }
