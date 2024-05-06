@@ -49,16 +49,22 @@ class RealmGlobalAnalyticsCache {
     
     func storeGlobalAnalyticsPublisher(globalAnalytics: MobileContentGlobalAnalyticsDecodable) -> AnyPublisher<GlobalAnalyticsDataModel, Error> {
         
-        return realmDatabase.writeObjectsPublisher(shouldAddObjectsToRealm: true) { (realm: Realm) in
+        return realmDatabase.writeObjectsPublisher { (realm: Realm) -> [RealmGlobalAnalytics] in
             
             let realmGlobalAnalytics: RealmGlobalAnalytics = RealmGlobalAnalytics()
-            
             realmGlobalAnalytics.mapFrom(decodable: globalAnalytics)
             
             return [realmGlobalAnalytics]
+            
+        } mapInBackgroundClosure: { (objects: [RealmGlobalAnalytics]) -> [GlobalAnalyticsDataModel] in
+            return objects.map({
+                GlobalAnalyticsDataModel(realmGlobalAnalytics: $0)
+            })
         }
         .map { _ in
-            return GlobalAnalyticsDataModel(mobileContentAnalyticsDecodable: globalAnalytics)
+            return GlobalAnalyticsDataModel(
+                mobileContentAnalyticsDecodable: globalAnalytics
+            )
         }
         .eraseToAnyPublisher()
     }
