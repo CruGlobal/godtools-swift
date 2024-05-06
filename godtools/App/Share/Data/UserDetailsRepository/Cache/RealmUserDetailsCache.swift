@@ -68,8 +68,10 @@ class RealmUserDetailsCache {
             
             return [newUserDetails]
             
-        } mapInBackgroundClosure: { (objects: [RealmUserDetails]) in
-            return objects
+        } mapInBackgroundClosure: { (objects: [RealmUserDetails]) -> [UserDetailsDataModel] in
+            return objects.map({
+                UserDetailsDataModel(userDetailsType: $0)
+            })
         }
         .map { _ in
             return userDetails
