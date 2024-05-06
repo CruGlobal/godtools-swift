@@ -37,7 +37,7 @@ class TranslatedLanguageNameRepositorySync {
             })
             .flatMap({ (languages: [LanguageModel]) -> AnyPublisher<Void, Never> in
                 
-                return self.realmDatabase.writeObjectsPublisher { (realm: Realm) in
+                return self.realmDatabase.writeObjectsPublisher { (realm: Realm) -> [RealmTranslatedLanguageName] in
                     
                     var translatedLanguageNames: [RealmTranslatedLanguageName] = Array()
                     
@@ -53,6 +53,9 @@ class TranslatedLanguageNameRepositorySync {
                     }
                     
                     return translatedLanguageNames
+                    
+                } mapInBackgroundClosure: { (objects: [RealmTranslatedLanguageName]) -> [Void] in
+                    return [Void()]
                 }
                 .map { _ in
                     return ()
@@ -62,6 +65,7 @@ class TranslatedLanguageNameRepositorySync {
                         .eraseToAnyPublisher()
                 })
                 .eraseToAnyPublisher()
+                
             })
             .eraseToAnyPublisher()
     }

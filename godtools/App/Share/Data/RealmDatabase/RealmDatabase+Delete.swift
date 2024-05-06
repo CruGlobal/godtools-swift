@@ -10,48 +10,37 @@ import Foundation
 import RealmSwift
 import Combine
 
+// MARK: - Delete Objects By Primary Keys
+
 extension RealmDatabase {
- 
-    func deleteObjects(realm: Realm, objects: [Object]) -> Error? {
-        
-        do {
-            
-            try realm.write {
-                
-                realm.delete(objects)
-            }
-            
-            return nil
-        }
-        catch let error {
-            
-            return error
-        }
-    }
     
-    func deleteObjectsInBackground(objects: [Object], completion: @escaping ((_ result: Result<Void, Error>) -> Void)) {
+    func deleteObjectsInBackground<Element: RealmFetchable>(type: Element.Type, primaryKeyPath: String, primaryKeys: [String], completion: @escaping ((_ result: Result<Void, Error>) -> Void)) {
         
-        self.background { realm in
+        self.background { (realm: Realm) in
             
-            let error: Error? = self.deleteObjects(
-                realm: realm,
-                objects: objects
-            )
+            let results: Results<Element> = realm.objects(type)
+                .filter("\(primaryKeyPath) IN %@", primaryKeys)
             
-            if let error = error {
-                completion(.failure(error))
+            let objects: [ObjectBase] = Array(results) as? [ObjectBase] ?? Array()
+            
+            let deleteObjectsError: Error? = self.deleteObjects(realm: realm, objects: objects)
+            
+            if let deleteObjectsError = deleteObjectsError {
+                
+                completion(.failure(deleteObjectsError))
             }
             else {
-                completion(.success(()))
+                
+                completion(.success(Void()))
             }
         }
     }
     
-    func deleteObjectsPublisher(objects: [Object]) -> AnyPublisher<Void, Error> {
-        
+    func deleteObjectsInBackgroundPublisher<Element: RealmFetchable>(type: Element.Type, primaryKeyPath: String, primaryKeys: [String]) -> AnyPublisher<Void, Error> {
+
         return Future() { promise in
             
-            self.deleteObjectsInBackground(objects: objects) { result in
+            self.deleteObjectsInBackground(type: type, primaryKeyPath: primaryKeyPath, primaryKeys: primaryKeys) { (result: Result<Void, Error>) in
                 
                 switch result {
                     
@@ -65,6 +54,31 @@ extension RealmDatabase {
         }
         .eraseToAnyPublisher()
     }
+}
+
+// MARK: - Delete Objects
+
+extension RealmDatabase {
+ 
+    func deleteObjects(realm: Realm, objects: [ObjectBase]) -> Error? {
+        
+        do {
+            
+            try realm.write {
+                realm.delete(objects)
+            }
+            
+            return nil
+        }
+        catch let error {
+            return error
+        }
+    }
+}
+
+// MARK: - Delete All Objects
+
+extension RealmDatabase {
     
     func deleteAllObjects(realm: Realm) -> Error? {
                 
@@ -77,7 +91,6 @@ extension RealmDatabase {
             return nil
         }
         catch let error {
-            
             return error
         }
     }

@@ -61,12 +61,17 @@ class RealmUserDetailsCache {
     
     func storeUserDetailsPublisher(userDetails: UserDetailsDataModel) -> AnyPublisher<UserDetailsDataModel, Error> {
         
-        return realmDatabase.writeObjectsPublisher { (realm: Realm) in
+        return realmDatabase.writeObjectsPublisher { (realm: Realm) -> [RealmUserDetails] in
             
             let newUserDetails: RealmUserDetails = RealmUserDetails()
             newUserDetails.mapFrom(model: userDetails)
             
             return [newUserDetails]
+            
+        } mapInBackgroundClosure: { (objects: [RealmUserDetails]) -> [UserDetailsDataModel] in
+            return objects.map({
+                UserDetailsDataModel(userDetailsType: $0)
+            })
         }
         .map { _ in
             return userDetails

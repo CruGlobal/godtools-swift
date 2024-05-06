@@ -10,6 +10,8 @@ import Foundation
 import RealmSwift
 import Combine
 
+// MARK: - Read Object
+
 extension RealmDatabase {
     
     func readObjectElseCreateNew<T: IdentifiableRealmObject>(realm: Realm, primaryKey: String) -> T {
@@ -41,23 +43,65 @@ extension RealmDatabase {
         return readObject(realm: realm, primaryKey: primaryKey)
     }
     
-    func readObjectInBackground<T: Object>(primaryKey: String, completion: @escaping ((_ object: T?) -> Void)) {
+    func readObjectInBackground<T: Object, U>(primaryKey: String, mapInBackgroundClosure: @escaping ((_ object: T?) -> U?), completion: @escaping ((_ object: U?) -> Void)) {
         
         background { realm in
             
             let realmObject: T? = self.readObject(realm: realm, primaryKey: primaryKey)
+            
+            let mappedObject: U? = mapInBackgroundClosure(realmObject)
 
-            completion(realmObject)
+            completion(mappedObject)
         }
     }
     
-    func readObjectPublisher<T: Object>(primaryKey: String) -> AnyPublisher<T?, Never> {
+    func readObjectPublisher<T: Object, U>(primaryKey: String, mapInBackgroundClosure: @escaping ((_ object: T?) -> U?)) -> AnyPublisher<U?, Never> {
         
         return Future() { promise in
             
-            self.readObjectInBackground(primaryKey: primaryKey) { (realmObject: T?) in
+            self.readObjectInBackground(primaryKey: primaryKey, mapInBackgroundClosure: mapInBackgroundClosure) { (mappedObject: U?) in
                 
-                promise(.success(realmObject))
+                promise(.success(mappedObject))
+            }
+        }
+        .eraseToAnyPublisher()
+    }
+}
+
+// MARK: - Read Objects
+
+extension RealmDatabase {
+    
+    func readObjects<T: Object>(realm: Realm) -> Results<T> {
+        return realm.objects(T.self)
+    }
+    
+    func readObjects<T: Object>() -> Results<T> {
+          
+        let realm: Realm = openRealm()
+        
+        return readObjects(realm: realm)
+    }
+    
+    func readObjectsInBackground<T: Object, U>(mapInBackgroundClosure: @escaping ((_ results: Results<T>) -> [U]), completion: @escaping ((_ mappedObjects: [U]) -> Void)) {
+        
+        background { realm in
+            
+            let results: Results<T> = self.readObjects(realm: realm)
+            
+            let mappedObjects: [U] = mapInBackgroundClosure(results)
+
+            completion(mappedObjects)
+        }
+    }
+    
+    func readObjectsPublisher<T: Object, U>(mapInBackgroundClosure: @escaping ((_ results: Results<T>) -> [U])) -> AnyPublisher<[U], Never> {
+        
+        return Future() { promise in
+            
+            self.readObjectsInBackground(mapInBackgroundClosure: mapInBackgroundClosure) { (mappedObjects: [U]) in
+                
+                promise(.success(mappedObjects))
             }
         }
         .eraseToAnyPublisher()

@@ -42,8 +42,8 @@ class TrackDownloadedTranslationsCache {
     
     func trackTranslationDownloaded(translation: TranslationModel) -> AnyPublisher<[DownloadedTranslationDataModel], Error> {
         
-        return realmDatabase.writeObjectsPublisher { realm in
-            
+        return realmDatabase.writeObjectsPublisher { (realm: Realm) -> [RealmDownloadedTranslation] in
+        
             let downloadedTranslation: RealmDownloadedTranslation = RealmDownloadedTranslation()
             
             guard let languageId = translation.language?.id, !languageId.isEmpty,
@@ -61,11 +61,9 @@ class TrackDownloadedTranslationsCache {
             let objects: [RealmDownloadedTranslation] = [downloadedTranslation]
             
             return objects
-        }
-        .map { (realmDownloadedTranslations: [RealmDownloadedTranslation]) in
-            realmDownloadedTranslations.map({
-                DownloadedTranslationDataModel(model: $0)
-            })
+            
+        } mapInBackgroundClosure: { (objects: [RealmDownloadedTranslation]) -> [DownloadedTranslationDataModel] in
+            return objects.map({DownloadedTranslationDataModel(model: $0)})
         }
         .eraseToAnyPublisher()
     }
