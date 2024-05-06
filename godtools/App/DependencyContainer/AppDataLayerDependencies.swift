@@ -145,13 +145,7 @@ class AppDataLayerDependencies {
     func getInfoPlist() -> InfoPlist {
         return sharedInfoPlist
     }
-    
-    func getLanguageSettingsRepository() -> LanguageSettingsRepository {
-        return LanguageSettingsRepository(
-            cache: LanguageSettingsCache()
-        )
-    }
-    
+
     func getLanguagesRepository() -> LanguagesRepository {
         
         let api = MobileContentLanguagesApi(
