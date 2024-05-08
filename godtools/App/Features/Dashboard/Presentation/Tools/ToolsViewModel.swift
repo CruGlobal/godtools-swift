@@ -32,6 +32,7 @@ class ToolsViewModel: ObservableObject {
     
     private weak var flowDelegate: FlowDelegate?
 
+    @Published private var didPullToRefresh: Void = ()
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     @Published private var toolFilterCategorySelection: CategoryFilterDomainModel = .anyCategory(text: "", toolsAvailableText: "")
     @Published private var toolFilterLanguageSelection: LanguageFilterDomainModel = .anyLanguage(text: "", toolsAvailableText: "")
@@ -68,12 +69,13 @@ class ToolsViewModel: ObservableObject {
             .getLanguagePublisher()
             .assign(to: &$appLanguage)
         
-        Publishers.CombineLatest3(
+        Publishers.CombineLatest4(
+            $didPullToRefresh.eraseToAnyPublisher(),
             $appLanguage.eraseToAnyPublisher(),
             $toolFilterCategorySelection.eraseToAnyPublisher(),
             $toolFilterLanguageSelection.eraseToAnyPublisher()
         )
-        .flatMap({ (appLanguage, toolFilterCategory, toolFilterLanguage) -> AnyPublisher<(ViewToolsDomainModel, [SpotlightToolListItemDomainModel]), Never> in
+        .flatMap({ (pullToRefresh, appLanguage, toolFilterCategory, toolFilterLanguage) -> AnyPublisher<(ViewToolsDomainModel, [SpotlightToolListItemDomainModel]), Never> in
                                     
             return Publishers.CombineLatest(
                 viewToolsUseCase.viewPublisher(
@@ -205,8 +207,8 @@ extension ToolsViewModel {
         resourcesRepository.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments()
             .sink(receiveCompletion: { completed in
 
-            }, receiveValue: { (result: RealmResourcesCacheSyncResult) in
-                
+            }, receiveValue: { [weak self] (result: RealmResourcesCacheSyncResult) in
+                self?.didPullToRefresh = ()
             })
             .store(in: &cancellables)
     }
