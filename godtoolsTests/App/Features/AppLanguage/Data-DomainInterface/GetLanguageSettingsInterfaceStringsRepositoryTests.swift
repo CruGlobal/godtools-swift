@@ -16,15 +16,30 @@ class GetLanguageSettingsInterfaceStringsRepositoryTests: QuickSpec {
     
     override class func spec() {
         
-        let numberOfTestAppLanguages: Int = 5
+        var cancellables: Set<AnyCancellable> = Set()
         
         let testsDiContainer = TestsDiContainer()
         
         let testsRealmDatabase: RealmDatabase = testsDiContainer.dataLayer.getSharedRealmDatabase()
         
+        let appLanguages: [AppLanguageCodable] = [
+            AppLanguageCodable(languageCode: "en", languageDirection: .leftToRight, languageScriptCode: nil),
+            AppLanguageCodable(languageCode: "es", languageDirection: .leftToRight, languageScriptCode: nil),
+            AppLanguageCodable(languageCode: "zh", languageDirection: .leftToRight, languageScriptCode: "Hans"),
+            AppLanguageCodable(languageCode: "zh", languageDirection: .leftToRight, languageScriptCode: "Hant"),
+            AppLanguageCodable(languageCode: "lv", languageDirection: .leftToRight, languageScriptCode: nil)
+        ]
+        
+        let numberOfTestAppLanguages: Int = appLanguages.count
+
         let mockAppLanguagesSync: AppLanguagesRepositorySyncInterface = MockAppLanguagesRepositorySync(
             realmDatabase: testsRealmDatabase,
-            numberOfAppLanguages: numberOfTestAppLanguages
+            appLanguages: appLanguages
+        )
+        
+        let appLanguagesRepository: AppLanguagesRepository = testsDiContainer.feature.appLanguage.dataLayer.getAppLanguagesRepository(
+            realmDatabase: testsRealmDatabase,
+            sync: mockAppLanguagesSync
         )
         
         let localizableStrings: [MockLocalizationServices.LocaleId: [MockLocalizationServices.StringKey: String]] = [
@@ -51,10 +66,7 @@ class GetLanguageSettingsInterfaceStringsRepositoryTests: QuickSpec {
         let getLanguageSettingsInterfaceStringsRepository = GetLanguageSettingsInterfaceStringsRepository(
             localizationServices: MockLocalizationServices(localizableStrings: localizableStrings),
             translatedLanguageNameRepository: testsDiContainer.dataLayer.getTranslatedLanguageNameRepository(),
-            appLanguagesRepository: testsDiContainer.feature.appLanguage.dataLayer.getAppLanguagesRepository(
-                realmDatabase: testsRealmDatabase,
-                sync: mockAppLanguagesSync
-            )
+            appLanguagesRepository: appLanguagesRepository
         )
         
         describe("User is viewing the language settings.") {
@@ -73,7 +85,7 @@ class GetLanguageSettingsInterfaceStringsRepositoryTests: QuickSpec {
                     
                     waitUntil { done in
                         
-                        _ = appLanguagePublisher
+                        appLanguagePublisher
                             .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<LanguageSettingsInterfaceStringsDomainModel, Never> in
                                 
                                 return getLanguageSettingsInterfaceStringsRepository
@@ -105,6 +117,7 @@ class GetLanguageSettingsInterfaceStringsRepositoryTests: QuickSpec {
                                     appLanguagePublisher.send(LanguageCodeDomainModel.spanish.rawValue)
                                 }
                             }
+                            .store(in: &cancellables)
                     }
 
                     expect(englishInterfaceStringsRef?.navTitle).to(equal("Language settings"))
@@ -132,7 +145,7 @@ class GetLanguageSettingsInterfaceStringsRepositoryTests: QuickSpec {
                     
                     waitUntil { done in
                         
-                        _ = getLanguageSettingsInterfaceStringsRepository
+                        getLanguageSettingsInterfaceStringsRepository
                             .getStringsPublisher(translateInAppLanguage: "en")
                             .sink { (interfaceStrings: LanguageSettingsInterfaceStringsDomainModel) in
                                 
@@ -146,7 +159,8 @@ class GetLanguageSettingsInterfaceStringsRepositoryTests: QuickSpec {
                                 
                                 done()
                                 
-                        }
+                            }
+                            .store(in: &cancellables)
                     }
                     
                     expect(interfaceStringsRef?.chooseAppLanguageButtonTitle).to(equal("English"))
@@ -155,12 +169,6 @@ class GetLanguageSettingsInterfaceStringsRepositoryTests: QuickSpec {
             
             context("When the app language is Spanish.") {
                 
-                let getLanguageSettingsInterfaceStringsRepository = GetLanguageSettingsInterfaceStringsRepository(
-                    localizationServices: MockLocalizationServices(localizableStrings: localizableStrings),
-                    translatedLanguageNameRepository: testsDiContainer.dataLayer.getTranslatedLanguageNameRepository(),
-                    appLanguagesRepository: testsDiContainer.feature.appLanguage.dataLayer.getAppLanguagesRepository()
-                )
-                
                 it("I expect the choose app language button title to display my app language Spanish translated in Spanish.") {
                                         
                     var interfaceStringsRef: LanguageSettingsInterfaceStringsDomainModel?
@@ -168,7 +176,7 @@ class GetLanguageSettingsInterfaceStringsRepositoryTests: QuickSpec {
                     
                     waitUntil { done in
                         
-                        _ = getLanguageSettingsInterfaceStringsRepository
+                        getLanguageSettingsInterfaceStringsRepository
                             .getStringsPublisher(translateInAppLanguage: "es")
                             .sink { (interfaceStrings: LanguageSettingsInterfaceStringsDomainModel) in
                                 
@@ -182,7 +190,8 @@ class GetLanguageSettingsInterfaceStringsRepositoryTests: QuickSpec {
                                 
                                 done()
                                 
-                        }
+                            }
+                            .store(in: &cancellables)
                     }
                     
                     expect(interfaceStringsRef?.chooseAppLanguageButtonTitle).to(equal("español"))
@@ -198,7 +207,7 @@ class GetLanguageSettingsInterfaceStringsRepositoryTests: QuickSpec {
                     
                     waitUntil { done in
                         
-                        _ = getLanguageSettingsInterfaceStringsRepository
+                        getLanguageSettingsInterfaceStringsRepository
                             .getStringsPublisher(translateInAppLanguage: "en")
                             .sink { (interfaceStrings: LanguageSettingsInterfaceStringsDomainModel) in
                                 
@@ -212,7 +221,8 @@ class GetLanguageSettingsInterfaceStringsRepositoryTests: QuickSpec {
                                                                 
                                 done()
                                 
-                        }
+                            }
+                            .store(in: &cancellables)
                     }
                                         
                     expect(interfaceStringsRef?.numberOfAppLanguagesAvailable).to(contain("\(numberOfTestAppLanguages)"))

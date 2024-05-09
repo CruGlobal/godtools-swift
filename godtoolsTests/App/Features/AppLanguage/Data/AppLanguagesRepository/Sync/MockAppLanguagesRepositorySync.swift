@@ -14,31 +14,34 @@ import RealmSwift
 class MockAppLanguagesRepositorySync: AppLanguagesRepositorySyncInterface {
     
     private let realmDatabase: RealmDatabase
-    private let numberOfAppLanguages: Int
+    private let appLanguages: [AppLanguageCodable]
     
-    init(realmDatabase: RealmDatabase, numberOfAppLanguages: Int) {
+    init(realmDatabase: RealmDatabase, appLanguages: [AppLanguageCodable]) {
         
         self.realmDatabase = realmDatabase
-        self.numberOfAppLanguages = numberOfAppLanguages
+        self.appLanguages = appLanguages
+        
+        addAppLanguagesToRealm(appLanguages: appLanguages)
     }
     
     func syncPublisher() -> AnyPublisher<Void, Never> {
-        
-        let allAppLanguages: [AppLanguageCodable] = [
-            AppLanguageCodable(languageCode: "en", languageDirection: .leftToRight, languageScriptCode: nil),
-            AppLanguageCodable(languageCode: "es", languageDirection: .leftToRight, languageScriptCode: nil),
-            AppLanguageCodable(languageCode: "zh", languageDirection: .leftToRight, languageScriptCode: "Hans"),
-            AppLanguageCodable(languageCode: "zh", languageDirection: .leftToRight, languageScriptCode: "Hant"),
-            AppLanguageCodable(languageCode: "lv", languageDirection: .leftToRight, languageScriptCode: nil)
-        ]
-        
-        if allAppLanguages.count != numberOfAppLanguages {
-            assertionFailure("numberOfAppLanguages should equal allAppLanguages.count for tests.")
+                
+        guard appLanguages.isEmpty else {
+            return Just(Void())
+                .eraseToAnyPublisher()
         }
+                
+        addAppLanguagesToRealm(appLanguages: appLanguages)
+        
+        return Just(())
+            .eraseToAnyPublisher()
+    }
+    
+    private func addAppLanguagesToRealm(appLanguages: [AppLanguageCodable]) {
         
         _ = realmDatabase.writeObjects(realm: realmDatabase.openRealm()) { (realm: Realm) in
             
-            let realmLanguages: [RealmAppLanguage] = allAppLanguages.map({
+            let realmLanguages: [RealmAppLanguage] = appLanguages.map({
                 
                 let realmAppLanguage = RealmAppLanguage()
                 realmAppLanguage.mapFrom(dataModel: $0)
@@ -47,8 +50,23 @@ class MockAppLanguagesRepositorySync: AppLanguagesRepositorySyncInterface {
             
             return realmLanguages
         }
+    }
+    
+    static func getSampleAppLanguages() -> [AppLanguageCodable] {
         
-        return Just(())
-            .eraseToAnyPublisher()
+        return [
+            AppLanguageCodable(languageCode: "am", languageDirection: .leftToRight, languageScriptCode: nil),
+            AppLanguageCodable(languageCode: "ar", languageDirection: .rightToLeft, languageScriptCode: nil),
+            AppLanguageCodable(languageCode: "en", languageDirection: .leftToRight, languageScriptCode: nil),
+            AppLanguageCodable(languageCode: "es", languageDirection: .leftToRight, languageScriptCode: nil),
+            AppLanguageCodable(languageCode: "fa", languageDirection: .rightToLeft, languageScriptCode: nil),
+            AppLanguageCodable(languageCode: "he", languageDirection: .rightToLeft, languageScriptCode: nil),
+            AppLanguageCodable(languageCode: "ja", languageDirection: .leftToRight, languageScriptCode: nil),
+            AppLanguageCodable(languageCode: "lv", languageDirection: .leftToRight, languageScriptCode: nil),
+            AppLanguageCodable(languageCode: "pt", languageDirection: .leftToRight, languageScriptCode: nil),
+            AppLanguageCodable(languageCode: "ru", languageDirection: .leftToRight, languageScriptCode: nil),
+            AppLanguageCodable(languageCode: "zh", languageDirection: .leftToRight, languageScriptCode: "Hans"),
+            AppLanguageCodable(languageCode: "zh", languageDirection: .leftToRight, languageScriptCode: "Hant")
+        ]
     }
 }
