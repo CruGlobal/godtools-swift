@@ -46,19 +46,13 @@ class AppLanguageFeatureDataLayerDependencies {
         )
     }
     
-    func getUserAppLanguageCache() -> RealmUserAppLanguageCache {
-        return RealmUserAppLanguageCache(
-            realmDatabase: coreDataLayer.getSharedRealmDatabase()
-        )
-    }
-    
     private func getRealmDownloadedLanguagesCache() -> RealmDownloadedLanguagesCache {
         return RealmDownloadedLanguagesCache(realmDatabase: coreDataLayer.getSharedRealmDatabase())
     }
     
     func getUserAppLanguageRepository() -> UserAppLanguageRepository {
         return UserAppLanguageRepository(
-            cache: getUserAppLanguageCache()
+            cache: RealmUserAppLanguageCache(realmDatabase: coreDataLayer.getSharedRealmDatabase())
         )
     }
     
