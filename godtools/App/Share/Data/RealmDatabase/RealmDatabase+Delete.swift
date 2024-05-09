@@ -14,16 +14,26 @@ import Combine
 
 extension RealmDatabase {
     
+    func deleteObjects<Element: RealmFetchable>(realm: Realm, type: Element.Type, primaryKeyPath: String, primaryKeys: [String]) -> Error? {
+        
+        let results: Results<Element> = realm.objects(type)
+            .filter("\(primaryKeyPath) IN %@", primaryKeys)
+        
+        let objects: [ObjectBase] = Array(results) as? [ObjectBase] ?? Array()
+        
+        return deleteObjects(realm: realm, objects: objects)
+    }
+    
     func deleteObjectsInBackground<Element: RealmFetchable>(type: Element.Type, primaryKeyPath: String, primaryKeys: [String], completion: @escaping ((_ result: Result<Void, Error>) -> Void)) {
         
         self.background { (realm: Realm) in
             
-            let results: Results<Element> = realm.objects(type)
-                .filter("\(primaryKeyPath) IN %@", primaryKeys)
-            
-            let objects: [ObjectBase] = Array(results) as? [ObjectBase] ?? Array()
-            
-            let deleteObjectsError: Error? = self.deleteObjects(realm: realm, objects: objects)
+            let deleteObjectsError: Error? = self.deleteObjects(
+                realm: realm,
+                type: type,
+                primaryKeyPath: primaryKeyPath,
+                primaryKeys: primaryKeys
+            )
             
             if let deleteObjectsError = deleteObjectsError {
                 
