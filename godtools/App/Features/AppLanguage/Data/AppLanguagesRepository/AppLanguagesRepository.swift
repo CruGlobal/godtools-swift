@@ -10,42 +10,67 @@ import Foundation
 import Combine
 
 class AppLanguagesRepository {
+        
+    private let cache: RealmAppLanguagesCache
+    private let sync: AppLanguagesRepositorySyncInterface
     
-    private let cache: AppLanguagesCache
+    private var cancellables: Set<AnyCancellable> = Set()
     
-    init(cache: AppLanguagesCache) {
+    init(cache: RealmAppLanguagesCache, sync: AppLanguagesRepositorySyncInterface) {
         
         self.cache = cache
+        self.sync = sync
     }
     
-    func getNumberOfCachedLanguages() -> Int {
-        return cache.getNumberOfLanguages()
+    func observeNumberOfAppLanguagesPublisher() -> AnyPublisher<Int, Never> {
+        
+        sync.syncPublisher()
+            .sink { _ in
+                
+            }
+            .store(in: &cancellables)
+        
+        return cache.observeChangesPublisher()
+            .flatMap({ (changes: Void) -> AnyPublisher<Int, Never> in
+                return self.cache.getNumberOfLanguagesPublisher()
+                    .eraseToAnyPublisher()
+            })
+            .eraseToAnyPublisher()
+    }
+    
+    func observeAppLanguagesPublisher() -> AnyPublisher<[AppLanguageDataModel], Never> {
+        
+        sync.syncPublisher()
+            .sink { _ in
+                
+            }
+            .store(in: &cancellables)
+        
+        return cache.observeChangesPublisher()
+            .flatMap({ (changes: Void) -> AnyPublisher<[AppLanguageDataModel], Never> in
+                return self.cache.getLanguagesPublisher()
+                    .eraseToAnyPublisher()
+            })
+            .eraseToAnyPublisher()
     }
     
     func getLanguagesPublisher() -> AnyPublisher<[AppLanguageDataModel], Never> {
         
-        let appLanguages: [AppLanguageDataModel] = cache.getAppLanguages()
-        
-        return Just(appLanguages)
-            .eraseToAnyPublisher()
-    }
-    
-    func getLanguagesChangedPublisher() -> AnyPublisher<Void, Never> {
-        
-        return Just(Void())
+        return sync.syncPublisher()
+            .flatMap({ (syncCompleted: Void) -> AnyPublisher<[AppLanguageDataModel], Never> in
+                
+                return self.cache.getLanguagesPublisher()
+                    .eraseToAnyPublisher()
+            })
             .eraseToAnyPublisher()
     }
 
     func getLanguagePublisher(languageId: BCP47LanguageIdentifier) -> AnyPublisher<AppLanguageDataModel?, Never> {
         
-        return getLanguagesPublisher()
-            .flatMap({ (languages: [AppLanguageDataModel]) -> AnyPublisher<AppLanguageDataModel?, Never> in
+        return sync.syncPublisher()
+            .flatMap({ (syncCompleted: Void) -> AnyPublisher<AppLanguageDataModel?, Never> in
                 
-                let language: AppLanguageDataModel? = languages.filter({
-                    $0.languageId.lowercased() == languageId.lowercased()
-                }).first
-                
-                return Just(language)
+                return self.cache.getLanguagePublisher(languageId: languageId)
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()

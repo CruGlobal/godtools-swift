@@ -8,19 +8,24 @@
 
 import Foundation
 
-struct AppLanguageDataModel {
+struct AppLanguageDataModel: AppLanguageDataModelInterface {
     
     let languageCode: String
     let languageDirection: AppLanguageDataModel.Direction
     let languageScriptCode: String?
     
-    var languageId: BCP47LanguageIdentifier {
+    init(languageCode: String, languageDirection: AppLanguageDataModel.Direction, languageScriptCode: String?) {
         
-        if let languageScriptCode = languageScriptCode, !languageScriptCode.isEmpty {
-            return languageCode + "-" + languageScriptCode
-        }
+        self.languageCode = languageCode
+        self.languageDirection = languageDirection
+        self.languageScriptCode = languageScriptCode
+    }
+    
+    init(dataModel: AppLanguageDataModelInterface) {
         
-        return languageCode
+        self.languageCode = dataModel.languageCode
+        self.languageDirection = dataModel.languageDirection
+        self.languageScriptCode = dataModel.languageScriptCode
     }
 }
 
