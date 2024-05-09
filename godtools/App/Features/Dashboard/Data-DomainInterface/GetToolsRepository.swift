@@ -40,11 +40,9 @@ class GetToolsRepository: GetToolsRepositoryInterface {
             languageForAvailabilityTextModel = nil
         }
         
-        return Publishers.CombineLatest(
-            resourcesRepository.getResourcesChangedPublisher().prepend(Void()),
-            getToolListItemInterfaceStringsRepository.getStringsPublisher(translateInLanguage: translatedInAppLanguage)
-        )
-        .flatMap({ (resourcesChanged: Void, interfaceStrings: ToolListItemInterfaceStringsDomainModel) -> AnyPublisher<[ToolListItemDomainModel], Never> in
+        return getToolListItemInterfaceStringsRepository.getStringsPublisher(translateInLanguage: translatedInAppLanguage)
+            .eraseToAnyPublisher()
+        .flatMap({ (interfaceStrings: ToolListItemInterfaceStringsDomainModel) -> AnyPublisher<[ToolListItemDomainModel], Never> in
         
             let tools: [ResourceModel] = self.resourcesRepository.getAllToolsList(
                 filterByCategory: filterToolsByCategory?.id,
