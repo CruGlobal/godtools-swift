@@ -91,7 +91,13 @@ class MobileContentStackView: MobileContentView {
         
         if let scrollView = self.scrollView, let contentOffset = positionState.scrollViewContentOffset, let contentSize = positionState.scrollViewContentSize {
             
-            let contentSizeHeightRatio: CGFloat = scrollView.contentSize.height / contentSize.height
+            let scrollHeight: CGFloat = contentSize.height
+            
+            guard scrollHeight > 0 else {
+                return
+            }
+            
+            let contentSizeHeightRatio: CGFloat = scrollView.contentSize.height / scrollHeight
                         
             scrollView.setContentOffset(
                 CGPoint(x: contentOffset.x, y: contentOffset.y * contentSizeHeightRatio),
