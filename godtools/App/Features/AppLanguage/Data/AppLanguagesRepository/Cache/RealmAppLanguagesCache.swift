@@ -22,8 +22,10 @@ class RealmAppLanguagesCache {
     func observeChangesPublisher() -> AnyPublisher<Void, Never> {
         return realmDatabase.openRealm().objects(RealmAppLanguage.self).objectWillChange
             .eraseToAnyPublisher()
+            .prepend(Void())
+            .eraseToAnyPublisher()
     }
-    
+
     func getNumberOfLanguagesPublisher() -> AnyPublisher<Int, Never> {
         
         let count: Int = realmDatabase.openRealm()
