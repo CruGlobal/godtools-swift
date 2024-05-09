@@ -40,11 +40,9 @@ class GetSpotlightToolsRepository: GetSpotlightToolsRepositoryInterface {
             languageForAvailabilityTextModel = nil
         }
         
-        return Publishers.CombineLatest(
-            resourcesRepository.getResourcesChangedPublisher(),
-            getToolListItemInterfaceStringsRepository.getStringsPublisher(translateInLanguage: translatedInAppLanguage)
-        )
-        .flatMap({ (resourcesChanged: Void, interfaceStrings: ToolListItemInterfaceStringsDomainModel) -> AnyPublisher<[SpotlightToolListItemDomainModel], Never> in
+        return getToolListItemInterfaceStringsRepository.getStringsPublisher(translateInLanguage: translatedInAppLanguage)
+            .eraseToAnyPublisher()
+        .flatMap({ (interfaceStrings: ToolListItemInterfaceStringsDomainModel) -> AnyPublisher<[SpotlightToolListItemDomainModel], Never> in
         
             let spotlightToolResources: [ResourceModel] = self.resourcesRepository.getSpotlightTools()
 
