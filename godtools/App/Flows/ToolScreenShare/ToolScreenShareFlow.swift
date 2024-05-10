@@ -92,8 +92,12 @@ class ToolScreenShareFlow: Flow {
         switch step {
             
         case .closeTappedFromToolScreenShareTutorial:
+            dismissToolScreenShareTutorial()
+            
+        case .skipTappedFromToolScreenShareTutorial:
             
             dismissToolScreenShareTutorial()
+            presentCreatingToolScreenShareSession()
             
         case .shareLinkTappedFromToolScreenShareTutorial:
            

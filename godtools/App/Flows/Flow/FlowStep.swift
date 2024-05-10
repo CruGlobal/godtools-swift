@@ -188,6 +188,7 @@ enum FlowStep {
     
     // tool screen share
     case closeTappedFromToolScreenShareTutorial
+    case skipTappedFromToolScreenShareTutorial
     case shareLinkTappedFromToolScreenShareTutorial
     case closeTappedFromCreatingToolScreenShareSession
     case didCreateSessionFromCreatingToolScreenShareSession(result: Result<TractRemoteShareChannel, TractRemoteSharePublisherError>)
