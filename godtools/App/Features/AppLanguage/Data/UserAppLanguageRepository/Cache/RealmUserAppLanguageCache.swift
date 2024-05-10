@@ -47,6 +47,16 @@ class RealmUserAppLanguageCache {
             .eraseToAnyPublisher()
     }
     
+    func deleteLanguage() -> Error? {
+        
+        return realmDatabase.deleteObjects(
+            realm: realmDatabase.openRealm(),
+            type: RealmUserAppLanguage.self,
+            primaryKeyPath: #keyPath(RealmUserAppLanguage.id),
+            primaryKeys: [RealmUserAppLanguageCache.sharedUserId]
+        )
+    }
+    
     func storeLanguage(languageId: BCP47LanguageIdentifier) {
         
         let realm: Realm = realmDatabase.openRealm()

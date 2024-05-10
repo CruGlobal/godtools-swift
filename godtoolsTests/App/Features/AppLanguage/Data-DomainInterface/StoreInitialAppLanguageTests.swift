@@ -16,16 +16,43 @@ class StoreInitialAppLanguageTests: QuickSpec {
     
     override class func spec() {
         
+        var cancellables: Set<AnyCancellable> = Set()
+        
         describe("App is launched.") {
             
             context("When no app language is currently set and my device language is english.") {
-                
+                        
                 let testsDiContainer = TestsDiContainer()
+                
+                let testsRealmDatabase: RealmDatabase = testsDiContainer.dataLayer.getSharedRealmDatabase()
+                
+                let appLanguages: [AppLanguageCodable] = [
+                    AppLanguageCodable(languageCode: "ar", languageDirection: .rightToLeft, languageScriptCode: nil),
+                    AppLanguageCodable(languageCode: "en", languageDirection: .leftToRight, languageScriptCode: nil),
+                    AppLanguageCodable(languageCode: "es", languageDirection: .leftToRight, languageScriptCode: nil),
+                    AppLanguageCodable(languageCode: "zh", languageDirection: .leftToRight, languageScriptCode: "Hans"),
+                    AppLanguageCodable(languageCode: "zh", languageDirection: .leftToRight, languageScriptCode: "Hant"),
+                    AppLanguageCodable(languageCode: "lv", languageDirection: .leftToRight, languageScriptCode: nil)
+                ]
+                
+                let mockAppLanguagesSync: AppLanguagesRepositorySyncInterface = MockAppLanguagesRepositorySync(
+                    realmDatabase: testsRealmDatabase,
+                    appLanguages: appLanguages
+                )
+                
+                let userAppLanguageCache: RealmUserAppLanguageCache = RealmUserAppLanguageCache(realmDatabase: testsRealmDatabase)
+                
+                _ = userAppLanguageCache.deleteLanguage()
+                                
+                let appLanguagesRepository: AppLanguagesRepository = testsDiContainer.feature.appLanguage.dataLayer.getAppLanguagesRepository(
+                    realmDatabase: testsRealmDatabase,
+                    sync: mockAppLanguagesSync
+                )
                 
                 let storeInitialAppLanguage = StoreInitialAppLanguage(
                     deviceSystemLanguage: MockDeviceSystemLanguage.getMockEnglishDevice(),
-                    userAppLanguageRepository: testsDiContainer.feature.appLanguage.dataLayer.getUserAppLanguageRepository(),
-                    appLanguagesRepository: testsDiContainer.feature.appLanguage.dataLayer.getAppLanguagesRepository()
+                    userAppLanguageRepository: UserAppLanguageRepository(cache: userAppLanguageCache),
+                    appLanguagesRepository: appLanguagesRepository
                 )
                 
                 it("I expect my app language to be the device language english since english is a supported app language.") {
@@ -34,9 +61,9 @@ class StoreInitialAppLanguageTests: QuickSpec {
                     
                     var sinkCompleted: Bool = false
                     
-                    waitUntil { done in
+                    waitUntil(timeout: .seconds(15)) { done in
                         
-                        _ = storeInitialAppLanguage
+                        storeInitialAppLanguage
                             .storeInitialAppLanguagePublisher()
                             .sink { (result: AppLanguageDomainModel) in
                             
@@ -50,6 +77,7 @@ class StoreInitialAppLanguageTests: QuickSpec {
                                 
                                 done()
                             }
+                            .store(in: &cancellables)
                     }
                     
                     expect(resultRef).to(equal("en"))
@@ -57,13 +85,38 @@ class StoreInitialAppLanguageTests: QuickSpec {
             }
             
             context("When no app language is currently set and my device language is arabic.") {
-                
+                        
                 let testsDiContainer = TestsDiContainer()
+                
+                let testsRealmDatabase: RealmDatabase = testsDiContainer.dataLayer.getSharedRealmDatabase()
+                
+                let appLanguages: [AppLanguageCodable] = [
+                    AppLanguageCodable(languageCode: "ar", languageDirection: .rightToLeft, languageScriptCode: nil),
+                    AppLanguageCodable(languageCode: "en", languageDirection: .leftToRight, languageScriptCode: nil),
+                    AppLanguageCodable(languageCode: "es", languageDirection: .leftToRight, languageScriptCode: nil),
+                    AppLanguageCodable(languageCode: "zh", languageDirection: .leftToRight, languageScriptCode: "Hans"),
+                    AppLanguageCodable(languageCode: "zh", languageDirection: .leftToRight, languageScriptCode: "Hant"),
+                    AppLanguageCodable(languageCode: "lv", languageDirection: .leftToRight, languageScriptCode: nil)
+                ]
+                
+                let mockAppLanguagesSync: AppLanguagesRepositorySyncInterface = MockAppLanguagesRepositorySync(
+                    realmDatabase: testsRealmDatabase,
+                    appLanguages: appLanguages
+                )
+                
+                let userAppLanguageCache: RealmUserAppLanguageCache = RealmUserAppLanguageCache(realmDatabase: testsRealmDatabase)
+                    
+                _ = userAppLanguageCache.deleteLanguage()
+                
+                let appLanguagesRepository: AppLanguagesRepository = testsDiContainer.feature.appLanguage.dataLayer.getAppLanguagesRepository(
+                    realmDatabase: testsRealmDatabase,
+                    sync: mockAppLanguagesSync
+                )
                 
                 let storeInitialAppLanguage = StoreInitialAppLanguage(
                     deviceSystemLanguage: MockDeviceSystemLanguage(deviceLocale: Locale(identifier: "ar")),
-                    userAppLanguageRepository: testsDiContainer.feature.appLanguage.dataLayer.getUserAppLanguageRepository(),
-                    appLanguagesRepository: testsDiContainer.feature.appLanguage.dataLayer.getAppLanguagesRepository()
+                    userAppLanguageRepository: UserAppLanguageRepository(cache: userAppLanguageCache),
+                    appLanguagesRepository: appLanguagesRepository
                 )
                 
                 it("I expect my app language to be the device language arabic since arabic is a supported app language.") {
@@ -74,7 +127,7 @@ class StoreInitialAppLanguageTests: QuickSpec {
                     
                     waitUntil { done in
                         
-                        _ = storeInitialAppLanguage
+                        storeInitialAppLanguage
                             .storeInitialAppLanguagePublisher()
                             .sink { (result: AppLanguageDomainModel) in
                             
@@ -88,6 +141,7 @@ class StoreInitialAppLanguageTests: QuickSpec {
                                 
                                 done()
                             }
+                            .store(in: &cancellables)
                     }
                     
                     expect(resultRef).to(equal("ar"))
@@ -95,33 +149,50 @@ class StoreInitialAppLanguageTests: QuickSpec {
             }
             
             context("When my app language is set to spanish and my device language is arabic.") {
-                
+                    
                 let testsDiContainer = TestsDiContainer()
                 
-                let userAppLanguageRepository: UserAppLanguageRepository = testsDiContainer.feature.appLanguage.dataLayer.getUserAppLanguageRepository()
+                let testsRealmDatabase: RealmDatabase = testsDiContainer.dataLayer.getSharedRealmDatabase()
+                
+                let appLanguages: [AppLanguageCodable] = [
+                    AppLanguageCodable(languageCode: "ar", languageDirection: .rightToLeft, languageScriptCode: nil),
+                    AppLanguageCodable(languageCode: "en", languageDirection: .leftToRight, languageScriptCode: nil),
+                    AppLanguageCodable(languageCode: "es", languageDirection: .leftToRight, languageScriptCode: nil),
+                    AppLanguageCodable(languageCode: "zh", languageDirection: .leftToRight, languageScriptCode: "Hans"),
+                    AppLanguageCodable(languageCode: "zh", languageDirection: .leftToRight, languageScriptCode: "Hant"),
+                    AppLanguageCodable(languageCode: "lv", languageDirection: .leftToRight, languageScriptCode: nil)
+                ]
+                
+                let mockAppLanguagesSync: AppLanguagesRepositorySyncInterface = MockAppLanguagesRepositorySync(
+                    realmDatabase: testsRealmDatabase,
+                    appLanguages: appLanguages
+                )
+                
+                let userAppLanguageCache: RealmUserAppLanguageCache = RealmUserAppLanguageCache(realmDatabase: testsRealmDatabase)
+                
+                userAppLanguageCache.storeLanguage(languageId: "es")
+                
+                let appLanguagesRepository: AppLanguagesRepository = testsDiContainer.feature.appLanguage.dataLayer.getAppLanguagesRepository(
+                    realmDatabase: testsRealmDatabase,
+                    sync: mockAppLanguagesSync
+                )
                 
                 let storeInitialAppLanguage = StoreInitialAppLanguage(
                     deviceSystemLanguage: MockDeviceSystemLanguage(deviceLocale: Locale(identifier: "ar")),
-                    userAppLanguageRepository: userAppLanguageRepository,
-                    appLanguagesRepository: testsDiContainer.feature.appLanguage.dataLayer.getAppLanguagesRepository()
+                    userAppLanguageRepository: UserAppLanguageRepository(cache: userAppLanguageCache),
+                    appLanguagesRepository: appLanguagesRepository
                 )
                 
                 it("I expect my app language to stay in spanish.") {
-                                        
+                    
                     var resultRef: AppLanguageDomainModel?
                     
                     var sinkCompleted: Bool = false
                     
                     waitUntil { done in
                         
-                        _ = userAppLanguageRepository
-                            .storeLanguagePublisher(languageId: "es")
-                            .flatMap({ (didStore: Bool) -> AnyPublisher<AppLanguageDomainModel, Never> in
-                                
-                                return storeInitialAppLanguage
-                                    .storeInitialAppLanguagePublisher()
-                                    .eraseToAnyPublisher()
-                            })
+                        storeInitialAppLanguage
+                            .storeInitialAppLanguagePublisher()
                             .sink { (result: AppLanguageDomainModel) in
                             
                                 guard !sinkCompleted else {
@@ -134,6 +205,7 @@ class StoreInitialAppLanguageTests: QuickSpec {
                                 
                                 done()
                             }
+                            .store(in: &cancellables)
                     }
                     
                     expect(resultRef).to(equal("es"))
@@ -144,10 +216,35 @@ class StoreInitialAppLanguageTests: QuickSpec {
                 
                 let testsDiContainer = TestsDiContainer()
                 
+                let testsRealmDatabase: RealmDatabase = testsDiContainer.dataLayer.getSharedRealmDatabase()
+                
+                let appLanguages: [AppLanguageCodable] = [
+                    AppLanguageCodable(languageCode: "ar", languageDirection: .rightToLeft, languageScriptCode: nil),
+                    AppLanguageCodable(languageCode: "en", languageDirection: .leftToRight, languageScriptCode: nil),
+                    AppLanguageCodable(languageCode: "es", languageDirection: .leftToRight, languageScriptCode: nil),
+                    AppLanguageCodable(languageCode: "zh", languageDirection: .leftToRight, languageScriptCode: "Hans"),
+                    AppLanguageCodable(languageCode: "zh", languageDirection: .leftToRight, languageScriptCode: "Hant"),
+                    AppLanguageCodable(languageCode: "lv", languageDirection: .leftToRight, languageScriptCode: nil)
+                ]
+                
+                let mockAppLanguagesSync: AppLanguagesRepositorySyncInterface = MockAppLanguagesRepositorySync(
+                    realmDatabase: testsRealmDatabase,
+                    appLanguages: appLanguages
+                )
+                
+                let userAppLanguageCache: RealmUserAppLanguageCache = RealmUserAppLanguageCache(realmDatabase: testsRealmDatabase)
+                
+                _ = userAppLanguageCache.deleteLanguage()
+                    
+                let appLanguagesRepository: AppLanguagesRepository = testsDiContainer.feature.appLanguage.dataLayer.getAppLanguagesRepository(
+                    realmDatabase: testsRealmDatabase,
+                    sync: mockAppLanguagesSync
+                )
+                
                 let storeInitialAppLanguage = StoreInitialAppLanguage(
                     deviceSystemLanguage: MockDeviceSystemLanguage(deviceLocale: Locale(identifier: "cs")),
-                    userAppLanguageRepository: testsDiContainer.feature.appLanguage.dataLayer.getUserAppLanguageRepository(),
-                    appLanguagesRepository: testsDiContainer.feature.appLanguage.dataLayer.getAppLanguagesRepository()
+                    userAppLanguageRepository: UserAppLanguageRepository(cache: userAppLanguageCache),
+                    appLanguagesRepository: appLanguagesRepository
                 )
                 
                 it("I expect my app language to be english since Czech is not a supported app language.") {
@@ -158,7 +255,7 @@ class StoreInitialAppLanguageTests: QuickSpec {
                     
                     waitUntil { done in
                         
-                        _ = storeInitialAppLanguage
+                        storeInitialAppLanguage
                             .storeInitialAppLanguagePublisher()
                             .sink { (result: AppLanguageDomainModel) in
                             
@@ -172,6 +269,7 @@ class StoreInitialAppLanguageTests: QuickSpec {
                                 
                                 done()
                             }
+                            .store(in: &cancellables)
                     }
                     
                     expect(resultRef).to(equal("en"))

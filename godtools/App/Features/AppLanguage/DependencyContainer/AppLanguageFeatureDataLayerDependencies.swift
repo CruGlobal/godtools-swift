@@ -19,12 +19,18 @@ class AppLanguageFeatureDataLayerDependencies {
     
     // MARK: - Data Layer Classes
     
-    private func getAppLanguagesCache() -> AppLanguagesCache {
-        return AppLanguagesCache()
-    }
-    
-    func getAppLanguagesRepository() -> AppLanguagesRepository {
-        return AppLanguagesRepository(cache: getAppLanguagesCache())
+    func getAppLanguagesRepository(realmDatabase: RealmDatabase? = nil, sync: AppLanguagesRepositorySyncInterface? = nil) -> AppLanguagesRepository {
+        
+        let cache = RealmAppLanguagesCache(
+            realmDatabase: realmDatabase ?? coreDataLayer.getSharedRealmDatabase()
+        )
+        
+        let sync: AppLanguagesRepositorySyncInterface = sync ?? AppLanguagesRepositorySync(api: AppLanguagesApi(), cache: cache)
+        
+        return AppLanguagesRepository(
+            cache: cache,
+            sync: sync
+        )
     }
     
     private func getDownloadedLanguagesRepository() -> DownloadedLanguagesRepository {
@@ -40,19 +46,13 @@ class AppLanguageFeatureDataLayerDependencies {
         )
     }
     
-    func getUserAppLanguageCache() -> RealmUserAppLanguageCache {
-        return RealmUserAppLanguageCache(
-            realmDatabase: coreDataLayer.getSharedRealmDatabase()
-        )
-    }
-    
     private func getRealmDownloadedLanguagesCache() -> RealmDownloadedLanguagesCache {
         return RealmDownloadedLanguagesCache(realmDatabase: coreDataLayer.getSharedRealmDatabase())
     }
     
     func getUserAppLanguageRepository() -> UserAppLanguageRepository {
         return UserAppLanguageRepository(
-            cache: getUserAppLanguageCache()
+            cache: RealmUserAppLanguageCache(realmDatabase: coreDataLayer.getSharedRealmDatabase())
         )
     }
     
