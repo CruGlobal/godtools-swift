@@ -104,9 +104,7 @@ extension ToolScreenShareTutorialViewModel {
     }
     
     @objc func skipTapped() {
-        
-        let lastPage: Int = tutorialPages.count - 1
-        currentPage = lastPage
+        flowDelegate?.navigate(step: .skipTappedFromToolScreenShareTutorial)
     }
     
     func continueTapped() {
