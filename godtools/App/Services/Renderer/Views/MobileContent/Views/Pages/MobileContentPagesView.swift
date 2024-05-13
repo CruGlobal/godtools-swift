@@ -277,6 +277,11 @@ extension MobileContentPagesView: PageNavigationCollectionViewDelegate {
         
         viewModel.pageDidDisappear(page: page)
     }
+    
+    func pageNavigationDidScrollToPage(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
+        
+        viewModel.didScrollToPage(page: page)
+    }
 }
 
 // MARK: - MobileContentPageViewDelegate
