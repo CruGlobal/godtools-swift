@@ -85,6 +85,7 @@ enum FlowStep {
     case tractFlowCompleted(state: TractFlowCompletedState)
         
     // tutorial
+    case backTappedFromTutorial
     case closeTappedFromTutorial
     case startUsingGodToolsTappedFromTutorial
     
