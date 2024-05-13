@@ -247,8 +247,7 @@ Se você receber esta mensagem demasiado tarde, a ligação poderá não estar a
 "remove_from_favorites" = "Remover dos Favoritos";
 
 /* This is a loading screen */
-"loading_unfavorited_tool" = "A ferramenta está baixando. Para evitar esperar no futuro, marque esta ferramenta como favorita para que fique disponível offline. 
-";
+"loading_unfavorited_tool" = "A ferramenta está baixando. Para evitar esperar no futuro, marque esta ferramenta como favorita para que fique disponível offline.";
 
 /* This is a loading screen */
 "loading_favorited_tool" = "A baixar a tradução mais recente desta ferramenta.";

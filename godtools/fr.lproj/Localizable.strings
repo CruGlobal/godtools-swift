@@ -245,8 +245,7 @@
 "remove_from_favorites" = "Supprimer des favoris";
 
 /* This is a loading screen */
-"loading_unfavorited_tool" = "L'outil est en cours de téléchargement. Pour éviter cette attente à l'avenir, placez cet outil en favori afin de le rendre disponible hors connexion.
-";
+"loading_unfavorited_tool" = "L'outil est en cours de téléchargement. Pour éviter cette attente à l'avenir, placez cet outil en favori afin de le rendre disponible hors connexion.";
 
 /* This is a loading screen */
 "loading_favorited_tool" = "Téléchargement de la traduction la plus récente pour cet outil en cours.";

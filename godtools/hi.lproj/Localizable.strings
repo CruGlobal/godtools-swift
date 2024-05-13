@@ -245,8 +245,7 @@
 "remove_from_favorites" = "पसंदीदा से निकालें";
 
 /* This is a loading screen */
-"loading_unfavorited_tool" = "टूल डाउनलोड हो रहा है। आगे से देरी से बचने के लिए इस टूल को पसंदीदा में जोड़ें जिससे यह ऑफलाइन उपलब्ध रहेगा।
-";
+"loading_unfavorited_tool" = "टूल डाउनलोड हो रहा है। आगे से देरी से बचने के लिए इस टूल को पसंदीदा में जोड़ें जिससे यह ऑफलाइन उपलब्ध रहेगा।";
 
 /* This is a loading screen */
 "loading_favorited_tool" = "इस टूल के लिए नवीनतम अनुवााद डाउनलोड कर रहे।";

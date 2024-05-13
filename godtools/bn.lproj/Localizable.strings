@@ -1,6 +1,61 @@
 "onboardingTutorial.chooseLanguageButton.title" = "ভাষা মনোনয়ন";
+"languageSettings.confirmAppLanguage.message" = "আপনি %@-কে আপনার অ্যাপের ভাষা হিসাবে মনোনীত করেছেন। এর ফলে সমগ্র গডটুলস অ্যাপের ভাষা পরিবর্তিত হবে। আপনি নিশ্চিত তো?";
+"languageSettings.confirmAppLanguage.changeLanguageButton.title" = "ভাষা পরিবর্তন করুন";
+"languageSettings.confirmAppLanguage.nevermindButton.title" = "ঠিক আছে";
+"languageSettings.appInterface.title" = "অ্যাপের ইন্টারফেসের সেটিংস";
+"languageSettings.appInterface.message" = "যে ভাষায় আপনি সমগ্র অ্যাপের প্রদর্শন চান সেটি সেট করুন";
 "languageSettings.appInterface.languagesAvailable" = "যে ভাষা গুলো পাওয়া যায়";
 "languageSettings.toolLanguagesAvailableOffline.title" = "অফলাইনে প্রাপ্ত সাধনের ভাষা";
+"languageSettings.toolLanguagesAvailableOffline.message" = "একটি ভাষায় সব কটি সাধন ডাউনলোড করুন যাতে আপনি ওয়াই-ফাই অথবা ইন্টারনেট পরিষেবার বাইরে থাকলেও সেগুলি দেখতে পারেন। সাধনের মধ্যে দেওয়া পছন্দের বোতাম টিপে সাধনের ভাষা নির্দিষ্ট করুন।";
+"languageSettings.toolLanguagesAvailableOffline.editDownloadedLanguagesButton.title" = "ডাউনলোড করা ভাষাগুলির সম্পাদনা";
+"allTools.filter.title" = "ফিল্টার";
+"allTools.filter.anyCategory" = "যে কোনো শ্রেণী";
+"allTools.filter.anyLanguage" = "যে কোনো ভাষা";
+"languageSettings.appLanguage.title" = "অ্যাপের ভাষা";
+"authError.userAccountAlreadyExists.message" = "ব্যবহারকারীর অ্যাকাউন্ট ইতিমধ্যেই আছে";
+"authError.userAccountNotFound.message" = "ব্যবহারকারীর অ্যাকাউন্ট পাওয়া যায় নি";
+"createAccount.title" = "অ্যাকাউন্ট তৈরি করুন";
+"createAccount.subtitle" = "বাস্তবিক গল্পগুলি, উৎসাহ, এবং আপনার হাতের কাছে ব্যবহারিক পরামর্শ পেতে একটি অ্যাকাউন্ট তৈরি  করুন";
+"confirmDeleteAccount.confirmButton.title" = "অ্যাকাউন্ট বিলোপ করুন";
+"deleteAccount.title" = "এত আগে যাবেন না";
+"deleteAccount.subtitle" = "যদি আপনি আপনার অ্যাকাউন্ট বিলোপ করে দেন তাহলে আপনি আপনার পছন্দসই সাধনীসমূহ বা অ্যাকাউন্টের কার্যকলাপ অ্যাক্সেস করতে পারবেন না।";
+"deleteAccount.confirmButton.title" = "আমার অ্যাকাউন্ট বিলোপ করুন";
+"deleteAccount.cancelButton.title" = "আমার অ্যাকাউন্ট রেখে দিন";
+"signIn.title" = "সাইন ইন করুন";
+"signIn.subtitle" = "বাস্তবিক গল্পগুলি, উৎসাহ, এবং আপনার হাতের কাছে ব্যবহারিক পরামর্শ পেতে আপনার অ্যাকাউন্টে লগ ইন করুন";
+"menu_getStarted" = "শুরু করুন";
+"menu_support" = "সহায়তা";
+"menu_about" = "বিষয়ে";
+"menu.sendFeedback" = "মতামত পাঠান";
+"menu.reportABug" = "কোনো বাগ রিপোর্ট করুন";
+"menu.askAQuestion" = "কোনো প্রশ্ন করুন";
+"menu.leaveAReview" = "কোনো পর্যালোচনা রেখে যান";
+"account.badges.sectionTitle" = "আপনার ব্যাজগুলি";
+"account.activity.sectionTitle" = "আপনার কার্যকলাপ";
+
+/* This is a title on a dashboard that will show the Number of Times a person has opened a tool */
+"account.activity.toolOpens" = "সাধনী খুলে যায়";
+
+/* This is a title on a dashboard that will show the Number of Times a person has completed a lesson */
+"account.activity.lessonCompletion" = "পাঠ সম্পূর্ণ";
+
+/* This is a title on a dashboard that will show the Number of Times a person has used the screen share function */
+"account.activity.screenShares" = "স্ক্রিন শেয়ারগুলি";
+
+/* This is a title on a dashboard that will show the Number of Times a person has shared a link */
+"account.activity.linksShared" = "লিঙ্কগুলি শেয়ার করা হয়েছে";
+
+/* This is a title on a dashboard that will show the Number of different languages they have used */
+"account.activity.languagesUsed" = "ব্যবহৃত ভাষাগুলি";
+
+"account.activity.sessions" = "সেশনস";
+"account.globalActivity.title" = "বৈশ্বিক ক্রিয়া কলাপ";
+"toolDetails.conversationStarters.title" = "কথোপকথন আরম্ভকারী";
+
+/* A list of the main points of the tool will live behind a section called "Outline" */
+"toolDetails.outline.title" = "রূপরেখা";
+
+"toolDetails.bibleReferences.title" = "বাইবেল উল্লেখ";
 
 /* This About refers to the whole app. */
 "aboutApp.navTitle" = "বিষয়ে";
@@ -11,6 +66,7 @@
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "%@ এ সহজলভ্য নয়";
 
+"menu.deleteAccount" = "অ্যাকাউন্ট বিলোপ করুন";
 "tool_menu_item.tools" = "টুলস";
 "lessons.pageTitle" = "আপনার জন্য প্রস্তুত পাঠসমূহ";
 "lessons.pageSubtitle" = "সম্পর্ক স্থাপন করতে এবং অর্থপূর্ণ কথোপকথন শুরু করার জন্য ব্যবহারিক ধারণা সমূহ।";
