@@ -84,6 +84,9 @@ class MenuFlow: Flow {
         case .tutorialTappedFromMenu:
             navigateToTutorial()
             
+        case .backTappedFromTutorial:
+            dismissTutorial()
+            
         case .closeTappedFromTutorial:
             dismissTutorial()
             

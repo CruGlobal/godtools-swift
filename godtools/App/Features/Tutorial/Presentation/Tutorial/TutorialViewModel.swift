@@ -146,10 +146,7 @@ class TutorialViewModel: ObservableObject {
 extension TutorialViewModel {
     
     @objc func backTapped() {
-        
-        if !isOnFirstPage {
-            currentPage = currentPage - 1
-        }
+        flowDelegate?.navigate(step: .backTappedFromTutorial)
     }
     
     @objc func closeTapped() {
