@@ -251,7 +251,7 @@ If you don't receive this message until later, the link may not still work. We c
 "remove_from_favorites" = "Remove from Favorites";
 
 /* This is a loading screen */
-"loading_unfavorited_tool" = "The tool is downloading. To avoid waiting in the future, favorite this tool so it will be available offline. ";
+"loading_unfavorited_tool" = "The tool is downloading. To avoid waiting in the future, favorite this tool so it will be available offline.";
 
 /* This is a loading screen */
 "loading_favorited_tool" = "Downloading the most recent translation for this tool.";
