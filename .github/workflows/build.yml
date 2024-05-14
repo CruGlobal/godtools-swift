@@ -31,7 +31,7 @@ jobs:
       - name: Select Xcode Version
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: '15.4'
+          xcode-version: '15.3.0'
 
       # Required for KotlinMultiplatform
       - name: Setup Java
