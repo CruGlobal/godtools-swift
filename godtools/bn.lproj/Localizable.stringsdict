@@ -109,9 +109,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>%d Tool available</string>
+<string>%d সাধনী উপলভ্য</string>
 <key>other</key>
-<string>%d Tools available</string>
+<string>%d সাধনীসমূহ উপলভ্য</string>
 </dict>
 </dict>
 <key>languageSettings.appLanguage.numberAvailable</key>
