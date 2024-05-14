@@ -250,8 +250,7 @@ Ja saņēmi šo ziņojumu novēloti, iespējams, ka saite vairs nedarbojas. Mēs
 "remove_from_favorites" = "Izņemt no izlases";
 
 /* This is a loading screen */
-"loading_unfavorited_tool" = "Notiek rīka lejupielāde… Lai nākotnē izvairītos no gaidīšanas, padari rīku pieejamu bezsaistē, nospiežot sirds ikonu, lai pievienotu to izlasei.
-";
+"loading_unfavorited_tool" = "Notiek rīka lejupielāde… Lai nākotnē izvairītos no gaidīšanas, padari rīku pieejamu bezsaistē, nospiežot sirds ikonu, lai pievienotu to izlasei.";
 
 /* This is a loading screen */
 "loading_favorited_tool" = "Notiek šī rīka jaunākā tulkojuma lejupielāde.";

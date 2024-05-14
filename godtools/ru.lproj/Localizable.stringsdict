@@ -133,13 +133,13 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>%d Tool available</string>
+<string>Доступен %d инструмент</string>
 <key>few</key>
-<string/>
+<string>Доступны %d инструментов</string>
 <key>many</key>
-<string/>
+<string>Доступны %d инструментов</string>
 <key>other</key>
-<string>%d Tools available</string>
+<string>Доступны %d инструментов</string>
 </dict>
 </dict>
 <key>languageSettings.appLanguage.numberAvailable</key>

@@ -219,8 +219,7 @@
 "remove_from_favorites" = "Gỡ bỏ khỏi Ưa thích";
 
 /* This is a loading screen */
-"loading_unfavorited_tool" = "Công cụ đang tải xuống. Để tránh phải chờ đợi trong tương lai, hãy đánh dấu yêu thích công cụ này để nó có thể khả dụng ngoại tuyến.
-";
+"loading_unfavorited_tool" = "Công cụ đang tải xuống. Để tránh phải chờ đợi trong tương lai, hãy đánh dấu yêu thích công cụ này để nó có thể khả dụng ngoại tuyến.";
 
 /* This is a loading screen */
 "loading_favorited_tool" = "Đang tải cập nhật mới nhất.";
