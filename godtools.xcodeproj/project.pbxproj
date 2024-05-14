@@ -1127,6 +1127,8 @@
 		45C2AF482A817621004958AB /* PageControllAttributesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C2AF462A817621004958AB /* PageControllAttributesType.swift */; };
 		45C2AF4A2A81764D004958AB /* GTPageControlAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C2AF492A81764D004958AB /* GTPageControlAttributes.swift */; };
 		45C321A72ACE7A89003B4F2C /* AppInterfaceStringNavBarItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C321A62ACE7A89003B4F2C /* AppInterfaceStringNavBarItemController.swift */; };
+		45C382BE2BF3FC5600378656 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 45C382BD2BF3FC5600378656 /* RealmSwift */; };
+		45C382BF2BF3FC5600378656 /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 45C382BD2BF3FC5600378656 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		45C5DDCE2AE6BF1300C70BBA /* AccessibilityScreenElementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C5DDCD2AE6BF1300C70BBA /* AccessibilityScreenElementView.swift */; };
 		45C649BC2B31E14D000249E0 /* ViewShareToolUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C649BB2B31E14D000249E0 /* ViewShareToolUseCase.swift */; };
 		45C649BE2B31E178000249E0 /* ViewShareToolDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C649BD2B31E178000249E0 /* ViewShareToolDomainModel.swift */; };
@@ -1573,6 +1575,17 @@
 			dstSubfolderSpec = 10;
 			files = (
 				45B10ADE2BF3F270004342AB /* RealmSwift in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		45C382C02BF3FC5600378656 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				45C382BF2BF3FC5600378656 /* RealmSwift in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3278,6 +3291,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45C382BE2BF3FC5600378656 /* RealmSwift in Frameworks */,
 				45F486F22B76D513004E0E27 /* Nimble in Frameworks */,
 				45F486EF2B76D501004E0E27 /* Quick in Frameworks */,
 				8C8C44BD9B31E90E469C99FF /* Pods_godtoolsTests.framework in Frameworks */,
@@ -11333,6 +11347,7 @@
 				684328ED1EB7CF66005E9131 /* Sources */,
 				684328EE1EB7CF66005E9131 /* Frameworks */,
 				684328EF1EB7CF66005E9131 /* Resources */,
+				45C382C02BF3FC5600378656 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -11343,6 +11358,7 @@
 			packageProductDependencies = (
 				45F486EE2B76D501004E0E27 /* Quick */,
 				45F486F12B76D513004E0E27 /* Nimble */,
+				45C382BD2BF3FC5600378656 /* RealmSwift */,
 			);
 			productName = godtoolsTests;
 			productReference = 684328F11EB7CF66005E9131 /* godtoolsTests.xctest */;
@@ -14582,6 +14598,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 45B4FDBB2BE1787000E5E35B /* XCRemoteSwiftPackageReference "AppsFlyerFramework-Strict" */;
 			productName = "AppsFlyerLib-Strict";
+		};
+		45C382BD2BF3FC5600378656 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 45B10ADB2BF3F262004342AB /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
 		};
 		45CF096F2784B910007F13D3 /* RequestOperation */ = {
 			isa = XCSwiftPackageProductDependency;
