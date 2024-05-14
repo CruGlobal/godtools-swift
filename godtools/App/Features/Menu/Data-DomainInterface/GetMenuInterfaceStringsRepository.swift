@@ -56,7 +56,7 @@ class GetMenuInterfaceStringsRepository: GetMenuInterfaceStringsRepositoryInterf
             termsOfUseOptionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.ItemTitles.termsOfUse.rawValue),
             privacyPolicyOptionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.ItemTitles.privacyPolicy.rawValue),
             copyrightInfoOptionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.ItemTitles.copyrightInfo.rawValue),
-            versionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.SectionTitles.account.rawValue),
+            versionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.SectionTitles.version.rawValue),
             version: versionString
         )
         
