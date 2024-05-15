@@ -63,6 +63,7 @@ class FavoritesViewModel: ObservableObject {
             .assign(to: &$appLanguage)
         
         $appLanguage.eraseToAnyPublisher()
+            .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
                 
                 Publishers.CombineLatest(
@@ -93,6 +94,7 @@ class FavoritesViewModel: ObservableObject {
             .store(in: &cancellables)
         
         $appLanguage.eraseToAnyPublisher()
+            .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
                 getOptInOnboardingBannerEnabledUseCase
                     .getBannerIsEnabled(appLanguage: appLanguage)
