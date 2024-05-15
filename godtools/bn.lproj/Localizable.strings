@@ -1,3 +1,5 @@
+"language_name_fil-x-taglish" = "Taglish";
+"language_name_sid" = "Sidama";
 "onboardingTutorial.chooseLanguageButton.title" = "ভাষা মনোনয়ন";
 "languageSettings.confirmAppLanguage.message" = "আপনি %@-কে আপনার অ্যাপের ভাষা হিসাবে মনোনীত করেছেন। এর ফলে সমগ্র গডটুলস অ্যাপের ভাষা পরিবর্তিত হবে। আপনি নিশ্চিত তো?";
 "languageSettings.confirmAppLanguage.changeLanguageButton.title" = "ভাষা পরিবর্তন করুন";
@@ -49,6 +51,23 @@
 "account.activity.languagesUsed" = "ব্যবহৃত ভাষাগুলি";
 
 "account.activity.sessions" = "সেশনস";
+"badges.tipsCompleted.singular" = "1 প্রশিক্ষণের পরামর্শ সম্পূর্ণ করেছি";
+
+/* leave %d in phrase - this is the number of images that the user has shared */
+"badges.imagesShared.plural" = "%d চিত্রগুলি শেয়ার করেছি";
+
+/* leave %d in phrase - this is the number of lessons that the user has completed */
+"badges.lessonsCompleted.plural" = "%d পাঠগুলি সম্পূর্ণ করেছি";
+
+/* leave %d in phrase - this is the number of tools that the user has opened */
+"badges.toolsOpened.plural" = "%d সাধনীসমূহ খুলেছি";
+
+/* leave %d in phrase - this is the number of tips that the user has completed */
+"badges.tipsCompleted.plural" = "%d প্রশিক্ষণের পরামর্শ সম্পূর্ণ করেছি";
+
+/* Just translate "Joined" - leave the %@ - this is the date they started using GodTools */
+"account.joinedOn" = "%@ যোগ দিয়েছেন";
+
 "account.globalActivity.title" = "বৈশ্বিক ক্রিয়া কলাপ";
 "toolDetails.conversationStarters.title" = "কথোপকথন আরম্ভকারী";
 
