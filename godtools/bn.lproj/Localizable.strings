@@ -1,9 +1,10 @@
-"language_name_fil-x-taglish" = "Taglish";
-"language_name_sid" = "Sidama";
+"language_name_fil-x-taglish" = "ট্যাগলিশ";
+"language_name_sid" = "সিডামা";
 "onboardingTutorial.chooseLanguageButton.title" = "ভাষা মনোনয়ন";
 "languageSettings.confirmAppLanguage.message" = "আপনি %@-কে আপনার অ্যাপের ভাষা হিসাবে মনোনীত করেছেন। এর ফলে সমগ্র গডটুলস অ্যাপের ভাষা পরিবর্তিত হবে। আপনি নিশ্চিত তো?";
 "languageSettings.confirmAppLanguage.changeLanguageButton.title" = "ভাষা পরিবর্তন করুন";
 "languageSettings.confirmAppLanguage.nevermindButton.title" = "ঠিক আছে";
+"languageSettings.downloadableLanguages.title" = "ডাউনলোড করা যায় এমন ভাষা";
 "languageSettings.appInterface.title" = "অ্যাপের ইন্টারফেসের সেটিংস";
 "languageSettings.appInterface.message" = "যে ভাষায় আপনি সমগ্র অ্যাপের প্রদর্শন চান সেটি সেট করুন";
 "languageSettings.appInterface.languagesAvailable" = "যে ভাষা গুলো পাওয়া যায়";
@@ -13,18 +14,27 @@
 "allTools.filter.title" = "ফিল্টার";
 "allTools.filter.anyCategory" = "যে কোনো শ্রেণী";
 "allTools.filter.anyLanguage" = "যে কোনো ভাষা";
+"allTools.filter.navBar.language" = "ভাষা দিয়ে ফিল্টার করুন";
+"allTools.filter.navBar.category" = "শ্রেণী দিয়ে ফিল্টার করুন";
 "languageSettings.appLanguage.title" = "অ্যাপের ভাষা";
 "authError.userAccountAlreadyExists.message" = "ব্যবহারকারীর অ্যাকাউন্ট ইতিমধ্যেই আছে";
 "authError.userAccountNotFound.message" = "ব্যবহারকারীর অ্যাকাউন্ট পাওয়া যায় নি";
 "createAccount.title" = "অ্যাকাউন্ট তৈরি করুন";
 "createAccount.subtitle" = "বাস্তবিক গল্পগুলি, উৎসাহ, এবং আপনার হাতের কাছে ব্যবহারিক পরামর্শ পেতে একটি অ্যাকাউন্ট তৈরি  করুন";
+"deleteAccountProgress.title" = "অ্যাকাউন্ট বিলোপ করছি...";
+"confirmDeleteAccount.title" = "আপনি কি নিশ্চিত?";
 "confirmDeleteAccount.confirmButton.title" = "অ্যাকাউন্ট বিলোপ করুন";
+"accountDeletedAlert.title" = "অ্যাকাউন্ট বিলোপ করা হয়েছে";
+"accountDeletedAlert.message" = "আপনার অ্যাকাউন্ট বিলোপ করা হয়েছে";
 "deleteAccount.title" = "এত আগে যাবেন না";
 "deleteAccount.subtitle" = "যদি আপনি আপনার অ্যাকাউন্ট বিলোপ করে দেন তাহলে আপনি আপনার পছন্দসই সাধনীসমূহ বা অ্যাকাউন্টের কার্যকলাপ অ্যাক্সেস করতে পারবেন না।";
 "deleteAccount.confirmButton.title" = "আমার অ্যাকাউন্ট বিলোপ করুন";
 "deleteAccount.cancelButton.title" = "আমার অ্যাকাউন্ট রেখে দিন";
 "signIn.title" = "সাইন ইন করুন";
 "signIn.subtitle" = "বাস্তবিক গল্পগুলি, উৎসাহ, এবং আপনার হাতের কাছে ব্যবহারিক পরামর্শ পেতে আপনার অ্যাকাউন্টে লগ ইন করুন";
+"signIn.google" = "Google দিয়ে সাইন ইন করুন";
+"signIn.facebook" = "Facebook দিয়ে লগ ইন করুন";
+"signIn.apple" = "Apple-এর সাথে অগ্রসর হন";
 "menu_getStarted" = "শুরু করুন";
 "menu_support" = "সহায়তা";
 "menu_about" = "বিষয়ে";
@@ -53,14 +63,26 @@
 "account.activity.sessions" = "সেশনস";
 "badges.tipsCompleted.singular" = "1 প্রশিক্ষণের পরামর্শ সম্পূর্ণ করেছি";
 
+/* leave %d in phrase - this is the number of articles that the user has read */
+"badges.articlesOpened.plural" = "%d প্রবন্ধগুলি পড়ুন";
+
+/* when they have read only 1 articles */
+"badges.articlesOpened.singular" = "1 প্রবন্ধ পড়ুন";
+
 /* leave %d in phrase - this is the number of images that the user has shared */
 "badges.imagesShared.plural" = "%d চিত্রগুলি শেয়ার করেছি";
+
+"badges.imagesShared.singular" = "1 চিত্র শেয়ার করেছি";
 
 /* leave %d in phrase - this is the number of lessons that the user has completed */
 "badges.lessonsCompleted.plural" = "%d পাঠগুলি সম্পূর্ণ করেছি";
 
+"badges.lessonsCompleted.singular" = "1 পাঠ সম্পূর্ণ করেছি";
+
 /* leave %d in phrase - this is the number of tools that the user has opened */
 "badges.toolsOpened.plural" = "%d সাধনীসমূহ খুলেছি";
+
+"badges.toolsOpened.singular" = "1 সাধনী খুলেছি";
 
 /* leave %d in phrase - this is the number of tips that the user has completed */
 "badges.tipsCompleted.plural" = "%d প্রশিক্ষণের পরামর্শ সম্পূর্ণ করেছি";
@@ -86,6 +108,8 @@
 "lessonCard.languageNotAvailable" = "%@ এ সহজলভ্য নয়";
 
 "menu.deleteAccount" = "অ্যাকাউন্ট বিলোপ করুন";
+"alert.mailAppUnavailable.title" = "মেইল অ্যাপ অপ্রাপ্য";
+"alert.mailAppUnavailable.message" = "নেটিভ মেইল অ্যাপ হয় কনফিগার করা নেই বা এই ডিভাইসের জন্য উপলভ্য নয়।";
 "tool_menu_item.tools" = "টুলস";
 "lessons.pageTitle" = "আপনার জন্য প্রস্তুত পাঠসমূহ";
 "lessons.pageSubtitle" = "সম্পর্ক স্থাপন করতে এবং অর্থপূর্ণ কথোপকথন শুরু করার জন্য ব্যবহারিক ধারণা সমূহ।";
@@ -128,6 +152,7 @@
 "tool_menu_item.lessons" = "পাঠসমূহ";
 "parallelLanguage.yesButton.title" = "হ্যা";
 "parallelLanguage.noButton.title" = "না, ধন্যবাদ";
+"parallelLanguage.selectButton.title" = "নির্বাচন করুন";
 "parallelLanguage.getStartedButton.title" = "শুরু করুন";
 "parallelLanguage.selectLanguageButton.title" = "একটি ভাষা বেছে নিন";
 "parellelLanguage.prompt" = "আপনি কি একটি দ্বিতীয় ভাষা স্থাপন করতে চান?";
@@ -167,7 +192,7 @@
 "onboardingQuickStart.2.button.title" = "আমাদের যেকোন একটি টুল বেছে নিন";
 "onboardingTutorial.nextButton.title" = "পরবর্তী";
 "onboardingQuickStart.title" = "দ্রুত শুরু করার লিংক";
-"onboardingQuickStart.0.title" = "আমি খ্রীস্টীয়ানিটি সম্পর্কে আরো অনুসন্ধান করতে চাই";
+"onboardingQuickStart.0.title" = "আমি যীশু সম্পর্কে আরো জানতে চাই";
 "onboardingQuickStart.0.button.title" = "আমাদের প্রবন্ধটি  পড়ুন";
 "onboardingQuickStart.1.title" = "আমি সুসমাচার বিষয়ক কথোপকথন সম্পর্কে জানতে চাই";
 "onboardingQuickStart.1.button.title" = "আমাদের পাঠগুলো একবার দেখুন";
@@ -224,6 +249,12 @@
 /* A user will be selecting this option to remove the tool from their Favorites screen */
 "remove_from_favorites" = "পছন্দের থেকে সরিয়ে দিন";
 
+/* This is a loading screen */
+"loading_unfavorited_tool" = "এই সাধনীটি ডাউনলোড হচ্ছে। ভবিষ্যতে অপেক্ষা করা থেকে বিরত থাকতে, এই সাধনীটি পছন্দসই করৃুন যাতে তা অফলাইনে পাওয়া যায়।";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "এই সাধনীটির জন্য সবচেয়ে সাম্প্রতিক অনুবাদ ডাউনলোড করছি";
+
 /* Adds a question mark */
 "remove_from_favorites_title" = "পছন্দের তালিকা থেকে বাদ দিন";
 
@@ -235,6 +266,11 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "প্রবন্ধ সমূহ";
+
+"articles.downloadArticlesButton.title.retryDownload" = "ডাউনলোড করার পুনরায় চেষ্টা করুন";
+
+/* This is to let users know which version of the app is installed on their phone */
+"menu_version" = "সংস্করণ";
 "language_onboard" = "90 + ভাষা";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -262,6 +298,8 @@
 "menu_legal" = "বৈধ";
 "language_settings" = "ভাষা সেটিংস";
 "menu.tutorial" = "টিউটোরিয়াল";
+"menu.my_account" = "আমার অ্যাকাউন্ট";
+
 // Login
 "login" = "লগইন করুন";
 "logout" = "লগ আউট করুন";
@@ -298,6 +336,9 @@ http://godtoolsapp.com";
 
 // Alert & Info Controllers
 "download_error" = "ডাউনলোড এরর";
+"no_internet_title" = "ইন্টারনেট সংযোগ নেই";
+"no_internet" = "অনুগ্রহ করে আপনার ইন্টারনেট সংযোগ পরীক্ষা করুন এবং আবার চেষ্টা করুন";
+
 "the_tool_you_requested_is_loading" = "আপনি যা সরঞ্জাম খুজচ্ছেন সেটি লোড হচ্ছে";
 // Actions
 "yes" = "হ্যা";

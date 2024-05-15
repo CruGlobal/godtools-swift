@@ -1,7 +1,10 @@
+"language_name_fil-x-taglish" = "Тагальский";
+"language_name_sid" = "Сидамо";
 "onboardingTutorial.chooseLanguageButton.title" = "Выбрать язык";
 "languageSettings.confirmAppLanguage.message" = "Вы выбрали %@ в качестве языка приложения. Изменится язык всего приложения GodTools. Вы уверены?";
 "languageSettings.confirmAppLanguage.changeLanguageButton.title" = "Изменить язык";
 "languageSettings.confirmAppLanguage.nevermindButton.title" = "Не важно";
+"languageSettings.downloadableLanguages.title" = "Доступные языки";
 "languageSettings.appInterface.title" = "Язык интерфейса приложения";
 "languageSettings.appInterface.message" = "Установите основной язык для всего приложения.";
 "languageSettings.appInterface.languagesAvailable" = "Доступные языки";

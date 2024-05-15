@@ -1,7 +1,10 @@
+"language_name_fil-x-taglish" = "टाग्लिश";
+"language_name_sid" = "सिदामा";
 "onboardingTutorial.chooseLanguageButton.title" = "भाषा चुनें";
 "languageSettings.confirmAppLanguage.message" = "आपने अपनी ऐप की भाषा के रूप में %@ को चुना है। इससे संपूर्ण गॉडटूल्स ऐप की भाषा बदल जाएगी। क्या आप ऐसा करना चाहेंगे?";
 "languageSettings.confirmAppLanguage.changeLanguageButton.title" = "भाषा बदलें";
 "languageSettings.confirmAppLanguage.nevermindButton.title" = "रहने दें";
+"languageSettings.downloadableLanguages.title" = "डाउनलोड-योग्य भाषाएँ";
 "languageSettings.appInterface.title" = "ऐप इंटरफ़ेस की भाषा";
 "languageSettings.appInterface.message" = "वह भाषा सेट करें जिसमें आप पूरे ऐप को देखना चाहते हैं।";
 "languageSettings.appInterface.languagesAvailable" = "उपलब्ध भाषाएँ";

@@ -1,7 +1,10 @@
+"language_name_fil-x-taglish" = "塔吉什語";
+"language_name_sid" = "希達馬語";
 "onboardingTutorial.chooseLanguageButton.title" = "選擇語言";
 "languageSettings.confirmAppLanguage.message" = "您已將「%@」選為應用程式的語言。這項動作將會變更整個 GodTools 應用程式的語言設定。確定要變更嗎？";
 "languageSettings.confirmAppLanguage.changeLanguageButton.title" = "變更語言";
 "languageSettings.confirmAppLanguage.nevermindButton.title" = "現在不用";
+"languageSettings.downloadableLanguages.title" = "可下載語言";
 "languageSettings.appInterface.title" = "應用程式介面語言";
 "languageSettings.appInterface.message" = "設定整個應用程式的顯示語言。";
 "languageSettings.appInterface.languagesAvailable" = "可用語言";
