@@ -748,11 +748,12 @@ extension MobileContentPagesViewModel {
         let locale = Locale(identifier: localeId)
         
         incrementUserCounterUseCase.incrementUserCounter(for: .languageUsed(locale: locale))
-            .sink { completion in
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] completion in
                 
                 switch completion {
                 case .finished:
-                    self.trackLanguageUsageCountedThisSession(localeId: localeId)
+                    self?.trackLanguageUsageCountedThisSession(localeId: localeId)
                     
                 case .failure:
                     break

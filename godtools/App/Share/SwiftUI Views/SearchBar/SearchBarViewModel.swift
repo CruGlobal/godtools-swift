@@ -32,7 +32,7 @@ class SearchBarViewModel: ObservableObject {
         $appLanguage.eraseToAnyPublisher()
             .flatMap { appLanguage in
                 
-                return self.viewSearchBarUseCase.viewPublisher(appLanguage: appLanguage)
+                return viewSearchBarUseCase.viewPublisher(appLanguage: appLanguage)
                     .eraseToAnyPublisher()
             }
             .receive(on: DispatchQueue.main)
