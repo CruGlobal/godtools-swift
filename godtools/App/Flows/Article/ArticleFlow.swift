@@ -122,6 +122,7 @@ extension ArticleFlow {
             category: category,
             manifest: manifest,
             articleManifestAemRepository: appDiContainer.dataLayer.getArticleManifestAemRepository(),
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             currentArticleDownloadReceipt: currentArticleDownloadReceipt

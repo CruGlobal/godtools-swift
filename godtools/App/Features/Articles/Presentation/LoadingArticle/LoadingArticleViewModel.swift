@@ -7,28 +7,43 @@
 //
 
 import Foundation
+import Combine
 
 class LoadingArticleViewModel: ObservableObject {
     
     private let articleAemRepository: ArticleAemRepository
+    private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     
     private var downloadArticleOperation: OperationQueue?
+    private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
     
     let message: String
     
-    init(flowDelegate: FlowDelegate, aemUri: String, articleAemRepository: ArticleAemRepository, localizationServices: LocalizationServices) {
+    init(flowDelegate: FlowDelegate, aemUri: String, articleAemRepository: ArticleAemRepository, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, localizationServices: LocalizationServices) {
         
         self.flowDelegate = flowDelegate
         self.articleAemRepository = articleAemRepository
+        self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.message = localizationServices.stringForSystemElseEnglish(key: "Download in progress")
         
-        downloadArticle(
-            aemUri: aemUri,
-            articleAemRepository: articleAemRepository,
-            localizationServices: localizationServices
-        )
+        getCurrentAppLanguageUseCase
+            .getLanguagePublisher()
+            .flatMap(maxPublishers: .max(1)) {
+                return Just($0)
+            }
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (appLanguage: AppLanguageDomainModel) in
+                
+                self?.downloadArticle(
+                    appLanguage: appLanguage,
+                    aemUri: aemUri,
+                    articleAemRepository: articleAemRepository,
+                    localizationServices: localizationServices
+                )
+            }
+            .store(in: &cancellables)
     }
     
     deinit {
@@ -36,7 +51,7 @@ class LoadingArticleViewModel: ObservableObject {
         downloadArticleOperation?.cancelAllOperations()
     }
     
-    private func downloadArticle(aemUri: String, articleAemRepository: ArticleAemRepository, localizationServices: LocalizationServices) {
+    private func downloadArticle(appLanguage: AppLanguageDomainModel, aemUri: String, articleAemRepository: ArticleAemRepository, localizationServices: LocalizationServices) {
         
         downloadArticleOperation = articleAemRepository.downloadAndCache(aemUris: [aemUri]) { [weak self] (result: ArticleAemRepositoryResult) in
              
@@ -52,7 +67,7 @@ class LoadingArticleViewModel: ObservableObject {
                     let errorMessage: String
                     
                     if let downloadError = result.downloaderResult.downloadError {
-                        errorMessage = DownloadArticlesErrorViewModel(localizationServices: localizationServices, error: downloadError).message
+                        errorMessage = DownloadArticlesErrorViewModel(appLanguage: appLanguage, localizationServices: localizationServices, error: downloadError).message
                     }
                     else {
                         errorMessage = localizationServices.stringForSystemElseEnglish(key: "download_error")

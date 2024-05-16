@@ -84,6 +84,7 @@ extension ArticleDeepLinkFlow {
             flowDelegate: self,
             aemUri: aemUri,
             articleAemRepository: appDiContainer.dataLayer.getArticleAemRepository(),
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             localizationServices: appDiContainer.dataLayer.getLocalizationServices()
         )
         
