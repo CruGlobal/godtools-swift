@@ -112,6 +112,7 @@ extension ToolFilterLanguageSelectionViewModel {
         selectedLanguage = language
         
         storeUserToolFilterUseCase.storeLanguageFilterPublisher(with: language.id)
+            .receive(on: DispatchQueue.main)
             .sink { _ in
                 
             }

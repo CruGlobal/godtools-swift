@@ -139,6 +139,7 @@ extension LessonsViewModel {
     func refreshData() {
         
         resourcesRepository.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments()
+            .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completed in
 
             }, receiveValue: { (result: RealmResourcesCacheSyncResult) in

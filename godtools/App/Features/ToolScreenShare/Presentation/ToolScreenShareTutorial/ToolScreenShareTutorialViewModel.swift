@@ -126,6 +126,7 @@ extension ToolScreenShareTutorialViewModel {
         
         ToolScreenShareTutorialViewModel.didViewToolScreenShareTutorialCancellable = didViewToolScreenShareTutorialUseCase
             .didViewPublisher(toolId: toolId)
+            .receive(on: DispatchQueue.main)
             .sink { _ in
                 
             }

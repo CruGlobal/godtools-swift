@@ -788,6 +788,7 @@ extension MobileContentPagesViewModel {
         }
         
         incrementUserCounterUseCase.incrementUserCounter(for: toolOpenInteraction)
+            .receive(on: DispatchQueue.main)
             .sink { _ in
                 
             } receiveValue: { _ in

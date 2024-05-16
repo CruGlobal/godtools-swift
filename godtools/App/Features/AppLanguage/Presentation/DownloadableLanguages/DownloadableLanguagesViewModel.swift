@@ -159,6 +159,7 @@ extension DownloadableLanguagesViewModel {
     func removeDownloadedLanguage(_ downloadableLanguage: DownloadableLanguageListItemDomainModel) {
         
         removeDownloadedToolLanguageUseCase.removeDownloadedToolLanguage(downloadableLanguage.languageId)
+            .receive(on: DispatchQueue.main)
             .sink { _ in
                 
             }

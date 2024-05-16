@@ -80,6 +80,7 @@ class ReviewShareShareableViewModel: ObservableObject {
         
         trackShareShareableTapUseCase
             .trackPublisher(toolId: "", shareableId: shareable.dataModelId)
+            .receive(on: DispatchQueue.main)
             .sink { _ in
                 
             }

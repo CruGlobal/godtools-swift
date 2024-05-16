@@ -80,6 +80,7 @@ extension CreatingToolScreenShareSessionViewModel {
     func pageViewed() {
         
         CreatingToolScreenShareSessionViewModel.incrementScreenShareInBackgroundCancellable = incrementUserCounterUseCase.incrementUserCounter(for: .screenShare(tool: toolId))
+            .receive(on: DispatchQueue.main)
             .sink { _ in
                 
             } receiveValue: { _ in

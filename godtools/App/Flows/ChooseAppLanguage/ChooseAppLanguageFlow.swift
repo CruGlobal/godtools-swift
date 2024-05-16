@@ -49,6 +49,7 @@ class ChooseAppLanguageFlow: Flow {
             let setAppLanguageUseCase: SetAppLanguageUseCase = appDiContainer.feature.appLanguage.domainLayer.getSetAppLanguageUseCase()
             
             ChooseAppLanguageFlow.setAppLanguageInBackgroundCancellable = setAppLanguageUseCase.setLanguagePublisher(language: appLanguage.language)
+                .receive(on: DispatchQueue.main)
                 .sink(receiveValue: { _ in
 
                 })

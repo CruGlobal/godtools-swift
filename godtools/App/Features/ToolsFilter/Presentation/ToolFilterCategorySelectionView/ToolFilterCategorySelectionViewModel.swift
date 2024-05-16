@@ -112,6 +112,7 @@ extension ToolFilterCategorySelectionViewModel {
         selectedCategory = category
         
         storeUserToolFiltersUseCase.storeCategoryFilterPublisher(with: category.id)
+            .receive(on: DispatchQueue.main)
             .sink { _ in
                 
             }

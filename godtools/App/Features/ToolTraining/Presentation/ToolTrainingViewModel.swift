@@ -155,6 +155,7 @@ extension ToolTrainingViewModel {
         let trainingTipCompleted = TrainingTipDomainModel(trainingTipId: trainingTipId, resourceId: resource.id, languageId: language.id)
         
         setCompletedTrainingTipUseCase.setTrainingTipAsCompleted(tip: trainingTipCompleted)
+            .receive(on: DispatchQueue.main)
             .sink { _ in
                 
             } receiveValue: { _ in

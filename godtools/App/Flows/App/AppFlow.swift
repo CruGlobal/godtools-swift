@@ -451,6 +451,7 @@ extension AppFlow {
                     .syncDownloadedLanguagesPublisher()
                     .eraseToAnyPublisher()
             })
+            .receive(on: DispatchQueue.main)
             .sink { _ in
                 
             }
@@ -463,6 +464,7 @@ extension AppFlow {
         let authenticateUser: AuthenticateUserInterface = appDiContainer.feature.accountCreation.dataLayer.getAuthenticateUserInterface()
         
         authenticateUser.renewAuthenticationPublisher()
+            .receive(on: DispatchQueue.main)
             .sink { finished in
 
             } receiveValue: { authUser in
@@ -479,6 +481,7 @@ extension AppFlow {
                     .syncTranslatedLanguageNamesPublisher(translateInLanguage: appLanguage)
                     .eraseToAnyPublisher()
             })
+            .receive(on: DispatchQueue.main)
             .sink { _ in
                 
             }
@@ -490,6 +493,7 @@ extension AppFlow {
         let incrementUserCounterUseCase = appDiContainer.domainLayer.getIncrementUserCounterUseCase()
         
         incrementUserCounterUseCase.incrementUserCounter(for: .sessionLaunch)
+            .receive(on: DispatchQueue.main)
             .sink { _ in
                 
             } receiveValue: { _ in
