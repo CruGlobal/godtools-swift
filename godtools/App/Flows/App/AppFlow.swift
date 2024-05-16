@@ -85,6 +85,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         appDiContainer.feature.appLanguage.domainLayer
             .getCurrentAppLanguageUseCase()
             .getLanguagePublisher()
+            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
     }
     

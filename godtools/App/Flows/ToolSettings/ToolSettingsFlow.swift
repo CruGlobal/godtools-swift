@@ -41,6 +41,7 @@ class ToolSettingsFlow: Flow {
         appDiContainer.feature.appLanguage.domainLayer
             .getCurrentAppLanguageUseCase()
             .getLanguagePublisher()
+            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
 
         $appLanguage.eraseToAnyPublisher()
@@ -63,6 +64,7 @@ class ToolSettingsFlow: Flow {
         
         getToolScreenShareTutorialHasBeenViewedUseCase
             .getViewedPublisher(toolId: toolSettingsObserver.toolId)
+            .receive(on: DispatchQueue.main)
             .assign(to: &$toolScreenShareTutorialHasBeenViewedDomainModel)
     }
     

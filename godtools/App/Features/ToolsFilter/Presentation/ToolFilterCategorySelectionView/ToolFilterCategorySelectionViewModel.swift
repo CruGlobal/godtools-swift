@@ -45,6 +45,7 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
         
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
+            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
         $appLanguage.eraseToAnyPublisher()

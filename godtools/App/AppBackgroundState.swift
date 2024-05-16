@@ -36,6 +36,7 @@ class AppBackgroundState {
         appDiContainer.feature.appLanguage.domainLayer
             .getCurrentAppLanguageUseCase()
             .getLanguagePublisher()
+            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
         appDiContainer.feature.appLanguage.domainLayer

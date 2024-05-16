@@ -48,6 +48,7 @@ class ToolScreenShareFlow: Flow {
         appDiContainer.feature.appLanguage.domainLayer
             .getCurrentAppLanguageUseCase()
             .getLanguagePublisher()
+            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
         let viewCreatingToolScreenShareSessionTimedOutUseCase: ViewCreatingToolScreenShareSessionTimedOutUseCase = appDiContainer.feature.toolScreenShare.domainLayer

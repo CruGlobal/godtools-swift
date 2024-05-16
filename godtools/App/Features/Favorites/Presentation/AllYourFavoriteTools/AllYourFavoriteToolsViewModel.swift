@@ -41,6 +41,7 @@ class AllYourFavoriteToolsViewModel: ObservableObject {
         
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
+            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
         $appLanguage.eraseToAnyPublisher()

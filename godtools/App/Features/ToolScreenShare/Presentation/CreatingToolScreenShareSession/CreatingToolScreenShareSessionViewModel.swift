@@ -38,6 +38,7 @@ class CreatingToolScreenShareSessionViewModel: ObservableObject {
         
         getCurrentAppLanguage
             .getLanguagePublisher()
+            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
         viewCreatingToolScreenShareSessionUseCase

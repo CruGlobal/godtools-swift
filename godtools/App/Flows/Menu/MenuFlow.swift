@@ -48,6 +48,7 @@ class MenuFlow: Flow {
         appDiContainer.feature.appLanguage.domainLayer
             .getCurrentAppLanguageUseCase()
             .getLanguagePublisher()
+            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
         $appLanguage.eraseToAnyPublisher()

@@ -53,6 +53,7 @@ class AccountViewModel: ObservableObject {
         
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
+            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
 
         viewAccountUseCase.viewPublisher(appLanguagePublisher: $appLanguage.eraseToAnyPublisher())

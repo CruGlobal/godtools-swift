@@ -63,6 +63,7 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
         
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
+            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
         Publishers.CombineLatest(

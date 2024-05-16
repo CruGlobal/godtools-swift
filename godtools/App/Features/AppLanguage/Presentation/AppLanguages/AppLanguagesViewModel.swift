@@ -40,6 +40,7 @@ class AppLanguagesViewModel: ObservableObject {
         
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
+            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
         $appLanguage.eraseToAnyPublisher()
@@ -48,6 +49,7 @@ class AppLanguagesViewModel: ObservableObject {
                     .getAppLanguagesListPublisher(appLanguage: appLanguage)
                     .eraseToAnyPublisher()
             })
+            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguagesList)
         
         $appLanguage.eraseToAnyPublisher()
