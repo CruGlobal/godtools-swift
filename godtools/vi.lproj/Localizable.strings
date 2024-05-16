@@ -1,7 +1,10 @@
+"language_name_fil-x-taglish" = "Taglish";
+"language_name_sid" = "Sidama";
 "onboardingTutorial.chooseLanguageButton.title" = "Chọn ngôn ngữ";
 "languageSettings.confirmAppLanguage.message" = "Bạn đã lựa chọn %@ làm ngôn ngữ ứng dụng. Toàn bộ ứng dụng GodTools sẽ được thay đổi sang ngôn ngữ này. Bạn có chắc chắn?";
 "languageSettings.confirmAppLanguage.changeLanguageButton.title" = "Thay đổi ngôn ngữ";
 "languageSettings.confirmAppLanguage.nevermindButton.title" = "Bỏ qua";
+"languageSettings.downloadableLanguages.title" = "Các ngôn ngữ có thể tải xuống";
 "languageSettings.appInterface.title" = "Giao diện ngôn ngữ của ứng dụng";
 "languageSettings.appInterface.message" = "Cài đặt ngôn ngữ mà bạn muốn cho toàn bộ ứng dụng.";
 "languageSettings.appInterface.languagesAvailable" = "Những ngôn ngữ sẵn có";
@@ -11,10 +14,27 @@
 "allTools.filter.title" = "Bộ lọc";
 "allTools.filter.anyCategory" = "Bất kỳ loại nào";
 "allTools.filter.anyLanguage" = "Bất kỳ ngôn ngữ nào";
+"allTools.filter.navBar.language" = "Lọc theo ngôn ngữ";
+"allTools.filter.navBar.category" = "Lọc theo danh mục";
 "languageSettings.appLanguage.title" = "Ngôn ngữ ứng dụng";
+"authError.userAccountAlreadyExists.message" = "Tài khoản người dùng đã tồn tại.";
+"authError.userAccountNotFound.message" = "Không tìm thấy tài khoản người dùng.";
 "createAccount.title" = "Tạo tài khoản";
 "createAccount.subtitle" = "Tạo một tài khoản để có những câu chuyện, sự khích lệ và gợi ý thực hành trong tầm tay bạn.";
+"deleteAccountProgress.title" = "Đang xóa tài khoản...";
+"confirmDeleteAccount.title" = "Bạn có chắc không?";
+"confirmDeleteAccount.confirmButton.title" = "Xóa tài khoản";
+"accountDeletedAlert.title" = "Tài khoản đã bị xóa";
+"accountDeletedAlert.message" = "Tài khoản của bạn đã bị xóa.";
+"deleteAccount.title" = "Đừng đi sớm thế";
+"deleteAccount.subtitle" = "Nếu xóa tài khoản của mình, bạn sẽ không thể truy cập các công cụ hoặc hoạt động tài khoản yêu thích nữa.";
+"deleteAccount.confirmButton.title" = "Xóa tài khoản của tôi đi";
+"deleteAccount.cancelButton.title" = "Giữ tài khoản của tôi lại";
 "signIn.title" = "Đăng nhập";
+"signIn.subtitle" = "Đăng nhập vào tài khoản của bạn để có những câu chuyện thực tế, những lời động viên và những lời khuyên thiết thực trong tầm tay.";
+"signIn.google" = "Đăng nhập bằng Google";
+"signIn.facebook" = "Đăng nhập Facebook";
+"signIn.apple" = "Tiếp tục với Apple";
 "menu_getStarted" = "Bắt đầu";
 "menu_support" = "Hỗ trợ";
 "menu_about" = "Giới thiệu";
@@ -42,6 +62,12 @@
 
 "account.activity.sessions" = "Phần";
 "badges.tipsCompleted.singular" = "Đã hoàn thành %1$,d gợi ý hướng dẫn";
+
+/* leave %d in phrase - this is the number of articles that the user has read */
+"badges.articlesOpened.plural" = "Đọc %d bài viết";
+
+/* when they have read only 1 articles */
+"badges.articlesOpened.singular" = "Đọc 1 bài viết";
 
 /* leave %d in phrase - this is the number of images that the user has shared */
 "badges.imagesShared.plural" = "Đã chia sẻ %d hình ảnh";
@@ -81,6 +107,9 @@
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "Không có sẵn trong %@";
 
+"menu.deleteAccount" = "Xóa tài khoản";
+"alert.mailAppUnavailable.title" = "Ứng dụng thư không khả dụng";
+"alert.mailAppUnavailable.message" = "Ứng dụng Thư gốc chưa được cấu hình hoặc không khả dụng trên thiết bị này.";
 "tool_menu_item.tools" = "Công cụ";
 "lessons.pageTitle" = "Bài học dành cho bạn";
 "lessons.pageSubtitle" = "Những ý tưởng thiết thực giúp xây dựng mối quan hệ và bắt đầu cuộc trò chuyện đầy ý nghĩa.";
@@ -219,8 +248,7 @@
 "remove_from_favorites" = "Gỡ bỏ khỏi Ưa thích";
 
 /* This is a loading screen */
-"loading_unfavorited_tool" = "Công cụ đang tải xuống. Để tránh phải chờ đợi trong tương lai, hãy đánh dấu yêu thích công cụ này để nó có thể khả dụng ngoại tuyến.
-";
+"loading_unfavorited_tool" = "Công cụ đang tải xuống. Để tránh phải chờ đợi trong tương lai, hãy đánh dấu yêu thích công cụ này để nó có thể khả dụng ngoại tuyến.";
 
 /* This is a loading screen */
 "loading_favorited_tool" = "Đang tải cập nhật mới nhất.";

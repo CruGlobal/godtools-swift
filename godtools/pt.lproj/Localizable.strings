@@ -1,7 +1,10 @@
+"language_name_fil-x-taglish" = "Taglish";
+"language_name_sid" = "Sidama";
 "onboardingTutorial.chooseLanguageButton.title" = "Selecionar idioma";
 "languageSettings.confirmAppLanguage.message" = "Você selecionou %@ como o idioma do seu aplicativo. Isto altera o idioma de todo o aplicativo GodTools. Tem certeza de que quer fazer isto?";
 "languageSettings.confirmAppLanguage.changeLanguageButton.title" = "Alterar idioma";
 "languageSettings.confirmAppLanguage.nevermindButton.title" = "Não se preocupe";
+"languageSettings.downloadableLanguages.title" = "Idiomas transferíveis";
 "languageSettings.appInterface.title" = "Idioma da interface do aplicativo";
 "languageSettings.appInterface.message" = "Definir o idioma que gostaria de exibir em todo o aplicativo.";
 "languageSettings.appInterface.languagesAvailable" = "Idiomas disponíveis";
@@ -247,8 +250,7 @@ Se você receber esta mensagem demasiado tarde, a ligação poderá não estar a
 "remove_from_favorites" = "Remover dos Favoritos";
 
 /* This is a loading screen */
-"loading_unfavorited_tool" = "A ferramenta está baixando. Para evitar esperar no futuro, marque esta ferramenta como favorita para que fique disponível offline. 
-";
+"loading_unfavorited_tool" = "A ferramenta está baixando. Para evitar esperar no futuro, marque esta ferramenta como favorita para que fique disponível offline.";
 
 /* This is a loading screen */
 "loading_favorited_tool" = "A baixar a tradução mais recente desta ferramenta.";

@@ -50,17 +50,31 @@ class ToolScreenShareFlow: Flow {
             .getLanguagePublisher()
             .assign(to: &$appLanguage)
         
-        appDiContainer.feature.toolScreenShare.domainLayer
+        let viewCreatingToolScreenShareSessionTimedOutUseCase: ViewCreatingToolScreenShareSessionTimedOutUseCase = appDiContainer.feature.toolScreenShare.domainLayer
             .getViewCreatingToolScreenShareSessionTimedOutUseCase()
-            .viewPublisher(appLanguage: appLanguage)
+        
+        $appLanguage.eraseToAnyPublisher()
+            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<CreatingToolScreenShareSessionTimedOutDomainModel, Never> in
+                
+                return viewCreatingToolScreenShareSessionTimedOutUseCase
+                    .viewPublisher(appLanguage: appLanguage)
+                    .eraseToAnyPublisher()
+            })
             .sink { [weak self] (domainModel: CreatingToolScreenShareSessionTimedOutDomainModel) in
                 self?.creatingToolScreenShareSessionTimedOutDomainModel = domainModel
             }
             .store(in: &cancellables)
         
-        appDiContainer.feature.toolScreenShare.domainLayer
+        let viewShareToolScreenShareSessionUseCase: ViewShareToolScreenShareSessionUseCase = appDiContainer.feature.toolScreenShare.domainLayer
             .getViewShareToolScreenShareSessionUseCase()
-            .viewPublisher(appLanguage: appLanguage)
+        
+        $appLanguage.eraseToAnyPublisher()
+            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<ShareToolScreenShareSessionDomainModel, Never> in
+                
+                return viewShareToolScreenShareSessionUseCase
+                    .viewPublisher(appLanguage: appLanguage)
+                    .eraseToAnyPublisher()
+            })
             .sink { [weak self] (domainModel: ShareToolScreenShareSessionDomainModel) in
                 self?.shareToolScreenShareSessionDomainModel = domainModel
             }

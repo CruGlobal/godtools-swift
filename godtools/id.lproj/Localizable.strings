@@ -1,7 +1,10 @@
+"language_name_fil-x-taglish" = "Bahasa Taglish";
+"language_name_sid" = "Sidama";
 "onboardingTutorial.chooseLanguageButton.title" = "Pilih bahasa";
 "languageSettings.confirmAppLanguage.message" = "Saudara telah memilih %@ sebagai bahasa aplikasi Saudara. Ini akan mengubah bahasa seluruh aplikasi GodTools. Apa Saudara yakin?";
 "languageSettings.confirmAppLanguage.changeLanguageButton.title" = "Mengubah bahasa";
 "languageSettings.confirmAppLanguage.nevermindButton.title" = "Tidak apa";
+"languageSettings.downloadableLanguages.title" = "Bahasa yang dapat diunduh";
 "languageSettings.appInterface.title" = "Bahasa antar-muka aplikasi";
 "languageSettings.appInterface.message" = "Tetapkan bahasa yang Saudara inginkan untuk menampilkan seluruh aplikasi.";
 "languageSettings.appInterface.languagesAvailable" = "Bahasa yang tersedia";
