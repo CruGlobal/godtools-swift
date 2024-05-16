@@ -10,7 +10,7 @@ import Foundation
 
 extension Flow {
     
-    func presentNetworkError(responseError: Error) {
+    func presentNetworkError(appLanguage: AppLanguageDomainModel, responseError: Error) {
         
         let isCancelled: Bool = responseError.isUrlErrorCancelledCode
         
@@ -25,12 +25,12 @@ extension Flow {
         
         if responseError.isUrlErrorNotConnectedToInternetCode {
 
-            title = localizationServices.stringForSystemElseEnglish(key: "no_internet_title")
-            message = localizationServices.stringForSystemElseEnglish(key: "no_internet")
+            title = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.noInternetTitle.key)
+            message = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.noInternet.key)
         }
         else {
             
-            title = localizationServices.stringForSystemElseEnglish(key: "error")
+            title = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.error.key)
             message = responseError.localizedDescription
         }
         
@@ -38,7 +38,7 @@ extension Flow {
             title: title,
             message: message,
             cancelTitle: nil,
-            acceptTitle: localizationServices.stringForSystemElseEnglish(key: "OK"),
+            acceptTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.ok.key),
             acceptHandler: nil
         )
         
