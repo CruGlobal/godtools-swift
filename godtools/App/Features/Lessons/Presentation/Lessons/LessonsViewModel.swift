@@ -42,18 +42,21 @@ class LessonsViewModel: ObservableObject {
         
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
+            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
         $appLanguage.eraseToAnyPublisher()
-            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewLessonsDomainModel, Never> in
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
             
                 return viewLessonsUseCase
                     .viewPublisher(appLanguage: appLanguage)
                     .eraseToAnyPublisher()
-            })
+            }
+            .switchToLatest()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (domainModel: ViewLessonsDomainModel) in
-                
+                                
                 self?.sectionTitle = domainModel.interfaceStrings.title
                 self?.subtitle = domainModel.interfaceStrings.subtitle
                 

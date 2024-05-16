@@ -32,7 +32,6 @@ class ToolsViewModel: ObservableObject {
     
     private weak var flowDelegate: FlowDelegate?
 
-    @Published private var didPullToRefresh: Void = ()
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     @Published private var toolFilterCategorySelection: CategoryFilterDomainModel = .anyCategory(text: "", toolsAvailableText: "")
     @Published private var toolFilterLanguageSelection: LanguageFilterDomainModel = .anyLanguage(text: "", toolsAvailableText: "")
@@ -67,17 +66,17 @@ class ToolsViewModel: ObservableObject {
         
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
+            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
-        Publishers.CombineLatest4(
-            $didPullToRefresh.eraseToAnyPublisher(),
-            $appLanguage.eraseToAnyPublisher(),
-            $toolFilterCategorySelection.eraseToAnyPublisher(),
-            $toolFilterLanguageSelection.eraseToAnyPublisher()
+        Publishers.CombineLatest3(
+            $appLanguage.eraseToAnyPublisher().dropFirst(),
+            $toolFilterCategorySelection.eraseToAnyPublisher().dropFirst(),
+            $toolFilterLanguageSelection.eraseToAnyPublisher().dropFirst()
         )
-        .flatMap({ (pullToRefresh, appLanguage, toolFilterCategory, toolFilterLanguage) -> AnyPublisher<(ViewToolsDomainModel, [SpotlightToolListItemDomainModel]), Never> in
+        .map{ (appLanguage, toolFilterCategory, toolFilterLanguage) -> AnyPublisher<(ViewToolsDomainModel, [SpotlightToolListItemDomainModel]), Never> in
                                     
-            return Publishers.CombineLatest(
+            Publishers.CombineLatest(
                 viewToolsUseCase.viewPublisher(
                     translatedInAppLanguage: appLanguage,
                     languageForAvailabilityText: toolFilterLanguage.language,
@@ -90,7 +89,8 @@ class ToolsViewModel: ObservableObject {
                 )
             )
             .eraseToAnyPublisher()
-        })
+        }
+        .switchToLatest()
         .receive(on: DispatchQueue.main)
         .sink { [weak self] (domainModel: ViewToolsDomainModel, spotlightTools: [SpotlightToolListItemDomainModel]) in
                 
@@ -107,11 +107,13 @@ class ToolsViewModel: ObservableObject {
         .store(in: &cancellables)
         
         $appLanguage.eraseToAnyPublisher()
-            .flatMap { appLanguage in
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
                 
                 return getUserToolFiltersUseCase.getUserToolFiltersPublisher(translatedInAppLanguage: appLanguage)
                     .eraseToAnyPublisher()
             }
+            .switchToLatest()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] userFilters in
             
@@ -207,8 +209,8 @@ extension ToolsViewModel {
         resourcesRepository.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments()
             .sink(receiveCompletion: { completed in
 
-            }, receiveValue: { [weak self] (result: RealmResourcesCacheSyncResult) in
-                self?.didPullToRefresh = ()
+            }, receiveValue: { (result: RealmResourcesCacheSyncResult) in
+
             })
             .store(in: &cancellables)
     }
