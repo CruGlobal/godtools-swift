@@ -124,13 +124,13 @@ class ToolDetailsViewModel: ObservableObject {
             $toolId.eraseToAnyPublisher(),
             $appLanguage.eraseToAnyPublisher()
         )
-        .receive(on: DispatchQueue.main)
         .flatMap ({ (toolId: String, appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewToolDetailsDomainModel, Never> in
             
             return viewToolDetailsUseCase
                 .viewPublisher(toolId: toolId, translateInLanguage: appLanguage, toolPrimaryLanguage: primaryLanguage, toolParallelLanguage: parallelLanguage)
                 .eraseToAnyPublisher()
         })
+        .receive(on: DispatchQueue.main)
         .sink(receiveValue: { [weak self] (domainModel: ViewToolDetailsDomainModel) in
             
             self?.analyticsToolAbbreviation = domainModel.toolDetails.analyticsToolAbbreviation

@@ -57,6 +57,7 @@ class ToolSettingsFlow: Flow {
                     )
                     .eraseToAnyPublisher()
             })
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] (domainModel: ViewShareToolDomainModel) in
                 self?.viewShareToolDomainModel = domainModel
             }

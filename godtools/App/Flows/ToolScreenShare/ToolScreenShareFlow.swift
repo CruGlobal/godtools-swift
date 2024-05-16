@@ -61,6 +61,7 @@ class ToolScreenShareFlow: Flow {
                     .viewPublisher(appLanguage: appLanguage)
                     .eraseToAnyPublisher()
             })
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] (domainModel: CreatingToolScreenShareSessionTimedOutDomainModel) in
                 self?.creatingToolScreenShareSessionTimedOutDomainModel = domainModel
             }
@@ -76,6 +77,7 @@ class ToolScreenShareFlow: Flow {
                     .viewPublisher(appLanguage: appLanguage)
                     .eraseToAnyPublisher()
             })
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] (domainModel: ShareToolScreenShareSessionDomainModel) in
                 self?.shareToolScreenShareSessionDomainModel = domainModel
             }

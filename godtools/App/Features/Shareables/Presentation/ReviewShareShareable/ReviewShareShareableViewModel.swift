@@ -48,6 +48,7 @@ class ReviewShareShareableViewModel: ObservableObject {
                     .viewPublisher(appLanguage: appLanguage)
                     .eraseToAnyPublisher()
             })
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] (domainModel: ViewReviewShareShareableDomainModel) in
                 self?.shareImageButtonTitle = domainModel.interfaceStrings.shareActionTitle
             }

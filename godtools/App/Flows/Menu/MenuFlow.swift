@@ -58,6 +58,7 @@ class MenuFlow: Flow {
                     .viewPublisher(appLanguage: appLanguage)
                     .eraseToAnyPublisher()
             })
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] (domainModel: ViewShareGodToolsDomainModel) in
                 self?.viewShareGodToolsDomainModel = domainModel
             }
