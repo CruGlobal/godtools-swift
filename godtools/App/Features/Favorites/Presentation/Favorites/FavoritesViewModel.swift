@@ -59,17 +59,20 @@ class FavoritesViewModel: ObservableObject {
                  
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
+            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
         $appLanguage.eraseToAnyPublisher()
-            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<(ViewFavoritesDomainModel, [FeaturedLessonDomainModel]), Never> in
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
                 
-                return Publishers.CombineLatest(
+                Publishers.CombineLatest(
                     viewFavoritesUseCase.viewPublisher(appLanguage: appLanguage),
                     getFeaturedLessonsUseCase.getFeaturedLessonsPublisher(appLanguage: appLanguage)
                 )
                 .eraseToAnyPublisher()
-            })
+            }
+            .switchToLatest()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (domainModel: ViewFavoritesDomainModel, featuredLessons: [FeaturedLessonDomainModel]) in
                 
@@ -91,11 +94,13 @@ class FavoritesViewModel: ObservableObject {
             .store(in: &cancellables)
         
         $appLanguage.eraseToAnyPublisher()
-            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<Bool, Never> in
-                return getOptInOnboardingBannerEnabledUseCase
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
+                getOptInOnboardingBannerEnabledUseCase
                     .getBannerIsEnabled(appLanguage: appLanguage)
                     .eraseToAnyPublisher()
-            })
+            }
+            .switchToLatest()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (isEnabled: Bool) in
                 self?.showsOpenTutorialBanner = isEnabled

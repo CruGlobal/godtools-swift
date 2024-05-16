@@ -1,3 +1,5 @@
+"language_name_fil-x-taglish" = "Taglish";
+"language_name_sid" = "Sidama";
 "onboardingTutorial.chooseLanguageButton.title" = "زبان منتخب کریں";
 "languageSettings.confirmAppLanguage.message" = "کو ا؛پنی اَیپ زبان%@ آپ نے کے طور پر منتخب کِیا ۔ یہ گاڈ ٹولزکی ساری زبان کو بدل دے گی ۔ کیا آپ چاہتے ہیں ؟";
 "languageSettings.confirmAppLanguage.changeLanguageButton.title" = "زبان تبدیل کریں";
@@ -114,6 +116,7 @@
 "allTools.spotlight.title" = "ٹول سپاٹ لائٹ";
 "allTools.spotlight.description" = "یہاں کچھ ٹولز ہیں ہم نے سوچا کہ شاید آپ پسند کریًر";
 "allTools.categories.title" = "زمرے";
+"close" = "ہوگیا / کر لیا";
 "tool_menu_item.lessons" = "اسباق";
 "parallelLanguage.yesButton.title" = "جی ہاں";
 "parallelLanguage.noButton.title" = "نہیں، شکریہ";

@@ -1,7 +1,10 @@
+"language_name_fil-x-taglish" = "Taglish";
+"language_name_sid" = "Sidama";
 "onboardingTutorial.chooseLanguageButton.title" = "Selecionar idioma";
 "languageSettings.confirmAppLanguage.message" = "Você selecionou %@ como o idioma do seu aplicativo. Isto altera o idioma de todo o aplicativo GodTools. Tem certeza de que quer fazer isto?";
 "languageSettings.confirmAppLanguage.changeLanguageButton.title" = "Alterar idioma";
 "languageSettings.confirmAppLanguage.nevermindButton.title" = "Não se preocupe";
+"languageSettings.downloadableLanguages.title" = "Idiomas transferíveis";
 "languageSettings.appInterface.title" = "Idioma da interface do aplicativo";
 "languageSettings.appInterface.message" = "Definir o idioma que gostaria de exibir em todo o aplicativo.";
 "languageSettings.appInterface.languagesAvailable" = "Idiomas disponíveis";
