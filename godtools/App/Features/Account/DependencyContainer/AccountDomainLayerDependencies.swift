@@ -1,5 +1,5 @@
 //
-//  AccountCreationFeatureDomainLayerDependencies.swift
+//  AccountDomainLayerDependencies.swift
 //  godtools
 //
 //  Created by Levi Eggert on 10/31/23.
@@ -8,12 +8,12 @@
 
 import Foundation
 
-class AccountCreationFeatureDomainLayerDependencies {
+class AccountDomainLayerDependencies {
     
-    private let dataLayer: AccountCreationFeatureDataLayerDependencies
+    private let dataLayer: AccountDataLayerDependencies
     private let coreDataLayer: AppDataLayerDependencies
     
-    init(dataLayer: AccountCreationFeatureDataLayerDependencies, coreDataLayer: AppDataLayerDependencies) {
+    init(dataLayer: AccountDataLayerDependencies, coreDataLayer: AppDataLayerDependencies) {
         
         self.dataLayer = dataLayer
         self.coreDataLayer = coreDataLayer

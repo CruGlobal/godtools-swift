@@ -1,5 +1,5 @@
 //
-//  AccountCreationFeatureDataLayerDependencies.swift
+//  AccountDataLayerDependencies.swift
 //  godtools
 //
 //  Created by Levi Eggert on 10/31/23.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class AccountCreationFeatureDataLayerDependencies {
+class AccountDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     
