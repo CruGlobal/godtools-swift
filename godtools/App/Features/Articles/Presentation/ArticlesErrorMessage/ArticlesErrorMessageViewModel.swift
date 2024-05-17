@@ -14,11 +14,11 @@ class ArticlesErrorMessageViewModel {
     let message: String
     let downloadArticlesButtonTitle: String
     
-    init(localizationServices: LocalizationServices, message: String) {
+    init(appLanguage: AppLanguageDomainModel, localizationServices: LocalizationServices, message: String) {
         
-        title = localizationServices.stringForSystemElseEnglish(key: "download_error")
+        title = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.downloadError.key)
         self.message = message
-        downloadArticlesButtonTitle = localizationServices.stringForSystemElseEnglish(key: "articles.downloadArticlesButton.title.retryDownload")
+        downloadArticlesButtonTitle = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.articlesRetryDownloadButtonTitle.key)
     }
     
     deinit {

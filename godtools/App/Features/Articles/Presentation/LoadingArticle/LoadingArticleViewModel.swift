@@ -63,14 +63,14 @@ class LoadingArticleViewModel: ObservableObject {
                 }
                 else {
                     
-                    let errorTitle: String = localizationServices.stringForSystemElseEnglish(key: "error")
+                    let errorTitle: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.error.key)
                     let errorMessage: String
                     
                     if let downloadError = result.downloaderResult.downloadError {
                         errorMessage = DownloadArticlesErrorViewModel(appLanguage: appLanguage, localizationServices: localizationServices, error: downloadError).message
                     }
                     else {
-                        errorMessage = localizationServices.stringForSystemElseEnglish(key: "download_error")
+                        errorMessage = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.downloadError.key)
                     }
                     
                     let alertMessage = AlertMessage(title: errorTitle, message: errorMessage)

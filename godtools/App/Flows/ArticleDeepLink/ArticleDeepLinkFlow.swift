@@ -17,12 +17,20 @@ class ArticleDeepLinkFlow: Flow {
     let appDiContainer: AppDiContainer
     let navigationController: AppNavigationController
     
+    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    
     init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, aemUri: String) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController
         self.aemUri = aemUri
+        
+        appDiContainer.feature.appLanguage.domainLayer
+            .getCurrentAppLanguageUseCase()
+            .getLanguagePublisher()
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$appLanguage)
                 
         if let aemCacheObject = appDiContainer.dataLayer.getArticleAemRepository().getAemCacheObject(aemUri: aemUri) {
             
@@ -49,6 +57,7 @@ class ArticleDeepLinkFlow: Flow {
         case .didFailToDownloadArticleFromLoadingArticle(let alertMessage):
             
             let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
+            let appLanguage: AppLanguageDomainModel = self.appLanguage
             
             navigationController.dismiss(animated: true) { [weak self] in
                 
@@ -56,7 +65,7 @@ class ArticleDeepLinkFlow: Flow {
                     title: alertMessage.title,
                     message: alertMessage.message,
                     cancelTitle: nil,
-                    acceptTitle: localizationServices.stringForSystemElseEnglish(key: "OK"),
+                    acceptTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.ok.key),
                     acceptHandler: nil
                 )
                 

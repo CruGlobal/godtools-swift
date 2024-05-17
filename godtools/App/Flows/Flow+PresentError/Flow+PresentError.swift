@@ -10,13 +10,13 @@ import Foundation
 
 extension Flow {
     
-    func presentError(error: Error) {
+    func presentError(appLanguage: AppLanguageDomainModel, error: Error) {
         
         let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
         
-        let title: String = localizationServices.stringForSystemElseEnglish(key: "error")
+        let title: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.error.key)
         let message: String = error.localizedDescription
         
-        presentAlert(title: title, message: message)
+        presentAlert(appLanguage: appLanguage, title: title, message: message)
     }
 }

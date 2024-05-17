@@ -116,16 +116,22 @@ class MenuFlow: Flow {
             navigationController.dismiss(animated: true)
                                 
         case .userCompletedSignInFromCreateAccount(let error):
+            
+            let appLanguage: AppLanguageDomainModel = self.appLanguage
+            
             navigationController.dismissPresented(animated: true) {
                 if let error = error {
-                    self.presentAlertMessage(alertMessage: self.getAuthErrorAlertMessage(authError: error))
+                    self.presentAlertMessage(appLanguage: appLanguage, alertMessage: self.getAuthErrorAlertMessage(authError: error))
                 }
             }
             
         case .userCompletedSignInFromLogin(let error):
+            
+            let appLanguage: AppLanguageDomainModel = self.appLanguage
+            
             navigationController.dismissPresented(animated: true) {
                 if let error = error {
-                    self.presentAlertMessage(alertMessage: self.getAuthErrorAlertMessage(authError: error))
+                    self.presentAlertMessage(appLanguage: appLanguage, alertMessage: self.getAuthErrorAlertMessage(authError: error))
                 }
             }
             
@@ -169,7 +175,7 @@ class MenuFlow: Flow {
             
             guard let writeReviewURL = URL(string: "https://apps.apple.com/app/id\(appleAppId)?action=write-review") else {
                 let error: Error = NSError.errorWithDescription(description: "Failed to open to apple review.  Invalid URL.")
-                presentError(error: error)
+                presentError(appLanguage: appLanguage, error: error)
                 return
             }
             
@@ -230,18 +236,22 @@ class MenuFlow: Flow {
         case .didFinishAccountDeletionWithSuccessFromDeleteAccountProgress:
             
             let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
+            let appLanguage: AppLanguageDomainModel = self.appLanguage
             
             navigationController.dismissPresented(animated: true) {
                 
-                let title: String = localizationServices.stringForSystemElseEnglish(key: "accountDeletedAlert.title")
-                let message: String = localizationServices.stringForSystemElseEnglish(key: "accountDeletedAlert.message")
+                let title: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.accountDeletedAlertTitle.key)
+                let message: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.accountDeletedAlertMessage.key)
                 
-                self.presentAlert(title: title, message: message)
+                self.presentAlert(appLanguage: appLanguage, title: title, message: message)
             }
             
         case .didFinishAccountDeletionWithErrorFromDeleteAccountProgress(let error):
+            
+            let appLanguage: AppLanguageDomainModel = self.appLanguage
+            
             navigationController.dismissPresented(animated: true) {
-                self.presentError(error: error)
+                self.presentError(appLanguage: appLanguage, error: error)
             }
                         
         default:
@@ -299,9 +309,9 @@ class MenuFlow: Flow {
             presentAuthViewController: navigationController,
             authenticationType: authenticationType,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            getSocialCreateAccountInterfaceStringsUseCase: appDiContainer.feature.accountCreation.domainLayer.getSocialCreateAccountInterfaceStringsUseCase(),
-            getSocialSignInInterfaceStringsUseCase: appDiContainer.feature.accountCreation.domainLayer.getSocialSignInInterfaceStringsUseCase(),
-            authenticateUserUseCase: appDiContainer.feature.accountCreation.domainLayer.getAuthenticateUserUseCase()
+            getSocialCreateAccountInterfaceStringsUseCase: appDiContainer.feature.account.domainLayer.getSocialCreateAccountInterfaceStringsUseCase(),
+            getSocialSignInInterfaceStringsUseCase: appDiContainer.feature.account.domainLayer.getSocialSignInInterfaceStringsUseCase(),
+            authenticateUserUseCase: appDiContainer.feature.account.domainLayer.getAuthenticateUserUseCase()
         )
         
         let view = SocialSignInView(viewModel: viewModel, backgroundColor: viewBackgroundColor)
@@ -444,17 +454,17 @@ class MenuFlow: Flow {
         let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
         
         let viewController = UIAlertController(
-            title: localizationServices.stringForSystemElseEnglish(key: "confirmDeleteAccount.title"),
+            title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.confirmDeleteAccountTitle.key),
             message: "",
             preferredStyle: .actionSheet
         )
         
-        viewController.addAction(UIAlertAction(title: localizationServices.stringForSystemElseEnglish(key: "confirmDeleteAccount.confirmButton.title"), style: .destructive, handler: { (action: UIAlertAction) in
+        viewController.addAction(UIAlertAction(title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.confirmDeleteAccountConfirmButtonTitle.key), style: .destructive, handler: { (action: UIAlertAction) in
                         
             self.navigate(step: .deleteAccountTappedFromConfirmDeleteAccount)
         }))
         
-        viewController.addAction(UIAlertAction(title: localizationServices.stringForSystemElseEnglish(key: "cancel"), style: .cancel, handler: { (action: UIAlertAction) in
+        viewController.addAction(UIAlertAction(title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.cancel.key), style: .cancel, handler: { (action: UIAlertAction) in
             
         }))
         

@@ -81,7 +81,9 @@ class ToolPageFormViewModel: MobileContentFormViewModel {
     
     private func notifiyFollowUpsMissingFieldsError(missingFieldsNames: [String]) {
         
-        let errorTitle: String = localizationServices.stringForSystemElseEnglish(key: "error")
+        let appLanguage: AppLanguageDomainModel = renderedPageContext.appLanguage
+        
+        let errorTitle: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.error.key)
         var errorMessage: String = ""
         
         for index in 0 ..< missingFieldsNames.count {
@@ -91,10 +93,11 @@ class ToolPageFormViewModel: MobileContentFormViewModel {
                 errorMessage += "\n"
             }
             
-            errorMessage += String(format: localizationServices.stringForSystemElseEnglish(key: "required_field_missing"), name.localizedCapitalized)
+            errorMessage += String(format: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.requiredMissingField.key), name.localizedCapitalized)
         }
         
         let errorViewModel = MobileContentErrorViewModel(
+            appLanguage: appLanguage,
             title: errorTitle,
             message: errorMessage,
             localizationServices: localizationServices
