@@ -41,8 +41,14 @@ class CreatingToolScreenShareSessionViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
-        viewCreatingToolScreenShareSessionUseCase
-            .viewPublisher(appLanguagePublisher: $appLanguage.eraseToAnyPublisher())
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
+                
+                viewCreatingToolScreenShareSessionUseCase
+                    .viewPublisher(appLanguage: appLanguage)
+            }
+            .switchToLatest()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (domainModel: CreatingToolScreenShareSessionDomainModel) in
                 

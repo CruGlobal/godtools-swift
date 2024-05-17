@@ -21,11 +21,11 @@ class AccountViewModel: ObservableObject {
     private let viewAccountUseCase: ViewAccountUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
-    private var getActivityCancellable: AnyCancellable?
     
     private weak var flowDelegate: FlowDelegate?
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
+    @Published private var didPullToRefresh: Void = ()
     
     @Published var navTitle: String = ""
     @Published var isLoadingProfile: Bool = true
@@ -56,7 +56,14 @@ class AccountViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
 
-        viewAccountUseCase.viewPublisher(appLanguagePublisher: $appLanguage.eraseToAnyPublisher())
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
+                
+                viewAccountUseCase
+                    .viewPublisher(appLanguage: appLanguage)
+            }
+            .switchToLatest()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] viewAccountDomainModel in
                 
@@ -71,7 +78,14 @@ class AccountViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        getUserAccountDetailsUseCase.getUserAccountDetailsPublisher(appLanguagePublisher: $appLanguage.eraseToAnyPublisher())
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
+                
+                getUserAccountDetailsUseCase
+                    .getUserAccountDetailsPublisher(appLanguage: appLanguage)
+            }
+            .switchToLatest()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (userDetails: UserAccountDetailsDomainModel) in
                 
@@ -82,13 +96,14 @@ class AccountViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        $appLanguage.eraseToAnyPublisher()
-            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewGlobalActivityThisWeekDomainModel, Never> in
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
                 
-                return viewGlobalActivityThisWeekUseCase
+                viewGlobalActivityThisWeekUseCase
                     .viewPublisher(appLanguage: appLanguage)
-                    .eraseToAnyPublisher()
-            })
+            }
+            .switchToLatest()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (domainModel: ViewGlobalActivityThisWeekDomainModel) in
                 
@@ -97,29 +112,27 @@ class AccountViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        refreshUserActivity()
+        Publishers.CombineLatest(
+            $appLanguage.dropFirst(),
+            $didPullToRefresh
+        )
+        .map { (appLanguage: AppLanguageDomainModel, didPullToRefresh: Void) in
+            
+            getUserActivityUseCase
+                .getUserActivityPublisher(appLanguage: appLanguage)
+        }
+        .switchToLatest()
+        .receive(on: DispatchQueue.main)
+        .sink { [weak self] (userActivity: UserActivityDomainModel) in
+                
+            self?.badges = userActivity.badges
+            self?.stats = userActivity.stats
+        }
+        .store(in: &cancellables)
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
-    }
-    
-    private func refreshUserActivity() {
-        
-        getActivityCancellable = getUserActivityUseCase.getUserActivityPublisher(appLanguagePublisher: $appLanguage.eraseToAnyPublisher())
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
-                
-            } receiveValue: { [weak self] userActivity in
-                
-                self?.updateUserActivityValues(userActivity: userActivity)
-            }
-    }
-    
-    private func updateUserActivityValues(userActivity: UserActivityDomainModel) {
-        
-        self.badges = userActivity.badges
-        self.stats = userActivity.stats
     }
     
     private func trackSectionViewedAnalytics(screenName: String) {
@@ -144,7 +157,7 @@ extension AccountViewModel {
     
     func pullToRefresh() {
         
-        refreshUserActivity()
+        didPullToRefresh = ()
     }
     
     func activityViewed() {

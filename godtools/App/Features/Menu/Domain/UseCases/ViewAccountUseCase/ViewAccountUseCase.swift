@@ -18,13 +18,10 @@ class ViewAccountUseCase {
         self.getInterfaceStringsRepository = getInterfaceStringsRepository
     }
     
-    func viewPublisher(appLanguagePublisher: AnyPublisher<AppLanguageDomainModel, Never>) -> AnyPublisher<ViewAccountDomainModel, Never> {
+    func viewPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewAccountDomainModel, Never> {
         
-        return appLanguagePublisher
-            .flatMap { appLanguage in
-                
-                return self.getInterfaceStringsRepository.getStringsPublisher(translateInAppLanguage: appLanguage)
-            }
+        return getInterfaceStringsRepository
+            .getStringsPublisher(translateInAppLanguage: appLanguage)
             .map { interfaceStrings in
                 
                 return ViewAccountDomainModel(

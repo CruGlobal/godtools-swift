@@ -18,14 +18,10 @@ class GetOnboardingTutorialInterfaceStringsUseCase {
         self.getStringsRepositoryInterface = getStringsRepositoryInterface
     }
     
-    func getStringsPublisher(appLanguagePublisher: AnyPublisher<AppLanguageDomainModel, Never>) -> AnyPublisher<OnboardingTutorialInterfaceStringsDomainModel, Never> {
+    func getStringsPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<OnboardingTutorialInterfaceStringsDomainModel, Never> {
         
-        return appLanguagePublisher
-            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<OnboardingTutorialInterfaceStringsDomainModel, Never> in
-                
-                return self.getStringsRepositoryInterface.getStringsPublisher(appLanguage: appLanguage)
-                    .eraseToAnyPublisher()
-            })
+        return getStringsRepositoryInterface
+            .getStringsPublisher(appLanguage: appLanguage)
             .eraseToAnyPublisher()
     }
 }

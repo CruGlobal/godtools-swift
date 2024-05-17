@@ -474,13 +474,13 @@ extension AppFlow {
         
         let translatedLanguageNameRepositorySync: TranslatedLanguageNameRepositorySync = appDiContainer.dataLayer.getTranslatedLanguageNameRepositorySync()
         
-        $appLanguage.eraseToAnyPublisher()
-            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<Void, Never> in
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
                 
-                return translatedLanguageNameRepositorySync
+                translatedLanguageNameRepositorySync
                     .syncTranslatedLanguageNamesPublisher(translateInLanguage: appLanguage)
-                    .eraseToAnyPublisher()
-            })
+            }
             .receive(on: DispatchQueue.main)
             .sink { _ in
                 

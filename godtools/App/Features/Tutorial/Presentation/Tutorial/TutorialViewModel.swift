@@ -44,13 +44,14 @@ class TutorialViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
-        $appLanguage.eraseToAnyPublisher()
-            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<TutorialDomainModel, Never> in
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
                 
-                return getTutorialUseCase
+                getTutorialUseCase
                     .getTutorialPublisher(appLanguage: appLanguage)
-                    .eraseToAnyPublisher()
-            })
+            }
+            .switchToLatest()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (tutorial: TutorialDomainModel) in
                 
@@ -60,8 +61,8 @@ class TutorialViewModel: ObservableObject {
             .store(in: &cancellables)
         
         Publishers.CombineLatest(
-            $currentPage.eraseToAnyPublisher(),
-            $interfaceStrings.eraseToAnyPublisher()
+            $currentPage,
+            $interfaceStrings
         )
         .receive(on: DispatchQueue.main)
         .sink { [weak self] (currentPage: Int, interfaceStrings: TutorialInterfaceStringsDomainModel?) in
@@ -72,7 +73,6 @@ class TutorialViewModel: ObservableObject {
         .store(in: &cancellables)
         
         $currentPage
-            .eraseToAnyPublisher()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (page: Int) in
                 self?.pageDidChange(page: page)

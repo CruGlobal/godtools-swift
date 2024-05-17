@@ -42,16 +42,19 @@ class DownloadableLanguagesViewModel: ObservableObject {
         self.downloadToolLanguageUseCase = downloadToolLanguageUseCase
         self.removeDownloadedToolLanguageUseCase = removeDownloadedToolLanguageUseCase
         
-        getCurrentAppLanguageUseCase.getLanguagePublisher()
+        getCurrentAppLanguageUseCase
+            .getLanguagePublisher()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
-        $appLanguage.eraseToAnyPublisher()
-            .flatMap { appLanguage in
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
                 
-                return viewDownloadableLanguagesUseCase.viewPublisher(appLanguage: appLanguage)
-                    .eraseToAnyPublisher()
+                viewDownloadableLanguagesUseCase
+                    .viewPublisher(appLanguage: appLanguage)
             }
+            .switchToLatest()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] domainModel in
                 
@@ -64,13 +67,14 @@ class DownloadableLanguagesViewModel: ObservableObject {
             .store(in: &cancellables)
         
         Publishers.CombineLatest3(
-            $searchText.eraseToAnyPublisher(),
-            $downloadableLanguages.eraseToAnyPublisher(),
-            $activeDownloads.eraseToAnyPublisher()
+            $searchText,
+            $downloadableLanguages.dropFirst(),
+            $activeDownloads
         )
         .flatMap({ searchText, downloadableLanguages, activeDownloads in
             
-            return searchLanguageInDownloadableLanguagesUseCase.getSearchResultsPublisher(for: searchText, in: downloadableLanguages)
+            return searchLanguageInDownloadableLanguagesUseCase
+                .getSearchResultsPublisher(for: searchText, in: downloadableLanguages)
                 .map { downloadableLanguages in
                     return (downloadableLanguages, activeDownloads)
                 }
@@ -158,7 +162,8 @@ extension DownloadableLanguagesViewModel {
     
     func removeDownloadedLanguage(_ downloadableLanguage: DownloadableLanguageListItemDomainModel) {
         
-        removeDownloadedToolLanguageUseCase.removeDownloadedToolLanguage(downloadableLanguage.languageId)
+        removeDownloadedToolLanguageUseCase
+            .removeDownloadedToolLanguage(downloadableLanguage.languageId)
             .receive(on: DispatchQueue.main)
             .sink { _ in
                 

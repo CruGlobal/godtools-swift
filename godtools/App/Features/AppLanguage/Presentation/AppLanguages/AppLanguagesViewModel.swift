@@ -43,21 +43,23 @@ class AppLanguagesViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
-        $appLanguage.eraseToAnyPublisher()
-            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> in
-                return getAppLanguagesListUseCase
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
+                getAppLanguagesListUseCase
                     .getAppLanguagesListPublisher(appLanguage: appLanguage)
-                    .eraseToAnyPublisher()
-            })
+            }
+            .switchToLatest()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguagesList)
         
-        $appLanguage.eraseToAnyPublisher()
-            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewAppLanguagesDomainModel, Never> in
-                return viewAppLanguagesUseCase
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
+                viewAppLanguagesUseCase
                     .viewPublisher(appLanguage: appLanguage)
-                    .eraseToAnyPublisher()
-            })
+            }
+            .switchToLatest()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (domainModel: ViewAppLanguagesDomainModel) in
                 
@@ -66,12 +68,13 @@ class AppLanguagesViewModel: ObservableObject {
             .store(in: &cancellables)
         
         Publishers.CombineLatest(
-            $searchText.eraseToAnyPublisher(),
-            $appLanguagesList.eraseToAnyPublisher()
+            $searchText,
+            $appLanguagesList.dropFirst()
         )
         .flatMap { (searchText: String, appLanguagesList: [AppLanguageListItemDomainModel]) in
             
-            return searchAppLanguageInAppLanguagesListUseCase.getSearchResultsPublisher(for: searchText, in: appLanguagesList)
+            searchAppLanguageInAppLanguagesListUseCase
+                .getSearchResultsPublisher(for: searchText, in: appLanguagesList)
         }
         .receive(on: DispatchQueue.main)
         .assign(to: &$appLanguageSearchResults)

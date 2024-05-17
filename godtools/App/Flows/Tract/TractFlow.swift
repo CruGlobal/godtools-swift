@@ -239,7 +239,7 @@ extension TractFlow {
         
         toolView = view
         
-        viewModel.$languageNames.eraseToAnyPublisher()
+        viewModel.$languageNames
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (languageNames: [String]) in
                 
@@ -258,7 +258,7 @@ extension TractFlow {
             }
             .store(in: &cancellables)
         
-        viewModel.$selectedLanguageIndex.eraseToAnyPublisher()
+        viewModel.$selectedLanguageIndex
             .receive(on: DispatchQueue.main)
             .sink { (index: Int) in
                 

@@ -45,13 +45,12 @@ class LessonsViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
-        $appLanguage.eraseToAnyPublisher()
+        $appLanguage
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
             
-                return viewLessonsUseCase
+                viewLessonsUseCase
                     .viewPublisher(appLanguage: appLanguage)
-                    .eraseToAnyPublisher()
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
@@ -138,7 +137,8 @@ extension LessonsViewModel {
     
     func refreshData() {
         
-        resourcesRepository.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments()
+        resourcesRepository
+            .syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments()
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completed in
 

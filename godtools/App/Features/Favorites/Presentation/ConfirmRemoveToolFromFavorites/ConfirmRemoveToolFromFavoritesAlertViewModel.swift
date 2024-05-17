@@ -44,7 +44,8 @@ class ConfirmRemoveToolFromFavoritesAlertViewModel: AlertMessageViewModelType {
         
         didConfirmToolRemovalSubject?.send(Void())
         
-        ConfirmRemoveToolFromFavoritesAlertViewModel.removeToolFromFavoritesCancellable = removeFavoritedToolUseCase.removeToolPublisher(toolId: toolId)
+        ConfirmRemoveToolFromFavoritesAlertViewModel.removeToolFromFavoritesCancellable = removeFavoritedToolUseCase
+            .removeToolPublisher(toolId: toolId)
             .receive(on: DispatchQueue.main)
             .sink { _ in
                 

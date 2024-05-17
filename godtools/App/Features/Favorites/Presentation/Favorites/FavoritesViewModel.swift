@@ -62,7 +62,7 @@ class FavoritesViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
-        $appLanguage.eraseToAnyPublisher()
+        $appLanguage
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
                 
@@ -70,7 +70,6 @@ class FavoritesViewModel: ObservableObject {
                     viewFavoritesUseCase.viewPublisher(appLanguage: appLanguage),
                     getFeaturedLessonsUseCase.getFeaturedLessonsPublisher(appLanguage: appLanguage)
                 )
-                .eraseToAnyPublisher()
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
@@ -93,12 +92,12 @@ class FavoritesViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        $appLanguage.eraseToAnyPublisher()
+        $appLanguage
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
+                
                 getOptInOnboardingBannerEnabledUseCase
                     .getBannerIsEnabled(appLanguage: appLanguage)
-                    .eraseToAnyPublisher()
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)

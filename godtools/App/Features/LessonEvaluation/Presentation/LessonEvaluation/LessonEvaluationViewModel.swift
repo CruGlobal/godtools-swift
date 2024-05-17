@@ -55,13 +55,14 @@ class LessonEvaluationViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
-        $appLanguage.eraseToAnyPublisher()
-            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<LessonEvaluationInterfaceStringsDomainModel, Never> in
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
                 
-                return getLessonEvaluationInterfaceStringsUseCase
+                getLessonEvaluationInterfaceStringsUseCase
                     .getStringsPublisher(appLanguage: appLanguage)
-                    .eraseToAnyPublisher()
-            })
+            }
+            .switchToLatest()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (interfaceStrings: LessonEvaluationInterfaceStringsDomainModel) in
                 
@@ -75,15 +76,15 @@ class LessonEvaluationViewModel: ObservableObject {
             .store(in: &cancellables)
         
         Publishers.CombineLatest(
-            $appLanguage.eraseToAnyPublisher(),
-            $readyToShareFaithScaleIntValue.eraseToAnyPublisher()
+            $appLanguage.dropFirst(),
+            $readyToShareFaithScaleIntValue
         )
-        .flatMap({ (appLanguage: AppLanguageDomainModel, scale: Int) -> AnyPublisher<SpiritualConversationReadinessScaleDomainModel, Never> in
+        .map { (appLanguage: AppLanguageDomainModel, scale: Int) in
                 
-            return didChangeScaleForSpiritualConversationReadinessUseCase
+            didChangeScaleForSpiritualConversationReadinessUseCase
                 .changeScalePublisher(scale: scale, translateInAppLanguage: appLanguage)
-                .eraseToAnyPublisher()
-        })
+        }
+        .switchToLatest()
         .receive(on: DispatchQueue.main)
         .sink { [weak self] (domainModel: SpiritualConversationReadinessScaleDomainModel) in
             

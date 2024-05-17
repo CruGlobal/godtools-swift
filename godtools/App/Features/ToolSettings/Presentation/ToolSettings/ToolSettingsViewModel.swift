@@ -53,12 +53,12 @@ class ToolSettingsViewModel: ObservableObject {
             .assign(to: &$appLanguage)
         
         Publishers.CombineLatest(
-            $appLanguage.eraseToAnyPublisher(),
-            toolSettingsObserver.$languages.eraseToAnyPublisher()
+            $appLanguage.dropFirst(),
+            toolSettingsObserver.$languages
         )
-        .flatMap ({ (appLanguage: AppLanguageDomainModel, languages: ToolSettingsLanguages) -> AnyPublisher<ViewToolSettingsDomainModel, Never> in
+        .map { (appLanguage: AppLanguageDomainModel, languages: ToolSettingsLanguages) in
             
-            return viewToolSettingsUseCase
+            viewToolSettingsUseCase
                 .viewPublisher(
                     appLanguage: appLanguage,
                     toolId: toolSettingsObserver.toolId,
@@ -66,8 +66,8 @@ class ToolSettingsViewModel: ObservableObject {
                     toolPrimaryLanguageId: languages.primaryLanguageId,
                     toolParallelLanguageId: languages.parallelLanguageId
                 )
-                .eraseToAnyPublisher()
-        })
+        }
+        .switchToLatest()
         .receive(on: DispatchQueue.main)
         .sink { [weak self] (domainModel: ViewToolSettingsDomainModel) in
                         
@@ -88,8 +88,8 @@ class ToolSettingsViewModel: ObservableObject {
         .store(in: &cancellables)
 
         Publishers.CombineLatest(
-            toolSettingsObserver.$trainingTipsEnabled.eraseToAnyPublisher(),
-            $interfaceStrings.eraseToAnyPublisher()
+            toolSettingsObserver.$trainingTipsEnabled,
+            $interfaceStrings
         )
         .receive(on: DispatchQueue.main)
         .sink { [weak self] (trainingTipsEnabled: Bool, interfaceStrings: ToolSettingsInterfaceStringsDomainModel?) in
@@ -103,12 +103,11 @@ class ToolSettingsViewModel: ObservableObject {
         }
         .store(in: &cancellables)
         
-        toolSettingsObserver.$languages.eraseToAnyPublisher()
+        toolSettingsObserver.$languages
             .flatMap({ (languages: ToolSettingsLanguages) -> AnyPublisher<[ShareableDomainModel], Never> in
                 
-                return getShareablesUseCase
+                getShareablesUseCase
                     .getShareablesPublisher(toolId: toolSettingsObserver.toolId, toolLanguageId: languages.selectedLanguageId)
-                    .eraseToAnyPublisher()
             })
             .receive(on: DispatchQueue.main)
             .assign(to: &$shareables)

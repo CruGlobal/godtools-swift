@@ -51,13 +51,15 @@ class MenuFlow: Flow {
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
-        $appLanguage.eraseToAnyPublisher()
-            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewShareGodToolsDomainModel, Never> in
-                return appDiContainer.feature.shareGodTools.domainLayer
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
+                
+                appDiContainer.feature.shareGodTools.domainLayer
                     .getViewShareGodToolsUseCase()
                     .viewPublisher(appLanguage: appLanguage)
-                    .eraseToAnyPublisher()
-            })
+            }
+            .switchToLatest()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (domainModel: ViewShareGodToolsDomainModel) in
                 self?.viewShareGodToolsDomainModel = domainModel

@@ -38,17 +38,19 @@ class LanguageSettingsViewModel: ObservableObject {
         self.viewLanguageSettingsUseCase = viewLanguageSettingsUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         
-        getCurrentAppLanguageUseCase.getLanguagePublisher()
+        getCurrentAppLanguageUseCase
+            .getLanguagePublisher()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
-        $appLanguage.eraseToAnyPublisher()
-            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewLanguageSettingsDomainModel, Never> in
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
                 
-                return viewLanguageSettingsUseCase
+                viewLanguageSettingsUseCase
                     .viewPublisher(appLanguage: appLanguage)
-                    .eraseToAnyPublisher()
-            })
+            }
+            .switchToLatest()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (domainModel: ViewLanguageSettingsDomainModel) in
                 

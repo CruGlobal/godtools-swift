@@ -67,8 +67,8 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
             .assign(to: &$appLanguage)
         
         Publishers.CombineLatest(
-            $languages.eraseToAnyPublisher(),
-            $appLanguage.eraseToAnyPublisher()
+            $languages,
+            $appLanguage.dropFirst()
         )
         .receive(on: DispatchQueue.main)
         .sink { [weak self] (languages: [LanguageDomainModel], appLanguage: AppLanguageDomainModel) in

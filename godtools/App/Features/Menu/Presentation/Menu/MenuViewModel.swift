@@ -72,8 +72,14 @@ class MenuViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
-        getMenuInterfaceStringsUseCase
-            .getStringsPublisher(appLanguagePublisher: $appLanguage.eraseToAnyPublisher())
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
+                
+                getMenuInterfaceStringsUseCase
+                    .getStringsPublisher(appLanguage: appLanguage)
+            }
+            .switchToLatest()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (interfaceStrings: MenuInterfaceStringsDomainModel) in
                 
@@ -103,17 +109,17 @@ class MenuViewModel: ObservableObject {
                 self?.appVersion = interfaceStrings.version
             }
             .store(in: &cancellables)
-                        
+    
         $appLanguage
-            .eraseToAnyPublisher()
-            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<(AccountCreationIsSupportedDomainModel, UserIsAuthenticatedDomainModel), Never> in
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
                 
-                return Publishers.CombineLatest(
+                Publishers.CombineLatest(
                     getAccountCreationIsSupportedUseCase.getIsSupportedPublisher(appLanguage: appLanguage),
                     getUserIsAuthenticatedUseCase.getIsAuthenticatedPublisher()
                 )
-                .eraseToAnyPublisher()
-            })
+            }
+            .switchToLatest()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (accountCreationIsSupportedDomainModel: AccountCreationIsSupportedDomainModel, userIsAuthenticatedDomainModel: UserIsAuthenticatedDomainModel) in
                             
@@ -128,12 +134,14 @@ class MenuViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        $appLanguage.eraseToAnyPublisher()
-            .flatMap({ appLanguage -> AnyPublisher<Bool, Never> in
-                return getOptInOnboardingTutorialAvailableUseCase
+        $appLanguage
+            .dropFirst()
+            .map { appLanguage in
+                
+                getOptInOnboardingTutorialAvailableUseCase
                     .getIsAvailablePublisher(appLanguage: appLanguage)
-                    .eraseToAnyPublisher()
-            })
+            }
+            .switchToLatest()
             .receive(on: DispatchQueue.main)
             .assign(to: &$showsTutorialOption)
     }

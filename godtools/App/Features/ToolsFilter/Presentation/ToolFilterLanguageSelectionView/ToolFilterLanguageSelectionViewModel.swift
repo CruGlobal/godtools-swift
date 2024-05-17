@@ -47,12 +47,14 @@ class ToolFilterLanguageSelectionViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
-        $appLanguage.eraseToAnyPublisher()
-            .flatMap { appLanguage in
+        $appLanguage
+            .dropFirst()
+            .map { appLanguage in
                 
-                return getUserToolFiltersUseCase.getUserToolFiltersPublisher(translatedInAppLanguage: appLanguage)
-                    .eraseToAnyPublisher()
+                getUserToolFiltersUseCase
+                    .getUserToolFiltersPublisher(translatedInAppLanguage: appLanguage)
             }
+            .switchToLatest()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] userFilters in
             
@@ -62,13 +64,15 @@ class ToolFilterLanguageSelectionViewModel: ObservableObject {
             .store(in: &cancellables)
         
         Publishers.CombineLatest(
-            $appLanguage.eraseToAnyPublisher(),
-            $selectedCategory.eraseToAnyPublisher()
+            $appLanguage.dropFirst(),
+            $selectedCategory
         )
-        .flatMap { appLanguage, selectedCategory in
+        .map { appLanguage, selectedCategory in
             
-            return viewToolFilterLanguagesUseCase.viewPublisher(filteredByCategoryId: selectedCategory.id, translatedInAppLanguage: appLanguage)
+            viewToolFilterLanguagesUseCase
+                .viewPublisher(filteredByCategoryId: selectedCategory.id, translatedInAppLanguage: appLanguage)
         }
+        .switchToLatest()
         .receive(on: DispatchQueue.main)
         .sink { [weak self] viewLanguageFiltersDomainModel in
             guard let self = self else { return }
@@ -82,13 +86,15 @@ class ToolFilterLanguageSelectionViewModel: ObservableObject {
         .store(in: &cancellables)
         
         Publishers.CombineLatest(
-            $searchText.eraseToAnyPublisher(),
-            $allLanguages.eraseToAnyPublisher()
+            $searchText,
+            $allLanguages
         )
-        .flatMap { searchText, allLanguages in
+        .map { searchText, allLanguages in
             
-            return searchToolFilterLanguagesUseCase.getSearchResultsPublisher(for: searchText, in: allLanguages)
+            searchToolFilterLanguagesUseCase
+                .getSearchResultsPublisher(for: searchText, in: allLanguages)
         }
+        .switchToLatest()
         .receive(on: DispatchQueue.main)
         .assign(to: &$languageSearchResults)
     }
@@ -111,7 +117,8 @@ extension ToolFilterLanguageSelectionViewModel {
         
         selectedLanguage = language
         
-        storeUserToolFilterUseCase.storeLanguageFilterPublisher(with: language.id)
+        storeUserToolFilterUseCase
+            .storeLanguageFilterPublisher(with: language.id)
             .receive(on: DispatchQueue.main)
             .sink { _ in
                 

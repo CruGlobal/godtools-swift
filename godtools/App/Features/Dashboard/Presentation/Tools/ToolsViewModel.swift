@@ -74,7 +74,7 @@ class ToolsViewModel: ObservableObject {
             $toolFilterCategorySelection.eraseToAnyPublisher().dropFirst(),
             $toolFilterLanguageSelection.eraseToAnyPublisher().dropFirst()
         )
-        .map{ (appLanguage, toolFilterCategory, toolFilterLanguage) -> AnyPublisher<(ViewToolsDomainModel, [SpotlightToolListItemDomainModel]), Never> in
+        .map{ (appLanguage, toolFilterCategory, toolFilterLanguage) in
                                     
             Publishers.CombineLatest(
                 viewToolsUseCase.viewPublisher(
@@ -88,7 +88,6 @@ class ToolsViewModel: ObservableObject {
                     languageForAvailabilityText: toolFilterLanguage.language
                 )
             )
-            .eraseToAnyPublisher()
         }
         .switchToLatest()
         .receive(on: DispatchQueue.main)
@@ -106,12 +105,12 @@ class ToolsViewModel: ObservableObject {
         }
         .store(in: &cancellables)
         
-        $appLanguage.eraseToAnyPublisher()
+        $appLanguage
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
                 
-                return getUserToolFiltersUseCase.getUserToolFiltersPublisher(translatedInAppLanguage: appLanguage)
-                    .eraseToAnyPublisher()
+                getUserToolFiltersUseCase
+                    .getUserToolFiltersPublisher(translatedInAppLanguage: appLanguage)
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)

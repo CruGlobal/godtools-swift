@@ -25,22 +25,20 @@ class GetUserActivityUseCase {
         self.completedTrainingTipRepository = completedTrainingTipRepository
     }
     
-    func getUserActivityPublisher(appLanguagePublisher: AnyPublisher<AppLanguageDomainModel, Never>) -> AnyPublisher<UserActivityDomainModel, Never> {
+    func getUserActivityPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<UserActivityDomainModel, Never> {
         
-        return Publishers.CombineLatest(
-            userCounterRepository.getUserCountersChanged(reloadFromRemote: true),
-            appLanguagePublisher
-        )
-        .flatMap { _, appLanguage in
-                
+        return userCounterRepository
+            .getUserCountersChanged(reloadFromRemote: true)
+            .flatMap { _ in
+                    
                 let allUserCounters = self.getAllUserCounters()
-                
-            let userActivityDomainModel = self.getUserActivityDomainModel(from: allUserCounters, translatedInAppLanguage: appLanguage)
-                
-                return Just(userActivityDomainModel)
-                
-            }
-            .eraseToAnyPublisher()
+                    
+                let userActivityDomainModel = self.getUserActivityDomainModel(from: allUserCounters, translatedInAppLanguage: appLanguage)
+                    
+                    return Just(userActivityDomainModel)
+                    
+                }
+                .eraseToAnyPublisher()
     }
     
     private func getAllUserCounters() -> [UserCounterDomainModel] {

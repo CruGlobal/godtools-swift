@@ -91,8 +91,8 @@ class ToolDetailsViewModel: ObservableObject {
             .assign(to: &$appLanguage)
         
         Publishers.CombineLatest(
-            $didViewPage.eraseToAnyPublisher(),
-            $analyticsToolAbbreviation.eraseToAnyPublisher()
+            $didViewPage,
+            $analyticsToolAbbreviation.dropFirst()
         )
         .flatMap({ [weak self] (pageViewed: Void?, analyticsToolAbbreviation: String) -> AnyPublisher<Void, Never> in
             
@@ -121,15 +121,16 @@ class ToolDetailsViewModel: ObservableObject {
         .store(in: &cancellables)
         
         Publishers.CombineLatest(
-            $toolId.eraseToAnyPublisher(),
-            $appLanguage.eraseToAnyPublisher()
+            $toolId,
+            $appLanguage.dropFirst()
         )
-        .flatMap ({ (toolId: String, appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewToolDetailsDomainModel, Never> in
+        .map { (toolId: String, appLanguage: AppLanguageDomainModel) in
             
             return viewToolDetailsUseCase
                 .viewPublisher(toolId: toolId, translateInLanguage: appLanguage, toolPrimaryLanguage: primaryLanguage, toolParallelLanguage: parallelLanguage)
                 .eraseToAnyPublisher()
-        })
+        }
+        .switchToLatest()
         .receive(on: DispatchQueue.main)
         .sink(receiveValue: { [weak self] (domainModel: ViewToolDetailsDomainModel) in
             

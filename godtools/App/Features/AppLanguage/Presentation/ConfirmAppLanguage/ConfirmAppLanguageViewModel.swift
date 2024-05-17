@@ -33,16 +33,19 @@ class ConfirmAppLanguageViewModel: ObservableObject {
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.viewConfirmAppLanguageUseCase = viewConfirmAppLanguageUseCase
         
-        getCurrentAppLanguageUseCase.getLanguagePublisher()
+        getCurrentAppLanguageUseCase
+            .getLanguagePublisher()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
-        $appLanguage.eraseToAnyPublisher()
-            .flatMap { appLanguage in
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
                 
-                return viewConfirmAppLanguageUseCase.viewPublisher(appLanguage: appLanguage, selectedLanguage: selectedLanguage.language)
-                    .eraseToAnyPublisher()
+                viewConfirmAppLanguageUseCase
+                    .viewPublisher(appLanguage: appLanguage, selectedLanguage: selectedLanguage.language)
             }
+            .switchToLatest()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] domainModel in
                 
