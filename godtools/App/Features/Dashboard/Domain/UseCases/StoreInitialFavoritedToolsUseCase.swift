@@ -36,7 +36,8 @@ class StoreInitialFavoritedToolsUseCase {
             
             let favoritedResourceIdsToStore: [String] = ["2", "1", "4", "8"]
             
-            return self.favoritedResourcesRepository.storeFavoritedResourcesPublisher(ids: favoritedResourceIdsToStore)
+            return favoritedResourcesRepository
+                .storeFavoritedResourcesPublisher(ids: favoritedResourceIdsToStore)
                 .eraseToAnyPublisher()
             
         })
