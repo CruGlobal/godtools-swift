@@ -178,23 +178,23 @@ class ToolDetailsViewModel: ObservableObject {
         })
         .store(in: &cancellables)
         
-        $toolId.eraseToAnyPublisher()
-            .flatMap({ (toolId: String) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> in
+        $toolId
+            .map { (toolId: String) in
                 
-                return getToolDetailsMediaUseCase
+                getToolDetailsMediaUseCase
                     .getMediaPublisher(toolId: toolId)
-                    .eraseToAnyPublisher()
-            })
+            }
+            .switchToLatest()
             .receive(on: DispatchQueue.main)
             .assign(to: &$mediaType)
         
-        $toolId.eraseToAnyPublisher()
-            .flatMap({ (toolId: String) -> AnyPublisher<Bool, Never> in
+        $toolId
+            .map { (toolId: String) in
                 
-                return getToolDetailsLearnToShareToolIsAvailableUseCase
+                getToolDetailsLearnToShareToolIsAvailableUseCase
                     .getIsAvailablePublisher(toolId: toolId, language: primaryLanguage)
-                    .eraseToAnyPublisher()
-            })
+            }
+            .switchToLatest()
             .receive(on: DispatchQueue.main)
             .assign(to: &$showsLearnToShareToolButton)
     }

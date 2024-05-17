@@ -104,11 +104,12 @@ class ToolSettingsViewModel: ObservableObject {
         .store(in: &cancellables)
         
         toolSettingsObserver.$languages
-            .flatMap({ (languages: ToolSettingsLanguages) -> AnyPublisher<[ShareableDomainModel], Never> in
+            .map { (languages: ToolSettingsLanguages) in
                 
                 getShareablesUseCase
                     .getShareablesPublisher(toolId: toolSettingsObserver.toolId, toolLanguageId: languages.selectedLanguageId)
-            })
+            }
+            .switchToLatest()
             .receive(on: DispatchQueue.main)
             .assign(to: &$shareables)
     }
