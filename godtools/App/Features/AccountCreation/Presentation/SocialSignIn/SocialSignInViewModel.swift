@@ -49,8 +49,13 @@ class SocialSignInViewModel: ObservableObject {
         switch authenticationType {
         case .createAccount:
             
-            getSocialCreateAccountInterfaceStringsUseCase
-                .getStringsPublisher(appLanguagePublisher: $appLanguage.eraseToAnyPublisher())
+            $appLanguage
+                .dropFirst()
+                .map { (appLanguage: AppLanguageDomainModel) in
+                    return getSocialCreateAccountInterfaceStringsUseCase
+                        .getStringsPublisher(appLanguage: appLanguage)
+                }
+                .switchToLatest()
                 .receive(on: DispatchQueue.main)
                 .sink { [weak self] (interfaceStrings: SocialCreateAccountInterfaceStringsDomainModel) in
                     
@@ -64,8 +69,13 @@ class SocialSignInViewModel: ObservableObject {
         
         case .login:
             
-            getSocialSignInInterfaceStringsUseCase
-                .getStringsPublisher(appLanguagePublisher: $appLanguage.eraseToAnyPublisher())
+            $appLanguage
+                .dropFirst()
+                .map { (appLanguage: AppLanguageDomainModel) in
+                    return getSocialSignInInterfaceStringsUseCase
+                        .getStringsPublisher(appLanguage: appLanguage)
+                }
+                .switchToLatest()
                 .receive(on: DispatchQueue.main)
                 .sink { [weak self] (interfaceStrings: SocialSignInInterfaceStringsDomainModel) in
                     
