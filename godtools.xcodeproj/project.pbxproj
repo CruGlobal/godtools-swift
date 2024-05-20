@@ -646,6 +646,11 @@
 		458721272BFB7756005DA242 /* DeleteAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458721222BFB7756005DA242 /* DeleteAccountView.swift */; };
 		458721282BFB7756005DA242 /* DeleteAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458721232BFB7756005DA242 /* DeleteAccountViewModel.swift */; };
 		4587212A2BFB7762005DA242 /* DeleteAccountUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458721292BFB7762005DA242 /* DeleteAccountUseCase.swift */; };
+		4587212C2BFB7E0C005DA242 /* ViewDeleteAccountUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4587212B2BFB7E0C005DA242 /* ViewDeleteAccountUseCase.swift */; };
+		4587212E2BFB7E33005DA242 /* ViewDeleteAccountDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4587212D2BFB7E33005DA242 /* ViewDeleteAccountDomainModel.swift */; };
+		458721302BFB7E78005DA242 /* GetDeleteAccountInterfaceStringsRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4587212F2BFB7E78005DA242 /* GetDeleteAccountInterfaceStringsRepositoryInterface.swift */; };
+		458721322BFB7E9D005DA242 /* DeleteAccountInterfaceStringsDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458721312BFB7E9D005DA242 /* DeleteAccountInterfaceStringsDomainModel.swift */; };
+		458721342BFB7EFB005DA242 /* GetDeleteAccountInterfaceStringsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458721332BFB7EFB005DA242 /* GetDeleteAccountInterfaceStringsRepository.swift */; };
 		45880D742BD2B769008F021C /* ShareGodToolsDiContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45880D732BD2B769008F021C /* ShareGodToolsDiContainer.swift */; };
 		45880D762BD2B785008F021C /* ShareGodToolsDataLayerDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45880D752BD2B785008F021C /* ShareGodToolsDataLayerDependencies.swift */; };
 		45880D782BD2B7AD008F021C /* ShareGodToolsDomainLayerDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45880D772BD2B7AD008F021C /* ShareGodToolsDomainLayerDependencies.swift */; };
@@ -2236,6 +2241,11 @@
 		458721222BFB7756005DA242 /* DeleteAccountView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteAccountView.swift; sourceTree = "<group>"; };
 		458721232BFB7756005DA242 /* DeleteAccountViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteAccountViewModel.swift; sourceTree = "<group>"; };
 		458721292BFB7762005DA242 /* DeleteAccountUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteAccountUseCase.swift; sourceTree = "<group>"; };
+		4587212B2BFB7E0C005DA242 /* ViewDeleteAccountUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewDeleteAccountUseCase.swift; sourceTree = "<group>"; };
+		4587212D2BFB7E33005DA242 /* ViewDeleteAccountDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewDeleteAccountDomainModel.swift; sourceTree = "<group>"; };
+		4587212F2BFB7E78005DA242 /* GetDeleteAccountInterfaceStringsRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetDeleteAccountInterfaceStringsRepositoryInterface.swift; sourceTree = "<group>"; };
+		458721312BFB7E9D005DA242 /* DeleteAccountInterfaceStringsDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountInterfaceStringsDomainModel.swift; sourceTree = "<group>"; };
+		458721332BFB7EFB005DA242 /* GetDeleteAccountInterfaceStringsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetDeleteAccountInterfaceStringsRepository.swift; sourceTree = "<group>"; };
 		45880D732BD2B769008F021C /* ShareGodToolsDiContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareGodToolsDiContainer.swift; sourceTree = "<group>"; };
 		45880D752BD2B785008F021C /* ShareGodToolsDataLayerDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareGodToolsDataLayerDependencies.swift; sourceTree = "<group>"; };
 		45880D772BD2B7AD008F021C /* ShareGodToolsDomainLayerDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareGodToolsDomainLayerDependencies.swift; sourceTree = "<group>"; };
@@ -7197,6 +7207,7 @@
 			isa = PBXGroup;
 			children = (
 				4598BCEA2BF7DF6800196463 /* AuthenticateUser.swift */,
+				458721332BFB7EFB005DA242 /* GetDeleteAccountInterfaceStringsRepository.swift */,
 				4598BCEB2BF7DF6800196463 /* GetSocialCreateAccountInterfaceStringsRepository.swift */,
 				4598BCEC2BF7DF6800196463 /* GetSocialSignInInterfaceStringsRepository.swift */,
 			);
@@ -7221,8 +7232,10 @@
 				4598BCF42BF7DF6800196463 /* AuthenticateUserAuthTypeDomainModel.swift */,
 				4598BCF52BF7DF6800196463 /* AuthErrorDomainModel.swift */,
 				4598BCF62BF7DF6800196463 /* AuthUserDomainModel.swift */,
+				458721312BFB7E9D005DA242 /* DeleteAccountInterfaceStringsDomainModel.swift */,
 				4598BCF72BF7DF6800196463 /* SocialCreateAccountInterfaceStringsDomainModel.swift */,
 				4598BCF82BF7DF6800196463 /* SocialSignInInterfaceStringsDomainModel.swift */,
+				4587212D2BFB7E33005DA242 /* ViewDeleteAccountDomainModel.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -7231,6 +7244,7 @@
 			isa = PBXGroup;
 			children = (
 				4598BCFA2BF7DF6800196463 /* AuthenticateUserInterface.swift */,
+				4587212F2BFB7E78005DA242 /* GetDeleteAccountInterfaceStringsRepositoryInterface.swift */,
 				4598BCFB2BF7DF6800196463 /* GetSocialCreateAccountInterfaceStringsRepositoryInterface.swift */,
 				4598BCFC2BF7DF6800196463 /* GetSocialSignInInterfaceStringsRepositoryInterface.swift */,
 			);
@@ -7244,6 +7258,7 @@
 				458721292BFB7762005DA242 /* DeleteAccountUseCase.swift */,
 				4598BCFF2BF7DF6800196463 /* GetSocialCreateAccountInterfaceStringsUseCase.swift */,
 				4598BD002BF7DF6800196463 /* GetSocialSignInInterfaceStringsUseCase.swift */,
+				4587212B2BFB7E0C005DA242 /* ViewDeleteAccountUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -12010,6 +12025,7 @@
 				458CFE8D29D4E0B9007B423C /* LoadingArticleView.swift in Sources */,
 				454B47E22AE0228200C7B5E7 /* GetOnboardingTutorialInterfaceStringsRepository.swift in Sources */,
 				D4AFA4492BAC955E00318023 /* GetToolFilterLanguagesInterfaceStringsRepository.swift in Sources */,
+				458721342BFB7EFB005DA242 /* GetDeleteAccountInterfaceStringsRepository.swift in Sources */,
 				45039E122B1F5AEA009E1D96 /* ViewToolDetailsDomainModel.swift in Sources */,
 				45F7162C290A12D70019B715 /* ShareAStoryWithUsWebContent.swift in Sources */,
 				D47DF0422B28F94A0079219B /* RealmDownloadedLanguage.swift in Sources */,
@@ -12474,6 +12490,7 @@
 				45D63E5B288F6896009B4610 /* TranslationModel.swift in Sources */,
 				452DFB482B7FE24F003A4A59 /* LanguageSupportable.swift in Sources */,
 				45BE4A842AF287E3004021DA /* ConfirmAppLanguageInterfaceStringsDomainModel.swift in Sources */,
+				4587212E2BFB7E33005DA242 /* ViewDeleteAccountDomainModel.swift in Sources */,
 				D4BC79D5299D6BFB0040651B /* CompletedTrainingTipRepository.swift in Sources */,
 				45A5200E26C481DB009B68D4 /* MobileContentRendererManifestResourcesCache.swift in Sources */,
 				45B3F4522AC3A92700D61BFD /* AppLanguageFeatureDomainLayerDependencies.swift in Sources */,
@@ -12571,6 +12588,7 @@
 				450EE2AB29A6719500524F64 /* GodToolsAppLessonsPathDeepLinkParser.swift in Sources */,
 				454BFDA72AFD8CD200104BC8 /* TractRemoteShareNavigationEvent.swift in Sources */,
 				45EA98FA2AFD67FC00E7EA9A /* ViewCreatingToolScreenShareSessionTimedOutUseCase.swift in Sources */,
+				458721302BFB7E78005DA242 /* GetDeleteAccountInterfaceStringsRepositoryInterface.swift in Sources */,
 				45AD1BE325938A4F00A096A0 /* NibBased.swift in Sources */,
 				D43FC1D42B814BDE00F8310E /* GetAccountInterfaceStringsRepositoryInterface.swift in Sources */,
 				4561AC96279C4C94003718C0 /* MobileContentContentPageViewModel.swift in Sources */,
@@ -12584,6 +12602,7 @@
 				455583D1269F2DA500C3FF14 /* MobileContentFormInputModel.swift in Sources */,
 				453A2F022B3636EC00C8F865 /* GetDownloadableLanguagesListRepository.swift in Sources */,
 				45070A802ACF42AD00229EDD /* AppMenuBarItem.swift in Sources */,
+				458721322BFB7E9D005DA242 /* DeleteAccountInterfaceStringsDomainModel.swift in Sources */,
 				45F7E7602701F1AA00CC9FB9 /* MobileContentViewVisibilityState.swift in Sources */,
 				458CFEA729D4E172007B423C /* GetUserActivityStatsUseCase.swift in Sources */,
 				459BD090289AD4310075901B /* GetToolTranslationsFilesUseCase.swift in Sources */,
@@ -12793,6 +12812,7 @@
 				45D5433728B4001400C4E70F /* GetResourcesAndLanguagesData.swift in Sources */,
 				45F378FE2B23642600EEF039 /* LearnToShareToolDiContainer.swift in Sources */,
 				45569E6C29F30BEE006F3E4E /* GetAppUIDebuggingIsEnabledUseCase.swift in Sources */,
+				4587212C2BFB7E0C005DA242 /* ViewDeleteAccountUseCase.swift in Sources */,
 				45A8BE032ACC9FB3007A1EBB /* GetLessonsListRepository.swift in Sources */,
 				45B6FF482BAA39DE0037B240 /* SearchLanguageInDownloadableLanguagesRepositoryInterface.swift in Sources */,
 				4561AC94279C4C7D003718C0 /* MobileContentContentPageView.swift in Sources */,

@@ -45,4 +45,10 @@ class AccountDomainLayerDependencies {
             getInterfaceStringsRepositoryInterface: dataLayer.getSocialSignInInterfaceStringsRepositoryInterface()
         )
     }
+    
+    func getViewDeleteAccountUseCase() -> ViewDeleteAccountUseCase {
+        return ViewDeleteAccountUseCase(
+            getInterfaceStringsRepository: dataLayer.getDeleteAccountInterfaceStringsRepository()
+        )
+    }
 }

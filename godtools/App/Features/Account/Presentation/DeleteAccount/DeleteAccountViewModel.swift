@@ -7,24 +7,39 @@
 //
 
 import Foundation
+import Combine
 
 class DeleteAccountViewModel: ObservableObject {
-        
+   
+    private var cancellables: Set<AnyCancellable> = Set()
+    
     private weak var flowDelegate: FlowDelegate?
     
-    let title: String
-    let subtitle: String
-    let confirmButtonTitle: String
-    let cancelButtonTitle: String
+    @Published private var appLanguage: AppLanguageDomainModel = ""
     
-    init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices) {
+    @Published var interfaceStrings: DeleteAccountInterfaceStringsDomainModel = DeleteAccountInterfaceStringsDomainModel.emptyStrings()
+    
+    init(flowDelegate: FlowDelegate, getCurrentAppLanguage: GetCurrentAppLanguageUseCase, viewDeleteAccountUseCase: ViewDeleteAccountUseCase) {
         
         self.flowDelegate = flowDelegate
         
-        title = localizationServices.stringForSystemElseEnglish(key: MenuStringKeys.DeleteAccount.title.rawValue)
-        subtitle = localizationServices.stringForSystemElseEnglish(key: MenuStringKeys.DeleteAccount.subtitle.rawValue)
-        confirmButtonTitle = localizationServices.stringForSystemElseEnglish(key: MenuStringKeys.DeleteAccount.confirmButtonTitle.rawValue)
-        cancelButtonTitle = localizationServices.stringForSystemElseEnglish(key: MenuStringKeys.DeleteAccount.cancelButtonTitle.rawValue)
+        getCurrentAppLanguage
+            .getLanguagePublisher()
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$appLanguage)
+        
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
+                viewDeleteAccountUseCase
+                    .viewPublisher(appLanguage: appLanguage)
+            }
+            .switchToLatest()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (domainModel: ViewDeleteAccountDomainModel) in
+                self?.interfaceStrings = domainModel.interfaceStrings
+            }
+            .store(in: &cancellables)
     }
     
     deinit {

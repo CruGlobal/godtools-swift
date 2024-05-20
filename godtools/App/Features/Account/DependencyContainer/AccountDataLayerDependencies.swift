@@ -27,6 +27,12 @@ class AccountDataLayerDependencies {
         )
     }
     
+    func getDeleteAccountInterfaceStringsRepository() -> GetDeleteAccountInterfaceStringsRepositoryInterface {
+        return GetDeleteAccountInterfaceStringsRepository(
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
+    
     func getSocialCreateAccountInterfaceStringsRepositoryInterface() -> GetSocialCreateAccountInterfaceStringsRepositoryInterface {
         return GetSocialCreateAccountInterfaceStringsRepository(
             localizationServices: coreDataLayer.getLocalizationServices()
