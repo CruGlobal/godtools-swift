@@ -164,6 +164,7 @@ class ArticlesViewModel: NSObject {
                 )
                 
                 let errorViewModel = ArticlesErrorMessageViewModel(
+                    appLanguage: appLanguage,
                     localizationServices: weakSelf.localizationServices,
                     message: downloadArticlesErrorViewModel.message
                 )

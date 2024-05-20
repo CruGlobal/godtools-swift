@@ -27,13 +27,6 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getDeleteAccountUseCase() -> DeleteAccountUseCase {
-        return DeleteAccountUseCase(
-            userAuthentication: dataLayer.getUserAuthentication(),
-            userDetailsRepository: dataLayer.getUserDetailsRepository()
-        )
-    }
-    
     func getDeleteUserCountersUseCase() -> DeleteUserCountersUseCase {
         return DeleteUserCountersUseCase(
             repository: dataLayer.getUserCountersRepository()

@@ -461,7 +461,7 @@ extension AppFlow {
         
         _ = resourceViewsService.postFailedResourceViewsIfNeeded()
         
-        let authenticateUser: AuthenticateUserInterface = appDiContainer.feature.accountCreation.dataLayer.getAuthenticateUserInterface()
+        let authenticateUser: AuthenticateUserInterface = appDiContainer.feature.account.dataLayer.getAuthenticateUserInterface()
         
         authenticateUser.renewAuthenticationPublisher()
             .receive(on: DispatchQueue.main)
