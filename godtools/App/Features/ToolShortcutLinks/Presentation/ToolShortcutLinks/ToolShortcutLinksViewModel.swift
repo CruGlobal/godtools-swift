@@ -28,9 +28,8 @@ class ToolShortcutLinksViewModel: ObservableObject {
             .getLanguagePublisher()
             .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewToolShortcutLinksDomainModel, Never> in
                 
-                return viewToolShortcutLinksUseCase
+                viewToolShortcutLinksUseCase
                     .viewPublisher(appLanguage: appLanguage)
-                    .eraseToAnyPublisher()
             })
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (domainModel: ViewToolShortcutLinksDomainModel) in

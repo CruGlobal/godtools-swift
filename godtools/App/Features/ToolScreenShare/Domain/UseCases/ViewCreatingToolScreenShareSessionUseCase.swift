@@ -18,22 +18,16 @@ class ViewCreatingToolScreenShareSessionUseCase {
         self.getInterfaceStringsRepositoryInterface = getInterfaceStringsRepositoryInterface
     }
     
-    func viewPublisher(appLanguagePublisher: AnyPublisher<AppLanguageDomainModel, Never>) -> AnyPublisher<CreatingToolScreenShareSessionDomainModel, Never> {
+    func viewPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<CreatingToolScreenShareSessionDomainModel, Never> {
         
-        return appLanguagePublisher
-            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<CreatingToolScreenShareSessionInterfaceStringsDomainModel, Never> in
+        return getInterfaceStringsRepositoryInterface
+            .getStringsPublisher(translateInLanguage: appLanguage)
+            .map { (interfaceStrings: CreatingToolScreenShareSessionInterfaceStringsDomainModel) in
                 
-                return self.getInterfaceStringsRepositoryInterface
-                    .getStringsPublisher(translateInLanguage: appLanguage)
-                    .eraseToAnyPublisher()
-            })
-            .flatMap({ (interfaceStrings: CreatingToolScreenShareSessionInterfaceStringsDomainModel) -> AnyPublisher<CreatingToolScreenShareSessionDomainModel, Never> in
-                
-                let domainModel = CreatingToolScreenShareSessionDomainModel(interfaceStrings: interfaceStrings)
-                
-                return Just(domainModel)
-                    .eraseToAnyPublisher()
-            })
+                CreatingToolScreenShareSessionDomainModel(
+                    interfaceStrings: interfaceStrings
+                )
+            }
             .eraseToAnyPublisher()
     }
 }

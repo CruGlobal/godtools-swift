@@ -30,7 +30,8 @@ class ToolShortcutLinksView {
         self.application = application
         self.viewModel = viewModel
         
-        ToolShortcutLinksView.shortcutLinksCancellable = viewModel.$shortcutLinks.eraseToAnyPublisher()
+        ToolShortcutLinksView.shortcutLinksCancellable = viewModel.$shortcutLinks
+            .receive(on: DispatchQueue.main)
             .sink { (toolShortcutLinks: [ToolShortcutLinkDomainModel]) in
                 
                 let toolShortcutItems = toolShortcutLinks.map({ (toolShortcutLink: ToolShortcutLinkDomainModel) in

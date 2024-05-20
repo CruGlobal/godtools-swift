@@ -45,14 +45,17 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
         
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
+            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
-        $appLanguage.eraseToAnyPublisher()
-            .flatMap { appLanguage in
+        $appLanguage
+            .dropFirst()
+            .map { appLanguage in
                 
-                return getUserToolFiltersUseCase.getUserToolFiltersPublisher(translatedInAppLanguage: appLanguage)
-                    .eraseToAnyPublisher()
+                getUserToolFiltersUseCase
+                    .getUserToolFiltersPublisher(translatedInAppLanguage: appLanguage)
             }
+            .switchToLatest()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] userFilters in
             
@@ -62,13 +65,15 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
             .store(in: &cancellables)
         
         Publishers.CombineLatest(
-            $appLanguage.eraseToAnyPublisher(),
-            $selectedLanguage.eraseToAnyPublisher()
+            $appLanguage.dropFirst(),
+            $selectedLanguage
         )
-        .flatMap { appLanguage, selectedLanguage in
+        .map { appLanguage, selectedLanguage in
             
-            return viewToolFilterCategoriesUseCase.viewPublisher(filteredByLanguageId: selectedLanguage.id, translatedInAppLanguage: appLanguage)
+            viewToolFilterCategoriesUseCase
+                .viewPublisher(filteredByLanguageId: selectedLanguage.id, translatedInAppLanguage: appLanguage)
         }
+        .switchToLatest()
         .receive(on: DispatchQueue.main)
         .sink { [weak self] viewCategoryFiltersDomainModel in
             guard let self = self else { return }
@@ -81,13 +86,15 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
             .store(in: &cancellables)
         
         Publishers.CombineLatest(
-            $searchText.eraseToAnyPublisher(),
-            $allCategories.eraseToAnyPublisher()
+            $searchText,
+            $allCategories
         )
-        .flatMap { searchText, allCategories in
+        .map { searchText, allCategories in
             
-            searchToolFilterCategoriesUseCase.getSearchResultsPublisher(for: searchText, in: allCategories)
+            searchToolFilterCategoriesUseCase
+                .getSearchResultsPublisher(for: searchText, in: allCategories)
         }
+        .switchToLatest()
         .receive(on: DispatchQueue.main)
         .assign(to: &$categorySearchResults)
     }
@@ -111,6 +118,7 @@ extension ToolFilterCategorySelectionViewModel {
         selectedCategory = category
         
         storeUserToolFiltersUseCase.storeCategoryFilterPublisher(with: category.id)
+            .receive(on: DispatchQueue.main)
             .sink { _ in
                 
             }

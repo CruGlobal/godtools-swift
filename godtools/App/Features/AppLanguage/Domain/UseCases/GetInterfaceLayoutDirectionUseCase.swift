@@ -18,14 +18,10 @@ class GetInterfaceLayoutDirectionUseCase {
         self.getLayoutDirectionInterface = getLayoutDirectionInterface
     }
     
-    func getLayoutDirectionPublisher(appLanguagePublisher: AnyPublisher<AppLanguageDomainModel, Never>) -> AnyPublisher<AppInterfaceLayoutDirectionDomainModel, Never> {
+    func getLayoutDirectionPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<AppInterfaceLayoutDirectionDomainModel, Never> {
         
-        return appLanguagePublisher
-            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<AppInterfaceLayoutDirectionDomainModel, Never> in
-                
-                return self.getLayoutDirectionInterface.getLayoutDirectionPublisher(appLanguage: appLanguage)
-                    .eraseToAnyPublisher()
-            })
+        return getLayoutDirectionInterface
+            .getLayoutDirectionPublisher(appLanguage: appLanguage)
             .eraseToAnyPublisher()
     }
 }

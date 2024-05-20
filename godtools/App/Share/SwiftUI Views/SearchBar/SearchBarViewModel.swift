@@ -25,16 +25,19 @@ class SearchBarViewModel: ObservableObject {
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.viewSearchBarUseCase = viewSearchBarUseCase
         
-        getCurrentAppLanguageUseCase.getLanguagePublisher()
+        getCurrentAppLanguageUseCase
+            .getLanguagePublisher()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
-        $appLanguage.eraseToAnyPublisher()
-            .flatMap { appLanguage in
+        $appLanguage
+            .dropFirst()
+            .map { appLanguage in
                 
-                return self.viewSearchBarUseCase.viewPublisher(appLanguage: appLanguage)
-                    .eraseToAnyPublisher()
+                viewSearchBarUseCase
+                    .viewPublisher(appLanguage: appLanguage)
             }
+            .switchToLatest()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] domainModel in
                 

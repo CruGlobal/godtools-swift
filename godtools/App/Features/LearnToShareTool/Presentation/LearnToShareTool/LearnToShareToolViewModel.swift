@@ -42,16 +42,17 @@ class LearnToShareToolViewModel: ObservableObject {
               
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
+            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
         $appLanguage
-            .eraseToAnyPublisher()
-            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewLearnToShareToolDomainModel, Never> in
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
                 
-                return viewLearnToShareToolUseCase
+                viewLearnToShareToolUseCase
                     .viewPublisher(appLanguage: appLanguage)
-                    .eraseToAnyPublisher()
-            })
+            }
+            .switchToLatest()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (domainModel: ViewLearnToShareToolDomainModel) in
                 
@@ -61,8 +62,8 @@ class LearnToShareToolViewModel: ObservableObject {
             .store(in: &cancellables)
         
         Publishers.CombineLatest(
-            $viewLearnToShareToolDomainModel.eraseToAnyPublisher(),
-            $currentPage.eraseToAnyPublisher()
+            $viewLearnToShareToolDomainModel,
+            $currentPage
         )
         .receive(on: DispatchQueue.main)
         .sink { [weak self] (viewLearnToShareToolDomainModel: ViewLearnToShareToolDomainModel?, currentPage: Int) in
@@ -78,7 +79,6 @@ class LearnToShareToolViewModel: ObservableObject {
         .store(in: &cancellables)
         
         $currentPage
-            .eraseToAnyPublisher()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (currentPage: Int) in
                 self?.hidesBackButton = currentPage == 0

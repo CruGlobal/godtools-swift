@@ -43,8 +43,14 @@ class DownloadToolProgressViewModel: ObservableObject {
             self?.didCompleteProgressTimerClosure?()
         })
         
-        getDownloadToolProgressInterfaceStringsUseCase
-            .getStringsPublisher(toolId: toolId, appLanguagePublisher: $appLanguage.eraseToAnyPublisher())
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
+                
+                getDownloadToolProgressInterfaceStringsUseCase
+                    .getStringsPublisher(toolId: toolId, appLanguage: appLanguage)
+            }
+            .switchToLatest()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (interfaceStrings: DownloadToolProgressInterfaceStringsDomainModel) in
                 

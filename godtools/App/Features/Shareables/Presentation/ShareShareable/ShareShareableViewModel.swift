@@ -35,6 +35,7 @@ extension ShareShareableViewModel {
     func pageViewed() {
         
         incrementUserCounterUseCase.incrementUserCounter(for: .imageShared)
+            .receive(on: DispatchQueue.main)
             .sink { _ in
                 
             } receiveValue: { _ in

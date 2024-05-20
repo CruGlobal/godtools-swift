@@ -41,15 +41,16 @@ class ToolSettingsToolLanguagesListViewModel: ObservableObject {
         
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
+            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
         Publishers.CombineLatest(
-            $appLanguage.eraseToAnyPublisher(),
-            toolSettingsObserver.$languages.eraseToAnyPublisher()
+            $appLanguage.dropFirst(),
+            toolSettingsObserver.$languages
         )
-        .flatMap({ (appLanguage: AppLanguageDomainModel, languages: ToolSettingsLanguages) -> AnyPublisher<ViewToolSettingsToolLanguagesListDomainModel, Never> in
+        .map { (appLanguage: AppLanguageDomainModel, languages: ToolSettingsLanguages) in
             
-            return viewToolSettingsToolLanguageListUseCase
+            viewToolSettingsToolLanguageListUseCase
                 .viewPublisher(
                     listType: listType,
                     primaryLanguageId: languages.primaryLanguageId,
@@ -57,8 +58,8 @@ class ToolSettingsToolLanguagesListViewModel: ObservableObject {
                     toolId: toolId,
                     appLanguage: appLanguage
                 )
-                .eraseToAnyPublisher()
-        })
+        }
+        .switchToLatest()
         .receive(on: DispatchQueue.main)
         .sink(receiveValue: { [weak self] (domainModel: ViewToolSettingsToolLanguagesListDomainModel) in
             
