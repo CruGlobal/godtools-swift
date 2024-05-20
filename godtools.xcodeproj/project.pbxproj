@@ -177,6 +177,7 @@
 		452486E02B07C9A5007AD932 /* GetUserToolFiltersRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452486DE2B07C9A5007AD932 /* GetUserToolFiltersRepository.swift */; };
 		452486E12B07C9A5007AD932 /* StoreUserFiltersRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452486DF2B07C9A5007AD932 /* StoreUserFiltersRepository.swift */; };
 		452486E82B07C9AA007AD932 /* UserToolFiltersRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452486E62B07C9AA007AD932 /* UserToolFiltersRepository.swift */; };
+		4525FB522BF7FA9A0025B905 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4525FB512BF7FA9A0025B905 /* RealmSwift */; };
 		4526EDD42AEB274800D1A3D4 /* EvaluationOptionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4526EDD32AEB274800D1A3D4 /* EvaluationOptionButton.swift */; };
 		4526EDD62AEB330100D1A3D4 /* OverlayNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4526EDD52AEB330100D1A3D4 /* OverlayNavigationController.swift */; };
 		4529B96628933A610011F16B /* ParseTranslationManifestForRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4529B96528933A610011F16B /* ParseTranslationManifestForRenderer.swift */; };
@@ -1001,8 +1002,6 @@
 		45AF47ED2B35E03500361EA7 /* GetToolSettingsToolHasTipsRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AF47EC2B35E03500361EA7 /* GetToolSettingsToolHasTipsRepositoryInterface.swift */; };
 		45AF47EF2B35E08C00361EA7 /* GetToolSettingsToolHasTipsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AF47EE2B35E08C00361EA7 /* GetToolSettingsToolHasTipsRepository.swift */; };
 		45AFC62D27CD74100090E381 /* MobileContentBackgroundImageAlignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4578782F27C41C08004552D5 /* MobileContentBackgroundImageAlignment.swift */; };
-		45B10ADD2BF3F270004342AB /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 45B10ADC2BF3F270004342AB /* RealmSwift */; };
-		45B10ADE2BF3F270004342AB /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 45B10ADC2BF3F270004342AB /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		45B212AC2922965F00C9A94D /* RealmDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B212AA2922965F00C9A94D /* RealmDatabase.swift */; };
 		45B212B629229CBA00C9A94D /* SwiftUIPreviewDiContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B212B529229CBA00C9A94D /* SwiftUIPreviewDiContainer.swift */; };
 		45B2E71B2BC045410077A3C3 /* GetAppLanguagesInterfaceStringsRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B2E71A2BC045410077A3C3 /* GetAppLanguagesInterfaceStringsRepositoryTests.swift */; };
@@ -1127,8 +1126,6 @@
 		45C2AF482A817621004958AB /* PageControllAttributesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C2AF462A817621004958AB /* PageControllAttributesType.swift */; };
 		45C2AF4A2A81764D004958AB /* GTPageControlAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C2AF492A81764D004958AB /* GTPageControlAttributes.swift */; };
 		45C321A72ACE7A89003B4F2C /* AppInterfaceStringNavBarItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C321A62ACE7A89003B4F2C /* AppInterfaceStringNavBarItemController.swift */; };
-		45C382BE2BF3FC5600378656 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 45C382BD2BF3FC5600378656 /* RealmSwift */; };
-		45C382BF2BF3FC5600378656 /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 45C382BD2BF3FC5600378656 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		45C5DDCE2AE6BF1300C70BBA /* AccessibilityScreenElementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C5DDCD2AE6BF1300C70BBA /* AccessibilityScreenElementView.swift */; };
 		45C649BC2B31E14D000249E0 /* ViewShareToolUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C649BB2B31E14D000249E0 /* ViewShareToolUseCase.swift */; };
 		45C649BE2B31E178000249E0 /* ViewShareToolDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C649BD2B31E178000249E0 /* ViewShareToolDomainModel.swift */; };
@@ -1570,25 +1567,23 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		45B10ADF2BF3F270004342AB /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 12;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				45B10ADE2BF3F270004342AB /* RealmSwift in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		45C382C02BF3FC5600378656 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 12;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				45C382BF2BF3FC5600378656 /* RealmSwift in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -3272,7 +3267,7 @@
 				45D40C6B2A5315D500E8E4AE /* Fuzi in Frameworks */,
 				4F2500621F0C1E8D00364FBC /* AdSupport.framework in Frameworks */,
 				457771B229A00C5C00EA8115 /* FirebaseAnalytics in Frameworks */,
-				45B10ADD2BF3F270004342AB /* RealmSwift in Frameworks */,
+				4525FB522BF7FA9A0025B905 /* RealmSwift in Frameworks */,
 				45CF09702784B910007F13D3 /* RequestOperation in Frameworks */,
 				457771B629A00C5C00EA8115 /* FirebaseDynamicLinks in Frameworks */,
 				45E7D4C42977430A008C7503 /* ZipArchive in Frameworks */,
@@ -3291,7 +3286,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				45C382BE2BF3FC5600378656 /* RealmSwift in Frameworks */,
 				45F486F22B76D513004E0E27 /* Nimble in Frameworks */,
 				45F486EF2B76D501004E0E27 /* Quick in Frameworks */,
 				8C8C44BD9B31E90E469C99FF /* Pods_godtoolsTests.framework in Frameworks */,
@@ -11333,7 +11327,7 @@
 				45D40C672A5315B400E8E4AE /* Starscream */,
 				45D40C6A2A5315D500E8E4AE /* Fuzi */,
 				45B4FDBC2BE1787000E5E35B /* AppsFlyerLib-Strict */,
-				45B10ADC2BF3F270004342AB /* RealmSwift */,
+				4525FB512BF7FA9A0025B905 /* RealmSwift */,
 			);
 			productName = godtools;
 			productReference = 4F5732891EA69CF00082035C /* godtools.app */;
@@ -11358,7 +11352,6 @@
 			packageProductDependencies = (
 				45F486EE2B76D501004E0E27 /* Quick */,
 				45F486F12B76D513004E0E27 /* Nimble */,
-				45C382BD2BF3FC5600378656 /* RealmSwift */,
 			);
 			productName = godtoolsTests;
 			productReference = 684328F11EB7CF66005E9131 /* godtoolsTests.xctest */;
@@ -11494,7 +11487,7 @@
 				45F486ED2B76D500004E0E27 /* XCRemoteSwiftPackageReference "Quick" */,
 				45F486F02B76D512004E0E27 /* XCRemoteSwiftPackageReference "Nimble" */,
 				45B4FDBB2BE1787000E5E35B /* XCRemoteSwiftPackageReference "AppsFlyerFramework-Strict" */,
-				45B10ADB2BF3F262004342AB /* XCRemoteSwiftPackageReference "realm-swift" */,
+				4525FB502BF7FA650025B905 /* XCRemoteSwiftPackageReference "realm-cocoa" */,
 			);
 			productRefGroup = 4F57328A1EA69CF00082035C /* Products */;
 			projectDirPath = "";
@@ -13393,6 +13386,7 @@
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				TEST_TARGET_NAME = godtools;
@@ -13514,7 +13508,6 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
-					"$(FRAMEWORK_SEARCH_PATHS)",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtoolsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -13522,6 +13515,7 @@
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/godtools.app/godtools";
@@ -13560,6 +13554,7 @@
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -13592,6 +13587,7 @@
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				TEST_TARGET_NAME = godtools;
@@ -13713,7 +13709,6 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
-					"$(FRAMEWORK_SEARCH_PATHS)",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtoolsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -13721,6 +13716,7 @@
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/godtools.app/godtools";
@@ -13759,6 +13755,7 @@
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -13791,6 +13788,7 @@
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				TEST_TARGET_NAME = godtools;
@@ -13910,7 +13908,6 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
-					"$(FRAMEWORK_SEARCH_PATHS)",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtoolsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -13918,6 +13915,7 @@
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/godtools.app/godtools";
@@ -13956,6 +13954,7 @@
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -13988,6 +13987,7 @@
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				TEST_TARGET_NAME = godtools;
@@ -14110,7 +14110,6 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
-					"$(FRAMEWORK_SEARCH_PATHS)",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtoolsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -14119,6 +14118,7 @@
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/godtools.app/godtools";
@@ -14157,6 +14157,7 @@
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -14189,6 +14190,7 @@
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				TEST_TARGET_NAME = godtools;
@@ -14227,6 +14229,7 @@
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				TEST_TARGET_NAME = godtools;
@@ -14341,7 +14344,6 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
-					"$(FRAMEWORK_SEARCH_PATHS)",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtoolsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -14349,6 +14351,7 @@
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/godtools.app/godtools";
 			};
@@ -14420,20 +14423,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		4525FB502BF7FA650025B905 /* XCRemoteSwiftPackageReference "realm-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-cocoa.git";
+			requirement = {
+				kind = exactVersion;
+				version = 10.49.2;
+			};
+		};
 		457771B029A00C5C00EA8115 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
 				kind = upToNextMinorVersion;
 				minimumVersion = 10.24.0;
-			};
-		};
-		45B10ADB2BF3F262004342AB /* XCRemoteSwiftPackageReference "realm-swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/realm/realm-swift.git";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 10.50.0;
 			};
 		};
 		45B4FDBB2BE1787000E5E35B /* XCRemoteSwiftPackageReference "AppsFlyerFramework-Strict" */ = {
@@ -14519,6 +14522,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		4525FB512BF7FA9A0025B905 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4525FB502BF7FA650025B905 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			productName = RealmSwift;
+		};
 		457771B129A00C5C00EA8115 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 457771B029A00C5C00EA8115 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
@@ -14594,20 +14602,10 @@
 			package = 45D40C692A5315D500E8E4AE /* XCRemoteSwiftPackageReference "Fuzi" */;
 			productName = Fuzi;
 		};
-		45B10ADC2BF3F270004342AB /* RealmSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 45B10ADB2BF3F262004342AB /* XCRemoteSwiftPackageReference "realm-swift" */;
-			productName = RealmSwift;
-		};
 		45B4FDBC2BE1787000E5E35B /* AppsFlyerLib-Strict */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 45B4FDBB2BE1787000E5E35B /* XCRemoteSwiftPackageReference "AppsFlyerFramework-Strict" */;
 			productName = "AppsFlyerLib-Strict";
-		};
-		45C382BD2BF3FC5600378656 /* RealmSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 45B10ADB2BF3F262004342AB /* XCRemoteSwiftPackageReference "realm-swift" */;
-			productName = RealmSwift;
 		};
 		45CF096F2784B910007F13D3 /* RequestOperation */ = {
 			isa = XCSwiftPackageProductDependency;
