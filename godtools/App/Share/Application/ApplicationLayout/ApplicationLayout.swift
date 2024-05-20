@@ -49,28 +49,30 @@ class ApplicationLayout: ObservableObject {
         
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
+            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
         let getInterfaceLayoutDirectionUseCase = appLanguageFeatureDiContainer.domainLayer.getInterfaceLayoutDirectionUseCase()
 
-        $appLanguage.eraseToAnyPublisher()
-            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<AppInterfaceLayoutDirectionDomainModel, Never> in
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
                 
-                return getInterfaceLayoutDirectionUseCase
+                getInterfaceLayoutDirectionUseCase
                     .getLayoutDirectionPublisher(appLanguage: appLanguage)
-                    .eraseToAnyPublisher()
-            })
+            }
+            .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { (interfaceLayoutDirection: AppInterfaceLayoutDirectionDomainModel) in
+            .sink { [weak self] (interfaceLayoutDirection: AppInterfaceLayoutDirectionDomainModel) in
                 
                 let newLayoutDirection: ApplicationLayoutDirection = interfaceLayoutDirection == .leftToRight ? .leftToRight : .rightToLeft
                 
-                if newLayoutDirection != self.currentDirection {
+                if newLayoutDirection != self?.currentDirection {
                     
-                    self.currentDirection = newLayoutDirection
+                    self?.currentDirection = newLayoutDirection
                     
-                    self.layoutDirection = newLayoutDirection.layoutDirection
-                    self.semanticContentAttributeSubject.send(newLayoutDirection.semanticContentAttribute)
+                    self?.layoutDirection = newLayoutDirection.layoutDirection
+                    self?.semanticContentAttributeSubject.send(newLayoutDirection.semanticContentAttribute)
                 }
             }
             .store(in: &cancellables)

@@ -36,6 +36,7 @@ class AppBackgroundState {
         appDiContainer.feature.appLanguage.domainLayer
             .getCurrentAppLanguageUseCase()
             .getLanguagePublisher()
+            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
         appDiContainer.feature.appLanguage.domainLayer
@@ -47,13 +48,13 @@ class AppBackgroundState {
             .store(in: &cancellables)
         
         $appLanguage
-            .eraseToAnyPublisher()
-            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<Void, Never> in
-                
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
                 return downloadLatestToolsForFavoritedToolsUseCase
                     .downloadPublisher(appLanguage: appLanguage)
                     .eraseToAnyPublisher()
-            })
+            }
+            .switchToLatest()
             .sink { _ in
                 
             }

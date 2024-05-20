@@ -48,18 +48,21 @@ class ToolScreenShareFlow: Flow {
         appDiContainer.feature.appLanguage.domainLayer
             .getCurrentAppLanguageUseCase()
             .getLanguagePublisher()
+            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
         let viewCreatingToolScreenShareSessionTimedOutUseCase: ViewCreatingToolScreenShareSessionTimedOutUseCase = appDiContainer.feature.toolScreenShare.domainLayer
             .getViewCreatingToolScreenShareSessionTimedOutUseCase()
         
-        $appLanguage.eraseToAnyPublisher()
-            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<CreatingToolScreenShareSessionTimedOutDomainModel, Never> in
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
                 
-                return viewCreatingToolScreenShareSessionTimedOutUseCase
+                viewCreatingToolScreenShareSessionTimedOutUseCase
                     .viewPublisher(appLanguage: appLanguage)
-                    .eraseToAnyPublisher()
-            })
+            }
+            .switchToLatest()
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] (domainModel: CreatingToolScreenShareSessionTimedOutDomainModel) in
                 self?.creatingToolScreenShareSessionTimedOutDomainModel = domainModel
             }
@@ -68,13 +71,15 @@ class ToolScreenShareFlow: Flow {
         let viewShareToolScreenShareSessionUseCase: ViewShareToolScreenShareSessionUseCase = appDiContainer.feature.toolScreenShare.domainLayer
             .getViewShareToolScreenShareSessionUseCase()
         
-        $appLanguage.eraseToAnyPublisher()
-            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<ShareToolScreenShareSessionDomainModel, Never> in
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
                 
-                return viewShareToolScreenShareSessionUseCase
+                viewShareToolScreenShareSessionUseCase
                     .viewPublisher(appLanguage: appLanguage)
-                    .eraseToAnyPublisher()
-            })
+            }
+            .switchToLatest()
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] (domainModel: ShareToolScreenShareSessionDomainModel) in
                 self?.shareToolScreenShareSessionDomainModel = domainModel
             }

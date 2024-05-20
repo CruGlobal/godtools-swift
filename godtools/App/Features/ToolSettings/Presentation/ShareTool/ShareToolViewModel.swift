@@ -79,6 +79,7 @@ extension ShareToolViewModel {
         )
         
         incrementUserCounterUseCase.incrementUserCounter(for: .linkShared)
+            .receive(on: DispatchQueue.main)
             .sink { _ in
                 
             } receiveValue: { _ in

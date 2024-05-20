@@ -42,12 +42,15 @@ class ReviewShareShareableViewModel: ObservableObject {
         self.getShareableImageUseCase = getShareableImageUseCase
         self.trackShareShareableTapUseCase = trackShareShareableTapUseCase
         
-        $appLanguage.eraseToAnyPublisher()
-            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewReviewShareShareableDomainModel, Never> in
-                return viewReviewShareShareableUseCase
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
+                
+                viewReviewShareShareableUseCase
                     .viewPublisher(appLanguage: appLanguage)
-                    .eraseToAnyPublisher()
-            })
+            }
+            .switchToLatest()
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] (domainModel: ViewReviewShareShareableDomainModel) in
                 self?.shareImageButtonTitle = domainModel.interfaceStrings.shareActionTitle
             }
@@ -79,6 +82,7 @@ class ReviewShareShareableViewModel: ObservableObject {
         
         trackShareShareableTapUseCase
             .trackPublisher(toolId: "", shareableId: shareable.dataModelId)
+            .receive(on: DispatchQueue.main)
             .sink { _ in
                 
             }

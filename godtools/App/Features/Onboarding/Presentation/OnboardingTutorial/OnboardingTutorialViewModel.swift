@@ -29,7 +29,7 @@ class OnboardingTutorialViewModel: ObservableObject {
     
     private weak var flowDelegate: FlowDelegate?
     
-    @Published private var appLanguage: AppLanguageDomainModel = ""
+    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     
     @Published var hidesSkipButton: Bool = true
     @Published var currentPage: Int = 0 {
@@ -66,8 +66,14 @@ class OnboardingTutorialViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
-        getOnboardingTutorialInterfaceStringsUseCase
-            .getStringsPublisher(appLanguagePublisher: $appLanguage.eraseToAnyPublisher())
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
+                
+                getOnboardingTutorialInterfaceStringsUseCase
+                    .getStringsPublisher(appLanguage: appLanguage)
+            }
+            .switchToLatest()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (interfaceStrings: OnboardingTutorialInterfaceStringsDomainModel) in
                 

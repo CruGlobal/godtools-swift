@@ -10,7 +10,7 @@ import Foundation
 
 class AppFeatureDiContainer {
     
-    let accountCreation: AccountCreationFeatureDiContainer
+    let account: AccountDiContainer
     let appLanguage: AppLanguageFeatureDiContainer
     let dashboard: DashboardDiContainer
     let downloadToolProgress: DownloadToolProgressFeatureDiContainer
@@ -31,9 +31,9 @@ class AppFeatureDiContainer {
     let toolShortcutLinks: ToolShortcutLinksDiContainer
     let tutorial: TutorialFeatureDiContainer
     
-    init(accountCreation: AccountCreationFeatureDiContainer, appLanguage: AppLanguageFeatureDiContainer, dashboard: DashboardDiContainer, downloadToolProgress: DownloadToolProgressFeatureDiContainer, favorites: FavoritesDiContainer, featuredLessons: FeaturedLessonsDiContainer, globalActivity: GlobalActivityDiContainer, learnToShareTool: LearnToShareToolDiContainer, lessonEvaluation: LessonEvaluationFeatureDiContainer, lessons: LessonsFeatureDiContainer, onboarding: OnboardingDiContainer, shareables: ShareablesDiContainer, shareGodTools: ShareGodToolsDiContainer, spotlightTools: SpotlightToolsDiContainer, toolDetails: ToolDetailsFeatureDiContainer, toolScreenShare: ToolScreenShareFeatureDiContainer, toolSettings: ToolSettingsDiContainer, toolsFilter: ToolsFilterFeatureDiContainer, toolShortcutLinks: ToolShortcutLinksDiContainer, tutorial: TutorialFeatureDiContainer) {
+    init(account: AccountDiContainer, appLanguage: AppLanguageFeatureDiContainer, dashboard: DashboardDiContainer, downloadToolProgress: DownloadToolProgressFeatureDiContainer, favorites: FavoritesDiContainer, featuredLessons: FeaturedLessonsDiContainer, globalActivity: GlobalActivityDiContainer, learnToShareTool: LearnToShareToolDiContainer, lessonEvaluation: LessonEvaluationFeatureDiContainer, lessons: LessonsFeatureDiContainer, onboarding: OnboardingDiContainer, shareables: ShareablesDiContainer, shareGodTools: ShareGodToolsDiContainer, spotlightTools: SpotlightToolsDiContainer, toolDetails: ToolDetailsFeatureDiContainer, toolScreenShare: ToolScreenShareFeatureDiContainer, toolSettings: ToolSettingsDiContainer, toolsFilter: ToolsFilterFeatureDiContainer, toolShortcutLinks: ToolShortcutLinksDiContainer, tutorial: TutorialFeatureDiContainer) {
         
-        self.accountCreation = accountCreation
+        self.account = account
         self.appLanguage = appLanguage
         self.dashboard = dashboard
         self.downloadToolProgress = downloadToolProgress

@@ -38,10 +38,17 @@ class CreatingToolScreenShareSessionViewModel: ObservableObject {
         
         getCurrentAppLanguage
             .getLanguagePublisher()
+            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
-        viewCreatingToolScreenShareSessionUseCase
-            .viewPublisher(appLanguagePublisher: $appLanguage.eraseToAnyPublisher())
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
+                
+                viewCreatingToolScreenShareSessionUseCase
+                    .viewPublisher(appLanguage: appLanguage)
+            }
+            .switchToLatest()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (domainModel: CreatingToolScreenShareSessionDomainModel) in
                 
@@ -79,6 +86,7 @@ extension CreatingToolScreenShareSessionViewModel {
     func pageViewed() {
         
         CreatingToolScreenShareSessionViewModel.incrementScreenShareInBackgroundCancellable = incrementUserCounterUseCase.incrementUserCounter(for: .screenShare(tool: toolId))
+            .receive(on: DispatchQueue.main)
             .sink { _ in
                 
             } receiveValue: { _ in

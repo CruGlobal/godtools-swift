@@ -18,14 +18,10 @@ class GetMenuInterfaceStringsUseCase {
         self.getInterfaceStringsRepositoryInterface = getInterfaceStringsRepositoryInterface
     }
     
-    func getStringsPublisher(appLanguagePublisher: AnyPublisher<AppLanguageDomainModel, Never>) -> AnyPublisher<MenuInterfaceStringsDomainModel, Never> {
+    func getStringsPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<MenuInterfaceStringsDomainModel, Never> {
         
-        return appLanguagePublisher
-            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<MenuInterfaceStringsDomainModel, Never> in
-                
-                return self.getInterfaceStringsRepositoryInterface.getStringsPublisher(translateInLanguage: appLanguage)
-                    .eraseToAnyPublisher()
-            })
+        return getInterfaceStringsRepositoryInterface
+            .getStringsPublisher(translateInLanguage: appLanguage)
             .eraseToAnyPublisher()
     }
 }

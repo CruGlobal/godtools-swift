@@ -29,7 +29,8 @@ class AppInterfaceStringNavBarItemController: NavBarItemController {
             itemIndex: itemIndex
         )
         
-        getInterfaceStringInAppLanguageUseCase.getStringPublisher(id: interfaceStringBarItem.localizedStringKey)
+        getInterfaceStringInAppLanguageUseCase
+            .getStringPublisher(id: interfaceStringBarItem.localizedStringKey)
         .receive(on: DispatchQueue.main)
         .sink{ [weak self] (interfaceString: String) in
             

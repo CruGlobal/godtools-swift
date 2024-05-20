@@ -41,12 +41,14 @@ class ToolSettingsFlow: Flow {
         appDiContainer.feature.appLanguage.domainLayer
             .getCurrentAppLanguageUseCase()
             .getLanguagePublisher()
+            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
 
-        $appLanguage.eraseToAnyPublisher()
-            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewShareToolDomainModel, Never> in
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
                
-                return appDiContainer.feature.toolSettings.domainLayer
+                appDiContainer.feature.toolSettings.domainLayer
                     .getViewShareToolUseCase()
                     .viewPublisher(
                         toolId: toolSettingsObserver.toolId,
@@ -54,8 +56,9 @@ class ToolSettingsFlow: Flow {
                         pageNumber: toolSettingsObserver.pageNumber,
                         appLanguage: appLanguage
                     )
-                    .eraseToAnyPublisher()
-            })
+            }
+            .switchToLatest()
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] (domainModel: ViewShareToolDomainModel) in
                 self?.viewShareToolDomainModel = domainModel
             }
@@ -63,6 +66,7 @@ class ToolSettingsFlow: Flow {
         
         getToolScreenShareTutorialHasBeenViewedUseCase
             .getViewedPublisher(toolId: toolSettingsObserver.toolId)
+            .receive(on: DispatchQueue.main)
             .assign(to: &$toolScreenShareTutorialHasBeenViewedDomainModel)
     }
     
