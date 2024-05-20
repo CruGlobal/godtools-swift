@@ -7,10 +7,13 @@
 //
 
 import UIKit
+import Combine
 
 class ArticleDeepLinkFlow: Flow {
     
     private let aemUri: String
+    
+    private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -29,17 +32,22 @@ class ArticleDeepLinkFlow: Flow {
         appDiContainer.feature.appLanguage.domainLayer
             .getCurrentAppLanguageUseCase()
             .getLanguagePublisher()
+            .flatMap(maxPublishers: .max(1)) {
+                return Just($0)
+            }
             .receive(on: DispatchQueue.main)
-            .assign(to: &$appLanguage)
+            .sink { [weak self] (appLanguage: AppLanguageDomainModel) in
                 
-        if let aemCacheObject = appDiContainer.dataLayer.getArticleAemRepository().getAemCacheObject(aemUri: aemUri) {
-            
-            navigateToArticleWebView(aemCacheObject: aemCacheObject, animated: true)
-        }
-        else {
-            
-            sharedNavigationController.present(getLoadingArticleView(), animated: true, completion: nil)
-        }
+                if let aemCacheObject = appDiContainer.dataLayer.getArticleAemRepository().getAemCacheObject(aemUri: aemUri) {
+                    
+                    self?.navigateToArticleWebView(aemCacheObject: aemCacheObject, animated: true)
+                }
+                else if let loadingArticleView = self?.getLoadingArticleView(appLanguage: appLanguage) {
+                    
+                    sharedNavigationController.present(loadingArticleView, animated: true, completion: nil)
+                }
+            }
+            .store(in: &cancellables)
     }
     
     deinit {
@@ -87,13 +95,13 @@ class ArticleDeepLinkFlow: Flow {
 
 extension ArticleDeepLinkFlow {
     
-    private func getLoadingArticleView() -> UIViewController {
+    private func getLoadingArticleView(appLanguage: AppLanguageDomainModel) -> UIViewController {
         
         let viewModel = LoadingArticleViewModel(
             flowDelegate: self,
             aemUri: aemUri,
+            appLanguage: appLanguage,
             articleAemRepository: appDiContainer.dataLayer.getArticleAemRepository(),
-            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             localizationServices: appDiContainer.dataLayer.getLocalizationServices()
         )
         

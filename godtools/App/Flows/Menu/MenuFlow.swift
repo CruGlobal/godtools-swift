@@ -412,7 +412,8 @@ class MenuFlow: Flow {
         
         let viewModel = DeleteAccountViewModel(
             flowDelegate: self,
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices()
+            getCurrentAppLanguage: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            viewDeleteAccountUseCase: appDiContainer.feature.account.domainLayer.getViewDeleteAccountUseCase()
         )
         
         let view = DeleteAccountView(viewModel: viewModel, backgroundColor: viewBackgroundColor)
@@ -478,8 +479,9 @@ class MenuFlow: Flow {
         
         let viewModel = DeleteAccountProgressViewModel(
             flowDelegate: self,
-            deleteAccountUseCase: appDiContainer.feature.account.domainLayer.getDeleteAccountUseCase(),
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices()
+            getCurrentAppLanguage: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            viewDeleteAccountProgressUseCase: appDiContainer.feature.account.domainLayer.getViewDeleteAccountProgressUseCase(),
+            deleteAccountUseCase: appDiContainer.feature.account.domainLayer.getDeleteAccountUseCase()
         )
         
         let view = DeleteAccountProgressView(viewModel: viewModel, backgroundColor: viewBackgroundColor)

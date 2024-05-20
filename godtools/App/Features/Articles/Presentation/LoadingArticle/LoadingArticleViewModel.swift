@@ -12,7 +12,7 @@ import Combine
 class LoadingArticleViewModel: ObservableObject {
     
     private let articleAemRepository: ArticleAemRepository
-    private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
+    private let appLanguage: AppLanguageDomainModel
     
     private var downloadArticleOperation: OperationQueue?
     private var cancellables: Set<AnyCancellable> = Set()
@@ -21,29 +21,19 @@ class LoadingArticleViewModel: ObservableObject {
     
     let message: String
     
-    init(flowDelegate: FlowDelegate, aemUri: String, articleAemRepository: ArticleAemRepository, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, localizationServices: LocalizationServices) {
+    init(flowDelegate: FlowDelegate, aemUri: String, appLanguage: AppLanguageDomainModel, articleAemRepository: ArticleAemRepository, localizationServices: LocalizationServices) {
         
         self.flowDelegate = flowDelegate
         self.articleAemRepository = articleAemRepository
-        self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
-        self.message = localizationServices.stringForSystemElseEnglish(key: "Download in progress")
+        self.appLanguage = appLanguage
+        self.message = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "Download in progress")
         
-        getCurrentAppLanguageUseCase
-            .getLanguagePublisher()
-            .flatMap(maxPublishers: .max(1)) {
-                return Just($0)
-            }
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (appLanguage: AppLanguageDomainModel) in
-                
-                self?.downloadArticle(
-                    appLanguage: appLanguage,
-                    aemUri: aemUri,
-                    articleAemRepository: articleAemRepository,
-                    localizationServices: localizationServices
-                )
-            }
-            .store(in: &cancellables)
+        downloadArticle(
+            appLanguage: appLanguage,
+            aemUri: aemUri,
+            articleAemRepository: articleAemRepository,
+            localizationServices: localizationServices
+        )
     }
     
     deinit {
