@@ -24,6 +24,11 @@
 		450397332B360F1B00938EE9 /* IdentifiableRealmObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450397322B360F1B00938EE9 /* IdentifiableRealmObject.swift */; };
 		45039E102B1F5ADD009E1D96 /* ViewToolDetailsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45039E0F2B1F5ADD009E1D96 /* ViewToolDetailsUseCase.swift */; };
 		45039E122B1F5AEA009E1D96 /* ViewToolDetailsDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45039E112B1F5AEA009E1D96 /* ViewToolDetailsDomainModel.swift */; };
+		45043F9D2BFB86EB00324573 /* ViewDeleteAccountProgressUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45043F9C2BFB86EB00324573 /* ViewDeleteAccountProgressUseCase.swift */; };
+		45043F9F2BFB871400324573 /* ViewDeleteAccountProgressDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45043F9E2BFB871400324573 /* ViewDeleteAccountProgressDomainModel.swift */; };
+		45043FA12BFB875A00324573 /* GetDeleteAccountProgressInterfaceStringsInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45043FA02BFB875A00324573 /* GetDeleteAccountProgressInterfaceStringsInterface.swift */; };
+		45043FA32BFB879400324573 /* GetDeleteAccountProgressInterfaceStringsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45043FA22BFB879400324573 /* GetDeleteAccountProgressInterfaceStringsRepository.swift */; };
+		45043FA52BFB87C500324573 /* DeleteAccountProgressInterfaceStringsDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45043FA42BFB87C500324573 /* DeleteAccountProgressInterfaceStringsDomainModel.swift */; };
 		4504BA1C2AF3ED4C001151E5 /* TutorialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4504BA152AF3ED4C001151E5 /* TutorialViewModel.swift */; };
 		4504BA1E2AF3ED4C001151E5 /* TutorialItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4504BA192AF3ED4C001151E5 /* TutorialItemView.swift */; };
 		4504BA1F2AF3ED4C001151E5 /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4504BA1A2AF3ED4C001151E5 /* TutorialView.swift */; };
@@ -1617,6 +1622,11 @@
 		450397322B360F1B00938EE9 /* IdentifiableRealmObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableRealmObject.swift; sourceTree = "<group>"; };
 		45039E0F2B1F5ADD009E1D96 /* ViewToolDetailsUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewToolDetailsUseCase.swift; sourceTree = "<group>"; };
 		45039E112B1F5AEA009E1D96 /* ViewToolDetailsDomainModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewToolDetailsDomainModel.swift; sourceTree = "<group>"; };
+		45043F9C2BFB86EB00324573 /* ViewDeleteAccountProgressUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewDeleteAccountProgressUseCase.swift; sourceTree = "<group>"; };
+		45043F9E2BFB871400324573 /* ViewDeleteAccountProgressDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewDeleteAccountProgressDomainModel.swift; sourceTree = "<group>"; };
+		45043FA02BFB875A00324573 /* GetDeleteAccountProgressInterfaceStringsInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetDeleteAccountProgressInterfaceStringsInterface.swift; sourceTree = "<group>"; };
+		45043FA22BFB879400324573 /* GetDeleteAccountProgressInterfaceStringsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetDeleteAccountProgressInterfaceStringsRepository.swift; sourceTree = "<group>"; };
+		45043FA42BFB87C500324573 /* DeleteAccountProgressInterfaceStringsDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountProgressInterfaceStringsDomainModel.swift; sourceTree = "<group>"; };
 		4504BA152AF3ED4C001151E5 /* TutorialViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewModel.swift; sourceTree = "<group>"; };
 		4504BA192AF3ED4C001151E5 /* TutorialItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialItemView.swift; sourceTree = "<group>"; };
 		4504BA1A2AF3ED4C001151E5 /* TutorialView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialView.swift; sourceTree = "<group>"; };
@@ -7208,6 +7218,7 @@
 			children = (
 				4598BCEA2BF7DF6800196463 /* AuthenticateUser.swift */,
 				458721332BFB7EFB005DA242 /* GetDeleteAccountInterfaceStringsRepository.swift */,
+				45043FA22BFB879400324573 /* GetDeleteAccountProgressInterfaceStringsRepository.swift */,
 				4598BCEB2BF7DF6800196463 /* GetSocialCreateAccountInterfaceStringsRepository.swift */,
 				4598BCEC2BF7DF6800196463 /* GetSocialSignInInterfaceStringsRepository.swift */,
 			);
@@ -7233,9 +7244,11 @@
 				4598BCF52BF7DF6800196463 /* AuthErrorDomainModel.swift */,
 				4598BCF62BF7DF6800196463 /* AuthUserDomainModel.swift */,
 				458721312BFB7E9D005DA242 /* DeleteAccountInterfaceStringsDomainModel.swift */,
+				45043FA42BFB87C500324573 /* DeleteAccountProgressInterfaceStringsDomainModel.swift */,
 				4598BCF72BF7DF6800196463 /* SocialCreateAccountInterfaceStringsDomainModel.swift */,
 				4598BCF82BF7DF6800196463 /* SocialSignInInterfaceStringsDomainModel.swift */,
 				4587212D2BFB7E33005DA242 /* ViewDeleteAccountDomainModel.swift */,
+				45043F9E2BFB871400324573 /* ViewDeleteAccountProgressDomainModel.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -7245,6 +7258,7 @@
 			children = (
 				4598BCFA2BF7DF6800196463 /* AuthenticateUserInterface.swift */,
 				4587212F2BFB7E78005DA242 /* GetDeleteAccountInterfaceStringsRepositoryInterface.swift */,
+				45043FA02BFB875A00324573 /* GetDeleteAccountProgressInterfaceStringsInterface.swift */,
 				4598BCFB2BF7DF6800196463 /* GetSocialCreateAccountInterfaceStringsRepositoryInterface.swift */,
 				4598BCFC2BF7DF6800196463 /* GetSocialSignInInterfaceStringsRepositoryInterface.swift */,
 			);
@@ -7258,6 +7272,7 @@
 				458721292BFB7762005DA242 /* DeleteAccountUseCase.swift */,
 				4598BCFF2BF7DF6800196463 /* GetSocialCreateAccountInterfaceStringsUseCase.swift */,
 				4598BD002BF7DF6800196463 /* GetSocialSignInInterfaceStringsUseCase.swift */,
+				45043F9C2BFB86EB00324573 /* ViewDeleteAccountProgressUseCase.swift */,
 				4587212B2BFB7E0C005DA242 /* ViewDeleteAccountUseCase.swift */,
 			);
 			path = UseCases;
@@ -12113,6 +12128,7 @@
 				45AE974227C97A9400C2CB33 /* FlowItem+MobileContentRenderableModel.swift in Sources */,
 				459BF7802AFEE0320053BA09 /* RealmToolScreenTutorialShareView.swift in Sources */,
 				45E41B782A83D14600F886A2 /* LocalizableStringsFileType.swift in Sources */,
+				45043FA12BFB875A00324573 /* GetDeleteAccountProgressInterfaceStringsInterface.swift in Sources */,
 				45645C1D2AFE7A5600BD233D /* ShareToolScreenShareSessionDomainModel.swift in Sources */,
 				458721252BFB7756005DA242 /* DeleteAccountProgressView.swift in Sources */,
 				454CA1FC2B7BC3DC009A3976 /* GetAppLanguageRepositoryInterface.swift in Sources */,
@@ -12190,6 +12206,7 @@
 				456AC1982B8CE89E00169C11 /* ToolSettingsObserver.swift in Sources */,
 				450EE28729A6648900524F64 /* DashboardDeepLinkDashboardPath.swift in Sources */,
 				453F84CB2A029FC00005101E /* ArticleJcrContent.swift in Sources */,
+				45043FA52BFB87C500324573 /* DeleteAccountProgressInterfaceStringsDomainModel.swift in Sources */,
 				45AC9DF02B28A9FB00DEEBFE /* GetSearchBarInterfaceStringsRepository.swift in Sources */,
 				458CFE8629D4E0B9007B423C /* ArticleCell.swift in Sources */,
 				4552F54C2AD4745A0075415E /* TrackExitLinkAnalyticsUseCase.swift in Sources */,
@@ -12629,6 +12646,7 @@
 				45D63E6E288F698C009B4610 /* RealmLanguage.swift in Sources */,
 				45EF23AC2B37314400E49716 /* JsonApiResponseBaseData.swift in Sources */,
 				45E41B7C2A83D14600F886A2 /* LocalizationServices.swift in Sources */,
+				45043F9F2BFB871400324573 /* ViewDeleteAccountProgressDomainModel.swift in Sources */,
 				45AD20B225938EE500A096A0 /* FileCache.swift in Sources */,
 				4556CEA829F2D57800643BBC /* RealmDatabaseProductionConfiguration.swift in Sources */,
 				458B91AA2B7D5D6800785C6F /* FavoritesViewModel.swift in Sources */,
@@ -12910,6 +12928,7 @@
 				4504BA1E2AF3ED4C001151E5 /* TutorialItemView.swift in Sources */,
 				45B3382B2AF42A3900D18C63 /* GetTutorialInterfaceStringsRepositoryInterface.swift in Sources */,
 				45AAC2992BB307FE000AE690 /* GlobalActivityDataLayerDependencies.swift in Sources */,
+				45043F9D2BFB86EB00324573 /* ViewDeleteAccountProgressUseCase.swift in Sources */,
 				455EE83C2AEC586200C3205C /* GetDownloadToolProgressInterfaceStringsUseCase.swift in Sources */,
 				D4B05FF529106212005852D0 /* MobileContentAuthTokenRepository.swift in Sources */,
 				45F7B0B32AF18E3D00A0E7B4 /* GetMenuInterfaceStringsUseCase.swift in Sources */,
@@ -13131,6 +13150,7 @@
 				450D63AA2AC8A84600B90319 /* TrackScreenViewAnalyticsPropertiesDomainModel.swift in Sources */,
 				D409F2AA292559F100D9D2FE /* MobileContentAuthTokenError.swift in Sources */,
 				45006D462B80EB60002E480D /* ToolListItemDomainModel.swift in Sources */,
+				45043FA32BFB879400324573 /* GetDeleteAccountProgressInterfaceStringsRepository.swift in Sources */,
 				4521B2802B32851F00C8A473 /* GetShareableImageRepositoryInterface.swift in Sources */,
 				D43FC1D62B814F2000F8310E /* GetAccountInterfaceStringsRepository.swift in Sources */,
 				45FB160827DBDDB60009DF8E /* LessonFlow.swift in Sources */,

@@ -51,4 +51,10 @@ class AccountDomainLayerDependencies {
             getInterfaceStringsRepository: dataLayer.getDeleteAccountInterfaceStringsRepository()
         )
     }
+    
+    func getViewDeleteAccountProgressUseCase() -> ViewDeleteAccountProgressUseCase {
+        return ViewDeleteAccountProgressUseCase(
+            getInterfaceStringsRepository: dataLayer.getDeleteAccountProgressInterfaceStringsRepository()
+        )
+    }
 }
