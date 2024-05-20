@@ -27,6 +27,13 @@ class AccountDomainLayerDependencies {
         )
     }
     
+    func getDeleteAccountUseCase() -> DeleteAccountUseCase {
+        return DeleteAccountUseCase(
+            userAuthentication: coreDataLayer.getUserAuthentication(),
+            userDetailsRepository: coreDataLayer.getUserDetailsRepository()
+        )
+    }
+    
     func getSocialCreateAccountInterfaceStringsUseCase() -> GetSocialCreateAccountInterfaceStringsUseCase {
         return GetSocialCreateAccountInterfaceStringsUseCase(
             getInterfaceStringsRepositoryInterface: dataLayer.getSocialCreateAccountInterfaceStringsRepositoryInterface()

@@ -478,7 +478,7 @@ class MenuFlow: Flow {
         
         let viewModel = DeleteAccountProgressViewModel(
             flowDelegate: self,
-            deleteAccountUseCase: appDiContainer.domainLayer.getDeleteAccountUseCase(),
+            deleteAccountUseCase: appDiContainer.feature.account.domainLayer.getDeleteAccountUseCase(),
             localizationServices: appDiContainer.dataLayer.getLocalizationServices()
         )
         
