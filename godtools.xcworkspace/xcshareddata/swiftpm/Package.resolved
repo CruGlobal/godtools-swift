@@ -1,5 +1,5 @@
 {
-  "originHash" : "3b769f16787fa2e7e8f6c8c8fdb2d86379cc646d446f821403297873da578b16",
+  "originHash" : "21bf5557cd80854fb30416658e2f4affd5f9a1aedfae78f9a812d457ecc91fbe",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -24,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/openid/AppAuth-iOS.git",
       "state" : {
-        "revision" : "71cde449f13d453227e687458144bde372d30fc7",
-        "version" : "1.6.2"
+        "revision" : "c89ed571ae140f8eb1142735e6e23d7bb8c34cb2",
+        "version" : "1.7.5"
       }
     },
     {
@@ -60,8 +60,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/facebook/facebook-ios-sdk.git",
       "state" : {
-        "revision" : "5c7367dadcbe504702c041621dc09752bf2cd747",
-        "version" : "16.0.1"
+        "revision" : "9b89497b97ef043991862c9a8c5bb7fffaf31988",
+        "version" : "17.0.1"
       }
     },
     {
@@ -105,8 +105,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/google/GoogleSignIn-iOS.git",
       "state" : {
-        "revision" : "7932d33686c1dc4d7df7a919aae47361d1cdfda4",
-        "version" : "7.0.0"
+        "revision" : "a7965d134c5d3567026c523e0a8a583f73b62b0d",
+        "version" : "7.1.0"
       }
     },
     {
@@ -132,8 +132,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/google/gtm-session-fetcher.git",
       "state" : {
-        "revision" : "5ccda3981422a84186387dbb763ba739178b529c",
-        "version" : "2.3.0"
+        "revision" : "0382ca27f22fb3494cf657d8dc356dc282cd1193",
+        "version" : "3.4.1"
       }
     },
     {
@@ -141,8 +141,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/google/GTMAppAuth.git",
       "state" : {
-        "revision" : "cee3c709307912d040bd1e06ca919875a92339c6",
-        "version" : "2.0.0"
+        "revision" : "5d7d66f647400952b1758b230e019b07c0b4b22a",
+        "version" : "4.1.1"
       }
     },
     {
@@ -240,8 +240,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/CruGlobal/social-authentication-ios.git",
       "state" : {
-        "revision" : "8386adf4134e30f640a7d7b7bad92b72473f314d",
-        "version" : "0.3.2"
+        "revision" : "48761f3949ecd47b4c9bbcd910e49f4ec7076961",
+        "version" : "0.4.0"
       }
     },
     {
