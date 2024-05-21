@@ -42,7 +42,6 @@ class AppConfig: AppConfigInterface {
             clientToken: "3b6bf5b7c128a970337c4fa1860ffa6e",
             displayName: "GodTools",
             isAutoLogAppEventsEnabled: true,
-            isAdvertiserTrackingEnabled: false,
             isAdvertiserIDCollectionEnabled: false,
             isSKAdNetworkReportEnabled: false
         )
