@@ -41,11 +41,11 @@ struct DeleteAccountView: View {
                 
                 VStack(alignment: .leading, spacing: 7) {
                     
-                    Text(viewModel.title)
+                    Text(viewModel.interfaceStrings.title)
                         .foregroundColor(ColorPalette.gtGrey.color)
                         .font(FontLibrary.sfProTextRegular.font(size: 30))
                     
-                    Text(viewModel.subtitle)
+                    Text(viewModel.interfaceStrings.subtitle)
                         .foregroundColor(ColorPalette.gtGrey.color)
                         .font(FontLibrary.sfProTextRegular.font(size: 18))
                 }
@@ -55,12 +55,12 @@ struct DeleteAccountView: View {
                     
                     let buttonWidth: CGFloat = geometry.size.width - contentInsets.leading - contentInsets.trailing
                     
-                    GTWhiteButton(title: viewModel.confirmButtonTitle, font: buttonFont, width: buttonWidth, height: buttonHeight, cornerRadius: buttonCornerRadius) {
+                    GTWhiteButton(title: viewModel.interfaceStrings.confirmActionTitle, font: buttonFont, width: buttonWidth, height: buttonHeight, cornerRadius: buttonCornerRadius) {
                         
                         viewModel.deleteAccountTapped()
                     }
                     
-                    GTBlueButton(title: viewModel.cancelButtonTitle, font: buttonFont, width: buttonWidth, height: buttonHeight, cornerRadius: buttonCornerRadius) {
+                    GTBlueButton(title: viewModel.interfaceStrings.cancelActionTitle, font: buttonFont, width: buttonWidth, height: buttonHeight, cornerRadius: buttonCornerRadius) {
                         
                         viewModel.cancelTapped()
                     }
@@ -82,7 +82,8 @@ struct DeleteAccountView_Preview: PreviewProvider {
         
         let viewModel = DeleteAccountViewModel(
             flowDelegate: MockFlowDelegate(),
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices()
+            getCurrentAppLanguage: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            viewDeleteAccountUseCase: appDiContainer.feature.account.domainLayer.getViewDeleteAccountUseCase()
         )
         
         return DeleteAccountView(viewModel: viewModel, backgroundColor: Color.white)

@@ -18,14 +18,10 @@ class GetSocialCreateAccountInterfaceStringsUseCase {
         self.getInterfaceStringsRepositoryInterface = getInterfaceStringsRepositoryInterface
     }
     
-    func getStringsPublisher(appLanguagePublisher: AnyPublisher<AppLanguageDomainModel, Never>) -> AnyPublisher<SocialCreateAccountInterfaceStringsDomainModel, Never> {
+    func getStringsPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<SocialCreateAccountInterfaceStringsDomainModel, Never> {
         
-        return appLanguagePublisher
-            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<SocialCreateAccountInterfaceStringsDomainModel, Never> in
-                
-                return self.getInterfaceStringsRepositoryInterface.getStringsPublisher(translateInLanguage: appLanguage)
-                    .eraseToAnyPublisher()
-            })
+        return getInterfaceStringsRepositoryInterface
+            .getStringsPublisher(translateInLanguage: appLanguage)
             .eraseToAnyPublisher()
     }
 }

@@ -20,24 +20,19 @@ class ViewToolScreenShareTutorialUseCase {
         self.getTutorialRepositoryInterface = getTutorialRepositoryInterface
     }
     
-    func viewTutorialPublisher(appLanguagePublisher: AnyPublisher<AppLanguageDomainModel, Never>) -> AnyPublisher<ToolScreenShareTutorialDomainModel, Never> {
+    func viewTutorialPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolScreenShareTutorialDomainModel, Never> {
         
-        return appLanguagePublisher
-            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<(ToolScreenShareInterfaceStringsDomainModel, [ToolScreenShareTutorialPageDomainModel]), Never> in
-                
-                return Publishers.CombineLatest(
-                    self.getInterfaceStringsRepositoryInterface.getStringsPublisher(translateInLanguage: appLanguage),
-                    self.getTutorialRepositoryInterface.getTutorialPublisher(translateInLanguage: appLanguage)
-                )
-                .eraseToAnyPublisher()
-            })
-            .flatMap({ (interfaceStrings: ToolScreenShareInterfaceStringsDomainModel, pages: [ToolScreenShareTutorialPageDomainModel]) -> AnyPublisher<ToolScreenShareTutorialDomainModel, Never> in
-                
-                let tutorial = ToolScreenShareTutorialDomainModel(interfaceStrings: interfaceStrings, pages: pages)
-                
-                return Just(tutorial)
-                    .eraseToAnyPublisher()
-            })
-            .eraseToAnyPublisher()
+        return Publishers.CombineLatest(
+            getInterfaceStringsRepositoryInterface.getStringsPublisher(translateInLanguage: appLanguage),
+            getTutorialRepositoryInterface.getTutorialPublisher(translateInLanguage: appLanguage)
+        )
+        .map { (interfaceStrings: ToolScreenShareInterfaceStringsDomainModel, pages: [ToolScreenShareTutorialPageDomainModel]) in
+            
+            ToolScreenShareTutorialDomainModel(
+                interfaceStrings: interfaceStrings,
+                pages: pages
+            )
+        }
+        .eraseToAnyPublisher()
     }
 }

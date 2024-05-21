@@ -85,6 +85,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         appDiContainer.feature.appLanguage.domainLayer
             .getCurrentAppLanguageUseCase()
             .getLanguagePublisher()
+            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
     }
     
@@ -450,6 +451,7 @@ extension AppFlow {
                     .syncDownloadedLanguagesPublisher()
                     .eraseToAnyPublisher()
             })
+            .receive(on: DispatchQueue.main)
             .sink { _ in
                 
             }
@@ -459,9 +461,10 @@ extension AppFlow {
         
         _ = resourceViewsService.postFailedResourceViewsIfNeeded()
         
-        let authenticateUser: AuthenticateUserInterface = appDiContainer.feature.accountCreation.dataLayer.getAuthenticateUserInterface()
+        let authenticateUser: AuthenticateUserInterface = appDiContainer.feature.account.dataLayer.getAuthenticateUserInterface()
         
         authenticateUser.renewAuthenticationPublisher()
+            .receive(on: DispatchQueue.main)
             .sink { finished in
 
             } receiveValue: { authUser in
@@ -471,13 +474,14 @@ extension AppFlow {
         
         let translatedLanguageNameRepositorySync: TranslatedLanguageNameRepositorySync = appDiContainer.dataLayer.getTranslatedLanguageNameRepositorySync()
         
-        $appLanguage.eraseToAnyPublisher()
-            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<Void, Never> in
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
                 
-                return translatedLanguageNameRepositorySync
+                translatedLanguageNameRepositorySync
                     .syncTranslatedLanguageNamesPublisher(translateInLanguage: appLanguage)
-                    .eraseToAnyPublisher()
-            })
+            }
+            .receive(on: DispatchQueue.main)
             .sink { _ in
                 
             }
@@ -489,6 +493,7 @@ extension AppFlow {
         let incrementUserCounterUseCase = appDiContainer.domainLayer.getIncrementUserCounterUseCase()
         
         incrementUserCounterUseCase.incrementUserCounter(for: .sessionLaunch)
+            .receive(on: DispatchQueue.main)
             .sink { _ in
                 
             } receiveValue: { _ in

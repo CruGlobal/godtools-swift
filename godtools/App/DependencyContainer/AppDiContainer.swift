@@ -27,7 +27,7 @@ class AppDiContainer {
         dataLayer = AppDataLayerDependencies(appBuild: appBuild, appConfig: appConfig, infoPlist: infoPlist, realmDatabase: realmDatabase)
         domainLayer = AppDomainLayerDependencies(dataLayer: dataLayer)
         
-        let accountCreationDiContainer = AccountCreationFeatureDiContainer(coreDataLayer: dataLayer)
+        let accountDiContainer = AccountDiContainer(coreDataLayer: dataLayer)
         let appLanguageDiContainer = AppLanguageFeatureDiContainer(coreDataLayer: dataLayer)
         let dashboardDiContainer = DashboardDiContainer(coreDataLayer: dataLayer)
         let downloadToolProgressDiContainer = DownloadToolProgressFeatureDiContainer(coreDataLayer: dataLayer)
@@ -49,7 +49,7 @@ class AppDiContainer {
         let tutorialDiContainer = TutorialFeatureDiContainer(coreDataLayer: dataLayer)
         
         feature = AppFeatureDiContainer(
-            accountCreation: accountCreationDiContainer,
+            account: accountDiContainer,
             appLanguage: appLanguageDiContainer,
             dashboard: dashboardDiContainer,
             downloadToolProgress: downloadToolProgressDiContainer,

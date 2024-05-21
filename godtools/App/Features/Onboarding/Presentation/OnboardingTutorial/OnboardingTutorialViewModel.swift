@@ -29,16 +29,10 @@ class OnboardingTutorialViewModel: ObservableObject {
     
     private weak var flowDelegate: FlowDelegate?
     
-    @Published private var appLanguage: AppLanguageDomainModel = ""
+    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     
     @Published var hidesSkipButton: Bool = true
-    @Published var currentPage: Int = 0 {
-        
-        didSet {
-            didSetPage(page: currentPage)
-        }
-    }
-    
+    @Published var currentPage: Int = 0
     @Published var chooseAppLanguageButtonTitle: String = ""
     @Published var showsChooseLanguageButton: Bool = true
     @Published var pages: [OnboardingTutorialPage] = Array()
@@ -66,8 +60,14 @@ class OnboardingTutorialViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
-        getOnboardingTutorialInterfaceStringsUseCase
-            .getStringsPublisher(appLanguagePublisher: $appLanguage.eraseToAnyPublisher())
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
+                
+                getOnboardingTutorialInterfaceStringsUseCase
+                    .getStringsPublisher(appLanguage: appLanguage)
+            }
+            .switchToLatest()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (interfaceStrings: OnboardingTutorialInterfaceStringsDomainModel) in
                 
@@ -80,11 +80,18 @@ class OnboardingTutorialViewModel: ObservableObject {
                 weakSelf.chooseAppLanguageButtonTitle = interfaceStrings.chooseAppLanguageButtonTitle
 
                 weakSelf.pages = OnboardingTutorialViewModel.tutorialPages
-                
-                let page: Int = weakSelf.currentPage
-                weakSelf.currentPage = page
             }
             .store(in: &cancellables)
+        
+        Publishers.CombineLatest(
+            $currentPage,
+            $pages.dropFirst()
+        )
+        .receive(on: DispatchQueue.main)
+        .sink { [weak self] (currentPage: Int, pages: [OnboardingTutorialPage]) in
+            self?.didSetPage(page: currentPage, pages: pages)
+        }
+        .store(in: &cancellables)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
             guard let weakSelf = self else {
@@ -116,7 +123,7 @@ class OnboardingTutorialViewModel: ObservableObject {
         showsChooseLanguageButton = showsChooseAppLanguageButtonOnPages.contains(page)
     }
     
-    private func didSetPage(page: Int) {
+    private func didSetPage(page: Int, pages: [OnboardingTutorialPage]) {
                 
         updateShowsChooseLanguageButtonState(page: page)
         
@@ -145,15 +152,22 @@ class OnboardingTutorialViewModel: ObservableObject {
         self.hidesSkipButton = hidesSkipButton
         self.continueButtonTitle = continueButtonTitle
         
-        let pageAnalytics: OnboardingTutorialPageAnalyticsProperties = getOnboardingTutorialPageAnalyticsProperties(page: pages[page])
-        
-        trackScreenViewAnalyticsUseCase.trackScreen(
-            screenName: pageAnalytics.screenName,
-            siteSection: pageAnalytics.siteSection,
-            siteSubSection: pageAnalytics.siteSubsection,
-            contentLanguage: pageAnalytics.contentLanguage,
-            contentLanguageSecondary: pageAnalytics.contentLanguageSecondary
-        )
+        if page >= 0 && page < pages.count {
+         
+            let pageAnalytics: OnboardingTutorialPageAnalyticsProperties = getOnboardingTutorialPageAnalyticsProperties(page: pages[page])
+            
+            trackScreenViewAnalyticsUseCase.trackScreen(
+                screenName: pageAnalytics.screenName,
+                siteSection: pageAnalytics.siteSection,
+                siteSubSection: pageAnalytics.siteSubsection,
+                contentLanguage: pageAnalytics.contentLanguage,
+                contentLanguageSecondary: pageAnalytics.contentLanguageSecondary
+            )
+        }
+        else {
+            
+            assertionFailure("Failed to fetch page at index:\n  \(page)\n  pages: \(pages)")
+        }
     }
     
     func getOnboardingTutorialReadyForEveryConversationViewModel() -> OnboardingTutorialReadyForEveryConversationViewModel {

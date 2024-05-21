@@ -40,10 +40,17 @@ class ToolScreenShareTutorialViewModel: ObservableObject {
         
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
+            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
-        viewToolScreenShareTutorialUseCase
-            .viewTutorialPublisher(appLanguagePublisher: $appLanguage.eraseToAnyPublisher())
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
+                
+                viewToolScreenShareTutorialUseCase
+                    .viewTutorialPublisher(appLanguage: appLanguage)
+            }
+            .switchToLatest()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (toolScreenShareTutorial: ToolScreenShareTutorialDomainModel) in
                 
@@ -53,8 +60,8 @@ class ToolScreenShareTutorialViewModel: ObservableObject {
             .store(in: &cancellables)
         
         Publishers.CombineLatest(
-            $currentPage.eraseToAnyPublisher(),
-            $interfaceStrings.eraseToAnyPublisher()
+            $currentPage,
+            $interfaceStrings
         )
         .receive(on: DispatchQueue.main)
         .sink { [weak self] (currentPage: Int, interfaceStrings: ToolScreenShareInterfaceStringsDomainModel?) in
@@ -125,6 +132,7 @@ extension ToolScreenShareTutorialViewModel {
         
         ToolScreenShareTutorialViewModel.didViewToolScreenShareTutorialCancellable = didViewToolScreenShareTutorialUseCase
             .didViewPublisher(toolId: toolId)
+            .receive(on: DispatchQueue.main)
             .sink { _ in
                 
             }

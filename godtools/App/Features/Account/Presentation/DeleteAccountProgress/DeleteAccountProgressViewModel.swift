@@ -12,22 +12,38 @@ import Combine
 class DeleteAccountProgressViewModel: ObservableObject {
     
     private let deleteAccountUseCase: DeleteAccountUseCase
-    private let localizationServices: LocalizationServices
     private let minimumSecondsToDisplayDeleteAccountProgress: TimeInterval = 2
     
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
     
-    @Published var title: String
+    @Published private var appLanguage: AppLanguageDomainModel = ""
     
-    init(flowDelegate: FlowDelegate, deleteAccountUseCase: DeleteAccountUseCase, localizationServices: LocalizationServices) {
+    @Published var interfaceStrings: DeleteAccountProgressInterfaceStringsDomainModel = DeleteAccountProgressInterfaceStringsDomainModel.emptyStrings()
+    
+    init(flowDelegate: FlowDelegate, getCurrentAppLanguage: GetCurrentAppLanguageUseCase, viewDeleteAccountProgressUseCase: ViewDeleteAccountProgressUseCase, deleteAccountUseCase: DeleteAccountUseCase) {
         
         self.flowDelegate = flowDelegate
         self.deleteAccountUseCase = deleteAccountUseCase
-        self.localizationServices = localizationServices
         
-        title = localizationServices.stringForSystemElseEnglish(key: "deleteAccountProgress.title")
+        getCurrentAppLanguage
+            .getLanguagePublisher()
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$appLanguage)
+        
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
+                viewDeleteAccountProgressUseCase
+                    .viewPublisher(appLanguage: appLanguage)
+            }
+            .switchToLatest()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (domainModel: ViewDeleteAccountProgressDomainModel) in
+                self?.interfaceStrings = domainModel.interfaceStrings
+            }
+            .store(in: &cancellables)
         
         deleteAccount()
     }

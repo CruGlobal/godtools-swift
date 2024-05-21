@@ -63,11 +63,12 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
         
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
+            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
         Publishers.CombineLatest(
-            $languages.eraseToAnyPublisher(),
-            $appLanguage.eraseToAnyPublisher()
+            $languages,
+            $appLanguage.dropFirst()
         )
         .receive(on: DispatchQueue.main)
         .sink { [weak self] (languages: [LanguageDomainModel], appLanguage: AppLanguageDomainModel) in
@@ -747,11 +748,12 @@ extension MobileContentPagesViewModel {
         let locale = Locale(identifier: localeId)
         
         incrementUserCounterUseCase.incrementUserCounter(for: .languageUsed(locale: locale))
-            .sink { completion in
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] completion in
                 
                 switch completion {
                 case .finished:
-                    self.trackLanguageUsageCountedThisSession(localeId: localeId)
+                    self?.trackLanguageUsageCountedThisSession(localeId: localeId)
                     
                 case .failure:
                     break
@@ -786,6 +788,7 @@ extension MobileContentPagesViewModel {
         }
         
         incrementUserCounterUseCase.incrementUserCounter(for: toolOpenInteraction)
+            .receive(on: DispatchQueue.main)
             .sink { _ in
                 
             } receiveValue: { _ in

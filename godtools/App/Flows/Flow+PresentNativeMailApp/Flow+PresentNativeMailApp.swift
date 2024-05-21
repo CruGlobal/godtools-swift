@@ -11,17 +11,17 @@ import MessageUI
 
 extension Flow {
     
-    func navigateToNativeMailApp(viewModel: MailViewModelType) {
+    func navigateToNativeMailApp(appLanguage: AppLanguageDomainModel, viewModel: MailViewModelType) {
         
         guard MFMailComposeViewController.canSendMail() else {
                         
             let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
             
             let viewModel = AlertMessageViewModel(
-                title: localizationServices.stringForSystemElseEnglish(key: "alert.mailAppUnavailable.title"),
-                message: localizationServices.stringForSystemElseEnglish(key: "alert.mailAppUnavailable.message"),
+                title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.alertMailAppUnavailableTitle.key),
+                message: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.alertMailAppUnavailableMessage.key),
                 cancelTitle: nil,
-                acceptTitle: localizationServices.stringForSystemElseEnglish(key: "OK"),
+                acceptTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.ok.key),
                 acceptHandler: nil
             )
             

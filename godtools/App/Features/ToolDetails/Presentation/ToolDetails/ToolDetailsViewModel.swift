@@ -87,11 +87,12 @@ class ToolDetailsViewModel: ObservableObject {
         
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
+            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
         Publishers.CombineLatest(
-            $didViewPage.eraseToAnyPublisher(),
-            $analyticsToolAbbreviation.eraseToAnyPublisher()
+            $didViewPage,
+            $analyticsToolAbbreviation.dropFirst()
         )
         .flatMap({ [weak self] (pageViewed: Void?, analyticsToolAbbreviation: String) -> AnyPublisher<Void, Never> in
             
@@ -120,16 +121,17 @@ class ToolDetailsViewModel: ObservableObject {
         .store(in: &cancellables)
         
         Publishers.CombineLatest(
-            $toolId.eraseToAnyPublisher(),
-            $appLanguage.eraseToAnyPublisher()
+            $toolId,
+            $appLanguage.dropFirst()
         )
-        .receive(on: DispatchQueue.main)
-        .flatMap ({ (toolId: String, appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewToolDetailsDomainModel, Never> in
+        .map { (toolId: String, appLanguage: AppLanguageDomainModel) in
             
             return viewToolDetailsUseCase
                 .viewPublisher(toolId: toolId, translateInLanguage: appLanguage, toolPrimaryLanguage: primaryLanguage, toolParallelLanguage: parallelLanguage)
                 .eraseToAnyPublisher()
-        })
+        }
+        .switchToLatest()
+        .receive(on: DispatchQueue.main)
         .sink(receiveValue: { [weak self] (domainModel: ViewToolDetailsDomainModel) in
             
             self?.analyticsToolAbbreviation = domainModel.toolDetails.analyticsToolAbbreviation
@@ -176,23 +178,23 @@ class ToolDetailsViewModel: ObservableObject {
         })
         .store(in: &cancellables)
         
-        $toolId.eraseToAnyPublisher()
-            .flatMap({ (toolId: String) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> in
+        $toolId
+            .map { (toolId: String) in
                 
-                return getToolDetailsMediaUseCase
+                getToolDetailsMediaUseCase
                     .getMediaPublisher(toolId: toolId)
-                    .eraseToAnyPublisher()
-            })
+            }
+            .switchToLatest()
             .receive(on: DispatchQueue.main)
             .assign(to: &$mediaType)
         
-        $toolId.eraseToAnyPublisher()
-            .flatMap({ (toolId: String) -> AnyPublisher<Bool, Never> in
+        $toolId
+            .map { (toolId: String) in
                 
-                return getToolDetailsLearnToShareToolIsAvailableUseCase
+                getToolDetailsLearnToShareToolIsAvailableUseCase
                     .getIsAvailablePublisher(toolId: toolId, language: primaryLanguage)
-                    .eraseToAnyPublisher()
-            })
+            }
+            .switchToLatest()
             .receive(on: DispatchQueue.main)
             .assign(to: &$showsLearnToShareToolButton)
     }

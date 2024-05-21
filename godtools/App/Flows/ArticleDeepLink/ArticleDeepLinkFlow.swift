@@ -7,15 +7,20 @@
 //
 
 import UIKit
+import Combine
 
 class ArticleDeepLinkFlow: Flow {
     
     private let aemUri: String
     
+    private var cancellables: Set<AnyCancellable> = Set()
+    
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
     let navigationController: AppNavigationController
+    
+    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     
     init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, aemUri: String) {
         
@@ -23,15 +28,26 @@ class ArticleDeepLinkFlow: Flow {
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController
         self.aemUri = aemUri
+        
+        appDiContainer.feature.appLanguage.domainLayer
+            .getCurrentAppLanguageUseCase()
+            .getLanguagePublisher()
+            .flatMap(maxPublishers: .max(1)) {
+                return Just($0)
+            }
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (appLanguage: AppLanguageDomainModel) in
                 
-        if let aemCacheObject = appDiContainer.dataLayer.getArticleAemRepository().getAemCacheObject(aemUri: aemUri) {
-            
-            navigateToArticleWebView(aemCacheObject: aemCacheObject, animated: true)
-        }
-        else {
-            
-            sharedNavigationController.present(getLoadingArticleView(), animated: true, completion: nil)
-        }
+                if let aemCacheObject = appDiContainer.dataLayer.getArticleAemRepository().getAemCacheObject(aemUri: aemUri) {
+                    
+                    self?.navigateToArticleWebView(aemCacheObject: aemCacheObject, animated: true)
+                }
+                else if let loadingArticleView = self?.getLoadingArticleView(appLanguage: appLanguage) {
+                    
+                    sharedNavigationController.present(loadingArticleView, animated: true, completion: nil)
+                }
+            }
+            .store(in: &cancellables)
     }
     
     deinit {
@@ -49,6 +65,7 @@ class ArticleDeepLinkFlow: Flow {
         case .didFailToDownloadArticleFromLoadingArticle(let alertMessage):
             
             let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
+            let appLanguage: AppLanguageDomainModel = self.appLanguage
             
             navigationController.dismiss(animated: true) { [weak self] in
                 
@@ -56,7 +73,7 @@ class ArticleDeepLinkFlow: Flow {
                     title: alertMessage.title,
                     message: alertMessage.message,
                     cancelTitle: nil,
-                    acceptTitle: localizationServices.stringForSystemElseEnglish(key: "OK"),
+                    acceptTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.ok.key),
                     acceptHandler: nil
                 )
                 
@@ -78,13 +95,13 @@ class ArticleDeepLinkFlow: Flow {
 
 extension ArticleDeepLinkFlow {
     
-    private func getLoadingArticleView() -> UIViewController {
+    private func getLoadingArticleView(appLanguage: AppLanguageDomainModel) -> UIViewController {
         
         let viewModel = LoadingArticleViewModel(
             flowDelegate: self,
             aemUri: aemUri,
+            appLanguage: appLanguage,
             articleAemRepository: appDiContainer.dataLayer.getArticleAemRepository(),
-            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             localizationServices: appDiContainer.dataLayer.getLocalizationServices()
         )
         
