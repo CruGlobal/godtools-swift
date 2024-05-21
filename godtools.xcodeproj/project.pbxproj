@@ -1579,14 +1579,14 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		45B10ADF2BF3F270004342AB /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 12;
+			buildActionMask = 8;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
 				4581EAA72BFBE2B9008115FF /* RealmSwift in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 		};
 		45C382C02BF3FC5600378656 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
