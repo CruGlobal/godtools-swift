@@ -26,7 +26,7 @@ class TranslatedLanguageNameRepository {
             return language.fallbackName
         }
         
-        if let cachedObject = cache.getTranslatedLanguageName(language: language, languageTranslation: translatedInLanguage) {
+        if let cachedObject = cache.getTranslatedLanguageName(language: language, languageTranslation: translatedInLanguage), !cachedObject.translatedName.isEmpty {
                         
             return cachedObject.translatedName
         }
