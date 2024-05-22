@@ -32,7 +32,7 @@ class GetToolFilterLanguagesRepository: GetToolFilterLanguagesRepositoryInterfac
                 let languageIds = self.resourcesRepository
                     .getAllToolLanguageIds(filteredByCategoryId: filteredByCategoryId)
                 
-                let languages = self.createLanguageFilterDomainModelList(from: Array(languageIds), translatedInAppLanguage: translatedInAppLanguage, filteredByCategoryId: filteredByCategoryId)
+                let languages = self.createLanguageFilterDomainModelList(from: languageIds, translatedInAppLanguage: translatedInAppLanguage, filteredByCategoryId: filteredByCategoryId)
                 
                 return Just(languages)
             }

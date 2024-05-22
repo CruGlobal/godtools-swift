@@ -471,21 +471,6 @@ extension AppFlow {
 
             }
             .store(in: &cancellables)
-        
-        let translatedLanguageNameRepositorySync: TranslatedLanguageNameRepositorySync = appDiContainer.dataLayer.getTranslatedLanguageNameRepositorySync()
-        
-        $appLanguage
-            .dropFirst()
-            .map { (appLanguage: AppLanguageDomainModel) in
-                
-                translatedLanguageNameRepositorySync
-                    .syncTranslatedLanguageNamesPublisher(translateInLanguage: appLanguage)
-            }
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
-                
-            }
-            .store(in: &cancellables)
     }
     
     private func countAppSessionLaunch() {

@@ -1587,14 +1587,14 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		45B10ADF2BF3F270004342AB /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 12;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
 				4581EAA72BFBE2B9008115FF /* RealmSwift in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		45C382C02BF3FC5600378656 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -11388,9 +11388,9 @@
 				4F5732851EA69CF00082035C /* Sources */,
 				4F5732861EA69CF00082035C /* Frameworks */,
 				4F5732871EA69CF00082035C /* Resources */,
-				451C8B7628AEC6AD00E98AFA /* Download Initial Resources */,
-				45AD220F2593C66B00A096A0 /* Run Crashlytics */,
 				45B10ADF2BF3F270004342AB /* Embed Frameworks */,
+				45AD220F2593C66B00A096A0 /* Run Crashlytics */,
+				451C8B7628AEC6AD00E98AFA /* Download Initial Resources */,
 			);
 			buildRules = (
 			);
@@ -14578,7 +14578,7 @@
 			repositoryURL = "https://github.com/CruGlobal/social-authentication-ios.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.3.2;
+				minimumVersion = 0.4.0;
 			};
 		};
 		45E39EDA27457E0C006A59E4 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
