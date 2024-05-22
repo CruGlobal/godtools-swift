@@ -49,6 +49,10 @@ class LanguagesRepository {
         return cache.getLanguages(realm: realm)
     }
     
+    func getLanguagesPublisher() -> AnyPublisher<[LanguageModel], Never> {
+        return cache.getLanguagesPublisher()
+    }
+    
     func syncLanguagesFromRemote() -> AnyPublisher<RealmLanguagesCacheSyncResult, Error> {
         
         return api.getLanguages()
