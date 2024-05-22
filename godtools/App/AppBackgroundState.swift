@@ -13,7 +13,6 @@ class AppBackgroundState {
     
     static let shared: AppBackgroundState = AppBackgroundState()
         
-    private var storeInitialFavoritedToolsUseCase: StoreInitialFavoritedToolsUseCase?
     private var cancellables: Set<AnyCancellable> = Set()
     private var isStarted: Bool = false
     
@@ -30,9 +29,7 @@ class AppBackgroundState {
         }
         
         isStarted = true
-        
-        let downloadLatestToolsForFavoritedToolsUseCase: DownloadLatestToolsForFavoritedToolsUseCase = appDiContainer.feature.dashboard.domainLayer.getDownloadLatestToolsForFavoritedToolsUseCase()
-        
+                        
         appDiContainer.feature.appLanguage.domainLayer
             .getCurrentAppLanguageUseCase()
             .getLanguagePublisher()
@@ -42,10 +39,23 @@ class AppBackgroundState {
         appDiContainer.feature.appLanguage.domainLayer
             .getStoreInitialAppLanguageUseCase()
             .storeInitialAppLanguagePublisher()
+            .receive(on: DispatchQueue.main)
             .sink { (appLanguage: BCP47LanguageIdentifier) in
 
             }
             .store(in: &cancellables)
+        
+        syncLatestToolsForFavoritedTools(
+            downloadLatestToolsForFavoritedToolsUseCase: appDiContainer.feature.dashboard.domainLayer.getDownloadLatestToolsForFavoritedToolsUseCase()
+        )
+        
+        syncTranslatedLanguageNames(
+            translatedLanguageNameRepositorySync: appDiContainer.dataLayer.getTranslatedLanguageNameRepositorySync(),
+            languagesRepository: appDiContainer.dataLayer.getLanguagesRepository()
+        )
+    }
+    
+    private func syncLatestToolsForFavoritedTools(downloadLatestToolsForFavoritedToolsUseCase: DownloadLatestToolsForFavoritedToolsUseCase) {
         
         $appLanguage
             .dropFirst()
@@ -55,11 +65,38 @@ class AppBackgroundState {
                     .eraseToAnyPublisher()
             }
             .switchToLatest()
+            .receive(on: DispatchQueue.main)
             .sink { _ in
                 
             }
             .store(in: &cancellables)
+    }
+    
+    private func syncTranslatedLanguageNames(translatedLanguageNameRepositorySync: TranslatedLanguageNameRepositorySync, languagesRepository: LanguagesRepository) {
+                
+        Publishers.CombineLatest(
+            $appLanguage.dropFirst(),
+            languagesRepository.getLanguagesChanged().prepend(Void())
+        )
+        .flatMap({ (appLanguage: AppLanguageDomainModel, languagesChanged: Void) -> AnyPublisher<(AppLanguageDomainModel, [LanguageModel]), Never> in
             
-        self.storeInitialFavoritedToolsUseCase = appDiContainer.domainLayer.getStoreInitialFavoritedToolsUseCase()
+            return languagesRepository
+                .getLanguagesPublisher()
+                .map { (languages: [LanguageModel]) in
+                    
+                    return (appLanguage, languages)
+                }
+                .eraseToAnyPublisher()
+        })
+        .map { (appLanguage: AppLanguageDomainModel, languages: [LanguageModel]) in
+                        
+            translatedLanguageNameRepositorySync
+                .syncTranslatedLanguageNamesPublisher(translateInLanguage: appLanguage, languages: languages)
+        }
+        .receive(on: DispatchQueue.main)
+        .sink { _ in
+            
+        }
+        .store(in: &cancellables)
     }
 }
