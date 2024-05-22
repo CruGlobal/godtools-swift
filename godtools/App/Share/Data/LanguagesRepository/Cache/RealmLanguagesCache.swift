@@ -69,6 +69,16 @@ class RealmLanguagesCache {
         return realmInstance.objects(RealmLanguage.self)
             .map({LanguageModel(model: $0)})
     }
+    
+    func getLanguagesPublisher() -> AnyPublisher<[LanguageModel], Never> {
+        
+        return realmDatabase.readObjectsPublisher { (results: Results<RealmLanguage>) in
+            results.map({
+                LanguageModel(model: $0)
+            })
+        }
+        .eraseToAnyPublisher()
+    }
         
     func syncLanguages(languages: [LanguageModel]) -> AnyPublisher<RealmLanguagesCacheSyncResult, Error> {
 

@@ -13,61 +13,46 @@ import RealmSwift
 class TranslatedLanguageNameRepositorySync {
     
     private let realmDatabase: RealmDatabase
-    private let languagesRepository: LanguagesRepository
     private let getTranslatedLanguageName: GetTranslatedLanguageName
     private let cache: RealmTranslatedLanguageNameCache
     
-    init(realmDatabase: RealmDatabase, languagesRepository: LanguagesRepository, getTranslatedLanguageName: GetTranslatedLanguageName, cache: RealmTranslatedLanguageNameCache) {
+    init(realmDatabase: RealmDatabase, getTranslatedLanguageName: GetTranslatedLanguageName, cache: RealmTranslatedLanguageNameCache) {
         
         self.realmDatabase = realmDatabase
-        self.languagesRepository = languagesRepository
         self.getTranslatedLanguageName = getTranslatedLanguageName
         self.cache = cache
     }
     
-    func syncTranslatedLanguageNamesPublisher(translateInLanguage: BCP47LanguageIdentifier) -> AnyPublisher<Void, Never> {
+    func syncTranslatedLanguageNamesPublisher(translateInLanguage: BCP47LanguageIdentifier, languages: [LanguageModel]) -> AnyPublisher<Void, Never> {
         
-        return languagesRepository.getLanguagesChanged()
-            .flatMap({ (languagesChanged: Void) -> AnyPublisher<[LanguageModel], Never> in
+        return realmDatabase.writeObjectsPublisher { (realm: Realm) -> [RealmTranslatedLanguageName] in
+            
+            var translatedLanguageNames: [RealmTranslatedLanguageName] = Array()
+            
+            for languageModel in languages {
                 
-                let languages: [LanguageModel] = self.languagesRepository.getLanguages()
-                
-                return Just(languages)
-                    .eraseToAnyPublisher()
-            })
-            .flatMap({ (languages: [LanguageModel]) -> AnyPublisher<Void, Never> in
-                
-                return self.realmDatabase.writeObjectsPublisher { (realm: Realm) -> [RealmTranslatedLanguageName] in
-                    
-                    var translatedLanguageNames: [RealmTranslatedLanguageName] = Array()
-                    
-                    for languageModel in languages {
-                        
-                        if let realmObject = self.getRealmTranslatedLanguage(realm: realm, language: languageModel, translateInLanguage: translateInLanguage) {
-                            translatedLanguageNames.append(realmObject)
-                        }
-                        
-                        if let realmObject = self.getRealmTranslatedLanguage(realm: realm, language: languageModel, translateInLanguage: languageModel.code) {
-                            translatedLanguageNames.append(realmObject)
-                        }
-                    }
-                    
-                    return translatedLanguageNames
-                    
-                } mapInBackgroundClosure: { (objects: [RealmTranslatedLanguageName]) -> [Void] in
-                    return [Void()]
+                if let realmObject = self.getRealmTranslatedLanguage(realm: realm, language: languageModel, translateInLanguage: translateInLanguage) {
+                    translatedLanguageNames.append(realmObject)
                 }
-                .map { _ in
-                    return ()
+                
+                if let realmObject = self.getRealmTranslatedLanguage(realm: realm, language: languageModel, translateInLanguage: languageModel.code) {
+                    translatedLanguageNames.append(realmObject)
                 }
-                .catch ({ (error: Error) in
-                    return Just(())
-                        .eraseToAnyPublisher()
-                })
+            }
+            
+            return translatedLanguageNames
+            
+        } mapInBackgroundClosure: { (objects: [RealmTranslatedLanguageName]) -> [Void] in
+            return [Void()]
+        }
+        .map { _ in
+            return ()
+        }
+        .catch ({ (error: Error) in
+            return Just(())
                 .eraseToAnyPublisher()
-                
-            })
-            .eraseToAnyPublisher()
+        })
+        .eraseToAnyPublisher()
     }
     
     private func getRealmTranslatedLanguage(realm: Realm, language: TranslatableLanguage, translateInLanguage: BCP47LanguageIdentifier) -> RealmTranslatedLanguageName? {
