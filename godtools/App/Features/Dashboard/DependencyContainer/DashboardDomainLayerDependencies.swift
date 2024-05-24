@@ -23,6 +23,12 @@ class DashboardDomainLayerDependencies {
         )
     }
     
+    func getStoreInitialFavoritedToolsUseCase() -> StoreInitialFavoritedToolsUseCase {
+        return StoreInitialFavoritedToolsUseCase(
+            storeInitialFavoritedTools: dataLayer.getStoreInitialFavoritedTools()
+        )
+    }
+    
     func getViewDashboardUseCase() -> ViewDashboardUseCase {
         return ViewDashboardUseCase(
             getInterfaceStringsRepository: dataLayer.getDashboardInterfaceStringsRepositoryInterface()
