@@ -53,6 +53,12 @@ class AppBackgroundState {
             translatedLanguageNameRepositorySync: appDiContainer.dataLayer.getTranslatedLanguageNameRepositorySync(),
             languagesRepository: appDiContainer.dataLayer.getLanguagesRepository()
         )
+        
+        syncInitialFavoritedTools(
+            resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
+            launchCountRepository: appDiContainer.dataLayer.getSharedLaunchCountRepository(),
+            storeInitialFavoritedToolsUseCase: appDiContainer.feature.dashboard.domainLayer.getStoreInitialFavoritedToolsUseCase()
+        )
     }
     
     private func syncLatestToolsForFavoritedTools(downloadLatestToolsForFavoritedToolsUseCase: DownloadLatestToolsForFavoritedToolsUseCase) {
@@ -92,6 +98,30 @@ class AppBackgroundState {
                         
             translatedLanguageNameRepositorySync
                 .syncTranslatedLanguageNamesPublisher(translateInLanguage: appLanguage, languages: languages)
+        }
+        .receive(on: DispatchQueue.main)
+        .sink { _ in
+            
+        }
+        .store(in: &cancellables)
+    }
+    
+    private func syncInitialFavoritedTools(resourcesRepository: ResourcesRepository, launchCountRepository: LaunchCountRepository, storeInitialFavoritedToolsUseCase: StoreInitialFavoritedToolsUseCase) {
+        
+        Publishers.CombineLatest(
+            resourcesRepository.getResourcesChangedPublisher().prepend(Void()),
+            launchCountRepository.getLaunchCountPublisher()
+        )
+        .flatMap { (resourcesChanged: Void, launchCount: Int) -> AnyPublisher<Void, Never> in
+            
+            guard launchCount == 1 else {
+                return Just(Void())
+                    .eraseToAnyPublisher()
+            }
+            
+            return storeInitialFavoritedToolsUseCase
+                .storeToolsPublisher()
+                .eraseToAnyPublisher()
         }
         .receive(on: DispatchQueue.main)
         .sink { _ in

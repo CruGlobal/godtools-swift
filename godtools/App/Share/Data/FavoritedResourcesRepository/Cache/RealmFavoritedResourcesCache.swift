@@ -72,10 +72,22 @@ class RealmFavoritedResourcesCache {
     
     func storeFavoritedResourcesPublisher(ids: [String]) -> AnyPublisher<[FavoritedResourceDataModel], Error> {
         
-        let newFavoritedResources: [FavoritedResourceDataModel] = ids.map {
-            return FavoritedResourceDataModel(id: $0)
-        }
+        let currentDate: Date = Date()
+        let calendar: Calendar = Calendar.current
         
+        var newFavoritedResources: [FavoritedResourceDataModel] = Array()
+        
+        for index in 0 ..< ids.count {
+            
+            guard let createdAtDate = calendar.date(byAdding: .second, value: index, to: currentDate) else {
+                continue
+            }
+            
+            let favoritedResource = FavoritedResourceDataModel(id: ids[index], createdAt: createdAtDate)
+            
+            newFavoritedResources.append(favoritedResource)
+        }
+
         return realmDatabase.writeObjectsPublisher { (realm: Realm) -> [RealmFavoritedResource] in
             
             let realmFavoritedResources: [RealmFavoritedResource] = newFavoritedResources.map {
