@@ -19,4 +19,8 @@ public extension NSError {
         
         return NSError(domain: domain, code: code, userInfo: [NSLocalizedDescriptionKey: description])
     }
+    
+    static func userCancelledError(domain: String = "") -> NSError {
+        return NSError.errorWithDomain(domain: domain, code: NSUserCancelledError, description: "User Cancelled")
+    }
 }
