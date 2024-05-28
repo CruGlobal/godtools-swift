@@ -57,7 +57,15 @@ extension FacebookAuthentication: AuthenticationProviderInterface {
         return authenticatePublisher(from: presentingViewController)
             .flatMap({ (response: FacebookAuthenticationResponse) -> AnyPublisher<AuthenticationProviderResponse, Error> in
                 
-                return self.getResponseForPersistedData().publisher
+                if !response.isCancelled {
+                    
+                    return self.getResponseForPersistedData().publisher
+                        .eraseToAnyPublisher()
+                }
+                
+                let cancelledError: Error = NSError.errorWithDomain(domain: "", code: NSUserCancelledError, description: "Cancelled")
+                
+                return Fail(error: cancelledError)
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
