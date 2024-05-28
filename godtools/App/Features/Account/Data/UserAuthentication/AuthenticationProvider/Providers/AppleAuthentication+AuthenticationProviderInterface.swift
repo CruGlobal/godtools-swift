@@ -57,7 +57,15 @@ extension AppleAuthentication: AuthenticationProviderInterface {
         return authenticatePublisher()
             .flatMap ({ (response: AppleAuthenticationResponse) -> AnyPublisher<AuthenticationProviderResponse, Error> in
                 
-                return self.getAuthenticationProviderResponse(appleAuthResponse: response).publisher
+                if !response.isCancelled {
+                    
+                    return self.getAuthenticationProviderResponse(appleAuthResponse: response).publisher
+                        .eraseToAnyPublisher()
+                }
+                
+                let cancelledError: Error = NSError.errorWithDomain(domain: "", code: NSUserCancelledError, description: "Cancelled")
+                
+                return Fail(error: cancelledError)
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
