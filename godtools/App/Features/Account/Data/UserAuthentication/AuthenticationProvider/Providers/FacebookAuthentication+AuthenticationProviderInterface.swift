@@ -57,13 +57,12 @@ extension FacebookAuthentication: AuthenticationProviderInterface {
         return authenticatePublisher(from: presentingViewController)
             .flatMap({ (response: FacebookAuthenticationResponse) -> AnyPublisher<AuthenticationProviderResponse, Error> in
                 
-                if !response.isCancelled {
-                    
-                    return self.getResponseForPersistedData().publisher
+                if response.isCancelled {
+                    return Fail(error: NSError.userCancelledError())
                         .eraseToAnyPublisher()
                 }
-                                
-                return Fail(error: NSError.userCancelledError())
+                
+                return self.getResponseForPersistedData().publisher
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
