@@ -62,10 +62,8 @@ extension GoogleAuthentication: AuthenticationProviderInterface {
                     return self.getResponseForPersistedData().publisher
                         .eraseToAnyPublisher()
                 }
-                
-                let cancelledError: Error = NSError.errorWithDomain(domain: "", code: NSUserCancelledError, description: "Cancelled")
-                
-                return Fail(error: cancelledError)
+                                
+                return Fail(error: NSError.userCancelledError())
                     .eraseToAnyPublisher()
                 
             })
