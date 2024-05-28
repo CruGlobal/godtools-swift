@@ -115,23 +115,23 @@ class MenuFlow: Flow {
         case .closeTappedFromCreateAccount:
             navigationController.dismiss(animated: true)
                                 
-        case .userCompletedSignInFromCreateAccount(let error):
+        case .userCompletedSignInFromCreateAccount(let authError):
             
             let appLanguage: AppLanguageDomainModel = self.appLanguage
             
-            navigationController.dismissPresented(animated: true) {
-                if let error = error {
-                    self.presentAlertMessage(appLanguage: appLanguage, alertMessage: self.getAuthErrorAlertMessage(authError: error))
+            navigationController.dismissPresented(animated: true) { [weak self] in
+                if let authError = authError {
+                    self?.presentSocialAuthError(authError: authError)
                 }
             }
             
-        case .userCompletedSignInFromLogin(let error):
+        case .userCompletedSignInFromLogin(let authError):
             
             let appLanguage: AppLanguageDomainModel = self.appLanguage
             
-            navigationController.dismissPresented(animated: true) {
-                if let error = error {
-                    self.presentAlertMessage(appLanguage: appLanguage, alertMessage: self.getAuthErrorAlertMessage(authError: error))
+            navigationController.dismissPresented(animated: true) { [weak self] in
+                if let authError = authError {
+                    self?.presentSocialAuthError(authError: authError)
                 }
             }
             
@@ -297,6 +297,17 @@ class MenuFlow: Flow {
         )
         
         return hostingView
+    }
+    
+    private func presentSocialAuthError(authError: AuthErrorDomainModel) {
+            
+        let errorIsUserCancelled: Bool = authError.getError()?.code == NSUserCancelledError
+        
+        guard !errorIsUserCancelled else {
+            return
+        }
+
+        presentAlertMessage(appLanguage: appLanguage, alertMessage: self.getAuthErrorAlertMessage(authError: authError))
     }
     
     private func getSocialSignInView(authenticationType: SocialSignInAuthenticationType) -> UIViewController {

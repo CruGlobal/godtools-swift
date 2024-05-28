@@ -14,3 +14,17 @@ enum AuthErrorDomainModel: Error {
     case accountNotFound
     case other(error: Error)
 }
+
+extension AuthErrorDomainModel {
+    
+    func getError() -> Error? {
+        switch self {
+        case .accountAlreadyExists:
+            return nil
+        case .accountNotFound:
+            return nil
+        case .other(let error):
+            return error
+        }
+    }
+}
