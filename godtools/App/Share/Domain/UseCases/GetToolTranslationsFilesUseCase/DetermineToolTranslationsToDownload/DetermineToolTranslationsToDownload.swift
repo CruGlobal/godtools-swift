@@ -46,8 +46,8 @@ class DetermineToolTranslationsToDownload: DetermineToolTranslationsToDownloadTy
             translations.append(translation)
         }
         
-        if translations.isEmpty, let englishTranslation = translationsRepository.getLatestTranslation(resourceId: resourceId, languageCode: LanguageCodeDomainModel.english.value) {
-            translations = [englishTranslation]
+        if translations.isEmpty, let defaultTranslation = translationsRepository.getLatestTranslation(resourceId: resourceId, languageId: resource.attrDefaultLocale) {
+            translations = [defaultTranslation]
         }
     
         let result = DetermineToolTranslationsToDownloadResult(translations: translations)
