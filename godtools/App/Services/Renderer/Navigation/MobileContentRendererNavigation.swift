@@ -91,7 +91,7 @@ class MobileContentRendererNavigation {
         
         let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(
             resourceId: toolId,
-            languageIds: languageIds, 
+            languageIds: languageIds,
             resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
             translationsRepository: appDiContainer.dataLayer.getTranslationsRepository()
         )
