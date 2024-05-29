@@ -21,4 +21,8 @@ public extension Error {
     var isUrlErrorNotConnectedToInternetCode: Bool {
         return code == Int(CFNetworkErrors.cfurlErrorNotConnectedToInternet.rawValue)
     }
+    
+    var isUserCancelled: Bool {
+        return code == NSUserCancelledError
+    }
 }
