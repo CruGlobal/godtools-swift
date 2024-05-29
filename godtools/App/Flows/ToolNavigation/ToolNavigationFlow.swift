@@ -44,7 +44,8 @@ extension ToolNavigationFlow {
         
         let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(
             resourceId: resourceId,
-            languageIds: languageIds,
+            languageIds: languageIds, 
+            languagesRepository: appDiContainer.dataLayer.getLanguagesRepository(),
             resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
             translationsRepository: appDiContainer.dataLayer.getTranslationsRepository()
         )
