@@ -12,11 +12,46 @@ extension Flow {
     
     func presentError(appLanguage: AppLanguageDomainModel, error: Error) {
         
+        let isCancelled: Bool = error.isUrlErrorCancelledCode || error.isUserCancelled
+        
+        guard !isCancelled else {
+            return
+        }
+
         let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
         
-        let title: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.error.key)
-        let message: String = error.localizedDescription
+        let defaultErrorTitle: String = localizationServices.stringForLocaleElseEnglish(
+            localeIdentifier: appLanguage,
+            key: LocalizableStringKeys.error.key
+        )
         
-        presentAlert(appLanguage: appLanguage, title: title, message: message)
+        let defaultErrorMessage: String = error.localizedDescription
+        
+        let title: String
+        let message: String
+        
+        if error.isUrlErrorNotConnectedToInternetCode {
+
+            title = localizationServices.stringForLocaleElseEnglish(
+                localeIdentifier: appLanguage,
+                key: LocalizableStringKeys.noInternetTitle.key
+            )
+            
+            message = localizationServices.stringForLocaleElseEnglish(
+                localeIdentifier: appLanguage,
+                key: LocalizableStringKeys.noInternet.key
+            )
+        }
+        else {
+            
+            title = defaultErrorTitle
+            message = defaultErrorMessage
+        }
+        
+        presentAlert(
+            appLanguage: appLanguage,
+            title: title,
+            message: message
+        )
     }
 }

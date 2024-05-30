@@ -35,6 +35,12 @@ class DashboardDataLayerDependencies {
         )
     }
     
+    func getStoreInitialFavoritedTools() -> StoreInitialFavoritedToolsInterface {
+        return StoreInitialFavoritedTools(
+            favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository()
+        )
+    }
+    
     func getToolsInterfaceStringsRepository() -> GetToolsInterfaceStringsRepositoryInterface {
         return GetToolsInterfaceStringsRepository(
             localizationServices: coreDataLayer.getLocalizationServices()

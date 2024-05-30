@@ -19,6 +19,12 @@ struct FavoritedResourceDataModel {
         self.id = id
     }
     
+    init(id: String, createdAt: Date) {
+        
+        self.createdAt = createdAt
+        self.id = id
+    }
+    
     init(realmFavoritedResource: RealmFavoritedResource) {
         
         self.createdAt = realmFavoritedResource.createdAt
