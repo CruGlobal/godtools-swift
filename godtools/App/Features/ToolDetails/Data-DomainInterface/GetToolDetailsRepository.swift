@@ -135,10 +135,10 @@ class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
                 name = appLanguageTranslation.translatedName
                 description = appLanguageTranslation.translatedTagline
             }
-            else if let englishTranslation = translationsRepository.getLatestTranslation(resourceId: resourceVariant.id, languageCode: LanguageCodeDomainModel.english.rawValue) {
+            else if let defaultTranslation = translationsRepository.getLatestTranslation(resourceId: resourceVariant.id, languageCode: resourceVariant.attrDefaultLocale) {
                 
-                name = englishTranslation.translatedName
-                description = englishTranslation.translatedTagline
+                name = defaultTranslation.translatedName
+                description = defaultTranslation.translatedTagline
             }
             else {
                 
