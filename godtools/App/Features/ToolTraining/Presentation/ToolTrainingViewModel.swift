@@ -92,10 +92,10 @@ class ToolTrainingViewModel: NSObject {
         
         let continueTitle: String
         if page < (numberOfTipPages.value - 1) {
-            continueTitle = localizationServices.stringForLocaleElseEnglish(localeIdentifier: renderedPageContext.appLanguage, key: LocalizableStringKeys.cardNextButtonTitle.key)
+            continueTitle = localizationServices.stringForLocaleElseEnglish(localeIdentifier: renderedPageContext.language.localeIdentifier, key: LocalizableStringKeys.cardNextButtonTitle.key)
         }
         else {
-            continueTitle = localizationServices.stringForLocaleElseEnglish(localeIdentifier: renderedPageContext.appLanguage, key: LocalizableStringKeys.close.key)
+            continueTitle = localizationServices.stringForLocaleElseEnglish(localeIdentifier: renderedPageContext.language.localeIdentifier, key: LocalizableStringKeys.close.key)
         }
         continueButtonTitle.accept(value: continueTitle)
 
@@ -138,7 +138,7 @@ class ToolTrainingViewModel: NSObject {
             localizedTipTitle = ""
         }
         
-        let tipTitle: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: renderedPageContext.appLanguage, key: localizedTipTitle)
+        let tipTitle: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: renderedPageContext.language.localeIdentifier, key: localizedTipTitle)
         
         trainingTipBackgroundImage.accept(value: UIImage(named: tipBackgroundImageName))
         trainingTipForegroundImage.accept(value: UIImage(named: tipImageName))

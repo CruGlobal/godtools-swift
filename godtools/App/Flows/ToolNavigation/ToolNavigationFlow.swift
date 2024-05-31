@@ -77,7 +77,7 @@ extension ToolNavigationFlow {
                 )
                 
             case .failure(let responseError):
-                self?.presentNetworkError(appLanguage: appLanguage, responseError: responseError)
+                self?.presentError(appLanguage: appLanguage, error: responseError)
             }
             
             self?.downloadToolTranslationFlow = nil
