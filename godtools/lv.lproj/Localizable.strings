@@ -12,10 +12,10 @@
 "languageSettings.toolLanguagesAvailableOffline.message" = "Lejupielādē visus rīkus izvēlētā valodā, lai tie būtu pieejami bezsaistē. Rīka valodas izvēlei izmanto rīka iestatījumu pogu.";
 "languageSettings.toolLanguagesAvailableOffline.editDownloadedLanguagesButton.title" = "Labot lejupielādēto valodu pieejamību";
 "allTools.filter.title" = "Filtrs";
-"allTools.filter.anyCategory" = "Jebkura kategorija";
-"allTools.filter.anyLanguage" = "Jebkura valoda";
-"allTools.filter.navBar.language" = "Filtrēt pēc valodas";
-"allTools.filter.navBar.category" = "Filtrēt pēc kategorijas";
+"allTools.filter.anyCategory" = "Visas kategorijas";
+"allTools.filter.anyLanguage" = "Visas valodas";
+"allTools.filter.navBar.language" = "Filtrs pēc valodas";
+"allTools.filter.navBar.category" = "Filtrs pēc kategorijas";
 "languageSettings.appLanguage.title" = "Lietotnes valoda";
 "authError.userAccountAlreadyExists.message" = "Lietotāja konts jau pastāv.";
 "authError.userAccountNotFound.message" = "Lietotāja konts nav atrasts.";
