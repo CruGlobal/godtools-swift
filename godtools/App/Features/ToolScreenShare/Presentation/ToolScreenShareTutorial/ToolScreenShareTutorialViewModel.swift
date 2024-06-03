@@ -59,25 +59,38 @@ class ToolScreenShareTutorialViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        Publishers.CombineLatest(
+        Publishers.CombineLatest3(
             $currentPage,
-            $interfaceStrings
+            $interfaceStrings,
+            $tutorialPages.dropFirst()
         )
         .receive(on: DispatchQueue.main)
-        .sink { [weak self] (currentPage: Int, interfaceStrings: ToolScreenShareInterfaceStringsDomainModel?) in
+        .sink { [weak self] (currentPage: Int, interfaceStrings: ToolScreenShareInterfaceStringsDomainModel?, tutorialPages: [ToolScreenShareTutorialPageDomainModel]) in
+            
+            guard let weakSelf = self else {
+                return
+            }
+            
             if let interfaceStrings = interfaceStrings {
-                self?.refreshContinueTitle(interfaceStrings: interfaceStrings)
+                weakSelf.refreshContinueTitle(interfaceStrings: interfaceStrings, tutorialPages: tutorialPages)
             }
         }
         .store(in: &cancellables)
 
-        $currentPage
-            .eraseToAnyPublisher()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (page: Int) in
-                self?.pageDidChange(page: page)
+        Publishers.CombineLatest(
+            $currentPage,
+            $tutorialPages.dropFirst()
+        )
+        .receive(on: DispatchQueue.main)
+        .sink { [weak self] (page: Int, tutorialPages: [ToolScreenShareTutorialPageDomainModel]) in
+            
+            guard let weakSelf = self else {
+                return
             }
-            .store(in: &cancellables)
+            
+            weakSelf.hidesSkipButton = weakSelf.getIsOnLastPage(tutorialPages: tutorialPages)
+        }
+        .store(in: &cancellables)
     }
     
     deinit {
@@ -88,16 +101,14 @@ class ToolScreenShareTutorialViewModel: ObservableObject {
         return "shareToolScreen"
     }
     
-    private var isOnLastPage: Bool {
+    private func getIsOnLastPage(tutorialPages: [ToolScreenShareTutorialPageDomainModel]) -> Bool {
         return currentPage >= tutorialPages.count - 1
     }
     
-    private func pageDidChange(page: Int) {
-                
-        hidesSkipButton = isOnLastPage
-    }
-    
-    private func refreshContinueTitle(interfaceStrings: ToolScreenShareInterfaceStringsDomainModel) {
+    private func refreshContinueTitle(interfaceStrings: ToolScreenShareInterfaceStringsDomainModel, tutorialPages: [ToolScreenShareTutorialPageDomainModel]) {
+        
+        let isOnLastPage: Bool = getIsOnLastPage(tutorialPages: tutorialPages)
+        
         continueTitle = !isOnLastPage ? interfaceStrings.nextTutorialPageActionTitle : interfaceStrings.shareLinkActionTitle
     }
 }
@@ -115,6 +126,8 @@ extension ToolScreenShareTutorialViewModel {
     }
     
     func continueTapped() {
+        
+        let isOnLastPage: Bool = getIsOnLastPage(tutorialPages: tutorialPages)
         
         if isOnLastPage {
             shareLinkTapped()
