@@ -67,12 +67,8 @@ class ToolScreenShareTutorialViewModel: ObservableObject {
         .receive(on: DispatchQueue.main)
         .sink { [weak self] (currentPage: Int, interfaceStrings: ToolScreenShareInterfaceStringsDomainModel?, tutorialPages: [ToolScreenShareTutorialPageDomainModel]) in
             
-            guard let weakSelf = self else {
-                return
-            }
-            
             if let interfaceStrings = interfaceStrings {
-                weakSelf.refreshContinueTitle(interfaceStrings: interfaceStrings, tutorialPages: tutorialPages)
+                self?.refreshContinueTitle(interfaceStrings: interfaceStrings, tutorialPages: tutorialPages)
             }
         }
         .store(in: &cancellables)
