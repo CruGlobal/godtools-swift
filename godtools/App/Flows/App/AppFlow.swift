@@ -362,10 +362,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                     
         case .openTutorialTappedFromTools:
             navigateToTutorial()
-            
-        case .backTappedFromTutorial:
-            dismissTutorial()
-    
+                
         case .closeTappedFromTutorial:
             dismissTutorial()
             
