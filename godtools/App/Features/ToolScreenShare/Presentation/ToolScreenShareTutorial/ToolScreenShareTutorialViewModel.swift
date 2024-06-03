@@ -111,6 +111,16 @@ class ToolScreenShareTutorialViewModel: ObservableObject {
         
         continueTitle = !isOnLastPage ? interfaceStrings.nextTutorialPageActionTitle : interfaceStrings.shareLinkActionTitle
     }
+    
+    private func markToolScreenShareTutorialViewed() {
+     
+        ToolScreenShareTutorialViewModel.didViewToolScreenShareTutorialCancellable = didViewToolScreenShareTutorialUseCase
+            .didViewPublisher(toolId: toolId)
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+                
+            }
+    }
 }
 
 // MARK: - Inputs
@@ -122,6 +132,9 @@ extension ToolScreenShareTutorialViewModel {
     }
     
     @objc func skipTapped() {
+        
+        markToolScreenShareTutorialViewed()
+        
         flowDelegate?.navigate(step: .skipTappedFromToolScreenShareTutorial)
     }
     
@@ -143,12 +156,7 @@ extension ToolScreenShareTutorialViewModel {
     
     private func shareLinkTapped() {
         
-        ToolScreenShareTutorialViewModel.didViewToolScreenShareTutorialCancellable = didViewToolScreenShareTutorialUseCase
-            .didViewPublisher(toolId: toolId)
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
-                
-            }
+        markToolScreenShareTutorialViewed()
         
         flowDelegate?.navigate(step: .shareLinkTappedFromToolScreenShareTutorial)
     }
