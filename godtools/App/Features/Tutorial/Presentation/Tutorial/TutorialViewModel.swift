@@ -60,24 +60,29 @@ class TutorialViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        Publishers.CombineLatest(
+        Publishers.CombineLatest3(
             $currentPage,
-            $interfaceStrings
+            $interfaceStrings,
+            $tutorialPages.dropFirst()
         )
         .receive(on: DispatchQueue.main)
-        .sink { [weak self] (currentPage: Int, interfaceStrings: TutorialInterfaceStringsDomainModel?) in
+        .sink { [weak self] (currentPage: Int, interfaceStrings: TutorialInterfaceStringsDomainModel?, tutorialPages: [TutorialPageDomainModel]) in
+            
             if let interfaceStrings = interfaceStrings {
-                self?.refreshContinueTitle(interfaceStrings: interfaceStrings)
+                self?.refreshContinueTitle(interfaceStrings: interfaceStrings, tutorialPages: tutorialPages)
             }
         }
         .store(in: &cancellables)
         
-        $currentPage
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (page: Int) in
-                self?.pageDidChange(page: page)
-            }
-            .store(in: &cancellables)
+        Publishers.CombineLatest(
+            $currentPage,
+            $tutorialPages.dropFirst()
+        )
+        .receive(on: DispatchQueue.main)
+        .sink { [weak self] (page: Int, tutorialPages: [TutorialPageDomainModel]) in
+            self?.pageDidChange(page: page, tutorialPages: tutorialPages)
+        }
+        .store(in: &cancellables)
     }
     
     deinit {
@@ -100,7 +105,7 @@ class TutorialViewModel: ObservableObject {
         return currentPage == 0
     }
     
-    private var isOnLastPage: Bool {
+    private func getIsOnLastPage(tutorialPages: [TutorialPageDomainModel]) -> Bool {
         
         guard tutorialPages.count > 0 else {
             return false
@@ -109,7 +114,7 @@ class TutorialViewModel: ObservableObject {
         return currentPage >= tutorialPages.count - 1
     }
     
-    private func pageDidChange(page: Int) {
+    private func pageDidChange(page: Int, tutorialPages: [TutorialPageDomainModel]) {
                 
         hidesBackButton = isOnFirstPage
                                 
@@ -137,7 +142,10 @@ class TutorialViewModel: ObservableObject {
         )
     }
     
-    private func refreshContinueTitle(interfaceStrings: TutorialInterfaceStringsDomainModel) {
+    private func refreshContinueTitle(interfaceStrings: TutorialInterfaceStringsDomainModel, tutorialPages: [TutorialPageDomainModel]) {
+        
+        let isOnLastPage: Bool = getIsOnLastPage(tutorialPages: tutorialPages)
+        
         continueTitle = isOnLastPage ? interfaceStrings.completeTutorialActionTitle : interfaceStrings.nextTutorialPageActionTitle
     }
 }
@@ -147,7 +155,10 @@ class TutorialViewModel: ObservableObject {
 extension TutorialViewModel {
     
     @objc func backTapped() {
-        flowDelegate?.navigate(step: .backTappedFromTutorial)
+        
+        if !isOnFirstPage {
+            currentPage = currentPage - 1
+        }
     }
     
     @objc func closeTapped() {
@@ -178,6 +189,8 @@ extension TutorialViewModel {
     }
     
     func continueTapped() {
+        
+        let isOnLastPage: Bool = getIsOnLastPage(tutorialPages: tutorialPages)
         
         if isOnLastPage {
             flowDelegate?.navigate(step: .startUsingGodToolsTappedFromTutorial)

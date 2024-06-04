@@ -50,10 +50,7 @@ class TutorialFlow: Flow {
     func navigate(step: FlowStep) {
         
         switch step {
-            
-        case .backTappedFromTutorial:
-            flowDelegate?.navigate(step: .backTappedFromTutorial)
-           
+                       
         case .closeTappedFromTutorial:
             flowDelegate?.navigate(step: .closeTappedFromTutorial)
             
