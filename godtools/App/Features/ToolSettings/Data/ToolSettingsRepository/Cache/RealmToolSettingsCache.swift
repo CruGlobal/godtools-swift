@@ -35,4 +35,21 @@ class RealmToolSettingsCache {
             print(error)
         }
     }
+        
+    func getToolSettings(toolId: String) -> ToolSettingsDataModel? {
+        
+        let realm: Realm = realmDatabase.openRealm()
+        
+        guard let realmToolSettings = realm.object(ofType: RealmToolSettings.self, forPrimaryKey: toolId) else {
+            return nil
+        }
+        
+        return ToolSettingsDataModel(realmObject: realmToolSettings)
+    }
+    
+    func getToolSettingsPublisher(toolId: String) -> AnyPublisher<ToolSettingsDataModel?, Never> {
+        
+        return Just(getToolSettings(toolId: toolId))
+            .eraseToAnyPublisher()
+    }
 }

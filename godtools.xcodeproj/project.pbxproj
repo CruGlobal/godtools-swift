@@ -1551,6 +1551,10 @@
 		D4BE3F6E2C0907E900887BFD /* RealmToolSettingsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BE3F6D2C0907E900887BFD /* RealmToolSettingsCache.swift */; };
 		D4BE3F702C0907FC00887BFD /* RealmToolSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BE3F6F2C0907FC00887BFD /* RealmToolSettings.swift */; };
 		D4BE3F722C0909BA00887BFD /* ToolSettingsDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BE3F712C0909BA00887BFD /* ToolSettingsDataModel.swift */; };
+		D4BE3F742C0E91DB00887BFD /* GetUserToolSettingsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BE3F732C0E91DB00887BFD /* GetUserToolSettingsUseCase.swift */; };
+		D4BE3F762C0E920400887BFD /* GetUserToolSettingsRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BE3F752C0E920400887BFD /* GetUserToolSettingsRepositoryInterface.swift */; };
+		D4BE3F782C0E967200887BFD /* UserToolSettingsDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BE3F772C0E967200887BFD /* UserToolSettingsDomainModel.swift */; };
+		D4BE3F7A2C0E96C600887BFD /* GetUserToolSettingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BE3F792C0E96C600887BFD /* GetUserToolSettingsRepository.swift */; };
 		D4C14E9229411A35001465F1 /* MobileContentAuthTokenDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C14E9129411A35001465F1 /* MobileContentAuthTokenDataModel.swift */; };
 		D4C759212BB643EF00D6AEB2 /* SearchBarLegacy.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C759202BB643EF00D6AEB2 /* SearchBarLegacy.swift */; };
 		D4E243CC29EDC6A100EA4BB7 /* SendFeedbackWebContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E243CB29EDC6A100EA4BB7 /* SendFeedbackWebContent.swift */; };
@@ -3253,6 +3257,10 @@
 		D4BE3F6D2C0907E900887BFD /* RealmToolSettingsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmToolSettingsCache.swift; sourceTree = "<group>"; };
 		D4BE3F6F2C0907FC00887BFD /* RealmToolSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmToolSettings.swift; sourceTree = "<group>"; };
 		D4BE3F712C0909BA00887BFD /* ToolSettingsDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolSettingsDataModel.swift; sourceTree = "<group>"; };
+		D4BE3F732C0E91DB00887BFD /* GetUserToolSettingsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserToolSettingsUseCase.swift; sourceTree = "<group>"; };
+		D4BE3F752C0E920400887BFD /* GetUserToolSettingsRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserToolSettingsRepositoryInterface.swift; sourceTree = "<group>"; };
+		D4BE3F772C0E967200887BFD /* UserToolSettingsDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserToolSettingsDomainModel.swift; sourceTree = "<group>"; };
+		D4BE3F792C0E96C600887BFD /* GetUserToolSettingsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserToolSettingsRepository.swift; sourceTree = "<group>"; };
 		D4C14E9129411A35001465F1 /* MobileContentAuthTokenDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentAuthTokenDataModel.swift; sourceTree = "<group>"; };
 		D4C759202BB643EF00D6AEB2 /* SearchBarLegacy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarLegacy.swift; sourceTree = "<group>"; };
 		D4E243CB29EDC6A100EA4BB7 /* SendFeedbackWebContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendFeedbackWebContent.swift; sourceTree = "<group>"; };
@@ -8941,6 +8949,7 @@
 		45C151EB2A43D1BD00F2A1E8 /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				D4BE3F732C0E91DB00887BFD /* GetUserToolSettingsUseCase.swift */,
 				D4BE3F622C08074400887BFD /* PersistToolSettingsIfFavoriteToolUseCase.swift */,
 				45C649BB2B31E14D000249E0 /* ViewShareToolUseCase.swift */,
 				4512D4C62B29125700DFAFB3 /* ViewToolSettingsToolLanguagesListUseCase.swift */,
@@ -10044,6 +10053,7 @@
 				45AF47EC2B35E03500361EA7 /* GetToolSettingsToolHasTipsRepositoryInterface.swift */,
 				4512D4C32B29124600DFAFB3 /* GetToolSettingsToolLanguagesListInterfaceStringsRepositoryInterface.swift */,
 				4512D4C22B29124600DFAFB3 /* GetToolSettingsToolLanguagesListRepositoryInterface.swift */,
+				D4BE3F752C0E920400887BFD /* GetUserToolSettingsRepositoryInterface.swift */,
 				D4BE3F642C09029900887BFD /* PersistToolSettingsIfFavoriteToolRepositoryInterface.swift */,
 			);
 			path = Interfaces;
@@ -10057,6 +10067,7 @@
 				4512D4CB2B29127200DFAFB3 /* ToolSettingsToolLanguageDomainModel.swift */,
 				4512D4CC2B29127200DFAFB3 /* ToolSettingsToolLanguagesListInterfaceStringsDomainModel.swift */,
 				450B7FC12B2B53A2000B9035 /* ToolSettingsToolLanguagesListTypeDomainModel.swift */,
+				D4BE3F772C0E967200887BFD /* UserToolSettingsDomainModel.swift */,
 				45C649BD2B31E178000249E0 /* ViewShareToolDomainModel.swift */,
 				45EA5AA02B2246A800D9E330 /* ViewToolSettingsDomainModel.swift */,
 				4512D4CA2B29127200DFAFB3 /* ViewToolSettingsToolLanguagesListDomainModel.swift */,
@@ -10084,6 +10095,7 @@
 				45AF47EE2B35E08C00361EA7 /* GetToolSettingsToolHasTipsRepository.swift */,
 				4512D4D12B29127C00DFAFB3 /* GetToolSettingsToolLanguagesListInterfaceStringsRepository.swift */,
 				4512D4D02B29127C00DFAFB3 /* GetToolSettingsToolLanguagesListRepository.swift */,
+				D4BE3F792C0E96C600887BFD /* GetUserToolSettingsRepository.swift */,
 				D4BE3F662C09048C00887BFD /* PersistToolSettingsForFavoriteToolsRepository.swift */,
 			);
 			path = "Data-DomainInterface";
@@ -11953,6 +11965,7 @@
 				4598BD232BF7DF6800196463 /* AuthenticateUserInterface.swift in Sources */,
 				4598BD162BF7DF6800196463 /* AuthenticateUser.swift in Sources */,
 				455583D7269F2DA500C3FF14 /* MobileContentTabsView.swift in Sources */,
+				D4BE3F7A2C0E96C600887BFD /* GetUserToolSettingsRepository.swift in Sources */,
 				45D63E9D288F77D4009B4610 /* RealmResourcesCache.swift in Sources */,
 				45AD1F6525938A9800A096A0 /* ToolTrainingTipsOnboardingViewsService.swift in Sources */,
 				453F84C32A029FC00005101E /* ArticleAemCache.swift in Sources */,
@@ -12040,6 +12053,7 @@
 				4598BD272BF7DF6800196463 /* GetSocialCreateAccountInterfaceStringsUseCase.swift in Sources */,
 				4504BA272AF3EE67001151E5 /* TutorialDomainModel.swift in Sources */,
 				459F86802AC516E600B4E5CA /* ChooseAppLanguageButton.swift in Sources */,
+				D4BE3F762C0E920400887BFD /* GetUserToolSettingsRepositoryInterface.swift in Sources */,
 				45AD1F6725938A9800A096A0 /* ToolTrainingTipsOnboardingViewsUserDefaultsCache.swift in Sources */,
 				45B3F44C2AC3A86100D61BFD /* AppLanguagesRepository.swift in Sources */,
 				452DFB392B7FB3E3003A4A59 /* ViewAllYourFavoritedToolsUseCase.swift in Sources */,
@@ -12806,6 +12820,7 @@
 				457102002AB9DDDB00D1BFFC /* MobileContentApiErrorCodable.swift in Sources */,
 				45931FF72B34C1D1008034C8 /* ViewReviewShareShareableUseCase.swift in Sources */,
 				45558402269F2DA500C3FF14 /* MobileContentBackgroundImageView.swift in Sources */,
+				D4BE3F742C0E91DB00887BFD /* GetUserToolSettingsUseCase.swift in Sources */,
 				45D63EA7288F77D4009B4610 /* ResourcesRepository.swift in Sources */,
 				45051205275AA7050081BF56 /* MobileContentParagraphView.swift in Sources */,
 				45B3F44B2AC3A86100D61BFD /* UserAppLanguageDataModel.swift in Sources */,
@@ -12853,6 +12868,7 @@
 				45AC9DEC2B28A9CD00DEEBFE /* DownloadableLanguageItemView.swift in Sources */,
 				45AE974C27C97A9500C2CB33 /* Tabs+MobileContentRenderableModel.swift in Sources */,
 				45AE974427C97A9400C2CB33 /* Modal+MobileContentRenderableModel.swift in Sources */,
+				D4BE3F782C0E967200887BFD /* UserToolSettingsDomainModel.swift in Sources */,
 				D4AFA44F2BAD0A9200318023 /* GetToolFilterCategoriesInterfaceStringsRepository.swift in Sources */,
 				4529B96E289345480011F16B /* TranslationManifestParserType.swift in Sources */,
 				4555840C269F2DA500C3FF14 /* MobileContentErrorViewModel.swift in Sources */,

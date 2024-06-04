@@ -27,4 +27,9 @@ class ToolSettingsRepository {
         
         cache.storeToolSettings(dataModel: dataModel)
     }
+    
+    func getToolSettingsPublisher(toolId: String) -> AnyPublisher<ToolSettingsDataModel?, Never> {
+        
+        return cache.getToolSettingsPublisher(toolId: toolId)
+    }
 }
