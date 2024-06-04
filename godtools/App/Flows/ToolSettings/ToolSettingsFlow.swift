@@ -167,7 +167,7 @@ extension ToolSettingsFlow {
             viewToolSettingsUseCase: appDiContainer.feature.toolSettings.domainLayer.getViewToolSettingsUseCase(),
             getShareablesUseCase: appDiContainer.feature.shareables.domainLayer.getShareablesUseCase(),
             getShareableImageUseCase: appDiContainer.feature.shareables.domainLayer.getShareableImageUseCase(), 
-            persistToolSettingsIfFavoriteToolUseCase: appDiContainer.feature.toolSettings.domainLayer.getPersistToolSettingsIfFavoriteToolUseCase()
+            persistUserToolSettingsIfFavoriteToolUseCase: appDiContainer.feature.toolSettings.domainLayer.getPersistUserToolSettingsIfFavoriteToolUseCase()
         )
         
         let toolSettingsView = ToolSettingsView(viewModel: viewModel)

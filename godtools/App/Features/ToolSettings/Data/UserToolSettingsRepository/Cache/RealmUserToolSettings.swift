@@ -1,5 +1,5 @@
 //
-//  RealmToolSettings.swift
+//  RealmUserToolSettings.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 5/30/24.
@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class RealmToolSettings: Object {
+class RealmUserToolSettings: Object {
     
     @Persisted var createdAt: Date = Date()
     @Persisted var toolId: String = ""
@@ -20,7 +20,7 @@ class RealmToolSettings: Object {
         return "toolId"
     }
     
-    func mapFrom(dataModel: ToolSettingsDataModel) {
+    func mapFrom(dataModel: UserToolSettingsDataModel) {
         
         createdAt = dataModel.createdAt
         toolId = dataModel.toolId

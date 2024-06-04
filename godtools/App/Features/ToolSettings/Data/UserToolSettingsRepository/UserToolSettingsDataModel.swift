@@ -1,5 +1,5 @@
 //
-//  ToolSettingsDataModel.swift
+//  UserToolSettingsDataModel.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 5/30/24.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ToolSettingsDataModel {
+struct UserToolSettingsDataModel {
     
     let createdAt: Date
     let toolId: String
@@ -22,7 +22,7 @@ struct ToolSettingsDataModel {
         self.parallelLanguageId = parallelLanguageId
     }
 
-    init(realmObject: RealmToolSettings) {
+    init(realmObject: RealmUserToolSettings) {
         createdAt = realmObject.createdAt
         toolId = realmObject.toolId
         primaryLanguageId = realmObject.primaryLanguageId

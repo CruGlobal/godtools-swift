@@ -17,9 +17,9 @@ class ToolSettingsDomainLayerDependencies {
         self.dataLayer = dataLayer
     }
     
-    func getPersistToolSettingsIfFavoriteToolUseCase() -> PersistToolSettingsIfFavoriteToolUseCase {
-        return PersistToolSettingsIfFavoriteToolUseCase(
-            persistToolSettingsIfFavoriteToolRepositoryInterface: dataLayer.getPersistToolSettingsIfFavoriteToolRepositoryInterface()
+    func getPersistUserToolSettingsIfFavoriteToolUseCase() -> PersistUserToolSettingsIfFavoriteToolUseCase {
+        return PersistUserToolSettingsIfFavoriteToolUseCase(
+            persistUserToolSettingsIfFavoriteToolRepositoryInterface: dataLayer.getPersistUserToolSettingsIfFavoriteToolRepositoryInterface()
         )
     }
     

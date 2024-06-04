@@ -1,0 +1,35 @@
+//
+//  UserToolSettingsRepository.swift
+//  godtools
+//
+//  Created by Rachael Skeath on 5/30/24.
+//  Copyright © 2024 Cru. All rights reserved.
+//
+
+import Foundation
+import Combine
+
+class UserToolSettingsRepository {
+    
+    private let cache: RealmUserToolSettingsCache
+    
+    init(cache: RealmUserToolSettingsCache) {
+        self.cache = cache
+    }
+    
+    func storeUserToolSettings(toolId: String, primaryLanguageId: String, parallelLanguageId: String?) {
+        
+        let dataModel = UserToolSettingsDataModel(
+            toolId: toolId,
+            primaryLanguageId: primaryLanguageId,
+            parallelLanguageId: parallelLanguageId
+        )
+        
+        cache.storeUserToolSettings(dataModel: dataModel)
+    }
+    
+    func getUserToolSettingsPublisher(toolId: String) -> AnyPublisher<UserToolSettingsDataModel?, Never> {
+        
+        return cache.getUserToolSettingsPublisher(toolId: toolId)
+    }
+}

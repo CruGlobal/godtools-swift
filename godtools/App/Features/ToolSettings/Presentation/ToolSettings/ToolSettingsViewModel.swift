@@ -17,7 +17,7 @@ class ToolSettingsViewModel: ObservableObject {
     private let viewToolSettingsUseCase: ViewToolSettingsUseCase
     private let getShareablesUseCase: GetShareablesUseCase
     private let getShareableImageUseCase: GetShareableImageUseCase
-    private let persistToolSettingsIfFavoriteToolUseCase: PersistToolSettingsIfFavoriteToolUseCase
+    private let persistUserToolSettingsIfFavoriteToolUseCase: PersistUserToolSettingsIfFavoriteToolUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
     
@@ -39,7 +39,7 @@ class ToolSettingsViewModel: ObservableObject {
     @Published var shareablesTitle: String = ""
     @Published var shareables: [ShareableDomainModel] = Array()
         
-    init(flowDelegate: FlowDelegate, toolSettingsObserver: ToolSettingsObserver, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewToolSettingsUseCase: ViewToolSettingsUseCase, getShareablesUseCase: GetShareablesUseCase, getShareableImageUseCase: GetShareableImageUseCase, persistToolSettingsIfFavoriteToolUseCase: PersistToolSettingsIfFavoriteToolUseCase) {
+    init(flowDelegate: FlowDelegate, toolSettingsObserver: ToolSettingsObserver, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewToolSettingsUseCase: ViewToolSettingsUseCase, getShareablesUseCase: GetShareablesUseCase, getShareableImageUseCase: GetShareableImageUseCase, persistUserToolSettingsIfFavoriteToolUseCase: PersistUserToolSettingsIfFavoriteToolUseCase) {
         
         self.flowDelegate = flowDelegate
         self.toolSettingsObserver = toolSettingsObserver
@@ -47,7 +47,7 @@ class ToolSettingsViewModel: ObservableObject {
         self.viewToolSettingsUseCase = viewToolSettingsUseCase
         self.getShareablesUseCase = getShareablesUseCase
         self.getShareableImageUseCase = getShareableImageUseCase
-        self.persistToolSettingsIfFavoriteToolUseCase = persistToolSettingsIfFavoriteToolUseCase
+        self.persistUserToolSettingsIfFavoriteToolUseCase = persistUserToolSettingsIfFavoriteToolUseCase
         
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
@@ -118,8 +118,8 @@ class ToolSettingsViewModel: ObservableObject {
         toolSettingsObserver.$languages
             .map { (languages: ToolSettingsLanguages) in
                 
-                persistToolSettingsIfFavoriteToolUseCase
-                    .persistToolSettingsIfFavoriteToolPublisher(with: toolSettingsObserver.toolId, primaryLanguageId: languages.primaryLanguageId, parallelLanguageId: languages.parallelLanguageId)
+                persistUserToolSettingsIfFavoriteToolUseCase
+                    .persistUserToolSettingsIfFavoriteToolPublisher(with: toolSettingsObserver.toolId, primaryLanguageId: languages.primaryLanguageId, parallelLanguageId: languages.parallelLanguageId)
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)

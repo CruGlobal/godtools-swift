@@ -1,5 +1,5 @@
 //
-//  RealmToolSettingsCache.swift
+//  RealmUserToolSettingsCache.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 5/30/24.
@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import Combine
 
-class RealmToolSettingsCache {
+class RealmUserToolSettingsCache {
     
     private let realmDatabase: RealmDatabase
     
@@ -18,11 +18,11 @@ class RealmToolSettingsCache {
         self.realmDatabase = realmDatabase
     }
     
-    func storeToolSettings(dataModel: ToolSettingsDataModel) {
+    func storeUserToolSettings(dataModel: UserToolSettingsDataModel) {
         
         let realm: Realm = realmDatabase.openRealm()
         
-        let realmToolSettings = RealmToolSettings()
+        let realmToolSettings = RealmUserToolSettings()
         realmToolSettings.mapFrom(dataModel: dataModel)
         
         do {
@@ -36,20 +36,20 @@ class RealmToolSettingsCache {
         }
     }
         
-    func getToolSettings(toolId: String) -> ToolSettingsDataModel? {
+    func getUserToolSettings(toolId: String) -> UserToolSettingsDataModel? {
         
         let realm: Realm = realmDatabase.openRealm()
         
-        guard let realmToolSettings = realm.object(ofType: RealmToolSettings.self, forPrimaryKey: toolId) else {
+        guard let realmToolSettings = realm.object(ofType: RealmUserToolSettings.self, forPrimaryKey: toolId) else {
             return nil
         }
         
-        return ToolSettingsDataModel(realmObject: realmToolSettings)
+        return UserToolSettingsDataModel(realmObject: realmToolSettings)
     }
     
-    func getToolSettingsPublisher(toolId: String) -> AnyPublisher<ToolSettingsDataModel?, Never> {
+    func getUserToolSettingsPublisher(toolId: String) -> AnyPublisher<UserToolSettingsDataModel?, Never> {
         
-        return Just(getToolSettings(toolId: toolId))
+        return Just(getUserToolSettings(toolId: toolId))
             .eraseToAnyPublisher()
     }
 }

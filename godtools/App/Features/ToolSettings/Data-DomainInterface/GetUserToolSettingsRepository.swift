@@ -11,15 +11,15 @@ import Combine
 
 class GetUserToolSettingsRepository: GetUserToolSettingsRepositoryInterface {
     
-    private let toolSettingsRepository: ToolSettingsRepository
+    private let userToolSettingsRepository: UserToolSettingsRepository
     
-    init(toolSettingsRepository: ToolSettingsRepository) {
-        self.toolSettingsRepository = toolSettingsRepository
+    init(userToolSettingsRepository: UserToolSettingsRepository) {
+        self.userToolSettingsRepository = userToolSettingsRepository
     }
     
     func getUserToolSettingsPublisher(toolId: String) -> AnyPublisher<UserToolSettingsDomainModel?, Never> {
         
-        return toolSettingsRepository.getToolSettingsPublisher(toolId: toolId)
+        return userToolSettingsRepository.getUserToolSettingsPublisher(toolId: toolId)
             .map { toolSettingsDataModel in
                 
                 guard let toolSettingsDataModel = toolSettingsDataModel else { return nil }
