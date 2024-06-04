@@ -4,6 +4,7 @@
 "languageSettings.confirmAppLanguage.message" = "کو ا؛پنی اَیپ زبان%@ آپ نے کے طور پر منتخب کِیا ۔ یہ گاڈ ٹولزکی ساری زبان کو بدل دے گی ۔ کیا آپ چاہتے ہیں ؟";
 "languageSettings.confirmAppLanguage.changeLanguageButton.title" = "زبان تبدیل کریں";
 "languageSettings.confirmAppLanguage.nevermindButton.title" = "کوئی بات نہیں";
+"languageSettings.downloadableLanguages.title" = " ڈاؤن لوڈ ہو نے کے قابل لغات";
 "languageSettings.appInterface.title" = "اَیپ انٹر فیس کی زبان";
 "languageSettings.appInterface.message" = "زبان منتخب کریں جس میں آپ پوری اَیپ کو ڈسپلے کرنا چاہتے ہیں۔";
 "languageSettings.appInterface.languagesAvailable" = "زبانیں دستیاب";
@@ -13,11 +14,27 @@
 "allTools.filter.title" = "فلٹر";
 "allTools.filter.anyCategory" = "کوئی بھی زمرہ";
 "allTools.filter.anyLanguage" = "کوئی بھی زبان";
+"allTools.filter.navBar.language" = "لغت کے ذریعہ فلٹر کریں";
+"allTools.filter.navBar.category" = "زمرے کے مطابق فلٹر کریں۔";
 "languageSettings.appLanguage.title" = "اَیپ کی زبان";
+"authError.userAccountAlreadyExists.message" = "یوزر اکاؤنٹ پہلے سے موجود ہے";
+"authError.userAccountNotFound.message" = "یوزر اکاؤنٹ نہیں ملا۔";
 "createAccount.title" = "اکاؤنٹ بنائیں";
 "createAccount.subtitle" = "اپنی انگلی کے اشارے پر حقیقی کہانیاں، حوصلہ افزائی، اور عملی تجاویز حاصل کرنے کے لیے ایک اکاؤنٹ بنائیں۔";
+"deleteAccountProgress.title" = "اکاؤنٹ حذف ہو رہا ۔۔۔";
+"confirmDeleteAccount.title" = "کیا آپ واقعی  کرنا چاہتے ہیں";
+"confirmDeleteAccount.confirmButton.title" = "اکاؤنٹ حذف کریں";
+"accountDeletedAlert.title" = "اکاؤنٹ حذف کیا گیا";
+"accountDeletedAlert.message" = "آپ کا اکاؤنٹ حذف ہو چکا ہے";
+"deleteAccount.title" = "اتنی جلد ی مت جائیے";
+"deleteAccount.subtitle" = "اگر آپ اپنا اکاؤنٹ حذف کر دیتے ہیں تو آپ اپنے پسندیدہ ٹولز یا اکاؤنٹ کی سرگرمی تک رسائی حاصل نہیں کر سکیں گے۔";
+"deleteAccount.confirmButton.title" = "میرا اکاؤنٹ حذف کریں";
+"deleteAccount.cancelButton.title" = "میرا اکاؤنٹ برقرار رکھیں";
 "signIn.title" = "سائن اِن";
 "signIn.subtitle" = "اپنی انگلی کے اشارے پر حقیقی کہانیاں، حوصلہ افزائی، اور عملی تجاویز حاصل کرنے کے لیے اپنے اکاؤنٹ میں لاگ ان کریں۔";
+"signIn.google" = "گوگل کے ساتھ سائن ان کریں";
+"signIn.facebook" = "فیسبک کے ساتھ لاگ ان کریں";
+"signIn.apple" = "ایپل کے ساتھ جاری رکھیں";
 "menu_getStarted" = "شروع کریں";
 "menu_support" = "مدد";
 "menu_about" = "ہمارے متعلق";
@@ -46,20 +63,26 @@
 "account.activity.sessions" = "سیشنز";
 "badges.tipsCompleted.singular" = " فی صد تربیتی تجاویز 1";
 
+/* leave %d in phrase - this is the number of articles that the user has read */
+"badges.articlesOpened.plural" = "فیصد %d مضامین پڑھیں";
+
+/* when they have read only 1 articles */
+"badges.articlesOpened.singular" = "1 مضمون پڑھیں";
+
 /* leave %d in phrase - this is the number of images that the user has shared */
 "badges.imagesShared.plural" = "فی صد تصاوی شئیر کی گئیں%d";
 
-"badges.imagesShared.singular" = "فی صد تصاوی شئیر کی گئیں%d";
+"badges.imagesShared.singular" = "ایک تصویر شئیر کی";
 
 /* leave %d in phrase - this is the number of lessons that the user has completed */
 "badges.lessonsCompleted.plural" = "فی صداسباق مکمل کئے گئے%d";
 
-"badges.lessonsCompleted.singular" = "فی صداسباق مکمل کئے گئے%d";
+"badges.lessonsCompleted.singular" = "ایک  سبق ختم  کر لیا";
 
 /* leave %d in phrase - this is the number of tools that the user has opened */
 "badges.toolsOpened.plural" = "فیصد ٹول کھولے گئے%d";
 
-"badges.toolsOpened.singular" = "فیصد ٹول کھولے گئے%d";
+"badges.toolsOpened.singular" = "ایک ٹول کھول لیا";
 
 /* leave %d in phrase - this is the number of tips that the user has completed */
 "badges.tipsCompleted.plural" = " فی صد تربیتی تجاویز %d";
@@ -84,6 +107,9 @@
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "%@ میں دستیاب نہیں";
 
+"menu.deleteAccount" = "اکاؤنٹ حذف کریں";
+"alert.mailAppUnavailable.title" = "میل ایپ موجود نہیں ہے";
+"alert.mailAppUnavailable.message" = "اس آلے پر اصلی میل ایپ مکمل طریقے سے ترتیب نہیں کیا گیا ہے یا یہ دستیاب نہیں ہے۔";
 "tool_menu_item.tools" = "تمام ٹولز";
 "lessons.pageTitle" = "آپ کے لیے بنائے گئے اسباق";
 "lessons.pageSubtitle" = "تعلقات بنانے اور معنی خیز گفتگو شروع کرنے کے لیے عملی خیالات۔";
@@ -116,19 +142,50 @@
 "allTools.spotlight.title" = "ٹول سپاٹ لائٹ";
 "allTools.spotlight.description" = "یہاں کچھ ٹولز ہیں ہم نے سوچا کہ شاید آپ پسند کریًر";
 "allTools.categories.title" = "زمرے";
+"training_tip_ask" = "پوچھیں";
+"training_tip_consider" = "غور کریں";
+"training_tip_prepare" = "تیار کریں";
+"training_tip_quote" = "حوالہ دیں";
+"training_tip_tip" = "مشورہ";
+"start_training" = "مشق شروع کریں";
 "close" = "ہوگیا / کر لیا";
 "tool_menu_item.lessons" = "اسباق";
 "parallelLanguage.yesButton.title" = "جی ہاں";
 "parallelLanguage.noButton.title" = "نہیں، شکریہ";
+"parallelLanguage.selectButton.title" = "سلیکٹ کریں";
 "parallelLanguage.getStartedButton.title" = "شروعات";
 "parallelLanguage.selectLanguageButton.title" = "کوئی زبان منتخب کریں";
 "parellelLanguage.prompt" = "کیا آپ کوئی ثانوی زبان سیٹ کرنا چاہیں گے؟";
 
 /* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.continueButton.title.closeTutorial" = "ٹیوٹوریل بند کریں";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.tool.title" = "ٹولز";
 
 /* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.tool.message" = "ہر ٹول کسی مختلف مرحلے -پہلے، دوران، بعد    میں گفتگو کے لیے بنایا گیا ہے۔";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.toolTip.title" = "ٹول مشورے";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.toolTip.message" = " گوڈ ٹولز کے مشورے آپ کی رہنمائی کرتے ہیں جب آپ کسی کو بائبل سمجھاتے اور جیسس سے ملاقات کرواتے ہیں۔";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.screenShare.title" = "اسکرین ساجھا کرنا";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.screenShare.message" = " اب آپ اپنی سکرین دور سے شیئر کر سکتے ہیں تاکہ دوسرا شخص اس ٹول کو استعمال کرنے میں  اتباع کرتے ہوئے آپ کے ساتھ    بائبل  پرگفتگو کر سکے۔";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.lesson.title" = "اسباق";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.lesson.message" = "ہر گوڈ ٹولز سبق میں آپ کو کچھ نیا سیکھنے کو ملتا ہے جو آپ کو خدا کے بارے میں اصل بات چیت کرنے میں مدد دیتا ہے۔";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.findTutorial.title" = "جب بھی آپ کو اس ٹیوٹوریل کی ضرورت ہو، اسےفہرست میں تلاش کریں۔";
 
 "onboardingTutorial.beginButton.title" = "شروع کریں";
 "onboardingQuickStart.2.title" = "میں کسی کے ساتھ انجیل ساجھا کرنا چاہتا ہوں";
@@ -159,6 +216,12 @@
 "share_tool_remote_link_message" = "ہیلو، GodTools میں سکرین شیئرنگ کے ذریعے میری پیروی کریں۔ ربط یہ رہا: %@ اگر آپ کو دیر تک یہ پیغام موصول نہیں ہوتا تو شاید ربط بھی کام نہ کرتا ہو۔ ہم کسی اور وقت دوبارہ کوشش کر سکتے ہیں۔";
 "exit_tract_remote_share_session.message" = "ابھی ریموٹ سکرین شیئرنگ سیشن سے نکلیں؟";
 "load_tool_remote_session.message" = "سکرین شیئرنگ شروع ہو رہی ہے۔۔۔";
+"learn_to_share_tool.learn_to_share.title" = "دوسروں کے ساتھ یہ آلہ ساجھا کرنا سیکھیں";
+"learn_to_share_tool.learn_to_share.message" = "اس آلے کو دوسروں کے ساتھ شیئر کرنے میں اعتماد حاصل کرنے کے لیے جتنی بھی تجاویز کی ضرورت ہو، ان کےاستعمال  کی مشق کریں۔";
+"learn_to_share_tool.tips_light_the_way.title" = "رہنمائی کے لیے تجاویز";
+"learn_to_share_tool.tips_light_the_way.message" = "اس مشق کی  اسکرینوں کو منتخب کرنےپر آپ کو مختلف آئکنز دیکھنے کو ملیں گے۔ ہر آئکن دبانے سے ایک مشورہ آپ کے سامنے آئے گا جو آپ کو اس اسکرین کے مواد کے بارے میں گفتگو کرنے میں مدد دیےگا۔ اگر کوئی اسکرین آئکن نہیں ہے، تو بس مواد کو پڑھ کر اور جس طرح ضروری ہو گفتگو کریں۔";
+"learn_to_share_tool.light_up_the_tips.title" = "تجاویز واضح کریں";
+"learn_to_share_tool.light_up_the_tips.message" = "جب کوئی مشورہ واضح ہو جائے، تو آپ نے مشق کے اس حصے کو مکمل کر لیا ہوتا ہے۔ آپ جتنے چاہیں مشورے کےاستعمال  کی مشق کریں تاکہ آپ کو اس ٹول کی وضاحت دینے میں اعتماد حاصل ہو۔";
 "lesson_evaluation.title" = "جائزہ لیں";
 "lesson_evaluation.wasThisHelpful" = "کیا یہ سبق آپ کے لئے مددگار تھا ؟";
 "lesson_evaluation.shareFaith" = "آپ خود کو روحانی گفتگو شروع کرنے کے لئے کتنے تیار ہیں؟";
@@ -201,6 +264,11 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "مضامین";
+
+"articles.downloadArticlesButton.title.retryDownload" = " ڈاؤن لوڈ کرنے کی دوبارہ کوشش کریں ";
+
+/* This is to let users know which version of the app is installed on their phone */
+"menu_version" = "ورزن";
 "language_onboard" = "90+ زبانیں";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -228,6 +296,8 @@
 "menu_legal" = "لِیگل";
 "language_settings" = "زبان سیٹِنگز";
 "menu.tutorial" = "تربیت";
+"menu.my_account" = "میرا اکاؤنٹ";
+
 // Login
 "login" = "لاگ اِن کریں";
 "logout" = "لاگ آؤٹ کریں";
@@ -303,22 +373,33 @@ https://godtoolsapp.com";
 
 // About
 "general_about_1" = "گاڈ ٹول آپ کی مدد کرتا ہے کہ آسانی سے اور صاف طور پر آپ اپنا ایمان بانٹیں۔";
+// Tutorial
+"tutorial.tutorialItem.0.title" = "دیکھیں";
 "general_about_2" = "یہ ٹولس آپ کی مدد کرتا ہے بھروسہ کے ساتھ سمجھانے کے لئے  کسی کو بھی کہ وہ کس طرح خداکے ساتھ یسوع مسیح کے وسیلہ سے ایک رشتہ کی شروعات کی جا سکتی ہے۔ اس کے باوجود بھی کہ آپ نے اس سے پہلے کبھی کسی سے اپنا ایمان نہ بانٹا ہو یا وہ لوگ ایک فرق زبان بولتے ہوں۔";
 "general_about_3" = "آپ اپنے ترجیح اور سامعین کی بنا پر مختلف قسم  کے اوزار کا چناؤ کریں۔ ہر کسی زبان میں تمام اوزار کا چناؤ کریں۔ ہر کسی زبان میں تمام اوزار دستیاب نہیں ہیں۔";
 "general_about_4" = "دیگر ذرائع کے لئے لنک ہر ایک اوزار کے آخر میں شامل کئے گئے ہیں۔";
 "general_about_5" = "ہر ایک نئے اوزار اور / یا زبان کے لئے آن لائن کا سلسلہ / تعلق ڈاؤن لوڈ کرنے کی ضرورت ہے۔ ایک بار جب ڈاؤن لوڈ ہو چکا تو انہیں کبھی بھی آف لائن میں استعمال کیا جا سکتاہے۔";
 "general_about_6" = "سوالات؟ صلاح مشورے ؟ درخواستیں؟  support@godtoolsapp.com میں ہمارے  ساتھ رابطہ قائم کریں۔";
 "general_about_7" = "ان اوزاروں کے آن لائن ورژن knowgod.com میں بھی دیکھی جا سکتی ہیں۔ آپ اپنے خوو کے سائٹ پر اسے مضبوطی سے جما دیں!";
+"tutorial.tutorialItem.3.title" = "اس کو دوبارہ دیکھنے کے لئیے یہ ٹیوٹوریل فہرست  میں موجود ہے";
 "general_about_8" = "مزید معلومات کے لئے godtoolsapp.com کا استعمال کریں۔";
 "tutorial.continueButton.title.continue" = "جاری";
 "general_about_9" = "جب آپ اپنا ایمان بانٹنے کے لئے آغازی فعل کو انجام دیتےہیں تو یاد رکھئے کہ وہ خداہی ہے جو دلوں کو بدلتاہے۔ اسے سمجھنے کے لئے دھیان سے سنتے ہوئے ہر ایک شخص سے اچھی طرح سے محبت سےپیش آئیں۔";
+"tutorial.continueButton.title.startUsingGodTools" = "گوڈ ٹولز استعمال کرنا شروع کریں";
+
 "general_about_10" = "\"تمہارا کلام ہمیشہ ایسا پر فضل اور نمکین ہو کہ تمہیں ہر شخص کو مناسب جواب دینا جائے۔\" کلیسیوں 4:6";
 
+// OpenTutorial
+"openTutorial.showTutorialLabel.text" = "مجھے ایک ٹیوٹوریل دکھائیے";
 // Downloads
 "Download in progress" = "ڈاؤنلوڈ جاری ہے";
 
+"openTutorial.openTutorialButton.title" = "ٹیوٹوریل کھولئیے";
+
 // Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "پچھلا";
+// Account
+"account.navTitle" = "میری پروفائل";
 "card_status2" = "اگلا";
 
 "account.activity.title" = "سرگرمی";
@@ -329,7 +410,11 @@ https://godtoolsapp.com";
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "عالمگیر سرگرمی";
 "accountActivity.globalAnalytics.users.title" = "منفرد صارفین";
+"onboardingWelcome.titleLabel.tagline" = "آپ کے ایمان کو ساجھا کرنے میں مددگار";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "انجیل کی پیشکشیں";
 "accountActivity.globalAnalytics.launches.title" = "سیشنز";
+// OnboardingTutorial
+"onboardingTutorial.aboutAppItem.0.title" = "دوسروں کے ساتھ ساجھا کریں";
 "accountActivity.globalAnalytics.countries.title" = "ممالک";
 
+"onboardingTutorial.showMoreButton.title" = "مزید دکھائیے ";

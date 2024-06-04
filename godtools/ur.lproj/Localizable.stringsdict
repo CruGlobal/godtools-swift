@@ -109,9 +109,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>زبانیں دستیاب%d</string>
+<string>ابزارهای موجود%d</string>
 <key>other</key>
-<string>زبانیں دستیاب%d</string>
+<string>ابزارهای موجود%d</string>
 </dict>
 </dict>
 <key>languageSettings.appLanguage.numberAvailable</key>
@@ -157,9 +157,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Read 1 article</string>
+<string>فیصد  %d مضامین پڑھیں</string>
 <key>other</key>
-<string>Read %d articles</string>
+<string>فیصد  %d مضامین پڑھیں</string>
 </dict>
 </dict>
 <key>badges.lessonsCompleted</key>
