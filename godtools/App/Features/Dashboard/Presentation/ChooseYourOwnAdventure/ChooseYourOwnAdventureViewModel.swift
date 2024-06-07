@@ -97,7 +97,17 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
             
             // Backward Navigation
             
-            let pageIndexesToRemove: [Int] = Array((backToPageIndex + 1)...(pages.count - 1))
+            let removeStartIndex: Int = backToPageIndex + 1
+            let removedEndIndex: Int = pages.count - 1
+            
+            let pageIndexesToRemove: [Int]
+            
+            if removeStartIndex <= removedEndIndex {
+                pageIndexesToRemove = Array(removeStartIndex...removedEndIndex)
+            }
+            else {
+                pageIndexesToRemove = Array()
+            }
             
             let pagesUpToBackToPage: [Page] = Array(pages[0...backToPageIndex])
             

@@ -26,45 +26,51 @@ struct LearnToShareToolView: View {
             
             VStack(spacing: 0) {
                 
-                TabView(selection: $viewModel.currentPage) {
-                    
-                    Group {
+                if viewModel.learnToShareToolItems.count > 0 {
+                 
+                    TabView(selection: $viewModel.currentPage) {
                         
-                        if ApplicationLayout.shared.layoutDirection == .rightToLeft {
+                        Group {
                             
-                            ForEach((0 ..< viewModel.learnToShareToolItems.count).reversed(), id: \.self) { index in
+                            if ApplicationLayout.shared.layoutDirection == .rightToLeft {
                                 
-                                getLearnToShareToolItemView(index: index, geometry: geometry)
-                                    .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
-                                    .tag(index)
+                                ForEach((0 ..< viewModel.learnToShareToolItems.count).reversed(), id: \.self) { index in
+                                    
+                                    getLearnToShareToolItemView(index: index, geometry: geometry)
+                                        .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
+                                        .tag(index)
+                                }
                             }
-                        }
-                        else {
-                            
-                            ForEach(0 ..< viewModel.learnToShareToolItems.count, id: \.self) { index in
+                            else {
                                 
-                                getLearnToShareToolItemView(index: index, geometry: geometry)
-                                    .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
-                                    .tag(index)
+                                ForEach(0 ..< viewModel.learnToShareToolItems.count, id: \.self) { index in
+                                    
+                                    getLearnToShareToolItemView(index: index, geometry: geometry)
+                                        .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
+                                        .tag(index)
+                                }
                             }
                         }
                     }
+                    .environment(\.layoutDirection, .leftToRight)
+                    .tabViewStyle(.page(indexDisplayMode: .never))
+                    .animation(.easeOut, value: viewModel.currentPage)
                 }
-                .environment(\.layoutDirection, .leftToRight)
-                .tabViewStyle(.page(indexDisplayMode: .never))
-                .animation(.easeOut, value: viewModel.currentPage)
                 
                 GTBlueButton(title: viewModel.continueTitle, font: FontLibrary.sfProTextRegular.font(size: 18), width: geometry.size.width - (continueButtonPadding * 2), height: 50) {
                     
                     viewModel.continueTapped()
                 }
-                            
-                PageControl(
-                    numberOfPages: viewModel.learnToShareToolItems.count,
-                    attributes: pageControlAttributes,
-                    currentPage: $viewModel.currentPage
-                )
-                .padding(EdgeInsets(top: 20, leading: 0, bottom: 10, trailing: 0))
+                
+                if viewModel.learnToShareToolItems.count > 0 {
+                 
+                    PageControl(
+                        numberOfPages: viewModel.learnToShareToolItems.count,
+                        attributes: pageControlAttributes,
+                        currentPage: $viewModel.currentPage
+                    )
+                    .padding(EdgeInsets(top: 20, leading: 0, bottom: 10, trailing: 0))
+                }
             }
         }
     }
