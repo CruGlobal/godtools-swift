@@ -29,45 +29,51 @@ struct ToolScreenShareTutorialView: View {
                 
                 FixedVerticalSpacer(height: 50)
                 
-                TabView(selection: $viewModel.currentPage) {
+                if viewModel.tutorialPages.count > 0 {
                     
-                    Group {
+                    TabView(selection: $viewModel.currentPage) {
                         
-                        if ApplicationLayout.shared.layoutDirection == .rightToLeft {
+                        Group {
                             
-                            ForEach((0 ..< viewModel.tutorialPages.count).reversed(), id: \.self) { index in
+                            if ApplicationLayout.shared.layoutDirection == .rightToLeft {
                                 
-                                getToolScreenShareTutorialPage(index: index, geometry: geometry)
-                                    .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
-                                    .tag(index)
+                                ForEach((0 ..< viewModel.tutorialPages.count).reversed(), id: \.self) { index in
+                                    
+                                    getToolScreenShareTutorialPage(index: index, geometry: geometry)
+                                        .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
+                                        .tag(index)
+                                }
                             }
-                        }
-                        else {
-                            
-                            ForEach(0 ..< viewModel.tutorialPages.count, id: \.self) { index in
+                            else {
                                 
-                                getToolScreenShareTutorialPage(index: index, geometry: geometry)
-                                    .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
-                                    .tag(index)
+                                ForEach(0 ..< viewModel.tutorialPages.count, id: \.self) { index in
+                                    
+                                    getToolScreenShareTutorialPage(index: index, geometry: geometry)
+                                        .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
+                                        .tag(index)
+                                }
                             }
                         }
                     }
+                    .environment(\.layoutDirection, .leftToRight)
+                    .tabViewStyle(.page(indexDisplayMode: .never))
+                    .animation(.easeOut, value: viewModel.currentPage)
                 }
-                .environment(\.layoutDirection, .leftToRight)
-                .tabViewStyle(.page(indexDisplayMode: .never))
-                .animation(.easeOut, value: viewModel.currentPage)
-                
+
                 GTBlueButton(title: viewModel.continueTitle, font: FontLibrary.sfProTextRegular.font(size: 18), width: geometry.size.width - (continueButtonHorizontalPadding * 2), height: continueButtonHeight) {
                     
                     viewModel.continueTapped()
                 }
                 
-                PageControl(
-                    numberOfPages: viewModel.tutorialPages.count,
-                    attributes: pageControlAttributes,
-                    currentPage: $viewModel.currentPage
-                )
-                .padding(EdgeInsets(top: 20, leading: 0, bottom: 20, trailing: 0))
+                if viewModel.tutorialPages.count > 0 {
+                    
+                    PageControl(
+                        numberOfPages: viewModel.tutorialPages.count,
+                        attributes: pageControlAttributes,
+                        currentPage: $viewModel.currentPage
+                    )
+                    .padding(EdgeInsets(top: 20, leading: 0, bottom: 20, trailing: 0))
+                }
             }
             .frame(maxWidth: .infinity)
         }
