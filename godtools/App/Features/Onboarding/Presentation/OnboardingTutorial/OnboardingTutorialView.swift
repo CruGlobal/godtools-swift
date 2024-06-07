@@ -30,33 +30,36 @@ struct OnboardingTutorialView: View {
 
             VStack(alignment: .center, spacing: 0) {
                    
-                TabView(selection: $viewModel.currentPage) {
-                    
-                    Group {
+                if viewModel.pages.count > 0 {
+                 
+                    TabView(selection: $viewModel.currentPage) {
                         
-                        if ApplicationLayout.shared.layoutDirection == .rightToLeft {
+                        Group {
                             
-                            ForEach((0 ..< viewModel.pages.count).reversed(), id: \.self) { index in
+                            if ApplicationLayout.shared.layoutDirection == .rightToLeft {
                                 
-                                getOnboardingTutorialView(index: index, geometry: geometry)
-                                    .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
-                                    .tag(index)
+                                ForEach((0 ..< viewModel.pages.count).reversed(), id: \.self) { index in
+                                    
+                                    getOnboardingTutorialView(index: index, geometry: geometry)
+                                        .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
+                                        .tag(index)
+                                }
                             }
-                        }
-                        else {
-                            
-                            ForEach(0 ..< viewModel.pages.count, id: \.self) { index in
+                            else {
                                 
-                                getOnboardingTutorialView(index: index, geometry: geometry)
-                                    .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
-                                    .tag(index)
+                                ForEach(0 ..< viewModel.pages.count, id: \.self) { index in
+                                    
+                                    getOnboardingTutorialView(index: index, geometry: geometry)
+                                        .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
+                                        .tag(index)
+                                }
                             }
                         }
                     }
+                    .environment(\.layoutDirection, .leftToRight)
+                    .tabViewStyle(.page(indexDisplayMode: .never))
+                    .animation(.easeOut, value: viewModel.currentPage)
                 }
-                .environment(\.layoutDirection, .leftToRight)
-                .tabViewStyle(.page(indexDisplayMode: .never))
-                .animation(.easeOut, value: viewModel.currentPage)
                 
                 OnboardingTutorialPrimaryButton(geometry: geometry, title: viewModel.continueButtonTitle, accessibility: .nextOnboardingTutorial) {
                     viewModel.continueTapped()
@@ -64,8 +67,11 @@ struct OnboardingTutorialView: View {
                 
                 FixedVerticalSpacer(height: 30)
                 
-                PageControl(numberOfPages: 4, attributes: GTPageControlAttributes(), currentPage: $viewModel.currentPage)
-                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0))
+                if viewModel.pages.count > 0 {
+                    
+                    PageControl(numberOfPages: 4, attributes: GTPageControlAttributes(), currentPage: $viewModel.currentPage)
+                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0))
+                }
             }
             .frame(maxWidth: .infinity)
             

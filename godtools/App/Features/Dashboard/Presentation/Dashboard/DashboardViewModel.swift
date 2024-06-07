@@ -16,6 +16,7 @@ class DashboardViewModel: ObservableObject {
     private let viewDashboardUseCase: ViewDashboardUseCase
         
     private var cancellables: Set<AnyCancellable> = Set()
+    private var initialTabSet: Bool = false
     
     private weak var flowDelegate: FlowDelegate?
         
@@ -33,7 +34,6 @@ class DashboardViewModel: ObservableObject {
         self.dashboardPresentationLayerDependencies = dashboardPresentationLayerDependencies
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.viewDashboardUseCase = viewDashboardUseCase
-        self.currentTab = tabs.firstIndex(of: startingTab) ?? 0
         
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
@@ -56,6 +56,7 @@ class DashboardViewModel: ObservableObject {
                 self?.toolsButtonTitle = domainModel.interfaceStrings.toolsActionTitle
                 
                 self?.reloadTabs() // NOTE: Needed since button title interface strings aren't connected to the View. ~Levi
+                self?.setStartingTabIfNeeded(startingTab: startingTab, tabs: self?.tabs ?? Array())
             }
             .store(in: &cancellables)        
     }
@@ -68,6 +69,21 @@ class DashboardViewModel: ObservableObject {
         
         let currentTabs: [DashboardTabTypeDomainModel] = tabs
         tabs = currentTabs
+    }
+    
+    private func setStartingTabIfNeeded(startingTab: DashboardTabTypeDomainModel, tabs: [DashboardTabTypeDomainModel]) {
+        
+        guard !initialTabSet else {
+            return
+        }
+        
+        guard tabs.count > 0 else {
+            return
+        }
+        
+        initialTabSet = true
+        
+        currentTab = tabs.firstIndex(of: startingTab) ?? 0
     }
     
     func getTab(tabIndex: Int) -> DashboardTabTypeDomainModel? {
