@@ -27,37 +27,40 @@ struct DashboardView: View {
             
             VStack(alignment: .center, spacing: 0) {
                 
-                TabView(selection: $viewModel.currentTab) {
-                    
-                    Group {
+                if viewModel.tabs.count > 0 {
+                 
+                    TabView(selection: $viewModel.currentTab) {
                         
-                        if ApplicationLayout.shared.layoutDirection == .rightToLeft {
+                        Group {
                             
-                            ForEach((0 ..< viewModel.tabs.count).reversed(), id: \.self) { index in
+                            if ApplicationLayout.shared.layoutDirection == .rightToLeft {
                                 
-                                getDashboardPageView(index: index)
-                                    .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
-                                    .tag(index)
+                                ForEach((0 ..< viewModel.tabs.count).reversed(), id: \.self) { index in
+                                    
+                                    getDashboardPageView(index: index)
+                                        .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
+                                        .tag(index)
+                                }
                             }
-                        }
-                        else {
-                            
-                            ForEach(0 ..< viewModel.tabs.count, id: \.self) { index in
+                            else {
                                 
-                                getDashboardPageView(index: index)
-                                    .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
-                                    .tag(index)
+                                ForEach(0 ..< viewModel.tabs.count, id: \.self) { index in
+                                    
+                                    getDashboardPageView(index: index)
+                                        .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
+                                        .tag(index)
+                                }
                             }
                         }
                     }
+                    .environment(\.layoutDirection, .leftToRight)
+                    .tabViewStyle(.page(indexDisplayMode: .never))
+                    .animation(.easeOut, value: viewModel.currentTab)
+                    
+                    DashboardTabBarView(
+                        viewModel: viewModel
+                    )
                 }
-                .environment(\.layoutDirection, .leftToRight)
-                .tabViewStyle(.page(indexDisplayMode: .never))
-                .animation(.easeOut, value: viewModel.currentTab)
-                
-                DashboardTabBarView(
-                    viewModel: viewModel
-                )
             }
         }
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
