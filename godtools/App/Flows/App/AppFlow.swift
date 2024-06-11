@@ -214,10 +214,10 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             navigationController.pushViewController(toolDetails, animated: true)
         
         case .openToolTappedFromFavorites(let tool):
-            navigateToToolInAppLanguage(toolDataModelId: tool.dataModelId, trainingTipsEnabled: false)
+            navigateToToolWithToolSettings(toolDataModelId: tool.dataModelId, trainingTipsEnabled: false)
             
         case .toolTappedFromFavorites(let tool):
-            navigateToToolInAppLanguage(toolDataModelId: tool.dataModelId, trainingTipsEnabled: false)
+            navigateToToolWithToolSettings(toolDataModelId: tool.dataModelId, trainingTipsEnabled: false)
             
         case .unfavoriteToolTappedFromFavorites(let tool):
             
@@ -734,6 +734,39 @@ extension AppFlow {
         }
         
         navigateToTool(toolDataModelId: toolDataModelId, languageIds: languageIds, selectedLanguageIndex: nil, trainingTipsEnabled: trainingTipsEnabled)
+    }
+    
+    private func navigateToToolWithToolSettings(toolDataModelId: String, trainingTipsEnabled: Bool) {
+        
+        let userToolSettingsRepository: UserToolSettingsRepository = appDiContainer.feature.toolSettings.dataLayer.getUserToolSettingsRepository()
+        
+        if let userToolSettings = userToolSettingsRepository.getUserToolSettings(toolId: toolDataModelId) {
+
+            navigateToTool(
+                toolDataModelId: toolDataModelId,
+                primaryLanguageId: userToolSettings.primaryLanguageId,
+                parallelLanguageId: userToolSettings.parallelLanguageId,
+                selectedLanguageIndex: nil,
+                trainingTipsEnabled: trainingTipsEnabled
+            )
+            
+        } else {
+            
+            navigateToToolInAppLanguage(toolDataModelId: toolDataModelId, trainingTipsEnabled: trainingTipsEnabled)
+        }
+    }
+    
+    private func navigateToTool(toolDataModelId: String, primaryLanguageId: String, parallelLanguageId: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool) {
+        
+        let languagesRepository: LanguagesRepository = appDiContainer.dataLayer.getLanguagesRepository()
+        
+        var languageIds: [String] = [primaryLanguageId]
+        
+        if let parallelLanguageId = parallelLanguageId {
+            languageIds.append(parallelLanguageId)
+        }
+        
+        navigateToTool(toolDataModelId: toolDataModelId, languageIds: languageIds, selectedLanguageIndex: selectedLanguageIndex, trainingTipsEnabled: trainingTipsEnabled)
     }
     
     private func navigateToTool(toolDataModelId: String, primaryLanguage: AppLanguageDomainModel, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool) {

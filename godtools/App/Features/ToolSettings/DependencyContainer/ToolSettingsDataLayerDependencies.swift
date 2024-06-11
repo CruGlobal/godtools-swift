@@ -29,6 +29,13 @@ class ToolSettingsDataLayerDependencies {
     
     // MARK: - Domain Interface
     
+    func getPersistUserToolSettingsIfFavoriteToolRepositoryInterface() -> PersistUserToolSettingsIfFavoriteToolRepositoryInterface {
+        return PersistUserToolSettingsIfFavoriteToolsRepository(
+            favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository(),
+            userToolSettingsRepository: getUserToolSettingsRepository()
+        )
+    }
+    
     func getShareToolInterfaceStringsRepositoryInterface() -> GetShareToolInterfaceStringsRepositoryInterface {
         return GetShareToolInterfaceStringsRepository(
             resourcesRepository: coreDataLayer.getResourcesRepository(),
@@ -74,13 +81,6 @@ class ToolSettingsDataLayerDependencies {
             resourcesRepository: coreDataLayer.getResourcesRepository(),
             languagesRepository: coreDataLayer.getLanguagesRepository(),
             translatedLanguageNameRepository: coreDataLayer.getTranslatedLanguageNameRepository()
-        )
-    }
-    
-    func getPersistUserToolSettingsIfFavoriteToolRepositoryInterface() -> PersistUserToolSettingsIfFavoriteToolRepositoryInterface {
-        return PersistUserToolSettingsIfFavoriteToolsRepository(
-            favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository(),
-            userToolSettingsRepository: getUserToolSettingsRepository()
         )
     }
 }

@@ -28,6 +28,11 @@ class UserToolSettingsRepository {
         cache.storeUserToolSettings(dataModel: dataModel)
     }
     
+    func getUserToolSettings(toolId: String) -> UserToolSettingsDataModel? {
+        
+        return cache.getUserToolSettings(toolId: toolId)
+    }
+    
     func getUserToolSettingsPublisher(toolId: String) -> AnyPublisher<UserToolSettingsDataModel?, Never> {
         
         return cache.getUserToolSettingsPublisher(toolId: toolId)
