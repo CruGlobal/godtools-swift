@@ -47,15 +47,6 @@ class RealmAppLanguagesCache {
         .eraseToAnyPublisher()
     }
     
-    func getLanguage(languageId: BCP47LanguageIdentifier) -> AppLanguageDataModel? {
-        
-        let realm = realmDatabase.openRealm()
-        
-        guard let language = realm.object(ofType: RealmAppLanguage.self, forPrimaryKey: languageId) else { return nil }
-        
-        return AppLanguageDataModel(dataModel: language)
-    }
-    
     func getLanguagePublisher(languageId: BCP47LanguageIdentifier) -> AnyPublisher<AppLanguageDataModel?, Never> {
         
         return realmDatabase.readObjectPublisher(primaryKey: languageId, mapInBackgroundClosure: { (object: RealmAppLanguage?) -> AppLanguageDataModel? in
