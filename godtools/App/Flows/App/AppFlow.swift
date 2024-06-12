@@ -176,7 +176,8 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             let toolDetails = getToolDetails(
                 toolId: spotlightTool.dataModelId,
                 parallelLanguage: toolFilterLanguage?.language?.localeIdentifier,
-                selectedLanguageIndex: 1
+                selectedLanguageIndex: 1, 
+                cameFromFavorites: false
             )
             
             navigationController.pushViewController(toolDetails, animated: true)
@@ -186,13 +187,22 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             let toolDetails = getToolDetails(
                 toolId: tool.dataModelId,
                 parallelLanguage: toolFilterLanguage?.language?.localeIdentifier,
-                selectedLanguageIndex: 1
+                selectedLanguageIndex: 1, 
+                cameFromFavorites: false
             )
             
             navigationController.pushViewController(toolDetails, animated: true)
                                     
-        case .openToolTappedFromToolDetails(let toolId, let primaryLanguage, let parallelLanguage, let selectedLanguageIndex):
-            navigateToTool(toolDataModelId: toolId, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, selectedLanguageIndex: selectedLanguageIndex, trainingTipsEnabled: false, cameFromFavorites: false)
+        case .openToolTappedFromToolDetails(let toolId, let primaryLanguage, let parallelLanguage, let selectedLanguageIndex, let cameFromFavorites):
+            
+            if cameFromFavorites {
+                
+                navigateToToolWithToolSettings(toolDataModelId: toolId, trainingTipsEnabled: false, cameFromFavorites: true)
+                
+            } else {
+                
+                navigateToTool(toolDataModelId: toolId, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, selectedLanguageIndex: selectedLanguageIndex, trainingTipsEnabled: false, cameFromFavorites: false)
+            }
             
         case .lessonTappedFromLessonsList(let lessonListItem):
             navigateToToolInAppLanguage(toolDataModelId: lessonListItem.dataModelId, trainingTipsEnabled: false, cameFromFavorites: false)
@@ -208,7 +218,8 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             let toolDetails = getToolDetails(
                 toolId: tool.dataModelId,
                 parallelLanguage: nil,
-                selectedLanguageIndex: nil
+                selectedLanguageIndex: nil, 
+                cameFromFavorites: true
             )
             
             navigationController.pushViewController(toolDetails, animated: true)
@@ -238,7 +249,8 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             let toolDetails = getToolDetails(
                 toolId: tool.dataModelId,
                 parallelLanguage: nil,
-                selectedLanguageIndex: nil
+                selectedLanguageIndex: nil, 
+                cameFromFavorites: true
             )
             
             navigationController.pushViewController(toolDetails, animated: true)
@@ -1029,7 +1041,7 @@ extension AppFlow {
 
 extension AppFlow {
     
-    private func getToolDetails(toolId: String, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?) -> UIViewController {
+    private func getToolDetails(toolId: String, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?, cameFromFavorites: Bool) -> UIViewController {
         
         let viewModel = ToolDetailsViewModel(
             flowDelegate: self,
@@ -1044,7 +1056,8 @@ extension AppFlow {
             toggleToolFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToggleFavoritedToolUseCase(),
             attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
-            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
+            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(), 
+            cameFromFavorites: cameFromFavorites
         )
         
         let view = ToolDetailsView(viewModel: viewModel)
