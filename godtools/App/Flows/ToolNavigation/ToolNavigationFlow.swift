@@ -36,11 +36,12 @@ extension ToolNavigationFlow {
             liveShareStream: toolDeepLink.liveShareStream,
             selectedLanguageIndex: toolDeepLink.selectedLanguageIndex,
             trainingTipsEnabled: false,
-            initialPage: toolDeepLink.mobileContentPage
+            initialPage: toolDeepLink.mobileContentPage, 
+            cameFromFavorites: false
         )
     }
     
-    func navigateToTool(appLanguage: AppLanguageDomainModel, resourceId: String, languageIds: [String], liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?) {
+    func navigateToTool(appLanguage: AppLanguageDomainModel, resourceId: String, languageIds: [String], liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?, cameFromFavorites: Bool) {
         
         let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(
             resourceId: resourceId,
@@ -55,11 +56,12 @@ extension ToolNavigationFlow {
             liveShareStream: liveShareStream,
             selectedLanguageIndex: selectedLanguageIndex,
             trainingTipsEnabled: trainingTipsEnabled,
-            initialPage: initialPage
+            initialPage: initialPage, 
+            cameFromFavorites: cameFromFavorites
         )
     }
     
-    private func navigateToToolAndDetermineToolTranslationsToDownload(appLanguage: AppLanguageDomainModel, determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?) {
+    private func navigateToToolAndDetermineToolTranslationsToDownload(appLanguage: AppLanguageDomainModel, determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?, cameFromFavorites: Bool) {
         
         let didDownloadToolTranslationsClosure = { [weak self] (result: Result<ToolTranslationsDomainModel, Error>) in
                         
@@ -73,7 +75,8 @@ extension ToolNavigationFlow {
                     liveShareStream: liveShareStream,
                     selectedLanguageIndex: selectedLanguageIndex,
                     trainingTipsEnabled: trainingTipsEnabled,
-                    initialPage: initialPage
+                    initialPage: initialPage,
+                    cameFromFavorites: cameFromFavorites
                 )
                 
             case .failure(let responseError):
@@ -93,7 +96,7 @@ extension ToolNavigationFlow {
         self.downloadToolTranslationFlow = downloadToolTranslationFlow
     }
     
-    private func navigateToTool(appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?) {
+    private func navigateToTool(appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?, cameFromFavorites: Bool) {
         
         let resourceType: ResourceType = toolTranslations.tool.resourceTypeEnum
         
@@ -131,7 +134,8 @@ extension ToolNavigationFlow {
                 liveShareStream: liveShareStream,
                 selectedLanguageIndex: selectedLanguageIndex,
                 trainingTipsEnabled: trainingTipsEnabled,
-                initialPage: initialPage
+                initialPage: initialPage, 
+                cameFromFavorites: cameFromFavorites
             )
             
         case .chooseYourOwnAdventure:

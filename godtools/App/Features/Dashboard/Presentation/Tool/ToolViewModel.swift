@@ -16,11 +16,13 @@ class ToolViewModel: MobileContentPagesViewModel {
     private let tractRemoteShareSubscriber: TractRemoteShareSubscriber
     private let resourceViewsService: ResourceViewsService
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
+    private let persistUserToolSettingsIfFavoriteToolUseCase: PersistUserToolSettingsIfFavoriteToolUseCase
     private let toolOpenedAnalytics: ToolOpenedAnalytics
     private let liveShareStream: String?
     
     private var cancellables: Set<AnyCancellable> = Set()
     private var remoteShareIsActive: Bool = false
+    private var cameFromFavorites: Bool = false
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -30,15 +32,17 @@ class ToolViewModel: MobileContentPagesViewModel {
     
     @Published var hidesRemoteShareIsActive: Bool = true
         
-    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, resourceViewsService: ResourceViewsService, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, translatedLanguageNameRepository: TranslatedLanguageNameRepository, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, initialPage: MobileContentPagesPage?, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?) {
+    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, resourceViewsService: ResourceViewsService, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, translatedLanguageNameRepository: TranslatedLanguageNameRepository, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, initialPage: MobileContentPagesPage?, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, persistUserToolSettingsIfFavoriteToolUseCase: PersistUserToolSettingsIfFavoriteToolUseCase, selectedLanguageIndex: Int?, cameFromFavorites: Bool) {
         
         self.flowDelegate = flowDelegate
         self.tractRemoteSharePublisher = tractRemoteSharePublisher
         self.tractRemoteShareSubscriber = tractRemoteShareSubscriber
         self.resourceViewsService = resourceViewsService
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
+        self.persistUserToolSettingsIfFavoriteToolUseCase = persistUserToolSettingsIfFavoriteToolUseCase
         self.toolOpenedAnalytics = toolOpenedAnalytics
         self.liveShareStream = liveShareStream
+        self.cameFromFavorites = cameFromFavorites
                 
         let primaryManifest: Manifest = renderer.pageRenderers[0].manifest
         
@@ -213,6 +217,24 @@ extension ToolViewModel {
                 
                 self?.setTrainingTipsEnabled(enabled: trainingTipsEnabled)
             }
+            .store(in: &cancellables)
+        
+        toolSettingsObserver.$languages
+            .map { [weak self] (languages: ToolSettingsLanguages) in
+                
+                guard let self = self, self.cameFromFavorites else {
+                    return Just(false)
+                        .eraseToAnyPublisher()
+                }
+                
+                return self.persistUserToolSettingsIfFavoriteToolUseCase
+                    .persistUserToolSettingsIfFavoriteToolPublisher(with: toolSettingsObserver.toolId, primaryLanguageId: languages.primaryLanguageId, parallelLanguageId: languages.parallelLanguageId)
+            }
+            .switchToLatest()
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { _ in
+                
+            })
             .store(in: &cancellables)
         
         trackActionAnalyticsUseCase
