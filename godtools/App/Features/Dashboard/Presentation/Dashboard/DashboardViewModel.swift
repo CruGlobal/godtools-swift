@@ -27,7 +27,7 @@ class DashboardViewModel: ObservableObject {
     @Published var toolsButtonTitle: String = ""
     @Published var currentTab: Int = 0
     
-    init(startingTab: DashboardTabTypeDomainModel, flowDelegate: FlowDelegate, dashboardPresentationLayerDependencies: DashboardPresentationLayerDependencies, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewDashboardUseCase: ViewDashboardUseCase) {
+    init(startingTab: DashboardTabTypeDomainModel, flowDelegate: FlowDelegate, dashboardPresentationLayerDependencies: DashboardPresentationLayerDependencies, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewDashboardUseCase: ViewDashboardUseCase, dashboardTabObserver: CurrentValueSubject<DashboardTabTypeDomainModel, Never>) {
         
         self.flowDelegate = flowDelegate
         self.dashboardPresentationLayerDependencies = dashboardPresentationLayerDependencies
@@ -58,6 +58,15 @@ class DashboardViewModel: ObservableObject {
                 self?.reloadTabs() // NOTE: Needed since button title interface strings aren't connected to the View. ~Levi
             }
             .store(in: &cancellables)        
+        
+        $currentTab.eraseToAnyPublisher()
+            .sink { [weak self] currentTab in
+                
+                guard let self = self else { return }
+                
+                dashboardTabObserver.send(self.tabs[currentTab])
+            }
+            .store(in: &cancellables)
     }
     
     deinit {
