@@ -13,4 +13,5 @@ struct UserToolSettingsDomainModel {
     let toolId: String
     let primaryLanguageId: String
     let parallelLanguageId: String?
+    let selectedLanguageId: String
 }

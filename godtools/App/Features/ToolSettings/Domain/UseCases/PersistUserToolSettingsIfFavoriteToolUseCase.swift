@@ -17,8 +17,8 @@ class PersistUserToolSettingsIfFavoriteToolUseCase {
         self.persistUserToolSettingsIfFavoriteToolRepository = persistUserToolSettingsIfFavoriteToolRepositoryInterface
     }
     
-    func persistUserToolSettingsIfFavoriteToolPublisher(with toolId: String, primaryLanguageId: String, parallelLanguageId: String?) -> AnyPublisher<Bool, Never> {
+    func persistUserToolSettingsIfFavoriteToolPublisher(with toolId: String, primaryLanguageId: String, parallelLanguageId: String?, selectedLanguageId: String) -> AnyPublisher<Bool, Never> {
         
-        return persistUserToolSettingsIfFavoriteToolRepository.persistUserToolSettingsIfFavoriteToolPublisher(toolId: toolId, primaryLanguageId: primaryLanguageId, parallelLanguageId: parallelLanguageId)
+        return persistUserToolSettingsIfFavoriteToolRepository.persistUserToolSettingsIfFavoriteToolPublisher(toolId: toolId, primaryLanguageId: primaryLanguageId, parallelLanguageId: parallelLanguageId, selectedLanguageId: selectedLanguageId)
     }
 }

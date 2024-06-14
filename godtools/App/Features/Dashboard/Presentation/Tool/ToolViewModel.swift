@@ -23,6 +23,7 @@ class ToolViewModel: MobileContentPagesViewModel {
     private var cancellables: Set<AnyCancellable> = Set()
     private var remoteShareIsActive: Bool = false
     private var shouldPersistNewToolSettings: Bool = false
+    private var toolSettingsObserver: ToolSettingsObserver?
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -198,6 +199,7 @@ extension ToolViewModel {
             trainingTipsEnabled: trainingTipsEnabled,
             tractRemoteSharePublisher: tractRemoteSharePublisher
         )
+        self.toolSettingsObserver = toolSettingsObserver
 
         toolSettingsObserver.$languages
             .receive(on: DispatchQueue.main)
@@ -228,7 +230,12 @@ extension ToolViewModel {
                 }
                 
                 return self.persistUserToolSettingsIfFavoriteToolUseCase
-                    .persistUserToolSettingsIfFavoriteToolPublisher(with: toolSettingsObserver.toolId, primaryLanguageId: languages.primaryLanguageId, parallelLanguageId: languages.parallelLanguageId)
+                    .persistUserToolSettingsIfFavoriteToolPublisher(
+                        with: toolSettingsObserver.toolId,
+                        primaryLanguageId: languages.primaryLanguageId,
+                        parallelLanguageId: languages.parallelLanguageId,
+                        selectedLanguageId: languages.selectedLanguageId
+                    )
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
@@ -264,6 +271,8 @@ extension ToolViewModel {
             page: page,
             pagePositions: pagePositions
         )
+        
+        toolSettingsObserver?.languages.selectedLanguageId = tappedLanguage.id
         
         trackLanguageTapped(tappedLanguage: tappedLanguage)
     }

@@ -14,12 +14,14 @@ struct UserToolSettingsDataModel {
     let toolId: String
     let primaryLanguageId: String
     let parallelLanguageId: String?
+    let selectedLanguageId: String
     
-    init(toolId: String, primaryLanguageId: String, parallelLanguageId: String?) {
+    init(toolId: String, primaryLanguageId: String, parallelLanguageId: String?, selectedLanguageId: String) {
         createdAt = Date()
         self.toolId = toolId
         self.primaryLanguageId = primaryLanguageId
         self.parallelLanguageId = parallelLanguageId
+        self.selectedLanguageId = selectedLanguageId
     }
 
     init(realmObject: RealmUserToolSettings) {
@@ -27,5 +29,6 @@ struct UserToolSettingsDataModel {
         toolId = realmObject.toolId
         primaryLanguageId = realmObject.primaryLanguageId
         parallelLanguageId = realmObject.parallelLanguageId
+        selectedLanguageId = realmObject.selectedLanguageId
     }
 }

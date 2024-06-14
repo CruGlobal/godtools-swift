@@ -12,12 +12,12 @@ class ToolSettingsLanguages {
     
     let primaryLanguageId: String
     let parallelLanguageId: String?
-    let selectedLanguageId: String
+    var selectedLanguageId: String
     
     init(primaryLanguageId: String, parallelLanguageId: String?, selectedLanguageId: String) {
         
         self.primaryLanguageId = primaryLanguageId
         self.parallelLanguageId = parallelLanguageId
         self.selectedLanguageId = selectedLanguageId
-    }
+    }    
 }

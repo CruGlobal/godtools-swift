@@ -11,5 +11,5 @@ import Combine
 
 protocol PersistUserToolSettingsIfFavoriteToolRepositoryInterface {
     
-    func persistUserToolSettingsIfFavoriteToolPublisher(toolId: String, primaryLanguageId: String, parallelLanguageId: String?) -> AnyPublisher<Bool, Never>
+    func persistUserToolSettingsIfFavoriteToolPublisher(toolId: String, primaryLanguageId: String, parallelLanguageId: String?, selectedLanguageId: String) -> AnyPublisher<Bool, Never>
 }

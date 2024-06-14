@@ -19,7 +19,7 @@ class PersistUserToolSettingsIfFavoriteToolsRepository: PersistUserToolSettingsI
         self.userToolSettingsRepository = userToolSettingsRepository
     }
     
-    func persistUserToolSettingsIfFavoriteToolPublisher(toolId: String, primaryLanguageId: String, parallelLanguageId: String?) -> AnyPublisher<Bool, Never> {
+    func persistUserToolSettingsIfFavoriteToolPublisher(toolId: String, primaryLanguageId: String, parallelLanguageId: String?, selectedLanguageId: String) -> AnyPublisher<Bool, Never> {
         
         guard favoritedResourcesRepository.getResourceIsFavorited(id: toolId) else {
             
@@ -27,7 +27,12 @@ class PersistUserToolSettingsIfFavoriteToolsRepository: PersistUserToolSettingsI
                 .eraseToAnyPublisher()
         }
         
-        userToolSettingsRepository.storeUserToolSettings(toolId: toolId, primaryLanguageId: primaryLanguageId, parallelLanguageId: parallelLanguageId)
+        userToolSettingsRepository.storeUserToolSettings(
+            toolId: toolId,
+            primaryLanguageId: primaryLanguageId,
+            parallelLanguageId: parallelLanguageId,
+            selectedLanguageId: selectedLanguageId
+        )
         
         return Just(true)
             .eraseToAnyPublisher()

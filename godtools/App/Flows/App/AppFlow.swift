@@ -755,12 +755,14 @@ extension AppFlow {
         
         if let userToolSettings = userToolSettingsRepository.getUserToolSettings(toolId: toolDataModelId) {
 
+            let selectedLanguageIndex: Int = userToolSettings.selectedLanguageId == userToolSettings.primaryLanguageId ? 0 : 1
+            
             navigateToTool(
                 toolDataModelId: toolDataModelId,
                 primaryLanguageId: userToolSettings.primaryLanguageId,
                 parallelLanguageId: userToolSettings.parallelLanguageId,
-                selectedLanguageIndex: nil,
-                trainingTipsEnabled: trainingTipsEnabled, 
+                selectedLanguageIndex: selectedLanguageIndex,
+                trainingTipsEnabled: trainingTipsEnabled,
                 shouldPersistNewToolSettings: shouldPersistNewToolSettings
             )
             
