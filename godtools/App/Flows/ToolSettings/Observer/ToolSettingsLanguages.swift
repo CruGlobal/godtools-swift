@@ -19,5 +19,5 @@ class ToolSettingsLanguages {
         self.primaryLanguageId = primaryLanguageId
         self.parallelLanguageId = parallelLanguageId
         self.selectedLanguageId = selectedLanguageId
-    }    
+    }
 }

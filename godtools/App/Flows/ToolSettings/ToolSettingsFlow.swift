@@ -166,7 +166,7 @@ extension ToolSettingsFlow {
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             viewToolSettingsUseCase: appDiContainer.feature.toolSettings.domainLayer.getViewToolSettingsUseCase(),
             getShareablesUseCase: appDiContainer.feature.shareables.domainLayer.getShareablesUseCase(),
-            getShareableImageUseCase: appDiContainer.feature.shareables.domainLayer.getShareableImageUseCase() 
+            getShareableImageUseCase: appDiContainer.feature.shareables.domainLayer.getShareableImageUseCase()
         )
         
         let toolSettingsView = ToolSettingsView(viewModel: viewModel)
