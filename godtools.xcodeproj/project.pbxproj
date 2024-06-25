@@ -1546,7 +1546,7 @@
 		D4BC79E829B130970040651B /* SetCompletedTrainingTipUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BC79E729B130970040651B /* SetCompletedTrainingTipUseCase.swift */; };
 		D4BE3F632C08074400887BFD /* PersistUserToolSettingsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BE3F622C08074400887BFD /* PersistUserToolSettingsUseCase.swift */; };
 		D4BE3F652C09029900887BFD /* PersistUserToolSettingsRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BE3F642C09029900887BFD /* PersistUserToolSettingsRepositoryInterface.swift */; };
-		D4BE3F672C09048C00887BFD /* PersistUserToolSettingsToolsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BE3F662C09048C00887BFD /* PersistUserToolSettingsToolsRepository.swift */; };
+		D4BE3F672C09048C00887BFD /* PersistUserToolSettingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BE3F662C09048C00887BFD /* PersistUserToolSettingsRepository.swift */; };
 		D4BE3F6E2C0907E900887BFD /* RealmUserToolSettingsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BE3F6D2C0907E900887BFD /* RealmUserToolSettingsCache.swift */; };
 		D4BE3F702C0907FC00887BFD /* RealmUserToolSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BE3F6F2C0907FC00887BFD /* RealmUserToolSettings.swift */; };
 		D4BE3F722C0909BA00887BFD /* UserToolSettingsDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BE3F712C0909BA00887BFD /* UserToolSettingsDataModel.swift */; };
@@ -3249,7 +3249,7 @@
 		D4BC79E729B130970040651B /* SetCompletedTrainingTipUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCompletedTrainingTipUseCase.swift; sourceTree = "<group>"; };
 		D4BE3F622C08074400887BFD /* PersistUserToolSettingsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistUserToolSettingsUseCase.swift; sourceTree = "<group>"; };
 		D4BE3F642C09029900887BFD /* PersistUserToolSettingsRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistUserToolSettingsRepositoryInterface.swift; sourceTree = "<group>"; };
-		D4BE3F662C09048C00887BFD /* PersistUserToolSettingsToolsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistUserToolSettingsToolsRepository.swift; sourceTree = "<group>"; };
+		D4BE3F662C09048C00887BFD /* PersistUserToolSettingsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistUserToolSettingsRepository.swift; sourceTree = "<group>"; };
 		D4BE3F6D2C0907E900887BFD /* RealmUserToolSettingsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmUserToolSettingsCache.swift; sourceTree = "<group>"; };
 		D4BE3F6F2C0907FC00887BFD /* RealmUserToolSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmUserToolSettings.swift; sourceTree = "<group>"; };
 		D4BE3F712C0909BA00887BFD /* UserToolSettingsDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserToolSettingsDataModel.swift; sourceTree = "<group>"; };
@@ -10087,7 +10087,7 @@
 				45AF47EE2B35E08C00361EA7 /* GetToolSettingsToolHasTipsRepository.swift */,
 				4512D4D12B29127C00DFAFB3 /* GetToolSettingsToolLanguagesListInterfaceStringsRepository.swift */,
 				4512D4D02B29127C00DFAFB3 /* GetToolSettingsToolLanguagesListRepository.swift */,
-				D4BE3F662C09048C00887BFD /* PersistUserToolSettingsToolsRepository.swift */,
+				D4BE3F662C09048C00887BFD /* PersistUserToolSettingsRepository.swift */,
 			);
 			path = "Data-DomainInterface";
 			sourceTree = "<group>";
@@ -12624,7 +12624,7 @@
 				45B3F4522AC3A92700D61BFD /* AppLanguageFeatureDomainLayerDependencies.swift in Sources */,
 				452DFB342B7F9FE2003A4A59 /* ToolDomainModel.swift in Sources */,
 				45A835172AD1A414004F5593 /* ToolVersionDomainModel.swift in Sources */,
-				D4BE3F672C09048C00887BFD /* PersistUserToolSettingsToolsRepository.swift in Sources */,
+				D4BE3F672C09048C00887BFD /* PersistUserToolSettingsRepository.swift in Sources */,
 				45308EBD2BDC254400A49D96 /* GetSpiritualConversationReadinessScale.swift in Sources */,
 				45FE82392ACE5BFE00930C39 /* AppHostingController.swift in Sources */,
 				451CEDFD282C3239006E5105 /* ToolSettingsFlow.swift in Sources */,

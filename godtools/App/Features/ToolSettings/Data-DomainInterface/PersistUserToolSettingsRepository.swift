@@ -1,5 +1,5 @@
 //
-//  PersistUserToolSettingsToolRepository.swift
+//  PersistUserToolSettingsRepository.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 5/30/24.

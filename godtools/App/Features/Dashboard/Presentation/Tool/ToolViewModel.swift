@@ -203,28 +203,31 @@ class ToolViewModel: MobileContentPagesViewModel {
             }
             .store(in: &cancellables)
         
-        toolSettingsObserver.$languages
-            .map { [weak self] (languages: ToolSettingsLanguages) in
-                
-                guard let self = self, self.shouldPersistToolSettings else {
-                    return Just(false)
-                        .eraseToAnyPublisher()
+        if shouldPersistToolSettings {
+            
+            toolSettingsObserver.$languages
+                .map { [weak self] (languages: ToolSettingsLanguages) in
+                    
+                    guard let self = self else {
+                        return Just(false)
+                            .eraseToAnyPublisher()
+                    }
+                    
+                    return self.persistUserToolSettingsUseCase
+                        .persistUserToolSettingsPublisher(
+                            with: renderer.value.resource.id,
+                            primaryLanguageId: languages.primaryLanguageId,
+                            parallelLanguageId: languages.parallelLanguageId,
+                            selectedLanguageId: languages.selectedLanguageId
+                        )
                 }
-                
-                return self.persistUserToolSettingsUseCase
-                    .persistUserToolSettingsPublisher(
-                        with: renderer.value.resource.id,
-                        primaryLanguageId: languages.primaryLanguageId,
-                        parallelLanguageId: languages.parallelLanguageId,
-                        selectedLanguageId: languages.selectedLanguageId
-                    )
-            }
-            .switchToLatest()
-            .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { _ in
-                
-            })
-            .store(in: &cancellables)
+                .switchToLatest()
+                .receive(on: DispatchQueue.main)
+                .sink(receiveValue: { _ in
+                    
+                })
+                .store(in: &cancellables)
+        }
         
         self.toolSettingsObserver = toolSettingsObserver
         return toolSettingsObserver
