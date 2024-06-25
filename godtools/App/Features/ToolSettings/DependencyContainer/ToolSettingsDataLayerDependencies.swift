@@ -29,9 +29,8 @@ class ToolSettingsDataLayerDependencies {
     
     // MARK: - Domain Interface
     
-    func getPersistUserToolSettingsIfFavoriteToolRepositoryInterface() -> PersistUserToolSettingsIfFavoriteToolRepositoryInterface {
-        return PersistUserToolSettingsIfFavoriteToolsRepository(
-            favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository(),
+    func getPersistUserToolSettingsToolRepositoryInterface() -> PersistUserToolSettingsToolRepositoryInterface {
+        return PersistUserToolSettingsToolsRepository(
             userToolSettingsRepository: getUserToolSettingsRepository()
         )
     }

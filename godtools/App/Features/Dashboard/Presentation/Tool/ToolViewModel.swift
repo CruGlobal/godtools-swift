@@ -16,7 +16,7 @@ class ToolViewModel: MobileContentPagesViewModel {
     private let tractRemoteShareSubscriber: TractRemoteShareSubscriber
     private let resourceViewsService: ResourceViewsService
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
-    private let persistUserToolSettingsIfFavoriteToolUseCase: PersistUserToolSettingsIfFavoriteToolUseCase
+    private let persistUserToolSettingsToolUseCase: PersistUserToolSettingsToolUseCase
     private let toolOpenedAnalytics: ToolOpenedAnalytics
     private let liveShareStream: String?
     
@@ -33,14 +33,14 @@ class ToolViewModel: MobileContentPagesViewModel {
     
     @Published var hidesRemoteShareIsActive: Bool = true
         
-    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, resourceViewsService: ResourceViewsService, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, translatedLanguageNameRepository: TranslatedLanguageNameRepository, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, initialPage: MobileContentPagesPage?, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, persistUserToolSettingsIfFavoriteToolUseCase: PersistUserToolSettingsIfFavoriteToolUseCase, selectedLanguageIndex: Int?, shouldPersistToolSettings: Bool) {
+    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, resourceViewsService: ResourceViewsService, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, translatedLanguageNameRepository: TranslatedLanguageNameRepository, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, initialPage: MobileContentPagesPage?, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, persistUserToolSettingsToolUseCase: PersistUserToolSettingsToolUseCase, selectedLanguageIndex: Int?, shouldPersistToolSettings: Bool) {
         
         self.flowDelegate = flowDelegate
         self.tractRemoteSharePublisher = tractRemoteSharePublisher
         self.tractRemoteShareSubscriber = tractRemoteShareSubscriber
         self.resourceViewsService = resourceViewsService
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
-        self.persistUserToolSettingsIfFavoriteToolUseCase = persistUserToolSettingsIfFavoriteToolUseCase
+        self.persistUserToolSettingsToolUseCase = persistUserToolSettingsToolUseCase
         self.toolOpenedAnalytics = toolOpenedAnalytics
         self.liveShareStream = liveShareStream
         self.shouldPersistToolSettings = shouldPersistToolSettings
@@ -227,8 +227,8 @@ extension ToolViewModel {
                         .eraseToAnyPublisher()
                 }
                 
-                return self.persistUserToolSettingsIfFavoriteToolUseCase
-                    .persistUserToolSettingsIfFavoriteToolPublisher(
+                return self.persistUserToolSettingsToolUseCase
+                    .persistUserToolSettingsToolPublisher(
                         with: renderer.value.resource.id,
                         primaryLanguageId: languages.primaryLanguageId,
                         parallelLanguageId: languages.parallelLanguageId,
