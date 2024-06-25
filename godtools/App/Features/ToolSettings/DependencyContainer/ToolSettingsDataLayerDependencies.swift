@@ -29,8 +29,8 @@ class ToolSettingsDataLayerDependencies {
     
     // MARK: - Domain Interface
     
-    func getPersistUserToolSettingsToolRepositoryInterface() -> PersistUserToolSettingsToolRepositoryInterface {
-        return PersistUserToolSettingsToolsRepository(
+    func getPersistUserToolSettingsRepositoryInterface() -> PersistUserToolSettingsRepositoryInterface {
+        return PersistUserToolSettingsRepository(
             userToolSettingsRepository: getUserToolSettingsRepository()
         )
     }

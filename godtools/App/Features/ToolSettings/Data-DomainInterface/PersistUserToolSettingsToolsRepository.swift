@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class PersistUserToolSettingsToolsRepository: PersistUserToolSettingsToolRepositoryInterface {
+class PersistUserToolSettingsRepository: PersistUserToolSettingsRepositoryInterface {
     
     private let userToolSettingsRepository: UserToolSettingsRepository
     
@@ -17,7 +17,7 @@ class PersistUserToolSettingsToolsRepository: PersistUserToolSettingsToolReposit
         self.userToolSettingsRepository = userToolSettingsRepository
     }
     
-    func persistUserToolSettingsToolPublisher(toolId: String, primaryLanguageId: String, parallelLanguageId: String?, selectedLanguageId: String) -> AnyPublisher<Bool, Never> {
+    func persistUserToolSettingsPublisher(toolId: String, primaryLanguageId: String, parallelLanguageId: String?, selectedLanguageId: String) -> AnyPublisher<Bool, Never> {
         
         userToolSettingsRepository.storeUserToolSettings(
             toolId: toolId,
