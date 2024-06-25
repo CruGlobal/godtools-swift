@@ -28,7 +28,7 @@ class TractFlow: ToolNavigationFlow, Flow {
     var tractFlow: TractFlow?
     var downloadToolTranslationFlow: DownloadToolTranslationsFlow?
     
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController?, appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?, shouldPersistNewToolSettings: Bool) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController?, appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?, shouldPersistToolSettings: Bool) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
@@ -41,7 +41,7 @@ class TractFlow: ToolNavigationFlow, Flow {
             selectedLanguageIndex: selectedLanguageIndex,
             trainingTipsEnabled: trainingTipsEnabled,
             initialPage: initialPage, 
-            shouldPersistNewToolSettings: shouldPersistNewToolSettings
+            shouldPersistToolSettings: shouldPersistToolSettings
         )
                         
         if let sharedNavController = sharedNavigationController {
@@ -153,7 +153,7 @@ class TractFlow: ToolNavigationFlow, Flow {
 
 extension TractFlow {
     
-    private func getToolView(toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?, shouldPersistNewToolSettings: Bool) -> UIViewController {
+    private func getToolView(toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?, shouldPersistToolSettings: Bool) -> UIViewController {
         
         let navigation: MobileContentRendererNavigation = appDiContainer.getMobileContentRendererNavigation(
             parentFlow: self,
@@ -191,7 +191,7 @@ extension TractFlow {
             incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase(), 
             persistUserToolSettingsIfFavoriteToolUseCase: appDiContainer.feature.toolSettings.domainLayer.getPersistUserToolSettingsIfFavoriteToolUseCase(),
             selectedLanguageIndex: selectedLanguageIndex,
-            shouldPersistNewToolSettings: shouldPersistNewToolSettings
+            shouldPersistToolSettings: shouldPersistToolSettings
         )
         
         navigationController.setSemanticContentAttribute(semanticContentAttribute: navBarLayoutDirection)

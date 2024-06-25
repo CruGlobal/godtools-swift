@@ -22,7 +22,7 @@ class ToolViewModel: MobileContentPagesViewModel {
     
     private var cancellables: Set<AnyCancellable> = Set()
     private var remoteShareIsActive: Bool = false
-    private var shouldPersistNewToolSettings: Bool = false
+    private var shouldPersistToolSettings: Bool = false
     private var toolSettingsObserver: ToolSettingsObserver?
     
     private weak var flowDelegate: FlowDelegate?
@@ -33,7 +33,7 @@ class ToolViewModel: MobileContentPagesViewModel {
     
     @Published var hidesRemoteShareIsActive: Bool = true
         
-    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, resourceViewsService: ResourceViewsService, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, translatedLanguageNameRepository: TranslatedLanguageNameRepository, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, initialPage: MobileContentPagesPage?, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, persistUserToolSettingsIfFavoriteToolUseCase: PersistUserToolSettingsIfFavoriteToolUseCase, selectedLanguageIndex: Int?, shouldPersistNewToolSettings: Bool) {
+    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, resourceViewsService: ResourceViewsService, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, translatedLanguageNameRepository: TranslatedLanguageNameRepository, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, initialPage: MobileContentPagesPage?, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, persistUserToolSettingsIfFavoriteToolUseCase: PersistUserToolSettingsIfFavoriteToolUseCase, selectedLanguageIndex: Int?, shouldPersistToolSettings: Bool) {
         
         self.flowDelegate = flowDelegate
         self.tractRemoteSharePublisher = tractRemoteSharePublisher
@@ -43,7 +43,7 @@ class ToolViewModel: MobileContentPagesViewModel {
         self.persistUserToolSettingsIfFavoriteToolUseCase = persistUserToolSettingsIfFavoriteToolUseCase
         self.toolOpenedAnalytics = toolOpenedAnalytics
         self.liveShareStream = liveShareStream
-        self.shouldPersistNewToolSettings = shouldPersistNewToolSettings
+        self.shouldPersistToolSettings = shouldPersistToolSettings
                 
         let primaryManifest: Manifest = renderer.pageRenderers[0].manifest
         
@@ -222,7 +222,7 @@ extension ToolViewModel {
         toolSettingsObserver?.$languages
             .map { [weak self] (languages: ToolSettingsLanguages) in
                 
-                guard let self = self, self.shouldPersistNewToolSettings else {
+                guard let self = self, self.shouldPersistToolSettings else {
                     return Just(false)
                         .eraseToAnyPublisher()
                 }
