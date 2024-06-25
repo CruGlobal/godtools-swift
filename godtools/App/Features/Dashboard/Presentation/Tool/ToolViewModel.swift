@@ -33,16 +33,16 @@ class ToolViewModel: MobileContentPagesViewModel {
     
     @Published var hidesRemoteShareIsActive: Bool = true
         
-    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, resourceViewsService: ResourceViewsService, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, translatedLanguageNameRepository: TranslatedLanguageNameRepository, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, initialPage: MobileContentPagesPage?, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, persistUserToolSettingsToolUseCase: PersistUserToolSettingsToolUseCase, selectedLanguageIndex: Int?, shouldPersistToolSettings: Bool) {
+    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, resourceViewsService: ResourceViewsService, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, translatedLanguageNameRepository: TranslatedLanguageNameRepository, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, initialPage: MobileContentPagesPage?, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?, persistUserToolSettingsToolUseCase: PersistUserToolSettingsToolUseCase, shouldPersistToolSettings: Bool) {
         
         self.flowDelegate = flowDelegate
         self.tractRemoteSharePublisher = tractRemoteSharePublisher
         self.tractRemoteShareSubscriber = tractRemoteShareSubscriber
         self.resourceViewsService = resourceViewsService
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
-        self.persistUserToolSettingsToolUseCase = persistUserToolSettingsToolUseCase
         self.toolOpenedAnalytics = toolOpenedAnalytics
         self.liveShareStream = liveShareStream
+        self.persistUserToolSettingsToolUseCase = persistUserToolSettingsToolUseCase
         self.shouldPersistToolSettings = shouldPersistToolSettings
                 
         let primaryManifest: Manifest = renderer.pageRenderers[0].manifest
@@ -166,32 +166,16 @@ class ToolViewModel: MobileContentPagesViewModel {
             data: trackTappedLanguageData
         )
     }
-}
-
-// MARK: - Inputs
-
-extension ToolViewModel {
     
-    @objc func homeTapped() {
+    private func createToolSettingsObserver() -> ToolSettingsObserver {
         
-        let isScreenSharing: Bool = remoteShareIsActive
-        
-        flowDelegate?.navigate(step: .homeTappedFromTool(isScreenSharing: isScreenSharing))
-    }
-    
-    @objc func backTapped() {
-        
-        flowDelegate?.navigate(step: .backTappedFromTool)
-    }
-    
-    private func createToolSettingsObserver() {
         let languages = ToolSettingsLanguages(
             primaryLanguageId: languages[0].id,
             parallelLanguageId: languages[safe: 1]?.id,
             selectedLanguageId: languages[selectedLanguageIndex].id
         )
         
-        toolSettingsObserver = ToolSettingsObserver(
+        let toolSettingsObserver = ToolSettingsObserver(
             toolId: renderer.value.resource.id,
             languages: languages,
             pageNumber: currentRenderedPageNumber,
@@ -199,7 +183,7 @@ extension ToolViewModel {
             tractRemoteSharePublisher: tractRemoteSharePublisher
         )
         
-        toolSettingsObserver?.$languages
+        toolSettingsObserver.$languages
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (languages: ToolSettingsLanguages) in
                 
@@ -211,7 +195,7 @@ extension ToolViewModel {
             }
             .store(in: &cancellables)
         
-        toolSettingsObserver?.$trainingTipsEnabled
+        toolSettingsObserver.$trainingTipsEnabled
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (trainingTipsEnabled: Bool) in
                 
@@ -219,7 +203,7 @@ extension ToolViewModel {
             }
             .store(in: &cancellables)
         
-        toolSettingsObserver?.$languages
+        toolSettingsObserver.$languages
             .map { [weak self] (languages: ToolSettingsLanguages) in
                 
                 guard let self = self, self.shouldPersistToolSettings else {
@@ -241,11 +225,31 @@ extension ToolViewModel {
                 
             })
             .store(in: &cancellables)
+        
+        self.toolSettingsObserver = toolSettingsObserver
+        return toolSettingsObserver
+    }
+}
+
+// MARK: - Inputs
+
+extension ToolViewModel {
+    
+    @objc func homeTapped() {
+        
+        let isScreenSharing: Bool = remoteShareIsActive
+        
+        flowDelegate?.navigate(step: .homeTappedFromTool(isScreenSharing: isScreenSharing))
+    }
+    
+    @objc func backTapped() {
+        
+        flowDelegate?.navigate(step: .backTappedFromTool)
     }
     
     @objc func toolSettingsTapped() {
         
-        createToolSettingsObserver()
+        let toolSettingsObserver = createToolSettingsObserver()
         
         trackActionAnalyticsUseCase
             .trackAction(
@@ -259,7 +263,7 @@ extension ToolViewModel {
                 data: [ToolAnalyticsActionNames.shared.ACTION_SETTINGS: 1]
             )
         
-        flowDelegate?.navigate(step: .toolSettingsTappedFromTool(toolSettingsObserver: toolSettingsObserver!))
+        flowDelegate?.navigate(step: .toolSettingsTappedFromTool(toolSettingsObserver: toolSettingsObserver))
     }
     
     func languageTapped(index: Int, page: Int, pagePositions: ToolPagePositions) {
@@ -284,7 +288,7 @@ extension ToolViewModel {
                 selectedLanguageId: tappedLanguage.id
             )
         } else {
-            createToolSettingsObserver()
+            _ = createToolSettingsObserver()
         }
         
         trackLanguageTapped(tappedLanguage: tappedLanguage)

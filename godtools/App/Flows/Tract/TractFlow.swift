@@ -189,8 +189,8 @@ extension TractFlow {
             initialPage: initialPage,
             trainingTipsEnabled: trainingTipsEnabled,
             incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase(), 
+            selectedLanguageIndex: selectedLanguageIndex, 
             persistUserToolSettingsToolUseCase: appDiContainer.feature.toolSettings.domainLayer.getPersistUserToolSettingsToolUseCase(),
-            selectedLanguageIndex: selectedLanguageIndex,
             shouldPersistToolSettings: shouldPersistToolSettings
         )
         
