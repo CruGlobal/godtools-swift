@@ -184,24 +184,22 @@ extension ToolViewModel {
         flowDelegate?.navigate(step: .backTappedFromTool)
     }
     
-    @objc func toolSettingsTapped() {
-        
+    private func createToolSettingsObserver() {
         let languages = ToolSettingsLanguages(
             primaryLanguageId: languages[0].id,
             parallelLanguageId: languages[safe: 1]?.id,
             selectedLanguageId: languages[selectedLanguageIndex].id
         )
         
-        let toolSettingsObserver = ToolSettingsObserver(
+        toolSettingsObserver = ToolSettingsObserver(
             toolId: renderer.value.resource.id,
             languages: languages,
             pageNumber: currentRenderedPageNumber,
             trainingTipsEnabled: trainingTipsEnabled,
             tractRemoteSharePublisher: tractRemoteSharePublisher
         )
-        self.toolSettingsObserver = toolSettingsObserver
-
-        toolSettingsObserver.$languages
+        
+        toolSettingsObserver?.$languages
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (languages: ToolSettingsLanguages) in
                 
@@ -213,7 +211,7 @@ extension ToolViewModel {
             }
             .store(in: &cancellables)
         
-        toolSettingsObserver.$trainingTipsEnabled
+        toolSettingsObserver?.$trainingTipsEnabled
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (trainingTipsEnabled: Bool) in
                 
@@ -221,7 +219,7 @@ extension ToolViewModel {
             }
             .store(in: &cancellables)
         
-        toolSettingsObserver.$languages
+        toolSettingsObserver?.$languages
             .map { [weak self] (languages: ToolSettingsLanguages) in
                 
                 guard let self = self, self.shouldPersistNewToolSettings else {
@@ -231,7 +229,7 @@ extension ToolViewModel {
                 
                 return self.persistUserToolSettingsIfFavoriteToolUseCase
                     .persistUserToolSettingsIfFavoriteToolPublisher(
-                        with: toolSettingsObserver.toolId,
+                        with: renderer.value.resource.id,
                         primaryLanguageId: languages.primaryLanguageId,
                         parallelLanguageId: languages.parallelLanguageId,
                         selectedLanguageId: languages.selectedLanguageId
@@ -243,6 +241,11 @@ extension ToolViewModel {
                 
             })
             .store(in: &cancellables)
+    }
+    
+    @objc func toolSettingsTapped() {
+        
+        createToolSettingsObserver()
         
         trackActionAnalyticsUseCase
             .trackAction(
@@ -256,7 +259,7 @@ extension ToolViewModel {
                 data: [ToolAnalyticsActionNames.shared.ACTION_SETTINGS: 1]
             )
         
-        flowDelegate?.navigate(step: .toolSettingsTappedFromTool(toolSettingsObserver: toolSettingsObserver))
+        flowDelegate?.navigate(step: .toolSettingsTappedFromTool(toolSettingsObserver: toolSettingsObserver!))
     }
     
     func languageTapped(index: Int, page: Int, pagePositions: ToolPagePositions) {
@@ -272,7 +275,17 @@ extension ToolViewModel {
             pagePositions: pagePositions
         )
         
-        toolSettingsObserver?.languages.selectedLanguageId = tappedLanguage.id
+        if let toolSettingsObserver = toolSettingsObserver {
+            
+            let languages = toolSettingsObserver.languages
+            self.toolSettingsObserver?.languages = ToolSettingsLanguages(
+                primaryLanguageId: languages.primaryLanguageId,
+                parallelLanguageId: languages.parallelLanguageId,
+                selectedLanguageId: tappedLanguage.id
+            )
+        } else {
+            createToolSettingsObserver()
+        }
         
         trackLanguageTapped(tappedLanguage: tappedLanguage)
     }
