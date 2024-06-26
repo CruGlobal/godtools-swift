@@ -17,9 +17,9 @@ class ToolSettingsDomainLayerDependencies {
         self.dataLayer = dataLayer
     }
     
-    func getPersistUserToolSettingsUseCase() -> PersistUserToolSettingsUseCase {
-        return PersistUserToolSettingsUseCase(
-            persistUserToolSettingsRepositoryInterface: dataLayer.getPersistUserToolSettingsRepositoryInterface()
+    func getPersistUserToolLanguageSettingsUseCase() -> PersistUserToolLanguageSettingsUseCase {
+        return PersistUserToolLanguageSettingsUseCase(
+            persistUserToolLanguageSettingsRepositoryInterface: dataLayer.getPersistUserToolLanguageSettingsRepositoryInterface()
         )
     }
     

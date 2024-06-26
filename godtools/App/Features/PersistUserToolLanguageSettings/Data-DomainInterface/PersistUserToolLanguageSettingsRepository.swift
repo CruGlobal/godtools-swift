@@ -1,5 +1,5 @@
 //
-//  PersistUserToolSettingsRepository.swift
+//  PersistUserToolLanguageSettingsRepository.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 5/30/24.
@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class PersistUserToolSettingsRepository: PersistUserToolSettingsRepositoryInterface {
+class PersistUserToolLanguageSettingsRepository: PersistUserToolLanguageSettingsRepositoryInterface {
     
     private let userToolSettingsRepository: UserToolSettingsRepository
     
@@ -17,7 +17,7 @@ class PersistUserToolSettingsRepository: PersistUserToolSettingsRepositoryInterf
         self.userToolSettingsRepository = userToolSettingsRepository
     }
     
-    func persistUserToolSettingsPublisher(toolId: String, primaryLanguageId: String, parallelLanguageId: String?, selectedLanguageId: String) -> AnyPublisher<Bool, Never> {
+    func persistUserToolLanguageSettingsPublisher(toolId: String, primaryLanguageId: String, parallelLanguageId: String?, selectedLanguageId: String) -> AnyPublisher<Bool, Never> {
         
         userToolSettingsRepository.storeUserToolSettings(
             toolId: toolId,
