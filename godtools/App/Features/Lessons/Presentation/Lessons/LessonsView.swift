@@ -42,6 +42,20 @@ struct LessonsView: View {
                         viewModel: viewModel
                     )
                     .padding([.top], 24)
+                    .padding([.leading, .trailing], contentHorizontalInsets + 5)
+                    
+                    HStack(spacing: 0) {
+                        Text("Lessons in:")
+                            .font(FontLibrary.sfProTextBold.font(size: 18))
+                            .foregroundColor(ColorPalette.gtGrey.color)
+                        
+                        FixedHorizontalSpacer(width: 30)
+                        
+                        ToolFilterButtonView(title: "Language") {
+                            print("yes")
+                        }
+                    }
+                    .padding([.top, .bottom], 20)
                     .padding([.leading, .trailing], contentHorizontalInsets)
                     
                     LazyVStack(alignment: .center, spacing: lessonCardSpacing) {
