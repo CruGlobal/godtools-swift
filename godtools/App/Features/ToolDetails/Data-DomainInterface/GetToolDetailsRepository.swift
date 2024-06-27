@@ -47,8 +47,17 @@ class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
             return Just(noToolDomainModel)
                 .eraseToAnyPublisher()
         }
-        
-        guard let translation = translationsRepository.getLatestTranslation(resourceId: toolId, languageCode: translateInLanguage) else {
+    
+        let translation: TranslationModel
+        if let appLanguagetranslation = translationsRepository.getLatestTranslation(resourceId: toolId, languageCode: translateInLanguage) {
+            
+            translation = appLanguagetranslation
+        }
+        else if let defaultTranslation = translationsRepository.getLatestTranslation(resourceId: toolId, languageCode: toolDataModel.attrDefaultLocale) {
+            
+            translation = defaultTranslation
+        }
+        else {
             return Just(noToolDomainModel)
                 .eraseToAnyPublisher()
         }
@@ -126,10 +135,10 @@ class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
                 name = appLanguageTranslation.translatedName
                 description = appLanguageTranslation.translatedTagline
             }
-            else if let englishTranslation = translationsRepository.getLatestTranslation(resourceId: resourceVariant.id, languageCode: LanguageCodeDomainModel.english.rawValue) {
+            else if let defaultTranslation = translationsRepository.getLatestTranslation(resourceId: resourceVariant.id, languageCode: resourceVariant.attrDefaultLocale) {
                 
-                name = englishTranslation.translatedName
-                description = englishTranslation.translatedTagline
+                name = defaultTranslation.translatedName
+                description = defaultTranslation.translatedTagline
             }
             else {
                 

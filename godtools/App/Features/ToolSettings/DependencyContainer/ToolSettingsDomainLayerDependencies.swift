@@ -17,6 +17,12 @@ class ToolSettingsDomainLayerDependencies {
         self.dataLayer = dataLayer
     }
     
+    func getPersistUserToolLanguageSettingsUseCase() -> PersistUserToolLanguageSettingsUseCase {
+        return PersistUserToolLanguageSettingsUseCase(
+            persistUserToolLanguageSettingsRepositoryInterface: dataLayer.getPersistUserToolLanguageSettingsRepositoryInterface()
+        )
+    }
+    
     func getViewShareToolUseCase() -> ViewShareToolUseCase {
         return ViewShareToolUseCase(
             getInterfaceStringsRepository: dataLayer.getShareToolInterfaceStringsRepositoryInterface()
