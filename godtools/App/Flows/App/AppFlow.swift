@@ -196,7 +196,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
             if dashboardTabObserver.value == .favorites {
                 
-                navigateToToolWithToolSettingsApplied(toolDataModelId: toolId, trainingTipsEnabled: false)
+                navigateToToolWithUserToolLanguageSettingsApplied(toolDataModelId: toolId, trainingTipsEnabled: false)
             } else {
                 
                 navigateToTool(toolDataModelId: toolId, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, selectedLanguageIndex: selectedLanguageIndex, trainingTipsEnabled: false)
@@ -223,10 +223,10 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             navigationController.pushViewController(toolDetails, animated: true)
         
         case .openToolTappedFromFavorites(let tool):
-            navigateToToolWithToolSettingsApplied(toolDataModelId: tool.dataModelId, trainingTipsEnabled: false)
+            navigateToToolWithUserToolLanguageSettingsApplied(toolDataModelId: tool.dataModelId, trainingTipsEnabled: false)
             
         case .toolTappedFromFavorites(let tool):
-            navigateToToolWithToolSettingsApplied(toolDataModelId: tool.dataModelId, trainingTipsEnabled: false)
+            navigateToToolWithUserToolLanguageSettingsApplied(toolDataModelId: tool.dataModelId, trainingTipsEnabled: false)
             
         case .unfavoriteToolTappedFromFavorites(let tool):
             
@@ -254,10 +254,10 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             navigationController.pushViewController(toolDetails, animated: true)
         
         case .openToolTappedFromAllYourFavoriteTools(let tool):
-            navigateToToolWithToolSettingsApplied(toolDataModelId: tool.dataModelId, trainingTipsEnabled: false)
+            navigateToToolWithUserToolLanguageSettingsApplied(toolDataModelId: tool.dataModelId, trainingTipsEnabled: false)
             
         case .toolTappedFromAllYourFavoritedTools(let tool):
-            navigateToToolWithToolSettingsApplied(toolDataModelId: tool.dataModelId, trainingTipsEnabled: false)
+            navigateToToolWithUserToolLanguageSettingsApplied(toolDataModelId: tool.dataModelId, trainingTipsEnabled: false)
             
         case .unfavoriteToolTappedFromAllYourFavoritedTools(let tool, let didConfirmToolRemovalSubject):
             
@@ -747,7 +747,7 @@ extension AppFlow {
         navigateToTool(toolDataModelId: toolDataModelId, languageIds: languageIds, selectedLanguageIndex: nil, trainingTipsEnabled: trainingTipsEnabled, shouldPersistToolSettings: shouldPersistToolSettings)
     }
     
-    private func navigateToToolWithToolSettingsApplied(toolDataModelId: String, trainingTipsEnabled: Bool) {
+    private func navigateToToolWithUserToolLanguageSettingsApplied(toolDataModelId: String, trainingTipsEnabled: Bool) {
         
         let userToolSettingsRepository: UserToolSettingsRepository = appDiContainer.feature.toolSettings.dataLayer.getUserToolSettingsRepository()
         
