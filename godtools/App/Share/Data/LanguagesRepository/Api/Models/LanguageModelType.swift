@@ -15,4 +15,5 @@ protocol LanguageModelType {
     var id: String { get }
     var name: String { get }
     var type: String { get }
+    var forceLanguageName: Bool { get }
 }
