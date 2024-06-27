@@ -16,6 +16,7 @@ class RealmLanguage: Object, LanguageModelType {
     @objc dynamic var id: String = ""
     @objc dynamic var name: String = ""
     @objc dynamic var type: String = ""
+    @objc dynamic var forceLanguageName: Bool = false
     
     override static func primaryKey() -> String? {
         return "id"
@@ -32,5 +33,6 @@ class RealmLanguage: Object, LanguageModelType {
         id = model.id
         name = model.name
         type = model.type
+        forceLanguageName = model.forceLanguageName
     }
 }
