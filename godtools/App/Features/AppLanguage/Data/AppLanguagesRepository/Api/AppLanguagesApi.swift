@@ -18,6 +18,7 @@ class AppLanguagesApi {
     func getAppLanguagesPublisher() -> AnyPublisher<[AppLanguageCodable], Error> {
         
         let allAppLanguages: [AppLanguageCodable] = [
+            AppLanguageCodable(languageCode: "am", languageDirection: .leftToRight, languageScriptCode: nil),
             AppLanguageCodable(languageCode: "ar", languageDirection: .rightToLeft, languageScriptCode: nil),
             AppLanguageCodable(languageCode: "en", languageDirection: .leftToRight, languageScriptCode: nil),
             AppLanguageCodable(languageCode: "es", languageDirection: .leftToRight, languageScriptCode: nil),
