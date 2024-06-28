@@ -197,6 +197,9 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         case .lessonTappedFromLessonsList(let lessonListItem):
             navigateToToolInAppLanguage(toolDataModelId: lessonListItem.dataModelId, trainingTipsEnabled: false)
             
+        case .lessonLanguageFilterTappedFromLessons:
+            navigationController.pushViewController(getLessonLanguageFilterSelection(), animated: true)
+            
         case .featuredLessonTappedFromFavorites(let featuredLesson):
             navigateToToolInAppLanguage(toolDataModelId: featuredLesson.dataModelId, trainingTipsEnabled: false)
             
@@ -1075,6 +1078,39 @@ extension AppFlow {
         
         navigationController.dismissPresented(animated: true, completion: completion)
         learnToShareToolFlow = nil
+    }
+}
+
+// MARK: - Lesson Filter
+
+extension AppFlow {
+    
+    private func getLessonLanguageFilterSelection() -> UIViewController {
+        
+        let viewModel = LessonFilterLanguageSelectionViewModel(
+            viewSearchBarUseCase: appDiContainer.domainLayer.getViewSearchBarUseCase(),
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase()
+        )
+        
+        let view = LessonFilterLanguageSelectionView()
+        
+//        let backButton = AppBackBarItem(
+//            target: viewModel,
+//            action: #selector(viewModel.backButtonTapped),
+//            accessibilityIdentifier: nil
+//        )
+        
+        let hostingView = AppHostingController<LessonFilterLanguageSelectionView>(
+            rootView: view,
+            navigationBar: AppNavigationBar(
+                appearance: nil,
+                backButton: nil,
+                leadingItems: [],
+                trailingItems: []
+            )
+        )
+        
+        return hostingView
     }
 }
 

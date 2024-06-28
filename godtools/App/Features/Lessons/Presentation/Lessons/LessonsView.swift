@@ -52,7 +52,7 @@ struct LessonsView: View {
                         FixedHorizontalSpacer(width: 30)
                         
                         ToolFilterButtonView(title: "Language") {
-                            print("yes")
+                            viewModel.lessonLanguageFilterTapped()
                         }
                     }
                     .padding([.top, .bottom], 20)

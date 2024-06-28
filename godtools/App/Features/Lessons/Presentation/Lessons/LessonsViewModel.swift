@@ -153,6 +153,10 @@ extension LessonsViewModel {
         trackPageViewed()
     }
     
+    func lessonLanguageFilterTapped() {
+        flowDelegate?.navigate(step: .lessonLanguageFilterTappedFromLessons)
+    }
+    
     func lessonCardTapped(lessonListItem: LessonListItemDomainModel) {
         
         flowDelegate?.navigate(step: .lessonTappedFromLessonsList(lessonListItem: lessonListItem))
