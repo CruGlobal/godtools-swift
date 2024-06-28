@@ -157,8 +157,8 @@ class ResourcesRepository {
 
 extension ResourcesRepository {
     
-    func getSpotlightTools() -> [ResourceModel] {
-        return cache.getSpotlightTools()
+    func getSpotlightTools(sortByDefaultOrder: Bool = false) -> [ResourceModel] {
+        return cache.getSpotlightTools(sortByDefaultOrder: sortByDefaultOrder)
     }
 }
 
