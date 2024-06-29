@@ -15,6 +15,7 @@ class LessonFilterLanguageSelectionViewModel: ObservableObject {
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
+    private weak var flowDelegate: FlowDelegate?
     
     private lazy var searchBarViewModel = SearchBarViewModel(getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, viewSearchBarUseCase: viewSearchBarUseCase)
     
@@ -25,9 +26,10 @@ class LessonFilterLanguageSelectionViewModel: ObservableObject {
     @Published var appLanguageSearchResults: [AppLanguageListItemDomainModel] = Array()
     @Published var navTitle: String = ""
     
-    init(viewSearchBarUseCase: ViewSearchBarUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase) {
+    init(viewSearchBarUseCase: ViewSearchBarUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, flowDelegate: FlowDelegate) {
         self.viewSearchBarUseCase = viewSearchBarUseCase
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
+        self.flowDelegate = flowDelegate
         
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
@@ -79,7 +81,7 @@ extension LessonFilterLanguageSelectionViewModel {
     
     @objc func backTapped() {
         
-//        flowDelegate?.navigate(step: .backTappedFromAppLanguages)
+        flowDelegate?.navigate(step: .backTappedFromLessonLanguageFilter)
     }
     
     func appLanguageTapped(appLanguage: AppLanguageListItemDomainModel) {
