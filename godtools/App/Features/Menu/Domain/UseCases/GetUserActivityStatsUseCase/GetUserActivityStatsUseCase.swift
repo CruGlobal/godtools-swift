@@ -9,6 +9,7 @@
 import Foundation
 import GodToolsToolParser
 import SwiftUI
+import LocalizationServices
 
 class GetUserActivityStatsUseCase {
     
@@ -72,8 +73,7 @@ class GetUserActivityStatsUseCase {
         
         let formatString = localizationServices.stringForLocaleElseEnglish(
             localeIdentifier: translatedInAppLanguage.localeId,
-            key: stringKey,
-            fileType: .stringsdict
+            key: stringKey
         )
         
         return String(format: formatString, locale: Locale(identifier: translatedInAppLanguage), activityCount)

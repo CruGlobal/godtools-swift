@@ -8,6 +8,7 @@
 
 import Foundation
 import Combine
+import LocalizationServices
 
 class GetAppLanguagesInterfaceStringsRepository: GetAppLanguagesInterfaceStringsRepositoryInterface {
     
@@ -19,11 +20,9 @@ class GetAppLanguagesInterfaceStringsRepository: GetAppLanguagesInterfaceStrings
     }
     
     func getStringsPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<AppLanguagesInterfaceStringsDomainModel, Never> {
-        
-        let stringsFileType: LocalizableStringsFileType = .strings
-        
+                
         let interfaceStrings = AppLanguagesInterfaceStringsDomainModel(
-            navTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: AppLanguageStringKeys.AppLanguages.navTitle.rawValue, fileType: stringsFileType)
+            navTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: AppLanguageStringKeys.AppLanguages.navTitle.rawValue)
         )
         
         return Just(interfaceStrings)
