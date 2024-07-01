@@ -11,11 +11,11 @@ import Foundation
 class GetTranslatedLanguageName {
     
     private let localizationServices: LocalizationServicesInterface
-    private let localeLanguageName: LocaleLanguageName
-    private let localeRegionName: LocaleLanguageRegionName
-    private let localeScriptName: LocaleLanguageScriptName
+    private let localeLanguageName: LocaleLanguageNameInterface
+    private let localeRegionName: LocaleLanguageRegionNameInterface
+    private let localeScriptName: LocaleLanguageScriptNameInterface
     
-    init(localizationServices: LocalizationServicesInterface, localeLanguageName: LocaleLanguageName, localeRegionName: LocaleLanguageRegionName, localeScriptName: LocaleLanguageScriptName) {
+    init(localizationServices: LocalizationServicesInterface, localeLanguageName: LocaleLanguageNameInterface, localeRegionName: LocaleLanguageRegionNameInterface, localeScriptName: LocaleLanguageScriptNameInterface) {
         
         self.localizationServices = localizationServices
         self.localeLanguageName = localeLanguageName
