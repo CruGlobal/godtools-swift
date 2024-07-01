@@ -63,7 +63,7 @@ class GetTranslatedLanguageName {
             languageName = localeLanguageName
         }
         else {
-            languageName = Locale(identifier: translatedInLanguage).localizedString(forIdentifier: language.localeId)
+            languageName = localeLanguageName.getLanguageName(forLocaleId: language.localeId, translatedInLanguageId: translatedInLanguage)
         }
         
         guard let languageName = languageName else {
