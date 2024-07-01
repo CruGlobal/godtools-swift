@@ -10,12 +10,12 @@ import Foundation
 
 class GetTranslatedLanguageName {
     
-    private let localizationServices: LocalizationServices
+    private let localizationServices: LocalizationServicesInterface
     private let localeLanguageName: LocaleLanguageName
     private let localeRegionName: LocaleLanguageRegionName
     private let localeScriptName: LocaleLanguageScriptName
     
-    init(localizationServices: LocalizationServices, localeLanguageName: LocaleLanguageName, localeRegionName: LocaleLanguageRegionName, localeScriptName: LocaleLanguageScriptName) {
+    init(localizationServices: LocalizationServicesInterface, localeLanguageName: LocaleLanguageName, localeRegionName: LocaleLanguageRegionName, localeScriptName: LocaleLanguageScriptName) {
         
         self.localizationServices = localizationServices
         self.localeLanguageName = localeLanguageName
@@ -44,7 +44,7 @@ class GetTranslatedLanguageName {
     private func getLanguageNameFromLocalization(language: TranslatableLanguage, translatedInLanguage: BCP47LanguageIdentifier) -> String? {
         
         let localizedKey: String = "language_name_" + language.localeId
-        let localizedName: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: translatedInLanguage, key: localizedKey)
+        let localizedName: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: translatedInLanguage, key: localizedKey, fileType: .strings)
         
         guard !localizedName.isEmpty && localizedName != localizedKey else {
             return nil
