@@ -21,14 +21,20 @@
 "authError.userAccountNotFound.message" = "የተጠቃሚ መለያ አልተገኘም።";
 "createAccount.title" = "መለያ ፍጠር";
 "createAccount.subtitle" = "እውነተኛ ታሪኮችን፣ ማበረታቻዎችን እና ተግባራዊ ምክሮችን በእጅዎ ለማግኘት መለያ ይፍጠሩ።";
+"deleteAccountProgress.title" = "መለያን በመሰረዝ ላይ...";
 "confirmDeleteAccount.title" = "እርግጠኛ ነህ?";
 "confirmDeleteAccount.confirmButton.title" = "መለያ አጥፋ";
+"accountDeletedAlert.title" = "መለያ ተሰርዟል";
+"accountDeletedAlert.message" = "መለያህ ተሰርዟል።";
 "deleteAccount.title" = "ቶሎ እንዳትሄድ";
 "deleteAccount.subtitle" = "መለያዎን ካጠትፉ የሚወዷቸውን መሳሪያዎች ወይም የመለያ እንቅስቃሴ ማግኘት አይችሉም።";
 "deleteAccount.confirmButton.title" = "መለያዬን አጥፋ";
 "deleteAccount.cancelButton.title" = "መለያዬን አታጥፋ";
 "signIn.title" = "ግባ";
 "signIn.subtitle" = "እውነተኛ ታሪኮችን፣ ማበረታቻዎችን እና ተግባራዊ ምክሮችን በእጅዎ ለማግኘት ወደ መለያዎ ይግቡ።";
+"signIn.google" = "በGoogle ይግቡ";
+"signIn.facebook" = "በFacebook ይግቡ";
+"signIn.apple" = "በApple ይቀጥሉ";
 "menu_getStarted" = "እንጀምር";
 "menu_support" = "ድጋፍ";
 "menu_about" = "ስለዚህ አፕሊኬሽን";
@@ -56,6 +62,12 @@
 
 "account.activity.sessions" = "ክፍለ ጊዜዎች";
 "badges.tipsCompleted.singular" = "የተጠናቀቁ 1 የሥልጠና ምክሮች";
+
+/* leave %d in phrase - this is the number of articles that the user has read */
+"badges.articlesOpened.plural" = "%d  ጽሑፎችን ያንብቡ";
+
+/* when they have read only 1 articles */
+"badges.articlesOpened.singular" = "1 ጽሑፍ ያንብቡ";
 
 /* leave %d in phrase - this is the number of images that the user has shared */
 "badges.imagesShared.plural" = "የተጋሩ %d ምስሎች";
@@ -96,6 +108,8 @@
 "lessonCard.languageNotAvailable" = "በ %@ ውስጥ አይገኝም";
 
 "menu.deleteAccount" = "መለያ አጥፋ";
+"alert.mailAppUnavailable.title" = "የMail መተግበሪያ የለም";
+"alert.mailAppUnavailable.message" = "የMail  መተግበሪያ በትክክል አልተዋቀረም ወይም በዚህ ስልክ ላይ አይገኝም። ";
 "tool_menu_item.tools" = "ቡክሌቶች";
 "lessons.pageTitle" = "ለእርስዎ የተዘጋጁ ትምህርቶች";
 "lessons.pageSubtitle" = "ግንኙነቶችን ለመፍጠር እና ትርጉም ያለው ውይይት ለመጀመር ተግባራዊ ሀሳቦች።";
@@ -119,9 +133,12 @@
 "toolDetails.learnToShareToolButton.title" = "ይህን ቡክሌት ማጋራት ይማሩ";
 "toolSettings.title" = "የመተግበሪያ አማራጮች";
 "toolSettings.option.shareLink.title" = "መስፈንጠሪያ አጋራ";
+"toolSettings.option.screenShare.title" = "ስክሪን አጋራ";
 "toolSettings.option.trainingTips.show.title" = "የስልጠና ምክሮች";
 "toolSettings.option.trainingTips.hide.title" = "ጠቃሚ ምክሮችን ደብቅ";
 "toolSettings.chooseLanguage.title" = "ሁለት ቋንቋ";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "ትይዪ";
+"toolSettings.shareables.title" = "ተዛማጅ ግራፊክስ";
 "allTools.spotlight.title" = "የተመረጡ ቡክሌቶች";
 "allTools.spotlight.description" = "ሊወዷቸው ይችልሉ ብለን ያሰብናቸውን ቡክሌቶች ከታች ያገኛሉ።";
 "training_tip_ask" = "ጠይቅ";
@@ -134,7 +151,10 @@
 "tool_menu_item.lessons" = "ትምህርቶች";
 "parallelLanguage.yesButton.title" = "አዎ";
 "parallelLanguage.noButton.title" = "አይ አልፈልግም";
+"parallelLanguage.selectButton.title" = "ምረጥ";
 "parallelLanguage.getStartedButton.title" = "እንጀምር";
+"parallelLanguage.selectLanguageButton.title" = "ቋንቋ ምረጥ";
+"parellelLanguage.prompt" = "ሁለተኛ ቋንቋ መምረጥ ይፈልጋሉ?";
 
 /* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.continueButton.title.closeTutorial" = "አጋዥ ስልጠናን ዝጋ";
@@ -171,6 +191,7 @@
 "onboardingQuickStart.2.button.title" = "ከቡክሌቶች ውስጥ አንዱን ይምረጡ";
 "onboardingTutorial.nextButton.title" = "ቀጣይ";
 "onboardingQuickStart.title" = "በፍጥነት ለመጀመር የሚረዱ ማስፈንጠሪያዎች";
+"onboardingQuickStart.0.title" = "ስለ ኢየሱስ የበለጠ ማወቅ እፈልጋለሁ።";
 "onboardingQuickStart.0.button.title" = "ጽሑፎቻችንን ያንብቡ";
 "onboardingQuickStart.1.title" = "ስለ ወንጌል ማውራትን መማር እፈልጋለሁ";
 "onboardingQuickStart.1.button.title" = "ትምህርቶቻችንን ይሞክሩ";
@@ -184,6 +205,7 @@
 
 "share_link" = "መስፈንጠሪያ አጋራ";
 "share_tool_menu.remote_share_tool" = "ስክሪን ያጋሩ";
+"share_tool_menu.send_tool" = "ይህን ቡክሌት ላክ";
 "share_tool_screen_tutorial.share_your_screen.title" = "ስክሪን ያጋሩ";
 "share_tool_screen_tutorial.share_your_screen.message" = "ይህ አማራጭ ይህን ቡክሌት የሚከፍት ማስፈንጠሪያ ለጓደኛ ይልካል። ማስፈንጠሪያው ሲከፈት የስክሪን ማጋሪያ ክፍለ ጊዜ ይጀምራል።";
 "share_tool_screen_tutorial.mirrored_experience.title" = "የተጋራ ይዘት";
@@ -226,11 +248,28 @@
 /* A user will be selecting this option to remove the tool from their Favorites screen */
 "remove_from_favorites" = "ከምርጫዎችህ አውጣ";
 
+/* This is a loading screen */
+"loading_unfavorited_tool" = "ቡክሌቱ እየወረደ ነው። ለወደፊቱ  ይህን ቡክሌት ያለ በይነመረብ ግንኙነት ለማግኘት የኔ ምርጫ ውስጥ አስገባው።";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "ለዚህ ቡክሌት በጣም የቅርብ ጊዜውን ትርጉም በማውረድ ላይ።";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "ከምርጫዎችህ አውጣ? ";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "እርግጠኛ ነዎት %@ን ከምርጫዎ ማስወገድ ይፈልጋሉ? ";
+
 /* Gospel indicates the gospel of Jesus Christ */
 "tool_category_gospel" = "የወንጌል ግብዣ";
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "መጣጥፎች";
+
+"articles.downloadArticlesButton.title.retryDownload" = "ለማውረድ እንደገና ይሞክሩ";
+
+/* This is to let users know which version of the app is installed on their phone */
+"menu_version" = "ሥሪት";
 "language_onboard" = "ከ 90 በላይ ቋንቋዎች";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -254,6 +293,8 @@
 "menu_legal" = "ሕጋዊ";
 "language_settings" = "የቋንቋ ቅንብሮች";
 "menu.tutorial" = "አጋዥ ስልጠና";
+"menu.my_account" = "የኔ መለያ";
+
 // Login
 "login" = "ግባ";
 "logout" = "ዉጣ";
@@ -285,6 +326,11 @@
 // Settings
 "settings" = "ድባቦች";
 
+// Alert & Info Controllers
+"download_error" = "የማውረድ ስህተት";
+"no_internet_title" = "ምንም የበይነመረብ ግንኙነት የለም።";
+"no_internet" = "እባክዎ የበይነመረብ ግንኙነትዎን ያረጋግጡ እና እንደገና ይሞክሩ።";
+
 "the_tool_you_requested_is_loading" = "የጠየቁት መተግበርያ በሂደት ላይ ነዉ...";
 // Actions
 "yes" = "አዎ";
@@ -298,24 +344,34 @@
 "dismiss" = "አጥፋ";
 "done" = "ሆኗል";
 "remove" = "ያጥፉ";
+"clear" = "አጥፋ";
 /* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
 "toolinfo_opentool" = "ክፈት";
 
+// Alerts
+"error" = "ስህተት";
 "OK" = "እሺ";
 "cancel" = "ውጣ";
+"required_field_missing" = "\"%@\" አስፈላጊ ገጽታ ነው";
+
 "onboardingTutorial.getStartedButton.title" = "እንጀምር";
 
 // About
 "general_about_1" = "GodTools እምነትዎን በቀላል እና በግልጽ መንገድ እንዲያካፍሉ ይረዳዎታል";
+// Tutorial
+"tutorial.tutorialItem.0.title" = "ተመልከት";
 "general_about_2" = "ይህ መተግበርያ ሰዎች ከእግዚአብሄር ጋር በልጁ በኢየሱስ ክርስቶስ በኩል ግንኙነት እንዲኖራቸዉ በድፍረት እንዲያግዙ ይረዳዎታል። ከዚህ በፊት እምነትዎን አካፍለዉ የማያዉቁ ቢሆኑ እና የሌላ ቋንቋ ተናጋሪ ሰዉ ቢገጥምዎ ይህ መተግበርያ በደንብ ያግዛዎታል።";
 "general_about_3" = "ከብዙ አይነት መተግበሪያ(መሳሪያ) የሚሆኖትን ለተመልካቹም የሚመቸዉን ይምረጡ።";
 "general_about_4" = "ከሁሉም መተግበሪያ(መሳሪያ) መጨረሻ ላይ ወደ ምንጩ የሚወስድ ጠቋሚ (ሊንክ) ይገኛል።";
 "general_about_5" = "አዳዲስ መተግበሪያዎችን(አገልግሎቶችን) እና ቋንቋን አንዴ ለማዉረድ ኢንተርኔት ኮኔክሽን ያስፈልጋል። አንድ ጊዜ ከወረደ በዃላ ግን እንደዚዉ ይሰራል።";
 "general_about_6" = "ጥያቄዎች? ጥቆማዎች? በዚህ አድራሻ አግኙን support@godtoolsapp.com";
 "general_about_7" = "እዚህ ላይ ያሉትን አገልግሎቶችን ኦንላይን knowgod.com ላይ ማግኘት ይችላሉ። የራስዎም ሳይት ላይ መጠቀም ይችላሉ።";
+"tutorial.tutorialItem.3.title" = "ይህ አጋዥ ስልጠና በማውጫው ውስጥ እንደገና ለማየት ይገኛል።";
 "general_about_8" = "ለተጨማሪ መረጃ godtoolsapp.com ይመልከቱ";
 "tutorial.continueButton.title.continue" = "ቀጥል";
 "general_about_9" = "እምነትዎን ለማካፈል ሲነሱ የሰዉን ልብ የሚቀይረዉ እግዚአብሄር መሆኑን ያስታዉሱ። ሁሉንም ሰዉ በትክክል መዉደድ እና ማዳመጥ ያስፈልጋል።";
+"tutorial.continueButton.title.startUsingGodTools" = "GodTools መጠቀም ይጀምር";
+
 "general_about_10" = "ለእያንዳንዱ እንዴት እንድትመልሱ እንደሚገባችሁ ታውቁ ዘንድ ንግግራችሁ ሁልጊዜ፥ በጨው እንደ ተቀመመ፥ በጸጋ ይሁን። ቆላስይስ 4:6";
 
 // OpenTutorial
@@ -327,6 +383,8 @@
 
 // Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "ቀዳሚ።";
+// Account
+"account.navTitle" = "የግል ማህደሬ";
 "card_status2" = "ቀጣይ";
 
 "account.activity.title" = "እንቅስቃሴ";
@@ -337,7 +395,11 @@
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "ዓለም አቀፋዊ እንቅስቃሴ";
 "accountActivity.globalAnalytics.users.title" = "ልዩ ተጠቃሚዎች";
+"onboardingWelcome.titleLabel.tagline" = "እምነትህን እንድታካፍል መርዳት";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "የወንጌል ግብዣዎች";
 "accountActivity.globalAnalytics.launches.title" = "ክፍለ ጊዜዎች";
+// OnboardingTutorial
+"onboardingTutorial.aboutAppItem.0.title" = "ለሌሎች አካፍል";
 "accountActivity.globalAnalytics.countries.title" = "ሀገሮች";
 
+"onboardingTutorial.showMoreButton.title" = "ተጨማሪ አሳየኝ";
