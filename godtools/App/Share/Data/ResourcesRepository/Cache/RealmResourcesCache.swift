@@ -264,8 +264,7 @@ extension RealmResourcesCache {
 
 extension RealmResourcesCache {
     
-    func getAllLessons(additionalAttributeFilters: [NSPredicate]? = nil, sorted: Bool) -> [ResourceModel] {
-       
+    func getAllLessonsResults(additionalAttributeFilters: [NSPredicate]? = nil, sorted: Bool) -> Results<RealmResource> {
         var filterByAttributes: [NSPredicate] = Array()
         
         if let additionalAttributeFilters = additionalAttributeFilters, !additionalAttributeFilters.isEmpty {
@@ -292,9 +291,36 @@ extension RealmResourcesCache {
         }
         
         return allLessons
+    }
+    
+    func getAllLessons(additionalAttributeFilters: [NSPredicate]? = nil, sorted: Bool) -> [ResourceModel] {
+        
+        return getAllLessonsResults(additionalAttributeFilters: additionalAttributeFilters, sorted: sorted)
             .map {
                 ResourceModel(model: $0)
             }
+    }
+    
+    func getAllLessonsCount(filterByLanguageId: String? = nil) -> Int {
+        
+        var predicates: [NSPredicate] = [NSPredicate]()
+        
+        if let filterByLanguageId = filterByLanguageId {
+            predicates.append(ResourcesFilter.getLanguageModelIdPredicate(languageModelId: filterByLanguageId))
+        }
+        
+        return getAllLessonsResults(additionalAttributeFilters: predicates, sorted: false).count
+    }
+    
+    func getAllLessonLanguageIds(additionalAttributeFilters: [NSPredicate]? = nil) -> [String] {
+        
+        let allLessonIds = getAllLessonsResults(additionalAttributeFilters: additionalAttributeFilters, sorted: false)
+            .flatMap { $0.getLanguages() }
+            .map { $0.id }
+        
+        let uniqueLanguageIds = Set(allLessonIds)
+        
+        return Array(uniqueLanguageIds)
     }
     
     func getFeaturedLessons(sorted: Bool) -> [ResourceModel] {

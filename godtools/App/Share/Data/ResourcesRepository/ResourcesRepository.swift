@@ -199,8 +199,16 @@ extension ResourcesRepository {
         return cache.getAllLessons(sorted: sorted)
     }
     
+    func getAllLessonsCount(filterByLanguageId: String?) -> Int {
+        return cache.getAllLessonsCount(filterByLanguageId: filterByLanguageId)
+    }
+    
     func getFeaturedLessons(sorted: Bool) -> [ResourceModel] {
         return cache.getFeaturedLessons(sorted: sorted)
+    }
+    
+    func getAllLessonLanguageIds() -> [String] {
+        return cache.getAllLessonLanguageIds()
     }
 }
 
