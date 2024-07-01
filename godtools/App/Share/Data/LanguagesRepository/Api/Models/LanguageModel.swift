@@ -15,6 +15,7 @@ struct LanguageModel: LanguageModelType, Codable {
     let id: String
     let name: String
     let type: String
+    let forceLanguageName: Bool
     
     enum RootKeys: String, CodingKey {
         case id = "id"
@@ -26,6 +27,7 @@ struct LanguageModel: LanguageModelType, Codable {
         case code = "code"
         case name = "name"
         case direction = "direction"
+        case forceLanguageName = "force-language-name"
     }
     
     init(from decoder: Decoder) throws {
@@ -55,6 +57,7 @@ struct LanguageModel: LanguageModelType, Codable {
         code = tempCode//try attributesContainer?.decodeIfPresent(BCP47LanguageIdentifier.self, forKey: .code) ?? "" // TODO: (GT-2399) Remove tempCode and replace with commented out line.
         direction = try attributesContainer?.decodeIfPresent(String.self, forKey: .direction) ?? ""
         name = try attributesContainer?.decodeIfPresent(String.self, forKey: .name) ?? ""
+        forceLanguageName = try attributesContainer?.decodeIfPresent(Bool.self, forKey: .forceLanguageName) ?? false
     }
     
     init(model: LanguageModelType) {
@@ -64,6 +67,7 @@ struct LanguageModel: LanguageModelType, Codable {
         id = model.id
         name = model.name
         type = model.type
+        forceLanguageName = model.forceLanguageName
     }
 }
 
