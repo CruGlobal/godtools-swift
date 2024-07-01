@@ -1,5 +1,5 @@
 {
-  "originHash" : "a3d2041bcb8f3bbbaa3e44eda084568588879e2d51501ad6396f9c0eddb6d4d9",
+  "originHash" : "ea584b1bef2b49fac80bdd94fb9aac7b6ff751c9759d8b8ed77b399b7efa4bcf",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -161,6 +161,15 @@
       "state" : {
         "revision" : "0706abcc6b0bd9cedfbb015ba840e4a780b5159b",
         "version" : "1.22.2"
+      }
+    },
+    {
+      "identity" : "localization-services-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/CruGlobal/localization-services-ios",
+      "state" : {
+        "revision" : "6d8f7d243854e3ce7caef1de672b8b7102f8cdbd",
+        "version" : "0.2.1"
       }
     },
     {
