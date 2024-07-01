@@ -157,7 +157,7 @@ extension RealmResourcesCache {
 
 extension RealmResourcesCache {
     
-    func getSpotlightTools() -> [ResourceModel] {
+    func getSpotlightTools(sortByDefaultOrder: Bool) -> [ResourceModel] {
         
         let realm: Realm = realmDatabase.openRealm()
         
@@ -171,9 +171,20 @@ extension RealmResourcesCache {
         
         let filterPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: filterByAttributes)
                 
-        let filteredResources = realm.objects(RealmResource.self).filter(filterPredicate)
+        let filteredResources: Results<RealmResource> = realm.objects(RealmResource.self).filter(filterPredicate)
+                
+        let spotlightToolsResults: Results<RealmResource>
         
-        return filteredResources
+        if sortByDefaultOrder {
+            
+            spotlightToolsResults = filteredResources.sorted(byKeyPath: #keyPath(RealmResource.attrDefaultOrder), ascending: true)
+        }
+        else {
+            
+            spotlightToolsResults = filteredResources
+        }
+        
+        return spotlightToolsResults
             .map {
                 ResourceModel(model: $0)
             }
