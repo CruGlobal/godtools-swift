@@ -1552,6 +1552,7 @@
 		D4C2A5722C344C9A0035AB4D /* LessonFilterDiContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C2A5712C344C9A0035AB4D /* LessonFilterDiContainer.swift */; };
 		D4C2A5742C344CB90035AB4D /* LessonFilterDataLayerDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C2A5732C344CB90035AB4D /* LessonFilterDataLayerDependencies.swift */; };
 		D4C2A5762C344CFA0035AB4D /* LessonFilterDomainLayerDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C2A5752C344CFA0035AB4D /* LessonFilterDomainLayerDependencies.swift */; };
+		D4C2A57B2C3484910035AB4D /* LessonFilterLanguageSelectionRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C2A57A2C3484910035AB4D /* LessonFilterLanguageSelectionRowView.swift */; };
 		D4C759212BB643EF00D6AEB2 /* SearchBarLegacy.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C759202BB643EF00D6AEB2 /* SearchBarLegacy.swift */; };
 		D4E243CC29EDC6A100EA4BB7 /* SendFeedbackWebContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E243CB29EDC6A100EA4BB7 /* SendFeedbackWebContent.swift */; };
 		D4E243CE29EDCA5700EA4BB7 /* ReportABugWebContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E243CD29EDCA5700EA4BB7 /* ReportABugWebContent.swift */; };
@@ -3253,6 +3254,7 @@
 		D4C2A5712C344C9A0035AB4D /* LessonFilterDiContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonFilterDiContainer.swift; sourceTree = "<group>"; };
 		D4C2A5732C344CB90035AB4D /* LessonFilterDataLayerDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonFilterDataLayerDependencies.swift; sourceTree = "<group>"; };
 		D4C2A5752C344CFA0035AB4D /* LessonFilterDomainLayerDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonFilterDomainLayerDependencies.swift; sourceTree = "<group>"; };
+		D4C2A57A2C3484910035AB4D /* LessonFilterLanguageSelectionRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonFilterLanguageSelectionRowView.swift; sourceTree = "<group>"; };
 		D4C759202BB643EF00D6AEB2 /* SearchBarLegacy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarLegacy.swift; sourceTree = "<group>"; };
 		D4E243CB29EDC6A100EA4BB7 /* SendFeedbackWebContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendFeedbackWebContent.swift; sourceTree = "<group>"; };
 		D4E243CD29EDCA5700EA4BB7 /* ReportABugWebContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportABugWebContent.swift; sourceTree = "<group>"; };
@@ -11272,6 +11274,7 @@
 			children = (
 				D4C2A5522C2E31C10035AB4D /* LessonFilterLanguageSelectionView.swift */,
 				D4C2A5542C2E32030035AB4D /* LessonFilterLanguageSelectionViewModel.swift */,
+				D4C2A5772C34845F0035AB4D /* Subviews */,
 			);
 			path = LessonFilterLanguageSelectionView;
 			sourceTree = "<group>";
@@ -11350,6 +11353,14 @@
 				D4C2A56F2C344B390035AB4D /* ViewLessonFilterLanguagesDomainModel.swift */,
 			);
 			path = Entities;
+			sourceTree = "<group>";
+		};
+		D4C2A5772C34845F0035AB4D /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				D4C2A57A2C3484910035AB4D /* LessonFilterLanguageSelectionRowView.swift */,
+			);
+			path = Subviews;
 			sourceTree = "<group>";
 		};
 		D4EB51D82833E079009C185F /* SwiftUI Modifiers */ = {
@@ -12073,6 +12084,7 @@
 				4529B96C2893440E0011F16B /* TranslationManifestParser.swift in Sources */,
 				4556CEA929F2D57800643BBC /* RealmDatabaseConfiguration+RealmConfig.swift in Sources */,
 				453A2F032B3636EC00C8F865 /* DownloadToolLanguageRepository.swift in Sources */,
+				D4C2A57B2C3484910035AB4D /* LessonFilterLanguageSelectionRowView.swift in Sources */,
 				454B47DA2AE01FFB00C7B5E7 /* GetOnboardingTutorialInterfaceStringsUseCase.swift in Sources */,
 				459BD08D289AD4310075901B /* DetermineToolTranslationsToDownload.swift in Sources */,
 				45BD7A7226A235F60007426B /* MobileContentRendererPageViewFactoriesType.swift in Sources */,

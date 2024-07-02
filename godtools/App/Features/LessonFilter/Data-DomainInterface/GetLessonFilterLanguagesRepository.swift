@@ -69,6 +69,7 @@ extension GetLessonFilterLanguagesRepository {
         let lessonsAvailableText: String = getLessonsAvailableText(lessonsAvailableCount: lessonsAvailableCount, translatedInAppLanguage: translatedInAppLanguage)
         
         return LessonLanguageFilterDomainModel(
+            languageId: languageModel.id, 
             languageName: languageName,
             translatedName: translatedLanguageName,
             lessonsAvailableText: lessonsAvailableText

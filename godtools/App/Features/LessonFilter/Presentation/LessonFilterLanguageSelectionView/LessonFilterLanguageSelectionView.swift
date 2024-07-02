@@ -22,23 +22,27 @@ struct LessonFilterLanguageSelectionView: View {
             
             SearchBarView(viewModel: viewModel.getSearchBarViewModel(), searchText: $viewModel.searchText)
             
-//            List {
-//                ForEach(viewModel.languageSearchResults, id: \.filterId) { language in
-//                    
-//                    Button {
-//                        
+            List {
+                ForEach(viewModel.allLanguages) { language in
+                    
+                    Button {
+                        
 //                        viewModel.rowTapped(with: language)
-//                        
-//                    } label: {
-//                        
+                        
+                    } label: {
+                        
+                        LessonFilterLanguageSelectionRowView(
+                            language: language,
+                            isSelected: false
+                        )
 //                        ToolFilterLanguageSelectionRowView(
 //                            language: language,
 //                            isSelected: viewModel.selectedLanguage.id == language.id
 //                        )
-//                    }
-//                }
-//            }
-//            .listStyle(.inset)
+                    }
+                }
+            }
+            .listStyle(.inset)
         }
         .navigationBarBackButtonHidden(true) // TODO: (GT-1794) This is a temp fix for iOS 16.  Will need to update to configure the navigation bar using SwiftUI instead of UIHostingController's. ~Levi
         .navigationTitle(viewModel.navTitle)
