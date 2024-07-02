@@ -8,6 +8,7 @@
 
 import Foundation
 import Combine
+import LocalizationServices
 
 class GetDownloadableLanguagesListRepository: GetDownloadableLanguagesListRepositoryInterface {
     
@@ -94,8 +95,7 @@ extension GetDownloadableLanguagesListRepository {
         
         let formatString = localizationServices.stringForLocaleElseSystemElseEnglish(
             localeIdentifier: localeId,
-            key: ToolStringKeys.ToolFilter.toolsAvailableText.rawValue,
-            fileType: .stringsdict
+            key: ToolStringKeys.ToolFilter.toolsAvailableText.rawValue
         )
         
         return String(format: formatString, locale: Locale(identifier: localeId), numberOfTools)

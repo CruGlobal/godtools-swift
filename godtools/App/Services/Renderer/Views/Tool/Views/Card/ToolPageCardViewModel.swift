@@ -8,6 +8,7 @@
 
 import UIKit
 import GodToolsToolParser
+import LocalizationServices
 
 class ToolPageCardViewModel: MobileContentViewModel {
     

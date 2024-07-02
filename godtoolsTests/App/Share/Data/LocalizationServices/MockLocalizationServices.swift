@@ -8,6 +8,7 @@
 
 import Foundation
 @testable import godtools
+import LocalizationServices
 
 class MockLocalizationServices: LocalizationServicesInterface {
     
@@ -21,17 +22,17 @@ class MockLocalizationServices: LocalizationServicesInterface {
         self.localizableStrings = localizableStrings
     }
     
-    func stringForEnglish(key: String, fileType: LocalizableStringsFileType) -> String {
+    func stringForEnglish(key: String) -> String {
         
-        return stringForLocaleElseEnglish(localeIdentifier: "en", key: key, fileType: fileType)
+        return stringForLocaleElseEnglish(localeIdentifier: "en", key: key)
     }
     
-    func stringForSystemElseEnglish(key: String, fileType: LocalizableStringsFileType) -> String {
+    func stringForSystemElseEnglish(key: String) -> String {
         
-        return stringForLocaleElseEnglish(localeIdentifier: "en", key: key, fileType: fileType)
+        return stringForLocaleElseEnglish(localeIdentifier: "en", key: key)
     }
     
-    func stringForLocaleElseEnglish(localeIdentifier: String?, key: String, fileType: LocalizableStringsFileType) -> String {
+    func stringForLocaleElseEnglish(localeIdentifier: String?, key: String) -> String {
         
         guard let localeIdentifier = localeIdentifier else {
             return ""
@@ -44,8 +45,8 @@ class MockLocalizationServices: LocalizationServicesInterface {
         return localizedStrings[key] ?? ""
     }
     
-    func stringForLocaleElseSystemElseEnglish(localeIdentifier: String?, key: String, fileType: LocalizableStringsFileType) -> String {
+    func stringForLocaleElseSystemElseEnglish(localeIdentifier: String?, key: String) -> String {
         
-        return stringForLocaleElseEnglish(localeIdentifier: localeIdentifier, key: key, fileType: fileType)
+        return stringForLocaleElseEnglish(localeIdentifier: localeIdentifier, key: key)
     }
 }

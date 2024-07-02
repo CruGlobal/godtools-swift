@@ -9,6 +9,7 @@
 import UIKit
 import GodToolsToolParser
 import Combine
+import LocalizationServices
 
 class ToolTrainingViewModel: NSObject {
     

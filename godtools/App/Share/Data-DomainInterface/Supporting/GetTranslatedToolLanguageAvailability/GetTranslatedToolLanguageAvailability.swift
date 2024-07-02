@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import LocalizationServices
 
 class GetTranslatedToolLanguageAvailability {
     

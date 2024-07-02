@@ -8,6 +8,7 @@
 
 import Foundation
 import Combine
+import LocalizationServices
 
 class GetShareGodToolsInterfaceStringsRepository: GetShareGodToolsInterfaceStringsRepositoryInterface {
     
@@ -21,7 +22,7 @@ class GetShareGodToolsInterfaceStringsRepository: GetShareGodToolsInterfaceStrin
     func getInterfaceStringsPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<ShareGodToolsInterfaceStringsDomainModel, Never> {
                 
         let interfaceStrings = ShareGodToolsInterfaceStringsDomainModel(
-            shareMessage: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "share_god_tools_share_sheet_text", fileType: .strings)
+            shareMessage: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "share_god_tools_share_sheet_text")
         )
         
         return Just(interfaceStrings)

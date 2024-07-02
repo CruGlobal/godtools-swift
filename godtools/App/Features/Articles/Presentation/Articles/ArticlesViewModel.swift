@@ -9,6 +9,7 @@
 import Foundation
 import GodToolsToolParser
 import Combine
+import LocalizationServices
 
 class ArticlesViewModel: NSObject {
     

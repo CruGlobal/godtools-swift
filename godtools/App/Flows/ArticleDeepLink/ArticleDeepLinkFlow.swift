@@ -8,6 +8,7 @@
 
 import UIKit
 import Combine
+import LocalizationServices
 
 class ArticleDeepLinkFlow: Flow {
     

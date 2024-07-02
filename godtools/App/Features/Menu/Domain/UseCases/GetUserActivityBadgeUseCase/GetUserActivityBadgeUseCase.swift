@@ -9,6 +9,7 @@
 import Foundation
 import GodToolsToolParser
 import SwiftUI
+import LocalizationServices
 
 class GetUserActivityBadgeUseCase {
     
@@ -80,8 +81,7 @@ class GetUserActivityBadgeUseCase {
         
         let formatString = localizationServices.stringForLocaleElseEnglish(
             localeIdentifier: translatedInAppLanguage.localeId,
-            key: stringLocalizationKey,
-            fileType: .stringsdict
+            key: stringLocalizationKey
         )
         
         let badgeText: String = String(format: formatString, locale: Locale(identifier: translatedInAppLanguage), progressTarget)

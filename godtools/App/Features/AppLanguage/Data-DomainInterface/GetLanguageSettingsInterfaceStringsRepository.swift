@@ -8,6 +8,7 @@
 
 import Foundation
 import Combine
+import LocalizationServices
 
 class GetLanguageSettingsInterfaceStringsRepository: GetLanguageSettingsInterfaceStringsRepositoryInterface {
     
@@ -30,14 +31,14 @@ class GetLanguageSettingsInterfaceStringsRepository: GetLanguageSettingsInterfac
             .map { (numberOfAppLanguagesInterfaceString: String) in
                 
                 let interfaceStrings = LanguageSettingsInterfaceStringsDomainModel(
-                    navTitle: self.localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.languageSettingsNavTitle.key, fileType: .strings),
-                    appInterfaceLanguageTitle: self.localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.languageSettingsAppInterfaceTitle.key, fileType: .strings),
+                    navTitle: self.localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.languageSettingsNavTitle.key),
+                    appInterfaceLanguageTitle: self.localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.languageSettingsAppInterfaceTitle.key),
                     numberOfAppLanguagesAvailable: numberOfAppLanguagesInterfaceString,
-                    setAppLanguageMessage: self.localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.languageSettingsAppInterfaceMessage.key, fileType: .strings),
+                    setAppLanguageMessage: self.localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.languageSettingsAppInterfaceMessage.key),
                     chooseAppLanguageButtonTitle: self.translatedLanguageNameRepository.getLanguageName(language: translateInAppLanguage, translatedInLanguage: translateInAppLanguage),
-                    toolLanguagesAvailableOfflineTitle: self.localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.languageSettingsToolLanguagesAvailableOfflineTitle.key, fileType: .strings),
-                    downloadToolsForOfflineMessage: self.localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.languageSettingsToolLanguagesAvailableOfflineMessage.key, fileType: .strings),
-                    editDownloadedLanguagesButtonTitle: self.localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.languageSettingsToolLanguagesAvailableOfflineEditDownloadedLanguagesButtonTitle.key, fileType: .strings)
+                    toolLanguagesAvailableOfflineTitle: self.localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.languageSettingsToolLanguagesAvailableOfflineTitle.key),
+                    downloadToolsForOfflineMessage: self.localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.languageSettingsToolLanguagesAvailableOfflineMessage.key),
+                    editDownloadedLanguagesButtonTitle: self.localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: LocalizableStringKeys.languageSettingsToolLanguagesAvailableOfflineEditDownloadedLanguagesButtonTitle.key)
                 )
                 
                 return interfaceStrings
@@ -52,8 +53,7 @@ class GetLanguageSettingsInterfaceStringsRepository: GetLanguageSettingsInterfac
                 
                 let localizedNumberOfLanguagesAvailable = self.localizationServices.stringForLocaleElseSystemElseEnglish(
                     localeIdentifier: translateInAppLanguage,
-                    key: LocalizableStringDictKeys.languageSettingsAppLanguageNumberAvailable.key,
-                    fileType: .stringsdict
+                    key: LocalizableStringDictKeys.languageSettingsAppLanguageNumberAvailable.key
                 )
                 
                 let stringLocaleFormat = String(

@@ -10,6 +10,7 @@ import UIKit
 import MessageUI
 import SwiftUI
 import Combine
+import LocalizationServices
 
 class MenuFlow: Flow {
     
