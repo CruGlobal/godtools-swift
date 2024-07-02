@@ -11,12 +11,12 @@ import LocalizationServices
 
 class GetTranslatedLanguageName {
     
-    private let localizationServices: LocalizationServices
-    private let localeLanguageName: LocaleLanguageName
-    private let localeRegionName: LocaleLanguageRegionName
-    private let localeScriptName: LocaleLanguageScriptName
+    private let localizationServices: LocalizationServicesInterface
+    private let localeLanguageName: LocaleLanguageNameInterface
+    private let localeRegionName: LocaleLanguageRegionNameInterface
+    private let localeScriptName: LocaleLanguageScriptNameInterface
     
-    init(localizationServices: LocalizationServices, localeLanguageName: LocaleLanguageName, localeRegionName: LocaleLanguageRegionName, localeScriptName: LocaleLanguageScriptName) {
+    init(localizationServices: LocalizationServicesInterface, localeLanguageName: LocaleLanguageNameInterface, localeRegionName: LocaleLanguageRegionNameInterface, localeScriptName: LocaleLanguageScriptNameInterface) {
         
         self.localizationServices = localizationServices
         self.localeLanguageName = localeLanguageName
@@ -64,7 +64,7 @@ class GetTranslatedLanguageName {
             languageName = localeLanguageName
         }
         else {
-            languageName = Locale(identifier: translatedInLanguage).localizedString(forIdentifier: language.localeId)
+            languageName = localeLanguageName.getLanguageName(forLocaleId: language.localeId, translatedInLanguageId: translatedInLanguage)
         }
         
         guard let languageName = languageName else {
