@@ -69,7 +69,7 @@ extension GetLessonFilterLanguagesRepository {
         let lessonsAvailableText: String = getLessonsAvailableText(lessonsAvailableCount: lessonsAvailableCount, translatedInAppLanguage: translatedInAppLanguage)
         
         return LessonLanguageFilterDomainModel(
-            languageId: languageModel.id, 
+            languageId: languageModel.id,
             languageName: languageName,
             translatedName: translatedLanguageName,
             lessonsAvailableText: lessonsAvailableText
@@ -78,10 +78,9 @@ extension GetLessonFilterLanguagesRepository {
     
     func getLessonsAvailableText(lessonsAvailableCount: Int, translatedInAppLanguage: AppLanguageDomainModel) -> String {
         
-        // TODO use lessons string
         let formatString = localizationServices.stringForLocaleElseSystemElseEnglish(
             localeIdentifier: translatedInAppLanguage.localeId,
-            key: ToolStringKeys.ToolFilter.toolsAvailableText.rawValue,
+            key: LessonFilterStringKeys.lessonsAvailableText.rawValue,
             fileType: .stringsdict
         )
         

@@ -23,7 +23,7 @@ struct LessonFilterLanguageSelectionView: View {
             SearchBarView(viewModel: viewModel.getSearchBarViewModel(), searchText: $viewModel.searchText)
             
             List {
-                ForEach(viewModel.allLanguages) { language in
+                ForEach(viewModel.languageSearchResults) { language in
                     
                     Button {
                         

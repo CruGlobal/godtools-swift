@@ -11,4 +11,5 @@ import Foundation
 enum LessonFilterStringKeys: String {
     
     case navTitle = "lessons.filter.navBar.language"
+    case lessonsAvailableText = "lessons.filter.lessonsAvailable"
 }

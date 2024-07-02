@@ -13,6 +13,7 @@ class LessonFilterLanguageSelectionViewModel: ObservableObject {
     
     private let viewLessonFilterLanguagesUseCase: ViewLessonFilterLanguagesUseCase
     private let viewSearchBarUseCase: ViewSearchBarUseCase
+    private let searchLessonFilterLanguagesUseCase: SearchLessonFilterLanguagesUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
@@ -24,12 +25,14 @@ class LessonFilterLanguageSelectionViewModel: ObservableObject {
     @Published private var allLanguages: [LessonLanguageFilterDomainModel] = Array()
     
     @Published var searchText: String = ""
-    @Published var appLanguageSearchResults: [AppLanguageListItemDomainModel] = Array()
+    @Published var languageSearchResults: [LessonLanguageFilterDomainModel] = Array()
+    @Published var selectedLanguage: LessonLanguageFilterDomainModel = LessonLanguageFilterDomainModel(languageId: "", languageName: "English", translatedName: "", lessonsAvailableText: "")
     @Published var navTitle: String = ""
     
-    init(viewLessonFilterLanguagesUseCase: ViewLessonFilterLanguagesUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, flowDelegate: FlowDelegate) {
+    init(viewLessonFilterLanguagesUseCase: ViewLessonFilterLanguagesUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, searchLessonFilterLanguagesUseCase: SearchLessonFilterLanguagesUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, flowDelegate: FlowDelegate) {
         self.viewLessonFilterLanguagesUseCase = viewLessonFilterLanguagesUseCase
         self.viewSearchBarUseCase = viewSearchBarUseCase
+        self.searchLessonFilterLanguagesUseCase = searchLessonFilterLanguagesUseCase
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.flowDelegate = flowDelegate
         
@@ -53,17 +56,16 @@ class LessonFilterLanguageSelectionViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-//        Publishers.CombineLatest(
-//            $searchText,
-//            $appLanguagesList.dropFirst()
-//        )
-//        .flatMap { (searchText: String, appLanguagesList: [AppLanguageListItemDomainModel]) in
-//            
-//            searchAppLanguageInAppLanguagesListUseCase
-//                .getSearchResultsPublisher(for: searchText, in: appLanguagesList)
-//        }
-//        .receive(on: DispatchQueue.main)
-//        .assign(to: &$appLanguageSearchResults)
+        Publishers.CombineLatest(
+            $searchText,
+            $allLanguages
+        )
+        .flatMap { (searchText: String, languages: [LessonLanguageFilterDomainModel]) in
+            
+            searchLessonFilterLanguagesUseCase.getSearchResultsPublisher(for: searchText, in: languages)
+        }
+        .receive(on: DispatchQueue.main)
+        .assign(to: &$languageSearchResults)
     }
 }
 

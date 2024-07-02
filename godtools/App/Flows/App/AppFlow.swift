@@ -1091,8 +1091,9 @@ extension AppFlow {
     private func getLessonLanguageFilterSelection() -> UIViewController {
         
         let viewModel = LessonFilterLanguageSelectionViewModel(
-            viewLessonFilterLanguagesUseCase: appDiContainer.feature.lessonFilter.domainLayer.getViewLessonFilterLanguagesUseCase(), 
-            viewSearchBarUseCase: appDiContainer.domainLayer.getViewSearchBarUseCase(),
+            viewLessonFilterLanguagesUseCase: appDiContainer.feature.lessonFilter.domainLayer.getViewLessonFilterLanguagesUseCase(),
+            viewSearchBarUseCase: appDiContainer.domainLayer.getViewSearchBarUseCase(), 
+            searchLessonFilterLanguagesUseCase: appDiContainer.feature.lessonFilter.domainLayer.getSearchLessonFilterLanguagesUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             flowDelegate: self
         )

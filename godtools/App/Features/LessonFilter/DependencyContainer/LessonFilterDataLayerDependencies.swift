@@ -36,4 +36,8 @@ class LessonFilterDataLayerDependencies {
             localizationServices: coreDataLayer.getLocalizationServices()
         )
     }
+    
+    func getSearchLessonFilterLanguagesRepositoryInterface() -> SearchLessonFilterLanguagesRepositoryInterface {
+        return SearchLessonFilterLanguagesRepository(stringSearcher: StringSearcher())
+    }
 }
