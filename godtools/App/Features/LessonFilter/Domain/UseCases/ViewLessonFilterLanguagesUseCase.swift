@@ -11,9 +11,27 @@ import Combine
 
 class ViewLessonFilterLanguagesUseCase {
     
+    private let getLessonFilterLanguagesRepository: GetLessonFilterLanguagesRepositoryInterface
     private let getInterfaceStringsRepository: GetLessonFilterLanguagesInterfaceStringsRepositoryInterface
     
-    init(getInterfaceStringsRepository: GetLessonFilterLanguagesInterfaceStringsRepositoryInterface) {
+    init(getLessonFilterLanguagesRepository: GetLessonFilterLanguagesRepositoryInterface, getInterfaceStringsRepository: GetLessonFilterLanguagesInterfaceStringsRepositoryInterface) {
+        self.getLessonFilterLanguagesRepository = getLessonFilterLanguagesRepository
         self.getInterfaceStringsRepository = getInterfaceStringsRepository
+    }
+    
+    func viewPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewLessonFilterLanguagesDomainModel, Never> {
+        
+        return Publishers.CombineLatest(
+            getInterfaceStringsRepository.getStringsPublisher(translateInAppLanguage: translatedInAppLanguage),
+            getLessonFilterLanguagesRepository.getLessonFilterLanguagesPublisher(translatedInAppLanguage: translatedInAppLanguage)
+        )
+        .map { interfaceStrings, languageFilters in
+            
+            return ViewLessonFilterLanguagesDomainModel(
+                interfaceStrings: interfaceStrings,
+                languageFilters: languageFilters
+            )
+        }
+        .eraseToAnyPublisher()
     }
 }
