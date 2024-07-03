@@ -8,6 +8,7 @@
 
 import Foundation
 import SocialAuthentication
+import LocalizationServices
 
 class AppDataLayerDependencies {
     

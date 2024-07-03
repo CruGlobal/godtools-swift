@@ -8,6 +8,7 @@
 
 import Foundation
 import Combine
+import LocalizationServices
 
 class GetDownloadToolProgressInterfaceStringsRepository: GetDownloadToolProgressInterfaceStringsRepositoryInterface {
     
@@ -25,7 +26,6 @@ class GetDownloadToolProgressInterfaceStringsRepository: GetDownloadToolProgress
     func getStringsPublisher(toolId: String?, translateInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<DownloadToolProgressInterfaceStringsDomainModel, Never> {
                         
         let localeId: String = translateInAppLanguage
-        let stringsFileType: LocalizableStringsFileType = .strings
         
         let resource: ResourceModel?
         
@@ -49,10 +49,10 @@ class GetDownloadToolProgressInterfaceStringsRepository: GetDownloadToolProgress
         let downloadMessage: String
         
         if toolCanBeFavorited && !toolIsFavorited {
-            downloadMessage = localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "loading_unfavorited_tool", fileType: stringsFileType)
+            downloadMessage = localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "loading_unfavorited_tool")
         }
         else {
-            downloadMessage = localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "loading_favorited_tool", fileType: stringsFileType)
+            downloadMessage = localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "loading_favorited_tool")
         }
         
         let interfaceStrings = DownloadToolProgressInterfaceStringsDomainModel(

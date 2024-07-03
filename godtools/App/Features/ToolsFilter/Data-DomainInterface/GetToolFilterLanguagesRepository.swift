@@ -8,6 +8,7 @@
 
 import Foundation
 import Combine
+import LocalizationServices
 
 class GetToolFilterLanguagesRepository: GetToolFilterLanguagesRepositoryInterface {
     
@@ -151,8 +152,7 @@ extension GetToolFilterLanguagesRepository {
         
         let formatString = localizationServices.stringForLocaleElseSystemElseEnglish(
             localeIdentifier: translatedInAppLanguage.localeId,
-            key: ToolStringKeys.ToolFilter.toolsAvailableText.rawValue,
-            fileType: .stringsdict
+            key: ToolStringKeys.ToolFilter.toolsAvailableText.rawValue
         )
         
         let localizedString = String(format: formatString, locale: Locale(identifier: translatedInAppLanguage), toolsAvailableCount)

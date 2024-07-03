@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import LocalizationServices
 
 class GetTranslatedLanguageName {
     
@@ -44,7 +45,7 @@ class GetTranslatedLanguageName {
     private func getLanguageNameFromLocalization(language: TranslatableLanguage, translatedInLanguage: BCP47LanguageIdentifier) -> String? {
         
         let localizedKey: String = "language_name_" + language.localeId
-        let localizedName: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: translatedInLanguage, key: localizedKey, fileType: .strings)
+        let localizedName: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: translatedInLanguage, key: localizedKey)
         
         guard !localizedName.isEmpty && localizedName != localizedKey else {
             return nil
