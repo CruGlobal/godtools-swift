@@ -24,7 +24,8 @@ class GetLessonsInterfaceStringsRepository: GetLessonsInterfaceStringsRepository
         
         let interfaceStrings = LessonsInterfaceStringsDomainModel(
             title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "lessons.pageTitle"),
-            subtitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "lessons.pageSubtitle")
+            subtitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "lessons.pageSubtitle"), 
+            languageFilterTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "lessons.languageFilter.title")
         )
         
         return Just(interfaceStrings)

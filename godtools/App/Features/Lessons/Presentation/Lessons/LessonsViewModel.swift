@@ -27,6 +27,7 @@ class LessonsViewModel: ObservableObject {
     
     @Published var sectionTitle: String = ""
     @Published var subtitle: String = ""
+    @Published var languageFilterTitle: String = ""
     @Published var lessons: [LessonListItemDomainModel] = []
     @Published var isLoadingLessons: Bool = true
         
@@ -58,6 +59,7 @@ class LessonsViewModel: ObservableObject {
                                 
                 self?.sectionTitle = domainModel.interfaceStrings.title
                 self?.subtitle = domainModel.interfaceStrings.subtitle
+                self?.languageFilterTitle = domainModel.interfaceStrings.languageFilterTitle
                 
                 self?.lessons = domainModel.lessons
                 self?.isLoadingLessons = false
