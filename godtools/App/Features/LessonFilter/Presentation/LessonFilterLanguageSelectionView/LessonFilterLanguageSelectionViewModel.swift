@@ -78,9 +78,11 @@ extension LessonFilterLanguageSelectionViewModel {
         flowDelegate?.navigate(step: .backTappedFromLessonLanguageFilter)
     }
     
-    func appLanguageTapped(appLanguage: AppLanguageListItemDomainModel) {
+    func rowTapped(with language: LessonLanguageFilterDomainModel) {
         
-//        flowDelegate?.navigate(step: .appLanguageTappedFromAppLanguages(appLanguage: appLanguage))
+        selectedLanguage = language
+        
+        flowDelegate?.navigate(step: .languageTappedFromLessonLanguageFilter)
     }
     
     func getSearchBarViewModel() -> SearchBarViewModel {

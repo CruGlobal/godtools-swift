@@ -33,6 +33,7 @@ enum FlowStep {
     // lessons list
     case lessonLanguageFilterTappedFromLessons
     case lessonTappedFromLessonsList(lessonListItem: LessonListItemDomainModel)
+    case languageTappedFromLessonLanguageFilter
     case backTappedFromLessonLanguageFilter
 
     // lesson

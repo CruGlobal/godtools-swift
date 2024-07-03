@@ -203,6 +203,9 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         case .backTappedFromLessonLanguageFilter:
             navigationController.popViewController(animated: true)
             
+        case .languageTappedFromLessonLanguageFilter:
+            navigationController.popViewController(animated: true)
+            
         case .featuredLessonTappedFromFavorites(let featuredLesson):
             navigateToToolInAppLanguage(toolDataModelId: featuredLesson.dataModelId, trainingTipsEnabled: false)
             

@@ -42,7 +42,11 @@ struct LessonsView: View {
                         viewModel: viewModel
                     )
                     .padding([.top], 24)
-                    .padding([.leading, .trailing], contentHorizontalInsets + 5)
+                    .padding(.horizontal, contentHorizontalInsets)
+                    
+                    SeparatorView()
+                        .padding(.vertical, 15)
+                        .padding(.horizontal, contentHorizontalInsets)
                     
                     HStack(spacing: 0) {
                         Text("Lessons in:")
@@ -55,8 +59,8 @@ struct LessonsView: View {
                             viewModel.lessonLanguageFilterTapped()
                         }
                     }
-                    .padding([.top, .bottom], 20)
-                    .padding([.leading, .trailing], contentHorizontalInsets)
+                    .padding(.bottom, 15)
+                    .padding(.horizontal, contentHorizontalInsets)
                     
                     LazyVStack(alignment: .center, spacing: lessonCardSpacing) {
                         

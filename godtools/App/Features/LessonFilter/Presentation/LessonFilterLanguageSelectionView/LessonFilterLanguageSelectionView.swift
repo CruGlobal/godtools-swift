@@ -27,18 +27,14 @@ struct LessonFilterLanguageSelectionView: View {
                     
                     Button {
                         
-//                        viewModel.rowTapped(with: language)
+                        viewModel.rowTapped(with: language)
                         
                     } label: {
                         
                         LessonFilterLanguageSelectionRowView(
                             language: language,
-                            isSelected: false
+                            isSelected: viewModel.selectedLanguage.id == language.id
                         )
-//                        ToolFilterLanguageSelectionRowView(
-//                            language: language,
-//                            isSelected: viewModel.selectedLanguage.id == language.id
-//                        )
                     }
                 }
             }
