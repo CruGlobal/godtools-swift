@@ -11,14 +11,14 @@ import LocalizationServices
 
 class GetTranslatedLanguageName {
     
-    private let localizationServices: LocalizationServicesInterface
+    private let localizationLanguageNameRepository: LocalizationLanguageNameRepository
     private let localeLanguageName: LocaleLanguageNameInterface
     private let localeRegionName: LocaleLanguageRegionNameInterface
     private let localeScriptName: LocaleLanguageScriptNameInterface
     
-    init(localizationServices: LocalizationServicesInterface, localeLanguageName: LocaleLanguageNameInterface, localeRegionName: LocaleLanguageRegionNameInterface, localeScriptName: LocaleLanguageScriptNameInterface) {
+    init(localizationLanguageNameRepository: LocalizationLanguageNameRepository, localeLanguageName: LocaleLanguageNameInterface, localeRegionName: LocaleLanguageRegionNameInterface, localeScriptName: LocaleLanguageScriptNameInterface) {
         
-        self.localizationServices = localizationServices
+        self.localizationLanguageNameRepository = localizationLanguageNameRepository
         self.localeLanguageName = localeLanguageName
         self.localeRegionName = localeRegionName
         self.localeScriptName = localeScriptName
@@ -30,7 +30,7 @@ class GetTranslatedLanguageName {
             return language.fallbackName
         }
         
-        if let localizedName = getLanguageNameFromLocalization(language: language, translatedInLanguage: translatedInLanguage) {
+        if let localizedName = localizationLanguageNameRepository.getLanguageName(languageId: language.localeId, translatedInLanguage: translatedInLanguage) {
             
             return localizedName
         }
@@ -40,18 +40,6 @@ class GetTranslatedLanguageName {
         }
         
         return language.fallbackName
-    }
-    
-    private func getLanguageNameFromLocalization(language: TranslatableLanguage, translatedInLanguage: BCP47LanguageIdentifier) -> String? {
-        
-        let localizedKey: String = "language_name_" + language.localeId
-        let localizedName: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: translatedInLanguage, key: localizedKey)
-        
-        guard !localizedName.isEmpty && localizedName != localizedKey else {
-            return nil
-        }
-        
-        return localizedName
     }
     
     private func getLanguageNameFromLocale(language: TranslatableLanguage, translatedInLanguage: BCP47LanguageIdentifier) -> String? {
