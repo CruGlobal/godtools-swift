@@ -72,7 +72,7 @@ class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
         let languagesDataModels: [LanguageModel] = languagesRepository.getLanguages(ids: toolDataModel.languageIds)
         
         let languageNamesTranslatedInToolLanguage: [String] = languagesDataModels.map { (languageDataModel: LanguageModel) in
-            self.getTranslatedLanguageName.getLanguageName(language: languageDataModel.code, translatedInLanguage: translateInLanguage)
+            self.getTranslatedLanguageName.getLanguageName(language: languageDataModel, translatedInLanguage: translateInLanguage)
         }
         
         let languagesAvailable: String = languageNamesTranslatedInToolLanguage.map({$0}).sorted(by: { $0 < $1 }).joined(separator: ", ")
