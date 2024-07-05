@@ -179,6 +179,11 @@
 		4525562D2C381B6000AA0046 /* LocalizationLanguageNameRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4525562C2C381B6000AA0046 /* LocalizationLanguageNameRepository.swift */; };
 		4525562F2C3827CD00AA0046 /* LocalizationLanguageNameRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4525562E2C3827CD00AA0046 /* LocalizationLanguageNameRepositoryInterface.swift */; };
 		452556322C38282A00AA0046 /* MockLocalizationLanguageNameRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452556312C38282A00AA0046 /* MockLocalizationLanguageNameRepository.swift */; };
+		452556382C38296800AA0046 /* GetTranslatedLanguageNameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452556332C38296800AA0046 /* GetTranslatedLanguageNameTests.swift */; };
+		452556392C38296800AA0046 /* MockTranslatableLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452556342C38296800AA0046 /* MockTranslatableLanguage.swift */; };
+		452556402C3829B900AA0046 /* MockLocaleLanguageRegionName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4525563A2C3829B900AA0046 /* MockLocaleLanguageRegionName.swift */; };
+		452556412C3829B900AA0046 /* MockLocaleLanguageScriptName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4525563C2C3829B900AA0046 /* MockLocaleLanguageScriptName.swift */; };
+		452556422C3829B900AA0046 /* MockLocaleLanguageName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4525563E2C3829B900AA0046 /* MockLocaleLanguageName.swift */; };
 		4526EDD42AEB274800D1A3D4 /* EvaluationOptionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4526EDD32AEB274800D1A3D4 /* EvaluationOptionButton.swift */; };
 		4526EDD62AEB330100D1A3D4 /* OverlayNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4526EDD52AEB330100D1A3D4 /* OverlayNavigationController.swift */; };
 		4529B96628933A610011F16B /* ParseTranslationManifestForRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4529B96528933A610011F16B /* ParseTranslationManifestForRenderer.swift */; };
@@ -1779,6 +1784,11 @@
 		4525562C2C381B6000AA0046 /* LocalizationLanguageNameRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationLanguageNameRepository.swift; sourceTree = "<group>"; };
 		4525562E2C3827CD00AA0046 /* LocalizationLanguageNameRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationLanguageNameRepositoryInterface.swift; sourceTree = "<group>"; };
 		452556312C38282A00AA0046 /* MockLocalizationLanguageNameRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLocalizationLanguageNameRepository.swift; sourceTree = "<group>"; };
+		452556332C38296800AA0046 /* GetTranslatedLanguageNameTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetTranslatedLanguageNameTests.swift; sourceTree = "<group>"; };
+		452556342C38296800AA0046 /* MockTranslatableLanguage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockTranslatableLanguage.swift; sourceTree = "<group>"; };
+		4525563A2C3829B900AA0046 /* MockLocaleLanguageRegionName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockLocaleLanguageRegionName.swift; sourceTree = "<group>"; };
+		4525563C2C3829B900AA0046 /* MockLocaleLanguageScriptName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockLocaleLanguageScriptName.swift; sourceTree = "<group>"; };
+		4525563E2C3829B900AA0046 /* MockLocaleLanguageName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockLocaleLanguageName.swift; sourceTree = "<group>"; };
 		4526EDD32AEB274800D1A3D4 /* EvaluationOptionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvaluationOptionButton.swift; sourceTree = "<group>"; };
 		4526EDD52AEB330100D1A3D4 /* OverlayNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayNavigationController.swift; sourceTree = "<group>"; };
 		4529B96528933A610011F16B /* ParseTranslationManifestForRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseTranslationManifestForRenderer.swift; sourceTree = "<group>"; };
@@ -4326,6 +4336,55 @@
 			path = LocalizationLanguageNameRepository;
 			sourceTree = "<group>";
 		};
+		452556352C38296800AA0046 /* GetTranslatedLanguageName */ = {
+			isa = PBXGroup;
+			children = (
+				452556332C38296800AA0046 /* GetTranslatedLanguageNameTests.swift */,
+				452556342C38296800AA0046 /* MockTranslatableLanguage.swift */,
+			);
+			path = GetTranslatedLanguageName;
+			sourceTree = "<group>";
+		};
+		452556362C38296800AA0046 /* Supporting */ = {
+			isa = PBXGroup;
+			children = (
+				452556352C38296800AA0046 /* GetTranslatedLanguageName */,
+			);
+			path = Supporting;
+			sourceTree = "<group>";
+		};
+		452556372C38296800AA0046 /* Data-DomainInterface */ = {
+			isa = PBXGroup;
+			children = (
+				452556362C38296800AA0046 /* Supporting */,
+			);
+			path = "Data-DomainInterface";
+			sourceTree = "<group>";
+		};
+		4525563B2C3829B900AA0046 /* LocaleLanguageRegionName */ = {
+			isa = PBXGroup;
+			children = (
+				4525563A2C3829B900AA0046 /* MockLocaleLanguageRegionName.swift */,
+			);
+			path = LocaleLanguageRegionName;
+			sourceTree = "<group>";
+		};
+		4525563D2C3829B900AA0046 /* LocaleLanguageScriptName */ = {
+			isa = PBXGroup;
+			children = (
+				4525563C2C3829B900AA0046 /* MockLocaleLanguageScriptName.swift */,
+			);
+			path = LocaleLanguageScriptName;
+			sourceTree = "<group>";
+		};
+		4525563F2C3829B900AA0046 /* LocaleLanguageName */ = {
+			isa = PBXGroup;
+			children = (
+				4525563E2C3829B900AA0046 /* MockLocaleLanguageName.swift */,
+			);
+			path = LocaleLanguageName;
+			sourceTree = "<group>";
+		};
 		4526EDD22AEB273C00D1A3D4 /* EvaluationOptionButton */ = {
 			isa = PBXGroup;
 			children = (
@@ -4601,6 +4660,7 @@
 				457719AC2BE00F9900E7E4D8 /* Application */,
 				453689FE2ABB2D840028A570 /* Common */,
 				45368A052ABB2D840028A570 /* Data */,
+				452556372C38296800AA0046 /* Data-DomainInterface */,
 				45368A102ABB2D840028A570 /* Services */,
 			);
 			path = Share;
@@ -4609,6 +4669,9 @@
 		453689FE2ABB2D840028A570 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				4525563F2C3829B900AA0046 /* LocaleLanguageName */,
+				4525563B2C3829B900AA0046 /* LocaleLanguageRegionName */,
+				4525563D2C3829B900AA0046 /* LocaleLanguageScriptName */,
 				453689FF2ABB2D840028A570 /* SharedAppleExtensions */,
 			);
 			path = Common;
@@ -13273,15 +13336,18 @@
 				450FB88A2BFBA0F80015D945 /* StoreInitialAppLanguageTests.swift in Sources */,
 				450FB88B2BFBA0F80015D945 /* GetLanguageSettingsInterfaceStringsRepositoryTests.swift in Sources */,
 				452556322C38282A00AA0046 /* MockLocalizationLanguageNameRepository.swift in Sources */,
+				452556422C3829B900AA0046 /* MockLocaleLanguageName.swift in Sources */,
 				450FB88C2BFBA0F80015D945 /* SearchAppLanguageInAppLanguagesListRepositoryTests.swift in Sources */,
 				450FB88D2BFBA0F80015D945 /* GetAppLanguagesInterfaceStringsRepositoryTests.swift in Sources */,
 				450FB88E2BFBA0F80015D945 /* SearchLanguageInDownloadableLanguagesRepositoryTests.swift in Sources */,
 				45A45CEE2731B8C9005D4E74 /* MobileContentBackgroundImageRendererType.swift in Sources */,
+				452556392C38296800AA0046 /* MockTranslatableLanguage.swift in Sources */,
 				450FB8892BFBA0EB0015D945 /* SearchToolFilterCategoriesRepositoryTests.swift in Sources */,
 				45AFC62D27CD74100090E381 /* MobileContentBackgroundImageAlignment.swift in Sources */,
 				45E1986B2BA488C800BF14F3 /* TestsInMemoryRealmDatabase.swift in Sources */,
 				450FB8902BFBA1060015D945 /* RealmDatabaseDeleteTests.swift in Sources */,
 				450FB8912BFBA1060015D945 /* RealmDatabaseReadTests.swift in Sources */,
+				452556382C38296800AA0046 /* GetTranslatedLanguageNameTests.swift in Sources */,
 				450FB8922BFBA1060015D945 /* RealmDatabaseWriteTests.swift in Sources */,
 				45CBDA092BA3930B0007DEC8 /* MockLaunchCountRepository.swift in Sources */,
 				45EB68E12C334D84008A5FF2 /* MockLocalizationServices.swift in Sources */,
@@ -13297,6 +13363,8 @@
 				45368A162ABB2D850028A570 /* LocaleTests.swift in Sources */,
 				45E198662BA47F4400BF14F3 /* GetDownloadToolProgressInterfaceStringsRepositoryTests.swift in Sources */,
 				450FB8872BFBA0E80015D945 /* GetOnboardingTutorialInterfaceStringsRepositoryTests.swift in Sources */,
+				452556402C3829B900AA0046 /* MockLocaleLanguageRegionName.swift in Sources */,
+				452556412C3829B900AA0046 /* MockLocaleLanguageScriptName.swift in Sources */,
 				450FB88F2BFBA0FD0015D945 /* Collection+SafeLookupTests.swift in Sources */,
 				450FB8882BFBA0E80015D945 /* GetOnboardingTutorialIsAvailableTests.swift in Sources */,
 				45AA12DB2BE55D1D00C85BFF /* TestRealmObjectMapping.swift in Sources */,
