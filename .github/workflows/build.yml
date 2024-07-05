@@ -69,6 +69,8 @@ jobs:
     if: github.event_name == 'pull_request'
     needs: [ select_xcode_version, pod_install ]
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
       - name: Run UI Tests
         run: bundle exec fastlane cru_shared_lane_run_tests scheme:GodTools-UITests reset_simulator:true should_clear_derived_data:true
 
