@@ -63,9 +63,38 @@ class GetLanguageSettingsInterfaceStringsRepositoryTests: QuickSpec {
             ]
         ]
         
+        let languageNames: [MockLocaleLanguageName.LanguageCode: [MockLocaleLanguageName.TranslateInLocaleId: MockLocaleLanguageName.LanguageName]] = [
+            LanguageCodeDomainModel.english.rawValue: [
+                LanguageCodeDomainModel.english.rawValue: "English",
+                LanguageCodeDomainModel.portuguese.rawValue: "Inglês",
+                LanguageCodeDomainModel.spanish.rawValue: "Inglés",
+                LanguageCodeDomainModel.russian.rawValue: "Английский"
+            ],
+            LanguageCodeDomainModel.french.rawValue: [
+                LanguageCodeDomainModel.czech.rawValue: "francouzština",
+                LanguageCodeDomainModel.english.rawValue: "French",
+                LanguageCodeDomainModel.portuguese.rawValue: "Francês",
+                LanguageCodeDomainModel.spanish.rawValue: "Francés",
+                LanguageCodeDomainModel.russian.rawValue: "Французский"
+            ],
+            LanguageCodeDomainModel.spanish.rawValue: [
+                LanguageCodeDomainModel.english.rawValue: "Spanish",
+                LanguageCodeDomainModel.portuguese.rawValue: "Espanhol",
+                LanguageCodeDomainModel.spanish.rawValue: "Español",
+                LanguageCodeDomainModel.russian.rawValue: "испанский"
+            ]
+        ]
+                
+        let getTranslatedLanguageName = GetTranslatedLanguageName(
+            localizationLanguageNameRepository: MockLocalizationLanguageNameRepository(localizationServices: MockLocalizationServices(localizableStrings: localizableStrings)),
+            localeLanguageName: MockLocaleLanguageName(languageNames: languageNames),
+            localeRegionName: MockLocaleLanguageRegionName(regionNames: [:]),
+            localeScriptName: MockLocaleLanguageScriptName(scriptNames: [:])
+        )
+        
         let getLanguageSettingsInterfaceStringsRepository = GetLanguageSettingsInterfaceStringsRepository(
             localizationServices: MockLocalizationServices(localizableStrings: localizableStrings),
-            translatedLanguageNameRepository: testsDiContainer.dataLayer.getTranslatedLanguageNameRepository(),
+            getTranslatedLanguageName: getTranslatedLanguageName,
             appLanguagesRepository: appLanguagesRepository
         )
         
@@ -194,7 +223,7 @@ class GetLanguageSettingsInterfaceStringsRepositoryTests: QuickSpec {
                             .store(in: &cancellables)
                     }
                     
-                    expect(interfaceStringsRef?.chooseAppLanguageButtonTitle).to(equal("español"))
+                    expect(interfaceStringsRef?.chooseAppLanguageButtonTitle).to(equal("Español"))
                 }
             }
             

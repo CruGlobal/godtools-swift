@@ -47,7 +47,7 @@ class GetTranslatedLanguageNameTests: QuickSpec {
         ]
                 
         let getTranslatedLanguageName = GetTranslatedLanguageName(
-            localizationServices: MockLocalizationServices(localizableStrings: localizableStrings),
+            localizationLanguageNameRepository: MockLocalizationLanguageNameRepository(localizationServices: MockLocalizationServices(localizableStrings: localizableStrings)),
             localeLanguageName: MockLocaleLanguageName(languageNames: languageNames),
             localeRegionName: MockLocaleLanguageRegionName(regionNames: [:]),
             localeScriptName: MockLocaleLanguageScriptName(scriptNames: [:])

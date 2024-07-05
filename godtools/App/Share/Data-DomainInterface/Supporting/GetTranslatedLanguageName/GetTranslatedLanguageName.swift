@@ -11,12 +11,12 @@ import LocalizationServices
 
 class GetTranslatedLanguageName {
     
-    private let localizationLanguageNameRepository: LocalizationLanguageNameRepository
+    private let localizationLanguageNameRepository: LocalizationLanguageNameRepositoryInterface
     private let localeLanguageName: LocaleLanguageNameInterface
     private let localeRegionName: LocaleLanguageRegionNameInterface
     private let localeScriptName: LocaleLanguageScriptNameInterface
     
-    init(localizationLanguageNameRepository: LocalizationLanguageNameRepository, localeLanguageName: LocaleLanguageNameInterface, localeRegionName: LocaleLanguageRegionNameInterface, localeScriptName: LocaleLanguageScriptNameInterface) {
+    init(localizationLanguageNameRepository: LocalizationLanguageNameRepositoryInterface, localeLanguageName: LocaleLanguageNameInterface, localeRegionName: LocaleLanguageRegionNameInterface, localeScriptName: LocaleLanguageScriptNameInterface) {
         
         self.localizationLanguageNameRepository = localizationLanguageNameRepository
         self.localeLanguageName = localeLanguageName
@@ -30,7 +30,7 @@ class GetTranslatedLanguageName {
             return language.fallbackName
         }
         
-        if let localizedName = localizationLanguageNameRepository.getLanguageName(languageId: language.localeId, translatedInLanguage: translatedInLanguage) {
+        if let localizedName = localizationLanguageNameRepository.getLanguageName(languageId: language.localeId, translatedInLanguage: translatedInLanguage), !localizedName.isEmpty {
             
             return localizedName
         }

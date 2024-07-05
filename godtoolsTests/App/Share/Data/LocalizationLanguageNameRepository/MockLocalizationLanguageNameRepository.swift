@@ -11,12 +11,15 @@ import Foundation
 
 class MockLocalizationLanguageNameRepository: LocalizationLanguageNameRepositoryInterface {
     
-    init() {
+    private let localizationServices: MockLocalizationServices
+    
+    init(localizationServices: MockLocalizationServices) {
         
+        self.localizationServices = localizationServices
     }
     
     func getLanguageName(languageId: BCP47LanguageIdentifier, translatedInLanguage: BCP47LanguageIdentifier) -> String? {
         
-        return nil
+        return localizationServices.stringForLocaleElseEnglish(localeIdentifier: translatedInLanguage, key: languageId)
     }
 }

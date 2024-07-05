@@ -30,7 +30,7 @@ class LocalizationLanguageNameRepository: LocalizationLanguageNameRepositoryInte
         
         let localizedName: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: translatedInLanguage, key: localizedKey)
         
-        guard !localizedName.isEmpty && localizedName != localizedKey else {
+        if localizedName.isEmpty || localizedName == localizedKey {
             return nil
         }
         
