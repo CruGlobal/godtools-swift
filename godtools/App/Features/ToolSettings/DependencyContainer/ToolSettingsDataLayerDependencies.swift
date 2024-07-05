@@ -52,14 +52,14 @@ class ToolSettingsDataLayerDependencies {
     func getToolSettingsPrimaryLanguageRepositoryInterface() -> GetToolSettingsPrimaryLanguageRepositoryInterface {
         return GetToolSettingsPrimaryLanguageRepository(
             languagesRepository: coreDataLayer.getLanguagesRepository(),
-            translatedLanguageNameRepository: coreDataLayer.getTranslatedLanguageNameRepository()
+            getTranslatedLanguageName: coreDataLayer.getTranslatedLanguageName()
         )
     }
     
     func getToolSettingsParallelLanguageRepositoryInterface() -> GetToolSettingsParallelLanguageRepositoryInterface {
         return GetToolSettingsParallelLanguageRepository(
             languagesRepository: coreDataLayer.getLanguagesRepository(),
-            translatedLanguageNameRepository: coreDataLayer.getTranslatedLanguageNameRepository()
+            getTranslatedLanguageName: coreDataLayer.getTranslatedLanguageName()
         )
     }
     
@@ -79,7 +79,7 @@ class ToolSettingsDataLayerDependencies {
         return GetToolSettingsToolLanguagesListRepository(
             resourcesRepository: coreDataLayer.getResourcesRepository(),
             languagesRepository: coreDataLayer.getLanguagesRepository(),
-            translatedLanguageNameRepository: coreDataLayer.getTranslatedLanguageNameRepository()
+            getTranslatedLanguageName: coreDataLayer.getTranslatedLanguageName()
         )
     }
 }

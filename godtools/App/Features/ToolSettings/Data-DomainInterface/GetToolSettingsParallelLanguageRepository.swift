@@ -12,12 +12,12 @@ import Combine
 class GetToolSettingsParallelLanguageRepository: GetToolSettingsParallelLanguageRepositoryInterface {
     
     private let languagesRepository: LanguagesRepository
-    private let translatedLanguageNameRepository: TranslatedLanguageNameRepository
+    private let getTranslatedLanguageName: GetTranslatedLanguageName
     
-    init(languagesRepository: LanguagesRepository, translatedLanguageNameRepository: TranslatedLanguageNameRepository) {
+    init(languagesRepository: LanguagesRepository, getTranslatedLanguageName: GetTranslatedLanguageName) {
         
         self.languagesRepository = languagesRepository
-        self.translatedLanguageNameRepository = translatedLanguageNameRepository
+        self.getTranslatedLanguageName = getTranslatedLanguageName
     }
     
     func getLanguagePublisher(parallelLanguageId: String?, translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolSettingsToolLanguageDomainModel?, Never> {
@@ -27,7 +27,7 @@ class GetToolSettingsParallelLanguageRepository: GetToolSettingsParallelLanguage
                 .eraseToAnyPublisher()
         }
         
-        let languageName: String = translatedLanguageNameRepository.getLanguageName(
+        let languageName: String = getTranslatedLanguageName.getLanguageName(
             language: language,
             translatedInLanguage: translateInLanguage
         )

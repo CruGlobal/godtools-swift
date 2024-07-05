@@ -87,7 +87,7 @@ extension ChooseYourOwnAdventureFlow {
             translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
             mobileContentEventAnalytics: appDiContainer.getMobileContentRendererEventAnalyticsTracking(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            translatedLanguageNameRepository: appDiContainer.dataLayer.getTranslatedLanguageNameRepository(),
+            getTranslatedLanguageName: appDiContainer.dataLayer.getTranslatedLanguageName(),
             trainingTipsEnabled: false,
             incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase(),
             selectedLanguageIndex: selectedLanguageIndex
