@@ -7,11 +7,11 @@ on:
     branches: [ develop, master, feature/* ]
 
   # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+  # workflow_dispatch:
 
-permissions:
-  id-token: write
-  contents: read
+# permissions:
+#   id-token: write
+#   contents: read
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -29,10 +29,43 @@ jobs:
         with:
           xcode-version: '15.4.0'
 
+  pod_install:
+    name: Pod Install
+    runs-on: macos-14
+    if: github.event_name == 'pull_request'
+    needs: [ select_xcode_version ]
+    steps:
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version-file: ".java-version"
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v3
+      - name: Cache Cocoapods
+        uses: actions/cache@v4
+        with:
+          path: ~/.cocoapods/repos
+          key: ${{ runner.os }}-cocoapods-${{ github.sha }}
+          restore-keys: ${{ runner.os }}-cocoapods-
+      - name: Cache Konan
+        uses: actions/cache@v4
+        with:
+          path: ~/.konan
+          key: ${{ runner.os }}-konan-${{ github.sha }}
+          restore-keys: ${{ runner.os }}-konan-
+      - name: Pod install
+        run: bundle exec pod install --repo-update
+
   run_ui_tests:
     name: Run UI Tests
     runs-on: macos-14
     if: github.event_name == 'pull_request'
+    needs: [ pod_install ]
     steps:
       - name: Run UI Tests
         run: bundle exec fastlane cru_shared_lane_run_tests scheme:GodTools-UITests reset_simulator:true should_clear_derived_data:true
