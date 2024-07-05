@@ -127,6 +127,22 @@ Commit downloaded localization files to default branch and push to remote
 
 
 
+### ios cru_shared_lane_get_version_number
+
+```sh
+[bundle exec] fastlane ios cru_shared_lane_get_version_number
+```
+
+
+
+### ios cru_shared_lane_increment_version_number
+
+```sh
+[bundle exec] fastlane ios cru_shared_lane_increment_version_number
+```
+
+
+
 ### ios cru_shared_lane_build_and_deploy_for_testflight_release
 
 ```sh
