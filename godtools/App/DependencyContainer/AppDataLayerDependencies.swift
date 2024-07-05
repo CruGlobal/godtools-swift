@@ -165,6 +165,12 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getLocalizationLanguageNameRepository() -> LocalizationLanguageNameRepository {
+        return LocalizationLanguageNameRepository(
+            localizationServices: getLocalizationServices()
+        )
+    }
+    
     func getLocalizationServices() -> LocalizationServices {
         return LocalizationServices(localizableStringsFilesBundle: Bundle.main)
     }
@@ -293,28 +299,9 @@ class AppDataLayerDependencies {
         )
     }
     
-    private func getTranslatedLanguageNameCache() -> RealmTranslatedLanguageNameCache {
-        return RealmTranslatedLanguageNameCache(realmDatabase: sharedRealmDatabase)
-    }
-    
-    func getTranslatedLanguageNameRepository() -> TranslatedLanguageNameRepository {
-        return TranslatedLanguageNameRepository(
-            getTranslatedLanguageName: getTranslatedLanguageName(),
-            cache: getTranslatedLanguageNameCache()
-        )
-    }
-    
-    func getTranslatedLanguageNameRepositorySync() -> TranslatedLanguageNameRepositorySync {
-        return TranslatedLanguageNameRepositorySync(
-            realmDatabase: sharedRealmDatabase,
-            getTranslatedLanguageName: getTranslatedLanguageName(),
-            cache: getTranslatedLanguageNameCache()
-        )
-    }
-    
-    private func getTranslatedLanguageName() -> GetTranslatedLanguageName {
+    func getTranslatedLanguageName() -> GetTranslatedLanguageName {
         return GetTranslatedLanguageName(
-            localizationServices: getLocalizationServices(),
+            localizationLanguageNameRepository: getLocalizationLanguageNameRepository(),
             localeLanguageName: LocaleLanguageName(),
             localeRegionName: LocaleLanguageRegionName(),
             localeScriptName: LocaleLanguageScriptName()
@@ -344,7 +331,7 @@ class AppDataLayerDependencies {
             localizationServices: getLocalizationServices(),
             resourcesRepository: getResourcesRepository(),
             languagesRepository: getLanguagesRepository(),
-            translatedLanguageNameRepository: getTranslatedLanguageNameRepository()
+            getTranslatedLanguageName: getTranslatedLanguageName()
         )
     }
     
