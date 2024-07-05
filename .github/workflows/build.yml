@@ -18,6 +18,17 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+
+  select_xcode_version:
+    name: Select Xcode Version
+    runs-on: macos-14
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Select Xcode Version
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '15.4.0'
+
   run_ui_tests:
     name: Run UI Tests
     runs-on: macos-14
