@@ -48,12 +48,7 @@ class AppBackgroundState {
         syncLatestToolsForFavoritedTools(
             downloadLatestToolsForFavoritedToolsUseCase: appDiContainer.feature.dashboard.domainLayer.getDownloadLatestToolsForFavoritedToolsUseCase()
         )
-        
-        syncTranslatedLanguageNames(
-            translatedLanguageNameRepositorySync: appDiContainer.dataLayer.getTranslatedLanguageNameRepositorySync(),
-            languagesRepository: appDiContainer.dataLayer.getLanguagesRepository()
-        )
-        
+                
         syncInitialFavoritedTools(
             resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
             launchCountRepository: appDiContainer.dataLayer.getSharedLaunchCountRepository(),
@@ -76,34 +71,6 @@ class AppBackgroundState {
                 
             }
             .store(in: &cancellables)
-    }
-    
-    private func syncTranslatedLanguageNames(translatedLanguageNameRepositorySync: TranslatedLanguageNameRepositorySync, languagesRepository: LanguagesRepository) {
-                
-        Publishers.CombineLatest(
-            $appLanguage.dropFirst(),
-            languagesRepository.getLanguagesChanged().prepend(Void())
-        )
-        .flatMap({ (appLanguage: AppLanguageDomainModel, languagesChanged: Void) -> AnyPublisher<(AppLanguageDomainModel, [LanguageModel]), Never> in
-            
-            return languagesRepository
-                .getLanguagesPublisher()
-                .map { (languages: [LanguageModel]) in
-                    
-                    return (appLanguage, languages)
-                }
-                .eraseToAnyPublisher()
-        })
-        .map { (appLanguage: AppLanguageDomainModel, languages: [LanguageModel]) in
-                        
-            translatedLanguageNameRepositorySync
-                .syncTranslatedLanguageNamesPublisher(translateInLanguage: appLanguage, languages: languages)
-        }
-        .receive(on: DispatchQueue.main)
-        .sink { _ in
-            
-        }
-        .store(in: &cancellables)
     }
     
     private func syncInitialFavoritedTools(resourcesRepository: ResourcesRepository, launchCountRepository: LaunchCountRepository, storeInitialFavoritedToolsUseCase: StoreInitialFavoritedToolsUseCase) {
