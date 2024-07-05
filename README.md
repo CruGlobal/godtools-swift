@@ -1,3 +1,5 @@
+[![codecov](https://codecov.io/gh/CruGlobal/godtools-swift/branch/main/graph/badge.svg)](https://codecov.io/gh/CruGlobal/godtools-swift)
+
 GodTools
 ========
 
