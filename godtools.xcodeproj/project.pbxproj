@@ -177,6 +177,8 @@
 		452486E12B07C9A5007AD932 /* StoreUserFiltersRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452486DF2B07C9A5007AD932 /* StoreUserFiltersRepository.swift */; };
 		452486E82B07C9AA007AD932 /* UserToolFiltersRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452486E62B07C9AA007AD932 /* UserToolFiltersRepository.swift */; };
 		4525562D2C381B6000AA0046 /* LocalizationLanguageNameRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4525562C2C381B6000AA0046 /* LocalizationLanguageNameRepository.swift */; };
+		4525562F2C3827CD00AA0046 /* LocalizationLanguageNameRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4525562E2C3827CD00AA0046 /* LocalizationLanguageNameRepositoryInterface.swift */; };
+		452556322C38282A00AA0046 /* MockLocalizationLanguageNameRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452556312C38282A00AA0046 /* MockLocalizationLanguageNameRepository.swift */; };
 		4526EDD42AEB274800D1A3D4 /* EvaluationOptionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4526EDD32AEB274800D1A3D4 /* EvaluationOptionButton.swift */; };
 		4526EDD62AEB330100D1A3D4 /* OverlayNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4526EDD52AEB330100D1A3D4 /* OverlayNavigationController.swift */; };
 		4529B96628933A610011F16B /* ParseTranslationManifestForRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4529B96528933A610011F16B /* ParseTranslationManifestForRenderer.swift */; };
@@ -1775,6 +1777,8 @@
 		452486DF2B07C9A5007AD932 /* StoreUserFiltersRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreUserFiltersRepository.swift; sourceTree = "<group>"; };
 		452486E62B07C9AA007AD932 /* UserToolFiltersRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserToolFiltersRepository.swift; sourceTree = "<group>"; };
 		4525562C2C381B6000AA0046 /* LocalizationLanguageNameRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationLanguageNameRepository.swift; sourceTree = "<group>"; };
+		4525562E2C3827CD00AA0046 /* LocalizationLanguageNameRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationLanguageNameRepositoryInterface.swift; sourceTree = "<group>"; };
+		452556312C38282A00AA0046 /* MockLocalizationLanguageNameRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLocalizationLanguageNameRepository.swift; sourceTree = "<group>"; };
 		4526EDD32AEB274800D1A3D4 /* EvaluationOptionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvaluationOptionButton.swift; sourceTree = "<group>"; };
 		4526EDD52AEB330100D1A3D4 /* OverlayNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayNavigationController.swift; sourceTree = "<group>"; };
 		4529B96528933A610011F16B /* ParseTranslationManifestForRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseTranslationManifestForRenderer.swift; sourceTree = "<group>"; };
@@ -4309,6 +4313,15 @@
 			isa = PBXGroup;
 			children = (
 				4525562C2C381B6000AA0046 /* LocalizationLanguageNameRepository.swift */,
+				4525562E2C3827CD00AA0046 /* LocalizationLanguageNameRepositoryInterface.swift */,
+			);
+			path = LocalizationLanguageNameRepository;
+			sourceTree = "<group>";
+		};
+		452556302C38282100AA0046 /* LocalizationLanguageNameRepository */ = {
+			isa = PBXGroup;
+			children = (
+				452556312C38282A00AA0046 /* MockLocalizationLanguageNameRepository.swift */,
 			);
 			path = LocalizationLanguageNameRepository;
 			sourceTree = "<group>";
@@ -4639,6 +4652,7 @@
 			children = (
 				45368A092ABB2D840028A570 /* DeepLinkingService */,
 				45CBDA072BA392FF0007DEC8 /* LaunchCountRepository */,
+				452556302C38282100AA0046 /* LocalizationLanguageNameRepository */,
 				45EB68E02C334D84008A5FF2 /* LocalizationServices */,
 				45368A062ABB2D840028A570 /* RealmDatabase */,
 				459ABF5E2B0BB2910034499D /* ResourcesRepository */,
@@ -12338,6 +12352,7 @@
 				459E86EB28EDA86C00E197A5 /* DeepLinkingParserManifestType.swift in Sources */,
 				453F84BC2A029FC00005101E /* ArticleAemWebArchiveFileCacheLocation.swift in Sources */,
 				D4E243D029EDD2E800EA4BB7 /* AskAQuestionWebContent.swift in Sources */,
+				4525562F2C3827CD00AA0046 /* LocalizationLanguageNameRepositoryInterface.swift in Sources */,
 				45E3476D2A49BE230014CCD1 /* Flow+NavigateToUrl.swift in Sources */,
 				457E199A27C6E3AF00BABD49 /* MobileContentRenderer.swift in Sources */,
 				45920D5B2A8D4F3600E336A8 /* ToolCardNavButtonType.swift in Sources */,
@@ -13257,6 +13272,7 @@
 				45E198692BA4822A00BF14F3 /* TestsDiContainer.swift in Sources */,
 				450FB88A2BFBA0F80015D945 /* StoreInitialAppLanguageTests.swift in Sources */,
 				450FB88B2BFBA0F80015D945 /* GetLanguageSettingsInterfaceStringsRepositoryTests.swift in Sources */,
+				452556322C38282A00AA0046 /* MockLocalizationLanguageNameRepository.swift in Sources */,
 				450FB88C2BFBA0F80015D945 /* SearchAppLanguageInAppLanguagesListRepositoryTests.swift in Sources */,
 				450FB88D2BFBA0F80015D945 /* GetAppLanguagesInterfaceStringsRepositoryTests.swift in Sources */,
 				450FB88E2BFBA0F80015D945 /* SearchLanguageInDownloadableLanguagesRepositoryTests.swift in Sources */,
