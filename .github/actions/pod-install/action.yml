@@ -1,7 +1,5 @@
 name: 'Run Cocoapods Pod Install'
 description: 'This action contains steps for running pod install on a project.'
-inputs:
-outputs:
 runs:
   using: "composite"
   steps:
