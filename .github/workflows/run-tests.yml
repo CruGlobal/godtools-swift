@@ -61,22 +61,8 @@ jobs:
       - name: Pod install
         run: bundle exec pod install --repo-update
 
-      - name: Run Tests
-        run: xcodebuild test -scheme GodTools-Production -sdk iphonesimulator17.5 -destination "OS=17.5,name=iPhone 15"
-
-      - name: Upload Xcode Code Coverage Report to CodeCov
-        uses: codecov/codecov-action@v4
-        with:
-          fail_ci_if_error: true
-          token: ${{ secrets.CODECOV_TOKEN }}
-          verbose: true
-          xcode: true
-
-      # - name: Run UITests
-      #   run: bundle exec fastlane cru_shared_lane_run_tests scheme:GodTools-UITests reset_simulator:true should_clear_derived_data:true
-
-      # - name: Run Tests and Generate Code Coverage Report (.xcresult)
-      #   run: bundle exec fastlane cru_shared_lane_run_tests output_directory:fastlane_scan_output_directory result_bundle:true reset_simulator:true should_clear_derived_data:true
+      # - name: Run Tests
+      #   run: xcodebuild test -scheme GodTools-Production -sdk iphonesimulator17.5 -destination "OS=17.5,name=iPhone 15"
 
       # - name: Upload Xcode Code Coverage Report to CodeCov
       #   uses: codecov/codecov-action@v4
@@ -85,4 +71,18 @@ jobs:
       #     token: ${{ secrets.CODECOV_TOKEN }}
       #     verbose: true
       #     xcode: true
-      #     xcode_archive_path: /Users/runner/work/godtools-swift/godtools-swift/fastlane_scan_output_directory/GodTools-Production.xcresult
+
+      # - name: Run UITests
+      #   run: bundle exec fastlane cru_shared_lane_run_tests scheme:GodTools-UITests reset_simulator:true should_clear_derived_data:true
+
+      - name: Run Tests and Generate Code Coverage Report (.xcresult)
+        run: bundle exec fastlane cru_shared_lane_run_tests output_directory:fastlane_scan_output_directory result_bundle:true reset_simulator:true should_clear_derived_data:true
+
+      - name: Upload Xcode Code Coverage Report to CodeCov
+        uses: codecov/codecov-action@v4
+        with:
+          fail_ci_if_error: true
+          token: ${{ secrets.CODECOV_TOKEN }}
+          verbose: true
+          xcode: true
+          xcode_archive_path: /Users/runner/work/godtools-swift/godtools-swift/fastlane_scan_output_directory/GodTools-Production.xcresult
