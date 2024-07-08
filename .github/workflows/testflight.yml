@@ -38,13 +38,6 @@ jobs:
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
         run: bundle exec fastlane cru_shared_lane_build_and_deploy_for_testflight_release is_running_in_ci:true
 
-      - name: Archive XCode Logs
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: xcode-logs
-          path: "/Users/runner/Library/Developer/Xcode/DerivedData/Logs/godtools-*/**"
-
       - name: Archive Fastlane Gym Logs
         if: always()
         uses: actions/upload-artifact@v4
