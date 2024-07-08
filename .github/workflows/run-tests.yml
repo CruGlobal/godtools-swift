@@ -37,3 +37,10 @@ jobs:
           verbose: true
           xcode: true
           xcode_archive_path: /Users/runner/work/godtools-swift/godtools-swift/fastlane_scan_output_directory/GodTools-Production.xcresult
+
+      # - name: Archive XCode Logs
+      #   if: always()
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: xcode-logs
+      #     path: "/Users/runner/Library/Developer/Xcode/DerivedData/Logs/godtools-*/**"
