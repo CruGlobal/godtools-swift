@@ -18,12 +18,12 @@ jobs:
     env:
       FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT: 60
     steps:
-      - name: Checkout Actions
+      - name: Checkout code
         uses: actions/checkout@v4
         
       - name: Pod Install
         uses: ./.github/actions/pod-install
-        
+
       - name: Import App Store Connect API Key
         env:
           APP_STORE_CONNECT_API_JSON_PAYLOAD: ${{ secrets.APP_STORE_CONNECT_API_JSON_PAYLOAD }}

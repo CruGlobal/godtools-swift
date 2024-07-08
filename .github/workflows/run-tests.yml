@@ -20,9 +20,9 @@ jobs:
       FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT: 60
 
     steps:
-      - name: Checkout Actions
+      - name: Checkout code
         uses: actions/checkout@v4
-        
+
       - name: Pod Install
         uses: ./.github/actions/pod-install
 
