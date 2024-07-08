@@ -14,14 +14,14 @@ class GetTranslatedToolLanguageAvailability {
     private let localizationServices: LocalizationServices
     private let resourcesRepository: ResourcesRepository
     private let languagesRepository: LanguagesRepository
-    private let translatedLanguageNameRepository: TranslatedLanguageNameRepository
+    private let getTranslatedLanguageName: GetTranslatedLanguageName
     
-    init(localizationServices: LocalizationServices, resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, translatedLanguageNameRepository: TranslatedLanguageNameRepository) {
+    init(localizationServices: LocalizationServices, resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, getTranslatedLanguageName: GetTranslatedLanguageName) {
         
         self.localizationServices = localizationServices
         self.resourcesRepository = resourcesRepository
         self.languagesRepository = languagesRepository
-        self.translatedLanguageNameRepository = translatedLanguageNameRepository
+        self.getTranslatedLanguageName = getTranslatedLanguageName
     }
     
     private var failedToDetermineLanguageAvailability: ToolLanguageAvailabilityDomainModel {
@@ -57,7 +57,7 @@ class GetTranslatedToolLanguageAvailability {
     
     func getTranslatedLanguageAvailability(resource: ResourceModel, language: LanguageModel, translateInLanguage: LanguageModel) -> ToolLanguageAvailabilityDomainModel {
         
-        let translatedLanguageName: String = translatedLanguageNameRepository.getLanguageName(language: language, translatedInLanguage: translateInLanguage.code)
+        let translatedLanguageName: String = getTranslatedLanguageName.getLanguageName(language: language, translatedInLanguage: translateInLanguage.code)
         
         let resourceSupportsLanguage: Bool = resource.supportsLanguage(languageId: language.id)
         
