@@ -32,4 +32,5 @@ runs:
         key: ${{ runner.os }}-konan-${{ github.sha }}
         restore-keys: ${{ runner.os }}-konan-
     - name: Pod install
+      shell: bash
       run: bundle exec pod install --repo-update
