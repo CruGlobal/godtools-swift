@@ -37,7 +37,18 @@ class GetLessonFilterLanguagesRepository: GetLessonFilterLanguagesRepositoryInte
             .eraseToAnyPublisher()
     }
     
-    func getLessonLanguageFilter(from languageId: String?, translatedInAppLanguage: AppLanguageDomainModel) -> LessonLanguageFilterDomainModel? {
+    func getLessonLanguageFilterFromLanguageCode(languageCode: String?, translatedInAppLanguage: AppLanguageDomainModel) -> LessonLanguageFilterDomainModel? {
+        
+        guard let languageCode = languageCode,
+              let language = languagesRepository.getLanguage(code: languageCode)
+        else {
+            return nil
+        }
+        
+        return createLessonLanguageFilterDomainModel(with: language, translatedInAppLanguage: translatedInAppLanguage)
+    }
+    
+    func getLessonLanguageFilterFromLanguageId(languageId: String?, translatedInAppLanguage: AppLanguageDomainModel) -> LessonLanguageFilterDomainModel? {
         
         guard let languageId = languageId,
               let language = languagesRepository.getLanguage(id: languageId)

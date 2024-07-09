@@ -26,14 +26,13 @@ class GetUserLessonFiltersRepository: GetUserLessonFiltersRepositoryInterface {
                 
                 let languageId = self.userLessonFiltersRepository.getUserLessonLanguageFilter()?.languageId
                 
-                if let languageFilter = self.getLessonFilterLanguagesRepository.getLessonLanguageFilter(from: languageId, translatedInAppLanguage: translatedInAppLanguage) {
+                if let languageFilter = self.getLessonFilterLanguagesRepository.getLessonLanguageFilterFromLanguageId(languageId: languageId, translatedInAppLanguage: translatedInAppLanguage) {
                     
                     return languageFilter
                     
                 } else {
                     
-                    // TODO: - not sure if I can pass the translatedInAppLanguage as the languageId here
-                    let currentAppLanguageFilterValue = self.getLessonFilterLanguagesRepository.getLessonLanguageFilter(from: translatedInAppLanguage, translatedInAppLanguage: translatedInAppLanguage)
+                    let currentAppLanguageFilterValue = self.getLessonFilterLanguagesRepository.getLessonLanguageFilterFromLanguageCode(languageCode: translatedInAppLanguage, translatedInAppLanguage: translatedInAppLanguage)
                     
                     return currentAppLanguageFilterValue
                 }
