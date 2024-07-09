@@ -8,18 +8,19 @@
 
 import Foundation
 import Combine
+import LocalizationServices
 
 class GetLessonFilterLanguagesRepository: GetLessonFilterLanguagesRepositoryInterface {
     
     private let resourcesRepository: ResourcesRepository
     private let languagesRepository: LanguagesRepository
-    private let translatedLanguageNameRepository: TranslatedLanguageNameRepository
+    private let getTranslatedLanguageName: GetTranslatedLanguageName
     private let localizationServices: LocalizationServices
     
-    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, translatedLanguageNameRepository: TranslatedLanguageNameRepository, localizationServices: LocalizationServices) {
+    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, getTranslatedLanguageName: GetTranslatedLanguageName, localizationServices: LocalizationServices) {
         self.resourcesRepository = resourcesRepository
         self.languagesRepository = languagesRepository
-        self.translatedLanguageNameRepository = translatedLanguageNameRepository
+        self.getTranslatedLanguageName = getTranslatedLanguageName
         self.localizationServices = localizationServices
     }
     
@@ -84,9 +85,9 @@ extension GetLessonFilterLanguagesRepository {
         guard lessonsAvailableCount > 0 else {
             return nil
         }
-        
-        let languageName = translatedLanguageNameRepository.getLanguageName(language: languageModel.code, translatedInLanguage: languageModel.code)
-        let translatedLanguageName = translatedLanguageNameRepository.getLanguageName(language: languageModel.code, translatedInLanguage: translatedInAppLanguage)
+
+        let languageName = getTranslatedLanguageName.getLanguageName(language: languageModel.code, translatedInLanguage: languageModel.code)
+        let translatedLanguageName = getTranslatedLanguageName.getLanguageName(language: languageModel.code, translatedInLanguage: translatedInAppLanguage)
         
         let lessonsAvailableText: String = getLessonsAvailableText(lessonsAvailableCount: lessonsAvailableCount, translatedInAppLanguage: translatedInAppLanguage)
         
@@ -102,8 +103,7 @@ extension GetLessonFilterLanguagesRepository {
         
         let formatString = localizationServices.stringForLocaleElseSystemElseEnglish(
             localeIdentifier: translatedInAppLanguage.localeId,
-            key: LessonFilterStringKeys.lessonsAvailableText.rawValue,
-            fileType: .stringsdict
+            key: LessonFilterStringKeys.lessonsAvailableText.rawValue
         )
         
         let localizedString = String(format: formatString, locale: Locale(identifier: translatedInAppLanguage), lessonsAvailableCount)

@@ -22,7 +22,7 @@ class LessonFilterDataLayerDependencies {
         return GetLessonFilterLanguagesRepository(
             resourcesRepository: coreDataLayer.getResourcesRepository(),
             languagesRepository: coreDataLayer.getLanguagesRepository(),
-            translatedLanguageNameRepository: coreDataLayer.getTranslatedLanguageNameRepository(),
+            getTranslatedLanguageName: coreDataLayer.getTranslatedLanguageName(),
             localizationServices: coreDataLayer.getLocalizationServices()
         )
     }
