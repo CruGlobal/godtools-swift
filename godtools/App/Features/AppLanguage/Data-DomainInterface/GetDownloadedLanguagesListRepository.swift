@@ -13,13 +13,13 @@ class GetDownloadedLanguagesListRepository: GetDownloadedLanguagesListRepository
     
     private let languagesRepository: LanguagesRepository
     private let downloadedLanguagesRepository: DownloadedLanguagesRepository
-    private let translatedLanguageNameRepository: TranslatedLanguageNameRepository
+    private let getTranslatedLanguageName: GetTranslatedLanguageName
     
-    init(languagesRepository: LanguagesRepository, downloadedLanguagesRepository: DownloadedLanguagesRepository, translatedLanguageNameRepository: TranslatedLanguageNameRepository) {
+    init(languagesRepository: LanguagesRepository, downloadedLanguagesRepository: DownloadedLanguagesRepository, getTranslatedLanguageName: GetTranslatedLanguageName) {
         
         self.languagesRepository = languagesRepository
         self.downloadedLanguagesRepository = downloadedLanguagesRepository
-        self.translatedLanguageNameRepository = translatedLanguageNameRepository
+        self.getTranslatedLanguageName = getTranslatedLanguageName
     }
     
     func getDownloadedLanguagesPublisher(currentAppLanguage: AppLanguageDomainModel) -> AnyPublisher<[DownloadedLanguageListItemDomainModel], Never> {
@@ -38,11 +38,11 @@ class GetDownloadedLanguagesListRepository: GetDownloadedLanguagesListRepository
             
             return self.languagesRepository.getLanguages(ids: downloadedLanguageIds).map { language in
                 
-                let languageNameInOwnLanguage = self.translatedLanguageNameRepository.getLanguageName(
+                let languageNameInOwnLanguage = self.getTranslatedLanguageName.getLanguageName(
                     language: language,
                     translatedInLanguage: language.code
                 )
-                let languageNameInAppLanguage = self.translatedLanguageNameRepository.getLanguageName(
+                let languageNameInAppLanguage = self.getTranslatedLanguageName.getLanguageName(
                     language: language,
                     translatedInLanguage: currentAppLanguage
                 )

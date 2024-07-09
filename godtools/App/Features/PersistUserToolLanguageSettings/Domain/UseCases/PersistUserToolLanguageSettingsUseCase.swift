@@ -1,0 +1,24 @@
+//
+//  PersistUserToolLanguageSettingsUseCase.swift
+//  godtools
+//
+//  Created by Rachael Skeath on 5/29/24.
+//  Copyright © 2024 Cru. All rights reserved.
+//
+
+import Foundation
+import Combine
+
+class PersistUserToolLanguageSettingsUseCase {
+    
+    private let persistUserToolLanguageSettingsRepository: PersistUserToolLanguageSettingsRepositoryInterface
+    
+    init(persistUserToolLanguageSettingsRepositoryInterface: PersistUserToolLanguageSettingsRepositoryInterface) {
+        self.persistUserToolLanguageSettingsRepository = persistUserToolLanguageSettingsRepositoryInterface
+    }
+    
+    func persistUserToolSettingsPublisher(with toolId: String, primaryLanguageId: String, parallelLanguageId: String?, selectedLanguageId: String) -> AnyPublisher<Bool, Never> {
+        
+        return persistUserToolLanguageSettingsRepository.persistUserToolLanguageSettingsPublisher(toolId: toolId, primaryLanguageId: primaryLanguageId, parallelLanguageId: parallelLanguageId, selectedLanguageId: selectedLanguageId)
+    }
+}

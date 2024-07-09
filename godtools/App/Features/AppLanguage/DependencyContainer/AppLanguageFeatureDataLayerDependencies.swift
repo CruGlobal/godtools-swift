@@ -19,12 +19,18 @@ class AppLanguageFeatureDataLayerDependencies {
     
     // MARK: - Data Layer Classes
     
-    private func getAppLanguagesCache() -> AppLanguagesCache {
-        return AppLanguagesCache()
-    }
-    
-    func getAppLanguagesRepository() -> AppLanguagesRepository {
-        return AppLanguagesRepository(cache: getAppLanguagesCache())
+    func getAppLanguagesRepository(realmDatabase: RealmDatabase? = nil, sync: AppLanguagesRepositorySyncInterface? = nil) -> AppLanguagesRepository {
+        
+        let cache = RealmAppLanguagesCache(
+            realmDatabase: realmDatabase ?? coreDataLayer.getSharedRealmDatabase()
+        )
+        
+        let sync: AppLanguagesRepositorySyncInterface = sync ?? AppLanguagesRepositorySync(api: AppLanguagesApi(), cache: cache)
+        
+        return AppLanguagesRepository(
+            cache: cache,
+            sync: sync
+        )
     }
     
     private func getDownloadedLanguagesRepository() -> DownloadedLanguagesRepository {
@@ -40,19 +46,13 @@ class AppLanguageFeatureDataLayerDependencies {
         )
     }
     
-    func getUserAppLanguageCache() -> RealmUserAppLanguageCache {
-        return RealmUserAppLanguageCache(
-            realmDatabase: coreDataLayer.getSharedRealmDatabase()
-        )
-    }
-    
     private func getRealmDownloadedLanguagesCache() -> RealmDownloadedLanguagesCache {
         return RealmDownloadedLanguagesCache(realmDatabase: coreDataLayer.getSharedRealmDatabase())
     }
     
     func getUserAppLanguageRepository() -> UserAppLanguageRepository {
         return UserAppLanguageRepository(
-            cache: getUserAppLanguageCache()
+            cache: RealmUserAppLanguageCache(realmDatabase: coreDataLayer.getSharedRealmDatabase())
         )
     }
     
@@ -67,7 +67,7 @@ class AppLanguageFeatureDataLayerDependencies {
     func getAppLanguagesListRepositoryInterface() -> GetAppLanguagesListRepositoryInterface {
         return GetAppLanguagesListRepository(
             appLanguagesRepository: getAppLanguagesRepository(),
-            translatedLanguageNameRepository: coreDataLayer.getTranslatedLanguageNameRepository()
+            getTranslatedLanguageName: coreDataLayer.getTranslatedLanguageName()
         )
     }
     
@@ -86,7 +86,7 @@ class AppLanguageFeatureDataLayerDependencies {
     func getConfirmAppLanguageInterfaceStringsRepositoryInterface() -> GetConfirmAppLanguageInterfaceStringsRepositoryInterface {
         return GetConfirmAppLanguageInterfaceStringsRepository(
             localizationServices: coreDataLayer.getLocalizationServices(),
-            translatedLanguageNameRepository: coreDataLayer.getTranslatedLanguageNameRepository()
+            getTranslatedLanguageName: coreDataLayer.getTranslatedLanguageName()
         )
     }
     
@@ -100,7 +100,7 @@ class AppLanguageFeatureDataLayerDependencies {
         return GetDownloadableLanguagesListRepository(
             languagesRepository: coreDataLayer.getLanguagesRepository(),
             downloadedLanguagesRepository: getDownloadedLanguagesRepository(),
-            translatedLanguageNameRepository: coreDataLayer.getTranslatedLanguageNameRepository(),
+            getTranslatedLanguageName: coreDataLayer.getTranslatedLanguageName(),
             resourcesRepository: coreDataLayer.getResourcesRepository(),
             localizationServices: coreDataLayer.getLocalizationServices()
         )
@@ -110,7 +110,7 @@ class AppLanguageFeatureDataLayerDependencies {
         return GetDownloadedLanguagesListRepository(
             languagesRepository: coreDataLayer.getLanguagesRepository(),
             downloadedLanguagesRepository: getDownloadedLanguagesRepository(),
-            translatedLanguageNameRepository: coreDataLayer.getTranslatedLanguageNameRepository()
+            getTranslatedLanguageName: coreDataLayer.getTranslatedLanguageName()
         )
     }
     
@@ -125,7 +125,7 @@ class AppLanguageFeatureDataLayerDependencies {
     func getLanguageSettingsInterfaceStringsRepositoryInterface() -> GetLanguageSettingsInterfaceStringsRepositoryInterface {
         return GetLanguageSettingsInterfaceStringsRepository(
             localizationServices: coreDataLayer.getLocalizationServices(),
-            translatedLanguageNameRepository: coreDataLayer.getTranslatedLanguageNameRepository(),
+            getTranslatedLanguageName: coreDataLayer.getTranslatedLanguageName(),
             appLanguagesRepository: getAppLanguagesRepository()
         )
     }

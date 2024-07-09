@@ -7,17 +7,18 @@
 //
 
 import Foundation
+import LocalizationServices
 
 class GetTranslatedLanguageName {
     
-    private let localizationServices: LocalizationServices
-    private let localeLanguageName: LocaleLanguageName
-    private let localeRegionName: LocaleLanguageRegionName
-    private let localeScriptName: LocaleLanguageScriptName
+    private let localizationLanguageNameRepository: LocalizationLanguageNameRepositoryInterface
+    private let localeLanguageName: LocaleLanguageNameInterface
+    private let localeRegionName: LocaleLanguageRegionNameInterface
+    private let localeScriptName: LocaleLanguageScriptNameInterface
     
-    init(localizationServices: LocalizationServices, localeLanguageName: LocaleLanguageName, localeRegionName: LocaleLanguageRegionName, localeScriptName: LocaleLanguageScriptName) {
+    init(localizationLanguageNameRepository: LocalizationLanguageNameRepositoryInterface, localeLanguageName: LocaleLanguageNameInterface, localeRegionName: LocaleLanguageRegionNameInterface, localeScriptName: LocaleLanguageScriptNameInterface) {
         
-        self.localizationServices = localizationServices
+        self.localizationLanguageNameRepository = localizationLanguageNameRepository
         self.localeLanguageName = localeLanguageName
         self.localeRegionName = localeRegionName
         self.localeScriptName = localeScriptName
@@ -29,7 +30,7 @@ class GetTranslatedLanguageName {
             return language.fallbackName
         }
         
-        if let localizedName = getLanguageNameFromLocalization(language: language, translatedInLanguage: translatedInLanguage) {
+        if let localizedName = localizationLanguageNameRepository.getLanguageName(languageId: language.localeId, translatedInLanguage: translatedInLanguage), !localizedName.isEmpty {
             
             return localizedName
         }
@@ -39,18 +40,6 @@ class GetTranslatedLanguageName {
         }
         
         return language.fallbackName
-    }
-    
-    private func getLanguageNameFromLocalization(language: TranslatableLanguage, translatedInLanguage: BCP47LanguageIdentifier) -> String? {
-        
-        let localizedKey: String = "language_name_" + language.localeId
-        let localizedName: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: translatedInLanguage, key: localizedKey)
-        
-        guard !localizedName.isEmpty && localizedName != localizedKey else {
-            return nil
-        }
-        
-        return localizedName
     }
     
     private func getLanguageNameFromLocale(language: TranslatableLanguage, translatedInLanguage: BCP47LanguageIdentifier) -> String? {
@@ -63,7 +52,7 @@ class GetTranslatedLanguageName {
             languageName = localeLanguageName
         }
         else {
-            languageName = Locale(identifier: translatedInLanguage).localizedString(forIdentifier: language.localeId)
+            languageName = localeLanguageName.getLanguageName(forLocaleId: language.localeId, translatedInLanguageId: translatedInLanguage)
         }
         
         guard let languageName = languageName else {

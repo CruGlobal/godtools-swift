@@ -8,7 +8,7 @@
 
 import Foundation
 
-class LocaleLanguageName {
+class LocaleLanguageName: LocaleLanguageNameInterface {
     
     init() {
         
@@ -26,5 +26,19 @@ class LocaleLanguageName {
         }
         
         return translateInLocale.localizedString(forLanguageCode: forLanguageCode)
+    }
+    
+    func getLanguageName(forLocaleId: String, translatedInLanguageId: BCP47LanguageIdentifier?) -> String? {
+        
+        let translateInLocale: Locale
+        
+        if let translatedInLanguageId = translatedInLanguageId, !translatedInLanguageId.isEmpty {
+            translateInLocale = Locale(identifier: translatedInLanguageId)
+        }
+        else {
+            translateInLocale = Locale(identifier: forLocaleId)
+        }
+        
+        return translateInLocale.localizedString(forLanguageCode: forLocaleId)
     }
 }

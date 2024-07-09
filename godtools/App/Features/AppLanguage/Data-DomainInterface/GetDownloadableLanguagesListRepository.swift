@@ -8,21 +8,22 @@
 
 import Foundation
 import Combine
+import LocalizationServices
 
 class GetDownloadableLanguagesListRepository: GetDownloadableLanguagesListRepositoryInterface {
     
     private let languagesRepository: LanguagesRepository
     private let downloadedLanguagesRepository: DownloadedLanguagesRepository
-    private let translatedLanguageNameRepository: TranslatedLanguageNameRepository
+    private let getTranslatedLanguageName: GetTranslatedLanguageName
     private let resourcesRepository: ResourcesRepository
     private let localizationServices: LocalizationServices
     private let sortDate: Date = Date()
     
-    init(languagesRepository: LanguagesRepository, downloadedLanguagesRepository: DownloadedLanguagesRepository, translatedLanguageNameRepository: TranslatedLanguageNameRepository, resourcesRepository: ResourcesRepository, localizationServices: LocalizationServices) {
+    init(languagesRepository: LanguagesRepository, downloadedLanguagesRepository: DownloadedLanguagesRepository, getTranslatedLanguageName: GetTranslatedLanguageName, resourcesRepository: ResourcesRepository, localizationServices: LocalizationServices) {
         
         self.languagesRepository = languagesRepository
         self.downloadedLanguagesRepository = downloadedLanguagesRepository
-        self.translatedLanguageNameRepository = translatedLanguageNameRepository
+        self.getTranslatedLanguageName = getTranslatedLanguageName
         self.resourcesRepository = resourcesRepository
         self.localizationServices = localizationServices
     }
@@ -42,11 +43,11 @@ class GetDownloadableLanguagesListRepository: GetDownloadableLanguagesListReposi
                     return nil
                 }
                 
-                let languageNameInOwnLanguage = self.translatedLanguageNameRepository.getLanguageName(
+                let languageNameInOwnLanguage = self.getTranslatedLanguageName.getLanguageName(
                     language: language,
                     translatedInLanguage: language.code
                 )
-                let languageNameInAppLanguage = self.translatedLanguageNameRepository.getLanguageName(
+                let languageNameInAppLanguage = self.getTranslatedLanguageName.getLanguageName(
                     language: language,
                     translatedInLanguage: currentAppLanguage
                 )
@@ -94,8 +95,7 @@ extension GetDownloadableLanguagesListRepository {
         
         let formatString = localizationServices.stringForLocaleElseSystemElseEnglish(
             localeIdentifier: localeId,
-            key: ToolStringKeys.ToolFilter.toolsAvailableText.rawValue,
-            fileType: .stringsdict
+            key: ToolStringKeys.ToolFilter.toolsAvailableText.rawValue
         )
         
         return String(format: formatString, locale: Locale(identifier: localeId), numberOfTools)

@@ -16,11 +16,14 @@ class ToolViewModel: MobileContentPagesViewModel {
     private let tractRemoteShareSubscriber: TractRemoteShareSubscriber
     private let resourceViewsService: ResourceViewsService
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
+    private let persistUserToolLanguageSettingsUseCase: PersistUserToolLanguageSettingsUseCase
     private let toolOpenedAnalytics: ToolOpenedAnalytics
     private let liveShareStream: String?
     
     private var cancellables: Set<AnyCancellable> = Set()
     private var remoteShareIsActive: Bool = false
+    private var shouldPersistToolSettings: Bool = false
+    private var toolSettingsObserver: ToolSettingsObserver?
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -30,7 +33,7 @@ class ToolViewModel: MobileContentPagesViewModel {
     
     @Published var hidesRemoteShareIsActive: Bool = true
         
-    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, resourceViewsService: ResourceViewsService, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, translatedLanguageNameRepository: TranslatedLanguageNameRepository, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, initialPage: MobileContentPagesPage?, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?) {
+    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, resourceViewsService: ResourceViewsService, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTranslatedLanguageName: GetTranslatedLanguageName, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, initialPage: MobileContentPagesPage?, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?, persistUserToolLanguageSettingsUseCase: PersistUserToolLanguageSettingsUseCase, shouldPersistToolSettings: Bool) {
         
         self.flowDelegate = flowDelegate
         self.tractRemoteSharePublisher = tractRemoteSharePublisher
@@ -39,6 +42,8 @@ class ToolViewModel: MobileContentPagesViewModel {
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.toolOpenedAnalytics = toolOpenedAnalytics
         self.liveShareStream = liveShareStream
+        self.persistUserToolLanguageSettingsUseCase = persistUserToolLanguageSettingsUseCase
+        self.shouldPersistToolSettings = shouldPersistToolSettings
                 
         let primaryManifest: Manifest = renderer.pageRenderers[0].manifest
         
@@ -52,7 +57,7 @@ class ToolViewModel: MobileContentPagesViewModel {
         
         languageFont = FontLibrary.systemUIFont(size: 14, weight: .regular)
         
-        super.init(renderer: renderer, initialPage: initialPage, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, translatedLanguageNameRepository: translatedLanguageNameRepository, initialPageRenderingType: .visiblePages, trainingTipsEnabled: trainingTipsEnabled, incrementUserCounterUseCase: incrementUserCounterUseCase, selectedLanguageIndex: selectedLanguageIndex)
+        super.init(renderer: renderer, initialPage: initialPage, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, getTranslatedLanguageName: getTranslatedLanguageName, initialPageRenderingType: .visiblePages, trainingTipsEnabled: trainingTipsEnabled, incrementUserCounterUseCase: incrementUserCounterUseCase, selectedLanguageIndex: selectedLanguageIndex)
         
         setupBinding()
     }
@@ -161,6 +166,72 @@ class ToolViewModel: MobileContentPagesViewModel {
             data: trackTappedLanguageData
         )
     }
+    
+    private func createToolSettingsObserver() -> ToolSettingsObserver {
+        
+        let languages = ToolSettingsLanguages(
+            primaryLanguageId: languages[0].id,
+            parallelLanguageId: languages[safe: 1]?.id,
+            selectedLanguageId: languages[selectedLanguageIndex].id
+        )
+        
+        let toolSettingsObserver = ToolSettingsObserver(
+            toolId: renderer.value.resource.id,
+            languages: languages,
+            pageNumber: currentRenderedPageNumber,
+            trainingTipsEnabled: trainingTipsEnabled,
+            tractRemoteSharePublisher: tractRemoteSharePublisher
+        )
+        
+        toolSettingsObserver.$languages
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (languages: ToolSettingsLanguages) in
+                
+                self?.setRendererPrimaryLanguage(
+                    primaryLanguageId: languages.primaryLanguageId,
+                    parallelLanguageId: languages.parallelLanguageId,
+                    selectedLanguageId: languages.selectedLanguageId
+                )
+            }
+            .store(in: &cancellables)
+        
+        toolSettingsObserver.$trainingTipsEnabled
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (trainingTipsEnabled: Bool) in
+                
+                self?.setTrainingTipsEnabled(enabled: trainingTipsEnabled)
+            }
+            .store(in: &cancellables)
+        
+        if shouldPersistToolSettings {
+            
+            toolSettingsObserver.$languages
+                .map { [weak self] (languages: ToolSettingsLanguages) in
+                    
+                    guard let self = self else {
+                        return Just(false)
+                            .eraseToAnyPublisher()
+                    }
+                    
+                    return self.persistUserToolLanguageSettingsUseCase
+                        .persistUserToolSettingsPublisher(
+                            with: renderer.value.resource.id,
+                            primaryLanguageId: languages.primaryLanguageId,
+                            parallelLanguageId: languages.parallelLanguageId,
+                            selectedLanguageId: languages.selectedLanguageId
+                        )
+                }
+                .switchToLatest()
+                .receive(on: DispatchQueue.main)
+                .sink(receiveValue: { _ in
+                    
+                })
+                .store(in: &cancellables)
+        }
+        
+        self.toolSettingsObserver = toolSettingsObserver
+        return toolSettingsObserver
+    }
 }
 
 // MARK: - Inputs
@@ -181,39 +252,7 @@ extension ToolViewModel {
     
     @objc func toolSettingsTapped() {
         
-        let languages = ToolSettingsLanguages(
-            primaryLanguageId: languages[0].id,
-            parallelLanguageId: languages[safe: 1]?.id,
-            selectedLanguageId: languages[selectedLanguageIndex].id
-        )
-        
-        let toolSettingsObserver = ToolSettingsObserver(
-            toolId: renderer.value.resource.id,
-            languages: languages,
-            pageNumber: currentRenderedPageNumber,
-            trainingTipsEnabled: trainingTipsEnabled,
-            tractRemoteSharePublisher: tractRemoteSharePublisher
-        )
-
-        toolSettingsObserver.$languages
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (languages: ToolSettingsLanguages) in
-                
-                self?.setRendererPrimaryLanguage(
-                    primaryLanguageId: languages.primaryLanguageId,
-                    parallelLanguageId: languages.parallelLanguageId,
-                    selectedLanguageId: languages.selectedLanguageId
-                )
-            }
-            .store(in: &cancellables)
-        
-        toolSettingsObserver.$trainingTipsEnabled
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (trainingTipsEnabled: Bool) in
-                
-                self?.setTrainingTipsEnabled(enabled: trainingTipsEnabled)
-            }
-            .store(in: &cancellables)
+        let toolSettingsObserver = createToolSettingsObserver()
         
         trackActionAnalyticsUseCase
             .trackAction(
@@ -242,6 +281,18 @@ extension ToolViewModel {
             page: page,
             pagePositions: pagePositions
         )
+        
+        if let toolSettingsObserver = toolSettingsObserver {
+            
+            let languages = toolSettingsObserver.languages
+            self.toolSettingsObserver?.languages = ToolSettingsLanguages(
+                primaryLanguageId: languages.primaryLanguageId,
+                parallelLanguageId: languages.parallelLanguageId,
+                selectedLanguageId: tappedLanguage.id
+            )
+        } else {
+            _ = createToolSettingsObserver()
+        }
         
         trackLanguageTapped(tappedLanguage: tappedLanguage)
     }

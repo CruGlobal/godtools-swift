@@ -12,12 +12,12 @@ import Combine
 class GetAppLanguagesListRepository: GetAppLanguagesListRepositoryInterface {
     
     private let appLanguagesRepository: AppLanguagesRepository
-    private let translatedLanguageNameRepository: TranslatedLanguageNameRepository
+    private let getTranslatedLanguageName: GetTranslatedLanguageName
     
-    init(appLanguagesRepository: AppLanguagesRepository, translatedLanguageNameRepository: TranslatedLanguageNameRepository) {
+    init(appLanguagesRepository: AppLanguagesRepository, getTranslatedLanguageName: GetTranslatedLanguageName) {
         
         self.appLanguagesRepository = appLanguagesRepository
-        self.translatedLanguageNameRepository = translatedLanguageNameRepository
+        self.getTranslatedLanguageName = getTranslatedLanguageName
     }
     
     func getLanguagesPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[AppLanguageListItemDomainModel], Never> {
@@ -27,8 +27,8 @@ class GetAppLanguagesListRepository: GetAppLanguagesListRepositoryInterface {
                 
                 let appLanguagesList: [AppLanguageListItemDomainModel] = languages.map { (languageDataModel: AppLanguageDataModel) in
                                                             
-                    let languageNameTranslatedInOwnLanguage: String = self.translatedLanguageNameRepository.getLanguageName(language: languageDataModel, translatedInLanguage: languageDataModel.languageId)
-                    let languageNameTranslatedInCurrentAppLanguage: String = self.translatedLanguageNameRepository.getLanguageName(language: languageDataModel, translatedInLanguage: appLanguage)
+                    let languageNameTranslatedInOwnLanguage: String = self.getTranslatedLanguageName.getLanguageName(language: languageDataModel, translatedInLanguage: languageDataModel.languageId)
+                    let languageNameTranslatedInCurrentAppLanguage: String = self.getTranslatedLanguageName.getLanguageName(language: languageDataModel, translatedInLanguage: appLanguage)
                     
                     return AppLanguageListItemDomainModel(
                         language: languageDataModel.languageId,
