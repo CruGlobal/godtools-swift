@@ -44,7 +44,7 @@ class ToolsFilterFeatureDataLayerDependencies {
         return GetToolFilterLanguagesRepository(
             resourcesRepository: coreDataLayer.getResourcesRepository(),
             languagesRepository: coreDataLayer.getLanguagesRepository(),
-            translatedLanguageNameRepository: coreDataLayer.getTranslatedLanguageNameRepository(),
+            getTranslatedLanguageName: coreDataLayer.getTranslatedLanguageName(),
             localizationServices: coreDataLayer.getLocalizationServices()
         )
     }

@@ -1,0 +1,46 @@
+name: Distribute To Testflight
+
+on:
+  push:
+    branches: [ master ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  distribute_to_testflight:
+    runs-on: macos-14
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    env:
+      FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT: 60
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Pod Install
+        uses: ./.github/actions/pod-install
+
+      - name: Import App Store Connect API Key
+        env:
+          APP_STORE_CONNECT_API_JSON_PAYLOAD: ${{ secrets.APP_STORE_CONNECT_API_JSON_PAYLOAD }}
+        run: echo $APP_STORE_CONNECT_API_JSON_PAYLOAD > fastlane/AppleAppStoreApi.json
+
+      - name: Increment Xcode Project Build Number
+        run: bundle exec fastlane cru_shared_lane_increment_xcode_project_build_number
+
+      - name: Build And Deploy For TestFlight Release
+        env:
+          MATCH_GIT_BASIC_AUTHORIZATION_PAT: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION_PAT }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+        run: bundle exec fastlane cru_shared_lane_build_and_deploy_for_testflight_release is_running_in_ci:true
+
+      - name: Archive Fastlane Gym Logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fastlane-gym-logs
+          path: "/Users/runner/Library/Logs/gym/godtools-*/**"

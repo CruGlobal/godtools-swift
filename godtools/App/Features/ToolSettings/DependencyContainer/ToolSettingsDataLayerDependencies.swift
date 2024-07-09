@@ -19,7 +19,21 @@ class ToolSettingsDataLayerDependencies {
     
     // MARK: - Data Layer Classes
     
+    func getUserToolSettingsRepository() -> UserToolSettingsRepository {
+        return UserToolSettingsRepository(cache: getRealmUserToolSettingsCache())
+    }
+    
+    func getRealmUserToolSettingsCache() -> RealmUserToolSettingsCache {
+        return RealmUserToolSettingsCache(realmDatabase: coreDataLayer.getSharedRealmDatabase())
+    }
+    
     // MARK: - Domain Interface
+    
+    func getPersistUserToolLanguageSettingsRepositoryInterface() -> PersistUserToolLanguageSettingsRepositoryInterface {
+        return PersistUserToolLanguageSettingsRepository(
+            userToolSettingsRepository: getUserToolSettingsRepository()
+        )
+    }
     
     func getShareToolInterfaceStringsRepositoryInterface() -> GetShareToolInterfaceStringsRepositoryInterface {
         return GetShareToolInterfaceStringsRepository(
@@ -38,14 +52,14 @@ class ToolSettingsDataLayerDependencies {
     func getToolSettingsPrimaryLanguageRepositoryInterface() -> GetToolSettingsPrimaryLanguageRepositoryInterface {
         return GetToolSettingsPrimaryLanguageRepository(
             languagesRepository: coreDataLayer.getLanguagesRepository(),
-            translatedLanguageNameRepository: coreDataLayer.getTranslatedLanguageNameRepository()
+            getTranslatedLanguageName: coreDataLayer.getTranslatedLanguageName()
         )
     }
     
     func getToolSettingsParallelLanguageRepositoryInterface() -> GetToolSettingsParallelLanguageRepositoryInterface {
         return GetToolSettingsParallelLanguageRepository(
             languagesRepository: coreDataLayer.getLanguagesRepository(),
-            translatedLanguageNameRepository: coreDataLayer.getTranslatedLanguageNameRepository()
+            getTranslatedLanguageName: coreDataLayer.getTranslatedLanguageName()
         )
     }
     
@@ -65,7 +79,7 @@ class ToolSettingsDataLayerDependencies {
         return GetToolSettingsToolLanguagesListRepository(
             resourcesRepository: coreDataLayer.getResourcesRepository(),
             languagesRepository: coreDataLayer.getLanguagesRepository(),
-            translatedLanguageNameRepository: coreDataLayer.getTranslatedLanguageNameRepository()
+            getTranslatedLanguageName: coreDataLayer.getTranslatedLanguageName()
         )
     }
 }

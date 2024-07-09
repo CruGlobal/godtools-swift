@@ -46,7 +46,7 @@ class GetSpotlightToolsRepository: GetSpotlightToolsRepositoryInterface {
         )
         .flatMap({ (resourcesChanged: Void, interfaceStrings: ToolListItemInterfaceStringsDomainModel) -> AnyPublisher<[SpotlightToolListItemDomainModel], Never> in
         
-            let spotlightToolResources: [ResourceModel] = self.resourcesRepository.getSpotlightTools()
+            let spotlightToolResources: [ResourceModel] = self.resourcesRepository.getSpotlightTools(sortByDefaultOrder: true)
 
             let spotlightTools: [SpotlightToolListItemDomainModel] = spotlightToolResources
                 .map({

@@ -63,16 +63,16 @@ class ApplicationLayout: ObservableObject {
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { (interfaceLayoutDirection: AppInterfaceLayoutDirectionDomainModel) in
+            .sink { [weak self] (interfaceLayoutDirection: AppInterfaceLayoutDirectionDomainModel) in
                 
                 let newLayoutDirection: ApplicationLayoutDirection = interfaceLayoutDirection == .leftToRight ? .leftToRight : .rightToLeft
                 
-                if newLayoutDirection != self.currentDirection {
+                if newLayoutDirection != self?.currentDirection {
                     
-                    self.currentDirection = newLayoutDirection
+                    self?.currentDirection = newLayoutDirection
                     
-                    self.layoutDirection = newLayoutDirection.layoutDirection
-                    self.semanticContentAttributeSubject.send(newLayoutDirection.semanticContentAttribute)
+                    self?.layoutDirection = newLayoutDirection.layoutDirection
+                    self?.semanticContentAttributeSubject.send(newLayoutDirection.semanticContentAttribute)
                 }
             }
             .store(in: &cancellables)

@@ -8,6 +8,7 @@
 
 import Foundation
 import Combine
+import LocalizationServices
 
 class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
     
@@ -15,16 +16,16 @@ class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
     private let languagesRepository: LanguagesRepository
     private let translationsRepository: TranslationsRepository
     private let localizationServices: LocalizationServices
-    private let translatedLanguageNameRepository: TranslatedLanguageNameRepository
+    private let getTranslatedLanguageName: GetTranslatedLanguageName
     private let favoritedResourcesRepository: FavoritedResourcesRepository
     
-    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, translationsRepository: TranslationsRepository, localizationServices: LocalizationServices, translatedLanguageNameRepository: TranslatedLanguageNameRepository, favoritedResourcesRepository: FavoritedResourcesRepository) {
+    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, translationsRepository: TranslationsRepository, localizationServices: LocalizationServices, getTranslatedLanguageName: GetTranslatedLanguageName, favoritedResourcesRepository: FavoritedResourcesRepository) {
         
         self.resourcesRepository = resourcesRepository
         self.languagesRepository = languagesRepository
         self.translationsRepository = translationsRepository
         self.localizationServices = localizationServices
-        self.translatedLanguageNameRepository = translatedLanguageNameRepository
+        self.getTranslatedLanguageName = getTranslatedLanguageName
         self.favoritedResourcesRepository = favoritedResourcesRepository
     }
     
@@ -47,8 +48,17 @@ class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
             return Just(noToolDomainModel)
                 .eraseToAnyPublisher()
         }
-        
-        guard let translation = translationsRepository.getLatestTranslation(resourceId: toolId, languageCode: translateInLanguage) else {
+    
+        let translation: TranslationModel
+        if let appLanguagetranslation = translationsRepository.getLatestTranslation(resourceId: toolId, languageCode: translateInLanguage) {
+            
+            translation = appLanguagetranslation
+        }
+        else if let defaultTranslation = translationsRepository.getLatestTranslation(resourceId: toolId, languageCode: toolDataModel.attrDefaultLocale) {
+            
+            translation = defaultTranslation
+        }
+        else {
             return Just(noToolDomainModel)
                 .eraseToAnyPublisher()
         }
@@ -62,7 +72,7 @@ class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
         let languagesDataModels: [LanguageModel] = languagesRepository.getLanguages(ids: toolDataModel.languageIds)
         
         let languageNamesTranslatedInToolLanguage: [String] = languagesDataModels.map { (languageDataModel: LanguageModel) in
-            self.translatedLanguageNameRepository.getLanguageName(language: languageDataModel.code, translatedInLanguage: translateInLanguage)
+            self.getTranslatedLanguageName.getLanguageName(language: languageDataModel, translatedInLanguage: translateInLanguage)
         }
         
         let languagesAvailable: String = languageNamesTranslatedInToolLanguage.map({$0}).sorted(by: { $0 < $1 }).joined(separator: ", ")
@@ -95,12 +105,12 @@ class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
             resourceVariants = []
         }
         
-        let toolPrimaryLanguageName: String = translatedLanguageNameRepository.getLanguageName(language: toolPrimaryLanguage, translatedInLanguage: translateInLanguage)
+        let toolPrimaryLanguageName: String = getTranslatedLanguageName.getLanguageName(language: toolPrimaryLanguage, translatedInLanguage: translateInLanguage)
         
         let toolParallelLanguageName: String?
         
         if let toolParallelLanguage = toolParallelLanguage {
-            toolParallelLanguageName = translatedLanguageNameRepository.getLanguageName(language: toolParallelLanguage, translatedInLanguage: translateInLanguage)
+            toolParallelLanguageName = getTranslatedLanguageName.getLanguageName(language: toolParallelLanguage, translatedInLanguage: translateInLanguage)
         }
         else {
             toolParallelLanguageName = nil
@@ -126,10 +136,10 @@ class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
                 name = appLanguageTranslation.translatedName
                 description = appLanguageTranslation.translatedTagline
             }
-            else if let englishTranslation = translationsRepository.getLatestTranslation(resourceId: resourceVariant.id, languageCode: LanguageCodeDomainModel.english.rawValue) {
+            else if let defaultTranslation = translationsRepository.getLatestTranslation(resourceId: resourceVariant.id, languageCode: resourceVariant.attrDefaultLocale) {
                 
-                name = englishTranslation.translatedName
-                description = englishTranslation.translatedTagline
+                name = defaultTranslation.translatedName
+                description = defaultTranslation.translatedTagline
             }
             else {
                 

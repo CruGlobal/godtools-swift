@@ -10,6 +10,7 @@ import Foundation
 import RealmSwift
 import GodToolsToolParser
 import Combine
+import LocalizationServices
 
 class ArticleCategoriesViewModel {
         

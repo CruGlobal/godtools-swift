@@ -8,6 +8,7 @@
 
 import Foundation
 import Combine
+import LocalizationServices
 
 class GetAllYourFavoritedToolsInterfaceStringsRepository: GetAllYourFavoritedToolsInterfaceStringsRepositoryInterface {
     
