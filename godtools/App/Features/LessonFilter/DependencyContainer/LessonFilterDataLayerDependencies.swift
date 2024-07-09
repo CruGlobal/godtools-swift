@@ -17,7 +17,24 @@ class LessonFilterDataLayerDependencies {
     }
     
     // MARK: - Data Layer Classes
+
+    func getLessonFilterLanguagesRepository() -> GetLessonFilterLanguagesRepository {
+        return GetLessonFilterLanguagesRepository(
+            resourcesRepository: coreDataLayer.getResourcesRepository(),
+            languagesRepository: coreDataLayer.getLanguagesRepository(),
+            translatedLanguageNameRepository: coreDataLayer.getTranslatedLanguageNameRepository(),
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
     
+    func getUserLessonFiltersRepository() -> UserLessonFiltersRepository {
+        return UserLessonFiltersRepository(
+            cache: RealmUserLessonFiltersCache(
+                realmDatabase: coreDataLayer.getSharedRealmDatabase()
+            )
+        )
+    }
+        
     // MARK: - Domain Interface
     
     func getLessonFilterLanguagesInterfaceStringsRepositoryInterface() -> GetLessonFilterLanguagesInterfaceStringsRepositoryInterface {
@@ -29,15 +46,21 @@ class LessonFilterDataLayerDependencies {
     
     func getLessonFilterLanguagesRepositoryInterface() -> GetLessonFilterLanguagesRepositoryInterface {
         
-        return GetLessonFilterLanguagesRepository(
-            resourcesRepository: coreDataLayer.getResourcesRepository(),
-            languagesRepository: coreDataLayer.getLanguagesRepository(),
-            translatedLanguageNameRepository: coreDataLayer.getTranslatedLanguageNameRepository(),
-            localizationServices: coreDataLayer.getLocalizationServices()
-        )
+        return getLessonFilterLanguagesRepository()
     }
     
     func getSearchLessonFilterLanguagesRepositoryInterface() -> SearchLessonFilterLanguagesRepositoryInterface {
         return SearchLessonFilterLanguagesRepository(stringSearcher: StringSearcher())
+    }
+    
+    func getStoreUserLessonFiltersRepositoryInterface() -> StoreUserLessonFiltersRepositoryInterface {
+        return StoreUserLessonFiltersRepository(userLessonFiltersRepository: getUserLessonFiltersRepository())
+    }
+    
+    func getUserLessonFiltersRepositoryInterface() -> GetUserLessonFiltersRepositoryInterface {
+        return GetUserLessonFiltersRepository(
+            userLessonFiltersRepository: getUserLessonFiltersRepository(),
+            getLessonFilterLanguagesRepository: getLessonFilterLanguagesRepository()
+        )
     }
 }

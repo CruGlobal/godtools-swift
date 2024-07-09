@@ -12,11 +12,14 @@ import Combine
 class LessonFilterLanguageSelectionViewModel: ObservableObject {
     
     private let viewLessonFilterLanguagesUseCase: ViewLessonFilterLanguagesUseCase
+    private let getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase
+    private let storeUserLessonFiltersUseCase: StoreUserLessonFiltersUseCase
     private let viewSearchBarUseCase: ViewSearchBarUseCase
     private let searchLessonFilterLanguagesUseCase: SearchLessonFilterLanguagesUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
+    private static var staticCancellables: Set<AnyCancellable> = Set()
     private weak var flowDelegate: FlowDelegate?
     
     private lazy var searchBarViewModel = SearchBarViewModel(getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, viewSearchBarUseCase: viewSearchBarUseCase)
@@ -29,8 +32,10 @@ class LessonFilterLanguageSelectionViewModel: ObservableObject {
     @Published var selectedLanguage: LessonLanguageFilterDomainModel = LessonLanguageFilterDomainModel(languageId: "", languageName: "English", translatedName: "", lessonsAvailableText: "")
     @Published var navTitle: String = ""
     
-    init(viewLessonFilterLanguagesUseCase: ViewLessonFilterLanguagesUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, searchLessonFilterLanguagesUseCase: SearchLessonFilterLanguagesUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, flowDelegate: FlowDelegate) {
+    init(viewLessonFilterLanguagesUseCase: ViewLessonFilterLanguagesUseCase, getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase, storeUserLessonFiltersUseCase: StoreUserLessonFiltersUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, searchLessonFilterLanguagesUseCase: SearchLessonFilterLanguagesUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, flowDelegate: FlowDelegate) {
         self.viewLessonFilterLanguagesUseCase = viewLessonFilterLanguagesUseCase
+        self.getUserLessonFiltersUseCase = getUserLessonFiltersUseCase
+        self.storeUserLessonFiltersUseCase = storeUserLessonFiltersUseCase
         self.viewSearchBarUseCase = viewSearchBarUseCase
         self.searchLessonFilterLanguagesUseCase = searchLessonFilterLanguagesUseCase
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
@@ -53,6 +58,23 @@ class LessonFilterLanguageSelectionViewModel: ObservableObject {
                 
                 self?.navTitle = domainModel.interfaceStrings.navTitle
                 self?.allLanguages = domainModel.languageFilters
+            }
+            .store(in: &cancellables)
+        
+        $appLanguage
+            .dropFirst()
+            .map { appLanguage in
+            
+                getUserLessonFiltersUseCase.getUserToolFiltersPublisher(translatedInAppLanguage: appLanguage)
+            }
+            .switchToLatest()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] userFilters in
+                
+                if let languageFilter = userFilters.languageFilter {
+                    
+                    self?.selectedLanguage = languageFilter
+                }
             }
             .store(in: &cancellables)
         
@@ -81,6 +103,14 @@ extension LessonFilterLanguageSelectionViewModel {
     func rowTapped(with language: LessonLanguageFilterDomainModel) {
         
         selectedLanguage = language
+        
+        storeUserLessonFiltersUseCase
+            .storeLanguageFilterPublisher(with: language.id)
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+                
+            }
+            .store(in: &LessonFilterLanguageSelectionViewModel.staticCancellables)
         
         flowDelegate?.navigate(step: .languageTappedFromLessonLanguageFilter)
     }

@@ -21,6 +21,17 @@ class LessonFilterDomainLayerDependencies {
         return SearchLessonFilterLanguagesUseCase(searchLessonFilterLanguagesRepository: dataLayer.getSearchLessonFilterLanguagesRepositoryInterface())
     }
     
+    func getStoreUserLessonFiltersUseCase() -> StoreUserLessonFiltersUseCase {
+        
+        return StoreUserLessonFiltersUseCase(storeUserLessonFiltersRepository: dataLayer.getStoreUserLessonFiltersRepositoryInterface())
+    }
+    
+    func getUserLessonFiltersUseCase() -> GetUserLessonFiltersUseCase {
+        return GetUserLessonFiltersUseCase(
+            getUserLessonFiltersRepositoryInterface: dataLayer.getUserLessonFiltersRepositoryInterface()
+        )
+    }
+    
     func getViewLessonFilterLanguagesUseCase() -> ViewLessonFilterLanguagesUseCase {
         
         return ViewLessonFilterLanguagesUseCase(
