@@ -1,10 +1,32 @@
 # By default, SwiftLint uses a set of sensible default rules you can adjust:
 disabled_rules: # rule identifiers turned on by default to exclude from running
-  - colon
-  - comma
-  - control_statement
 opt_in_rules: # some rules are turned off by default, so you need to opt-in
-  - empty_count # find all the available rules by running: `swiftlint rules`
+  - closure_end_indentation
+  - closure_spacing
+  - collection_alignment
+  - comma_inheritance
+  - conditional_returns_on_newline
+  - convenience_type
+  - discouraged_none_name
+  - discouraged_object_literal
+  - empty_count
+  - empty_string
+  - enum_case_associated_values_count
+  - explicit_enum_raw_value
+  - explicit_type_interface
+  - fallthrough
+  - fatal_error_message
+  - file_name_no_space
+  # - file_types_order #Curious about this one. ~Levi
+  - first_where
+  - force_unwrapping
+  - function_default_parameter_at_end
+  - ibinspectable_in_extension
+  - identical_operands
+  - implicit_return
+  - implicitly_unwrapped_optional
+  - indentation_width
+  - last_where
 
 # Alternatively, specify all rules explicitly by uncommenting this option:
 # only_rules: # delete `disabled_rules` & `opt_in_rules` if using this
