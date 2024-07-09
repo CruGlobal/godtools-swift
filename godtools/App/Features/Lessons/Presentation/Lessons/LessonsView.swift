@@ -55,7 +55,7 @@ struct LessonsView: View {
                         
                         FixedHorizontalSpacer(width: 30)
                         
-                        ToolFilterButtonView(title: "Language") {
+                        ToolFilterButtonView(title: viewModel.languageFilterButtonTitle) {
                             viewModel.lessonLanguageFilterTapped()
                         }
                     }
@@ -102,7 +102,8 @@ struct LessonsView_Preview: PreviewProvider {
         let viewModel = LessonsViewModel(
             flowDelegate: MockFlowDelegate(),
             resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
-            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(), 
+            getUserLessonFiltersUseCase: appDiContainer.feature.lessonFilter.domainLayer.getUserLessonFiltersUseCase(),
             viewLessonsUseCase: appDiContainer.feature.lessons.domainLayer.getViewLessonsUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),

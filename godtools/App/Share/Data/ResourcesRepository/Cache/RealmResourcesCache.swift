@@ -264,8 +264,12 @@ extension RealmResourcesCache {
 
 extension RealmResourcesCache {
     
-    func getAllLessonsResults(additionalAttributeFilters: [NSPredicate]? = nil, sorted: Bool) -> Results<RealmResource> {
+    func getAllLessonsResults(filterByLanguageId: String? = nil, additionalAttributeFilters: [NSPredicate]? = nil, sorted: Bool) -> Results<RealmResource> {
         var filterByAttributes: [NSPredicate] = Array()
+        
+        if let filterByLanguageId = filterByLanguageId {
+            filterByAttributes.append(ResourcesFilter.getLanguageModelIdPredicate(languageModelId: filterByLanguageId))
+        }
         
         if let additionalAttributeFilters = additionalAttributeFilters, !additionalAttributeFilters.isEmpty {
             filterByAttributes.append(contentsOf: additionalAttributeFilters)
@@ -293,28 +297,22 @@ extension RealmResourcesCache {
         return allLessons
     }
     
-    func getAllLessons(additionalAttributeFilters: [NSPredicate]? = nil, sorted: Bool) -> [ResourceModel] {
+    func getAllLessons(filterByLanguageId: String? = nil, additionalAttributeFilters: [NSPredicate]? = nil, sorted: Bool) -> [ResourceModel] {
         
-        return getAllLessonsResults(additionalAttributeFilters: additionalAttributeFilters, sorted: sorted)
+        return getAllLessonsResults(filterByLanguageId: filterByLanguageId, additionalAttributeFilters: additionalAttributeFilters, sorted: sorted)
             .map {
                 ResourceModel(model: $0)
             }
     }
     
-    func getAllLessonsCount(filterByLanguageId: String? = nil) -> Int {
-        
-        var predicates: [NSPredicate] = [NSPredicate]()
-        
-        if let filterByLanguageId = filterByLanguageId {
-            predicates.append(ResourcesFilter.getLanguageModelIdPredicate(languageModelId: filterByLanguageId))
-        }
-        
-        return getAllLessonsResults(additionalAttributeFilters: predicates, sorted: false).count
+    func getAllLessonsCount(filterByLanguageId: String?) -> Int {
+                
+        return getAllLessonsResults(filterByLanguageId: filterByLanguageId, sorted: false).count
     }
     
-    func getAllLessonLanguageIds(additionalAttributeFilters: [NSPredicate]? = nil) -> [String] {
+    func getAllLessonLanguageIds() -> [String] {
         
-        let allLessonIds = getAllLessonsResults(additionalAttributeFilters: additionalAttributeFilters, sorted: false)
+        let allLessonIds = getAllLessonsResults(sorted: false)
             .flatMap { $0.getLanguages() }
             .map { $0.id }
         
