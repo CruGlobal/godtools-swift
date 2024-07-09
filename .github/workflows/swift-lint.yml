@@ -12,7 +12,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  run_tests:
+  swift_lint:
     runs-on: macos-14
     env:
       FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT: 60
@@ -28,4 +28,4 @@ jobs:
         uses: ./.github/actions/pod-install
 
       - name: Swift Lint
-        run: bundle exec fastlane cru_shared_lane_swift_lint config_file:./.github/swiftlint.yml mode:lint raise_if_swiftlint_error:true
+        run: bundle exec fastlane cru_shared_lane_swift_lint config_file:./.github/swiftlint.yml mode:lint path:./godtools/App raise_if_swiftlint_error:true
