@@ -13,13 +13,13 @@ class GetToolSettingsToolLanguagesListRepository: GetToolSettingsToolLanguagesLi
     
     private let resourcesRepository: ResourcesRepository
     private let languagesRepository: LanguagesRepository
-    private let translatedLanguageNameRepository: TranslatedLanguageNameRepository
+    private let getTranslatedLanguageName: GetTranslatedLanguageName
     
-    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, translatedLanguageNameRepository: TranslatedLanguageNameRepository) {
+    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, getTranslatedLanguageName: GetTranslatedLanguageName) {
         
         self.resourcesRepository = resourcesRepository
         self.languagesRepository = languagesRepository
-        self.translatedLanguageNameRepository = translatedLanguageNameRepository
+        self.getTranslatedLanguageName = getTranslatedLanguageName
     }
     
     func getToolLanguagesPublisher(listType: ToolSettingsToolLanguagesListTypeDomainModel, primaryLanguageId: String, parallelLanguageId: String?, toolId: String, translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<[ToolSettingsToolLanguageDomainModel], Never> {
@@ -51,7 +51,7 @@ class GetToolSettingsToolLanguagesListRepository: GetToolSettingsToolLanguagesLi
             .getLanguages(ids: languageIds)
             .map { (language: LanguageModel) in
                                 
-                let languageName: String = translatedLanguageNameRepository.getLanguageName(
+                let languageName: String = getTranslatedLanguageName.getLanguageName(
                     language: language,
                     translatedInLanguage: translateInLanguage
                 )
