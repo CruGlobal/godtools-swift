@@ -49,44 +49,26 @@ jobs:
             echo echo "value=false" >> "$GITHUB_OUTPUT"
           fi
 
-    fastlane_increment_version:
-      name: Fastlane Increment Version
-      runs-on: macos-14
-      needs: [ version_increment_is_bump ]
-      if: ${{ needs.version_increment_is_bump.outputs.isBump == 'true' || inputs.versionIncrementType == 'manual' }}
-      steps:
-        - name: Increment Version
-          run: |
-            if [ ${{ needs.version_increment_is_bump.outputs.isBump }} == 'true' ]; then
-              bundle exec fastlane cru_shared_lane_increment_version_number bump_type:${{ inputs.versionIncrementType }}
-            elif [ ${{ inputs.versionIncrementType }} == 'manual' ]; then
-              bundle exec fastlane cru_shared_lane_increment_version_number version_number:${{ inputs.manualVersionNumber }}
-            else
-              echo "No Version"
-            fi
-  
-  # fastlane_bump_version:
-  #   name: Fastlane Bump Version
-  #   runs-on: macos-14
-  #   needs: [ version_increment_is_bump ]
-  #   if: ${{ needs.version_increment_is_bump.outputs.isBump == 'true' }}
-  #   steps:
-  #     - name: Run Fastlane Bump Version
-  #     run: bundle exec fastlane cru_shared_lane_increment_version_number bump_type:${{ inputs.versionIncrementType }}
-
-  # fastlane_set_version:
-  #   name: Fastlane Set Version
-  #   runs-on: macos-14
-  #   needs: [ version_increment_is_bump ]
-  #   if: ${{ needs.version_increment_is_bump.outputs.isBump == 'false' }}
-  #   steps:
-  #     - name: Run Fastlane Set Version
-  #     run: bundle exec fastlane cru_shared_lane_increment_version_number version_number:${{ inputs.manualVersionNumber }}
+  increment_version:
+    name: Fastlane Increment Version
+    runs-on: macos-14
+    needs: [ version_increment_is_bump ]
+    if: ${{ needs.version_increment_is_bump.outputs.isBump == 'true' || inputs.versionIncrementType == 'manual' }}
+    steps:
+    - name: Increment Version
+      run: |
+        if [ ${{ needs.version_increment_is_bump.outputs.isBump }} == 'true' ]; then
+          bundle exec fastlane cru_shared_lane_increment_version_number bump_type:${{ inputs.versionIncrementType }}
+        elif [ ${{ inputs.versionIncrementType }} == 'manual' ]; then
+          bundle exec fastlane cru_shared_lane_increment_version_number version_number:${{ inputs.manualVersionNumber }}
+        else
+          echo "No Version"
+        fi
 
   current_version:
     name: Store Current Version
     runs-on: ubuntu-latest
-    needs: [ fastlane_increment_version ]
+    needs: [ increment_version ]
     if: github.event_name == 'workflow_dispatch'
     outputs:
       version: ${{ steps.version.outputs.version }}
@@ -233,3 +215,24 @@ jobs:
   #         branch: "versions/${{ needs.new_version.outputs.version }}"
   #         title: "Version ${{needs.new_version.outputs.version}}"
   #         commit-message: "Increase version to ${{needs.new_version.outputs.version}}"
+
+
+
+
+  # fastlane_bump_version:
+  #   name: Fastlane Bump Version
+  #   runs-on: macos-14
+  #   needs: [ version_increment_is_bump ]
+  #   if: ${{ needs.version_increment_is_bump.outputs.isBump == 'true' }}
+  #   steps:
+  #     - name: Run Fastlane Bump Version
+  #     run: bundle exec fastlane cru_shared_lane_increment_version_number bump_type:${{ inputs.versionIncrementType }}
+
+  # fastlane_set_version:
+  #   name: Fastlane Set Version
+  #   runs-on: macos-14
+  #   needs: [ version_increment_is_bump ]
+  #   if: ${{ needs.version_increment_is_bump.outputs.isBump == 'false' }}
+  #   steps:
+  #     - name: Run Fastlane Set Version
+  #     run: bundle exec fastlane cru_shared_lane_increment_version_number version_number:${{ inputs.manualVersionNumber }}
