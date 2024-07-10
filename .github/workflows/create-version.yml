@@ -57,6 +57,8 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
+    - name: Pod Install
+      uses: ./.github/actions/pod-install
     - name: Increment Version
       run: |
         if [ ${{ needs.version_increment_is_bump.outputs.isBump }} == 'true' ]; then
