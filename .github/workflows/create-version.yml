@@ -55,6 +55,8 @@ jobs:
     needs: [ version_increment_is_bump ]
     if: ${{ needs.version_increment_is_bump.outputs.isBump == 'true' || inputs.versionIncrementType == 'manual' }}
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
     - name: Increment Version
       run: |
         if [ ${{ needs.version_increment_is_bump.outputs.isBump }} == 'true' ]; then
