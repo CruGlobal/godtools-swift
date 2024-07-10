@@ -60,7 +60,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Set Version Output
         id: version
-        run: grep s\\MARKETING_VERSION\\s godtools.xcodeproj/project.pbxproj | sed 's/MARKETING_VERSION//' | sed "s/'//g" | sed 's/ //g' >> $GITHUB_OUTPUT
+        run: grep -m 1 s\\MARKETING_VERSION\\s godtools.xcodeproj/project.pbxproj | sed 's/MARKETING_VERSION//' | sed "s/'//g" | sed 's/ //g' >> $GITHUB_OUTPUT
 
   print_current_version:
     name: Print Current Version
