@@ -82,7 +82,7 @@ class LessonsViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] userFilters in
                 
-                self?.languageFilterButtonTitle = userFilters.languageFilter?.translatedName ?? userFilters.languageFilter?.languageName ?? ""
+                self?.languageFilterButtonTitle = userFilters.languageFilter?.translatedName ?? ""
                 self?.lessonFilterLanguageSelection = userFilters.languageFilter
             }
             .store(in: &cancellables)

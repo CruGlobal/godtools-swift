@@ -11,6 +11,8 @@ import Combine
 
 class LessonFilterLanguageSelectionViewModel: ObservableObject {
     
+    private static var staticCancellables: Set<AnyCancellable> = Set()
+    
     private let viewLessonFilterLanguagesUseCase: ViewLessonFilterLanguagesUseCase
     private let getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase
     private let storeUserLessonFiltersUseCase: StoreUserLessonFiltersUseCase
@@ -19,9 +21,7 @@ class LessonFilterLanguageSelectionViewModel: ObservableObject {
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
-    private static var staticCancellables: Set<AnyCancellable> = Set()
     private weak var flowDelegate: FlowDelegate?
-    
     private lazy var searchBarViewModel = SearchBarViewModel(getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, viewSearchBarUseCase: viewSearchBarUseCase)
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
@@ -119,5 +119,4 @@ extension LessonFilterLanguageSelectionViewModel {
         
         return searchBarViewModel
     }
-    
 }
