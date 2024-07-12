@@ -27,6 +27,16 @@ opt_in_rules: # some rules are turned off by default, so you need to opt-in
   - implicitly_unwrapped_optional
   - indentation_width
   - last_where
+  - let_var_whitespace
+  - literal_expression_end_indentation
+  - multiline_arguments
+  - multiline_arguments_brackets
+  - multiline_function_chains
+  - multiline_literal_brackets
+  - multiline_parameters
+  - multiline_parameters_brackets
+  - no_extension_access_modifier
+  - no_magic_numbers
 
 # Alternatively, specify all rules explicitly by uncommenting this option:
 # only_rules: # delete `disabled_rules` & `opt_in_rules` if using this
