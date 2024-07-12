@@ -16,10 +16,50 @@ class GetLessonFilterLanguagesRepositoryTests: QuickSpec {
     
     override class func spec() {
         
+        let testsDiContainer = TestsDiContainer()
+        
+        let localizableStrings: [MockLocalizationServices.LocaleId: [MockLocalizationServices.StringKey: String]] = [
+            LanguageCodeDomainModel.spanish.value: [
+                LanguageCodeDomainModel.english.rawValue: "Inglés",
+                LanguageCodeDomainModel.french.rawValue: "Francés",
+                LanguageCodeDomainModel.spanish.rawValue: "Español",
+                LanguageCodeDomainModel.russian.rawValue: "Ruso"
+            ]
+        ]
+        
+        let languageNames: [MockLocaleLanguageName.LanguageCode: [MockLocaleLanguageName.TranslateInLocaleId: MockLocaleLanguageName.LanguageName]] = [
+            LanguageCodeDomainModel.english.rawValue: [
+                LanguageCodeDomainModel.english.rawValue: "English",
+                LanguageCodeDomainModel.portuguese.rawValue: "Inglês",
+                LanguageCodeDomainModel.spanish.rawValue: "Inglés",
+                LanguageCodeDomainModel.russian.rawValue: "Английский"
+            ],
+            LanguageCodeDomainModel.french.rawValue: [
+                LanguageCodeDomainModel.czech.rawValue: "francouzština",
+                LanguageCodeDomainModel.english.rawValue: "French",
+                LanguageCodeDomainModel.portuguese.rawValue: "Francês",
+                LanguageCodeDomainModel.spanish.rawValue: "Francés",
+                LanguageCodeDomainModel.russian.rawValue: "Французский"
+            ],
+            LanguageCodeDomainModel.spanish.rawValue: [
+                LanguageCodeDomainModel.english.rawValue: "Spanish",
+                LanguageCodeDomainModel.portuguese.rawValue: "Espanhol",
+                LanguageCodeDomainModel.spanish.rawValue: "Español",
+                LanguageCodeDomainModel.russian.rawValue: "испанский"
+            ]
+        ]
+                
+        let getTranslatedLanguageName = GetTranslatedLanguageName(
+            localizationLanguageNameRepository: MockLocalizationLanguageNameRepository(localizationServices: MockLocalizationServices(localizableStrings: localizableStrings)),
+            localeLanguageName: MockLocaleLanguageName(languageNames: languageNames),
+            localeRegionName: MockLocaleLanguageRegionName(regionNames: [:]),
+            localeScriptName: MockLocaleLanguageScriptName(scriptNames: [:])
+        )
+        
         let getLessonFilterLanguagesRepository = GetLessonFilterLanguagesRepository(
-            resourcesRepository: <#T##ResourcesRepository#>,
-            languagesRepository: <#T##LanguagesRepository#>,
-            getTranslatedLanguageName: <#T##GetTranslatedLanguageName#>,
+            resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),
+            languagesRepository: testsDiContainer.dataLayer.getLanguagesRepository(),
+            getTranslatedLanguageName: getTranslatedLanguageName,
             localizationServices: MockLocalizationServices(localizableStrings: [:])
         )
         
@@ -34,14 +74,14 @@ class GetLessonFilterLanguagesRepositoryTests: QuickSpec {
 
                 it("I expect to see the language name translated in spanish.") {
 
-                    var lessonLanguageFilterRef: LessonLanguageFilterDomainModel?
+                    var languagesRef: [LessonLanguageFilterDomainModel] = Array()
                     var sinkCompleted: Bool = false
 
                     waitUntil { done in
 
-                        _ = getOnboardingIsAvailable
-                            .isAvailablePublisher()
-                            .sink { (lessonLanguageFilter: LessonLanguageFilterDomainModel?) in
+                        _ = getLessonFilterLanguagesRepository
+                            .getLessonFilterLanguagesPublisher(translatedInAppLanguage: LanguageCodeDomainModel.spanish.rawValue)
+                            .sink { (languages: [LessonLanguageFilterDomainModel]) in
 
                                 guard !sinkCompleted else {
                                     return
@@ -49,7 +89,7 @@ class GetLessonFilterLanguagesRepositoryTests: QuickSpec {
 
                                 sinkCompleted = true
 
-                                lessonLanguageFilterRef = lessonLanguageFilter
+                                languagesRef = languages
 
                                 done()
                             }
