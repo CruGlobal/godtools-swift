@@ -15,9 +15,9 @@ class GetLessonFilterLanguagesRepository: GetLessonFilterLanguagesRepositoryInte
     private let resourcesRepository: ResourcesRepository
     private let languagesRepository: LanguagesRepository
     private let getTranslatedLanguageName: GetTranslatedLanguageName
-    private let localizationServices: LocalizationServices
+    private let localizationServices: LocalizationServicesInterface
     
-    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, getTranslatedLanguageName: GetTranslatedLanguageName, localizationServices: LocalizationServices) {
+    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, getTranslatedLanguageName: GetTranslatedLanguageName, localizationServices: LocalizationServicesInterface) {
         self.resourcesRepository = resourcesRepository
         self.languagesRepository = languagesRepository
         self.getTranslatedLanguageName = getTranslatedLanguageName
