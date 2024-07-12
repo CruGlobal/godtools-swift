@@ -49,7 +49,6 @@
 		4505F5A22C4154AF00F60F94 /* GetUserLessonFiltersRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4505F5A12C4154AF00F60F94 /* GetUserLessonFiltersRepositoryTests.swift */; };
 		4505F5A42C4154D100F60F94 /* GetLessonFilterLanguagesInterfaceStringsRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4505F5A32C4154D100F60F94 /* GetLessonFilterLanguagesInterfaceStringsRepositoryTests.swift */; };
 		4505F5A62C41570E00F60F94 /* SearchLessonFilterLanguagesRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4505F5A52C41570E00F60F94 /* SearchLessonFilterLanguagesRepositoryTests.swift */; };
-		4505F5A82C41605800F60F94 /* GetLessonFilterLanguagesRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4505F5A72C41605800F60F94 /* GetLessonFilterLanguagesRepositoryTests.swift */; };
 		45060D1E2B38815600A2A44C /* ResourcesFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45060D1D2B38815600A2A44C /* ResourcesFilter.swift */; };
 		45060D202B38816100A2A44C /* ResourcesFilterVariant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45060D1F2B38816100A2A44C /* ResourcesFilterVariant.swift */; };
 		45070A7E2ACF42AD00229EDD /* AppCloseBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45070A772ACF42AD00229EDD /* AppCloseBarItem.swift */; };
@@ -1711,7 +1710,6 @@
 		4505F5A12C4154AF00F60F94 /* GetUserLessonFiltersRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserLessonFiltersRepositoryTests.swift; sourceTree = "<group>"; };
 		4505F5A32C4154D100F60F94 /* GetLessonFilterLanguagesInterfaceStringsRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLessonFilterLanguagesInterfaceStringsRepositoryTests.swift; sourceTree = "<group>"; };
 		4505F5A52C41570E00F60F94 /* SearchLessonFilterLanguagesRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLessonFilterLanguagesRepositoryTests.swift; sourceTree = "<group>"; };
-		4505F5A72C41605800F60F94 /* GetLessonFilterLanguagesRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLessonFilterLanguagesRepositoryTests.swift; sourceTree = "<group>"; };
 		45060D1D2B38815600A2A44C /* ResourcesFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourcesFilter.swift; sourceTree = "<group>"; };
 		45060D1F2B38816100A2A44C /* ResourcesFilterVariant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourcesFilterVariant.swift; sourceTree = "<group>"; };
 		45070A772ACF42AD00229EDD /* AppCloseBarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppCloseBarItem.swift; sourceTree = "<group>"; };
@@ -3687,7 +3685,6 @@
 			isa = PBXGroup;
 			children = (
 				4505F5A32C4154D100F60F94 /* GetLessonFilterLanguagesInterfaceStringsRepositoryTests.swift */,
-				4505F5A72C41605800F60F94 /* GetLessonFilterLanguagesRepositoryTests.swift */,
 				4505F5A12C4154AF00F60F94 /* GetUserLessonFiltersRepositoryTests.swift */,
 				4505F5A52C41570E00F60F94 /* SearchLessonFilterLanguagesRepositoryTests.swift */,
 			);
@@ -13601,7 +13598,6 @@
 				45D7783029A572CC00F23D99 /* PassthroughValue.swift in Sources */,
 				45E198692BA4822A00BF14F3 /* TestsDiContainer.swift in Sources */,
 				450FB88A2BFBA0F80015D945 /* StoreInitialAppLanguageTests.swift in Sources */,
-				4505F5A82C41605800F60F94 /* GetLessonFilterLanguagesRepositoryTests.swift in Sources */,
 				450FB88B2BFBA0F80015D945 /* GetLanguageSettingsInterfaceStringsRepositoryTests.swift in Sources */,
 				45CC42F92C38981F00B0D82B /* MockLocalizationLanguageNameRepository.swift in Sources */,
 				450FB88C2BFBA0F80015D945 /* SearchAppLanguageInAppLanguagesListRepositoryTests.swift in Sources */,
