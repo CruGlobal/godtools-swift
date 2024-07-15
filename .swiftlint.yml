@@ -123,7 +123,7 @@ type_name:
   allowed_symbols: ["_"] # these are allowed in type names
 identifier_name:
   min_length: # only min_length
-    error: 2 # only error
+    error: 1 # only error
   max_length: # warning and error
     warning: 80
     error: 90
