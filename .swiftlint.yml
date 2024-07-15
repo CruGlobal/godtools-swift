@@ -1,7 +1,9 @@
 # By default, SwiftLint uses a set of sensible default rules you can adjust:
 disabled_rules: # rule identifiers turned on by default to exclude from running
+  - multiple_closures_with_trailing_closure #disabling for now as this touches many files.
   - statement_position #disabling for now as this touches many files.
   - trailing_whitespace #disabling for now as this touches many files.  Command swiftlint --fix is a way to fix whitespace.
+  - unused_closure_parameter #disabling for now as this touches many files.
 opt_in_rules: # some rules are turned off by default, so you need to opt-in
   - closure_end_indentation
   - closure_spacing
@@ -11,7 +13,7 @@ opt_in_rules: # some rules are turned off by default, so you need to opt-in
   - convenience_type
   - discouraged_none_name
   - discouraged_object_literal
-  - empty_count
+  # - empty_count #disabling for now as this touches many files.
   - empty_string
   - enum_case_associated_values_count
   - explicit_enum_raw_value
