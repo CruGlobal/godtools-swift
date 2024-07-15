@@ -8,7 +8,7 @@
 
 import UIKit
 
-public extension UILabel {
+extension UILabel {
     
     private func getAttributedString() -> NSMutableAttributedString {
        

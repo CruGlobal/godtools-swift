@@ -25,7 +25,7 @@ class OptInOnboardingBannerEnabledCache {
     }
 }
 
-private extension UserDefaults {
+extension UserDefaults {
     
     private static let enabledCacheKey: String = "keyOpenTutorialCalloutDisabled"
     

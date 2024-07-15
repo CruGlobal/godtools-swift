@@ -8,7 +8,7 @@
 
 import Foundation
 
-public extension Locale {
+extension Locale {
     
     var isBaseLanguage: Bool {
         

@@ -8,7 +8,7 @@
 
 import UIKit
 
-public extension UIImage {
+extension UIImage {
     
     static func createImageWithColor(color: UIColor) -> UIImage? {
         
