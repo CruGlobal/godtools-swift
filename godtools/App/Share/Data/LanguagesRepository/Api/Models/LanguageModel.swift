@@ -68,7 +68,7 @@ struct LanguageModel: LanguageModelType, Codable {
 }
 
 extension LanguageModel: Equatable {
-    static func ==(this: LanguageModel, that: LanguageModel) -> Bool {
+    static func == (this: LanguageModel, that: LanguageModel) -> Bool {
         return this.id == that.id
     }
 }

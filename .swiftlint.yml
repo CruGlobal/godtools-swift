@@ -41,7 +41,7 @@ opt_in_rules: # some rules are turned off by default, so you need to opt-in
   # - no_magic_numbers #Disabling for now as this touches many files.
   # - one_declaration_per_file #SwiftUI Preview breaks this, may need to update preview to use macros.
   - operator_usage_whitespace
-  - prefer_self_in_static_references
+  # - prefer_self_in_static_references #Disabling for now as touches many files.
   - prefer_self_type_over_type_of_self
   - private_action
   - private_outlet

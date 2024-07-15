@@ -188,7 +188,7 @@ struct ResourceModel: ResourceModelType, Decodable, Identifiable {
 }
 
 extension ResourceModel: Equatable {
-    static func ==(this: ResourceModel, that: ResourceModel) -> Bool {
+    static func == (this: ResourceModel, that: ResourceModel) -> Bool {
         return this.id == that.id
     }
 }

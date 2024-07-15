@@ -21,7 +21,7 @@ extension ToolSettingsToolLanguageDomainModel: Identifiable {
 }
 
 extension ToolSettingsToolLanguageDomainModel: Equatable {
-    static func ==(this: ToolSettingsToolLanguageDomainModel, that: ToolSettingsToolLanguageDomainModel) -> Bool {
+    static func == (this: ToolSettingsToolLanguageDomainModel, that: ToolSettingsToolLanguageDomainModel) -> Bool {
         return this.dataModelId == that.dataModelId
     }
 }
