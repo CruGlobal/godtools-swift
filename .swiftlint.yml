@@ -37,6 +37,11 @@ opt_in_rules: # some rules are turned off by default, so you need to opt-in
   - multiline_parameters_brackets
   - no_extension_access_modifier
   - no_magic_numbers
+  - one_declaration_per_file
+  - operator_usage_whitespace
+  - overridden_super_call
+  - prefer_self_in_static_references
+  - prefer_self_type_over_type_of_self
 
 # Alternatively, specify all rules explicitly by uncommenting this option:
 # only_rules: # delete `disabled_rules` & `opt_in_rules` if using this
