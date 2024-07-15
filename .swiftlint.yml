@@ -17,7 +17,7 @@ opt_in_rules: # some rules are turned off by default, so you need to opt-in
   # - empty_count #disabling for now as this touches many files.
   - empty_string
   - enum_case_associated_values_count
-  - explicit_enum_raw_value
+  # - explicit_enum_raw_value #disabling for now as this touches many files.
   # - explicit_type_interface
   - fallthrough
   - fatal_error_message
@@ -28,7 +28,7 @@ opt_in_rules: # some rules are turned off by default, so you need to opt-in
   - function_default_parameter_at_end
   - ibinspectable_in_extension
   - identical_operands
-  # - implicit_return #Will disable for now as many warnings.
+  # - implicit_return #disabling for now as this touches many files.
   - implicitly_unwrapped_optional
   - indentation_width
   - last_where
@@ -44,13 +44,13 @@ opt_in_rules: # some rules are turned off by default, so you need to opt-in
   # - no_magic_numbers #disabling for now as this touches many files.
   # - one_declaration_per_file #SwiftUI Preview breaks this, may need to update preview to use macros.
   - operator_usage_whitespace
-  # - prefer_self_in_static_references #Disabling for now as touches many files.
+  # - prefer_self_in_static_references #disabling for now as this touches many files.
   - prefer_self_type_over_type_of_self
   - private_action
   - private_outlet
   - private_subject
   - private_swiftui_state
-  - sorted_enum_cases
+  # - sorted_enum_cases #disabling for now as this touches many files.
   - strict_fileprivate
   - switch_case_on_newline
   - toggle_bool
@@ -124,6 +124,9 @@ type_name:
 identifier_name:
   min_length: # only min_length
     error: 4 # only error
+  max_length: # warning and error
+    warning: 80
+    error: 90
   excluded: # excluded via string array
     - id
     - URL
