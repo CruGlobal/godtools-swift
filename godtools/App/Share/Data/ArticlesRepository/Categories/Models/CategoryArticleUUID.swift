@@ -19,7 +19,7 @@ struct CategoryArticleUUID {
 }
 
 extension CategoryArticleUUID: Equatable {
-    static func ==(lhs: CategoryArticleUUID, rhs: CategoryArticleUUID) -> Bool {
-        return lhs.uuidString == rhs.uuidString
+    static func ==(this: CategoryArticleUUID, that: CategoryArticleUUID) -> Bool {
+        return this.uuidString == that.uuidString
     }
 }
