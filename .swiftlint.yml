@@ -39,9 +39,21 @@ opt_in_rules: # some rules are turned off by default, so you need to opt-in
   - no_magic_numbers
   - one_declaration_per_file
   - operator_usage_whitespace
-  - overridden_super_call
   - prefer_self_in_static_references
   - prefer_self_type_over_type_of_self
+  - private_action
+  - private_outlet
+  - private_subject
+  - private_swiftui_state
+  - sorted_enum_cases
+  - strict_fileprivate
+  - switch_case_on_newline
+  - toggle_bool
+  - trailing_closure
+  - unowned_variable_capture
+  - unused_capture_list
+  - weak_delegate
+  - yoda_condition
 
 # Alternatively, specify all rules explicitly by uncommenting this option:
 # only_rules: # delete `disabled_rules` & `opt_in_rules` if using this
@@ -49,7 +61,9 @@ opt_in_rules: # some rules are turned off by default, so you need to opt-in
 #   - vertical_whitespace
 
 analyzer_rules: # rules run by `swiftlint analyze`
+  - capture_variable
   - explicit_self
+  - unused_import
 
 # Case-sensitive paths to include during linting. Directory paths supplied on the
 # command line will be ignored.
