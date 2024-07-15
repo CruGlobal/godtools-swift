@@ -58,24 +58,24 @@ class TrainingTipViewModel: MobileContentViewModel {
         let backgroundImageName: String
         switch viewType {
         case .upArrow:
-            backgroundImageName = trainingTipViewed ? "training_tip_red_arrow_up_bg": "training_tip_arrow_up_bg"
+            backgroundImageName = trainingTipViewed ? "training_tip_red_arrow_up_bg" : "training_tip_arrow_up_bg"
         case .rounded:
-            backgroundImageName = trainingTipViewed ? "training_tip_red_square_bg": "training_tip_square_bg"
+            backgroundImageName = trainingTipViewed ? "training_tip_red_square_bg" : "training_tip_square_bg"
         }
         
         let imageName: String
         
         switch tipModel.type {
         case .ask:
-            imageName = trainingTipViewed ? "training_tip_ask_filled_red": "training_tip_ask"
+            imageName = trainingTipViewed ? "training_tip_ask_filled_red" : "training_tip_ask"
         case .consider:
-            imageName = trainingTipViewed ? "training_tip_consider_filled_red": "training_tip_consider"
+            imageName = trainingTipViewed ? "training_tip_consider_filled_red" : "training_tip_consider"
         case .prepare:
-            imageName = trainingTipViewed ? "training_tip_prepare_filled_red": "training_tip_prepare"
+            imageName = trainingTipViewed ? "training_tip_prepare_filled_red" : "training_tip_prepare"
         case .quote:
-            imageName = trainingTipViewed ? "training_tip_quote_filled_red": "training_tip_quote"
+            imageName = trainingTipViewed ? "training_tip_quote_filled_red" : "training_tip_quote"
         case .tip:
-            imageName = trainingTipViewed ? "training_tip_tip_filled_red": "training_tip_tip"
+            imageName = trainingTipViewed ? "training_tip_tip_filled_red" : "training_tip_tip"
         default:
             imageName = ""
         }

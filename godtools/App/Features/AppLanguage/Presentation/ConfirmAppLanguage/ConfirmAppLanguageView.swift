@@ -64,7 +64,7 @@ struct ConfirmAppLanguageView: View {
 
                 HStack(spacing: buttonSpacing) {
                     
-                    let buttonWidth = (geometry.size.width - buttonSpacing - 2*horizontalPadding) / 2
+                    let buttonWidth = (geometry.size.width - buttonSpacing - 2 * horizontalPadding) / 2
                     
                     GTWhiteButton(title: viewModel.nevermindButtonTitle, fontSize: 15, width: buttonWidth, height: 48) {
                         

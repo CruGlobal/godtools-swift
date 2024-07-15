@@ -540,7 +540,7 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
             return nil
         }
                 
-        let renderPageResult: Result<MobileContentView, Error> =  currentPageRenderer.value.renderPageModel(
+        let renderPageResult: Result<MobileContentView, Error> = currentPageRenderer.value.renderPageModel(
             pageModel: pageModels[page],
             page: page,
             numberOfPages: pageModels.count,
