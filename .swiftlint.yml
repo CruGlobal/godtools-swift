@@ -1,6 +1,7 @@
 # By default, SwiftLint uses a set of sensible default rules you can adjust:
 disabled_rules: # rule identifiers turned on by default to exclude from running
-  - trailing_whitespace # disabling for now as this touches a lot of files.  Command swiftlint --fix is a way to fix whitespace.
+  - statement_position #disabling for now as this touches many files.
+  - trailing_whitespace #disabling for now as this touches many files.  Command swiftlint --fix is a way to fix whitespace.
 opt_in_rules: # some rules are turned off by default, so you need to opt-in
   - closure_end_indentation
   - closure_spacing
@@ -14,7 +15,7 @@ opt_in_rules: # some rules are turned off by default, so you need to opt-in
   - empty_string
   - enum_case_associated_values_count
   - explicit_enum_raw_value
-  - explicit_type_interface
+  # - explicit_type_interface
   - fallthrough
   - fatal_error_message
   - file_name_no_space
@@ -24,7 +25,7 @@ opt_in_rules: # some rules are turned off by default, so you need to opt-in
   - function_default_parameter_at_end
   - ibinspectable_in_extension
   - identical_operands
-  - implicit_return
+  # - implicit_return #Will disable for now as many warnings.
   - implicitly_unwrapped_optional
   - indentation_width
   - last_where
@@ -37,8 +38,8 @@ opt_in_rules: # some rules are turned off by default, so you need to opt-in
   - multiline_parameters
   - multiline_parameters_brackets
   - no_extension_access_modifier
-  - no_magic_numbers
-  - one_declaration_per_file
+  # - no_magic_numbers #Disabling for now as this touches many files.
+  # - one_declaration_per_file #SwiftUI Preview breaks this, may need to update preview to use macros.
   - operator_usage_whitespace
   - prefer_self_in_static_references
   - prefer_self_type_over_type_of_self
@@ -52,7 +53,6 @@ opt_in_rules: # some rules are turned off by default, so you need to opt-in
   - toggle_bool
   - trailing_closure
   - unowned_variable_capture
-  - unused_capture_list
   - weak_delegate
   - yoda_condition
 
@@ -99,7 +99,7 @@ force_try:
   severity: warning # explicitly
 # rules that have both warning and error levels, can set just the warning level
 # implicitly
-line_length: 500
+line_length: 1200
 # they can set both implicitly with an array
 type_body_length:
   - 300 # warning
