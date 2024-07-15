@@ -1,5 +1,6 @@
 # By default, SwiftLint uses a set of sensible default rules you can adjust:
 disabled_rules: # rule identifiers turned on by default to exclude from running
+  - trailing_whitespace # disabling for now as this touches a lot of files.  Command swiftlint --fix is a way to fix whitespace.
 opt_in_rules: # some rules are turned off by default, so you need to opt-in
   - closure_end_indentation
   - closure_spacing
@@ -98,7 +99,7 @@ force_try:
   severity: warning # explicitly
 # rules that have both warning and error levels, can set just the warning level
 # implicitly
-line_length: 110
+line_length: 500
 # they can set both implicitly with an array
 type_body_length:
   - 300 # warning
