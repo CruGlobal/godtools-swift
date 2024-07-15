@@ -10,6 +10,6 @@ import Foundation
 
 enum ToolSettingsToolLanguagesListTypeDomainModel {
     
-    case choosePrimaryLanguage
     case chooseParallelLanguage
+    case choosePrimaryLanguage
 }

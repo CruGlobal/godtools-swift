@@ -11,7 +11,7 @@ import Foundation
 enum AppBuildConfiguration {
     
     case analyticsLogging
-    case staging
     case production
     case release
+    case staging
 }
