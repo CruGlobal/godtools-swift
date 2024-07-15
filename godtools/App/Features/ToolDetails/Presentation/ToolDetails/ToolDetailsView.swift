@@ -42,50 +42,49 @@ struct ToolDetailsView: View {
                         ToolDetailsMediaView(viewModel: viewModel, width: geometry.size.width)
                         
                         VStack(alignment: .center, spacing: 0) {
-                                                     
-                             ToolDetailsTitleHeaderView(viewModel: viewModel)
+                            
+                            ToolDetailsTitleHeaderView(viewModel: viewModel)
                                 .padding(EdgeInsets(top: 40, leading: contentInsets.leading, bottom: 0, trailing: contentInsets.trailing))
-                             
-                             ToolDetailsPrimaryButtonsView(viewModel: viewModel, primaryButtonWidth: contentWidth)
+                            
+                            ToolDetailsPrimaryButtonsView(viewModel: viewModel, primaryButtonWidth: contentWidth)
                                 .padding(EdgeInsets(top: 16, leading: contentInsets.leading, bottom: 0, trailing: contentInsets.trailing))
-                                                 
-                             SegmentControl(selectedIndex: $selectedSegmentIndex, segments: viewModel.segments, segmentTappedClosure: { (index: Int) in
-                                 
-                                 viewModel.segmentTapped(index: index)
-                             })
-                             .padding(EdgeInsets(top: 50, leading: 0, bottom: 0, trailing: 0))
-                         }
-                         .background(Rectangle()
-                             .fill(Color.white)
-                             .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 1)
-                             .mask(Rectangle().padding(.bottom, -8))
-                         )
-                         
-                         Rectangle()
-                             .frame(width: geometry.size.width, height: 20)
-                             .foregroundColor(.clear)
-                         
-                         switch viewModel.selectedSegment {
-                         
-                         case .about:
-                             ToolDetailsAboutView(
+                            
+                            SegmentControl(selectedIndex: $selectedSegmentIndex, segments: viewModel.segments, segmentTappedClosure: { (index: Int) in
+                                viewModel.segmentTapped(index: index)
+                            })
+                            .padding(EdgeInsets(top: 50, leading: 0, bottom: 0, trailing: 0))
+                        }
+                        .background(Rectangle()
+                            .fill(Color.white)
+                            .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 1)
+                            .mask(Rectangle().padding(.bottom, -8))
+                        )
+                        
+                        Rectangle()
+                            .frame(width: geometry.size.width, height: 20)
+                            .foregroundColor(.clear)
+                        
+                        switch viewModel.selectedSegment {
+                            
+                        case .about:
+                            ToolDetailsAboutView(
                                 viewModel: viewModel,
                                 geometry: geometry
-                             )
-                         
-                         case .versions:
-                             ToolDetailsVersionsView(
+                            )
+                            
+                        case .versions:
+                            ToolDetailsVersionsView(
                                 viewModel: viewModel,
                                 geometry: geometry,
                                 toolVersionTappedClosure: {
                                     scrollViewReader.scrollTo(ToolDetailsView.scrollToTopViewId)
                                 }
-                             )
-                         }
-                         
-                         Rectangle()
-                             .frame(width: geometry.size.width, height: 20)
-                             .foregroundColor(.clear)
+                            )
+                        }
+                        
+                        Rectangle()
+                            .frame(width: geometry.size.width, height: 20)
+                            .foregroundColor(.clear)
                     }
                     .frame(width: geometry.size.width)
                 }

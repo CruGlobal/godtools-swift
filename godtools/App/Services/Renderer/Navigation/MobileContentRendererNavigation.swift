@@ -153,7 +153,8 @@ class MobileContentRendererNavigation {
             localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             closeTappedClosure: { [weak self] in
                 self?.dismissToolTraining()
-        })
+            }
+        )
         
         let view = ToolTrainingView(viewModel: viewModel)
         
