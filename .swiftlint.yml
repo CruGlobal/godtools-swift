@@ -1,6 +1,7 @@
 # By default, SwiftLint uses a set of sensible default rules you can adjust:
 disabled_rules: # rule identifiers turned on by default to exclude from running
   - multiple_closures_with_trailing_closure #disabling for now as this touches many files.
+  - redundant_string_enum_value
   - statement_position #disabling for now as this touches many files.
   - trailing_whitespace #disabling for now as this touches many files.  Command swiftlint --fix is a way to fix whitespace.
   - unused_closure_parameter #disabling for now as this touches many files.
@@ -34,13 +35,13 @@ opt_in_rules: # some rules are turned off by default, so you need to opt-in
   - let_var_whitespace
   - literal_expression_end_indentation
   # - multiline_arguments #Disabling this rule as UIView.animate would fail when using animate and completion together.
-  - multiline_arguments_brackets
+  # - multiline_arguments_brackets #disabling for now as this touches many files.
   - multiline_function_chains
   - multiline_literal_brackets
   - multiline_parameters
   - multiline_parameters_brackets
   - no_extension_access_modifier
-  # - no_magic_numbers #Disabling for now as this touches many files.
+  # - no_magic_numbers #disabling for now as this touches many files.
   # - one_declaration_per_file #SwiftUI Preview breaks this, may need to update preview to use macros.
   - operator_usage_whitespace
   # - prefer_self_in_static_references #Disabling for now as touches many files.
@@ -53,7 +54,7 @@ opt_in_rules: # some rules are turned off by default, so you need to opt-in
   - strict_fileprivate
   - switch_case_on_newline
   - toggle_bool
-  - trailing_closure
+  # - trailing_closure #disabling for now as this touches many files.
   - unowned_variable_capture
   - weak_delegate
   - yoda_condition
