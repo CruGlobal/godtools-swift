@@ -15,7 +15,7 @@ struct TwoRowHStack<Content: View>: View {
     private let spacing: CGFloat
     private let content: (Int) -> Content
 
-    init(itemCount: Int, spacing: CGFloat, @ViewBuilder content:@escaping (Int) -> Content) {
+    init(itemCount: Int, spacing: CGFloat, @ViewBuilder content: @escaping (Int) -> Content) {
         
         self.itemCount = itemCount
         self.numberOfColumns = Int(ceil(Double(itemCount) / 2))
