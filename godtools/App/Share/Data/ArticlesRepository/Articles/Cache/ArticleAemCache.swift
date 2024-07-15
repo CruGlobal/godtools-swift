@@ -45,7 +45,6 @@ class ArticleAemCache {
         return getAemCacheObject(realm: realm, aemUri: aemUri)
     }
 
-    
     private func getAemCacheObject(realm: Realm, aemUri: String) -> ArticleAemCacheObject? {
         
         guard let realmAemData = realm.object(ofType: RealmArticleAemData.self, forPrimaryKey: aemUri) else {
