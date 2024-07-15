@@ -14,7 +14,7 @@ class GodToolsAppLessonsPathDeepLinkParser: DeepLinkUrlParserType {
         
     }
     
-    func parse(url: URL, pathComponents: [String], queryParameters: [String : Any]) -> ParsedDeepLinkType? {
+    func parse(url: URL, pathComponents: [String], queryParameters: [String: Any]) -> ParsedDeepLinkType? {
         
         guard pathComponents.first == "lessons" else {
             return nil

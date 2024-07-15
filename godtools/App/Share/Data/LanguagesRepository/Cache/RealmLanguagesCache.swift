@@ -59,7 +59,7 @@ class RealmLanguagesCache {
     
     func getLanguages(languageCodes: [String]) -> [LanguageModel] {
     
-        return languageCodes.compactMap({getLanguage(code:$0)})
+        return languageCodes.compactMap({getLanguage(code: $0)})
     }
     
     func getLanguages(realm: Realm? = nil) -> [LanguageModel] {

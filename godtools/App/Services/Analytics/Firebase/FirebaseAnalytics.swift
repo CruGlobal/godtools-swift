@@ -71,7 +71,7 @@ class FirebaseAnalytics {
         previousTrackedScreenName = screenName
     }
     
-    func trackAction(screenName: String, siteSection: String, siteSubSection: String, contentLanguage: String?, secondaryContentLanguage: String?, actionName: String, data: [String : Any]?) {
+    func trackAction(screenName: String, siteSection: String, siteSubSection: String, contentLanguage: String?, secondaryContentLanguage: String?, actionName: String, data: [String: Any]?) {
         
         internalTrackEvent(
             screenName: screenName,

@@ -14,7 +14,7 @@ class ToolPathDeepLinkParser: DeepLinkUrlParserType {
         
     }
     
-    func parse(url: URL, pathComponents: [String], queryParameters: [String : Any]) -> ParsedDeepLinkType? {
+    func parse(url: URL, pathComponents: [String], queryParameters: [String: Any]) -> ParsedDeepLinkType? {
         
         guard let toolPathIndex = pathComponents.firstIndex(of: "tool") else {
             return nil

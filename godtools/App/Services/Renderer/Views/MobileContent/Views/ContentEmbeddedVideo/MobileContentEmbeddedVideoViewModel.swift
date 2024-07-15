@@ -42,7 +42,7 @@ class MobileContentEmbeddedVideoViewModel: MobileContentViewModel {
         return id
     }
     
-    var youtubePlayerParameters: [String : Any] {
+    var youtubePlayerParameters: [String: Any] {
         
         let playsInFullScreen = 0
         

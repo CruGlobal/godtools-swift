@@ -250,9 +250,9 @@ struct JsonServices: JsonServicesType {
     
     // MARK: - Encoding
     
-    func encode<T>(object: T, options: JSONSerialization.ReadingOptions = []) -> [String : Any] where T : Encodable {
+    func encode<T>(object: T, options: JSONSerialization.ReadingOptions = []) -> [String: Any] where T : Encodable {
         
-        let result: Result<[String : Any], Error> = encode(object: object, options: options)
+        let result: Result<[String: Any], Error> = encode(object: object, options: options)
         
         switch result {
         case .success(let data):
@@ -263,7 +263,7 @@ struct JsonServices: JsonServicesType {
         }
     }
     
-    func encode<T>(object: T, options: JSONSerialization.ReadingOptions = []) -> Result<[String : Any], Error> where T : Encodable {
+    func encode<T>(object: T, options: JSONSerialization.ReadingOptions = []) -> Result<[String: Any], Error> where T : Encodable {
                 
         do {
             

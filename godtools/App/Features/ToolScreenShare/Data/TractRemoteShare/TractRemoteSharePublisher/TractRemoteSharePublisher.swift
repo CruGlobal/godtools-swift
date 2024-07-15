@@ -141,7 +141,7 @@ class TractRemoteSharePublisher: NSObject {
         }
     }
     
-    // MARK:  Timeout Timer
+    // MARK: Timeout Timer
     
     private func startTimeoutTimer() {
         

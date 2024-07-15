@@ -57,7 +57,7 @@ class AppsFlyerAnalytics: NSObject {
         }
     }
     
-    func trackAction(actionName: String, data: [String : Any]?) {
+    func trackAction(actionName: String, data: [String: Any]?) {
                 
         serialQueue.async { [weak self] in
             

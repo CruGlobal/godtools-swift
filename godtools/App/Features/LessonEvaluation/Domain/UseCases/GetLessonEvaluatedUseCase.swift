@@ -11,9 +11,9 @@ import Combine
 
 class GetLessonEvaluatedUseCase {
     
-    private let getLessonEvaluatedRepositoryInterface:  GetLessonEvaluatedRepositoryInterface
+    private let getLessonEvaluatedRepositoryInterface: GetLessonEvaluatedRepositoryInterface
     
-    init(getLessonEvaluatedRepositoryInterface:  GetLessonEvaluatedRepositoryInterface) {
+    init(getLessonEvaluatedRepositoryInterface: GetLessonEvaluatedRepositoryInterface) {
         
         self.getLessonEvaluatedRepositoryInterface = getLessonEvaluatedRepositoryInterface
     }

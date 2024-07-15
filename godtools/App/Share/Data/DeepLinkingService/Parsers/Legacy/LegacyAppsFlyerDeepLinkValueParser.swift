@@ -14,7 +14,7 @@ class LegacyAppsFlyerDeepLinkValueParser: DeepLinkAppsFlyerParserType {
         
     }
     
-    func parse(data: [AnyHashable : Any]) -> ParsedDeepLinkType? {
+    func parse(data: [AnyHashable: Any]) -> ParsedDeepLinkType? {
         
         let resourceAbbreviation: String?
         
