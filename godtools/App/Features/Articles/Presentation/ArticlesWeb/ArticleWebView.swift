@@ -94,7 +94,7 @@ class ArticleWebView: AppViewController {
             
             switch currentViewState {
                 
-            case .errorMessage( _,  _):
+            case .errorMessage( _, _):
                 errorTitleLabel.text = ""
                 errorMessageLabel.text = ""
                 setErrorViewHidden(hidden: true)
