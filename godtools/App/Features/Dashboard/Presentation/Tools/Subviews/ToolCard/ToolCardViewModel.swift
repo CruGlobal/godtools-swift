@@ -23,7 +23,7 @@ class ToolCardViewModel: ObservableObject {
     @Published var isFavorited = false
     @Published var name: String = ""
     @Published var category: String = ""
-    @Published var languageAvailability: String? = nil
+    @Published var languageAvailability: String?
     @Published var detailsButtonTitle: String = ""
     @Published var openButtonTitle: String = ""
             
