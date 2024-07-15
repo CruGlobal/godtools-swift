@@ -173,7 +173,7 @@ class TractRemoteSharePublisher: NSObject {
         if loggingEnabled {
             print("\n TractRemoteSharePublisher \(method)")
             if let label = label, let labelValue = labelValue {
-               print("  \(label): \(labelValue)")
+                print("  \(label): \(labelValue)")
             }
         }
     }

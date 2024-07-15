@@ -164,9 +164,11 @@ struct DownloadableLanguageItemView: View {
     private func startProgressAnimationTimer() {
         
         progressAnimationTimer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: true, block: { timer in
-            guard let downloadProgress = self.animationDownloadProgress,
-                  let progressTarget = self.downloadProgressTarget
-            else { return }
+            
+            guard let downloadProgress = self.animationDownloadProgress, let progressTarget = self.downloadProgressTarget else {
+                
+                return
+            }
             
             if downloadProgress < progressTarget {
                 

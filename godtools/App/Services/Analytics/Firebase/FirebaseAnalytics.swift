@@ -192,10 +192,13 @@ class FirebaseAnalytics {
     private func log(method: String, label: String?, labelValue: String?, data: [String: Any]?) {
         
         if loggingEnabled {
+            
             print("\nFirebaseAnalytics \(method)")
+            
             if let label = label, let labelValue = labelValue {
-               print("  \(label): \(labelValue)")
+                print("  \(label): \(labelValue)")
             }
+            
             if let data = data {
                 print("  data: \(data)")
             }

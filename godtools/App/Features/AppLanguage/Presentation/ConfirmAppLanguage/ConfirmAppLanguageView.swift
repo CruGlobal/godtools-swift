@@ -97,5 +97,5 @@ struct ConfirmAppLanguageView: View {
         }
         .font(FontLibrary.sfProTextRegular.font(size: fontSize))
         .foregroundColor(ColorPalette.gtGrey.color)
-     }
+    }
 }
