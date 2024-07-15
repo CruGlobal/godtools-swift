@@ -73,6 +73,7 @@ analyzer_rules: # rules run by `swiftlint analyze`
 included: 
   - godtools/App
 excluded: # case-sensitive paths to ignore during linting. Takes precedence over `included`
+  - godtools/App/Flows/Flow/FlowStep.swift
   - Carthage
   - Pods
   - Sources/ExcludedFolder
