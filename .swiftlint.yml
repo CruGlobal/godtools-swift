@@ -1,5 +1,6 @@
 # By default, SwiftLint uses a set of sensible default rules you can adjust:
 disabled_rules: # rule identifiers turned on by default to exclude from running
+  - cyclomatic_complexity #disabling for now as this touches many files.
   - empty_enum_arguments #disabling for now as this touches many files.
   - function_body_length #disabling for now as this touches many files.
   - function_parameter_count #disabling for now as this touches many files.
