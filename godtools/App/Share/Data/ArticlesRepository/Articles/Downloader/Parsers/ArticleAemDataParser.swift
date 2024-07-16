@@ -92,32 +92,30 @@ class ArticleAemDataParser {
     }
     
     /*
-     
-     NOTE:
-     
-     The below preferred variatons are root level keys found in the json structure that is getting parsed.
-     
-     It appears that each variation can be appended to an aem import src url in order to load an html page per platform.
-     
-     For example, take the following aem import src url:
-     
-     https://www.cru.org/content/experience-fragments/shared-library/language-masters/en/how-to-know-god/what-is-christianity/does-god-answer-our-prayers-
-     
-     We obtain the json by appending a number representing the maximum amount of levels the json structure will return like so:
-     
-     https://www.cru.org/content/experience-fragments/shared-library/language-masters/en/how-to-know-god/what-is-christianity/does-god-answer-our-prayers-.10.json (10 levels).
-     
-     We can also append variations 'master' or ('godtools' or 'godtools-variation') to the import src url to load an html page like so:
-     
-     master
-     https://www.cru.org/content/experience-fragments/shared-library/language-masters/en/how-to-know-god/what-is-christianity/does-god-answer-our-prayers-/master.html
-     
-     //godtools
-     https://www.cru.org/content/experience-fragments/shared-library/language-masters/en/how-to-know-god/what-is-christianity/does-god-answer-our-prayers-/godtools.html
-     
-     //godtools-variation
-     https://www.cru.org/content/experience-fragments/shared-library/language-masters/en/how-to-know-god/what-is-christianity/can-you-explain-the-trinity--/godtools-variation.html
-     
+    NOTE:
+
+    The below preferred variatons are root level keys found in the json structure that is getting parsed.
+
+    It appears that each variation can be appended to an aem import src url in order to load an html page per platform.
+
+    For example, take the following aem import src url:
+
+    https://www.cru.org/content/experience-fragments/shared-library/language-masters/en/how-to-know-god/what-is-christianity/does-god-answer-our-prayers-
+
+    We obtain the json by appending a number representing the maximum amount of levels the json structure will return like so:
+
+    https://www.cru.org/content/experience-fragments/shared-library/language-masters/en/how-to-know-god/what-is-christianity/does-god-answer-our-prayers-.10.json (10 levels).
+
+    We can also append variations 'master' or ('godtools' or 'godtools-variation') to the import src url to load an html page like so:
+
+    master
+    https://www.cru.org/content/experience-fragments/shared-library/language-masters/en/how-to-know-god/what-is-christianity/does-god-answer-our-prayers-/master.html
+
+    //godtools
+    https://www.cru.org/content/experience-fragments/shared-library/language-masters/en/how-to-know-god/what-is-christianity/does-god-answer-our-prayers-/godtools.html
+
+    //godtools-variation
+    https://www.cru.org/content/experience-fragments/shared-library/language-masters/en/how-to-know-god/what-is-christianity/can-you-explain-the-trinity--/godtools-variation.html
     */
     
     private func getPreferredVariation(aemUrl: URL, aemJson: [String: Any]) -> String? {

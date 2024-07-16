@@ -90,11 +90,7 @@ class ArticleAemCache {
                 let dataIsNotCached: Bool
                 let uuidChanged: Bool
                 
-                if let aemCacheObject = self.getAemCacheObject(realm: realm, aemUri: aemData.aemUri),
-                   let cachedUUID = aemCacheObject.aemData.articleJcrContent?.uuid,
-                   let uuid = aemData.articleJcrContent?.uuid,
-                   !cachedUUID.isEmpty,
-                   !uuid.isEmpty {
+                if let aemCacheObject = self.getAemCacheObject(realm: realm, aemUri: aemData.aemUri), let cachedUUID = aemCacheObject.aemData.articleJcrContent?.uuid, let uuid = aemData.articleJcrContent?.uuid, !cachedUUID.isEmpty, !uuid.isEmpty {
                     
                     dataIsNotCached = false
                     uuidChanged = cachedUUID != uuid

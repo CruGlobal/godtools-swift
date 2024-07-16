@@ -60,8 +60,7 @@ class DetermineDeepLinkedToolTranslationsToDownload: DetermineToolTranslationsTo
             
             return primaryTranslation
         }
-        else if let appLanguage = userAppLanguageRepository.getCachedLanguage(),
-                let appLanguageTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageCode: appLanguage.languageId) {
+        else if let appLanguage = userAppLanguageRepository.getCachedLanguage(), let appLanguageTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageCode: appLanguage.languageId) {
             
             return appLanguageTranslation
         }

@@ -24,8 +24,7 @@ class ToolPathDeepLinkParser: DeepLinkUrlParserType {
             return nil
         }
         
-        guard let resourceAbbreviation = pathComponents[safe: toolPathIndex + 2],
-              let language = pathComponents[safe: toolPathIndex + 3] else {
+        guard let resourceAbbreviation = pathComponents[safe: toolPathIndex + 2], let language = pathComponents[safe: toolPathIndex + 3] else {
             
             return nil
         }

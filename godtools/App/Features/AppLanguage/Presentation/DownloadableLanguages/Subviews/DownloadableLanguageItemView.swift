@@ -198,9 +198,8 @@ struct DownloadableLanguageItemView: View {
     }
     
     private func shouldContinueDownloadProgressAnimation() -> Bool {
-        guard isVisible,
-              let animationDownloadProgress = animationDownloadProgress
-        else {
+        
+        guard isVisible, let animationDownloadProgress = animationDownloadProgress else {
             return false
         }
         

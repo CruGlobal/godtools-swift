@@ -33,21 +33,19 @@ class UserCountersRepository {
     }
     
     func getUserCountersChanged(reloadFromRemote: Bool) -> AnyPublisher<Void, Never> {
+        
+        if reloadFromRemote {
             
-            if reloadFromRemote {
-                
-                fetchRemoteUserCounters()
-                    .sink(receiveCompletion: { _ in
-                        
-                    }, receiveValue: { _ in
-                        
-                    })
-                    .store(in: &cancellables)
-
-            }
-            
-            return cache.getUserCountersChanged()
+            fetchRemoteUserCounters()
+                .sink(receiveCompletion: { _ in
+                }, receiveValue: { _ in
+                    
+                })
+                .store(in: &cancellables)
         }
+        
+        return cache.getUserCountersChanged()
+    }
     
     func getUserCounters() -> [UserCounterDataModel] {
         

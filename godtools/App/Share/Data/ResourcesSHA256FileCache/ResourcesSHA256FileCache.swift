@@ -180,8 +180,7 @@ class ResourcesSHA256FileCache {
                                 continue
                             }
                             
-                            if let existingRealmSHA256File = realm.object(ofType: RealmSHA256File.self, forPrimaryKey: filenameWithPathExtension),
-                               !existingRealmSHA256File.translations.contains(realmTranslation) {
+                            if let existingRealmSHA256File = realm.object(ofType: RealmSHA256File.self, forPrimaryKey: filenameWithPathExtension), !existingRealmSHA256File.translations.contains(realmTranslation) {
                                 
                                 existingRealmSHA256File.translations.append(realmTranslation)
                             }

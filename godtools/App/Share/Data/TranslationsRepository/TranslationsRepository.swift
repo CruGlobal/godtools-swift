@@ -238,10 +238,7 @@ extension TranslationsRepository {
                 
                 let latestDownloadedTranslation: TranslationModel?
                 
-                if shouldFallbackToLatestDownloadedTranslation,
-                   let resourceId = translation.resource?.id,
-                   let languageId = translation.language?.id,
-                   let latestTrackedDownloadedTranslation = self.trackDownloadedTranslationsRepository.getLatestDownloadedTranslation(resourceId: resourceId, languageId: languageId) {
+                if shouldFallbackToLatestDownloadedTranslation, let resourceId = translation.resource?.id, let languageId = translation.language?.id, let latestTrackedDownloadedTranslation = self.trackDownloadedTranslationsRepository.getLatestDownloadedTranslation(resourceId: resourceId, languageId: languageId) {
                     
                     latestDownloadedTranslation = self.getTranslation(id: latestTrackedDownloadedTranslation.translationId)
                 }
