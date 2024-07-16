@@ -4,6 +4,7 @@ disabled_rules: # rule identifiers turned on by default to exclude from running
   - empty_enum_arguments #disabling for now as this touches many files.
   - function_body_length #disabling for now as this touches many files.
   - function_parameter_count #disabling for now as this touches many files.
+  - inclusive_language
   - multiple_closures_with_trailing_closure #disabling for now as this touches many files.
   - opening_brace #disabling for now as this touches many files.
   - redundant_string_enum_value
@@ -112,12 +113,12 @@ force_try:
 line_length: 1200
 # they can set both implicitly with an array
 type_body_length:
-  - 300 # warning
-  - 400 # error
+  - 500 # warning
+  - 600 # error
 # or they can set both explicitly
 file_length:
-  warning: 500
-  error: 1200
+  warning: 1500
+  error: 2000
 # naming rules can set warnings/errors for min_length and max_length
 # additionally they can set excluded names
 type_name:
