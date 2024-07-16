@@ -10,22 +10,22 @@ import Foundation
 
 extension Locale {
     
-    var isBaseLanguage: Bool {
+    public var isBaseLanguage: Bool {
         
         let isBaseLanguage: Bool = isMissingRegionCode && isMissingScriptCode
         
         return isBaseLanguage
     }
     
-    var isEnglishLanguage: Bool {
+    public var isEnglishLanguage: Bool {
         return languageCode == "en"
     }
     
-    var isMissingRegionCode: Bool {
+    public var isMissingRegionCode: Bool {
         return regionCode?.isEmpty ?? true
     }
     
-    var isMissingScriptCode: Bool {
+    public var isMissingScriptCode: Bool {
         return scriptCode?.isEmpty ?? true
     }
     
@@ -43,15 +43,15 @@ extension Locale {
         return languageCodesMatch
     }
     
-    func scriptCodeIsEqualToLocaleScriptCode(locale: Locale) -> Bool {
+    public func scriptCodeIsEqualToLocaleScriptCode(locale: Locale) -> Bool {
         return locale.scriptCode?.lowercased() == scriptCode?.lowercased()
     }
     
-    func regionCodeIsEqualToLocaleRegionCode(locale: Locale) -> Bool {
+    public func regionCodeIsEqualToLocaleRegionCode(locale: Locale) -> Bool {
         return locale.regionCode?.lowercased() == regionCode?.lowercased()
     }
     
-    func isEqualTo(locale: Locale) -> Bool {
+    public func isEqualTo(locale: Locale) -> Bool {
         
         let languageCodesMatch: Bool = languageCodeIsEqualToLocaleLanguageCode(locale: locale)
         let scriptCodesMatch: Bool = scriptCodeIsEqualToLocaleScriptCode(locale: locale)
@@ -60,12 +60,12 @@ extension Locale {
         return languageCodesMatch && scriptCodesMatch && regionCodesMatch
     }
     
-    func baseLanguageIsEqualToLocaleBaseLanguage(locale: Locale) -> Bool {
+    public func baseLanguageIsEqualToLocaleBaseLanguage(locale: Locale) -> Bool {
         
         return languageCodeIsEqualToLocaleLanguageCode(locale: locale)
     }
     
-    func baseLanguageAndScriptCodesAreEqualTo(locale: Locale) -> Bool {
+    public func baseLanguageAndScriptCodesAreEqualTo(locale: Locale) -> Bool {
         
         let baseLanguagesMatch: Bool = baseLanguageIsEqualToLocaleBaseLanguage(locale: locale)
         let scriptCodesMatch: Bool = locale.scriptCode?.lowercased() == scriptCode?.lowercased()
