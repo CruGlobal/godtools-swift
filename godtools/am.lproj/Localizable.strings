@@ -105,7 +105,7 @@
 "toolDetails.about.title" = "ስለ";
 
 /* This means that the tool/resource is not available in the currently selected language. */
-"lessonCard.languageNotAvailable" = "በ %@ ውስጥ አይገኝም";
+"lessonCard.languageNotAvailable" = "በ%@ ቋንቋ የለም";
 
 "menu.deleteAccount" = "መለያ አጥፋ";
 "alert.mailAppUnavailable.title" = "የMail መተግበሪያ የለም";
