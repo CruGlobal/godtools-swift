@@ -75,7 +75,10 @@ class ToolFilterLanguageSelectionViewModel: ObservableObject {
         .switchToLatest()
         .receive(on: DispatchQueue.main)
         .sink { [weak self] viewLanguageFiltersDomainModel in
-            guard let self = self else { return }
+            
+            guard let self = self else {
+                return
+            }
             
             let interfaceStrings = viewLanguageFiltersDomainModel.interfaceStrings
             

@@ -63,7 +63,9 @@ class DashboardViewModel: ObservableObject {
         $currentTab.eraseToAnyPublisher()
             .sink { [weak self] currentTab in
                 
-                guard let self = self else { return }
+                guard let self = self else {
+                    return
+                }
                 
                 dashboardTabObserver.send(self.tabs[currentTab])
             }

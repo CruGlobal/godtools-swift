@@ -182,7 +182,10 @@ struct DownloadableLanguageItemView: View {
     }
     
     private func stopProgressAnimationTimer() {
-        guard progressAnimationTimer != nil else { return }
+        
+        guard progressAnimationTimer != nil else {
+            return
+        }
         
         progressAnimationTimer?.invalidate()
         progressAnimationTimer = nil

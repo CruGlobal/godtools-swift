@@ -743,7 +743,9 @@ extension MobileContentPagesViewModel {
     
     private func countLanguageUsage(localeId: String) {
         
-        if languageUsageAlreadyCountedThisSession(localeId: localeId) { return }
+        if languageUsageAlreadyCountedThisSession(localeId: localeId) {
+            return
+        }
         
         let locale = Locale(identifier: localeId)
         

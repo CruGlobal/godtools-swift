@@ -46,7 +46,11 @@ class RealmDownloadedLanguagesCache {
     
     func getDownloadedLanguage(languageId: String) -> DownloadedLanguageDataModel? {
         
-        guard let downloadedLanguage = realmDatabase.openRealm().object(ofType: RealmDownloadedLanguage.self, forPrimaryKey: languageId) else { return nil }
+        guard let downloadedLanguage = realmDatabase.openRealm()
+            .object(ofType: RealmDownloadedLanguage.self, forPrimaryKey: languageId) else {
+            
+            return nil
+        }
         
         return DownloadedLanguageDataModel(realmDownloadedLanguage: downloadedLanguage)
     }
