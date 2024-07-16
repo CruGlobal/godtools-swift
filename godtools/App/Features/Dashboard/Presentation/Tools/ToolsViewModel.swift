@@ -14,7 +14,7 @@ class ToolsViewModel: ObservableObject {
     
     typealias ToolId = String
     
-    private static var favoriteToolCancellables: Dictionary<ToolId, AnyCancellable?> = Dictionary()
+    private static var favoriteToolCancellables: [ToolId: AnyCancellable?] = Dictionary()
     
     private let resourcesRepository: ResourcesRepository
     private let viewToolsUseCase: ViewToolsUseCase
