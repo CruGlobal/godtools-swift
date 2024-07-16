@@ -223,14 +223,14 @@ extension ArticleWebViewModel {
 
 extension ArticleWebViewModel: WKNavigationDelegate {
     
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation) {
         
         stopDisplayArticleTimer()
         
         viewState.accept(value: .viewingArticle)
     }
     
-    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation, withError error: Error) {
              
         stopDisplayArticleTimer()
         
