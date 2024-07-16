@@ -21,7 +21,8 @@ class RealmDownloadedLanguagesCache {
     
     func getDownloadedLanguagesChangedPublisher() -> AnyPublisher<Void, Never> {
         
-        return realmDatabase.openRealm().objects(RealmDownloadedLanguage.self)
+        return realmDatabase.openRealm()
+            .objects(RealmDownloadedLanguage.self)
             .objectWillChange
             .eraseToAnyPublisher()
     }

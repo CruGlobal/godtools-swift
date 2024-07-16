@@ -25,7 +25,9 @@ class RealmFavoritedResourcesCache {
     
     func getFavoritedResourcesChangedPublisher() -> AnyPublisher<Void, Never> {
         
-        return realmDatabase.openRealm().objects(RealmFavoritedResource.self).objectWillChange
+        return realmDatabase.openRealm()
+            .objects(RealmFavoritedResource.self)
+            .objectWillChange
             .eraseToAnyPublisher()
     }
     
@@ -39,7 +41,9 @@ class RealmFavoritedResourcesCache {
     
     func getFavoritedResource(resourceId: String) -> FavoritedResourceDataModel? {
         
-        guard let realmFavoritedResource = realmDatabase.openRealm().object(ofType: RealmFavoritedResource.self, forPrimaryKey: resourceId) else {
+        guard let realmFavoritedResource = realmDatabase.openRealm()
+            .object(ofType: RealmFavoritedResource.self, forPrimaryKey: resourceId) else {
+            
             return nil
         }
         
@@ -48,19 +52,22 @@ class RealmFavoritedResourcesCache {
     
     func getResourceIsFavorited(id: String) -> Bool {
             
-        return realmDatabase.openRealm().object(ofType: RealmFavoritedResource.self, forPrimaryKey: id) != nil
+        return realmDatabase.openRealm()
+            .object(ofType: RealmFavoritedResource.self, forPrimaryKey: id) != nil
     }
     
     func getFavoritedResourcesSortedByCreatedAt(ascendingOrder: Bool) -> [FavoritedResourceDataModel] {
         
-        return realmDatabase.openRealm().objects(RealmFavoritedResource.self)
+        return realmDatabase.openRealm()
+            .objects(RealmFavoritedResource.self)
             .sorted(byKeyPath: #keyPath(RealmFavoritedResource.createdAt), ascending: ascendingOrder)
             .map({FavoritedResourceDataModel(realmFavoritedResource: $0)})
     }
     
     func getFavoritedResourcesSortedByCreatedAtPublisher(ascendingOrder: Bool) -> AnyPublisher<[FavoritedResourceDataModel], Never> {
         
-        let favoritedResources: [FavoritedResourceDataModel] = realmDatabase.openRealm().objects(RealmFavoritedResource.self)
+        let favoritedResources: [FavoritedResourceDataModel] = realmDatabase.openRealm()
+            .objects(RealmFavoritedResource.self)
             .sorted(byKeyPath: #keyPath(RealmFavoritedResource.createdAt), ascending: ascendingOrder)
             .map({
                 return FavoritedResourceDataModel(realmFavoritedResource: $0)

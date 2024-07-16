@@ -24,12 +24,16 @@ class GetUserAccountDetailsUseCase {
     func getUserAccountDetailsPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<UserAccountDetailsDomainModel, Never> {
         
         return Publishers.CombineLatest(
-            repository.getAuthUserDetailsFromRemotePublisher().prepend(UserDetailsDataModel.emptyDataModel())
+            repository
+                .getAuthUserDetailsFromRemotePublisher()
+                .prepend(UserDetailsDataModel.emptyDataModel())
                 .catch({ _ in
                     return Just(UserDetailsDataModel.emptyDataModel())
                         .eraseToAnyPublisher()
                 }),
-            repository.getAuthUserDetailsChangedPublisher().prepend(nil)
+            repository
+                .getAuthUserDetailsChangedPublisher()
+                .prepend(nil)
         )
         .flatMap({ (remoteUserDetails: UserDetailsDataModel, changedUserDetails: UserDetailsDataModel?) -> AnyPublisher<UserAccountDetailsDomainModel, Never> in
                             

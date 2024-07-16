@@ -22,17 +22,23 @@ class RealmLanguagesCache {
     }
     
     var numberOfLanguages: Int {
-        return realmDatabase.openRealm().objects(RealmLanguage.self).count
+        return realmDatabase.openRealm()
+            .objects(RealmLanguage.self)
+            .count
     }
     
     func getLanguagesChanged() -> AnyPublisher<Void, Never> {
-        return realmDatabase.openRealm().objects(RealmLanguage.self).objectWillChange
+        return realmDatabase.openRealm()
+            .objects(RealmLanguage.self)
+            .objectWillChange
             .eraseToAnyPublisher()
     }
     
     func getLanguage(id: String) -> LanguageModel? {
         
-        guard let realmLanguage = realmDatabase.openRealm().object(ofType: RealmLanguage.self, forPrimaryKey: id) else {
+        guard let realmLanguage = realmDatabase.openRealm()
+            .object(ofType: RealmLanguage.self, forPrimaryKey: id) else {
+            
             return nil
         }
         
@@ -41,7 +47,10 @@ class RealmLanguagesCache {
     
     func getLanguage(code: String) -> LanguageModel? {
                 
-        guard let realmLanguage = realmDatabase.openRealm().objects(RealmLanguage.self).filter(NSPredicate(format: "code".appending(" = [c] %@"), code.lowercased())).first else {
+        guard let realmLanguage = realmDatabase.openRealm()
+            .objects(RealmLanguage.self).filter(NSPredicate(format: "code".appending(" = [c] %@"), code.lowercased()))
+            .first else {
+            
             return nil
         }
         
@@ -50,16 +59,17 @@ class RealmLanguagesCache {
     
     func getLanguages(ids: [String]) -> [LanguageModel] {
         
-        return realmDatabase.openRealm().objects(RealmLanguage.self)
+        return realmDatabase.openRealm()
+            .objects(RealmLanguage.self)
             .filter("id IN %@", ids)
-            .map{
+            .map {
                 LanguageModel(model: $0)
             }
     }
     
     func getLanguages(languageCodes: [String]) -> [LanguageModel] {
     
-        return languageCodes.compactMap({getLanguage(code: $0)})
+        return languageCodes.compactMap({ getLanguage(code: $0) })
     }
     
     func getLanguages(realm: Realm? = nil) -> [LanguageModel] {

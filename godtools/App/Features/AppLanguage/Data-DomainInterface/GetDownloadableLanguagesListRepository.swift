@@ -36,39 +36,40 @@ class GetDownloadableLanguagesListRepository: GetDownloadableLanguagesListReposi
         )
         .map { _ in
             
-            return self.languagesRepository.getLanguages().compactMap { language in
-                
-                let numberToolsAvailable = self.getNumberToolsAvailable(for: language.code)
-                if numberToolsAvailable == 0 {
-                    return nil
+            return self.languagesRepository.getLanguages()
+                .compactMap { language in
+                    
+                    let numberToolsAvailable = self.getNumberToolsAvailable(for: language.code)
+                    if numberToolsAvailable == 0 {
+                        return nil
+                    }
+                    
+                    let languageNameInOwnLanguage = self.getTranslatedLanguageName.getLanguageName(
+                        language: language,
+                        translatedInLanguage: language.code
+                    )
+                    let languageNameInAppLanguage = self.getTranslatedLanguageName.getLanguageName(
+                        language: language,
+                        translatedInLanguage: currentAppLanguage
+                    )
+                    
+                    let toolsAvailableText = self.getToolsAvailableText(numberOfTools: numberToolsAvailable, translatedIn: currentAppLanguage)
+                    
+                    let downloadStatus = self.getDownloadStatus(for: language.id)
+                    
+                    return DownloadableLanguageListItemDomainModel(
+                        languageId: language.id,
+                        languageCode: language.languageCode,
+                        languageNameInOwnLanguage: languageNameInOwnLanguage,
+                        languageNameInAppLanguage: languageNameInAppLanguage,
+                        toolsAvailableText: toolsAvailableText,
+                        downloadStatus: downloadStatus
+                    )
                 }
-                
-                let languageNameInOwnLanguage = self.getTranslatedLanguageName.getLanguageName(
-                    language: language,
-                    translatedInLanguage: language.code
-                )
-                let languageNameInAppLanguage = self.getTranslatedLanguageName.getLanguageName(
-                    language: language,
-                    translatedInLanguage: currentAppLanguage
-                )
-                
-                let toolsAvailableText = self.getToolsAvailableText(numberOfTools: numberToolsAvailable, translatedIn: currentAppLanguage)
-                
-                let downloadStatus = self.getDownloadStatus(for: language.id)
-                
-                return DownloadableLanguageListItemDomainModel(
-                    languageId: language.id,
-                    languageCode: language.languageCode,
-                    languageNameInOwnLanguage: languageNameInOwnLanguage,
-                    languageNameInAppLanguage: languageNameInAppLanguage,
-                    toolsAvailableText: toolsAvailableText,
-                    downloadStatus: downloadStatus
-                )
-            }
-            .sorted { language1, language2 in
-                
-                return self.getSortOrder(language1: language1, language2: language2)
-            }
+                .sorted { language1, language2 in
+                    
+                    return self.getSortOrder(language1: language1, language2: language2)
+                }
         }
         .eraseToAnyPublisher()
     }

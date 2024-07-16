@@ -21,7 +21,8 @@ class RealmCategoryArticlesCache {
     
     func getCategoryArticles(categoryId: String, languageCode: String) -> [CategoryArticleModel] {
         
-        return realmDatabase.openRealm().objects(RealmCategoryArticle.self)
+        return realmDatabase.openRealm()
+            .objects(RealmCategoryArticle.self)
             .filter(NSPredicate(format: "categoryId == %@ AND languageCode == %@", categoryId, languageCode))
             .map({CategoryArticleModel(realmModel: $0)})
     }

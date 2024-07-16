@@ -74,7 +74,7 @@ class ToolsViewModel: ObservableObject {
             $toolFilterCategorySelection.eraseToAnyPublisher().dropFirst(),
             $toolFilterLanguageSelection.eraseToAnyPublisher().dropFirst()
         )
-        .map{ (appLanguage, toolFilterCategory, toolFilterLanguage) in
+        .map { (appLanguage, toolFilterCategory, toolFilterLanguage) in
                                     
             Publishers.CombineLatest(
                 viewToolsUseCase.viewPublisher(

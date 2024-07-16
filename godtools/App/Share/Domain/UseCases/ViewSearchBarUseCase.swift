@@ -20,10 +20,11 @@ class ViewSearchBarUseCase {
     
     func viewPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewSearchBarDomainModel, Never> {
         
-        return self.getInterfaceStringsRepository.getStringsPublisher(translateInAppLanguage: appLanguage).map {
-            
-            return ViewSearchBarDomainModel(interfaceStrings: $0)
-        }
-        .eraseToAnyPublisher()
+        return self.getInterfaceStringsRepository
+            .getStringsPublisher(translateInAppLanguage: appLanguage)
+            .map {
+                return ViewSearchBarDomainModel(interfaceStrings: $0)
+            }
+            .eraseToAnyPublisher()
     }
 }
