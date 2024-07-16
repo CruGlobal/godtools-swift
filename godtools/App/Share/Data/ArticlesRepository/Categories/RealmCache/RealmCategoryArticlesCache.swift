@@ -111,6 +111,6 @@ class RealmCategoryArticlesCache {
             
             completion(errors)
             
-        }//end realm background
+        }// end realm background
     }
 }

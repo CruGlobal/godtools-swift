@@ -655,8 +655,8 @@ extension PageNavigationCollectionView: UIScrollViewDelegate {
      
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
                         
-        //logMessage(message: "did scroll")
-        //logMessage(message: "  contentOffset.x: \(scrollView.contentOffset.x)")
+        // logMessage(message: "did scroll")
+        // logMessage(message: "  contentOffset.x: \(scrollView.contentOffset.x)")
         
         let currentPage: Int = getPageBasedOnContentOffset(contentOffset: scrollView.contentOffset)
                 

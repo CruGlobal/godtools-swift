@@ -71,7 +71,6 @@ struct VideoViewRepresentable: UIViewRepresentable {
         if animated {
             
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut) {
-                //animations
                 videoViewRep.loadingView.alpha = loadingViewAlpha
             } completion: { (finished: Bool) in
                 if finished && hidden {
