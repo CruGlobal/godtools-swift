@@ -124,12 +124,9 @@ class ArticleAemDataParser {
         
         for variation in preferredVariationOrder {
             
-            for (rootKey, _) in aemJson {
+            for (rootKey, _) in aemJson where rootKey == variation {
                 
-                if rootKey == variation {
-                    
-                    return rootKey
-                }
+                return rootKey
             }
         }
         

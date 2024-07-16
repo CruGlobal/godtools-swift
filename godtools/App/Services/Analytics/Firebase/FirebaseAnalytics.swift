@@ -129,10 +129,8 @@ class FirebaseAnalytics {
             var parameters: [String: Any] = baseParameters
             
             if let data = data {
-                for (key, value) in data {
-                    if parameters[key] == nil {
-                        parameters[key] = value
-                    }
+                for (key, value) in data where parameters[key] == nil {
+                    parameters[key] = value
                 }
             }
             

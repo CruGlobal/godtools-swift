@@ -552,10 +552,9 @@ extension MobileContentStackView {
             }
         }
         
-        for childView in childViews {
-            if childView.visibilityState == .visible {
-                addTopAndBottomConstraintsToChildView(childView: childView)
-            }
+        for childView in childViews where childView.visibilityState == .visible {
+            
+            addTopAndBottomConstraintsToChildView(childView: childView)
         }
         
         childrenParentView.layoutIfNeeded()
