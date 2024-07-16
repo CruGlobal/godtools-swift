@@ -180,9 +180,14 @@ extension MobileContentCardCollectionPageView: PageNavigationCollectionViewDeleg
     
     func pageNavigation(pageNavigation: PageNavigationCollectionView, cellForPageAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell: MobileContentCardCollectionPageItemView = cardPageNavigationView.getReusablePageCell(
+        guard let cell = cardPageNavigationView.getReusablePageCell(
             cellReuseIdentifier: MobileContentCardCollectionPageItemView.reuseIdentifier,
-            indexPath: indexPath) as! MobileContentCardCollectionPageItemView
+            indexPath: indexPath) as? MobileContentCardCollectionPageItemView else {
+            
+            assertionFailure("Failed to dequeue reusable cell with identifier :\(MobileContentCardCollectionPageItemView.reuseIdentifier)")
+            
+            return UICollectionViewCell()
+        }
         
         if let cardView = viewModel.cardWillAppear(card: indexPath.row) as? MobileContentCardCollectionPageCardView {
             cell.configure(cardView: cardView)

@@ -220,9 +220,14 @@ extension MobileContentPagesView: PageNavigationCollectionViewDelegate {
     
     func pageNavigation(pageNavigation: PageNavigationCollectionView, cellForPageAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell: MobileContentPageCell = pageNavigationView.getReusablePageCell(
+        guard let cell = pageNavigationView.getReusablePageCell(
             cellReuseIdentifier: MobileContentPageCell.reuseIdentifier,
-            indexPath: indexPath) as! MobileContentPageCell
+            indexPath: indexPath) as? MobileContentPageCell else {
+            
+            assertionFailure("Failed to dequeue reusable cell with identifier :\(MobileContentPageCell.reuseIdentifier)")
+            
+            return UICollectionViewCell()
+        }
         
         let pageNumber: Int = indexPath.row
         
