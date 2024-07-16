@@ -58,4 +58,3 @@ class MobileContentSpacerView: MobileContentView {
         return .spacer
     }
 }
-

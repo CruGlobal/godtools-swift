@@ -43,4 +43,3 @@ class LoadingView: AppViewController {
         loadingView.startAnimating()
     }
 }
-
