@@ -18,7 +18,7 @@ extension UILabel {
     private func getRangeOfString(string: String) -> NSRange {
        
         guard let text = self.text else {
-            return NSMakeRange(0, 0)
+            return NSRange(location: 0, length: 0)
         }
         
         return (text as NSString).range(of: string)
