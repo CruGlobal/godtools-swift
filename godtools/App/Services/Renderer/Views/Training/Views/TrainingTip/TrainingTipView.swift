@@ -22,7 +22,6 @@ class TrainingTipView: MobileContentView, NibBased {
         super.init(viewModel: viewModel, frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         
         loadNib()
-        setupLayout()
         setupBinding()
         
         tipButton.addTarget(self, action: #selector(handleTip(button:)), for: .touchUpInside)
@@ -30,10 +29,6 @@ class TrainingTipView: MobileContentView, NibBased {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func setupLayout() {
-        
     }
     
     private func setupBinding() {
@@ -58,13 +53,7 @@ class TrainingTipView: MobileContentView, NibBased {
     
     // MARK: - MobileContentView
     
-    override func renderChild(childView: MobileContentView) {
-        super.renderChild(childView: childView)
-    }
-    
     override var heightConstraintType: MobileContentViewHeightConstraintType {
         return .equalToSize(size: CGSize(width: 50, height: 50))
     }
-    
-    // MARK: - 
 }

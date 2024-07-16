@@ -38,10 +38,6 @@ class ChooseYourOwnAdventureView: MobileContentPagesView {
         pageNavigationView.gestureScrollingEnabled = false
     }
     
-    override func setupBinding() {
-        super.setupBinding()
-    }
-    
     func languageTapped(index: Int) {
         viewModel.languageTapped(index: index)
     }
