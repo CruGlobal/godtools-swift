@@ -30,7 +30,7 @@ class GetToolDetailsLearnToShareToolIsAvailableRepository: GetToolDetailsLearnTo
         let includeRelatedFiles: Bool = false
         
         return translationsRepository.getTranslationManifestFromCache(translation: translation, manifestParserType: manifestParserType, includeRelatedFiles: includeRelatedFiles)
-            .catch ({ (cacheError: Error) -> AnyPublisher<TranslationManifestFileDataModel, Error> in
+            .catch({ (cacheError: Error) -> AnyPublisher<TranslationManifestFileDataModel, Error> in
                 
                 return self.translationsRepository.getTranslationManifestFromRemote(
                     translation: translation,

@@ -55,7 +55,7 @@ extension AppleAuthentication: AuthenticationProviderInterface {
     func authenticatePublisher(presentingViewController: UIViewController) -> AnyPublisher<AuthenticationProviderResponse, Error> {
         
         return authenticatePublisher()
-            .flatMap ({ (response: AppleAuthenticationResponse) -> AnyPublisher<AuthenticationProviderResponse, Error> in
+            .flatMap({ (response: AppleAuthenticationResponse) -> AnyPublisher<AuthenticationProviderResponse, Error> in
                 
                 if response.isCancelled {
                     return Fail(error: NSError.userCancelledError())
