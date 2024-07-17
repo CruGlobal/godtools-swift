@@ -9,6 +9,7 @@
 import Foundation
 import GodToolsToolParser
 import SwiftUI
+import LocalizationServices
 
 class GetUserActivityBadgeUseCase {
     
@@ -21,12 +22,12 @@ class GetUserActivityBadgeUseCase {
         self.localizationServices = localizationServices
     }
     
-    func getBadge(from godToolsSharedLibraryBadge: Badge) -> UserActivityBadgeDomainModel {
+    func getBadge(from godToolsSharedLibraryBadge: Badge, translatedInAppLanguage: AppLanguageDomainModel) -> UserActivityBadgeDomainModel {
         
         let badgeType = godToolsSharedLibraryBadge.type
         let variant = Int(godToolsSharedLibraryBadge.variant)
         
-        let badgeText = getBadgeText(badgeType: badgeType, progressTarget: Int(godToolsSharedLibraryBadge.progressTarget))
+        let badgeText = getBadgeText(badgeType: badgeType, progressTarget: Int(godToolsSharedLibraryBadge.progressTarget), translatedInAppLanguage: translatedInAppLanguage)
         let iconName = getIconImageName(badgeType: badgeType, variant: variant)
         
         let iconBackgroundColor = Color(godToolsSharedLibraryBadge.colors.containerColor(mode: .light))
@@ -46,7 +47,7 @@ class GetUserActivityBadgeUseCase {
         )
     }
     
-    private func getBadgeText(badgeType: Badge.BadgeType, progressTarget: Int) -> String {
+    private func getBadgeText(badgeType: Badge.BadgeType, progressTarget: Int, translatedInAppLanguage: AppLanguageDomainModel) -> String {
         
         let stringLocalizationKey: String
         
@@ -78,9 +79,14 @@ class GetUserActivityBadgeUseCase {
 
         }
         
-        let formatString = localizationServices.stringForMainBundle(key: stringLocalizationKey)
+        let formatString = localizationServices.stringForLocaleElseEnglish(
+            localeIdentifier: translatedInAppLanguage.localeId,
+            key: stringLocalizationKey
+        )
         
-        return String.localizedStringWithFormat(formatString, progressTarget)
+        let badgeText: String = String(format: formatString, locale: Locale(identifier: translatedInAppLanguage), progressTarget)
+        
+        return badgeText
     }
     
     private func getIconImageName(badgeType: Badge.BadgeType, variant: Int) -> String {

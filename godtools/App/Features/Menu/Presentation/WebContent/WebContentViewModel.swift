@@ -10,28 +10,28 @@ import Foundation
 
 class WebContentViewModel {
     
-    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
-    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
-    private let analytics: AnalyticsContainer
     private let webContent: WebContentType
     private let backTappedFromWebContentStep: FlowStep
+    private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     
     private weak var flowDelegate: FlowDelegate?
     
     let navTitle: ObservableValue<String> = ObservableValue(value: "")
     let url: ObservableValue<URL?> = ObservableValue(value: nil)
     
-    init(flowDelegate: FlowDelegate, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, analytics: AnalyticsContainer, webContent: WebContentType, backTappedFromWebContentStep: FlowStep) {
+    init(flowDelegate: FlowDelegate, webContent: WebContentType, backTappedFromWebContentStep: FlowStep, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
-        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
-        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
-        self.analytics = analytics
         self.webContent = webContent
         self.backTappedFromWebContentStep = backTappedFromWebContentStep
+        self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         
         navTitle.accept(value: webContent.navTitle)
         url.accept(value: webContent.url)
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
     }
     
     private var analyticsScreenName: String {
@@ -58,14 +58,12 @@ extension WebContentViewModel {
     
     func pageViewed() {
         
-        let trackScreen = TrackScreenModel(
+        trackScreenViewAnalyticsUseCase.trackScreen(
             screenName: analyticsScreenName,
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
-            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
-            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage
+            contentLanguage: nil,
+            contentLanguageSecondary: nil
         )
-        
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
     }
 }

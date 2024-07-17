@@ -63,7 +63,7 @@ class ToolTrainingView: UIViewController {
         
         viewModel.viewLoaded()
         
-        tipPagesNavigationView.delegate = self
+        tipPagesNavigationView.setDelegate(delegate: self)
         
         overlayButton.addTarget(self, action: #selector(handleOverlay(button:)), for: .touchUpInside)
         closeButton.addTarget(self, action: #selector(handleClose(button:)), for: .touchUpInside)

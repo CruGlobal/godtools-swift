@@ -7,16 +7,17 @@
 //
 
 import Foundation
+import LocalizationServices
 
 struct CopyrightInfoWebContent: WebContentType {
     
     let navTitle: String
-    let url: URL? = URL(string: "http://www.godtoolsapp.com/copyright")
+    let url: URL? = URL(string: "https://godtoolsapp.com/copyright")
     let analyticsScreenName: String = "Copyright Info"
     let analyticsSiteSection: String = "menu"
     
     init(localizationServices: LocalizationServices) {
         
-        navTitle = localizationServices.stringForMainBundle(key: "copyright_info")
+        navTitle = localizationServices.stringForSystemElseEnglish(key: "copyright_info")
     }
 }

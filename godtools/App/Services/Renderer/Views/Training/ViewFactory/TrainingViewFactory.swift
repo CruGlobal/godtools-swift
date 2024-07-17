@@ -11,10 +11,10 @@ import GodToolsToolParser
 
 class TrainingViewFactory: MobileContentPageViewFactoryType {
     
-    private let mobileContentAnalytics: MobileContentAnalytics
+    private let mobileContentAnalytics: MobileContentRendererAnalytics
     private let getTrainingTipCompletedUseCase: GetTrainingTipCompletedUseCase
             
-    init(mobileContentAnalytics: MobileContentAnalytics, getTrainingTipCompletedUseCase: GetTrainingTipCompletedUseCase) {
+    init(mobileContentAnalytics: MobileContentRendererAnalytics, getTrainingTipCompletedUseCase: GetTrainingTipCompletedUseCase) {
     
         self.mobileContentAnalytics = mobileContentAnalytics
         self.getTrainingTipCompletedUseCase = getTrainingTipCompletedUseCase

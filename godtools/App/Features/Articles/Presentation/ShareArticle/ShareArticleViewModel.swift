@@ -8,21 +8,19 @@
 
 import Foundation
 
-class ShareArticleViewModel: ShareArticleViewModelType {
+class ShareArticleViewModel {
     
-    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
-    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
-    private let analytics: AnalyticsContainer
     private let articleAemData: ArticleAemData
+    private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
+    private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     
     let shareMessage: String
     
-    init(articleAemData: ArticleAemData, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, analytics: AnalyticsContainer) {
+    init(articleAemData: ArticleAemData, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
         
-        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
-        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
-        self.analytics = analytics
         self.articleAemData = articleAemData
+        self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
+        self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         
         // shareUrlString
         var urlString: String = articleAemData.articleJcrContent?.canonical ?? ""
@@ -36,6 +34,10 @@ class ShareArticleViewModel: ShareArticleViewModelType {
         let shareUrlString: String = urlString.appending("?icid=gtshare")
         
         shareMessage = shareUrlString
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
     }
     
     private var analyticsScreenName: String {
@@ -52,30 +54,26 @@ class ShareArticleViewModel: ShareArticleViewModelType {
     
     func pageViewed() {
         
-        let trackScreen = TrackScreenModel(
+        trackScreenViewAnalyticsUseCase.trackScreen(
             screenName: analyticsScreenName,
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
-            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
-            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage
+            contentLanguage: nil,
+            contentLanguageSecondary: nil
         )
-        
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
     }
     
     func articleShared() {
                 
-        let trackAction = TrackActionModel(
+        trackActionAnalyticsUseCase.trackAction(
             screenName: analyticsScreenName,
             actionName: AnalyticsConstants.ActionNames.shareIconEngaged,
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
-            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
-            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage,
+            contentLanguage: nil,
+            contentLanguageSecondary: nil,
             url: nil,
             data: [AnalyticsConstants.Keys.shareAction: 1]
         )
-        
-        analytics.trackActionAnalytics.trackAction(trackAction: trackAction)
     }
 }

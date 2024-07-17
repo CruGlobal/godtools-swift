@@ -9,6 +9,7 @@
 import UIKit
 import GodToolsToolParser
 import Combine
+import LocalizationServices
 
 class ToolTrainingViewModel: NSObject {
     
@@ -17,10 +18,8 @@ class ToolTrainingViewModel: NSObject {
     private let trainingTipId: String
     private let tipModel: Tip
     private let setCompletedTrainingTipUseCase: SetCompletedTrainingTipUseCase
-    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
-    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
     private let getTrainingTipCompletedUseCase: GetTrainingTipCompletedUseCase
-    private let analytics: AnalyticsContainer
+    private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let localizationServices: LocalizationServices
     private let closeTappedClosure: (() -> Void)
     
@@ -34,17 +33,15 @@ class ToolTrainingViewModel: NSObject {
     let continueButtonTitle: ObservableValue<String> = ObservableValue(value: "")
     let numberOfTipPages: ObservableValue<Int> = ObservableValue(value: 0)
     
-    init(pageRenderer: MobileContentPageRenderer, renderedPageContext: MobileContentRenderedPageContext, trainingTipId: String, tipModel: Tip, setCompletedTrainingTipUseCase: SetCompletedTrainingTipUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getTrainingTipCompletedUseCase: GetTrainingTipCompletedUseCase, analytics: AnalyticsContainer, localizationServices: LocalizationServices, closeTappedClosure: @escaping (() -> Void)) {
+    init(pageRenderer: MobileContentPageRenderer, renderedPageContext: MobileContentRenderedPageContext, trainingTipId: String, tipModel: Tip, setCompletedTrainingTipUseCase: SetCompletedTrainingTipUseCase, getTrainingTipCompletedUseCase: GetTrainingTipCompletedUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, localizationServices: LocalizationServices, closeTappedClosure: @escaping (() -> Void)) {
         
         self.renderedPageContext = renderedPageContext
         self.pageRenderer = pageRenderer
         self.trainingTipId = trainingTipId
         self.tipModel = tipModel
         self.setCompletedTrainingTipUseCase = setCompletedTrainingTipUseCase
-        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
-        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.getTrainingTipCompletedUseCase = getTrainingTipCompletedUseCase
-        self.analytics = analytics
+        self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.localizationServices = localizationServices
         self.closeTappedClosure = closeTappedClosure
         
@@ -60,6 +57,10 @@ class ToolTrainingViewModel: NSObject {
         
         numberOfTipPages.accept(value: tipModel.pages.count)
         setPage(page: 0, animated: false)
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
     }
 
     private var resource: ResourceModel {
@@ -92,10 +93,10 @@ class ToolTrainingViewModel: NSObject {
         
         let continueTitle: String
         if page < (numberOfTipPages.value - 1) {
-            continueTitle = localizationServices.stringForMainBundle(key: "card_status2")
+            continueTitle = localizationServices.stringForLocaleElseEnglish(localeIdentifier: renderedPageContext.language.localeIdentifier, key: LocalizableStringKeys.cardNextButtonTitle.key)
         }
         else {
-            continueTitle = localizationServices.stringForMainBundle(key: "close")
+            continueTitle = localizationServices.stringForLocaleElseEnglish(localeIdentifier: renderedPageContext.language.localeIdentifier, key: LocalizableStringKeys.close.key)
         }
         continueButtonTitle.accept(value: continueTitle)
 
@@ -138,7 +139,7 @@ class ToolTrainingViewModel: NSObject {
             localizedTipTitle = ""
         }
         
-        let tipTitle: String = localizationServices.stringForMainBundle(key: localizedTipTitle)
+        let tipTitle: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: renderedPageContext.language.localeIdentifier, key: localizedTipTitle)
         
         trainingTipBackgroundImage.accept(value: UIImage(named: tipBackgroundImageName))
         trainingTipForegroundImage.accept(value: UIImage(named: tipImageName))
@@ -155,6 +156,7 @@ extension ToolTrainingViewModel {
         let trainingTipCompleted = TrainingTipDomainModel(trainingTipId: trainingTipId, resourceId: resource.id, languageId: language.id)
         
         setCompletedTrainingTipUseCase.setTrainingTipAsCompleted(tip: trainingTipCompleted)
+            .receive(on: DispatchQueue.main)
             .sink { _ in
                 
             } receiveValue: { _ in
@@ -183,16 +185,7 @@ extension ToolTrainingViewModel {
     
     func buttonWithUrlTapped(url: URL) {
         
-        let exitLink = ExitLinkModel(
-            screenName: getExitAnalyticsScreenName(),
-            siteSection: analyticsSiteSection,
-            siteSubSection: analyticsSiteSubSection,
-            contentLanguage: renderedPageContext.language.localeIdentifier,
-            secondaryContentLanguage: nil,
-            url: url
-        )
-        
-        renderedPageContext.navigation.buttonWithUrlTapped(url: url, exitLink: exitLink)
+        renderedPageContext.navigation.buttonWithUrlTapped(url: url, screenName: getExitAnalyticsScreenName(), siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection, contentLanguage: renderedPageContext.language.localeIdentifier)
     }
     
     func tipPageWillAppear(page: Int, window: UIViewController, safeArea: UIEdgeInsets) -> MobileContentView? {
@@ -201,7 +194,7 @@ extension ToolTrainingViewModel {
             return nil
         }
         
-        return pageRenderer.recurseAndRender(
+        return pageRenderer.viewRenderer.recurseAndRender(
             renderableModel: tipModel.pages[page],
             renderableModelParent: nil,
             renderedPageContext: renderedPageContext
@@ -216,14 +209,12 @@ extension ToolTrainingViewModel {
        
         setPage(page: page, animated: true)
         
-        let trackScreen = TrackScreenModel(
+        trackScreenViewAnalyticsUseCase.trackScreen(
             screenName: getTipPageAnalyticsScreenName(tipPage: page),
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
-            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
-            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage
+            contentLanguage: nil,
+            contentLanguageSecondary: nil
         )
-        
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
     }
 }

@@ -19,25 +19,30 @@ class MobileContentAuthTokenAPI {
     init(config: AppConfig, ignoreCacheSession: IgnoreCacheSession) {
         
         self.session = ignoreCacheSession.session
-        self.baseURL = config.mobileContentApiBaseUrl
+        self.baseURL = config.getMobileContentApiBaseUrl()
     }
     
     private func getAuthTokenRequest(providerToken: MobileContentAuthProviderToken, createUser: Bool) -> URLRequest {
         
-        var attributes: [String: Any] = [
-            "create_user": createUser
-        ]
+        var attributes: [String: Any] = Dictionary()
+        
+        attributes["create_user"] = createUser
         
         switch providerToken {
-        case .appleAuth(let authCode, let givenName, let familyName):
+        case .appleAuth(let authCode, let givenName, let familyName, let name):
             
             attributes["apple_auth_code"] = authCode
             attributes["apple_given_name"] = givenName
             attributes["apple_family_name"] = familyName
             
+            if let name = name {
+                attributes["apple_name"] = name
+            }
+            
         case .appleRefresh(let refreshToken):
             
             attributes["apple_refresh_token"] = refreshToken
+            attributes["create_user"] = nil // Will not provide create_user flag on apple refresh.
                         
         case .facebook(let accessToken):
             
@@ -69,29 +74,16 @@ class MobileContentAuthTokenAPI {
         )
     }
     
-    func fetchAuthTokenPublisher(providerToken: MobileContentAuthProviderToken, createUser: Bool) -> AnyPublisher<MobileContentAuthTokenDecodable, URLResponseError> {
+    func fetchAuthTokenPublisher(providerToken: MobileContentAuthProviderToken, createUser: Bool) -> AnyPublisher<MobileContentAuthTokenDecodable, MobileContentApiError> {
         
-        return session.dataTaskPublisher(for: getAuthTokenRequest(providerToken: providerToken, createUser: createUser))
-            .tryMap {
-                
-                let urlResponseObject = URLResponseObject(data: $0.data, urlResponse: $0.response)
-                
-                guard urlResponseObject.isSuccessHttpStatusCode else {
-                    
-                    throw URLResponseError.statusCode(urlResponseObject: urlResponseObject)
-                }
-                
-                return urlResponseObject.data
+        let urlRequest: URLRequest = getAuthTokenRequest(providerToken: providerToken, createUser: createUser)
+        
+        return session.sendAndDecodeUrlRequestPublisher(urlRequest: urlRequest)
+            .map { (response: JsonApiResponseData<MobileContentAuthTokenDecodable>) in
+                return response.data
             }
-            .mapError {
-                return URLResponseError.requestError(error: $0 as Error)
-            }
-            .decode(type: JsonApiResponseData<MobileContentAuthTokenDecodable>.self, decoder: JSONDecoder())
-            .mapError {
-                return URLResponseError.decodeError(error: $0)
-            }
-            .map {
-                return $0.data
+            .mapError { (error: Error) in
+                return error.decodeRequestOperationErrorToMobileContentApiError()
             }
             .eraseToAnyPublisher()
     }

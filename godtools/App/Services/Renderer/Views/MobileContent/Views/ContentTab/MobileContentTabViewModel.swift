@@ -12,9 +12,9 @@ import GodToolsToolParser
 class MobileContentTabViewModel: MobileContentViewModel {
     
     private let tabModel: Tabs.Tab
-    private let mobileContentAnalytics: MobileContentAnalytics
+    private let mobileContentAnalytics: MobileContentRendererAnalytics
     
-    init(tabModel: Tabs.Tab, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
+    init(tabModel: Tabs.Tab, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
         
         self.tabModel = tabModel
         self.mobileContentAnalytics = mobileContentAnalytics

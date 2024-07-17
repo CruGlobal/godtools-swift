@@ -15,9 +15,9 @@ class ArticleFlow: Flow {
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
-    let navigationController: UINavigationController
+    let navigationController: AppNavigationController
     
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController, toolTranslations: ToolTranslationsDomainModel) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, toolTranslations: ToolTranslationsDomainModel) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
@@ -31,14 +31,28 @@ class ArticleFlow: Flow {
             language: languageTranslationManifest.language,
             manifest: languageTranslationManifest.manifest,
             articleManifestAemRepository: appDiContainer.dataLayer.getArticleManifestAemRepository(),
-            manifestResourcesCache: appDiContainer.getManifestResourcesCache(),
-            localizationServices: appDiContainer.localizationServices,
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-            analytics: appDiContainer.dataLayer.getAnalytics()
+            manifestResourcesCache: appDiContainer.getMobileContentRendererManifestResourcesCache(),
+            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
+            incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase(),
+            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
+            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
         )
         
-        let view = ArticleCategoriesView(viewModel: viewModel)
+        let backButton = AppBackBarItem(
+            target: viewModel,
+            action: #selector(viewModel.backTapped),
+            accessibilityIdentifier: nil
+        )
+        
+        let view = ArticleCategoriesView(
+            viewModel: viewModel,
+            navigationBar: AppNavigationBar(
+                appearance: nil,
+                backButton: backButton,
+                leadingItems: [],
+                trailingItems: []
+            )
+        )
         
         sharedNavigationController.pushViewController(view, animated: true)
     }
@@ -76,9 +90,8 @@ class ArticleFlow: Flow {
             
             let viewModel = ShareArticleViewModel(
                 articleAemData: articleAemData,
-                getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-                getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-                analytics: appDiContainer.dataLayer.getAnalytics()
+                trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
+                trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
             )
             
             let view = ShareArticleView(viewModel: viewModel)
@@ -109,20 +122,28 @@ extension ArticleFlow {
             category: category,
             manifest: manifest,
             articleManifestAemRepository: appDiContainer.dataLayer.getArticleManifestAemRepository(),
-            localizationServices: appDiContainer.localizationServices,
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-            analytics: appDiContainer.dataLayer.getAnalytics(),
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
+            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             currentArticleDownloadReceipt: currentArticleDownloadReceipt
         )
         
-        let view = ArticlesView(viewModel: viewModel)
-        
-        _ = view.addDefaultNavBackItem(
+        let backButton = AppBackBarItem(
             target: viewModel,
-            action: #selector(viewModel.backTapped)
+            action: #selector(viewModel.backTapped),
+            accessibilityIdentifier: nil
         )
         
+        let view = ArticlesView(
+            viewModel: viewModel,
+            navigationBar: AppNavigationBar(
+                appearance: nil,
+                backButton: backButton,
+                leadingItems: [],
+                trailingItems: []
+            )
+        )
+                
         return view
     }
     
@@ -130,20 +151,43 @@ extension ArticleFlow {
         
         let viewModel = ArticleWebViewModel(
             flowDelegate: self,
+            flowType: .tool(resource: resource),
             aemCacheObject: aemCacheObject,
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase(),
             getAppUIDebuggingIsEnabledUseCase: appDiContainer.domainLayer.getAppUIDebuggingIsEnabledUseCase(),
-            analytics: appDiContainer.dataLayer.getAnalytics(),
-            flowType: .tool(resource: resource)
+            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase()
         )
         
-        let view = ArticleWebView(viewModel: viewModel)
-        
-        _ = view.addDefaultNavBackItem(
+        let backButton = AppBackBarItem(
             target: viewModel,
-            action: #selector(viewModel.backTapped)
+            action: #selector(viewModel.backTapped),
+            accessibilityIdentifier: nil
+        )
+        
+        let shareButton = AppShareBarItem(
+            color: nil,
+            target: viewModel,
+            action: #selector(viewModel.sharedTapped),
+            accessibilityIdentifier: nil,
+            hidesBarItemPublisher: viewModel.$hidesShareButton.eraseToAnyPublisher()
+        )
+        
+        let debugButton = AppDebugBarItem(
+            color: nil,
+            target: viewModel,
+            action: #selector(viewModel.debugTapped),
+            accessibilityIdentifier: nil,
+            hidesBarItemPublisher: viewModel.$hidesDebugButton.eraseToAnyPublisher()
+        )
+        
+        let view = ArticleWebView(
+            viewModel: viewModel,
+            navigationBar: AppNavigationBar(
+                appearance: nil,
+                backButton: backButton,
+                leadingItems: [],
+                trailingItems: [debugButton, shareButton]
+            )
         )
         
         return view
@@ -158,14 +202,21 @@ extension ArticleFlow {
         
         let view = ArticleDebugView(viewModel: viewModel)
         
-        let hostingView: UIHostingController<ArticleDebugView> = UIHostingController(rootView: view)
-        
-        _ = hostingView.addBarButtonItem(
-            to: .right,
-            image: ImageCatalog.navClose.uiImage,
+        let closeButton = AppCloseBarItem(
             color: nil,
             target: viewModel,
-            action: #selector(viewModel.closeTapped)
+            action: #selector(viewModel.closeTapped),
+            accessibilityIdentifier: nil
+        )
+        
+        let hostingView = AppHostingController<ArticleDebugView>(
+            rootView: view,
+            navigationBar: AppNavigationBar(
+                appearance: nil,
+                backButton: nil,
+                leadingItems: [],
+                trailingItems: [closeButton]
+            )
         )
         
         let modal = ModalNavigationController.defaultModal(rootView: hostingView, statusBarStyle: .default)

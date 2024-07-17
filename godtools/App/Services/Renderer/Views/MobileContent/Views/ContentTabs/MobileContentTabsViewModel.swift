@@ -13,7 +13,7 @@ class MobileContentTabsViewModel: MobileContentViewModel {
     
     private let tabsModel: Tabs
         
-    init(tabsModel: Tabs, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
+    init(tabsModel: Tabs, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
         
         self.tabsModel = tabsModel
         

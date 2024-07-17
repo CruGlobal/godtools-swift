@@ -12,28 +12,35 @@ import Combine
 
 class ToolDetailsViewModel: ObservableObject {
     
-    private let resourcesRepository: ResourcesRepository
-    private let translationsRepository: TranslationsRepository
+    typealias ToolId = String
+    
+    private static var toggleToolFavoritedCancellables: Dictionary<ToolId, AnyCancellable?> = Dictionary()
+    
+    private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
+    private let viewToolDetailsUseCase: ViewToolDetailsUseCase
     private let getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase
-    private let addToolToFavoritesUseCase: AddToolToFavoritesUseCase
-    private let removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase
-    private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
-    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
-    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
-    private let getToolLanguagesUseCase: GetToolLanguagesUseCase
-    private let localizationServices: LocalizationServices
-    private let analytics: AnalyticsContainer
-    private let getToolTranslationsFilesUseCase: GetToolTranslationsFilesUseCase
-    private let getToolVersionsUseCase: GetToolVersionsUseCase
-    private let getBannerImageUseCase: GetBannerImageUseCase
+    private let getToolDetailsLearnToShareToolIsAvailableUseCase: GetToolDetailsLearnToShareToolIsAvailableUseCase
+    private let toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase
+    private let attachmentsRepository: AttachmentsRepository
+    private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
+    private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
+    private let primaryLanguage: AppLanguageDomainModel
+    private let parallelLanguage: AppLanguageDomainModel?
+    private let selectedLanguageIndex: Int?
     
     private var segmentTypes: [ToolDetailsSegmentType] = Array()
-    private var resource: ResourceModel
-    private var mediaCancellable: AnyCancellable?
-    private var toolIsFavoritedCancellable: AnyCancellable?
-    private var hidesLearnToShareCancellable: AnyCancellable?
+    private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
+    
+    @Published private var toolId: String {
+        willSet {
+            showsLearnToShareToolButton = false
+        }
+    }
+    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    @Published private var analyticsToolAbbreviation: String = ""
+    @Published private var didViewPage: Void?
     
     @Published var mediaType: ToolDetailsMediaDomainModel = .empty
     @Published var name: String = ""
@@ -42,196 +49,187 @@ class ToolDetailsViewModel: ObservableObject {
     @Published var learnToShareToolButtonTitle: String = ""
     @Published var addToFavoritesButtonTitle: String = ""
     @Published var removeFromFavoritesButtonTitle: String = ""
-    @Published var hidesLearnToShareToolButton: Bool = true
+    @Published var showsLearnToShareToolButton: Bool = false
     @Published var isFavorited: Bool = false
     @Published var segments: [String] = Array()
     @Published var selectedSegment: ToolDetailsSegmentType = .about
-    @Published var aboutDetails: String = ""
+    @Published var aboutDescription: String = ""
     @Published var conversationStartersTitle: String = ""
     @Published var conversationStartersContent: String = ""
     @Published var outlineTitle: String = ""
     @Published var outlineContent: String = ""
     @Published var bibleReferencesTitle: String = ""
     @Published var bibleReferencesContent: String = ""
-    @Published var availableLanguagesTitle: String = ""
-    @Published var availableLanguagesList: String = ""
-    @Published var versionsMessage: String = ""
+    @Published var languagesAvailableTitle: String = ""
+    @Published var languagesAvailable: String = ""
+    @Published var versionsDescription: String = ""
     @Published var toolVersions: [ToolVersionDomainModel] = Array()
     @Published var selectedToolVersion: ToolVersionDomainModel?
     
-    init(flowDelegate: FlowDelegate, resource: ResourceModel, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase, addToolToFavoritesUseCase: AddToolToFavoritesUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getToolLanguagesUseCase: GetToolLanguagesUseCase, localizationServices: LocalizationServices, analytics: AnalyticsContainer, getToolTranslationsFilesUseCase: GetToolTranslationsFilesUseCase, getToolVersionsUseCase: GetToolVersionsUseCase, getBannerImageUseCase: GetBannerImageUseCase) {
+    init(flowDelegate: FlowDelegate, toolId: String, primaryLanguage: AppLanguageDomainModel, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewToolDetailsUseCase: ViewToolDetailsUseCase, getToolDetailsMediaUseCase: GetToolDetailsMediaUseCase, getToolDetailsLearnToShareToolIsAvailableUseCase: GetToolDetailsLearnToShareToolIsAvailableUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase, attachmentsRepository: AttachmentsRepository, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+        
+        let primaryLanguage: AppLanguageDomainModel = primaryLanguage
+        let parallelLanguage: AppLanguageDomainModel? = parallelLanguage != primaryLanguage ? parallelLanguage : nil
         
         self.flowDelegate = flowDelegate
-        self.resource = resource
-        self.resourcesRepository = resourcesRepository
-        self.translationsRepository = translationsRepository
+        self.toolId = toolId
+        self.primaryLanguage = primaryLanguage
+        self.parallelLanguage = parallelLanguage
+        self.selectedLanguageIndex = selectedLanguageIndex
+        self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
+        self.viewToolDetailsUseCase = viewToolDetailsUseCase
         self.getToolDetailsMediaUseCase = getToolDetailsMediaUseCase
-        self.addToolToFavoritesUseCase = addToolToFavoritesUseCase
-        self.removeToolFromFavoritesUseCase = removeToolFromFavoritesUseCase
-        self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
-        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
-        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
-        self.getToolLanguagesUseCase = getToolLanguagesUseCase
-        self.localizationServices = localizationServices
-        self.analytics = analytics
-        self.getToolTranslationsFilesUseCase = getToolTranslationsFilesUseCase
-        self.getToolVersionsUseCase = getToolVersionsUseCase
-        self.getBannerImageUseCase = getBannerImageUseCase
+        self.getToolDetailsLearnToShareToolIsAvailableUseCase = getToolDetailsLearnToShareToolIsAvailableUseCase
+        self.toggleToolFavoritedUseCase = toggleToolFavoritedUseCase
+        self.attachmentsRepository = attachmentsRepository
+        self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
+        self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         
-        self.versionsMessage = localizationServices.stringForMainBundle(key: "toolDetails.versions.message")
+        getCurrentAppLanguageUseCase
+            .getLanguagePublisher()
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$appLanguage)
         
-        reloadToolDetails(resource: resource)
+        Publishers.CombineLatest(
+            $didViewPage,
+            $analyticsToolAbbreviation.dropFirst()
+        )
+        .flatMap({ [weak self] (pageViewed: Void?, analyticsToolAbbreviation: String) -> AnyPublisher<Void, Never> in
+            
+            guard !analyticsToolAbbreviation.isEmpty, pageViewed != nil, let weakSelf = self else {
+                return Just(())
+                    .eraseToAnyPublisher()
+            }
+            
+            weakSelf.didViewPage = nil
+            
+            trackScreenViewAnalyticsUseCase.trackScreen(
+                screenName: weakSelf.getAnalyticsScreenName(analyticsToolAbbreviation: analyticsToolAbbreviation),
+                siteSection: weakSelf.getAnalyticsScreenName(analyticsToolAbbreviation: analyticsToolAbbreviation),
+                siteSubSection: weakSelf.analyticsSiteSubSection,
+                contentLanguage: nil,
+                contentLanguageSecondary: nil
+            )
+            
+            return Just(())
+                .eraseToAnyPublisher()
+        })
+        .receive(on: DispatchQueue.main)
+        .sink { (void: Void) in
+            
+        }
+        .store(in: &cancellables)
+        
+        Publishers.CombineLatest(
+            $toolId,
+            $appLanguage.dropFirst()
+        )
+        .map { (toolId: String, appLanguage: AppLanguageDomainModel) in
+            
+            return viewToolDetailsUseCase
+                .viewPublisher(toolId: toolId, translateInLanguage: appLanguage, toolPrimaryLanguage: primaryLanguage, toolParallelLanguage: parallelLanguage)
+                .eraseToAnyPublisher()
+        }
+        .switchToLatest()
+        .receive(on: DispatchQueue.main)
+        .sink(receiveValue: { [weak self] (domainModel: ViewToolDetailsDomainModel) in
+            
+            self?.analyticsToolAbbreviation = domainModel.toolDetails.analyticsToolAbbreviation
+            
+            self?.openToolButtonTitle = domainModel.interfaceStrings.openToolButtonTitle
+            self?.learnToShareToolButtonTitle = domainModel.interfaceStrings.learnToShareThisToolButtonTitle
+            self?.addToFavoritesButtonTitle = domainModel.interfaceStrings.addToFavoritesButtonTitle
+            self?.removeFromFavoritesButtonTitle = domainModel.interfaceStrings.removeFromFavoritesButtonTitle
+            self?.conversationStartersTitle = domainModel.interfaceStrings.conversationStartersTitle
+            self?.outlineTitle = domainModel.interfaceStrings.outlineTitle
+            self?.bibleReferencesTitle = domainModel.interfaceStrings.bibleReferencesTitle
+            self?.languagesAvailableTitle = domainModel.interfaceStrings.languagesAvailableTitle
+            
+            self?.toolVersions = domainModel.toolDetails.versions
+            self?.name = domainModel.toolDetails.name
+            self?.totalViews = domainModel.toolDetails.numberOfViews
+            self?.isFavorited = domainModel.toolDetails.isFavorited
+            self?.aboutDescription = domainModel.toolDetails.aboutDescription
+            self?.conversationStartersContent = domainModel.toolDetails.conversationStarters
+            self?.bibleReferencesContent = domainModel.toolDetails.bibleReferences
+            self?.languagesAvailable = domainModel.toolDetails.languagesAvailable
+            self?.versionsDescription = domainModel.toolDetails.versionsDescription
+            
+            var segmentTypes: [ToolDetailsSegmentType] = Array()
+            segmentTypes.append(.about)
+            if !domainModel.toolDetails.versions.isEmpty {
+                segmentTypes.append(.versions)
+            }
+            
+            self?.segmentTypes = segmentTypes
+            
+            self?.segments = segmentTypes.map({
+                switch $0 {
+                case .about:
+                    return domainModel.interfaceStrings.aboutButtonTitle
+                case .versions:
+                    return domainModel.interfaceStrings.versionsButtonTitle
+                }
+            })
+            
+            if self?.selectedToolVersion == nil {
+                self?.selectedToolVersion = domainModel.toolDetails.versions.filter({$0.id == self?.toolId}).first
+            }
+        })
+        .store(in: &cancellables)
+        
+        $toolId
+            .map { (toolId: String) in
+                
+                getToolDetailsMediaUseCase
+                    .getMediaPublisher(toolId: toolId)
+            }
+            .switchToLatest()
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$mediaType)
+        
+        $toolId
+            .map { (toolId: String) in
+                
+                getToolDetailsLearnToShareToolIsAvailableUseCase
+                    .getIsAvailablePublisher(toolId: toolId, language: primaryLanguage)
+            }
+            .switchToLatest()
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$showsLearnToShareToolButton)
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
     }
     
-    private var analyticsScreenName: String {
-        return resource.abbreviation + "-tool-info"
+    private func getAnalyticsScreenName(analyticsToolAbbreviation: String) -> String {
+        return analyticsToolAbbreviation + "-tool-info"
     }
     
-    private var siteSection: String {
-        return resource.abbreviation
+    private func getAnalyticsSiteSection(analyticsToolAbbreviation: String) -> String {
+        return analyticsToolAbbreviation
     }
     
-    private var siteSubSection: String {
+    private var analyticsSiteSubSection: String {
         return "tool-info"
     }
     
-    private func reloadToolDetails(resource: ResourceModel) {
+    private func trackToolVersionTappedAnalytics(toolVersion: ToolVersionDomainModel) {
         
-        self.resource = resource
-        
-        let nameValue: String
-        let aboutDetailsValue: String
-        let languageBundle: Bundle
-        
-        if let primaryLanguage = getSettingsPrimaryLanguageUseCase.getPrimaryLanguage(), let primaryTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageId: primaryLanguage.id) {
-            
-            nameValue = primaryTranslation.translatedName
-            aboutDetailsValue = primaryTranslation.translatedDescription
-            bibleReferencesContent = primaryTranslation.toolDetailsBibleReferences
-            conversationStartersContent = primaryTranslation.toolDetailsConversationStarters
-            outlineContent = primaryTranslation.toolDetailsOutline
-            languageBundle = localizationServices.bundleLoader.bundleForResource(resourceName: primaryLanguage.localeIdentifier) ?? Bundle.main
-        }
-        else if let englishTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageCode: "en") {
-            
-            nameValue = englishTranslation.translatedName
-            aboutDetailsValue = englishTranslation.translatedDescription
-            bibleReferencesContent = englishTranslation.toolDetailsBibleReferences
-            conversationStartersContent = englishTranslation.toolDetailsConversationStarters
-            outlineContent = englishTranslation.toolDetailsOutline
-            languageBundle = localizationServices.bundleLoader.englishBundle ?? Bundle.main
-        }
-        else {
-            
-            nameValue = resource.name
-            aboutDetailsValue = resource.resourceDescription
-            languageBundle = localizationServices.bundleLoader.englishBundle ?? Bundle.main
-        }
-                
-        name = nameValue
-        totalViews = String.localizedStringWithFormat(localizationServices.stringForBundle(bundle: languageBundle, key: "total_views"), resource.totalViews)
-        openToolButtonTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "toolinfo_opentool")
-        learnToShareToolButtonTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "toolDetails.learnToShareToolButton.title")
-        addToFavoritesButtonTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "add_to_favorites")
-        removeFromFavoritesButtonTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "remove_from_favorites")
-        aboutDetails = aboutDetailsValue
-        conversationStartersTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "toolDetails.conversationStarters.title")
-        outlineTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "toolDetails.outline.title")
-        bibleReferencesTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "toolDetails.bibleReferences.title")
-        availableLanguagesTitle = localizationServices.stringForBundle(bundle: languageBundle, key: "toolSettings.languagesAvailable.title")
-                        
-        availableLanguagesList = getToolLanguagesUseCase.getToolLanguages(resource: resource).map({$0.translatedName}).sorted(by: { $0 < $1 }).joined(separator: ", ")
-        
-        segmentTypes = [.about, .versions].filter({
-            if $0 == .versions && resource.metatoolId == nil {
-                return false
-            }
-            return true
-        })
-        
-        segments = segmentTypes.map({
-            switch $0 {
-            case .about:
-                return localizationServices.stringForBundle(bundle: languageBundle, key: "toolDetails.about.title")
-            case .versions:
-                return localizationServices.stringForBundle(bundle: languageBundle, key: "toolDetails.versions.title")
-            }
-        })
-        
-        reloadLearnToShareToolButtonState(resourceId: resource.id)
-        
-        if let metatoolId = resource.metatoolId {
-            toolVersions = getToolVersionsUseCase.getToolVersions(resourceId: metatoolId)
-        }
-        
-        if selectedToolVersion == nil {
-            selectedToolVersion = toolVersions.filter({$0.id == resource.id}).first
-        }
-        
-        mediaCancellable = getToolDetailsMediaUseCase.getMedia(resource: resource)
-            .receive(on: DispatchQueue.main)
-            .assign(to: \.mediaType, on: self)
-        
-        toolIsFavoritedCancellable = getToolIsFavoritedUseCase.getToolIsFavoritedPublisher(toolId: resource.id)
-            .receive(on: DispatchQueue.main)
-            .assign(to: \.isFavorited, on: self)
-    }
-    
-    private func reloadLearnToShareToolButtonState(resourceId: String) {
-        
-        guard let primaryLanguage = getSettingsPrimaryLanguageUseCase.getPrimaryLanguage() else {
-            return
-        }
-        
-        let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(
-            resourceId: resourceId,
-            languageIds: [primaryLanguage.id],
-            resourcesRepository: resourcesRepository,
-            translationsRepository: translationsRepository
-        )
-        
-        hidesLearnToShareCancellable = getToolTranslationsFilesUseCase.getToolTranslationsFilesPublisher(filter: .downloadManifestForTipsCount, determineToolTranslationsToDownload: determineToolTranslationsToDownload, downloadStarted: {
-            
-        })
-        .receive(on: DispatchQueue.main)
-        .sink(receiveCompletion: { completed in
-                        
-        }, receiveValue: { [weak self] (toolTranslations: ToolTranslationsDomainModel) in
-            
-            let hidesLearnToShareToolButtonValue: Bool
-            
-            if let manifest = toolTranslations.languageTranslationManifests.first?.manifest {
-                hidesLearnToShareToolButtonValue = !manifest.hasTips
-            }
-            else {
-                hidesLearnToShareToolButtonValue = true
-            }
-            
-            self?.hidesLearnToShareToolButton = hidesLearnToShareToolButtonValue
-        })
-    }
-    
-    private func trackToolVersionTappedAnalytics(for tool: ResourceModel) {
-        
-        let trackAction = TrackActionModel(
-            screenName: analyticsScreenName,
+        trackActionAnalyticsUseCase.trackAction(
+            screenName: getAnalyticsScreenName(analyticsToolAbbreviation: toolVersion.analyticsToolAbbreviation),
             actionName: AnalyticsConstants.ActionNames.openDetails,
             siteSection: "",
             siteSubSection: "",
-            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
-            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage,
+            contentLanguage: nil,
+            contentLanguageSecondary: nil,
             url: nil,
             data: [
                 AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.versions,
-                AnalyticsConstants.Keys.tool: tool.abbreviation
+                AnalyticsConstants.Keys.tool: toolVersion.analyticsToolAbbreviation
             ]
         )
-        
-        analytics.trackActionAnalytics.trackAction(trackAction: trackAction)
     }
 }
 
@@ -239,53 +237,50 @@ class ToolDetailsViewModel: ObservableObject {
 
 extension ToolDetailsViewModel {
     
+    @objc func backTapped() {
+        
+        flowDelegate?.navigate(step: .backTappedFromToolDetails)
+    }
+    
     func pageViewed() {
         
-        let trackScreen = TrackScreenModel(
-            screenName: analyticsScreenName,
-            siteSection: siteSection,
-            siteSubSection: siteSubSection,
-            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
-            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage
-        )
-        
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
+        didViewPage = ()
     }
     
     func openToolTapped() {
         
-        let trackAction = TrackActionModel(
-            screenName: analyticsScreenName,
+        trackActionAnalyticsUseCase.trackAction(
+            screenName: getAnalyticsScreenName(analyticsToolAbbreviation: analyticsToolAbbreviation),
             actionName: AnalyticsConstants.ActionNames.toolOpened,
-            siteSection: siteSection,
-            siteSubSection: siteSubSection,
-            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
-            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage,
+            siteSection: getAnalyticsSiteSection(analyticsToolAbbreviation: analyticsToolAbbreviation),
+            siteSubSection: analyticsSiteSubSection,
+            contentLanguage: nil,
+            contentLanguageSecondary: nil,
             url: nil,
             data: [
                 AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.toolDetails,
-                AnalyticsConstants.Keys.tool: resource.abbreviation
+                AnalyticsConstants.Keys.tool: analyticsToolAbbreviation
             ]
         )
         
-        analytics.trackActionAnalytics.trackAction(trackAction: trackAction)
-
-        flowDelegate?.navigate(step: .openToolTappedFromToolDetails(resource: resource))
+        flowDelegate?.navigate(step: .openToolTappedFromToolDetails(toolId: toolId, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, selectedLanguageIndex: selectedLanguageIndex))
     }
     
     func learnToShareToolTapped() {
         
-        flowDelegate?.navigate(step: .learnToShareToolTappedFromToolDetails(resource: resource))
+        flowDelegate?.navigate(step: .learnToShareToolTappedFromToolDetails(toolId: toolId, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, selectedLanguageIndex: selectedLanguageIndex))
     }
     
     func toggleFavorited() {
         
-        if isFavorited {
-            removeToolFromFavoritesUseCase.removeToolFromFavorites(resourceId: resource.id)
-        }
-        else {
-            addToolToFavoritesUseCase.addToolToFavorites(resourceId: resource.id)
-        }
+        let toolId: String = self.toolId
+        
+        ToolDetailsViewModel.toggleToolFavoritedCancellables[toolId] = toggleToolFavoritedUseCase
+            .toggleFavoritedPublisher(toolId: toolId)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] (domainModel: ToolIsFavoritedDomainModel) in
+                self?.isFavorited = domainModel.isFavorited
+            })
     }
     
     func segmentTapped(index: Int) {
@@ -294,36 +289,24 @@ extension ToolDetailsViewModel {
     }
     
     func urlTapped(url: URL) {
-                
-        let exitLink = ExitLinkModel(
-            screenName: analyticsScreenName,
-            siteSection: siteSection,
-            siteSubSection: siteSubSection,
-            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage ?? "",
-            secondaryContentLanguage: nil,
-            url: url
-        )
-        
-        flowDelegate?.navigate(step: .urlLinkTappedFromToolDetail(url: url, exitLink: exitLink))
+           
+        flowDelegate?.navigate(step: .urlLinkTappedFromToolDetail(url: url, screenName: getAnalyticsScreenName(analyticsToolAbbreviation: analyticsToolAbbreviation), siteSection: getAnalyticsSiteSection(analyticsToolAbbreviation: analyticsToolAbbreviation), siteSubSection: analyticsSiteSubSection, contentLanguage: nil, contentLanguageSecondary: nil))
     }
     
     func toolVersionTapped(toolVersion: ToolVersionDomainModel) {
         
-        guard let resource = resourcesRepository.getResource(id: toolVersion.dataModelId) else {
-            return
-        }
-        
+        toolId = toolVersion.dataModelId
+            
         selectedToolVersion = toolVersion
 
-        trackToolVersionTappedAnalytics(for: resource)
-        reloadToolDetails(resource: resource)
+        trackToolVersionTappedAnalytics(toolVersion: toolVersion)
     }
     
     func toolVersionCardWillAppear(toolVersion: ToolVersionDomainModel) -> ToolDetailsVersionsCardViewModel {
         
         return ToolDetailsVersionsCardViewModel(
             toolVersion: toolVersion,
-            getBannerImageUseCase: getBannerImageUseCase,
+            attachmentsRepository: attachmentsRepository,
             isSelected: selectedToolVersion?.id == toolVersion.id
         )
     }

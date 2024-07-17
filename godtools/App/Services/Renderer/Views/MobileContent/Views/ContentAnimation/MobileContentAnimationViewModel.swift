@@ -13,10 +13,10 @@ class MobileContentAnimationViewModel: MobileContentViewModel {
     
     private let animationModel: Animation
     
-    let mobileContentAnalytics: MobileContentAnalytics
+    let mobileContentAnalytics: MobileContentRendererAnalytics
     let animatedViewModel: AnimatedViewModel?
     
-    init(animationModel: Animation, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
+    init(animationModel: Animation, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
         
         self.animationModel = animationModel
         self.mobileContentAnalytics = mobileContentAnalytics
@@ -29,7 +29,7 @@ class MobileContentAnimationViewModel: MobileContentViewModel {
             
             case .success(let fileUrl):
                 animatedViewModel = AnimatedViewModel(
-                    animationDataResource: .filepathJsonFile(filepath: fileUrl.path),
+                    animationDataResource: .deviceFileManagerfilepathJsonFile(filepath: fileUrl.path),
                     autoPlay: animationModel.autoPlay,
                     loop: animationModel.loop
                 )

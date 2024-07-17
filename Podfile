@@ -13,19 +13,20 @@ use_frameworks!
 def shared_pods
   
   # CruGlobal pods
-  pod 'GodToolsShared', '0.9.1'
+  pod 'GodToolsShared', '1.0.1'
 end
 
 target 'godtools' do
-        
-    pod 'GoogleConversionTracking', '~> 3.4.0'
-    pod 'Fuzi', '~> 3.1.1'
-    pod 'Starscream', '~> 4.0.0'
-    
+            
     shared_pods
 end
 
 target 'godtoolsTests' do
+      
+  shared_pods
+end
+
+target 'godtoolsUITests' do
     
   shared_pods
 end

@@ -21,6 +21,10 @@ class RealmLanguage: Object, LanguageModelType {
         return "id"
     }
     
+    // Backlink to the resource. This is automatically updated whenever this language is added to or removed from a resource's languages list. ~Levi
+    // (https://www.mongodb.com/docs/realm/sdk/swift/model-data/relationships/)
+    let resource = LinkingObjects(fromType: RealmResource.self, property: "languages")
+    
     func mapFrom(model: LanguageModel) {
         
         code = model.code

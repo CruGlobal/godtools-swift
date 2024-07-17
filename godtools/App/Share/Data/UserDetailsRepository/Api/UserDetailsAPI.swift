@@ -19,27 +19,24 @@ class UserDetailsAPI {
     
     init(config: AppConfig, ignoreCacheSession: IgnoreCacheSession, mobileContentApiAuthSession: MobileContentApiAuthSession) {
         
-        self.baseURL = config.mobileContentApiBaseUrl
+        self.baseURL = config.getMobileContentApiBaseUrl()
         self.ignoreCacheSession = ignoreCacheSession.session
         self.authSession = mobileContentApiAuthSession
     }
     
-    func fetchUserDetailsPublisher() -> AnyPublisher<UserDetailsDataModel, URLResponseError> {
+    func fetchUserDetailsPublisher() -> AnyPublisher<MobileContentApiUsersMeCodable, Error> {
         
-        let urlRequest = getUserDetailsRequest()
+        let urlRequest: URLRequest = getAuthUserDetailsRequest()
         
         return authSession.sendAuthenticatedRequest(urlRequest: urlRequest, urlSession: ignoreCacheSession)
-            .decode(type: JsonApiResponseData<UserDetailsDataModel>.self, decoder: JSONDecoder())
-            .mapError {
-                return URLResponseError.decodeError(error: $0)
-            }
+            .decode(type: JsonApiResponseData<MobileContentApiUsersMeCodable>.self, decoder: JSONDecoder())
             .map {
                 return $0.data
             }
             .eraseToAnyPublisher()
     }
     
-    private func getUserDetailsRequest() -> URLRequest {
+    private func getAuthUserDetailsRequest() -> URLRequest {
         
         let headers: [String: String] = [
             "Content-Type": "application/vnd.api+json"
@@ -55,7 +52,7 @@ class UserDetailsAPI {
         )
     }
     
-    func deleteAuthorizedUserDetailsPublisher() -> AnyPublisher<Void, URLResponseError> {
+    func deleteAuthUserDetailsPublisher() -> AnyPublisher<Void, Error> {
         
         let urlRequest = getDeleteAuthorizedUserDetailsRequest()
         

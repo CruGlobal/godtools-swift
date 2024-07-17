@@ -18,9 +18,15 @@ struct AccountSectionsView: View {
     
     @State private var selectedSegmentIndex: Int = 0
     
-    @ObservedObject var viewModel: AccountViewModel
+    @ObservedObject private var viewModel: AccountViewModel
     
     let geometry: GeometryProxy
+    
+    init(viewModel: AccountViewModel, geometry: GeometryProxy) {
+        
+        self.viewModel = viewModel
+        self.geometry = geometry
+    }
     
     var body: some View {
         

@@ -12,15 +12,13 @@ import SwiftUI
 
 class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
     
-    private let mobileContentAnalytics: MobileContentAnalytics
-    private let fontService: FontService
-    private let analytics: AnalyticsContainer
+    private let mobileContentAnalytics: MobileContentRendererAnalytics
+    private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
         
-    required init(mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, analytics: AnalyticsContainer) {
+    init(mobileContentAnalytics: MobileContentRendererAnalytics, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
         
         self.mobileContentAnalytics = mobileContentAnalytics
-        self.fontService = fontService
-        self.analytics = analytics
+        self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
     }
     
     func viewForRenderableModel(renderableModel: AnyObject, renderableModelParent: AnyObject?, renderedPageContext: MobileContentRenderedPageContext) -> MobileContentView? {
@@ -63,8 +61,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             let viewModel = MobileContentButtonViewModel(
                 buttonModel: buttonModel,
                 renderedPageContext: renderedPageContext,
-                mobileContentAnalytics: mobileContentAnalytics,
-                fontService: fontService
+                mobileContentAnalytics: mobileContentAnalytics
             )
 
             let view = MobileContentButtonView(viewModel: viewModel)
@@ -88,8 +85,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             let viewModel = MobileContentLinkViewModel(
                 linkModel: linkModel,
                 renderedPageContext: renderedPageContext,
-                mobileContentAnalytics: mobileContentAnalytics,
-                fontService: fontService
+                mobileContentAnalytics: mobileContentAnalytics
             )
             
             let view = MobileContentLinkView(viewModel: viewModel)
@@ -114,7 +110,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 contentPage: contentPage,
                 renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics,
-                analytics: analytics
+                trackScreenViewAnalyticsUseCase: trackScreenViewAnalyticsUseCase
             )
             
             let view = MobileContentContentPageView(viewModel: viewModel, contentInsets: .zero, itemSpacing: 20)
@@ -127,7 +123,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 cardCollectionPage: cardCollectionPage,
                 renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics,
-                analytics: analytics
+                trackScreenViewAnalyticsUseCase: trackScreenViewAnalyticsUseCase
             )
             
             let view = MobileContentCardCollectionPageView(viewModel: viewModel)
@@ -214,8 +210,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             let viewModel = MobileContentInputViewModel(
                 inputModel: inputModel,
                 renderedPageContext: renderedPageContext,
-                mobileContentAnalytics: mobileContentAnalytics,
-                fontService: fontService
+                mobileContentAnalytics: mobileContentAnalytics
             )
             
             let view = MobileContentInputView(viewModel: viewModel)
@@ -339,8 +334,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         let viewModel = MobileContentTextViewModel(
             textModel: textModel,
             renderedPageContext: renderedPageContext,
-            mobileContentAnalytics: mobileContentAnalytics,
-            fontService: fontService
+            mobileContentAnalytics: mobileContentAnalytics
         )
         
         let view = MobileContentTextView(

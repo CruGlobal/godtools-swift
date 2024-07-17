@@ -12,7 +12,7 @@ class MobileContentPagePositionState: MobileContentViewPositionState {
     
     let scrollVerticalContentOffsetPercentageOfContentSize: CGFloat
     
-    required init(scrollVerticalContentOffsetPercentageOfContentSize: CGFloat) {
+    init(scrollVerticalContentOffsetPercentageOfContentSize: CGFloat) {
         
         self.scrollVerticalContentOffsetPercentageOfContentSize = scrollVerticalContentOffsetPercentageOfContentSize
     }

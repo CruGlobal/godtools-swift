@@ -12,37 +12,56 @@ import Combine
 
 class ToolDetailsVersionsCardViewModel: ObservableObject {
     
-    private let getBannerImageUseCase: GetBannerImageUseCase
+    private let toolVersion: ToolVersionDomainModel
+    private let attachmentsRepository: AttachmentsRepository
     
-    private var cancellables = Set<AnyCancellable>()
+    private var getBannerImageCancellable: AnyCancellable?
     
-    @Published var bannerImage: Image?
+    @Published var bannerImageData: OptionalImageData?
     
     let isSelected: Bool
     let name: String
     let description: String
     let languages: String
-    let primaryLanguageName: String?
-    let primaryLanguageIsSupported: Bool
-    let parallelLanguageName: String?
-    let parallelLanguageIsSupported: Bool
+    let toolLanguageName: String?
+    let toolLanguageNameIsSupported: Bool
+    let toolParallelLanguageName: String?
+    let toolParallelLanguageNameIsSupported: Bool?
     
-    init(toolVersion: ToolVersionDomainModel, getBannerImageUseCase: GetBannerImageUseCase, isSelected: Bool) {
+    init(toolVersion: ToolVersionDomainModel, attachmentsRepository: AttachmentsRepository, isSelected: Bool) {
         
-        self.getBannerImageUseCase = getBannerImageUseCase
+        self.toolVersion = toolVersion
+        self.attachmentsRepository = attachmentsRepository
         self.isSelected = isSelected
         
         name = toolVersion.name
         description = toolVersion.description
-        languages = toolVersion.numberOfLanguagesString
-        primaryLanguageName = toolVersion.primaryLanguage
-        primaryLanguageIsSupported = toolVersion.primaryLanguageIsSupported
-        parallelLanguageName = toolVersion.parallelLanguage
-        parallelLanguageIsSupported = toolVersion.parallelLanguageIsSupported
+        languages = toolVersion.numberOfLanguages
+        toolLanguageName = toolVersion.toolLanguageName
+        toolLanguageNameIsSupported = toolVersion.toolLanguageNameIsSupported
+        toolParallelLanguageName = toolVersion.toolParallelLanguageName
+        toolParallelLanguageNameIsSupported = toolVersion.toolParallelLanguageNameIsSupported
         
-        getBannerImageUseCase.getBannerImagePublisher(for: toolVersion.bannerImageId)
-            .receive(on: DispatchQueue.main)
-            .assign(to: \.bannerImage, on: self)
-            .store(in: &cancellables)
+        downloadBannerImage()
+    }
+    
+    private func downloadBannerImage() {
+        
+        getBannerImageCancellable = nil
+        
+        let attachmentId: String = toolVersion.bannerImageId
+        
+        if let cachedImage = attachmentsRepository.getAttachmentImageFromCache(id: attachmentId) {
+            
+            bannerImageData = OptionalImageData(image: cachedImage, imageIdForAnimationChange: attachmentId)
+        }
+        else {
+            
+            getBannerImageCancellable = attachmentsRepository.getAttachmentImagePublisher(id: attachmentId)
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] (image: Image?) in
+                    self?.bannerImageData = OptionalImageData(image: image, imageIdForAnimationChange: attachmentId)
+                }
+        }
     }
 }

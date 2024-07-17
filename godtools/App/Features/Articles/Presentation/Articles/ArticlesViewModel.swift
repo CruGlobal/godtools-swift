@@ -8,6 +8,8 @@
 
 import Foundation
 import GodToolsToolParser
+import Combine
+import LocalizationServices
 
 class ArticlesViewModel: NSObject {
     
@@ -18,14 +20,15 @@ class ArticlesViewModel: NSObject {
     private let category: GodToolsToolParser.Category
     private let manifest: Manifest
     private let articleManifestAemRepository: ArticleManifestAemRepository
+    private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let localizationServices: LocalizationServices
-    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
-    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
-    private let analytics: AnalyticsContainer
+    private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
         
     private var articleAemCacheObjects: [ArticleAemCacheObject] = Array()
     private var continueArticleDownloadReceipt: ArticleManifestDownloadArticlesReceipt?
     private var downloadArticlesReceipt: ArticleManifestDownloadArticlesReceipt?
+    private var cancellables: Set<AnyCancellable> = Set()
+    private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -34,7 +37,7 @@ class ArticlesViewModel: NSObject {
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
     let errorMessage: ObservableValue<ArticlesErrorMessageViewModel?> = ObservableValue(value: nil)
         
-    init(flowDelegate: FlowDelegate, resource: ResourceModel, language: LanguageDomainModel, category: GodToolsToolParser.Category, manifest: Manifest, articleManifestAemRepository: ArticleManifestAemRepository, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, analytics: AnalyticsContainer, currentArticleDownloadReceipt: ArticleManifestDownloadArticlesReceipt?) {
+    init(flowDelegate: FlowDelegate, resource: ResourceModel, language: LanguageDomainModel, category: GodToolsToolParser.Category, manifest: Manifest, articleManifestAemRepository: ArticleManifestAemRepository, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, localizationServices: LocalizationServices, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, currentArticleDownloadReceipt: ArticleManifestDownloadArticlesReceipt?) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -42,10 +45,9 @@ class ArticlesViewModel: NSObject {
         self.category = category
         self.manifest = manifest
         self.articleManifestAemRepository = articleManifestAemRepository
+        self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.localizationServices = localizationServices
-        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
-        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
-        self.analytics = analytics
+        self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.continueArticleDownloadReceipt = currentArticleDownloadReceipt
         
         super.init()
@@ -54,15 +56,27 @@ class ArticlesViewModel: NSObject {
 
         let cachedArticleAemUris: [AemUri] = getCachedArticleAemUris()
         
-        reloadArticlesFromCache(aemUris: cachedArticleAemUris, completionOnMainThread: { [weak self] in
-            
-            if let continueArticleDownloadReceipt = self?.continueArticleDownloadReceipt {
-                self?.continueArticlesDownload(downloadArticlesReceipt: continueArticleDownloadReceipt)
+        getCurrentAppLanguageUseCase
+            .getLanguagePublisher()
+            .flatMap(maxPublishers: .max(1)) {
+                return Just($0)
             }
-            else if cachedArticleAemUris.isEmpty {
-                self?.downloadArticles(forceDownload: true)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (appLanguage: AppLanguageDomainModel) in
+                
+                self?.appLanguage = appLanguage
+                
+                self?.reloadArticlesFromCache(appLanguage: appLanguage, aemUris: cachedArticleAemUris, completionOnMainThread: { [weak self] in
+                    
+                    if let continueArticleDownloadReceipt = self?.continueArticleDownloadReceipt {
+                        self?.continueArticlesDownload(appLanguage: appLanguage, downloadArticlesReceipt: continueArticleDownloadReceipt)
+                    }
+                    else if cachedArticleAemUris.isEmpty {
+                        self?.downloadArticles(appLanguage: appLanguage, forceDownload: true)
+                    }
+                })
             }
-        })
+            .store(in: &cancellables)
     }
     
     deinit {
@@ -87,7 +101,7 @@ class ArticlesViewModel: NSObject {
         return numberOfArticles.value == 0
     }
     
-    private func continueArticlesDownload(downloadArticlesReceipt: ArticleManifestDownloadArticlesReceipt) {
+    private func continueArticlesDownload(appLanguage: AppLanguageDomainModel, downloadArticlesReceipt: ArticleManifestDownloadArticlesReceipt) {
         
         if shouldShowLoadingIndicator {
             isLoading.accept(value: true)
@@ -105,12 +119,12 @@ class ArticlesViewModel: NSObject {
             
             DispatchQueue.main.async {
                 self?.continueArticleDownloadReceipt?.removeAllObserversFrom(object: weakSelf)
-                self?.handleCompleteArticlesDownload(result: result)
+                self?.handleCompleteArticlesDownload(appLanguage: appLanguage, result: result)
             }
         }
     }
     
-    private func downloadArticles(forceDownload: Bool) {
+    private func downloadArticles(appLanguage: AppLanguageDomainModel, forceDownload: Bool) {
         
         if downloadArticlesReceipt != nil {
             return
@@ -122,21 +136,21 @@ class ArticlesViewModel: NSObject {
         
         errorMessage.accept(value: nil)
         
-        downloadArticlesReceipt = articleManifestAemRepository.downloadAndCacheManifestAemUris(manifest: manifest, languageCode: language.localeIdentifier, forceDownload: forceDownload) { [weak self] (result: ArticleAemRepositoryResult) in
+        downloadArticlesReceipt = articleManifestAemRepository.downloadAndCacheManifestAemUrisReceipt(manifest: manifest, languageCode: language.localeIdentifier, forceDownload: forceDownload) { [weak self] (result: ArticleAemRepositoryResult) in
             self?.downloadArticlesReceipt = nil
             DispatchQueue.main.async { [weak self] in
-                self?.handleCompleteArticlesDownload(result: result)
+                self?.handleCompleteArticlesDownload(appLanguage: appLanguage, result: result)
             }
         }
     }
     
-    private func handleCompleteArticlesDownload(result: ArticleAemRepositoryResult) {
+    private func handleCompleteArticlesDownload(appLanguage: AppLanguageDomainModel, result: ArticleAemRepositoryResult) {
                 
         isLoading.accept(value: false)
         
         let cachedArticleAemUris: [AemUri] = getCachedArticleAemUris()
         
-        reloadArticlesFromCache(aemUris: cachedArticleAemUris, completionOnMainThread: { [weak self] in
+        reloadArticlesFromCache(appLanguage: appLanguage, aemUris: cachedArticleAemUris, completionOnMainThread: { [weak self] in
             
             guard let weakSelf = self else {
                 return
@@ -145,11 +159,13 @@ class ArticlesViewModel: NSObject {
             if let downloadError = result.downloaderResult.downloadError, cachedArticleAemUris.isEmpty {
                 
                 let downloadArticlesErrorViewModel = DownloadArticlesErrorViewModel(
+                    appLanguage: appLanguage,
                     localizationServices: weakSelf.localizationServices,
                     error: downloadError
                 )
                 
                 let errorViewModel = ArticlesErrorMessageViewModel(
+                    appLanguage: appLanguage,
                     localizationServices: weakSelf.localizationServices,
                     message: downloadArticlesErrorViewModel.message
                 )
@@ -186,7 +202,7 @@ class ArticlesViewModel: NSObject {
         return aemUris.sorted()
     }
     
-    private func reloadArticlesFromCache(aemUris: [AemUri], completionOnMainThread: @escaping (() -> Void)) {
+    private func reloadArticlesFromCache(appLanguage: AppLanguageDomainModel, aemUris: [AemUri], completionOnMainThread: @escaping (() -> Void)) {
         
         articleManifestAemRepository.getAemCacheObjectsOnBackgroundThread(aemUris: aemUris) { [weak self] (aemCacheObjects: [ArticleAemCacheObject]) in
             
@@ -221,15 +237,13 @@ extension ArticlesViewModel {
     
     func pageViewed() {
         
-        let trackScreen = TrackScreenModel(
+        trackScreenViewAnalyticsUseCase.trackScreen(
             screenName: analyticsScreenName,
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
-            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
-            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage
+            contentLanguage: nil,
+            contentLanguageSecondary: nil
         )
-        
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
     }
     
     func articleTapped(index: Int) {
@@ -247,6 +261,6 @@ extension ArticlesViewModel {
     }
     
     func downloadArticlesTapped() {
-        downloadArticles(forceDownload: true)
+        downloadArticles(appLanguage: appLanguage, forceDownload: true)
     }
 }

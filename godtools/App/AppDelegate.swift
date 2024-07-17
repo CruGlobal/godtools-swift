@@ -14,9 +14,9 @@ import FirebaseDynamicLinks
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-            
+               
     private lazy var appBuild: AppBuild = {
-       AppBuild(infoPlist: infoPlist)
+        AppBuild(buildConfiguration: infoPlist.getAppBuildConfiguration())
     }()
     
     private lazy var appConfig: AppConfig = {
@@ -43,6 +43,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppFlow(appDiContainer: appDiContainer, appDeepLinkingService: appDeepLinkingService)
     }()
     
+    private var toolShortcutLinks: ToolShortcutLinksView?
+    
     var window: UIWindow?
     
     static func getWindow() -> UIWindow? {
@@ -54,7 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-            
+                            
         let appConfig: AppConfig = appDiContainer.dataLayer.getAppConfig()
         
         if appBuild.configuration == .analyticsLogging {
@@ -67,28 +69,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             GodToolsParserLogger.shared.start()
         }
                 
-        appDiContainer.dataLayer.getSharedAppsFlyer().configure(configuration: appConfig.appsFlyerConfiguration, deepLinkDelegate: self)
+        appDiContainer.dataLayer.getSharedAppsFlyer().configure(configuration: appConfig.getAppsFlyerConfiguration(), deepLinkDelegate: self)
         
         appDiContainer.dataLayer.getAnalytics().firebaseAnalytics.configure()
         
         appDiContainer.dataLayer.getAnalytics().appsFlyerAnalytics.configure()
         
-        appDiContainer.getGoogleAdwordsAnalytics().recordAdwordsConversion()
-        
         ConfigureFacebookOnAppLaunch.configure(
             application: application,
             launchOptions: launchOptions,
-            configuration: appConfig.facebookConfig
+            configuration: appConfig.getFacebookConfiguration()
         )
-                
+               
         // window
         let window: UIWindow = UIWindow(frame: UIScreen.main.bounds)
         window.backgroundColor = UIColor.white
-        window.rootViewController = appFlow.rootController
+        window.rootViewController = appFlow.getInitialView()
         window.makeKeyAndVisible()
         self.window = window
         
         application.registerForRemoteNotifications()
+        
+        let uiTestsDeepLinkString: String? = ProcessInfo.processInfo.environment[LaunchEnvironmentKey.urlDeeplink.value]
+                
+        if let uiTestsDeepLinkString = uiTestsDeepLinkString, !uiTestsDeepLinkString.isEmpty,
+           let url = URL(string: uiTestsDeepLinkString) {
+            
+            _ = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
+        }
         
         return true
     }
@@ -125,7 +133,17 @@ extension AppDelegate {
     
     private func reloadShortcutItems(application: UIApplication) {
         
-        application.shortcutItems = appDiContainer.domainLayer.getShortcutItemsUseCase().getShortcutItems()
+        let viewModel = ToolShortcutLinksViewModel(
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            viewToolShortcutLinksUseCase: appDiContainer.feature.toolShortcutLinks.domainLayer.getViewToolShortcutLinksUseCase()
+        )
+            
+        let view = ToolShortcutLinksView(
+            application: application,
+            viewModel: viewModel
+        )   
+        
+        toolShortcutLinks = view
     }
 }
 
@@ -156,44 +174,34 @@ extension AppDelegate {
 extension AppDelegate {
     
     func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
-                
-        guard let shortcutItemType = ShortcutItemType.shortcutItemType(shortcutItem: shortcutItem) else {
-            completionHandler(false)
-            return
-        }
-        
+               
         let successfullyHandledQuickAction: Bool
         
-        switch shortcutItemType {
+        if let toolDeepLinkUrlString = ToolShortcutLinksView.getToolDeepLinkUrl(shortcutItem: shortcutItem),
+           let toolDeepLinkUrl = URL(string: toolDeepLinkUrlString) {
             
-        case .tool:
+            let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase = appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
             
-            let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase = appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase()
-            let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase = appDiContainer.domainLayer.getSettingsParallelLanguageUseCase()
-            
-            let trackAction = TrackActionModel(
+            trackActionAnalyticsUseCase.trackAction(
                 screenName: "",
                 actionName: AnalyticsConstants.ActionNames.toolOpenedShortcut,
                 siteSection: "",
                 siteSubSection: "",
-                contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
-                secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage,
+                contentLanguage: nil,
+                contentLanguageSecondary: nil,
                 url: nil,
                 data: [
                     AnalyticsConstants.Keys.toolOpenedShortcutCountKey: 1
                 ]
             )
             
-            appDiContainer.dataLayer.getAnalytics().trackActionAnalytics.trackAction(trackAction: trackAction)
-            
-            if let tractUrl = ToolShortcutItem.getTractUrl(shortcutItem: shortcutItem) {
-                successfullyHandledQuickAction = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: tractUrl)))
-            }
-            else {
-                successfullyHandledQuickAction = false
-            }
+            successfullyHandledQuickAction = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: toolDeepLinkUrl)))
         }
-        
+        else {
+            
+            successfullyHandledQuickAction = false
+        }
+
         completionHandler(successfullyHandledQuickAction)
     }
 }

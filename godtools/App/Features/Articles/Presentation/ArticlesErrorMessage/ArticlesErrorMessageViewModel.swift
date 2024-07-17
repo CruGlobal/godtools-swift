@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import LocalizationServices
 
 class ArticlesErrorMessageViewModel {
     
@@ -14,10 +15,14 @@ class ArticlesErrorMessageViewModel {
     let message: String
     let downloadArticlesButtonTitle: String
     
-    required init(localizationServices: LocalizationServices, message: String) {
+    init(appLanguage: AppLanguageDomainModel, localizationServices: LocalizationServices, message: String) {
         
-        title = localizationServices.stringForMainBundle(key: "download_error")
+        title = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.downloadError.key)
         self.message = message
-        downloadArticlesButtonTitle = localizationServices.stringForMainBundle(key: "articles.downloadArticlesButton.title.retryDownload")
+        downloadArticlesButtonTitle = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.articlesRetryDownloadButtonTitle.key)
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
     }
 }

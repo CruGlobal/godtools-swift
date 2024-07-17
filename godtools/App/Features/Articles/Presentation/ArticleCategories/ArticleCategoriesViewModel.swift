@@ -9,28 +9,32 @@
 import Foundation
 import RealmSwift
 import GodToolsToolParser
+import Combine
+import LocalizationServices
 
-class ArticleCategoriesViewModel: NSObject {
+class ArticleCategoriesViewModel {
         
     private let resource: ResourceModel
     private let language: LanguageDomainModel
     private let manifest: Manifest
     private let articleManifestAemRepository: ArticleManifestAemRepository
     private let localizationServices: LocalizationServices
-    private let manifestResourcesCache: ManifestResourcesCache
-    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
-    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
-    private let analytics: AnalyticsContainer
+    private let manifestResourcesCache: MobileContentRendererManifestResourcesCache
+    private let incrementUserCounterUseCase: IncrementUserCounterUseCase
+    private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
+    private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     
     private var categories: [GodToolsToolParser.Category] = Array()
     private var downloadArticlesReceipt: ArticleManifestDownloadArticlesReceipt?
+    private var cancellables = Set<AnyCancellable>()
+    private var pageViewCount: Int = 0
     
     private weak var flowDelegate: FlowDelegate?
     
     let numberOfCategories: ObservableValue<Int> = ObservableValue(value: 0)
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
         
-    init(flowDelegate: FlowDelegate, resource: ResourceModel, language: LanguageDomainModel, manifest: Manifest, articleManifestAemRepository: ArticleManifestAemRepository, manifestResourcesCache: ManifestResourcesCache, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, analytics: AnalyticsContainer) {
+    init(flowDelegate: FlowDelegate, resource: ResourceModel, language: LanguageDomainModel, manifest: Manifest, articleManifestAemRepository: ArticleManifestAemRepository, manifestResourcesCache: MobileContentRendererManifestResourcesCache, localizationServices: LocalizationServices, incrementUserCounterUseCase: IncrementUserCounterUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -39,12 +43,10 @@ class ArticleCategoriesViewModel: NSObject {
         self.articleManifestAemRepository = articleManifestAemRepository
         self.manifestResourcesCache = manifestResourcesCache
         self.localizationServices = localizationServices
-        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
-        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
-        self.analytics = analytics
-        
-        super.init()
-                                            
+        self.incrementUserCounterUseCase = incrementUserCounterUseCase
+        self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
+        self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
+                                                    
         reloadCategories()
         
         downloadArticles(forceDownload: false)
@@ -83,7 +85,7 @@ class ArticleCategoriesViewModel: NSObject {
         
         isLoading.accept(value: true)
         
-        downloadArticlesReceipt = articleManifestAemRepository.downloadAndCacheManifestAemUris(manifest: manifest, languageCode: language.localeIdentifier, forceDownload: forceDownload, completion: { [weak self] (result: ArticleAemRepositoryResult) in
+        downloadArticlesReceipt = articleManifestAemRepository.downloadAndCacheManifestAemUrisReceipt(manifest: manifest, languageCode: language.localeIdentifier, forceDownload: forceDownload, completion: { [weak self] (result: ArticleAemRepositoryResult) in
             
             DispatchQueue.main.async { [weak self] in
                 self?.isLoading.accept(value: false)
@@ -96,18 +98,33 @@ class ArticleCategoriesViewModel: NSObject {
 
 extension ArticleCategoriesViewModel {
     
+    @objc func backTapped() {
+        flowDelegate?.navigate(step: .backTappedFromArticleCategories)
+    }
+    
     func pageViewed() {
         
-        let trackScreen = TrackScreenModel(
+        if pageViewCount == 0 {
+            
+            incrementUserCounterUseCase.incrementUserCounter(for: .toolOpen(tool: resource.id))
+                .receive(on: DispatchQueue.main)
+                .sink { _ in
+                    
+                } receiveValue: { _ in
+                    
+                }
+                .store(in: &cancellables)
+        }
+        
+        trackScreenViewAnalyticsUseCase.trackScreen(
             screenName: analyticsScreenName,
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
-            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
-            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage
+            contentLanguage: nil,
+            contentLanguageSecondary: nil
         )
-        
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
-        analytics.appsFlyerAnalytics.trackAction(actionName: analyticsScreenName, data: nil)
+                
+        pageViewCount += 1
     }
     
     func categoryWillAppear(index: Int) -> ArticleCategoryCellViewModel {
@@ -129,9 +146,5 @@ extension ArticleCategoriesViewModel {
     
     func refreshArticles() {
         downloadArticles(forceDownload: true)
-    }
-    
-    func backButtonTapped() {
-        flowDelegate?.navigate(step: .backTappedFromArticleCategories)
     }
 }

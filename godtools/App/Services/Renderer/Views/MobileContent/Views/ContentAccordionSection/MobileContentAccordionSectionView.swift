@@ -161,6 +161,20 @@ class MobileContentAccordionSectionView: MobileContentView, NibBased {
     override var heightConstraintType: MobileContentViewHeightConstraintType {
         return .constrainedToChildren
     }
+    
+    override func getPositionState() -> MobileContentViewPositionState {
+        
+        return MobileContentAccordionSectionPositionState(contentIsHidden: contentIsHidden)
+    }
+    
+    override func setPositionState(positionState: MobileContentViewPositionState, animated: Bool) {
+        
+        guard let positionState = positionState as? MobileContentAccordionSectionPositionState else {
+            return
+        }
+        
+        setContentHidden(hidden: positionState.contentIsHidden, animated: false)
+    }
 }
 
 // MARK: - Header Text

@@ -19,35 +19,29 @@ class UserCountersAPI: UserCountersAPIType {
     
     init(config: AppConfig, ignoreCacheSession: IgnoreCacheSession, mobileContentApiAuthSession: MobileContentApiAuthSession) {
         
-        self.baseURL = config.mobileContentApiBaseUrl
+        self.baseURL = config.getMobileContentApiBaseUrl()
         self.ignoreCacheSession = ignoreCacheSession.session
         self.authSession = mobileContentApiAuthSession
     }
     
-    func fetchUserCountersPublisher() -> AnyPublisher<[UserCounterDecodable], URLResponseError> {
+    func fetchUserCountersPublisher() -> AnyPublisher<[UserCounterDecodable], Error> {
         
         let fetchRequest = getUserCountersRequest()
         
         return authSession.sendAuthenticatedRequest(urlRequest: fetchRequest, urlSession: ignoreCacheSession)
             .decode(type: JsonApiResponseData<[UserCounterDecodable]>.self, decoder: JSONDecoder())
-            .mapError {
-                return URLResponseError.decodeError(error: $0)
-            }
             .map {
                 return $0.data
             }
             .eraseToAnyPublisher()
     }
     
-    func incrementUserCounterPublisher(id: String, increment: Int) -> AnyPublisher<UserCounterDecodable, URLResponseError> {
+    func incrementUserCounterPublisher(id: String, increment: Int) -> AnyPublisher<UserCounterDecodable, Error> {
         
         let incrementRequest = getIncrementUserCountersRequest(id: id, increment: increment)
         
         return authSession.sendAuthenticatedRequest(urlRequest: incrementRequest, urlSession: ignoreCacheSession)
             .decode(type: JsonApiResponseData<UserCounterDecodable>.self, decoder: JSONDecoder())
-            .mapError {
-                return URLResponseError.decodeError(error: $0)
-            }
             .map {
                 return $0.data
             }

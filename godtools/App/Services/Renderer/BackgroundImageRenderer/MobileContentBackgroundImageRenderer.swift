@@ -11,7 +11,7 @@ import GodToolsToolParser
 
 class MobileContentBackgroundImageRenderer: MobileContentBackgroundImageRendererType {
     
-    required init() {
+    init() {
         
     }
     

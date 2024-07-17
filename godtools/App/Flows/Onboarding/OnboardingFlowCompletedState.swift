@@ -10,7 +10,5 @@ import Foundation
 
 enum OnboardingFlowCompletedState {
     
-    case readArticles
-    case tryLessons
-    case chooseTool
+    case completed
 }

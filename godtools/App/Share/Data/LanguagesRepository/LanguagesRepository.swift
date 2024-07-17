@@ -8,6 +8,7 @@
 
 import Foundation
 import Combine
+import RealmSwift
 
 class LanguagesRepository {
     
@@ -44,19 +45,20 @@ class LanguagesRepository {
         return cache.getLanguages(languageCodes: languageCodes)
     }
     
-    func getLanguages() -> [LanguageModel] {
-        return cache.getLanguages()
+    func getLanguages(realm: Realm? = nil) -> [LanguageModel] {
+        return cache.getLanguages(realm: realm)
     }
     
-    func syncLanguagesFromRemote() -> AnyPublisher<RealmLanguagesCacheSyncResult, URLResponseError> {
+    func getLanguagesPublisher() -> AnyPublisher<[LanguageModel], Never> {
+        return cache.getLanguagesPublisher()
+    }
+    
+    func syncLanguagesFromRemote() -> AnyPublisher<RealmLanguagesCacheSyncResult, Error> {
         
         return api.getLanguages()
-            .flatMap({ languages -> AnyPublisher<RealmLanguagesCacheSyncResult, URLResponseError> in
+            .flatMap({ languages -> AnyPublisher<RealmLanguagesCacheSyncResult, Error> in
                 
                 return self.cache.syncLanguages(languages: languages)
-                    .mapError { error in
-                        return .otherError(error: error)
-                    }
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
@@ -64,7 +66,7 @@ class LanguagesRepository {
     
     func syncLanguagesFromJsonFileCache() -> AnyPublisher<RealmLanguagesCacheSyncResult, Error> {
         
-        return LanguagesJsonFileCache().getLanguages().publisher
+        return LanguagesJsonFileCache(jsonServices: JsonServices()).getLanguages().publisher
             .flatMap({ languages -> AnyPublisher<RealmLanguagesCacheSyncResult, Error> in
                 
                 return self.cache.syncLanguages(languages: languages)

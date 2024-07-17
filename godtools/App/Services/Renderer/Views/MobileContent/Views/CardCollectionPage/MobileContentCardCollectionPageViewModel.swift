@@ -12,14 +12,21 @@ import GodToolsToolParser
 class MobileContentCardCollectionPageViewModel: MobileContentPageViewModel {
     
     private let cardCollectionPage: CardCollectionPage
-    private let analytics: AnalyticsContainer
+    private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
+    
+    let numberOfCards: Int
         
-    init(cardCollectionPage: CardCollectionPage, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics, analytics: AnalyticsContainer) {
+    init(cardCollectionPage: CardCollectionPage, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
         
         self.cardCollectionPage = cardCollectionPage
-        self.analytics = analytics
+        self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
+        self.numberOfCards = cardCollectionPage.cards.count
         
         super.init(pageModel: cardCollectionPage, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics, hidesBackgroundImage: false)
+    }
+    
+    var layoutDirection: ApplicationLayoutDirection {
+        return renderedPageContext.primaryLanguageLayoutDirection
     }
     
     private func getPageAnalyticsScreenName() -> String {
@@ -82,27 +89,34 @@ extension MobileContentCardCollectionPageViewModel {
     
     func pageDidAppear() {
         
-        let trackScreen = TrackScreenModel(
+        trackScreenViewAnalyticsUseCase.trackScreen(
             screenName: getPageAnalyticsScreenName(),
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
             contentLanguage: renderedPageContext.language.localeIdentifier,
-            secondaryContentLanguage: nil
+            contentLanguageSecondary: nil
         )
+    }
+    
+    func cardWillAppear(card: Int) -> MobileContentView? {
         
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
+        let view: MobileContentView? = renderedPageContext.viewRenderer.recurseAndRender(
+            renderableModel: cardCollectionPage.cards[card],
+            renderableModelParent: nil,
+            renderedPageContext: renderedPageContext
+        )
+                
+        return view
     }
     
     func cardDidAppear(card: Int) {
         
-        let trackScreen = TrackScreenModel(
+        trackScreenViewAnalyticsUseCase.trackScreen(
             screenName: getCardAnalyticsScreenName(card: card),
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
             contentLanguage: renderedPageContext.language.localeIdentifier,
-            secondaryContentLanguage: nil
-        )
-        
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
+            contentLanguageSecondary: nil
+        )        
     }
 }

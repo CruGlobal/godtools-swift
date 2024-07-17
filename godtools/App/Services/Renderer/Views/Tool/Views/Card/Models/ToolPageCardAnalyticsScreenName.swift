@@ -14,7 +14,7 @@ class ToolPageCardAnalyticsScreenName {
     
     let screenName: String
     
-    required init(cardPosition: Int) {
+    init(cardPosition: Int) {
         
         if cardPosition >= 0 && cardPosition < ToolPageCardAnalyticsScreenName.screenNames.count {
             screenName = ToolPageCardAnalyticsScreenName.screenNames[cardPosition]

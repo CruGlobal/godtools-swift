@@ -15,7 +15,7 @@ class MobileContentSpacerViewModel: MobileContentViewModel {
     
     let height: MobileContentSpacerHeight
     
-    init(spacerModel: Spacer, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
+    init(spacerModel: Spacer, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
         
         self.spacerModel = spacerModel
         

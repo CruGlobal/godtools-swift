@@ -11,14 +11,21 @@ import Combine
 
 class ResourcesJsonFileCache {
     
-    init() {
+    private let jsonServices: JsonServices
+    
+    init(jsonServices: JsonServices) {
         
+        self.jsonServices = jsonServices
     }
     
     func getResourcesPlusLatestTranslationsAndAttachments() -> Result<ResourcesPlusLatestTranslationsAndAttachmentsModel, Error> {
         
-        let jsonServices: JsonServices = JsonServices()
-        let result: Result<Data?, Error> = jsonServices.getJsonData(fileName: "resources")
+        return parseResourcesJsonFromBundle(fileName: "resources")
+    }
+    
+    func parseResourcesJsonFromBundle(fileName: String) -> Result<ResourcesPlusLatestTranslationsAndAttachmentsModel, Error> {
+        
+        let result: Result<Data?, Error> = jsonServices.getJsonData(fileName: fileName)
         
         switch result {
             

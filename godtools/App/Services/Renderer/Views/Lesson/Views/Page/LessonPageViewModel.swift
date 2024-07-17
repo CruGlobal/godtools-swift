@@ -12,15 +12,15 @@ import GodToolsToolParser
 class LessonPageViewModel: MobileContentPageViewModel {
     
     private let pageModel: Page
-    private let analytics: AnalyticsContainer
-    private let visibleAnalyticsEventsObjects: [MobileContentAnalyticsEvent]
+    private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
+    private let visibleAnalyticsEventsObjects: [MobileContentRendererAnalyticsEvent]
     
-    init(pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics) {
+    init(pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, mobileContentAnalytics: MobileContentRendererAnalytics) {
             
         self.pageModel = pageModel
-        self.analytics = analytics
+        self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         
-        self.visibleAnalyticsEventsObjects = MobileContentAnalyticsEvent.initAnalyticsEvents(
+        self.visibleAnalyticsEventsObjects = MobileContentRendererAnalyticsEvent.initAnalyticsEvents(
             analyticsEvents: pageModel.getAnalyticsEvents(type: .visible),
             mobileContentAnalytics: mobileContentAnalytics,
             renderedPageContext: renderedPageContext
@@ -37,15 +37,13 @@ extension LessonPageViewModel {
     func pageDidAppear() {
         
         super.viewDidAppear(visibleAnalyticsEvents: visibleAnalyticsEventsObjects)
-                
-        let trackScreenModel = TrackScreenModel(
+          
+        trackScreenViewAnalyticsUseCase.trackScreen(
             screenName: analyticsScreenName,
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
             contentLanguage: renderedPageContext.language.localeIdentifier,
-            secondaryContentLanguage: nil
+            contentLanguageSecondary: nil
         )
-        
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreenModel)
     }
 }

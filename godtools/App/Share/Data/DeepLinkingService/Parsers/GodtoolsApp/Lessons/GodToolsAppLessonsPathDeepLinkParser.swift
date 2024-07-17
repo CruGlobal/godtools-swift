@@ -43,7 +43,8 @@ class GodToolsAppLessonsPathDeepLinkParser: DeepLinkUrlParserType {
             parallelLanguageCodes: [],
             liveShareStream: nil,
             page: nil,
-            pageId: nil
+            pageId: nil,
+            selectedLanguageIndex: nil
         )
                        
         return .tool(toolDeepLink: toolDeepLink)

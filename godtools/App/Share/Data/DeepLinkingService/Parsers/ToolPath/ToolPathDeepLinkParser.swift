@@ -76,7 +76,8 @@ class ToolPathDeepLinkParser: DeepLinkUrlParserType {
                 parallelLanguageCodes: [],
                 liveShareStream: nil,
                 page: pageNumber,
-                pageId: pageId
+                pageId: pageId,
+                selectedLanguageIndex: nil
             )
         )
     }

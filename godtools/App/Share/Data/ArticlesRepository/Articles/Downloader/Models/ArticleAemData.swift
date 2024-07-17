@@ -10,16 +10,18 @@ import Foundation
 
 struct ArticleAemData: ArticleAemDataType {
     
+    private let htmlExtension: String = "html"
+    private let internalWebUrl: String
+    
     let aemUri: String
     let articleJcrContent: ArticleJcrContent?
-    let webUrl: String
     let updatedAt: Date
     
     init(aemUri: String, articleJcrContent: ArticleJcrContent?, webUrl: String, updatedAt: Date) {
         
         self.aemUri = aemUri
         self.articleJcrContent = articleJcrContent
-        self.webUrl = webUrl
+        self.internalWebUrl = webUrl
         self.updatedAt = updatedAt
     }
     
@@ -33,7 +35,11 @@ struct ArticleAemData: ArticleAemDataType {
             articleJcrContent = nil
         }
         
-        webUrl = realmModel.webUrl
+        internalWebUrl = realmModel.webUrl
         updatedAt = realmModel.updatedAt
+    }
+    
+    var webUrl: String {
+        return internalWebUrl.replacingOccurrences(of: "/.\(htmlExtension)", with: ".\(htmlExtension)")        
     }
 }

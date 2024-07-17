@@ -9,99 +9,115 @@
 import SwiftUI
 
 struct DashboardView: View {
-    
-    @ObservedObject var viewModel: DashboardViewModel
-    
-    private static let marginMultiplier: CGFloat = 15/375
+        
+    static let contentHorizontalInsets: CGFloat = 16
+    static let toolCardVerticalSpacing: CGFloat = 15
+    static let scrollViewBottomSpacingToTabBar: CGFloat = 30
+        
+    @ObservedObject private var viewModel: DashboardViewModel
     
     init(viewModel: DashboardViewModel) {
+       
         self.viewModel = viewModel
-        
     }
     
     var body: some View {
-        GeometryReader { geo in
+        
+        GeometryReader { geometry in
             
-            let leadingTrailingPadding = DashboardView.getMargin(for: geo.size.width)
-            
-            VStack(spacing: 0) {
-
-                tabView(padding: leadingTrailingPadding)
-
-                DashboardTabBarView(viewModel: viewModel)
+            VStack(alignment: .center, spacing: 0) {
+                
+                if viewModel.tabs.count > 0 {
+                 
+                    TabView(selection: $viewModel.currentTab) {
+                        
+                        Group {
+                            
+                            if ApplicationLayout.shared.layoutDirection == .rightToLeft {
+                                
+                                ForEach((0 ..< viewModel.tabs.count).reversed(), id: \.self) { index in
+                                    
+                                    getDashboardPageView(index: index)
+                                        .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
+                                        .tag(index)
+                                }
+                            }
+                            else {
+                                
+                                ForEach(0 ..< viewModel.tabs.count, id: \.self) { index in
+                                    
+                                    getDashboardPageView(index: index)
+                                        .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
+                                        .tag(index)
+                                }
+                            }
+                        }
+                    }
+                    .environment(\.layoutDirection, .leftToRight)
+                    .tabViewStyle(.page(indexDisplayMode: .never))
+                    .animation(.easeOut, value: viewModel.currentTab)
+                    
+                    DashboardTabBarView(
+                        viewModel: viewModel
+                    )
+                }
             }
         }
+        .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
     }
     
-    @ViewBuilder private func tabView(padding: CGFloat) -> some View {
+    @ViewBuilder private func getDashboardPageView(index: Int) -> some View {
         
-        TabView(selection: $viewModel.selectedTab) {
-            makeTabs(padding: padding)
-        }
-        .tabViewStyle(.page(indexDisplayMode: .never))
-        .animation(.easeOut, value: viewModel.selectedTab)
-    }
-    
-    @ViewBuilder private func makeTabs(padding: CGFloat) -> some View {
-        
-        Group {
-            LessonsView(viewModel: viewModel.lessonsViewModel, leadingTrailingPadding: padding)
-                .tag(DashboardTabTypeDomainModel.lessons)
+        switch viewModel.tabs[index] {
             
-            FavoritesContentView(viewModel: viewModel.favoritesViewModel, leadingTrailingPadding: padding)
-                .tag(DashboardTabTypeDomainModel.favorites)
+        case .lessons:
+            LessonsView(viewModel: viewModel.getLessonsViewModel())
             
-            AllToolsContentView(viewModel: viewModel.allToolsViewModel, leadingTrailingPadding: padding)
-                .tag(DashboardTabTypeDomainModel.allTools)
+        case .favorites:
+            FavoritesView(viewModel: viewModel.getFavoritesViewModel())
+            
+        case .tools:
+            ToolsView(viewModel: viewModel.getToolsViewModel())
         }
     }
 }
-
-// MARK: - Inputs
     
 extension DashboardView {
     
-    static func getMargin(for width: CGFloat) -> CGFloat {
-        return marginMultiplier * width
+    func getCurrentTab() -> DashboardTabTypeDomainModel {
+        return viewModel.getTab(tabIndex: viewModel.currentTab) ?? .favorites
     }
     
-    func navigateToTab(_ tab: DashboardTabTypeDomainModel) {
-        viewModel.selectedTab = tab
+    func navigateToTab(tab: DashboardTabTypeDomainModel) {
+        
+        viewModel.tabTapped(tab: tab)
     }
 }
 
 // MARK: - Preview
 
+import Combine
+
 struct DashboardView_Previews: PreviewProvider {
-    static var previews: some View {
+    
+    static func getDashboardViewModel() -> DashboardViewModel {
+        
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         
         let viewModel = DashboardViewModel(
             startingTab: .favorites,
             flowDelegate: MockFlowDelegate(),
-            initialDataDownloader: appDiContainer.dataLayer.getInitialDataDownloader(),
-            translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
-            localizationServices: appDiContainer.localizationServices,
-            favoritingToolMessageCache: appDiContainer.dataLayer.getFavoritingToolMessageCache(),
-            analytics: appDiContainer.dataLayer.getAnalytics(),
-            disableOptInOnboardingBannerUseCase: appDiContainer.getDisableOptInOnboardingBannerUseCase(),
-            getAllFavoritedToolsUseCase: appDiContainer.domainLayer.getAllFavoritedToolsUseCase(),
-            getAllToolsUseCase: appDiContainer.domainLayer.getAllToolsUseCase(),
-            getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
-            getFeaturedLessonsUseCase: appDiContainer.domainLayer.getFeaturedLessonsUseCase(),
-            getLanguageAvailabilityUseCase: appDiContainer.domainLayer.getLanguageAvailabilityUseCase(),
-            getLessonsUseCase: appDiContainer.domainLayer.getLessonsUseCase(),
-            getOptInOnboardingBannerEnabledUseCase: appDiContainer.getOpInOnboardingBannerEnabledUseCase(),
-            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            getShouldShowLanguageSettingsBarButtonUseCase: appDiContainer.domainLayer.getShouldShowLanguageSettingsBarButtonUseCase(),
-            getSpotlightToolsUseCase: appDiContainer.domainLayer.getSpotlightToolsUseCase(),
-            getToolCategoriesUseCase: appDiContainer.domainLayer.getToolCategoriesUseCase(),
-            getToolIsFavoritedUseCase: appDiContainer.domainLayer.getToolIsFavoritedUseCase(),
-            removeToolFromFavoritesUseCase: appDiContainer.domainLayer.getRemoveToolFromFavoritesUseCase(),
-            toggleToolFavoritedUseCase: appDiContainer.domainLayer.getToggleToolFavoritedUseCase()
+            dashboardPresentationLayerDependencies: DashboardPresentationLayerDependencies(appDiContainer: appDiContainer, flowDelegate: MockFlowDelegate()),
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            viewDashboardUseCase: appDiContainer.feature.dashboard.domainLayer.getViewDashboardUseCase(), 
+            dashboardTabObserver: CurrentValueSubject(.favorites)
         )
         
-        DashboardView(viewModel: viewModel)
+        return viewModel
+    }
+    
+    static var previews: some View {
+    
+        DashboardView(viewModel: DashboardView_Previews.getDashboardViewModel())
     }
 }

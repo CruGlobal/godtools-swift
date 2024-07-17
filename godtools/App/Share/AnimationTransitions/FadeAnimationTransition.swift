@@ -18,7 +18,7 @@ class FadeAnimationTransition: NSObject, UIViewControllerAnimatedTransitioning {
     private let fade: FadeAnimationTransition.Fade
     private let duration: TimeInterval = 0.3
     
-    required init(fade: FadeAnimationTransition.Fade) {
+    init(fade: FadeAnimationTransition.Fade) {
         
         self.fade = fade
         

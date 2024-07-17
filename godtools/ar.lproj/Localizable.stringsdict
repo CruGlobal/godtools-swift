@@ -2,6 +2,198 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+<key>account.activity.toolOpens</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@toolCount@</string>
+<key>toolCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>zero</key>
+<string>لا يوجد اداة مفتوحة</string>
+<key>one</key>
+<string>عدد الادوات المفتوحة %1$d</string>
+<key>two</key>
+<string>عدد الادوات المفتوحة %1$d</string>
+<key>few</key>
+<string>عدد الادوات المفتوحة %1$d</string>
+<key>many</key>
+<string>عدد الادوات المفتوحة %1$d</string>
+<key>other</key>
+<string>عدد فتح ادوات %1$d</string>
+</dict>
+</dict>
+<key>account.activity.lessonCompletions</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@lessonCount@</string>
+<key>lessonCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>zero</key>
+<string>لا يوجد دروس مكتملة</string>
+<key>one</key>
+<string>عدد الدروس  المكتملة %1$d</string>
+<key>two</key>
+<string>عدد الدروس  المكتملة %1$d</string>
+<key>few</key>
+<string>عدد الدروس  المكتملة %1$d</string>
+<key>many</key>
+<string>عدد الدروس  المكتملة %1$d</string>
+<key>other</key>
+<string>دروس مكتملة %1$d</string>
+</dict>
+</dict>
+<key>account.activity.screenShares</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@screenShareCount@</string>
+<key>screenShareCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>zero</key>
+<string>لا يوجد شاشات متشاركة</string>
+<key>one</key>
+<string>عدد الشاشات مشاركة %1$d</string>
+<key>two</key>
+<string>عدد الشاشات مشاركة %1$d</string>
+<key>few</key>
+<string>عدد الشاشات مشاركة %1$d</string>
+<key>many</key>
+<string>عدد الشاشات مشاركة %1$d</string>
+<key>other</key>
+<string>الشاشات التي تم مشاركاتها %1$d</string>
+</dict>
+</dict>
+<key>account.activity.linksShared</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@linkShareCount@</string>
+<key>linkShareCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>zero</key>
+<string>لا يوجد روابط مشاركة</string>
+<key>one</key>
+<string>عدد الروابط المشاركة %1$d</string>
+<key>two</key>
+<string>عدد الروابط المشاركة %1$d</string>
+<key>few</key>
+<string>عدد الروابط المشاركة %1$d</string>
+<key>many</key>
+<string>عدد الروابط المشاركة %1$d</string>
+<key>other</key>
+<string>عدد مشاركة الروابط %1$d</string>
+</dict>
+</dict>
+<key>account.activity.languagesUsed</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@languagesUsedCount@</string>
+<key>languagesUsedCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>zero</key>
+<string>لا يوجد لغات مستخدمة</string>
+<key>one</key>
+<string>عدد اللغات مستخدمة %1$d</string>
+<key>two</key>
+<string>عدد اللغات مستخدمة %1$d</string>
+<key>few</key>
+<string>عدد اللغات مستخدمة %1$d</string>
+<key>many</key>
+<string>عدد اللغات مستخدمة %1$d</string>
+<key>other</key>
+<string>لغات مستخدمة %1$d</string>
+</dict>
+</dict>
+<key>account.activity.sessions</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@sessionCount@</string>
+<key>sessionCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>zero</key>
+<string>لا يوجد جلسات</string>
+<key>one</key>
+<string>عدد الجلسات %1$d</string>
+<key>two</key>
+<string>عدد الجلسات %1$d</string>
+<key>few</key>
+<string>عدد الجلسات %1$d</string>
+<key>many</key>
+<string>عدد الجلسات %1$d</string>
+<key>other</key>
+<string>عدد الجلسات %1$d</string>
+</dict>
+</dict>
+<key>tools.filter.toolsAvailable</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@toolCount@</string>
+<key>toolCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>zero</key>
+<string>لا بوجد أدوات متوفرة</string>
+<key>one</key>
+<string>%d أداة متوفرة</string>
+<key>two</key>
+<string>الادوات المتوفرة %d</string>
+<key>few</key>
+<string>الادوات المتوفرة %d</string>
+<key>many</key>
+<string>الادوات المتوفرة %d</string>
+<key>other</key>
+<string>الادوات المتوفرة %d</string>
+</dict>
+</dict>
+<key>languageSettings.appLanguage.numberAvailable</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@appLanguageCount@</string>
+<key>appLanguageCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>zero</key>
+<string>لا يوجد لغات متوفرة</string>
+<key>one</key>
+<string>%d لغة متوفرة</string>
+<key>two</key>
+<string>عدد اللغات المتوفرة %d</string>
+<key>few</key>
+<string>عدد اللغات المتوفرة %d</string>
+<key>many</key>
+<string>عدد اللغات المتوفرة %d</string>
+<key>other</key>
+<string>%d لغة متوفرة</string>
+</dict>
+</dict>
 <key>badges.imagesShared</key>
 <dict>
 <key>NSStringLocalizedFormatKey</key>
@@ -15,15 +207,15 @@
 <key>zero</key>
 <string/>
 <key>one</key>
-<string>Shared 1 image</string>
+<string>تم مشاركة صورة واحدة</string>
 <key>two</key>
-<string/>
+<string>تم مشاركة عدد 2 صورة</string>
 <key>few</key>
-<string/>
+<string>تم مشاركة القليل من الصور</string>
 <key>many</key>
-<string/>
+<string>تم مشاركة العديد من الصور</string>
 <key>other</key>
-<string>Shared %d images</string>
+<string>تم مشاركة %d من الصور</string>
 </dict>
 </dict>
 <key>badges.articlesOpened</key>
@@ -37,17 +229,17 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>zero</key>
-<string/>
+<string>لا يوجد مقالات مقروءة</string>
 <key>one</key>
-<string>Read 1 article</string>
+<string>قراءة عدد %d مقال</string>
 <key>two</key>
-<string/>
+<string>قراءة عدد %d مقال</string>
 <key>few</key>
-<string/>
+<string>قراءة عدد %d مقالات</string>
 <key>many</key>
-<string/>
+<string>قراءة عدد %d مقالات</string>
 <key>other</key>
-<string>Read %d articles</string>
+<string>قراءة %d مقالات</string>
 </dict>
 </dict>
 <key>badges.lessonsCompleted</key>
@@ -61,17 +253,17 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>zero</key>
-<string/>
+<string>لا يوجد دروس مكتملة</string>
 <key>one</key>
-<string>Completed 1 lesson</string>
+<string>عدد %d درس مكتمل</string>
 <key>two</key>
-<string/>
+<string>عدد %d درس مكتمل</string>
 <key>few</key>
-<string/>
+<string>عدد الدروس المكتملة %d</string>
 <key>many</key>
-<string/>
+<string>عدد الدروس المكتملة %d</string>
 <key>other</key>
-<string>Completed %d lessons</string>
+<string>تم إكمال %d من الدروس</string>
 </dict>
 </dict>
 <key>badges.toolsOpened</key>
@@ -85,17 +277,17 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>zero</key>
-<string/>
+<string>لا يوجد أدوات مفتوحة</string>
 <key>one</key>
-<string>Opened 1 tool</string>
+<string>تم فتح عدد %d أداة</string>
 <key>two</key>
-<string/>
+<string>تم فتح عدد %d أداة</string>
 <key>few</key>
-<string/>
+<string>تم فتح %d من الادوات</string>
 <key>many</key>
-<string/>
+<string>تم فتح %d من الادوات</string>
 <key>other</key>
-<string>Opened %d tools</string>
+<string>تم فتح %d من الأدوات</string>
 </dict>
 </dict>
 <key>badges.tipsCompleted</key>
@@ -109,17 +301,17 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>zero</key>
-<string/>
+<string>لا يوجد نصيحة تدريبية مكتملة</string>
 <key>one</key>
-<string>Completed 1 training tip</string>
+<string>عدد %d نصيحة تدريبية مكتملة</string>
 <key>two</key>
-<string/>
+<string>عدد %d نصيحة تدريبية مكتملة</string>
 <key>few</key>
-<string/>
+<string>عدد %d نصيحة تدريبية مكتملة</string>
 <key>many</key>
-<string/>
+<string>عدد %d نصيحة تدريبية مكتملة</string>
 <key>other</key>
-<string>Completed %d training tips</string>
+<string>تم إكمال %d من النصائح التدريبية</string>
 </dict>
 </dict>
 </dict>

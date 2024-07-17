@@ -8,6 +8,7 @@
 
 import Foundation
 import GodToolsToolParser
+import LocalizationServices
 
 class ToolPageFormViewModel: MobileContentFormViewModel {
     
@@ -17,7 +18,7 @@ class ToolPageFormViewModel: MobileContentFormViewModel {
     let didSendFollowUpSignal: SignalValue<[EventId]> = SignalValue()
     let error: ObservableValue<MobileContentErrorViewModel?> = ObservableValue(value: nil)
     
-    init(formModel: Form, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics, followUpService: FollowUpsService, localizationServices: LocalizationServices) {
+    init(formModel: Form, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics, followUpService: FollowUpsService, localizationServices: LocalizationServices) {
         
         self.followUpService = followUpService
         self.localizationServices = localizationServices
@@ -81,7 +82,9 @@ class ToolPageFormViewModel: MobileContentFormViewModel {
     
     private func notifiyFollowUpsMissingFieldsError(missingFieldsNames: [String]) {
         
-        let errorTitle: String = localizationServices.stringForMainBundle(key: "error")
+        let appLanguage: AppLanguageDomainModel = renderedPageContext.appLanguage
+        
+        let errorTitle: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.error.key)
         var errorMessage: String = ""
         
         for index in 0 ..< missingFieldsNames.count {
@@ -91,10 +94,11 @@ class ToolPageFormViewModel: MobileContentFormViewModel {
                 errorMessage += "\n"
             }
             
-            errorMessage += String(format: localizationServices.stringForMainBundle(key: "required_field_missing"), name.localizedCapitalized)
+            errorMessage += String(format: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.requiredMissingField.key), name.localizedCapitalized)
         }
         
         let errorViewModel = MobileContentErrorViewModel(
+            appLanguage: appLanguage,
             title: errorTitle,
             message: errorMessage,
             localizationServices: localizationServices

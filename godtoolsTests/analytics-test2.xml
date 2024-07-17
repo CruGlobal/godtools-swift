@@ -1,9 +1,0 @@
-<analytics:events xmlns:analytics="https://mobile-content-api.cru.org/xmlns/analytics">
-    <analytics:event system="adobe" action="foo" trigger="visible" delay="5">
-        <analytics:attribute key="bar" value="baz"/>
-    </analytics:event>
-    <analytics:event system="adobe google" action="foo2" trigger="hidden" delay="45">
-        <analytics:attribute key="bar" value="quux"/>
-        <analytics:attribute key="cru.emaillist" value="5" />
-    </analytics:event>
-</analytics:events>

@@ -1,3 +1,26 @@
+"language_name_fil-x-taglish" = "tagļu";
+"language_name_sid" = "sidamas";
+"onboardingTutorial.chooseLanguageButton.title" = "Izvēlies valodu";
+"languageSettings.confirmAppLanguage.message" = "Tu izvēlējies %@ valodu – līdz ar to mainīsies lietotnes 'GodTools' valoda kopumā. Vai esi drošs, ka to vēlies?";
+"languageSettings.confirmAppLanguage.changeLanguageButton.title" = "Mainīt valodu";
+"languageSettings.confirmAppLanguage.nevermindButton.title" = "Atcelt";
+"languageSettings.downloadableLanguages.title" = "Lejupielādējamās valodas";
+"languageSettings.appInterface.title" = "Lietotnes valoda";
+"languageSettings.appInterface.message" = "Iestati sev vēlamo valodu.";
+"languageSettings.appInterface.languagesAvailable" = "Pieejamās valodas";
+"languageSettings.toolLanguagesAvailableOffline.title" = "Rīka valodas pieejamas bezsaistē";
+"languageSettings.toolLanguagesAvailableOffline.message" = "Lejupielādē visus rīkus izvēlētā valodā, lai tie būtu pieejami bezsaistē. Rīka valodas izvēlei izmanto rīka iestatījumu pogu.";
+"languageSettings.toolLanguagesAvailableOffline.editDownloadedLanguagesButton.title" = "Labot lejupielādēto valodu pieejamību";
+"allTools.filter.title" = "Filtrs";
+"allTools.filter.anyCategory" = "Visas kategorijas";
+"allTools.filter.anyLanguage" = "Visas valodas";
+"allTools.filter.navBar.language" = "Filtrs pēc valodas";
+"allTools.filter.navBar.category" = "Filtrs pēc kategorijas";
+"languageSettings.appLanguage.title" = "Lietotnes valoda";
+"authError.userAccountAlreadyExists.message" = "Lietotāja konts jau pastāv.";
+"authError.userAccountNotFound.message" = "Lietotāja konts nav atrasts.";
+"createAccount.title" = "Reģistrēt kontu";
+"createAccount.subtitle" = "Izveido kontu, lai tev būtu pieejami patiesi stāsti, iedrošinājums un praktiski padomi.";
 "deleteAccountProgress.title" = "Notiek konta dzēšana...";
 "confirmDeleteAccount.title" = "Vai esi pārliecināts?";
 "confirmDeleteAccount.confirmButton.title" = "Izdzēst kontu";
@@ -8,7 +31,7 @@
 "deleteAccount.confirmButton.title" = "Izdzēst manu kontu";
 "deleteAccount.cancelButton.title" = "Paturēt manu kontu";
 "signIn.title" = "Pierakstīties";
-"signIn.subtitle" = "Izveido kontu, lai būtu pieejami patiesi stāsti, iedrošinājums un praktiski padomi.";
+"signIn.subtitle" = "Ieej savā kontā, lai būtu pieejami patiesi stāsti, iedrošinājums un praktiski padomi.";
 "signIn.google" = "Pierakstīties ar Google";
 "signIn.facebook" = "Ienākt, izmantojot Facebook";
 "signIn.apple" = "Turpināt, izmantojot Apple";
@@ -17,11 +40,10 @@
 "menu_about" = "Par lietotni";
 "menu.sendFeedback" = "Nosūtīt atsauksmes";
 "menu.reportABug" = "Ziņot par kļūdu";
-"menu.askAQuestion" = "Uzdod jautājumu";
+"menu.askAQuestion" = "Uzdot jautājumu";
 "menu.leaveAReview" = "Atstāt atsauksmi";
 "account.badges.sectionTitle" = "Tavi žetoni";
-"
-account.activity.sectionTitle" = "Tava aktivitāte";
+"account.activity.sectionTitle" = "Tava aktivitāte";
 
 /* This is a title on a dashboard that will show the Number of Times a person has opened a tool */
 "account.activity.toolOpens" = "Atvērtie rīki";
@@ -39,28 +61,28 @@ account.activity.sectionTitle" = "Tava aktivitāte";
 "account.activity.languagesUsed" = "Izmantotās valodas";
 
 "account.activity.sessions" = "Sesijas";
-"badges.tipsCompleted.singular" = "Izmantoti apmācības padomi: 1";
+"badges.tipsCompleted.singular" = "Izmantoti apmācības padomi: %d";
 
 /* leave %d in phrase - this is the number of articles that the user has read */
 "badges.articlesOpened.plural" = "Atvērto rakstu skaits: %d";
 
 /* when they have read only 1 articles */
-"badges.articlesOpened.singular" = "Atvērto rakstu skaits: 1";
+"badges.articlesOpened.singular" = "Atvērto rakstu skaits: %d";
 
 /* leave %d in phrase - this is the number of images that the user has shared */
 "badges.imagesShared.plural" = "Kopīgoto attēlu skaits: %d";
 
-"badges.imagesShared.singular" = "Kopīgoto attēlu skaits: 1";
+"badges.imagesShared.singular" = "Kopīgoto attēlu skaits: %d";
 
 /* leave %d in phrase - this is the number of lessons that the user has completed */
 "badges.lessonsCompleted.plural" = "Pabeigta(s) nodarbība(s): %d";
 
-"badges.lessonsCompleted.singular" = "Pabeigta(s) nodarbība(s): 1";
+"badges.lessonsCompleted.singular" = "Pabeigta(s) nodarbība(s): %d";
 
 /* leave %d in phrase - this is the number of tools that the user has opened */
 "badges.toolsOpened.plural" = "Atvērto rīku skaits: %d";
 
-"badges.toolsOpened.singular" = "Atvērto rīku skaits: 1";
+"badges.toolsOpened.singular" = "Atvērto rīku skaits: %d";
 
 /* leave %d in phrase - this is the number of tips that the user has completed */
 "badges.tipsCompleted.plural" = "Izmantoti apmācības padomi: %d";
@@ -68,7 +90,7 @@ account.activity.sectionTitle" = "Tava aktivitāte";
 /* Just translate "Joined" - leave the %@ - this is the date they started using GodTools */
 "account.joinedOn" = "Pievienojās %@";
 
-"account.globalActivity.title" = "Aktivitātes";
+"account.globalActivity.title" = "Globālā aktivitāte";
 "toolDetails.conversationStarters.title" = "Sarunas uzsākšanai";
 
 /* A list of the main points of the tool will live behind a section called "Outline" */
@@ -228,8 +250,7 @@ Ja saņēmi šo ziņojumu novēloti, iespējams, ka saite vairs nedarbojas. Mēs
 "remove_from_favorites" = "Izņemt no izlases";
 
 /* This is a loading screen */
-"loading_unfavorited_tool" = "Notiek rīka lejupielāde… Lai nākotnē izvairītos no gaidīšanas, padari rīku pieejamu bezsaistē, nospiežot sirds ikonu, lai pievienotu to izlasei.
-";
+"loading_unfavorited_tool" = "Notiek rīka lejupielāde… Lai nākotnē izvairītos no gaidīšanas, padari rīku pieejamu bezsaistē, nospiežot sirds ikonu, lai pievienotu to izlasei.";
 
 /* This is a loading screen */
 "loading_favorited_tool" = "Notiek šī rīka jaunākā tulkojuma lejupielāde.";
@@ -398,7 +419,7 @@ Lai iegūtu vairāk informācijas, nospied pogu \"Apraksts\".";
 "account.activity.title" = "Aktivitāte";
 
 // Language Name Strings
-"language_name_fa" = "persiešu (Farsi)";
+"language_name_fa" = "persiešu (farsi)";
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "Globālā aktivitāte";

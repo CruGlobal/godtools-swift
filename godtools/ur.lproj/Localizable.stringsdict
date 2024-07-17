@@ -2,6 +2,134 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+<key>account.activity.toolOpens</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@toolCount@</string>
+<key>toolCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>طریقہ  کھلتا ہے</string>
+<key>other</key>
+<string>طریقہ  کھلتا ہے</string>
+</dict>
+</dict>
+<key>account.activity.lessonCompletions</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@lessonCount@</string>
+<key>lessonCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>سبق کی تکمیل</string>
+<key>other</key>
+<string>سبق کی تکمیل</string>
+</dict>
+</dict>
+<key>account.activity.screenShares</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@screenShareCount@</string>
+<key>screenShareCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>سکرین شئیرز</string>
+<key>other</key>
+<string>سکرین شئیرز</string>
+</dict>
+</dict>
+<key>account.activity.linksShared</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@linkShareCount@</string>
+<key>linkShareCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>Link share</string>
+<key>other</key>
+<string>Link shares</string>
+</dict>
+</dict>
+<key>account.activity.languagesUsed</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@languagesUsedCount@</string>
+<key>languagesUsedCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>استعمال کی گئی زبانیں</string>
+<key>other</key>
+<string>استعمال کی گئی زبانیں</string>
+</dict>
+</dict>
+<key>account.activity.sessions</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@sessionCount@</string>
+<key>sessionCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>سیشنز</string>
+<key>other</key>
+<string>سیشنز</string>
+</dict>
+</dict>
+<key>tools.filter.toolsAvailable</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@toolCount@</string>
+<key>toolCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>ابزارهای موجود%d</string>
+<key>other</key>
+<string>ابزارهای موجود%d</string>
+</dict>
+</dict>
+<key>languageSettings.appLanguage.numberAvailable</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@appLanguageCount@</string>
+<key>appLanguageCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>%d زبانیں دستیاب ہیں</string>
+<key>other</key>
+<string>%d زبانیں دستیاب ہیں</string>
+</dict>
+</dict>
 <key>badges.imagesShared</key>
 <dict>
 <key>NSStringLocalizedFormatKey</key>
@@ -13,9 +141,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Shared 1 image</string>
+<string>فی صد تصاوی شئیر کی گئیں%d</string>
 <key>other</key>
-<string>Shared %d images</string>
+<string>فی صد تصاوی شئیر کی گئیں%d</string>
 </dict>
 </dict>
 <key>badges.articlesOpened</key>
@@ -29,9 +157,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Read 1 article</string>
+<string>فیصد  %d مضامین پڑھیں</string>
 <key>other</key>
-<string>Read %d articles</string>
+<string>فیصد  %d مضامین پڑھیں</string>
 </dict>
 </dict>
 <key>badges.lessonsCompleted</key>
@@ -45,9 +173,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Completed 1 lesson</string>
+<string>فی صداسباق مکمل کئے گئے%d</string>
 <key>other</key>
-<string>Completed %d lessons</string>
+<string>فی صداسباق مکمل کئے گئے%d</string>
 </dict>
 </dict>
 <key>badges.toolsOpened</key>
@@ -61,9 +189,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Opened 1 tool</string>
+<string>فیصد ٹول کھولے گئے%d</string>
 <key>other</key>
-<string>Opened %d tools</string>
+<string>فیصد ٹول کھولے گئے%d</string>
 </dict>
 </dict>
 <key>badges.tipsCompleted</key>
@@ -77,9 +205,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Completed 1 training tip</string>
+<string>فی صد تربیتی تجاویز 1</string>
 <key>other</key>
-<string>Completed %d training tips</string>
+<string>فی صد تربیتی تجاویز %d</string>
 </dict>
 </dict>
 </dict>

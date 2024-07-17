@@ -15,7 +15,7 @@ class DetermineToolTranslationsToDownload: DetermineToolTranslationsToDownloadTy
     private let resourcesRepository: ResourcesRepository
     private let translationsRepository: TranslationsRepository
         
-    required init(resourceId: String, languageIds: [String], resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository) {
+    init(resourceId: String, languageIds: [String], resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository) {
         
         self.resourceId = resourceId
         self.languageIds = languageIds
@@ -46,8 +46,9 @@ class DetermineToolTranslationsToDownload: DetermineToolTranslationsToDownloadTy
             translations.append(translation)
         }
         
-        if translations.isEmpty, let englishTranslation = translationsRepository.getLatestTranslation(resourceId: resourceId, languageCode: LanguageCodes.english) {
-            translations = [englishTranslation]
+        if translations.isEmpty, let defaultTranslation = translationsRepository.getLatestTranslation(resourceId: resourceId, languageCode: resource.attrDefaultLocale) {
+            
+            translations = [defaultTranslation]
         }
     
         let result = DetermineToolTranslationsToDownloadResult(translations: translations)

@@ -12,7 +12,12 @@ struct AccountGlobalActivityAnalyticsItemView: View {
     
     private let cornerRadius: CGFloat = 10
     
-    @ObservedObject var viewModel: AccountGlobalActivityAnalyticsItemViewModel
+    @ObservedObject private var viewModel: AccountGlobalActivityAnalyticsItemViewModel
+    
+    init(viewModel: AccountGlobalActivityAnalyticsItemViewModel) {
+        
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         

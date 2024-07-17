@@ -13,7 +13,7 @@ class ToolPageModalsViewModel: MobileContentViewModel {
     
     private let modals: [Modal]
     
-    init(modals: [Modal], renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
+    init(modals: [Modal], renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
         
         self.modals = modals
         

@@ -75,6 +75,37 @@ class MobileContentStackView: MobileContentView {
         return .constrainedToChildren
     }
     
+    override func getPositionState() -> MobileContentViewPositionState {
+        
+        return MobileContentStackPositionState(
+            scrollViewContentOffset: scrollView?.contentOffset,
+            scrollViewContentSize: scrollView?.contentSize
+        )
+    }
+    
+    override func setPositionState(positionState: MobileContentViewPositionState, animated: Bool) {
+        
+        guard let positionState = positionState as? MobileContentStackPositionState else {
+            return
+        }
+        
+        if let scrollView = self.scrollView, let contentOffset = positionState.scrollViewContentOffset, let contentSize = positionState.scrollViewContentSize {
+            
+            let scrollHeight: CGFloat = contentSize.height
+            
+            guard scrollHeight > 0 else {
+                return
+            }
+            
+            let contentSizeHeightRatio: CGFloat = scrollView.contentSize.height / scrollHeight
+                        
+            scrollView.setContentOffset(
+                CGPoint(x: contentOffset.x, y: contentOffset.y * contentSizeHeightRatio),
+                animated: false
+            )
+        }
+    }
+    
     // MARK: -
     
     private var contentInsets: UIEdgeInsets {

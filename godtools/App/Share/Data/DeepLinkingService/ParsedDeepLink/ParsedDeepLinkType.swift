@@ -11,9 +11,12 @@ import Foundation
 enum ParsedDeepLinkType: Equatable {
     
     case allToolsList
+    case appLanguagesList
     case articleAemUri(aemUri: String)
     case dashboard
     case favoritedToolsList
+    case languageSettings
     case lessonsList
+    case onboarding(appLanguage: AppLanguageDomainModel)
     case tool(toolDeepLink: ToolDeepLink)
 }

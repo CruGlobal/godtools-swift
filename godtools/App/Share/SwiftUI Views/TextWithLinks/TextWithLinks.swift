@@ -9,6 +9,7 @@
 import UIKit
 import SwiftUI
 
+@available(iOS, deprecated: 14.0, obsoleted: 15.0, message: "For iOS 14 use BackwardsCompatibleTextWithLinks.swift and iOS 15 use TextWithLinksView.swift")
 struct TextWithLinks: UIViewRepresentable {
         
     private let text: String
@@ -33,7 +34,7 @@ struct TextWithLinks: UIViewRepresentable {
     }
     
     func makeCoordinator() -> TextViewLinksCoordinator {
-        return TextViewLinksCoordinator(textWithLinks: self, didInteractWithUrlClosure: didInteractWithUrlClosure)
+        return TextViewLinksCoordinator(didInteractWithUrlClosure: didInteractWithUrlClosure)
     }
     
     func makeUIView(context: Context) -> UITextView {

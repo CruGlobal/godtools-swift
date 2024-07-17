@@ -10,15 +10,13 @@ import Foundation
 import WebKit
 import Combine
 
-class ArticleWebViewModel: NSObject {
+class ArticleWebViewModel: NSObject, ObservableObject {
     
     private let aemCacheObject: ArticleAemCacheObject
-    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
-    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
+    private let flowType: ArticleWebViewModelFlowType
     private let incrementUserCounterUseCase: IncrementUserCounterUseCase
     private let getAppUIDebuggingIsEnabledUseCase: GetAppUIDebuggingIsEnabledUseCase
-    private let analytics: AnalyticsContainer
-    private let flowType: ArticleWebViewModelFlowType
+    private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let displayArticleAfterNumberOfSeconds: TimeInterval = 2
     
     private var loadingCurrentWebView: WKWebView?
@@ -28,36 +26,36 @@ class ArticleWebViewModel: NSObject {
     private var cancellables = Set<AnyCancellable>()
     
     let navTitle: ObservableValue<String> = ObservableValue(value: "")
-    let hidesShareButton: ObservableValue<Bool> = ObservableValue(value: false)
-    let hidesDebugButton: ObservableValue<Bool> = ObservableValue(value: true)
     let viewState: ObservableValue<ArticleWebViewState> = ObservableValue(value: .loadingArticle)
     
-    init(flowDelegate: FlowDelegate, aemCacheObject: ArticleAemCacheObject, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, incrementUserCounterUseCase: IncrementUserCounterUseCase, getAppUIDebuggingIsEnabledUseCase: GetAppUIDebuggingIsEnabledUseCase, analytics: AnalyticsContainer, flowType: ArticleWebViewModelFlowType) {
+    @Published var hidesShareButton: Bool = false
+    @Published var hidesDebugButton: Bool = true
+    
+    init(flowDelegate: FlowDelegate, flowType: ArticleWebViewModelFlowType, aemCacheObject: ArticleAemCacheObject, incrementUserCounterUseCase: IncrementUserCounterUseCase, getAppUIDebuggingIsEnabledUseCase: GetAppUIDebuggingIsEnabledUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
+        self.flowType = flowType
         self.aemCacheObject = aemCacheObject
-        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
-        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
         self.incrementUserCounterUseCase = incrementUserCounterUseCase
         self.getAppUIDebuggingIsEnabledUseCase = getAppUIDebuggingIsEnabledUseCase
-        self.analytics = analytics
-        self.flowType = flowType
+        self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         
         super.init()
         
         navTitle.accept(value: aemCacheObject.aemData.articleJcrContent?.title ?? "")
+              
+        hidesShareButton = aemCacheObject.aemData.articleJcrContent?.canonical == nil
                 
-        hidesShareButton.accept(value: aemCacheObject.aemData.articleJcrContent?.canonical == nil)
-        
         getAppUIDebuggingIsEnabledUseCase.getIsEnabledPublisher()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (isEnabled: Bool) in
-                self?.hidesDebugButton.accept(value: !isEnabled)
+                self?.hidesDebugButton = !isEnabled
             }
             .store(in: &cancellables)
     }
     
     deinit {
+        print("x deinit: \(type(of: self))")
         stopDisplayArticleTimer()
         stopLoadWebPage(webView: loadingCurrentWebView)
     }
@@ -167,17 +165,16 @@ extension ArticleWebViewModel {
 
     func pageViewed() {
         
-        let trackScreen = TrackScreenModel(
+        trackScreenViewAnalyticsUseCase.trackScreen(
             screenName: analyticsScreenName,
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
-            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
-            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage
+            contentLanguage: nil,
+            contentLanguageSecondary: nil
         )
-                
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
         
         incrementUserCounterUseCase.incrementUserCounter(for: .articleOpen(uri: aemCacheObject.aemUri))
+            .receive(on: DispatchQueue.main)
             .sink { _ in
                 
             } receiveValue: { _ in
@@ -186,7 +183,7 @@ extension ArticleWebViewModel {
             .store(in: &cancellables)
     }
     
-    func debugTapped() {
+    @objc func debugTapped() {
         
         let url: URL?
         let urlType: ArticleUrlType?
@@ -209,7 +206,7 @@ extension ArticleWebViewModel {
         flowDelegate?.navigate(step: .debugTappedFromArticle(article: article))
     }
     
-    func sharedTapped() {
+    @objc func sharedTapped() {
         flowDelegate?.navigate(step: .sharedTappedFromArticle(articleAemData: aemCacheObject.aemData))
     }
     

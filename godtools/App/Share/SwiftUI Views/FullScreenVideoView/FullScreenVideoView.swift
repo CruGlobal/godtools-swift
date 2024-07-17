@@ -10,15 +10,26 @@ import SwiftUI
 
 struct FullScreenVideoView: View {
     
+    private let screenAccessibility: AccessibilityStrings.Screen
+    
     @State private var videoPlayerState: VideoViewPlayerState = .stopped
     
-    @ObservedObject var viewModel: FullScreenVideoViewModel
+    @ObservedObject private var viewModel: FullScreenVideoViewModel
     
     let backgroundColor: Color
+    
+    init(viewModel: FullScreenVideoViewModel, backgroundColor: Color, screenAccessibility: AccessibilityStrings.Screen) {
+        
+        self.viewModel = viewModel
+        self.backgroundColor = backgroundColor
+        self.screenAccessibility = screenAccessibility
+    }
     
     var body: some View {
         
         GeometryReader { geometry in
+                        
+            AccessibilityScreenElementView(screenAccessibility: screenAccessibility)
             
             VStack(alignment: .center, spacing: 0) {
                 
@@ -28,7 +39,7 @@ struct FullScreenVideoView: View {
                 let videoWidth: CGFloat = geometry.size.width
                 let videoHeight: CGFloat = (videoWidth / aspectRatio.width) * aspectRatio.height
                 
-                VideoView(playerState: $videoPlayerState, frameSize: CGSize(width: videoWidth, height: videoHeight), videoId: viewModel.videoId, videoPlayerParameters: viewModel.videoPlayerParameters, configuration: VideoViewConfiguration(videoContainerBackgroundColor: backgroundColor, videoBackgroundColor: backgroundColor, loadingViewBackgroundColor: backgroundColor, loadingActivityIndicatorColor: .white), videoEndedClosure: {
+                VideoViewRepresentable(playerState: $videoPlayerState, frameSize: CGSize(width: videoWidth, height: videoHeight), videoId: viewModel.videoId, videoPlayerParameters: viewModel.videoPlayerParameters, configuration: VideoViewConfiguration(videoContainerBackgroundColor: backgroundColor, videoBackgroundColor: backgroundColor, loadingViewBackgroundColor: backgroundColor, loadingActivityIndicatorColor: .white), videoPlayingClosure: nil, videoEndedClosure: {
                     viewModel.videoEnded()
                 })
                 .frame(width: videoWidth, height: videoHeight)

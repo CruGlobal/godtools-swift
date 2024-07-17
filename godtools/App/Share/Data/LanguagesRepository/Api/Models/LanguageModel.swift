@@ -8,9 +8,9 @@
 
 import Foundation
 
-struct LanguageModel: LanguageModelType, Decodable {
+struct LanguageModel: LanguageModelType, Codable {
     
-    let code: String
+    let code: BCP47LanguageIdentifier
     let direction: String
     let id: String
     let name: String
@@ -45,7 +45,14 @@ struct LanguageModel: LanguageModelType, Decodable {
         }
         
         // attributes
-        code = try attributesContainer?.decodeIfPresent(String.self, forKey: .code) ?? ""
+        
+        // TODO: (GT-2399) Remove tempCode override.  This is a temporary Taglish label until production switches to the fil-x-taglish language tag.
+        var tempCode: String = try attributesContainer?.decodeIfPresent(BCP47LanguageIdentifier.self, forKey: .code) ?? ""
+        if tempCode == "en-PH" {
+            tempCode = "fil-x-taglish"
+        }
+        
+        code = tempCode//try attributesContainer?.decodeIfPresent(BCP47LanguageIdentifier.self, forKey: .code) ?? "" // TODO: (GT-2399) Remove tempCode and replace with commented out line.
         direction = try attributesContainer?.decodeIfPresent(String.self, forKey: .direction) ?? ""
         name = try attributesContainer?.decodeIfPresent(String.self, forKey: .name) ?? ""
     }

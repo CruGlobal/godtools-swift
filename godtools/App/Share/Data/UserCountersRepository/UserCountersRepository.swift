@@ -25,7 +25,9 @@ class UserCountersRepository {
     
     func getUserCounter(id: String) -> UserCounterDomainModel? {
         
-        guard let userCounterDataModel = cache.getUserCounter(id: id) else { return nil }
+        guard let userCounterDataModel = cache.getUserCounter(id: id) else {
+            return nil
+        }
         
         return UserCounterDomainModel(dataModel: userCounterDataModel)
     }
@@ -52,15 +54,12 @@ class UserCountersRepository {
         return cache.getAllUserCounters()
     }
     
-    func fetchRemoteUserCounters() -> AnyPublisher<[UserCounterDataModel], URLResponseError> {
+    func fetchRemoteUserCounters() -> AnyPublisher<[UserCounterDataModel], Error> {
         
         return api.fetchUserCountersPublisher()
-            .flatMap { userCounters in
+            .flatMap { (userCounters: [UserCounterDecodable]) in
                 
                 return self.cache.syncUserCounters(userCounters)
-                    .mapError { error in
-                        return URLResponseError.otherError(error: error)
-                    }
                     .eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
@@ -69,6 +68,11 @@ class UserCountersRepository {
     func incrementCachedUserCounterBy1(id: String) -> AnyPublisher<UserCounterDataModel, Error> {
         
         return cache.incrementUserCounterBy1(id: id)
+    }
+    
+    func deleteUserCounters() -> AnyPublisher<Void, Error> {
+        
+        return cache.deleteAllUserCounters()
     }
     
     func syncUpdatedUserCountersWithRemote() {

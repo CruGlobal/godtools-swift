@@ -12,26 +12,30 @@ import GodToolsToolParser
 class ToolPageViewModel: MobileContentPageViewModel {
     
     private let pageModel: TractPage
-    private let analytics: AnalyticsContainer
-    private let visibleAnalyticsEventsObjects: [MobileContentAnalyticsEvent]
+    private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
+    private let visibleAnalyticsEventsObjects: [MobileContentRendererAnalyticsEvent]
     
     private var cardPosition: Int?
     
     let hidesCallToAction: Bool
     
-    init(pageModel: TractPage, renderedPageContext: MobileContentRenderedPageContext, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics) {
+    init(pageModel: TractPage, renderedPageContext: MobileContentRenderedPageContext, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, mobileContentAnalytics: MobileContentRendererAnalytics) {
                 
         self.pageModel = pageModel
-        self.analytics = analytics
+        self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.hidesCallToAction = pageModel.isLastPage
                 
-        self.visibleAnalyticsEventsObjects = MobileContentAnalyticsEvent.initAnalyticsEvents(
+        self.visibleAnalyticsEventsObjects = MobileContentRendererAnalyticsEvent.initAnalyticsEvents(
             analyticsEvents: pageModel.getAnalyticsEvents(type: .visible),
             mobileContentAnalytics: mobileContentAnalytics,
             renderedPageContext: renderedPageContext
         )
         
         super.init(pageModel: pageModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics, hidesBackgroundImage: false)
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
     }
     
     override var analyticsScreenName: String {
@@ -78,7 +82,7 @@ extension ToolPageViewModel {
             return nil
         }
         
-        for viewFactory in renderedPageContext.pageViewFactories.factories {
+        for viewFactory in renderedPageContext.viewRenderer.pageViewFactories.factories {
             if let toolPageViewFactory = viewFactory as? ToolPageViewFactory {
                 return toolPageViewFactory.getCallToActionView(callToActionModel: nil, renderedPageContext: renderedPageContext)
             }
@@ -91,15 +95,13 @@ extension ToolPageViewModel {
         
         super.viewDidAppear(visibleAnalyticsEvents: visibleAnalyticsEventsObjects)
                 
-        let trackScreen = TrackScreenModel(
+        trackScreenViewAnalyticsUseCase.trackScreen(
             screenName: analyticsScreenName,
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
             contentLanguage: renderedPageContext.language.localeIdentifier,
-            secondaryContentLanguage: nil
+            contentLanguageSecondary: nil
         )
-        
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
     }
     
     func didChangeCardPosition(cardPosition: Int?) {

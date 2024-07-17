@@ -11,43 +11,98 @@ import Combine
 
 class OnboardingTutorialViewModel: ObservableObject {
     
-    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
-    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
-    private let onboardingTutorialViewedRepository: OnboardingTutorialViewedRepository
-    private let localizationServices: LocalizationServices
-    private let analyticsContainer: AnalyticsContainer
+    private static let tutorialPages: [OnboardingTutorialPage] = [.readyForEveryConversation, .talkAboutGodWithAnyone, .prepareForTheMomentsThatMatter, .helpSomeoneDiscoverJesus]
+    
+    private static var trackInBackgroundViewedOnboardingTutorialCancellable: AnyCancellable?
+    
+    private let trackViewedOnboardingTutorialUseCase: TrackViewedOnboardingTutorialUseCase
+    private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
+    private let getOnboardingTutorialInterfaceStringsUseCase: GetOnboardingTutorialInterfaceStringsUseCase
     private let trackTutorialVideoAnalytics: TutorialVideoAnalytics
+    private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
+    private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let readyForEveryConversationYoutubeVideoId: String = "RvhZ_wuxAgE"
+    private let showsChooseAppLanguageButtonOnPages: [Int] = [0]
+    
+    private var interfaceStrings: OnboardingTutorialInterfaceStringsDomainModel?
+    private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
     
-    let hidesSkipButton: CurrentValueSubject<Bool, Never> = CurrentValueSubject(true)
+    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     
-    @Published var currentPage: Int = 0 {
-        didSet {
-            didSetPage(page: currentPage)
+    @Published var hidesSkipButton: Bool = true
+    @Published var currentPage: Int = 0
+    @Published var chooseAppLanguageButtonTitle: String = ""
+    @Published var showsChooseLanguageButton: Bool = true
+    @Published var pages: [OnboardingTutorialPage] = Array()
+    @Published var continueButtonTitle: String = ""
+    
+    init(flowDelegate: FlowDelegate, trackViewedOnboardingTutorialUseCase: TrackViewedOnboardingTutorialUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getOnboardingTutorialInterfaceStringsUseCase: GetOnboardingTutorialInterfaceStringsUseCase, trackTutorialVideoAnalytics: TutorialVideoAnalytics, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+        
+        self.flowDelegate = flowDelegate
+        self.trackViewedOnboardingTutorialUseCase = trackViewedOnboardingTutorialUseCase
+        self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
+        self.getOnboardingTutorialInterfaceStringsUseCase = getOnboardingTutorialInterfaceStringsUseCase
+        self.trackTutorialVideoAnalytics = trackTutorialVideoAnalytics
+        self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
+        self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
+                        
+        OnboardingTutorialViewModel.trackInBackgroundViewedOnboardingTutorialCancellable = trackViewedOnboardingTutorialUseCase
+            .viewedPublisher()
+            .receive(on: DispatchQueue.main)
+            .sink { (void: Void) in
+                
+            }
+                
+        getCurrentAppLanguageUseCase
+            .getLanguagePublisher()
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$appLanguage)
+        
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
+                
+                getOnboardingTutorialInterfaceStringsUseCase
+                    .getStringsPublisher(appLanguage: appLanguage)
+            }
+            .switchToLatest()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (interfaceStrings: OnboardingTutorialInterfaceStringsDomainModel) in
+                
+                guard let weakSelf = self else {
+                    return
+                }
+                
+                weakSelf.interfaceStrings = interfaceStrings
+                
+                weakSelf.chooseAppLanguageButtonTitle = interfaceStrings.chooseAppLanguageButtonTitle
+
+                weakSelf.pages = OnboardingTutorialViewModel.tutorialPages
+            }
+            .store(in: &cancellables)
+        
+        Publishers.CombineLatest(
+            $currentPage,
+            $pages.dropFirst()
+        )
+        .receive(on: DispatchQueue.main)
+        .sink { [weak self] (currentPage: Int, pages: [OnboardingTutorialPage]) in
+            self?.didSetPage(page: currentPage, pages: pages)
+        }
+        .store(in: &cancellables)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            guard let weakSelf = self else {
+                return
+            }
+            weakSelf.updateShowsChooseLanguageButtonState(page: weakSelf.currentPage)
         }
     }
     
-    @Published var pages: [OnboardingTutorialPage] = [.readyForEveryConversation, .talkAboutGodWithAnyone, .prepareForTheMomentsThatMatter, .helpSomeoneDiscoverJesus]
-    @Published var skipButtonTitle: String
-    @Published var continueButtonTitle: String = ""
-    
-    init(flowDelegate: FlowDelegate, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, onboardingTutorialViewedRepository: OnboardingTutorialViewedRepository, localizationServices: LocalizationServices, analyticsContainer: AnalyticsContainer, trackTutorialVideoAnalytics: TutorialVideoAnalytics) {
-        
-        self.flowDelegate = flowDelegate
-        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
-        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
-        self.onboardingTutorialViewedRepository = onboardingTutorialViewedRepository
-        self.localizationServices = localizationServices
-        self.analyticsContainer = analyticsContainer
-        self.trackTutorialVideoAnalytics = trackTutorialVideoAnalytics
-        
-        skipButtonTitle = localizationServices.stringForMainBundle(key: "navigationBar.navigationItem.skip")
-        
-        onboardingTutorialViewedRepository.storeOnboardingTutorialViewed(viewed: true)
-        
-        didSetPage(page: currentPage)
+    deinit {
+        print("x deinit: \(type(of: self))")
     }
     
     private func getOnboardingTutorialPageAnalyticsProperties(page: OnboardingTutorialPage) -> OnboardingTutorialPageAnalyticsProperties {
@@ -59,51 +114,75 @@ class OnboardingTutorialViewModel: ObservableObject {
             screenName: "onboarding" + "-" + String(pageIndex + pageOffset),
             siteSection: "onboarding",
             siteSubsection: "",
-            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage ?? "",
-            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage ?? ""
+            contentLanguage: nil,
+            contentLanguageSecondary: nil
         )
     }
     
-    private func didSetPage(page: Int) {
+    private func updateShowsChooseLanguageButtonState(page: Int) {
+        showsChooseLanguageButton = showsChooseAppLanguageButtonOnPages.contains(page)
+    }
+    
+    private func didSetPage(page: Int, pages: [OnboardingTutorialPage]) {
+                
+        updateShowsChooseLanguageButtonState(page: page)
         
-        switch page {
+        let isFirstPage: Bool = page == 0
+        let isLastPage: Bool = pages.count > 0 && page == pages.count - 1
         
-        case 0:
-            hidesSkipButton.send(true)
-            continueButtonTitle = localizationServices.stringForMainBundle(key: "onboardingTutorial.beginButton.title")
-       
-        default:
-            hidesSkipButton.send(false)
-            continueButtonTitle = localizationServices.stringForMainBundle(key: "onboardingTutorial.nextButton.title")
+        let hidesSkipButton: Bool
+        let continueButtonTitle: String
+                
+        if isFirstPage {
+            
+            hidesSkipButton = true
+            continueButtonTitle = interfaceStrings?.beginTutorialButtonTitle ?? ""
+        }
+        else if isLastPage {
+            
+            hidesSkipButton = true
+            continueButtonTitle = interfaceStrings?.endTutorialButtonTitle ?? ""
+        }
+        else {
+         
+            hidesSkipButton = false
+            continueButtonTitle = interfaceStrings?.nextTutorialPageButtonTitle ?? ""
         }
         
+        self.hidesSkipButton = hidesSkipButton
+        self.continueButtonTitle = continueButtonTitle
         
-        let pageAnalytics = getOnboardingTutorialPageAnalyticsProperties(page: pages[page])
-        
-        let trackScreen = TrackScreenModel(
-            screenName: pageAnalytics.screenName,
-            siteSection: pageAnalytics.siteSection,
-            siteSubSection: pageAnalytics.siteSubsection,
-            contentLanguage: pageAnalytics.contentLanguage,
-            secondaryContentLanguage: pageAnalytics.secondaryContentLanguage
-        )
-        
-        analyticsContainer.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
+        if page >= 0 && page < pages.count {
+         
+            let pageAnalytics: OnboardingTutorialPageAnalyticsProperties = getOnboardingTutorialPageAnalyticsProperties(page: pages[page])
+            
+            trackScreenViewAnalyticsUseCase.trackScreen(
+                screenName: pageAnalytics.screenName,
+                siteSection: pageAnalytics.siteSection,
+                siteSubSection: pageAnalytics.siteSubsection,
+                contentLanguage: pageAnalytics.contentLanguage,
+                contentLanguageSecondary: pageAnalytics.contentLanguageSecondary
+            )
+        }
+        else {
+            
+            assertionFailure("Failed to fetch page at index:\n  \(page)\n  pages: \(pages)")
+        }
     }
     
     func getOnboardingTutorialReadyForEveryConversationViewModel() -> OnboardingTutorialReadyForEveryConversationViewModel {
         
         return OnboardingTutorialReadyForEveryConversationViewModel(
-            title: localizationServices.stringForMainBundle(key: "onboardingTutorial.0.title"),
-            watchVideoButtonTitle: localizationServices.stringForMainBundle(key: "onboardingTutorial.0.videoLink.title")
+            title: interfaceStrings?.readyForEveryConversationTitle ?? "",
+            watchVideoButtonTitle: interfaceStrings?.readyForEveryConversationVideoLinkTitle ?? ""
         )
     }
     
     func getOnboardingTutorialPrepareForTheMomentsThatMatterViewModel() -> OnboardingTutorialMediaViewModel {
         
         return OnboardingTutorialMediaViewModel(
-            title: localizationServices.stringForMainBundle(key: "onboardingTutorial.2.title"),
-            message: localizationServices.stringForMainBundle(key: "onboardingTutorial.2.message"),
+            title: interfaceStrings?.prepareForMomentsThatMatterTitle ?? "",
+            message: interfaceStrings?.prepareForMomentsThatMatterMessage ?? "",
             animationFilename: "onboarding_prepare_for_moments"
         )
     }
@@ -111,8 +190,8 @@ class OnboardingTutorialViewModel: ObservableObject {
     func getOnboardingTutorialTalkAboutGodWithAnyoneViewModel() -> OnboardingTutorialMediaViewModel {
         
         return OnboardingTutorialMediaViewModel(
-            title: localizationServices.stringForMainBundle(key: "onboardingTutorial.1.title"),
-            message: localizationServices.stringForMainBundle(key: "onboardingTutorial.1.message"),
+            title: interfaceStrings?.talkWithGodAboutAnyoneTitle ?? "",
+            message: interfaceStrings?.talkWithGodAboutAnyoneMessage ?? "",
             animationFilename: "onboarding_talk_about_god"
         )
     }
@@ -120,8 +199,8 @@ class OnboardingTutorialViewModel: ObservableObject {
     func getOnboardingTutorialHelpSomeoneDiscoverJesusViewModel() -> OnboardingTutorialMediaViewModel {
         
         return OnboardingTutorialMediaViewModel(
-            title: localizationServices.stringForMainBundle(key: "onboardingTutorial.3.title"),
-            message: localizationServices.stringForMainBundle(key: "onboardingTutorial.3.message"),
+            title: interfaceStrings?.helpSomeoneDiscoverJesusTitle ?? "",
+            message: interfaceStrings?.helpSomeoneDiscoverJesusMessage ?? "",
             animationFilename: "onboarding_help_someone_discover_jesus"
         )
     }
@@ -131,9 +210,27 @@ class OnboardingTutorialViewModel: ObservableObject {
 
 extension OnboardingTutorialViewModel {
     
+    func chooseAppLanguageTapped() {
+        
+        flowDelegate?.navigate(step: .chooseAppLanguageTappedFromOnboardingTutorial)
+    }
+    
     @objc func skipTapped() {
         
         flowDelegate?.navigate(step: .skipTappedFromOnboardingTutorial)
+        
+        let pageAnalytics: OnboardingTutorialPageAnalyticsProperties = getOnboardingTutorialPageAnalyticsProperties(page: pages[currentPage])
+        
+        trackActionAnalyticsUseCase.trackAction(
+            screenName: pageAnalytics.screenName,
+            actionName: "Onboarding Skip",
+            siteSection: pageAnalytics.siteSection,
+            siteSubSection: pageAnalytics.siteSubsection,
+            contentLanguage: pageAnalytics.contentLanguage,
+            contentLanguageSecondary: pageAnalytics.contentLanguageSecondary,
+            url: nil,
+            data: [AnalyticsConstants.Keys.onboardingSkip: 1]
+        )
     }
     
     func continueTapped() {
@@ -146,20 +243,18 @@ extension OnboardingTutorialViewModel {
             
             flowDelegate?.navigate(step: .endTutorialFromOnboardingTutorial)
             
-            let pageAnalytics = getOnboardingTutorialPageAnalyticsProperties(page: pages[currentPage])
+            let pageAnalytics: OnboardingTutorialPageAnalyticsProperties = getOnboardingTutorialPageAnalyticsProperties(page: pages[currentPage])
             
-            let trackAction = TrackActionModel(
+            trackActionAnalyticsUseCase.trackAction(
                 screenName: pageAnalytics.screenName,
                 actionName: "Onboarding Start",
                 siteSection: pageAnalytics.siteSection,
                 siteSubSection: pageAnalytics.siteSubsection,
                 contentLanguage: pageAnalytics.contentLanguage,
-                secondaryContentLanguage: pageAnalytics.secondaryContentLanguage,
+                contentLanguageSecondary: pageAnalytics.contentLanguageSecondary,
                 url: nil,
                 data: [AnalyticsConstants.Keys.onboardingStart: 1]
             )
-            
-            analyticsContainer.trackActionAnalytics.trackAction(trackAction: trackAction)
         }
         else {
             
@@ -171,13 +266,13 @@ extension OnboardingTutorialViewModel {
         
         flowDelegate?.navigate(step: .videoButtonTappedFromOnboardingTutorial(youtubeVideoId: readyForEveryConversationYoutubeVideoId))
         
-        let pageAnalytics = getOnboardingTutorialPageAnalyticsProperties(page: .readyForEveryConversation)
+        let pageAnalytics: OnboardingTutorialPageAnalyticsProperties = getOnboardingTutorialPageAnalyticsProperties(page: .readyForEveryConversation)
         
         trackTutorialVideoAnalytics.trackVideoPlayed(
             videoId: readyForEveryConversationYoutubeVideoId,
             screenName: pageAnalytics.screenName,
             contentLanguage: pageAnalytics.contentLanguage,
-            secondaryContentLanguage: pageAnalytics.secondaryContentLanguage
+            secondaryContentLanguage: pageAnalytics.contentLanguageSecondary
         )
     }
 }

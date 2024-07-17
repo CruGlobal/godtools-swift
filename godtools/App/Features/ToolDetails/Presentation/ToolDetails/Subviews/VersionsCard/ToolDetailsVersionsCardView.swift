@@ -9,13 +9,17 @@
 import SwiftUI
 
 struct ToolDetailsVersionsCardView: View {
-    
-    private let bannerHeight: CGFloat = 87
-    
-    @ObservedObject var viewModel: ToolDetailsVersionsCardViewModel
+        
+    @ObservedObject private var viewModel: ToolDetailsVersionsCardViewModel
     
     let width: CGFloat
         
+    init(viewModel: ToolDetailsVersionsCardViewModel, width: CGFloat) {
+        
+        self.viewModel = viewModel
+        self.width = width
+    }
+    
     var body: some View {
         
         ZStack {
@@ -24,18 +28,12 @@ struct ToolDetailsVersionsCardView: View {
             
             VStack(alignment: .leading, spacing: 0) {
                 
-                if let bannerImage = viewModel.bannerImage {
-                    bannerImage
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: width, height: bannerHeight)
-                        .clipped()
-                }
-                else {
-                    Rectangle()
-                        .fill(ColorPalette.gtLightestGrey.color)
-                        .frame(width: width, height: bannerHeight)
-                }
+                OptionalImage(
+                    imageData: viewModel.bannerImageData,
+                    imageSize: .aspectRatio(width: width, aspectRatio: CGSize(width: 335, height: 87)),
+                    contentMode: .fill,
+                    placeholderColor: ColorPalette.gtLightestGrey.color
+                )
                 
                 HStack(alignment: .top, spacing: 0) {
                     
@@ -72,12 +70,12 @@ struct ToolDetailsVersionsCardView: View {
                                 
                                 Text(viewModel.languages)
                                 
-                                if let primaryLanguageName = viewModel.primaryLanguageName {
-                                    LanguageSupportedText(languageName: primaryLanguageName, isSupported: viewModel.primaryLanguageIsSupported)
+                                if let toolLanguageName = viewModel.toolLanguageName, !toolLanguageName.isEmpty {
+                                    LanguageSupportedText(languageName: toolLanguageName, isSupported: viewModel.toolLanguageNameIsSupported)
                                 }
                                 
-                                if let parallelLanguageName = viewModel.parallelLanguageName {
-                                    LanguageSupportedText(languageName: parallelLanguageName, isSupported: viewModel.parallelLanguageIsSupported)
+                                if let toolParallelLanguageName = viewModel.toolParallelLanguageName, !toolParallelLanguageName.isEmpty, let toolParallelLanguageNameIsSupported = viewModel.toolParallelLanguageNameIsSupported {
+                                    LanguageSupportedText(languageName: toolParallelLanguageName, isSupported: toolParallelLanguageNameIsSupported)
                                 }
                             }
                             .foregroundColor(ColorPalette.gtLightGrey.color)
@@ -100,22 +98,21 @@ struct ToolDetailsVersionsCardView_Preview: PreviewProvider {
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
         
         let toolVersion = ToolVersionDomainModel(
+            analyticsToolAbbreviation: "",
             bannerImageId: "1",
             dataModelId: "1",
-            name: "Tool Name",
             description: "Tool description",
-            numberOfLanguages: 45,
-            numberOfLanguagesString: "45 languages",
-            primaryLanguage: "English",
-            primaryLanguageIsSupported: true,
-            parallelLanguage: "Spanish",
-            parallelLanguageIsSupported: false,
-            isDefaultVersion: false
+            name: "Tool name",
+            numberOfLanguages: "45 languages",
+            toolLanguageName: "Spanish",
+            toolLanguageNameIsSupported: true,
+            toolParallelLanguageName: "English",
+            toolParallelLanguageNameIsSupported: true
         )
         
         let viewModel = ToolDetailsVersionsCardViewModel(
             toolVersion: toolVersion,
-            getBannerImageUseCase: appDiContainer.domainLayer.getBannerImageUseCase(),
+            attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository(),
             isSelected: false
         )
         

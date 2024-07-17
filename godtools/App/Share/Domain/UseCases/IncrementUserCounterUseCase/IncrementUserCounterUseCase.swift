@@ -63,7 +63,10 @@ class IncrementUserCounterUseCase {
             
         case .articleOpen(let uriString):
             
-            guard let uri = URL(string: uriString) else { return nil }
+            guard let uri = URL(string: uriString) else {
+                return nil
+            }
+            
             userCounterId = userCounterNames.ARTICLE_OPEN(uri: uri)
         
         case .imageShared:
