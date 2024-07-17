@@ -22,7 +22,7 @@ final class UserCountersRepositoryTests: XCTestCase {
         userCountersApi = UserCountersAPIMock()
         cancellables = Set<AnyCancellable>()
         
-        let realmDatabase = TestsInMemoryRealmDatabase(shouldUseSingleRealmInstance: true)
+        let realmDatabase = TestsInMemoryRealmDatabase(realmInstanceCreationType: .usesASingleSharedRealmInstance)
         let userCountersCacheSync = RealmUserCountersCacheSync(realmDatabase: realmDatabase)
         let userCountersCache = RealmUserCountersCache(realmDatabase: realmDatabase, userCountersSync: userCountersCacheSync)
         

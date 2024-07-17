@@ -16,11 +16,11 @@ class RealmDatabase {
     private let config: Realm.Configuration
     private let realmInstanceCreator: RealmInstanceCreator
     
-    init(databaseConfiguration: RealmDatabaseConfiguration, shouldUseSingleRealmInstance: Bool = false) {
+    init(databaseConfiguration: RealmDatabaseConfiguration, realmInstanceCreationType: RealmInstanceCreationType = .alwaysCreatesANewRealmInstance) {
         
         self.databaseConfiguration = databaseConfiguration
         config = databaseConfiguration.getRealmConfig()
-        realmInstanceCreator = RealmInstanceCreator(config: config, shouldUseSingleInstance: shouldUseSingleRealmInstance)
+        realmInstanceCreator = RealmInstanceCreator(config: config, creationType: realmInstanceCreationType)
     }
 
     func openRealm() -> Realm {

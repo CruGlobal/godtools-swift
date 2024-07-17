@@ -11,13 +11,13 @@ import Foundation
 
 class TestsInMemoryRealmDatabase: RealmDatabase {
     
-    init(schemaVersion: UInt64 = 1, shouldUseSingleRealmInstance: Bool = false) {
+    init(schemaVersion: UInt64 = 1, realmInstanceCreationType: RealmInstanceCreationType = .alwaysCreatesANewRealmInstance) {
         
         let uniqueId: String = "godtoolsTests" + UUID().uuidString
         
         super.init(
             databaseConfiguration: RealmDatabaseConfiguration(cacheType: .inMemory(identifier: uniqueId), schemaVersion: schemaVersion),
-            shouldUseSingleRealmInstance: shouldUseSingleRealmInstance
+            realmInstanceCreationType: realmInstanceCreationType
         )
     }
 }

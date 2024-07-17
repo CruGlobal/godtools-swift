@@ -16,11 +16,11 @@ class RealmInstanceCreator {
     
     private var sharedRealm: Realm?
         
-    init(config: Realm.Configuration, shouldUseSingleInstance: Bool) {
+    init(config: Realm.Configuration, creationType: RealmInstanceCreationType = .alwaysCreatesANewRealmInstance) {
         
         self.config = config
         
-        if shouldUseSingleInstance {
+        if creationType == .usesASingleSharedRealmInstance {
             sharedRealm = try! Realm(configuration: config)
         }
     }
