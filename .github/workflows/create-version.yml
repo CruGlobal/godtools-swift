@@ -2,9 +2,9 @@ name: Create Version
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, releases/* ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, releases/* ]
     
   workflow_dispatch:
     inputs:
@@ -61,7 +61,7 @@ jobs:
       - name: Set Version Output
         id: version
         run: |
-          echo "version=$(grep -m 1 MARKETING_VERSION godtools.xcodeproj/project.pbxproj | sed 's/;//g' | sed 's/ //g' | sed 's/=//g' | sed 's/MARKETING_VERSION//g')" >> $GITHUB_OUTPUT
+          echo "version=$(grep -m 1 MARKETING_VERSION godtools.xcodeproj/project.pbxproj | sed 's/;//g' | sed 's/ //g' | sed 's/=//g' | sed 's/MARKETING_VERSION//g' | sed 's/^ *//g' | sed 's/^[[:space:]]*//g')" >> $GITHUB_OUTPUT
 
   print_current_version:
     name: Print Current Version

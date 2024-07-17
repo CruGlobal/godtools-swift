@@ -12,5 +12,5 @@ enum LearnToShareToolItemAssetContent {
     
     case animation(viewModel: AnimatedViewModel)
     case image(image: Image)
-    case none
+    case noAsset
 }

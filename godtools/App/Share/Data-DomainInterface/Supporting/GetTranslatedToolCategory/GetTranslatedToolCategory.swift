@@ -11,11 +11,13 @@ import LocalizationServices
 
 class GetTranslatedToolCategory {
     
+    private let languagesRepository: LanguagesRepository
     private let localizationServices: LocalizationServices
     private let resourcesRepository: ResourcesRepository
     
-    init(localizationServices: LocalizationServices, resourcesRepository: ResourcesRepository) {
+    init(languagesRepository: LanguagesRepository, localizationServices: LocalizationServices, resourcesRepository: ResourcesRepository) {
         
+        self.languagesRepository = languagesRepository
         self.localizationServices = localizationServices
         self.resourcesRepository = resourcesRepository
     }
@@ -33,8 +35,11 @@ class GetTranslatedToolCategory {
         
         let localeId: String
         
-        if resource.supportsLanguage(languageId: translateInLanguage) {
-            localeId = translateInLanguage
+        if 
+            let translateInLanguageModel = languagesRepository.getLanguage(code: translateInLanguage),
+            resource.supportsLanguage(languageId: translateInLanguageModel.id)
+        {
+            localeId = translateInLanguageModel.code
         } else {
             localeId = resource.attrDefaultLocale
         }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-public extension UIButton {
+extension UIButton {
     
     func setImageColor(color: UIColor) {
         

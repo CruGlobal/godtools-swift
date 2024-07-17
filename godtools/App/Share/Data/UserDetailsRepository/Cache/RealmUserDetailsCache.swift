@@ -23,7 +23,9 @@ class RealmUserDetailsCache {
     
     func getAuthUserDetailsChangedPublisher() -> AnyPublisher<UserDetailsDataModel?, Never> {
         
-        return realmDatabase.openRealm().objects(RealmUserDetails.self).objectWillChange
+        return realmDatabase.openRealm()
+            .objects(RealmUserDetails.self)
+            .objectWillChange
             .map { _ in
                 return self.getAuthUserDetails()
             }
@@ -32,7 +34,9 @@ class RealmUserDetailsCache {
     
     func getUserDetailsChangedPublisher(id: String) -> AnyPublisher<UserDetailsDataModel?, Never> {
         
-        return realmDatabase.openRealm().objects(RealmUserDetails.self).objectWillChange
+        return realmDatabase.openRealm()
+            .objects(RealmUserDetails.self)
+            .objectWillChange
             .map { _ in
                 
                 let realmObject: RealmUserDetails? = self.realmDatabase.readObject(primaryKey: id)

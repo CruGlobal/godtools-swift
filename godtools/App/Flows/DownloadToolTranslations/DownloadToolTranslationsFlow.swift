@@ -133,4 +133,3 @@ class DownloadToolTranslationsFlow: Flow {
         downloadToolProgressModal = nil
     }
 }
-

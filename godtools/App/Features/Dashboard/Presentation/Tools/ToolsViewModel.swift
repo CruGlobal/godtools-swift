@@ -14,7 +14,7 @@ class ToolsViewModel: ObservableObject {
     
     typealias ToolId = String
     
-    private static var favoriteToolCancellables: Dictionary<ToolId, AnyCancellable?> = Dictionary()
+    private static var favoriteToolCancellables: [ToolId: AnyCancellable?] = Dictionary()
     
     private let resourcesRepository: ResourcesRepository
     private let viewToolsUseCase: ViewToolsUseCase
@@ -74,7 +74,7 @@ class ToolsViewModel: ObservableObject {
             $toolFilterCategorySelection.eraseToAnyPublisher().dropFirst(),
             $toolFilterLanguageSelection.eraseToAnyPublisher().dropFirst()
         )
-        .map{ (appLanguage, toolFilterCategory, toolFilterLanguage) in
+        .map { (appLanguage, toolFilterCategory, toolFilterLanguage) in
                                     
             Publishers.CombineLatest(
                 viewToolsUseCase.viewPublisher(

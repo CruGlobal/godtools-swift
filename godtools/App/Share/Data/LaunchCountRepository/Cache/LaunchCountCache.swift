@@ -34,7 +34,7 @@ class LaunchCountCache {
     }
 }
 
-private extension UserDefaults {
+extension UserDefaults {
     
     private static let launchCountCacheKey: String = "LaunchCountCache.launchCountCacheKey"
     

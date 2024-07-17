@@ -15,11 +15,11 @@ struct WebArchiveQueueResult {
     let totalAttemptedArchives: Int
     
     var networkFailed: Bool {
-        for operationError in failedArchives {
-            if operationError.networkFailed {
-                return true
-            }
+        
+        for operationError in failedArchives where operationError.networkFailed {
+            return true
         }
+        
         return false
     }
 }

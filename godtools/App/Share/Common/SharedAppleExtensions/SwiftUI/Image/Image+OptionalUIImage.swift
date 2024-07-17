@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-public extension Image {
+extension Image {
     
     static func from(uiImage: UIImage?) -> Image? {
         

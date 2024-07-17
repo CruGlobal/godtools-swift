@@ -42,7 +42,7 @@ struct LearnToShareToolItemView: View {
                     .resizable()
                     .scaledToFit()
            
-            case .none:
+            case .noAsset:
                 
                 Rectangle()
                     .fill(.clear)

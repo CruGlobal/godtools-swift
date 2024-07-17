@@ -105,10 +105,11 @@ extension FileCache {
             
             let location: FileCacheLocation = FileCacheLocation(relativeUrlString: relativeUrlString)
                     
-            
             switch storeFile(location: location, data: data) {
+            
             case .success( _):
                 storedFileLocations.append(location)
+            
             case .failure(let error):
                 return .failure(error)
             }

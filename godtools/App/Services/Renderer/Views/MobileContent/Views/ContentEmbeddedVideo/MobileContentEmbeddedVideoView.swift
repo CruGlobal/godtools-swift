@@ -65,7 +65,6 @@ class MobileContentEmbeddedVideoView: MobileContentView {
     }
 }
 
-
 // MARK: - YTPlayerViewDelegate
 
 extension MobileContentEmbeddedVideoView: YTPlayerViewDelegate {
@@ -92,4 +91,3 @@ extension MobileContentEmbeddedVideoView: YTPlayerViewDelegate {
 
     }
 }
-

@@ -14,7 +14,7 @@ class DashboardPathDeepLinkParser: DeepLinkUrlParserType {
         
     }
     
-    func parse(url: URL, pathComponents: [String], queryParameters: [String : Any]) -> ParsedDeepLinkType? {
+    func parse(url: URL, pathComponents: [String], queryParameters: [String: Any]) -> ParsedDeepLinkType? {
         
         guard let dashboardPathIndex = pathComponents.firstIndex(of: DashboardDeepLinkDashboardPath.dashboard.rawValue) else {
             return nil

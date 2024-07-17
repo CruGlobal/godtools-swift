@@ -23,14 +23,17 @@ class RealmUserCountersCache {
     
     func getUserCountersChanged() -> AnyPublisher<Void, Never> {
         
-        return realmDatabase.openRealm().objects(RealmUserCounter.self)
+        return realmDatabase.openRealm()
+            .objects(RealmUserCounter.self)
             .objectWillChange
             .eraseToAnyPublisher()
     }
     
     func getUserCounter(id: String) -> UserCounterDataModel? {
         
-        guard let realmUserCounter = realmDatabase.openRealm().object(ofType: RealmUserCounter.self, forPrimaryKey: id) else {
+        guard let realmUserCounter = realmDatabase.openRealm()
+            .object(ofType: RealmUserCounter.self, forPrimaryKey: id) else {
+            
             return nil
         }
         
@@ -39,13 +42,15 @@ class RealmUserCountersCache {
     
     func getAllUserCounters() -> [UserCounterDataModel] {
         
-        return realmDatabase.openRealm().objects(RealmUserCounter.self)
+        return realmDatabase.openRealm()
+            .objects(RealmUserCounter.self)
             .map { UserCounterDataModel(realmUserCounter: $0) }
     }
     
     func getUserCountersWithIncrementGreaterThanZero() -> [UserCounterDataModel] {
         
-        return realmDatabase.openRealm().objects(RealmUserCounter.self)
+        return realmDatabase.openRealm()
+            .objects(RealmUserCounter.self)
             .filter(NSPredicate(format: "%K > 0", #keyPath(RealmUserCounter.incrementValue)))
             .map { UserCounterDataModel(realmUserCounter: $0) }
     }

@@ -125,11 +125,13 @@ class ToolViewModel: MobileContentPagesViewModel {
     }
     
     private func getPageRenderer(language: LanguageDomainModel) -> MobileContentPageRenderer? {
-        for pageRenderer in renderer.value.pageRenderers {
-            if pageRenderer.language.localeIdentifier.lowercased() == language.localeIdentifier.lowercased() {
-                return pageRenderer
-            }
+        
+        let languageLocaleId: String = language.localeIdentifier.lowercased()
+        
+        for pageRenderer in renderer.value.pageRenderers where pageRenderer.language.localeIdentifier.lowercased() == languageLocaleId {
+            return pageRenderer
         }
+        
         return nil
     }
     

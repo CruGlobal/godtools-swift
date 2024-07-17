@@ -81,10 +81,6 @@ class ToolPageView: MobileContentPageView {
         setCallToActionHidden(hidden: true, animated: false)
     }
     
-    override func setupBinding() {
-        super.setupBinding()
-    }
-    
     override func getPositionState() -> MobileContentViewPositionState {
         
         let cardPosition: Int? = cardsView?.getCurrentCardPosition()

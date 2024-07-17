@@ -53,8 +53,9 @@ struct LessonsView: View {
                                 geometry: geometry,
                                 cardTappedClosure: {
                                 
-                                viewModel.lessonCardTapped(lessonListItem: lessonListItem)
-                            })
+                                    viewModel.lessonCardTapped(lessonListItem: lessonListItem)
+                                }
+                            )
                         }
                     }
                     .padding([.top], lessonCardSpacing)

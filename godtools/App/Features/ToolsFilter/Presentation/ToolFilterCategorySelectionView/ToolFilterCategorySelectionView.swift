@@ -48,4 +48,3 @@ struct ToolFilterCategorySelectionView: View {
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
     }
 }
-

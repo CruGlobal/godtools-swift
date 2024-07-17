@@ -124,9 +124,7 @@ class MobileContentPagesView: AppViewController {
                         
             weakSelf.pageNavigationView.scrollToPage(pageNavigation: navigationEvent.pageNavigation, completion: { (completedNavigation: PageNavigationCollectionViewNavigationCompleted) in
                                     
-                if let pagePositions = navigationEvent.pagePositions,
-                   let pageCell = completedNavigation.pageCell as? MobileContentPageCell,
-                   let pageView = pageCell.mobileContentView as? MobileContentPageView {
+                if let pagePositions = navigationEvent.pagePositions, let pageCell = completedNavigation.pageCell as? MobileContentPageCell, let pageView = pageCell.mobileContentView as? MobileContentPageView {
                     
                     pageView.setPositionStateForViewHierarchy(
                         positionState: pagePositions,
@@ -159,9 +157,7 @@ class MobileContentPagesView: AppViewController {
         
         for cell in visiblePageCells {
             
-            if let pageCell = cell as? MobileContentPageCell,
-               let pageView = pageCell.mobileContentView as? MobileContentPageView,
-               let indexPath = pageNavigationView.getIndexPathForPageCell(pageCell: pageCell) {
+            if let pageCell = cell as? MobileContentPageCell, let pageView = pageCell.mobileContentView as? MobileContentPageView, let indexPath = pageNavigationView.getIndexPathForPageCell(pageCell: pageCell) {
                 
                 let page: Int = indexPath.row
                 let currentPagePositions: MobileContentViewPositionState = pageView.getPositionStateForViewHierarchy()
@@ -224,9 +220,14 @@ extension MobileContentPagesView: PageNavigationCollectionViewDelegate {
     
     func pageNavigation(pageNavigation: PageNavigationCollectionView, cellForPageAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell: MobileContentPageCell = pageNavigationView.getReusablePageCell(
+        guard let cell = pageNavigationView.getReusablePageCell(
             cellReuseIdentifier: MobileContentPageCell.reuseIdentifier,
-            indexPath: indexPath) as! MobileContentPageCell
+            indexPath: indexPath) as? MobileContentPageCell else {
+            
+            assertionFailure("Failed to dequeue reusable cell with identifier :\(MobileContentPageCell.reuseIdentifier)")
+            
+            return UICollectionViewCell()
+        }
         
         let pageNumber: Int = indexPath.row
         

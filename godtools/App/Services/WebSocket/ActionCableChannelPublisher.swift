@@ -132,7 +132,7 @@ class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherType {
         addTextSignalObserver()
                 
         let stringChannel = "{ \"channel\": \"PublishChannel\",\"channelId\": \"\(channelId)\" }"
-        let message = ["command" : "subscribe", "identifier": stringChannel]
+        let message = ["command": "subscribe", "identifier": stringChannel]
         
         publishChannelIdentifier = stringChannel
 

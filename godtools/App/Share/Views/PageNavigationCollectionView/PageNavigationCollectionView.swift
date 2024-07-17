@@ -66,7 +66,7 @@ class PageNavigationCollectionView: UIView, NibBased {
         assertionFailure("init(frame:) not supported")
         
         self.layout = PageNavigationCollectionView.getDefaultFlowLayout()
-        self.layoutType =  .fullScreen
+        self.layoutType = .fullScreen
         
         super.init(frame: frame)
     }
@@ -74,7 +74,7 @@ class PageNavigationCollectionView: UIView, NibBased {
     required init?(coder: NSCoder) {
         
         self.layout = PageNavigationCollectionView.getDefaultFlowLayout()
-        self.layoutType =  .fullScreen
+        self.layoutType = .fullScreen
         
         super.init(coder: coder)
         
@@ -655,8 +655,8 @@ extension PageNavigationCollectionView: UIScrollViewDelegate {
      
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
                         
-        //logMessage(message: "did scroll")
-        //logMessage(message: "  contentOffset.x: \(scrollView.contentOffset.x)")
+        // logMessage(message: "did scroll")
+        // logMessage(message: "  contentOffset.x: \(scrollView.contentOffset.x)")
         
         let currentPage: Int = getPageBasedOnContentOffset(contentOffset: scrollView.contentOffset)
                 

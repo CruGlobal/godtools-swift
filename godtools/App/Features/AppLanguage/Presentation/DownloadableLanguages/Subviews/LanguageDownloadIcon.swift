@@ -131,7 +131,10 @@ struct LanguageDownloadIcon: View {
     
     private func shouldFinishAnimatingDownloadProgress() -> Bool {
         
-        guard let animationDownloadProgress = animationDownloadProgress else { return false }
+        guard let animationDownloadProgress = animationDownloadProgress else {
+            return false
+        }
+        
         return animationDownloadProgress <= 1
     }
 }

@@ -33,7 +33,7 @@ class LanguagesRepository {
         return cache.getLanguage(id: id)
     }
     
-    func getLanguage(code: String) -> LanguageModel? {
+    func getLanguage(code: BCP47LanguageIdentifier) -> LanguageModel? {
         return cache.getLanguage(code: code)
     }
     
@@ -41,7 +41,7 @@ class LanguagesRepository {
         return cache.getLanguages(ids: ids)
     }
     
-    func getLanguages(languageCodes: [String]) -> [LanguageModel] {
+    func getLanguages(languageCodes: [BCP47LanguageIdentifier]) -> [LanguageModel] {
         return cache.getLanguages(languageCodes: languageCodes)
     }
     

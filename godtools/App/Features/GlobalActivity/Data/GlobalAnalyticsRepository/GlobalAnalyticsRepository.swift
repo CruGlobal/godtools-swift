@@ -27,7 +27,6 @@ class GlobalAnalyticsRepository {
         getGlobalAnalyticsFromRemotePublisher()
             .sink { value in
                 
-                
             } receiveValue: { value in
                                 
             }

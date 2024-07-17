@@ -57,11 +57,6 @@ class LessonPageView: MobileContentPageView {
         contentContainerView.backgroundColor = .clear
     }
     
-    override func setupBinding() {
-        super.setupBinding()
-        
-    }
-    
     // MARK: - MobileContentView
 
     override func renderChild(childView: MobileContentView) {
