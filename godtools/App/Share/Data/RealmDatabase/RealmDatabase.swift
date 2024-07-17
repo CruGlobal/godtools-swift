@@ -25,11 +25,11 @@ class RealmDatabase {
 
     func openRealm() -> Realm {
         
-        return realmInstanceCreator.newRealm()
+        return realmInstanceCreator.createRealm()
     }
     
     func background(async: @escaping ((_ realm: Realm) -> Void)) {
                 
-        realmInstanceCreator.newBackgroundRealm(async: async)
+        realmInstanceCreator.createBackgroundRealm(async: async)
     }
 }

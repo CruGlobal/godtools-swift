@@ -25,7 +25,7 @@ class RealmInstanceCreator {
         }
     }
     
-    func newRealm() -> Realm {
+    func createRealm() -> Realm {
         
         if let sharedRealm = sharedRealm {
             return sharedRealm
@@ -34,7 +34,7 @@ class RealmInstanceCreator {
         return try! Realm(configuration: config)
     }
     
-    func newBackgroundRealm(async: @escaping ((_ realm: Realm) -> Void)) {
+    func createBackgroundRealm(async: @escaping ((_ realm: Realm) -> Void)) {
              
         if let sharedRealm = sharedRealm {
             return async(sharedRealm)
