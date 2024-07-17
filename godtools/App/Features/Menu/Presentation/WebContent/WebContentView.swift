@@ -12,14 +12,12 @@ import WebKit
 class WebContentView: AppViewController {
     
     private let viewModel: WebContentViewModel
-        
-    private var webView: WKWebView!
+    private let webView: WKWebView = WKWebView(frame: UIScreen.main.bounds)
     
     @IBOutlet weak private var loadingView: UIActivityIndicatorView!
         
     init(viewModel: WebContentViewModel, navigationBar: AppNavigationBar?) {
         
-        self.webView = WKWebView(frame: UIScreen.main.bounds)
         self.viewModel = viewModel
         
         super.init(nibName: String(describing: WebContentView.self), bundle: nil, navigationBar: navigationBar)
@@ -87,7 +85,7 @@ class WebContentView: AppViewController {
 
 extension WebContentView: WKNavigationDelegate {
     
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation) {
                 
         finishedLoadingWebView()
     }

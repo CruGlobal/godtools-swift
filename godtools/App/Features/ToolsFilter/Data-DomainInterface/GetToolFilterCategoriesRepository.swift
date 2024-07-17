@@ -43,7 +43,9 @@ class GetToolFilterCategoriesRepository: GetToolFilterCategoriesRepositoryInterf
     
     func getCategoryFilter(from categoryId: String?, translatedInAppLanguage: AppLanguageDomainModel) -> CategoryFilterDomainModel? {
         
-        guard let categoryId = categoryId else { return nil }
+        guard let categoryId = categoryId else {
+            return nil
+        }
         
         return createCategoryDomainModel(with: categoryId, translatedInAppLanguage: translatedInAppLanguage, filteredByLanguageId: nil)
     }

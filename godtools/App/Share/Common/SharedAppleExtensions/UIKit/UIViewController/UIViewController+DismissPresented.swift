@@ -8,7 +8,7 @@
 
 import UIKit
 
-public extension UIViewController {
+extension UIViewController {
     
     // Helper ensures completion will always be called.  I believe if animated is false when calling UIKit's UIViewController.dismiss(animated:) the completion closure will never be called.
     

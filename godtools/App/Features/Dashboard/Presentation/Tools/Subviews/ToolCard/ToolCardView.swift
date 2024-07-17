@@ -168,7 +168,7 @@ struct ToolCardView: View {
                 })
             }
             
-        }//end ZStack
+        }// end ZStack
         .frame(width: cardWidth)
         .cornerRadius(cornerRadius)
         .shadow(color: Color.black.opacity(0.25), radius: 4, y: 2)

@@ -20,7 +20,7 @@ struct NoFavoriteToolsView: View {
     var body: some View {
         
         ZStack {
-            Color(.sRGB, red: 243/256, green: 243/256, blue: 243/256, opacity: 1)
+            Color(.sRGB, red: 243 / 256, green: 243 / 256, blue: 243 / 256, opacity: 1)
             
             VStack(spacing: 4) {
                 

@@ -18,7 +18,7 @@ struct LanguageSupportedText: View {
         HStack(alignment: .bottom, spacing: 4) {
             
             Text(languageName)
-            Image(isSupported ? ImageCatalog.languageAvailableCheck.name: ImageCatalog.languageUnavailableX.name)
+            Image(isSupported ? ImageCatalog.languageAvailableCheck.name : ImageCatalog.languageUnavailableX.name)
                 .padding(EdgeInsets(top: 0, leading: 0, bottom: 4, trailing: 0))
         }
     }

@@ -65,7 +65,6 @@ class ToolPageFormViewModel: MobileContentFormViewModel {
             return
         }
         
-        
         let languageId: Int = Int(renderedPageContext.language.id) ?? 0
         
         let followUpModel = FollowUpModel(

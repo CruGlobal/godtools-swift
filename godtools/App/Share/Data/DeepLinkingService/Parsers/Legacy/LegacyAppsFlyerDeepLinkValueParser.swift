@@ -14,16 +14,14 @@ class LegacyAppsFlyerDeepLinkValueParser: DeepLinkAppsFlyerParserType {
         
     }
     
-    func parse(data: [AnyHashable : Any]) -> ParsedDeepLinkType? {
+    func parse(data: [AnyHashable: Any]) -> ParsedDeepLinkType? {
         
         let resourceAbbreviation: String?
         
         if let deepLinkValue = data["deep_link_value"] as? String {
             resourceAbbreviation = deepLinkValue
         }
-        else if let link = data["link"] as? String,
-                let linkComponents = URLComponents(string: link),
-                let deepLinkValue = linkComponents.queryItems?.first(where: { $0.name == "deep_link_value" })?.value {
+        else if let link = data["link"] as? String, let linkComponents = URLComponents(string: link), let deepLinkValue = linkComponents.queryItems?.first(where: { $0.name == "deep_link_value" })?.value {
             
             resourceAbbreviation = deepLinkValue
         }

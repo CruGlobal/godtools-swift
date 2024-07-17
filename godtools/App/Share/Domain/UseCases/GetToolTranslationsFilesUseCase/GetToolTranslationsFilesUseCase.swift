@@ -145,6 +145,3 @@ class GetToolTranslationsFilesUseCase {
         return sortedLanguageTranslationManifests
     }
 }
-
-
-

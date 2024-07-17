@@ -10,6 +10,6 @@ import Foundation
 
 enum AppEnvironment {
     
-    case staging
     case production
+    case staging
 }

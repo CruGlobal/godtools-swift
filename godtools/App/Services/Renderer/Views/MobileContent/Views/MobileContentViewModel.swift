@@ -93,8 +93,7 @@ extension MobileContentViewModel {
     
     func getClickableAnalyticsEvents() -> [AnalyticsEvent] {
         
-        guard let clickableModel = baseModel as? Clickable, clickableModel.isClickable,
-              let modelHasAnalyticsEvents = clickableModel as? HasAnalyticsEvents else {
+        guard let clickableModel = baseModel as? Clickable, clickableModel.isClickable, let modelHasAnalyticsEvents = clickableModel as? HasAnalyticsEvents else {
             
             return Array()
         }

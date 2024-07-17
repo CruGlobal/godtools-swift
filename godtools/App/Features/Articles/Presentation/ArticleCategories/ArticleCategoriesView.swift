@@ -117,9 +117,14 @@ extension ArticleCategoriesView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell: ArticleCategoryCell = categoriesTableView.dequeueReusableCell(
+        guard let cell = categoriesTableView.dequeueReusableCell(
             withIdentifier: ArticleCategoryCell.reuseIdentifier,
-            for: indexPath) as! ArticleCategoryCell
+            for: indexPath) as? ArticleCategoryCell else {
+            
+            assertionFailure("Failed to dequeue reusable cell with identifier :\(ArticleCategoryCell.reuseIdentifier)")
+            
+            return UITableViewCell()
+        }
         
         let cellViewModel: ArticleCategoryCellViewModel = viewModel.categoryWillAppear(index: indexPath.row)
         

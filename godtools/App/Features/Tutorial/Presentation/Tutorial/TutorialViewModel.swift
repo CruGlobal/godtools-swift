@@ -157,7 +157,7 @@ extension TutorialViewModel {
     @objc func backTapped() {
         
         if !isOnFirstPage {
-            currentPage = currentPage - 1
+            currentPage -= 1
         }
     }
     
@@ -196,7 +196,7 @@ extension TutorialViewModel {
             flowDelegate?.navigate(step: .startUsingGodToolsTappedFromTutorial)
         }
         else {
-            currentPage = currentPage + 1
+            currentPage += 1
         }
     }
 }

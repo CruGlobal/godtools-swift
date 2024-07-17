@@ -47,7 +47,7 @@ class AppsFlyer {
         appsFlyerLib.useUninstallSandbox = configuration.shouldUseUninstallSandbox
     }
     
-    func handleOpenUrl(url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) {
+    func handleOpenUrl(url: URL, options: [UIApplication.OpenURLOptionsKey: Any]) {
         appsFlyerLib.handleOpen(url, options: options)
     }
     
@@ -59,7 +59,7 @@ class AppsFlyer {
         appsFlyerLib.registerUninstall(deviceToken)
     }
     
-    func handlePushNotification(userInfo: [AnyHashable : Any]) {
+    func handlePushNotification(userInfo: [AnyHashable: Any]) {
         appsFlyerLib.handlePushNotification(userInfo)
     }
 }

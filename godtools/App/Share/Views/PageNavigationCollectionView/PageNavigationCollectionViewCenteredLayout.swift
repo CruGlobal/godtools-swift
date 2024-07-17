@@ -12,8 +12,8 @@ class PageNavigationCollectionViewCenteredLayout: UICollectionViewFlowLayout {
     
     enum PanDirection {
         
+        case directionNotSet
         case left
-        case none
         case right
     }
     
@@ -26,7 +26,7 @@ class PageNavigationCollectionViewCenteredLayout: UICollectionViewFlowLayout {
     private var beginningContentOffset: CGPoint?
     private var lastPanningPoint: CGPoint = .zero
         
-    private(set) var panDirection: PageNavigationCollectionViewCenteredLayout.PanDirection = .none
+    private(set) var panDirection: PageNavigationCollectionViewCenteredLayout.PanDirection = .directionNotSet
     private(set) var isPanning: Bool = false
     
     private weak var pageNavigationCollectionView: PageNavigationCollectionView?
@@ -100,6 +100,9 @@ class PageNavigationCollectionViewCenteredLayout: UICollectionViewFlowLayout {
             
             switch panDirection {
             
+            case .directionNotSet:
+                targetPage = beginningPage
+                
             case .left:
                 
                 if lastPanningPoint.x < beginningPanPoint.x {
@@ -108,9 +111,6 @@ class PageNavigationCollectionViewCenteredLayout: UICollectionViewFlowLayout {
                 else {
                     targetPage = beginningPage
                 }
-            
-            case .none:
-                targetPage = beginningPage
             
             case .right:
                 

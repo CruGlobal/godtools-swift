@@ -77,7 +77,7 @@ class ToolsFilterFeatureDataLayerDependencies {
         return getToolFilterCategoriesRepository()
     }
     
-    func getToolFilterCategoriesInterfaceStringsRepositoryInterface() ->  GetToolFilterCategoriesInterfaceStringsRepositoryInterface {
+    func getToolFilterCategoriesInterfaceStringsRepositoryInterface() -> GetToolFilterCategoriesInterfaceStringsRepositoryInterface {
         return getToolFilterCategoriesInterfaceStringsRepository()
     }
     
@@ -85,7 +85,7 @@ class ToolsFilterFeatureDataLayerDependencies {
         return getToolFilterLanguagesRepository()
     }
     
-    func getToolFilterLanguagesInterfaceStringsRepositoryInterface() ->  GetToolFilterLanguagesInterfaceStringsRepositoryInterface {
+    func getToolFilterLanguagesInterfaceStringsRepositoryInterface() -> GetToolFilterLanguagesInterfaceStringsRepositoryInterface {
         return getToolFilterLanguagesInterfaceStringsRepository()
     }
     
