@@ -15,6 +15,7 @@ class AppLanguagesCache {
     init() {
         
         appLanguages = [
+            AppLanguageDataModel(languageCode: "am", languageDirection: .leftToRight, languageScriptCode: nil),
             AppLanguageDataModel(languageCode: "ar", languageDirection: .rightToLeft, languageScriptCode: nil),
             AppLanguageDataModel(languageCode: "en", languageDirection: .leftToRight, languageScriptCode: nil),
             AppLanguageDataModel(languageCode: "es", languageDirection: .leftToRight, languageScriptCode: nil),
