@@ -9,8 +9,6 @@
 import SwiftUI
 
 struct ToolDetailsToggleFavoriteButton: View {
-        
-    @ObservedObject var viewModel: ToolDetailsViewModel
     
     private let iconName: String
     private let title: String
@@ -18,6 +16,8 @@ struct ToolDetailsToggleFavoriteButton: View {
     private let width: CGFloat
     private let height: CGFloat
     private let cornerRadius: CGFloat
+    
+    @ObservedObject private var viewModel: ToolDetailsViewModel
         
     init(viewModel: ToolDetailsViewModel, width: CGFloat, height: CGFloat, cornerRadius: CGFloat) {
         

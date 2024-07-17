@@ -8,19 +8,19 @@
 
 import Foundation
 import GodToolsToolParser
+import LocalizationServices
 
 class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
         
     let factories: [MobileContentPageViewFactoryType]
     
-    required init(type: MobileContentRendererPageViewFactoriesType, appDiContainer: AppDiContainer) {
+    init(type: MobileContentRendererPageViewFactoriesType, appDiContainer: AppDiContainer) {
                 
         var pageViewFactories: [MobileContentPageViewFactoryType] = Array()
         
-        let analytics: AnalyticsContainer = appDiContainer.dataLayer.getAnalytics()
-        let mobileContentAnalytics: MobileContentAnalytics = appDiContainer.getMobileContentAnalytics()
-        let fontService: FontService = appDiContainer.getFontService()
-        let localizationServices: LocalizationServices = appDiContainer.localizationServices
+        let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase = appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase()
+        let mobileContentAnalytics: MobileContentRendererAnalytics = appDiContainer.getMobileContentRendererAnalytics()
+        let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
         let followUpsService: FollowUpsService = appDiContainer.dataLayer.getFollowUpsService()
         let cardJumpService: CardJumpService = appDiContainer.getCardJumpService()
         
@@ -31,7 +31,7 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
         case .chooseYourOwnAdventure:
             
             let chooseYourOwnAdventureViewFactory = ChooseYourOwnAdventurePageViewFactory(
-                analytics: analytics,
+                trackScreenViewAnalyticsUseCase: trackScreenViewAnalyticsUseCase,
                 mobileContentAnalytics: mobileContentAnalytics
             )
             
@@ -40,14 +40,13 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
         case .lesson:
             
             let lessonPageViewFactory = LessonPageViewFactory(
-                analytics: analytics,
+                trackScreenViewAnalyticsUseCase: trackScreenViewAnalyticsUseCase,
                 mobileContentAnalytics: mobileContentAnalytics
             )
             
             let toolPageViewFactory = ToolPageViewFactory(
-                analytics: analytics,
+                trackScreenViewAnalyticsUseCase: trackScreenViewAnalyticsUseCase,
                 mobileContentAnalytics: mobileContentAnalytics,
-                fontService: fontService,
                 localizationServices: localizationServices,
                 cardJumpService: cardJumpService,
                 followUpService: followUpsService
@@ -63,9 +62,8 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
         case .tract:
             
             let toolPageViewFactory = ToolPageViewFactory(
-                analytics: analytics,
+                trackScreenViewAnalyticsUseCase: trackScreenViewAnalyticsUseCase,
                 mobileContentAnalytics: mobileContentAnalytics,
-                fontService: fontService,
                 localizationServices: localizationServices,
                 cardJumpService: cardJumpService,
                 followUpService: followUpsService
@@ -90,8 +88,7 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
         
         let mobileContentPageViewFactory = MobileContentPageViewFactory(
             mobileContentAnalytics: mobileContentAnalytics,
-            fontService: fontService,
-            analytics: analytics
+            trackScreenViewAnalyticsUseCase: trackScreenViewAnalyticsUseCase
         )
         
         pageViewFactories.append(mobileContentPageViewFactory)

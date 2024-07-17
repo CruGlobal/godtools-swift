@@ -40,7 +40,7 @@ class ToolPageModalView: MobileContentView, NibBased {
         fatalError("init(coder:) has not been implemented")
     }
     
-    required init(itemSpacing: CGFloat, scrollIsEnabled: Bool) {
+    init(itemSpacing: CGFloat, scrollIsEnabled: Bool) {
         fatalError("init(itemSpacing:scrollIsEnabled:) has not been implemented")
     }
     

@@ -56,7 +56,7 @@ class MenuStringKeys {
         
         enum Activity: String {
             case languagesUsed = "account.activity.languagesUsed"
-            case lessonCompletions = "account.activity.lessonCompletion"
+            case lessonCompletions = "account.activity.lessonCompletions"
             case linksShared = "account.activity.linksShared"
             case screenShares = "account.activity.screenShares"
             case sessions = "account.activity.sessions"

@@ -19,7 +19,7 @@ class TrainingTipViewModel: MobileContentViewModel {
     let trainingTipBackgroundImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
     let trainingTipForegroundImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
     
-    init(tipModel: Tip, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics, viewType: TrainingTipViewType, getTrainingTipCompletedUseCase: GetTrainingTipCompletedUseCase) {
+    init(tipModel: Tip, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics, viewType: TrainingTipViewType, getTrainingTipCompletedUseCase: GetTrainingTipCompletedUseCase) {
         
         self.tipModel = tipModel
         self.viewType = viewType

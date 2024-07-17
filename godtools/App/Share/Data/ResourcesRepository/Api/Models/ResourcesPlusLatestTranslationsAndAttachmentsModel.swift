@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ResourcesPlusLatestTranslationsAndAttachmentsModel: Decodable {
+struct ResourcesPlusLatestTranslationsAndAttachmentsModel: Codable {
     
     let resources: [ResourceModel]
     let attachments: [AttachmentModel]
@@ -65,5 +65,9 @@ struct ResourcesPlusLatestTranslationsAndAttachmentsModel: Decodable {
         
         self.attachments = attachments
         self.translations = translations
+    }
+    
+    func encode(to encoder: Encoder) throws {
+
     }
 }

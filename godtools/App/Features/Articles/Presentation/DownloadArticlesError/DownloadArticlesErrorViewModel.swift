@@ -7,16 +7,17 @@
 //
 
 import Foundation
+import LocalizationServices
 
 class DownloadArticlesErrorViewModel {
     
     let message: String
     
-    required init(localizationServices: LocalizationServices, error: ArticleAemDownloaderError) {
+    init(appLanguage: AppLanguageDomainModel, localizationServices: LocalizationServices, error: ArticleAemDownloaderError) {
             
-        let notConnectedToNetworkMessage: String = localizationServices.stringForMainBundle(key: "no_internet")
+        let notConnectedToNetworkMessage: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.noInternet.key)
         let cancelledError: String = "The request was cancelled"
-        let unknownError: String = localizationServices.stringForMainBundle(key: "download_error")
+        let unknownError: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.downloadError.key)
                 
         switch error {
         
@@ -29,5 +30,9 @@ class DownloadArticlesErrorViewModel {
         case .unknownError:
             message = unknownError
         }
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
     }
 }

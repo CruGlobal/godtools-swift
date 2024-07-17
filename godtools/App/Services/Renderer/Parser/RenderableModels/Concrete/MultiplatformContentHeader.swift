@@ -13,7 +13,7 @@ class MultiplatformContentHeader {
     
     let text: Text
     
-    required init(text: Text) {
+    init(text: Text) {
         
         self.text = text
     }

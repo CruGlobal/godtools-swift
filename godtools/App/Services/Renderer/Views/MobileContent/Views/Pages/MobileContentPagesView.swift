@@ -9,23 +9,26 @@
 import UIKit
 import GodToolsToolParser
 
-class MobileContentPagesView: UIViewController {
+class MobileContentPagesView: AppViewController {
     
     typealias PageNumber = Int
     
     private let viewModel: MobileContentPagesViewModel
     
     private var initialPagePositions: [PageNumber: MobileContentViewPositionState] = Dictionary()
-    private var currentNavigation: MobileContentPagesNavigationModel?
     private var pageInsets: UIEdgeInsets = .zero
     private var didLayoutSubviews: Bool = false
           
     @IBOutlet weak private(set) var safeAreaView: UIView!
-    @IBOutlet weak private(set) var pageNavigationView: PageNavigationCollectionView!
+    
+    let pageNavigationView: PageNavigationCollectionView
         
-    init(viewModel: MobileContentPagesViewModel) {
+    init(viewModel: MobileContentPagesViewModel, navigationBar: AppNavigationBar?) {
+        
         self.viewModel = viewModel
-        super.init(nibName: String(describing: MobileContentPagesView.self), bundle: nil)
+        self.pageNavigationView = PageNavigationCollectionView(layoutType: .fullScreen)
+        
+        super.init(nibName: String(describing: MobileContentPagesView.self), bundle: nil, navigationBar: navigationBar)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -75,81 +78,62 @@ class MobileContentPagesView: UIViewController {
             right: 0
         )
         
+        pageNavigationView.setDelegate(delegate: self)
+        
         viewModel.viewDidFinishLayout(
             window: navigationController ?? self,
             safeArea: safeArea
         )
-
-        pageNavigationView.delegate = self
-        
-        viewModel.numberOfPages.addObserver(self) { [weak self] (numberOfToolPages: Int) in
-            self?.pageNavigationView.reloadData()
-        }
-        
-        viewModel.pageNavigation.addObserver(self) { [weak self] (navigationModel: MobileContentPagesNavigationModel?) in
-            if let navigationModel = navigationModel {
-                self?.startNavigation(navigationModel: navigationModel)
-            }
-        }
-        
-        viewModel.pagesRemoved.addObserver(self) { [weak self] (indexPaths: [IndexPath]) in
-            guard !indexPaths.isEmpty else {
-                return
-            }
-            self?.pageNavigationView.deletePagesAt(indexPaths: indexPaths)
-        }
     }
     
     func setupLayout() {
                        
         // pageNavigationView
+        view.addSubview(pageNavigationView)
+        pageNavigationView.translatesAutoresizingMaskIntoConstraints = false
+        pageNavigationView.constrainEdgesToView(view: view)
+        
+        pageNavigationView.setSemanticContentAttribute(semanticContentAttribute: viewModel.layoutDirection)
+        
         pageNavigationView.pageBackgroundColor = .clear
         pageNavigationView.registerPageCell(
             nib: UINib(nibName: MobileContentPageCell.nibName, bundle: nil),
             cellReuseIdentifier: MobileContentPageCell.reuseIdentifier
         )
         pageNavigationView.setContentInset(contentInset: .zero)
-        pageNavigationView.setSemanticContentAttribute(semanticContentAttribute: viewModel.pageNavigationSemanticContentAttribute.value)
-        
-        if #available(iOS 11.0, *) {
-            pageNavigationView.setContentInsetAdjustmentBehavior(contentInsetAdjustmentBehavior: .never)
-        } else {
-            automaticallyAdjustsScrollViewInsets = false
-        }
+        pageNavigationView.setContentInsetAdjustmentBehavior(contentInsetAdjustmentBehavior: .never)
     }
     
     func setupBinding() {
-        
+
         viewModel.rendererWillChangeSignal.addObserver(self) { [weak self] in
-            
-            guard let pagesView = self else {
-                return
-            }
-            
-            pagesView.initialPagePositions.removeAll()
-            pagesView.initialPagePositions = pagesView.getAllVisiblePagesPositions()
-        }
-        
-        viewModel.pageNavigationSemanticContentAttribute.addObserver(self) { [weak self] (pageNavigationSemanticContentAttribute: UISemanticContentAttribute) in
             
             guard let weakSelf = self else {
                 return
             }
             
-            let currentPageNavigationSemanticContentAttribute: UISemanticContentAttribute = weakSelf.pageNavigationView.getSemanticContentAttribute()
-            let currentPage: Int = weakSelf.pageNavigationView.currentPage
-            let numberOfPages: Int = weakSelf.pageNavigationView.numberOfPages
+            weakSelf.initialPagePositions.removeAll()
+            weakSelf.initialPagePositions = weakSelf.getAllVisiblePagesPositions()
+        }
+        
+        viewModel.pageNavigationEventSignal.addObserver(self) { [weak self] (navigationEvent: MobileContentPagesNavigationEvent) in
             
-            guard currentPageNavigationSemanticContentAttribute != pageNavigationSemanticContentAttribute else {
+            guard let weakSelf = self else {
                 return
             }
-            
-            guard numberOfPages > 0 else {
-                return
-            }
-            
-            weakSelf.pageNavigationView.setSemanticContentAttribute(semanticContentAttribute: pageNavigationSemanticContentAttribute)
-            weakSelf.pageNavigationView.scrollToPage(page: currentPage, animated: false)
+                        
+            weakSelf.pageNavigationView.scrollToPage(pageNavigation: navigationEvent.pageNavigation, completion: { (completedNavigation: PageNavigationCollectionViewNavigationCompleted) in
+                                    
+                if let pagePositions = navigationEvent.pagePositions,
+                   let pageCell = completedNavigation.pageCell as? MobileContentPageCell,
+                   let pageView = pageCell.mobileContentView as? MobileContentPageView {
+                    
+                    pageView.setPositionStateForViewHierarchy(
+                        positionState: pagePositions,
+                        animated: completedNavigation.pageNavigation.animated
+                    )
+                }
+            })
         }
     }
     
@@ -227,53 +211,15 @@ class MobileContentPagesView: UIViewController {
         
         pageView.setPositionStateForViewHierarchy(positionState: pagePositions, animated: animated)
     }
-    
-    private func startNavigation(navigationModel: MobileContentPagesNavigationModel) {
-        
-        self.currentNavigation = navigationModel
-        
-        if !navigationModel.willReloadData {
-            
-            navigate(navigationModel: navigationModel)
-        }
-    }
-    
-    private func navigate(navigationModel: MobileContentPagesNavigationModel) {
-                
-        if pageNavigationView.currentPage == navigationModel.page {
-            
-            if let pagePositions = navigationModel.pagePositions {
-                
-                setCurrentPagePositions(pagePositions: pagePositions, animated: navigationModel.animated)
-            }
-            
-            currentNavigation = nil
-        }
-        else {
-                        
-            pageNavigationView.scrollToPage(
-                page: navigationModel.page,
-                animated: navigationModel.animated
-            )
-        }
-    }
-    
-    private func completeCurrentNavigationIfNeeded() {
-        
-        if let navigationModel = currentNavigation {
-            
-            navigate(navigationModel: navigationModel)
-        }
-    }
 }
 
 // MARK: - PageNavigationCollectionViewDelegate
 
 extension MobileContentPagesView: PageNavigationCollectionViewDelegate {
-    
+        
     func pageNavigationNumberOfPages(pageNavigation: PageNavigationCollectionView) -> Int {
         
-        return viewModel.numberOfPages.value
+        return viewModel.getNumberOfRenderedPages()
     }
     
     func pageNavigation(pageNavigation: PageNavigationCollectionView, cellForPageAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -293,10 +239,10 @@ extension MobileContentPagesView: PageNavigationCollectionViewDelegate {
         
         pageView.setDelegate(delegate: self)
         
+        pageView.setSemanticContentAttribute(semanticContentAttribute: viewModel.layoutDirection)
+        
         didConfigurePageView(pageView: pageView)
-        
-        completeCurrentNavigationIfNeeded()
-        
+                        
         return cell
     }
     
@@ -307,12 +253,8 @@ extension MobileContentPagesView: PageNavigationCollectionViewDelegate {
         viewModel.didChangeMostVisiblePage(page: page)
     }
     
-    func pageNavigationPageWillAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
-        
-    }
-    
     func pageNavigationPageDidAppear(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
-                
+        
         if let contentPageCell = pageCell as? MobileContentPageCell {
             
             if let pageView = contentPageCell.mobileContentView as? MobileContentPageView, let pagePositions = initialPagePositions[page] {
@@ -323,9 +265,7 @@ extension MobileContentPagesView: PageNavigationCollectionViewDelegate {
             
             contentPageCell.mobileContentView?.notifyViewAndAllChildrenViewDidAppear()
         }
-        
-        completeCurrentNavigationIfNeeded()
-        
+                
         viewModel.pageDidAppear(page: page)
     }
     
@@ -338,8 +278,9 @@ extension MobileContentPagesView: PageNavigationCollectionViewDelegate {
         viewModel.pageDidDisappear(page: page)
     }
     
-    func pageNavigationDidScrollPage(pageNavigation: PageNavigationCollectionView, page: Int) {
+    func pageNavigationDidScrollToPage(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
         
+        viewModel.didScrollToPage(page: page)
     }
 }
 

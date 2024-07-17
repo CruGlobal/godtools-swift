@@ -13,7 +13,7 @@ class MultiplatformCards {
     
     let cards: [TractPage.Card]
     
-    required init(cards: [TractPage.Card]) {
+    init(cards: [TractPage.Card]) {
         
         self.cards = cards
     }

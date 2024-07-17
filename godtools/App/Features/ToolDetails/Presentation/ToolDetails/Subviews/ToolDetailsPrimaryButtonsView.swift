@@ -13,9 +13,15 @@ struct ToolDetailsPrimaryButtonsView: View {
     private let primaryButtonHeight: CGFloat = 55
     private let primaryButtonCornerRadius: CGFloat = 8
     
-    @ObservedObject var viewModel: ToolDetailsViewModel
+    @ObservedObject private var viewModel: ToolDetailsViewModel
        
     let primaryButtonWidth: CGFloat
+    
+    init(viewModel: ToolDetailsViewModel, primaryButtonWidth: CGFloat) {
+        
+        self.viewModel = viewModel
+        self.primaryButtonWidth = primaryButtonWidth
+    }
     
     var body: some View {
         
@@ -31,7 +37,7 @@ struct ToolDetailsPrimaryButtonsView: View {
                 viewModel.openToolTapped()
             }
             
-            if !viewModel.hidesLearnToShareToolButton {
+            if viewModel.showsLearnToShareToolButton {
                 
                 GTBlueButton(
                     title: viewModel.learnToShareToolButtonTitle,

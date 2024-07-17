@@ -93,9 +93,10 @@ extension MobileContentFlowView {
             
             row = MobileContentFlowRow(
                 frame: CGRect(x: 0, y: 0, width: frame.size.width, height: 100),
-                rowGravity: viewModel.rowGravity
+                rowGravity: viewModel.rowGravity,
+                layoutDirection: viewModel.layoutDirection.semanticContentAttribute
             )
-            
+                        
             flowItemRows.append(row)
             
             super.renderChild(childView: row)

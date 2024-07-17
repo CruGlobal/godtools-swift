@@ -11,48 +11,62 @@ import Combine
 
 class FavoritedResourcesRepository {
     
-    private let cache: FavoritedResourcesCache
+    private let cache: RealmFavoritedResourcesCache
     
-    init(cache: FavoritedResourcesCache) {
+    init(cache: RealmFavoritedResourcesCache) {
         
         self.cache = cache
     }
     
-    var numberOfFavoritedResources: Int {
-        return cache.numberOfFavoritedResources
+    func getNumberOfFavoritedResources() -> Int {
+        return cache.getNumberOfFavoritedResources()
     }
     
-    func getFavoritedResourcesChanged() -> AnyPublisher<Void, Never> {
-        return cache.getFavoritedResourcesChanged()
-    }
-    
-    func getResourceIsFavorited(resourceId: String) -> Bool {
+    func getFavoritedResourcesChangedPublisher() -> AnyPublisher<Void, Never> {
         
-        return cache.getFavoritedResource(resourceId: resourceId) != nil
+        return cache.getFavoritedResourcesChangedPublisher()
+            .eraseToAnyPublisher()
     }
     
-    func getFavoritedResource(resourceId: String) -> FavoritedResourceModel? {
+    func getFavoritedResourcePublisher(id: String) -> AnyPublisher<FavoritedResourceDataModel?, Never> {
         
-        return cache.getFavoritedResource(resourceId: resourceId)
+        return cache.getFavoritedResourcePublisher(id: id)
+            .eraseToAnyPublisher()
     }
     
-    func getFavoritedResources() -> [FavoritedResourceModel] {
+    func getResourceIsFavoritedPublisher(id: String) -> AnyPublisher<Bool, Never> {
         
-        return cache.getFavoritedResources()
+        return cache.getFavoritedResourcePublisher(id: id)
+            .map { (object: FavoritedResourceDataModel?) in
+                return object != nil
+            }
+            .eraseToAnyPublisher()
     }
     
-    func getFavoritedResourcesSortedByCreatedAt(ascendingOrder: Bool) -> [FavoritedResourceModel] {
+    func getResourceIsFavorited(id: String) -> Bool {
+        return cache.getResourceIsFavorited(id: id)
+    }
+
+    func getFavoritedResourcesSortedByCreatedAt(ascendingOrder: Bool) -> [FavoritedResourceDataModel] {
         
         return cache.getFavoritedResourcesSortedByCreatedAt(ascendingOrder: ascendingOrder)
     }
     
-    func storeFavoritedResource(resourceId: String) -> Result<FavoritedResourceModel, Error> {
+    func getFavoritedResourcesSortedByCreatedAtPublisher(ascendingOrder: Bool) -> AnyPublisher<[FavoritedResourceDataModel], Never> {
         
-        return cache.storeFavoritedResource(resourceId: resourceId)
+        return cache.getFavoritedResourcesSortedByCreatedAtPublisher(ascendingOrder: ascendingOrder)
+            .eraseToAnyPublisher()
     }
     
-    func deleteFavoritedResource(resourceId: String) -> Result<FavoritedResourceModel, Error> {
-
-        return cache.deleteFavoritedResource(resourceId: resourceId)
+    func storeFavoritedResourcesPublisher(ids: [String]) -> AnyPublisher<[FavoritedResourceDataModel], Error> {
+     
+        return cache.storeFavoritedResourcesPublisher(ids: ids)
+            .eraseToAnyPublisher()
+    }
+    
+    func deleteFavoritedResourcePublisher(id: String) -> AnyPublisher<Void, Error> {
+        
+        return cache.deleteFavoritedResourcePublisher(id: id)
+            .eraseToAnyPublisher()
     }
 }

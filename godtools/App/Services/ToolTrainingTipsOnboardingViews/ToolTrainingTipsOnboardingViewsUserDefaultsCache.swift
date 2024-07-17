@@ -8,32 +8,36 @@
 
 import Foundation
 
-class ToolTrainingTipsOnboardingViewsUserDefaultsCache: ToolTrainingTipsOnboardingViewsCacheType {
+class ToolTrainingTipsOnboardingViewsUserDefaultsCache {
     
     private let userDefaultsCache: SharedUserDefaultsCache
+    private let getTranslatedToolName: GetTranslatedToolName
     
-    required init(userDefaultsCache: SharedUserDefaultsCache) {
+    init(userDefaultsCache: SharedUserDefaultsCache, getTranslatedToolName: GetTranslatedToolName) {
         
         self.userDefaultsCache = userDefaultsCache
+        self.getTranslatedToolName = getTranslatedToolName
     }
     
-    private func getNumberOfViewsKey(resource: ResourceModel) -> String {
+    private func getNumberOfViewsKey(toolId: String, primaryLanguage: AppLanguageDomainModel) -> String {
         
-        return "ToolTrainingTipsOnboardingViewsService." + resource.name + "_" + resource.id
+        let toolName: String = getTranslatedToolName.getToolName(toolId: toolId, translateInLanguage: primaryLanguage)
+        
+        return "ToolTrainingTipsOnboardingViewsService." + toolName + "_" + toolId
     }
     
-    func getNumberOfToolTrainingTipViews(resource: ResourceModel) -> Int {
+    func getNumberOfToolTrainingTipViews(toolId: String, primaryLanguage: AppLanguageDomainModel) -> Int {
         
-        if let number = userDefaultsCache.getValue(key: getNumberOfViewsKey(resource: resource)) as? NSNumber {
+        if let number = userDefaultsCache.getValue(key: getNumberOfViewsKey(toolId: toolId, primaryLanguage: primaryLanguage)) as? NSNumber {
             return number.intValue
         }
         
         return 0
     }
     
-    func storeToolTrainingTipViewed(resource: ResourceModel) {
+    func storeToolTrainingTipViewed(toolId: String, primaryLanguage: AppLanguageDomainModel) {
         
-        let numberOfViews: Int = getNumberOfToolTrainingTipViews(resource: resource)
+        let numberOfViews: Int = getNumberOfToolTrainingTipViews(toolId: toolId, primaryLanguage: primaryLanguage)
         
         if numberOfViews < Int.max {
             
@@ -41,7 +45,7 @@ class ToolTrainingTipsOnboardingViewsUserDefaultsCache: ToolTrainingTipsOnboardi
             
             userDefaultsCache.cache(
                 value: NSNumber(value: newNumberOfViews),
-                forKey: getNumberOfViewsKey(resource: resource)
+                forKey: getNumberOfViewsKey(toolId: toolId, primaryLanguage: primaryLanguage)
             )
             
             userDefaultsCache.commitChanges()

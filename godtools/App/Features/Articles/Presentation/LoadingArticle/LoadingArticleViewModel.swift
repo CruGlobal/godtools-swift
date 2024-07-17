@@ -7,25 +7,30 @@
 //
 
 import Foundation
+import Combine
+import LocalizationServices
 
-class LoadingArticleViewModel: LoadingViewModelType {
+class LoadingArticleViewModel: ObservableObject {
     
     private let articleAemRepository: ArticleAemRepository
+    private let appLanguage: AppLanguageDomainModel
     
     private var downloadArticleOperation: OperationQueue?
+    private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
     
-    let message: ObservableValue<String>
-    let hidesCloseButton: Bool = true
+    let message: String
     
-    required init(flowDelegate: FlowDelegate, aemUri: String, articleAemRepository: ArticleAemRepository, localizationServices: LocalizationServices) {
+    init(flowDelegate: FlowDelegate, aemUri: String, appLanguage: AppLanguageDomainModel, articleAemRepository: ArticleAemRepository, localizationServices: LocalizationServices) {
         
         self.flowDelegate = flowDelegate
         self.articleAemRepository = articleAemRepository
-        self.message = ObservableValue(value: localizationServices.stringForMainBundle(key: "Download in progress"))
+        self.appLanguage = appLanguage
+        self.message = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "Download in progress")
         
         downloadArticle(
+            appLanguage: appLanguage,
             aemUri: aemUri,
             articleAemRepository: articleAemRepository,
             localizationServices: localizationServices
@@ -33,10 +38,11 @@ class LoadingArticleViewModel: LoadingViewModelType {
     }
     
     deinit {
+        print("x deinit: \(type(of: self))")
         downloadArticleOperation?.cancelAllOperations()
     }
     
-    private func downloadArticle(aemUri: String, articleAemRepository: ArticleAemRepository, localizationServices: LocalizationServices) {
+    private func downloadArticle(appLanguage: AppLanguageDomainModel, aemUri: String, articleAemRepository: ArticleAemRepository, localizationServices: LocalizationServices) {
         
         downloadArticleOperation = articleAemRepository.downloadAndCache(aemUris: [aemUri]) { [weak self] (result: ArticleAemRepositoryResult) in
              
@@ -48,14 +54,14 @@ class LoadingArticleViewModel: LoadingViewModelType {
                 }
                 else {
                     
-                    let errorTitle: String = localizationServices.stringForMainBundle(key: "error")
+                    let errorTitle: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.error.key)
                     let errorMessage: String
                     
                     if let downloadError = result.downloaderResult.downloadError {
-                        errorMessage = DownloadArticlesErrorViewModel(localizationServices: localizationServices, error: downloadError).message
+                        errorMessage = DownloadArticlesErrorViewModel(appLanguage: appLanguage, localizationServices: localizationServices, error: downloadError).message
                     }
                     else {
-                        errorMessage = localizationServices.stringForMainBundle(key: "download_error")
+                        errorMessage = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.downloadError.key)
                     }
                     
                     let alertMessage = AlertMessage(title: errorTitle, message: errorMessage)
@@ -64,13 +70,5 @@ class LoadingArticleViewModel: LoadingViewModelType {
                 }
             }
         }
-    }
-    
-    func closeTapped() {
-        // No implementation needed here. ~Levi
-    }
-    
-    func pageViewed() {
-        // No implementation needed here.
     }
 }

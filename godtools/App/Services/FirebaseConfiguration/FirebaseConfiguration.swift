@@ -20,7 +20,7 @@ class FirebaseConfiguration {
     
     func configure() {
                 
-        let googleServiceName: String = config.firebaseGoogleServiceFileName
+        let googleServiceName: String = config.getFirebaseGoogleServiceFileName()
         
         guard let filePath = Bundle.main.path(forResource: googleServiceName, ofType: "plist") else {
             assertionFailure("WARNING: Failed to initialize firebase filePath with googleServiceName: \(googleServiceName)")

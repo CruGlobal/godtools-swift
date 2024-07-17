@@ -8,7 +8,7 @@
 
 import Foundation
 import FirebaseAnalytics
-import GoogleAnalytics
+import FirebaseCore
 
 class FirebaseAnalytics {
     
@@ -32,15 +32,10 @@ class FirebaseAnalytics {
         
         isConfigured = true
         
-        // gai
-        if let gai = GAI.sharedInstance() {
-            if appBuild.configuration == .analyticsLogging {
-                gai.dispatchInterval = 1
-            }
-            
-            gai.logger.logLevel = loggingEnabled ? .verbose : .none
+        if !loggingEnabled {
+            FirebaseCore.FirebaseConfiguration.shared.setLoggerLevel(.min)
         }
-                        
+                     
         setUserProperty(
             key: AnalyticsConstants.Keys.debug,
             value: appBuild.isDebug ? AnalyticsConstants.Values.debugIsTrue : AnalyticsConstants.Values.debugIsFalse
@@ -55,7 +50,8 @@ class FirebaseAnalytics {
         let userId: String? = loggedInUserProperties?.grMasterPersonId ?? loggedInUserProperties?.ssoguid
         
         Analytics.setUserID(isLoggedIn ? userId : nil)
-        setUserProperty(key: AnalyticsConstants.Keys.loggedInStatus, value: isLoggedIn ? AnalyticsConstants.Values.isLoggedIn : AnalyticsConstants.Values.notLoggedIn)
+        setUserProperty(key: AnalyticsConstants.UserProperties.loggedInStatus, value: isLoggedIn ? AnalyticsConstants.Values.isLoggedIn : AnalyticsConstants.Values.notLoggedIn)
+        setUserProperty(key: AnalyticsConstants.UserProperties.loginProvider, value: isLoggedIn ? loggedInUserProperties?.loginProvider : nil)
         setUserProperty(key: AnalyticsConstants.Keys.grMasterPersonID, value: isLoggedIn ? loggedInUserProperties?.grMasterPersonId : nil)
         setUserProperty(key: AnalyticsConstants.Keys.ssoguid, value: isLoggedIn ? loggedInUserProperties?.ssoguid : nil)
     }

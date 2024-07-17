@@ -8,17 +8,28 @@
 
 import Foundation
 import Combine
+import UIKit
 
-class LaunchCountRepository {
+class LaunchCountRepository: LaunchCountRepositoryInterface {
     
-    private let cache: LaunchCountCache
+    static let shared: LaunchCountRepository = LaunchCountRepository()
     
-    init(cache: LaunchCountCache) {
-        
-        self.cache = cache
+    private let cache: LaunchCountCache = LaunchCountCache()
+    
+    private var incrementLaunchCountNeeded: Bool = true
+    
+    private init() {
+                
+        NotificationCenter.default.addObserver(self, selector: #selector(handleUIApplicationLifeCycleNotification(notification:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
     }
     
-    func incrementLaunchCount() {
+    private func incrementLaunchCountForAppLaunchIfNeeded() {
+        
+        guard incrementLaunchCountNeeded else {
+            return
+        }
+        
+        incrementLaunchCountNeeded = false
         
         let launchCount: Int = cache.getLaunchCountValue()
         
@@ -31,13 +42,22 @@ class LaunchCountRepository {
         cache.storeLaunchCount(launchCount: newLaunchCount)
     }
     
-    func getLaunchCount() -> Int {
-        
-        return cache.getLaunchCountValue()
-    }
-    
     func getLaunchCountPublisher() -> AnyPublisher<Int, Never> {
         
+        incrementLaunchCountForAppLaunchIfNeeded()
+        
         return cache.getLaunchCountPublisher()
+    }
+    
+    @objc private func handleUIApplicationLifeCycleNotification(notification: Notification) {
+        
+        if notification.name == UIApplication.didBecomeActiveNotification {
+            
+            incrementLaunchCountForAppLaunchIfNeeded()
+        }
+        else if notification.name == UIApplication.didEnterBackgroundNotification {
+            
+            incrementLaunchCountNeeded = true
+        }
     }
 }

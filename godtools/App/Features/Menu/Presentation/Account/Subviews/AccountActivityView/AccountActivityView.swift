@@ -10,9 +10,15 @@ import SwiftUI
 
 struct AccountActivityView: View {
         
-    @ObservedObject var viewModel: AccountViewModel
+    @ObservedObject private var viewModel: AccountViewModel
     
     let sectionFrameWidth: CGFloat
+    
+    init(viewModel: AccountViewModel, sectionFrameWidth: CGFloat) {
+        
+        self.viewModel = viewModel
+        self.sectionFrameWidth = sectionFrameWidth
+    }
     
     var body: some View {
         
@@ -93,6 +99,20 @@ struct AccountActivityView: View {
                     .frame(width: itemWidthHeight, height: itemWidthHeight)
                 }
             }
+        }
+    }
+}
+
+struct AccountActivityView_Preview: PreviewProvider {
+    
+    static var previews: some View {
+        
+        GeometryReader { geometry in
+            
+            AccountActivityView(
+                viewModel: AccountView_Preview.getAccountViewModel(),
+                sectionFrameWidth: geometry.size.width
+            )
         }
     }
 }

@@ -8,56 +8,28 @@
 
 import Foundation
 import RealmSwift
+import Combine
 
 class RealmDatabase {
     
     private let databaseConfiguration: RealmDatabaseConfiguration
     private let config: Realm.Configuration
-    private let backgroundQueue: DispatchQueue = DispatchQueue(label: "realm.background_queue")
+    private let realmInstanceCreator: RealmInstanceCreator
     
-    private lazy var isInMemory: Bool = {
-        return config.inMemoryIdentifier != nil
-    }()
-    private lazy var inMemRealm: Realm = {
-        return try! Realm(configuration: config)
-    }()
-    
-    init(databaseConfiguration: RealmDatabaseConfiguration) {
+    init(databaseConfiguration: RealmDatabaseConfiguration, shouldUseSingleRealmInstance: Bool = false) {
         
         self.databaseConfiguration = databaseConfiguration
         config = databaseConfiguration.getRealmConfig()
+        realmInstanceCreator = RealmInstanceCreator(config: config, shouldUseSingleInstance: shouldUseSingleRealmInstance)
     }
 
     func openRealm() -> Realm {
-        if isInMemory {
-            
-            return inMemRealm
-        }
         
-        return try! Realm(configuration: config)
+        return realmInstanceCreator.newRealm()
     }
     
     func background(async: @escaping ((_ realm: Realm) -> Void)) {
-        if isInMemory {
-            async(inMemRealm)
-            return
-        }
-        
-        backgroundQueue.async {
-            autoreleasepool {
                 
-                let realm: Realm
-               
-                do {
-                    realm = try Realm(configuration: self.config)
-                }
-                catch let error {
-                    assertionFailure("RealmDatabase: Did fail to initialize background realm with error: \(error.localizedDescription) ")
-                    realm = try! Realm(configuration: self.config)
-                }
-                
-                async(realm)
-            }
-        }
+        realmInstanceCreator.newBackgroundRealm(async: async)
     }
 }

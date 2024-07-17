@@ -17,7 +17,7 @@ class MobileContentCardCollectionPageCardView: MobileContentView, NibBased {
     @IBOutlet weak private var contentStackContainerView: UIView!
     @IBOutlet weak private var pageNumberLabel: UILabel!
     
-    required init(viewModel: MobileContentCardCollectionPageCardViewModel) {
+    init(viewModel: MobileContentCardCollectionPageCardViewModel) {
         
         self.viewModel = viewModel
         

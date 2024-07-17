@@ -1,32 +1,47 @@
-"signIn.title" = "Sign in";
-"signIn.subtitle" = "Log in to your account to have real stories, encouragement, and practical tips at your fingertips.";
+"language_name_fil-x-taglish" = "Taglish";
+"language_name_sid" = "Sidama";
+"onboardingTutorial.chooseLanguageButton.title" = "Choose language";
+"languageSettings.confirmAppLanguage.message" = "You have selected %@ as your app language. This will change the language of the whole GodTools app. Are you sure?";
+"languageSettings.confirmAppLanguage.changeLanguageButton.title" = "Change language";
+"languageSettings.confirmAppLanguage.nevermindButton.title" = "Nevermind";
+"languageSettings.downloadableLanguages.title" = "Downloadable languages";
+"languageSettings.appInterface.title" = "App interface language";
+"languageSettings.appInterface.message" = "Set the language you'd like the whole app to be displayed in.";
+"languageSettings.appInterface.languagesAvailable" = "Languages available";
+"languageSettings.toolLanguagesAvailableOffline.title" = "Tool languages available offline";
+"languageSettings.toolLanguagesAvailableOffline.message" = "Download all the tools in a language to make them available even if you're out of WiFi or cell service. Set the tool language via the options button within a tool.";
+"languageSettings.toolLanguagesAvailableOffline.editDownloadedLanguagesButton.title" = "Edit downloaded languages";
+"allTools.filter.title" = "Filter";
+"allTools.filter.anyCategory" = "Any category";
+"allTools.filter.anyLanguage" = "Any language";
+"allTools.filter.navBar.language" = "Filter by language";
+"allTools.filter.navBar.category" = "Filter by category";
+"languageSettings.appLanguage.title" = "App Language";
+"authError.userAccountAlreadyExists.message" = "User account already exists.";
+"authError.userAccountNotFound.message" = "User account not found.";
 "createAccount.title" = "Create account";
 "createAccount.subtitle" = "Create an account to have real stories, encouragement, and practical tips at your fingertips.";
-
 "deleteAccountProgress.title" = "Deleting account...";
 "confirmDeleteAccount.title" = "Are you sure?";
-"confirmDeleteAccount.confirmButton.title" = "Delete Account";
+"confirmDeleteAccount.confirmButton.title" = "Delete account";
 "accountDeletedAlert.title" = "Account Deleted";
 "accountDeletedAlert.message" = "Your account has been deleted.";
 "deleteAccount.title" = "Don't go so soon";
 "deleteAccount.subtitle" = "If you delete your account you won't be able to access your favorited tools or account activity.";
 "deleteAccount.confirmButton.title" = "Delete my account";
 "deleteAccount.cancelButton.title" = "Keep my account";
-"deleteAccountProgress.title" = "Deleting account...";
-"confirmDeleteAccount.title" = "Are you sure?";
-"confirmDeleteAccount.confirmButton.title" = "Delete Account";
-"accountDeletedAlert.title" = "Account Deleted";
-"accountDeletedAlert.message" = "Your account has been deleted.";
+"signIn.title" = "Sign in";
+"signIn.subtitle" = "Log in to your account to have real stories, encouragement, and practical tips at your fingertips.";
 "signIn.google" = "Sign in with Google";
 "signIn.facebook" = "Login with Facebook";
 "signIn.apple" = "Continue with Apple";
-"menu_getStarted" = "Get Started";
+"menu_getStarted" = "Get started";
 "menu_support" = "Support";
 "menu_about" = "About";
-"menu.sendFeedback" = "Send Feedback";
-"menu.reportABug" = "Report a Bug";
-"menu.askAQuestion" = "Ask a Question";
-"menu.leaveAReview" = "Leave a Review";
+"menu.sendFeedback" = "Send feedback";
+"menu.reportABug" = "Report a bug";
+"menu.askAQuestion" = "Ask a question";
+"menu.leaveAReview" = "Leave a review";
 "account.badges.sectionTitle" = "Your badges";
 "account.activity.sectionTitle" = "Your activity";
 
@@ -92,7 +107,7 @@
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "Not available in %@";
 
-"menu.deleteAccount" = "Delete Account";
+"menu.deleteAccount" = "Delete account";
 "alert.mailAppUnavailable.title" = "Mail App Unavailable";
 "alert.mailAppUnavailable.message" = "The native Mail app is either not configured or is unavailable on this device. ";
 "tool_menu_item.tools" = "Tools";
@@ -139,7 +154,7 @@
 "parallelLanguage.yesButton.title" = "Yes";
 "parallelLanguage.noButton.title" = "No thanks";
 "parallelLanguage.selectButton.title" = "Select";
-"parallelLanguage.getStartedButton.title" = "Get Started";
+"parallelLanguage.getStartedButton.title" = "Get started";
 "parallelLanguage.selectLanguageButton.title" = "Select a language";
 "parellelLanguage.prompt" = "Would you like to set a secondary language?";
 
@@ -236,8 +251,7 @@ If you don't receive this message until later, the link may not still work. We c
 "remove_from_favorites" = "Remove from Favorites";
 
 /* This is a loading screen */
-"loading_unfavorited_tool" = "The tool is downloading. To avoid waiting in the future, favorite this tool so it will be available offline. 
-";
+"loading_unfavorited_tool" = "The tool is downloading. To avoid waiting in the future, favorite this tool so it will be available offline.";
 
 /* This is a loading screen */
 "loading_favorited_tool" = "Downloading the most recent translation for this tool.";
@@ -290,7 +304,7 @@ If you don't receive this message until later, the link may not still work. We c
 "menu_account" = "Account";
 "menu_share" = "Share";
 "menu_legal" = "Legal";
-"language_settings" = "Language Settings";
+"language_settings" = "Language settings";
 "menu.tutorial" = "Tutorial";
 "menu.my_account" = "My Account";
 
@@ -305,11 +319,11 @@ If you don't receive this message until later, the link may not still work. We c
 "help" = "Frequently Asked Questions";
 "contact_us" = "Contact Us";
 "preview_mode_translators_only" = "Preview Mode (Translators Only)";
-"share_god_tools" = "Share the GodTools App";
-"share_a_story_with_us" = "Share a Story With Us";
-"terms_of_use" = "Terms of Use";
-"privacy_policy" = "Privacy Policy";
-"copyright_info" = "Copyright Info";
+"share_god_tools" = "Share GodTools";
+"share_a_story_with_us" = "Share a story with us";
+"terms_of_use" = "Terms of use";
+"privacy_policy" = "Privacy policy";
+"copyright_info" = "Copyright info";
 "share_god_tools_share_sheet_text" = "Download the GodTools app: https://godtoolsapp.com
 
 An online version can be found at https://knowgod.com/";
@@ -365,7 +379,7 @@ The app can be downloaded from https://godtoolsapp.com";
 "cancel" = "Cancel";
 "required_field_missing" = "\"%@\" is a required field.";
 
-"onboardingTutorial.getStartedButton.title" = "Get Started";
+"onboardingTutorial.getStartedButton.title" = "Get started";
 
 // About
 "general_about_1" = "GodTools helps you share your faith in an easy and clear way.";

@@ -47,7 +47,8 @@ class KnowGodDeepLinkParser: DeepLinkUrlParserType {
             parallelLanguageCodes: [],
             liveShareStream: nil,
             page: nil,
-            pageId: nil
+            pageId: nil,
+            selectedLanguageIndex: nil
         )
                        
         return .tool(toolDeepLink: toolDeepLink)
@@ -57,29 +58,40 @@ class KnowGodDeepLinkParser: DeepLinkUrlParserType {
         
         let knowGodQueryParameters: KnowGodTractDeepLinkQueryParameters? = JsonServices().decodeJsonObject(jsonObject: queryParameters)
         
-        var abbreviationFromUrlPath: String?
-        var primaryLanguageCodeFromUrlPath: String?
-        var pageFromUrlPath: Int?
+        let primaryLanguageCodeFromUrlPath: String? = pathComponents[safe: 0]
+        let abbreviationFromUrlPath: String? = pathComponents[safe: 1]
+        let pageFromUrlPath: Int?
         
-        if pathComponents.count > 1 {
-            abbreviationFromUrlPath = pathComponents[1]
+        if let pageStringFromUrlPath = pathComponents[safe: 2] {
+            pageFromUrlPath = Int(pageStringFromUrlPath)
+        }
+        else {
+            pageFromUrlPath = nil
         }
         
-        if pathComponents.count > 0 {
-            primaryLanguageCodeFromUrlPath = pathComponents[0]
+        var primaryLanguageCodes: [String] = knowGodQueryParameters?.getPrimaryLanguageCodes() ?? Array()
+        let parallelLanguageCodes: [String] = knowGodQueryParameters?.getParallelLanguageCodes() ?? Array()
+        let selectedLanguageIndex: Int?
+        
+        if primaryLanguageCodes.isEmpty, let primaryLanguageCodeFromUrlPath = primaryLanguageCodeFromUrlPath, !parallelLanguageCodes.contains(primaryLanguageCodeFromUrlPath) {
+            primaryLanguageCodes.append(primaryLanguageCodeFromUrlPath)
         }
         
-        if pathComponents.count > 2, let pageIntegerValue = Int(pathComponents[2]) {
-            pageFromUrlPath = pageIntegerValue
+        if let primaryLanguageCodeFromUrlPath = primaryLanguageCodeFromUrlPath {
+            
+            if primaryLanguageCodes.contains(primaryLanguageCodeFromUrlPath) {
+                selectedLanguageIndex = 0
+            }
+            else if parallelLanguageCodes.contains(primaryLanguageCodeFromUrlPath) {
+                selectedLanguageIndex = 1
+            }
+            else {
+                selectedLanguageIndex = nil
+            }
         }
-        
-        var primaryLanguageCodesFromUrlQuery: [String] = knowGodQueryParameters?.getPrimaryLanguageCodes() ?? Array()
-        
-        if let primaryLanguageCodeFromUrlPath = primaryLanguageCodeFromUrlPath, !primaryLanguageCodesFromUrlQuery.contains(primaryLanguageCodeFromUrlPath) {
-            primaryLanguageCodesFromUrlQuery.insert(primaryLanguageCodeFromUrlPath, at: 0)
+        else {
+            selectedLanguageIndex = nil
         }
-        
-        let parallelLanguageCodesFromUrlQuery: [String] = knowGodQueryParameters?.getParallelLanguageCodes() ?? Array()
              
         guard let resourceAbbreviation = abbreviationFromUrlPath, !resourceAbbreviation.isEmpty else {
             return nil
@@ -87,11 +99,12 @@ class KnowGodDeepLinkParser: DeepLinkUrlParserType {
         
         let toolDeepLink = ToolDeepLink(
             resourceAbbreviation: resourceAbbreviation,
-            primaryLanguageCodes: primaryLanguageCodesFromUrlQuery,
-            parallelLanguageCodes: parallelLanguageCodesFromUrlQuery,
+            primaryLanguageCodes: primaryLanguageCodes,
+            parallelLanguageCodes: parallelLanguageCodes,
             liveShareStream: knowGodQueryParameters?.liveShareStream,
             page: pageFromUrlPath,
-            pageId: nil
+            pageId: nil,
+            selectedLanguageIndex: selectedLanguageIndex
         )
         
         return .tool(toolDeepLink: toolDeepLink)

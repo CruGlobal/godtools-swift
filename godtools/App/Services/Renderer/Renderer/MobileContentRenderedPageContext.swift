@@ -16,20 +16,22 @@ class MobileContentRenderedPageContext {
     let isLastPage: Bool
     let safeArea: UIEdgeInsets
     let manifest: Manifest
-    let resourcesCache: ManifestResourcesCache
+    let resourcesCache: MobileContentRendererManifestResourcesCache
     let resource: ResourceModel
+    let appLanguage: AppLanguageDomainModel
     let language: LanguageDomainModel
     let translation: TranslationModel
-    let pageViewFactories: MobileContentRendererPageViewFactories
+    let viewRenderer: MobileContentViewRenderer
     let navigation: MobileContentRendererNavigation
     let primaryRendererLanguage: LanguageDomainModel
+    let primaryLanguageLayoutDirection: ApplicationLayoutDirection
     let rendererState: State
     let trainingTipsEnabled: Bool
     let pageViewDataCache: MobileContentPageViewDataCache
     
     private weak var weakWindow: UIViewController?
     
-    init(pageModel: Page, page: Int, isLastPage: Bool, window: UIViewController, safeArea: UIEdgeInsets, manifest: Manifest, resourcesCache: ManifestResourcesCache, resource: ResourceModel, language: LanguageDomainModel, translation: TranslationModel, pageViewFactories: MobileContentRendererPageViewFactories, navigation: MobileContentRendererNavigation, primaryRendererLanguage: LanguageDomainModel, rendererState: State, trainingTipsEnabled: Bool, pageViewDataCache: MobileContentPageViewDataCache) {
+    init(pageModel: Page, page: Int, isLastPage: Bool, window: UIViewController, safeArea: UIEdgeInsets, manifest: Manifest, resourcesCache: MobileContentRendererManifestResourcesCache, resource: ResourceModel, appLanguage: AppLanguageDomainModel, language: LanguageDomainModel, translation: TranslationModel, viewRenderer: MobileContentViewRenderer, navigation: MobileContentRendererNavigation, primaryRendererLanguage: LanguageDomainModel, rendererState: State, trainingTipsEnabled: Bool, pageViewDataCache: MobileContentPageViewDataCache) {
         
         self.pageModel = pageModel
         self.page = page
@@ -39,14 +41,20 @@ class MobileContentRenderedPageContext {
         self.manifest = manifest
         self.resourcesCache = resourcesCache
         self.resource = resource
+        self.appLanguage = appLanguage
         self.language = language
         self.translation = translation
-        self.pageViewFactories = pageViewFactories
+        self.viewRenderer = viewRenderer
         self.navigation = navigation
         self.primaryRendererLanguage = primaryRendererLanguage
+        self.primaryLanguageLayoutDirection = primaryRendererLanguage.direction == .rightToLeft ? .rightToLeft : .leftToRight
         self.rendererState = rendererState
         self.trainingTipsEnabled = trainingTipsEnabled
         self.pageViewDataCache = pageViewDataCache
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
     }
     
     var window: UIViewController {

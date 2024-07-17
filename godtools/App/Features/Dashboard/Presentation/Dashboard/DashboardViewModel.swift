@@ -7,186 +7,99 @@
 //
 
 import Foundation
-import UIKit
 import Combine
 
 class DashboardViewModel: ObservableObject {
     
-    private let initialDataDownloader: InitialDataDownloader
-    private let translationsRepository: TranslationsRepository
-    private let localizationServices: LocalizationServices
-    private let favoritingToolMessageCache: FavoritingToolMessageCache
-    private let analytics: AnalyticsContainer
-    
-    private let disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase
-    private let getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase
-    private let getAllToolsUseCase: GetAllToolsUseCase
-    private let getBannerImageUseCase: GetBannerImageUseCase
-    private let getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase
-    private let getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase
-    private let getLessonsUseCase: GetLessonsUseCase
-    private let getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase
-    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
-    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
-    private let getShouldShowLanguageSettingsBarButtonUseCase: GetShouldShowLanguageSettingsBarButtonUseCase
-    private let getSpotlightToolsUseCase: GetSpotlightToolsUseCase
-    private let getToolCategoriesUseCase: GetToolCategoriesUseCase
-    private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
-    private let removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase
-    private let toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase
+    private let dashboardPresentationLayerDependencies: DashboardPresentationLayerDependencies
+    private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
+    private let viewDashboardUseCase: ViewDashboardUseCase
+        
+    private var cancellables: Set<AnyCancellable> = Set()
+    private var initialTabSet: Bool = false
     
     private weak var flowDelegate: FlowDelegate?
-    private var unwrappedFlowDelegate: FlowDelegate {
-        guard let flowDelegate = self.flowDelegate else {
-            assertionFailure("FlowDelegate should not be nil.")
-            return self.flowDelegate!
-        }
-        return flowDelegate
-    }
-    
-    private var chooseLanguageButton: UIBarButtonItem?
-    let shouldShowLanguageSettingsBarButtonItemPublisher = CurrentValueSubject<(shouldShowButton: Bool, barButtonItem: UIBarButtonItem?), Never>((false, nil))
-    
-    @Published var allToolsTabTitle: String
-    @Published var favoritesTabTitle: String
-    @Published var lessonsTabTitle: String
-    @Published var selectedTab: DashboardTabTypeDomainModel {
-        didSet {
-            tabChanged()
-        }
-    }
-    
-    lazy var allToolsViewModel: AllToolsContentViewModel = {
-        AllToolsContentViewModel(
-            flowDelegate: unwrappedFlowDelegate,
-            dataDownloader: initialDataDownloader,
-            localizationServices: localizationServices,
-            favoritingToolMessageCache: favoritingToolMessageCache,
-            analytics: analytics,
-            getAllToolsUseCase: getAllToolsUseCase,
-            getBannerImageUseCase: getBannerImageUseCase,
-            getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
-            getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase,
-            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase,
-            getSpotlightToolsUseCase: getSpotlightToolsUseCase,
-            getToolCategoriesUseCase: getToolCategoriesUseCase,
-            getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
-            toggleToolFavoritedUseCase: toggleToolFavoritedUseCase
-        )
-    }()
-    
-    lazy var favoritesViewModel: FavoritesContentViewModel = {
-        let favoritesViewModel = FavoritesContentViewModel(
-            flowDelegate: unwrappedFlowDelegate,
-            dataDownloader: initialDataDownloader,
-            localizationServices: localizationServices,
-            analytics: analytics,
-            translationsRepository: translationsRepository,
-            disableOptInOnboardingBannerUseCase: disableOptInOnboardingBannerUseCase,
-            getAllFavoritedToolsUseCase: getAllFavoritedToolsUseCase,
-            getBannerImageUseCase: getBannerImageUseCase,
-            getFeaturedLessonsUseCase: getFeaturedLessonsUseCase,
-            getLanguageAvailabilityUseCase: getLanguageAvailabilityUseCase,
-            getOptInOnboardingBannerEnabledUseCase: getOptInOnboardingBannerEnabledUseCase,
-            getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase,
-            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase,
-            getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
-            removeToolFromFavoritesUseCase: removeToolFromFavoritesUseCase
-        )
         
-        favoritesViewModel.setDelegate(delegate: self)
-        
-        return favoritesViewModel
-    }()
+    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     
-    lazy var lessonsViewModel: LessonsViewModel = {
-        LessonsViewModel(
-            flowDelegate: unwrappedFlowDelegate,
-            dataDownloader: initialDataDownloader,
-            localizationServices: localizationServices,
-            analytics: analytics,
-            getBannerImageUseCase: getBannerImageUseCase,
-            getLanguageAvailabilityUseCase:
-                getLanguageAvailabilityUseCase,
-            getLessonsUseCase: getLessonsUseCase,
-            getSettingsParallelLanguageUseCase: getSettingsParallelLanguageUseCase,
-            getSettingsPrimaryLanguageUseCase: getSettingsPrimaryLanguageUseCase,
-            translationsRepository: translationsRepository
-        )
-    }()
+    @Published var tabs: [DashboardTabTypeDomainModel] = [.lessons, .favorites, .tools]
+    @Published var lessonsButtonTitle: String = ""
+    @Published var favoritesButtonTitle: String = ""
+    @Published var toolsButtonTitle: String = ""
+    @Published var currentTab: Int = 0
     
-    required init(startingTab: DashboardTabTypeDomainModel, flowDelegate: FlowDelegate, initialDataDownloader: InitialDataDownloader, translationsRepository: TranslationsRepository, localizationServices: LocalizationServices, favoritingToolMessageCache: FavoritingToolMessageCache, analytics: AnalyticsContainer, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getAllFavoritedToolsUseCase: GetAllFavoritedToolsUseCase, getAllToolsUseCase: GetAllToolsUseCase, getBannerImageUseCase: GetBannerImageUseCase, getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase, getLanguageAvailabilityUseCase: GetLanguageAvailabilityUseCase, getLessonsUseCase: GetLessonsUseCase, getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getShouldShowLanguageSettingsBarButtonUseCase: GetShouldShowLanguageSettingsBarButtonUseCase, getSpotlightToolsUseCase: GetSpotlightToolsUseCase, getToolCategoriesUseCase: GetToolCategoriesUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, removeToolFromFavoritesUseCase: RemoveToolFromFavoritesUseCase, toggleToolFavoritedUseCase: ToggleToolFavoritedUseCase) {
+    init(startingTab: DashboardTabTypeDomainModel, flowDelegate: FlowDelegate, dashboardPresentationLayerDependencies: DashboardPresentationLayerDependencies, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewDashboardUseCase: ViewDashboardUseCase, dashboardTabObserver: CurrentValueSubject<DashboardTabTypeDomainModel, Never>) {
         
         self.flowDelegate = flowDelegate
-        self.initialDataDownloader = initialDataDownloader
-        self.translationsRepository = translationsRepository
-        self.localizationServices = localizationServices
-        self.favoritingToolMessageCache = favoritingToolMessageCache
-        self.analytics = analytics
+        self.dashboardPresentationLayerDependencies = dashboardPresentationLayerDependencies
+        self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
+        self.viewDashboardUseCase = viewDashboardUseCase
         
-        self.disableOptInOnboardingBannerUseCase = disableOptInOnboardingBannerUseCase
-        self.getAllFavoritedToolsUseCase = getAllFavoritedToolsUseCase
-        self.getAllToolsUseCase = getAllToolsUseCase
-        self.getBannerImageUseCase = getBannerImageUseCase
-        self.getFeaturedLessonsUseCase = getFeaturedLessonsUseCase
-        self.getLanguageAvailabilityUseCase = getLanguageAvailabilityUseCase
-        self.getLessonsUseCase = getLessonsUseCase
-        self.getOptInOnboardingBannerEnabledUseCase = getOptInOnboardingBannerEnabledUseCase
-        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
-        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
-        self.getShouldShowLanguageSettingsBarButtonUseCase = getShouldShowLanguageSettingsBarButtonUseCase
-        self.getSpotlightToolsUseCase = getSpotlightToolsUseCase
-        self.getToolCategoriesUseCase = getToolCategoriesUseCase
-        self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
-        self.removeToolFromFavoritesUseCase = removeToolFromFavoritesUseCase
-        self.toggleToolFavoritedUseCase = toggleToolFavoritedUseCase
+        getCurrentAppLanguageUseCase
+            .getLanguagePublisher()
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$appLanguage)
         
-        allToolsTabTitle = localizationServices.stringForMainBundle(key: "tool_menu_item.tools")
-        favoritesTabTitle = localizationServices.stringForMainBundle(key: "my_tools")
-        lessonsTabTitle = localizationServices.stringForMainBundle(key: "tool_menu_item.lessons")
-        selectedTab = startingTab
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
+                
+                viewDashboardUseCase
+                    .viewPublisher(appLanguage: appLanguage)
+            }
+            .switchToLatest()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (domainModel: ViewDashboardDomainModel) in
+                
+                self?.lessonsButtonTitle = domainModel.interfaceStrings.lessonsActionTitle
+                self?.favoritesButtonTitle = domainModel.interfaceStrings.favoritesActionTitle
+                self?.toolsButtonTitle = domainModel.interfaceStrings.toolsActionTitle
+                
+                self?.reloadTabs() // NOTE: Needed since button title interface strings aren't connected to the View. ~Levi
+                self?.setStartingTabIfNeeded(startingTab: startingTab, tabs: self?.tabs ?? Array())
+            }
+            .store(in: &cancellables)        
         
-        tabChanged()
+        $currentTab.eraseToAnyPublisher()
+            .sink { [weak self] currentTab in
+                
+                guard let self = self else { return }
+                
+                dashboardTabObserver.send(self.tabs[currentTab])
+            }
+            .store(in: &cancellables)
     }
-}
-
-// MARK: - Private
-
-extension DashboardViewModel {
     
-    private func tabChanged() {
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
+    private func reloadTabs() {
         
-        let shouldShowLanguageSettingsButton = getShouldShowLanguageSettingsBarButtonUseCase.getShouldShowLanguageSettingsBarButton(for: selectedTab)
+        let currentTabs: [DashboardTabTypeDomainModel] = tabs
+        tabs = currentTabs
+    }
+    
+    private func setStartingTabIfNeeded(startingTab: DashboardTabTypeDomainModel, tabs: [DashboardTabTypeDomainModel]) {
         
-        let languageButtonCurrentlyShowing = shouldShowLanguageSettingsBarButtonItemPublisher.value.shouldShowButton
-        if languageButtonCurrentlyShowing != shouldShowLanguageSettingsButton {
-            
-            publishNewLanguageSettingsBarButtonItemState(shouldShowButton: shouldShowLanguageSettingsButton)
+        guard !initialTabSet else {
+            return
         }
-    }
-    
-    private func publishNewLanguageSettingsBarButtonItemState(shouldShowButton: Bool) {
         
-        if shouldShowButton {
-
-            chooseLanguageButton = createLanguageBarButtonItem()
-            shouldShowLanguageSettingsBarButtonItemPublisher.send((true, chooseLanguageButton))
-            
-        } else {
-            
-            shouldShowLanguageSettingsBarButtonItemPublisher.send((false, chooseLanguageButton))
-            chooseLanguageButton = nil
+        guard tabs.count > 0 else {
+            return
         }
+        
+        initialTabSet = true
+        
+        currentTab = tabs.firstIndex(of: startingTab) ?? 0
     }
     
-    private func createLanguageBarButtonItem() -> UIBarButtonItem {
-        let languageBarButtonItem = UIBarButtonItem()
-        languageBarButtonItem.image = ImageCatalog.navLanguage.uiImage
-        languageBarButtonItem.tintColor = .white
-        languageBarButtonItem.target = self
-        languageBarButtonItem.action = #selector(languageBarButtonItemTapped)
-        
-        return languageBarButtonItem
+    func getTab(tabIndex: Int) -> DashboardTabTypeDomainModel? {
+        guard tabIndex >= 0 && tabIndex < tabs.count else {
+            return nil
+        }
+        return tabs[tabIndex]
     }
 }
 
@@ -198,16 +111,56 @@ extension DashboardViewModel {
         flowDelegate?.navigate(step: .menuTappedFromTools)
     }
             
-    @objc func languageBarButtonItemTapped() {
-        flowDelegate?.navigate(step: .languageSettingsTappedFromTools)
+    func getLessonsViewModel() -> LessonsViewModel {
+        return dashboardPresentationLayerDependencies.lessonsViewModel
     }
-}
-
-// MARK: - FavoritesContentViewModelDelegate
-
-extension DashboardViewModel: FavoritesContentViewModelDelegate {
     
-    func favoriteToolsViewGoToToolsTapped() {
-        flowDelegate?.navigate(step: .allToolsTappedFromFavoritedTools)
+    func getFavoritesViewModel() -> FavoritesViewModel {
+        return dashboardPresentationLayerDependencies.favoritesViewModel
+    }
+    
+    func getToolsViewModel() -> ToolsViewModel {
+        return dashboardPresentationLayerDependencies.toolsViewModel
+    }
+    
+    func tabTapped(tabIndex: Int) {
+        
+        currentTab = tabIndex
+    }
+    
+    func tabTapped(tab: DashboardTabTypeDomainModel) {
+        
+        guard let index = tabs.firstIndex(of: tab) else {
+            return
+        }
+        
+        tabTapped(tabIndex: index)
+    }
+    
+    func getTabBarItemViewModel(tabIndex: Int) -> DashboardTabBarItemViewModel {
+        
+        let imageName: String
+        let title: String
+        
+        switch tabs[tabIndex] {
+            
+        case .lessons:
+            imageName = ImageCatalog.toolsMenuLessons.name
+            title = lessonsButtonTitle
+            
+        case .favorites:
+            imageName = ImageCatalog.toolsMenuFavorites.name
+            title = favoritesButtonTitle
+            
+        case .tools:
+            imageName = ImageCatalog.toolsMenuAllTools.name
+            title = toolsButtonTitle
+        }
+        
+        return DashboardTabBarItemViewModel(
+            tabIndex: tabIndex,
+            title: title,
+            imageName: imageName
+        )
     }
 }

@@ -2,6 +2,134 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+<key>account.activity.toolOpens</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@toolCount@</string>
+<key>toolCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>የተከፈቱ ቡክሌቶች</string>
+<key>other</key>
+<string>የተከፈቱ ቡክሌቶች</string>
+</dict>
+</dict>
+<key>account.activity.lessonCompletions</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@lessonCount@</string>
+<key>lessonCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>የትምህርት ማጠናቀቂያዎች</string>
+<key>other</key>
+<string>የትምህርት ማጠናቀቂያዎች</string>
+</dict>
+</dict>
+<key>account.activity.screenShares</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@screenShareCount@</string>
+<key>screenShareCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>ስክሪን ማጋራቶች</string>
+<key>other</key>
+<string>ስክሪን ማጋራቶች</string>
+</dict>
+</dict>
+<key>account.activity.linksShared</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@linkShareCount@</string>
+<key>linkShareCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>ማስፈንጠሪያ ማጋራት</string>
+<key>other</key>
+<string>ማስፈንጠሪያ ማጋራቶች</string>
+</dict>
+</dict>
+<key>account.activity.languagesUsed</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@languagesUsedCount@</string>
+<key>languagesUsedCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>የተጠቀሙዋቸው ቋንቋዎች</string>
+<key>other</key>
+<string>የተጠቀሙዋቸው ቋንቋዎች</string>
+</dict>
+</dict>
+<key>account.activity.sessions</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@sessionCount@</string>
+<key>sessionCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>ክፍለ ጊዜዎች</string>
+<key>other</key>
+<string>ክፍለ ጊዜዎች</string>
+</dict>
+</dict>
+<key>tools.filter.toolsAvailable</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@toolCount@</string>
+<key>toolCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>%d ቡክሌቶች አሉ</string>
+<key>other</key>
+<string>%d ቡክሌቶች አሉ</string>
+</dict>
+</dict>
+<key>languageSettings.appLanguage.numberAvailable</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@appLanguageCount@</string>
+<key>appLanguageCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>%d ቋንቋ ይገኛል</string>
+<key>other</key>
+<string>%d ቋንቋ ይገኛል</string>
+</dict>
+</dict>
 <key>badges.imagesShared</key>
 <dict>
 <key>NSStringLocalizedFormatKey</key>
@@ -13,9 +141,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Shared 1 image</string>
+<string>የተጋሩ %d ምስሎች</string>
 <key>other</key>
-<string>Shared %d images</string>
+<string>የተጋሩ %d ምስሎች</string>
 </dict>
 </dict>
 <key>badges.articlesOpened</key>
@@ -29,9 +157,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Read 1 article</string>
+<string>1 ጽሑፍ ያንብቡ</string>
 <key>other</key>
-<string>Read %d articles</string>
+<string>%d ጽሑፎችን ያንብቡ</string>
 </dict>
 </dict>
 <key>badges.lessonsCompleted</key>
@@ -45,9 +173,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Completed 1 lesson</string>
+<string>የተጠናቀቁ 1 ትምህርቶች</string>
 <key>other</key>
-<string>Completed %d lessons</string>
+<string>የተጠናቀቁ %d ትምህርቶች</string>
 </dict>
 </dict>
 <key>badges.toolsOpened</key>
@@ -61,9 +189,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Opened 1 tool</string>
+<string>1 መሳሪያዎች ተከፍተዋል</string>
 <key>other</key>
-<string>Opened %d tools</string>
+<string>%d መሳሪያዎች ተከፍተዋል</string>
 </dict>
 </dict>
 <key>badges.tipsCompleted</key>
@@ -77,9 +205,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Completed 1 training tip</string>
+<string>የተጠናቀቁ 1 የሥልጠና ምክሮች</string>
 <key>other</key>
-<string>Completed %d training tips</string>
+<string>የተጠናቀቁ %d የሥልጠና ምክሮች</string>
 </dict>
 </dict>
 </dict>

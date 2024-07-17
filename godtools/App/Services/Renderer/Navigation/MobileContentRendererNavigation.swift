@@ -18,20 +18,27 @@ protocol MobileContentRendererNavigationDelegate: AnyObject {
 class MobileContentRendererNavigation {
     
     private let appDiContainer: AppDiContainer
+    private let appLanguage: AppLanguageDomainModel
     
     private var toolTraining: ToolTrainingView?
+    private var downloadToolTranslationsFlow: DownloadToolTranslationsFlow?
     
     private weak var parentFlow: ToolNavigationFlow?
     private weak var delegate: MobileContentRendererNavigationDelegate?
     
-    init(parentFlow: ToolNavigationFlow, delegate: MobileContentRendererNavigationDelegate, appDiContainer: AppDiContainer) {
+    init(parentFlow: ToolNavigationFlow, delegate: MobileContentRendererNavigationDelegate, appDiContainer: AppDiContainer, appLanguage: AppLanguageDomainModel) {
         
         self.parentFlow = parentFlow
         self.delegate = delegate
         self.appDiContainer = appDiContainer
+        self.appLanguage = appLanguage
     }
     
-    func buttonWithUrlTapped(url: URL, exitLink: ExitLinkModel) {
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
+    func buttonWithUrlTapped(url: URL, screenName: String, siteSection: String, siteSubSection: String, contentLanguage: String?) {
         
         let deepLinkingService: DeepLinkingService = appDiContainer.dataLayer.getDeepLinkingService()
         let deepLink: ParsedDeepLinkType? = deepLinkingService.parseDeepLink(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
@@ -40,30 +47,21 @@ class MobileContentRendererNavigation {
             
             switch deepLink {
             
-            case .dashboard:
-                break
-                
-            case .allToolsList:
-                break
-            
-            case .articleAemUri( _):
-                break
-            
-            case .favoritedToolsList:
-                break
-            
             case .lessonsList:
                
                 delegate?.mobileContentRendererNavigationDeepLink(navigation: self, deepLink: .lessonsList)
-            
+                            
             case .tool(let toolDeepLink):
                 
-                parentFlow?.navigateToToolFromToolDeepLink(toolDeepLink: toolDeepLink, didCompleteToolNavigation: nil)
+                parentFlow?.navigateToToolFromToolDeepLink(appLanguage: appLanguage, toolDeepLink: toolDeepLink, didCompleteToolNavigation: nil)
+                
+            default:
+                break
             }
         }
         else {
             
-            parentFlow?.navigateToURL(url: url, exitLink: exitLink)
+            parentFlow?.navigateToURL(url: url, screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, contentLanguage: contentLanguage, contentLanguageSecondary: nil)
         }
     }
     
@@ -82,6 +80,31 @@ class MobileContentRendererNavigation {
     func trainingTipTapped(event: TrainingTipEvent) {
                 
         presentToolTraining(event: event)
+    }
+    
+    func downloadToolLanguages(toolId: String, languageIds: [String], completion: @escaping ((_ result: Result<ToolTranslationsDomainModel, Error>) -> Void)) {
+             
+        guard let flow = parentFlow else {
+            completion(.failure(NSError.errorWithDescription(description: "Failed to download tool languages.  Parent flow is null.")))
+            return
+        }
+        
+        let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(
+            resourceId: toolId,
+            languageIds: languageIds,
+            resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
+            translationsRepository: appDiContainer.dataLayer.getTranslationsRepository()
+        )
+        
+        downloadToolTranslationsFlow = DownloadToolTranslationsFlow(
+            presentInFlow: flow,
+            appDiContainer: appDiContainer,
+            determineToolTranslationsToDownload: determineToolTranslationsToDownload,
+            didDownloadToolTranslations: { [weak self] (result: Result<ToolTranslationsDomainModel, Error>) in
+                self?.downloadToolTranslationsFlow = nil
+                completion(result)
+            }
+        )
     }
     
     private func presentToolTraining(event: TrainingTipEvent) {
@@ -104,17 +127,19 @@ class MobileContentRendererNavigation {
         let navigation = MobileContentRendererNavigation(
             parentFlow: parentFlow,
             delegate: self,
-            appDiContainer: appDiContainer
+            appDiContainer: appDiContainer,
+            appLanguage: appLanguage
         )
         
         let pageRenderer = MobileContentPageRenderer(
             sharedState: State(),
             resource: event.renderedPageContext.resource,
+            appLanguage: appLanguage,
             primaryLanguage: event.renderedPageContext.primaryRendererLanguage,
             languageTranslationManifest: languageTranslationManifest,
             pageViewFactories: pageViewFactories,
             navigation: navigation,
-            manifestResourcesCache: appDiContainer.getManifestResourcesCache()
+            manifestResourcesCache: appDiContainer.getMobileContentRendererManifestResourcesCache()
         )
                            
         let viewModel = ToolTrainingViewModel(
@@ -123,11 +148,9 @@ class MobileContentRendererNavigation {
             trainingTipId: event.trainingTipId,
             tipModel: event.tipModel,
             setCompletedTrainingTipUseCase: appDiContainer.domainLayer.getSetCompletedTrainingTipUseCase(),
-            getSettingsPrimaryLanguageUseCase: appDiContainer.domainLayer.getSettingsPrimaryLanguageUseCase(),
-            getSettingsParallelLanguageUseCase: appDiContainer.domainLayer.getSettingsParallelLanguageUseCase(),
             getTrainingTipCompletedUseCase: appDiContainer.domainLayer.getTrainingTipCompletedUseCase(),
-            analytics: appDiContainer.dataLayer.getAnalytics(),
-            localizationServices: appDiContainer.localizationServices,
+            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
+            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             closeTappedClosure: { [weak self] in
                 self?.dismissToolTraining()
         })

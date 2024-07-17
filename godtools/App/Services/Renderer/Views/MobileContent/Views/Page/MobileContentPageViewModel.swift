@@ -15,7 +15,7 @@ class MobileContentPageViewModel: MobileContentViewModel {
     private let pageModel: Page
     private let hidesBackgroundImage: Bool
         
-    init(pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics, hidesBackgroundImage: Bool) {
+    init(pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics, hidesBackgroundImage: Bool) {
         
         self.pageModel = pageModel
         self.hidesBackgroundImage = hidesBackgroundImage
@@ -94,17 +94,8 @@ extension MobileContentPageViewModel {
     }
     
     func buttonWithUrlTapped(url: URL) {
-               
-        let exitLink = ExitLinkModel(
-            screenName: analyticsScreenName,
-            siteSection: analyticsSiteSection,
-            siteSubSection: analyticsSiteSubSection,
-            contentLanguage: renderedPageContext.language.localeIdentifier,
-            secondaryContentLanguage: nil,
-            url: url
-        )
-                        
-        renderedPageContext.navigation.buttonWithUrlTapped(url: url, exitLink: exitLink)
+                             
+        renderedPageContext.navigation.buttonWithUrlTapped(url: url, screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection, contentLanguage: renderedPageContext.language.localeIdentifier)
     }
     
     func trainingTipTapped(event: TrainingTipEvent) {

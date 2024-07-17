@@ -15,7 +15,7 @@ class TrainingTipView: MobileContentView, NibBased {
     @IBOutlet weak private var tipButton: UIButton!
     @IBOutlet weak private var tipImage: UIImageView!
     
-    required init(viewModel: TrainingTipViewModel) {
+    init(viewModel: TrainingTipViewModel) {
         
         self.viewModel = viewModel
         

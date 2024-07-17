@@ -7,7 +7,10 @@
 //
 
 import Foundation
+import Combine
+import LocalizationServices
 
+@available(*, deprecated)
 class GetLanguageUseCase {
     
     private let languagesRepository: LanguagesRepository
@@ -17,6 +20,20 @@ class GetLanguageUseCase {
         
         self.languagesRepository = languagesRepository
         self.localizationServices = localizationServices
+    }
+    
+    func getLanguagePublisher(languageCode: String) -> AnyPublisher<LanguageDomainModel?, Never> {
+        
+        return languagesRepository.getLanguagesChanged()
+            .map { (void: Void) in
+                
+                guard let languageModel = self.languagesRepository.getLanguage(code: languageCode) else {
+                    return nil
+                }
+                
+                return self.getLanguage(language: languageModel)
+            }
+            .eraseToAnyPublisher()
     }
     
     func getLanguage(id: String) -> LanguageDomainModel? {
@@ -35,20 +52,6 @@ class GetLanguageUseCase {
         }
         
         return getLanguage(language: language)
-    }
-    
-    func getLanguage(locale: Locale) -> LanguageDomainModel? {
-        
-        if let language = languagesRepository.getLanguage(code: locale.identifier) {
-            
-            return getLanguage(language: language)
-        }
-        else if let languageCode = locale.languageCode, let language = languagesRepository.getLanguage(code: languageCode) {
-            
-            return getLanguage(language: language)
-        }
-                
-        return nil
     }
     
     func getLanguage(language: LanguageModel) -> LanguageDomainModel {
@@ -71,7 +74,7 @@ class GetLanguageUseCase {
         let strippedCode: String = language.code.components(separatedBy: "-x-")[0]
 
         let localizedKey: String = "language_name_" + language.code
-        let localizedName: String = localizationServices.stringForBundle(bundle: Bundle.main, key: localizedKey)
+        let localizedName: String = localizationServices.stringForSystemElseEnglish(key: localizedKey)
         
         var translatedLanguageName: String
         

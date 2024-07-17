@@ -43,12 +43,21 @@ class IncrementUserCounterUseCase {
         }
         
         return userCountersRepository.incrementCachedUserCounterBy1(id: userCounterId)
-            .flatMap { userCounterDataModel in
+            .flatMap { (userCounterDataModels: [UserCounterDataModel]) in
                 
                 self.userCountersRepository.syncUpdatedUserCountersWithRemote()
                 
-                let userCounterDomainModel = UserCounterDomainModel(dataModel: userCounterDataModel)
+                let userCounterDomainModel: UserCounterDomainModel
                 
+                if let dataModel = userCounterDataModels.first {
+                    
+                    userCounterDomainModel = UserCounterDomainModel(dataModel: dataModel)
+                }
+                else {
+                    
+                    userCounterDomainModel = UserCounterDomainModel(id: userCounterId, count: 0)
+                }
+                                
                 return Just(userCounterDomainModel)
             }
             .eraseToAnyPublisher()
@@ -63,7 +72,10 @@ class IncrementUserCounterUseCase {
             
         case .articleOpen(let uriString):
             
-            guard let uri = URL(string: uriString) else { return nil }
+            guard let uri = URL(string: uriString) else {
+                return nil
+            }
+            
             userCounterId = userCounterNames.ARTICLE_OPEN(uri: uri)
         
         case .imageShared:

@@ -9,14 +9,11 @@
 import Foundation
 import WebKit
 
-class ArticleWebView: UIViewController {
+class ArticleWebView: AppViewController {
     
     private let viewModel: ArticleWebViewModel
         
     private var webView: WKWebView!
-    private var shareButton: UIBarButtonItem?
-    private var debugButton: UIBarButtonItem?
-    private var rightBarButtonItems: [UIBarButtonItem] = Array()
     private var currentViewState: ArticleWebViewState?
     
     @IBOutlet weak private var loadingView: UIActivityIndicatorView!
@@ -25,10 +22,12 @@ class ArticleWebView: UIViewController {
     @IBOutlet weak private var errorMessageLabel: UILabel!
     @IBOutlet weak private var reloadArticleButton: UIButton!
         
-    required init(viewModel: ArticleWebViewModel) {
+    init(viewModel: ArticleWebViewModel, navigationBar: AppNavigationBar?) {
+        
         self.webView = WKWebView(frame: UIScreen.main.bounds)
         self.viewModel = viewModel
-        super.init(nibName: String(describing: ArticleWebView.self), bundle: nil)
+        
+        super.init(nibName: String(describing: ArticleWebView.self), bundle: nil, navigationBar: navigationBar)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -55,30 +54,6 @@ class ArticleWebView: UIViewController {
     }
     
     private func setupLayout() {
-        
-        // right bar button items
-        let shareButton: UIBarButtonItem = addBarButtonItem(
-            to: .right,
-            image: ImageCatalog.navShare.uiImage,
-            color: .white,
-            target: self,
-            action: #selector(shareButtonTapped)
-        )
-        
-        self.shareButton = shareButton
-                
-        let debugButton: UIBarButtonItem = addBarButtonItem(
-            to: .right,
-            image: ImageCatalog.navDebug.uiImage,
-            color: .white,
-            target: self,
-            action: #selector(debugButtonTapped)
-        )
-        
-        self.debugButton = debugButton
-        
-        rightBarButtonItems = [shareButton, debugButton]
-        removeRightBarButtonItems()
         
         // loadingView
         loadingView.stopAnimating()
@@ -108,16 +83,7 @@ class ArticleWebView: UIViewController {
             self?.title = navTitle
         }
         
-        viewModel.hidesShareButton.addObserver(self) { [weak self] (hidesShareButton) in
-            self?.reloadRightBarButtonItems()
-        }
-        
-        viewModel.hidesDebugButton.addObserver(self) { [weak self] (hidesDebugButton: Bool) in
-            self?.reloadRightBarButtonItems()
-        }
-        
         viewModel.viewState.addObserver(self) { [weak self] (viewState: ArticleWebViewState) in
-            
             self?.setViewState(viewState: viewState)
         }
     }
@@ -160,36 +126,9 @@ class ArticleWebView: UIViewController {
         }
     }
     
-    private func reloadRightBarButtonItems() {
-        
-        removeRightBarButtonItems()
-        
-        if !viewModel.hidesShareButton.value, let shareButton = self.shareButton {
-            addBarButtonItem(item: shareButton, barPosition: .right)
-        }
-        
-        if !viewModel.hidesDebugButton.value, let debugButton = self.debugButton {
-            addBarButtonItem(item: debugButton, barPosition: .right)
-        }
-    }
-    
     private func setErrorViewHidden(hidden: Bool) {
         errorMessageView.isHidden = hidden
         reloadArticleButton.isHidden = hidden
-    }
-    
-    private func removeRightBarButtonItems() {
-        for buttonItem in rightBarButtonItems {
-            removeBarButtonItem(item: buttonItem)
-        }
-    }
-    
-    @objc private func debugButtonTapped() {
-        viewModel.debugTapped()
-    }
-    
-    @objc private func shareButtonTapped() {
-        viewModel.sharedTapped()
     }
     
     @objc private func reloadArticleButtonTapped() {

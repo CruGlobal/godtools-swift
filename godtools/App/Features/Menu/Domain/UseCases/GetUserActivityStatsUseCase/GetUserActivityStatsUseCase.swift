@@ -9,60 +9,78 @@
 import Foundation
 import GodToolsToolParser
 import SwiftUI
+import LocalizationServices
 
 class GetUserActivityStatsUseCase {
     
     private let localizationServices: LocalizationServices
+    private let getTranslatedNumberCount: GetTranslatedNumberCount
     
-    init(localizationServices: LocalizationServices) {
+    init(localizationServices: LocalizationServices, getTranslatedNumberCount: GetTranslatedNumberCount) {
         
         self.localizationServices = localizationServices
+        self.getTranslatedNumberCount = getTranslatedNumberCount
     }
     
-    func getUserActivityStats(from userActivity: UserActivity) -> [UserActivityStatDomainModel] {
+    func getUserActivityStats(from userActivity: UserActivity, translatedInAppLanguage: AppLanguageDomainModel) -> [UserActivityStatDomainModel] {
         
         let toolOpensStat = UserActivityStatDomainModel(
             iconImageName: ImageCatalog.userActivityToolOpens.name,
-            text: localizationServices.stringForMainBundle(key: MenuStringKeys.Account.Activity.toolOpens.rawValue),
+            text: getUserActivityText(stringKey: MenuStringKeys.Account.Activity.toolOpens.rawValue, activityCount: userActivity.toolOpens, translatedInAppLanguage: translatedInAppLanguage),
             textColor: Color.getColorWithRGB(red: 5, green: 105, blue: 155, opacity: 1),
-            value: String(userActivity.toolOpens)
+            value: getUserActivityFormattedCount(activityCount: userActivity.toolOpens, translatedInAppLanguage: translatedInAppLanguage)
         )
         
         let lessonCompletionsStat = UserActivityStatDomainModel(
             iconImageName: ImageCatalog.userActivityLessonCompletions.name,
-            text: localizationServices.stringForMainBundle(key: MenuStringKeys.Account.Activity.lessonCompletions.rawValue),
+            text: getUserActivityText(stringKey: MenuStringKeys.Account.Activity.lessonCompletions.rawValue, activityCount: userActivity.lessonCompletions, translatedInAppLanguage: translatedInAppLanguage),
             textColor: Color.getColorWithRGB(red: 55, green: 167, blue: 160, opacity: 1),
-            value: String(userActivity.lessonCompletions)
+            value: getUserActivityFormattedCount(activityCount: userActivity.lessonCompletions, translatedInAppLanguage: translatedInAppLanguage)
         )
         
         let screenSharesStat = UserActivityStatDomainModel(
             iconImageName: ImageCatalog.userActivityScreenShares.name,
-            text: localizationServices.stringForMainBundle(key: MenuStringKeys.Account.Activity.screenShares.rawValue),
+            text: getUserActivityText(stringKey: MenuStringKeys.Account.Activity.screenShares.rawValue, activityCount: userActivity.screenShares, translatedInAppLanguage: translatedInAppLanguage),
             textColor: Color.getColorWithRGB(red: 229, green: 91, blue: 54, opacity: 1),
-            value: String(userActivity.screenShares)
+            value: getUserActivityFormattedCount(activityCount: userActivity.screenShares, translatedInAppLanguage: translatedInAppLanguage)
         )
         
         let linksSharedStat = UserActivityStatDomainModel(
             iconImageName: ImageCatalog.userActivityLinksShared.name,
-            text: localizationServices.stringForMainBundle(key: MenuStringKeys.Account.Activity.linksShared.rawValue),
+            text: getUserActivityText(stringKey: MenuStringKeys.Account.Activity.linksShared.rawValue, activityCount: userActivity.linksShared, translatedInAppLanguage: translatedInAppLanguage),
             textColor: Color.getColorWithRGB(red: 47, green: 54, blue: 118, opacity: 1),
-            value: String(userActivity.linksShared)
+            value: getUserActivityFormattedCount(activityCount: userActivity.linksShared, translatedInAppLanguage: translatedInAppLanguage)
         )
         
         let languagesUsedStat = UserActivityStatDomainModel(
             iconImageName: ImageCatalog.userActivityLanguagesUsed.name,
-            text: localizationServices.stringForMainBundle(key: MenuStringKeys.Account.Activity.languagesUsed.rawValue),
+            text: getUserActivityText(stringKey: MenuStringKeys.Account.Activity.languagesUsed.rawValue, activityCount: userActivity.languagesUsed, translatedInAppLanguage: translatedInAppLanguage),
             textColor: Color.getColorWithRGB(red: 110, green: 220, blue: 80, opacity: 1),
-            value: String(userActivity.languagesUsed)
+            value: getUserActivityFormattedCount(activityCount: userActivity.languagesUsed, translatedInAppLanguage: translatedInAppLanguage)
         )
-
+        
         let sessionsStat = UserActivityStatDomainModel(
             iconImageName: ImageCatalog.userActivitySessions.name,
-            text: localizationServices.stringForMainBundle(key: MenuStringKeys.Account.Activity.sessions.rawValue),
+            text: getUserActivityText(stringKey: MenuStringKeys.Account.Activity.sessions.rawValue, activityCount: userActivity.sessions, translatedInAppLanguage: translatedInAppLanguage),
             textColor: Color.getColorWithRGB(red: 224, green: 206, blue: 38, opacity: 1),
-            value: String(userActivity.sessions)
+            value: getUserActivityFormattedCount(activityCount: userActivity.sessions, translatedInAppLanguage: translatedInAppLanguage)
         )
         
         return [toolOpensStat, lessonCompletionsStat, screenSharesStat, linksSharedStat, languagesUsedStat, sessionsStat]
+    }
+    
+    private func getUserActivityText(stringKey: String, activityCount: Int32, translatedInAppLanguage: AppLanguageDomainModel) -> String {
+        
+        let formatString = localizationServices.stringForLocaleElseEnglish(
+            localeIdentifier: translatedInAppLanguage.localeId,
+            key: stringKey
+        )
+        
+        return String(format: formatString, locale: Locale(identifier: translatedInAppLanguage), activityCount)
+    }
+    
+    private func getUserActivityFormattedCount(activityCount: Int32, translatedInAppLanguage: AppLanguageDomainModel) -> String {
+                        
+        return getTranslatedNumberCount.getTranslatedCount(count: Int(activityCount), translateInLanguage: translatedInAppLanguage)
     }
 }

@@ -32,20 +32,8 @@ class ResourcesRepository {
         return cache.numberOfResources
     }
     
-    func getResourcesChanged() -> AnyPublisher<Void, Never> {
-        return cache.getResourcesChanged()
-    }
-    
-    func getAllLessons() -> [ResourceModel] {
-        return cache.getAllLessons()
-    }
-    
-    func getAllTools(sorted: Bool, with category: String? = nil) -> [ResourceModel] {
-        return cache.getAllTools(sorted: sorted, with: category)
-    }
-    
-    func getFeaturedLessons() -> [ResourceModel] {
-        return cache.getFeaturedLessons()
+    func getResourcesChangedPublisher() -> AnyPublisher<Void, Never> {
+        return cache.getResourcesChangedPublisher()
     }
     
     func getResource(id: String) -> ResourceModel? {
@@ -68,16 +56,18 @@ class ResourcesRepository {
         return cache.getResources(with: resourceType)
     }
     
-    func getResourceVariants(resourceId: String) -> [ResourceModel] {
+    func getCachedResourcesByFilter(filter: ResourcesFilter) -> [ResourceModel] {
         
-        return cache.getResourceVariants(resourceId: resourceId)
+        return cache.getResourcesByFilter(filter: filter)
     }
     
-    func getSpotlightTools() -> [ResourceModel] {
-        return cache.getSpotlightTools()
+    func getCachedResourcesByFilterPublisher(filter: ResourcesFilter) -> AnyPublisher<[ResourceModel], Never> {
+        
+        return cache.getResourcesByFilterPublisher(filter: filter)
+            .eraseToAnyPublisher()
     }
     
-    func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments() -> AnyPublisher<RealmResourcesCacheSyncResult, URLResponseError> {
+    func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments() -> AnyPublisher<RealmResourcesCacheSyncResult, Error> {
         
         return syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFileIfNeeded()
             .map({ result in
@@ -94,9 +84,28 @@ class ResourcesRepository {
                 return self.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote()
                     .eraseToAnyPublisher()
             })
-            .flatMap({ syncedResourcesFromFileCacheResults -> AnyPublisher<RealmResourcesCacheSyncResult, URLResponseError> in
+            .flatMap({ syncedResourcesFromFileCacheResults -> AnyPublisher<RealmResourcesCacheSyncResult, Error> in
                                 
                 return self.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote()
+                    .eraseToAnyPublisher()
+            })
+            .eraseToAnyPublisher()
+    }
+    
+    func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsIgnoringErrorPublisher() -> AnyPublisher<RealmResourcesCacheSyncResult, Never> {
+        
+        return syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments()
+            .catch({ _ in
+                
+                let emptyResult = RealmResourcesCacheSyncResult(
+                    languagesSyncResult: RealmLanguagesCacheSyncResult(languagesRemoved: []),
+                    resourcesRemoved: [],
+                    translationsRemoved: [],
+                    attachmentsRemoved: [],
+                    downloadedTranslationsRemoved: []
+                )
+                
+                return Just(emptyResult)
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
@@ -117,7 +126,7 @@ class ResourcesRepository {
         }
         
         return Publishers
-            .CombineLatest(languagesRepository.syncLanguagesFromJsonFileCache(), ResourcesJsonFileCache().getResourcesPlusLatestTranslationsAndAttachments().publisher)
+            .CombineLatest(languagesRepository.syncLanguagesFromJsonFileCache(), ResourcesJsonFileCache(jsonServices: JsonServices()).getResourcesPlusLatestTranslationsAndAttachments().publisher)
             .flatMap({ (languagesSyncResult: RealmLanguagesCacheSyncResult, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> in
                 
                 return self.cache.syncResources(languagesSyncResult: languagesSyncResult, resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments)
@@ -131,18 +140,76 @@ class ResourcesRepository {
             .eraseToAnyPublisher()
     }
     
-    private func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote() -> AnyPublisher<RealmResourcesCacheSyncResult, URLResponseError> {
+    private func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote() -> AnyPublisher<RealmResourcesCacheSyncResult, Error> {
         
         return Publishers
             .CombineLatest(languagesRepository.syncLanguagesFromRemote(), api.getResourcesPlusLatestTranslationsAndAttachments())
-            .flatMap({ (languagesSyncResult: RealmLanguagesCacheSyncResult, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<RealmResourcesCacheSyncResult, URLResponseError> in
+            .flatMap({ (languagesSyncResult: RealmLanguagesCacheSyncResult, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> in
                 
                 return self.cache.syncResources(languagesSyncResult: languagesSyncResult, resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments)
-                    .mapError { error in
-                        return .otherError(error: error)
-                    }
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
+    }
+}
+
+// MARK: - Spotlight Tools
+
+extension ResourcesRepository {
+    
+    func getSpotlightTools(sortByDefaultOrder: Bool = false) -> [ResourceModel] {
+        return cache.getSpotlightTools(sortByDefaultOrder: sortByDefaultOrder)
+    }
+}
+
+// MARK: - All Tools List
+
+extension ResourcesRepository {
+    
+    func getAllToolsList(filterByCategory: String?, filterByLanguageId: String?, sortByDefaultOrder: Bool) -> [ResourceModel] {
+        
+        return cache.getAllToolsList(
+            filterByCategory: filterByCategory,
+            filterByLanguageId: filterByLanguageId,
+            sortByDefaultOrder: sortByDefaultOrder
+        )
+    }
+    
+    func getAllToolsListCount(filterByCategory: String?, filterByLanguageId: String?) -> Int {
+        
+        return cache.getAllToolsListCount(filterByCategory: filterByCategory, filterByLanguageId: filterByLanguageId)
+    }
+    
+    func getAllToolCategoryIds(filteredByLanguageId: String?) -> [String] {
+        
+        return cache.getAllToolCategoryIds(filteredByLanguageId: filteredByLanguageId)
+    }
+    
+    func getAllToolLanguageIds(filteredByCategoryId: String?) -> [String] {
+        
+        return cache.getAllToolLanguageIds(filteredByCategoryId: filteredByCategoryId)
+    }
+}
+
+// MARK: - Lessons
+
+extension ResourcesRepository {
+    
+    func getAllLessons(sorted: Bool) -> [ResourceModel] {
+        return cache.getAllLessons(sorted: sorted)
+    }
+    
+    func getFeaturedLessons(sorted: Bool) -> [ResourceModel] {
+        return cache.getFeaturedLessons(sorted: sorted)
+    }
+}
+
+// MARK: - Variants
+
+extension ResourcesRepository {
+    
+    func getResourceVariants(resourceId: String) -> [ResourceModel] {
+        
+        return cache.getResourceVariants(resourceId: resourceId)
     }
 }

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import LocalizationServices
 
 class MobileContentErrorViewModel {
     
@@ -14,10 +15,10 @@ class MobileContentErrorViewModel {
     let message: String
     let acceptTitle: String
     
-    init(title: String, message: String, localizationServices: LocalizationServices) {
+    init(appLanguage: AppLanguageDomainModel, title: String, message: String, localizationServices: LocalizationServices) {
         
         self.title = title
         self.message = message
-        self.acceptTitle = localizationServices.stringForMainBundle(key: "OK")
+        self.acceptTitle = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.ok.key)
     }
 }

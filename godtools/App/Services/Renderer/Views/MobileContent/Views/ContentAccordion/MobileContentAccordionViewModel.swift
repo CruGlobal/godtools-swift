@@ -13,7 +13,7 @@ class MobileContentAccordionViewModel: MobileContentViewModel {
     
     private let accordionModel: Accordion
     
-    init(accordionModel: Accordion, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
+    init(accordionModel: Accordion, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
         
         self.accordionModel = accordionModel
         

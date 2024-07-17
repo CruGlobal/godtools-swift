@@ -10,12 +10,19 @@ import UIKit
 
 public extension UIView {
     
-    func constrainEdgesToView(view: UIView, edgeInsets: UIEdgeInsets = .zero) {
+    func constrainEdgesToView(view: UIView, edgeInsets: UIEdgeInsets = .zero, horizontalConstraintType: UIViewHorizontalContraintType = .leadingAndTrailing) {
         
         constrainTopToView(view: view, constant: edgeInsets.top)
         _ = constrainBottomToView(view: view, constant: edgeInsets.bottom)
-        constrainLeadingToView(view: view, constant: edgeInsets.left)
-        constrainTrailingToView(view: view, constant: edgeInsets.right)
+        
+        switch horizontalConstraintType {
+        case .leadingAndTrailing:
+            constrainLeadingToView(view: view, constant: edgeInsets.left)
+            constrainTrailingToView(view: view, constant: edgeInsets.right)
+        case .leftAndRight:
+            constrainLeftToView(view: view, constant: edgeInsets.left)
+            constrainRightToView(view: view, constant: edgeInsets.right)
+        }
     }
     
     func constrainTopToView(view: UIView, constant: CGFloat = 0) {
@@ -48,6 +55,36 @@ public extension UIView {
         view.addConstraint(bottom)
         
         return bottom
+    }
+    
+    func constrainLeftToView(view: UIView, constant: CGFloat = 0) {
+        
+        let left: NSLayoutConstraint = NSLayoutConstraint(
+            item: self,
+            attribute: .left,
+            relatedBy: .equal,
+            toItem: view,
+            attribute: .left,
+            multiplier: 1,
+            constant: constant
+        )
+        
+        view.addConstraint(left)
+    }
+    
+    func constrainRightToView(view: UIView, constant: CGFloat = 0) {
+        
+        let right: NSLayoutConstraint = NSLayoutConstraint(
+            item: self,
+            attribute: .right,
+            relatedBy: .equal,
+            toItem: view,
+            attribute: .right,
+            multiplier: 1,
+            constant: constant * -1
+        )
+        
+        view.addConstraint(right)
     }
     
     func constrainLeadingToView(view: UIView, constant: CGFloat = 0) {

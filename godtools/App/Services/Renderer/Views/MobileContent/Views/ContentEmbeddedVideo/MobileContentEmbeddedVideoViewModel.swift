@@ -13,7 +13,7 @@ class MobileContentEmbeddedVideoViewModel: MobileContentViewModel {
     
     private let videoModel: Video
     
-    init(videoModel: Video, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
+    init(videoModel: Video, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
         
         self.videoModel = videoModel
         
@@ -47,7 +47,8 @@ class MobileContentEmbeddedVideoViewModel: MobileContentViewModel {
         let playsInFullScreen = 0
         
         return [
-            Strings.YoutubePlayerParameters.playsInline.rawValue: playsInFullScreen
+            YoutubePlayerParameters.interfaceLanguage.rawValue: renderedPageContext.appLanguage,
+            YoutubePlayerParameters.playsInline.rawValue: playsInFullScreen
         ]
 
     }

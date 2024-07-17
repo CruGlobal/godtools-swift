@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct UserCounterDecodable: Decodable {
+struct UserCounterDecodable: Codable {
     
     let id: String
     let count: Int

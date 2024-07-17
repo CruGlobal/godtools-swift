@@ -18,7 +18,7 @@ class RealmAttachmentsCache {
         self.realmDatabase = realmDatabase
     }
     
-    func getAttachment(id: String) -> AttachmentModel? {
+    func getAttachmentModel(id: String) -> AttachmentModel? {
         
         guard let realmAttachment = realmDatabase.openRealm().object(ofType: RealmAttachment.self, forPrimaryKey: id) else {
             return nil

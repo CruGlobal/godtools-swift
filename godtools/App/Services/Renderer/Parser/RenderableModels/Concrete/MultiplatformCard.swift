@@ -14,7 +14,7 @@ class MultiplatformCard {
     let card: TractPage.Card
     let numberOfVisibleCards: Int
     
-    required init(card: TractPage.Card, numberOfVisibleCards: Int) {
+    init(card: TractPage.Card, numberOfVisibleCards: Int) {
         
         self.card = card
         self.numberOfVisibleCards = numberOfVisibleCards

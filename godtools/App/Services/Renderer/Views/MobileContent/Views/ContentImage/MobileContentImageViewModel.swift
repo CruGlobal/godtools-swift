@@ -14,11 +14,11 @@ class MobileContentImageViewModel: MobileContentViewModel {
     
     private let imageModel: Image
 
-    let mobileContentAnalytics: MobileContentAnalytics
+    let mobileContentAnalytics: MobileContentRendererAnalytics
     let image: UIImage?
     let imageWidth: MobileContentViewWidth
     
-    init(imageModel: Image, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentAnalytics) {
+    init(imageModel: Image, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
         
         self.imageModel = imageModel
         self.mobileContentAnalytics = mobileContentAnalytics

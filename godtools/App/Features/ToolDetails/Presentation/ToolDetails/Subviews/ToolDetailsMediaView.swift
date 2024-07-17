@@ -15,7 +15,7 @@ struct ToolDetailsMediaView: View {
     
     @State private var videoPlayerState: VideoViewPlayerState = .stopped
     
-    @ObservedObject var viewModel: ToolDetailsViewModel
+    @ObservedObject private var viewModel: ToolDetailsViewModel
         
     init(viewModel: ToolDetailsViewModel, width: CGFloat) {
         
@@ -50,12 +50,13 @@ struct ToolDetailsMediaView: View {
            
             case .youtube(let videoId, let playerParameters):
                 
-                VideoView(
+                VideoViewRepresentable(
                     playerState: $videoPlayerState,
                     frameSize: mediaViewSize,
                     videoId: videoId,
                     videoPlayerParameters: playerParameters,
                     configuration: nil,
+                    videoPlayingClosure: nil,
                     videoEndedClosure: nil
                 )
                 

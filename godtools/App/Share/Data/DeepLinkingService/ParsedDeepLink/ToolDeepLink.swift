@@ -16,4 +16,5 @@ struct ToolDeepLink: Equatable {
     let liveShareStream: String?
     let page: Int?
     let pageId: String?
+    let selectedLanguageIndex: Int?
 }

@@ -20,14 +20,10 @@ enum ResourceType: String {
 
 extension ResourceType {
     
+    static let toolTypes: [ResourceType] = [.article, .chooseYourOwnAdventure, .tract]
+    
     var isToolType: Bool {
-        switch self {
-        case .article, .chooseYourOwnAdventure, .tract:
-            return true
-            
-        case .lesson, .metaTool, .unknown:
-            return false
-        }
+        return ResourceType.toolTypes.contains(self)
     }
     
     var isLessonType: Bool {

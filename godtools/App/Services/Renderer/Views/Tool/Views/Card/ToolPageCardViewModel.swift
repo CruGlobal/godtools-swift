@@ -8,15 +8,15 @@
 
 import UIKit
 import GodToolsToolParser
+import LocalizationServices
 
 class ToolPageCardViewModel: MobileContentViewModel {
     
     private let cardModel: TractPage.Card
-    private let analytics: AnalyticsContainer
-    private let fontService: FontService
+    private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let localizationServices: LocalizationServices
     private let trainingTipsEnabled: Bool
-    private let visibleAnalyticsEventsObjects: [MobileContentAnalyticsEvent]
+    private let visibleAnalyticsEventsObjects: [MobileContentRendererAnalyticsEvent]
     private let numberOfVisbleCards: Int
      
     let hidesHeaderTrainingTip: Bool
@@ -25,11 +25,10 @@ class ToolPageCardViewModel: MobileContentViewModel {
     let hidesNextButton: Bool
     let isHiddenCard: Bool
     
-    init(cardModel: TractPage.Card, renderedPageContext: MobileContentRenderedPageContext, analytics: AnalyticsContainer, mobileContentAnalytics: MobileContentAnalytics, fontService: FontService, localizationServices: LocalizationServices, numberOfVisbleCards: Int, trainingTipsEnabled: Bool) {
+    init(cardModel: TractPage.Card, renderedPageContext: MobileContentRenderedPageContext, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, mobileContentAnalytics: MobileContentRendererAnalytics, localizationServices: LocalizationServices, numberOfVisbleCards: Int, trainingTipsEnabled: Bool) {
                         
         self.cardModel = cardModel
-        self.analytics = analytics
-        self.fontService = fontService
+        self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.localizationServices = localizationServices
         self.trainingTipsEnabled = trainingTipsEnabled
         self.numberOfVisbleCards = numberOfVisbleCards
@@ -48,7 +47,7 @@ class ToolPageCardViewModel: MobileContentViewModel {
             hidesNextButton = true
         }
         
-        visibleAnalyticsEventsObjects = MobileContentAnalyticsEvent.initAnalyticsEvents(
+        visibleAnalyticsEventsObjects = MobileContentRendererAnalyticsEvent.initAnalyticsEvents(
             analyticsEvents: cardModel.getAnalyticsEvents(type: .visible),
             mobileContentAnalytics: mobileContentAnalytics,
             renderedPageContext: renderedPageContext
@@ -63,6 +62,10 @@ class ToolPageCardViewModel: MobileContentViewModel {
         }
         
         super.init(baseModel: cardModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
     }
     
     private var analyticsScreenName: String {
@@ -93,7 +96,7 @@ class ToolPageCardViewModel: MobileContentViewModel {
     }
     
     var titleFont: UIFont {
-        return fontService.getFont(size: 19, weight: .regular)
+        return FontLibrary.systemUIFont(size: 19, weight: .regular)
     }
     
     var titleAlignment: NSTextAlignment {
@@ -114,11 +117,11 @@ class ToolPageCardViewModel: MobileContentViewModel {
     }
     
     var cardPositionLabelFont: UIFont {
-        return fontService.getFont(size: 18, weight: .regular)
+        return FontLibrary.systemUIFont(size: 18, weight: .regular)
     }
     
     var previousButtonTitle: String? {
-        return localizationServices.stringForLocaleElseSystem(localeIdentifier: renderedPageContext.language.localeIdentifier, key: "card_status1")
+        return localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: renderedPageContext.language.localeIdentifier, key: "card_status1")
     }
     
     var previousButtonTitleColor: UIColor {
@@ -126,11 +129,11 @@ class ToolPageCardViewModel: MobileContentViewModel {
     }
     
     var previousButtonTitleFont: UIFont {
-        return fontService.getFont(size: 18, weight: .regular)
+        return FontLibrary.systemUIFont(size: 18, weight: .regular)
     }
     
     var nextButtonTitle: String? {
-        return localizationServices.stringForLocaleElseSystem(localeIdentifier: renderedPageContext.language.localeIdentifier, key: "card_status2")
+        return localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: renderedPageContext.language.localeIdentifier, key: "card_status2")
     }
     
     var nextButtonTitleColor: UIColor {
@@ -138,7 +141,7 @@ class ToolPageCardViewModel: MobileContentViewModel {
     }
     
     var nextButtonTitleFont: UIFont {
-        return fontService.getFont(size: 18, weight: .regular)
+        return FontLibrary.systemUIFont(size: 18, weight: .regular)
     }
     
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
@@ -180,16 +183,14 @@ extension ToolPageCardViewModel {
     func cardDidAppear() {
         
         super.viewDidAppear(visibleAnalyticsEvents: visibleAnalyticsEventsObjects)
-                           
-        let trackScreen =  TrackScreenModel(
+                       
+        trackScreenViewAnalyticsUseCase.trackScreen(
             screenName: analyticsScreenName,
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
             contentLanguage: renderedPageContext.language.localeIdentifier,
-            secondaryContentLanguage: nil
+            contentLanguageSecondary: nil
         )
-        
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
     }
     
     func cardDidDisappear() {

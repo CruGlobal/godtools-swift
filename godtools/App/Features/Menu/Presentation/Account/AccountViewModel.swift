@@ -13,119 +13,137 @@ import GodToolsToolParser
 
 class AccountViewModel: ObservableObject {
     
-    private let localizationServices: LocalizationServices
-    private let getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase
-    private let getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase
+    private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase
-    private let getUserAccountProfileNameUseCase: GetUserAccountProfileNameUseCase
     private let getUserActivityUseCase: GetUserActivityUseCase
-    private let getGlobalActivityThisWeekUseCase: GetGlobalActivityThisWeekUseCase
-    private let analytics: AnalyticsContainer
+    private let viewGlobalActivityThisWeekUseCase: ViewGlobalActivityThisWeekUseCase
+    private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
+    private let viewAccountUseCase: ViewAccountUseCase
     
-    private var globalActivityThisWeekDomainModels: [GlobalActivityThisWeekDomainModel] = Array()
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
     
-    @Published var navTitle: String
+    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
+    @Published private var didPullToRefresh: Void = ()
+    
+    @Published var navTitle: String = ""
     @Published var isLoadingProfile: Bool = true
     @Published var isLoadingGlobalActivityThisWeek: Bool = true
     @Published var profileName: String = ""
     @Published var joinedOnText: String = ""
-    @Published var activityButtonTitle: String
-    @Published var myActivitySectionTitle: String
+    @Published var activityButtonTitle: String = ""
+    @Published var myActivitySectionTitle: String = ""
     @Published var badges = [UserActivityBadgeDomainModel]()
-    @Published var badgesSectionTitle: String
-    @Published var globalActivityButtonTitle: String
-    @Published var globalActivityTitle: String
-    @Published var numberOfGlobalActivityThisWeekItems: Int = 0
+    @Published var badgesSectionTitle: String = ""
+    @Published var globalActivityButtonTitle: String = ""
+    @Published var globalActivityTitle: String = ""
+    @Published var globalActivitiesThisWeek: [GlobalActivityThisWeekDomainModel] = Array()
     @Published var stats = [UserActivityStatDomainModel]()
         
-    init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, getSettingsPrimaryLanguageUseCase: GetSettingsPrimaryLanguageUseCase, getSettingsParallelLanguageUseCase: GetSettingsParallelLanguageUseCase, getUserAccountProfileNameUseCase: GetUserAccountProfileNameUseCase, getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase, getUserActivityUseCase: GetUserActivityUseCase, getGlobalActivityThisWeekUseCase: GetGlobalActivityThisWeekUseCase, analytics: AnalyticsContainer) {
+    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase, getUserActivityUseCase: GetUserActivityUseCase, viewGlobalActivityThisWeekUseCase: ViewGlobalActivityThisWeekUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, viewAccountUseCase: ViewAccountUseCase) {
         
         self.flowDelegate = flowDelegate
-        self.localizationServices = localizationServices
-        self.getSettingsPrimaryLanguageUseCase = getSettingsPrimaryLanguageUseCase
-        self.getSettingsParallelLanguageUseCase = getSettingsParallelLanguageUseCase
+        self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getUserAccountDetailsUseCase = getUserAccountDetailsUseCase
-        self.getUserAccountProfileNameUseCase = getUserAccountProfileNameUseCase
-        self.getGlobalActivityThisWeekUseCase = getGlobalActivityThisWeekUseCase
+        self.viewGlobalActivityThisWeekUseCase = viewGlobalActivityThisWeekUseCase
         self.getUserActivityUseCase = getUserActivityUseCase
-        self.analytics = analytics
+        self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
+        self.viewAccountUseCase = viewAccountUseCase
         
-        navTitle = localizationServices.stringForMainBundle(key: MenuStringKeys.Account.navTitle.rawValue)
-        activityButtonTitle = localizationServices.stringForMainBundle(key: MenuStringKeys.Account.activityButtonTitle.rawValue)
-        myActivitySectionTitle = localizationServices.stringForMainBundle(key: MenuStringKeys.Account.activitySectionTitle.rawValue)
-        badgesSectionTitle = localizationServices.stringForMainBundle(key: MenuStringKeys.Account.badgesSectionTitle.rawValue)
-        globalActivityButtonTitle = localizationServices.stringForMainBundle(key: MenuStringKeys.Account.globalActivityButtonTitle.rawValue)
-        
-        let localizedGlobalActivityTitle: String = localizationServices.stringForMainBundle(key: MenuStringKeys.Account.globalAnalyticsTitle.rawValue)
-        let todaysDate: Date = Date()
-        let todaysYearComponents: DateComponents = Calendar.current.dateComponents([.year], from: todaysDate)
-                
-        if let year = todaysYearComponents.year {
-            globalActivityTitle = "\(year) \(localizedGlobalActivityTitle)"
-        }
-        else {
-            globalActivityTitle = localizedGlobalActivityTitle
-        }
-                
-        getUserAccountProfileNameUseCase.getProfileNamePublisher()
+        getCurrentAppLanguageUseCase
+            .getLanguagePublisher()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (profileNameDomainModel: AccountProfileNameDomainModel) in
+            .assign(to: &$appLanguage)
+
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
                 
-                self?.isLoadingProfile = false
-                self?.profileName = profileNameDomainModel.value
+                viewAccountUseCase
+                    .viewPublisher(appLanguage: appLanguage)
+            }
+            .switchToLatest()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] viewAccountDomainModel in
+                
+                let interfaceStrings = viewAccountDomainModel.interfaceStrings
+                
+                self?.navTitle = interfaceStrings.navTitle
+                self?.activityButtonTitle = interfaceStrings.activityButtonTitle
+                self?.myActivitySectionTitle = interfaceStrings.myActivitySectionTitle
+                self?.badgesSectionTitle = interfaceStrings.badgesSectionTitle
+                self?.globalActivityButtonTitle = interfaceStrings.globalActivityButtonTitle
+                self?.globalActivityTitle = interfaceStrings.globalAnalyticsTitle
             }
             .store(in: &cancellables)
         
-        getUserAccountDetailsUseCase.getUserAccountDetailsPublisher()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] userDetails in
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
                 
+                getUserAccountDetailsUseCase
+                    .getUserAccountDetailsPublisher(appLanguage: appLanguage)
+            }
+            .switchToLatest()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (userDetails: UserAccountDetailsDomainModel) in
+                
+                self?.isLoadingProfile = false
+                
+                self?.profileName = userDetails.name
                 self?.joinedOnText = userDetails.joinedOnString
             }
             .store(in: &cancellables)
         
-        getGlobalActivityThisWeekUseCase.getGlobalActivityPublisher()
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
+                
+                viewGlobalActivityThisWeekUseCase
+                    .viewPublisher(appLanguage: appLanguage)
+            }
+            .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (globalActivityThisWeekDomainModels: [GlobalActivityThisWeekDomainModel]) in
+            .sink { [weak self] (domainModel: ViewGlobalActivityThisWeekDomainModel) in
                 
                 self?.isLoadingGlobalActivityThisWeek = false
-                self?.globalActivityThisWeekDomainModels = globalActivityThisWeekDomainModels
-                self?.numberOfGlobalActivityThisWeekItems = globalActivityThisWeekDomainModels.count
+                self?.globalActivitiesThisWeek = domainModel.activityItems
             }
             .store(in: &cancellables)
         
-        getUserActivityUseCase.getUserActivityPublisher()
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
+        Publishers.CombineLatest(
+            $appLanguage.dropFirst(),
+            $didPullToRefresh
+        )
+        .map { (appLanguage: AppLanguageDomainModel, didPullToRefresh: Void) in
+            
+            getUserActivityUseCase
+                .getUserActivityPublisher(appLanguage: appLanguage)
+        }
+        .switchToLatest()
+        .receive(on: DispatchQueue.main)
+        .sink { [weak self] (userActivity: UserActivityDomainModel) in
                 
-            } receiveValue: { userActivity in
-                
-                self.updateUserActivityValues(userActivity: userActivity)
-            }
-            .store(in: &cancellables)
-
+            self?.badges = userActivity.badges
+            self?.stats = userActivity.stats
+        }
+        .store(in: &cancellables)
     }
     
-    private func updateUserActivityValues(userActivity: UserActivityDomainModel) {
-        
-        self.badges = userActivity.badges
-        self.stats = userActivity.stats
+    deinit {
+        print("x deinit: \(type(of: self))")
     }
     
     private func trackSectionViewedAnalytics(screenName: String) {
-                        
-        let trackScreen = TrackScreenModel(
+                 
+        trackScreenViewAnalyticsUseCase.trackScreen(
             screenName: screenName,
             siteSection: "account",
             siteSubSection: "",
-            contentLanguage: getSettingsPrimaryLanguageUseCase.getPrimaryLanguage()?.analyticsContentLanguage,
-            secondaryContentLanguage: getSettingsParallelLanguageUseCase.getParallelLanguage()?.analyticsContentLanguage
+            contentLanguage: nil,
+            contentLanguageSecondary: nil
         )
-        
-        analytics.pageViewedAnalytics.trackPageView(trackScreen: trackScreen)
     }
 }
 
@@ -135,6 +153,11 @@ extension AccountViewModel {
     
     @objc func backTapped() {
         flowDelegate?.navigate(step: .backTappedFromActivity)
+    }
+    
+    func pullToRefresh() {
+        
+        didPullToRefresh = ()
     }
     
     func activityViewed() {
@@ -147,8 +170,10 @@ extension AccountViewModel {
         trackSectionViewedAnalytics(screenName: AnalyticsScreenNames.shared.ACCOUNT_GLOBAL_ACTIVITY)
     }
     
-    func getGlobalActivityAnalyticsItem(index: Int) -> AccountGlobalActivityAnalyticsItemViewModel {
+    func getGlobalActivityAnalyticsItemViewModel(index: Int) -> AccountGlobalActivityAnalyticsItemViewModel {
         
-        return AccountGlobalActivityAnalyticsItemViewModel(globalActivity: globalActivityThisWeekDomainModels[index])
+        return AccountGlobalActivityAnalyticsItemViewModel(
+            globalActivity: globalActivitiesThisWeek[index]
+        )
     }
 }

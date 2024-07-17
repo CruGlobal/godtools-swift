@@ -62,9 +62,22 @@ class RealmLanguagesCache {
         return languageCodes.compactMap({getLanguage(code:$0)})
     }
     
-    func getLanguages() -> [LanguageModel] {
-        return realmDatabase.openRealm().objects(RealmLanguage.self)
+    func getLanguages(realm: Realm? = nil) -> [LanguageModel] {
+        
+        let realmInstance: Realm = realm ?? realmDatabase.openRealm()
+        
+        return realmInstance.objects(RealmLanguage.self)
             .map({LanguageModel(model: $0)})
+    }
+    
+    func getLanguagesPublisher() -> AnyPublisher<[LanguageModel], Never> {
+        
+        return realmDatabase.readObjectsPublisher { (results: Results<RealmLanguage>) in
+            results.map({
+                LanguageModel(model: $0)
+            })
+        }
+        .eraseToAnyPublisher()
     }
         
     func syncLanguages(languages: [LanguageModel]) -> AnyPublisher<RealmLanguagesCacheSyncResult, Error> {

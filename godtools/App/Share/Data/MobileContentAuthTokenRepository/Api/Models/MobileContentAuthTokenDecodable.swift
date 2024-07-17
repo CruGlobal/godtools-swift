@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct MobileContentAuthTokenDecodable: Decodable {
+struct MobileContentAuthTokenDecodable: Codable {
     
     let token: String
     let expirationDate: Date?

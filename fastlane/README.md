@@ -13,6 +13,17 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 # Available Actions
 
+### cru_shared_lane_swift_lint
+
+```sh
+[bundle exec] fastlane cru_shared_lane_swift_lint
+```
+
+
+
+----
+
+
 ## iOS
 
 ### ios release
@@ -119,18 +130,26 @@ Commit downloaded localization files to default branch and push to remote
 
 
 
-### ios download_onesky_localizations
-
-```sh
-[bundle exec] fastlane ios download_onesky_localizations
-```
-
-
-
 ### ios cru_shared_lane_increment_xcode_project_build_number
 
 ```sh
 [bundle exec] fastlane ios cru_shared_lane_increment_xcode_project_build_number
+```
+
+
+
+### ios cru_shared_lane_get_version_number
+
+```sh
+[bundle exec] fastlane ios cru_shared_lane_get_version_number
+```
+
+
+
+### ios cru_shared_lane_increment_version_number
+
+```sh
+[bundle exec] fastlane ios cru_shared_lane_increment_version_number
 ```
 
 
