@@ -284,6 +284,89 @@ class MenuFlow: Flow {
             break
         }
     }
+}
+
+// MARK: - Share GodTools
+
+extension MenuFlow {
+    
+    private func getShareGodToolsView() -> UIViewController {
+        
+        guard let domainModel = viewShareGodToolsDomainModel else {
+            let viewModel = AlertMessageViewModel(title: "Internal Error", message: "Failed to fetch data for share godtools modal.", cancelTitle: nil, acceptTitle: "OK", acceptHandler: nil)
+            return AlertMessageView(viewModel: viewModel).controller
+        }
+        
+        let viewModel = ShareGodToolsViewModel(
+            viewShareGodToolsDomainModel: domainModel
+        )
+        
+        let view = ShareGodToolsView(viewModel: viewModel)
+        
+        return view
+    }
+}
+
+// MARK: - Language Settings
+
+extension MenuFlow {
+    
+    private func navigateToLanguageSettings(deepLink: ParsedDeepLinkType?) {
+        
+        let languageSettingsFlow = LanguageSettingsFlow(
+            flowDelegate: self,
+            appDiContainer: appDiContainer,
+            sharedNavigationController: navigationController,
+            deepLink: deepLink
+        )
+        
+        self.languageSettingsFlow = languageSettingsFlow
+    }
+    
+    private func closeLanguageSettings() {
+        
+        guard languageSettingsFlow != nil else {
+            return
+        }
+        
+        navigationController.popViewController(animated: true)
+        
+        self.languageSettingsFlow = nil
+    }
+}
+
+// MARK: - Tutorial
+
+extension MenuFlow {
+    
+    private func navigateToTutorial() {
+        
+        let tutorialFlow = TutorialFlow(
+            flowDelegate: self,
+            appDiContainer: appDiContainer,
+            sharedNavigationController: nil
+        )
+        
+        navigationController.present(tutorialFlow.navigationController, animated: true, completion: nil)
+        
+        self.tutorialFlow = tutorialFlow
+    }
+    
+    private func dismissTutorial() {
+        
+        guard tutorialFlow != nil else {
+            return
+        }
+        
+        navigationController.dismiss(animated: true, completion: nil)
+        
+        self.tutorialFlow = nil
+    }
+}
+
+// MARK: - Menu
+
+extension MenuFlow {
     
     private func getMenuView() -> UIViewController {
             
@@ -324,17 +407,11 @@ class MenuFlow: Flow {
         
         return hostingView
     }
-    
-    private func presentSocialAuthError(authError: AuthErrorDomainModel) {
-            
-        let errorIsUserCancelled: Bool = authError.getError()?.code == NSUserCancelledError
-        
-        guard !errorIsUserCancelled else {
-            return
-        }
+}
 
-        presentAlertMessage(appLanguage: appLanguage, alertMessage: self.getAuthErrorAlertMessage(authError: authError))
-    }
+// MARK: - Social SignIn
+
+extension MenuFlow {
     
     private func getSocialSignInView(authenticationType: SocialSignInAuthenticationType) -> UIViewController {
         
@@ -384,6 +461,22 @@ class MenuFlow: Flow {
                 
         return modal
     }
+}
+
+// MARK: - Social Auth Error
+
+extension MenuFlow {
+    
+    private func presentSocialAuthError(authError: AuthErrorDomainModel) {
+            
+        let errorIsUserCancelled: Bool = authError.getError()?.code == NSUserCancelledError
+        
+        guard !errorIsUserCancelled else {
+            return
+        }
+
+        presentAlertMessage(appLanguage: appLanguage, alertMessage: self.getAuthErrorAlertMessage(authError: authError))
+    }
     
     private func getAuthErrorAlertMessage(authError: AuthErrorDomainModel) -> AlertMessageType {
         
@@ -408,7 +501,12 @@ class MenuFlow: Flow {
             message: message
         )
     }
-    
+}
+
+// MARK: - Account
+
+extension MenuFlow {
+ 
     private func getAccountView() -> UIViewController {
         
         let viewModel = AccountViewModel(
@@ -441,6 +539,11 @@ class MenuFlow: Flow {
         
         return hostingView
     }
+}
+
+// MARK: - Delete Account
+
+extension MenuFlow {
     
     private func getDeleteAccountView() -> UIViewController {
         
@@ -542,6 +645,11 @@ class MenuFlow: Flow {
                 
         return modal
     }
+}
+
+// MARK: - Web Content
+
+extension MenuFlow {
     
     private func getWebContentView(webContent: WebContentType, screenAccessibility: AccessibilityStrings.Screen?, backTappedFromWebContentStep: FlowStep) -> UIViewController {
         
@@ -581,81 +689,5 @@ class MenuFlow: Flow {
         )
         
         navigationController.pushViewController(view, animated: true)
-    }
-}
-
-extension MenuFlow {
-    
-    private func getShareGodToolsView() -> UIViewController {
-        
-        guard let domainModel = viewShareGodToolsDomainModel else {
-            let viewModel = AlertMessageViewModel(title: "Internal Error", message: "Failed to fetch data for share godtools modal.", cancelTitle: nil, acceptTitle: "OK", acceptHandler: nil)
-            return AlertMessageView(viewModel: viewModel).controller
-        }
-        
-        let viewModel = ShareGodToolsViewModel(
-            viewShareGodToolsDomainModel: domainModel
-        )
-        
-        let view = ShareGodToolsView(viewModel: viewModel)
-        
-        return view
-    }
-}
-
-// MARK: - Language Settings
-
-extension MenuFlow {
-    
-    private func navigateToLanguageSettings(deepLink: ParsedDeepLinkType?) {
-        
-        let languageSettingsFlow = LanguageSettingsFlow(
-            flowDelegate: self,
-            appDiContainer: appDiContainer,
-            sharedNavigationController: navigationController,
-            deepLink: deepLink
-        )
-        
-        self.languageSettingsFlow = languageSettingsFlow
-    }
-    
-    private func closeLanguageSettings() {
-        
-        guard languageSettingsFlow != nil else {
-            return
-        }
-        
-        navigationController.popViewController(animated: true)
-        
-        self.languageSettingsFlow = nil
-    }
-}
-
-// MARK: - Tutorial
-
-extension MenuFlow {
-    
-    private func navigateToTutorial() {
-        
-        let tutorialFlow = TutorialFlow(
-            flowDelegate: self,
-            appDiContainer: appDiContainer,
-            sharedNavigationController: nil
-        )
-        
-        navigationController.present(tutorialFlow.navigationController, animated: true, completion: nil)
-        
-        self.tutorialFlow = tutorialFlow
-    }
-    
-    private func dismissTutorial() {
-        
-        guard tutorialFlow != nil else {
-            return
-        }
-        
-        navigationController.dismiss(animated: true, completion: nil)
-        
-        self.tutorialFlow = nil
     }
 }
