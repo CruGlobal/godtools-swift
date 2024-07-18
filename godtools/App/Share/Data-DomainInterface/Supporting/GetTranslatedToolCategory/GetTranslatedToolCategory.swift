@@ -33,16 +33,7 @@ class GetTranslatedToolCategory {
     
     func getTranslatedCategory(resource: ResourceModel, translateInLanguage: BCP47LanguageIdentifier) -> String {
         
-        let localeId: String
-        
-        if 
-            let translateInLanguageModel = languagesRepository.getLanguage(code: translateInLanguage),
-            resource.supportsLanguage(languageId: translateInLanguageModel.id)
-        {
-            localeId = translateInLanguageModel.code
-        } else {
-            localeId = resource.attrDefaultLocale
-        }
+        let localeId = translateInLanguage.localeId
 
         let category: String = localizationServices.stringForLocaleElseEnglish(
             localeIdentifier: localeId,
