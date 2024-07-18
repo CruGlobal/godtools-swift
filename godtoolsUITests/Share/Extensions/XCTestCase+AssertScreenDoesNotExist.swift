@@ -15,10 +15,7 @@ extension XCTestCase {
         
         if let waitForExistence = waitForExistence {
             
-            if app.staticTexts[screenAccessibility.id].waitForExistence(timeout: waitForExistence) {
-                
-                assertIfScreenDoesNotExist(app: app, screenAccessibility: screenAccessibility)
-            }
+            XCTAssertTrue(app.staticTexts[screenAccessibility.id].waitForExistence(timeout: waitForExistence))
         }
         else {
             
