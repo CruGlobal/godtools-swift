@@ -12,17 +12,19 @@ struct MenuItemView: View {
     
     private let imageWidth: CGFloat = 24
     private let imageAlignment: Alignment = .leading
+    private let accessibility: AccessibilityStrings.Button?
     
     let imageAssetName: String?
     let shouldReplaceNullAssetWithEmptySpace: Bool
     let title: String
     let tappedClosure: (() -> Void)?
     
-    init(imageAssetName: String?, shouldReplaceNullAssetWithEmptySpace: Bool = false, title: String, tappedClosure: (() -> Void)?) {
+    init(imageAssetName: String?, shouldReplaceNullAssetWithEmptySpace: Bool = false, title: String, accessibility: AccessibilityStrings.Button?, tappedClosure: (() -> Void)?) {
         
         self.imageAssetName = imageAssetName
         self.shouldReplaceNullAssetWithEmptySpace = shouldReplaceNullAssetWithEmptySpace
         self.title = title
+        self.accessibility = accessibility
         self.tappedClosure = tappedClosure
     }
 
@@ -57,6 +59,7 @@ struct MenuItemView: View {
                     .contentShape(Rectangle())
             }
             .disabled(tappedClosure == nil)
+            .accessibilityIdentifier(accessibility?.id ?? "")
         }
     }
 }
