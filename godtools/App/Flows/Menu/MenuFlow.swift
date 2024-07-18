@@ -428,7 +428,20 @@ extension MenuFlow {
             authenticateUserUseCase: appDiContainer.feature.account.domainLayer.getAuthenticateUserUseCase()
         )
         
-        let view = SocialSignInView(viewModel: viewModel, backgroundColor: viewBackgroundColor)
+        let screenAccessibility: AccessibilityStrings.Screen
+        
+        switch authenticationType {
+        case .createAccount:
+            screenAccessibility = .createAccount
+        case .login:
+            screenAccessibility = .login
+        }
+        
+        let view = SocialSignInView(
+            viewModel: viewModel,
+            backgroundColor: viewBackgroundColor,
+            screenAccessibility: screenAccessibility
+        )
         
         let closeButton = AppCloseBarItem(
             color: .white,
