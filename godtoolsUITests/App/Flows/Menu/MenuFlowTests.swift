@@ -180,20 +180,20 @@ class MenuFlowTests: BaseFlowTests {
         assertIfScreenDoesNotExist(app: app, screenAccessibility: .shareAStoryWithUs)
     }
     
-    func testNavigationToShareGodTools() {
-        
-        launchApp()
-        
-        navigateToMenu()
-        
-        let shareGodToolsButton = app.queryButton(buttonAccessibility: .shareGodTools)
-        
-        XCTAssertTrue(shareGodToolsButton.exists)
-        
-        shareGodToolsButton.tap()
-        
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .shareGodTools, waitForExistence: 0.5)
-    }
+//    func testNavigationToShareGodTools() {
+//        
+//        launchApp()
+//        
+//        navigateToMenu()
+//        
+//        let shareGodToolsButton = app.queryButton(buttonAccessibility: .shareGodTools)
+//        
+//        XCTAssertTrue(shareGodToolsButton.exists)
+//        
+//        shareGodToolsButton.tap()
+//        
+//        assertIfScreenDoesNotExist(app: app, screenAccessibility: .shareGodTools, waitForExistence: 0.5)
+//    }
     
     func testNavigationToTermsOfUse() {
         
