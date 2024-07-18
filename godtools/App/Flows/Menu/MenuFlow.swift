@@ -146,7 +146,11 @@ class MenuFlow: Flow {
         case .sendFeedbackTappedFromMenu:
             let sendFeedbackWebContent = SendFeedbackWebContent(localizationServices: appDiContainer.dataLayer.getLocalizationServices())
             
-            pushWebContentView(webContent: sendFeedbackWebContent, backTappedFromWebContentStep: .backTappedFromSendFeedback)
+            pushWebContentView(
+                webContent: sendFeedbackWebContent,
+                screenAccessibility: .sendFeedback,
+                backTappedFromWebContentStep: .backTappedFromSendFeedback
+            )
             
         case .backTappedFromSendFeedback:
             navigationController.popViewController(animated: true)
@@ -154,7 +158,11 @@ class MenuFlow: Flow {
         case .reportABugTappedFromMenu:
             let reportABugWebContent = ReportABugWebContent(localizationServices: appDiContainer.dataLayer.getLocalizationServices())
             
-            pushWebContentView(webContent: reportABugWebContent, backTappedFromWebContentStep: .backTappedFromReportABug)
+            pushWebContentView(
+                webContent: reportABugWebContent,
+                screenAccessibility: .reportABug,
+                backTappedFromWebContentStep: .backTappedFromReportABug
+            )
             
         case .backTappedFromReportABug:
             navigationController.popViewController(animated: true)
@@ -162,7 +170,11 @@ class MenuFlow: Flow {
         case .askAQuestionTappedFromMenu:
             let askAQuestionWebContent = AskAQuestionWebContent(localizationServices: appDiContainer.dataLayer.getLocalizationServices())
             
-            pushWebContentView(webContent: askAQuestionWebContent, backTappedFromWebContentStep: .backTappedFromAskAQuestion)
+            pushWebContentView(
+                webContent: askAQuestionWebContent,
+                screenAccessibility: .askAQuestion,
+                backTappedFromWebContentStep: .backTappedFromAskAQuestion
+            )
             
         case .backTappedFromAskAQuestion:
             navigationController.popViewController(animated: true)
@@ -182,7 +194,11 @@ class MenuFlow: Flow {
         case .shareAStoryWithUsTappedFromMenu:
             let shareStoryWebContent = ShareAStoryWithUsWebContent(localizationServices: appDiContainer.dataLayer.getLocalizationServices())
             
-            pushWebContentView(webContent: shareStoryWebContent, backTappedFromWebContentStep: .backTappedFromShareAStoryWithUs)
+            pushWebContentView(
+                webContent: shareStoryWebContent,
+                screenAccessibility: .shareAStoryWithUs,
+                backTappedFromWebContentStep: .backTappedFromShareAStoryWithUs
+            )
             
         case .backTappedFromShareAStoryWithUs:
             navigationController.popViewController(animated: true)
@@ -191,7 +207,11 @@ class MenuFlow: Flow {
             
             let termsOfUserWebContent = TermsOfUseWebContent(localizationServices: appDiContainer.dataLayer.getLocalizationServices())
             
-            pushWebContentView(webContent: termsOfUserWebContent, backTappedFromWebContentStep: .backTappedFromTermsOfUse)
+            pushWebContentView(
+                webContent: termsOfUserWebContent,
+                screenAccessibility: .termsOfUse,
+                backTappedFromWebContentStep: .backTappedFromTermsOfUse
+            )
             
         case .backTappedFromTermsOfUse:
             navigationController.popViewController(animated: true)
@@ -200,7 +220,11 @@ class MenuFlow: Flow {
             
             let privacyPolicyWebContent = PrivacyPolicyWebContent(localizationServices: appDiContainer.dataLayer.getLocalizationServices())
             
-            pushWebContentView(webContent: privacyPolicyWebContent, backTappedFromWebContentStep: .backTappedFromPrivacyPolicy)
+            pushWebContentView(
+                webContent: privacyPolicyWebContent,
+                screenAccessibility: .privacyPolicy,
+                backTappedFromWebContentStep: .backTappedFromPrivacyPolicy
+            )
             
         case .backTappedFromPrivacyPolicy:
             navigationController.popViewController(animated: true)
@@ -209,7 +233,11 @@ class MenuFlow: Flow {
             
             let copyrightInfoWebContent = CopyrightInfoWebContent(localizationServices: appDiContainer.dataLayer.getLocalizationServices())
             
-            pushWebContentView(webContent: copyrightInfoWebContent, backTappedFromWebContentStep: .backTappedFromCopyrightInfo)
+            pushWebContentView(
+                webContent: copyrightInfoWebContent,
+                screenAccessibility: .copyrightInfo,
+                backTappedFromWebContentStep: .backTappedFromCopyrightInfo
+            )
             
         case .backTappedFromCopyrightInfo:
             navigationController.popViewController(animated: true)
@@ -515,7 +543,7 @@ class MenuFlow: Flow {
         return modal
     }
     
-    private func getWebContentView(webContent: WebContentType, backTappedFromWebContentStep: FlowStep) -> UIViewController {
+    private func getWebContentView(webContent: WebContentType, screenAccessibility: AccessibilityStrings.Screen?, backTappedFromWebContentStep: FlowStep) -> UIViewController {
         
         let viewModel = WebContentViewModel(
             flowDelegate: self,
@@ -537,16 +565,18 @@ class MenuFlow: Flow {
                 backButton: backButton,
                 leadingItems: [],
                 trailingItems: []
-            )
+            ),
+            screenAccessibility: screenAccessibility
         )
         
         return view
     }
     
-    private func pushWebContentView(webContent: WebContentType, backTappedFromWebContentStep: FlowStep) {
+    private func pushWebContentView(webContent: WebContentType, screenAccessibility: AccessibilityStrings.Screen?, backTappedFromWebContentStep: FlowStep) {
         
         let view = getWebContentView(
             webContent: webContent,
+            screenAccessibility: screenAccessibility,
             backTappedFromWebContentStep: backTappedFromWebContentStep
         )
         
