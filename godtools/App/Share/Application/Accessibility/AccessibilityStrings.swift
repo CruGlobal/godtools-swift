@@ -41,6 +41,7 @@ class AccessibilityStrings {
         case shareAStoryWithUs = "Share A Story With Us"
         case shareGodTools = "Share GodTools"
         case termsOfUse = "Terms Of Use"
+        case toolDetails = "Tool Details"
         case tutorial = "Tutorial"
         case watchOnboardingTutorialVideo = "Watch Onboarding Tutorial Video Screen"
     }
@@ -59,6 +60,9 @@ class AccessibilityStrings {
         case copyrightInfo = "Copyright Info"
         case createAccount = "Create Account"
         case dashboardMenu = "Menu"
+        case dashboardTabFavorites = "Dashboard Tab Favorites"
+        case dashboardTabLessons = "Dashboard Tab Lessons"
+        case dashboardTabTools = "Dashboard Tab Tools"
         case deleteAccount = "Delete Account"
         case editDownloadedLanguages = "Edit Downloaded Languages"
         case languageSettings = "Language Settings"
@@ -66,6 +70,7 @@ class AccessibilityStrings {
         case login = "Login"
         case logout = "Logout"
         case nextOnboardingTutorial = "Next Onboarding Tutorial Button"
+        case openTool = "Open Tool"
         case privacyPolicy = "Privacy Policy"
         case reportABug = "Report A Bug"
         case sendFeedback
@@ -73,6 +78,8 @@ class AccessibilityStrings {
         case shareGodTools = "Share GodTools"
         case skipOnboardingTutorial = "Skip Onboarding Tutorial Button"
         case termsOfUse = "Terms Of Use"
+        case toolDetails = "Tool Details"
+        case toolDetailsNavBack = "Tool Details Nav Back"
         case tutorial = "Tutorial"
         case watchOnboardingTutorialVideo = "Watch Onboarding Tutorial Video Button"
         

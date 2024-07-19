@@ -1062,7 +1062,7 @@ extension AppFlow {
         let backButton = AppBackBarItem(
             target: viewModel,
             action: #selector(viewModel.backTapped),
-            accessibilityIdentifier: nil
+            accessibilityIdentifier: AccessibilityStrings.Button.toolDetailsNavBack.id
         )
         
         let hostingView = AppHostingController<ToolDetailsView>(

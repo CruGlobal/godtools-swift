@@ -141,12 +141,12 @@ struct ToolCardView: View {
                                 Spacer()
                             }
                             
-                            GTWhiteButton(title: viewModel.detailsButtonTitle, font: navButtonFont, width: navButtonWidth, height: navButtonHeight) {
+                            GTWhiteButton(title: viewModel.detailsButtonTitle, font: navButtonFont, width: navButtonWidth, height: navButtonHeight, accessibility: .toolDetails) {
                                 
                                 toolDetailsTappedClosure?()
                             }
                             
-                            GTBlueButton(title: viewModel.openButtonTitle, font: navButtonFont, width: navButtonWidth, height: navButtonHeight) {
+                            GTBlueButton(title: viewModel.openButtonTitle, font: navButtonFont, width: navButtonWidth, height: navButtonHeight, accessibility: .openTool) {
 
                                 openToolTappedClosure?()
                             }

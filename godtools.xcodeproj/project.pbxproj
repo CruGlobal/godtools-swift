@@ -148,6 +148,7 @@
 		451CCF1D27A9D87600E8D2D3 /* MobileContentCardCollectionPagePositionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CCF1C27A9D87600E8D2D3 /* MobileContentCardCollectionPagePositionState.swift */; };
 		451CCF2027A9DB2D00E8D2D3 /* PageNavigationCollectionViewNavigationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CCF1F27A9DB2D00E8D2D3 /* PageNavigationCollectionViewNavigationModel.swift */; };
 		451CEDFD282C3239006E5105 /* ToolSettingsFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CEDFC282C3239006E5105 /* ToolSettingsFlow.swift */; };
+		451CF5952C4AAC5500CD65C4 /* AppFlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CF5942C4AAC5500CD65C4 /* AppFlowTests.swift */; };
 		451FB9372896B3DE00423865 /* LanguageDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451FB9342896B3DE00423865 /* LanguageDomainModel.swift */; };
 		451FB9382896B3DE00423865 /* GetLanguageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451FB9352896B3DE00423865 /* GetLanguageUseCase.swift */; };
 		451FB9392896B3DE00423865 /* LanguageDirectionDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451FB9362896B3DE00423865 /* LanguageDirectionDomainModel.swift */; };
@@ -1764,6 +1765,7 @@
 		451CCF1C27A9D87600E8D2D3 /* MobileContentCardCollectionPagePositionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentCardCollectionPagePositionState.swift; sourceTree = "<group>"; };
 		451CCF1F27A9DB2D00E8D2D3 /* PageNavigationCollectionViewNavigationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageNavigationCollectionViewNavigationModel.swift; sourceTree = "<group>"; };
 		451CEDFC282C3239006E5105 /* ToolSettingsFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolSettingsFlow.swift; sourceTree = "<group>"; };
+		451CF5942C4AAC5500CD65C4 /* AppFlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFlowTests.swift; sourceTree = "<group>"; };
 		451F7A802ABD2F1100006EF2 /* Quick.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Quick.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		451F7A822ABD2F1400006EF2 /* Nimble.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		451FB9342896B3DE00423865 /* LanguageDomainModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageDomainModel.swift; sourceTree = "<group>"; };
@@ -4149,6 +4151,14 @@
 				456AC1962B8CE89E00169C11 /* Observer */,
 			);
 			path = ToolSettings;
+			sourceTree = "<group>";
+		};
+		451CF5932C4AAC4B00CD65C4 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				451CF5942C4AAC5500CD65C4 /* AppFlowTests.swift */,
+			);
+			path = App;
 			sourceTree = "<group>";
 		};
 		451FB9332896B3DE00423865 /* GetLanguageUseCase */ = {
@@ -7564,6 +7574,7 @@
 			isa = PBXGroup;
 			children = (
 				45DC19162BB5B34D007542A5 /* BaseFlowTests.swift */,
+				451CF5932C4AAC4B00CD65C4 /* App */,
 				45DC19132BB5B338007542A5 /* ChooseAppLanguage */,
 				45DC19102BB5AB21007542A5 /* LanguageSettings */,
 				450FC7572C49590D00F87282 /* Menu */,
@@ -11901,6 +11912,7 @@
 				45FBE5732AB8A33700BFBE92 /* LaunchEnvironmentKey.swift in Sources */,
 				4585E4B82B05895200223A9B /* BCP47LanguageIdentifier.swift in Sources */,
 				45DC19152BB5B33F007542A5 /* ChooseAppLanguageFlowTests.swift in Sources */,
+				451CF5952C4AAC5500CD65C4 /* AppFlowTests.swift in Sources */,
 				45D318FB2AE7020200D74A87 /* AppLanguageDataModel.swift in Sources */,
 				45A415F32A99429C0030E2C7 /* OnboardingFlowTests.swift in Sources */,
 				45DC19122BB5AB2C007542A5 /* LanguageSettingsFlowTests.swift in Sources */,
