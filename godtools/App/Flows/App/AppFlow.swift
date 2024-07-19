@@ -530,7 +530,7 @@ extension AppFlow {
             color: .white,
             target: viewModel,
             action: #selector(viewModel.menuTapped),
-            accessibilityIdentifier: nil
+            accessibilityIdentifier: AccessibilityStrings.Button.dashboardMenu.id
         )
         
         let hostingController = AppHostingController<DashboardView>(
