@@ -23,6 +23,8 @@ struct ToolFilterLanguageSelectionView: View {
         
         VStack(spacing: 0) {
             
+            AccessibilityScreenElementView(screenAccessibility: .toolsLanguageFilters)
+            
             SearchBarView(viewModel: viewModel.getSearchBarViewModel(), searchText: $viewModel.searchText)
             
             List {

@@ -23,6 +23,8 @@ struct ToolFilterCategorySelectionView: View {
         
         VStack(spacing: 0) {
             
+            AccessibilityScreenElementView(screenAccessibility: .toolsCategoryFilters)
+            
             SearchBarView(viewModel: viewModel.getSearchBarViewModel(), searchText: $viewModel.searchText)
             
             List {

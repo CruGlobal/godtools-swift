@@ -39,13 +39,18 @@ class AppFlowTests: BaseFlowTests {
         
         assertIfScreenDoesNotExist(app: app, screenAccessibility: .menu)
     }
+}
+
+// MARK: - Dashboard Tabs
+
+extension AppFlowTests {
     
     private func getDashboardTabButton(buttonAccessibility: AccessibilityStrings.Button) -> XCUIElement {
                 
         return app.queryButton(buttonAccessibility: buttonAccessibility).firstMatch
     }
     
-    private func navigateToLessons() {
+    private func tabToLessons() {
         
         let lessonsTab = getDashboardTabButton(buttonAccessibility: .dashboardTabLessons)
         
@@ -56,7 +61,7 @@ class AppFlowTests: BaseFlowTests {
         assertIfScreenDoesNotExist(app: app, screenAccessibility: .dashboardLessons)
     }
     
-    private func navigateToFavorites() {
+    private func tabToFavorites() {
         
         let favoritesTab = getDashboardTabButton(buttonAccessibility: .dashboardTabFavorites)
         
@@ -67,7 +72,7 @@ class AppFlowTests: BaseFlowTests {
         assertIfScreenDoesNotExist(app: app, screenAccessibility: .dashboardFavorites)
     }
     
-    private func navigateToTools() {
+    private func tabToTools() {
         
         let toolsTab = getDashboardTabButton(buttonAccessibility: .dashboardTabTools)
         
@@ -82,28 +87,33 @@ class AppFlowTests: BaseFlowTests {
         
         launchApp()
         
-        navigateToLessons()
+        tabToLessons()
     }
     
     func testFavoritesTabTappedNavigatesToFavorites() {
         
         launchApp()
         
-        navigateToFavorites()
+        tabToFavorites()
     }
     
     func testToolsTabTappedNavigatesToTools() {
         
         launchApp()
         
-        navigateToTools()
+        tabToTools()
     }
+}
+
+// MARK: - Favorites
+
+extension AppFlowTests {
     
-    func testToolDetailsTappedFromFavoritedToolOpensToolDetails() {
+    func testToolDetailsTappedFromAFavoritedToolOpensToolDetails() {
         
         launchApp()
         
-        navigateToFavorites()
+        tabToFavorites()
         
         let toolDetails = app.queryButton(buttonAccessibility: .toolDetails).firstMatch
         
@@ -118,7 +128,7 @@ class AppFlowTests: BaseFlowTests {
         
         launchApp()
         
-        navigateToFavorites()
+        tabToFavorites()
         
         let toolDetails = app.queryButton(buttonAccessibility: .toolDetails).firstMatch
         
@@ -135,5 +145,40 @@ class AppFlowTests: BaseFlowTests {
         toolDetailsNavBack.tap()
         
         assertIfScreenDoesNotExist(app: app, screenAccessibility: .dashboardFavorites)
+    }
+}
+
+// MARK: - Tools
+
+extension AppFlowTests {
+    
+    func testTappingToolsCategoryFilterOpensToolsCategoryFiltersList() {
+        
+        launchApp()
+        
+        tabToTools()
+        
+        let toolsCategoryFilter = app.queryButton(buttonAccessibility: .toolsCategoryFilter)
+        
+        XCTAssertTrue(toolsCategoryFilter.exists)
+        
+        toolsCategoryFilter.tap()
+        
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .toolsCategoryFilters)
+    }
+    
+    func testTappingToolsLanguageFilterOpensToolsLanguageFiltersList() {
+        
+        launchApp()
+        
+        tabToTools()
+        
+        let toolsLanguageFilter = app.queryButton(buttonAccessibility: .toolsLanguageFilter)
+        
+        XCTAssertTrue(toolsLanguageFilter.exists)
+        
+        toolsLanguageFilter.tap()
+        
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .toolsLanguageFilters)
     }
 }

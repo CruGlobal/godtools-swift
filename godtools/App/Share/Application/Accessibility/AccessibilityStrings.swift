@@ -42,6 +42,8 @@ class AccessibilityStrings {
         case shareGodTools = "Share GodTools"
         case termsOfUse = "Terms Of Use"
         case toolDetails = "Tool Details"
+        case toolsCategoryFilters = "Tools Category Filters"
+        case toolsLanguageFilters = "Tools Language Filters"
         case tutorial = "Tutorial"
         case watchOnboardingTutorialVideo = "Watch Onboarding Tutorial Video Screen"
     }
@@ -80,6 +82,8 @@ class AccessibilityStrings {
         case termsOfUse = "Terms Of Use"
         case toolDetails = "Tool Details"
         case toolDetailsNavBack = "Tool Details Nav Back"
+        case toolsCategoryFilter = "Tools Category Filter"
+        case toolsLanguageFilter = "Tools Language Filter"
         case tutorial = "Tutorial"
         case watchOnboardingTutorialVideo = "Watch Onboarding Tutorial Video Button"
         
