@@ -11,13 +11,11 @@ import LocalizationServices
 
 class GetTranslatedToolCategory {
     
-    private let languagesRepository: LanguagesRepository
     private let localizationServices: LocalizationServices
     private let resourcesRepository: ResourcesRepository
     
-    init(languagesRepository: LanguagesRepository, localizationServices: LocalizationServices, resourcesRepository: ResourcesRepository) {
+    init(localizationServices: LocalizationServices, resourcesRepository: ResourcesRepository) {
         
-        self.languagesRepository = languagesRepository
         self.localizationServices = localizationServices
         self.resourcesRepository = resourcesRepository
     }
