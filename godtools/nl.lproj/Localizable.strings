@@ -40,24 +40,12 @@
 "allTools.spotlight.description" = "Hier zijn wat tools die vast zullen bevallen";
 "allTools.categories.title" = "Categorieën";
 "tool_menu_item.lessons" = "Lessen";
-"parallelLanguage.yesButton.title" = "Ja";
-"parallelLanguage.noButton.title" = "Nee, bedankt";
-"parallelLanguage.getStartedButton.title" = "Aan de slag";
-"parallelLanguage.selectLanguageButton.title" = "Selecteer een taal";
-"parellelLanguage.prompt" = "Wil je een tweede taal instellen?";
 
 /* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.lesson.title" = "Lessen";
 
 "onboardingTutorial.beginButton.title" = "Beginnen";
-"onboardingQuickStart.2.title" = "Ik wil het evangelie met iemand delen";
-"onboardingQuickStart.2.button.title" = "Kies een van onze programma's";
 "onboardingTutorial.nextButton.title" = "Volgende";
-"onboardingQuickStart.title" = "Links voor snelle start";
-"onboardingQuickStart.0.title" = "Ik wil het Christendom leren kennen";
-"onboardingQuickStart.0.button.title" = "Lees onze artikelen";
-"onboardingQuickStart.1.title" = "Ik wil evangeliegesprekken leren voeren";
-"onboardingQuickStart.1.button.title" = "Probeer onze lessen";
 "tool_offline_favorite_message" = "Maak een hulpprogramma ook offline beschikbaar door op het hartje te tikken en het toe te voegen aan je favorieten.";
 
 /* This is a category description of a tool that helps you start a conversation */

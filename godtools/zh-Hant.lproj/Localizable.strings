@@ -45,48 +45,6 @@
 "account.badges.sectionTitle" = "您的徽章";
 "account.activity.sectionTitle" = "您的活動";
 
-/* This is a title on a dashboard that will show the Number of Times a person has opened a tool */
-"account.activity.toolOpens" = "開啟過的工具";
-
-/* This is a title on a dashboard that will show the Number of Times a person has completed a lesson */
-"account.activity.lessonCompletion" = "完成的課程";
-
-/* This is a title on a dashboard that will show the Number of Times a person has used the screen share function */
-"account.activity.screenShares" = "分享螢幕次數";
-
-/* This is a title on a dashboard that will show the Number of Times a person has shared a link */
-"account.activity.linksShared" = "分享連結次數";
-
-/* This is a title on a dashboard that will show the Number of different languages they have used */
-"account.activity.languagesUsed" = "使用過的語言";
-
-"account.activity.sessions" = "會議";
-"badges.tipsCompleted.singular" = "完成 1 個訓練技巧";
-
-/* leave %d in phrase - this is the number of articles that the user has read */
-"badges.articlesOpened.plural" = "閱讀 %d 篇文章";
-
-/* when they have read only 1 articles */
-"badges.articlesOpened.singular" = "閱讀 1 篇文章";
-
-/* leave %d in phrase - this is the number of images that the user has shared */
-"badges.imagesShared.plural" = "分享 %d 張圖片";
-
-"badges.imagesShared.singular" = "分享 1 張圖片";
-
-/* leave %d in phrase - this is the number of lessons that the user has completed */
-"badges.lessonsCompleted.plural" = "完成 %d 個課程";
-
-"badges.lessonsCompleted.singular" = "完成 1 個課程";
-
-/* leave %d in phrase - this is the number of tools that the user has opened */
-"badges.toolsOpened.plural" = "開啟 %d 個工具";
-
-"badges.toolsOpened.singular" = "開啟 1 個工具";
-
-/* leave %d in phrase - this is the number of tips that the user has completed */
-"badges.tipsCompleted.plural" = "完成 %d 個訓練技巧";
-
 /* Just translate "Joined" - leave the %@ - this is the date they started using GodTools */
 "account.joinedOn" = "加入日期：%@";
 
@@ -150,12 +108,6 @@
 "start_training" = "開始訓練";
 "close" = "關閉";
 "tool_menu_item.lessons" = "課程";
-"parallelLanguage.yesButton.title" = "是";
-"parallelLanguage.noButton.title" = "不用了，謝謝";
-"parallelLanguage.selectButton.title" = "选择";
-"parallelLanguage.getStartedButton.title" = "開始使用";
-"parallelLanguage.selectLanguageButton.title" = "選擇語言";
-"parellelLanguage.prompt" = "您想要設定次要語言嗎？";
 
 /* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.continueButton.title.closeTutorial" = "關閉教學";
@@ -188,14 +140,7 @@
 "tutorial.findTutorial.title" = "隨時在選單中查看教學內容。";
 
 "onboardingTutorial.beginButton.title" = "開始";
-"onboardingQuickStart.2.title" = "我想要與某人分享福音";
-"onboardingQuickStart.2.button.title" = "選擇一個我們的工具";
 "onboardingTutorial.nextButton.title" = "下一頁";
-"onboardingQuickStart.title" = "快速入門連結";
-"onboardingQuickStart.0.title" = "我想要更深入認識耶穌。";
-"onboardingQuickStart.0.button.title" = "閱讀我們的文章";
-"onboardingQuickStart.1.title" = "我想要瞭解福音對話";
-"onboardingQuickStart.1.button.title" = "試試我們的課程";
 "tool_offline_favorite_message" = "點擊愛心圖示，將工具新增至你的最愛，就能離線使用工具。";
 
 /* This is a category description of a tool that helps you start a conversation */

@@ -45,48 +45,6 @@
 "account.badges.sectionTitle" = "Lencana Saudara";
 "account.activity.sectionTitle" = "Aktifitas Saudara";
 
-/* This is a title on a dashboard that will show the Number of Times a person has opened a tool */
-"account.activity.toolOpens" = "Alat dibuka";
-
-/* This is a title on a dashboard that will show the Number of Times a person has completed a lesson */
-"account.activity.lessonCompletion" = "Pelajaran diselesaikan";
-
-/* This is a title on a dashboard that will show the Number of Times a person has used the screen share function */
-"account.activity.screenShares" = "Layar dibagikan";
-
-/* This is a title on a dashboard that will show the Number of Times a person has shared a link */
-"account.activity.linksShared" = "Tautan telah dibagikan";
-
-/* This is a title on a dashboard that will show the Number of different languages they have used */
-"account.activity.languagesUsed" = "Bahasa-bahasa yang digunakan";
-
-"account.activity.sessions" = "Sesi";
-"badges.tipsCompleted.singular" = "Menyelesaikan 1 tip latihan";
-
-/* leave %d in phrase - this is the number of articles that the user has read */
-"badges.articlesOpened.plural" = "%d artikel dibaca";
-
-/* when they have read only 1 articles */
-"badges.articlesOpened.singular" = "Satu artikel dibaca";
-
-/* leave %d in phrase - this is the number of images that the user has shared */
-"badges.imagesShared.plural" = "%d gambar telah dibagikan";
-
-"badges.imagesShared.singular" = "Satu gambar dibagikan";
-
-/* leave %d in phrase - this is the number of lessons that the user has completed */
-"badges.lessonsCompleted.plural" = "%d pelajaran diselesaikan";
-
-"badges.lessonsCompleted.singular" = "Satu pelajaran diselesaikan";
-
-/* leave %d in phrase - this is the number of tools that the user has opened */
-"badges.toolsOpened.plural" = "%d alat telah dibuka";
-
-"badges.toolsOpened.singular" = "Satu alat dibuka";
-
-/* leave %d in phrase - this is the number of tips that the user has completed */
-"badges.tipsCompleted.plural" = "%d tip latihan telah diselesaikan";
-
 /* Just translate "Joined" - leave the %@ - this is the date they started using GodTools */
 "account.joinedOn" = "Bergabung pada %@";
 
@@ -150,12 +108,6 @@
 "start_training" = "Mulai Latihan";
 "close" = "Selesai";
 "tool_menu_item.lessons" = "Pelajaran";
-"parallelLanguage.yesButton.title" = "Ya";
-"parallelLanguage.noButton.title" = "Tidak, terima kasih.";
-"parallelLanguage.selectButton.title" = "Pilih";
-"parallelLanguage.getStartedButton.title" = "Mari Mulai";
-"parallelLanguage.selectLanguageButton.title" = "Pilih bahasa";
-"parellelLanguage.prompt" = "Apakah Anda ingin menyetel bahasa sekunder?";
 
 /* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.continueButton.title.closeTutorial" = "Tutup tutorial";
@@ -188,14 +140,7 @@
 "tutorial.findTutorial.title" = "Temukan tutorial ini di menu saat Anda membutuhkannya.";
 
 "onboardingTutorial.beginButton.title" = "Mulai";
-"onboardingQuickStart.2.title" = "Saya ingin membagikan Injil dengan seseorang";
-"onboardingQuickStart.2.button.title" = "Pilih salah satu alat kami";
 "onboardingTutorial.nextButton.title" = "Berikutnya";
-"onboardingQuickStart.title" = "Tautan mulai cepat";
-"onboardingQuickStart.0.title" = "Saya ingin belajar lebih banyak tentang Yesus.";
-"onboardingQuickStart.0.button.title" = "Baca artikel kami";
-"onboardingQuickStart.1.title" = "Saya ingin belajar tentang melakukan percakapan Injil";
-"onboardingQuickStart.1.button.title" = "Coba Pelajaran kami";
 "tool_offline_favorite_message" = "Jadikan sarana tersedia secara offline dengan mengetuk ikon hati, yang menambahkannya ke favorit Anda.";
 
 /* This is a category description of a tool that helps you start a conversation */
