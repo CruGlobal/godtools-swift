@@ -54,6 +54,7 @@ class LessonsViewModel: ObservableObject {
             $appLanguage,
             $lessonFilterLanguageSelection
         )
+        .dropFirst()
         .map { (appLanguage, languageFilter) in
         
             viewLessonsUseCase
