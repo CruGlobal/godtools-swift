@@ -71,6 +71,7 @@ struct ToolsView: View {
                                     geometry: geometry,
                                     layout: .landscape,
                                     showsCategory: true,
+                                    accessibility: .tool,
                                     favoriteTappedClosure: {
                                         
                                         viewModel.toolFavoriteTapped(tool: tool)

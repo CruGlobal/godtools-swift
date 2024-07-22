@@ -23,6 +23,7 @@ struct ToolCardView: View {
     private let navButtonSpacing: CGFloat = 8
     private let contentHorizontalInsets: CGFloat = 15
     private let showsCategory: Bool
+    private let accessibility: AccessibilityStrings.Button?
     private let favoriteTappedClosure: (() -> Void)?
     private let toolDetailsTappedClosure: (() -> Void)?
     private let openToolTappedClosure: (() -> Void)?
@@ -30,7 +31,7 @@ struct ToolCardView: View {
     
     @ObservedObject private var viewModel: ToolCardViewModel
     
-    init(viewModel: ToolCardViewModel, geometry: GeometryProxy, layout: ToolCardLayout, showsCategory: Bool, favoriteTappedClosure: (() -> Void)?, toolDetailsTappedClosure: (() -> Void)?, openToolTappedClosure: (() -> Void)?, toolTappedClosure: (() -> Void)?) {
+    init(viewModel: ToolCardViewModel, geometry: GeometryProxy, layout: ToolCardLayout, showsCategory: Bool, accessibility: AccessibilityStrings.Button?, favoriteTappedClosure: (() -> Void)?, toolDetailsTappedClosure: (() -> Void)?, openToolTappedClosure: (() -> Void)?, toolTappedClosure: (() -> Void)?) {
         
         var navButtons: [ToolCardNavButtonType] = Array()
         
@@ -49,6 +50,7 @@ struct ToolCardView: View {
         self.layout = layout
         self.navButtons = navButtons
         self.showsCategory = showsCategory
+        self.accessibility = accessibility
         self.favoriteTappedClosure = favoriteTappedClosure
         self.toolDetailsTappedClosure = toolDetailsTappedClosure
         self.openToolTappedClosure = openToolTappedClosure
@@ -84,6 +86,10 @@ struct ToolCardView: View {
     var body: some View {
         
         ZStack(alignment: .topLeading) {
+            
+            if let accessibilityIdentifier = accessibility?.id {
+                AccessibilityTapAreaView(accessibilityIdentifier: accessibilityIdentifier)
+            }
             
             backgroundColor
             
@@ -218,6 +224,7 @@ struct ToolCardView_Previews: PreviewProvider {
                 geometry: geometry,
                 layout: .landscape,
                 showsCategory: true,
+                accessibility: nil,
                 favoriteTappedClosure: nil,
                 toolDetailsTappedClosure: nil,
                 openToolTappedClosure: nil,

@@ -51,6 +51,7 @@ struct ToolSpotlightView: View {
                             geometry: geometry,
                             layout: .thumbnail,
                             showsCategory: false,
+                            accessibility: .spotlightTool,
                             favoriteTappedClosure: {
                                 
                                 viewModel.spotlightToolFavoriteTapped(spotlightTool: spotlightTool)
