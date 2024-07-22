@@ -47,7 +47,7 @@ extension AppFlowTests {
     
     private func getDashboardTabButton(buttonAccessibility: AccessibilityStrings.Button) -> XCUIElement {
                 
-        return app.queryButton(buttonAccessibility: buttonAccessibility).firstMatch
+        return app.queryFirstButtonMatching(buttonAccessibility: buttonAccessibility)
     }
     
     private func tabToLessons() {
@@ -115,7 +115,9 @@ extension AppFlowTests {
         
         tabToFavorites()
         
-        let toolDetails = app.queryButton(buttonAccessibility: .toolDetails).firstMatch
+        let toolDetailsButtons = app.buttons[AccessibilityStrings.Button.toolDetails.id]
+        
+        let toolDetails = app.queryFirstButtonMatching(buttonAccessibility: .toolDetails)
         
         XCTAssertTrue(toolDetails.exists)
         
@@ -130,7 +132,7 @@ extension AppFlowTests {
         
         tabToFavorites()
         
-        let toolDetails = app.queryButton(buttonAccessibility: .toolDetails).firstMatch
+        let toolDetails = app.queryFirstButtonMatching(buttonAccessibility: .toolDetails)
         
         XCTAssertTrue(toolDetails.exists)
         
@@ -180,5 +182,45 @@ extension AppFlowTests {
         toolsLanguageFilter.tap()
         
         assertIfScreenDoesNotExist(app: app, screenAccessibility: .toolsLanguageFilters)
+    }
+    
+    func testTappingSpotlightToolFromToolsOpensToolDetails() {
+        
+        launchApp()
+        
+        tabToTools()
+        
+        let spotlightTool = app.queryDescendants(id: AccessibilityStrings.Button.spotlightTool.id)
+        
+        guard let spotlightTool = spotlightTool else {
+            XCTAssertNotNil(spotlightTool, "Found nil element.")
+            return
+        }
+        
+        XCTAssertTrue(spotlightTool.exists)
+        
+        spotlightTool.tap()
+        
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .toolDetails)
+    }
+    
+    func testTappingToolFromToolsOpensToolDetails() {
+        
+        launchApp()
+        
+        tabToTools()
+        
+        let tool = app.queryDescendants(id: AccessibilityStrings.Button.tool.id)
+        
+        guard let tool = tool else {
+            XCTAssertNotNil(tool, "Found nil element.")
+            return
+        }
+
+        XCTAssertTrue(tool.exists)
+        
+        tool.tap()
+        
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .toolDetails)
     }
 }
