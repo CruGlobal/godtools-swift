@@ -29,7 +29,7 @@ class LessonFilterLanguageSelectionViewModel: ObservableObject {
     
     @Published var searchText: String = ""
     @Published var languageSearchResults: [LessonLanguageFilterDomainModel] = Array()
-    @Published var selectedLanguage: LessonLanguageFilterDomainModel = LessonLanguageFilterDomainModel(languageId: "", languageName: "English", translatedName: "", lessonsAvailableText: "")
+    @Published var selectedLanguage: LessonLanguageFilterDomainModel?
     @Published var navTitle: String = ""
     
     init(viewLessonFilterLanguagesUseCase: ViewLessonFilterLanguagesUseCase, getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase, storeUserLessonFiltersUseCase: StoreUserLessonFiltersUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, searchLessonFilterLanguagesUseCase: SearchLessonFilterLanguagesUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, flowDelegate: FlowDelegate) {
@@ -70,10 +70,12 @@ class LessonFilterLanguageSelectionViewModel: ObservableObject {
             .switchToLatest()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] userFilters in
+                guard let self = self else { return }
+                guard self.selectedLanguage == nil else { return }
                 
                 if let languageFilter = userFilters.languageFilter {
                     
-                    self?.selectedLanguage = languageFilter
+                    self.selectedLanguage = languageFilter
                 }
             }
             .store(in: &cancellables)

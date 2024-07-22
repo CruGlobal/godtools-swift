@@ -33,7 +33,7 @@ struct LessonFilterLanguageSelectionView: View {
                         
                         LessonFilterLanguageSelectionRowView(
                             language: language,
-                            isSelected: viewModel.selectedLanguage.id == language.id
+                            isSelected: viewModel.selectedLanguage?.id == language.id
                         )
                     }
                 }
