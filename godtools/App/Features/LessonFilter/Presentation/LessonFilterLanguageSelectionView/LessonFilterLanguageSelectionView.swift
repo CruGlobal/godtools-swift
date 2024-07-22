@@ -27,7 +27,7 @@ struct LessonFilterLanguageSelectionView: View {
                     
                     Button {
                         
-                        viewModel.rowTapped(with: language)
+                        viewModel.languageTapped(language)
                         
                     } label: {
                         

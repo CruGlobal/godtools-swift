@@ -100,7 +100,7 @@ extension LessonFilterLanguageSelectionViewModel {
         flowDelegate?.navigate(step: .backTappedFromLessonLanguageFilter)
     }
     
-    func rowTapped(with language: LessonLanguageFilterDomainModel) {
+    func languageTapped(_ language: LessonLanguageFilterDomainModel) {
         
         selectedLanguage = language
         
