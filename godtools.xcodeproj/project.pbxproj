@@ -1154,6 +1154,7 @@
 		45C8835D2A93EDDF00F33E6D /* DashboardTabBarItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C8835C2A93EDDF00F33E6D /* DashboardTabBarItemView.swift */; };
 		45C8835F2A93EE9C00F33E6D /* DashboardTabBarItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C8835E2A93EE9C00F33E6D /* DashboardTabBarItemViewModel.swift */; };
 		45C925022B45E7AA005947DB /* AppHomeBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C925012B45E7AA005947DB /* AppHomeBarItem.swift */; };
+		45C94E612C4EDF1C004D80FE /* AccessibilityTapAreaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C94E602C4EDF1C004D80FE /* AccessibilityTapAreaView.swift */; };
 		45CAB4EA28A2CE8000224B5F /* KeyboardNotificationObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CAB4E928A2CE7F00224B5F /* KeyboardNotificationObserver.swift */; };
 		45CBD9FB2BA343590007DEC8 /* GetOnboardingTutorialIsAvailableInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CBD9FA2BA343590007DEC8 /* GetOnboardingTutorialIsAvailableInterface.swift */; };
 		45CBD9FD2BA343DE0007DEC8 /* GetOnboardingTutorialIsAvailable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CBD9FC2BA343DE0007DEC8 /* GetOnboardingTutorialIsAvailable.swift */; };
@@ -2749,6 +2750,7 @@
 		45C8835C2A93EDDF00F33E6D /* DashboardTabBarItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardTabBarItemView.swift; sourceTree = "<group>"; };
 		45C8835E2A93EE9C00F33E6D /* DashboardTabBarItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardTabBarItemViewModel.swift; sourceTree = "<group>"; };
 		45C925012B45E7AA005947DB /* AppHomeBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppHomeBarItem.swift; sourceTree = "<group>"; };
+		45C94E602C4EDF1C004D80FE /* AccessibilityTapAreaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityTapAreaView.swift; sourceTree = "<group>"; };
 		45CAB4E928A2CE7F00224B5F /* KeyboardNotificationObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardNotificationObserver.swift; sourceTree = "<group>"; };
 		45CBD9FA2BA343590007DEC8 /* GetOnboardingTutorialIsAvailableInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOnboardingTutorialIsAvailableInterface.swift; sourceTree = "<group>"; };
 		45CBD9FC2BA343DE0007DEC8 /* GetOnboardingTutorialIsAvailable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOnboardingTutorialIsAvailable.swift; sourceTree = "<group>"; };
@@ -4073,6 +4075,7 @@
 			children = (
 				45131A0C2AB498AD0085AF0D /* AccessibilityStrings.swift */,
 				45C5DDCD2AE6BF1300C70BBA /* AccessibilityScreenElementView.swift */,
+				45C94E602C4EDF1C004D80FE /* AccessibilityTapAreaView.swift */,
 				45DEF4DB2AE95237000C8F4B /* UIViewController+AccessibilityScreenId.swift */,
 			);
 			path = Accessibility;
@@ -12768,6 +12771,7 @@
 				D4BE3F702C0907FC00887BFD /* RealmUserToolSettings.swift in Sources */,
 				450EE2AB29A6719500524F64 /* GodToolsAppLessonsPathDeepLinkParser.swift in Sources */,
 				454BFDA72AFD8CD200104BC8 /* TractRemoteShareNavigationEvent.swift in Sources */,
+				45C94E612C4EDF1C004D80FE /* AccessibilityTapAreaView.swift in Sources */,
 				45EA98FA2AFD67FC00E7EA9A /* ViewCreatingToolScreenShareSessionTimedOutUseCase.swift in Sources */,
 				458721302BFB7E78005DA242 /* GetDeleteAccountInterfaceStringsRepositoryInterface.swift in Sources */,
 				45AD1BE325938A4F00A096A0 /* NibBased.swift in Sources */,
