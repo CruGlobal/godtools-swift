@@ -45,48 +45,6 @@
 "account.badges.sectionTitle" = "ባጆች";
 "account.activity.sectionTitle" = "የአርሶ እንቅስቃሴ";
 
-/* This is a title on a dashboard that will show the Number of Times a person has opened a tool */
-"account.activity.toolOpens" = "የተከፈቱ ቡክሌቶች";
-
-/* This is a title on a dashboard that will show the Number of Times a person has completed a lesson */
-"account.activity.lessonCompletion" = "የትምህርት ማጠናቀቂያዎች";
-
-/* This is a title on a dashboard that will show the Number of Times a person has used the screen share function */
-"account.activity.screenShares" = "ስክሪን ማጋራቶች";
-
-/* This is a title on a dashboard that will show the Number of Times a person has shared a link */
-"account.activity.linksShared" = "ማስፈንጠሪያ ማጋራቶች";
-
-/* This is a title on a dashboard that will show the Number of different languages they have used */
-"account.activity.languagesUsed" = "የተጠቀሙዋቸው ቋንቋዎች";
-
-"account.activity.sessions" = "ክፍለ ጊዜዎች";
-"badges.tipsCompleted.singular" = "የተጠናቀቁ 1 የሥልጠና ምክሮች";
-
-/* leave %d in phrase - this is the number of articles that the user has read */
-"badges.articlesOpened.plural" = "%d  ጽሑፎችን ያንብቡ";
-
-/* when they have read only 1 articles */
-"badges.articlesOpened.singular" = "1 ጽሑፍ ያንብቡ";
-
-/* leave %d in phrase - this is the number of images that the user has shared */
-"badges.imagesShared.plural" = "የተጋሩ %d ምስሎች";
-
-"badges.imagesShared.singular" = "የተጋሩ 1 ምስሎች";
-
-/* leave %d in phrase - this is the number of lessons that the user has completed */
-"badges.lessonsCompleted.plural" = "የተጠናቀቁ %d ትምህርቶች";
-
-"badges.lessonsCompleted.singular" = "የተጠናቀቁ 1 ትምህርቶች";
-
-/* leave %d in phrase - this is the number of tools that the user has opened */
-"badges.toolsOpened.plural" = "%d መሳሪያዎች ተከፍተዋል";
-
-"badges.toolsOpened.singular" = "1 መሳሪያዎች ተከፍተዋል";
-
-/* leave %d in phrase - this is the number of tips that the user has completed */
-"badges.tipsCompleted.plural" = "የተጠናቀቁ %d የሥልጠና ምክሮች";
-
 /* Just translate "Joined" - leave the %@ - this is the date they started using GodTools */
 "account.joinedOn" = "%@ ተቀላቅሏል";
 
@@ -149,12 +107,6 @@
 "start_training" = "ስልጠናውን ይጀምሩ";
 "close" = "ይዝጉ";
 "tool_menu_item.lessons" = "ትምህርቶች";
-"parallelLanguage.yesButton.title" = "አዎ";
-"parallelLanguage.noButton.title" = "አይ አልፈልግም";
-"parallelLanguage.selectButton.title" = "ይምረጡ";
-"parallelLanguage.getStartedButton.title" = "እንጀምር";
-"parallelLanguage.selectLanguageButton.title" = "ቋንቋ ይምረጡ";
-"parellelLanguage.prompt" = "ሁለተኛ ቋንቋ መምረጥ ይፈልጋሉ?";
 
 /* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.continueButton.title.closeTutorial" = "አጋዥ ስልጠናን ይዝጉ";
@@ -187,14 +139,7 @@
 "tutorial.findTutorial.title" = "ይህንን አጋዥ ስልጠና በሚፈልጉበት ጊዜ በማውጫ ውስጥ ያግኙት።";
 
 "onboardingTutorial.beginButton.title" = "ይጀምሩ";
-"onboardingQuickStart.2.title" = "ለአንድ ሰው ወንጌልን ማካፈል እፈልጋለሁ";
-"onboardingQuickStart.2.button.title" = "ከቡክሌቶች ውስጥ አንዱን ይምረጡ";
 "onboardingTutorial.nextButton.title" = "ቀጣይ";
-"onboardingQuickStart.title" = "በፍጥነት ለመጀመር የሚረዱ ማስፈንጠሪያዎች";
-"onboardingQuickStart.0.title" = "ስለ ኢየሱስ የበለጠ ማወቅ እፈልጋለሁ።";
-"onboardingQuickStart.0.button.title" = "ጽሑፎቻችንን ያንብቡ";
-"onboardingQuickStart.1.title" = "ስለ ወንጌል ማውራትን መማር እፈልጋለሁ";
-"onboardingQuickStart.1.button.title" = "ትምህርቶቻችንን ይሞክሩ";
 "tool_offline_favorite_message" = "ወደ ምርጫዎ የሚያክለውን የልብ ምልክት በመጫን ቡክሌቱን ከመስመር ውጭ የሚገኝ ያድርጉት።";
 
 /* This is a category description of a tool that helps you start a conversation */

@@ -40,20 +40,8 @@
 "allTools.spotlight.description" = "Voici quelques outils qui seraient à votre goût";
 "allTools.categories.title" = "Catégories";
 "tool_menu_item.lessons" = "Cours";
-"parallelLanguage.yesButton.title" = "Oui";
-"parallelLanguage.noButton.title" = "Non merci";
-"parallelLanguage.getStartedButton.title" = "Commencer";
-"parallelLanguage.selectLanguageButton.title" = "Sélectionner une langue";
-"parellelLanguage.prompt" = "Voudriez-vous définir une langue secondaire?";
 "onboardingTutorial.beginButton.title" = "Commencer";
-"onboardingQuickStart.2.title" = "Je veux partager l’évangile avec quelqu’un";
-"onboardingQuickStart.2.button.title" = "Choisissez un de nos outils";
 "onboardingTutorial.nextButton.title" = "Suivant";
-"onboardingQuickStart.title" = "Liens de démarrage rapide";
-"onboardingQuickStart.0.title" = "Je veux explorer le christianisme";
-"onboardingQuickStart.0.button.title" = "Lire nos articles";
-"onboardingQuickStart.1.title" = "Je veux apprendre comment avoir des conversations sur l’évangile";
-"onboardingQuickStart.1.button.title" = "Essayer nos cours";
 "tool_offline_favorite_message" = "Appuyez sur l'icône en forme de cœur pour ajouter un outil à vos favoris et le rendre disponible hors ligne.";
 
 /* This is a category description of a tool that helps you start a conversation */

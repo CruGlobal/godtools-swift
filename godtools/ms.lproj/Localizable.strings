@@ -40,20 +40,8 @@
 "allTools.spotlight.description" = "Di sini adalah beberapa alat yang anda mungkin berminat";
 "allTools.categories.title" = "Kategori";
 "tool_menu_item.lessons" = "Pengajaran";
-"parallelLanguage.yesButton.title" = "Ya";
-"parallelLanguage.noButton.title" = "Tidak, terima kasih";
-"parallelLanguage.getStartedButton.title" = "Mulakan";
-"parallelLanguage.selectLanguageButton.title" = "Pilih bahasa";
-"parellelLanguage.prompt" = "Adakah anda ingin menetapkan bahasa kedua?";
 "onboardingTutorial.beginButton.title" = "Bermula";
-"onboardingQuickStart.2.title" = "Saya ingin berkongsi ajaran Kristian dengan seseorang";
-"onboardingQuickStart.2.button.title" = "Pilih salah satu alatan kami";
 "onboardingTutorial.nextButton.title" = "Seterusnya";
-"onboardingQuickStart.title" = "Pautan permulaan pantas";
-"onboardingQuickStart.0.title" = "Saya ingin mengetahui lebih banyak tentang agama Kristian";
-"onboardingQuickStart.0.button.title" = "Baca makalah kami";
-"onboardingQuickStart.1.title" = "Saya ingin pelajari tentang cara memulakan perbualan keagamaan";
-"onboardingQuickStart.1.button.title" = "Cuba Pengajaran kami";
 "tool_offline_favorite_message" = "Menjadikan sesuatu alat tersedia semasa luar talian dengan mengetik pada ikon hati yang akan menambahkannya ke kegemaran anda.
 ";
 

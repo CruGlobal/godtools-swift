@@ -35,20 +35,8 @@
 "allTools.spotlight.description" = "นี่คือเครื่องมือที่เราคิดว่าคุณอาจชอบ";
 "allTools.categories.title" = "หมวดหมู่";
 "tool_menu_item.lessons" = "บทเรียน";
-"parallelLanguage.yesButton.title" = "ใช่";
-"parallelLanguage.noButton.title" = "ไม่ ขอบคุณ";
-"parallelLanguage.getStartedButton.title" = "เริ่มต้นใช้งาน";
-"parallelLanguage.selectLanguageButton.title" = "เลือกภาษา";
-"parellelLanguage.prompt" = "คุณต้องการตั้งค่าภาษารองหรือไม่";
 "onboardingTutorial.beginButton.title" = "เริ่มต้น";
-"onboardingQuickStart.2.title" = "ฉันต้องการแชร์เรื่องพระกิตติคุณกับใครสักคน";
-"onboardingQuickStart.2.button.title" = "เลือกหนึ่งในเครื่องมือของเรา";
 "onboardingTutorial.nextButton.title" = "ต่อไป";
-"onboardingQuickStart.title" = "ลิงก์เริ่มต้นด่วน";
-"onboardingQuickStart.0.title" = "ฉันต้องการศึกษาศาสนาคริสต์";
-"onboardingQuickStart.0.button.title" = "อ่านบทความของเรา";
-"onboardingQuickStart.1.title" = "ฉันต้องการเรียนรู้เกี่ยวกับการสนทนาเรื่องพระกิตติคุณ";
-"onboardingQuickStart.1.button.title" = "ลองศึกษาบทเรียนของเรา";
 "tool_offline_favorite_message" = "ทำให้เครื่องมือพร้อมใช้งานแบบออฟไลน์โดยแตะที่ไอคอนรูปหัวใจเพื่อเพิ่มไว้ในรายการโปรดของคุณ";
 
 /* This is a category description of a tool that helps you start a conversation */
