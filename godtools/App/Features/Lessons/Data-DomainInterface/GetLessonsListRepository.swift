@@ -40,7 +40,7 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
                     
                     if let translationModel = appLanguageModel {
                         
-                        var language: LanguageModel
+                        let language: LanguageModel
                         
                         if let filterLanguageId = filterLessonsByLanguage?.languageId, let filterLanguageModel = self.languagesRepository.getLanguage(id: filterLanguageId) {
                             
