@@ -10,12 +10,10 @@ import Foundation
 import RealmSwift
 
 class RealmUserLessonLanguageFilter: Object {
-    
-    static let filterId = "userLessonLanguageFilter"
-    
+        
     @objc dynamic var createdAt: Date = Date()
     @objc dynamic var languageId: String = ""
-    @objc dynamic var filterId: String = RealmUserLessonLanguageFilter.filterId
+    @objc dynamic var filterId: String = ""
     
     override static func primaryKey() -> String? {
         return "filterId"

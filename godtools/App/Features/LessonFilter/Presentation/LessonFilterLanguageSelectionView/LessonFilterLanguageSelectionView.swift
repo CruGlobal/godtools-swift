@@ -27,13 +27,13 @@ struct LessonFilterLanguageSelectionView: View {
                     
                     Button {
                         
-                        viewModel.rowTapped(with: language)
+                        viewModel.languageTapped(language)
                         
                     } label: {
                         
                         LessonFilterLanguageSelectionRowView(
                             language: language,
-                            isSelected: viewModel.selectedLanguage.id == language.id
+                            isSelected: viewModel.selectedLanguage?.id == language.id
                         )
                     }
                 }

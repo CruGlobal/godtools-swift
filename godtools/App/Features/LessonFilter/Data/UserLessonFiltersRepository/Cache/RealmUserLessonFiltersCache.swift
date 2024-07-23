@@ -26,10 +26,10 @@ class RealmUserLessonFiltersCache {
             .eraseToAnyPublisher()
     }
     
-    func getUserLessonLanguageFilter() -> UserLessonLanguageFilterDataModel? {
+    func getUserLessonLanguageFilter(filterId: String) -> UserLessonLanguageFilterDataModel? {
         
         if let realmLanguageFilter = realmDatabase.openRealm()
-            .object(ofType: RealmUserLessonLanguageFilter.self, forPrimaryKey: RealmUserLessonLanguageFilter.filterId) {
+            .object(ofType: RealmUserLessonLanguageFilter.self, forPrimaryKey: filterId) {
             
             return UserLessonLanguageFilterDataModel(realmUserLessonLanguageFilter: realmLanguageFilter)
         } else {
@@ -38,12 +38,13 @@ class RealmUserLessonFiltersCache {
         }
     }
     
-    func storeUserLessonLanguageFilter(languageId: String) {
+    func storeUserLessonLanguageFilter(languageId: String, filterId: String) {
         
         let realm: Realm = realmDatabase.openRealm()
         
         let realmUserLessonLanguageFilter = RealmUserLessonLanguageFilter()
         realmUserLessonLanguageFilter.languageId = languageId
+        realmUserLessonLanguageFilter.filterId = filterId
         
         do {
             

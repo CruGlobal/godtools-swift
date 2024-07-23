@@ -11,5 +11,5 @@ import Combine
 
 protocol StoreUserLessonFiltersRepositoryInterface {
     
-    func storeUserLanguageFilterPublisher(with id: String) -> AnyPublisher<Void, Never>
+    func storeUserLanguageFilterPublisher(_ languageFilter: LessonLanguageFilterDomainModel) -> AnyPublisher<Void, Never>
 }

@@ -11,6 +11,8 @@ import Combine
 
 class UserLessonFiltersRepository {
     
+    static let filterId = "userLessonLanguageFilter"
+    
     private let cache: RealmUserLessonFiltersCache
     
     init(cache: RealmUserLessonFiltersCache) {
@@ -22,10 +24,10 @@ class UserLessonFiltersRepository {
     }
     
     func storeUserLessonLanguageFilter(with id: String) {
-        cache.storeUserLessonLanguageFilter(languageId: id)
+        cache.storeUserLessonLanguageFilter(languageId: id, filterId: UserLessonFiltersRepository.filterId)
     }
     
     func getUserLessonLanguageFilter() -> UserLessonLanguageFilterDataModel? {
-        return cache.getUserLessonLanguageFilter()
+        return cache.getUserLessonLanguageFilter(filterId: UserLessonFiltersRepository.filterId)
     }
 }
