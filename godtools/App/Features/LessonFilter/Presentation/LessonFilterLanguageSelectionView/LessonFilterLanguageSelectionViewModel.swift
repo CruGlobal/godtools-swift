@@ -107,7 +107,7 @@ extension LessonFilterLanguageSelectionViewModel {
         selectedLanguage = language
         
         storeUserLessonFiltersUseCase
-            .storeLanguageFilterPublisher(with: language.id)
+            .storeLanguageFilterPublisher(language)
             .receive(on: DispatchQueue.main)
             .sink { _ in
                 
