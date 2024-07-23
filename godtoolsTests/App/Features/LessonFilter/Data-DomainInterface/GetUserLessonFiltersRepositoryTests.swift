@@ -77,7 +77,7 @@ class GetUserLessonFiltersRepositoryTests: QuickSpec {
                 
                 it("The lesson language filter should default to the current app language french even when there are no lessons in french.") {
                     
-                    let appLanguageRussian: AppLanguageDomainModel = LanguageCodeDomainModel.russian.rawValue
+                    let appLanguageFrench: AppLanguageDomainModel = LanguageCodeDomainModel.french.rawValue
                     
                     let spanishLanguage = RealmLanguage()
                     spanishLanguage.id = "0"
@@ -116,7 +116,7 @@ class GetUserLessonFiltersRepositoryTests: QuickSpec {
                     waitUntil { done in
                         
                         _ = getUserLessonFiltersRepository
-                            .getUserLessonLanguageFilterPublisher(translatedInAppLanguage: appLanguageRussian)
+                            .getUserLessonLanguageFilterPublisher(translatedInAppLanguage: appLanguageFrench)
                             .sink { (lessonLanguageFilter: LessonLanguageFilterDomainModel?) in
                                 
                                 guard !sinkCompleted else {
@@ -134,6 +134,73 @@ class GetUserLessonFiltersRepositoryTests: QuickSpec {
                     
                     expect(lessonLanguageFilterRef?.languageName).to(equal("Français"))
                     expect(lessonLanguageFilterRef?.translatedName).to(equal("Français"))
+                }
+            }
+            
+            context("When the app language is french and the user has selected lesson language filter spanish.") {
+                
+                it("The lesson language filter should be spanish.") {
+                    
+                    let appLanguageFrench: AppLanguageDomainModel = LanguageCodeDomainModel.french.rawValue
+                    
+                    let spanishLanguage = RealmLanguage()
+                    spanishLanguage.id = "0"
+                    spanishLanguage.code = LanguageCodeDomainModel.spanish.rawValue
+                    spanishLanguage.name = "Spanish Name"
+                    
+                    let frenchLanguage = RealmLanguage()
+                    frenchLanguage.id = "1"
+                    frenchLanguage.code = LanguageCodeDomainModel.french.rawValue
+                    frenchLanguage.name = "French Name"
+                    
+                    let testsDiContainer = TestsDiContainer(
+                        realmDatabase: GetUserLessonFiltersRepositoryTests.getRealmDatabase(addRealmObjects: [spanishLanguage, frenchLanguage])
+                    )
+                    
+                    let userLessonFiltersRepository: UserLessonFiltersRepository = GetUserLessonFiltersRepositoryTests.getUserLessonFiltersRepository(testsDiContainer: testsDiContainer)
+                    
+                    let getUserLessonFiltersRepository = GetUserLessonFiltersRepository(
+                        userLessonFiltersRepository: userLessonFiltersRepository,
+                        getLessonFilterLanguagesRepository: GetUserLessonFiltersRepositoryTests.getLessonFilterLanguagesRepository(testsDiContainer: testsDiContainer)
+                    )
+                    
+                    var originalLessonLanguageFilterRef: LessonLanguageFilterDomainModel?
+                    var selectedLessonLanguageFilterRef: LessonLanguageFilterDomainModel?
+                    var sinkCount: Int = 0
+                    var sinkCompleted: Bool = false
+                    
+                    waitUntil { done in
+                        
+                        _ = getUserLessonFiltersRepository
+                            .getUserLessonLanguageFilterPublisher(translatedInAppLanguage: appLanguageFrench)
+                            .sink { (lessonLanguageFilter: LessonLanguageFilterDomainModel?) in
+                                
+                                guard !sinkCompleted else {
+                                    return
+                                }
+                                
+                                sinkCount += 1
+                                                                
+                                if sinkCount == 1 {
+                                    
+                                    originalLessonLanguageFilterRef = lessonLanguageFilter
+                                    userLessonFiltersRepository.storeUserLessonLanguageFilter(with: spanishLanguage.id)
+                                }
+                                else if sinkCount == 2 {
+                                    
+                                    selectedLessonLanguageFilterRef = lessonLanguageFilter
+                                    
+                                    sinkCompleted = true
+                                    done()
+                                }
+                            }
+                    }
+                    
+                    expect(originalLessonLanguageFilterRef?.languageName).to(equal("Français"))
+                    expect(originalLessonLanguageFilterRef?.translatedName).to(equal("Français"))
+                    
+                    expect(selectedLessonLanguageFilterRef?.languageName).to(equal("Español"))
+                    expect(selectedLessonLanguageFilterRef?.translatedName).to(equal("Español"))
                 }
             }
         }
