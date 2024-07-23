@@ -205,6 +205,15 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         case .lessonTappedFromLessonsList(let lessonListItem):
             navigateToToolInAppLanguage(toolDataModelId: lessonListItem.dataModelId, trainingTipsEnabled: false)
             
+        case .lessonLanguageFilterTappedFromLessons:
+            navigationController.pushViewController(getLessonLanguageFilterSelection(), animated: true)
+            
+        case .backTappedFromLessonLanguageFilter:
+            navigationController.popViewController(animated: true)
+            
+        case .languageTappedFromLessonLanguageFilter:
+            navigationController.popViewController(animated: true)
+            
         case .featuredLessonTappedFromFavorites(let featuredLesson):
             navigateToToolInAppLanguage(toolDataModelId: featuredLesson.dataModelId, trainingTipsEnabled: false)
             
@@ -1127,6 +1136,44 @@ extension AppFlow {
         
         navigationController.dismissPresented(animated: true, completion: completion)
         learnToShareToolFlow = nil
+    }
+}
+
+// MARK: - Lesson Filter
+
+extension AppFlow {
+    
+    private func getLessonLanguageFilterSelection() -> UIViewController {
+        
+        let viewModel = LessonFilterLanguageSelectionViewModel(
+            viewLessonFilterLanguagesUseCase: appDiContainer.feature.lessonFilter.domainLayer.getViewLessonFilterLanguagesUseCase(),
+            getUserLessonFiltersUseCase: appDiContainer.feature.lessonFilter.domainLayer.getUserLessonFiltersUseCase(),
+            storeUserLessonFiltersUseCase: appDiContainer.feature.lessonFilter.domainLayer.getStoreUserLessonFiltersUseCase(),
+            viewSearchBarUseCase: appDiContainer.domainLayer.getViewSearchBarUseCase(),
+            searchLessonFilterLanguagesUseCase: appDiContainer.feature.lessonFilter.domainLayer.getSearchLessonFilterLanguagesUseCase(),
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            flowDelegate: self
+        )
+        
+        let view = LessonFilterLanguageSelectionView(viewModel: viewModel)
+        
+        let backButton = AppBackBarItem(
+            target: viewModel,
+            action: #selector(viewModel.backTapped),
+            accessibilityIdentifier: nil
+        )
+        
+        let hostingView = AppHostingController<LessonFilterLanguageSelectionView>(
+            rootView: view,
+            navigationBar: AppNavigationBar(
+                appearance: nil,
+                backButton: backButton,
+                leadingItems: [],
+                trailingItems: []
+            )
+        )
+        
+        return hostingView
     }
 }
 

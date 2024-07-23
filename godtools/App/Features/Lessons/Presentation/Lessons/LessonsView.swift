@@ -42,7 +42,25 @@ struct LessonsView: View {
                         viewModel: viewModel
                     )
                     .padding([.top], 24)
-                    .padding([.leading, .trailing], contentHorizontalInsets)
+                    .padding(.horizontal, contentHorizontalInsets)
+                    
+                    SeparatorView()
+                        .padding(.vertical, 15)
+                        .padding(.horizontal, contentHorizontalInsets)
+                    
+                    HStack(spacing: 0) {
+                        Text(viewModel.languageFilterTitle)
+                            .font(FontLibrary.sfProTextBold.font(size: 18))
+                            .foregroundColor(ColorPalette.gtGrey.color)
+                        
+                        FixedHorizontalSpacer(width: 30)
+                        
+                        ToolFilterButtonView(title: viewModel.languageFilterButtonTitle) {
+                            viewModel.lessonLanguageFilterTapped()
+                        }
+                    }
+                    .padding(.bottom, 15)
+                    .padding(.horizontal, contentHorizontalInsets)
                     
                     LazyVStack(alignment: .center, spacing: lessonCardSpacing) {
                         
@@ -85,7 +103,8 @@ struct LessonsView_Preview: PreviewProvider {
         let viewModel = LessonsViewModel(
             flowDelegate: MockFlowDelegate(),
             resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
-            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(), 
+            getUserLessonFiltersUseCase: appDiContainer.feature.lessonFilter.domainLayer.getUserLessonFiltersUseCase(),
             viewLessonsUseCase: appDiContainer.feature.lessons.domainLayer.getViewLessonsUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),

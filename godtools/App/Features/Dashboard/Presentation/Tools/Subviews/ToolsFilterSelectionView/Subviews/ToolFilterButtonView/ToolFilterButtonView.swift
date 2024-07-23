@@ -14,11 +14,11 @@ struct ToolFilterButtonView: View {
     private static let cornerRadius: CGFloat = height / 2
     
     private let buttonTitle: String
-    private let width: CGFloat
+    private let width: CGFloat?
     private let backgroundColor: Color = Color.white
     private let tappedClosure: (() -> Void)?
         
-    init(title: String, width: CGFloat, tappedClosure: (() -> Void)?) {
+    init(title: String, width: CGFloat? = nil, tappedClosure: (() -> Void)?) {
         
         self.buttonTitle = title
         self.width = width
