@@ -112,7 +112,7 @@ class ActionCableChannelSubscriber: NSObject, WebSocketChannelSubscriberType {
         isSubscribingToChannel = channelId
         
         let strChannel = "{ \"channel\": \"SubscribeChannel\",\"channelId\": \"\(channelId)\" }"
-        let message = ["command" : "subscribe","identifier": strChannel]
+        let message = ["command": "subscribe", "identifier": strChannel]
 
         do {
             

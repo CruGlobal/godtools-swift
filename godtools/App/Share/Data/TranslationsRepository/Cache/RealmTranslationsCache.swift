@@ -20,7 +20,9 @@ class RealmTranslationsCache {
 
     func getTranslation(id: String) -> TranslationModel? {
         
-        guard let realmTranslation = realmDatabase.openRealm().object(ofType: RealmTranslation.self, forPrimaryKey: id) else {
+        guard let realmTranslation = realmDatabase.openRealm()
+            .object(ofType: RealmTranslation.self, forPrimaryKey: id) else {
+            
             return nil
         }
         
@@ -29,16 +31,18 @@ class RealmTranslationsCache {
     
     func getTranslations(ids: [String]) -> [TranslationModel] {
         
-        return realmDatabase.openRealm().objects(RealmTranslation.self)
+        return realmDatabase.openRealm()
+            .objects(RealmTranslation.self)
             .filter("id IN %@", ids)
-            .map{
+            .map {
                 TranslationModel(model: $0)
             }
     }
     
     func getTranslationsSortedByLatestVersion(resourceId: String, languageId: String) -> [TranslationModel] {
         
-        guard let realmResource = realmDatabase.openRealm().object(ofType: RealmResource.self, forPrimaryKey: resourceId) else {
+        guard let realmResource = realmDatabase.openRealm()
+            .object(ofType: RealmResource.self, forPrimaryKey: resourceId) else {
             
             return Array()
         }
@@ -52,7 +56,8 @@ class RealmTranslationsCache {
     
     func getTranslationsSortedByLatestVersion(resourceId: String, languageCode: String) -> [TranslationModel] {
         
-        guard let realmResource = realmDatabase.openRealm().object(ofType: RealmResource.self, forPrimaryKey: resourceId) else {
+        guard let realmResource = realmDatabase.openRealm()
+            .object(ofType: RealmResource.self, forPrimaryKey: resourceId) else {
            
             return Array()
         }

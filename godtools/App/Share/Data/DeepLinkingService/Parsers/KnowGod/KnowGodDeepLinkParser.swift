@@ -14,7 +14,7 @@ class KnowGodDeepLinkParser: DeepLinkUrlParserType {
         
     }
     
-    func parse(url: URL, pathComponents: [String], queryParameters: [String : Any]) -> ParsedDeepLinkType? {
+    func parse(url: URL, pathComponents: [String], queryParameters: [String: Any]) -> ParsedDeepLinkType? {
         
         if pathComponents.first == "lessons" {
             
@@ -26,7 +26,7 @@ class KnowGodDeepLinkParser: DeepLinkUrlParserType {
         }
     }
     
-    private func parseLesson(url: URL, pathComponents: [String], queryParameters: [String : Any]) -> ParsedDeepLinkType? {
+    private func parseLesson(url: URL, pathComponents: [String], queryParameters: [String: Any]) -> ParsedDeepLinkType? {
         
         guard let resourceAbbreviation = pathComponents[safe: 1] else {
             return nil
@@ -54,7 +54,7 @@ class KnowGodDeepLinkParser: DeepLinkUrlParserType {
         return .tool(toolDeepLink: toolDeepLink)
     }
     
-    private func parseTract(url: URL, pathComponents: [String], queryParameters: [String : Any]) -> ParsedDeepLinkType? {
+    private func parseTract(url: URL, pathComponents: [String], queryParameters: [String: Any]) -> ParsedDeepLinkType? {
         
         let knowGodQueryParameters: KnowGodTractDeepLinkQueryParameters? = JsonServices().decodeJsonObject(jsonObject: queryParameters)
         

@@ -12,11 +12,14 @@ extension UIViewController {
     
     func addScreenAccessibility(screenAccessibility: AccessibilityStrings.Screen) {
         
-        let textField = UITextField(frame: .zero)
-        textField.text = ""
-        textField.isHidden = true
-        textField.accessibilityIdentifier = screenAccessibility.id
+        // Frame has to have a size, label can't be hidden, and alpha can't be zero in order to be queried. ~Levi
         
-        view.addSubview(textField)
+        let label = UILabel(frame: CGRect(x: -10, y: -10, width: 1, height: 1))
+        label.text = ""
+        label.clipsToBounds = true
+        label.isHidden = false
+        label.accessibilityIdentifier = screenAccessibility.id
+        
+        view.insertSubview(label, at: 0)
     }
 }

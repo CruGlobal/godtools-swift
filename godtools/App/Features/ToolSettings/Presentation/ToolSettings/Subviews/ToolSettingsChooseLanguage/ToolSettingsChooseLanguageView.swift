@@ -28,7 +28,7 @@ struct ToolSettingsChooseLanguageView: View {
         
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            VStack (alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: 4) {
                 Text(viewModel.chooseLanguageTitle)
                     .foregroundColor(ColorPalette.gtGrey.color)
                     .font(FontLibrary.sfProTextRegular.font(size: 19))

@@ -20,14 +20,16 @@ class RealmUserToolFiltersCache {
     
     func getUserToolCategoryFilterChangedPublisher() -> AnyPublisher<Void, Never> {
         
-        return realmDatabase.openRealm().objects(RealmUserToolCategoryFilter.self)
+        return realmDatabase.openRealm()
+            .objects(RealmUserToolCategoryFilter.self)
             .objectWillChange
             .eraseToAnyPublisher()
     }
     
     func getUserToolLanguageFilterChangedPublisher() -> AnyPublisher<Void, Never> {
         
-        return realmDatabase.openRealm().objects(RealmUserToolLanguageFilter.self)
+        return realmDatabase.openRealm()
+            .objects(RealmUserToolLanguageFilter.self)
             .objectWillChange
             .eraseToAnyPublisher()
     }

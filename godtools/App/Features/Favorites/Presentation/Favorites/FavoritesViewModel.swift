@@ -158,7 +158,7 @@ class FavoritesViewModel: ObservableObject {
             data: [
                 AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.featured,
                 AnalyticsConstants.Keys.tool: featuredLesson.analyticsToolName
-              ]
+            ]
         )
     }
     

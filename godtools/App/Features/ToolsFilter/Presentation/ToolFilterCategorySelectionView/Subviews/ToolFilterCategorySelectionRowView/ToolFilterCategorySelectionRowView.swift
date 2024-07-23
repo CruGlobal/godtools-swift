@@ -44,4 +44,3 @@ struct ToolFilterCategorySelectionRowView: View {
         }
     }
 }
-

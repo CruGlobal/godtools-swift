@@ -42,11 +42,11 @@ class MobileContentAccordionView: MobileContentView {
     }
     
     var isRevealingSectionText: Bool {
-        for sectionView in sectionViews {
-            if !sectionView.contentIsHidden {
-                return true
-            }
+       
+        for sectionView in sectionViews where !sectionView.contentIsHidden {
+            return true
         }
+        
         return false
     }
     

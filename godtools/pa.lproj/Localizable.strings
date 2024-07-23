@@ -40,20 +40,8 @@
 "allTools.spotlight.description" = "ਇੱਥੇ ਕੁਝ ਟੂਲ ਹਨ ਜੋ ਅਸੀਂ ਸੋਚਿਆ ਕਿ ਸ਼ਾਇਦ ਤੁਹਾਨੂੰ ਪਸੰਦ ਆਉਣ";
 "allTools.categories.title" = "ਸ਼੍ਰੇਣੀਆਂ";
 "tool_menu_item.lessons" = "ਸਬਕ";
-"parallelLanguage.yesButton.title" = "ਹਾਂ";
-"parallelLanguage.noButton.title" = "ਨਹੀਂ ਧੰਨਵਾਦ";
-"parallelLanguage.getStartedButton.title" = "ਸ਼ੁਰੂ ਕਰੋ";
-"parallelLanguage.selectLanguageButton.title" = "ਇੱਕ ਭਾਸ਼ਾ ਚੁਣੋ";
-"parellelLanguage.prompt" = "ਕੀ ਤੁਸੀਂ ਇੱਕ ਸੈਕੰਡਰੀ ਭਾਸ਼ਾ ਸੈਟ ਕਰਨਾ ਚਾਹੋਗੇ?";
 "onboardingTutorial.beginButton.title" = "ਅਰੰਭ ਕਰੋ";
-"onboardingQuickStart.2.title" = "ਮੈਂ ਕਿਸੇ ਨਾਲ ਗੌਸਪਲ ਸਾਂਝੇ ਕਰਨਾ ਚਾਹੁੰਦਾ ਹਾਂ";
-"onboardingQuickStart.2.button.title" = "ਸਾਡੇ ਟੂਲਸ ਵਿੱਚੋਂ ਇੱਕ ਦੀ ਚੋਣ ਕਰੋ";
 "onboardingTutorial.nextButton.title" = "ਅਗਲਾ";
-"onboardingQuickStart.title" = "ਤੁਰੰਤ ਸ਼ੁਰੂਆਤ ਲਈ ਲਿੰਕ";
-"onboardingQuickStart.0.title" = "ਮੈਂ ਈਸਾਈ ਧਰਮ ਦੀ ਪੜਚੋਲ ਕਰਨਾ ਚਾਹੁੰਦਾ ਹਾਂ";
-"onboardingQuickStart.0.button.title" = "ਸਾਡੇ ਲੇਖ ਪੜ੍ਹੋ";
-"onboardingQuickStart.1.title" = "ਮੈਂ ਗੌਸਪਲ ਸੰਚਾਰ ਕਰਨ ਬਾਰੇ ਸਿੱਖਣਾ ਚਾਹੁੰਦਾ ਹਾਂ";
-"onboardingQuickStart.1.button.title" = "ਸਾਡੇ ਪਾਠਾਂ ਨੂੰ ਅਜ਼ਮਾਓ";
 "tool_offline_favorite_message" = "ਦਿਲ ਦੇ ਆਈਕਨ ਨੂੰ ਟੈਪ ਕਰਕੇ ਇੱਕ ਟੂਲ ਨੂੰ ਆਫਲਾਈਨ ਉਪਲੱਬਧ ਕਰੋ ਜੋ ਇਸਨੂੰ ਤੁਹਾਡੇ ਮਨਪਸੰਦ ਵਿੱਚ ਜੋੜਦਾ ਹੈ।";
 
 /* This is a category description of a tool that helps you start a conversation */

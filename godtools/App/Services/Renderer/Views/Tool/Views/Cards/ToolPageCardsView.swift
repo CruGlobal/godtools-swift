@@ -553,11 +553,9 @@ extension ToolPageCardsView {
                 
             setCurrentCardPosition(cardPosition: showingCardAtPosition, animated: animated)
             
-            for cardPosition in 0 ..< renderedCards.count {
+            for cardPosition in 0 ..< renderedCards.count where cardPosition <= showingCardAtPosition {
                                 
-                if cardPosition <= showingCardAtPosition {
-                    cardTopConstraints[cardPosition].constant = getCardTopConstant(state: .showingKeyboard, cardPosition: cardPosition)
-                }
+                cardTopConstraints[cardPosition].constant = getCardTopConstant(state: .showingKeyboard, cardPosition: cardPosition)
             }
                         
         case .collapseAllCards:

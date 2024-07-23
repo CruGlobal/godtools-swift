@@ -14,7 +14,7 @@ class RealmUserToolSettings: Object {
     @Persisted var createdAt: Date = Date()
     @Persisted var toolId: String = ""
     @Persisted var primaryLanguageId: String = ""
-    @Persisted var parallelLanguageId: String? = nil
+    @Persisted var parallelLanguageId: String?
     @Persisted var selectedLanguageId: String = ""
     
     override static func primaryKey() -> String? {

@@ -8,7 +8,7 @@
 
 import UIKit
 
-public extension UIColor {
+extension UIColor {
     
     static func hexColor(hexValue: Int, alpha: CGFloat = 1) -> UIColor {
         let red: Int = (hexValue >> 16) & 0xff

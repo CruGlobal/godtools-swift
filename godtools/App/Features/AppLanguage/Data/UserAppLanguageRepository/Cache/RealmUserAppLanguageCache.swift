@@ -40,7 +40,9 @@ class RealmUserAppLanguageCache {
     
     func getLanguageChangedPublisher() -> AnyPublisher<Void, Never> {
                 
-        return realmDatabase.openRealm().objects(RealmUserAppLanguage.self).objectWillChange
+        return realmDatabase.openRealm()
+            .objects(RealmUserAppLanguage.self)
+            .objectWillChange
             .map { _ in
                 Void()
             }

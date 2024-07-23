@@ -40,9 +40,6 @@
 "allTools.spotlight.description" = "Hier is van die gereedskap wat ons dink jy van sal hou";
 "allTools.categories.title" = "Kategorieë";
 "tool_menu_item.lessons" = "Lesse";
-"parallelLanguage.yesButton.title" = "Ja";
-"parallelLanguage.noButton.title" = "Nee dankie";
-"parallelLanguage.getStartedButton.title" = "Kom ons begin";
 "tool_offline_favorite_message" = "Maak die gereedskap beskikbaar deur die hartikoon te tik wat dit tot jou gunstelinge sal byvoeg.";
 
 /* This is a category description of a tool that helps you start a conversation */

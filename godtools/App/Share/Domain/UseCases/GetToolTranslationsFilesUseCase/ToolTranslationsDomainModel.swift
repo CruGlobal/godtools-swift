@@ -13,4 +13,3 @@ struct ToolTranslationsDomainModel {
     let tool: ResourceModel
     let languageTranslationManifests: [MobileContentRendererLanguageTranslationManifest]
 }
-

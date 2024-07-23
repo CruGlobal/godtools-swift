@@ -24,4 +24,3 @@ extension UserActivityStatDomainModel: Identifiable {
         return text
     }
 }
-

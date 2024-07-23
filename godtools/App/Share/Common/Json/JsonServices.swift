@@ -134,7 +134,7 @@ struct JsonServices: JsonServicesType {
     
     // MARK: - Decoding
     
-    func decodeArray<T>(fileName: String?) -> [T] where T : Decodable {
+    func decodeArray<T>(fileName: String?) -> [T] where T: Decodable {
         
         let result: Result<[T], Error> = decodeArray(fileName: fileName)
         
@@ -147,7 +147,7 @@ struct JsonServices: JsonServicesType {
         }
     }
     
-    func decodeArray<T>(fileName: String?) -> Result<[T], Error> where T : Decodable {
+    func decodeArray<T>(fileName: String?) -> Result<[T], Error> where T: Decodable {
         
         let dataResult: Result = getJsonData(fileName: fileName)
         
@@ -168,7 +168,7 @@ struct JsonServices: JsonServicesType {
         }
     }
     
-    func decodeArray<T>(data: Data?) -> [T] where T : Decodable {
+    func decodeArray<T>(data: Data?) -> [T] where T: Decodable {
         
         let result: Result<[T], Error> = decodeArray(data: data)
         
@@ -181,7 +181,7 @@ struct JsonServices: JsonServicesType {
         }
     }
     
-    func decodeArray<T>(data: Data?) -> Result<[T], Error> where T : Decodable {
+    func decodeArray<T>(data: Data?) -> Result<[T], Error> where T: Decodable {
         
         guard let data = data else {
             return .success([])
@@ -196,7 +196,7 @@ struct JsonServices: JsonServicesType {
         }
     }
     
-    func decodeObject<T>(data: Data?) -> T? where T : Decodable {
+    func decodeObject<T>(data: Data?) -> T? where T: Decodable {
         
         let result: Result<T?, Error> = decodeObject(data: data)
         
@@ -209,7 +209,7 @@ struct JsonServices: JsonServicesType {
         }
     }
     
-    func decodeObject<T>(data: Data?) -> Result<T?, Error> where T : Decodable {
+    func decodeObject<T>(data: Data?) -> Result<T?, Error> where T: Decodable {
         
         guard let data = data else {
             return .success(nil)
@@ -224,7 +224,7 @@ struct JsonServices: JsonServicesType {
         }
     }
     
-    func decodeJsonObject<T>(jsonObject: [String: Any], options: JSONSerialization.WritingOptions = []) -> T? where T : Decodable {
+    func decodeJsonObject<T>(jsonObject: [String: Any], options: JSONSerialization.WritingOptions = []) -> T? where T: Decodable {
           
         let result: Result<T?, Error> = decodeJsonObject(jsonObject: jsonObject, options: options)
         
@@ -237,7 +237,7 @@ struct JsonServices: JsonServicesType {
         }
     }
     
-    func decodeJsonObject<T>(jsonObject: [String: Any], options: JSONSerialization.WritingOptions = []) -> Result<T?, Error> where T : Decodable {
+    func decodeJsonObject<T>(jsonObject: [String: Any], options: JSONSerialization.WritingOptions = []) -> Result<T?, Error> where T: Decodable {
                 
         do {
             let jsonData: Data = try JSONSerialization.data(withJSONObject: jsonObject, options: options)
@@ -250,9 +250,9 @@ struct JsonServices: JsonServicesType {
     
     // MARK: - Encoding
     
-    func encode<T>(object: T, options: JSONSerialization.ReadingOptions = []) -> [String : Any] where T : Encodable {
+    func encode<T>(object: T, options: JSONSerialization.ReadingOptions = []) -> [String: Any] where T: Encodable {
         
-        let result: Result<[String : Any], Error> = encode(object: object, options: options)
+        let result: Result<[String: Any], Error> = encode(object: object, options: options)
         
         switch result {
         case .success(let data):
@@ -263,7 +263,7 @@ struct JsonServices: JsonServicesType {
         }
     }
     
-    func encode<T>(object: T, options: JSONSerialization.ReadingOptions = []) -> Result<[String : Any], Error> where T : Encodable {
+    func encode<T>(object: T, options: JSONSerialization.ReadingOptions = []) -> Result<[String: Any], Error> where T: Encodable {
                 
         do {
             

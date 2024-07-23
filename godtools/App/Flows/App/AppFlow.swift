@@ -530,7 +530,7 @@ extension AppFlow {
             color: .white,
             target: viewModel,
             action: #selector(viewModel.menuTapped),
-            accessibilityIdentifier: nil
+            accessibilityIdentifier: AccessibilityStrings.Button.dashboardMenu.id
         )
         
         let hostingController = AppHostingController<DashboardView>(
@@ -978,7 +978,7 @@ extension AppFlow {
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             viewSearchBarUseCase: appDiContainer.domainLayer.getViewSearchBarUseCase(),
             flowDelegate: self
-         )
+        )
         
         let view = ToolFilterCategorySelectionView(viewModel: viewModel)
         

@@ -12,7 +12,7 @@ class ObservableValue<T> {
     
     typealias Handler = ((_ value: T) -> Void)
     
-    private(set) var value : T
+    private(set) var value: T
 
     private var observers = [String: Handler]()
 

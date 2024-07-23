@@ -8,7 +8,7 @@
 
 import UIKit
 
-public extension UIView {
+extension UIView {
     
     func drawBorder(color: UIColor = UIColor.red) {
         layer.borderWidth = 1

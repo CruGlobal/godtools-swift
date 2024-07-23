@@ -40,20 +40,8 @@
 "allTools.spotlight.description" = "Iată câteva instrumente care credem că îți vor plăcea";
 "allTools.categories.title" = "Categorii";
 "tool_menu_item.lessons" = "Lecții";
-"parallelLanguage.yesButton.title" = "Da";
-"parallelLanguage.noButton.title" = "Nu, mulțumesc";
-"parallelLanguage.getStartedButton.title" = "Să începem";
-"parallelLanguage.selectLanguageButton.title" = "Selectează o limbă";
-"parellelLanguage.prompt" = "Vrei să setezi o limbă secundară?";
 "onboardingTutorial.beginButton.title" = "Începe";
-"onboardingQuickStart.2.title" = "Vreau să împărtășesc Biblia cu cineva";
-"onboardingQuickStart.2.button.title" = "Alege unul dintre instrumentele noastre";
 "onboardingTutorial.nextButton.title" = "Următorul";
-"onboardingQuickStart.title" = "Linkuri de pornire rapidă";
-"onboardingQuickStart.0.title" = "Vreau să explorez creștinismul";
-"onboardingQuickStart.0.button.title" = "Citește articolele noastre";
-"onboardingQuickStart.1.title" = "Vreau să aflu despre conversațiile pe marginea Bibliei";
-"onboardingQuickStart.1.button.title" = "Încearcă lecțiile noastre";
 "tool_offline_favorite_message" = "Un instrument va fi disponibil offline dacă apeși pictograma inimă, care îl adaugă la Favorite.";
 
 /* This is a category description of a tool that helps you start a conversation */

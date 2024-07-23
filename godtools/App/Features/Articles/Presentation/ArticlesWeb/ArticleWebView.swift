@@ -12,8 +12,8 @@ import WebKit
 class ArticleWebView: AppViewController {
     
     private let viewModel: ArticleWebViewModel
-        
-    private var webView: WKWebView!
+    private let webView: WKWebView = WKWebView(frame: UIScreen.main.bounds)
+    
     private var currentViewState: ArticleWebViewState?
     
     @IBOutlet weak private var loadingView: UIActivityIndicatorView!
@@ -24,7 +24,6 @@ class ArticleWebView: AppViewController {
         
     init(viewModel: ArticleWebViewModel, navigationBar: AppNavigationBar?) {
         
-        self.webView = WKWebView(frame: UIScreen.main.bounds)
         self.viewModel = viewModel
         
         super.init(nibName: String(describing: ArticleWebView.self), bundle: nil, navigationBar: navigationBar)
@@ -94,7 +93,7 @@ class ArticleWebView: AppViewController {
             
             switch currentViewState {
                 
-            case .errorMessage( _,  _):
+            case .errorMessage( _, _):
                 errorTitleLabel.text = ""
                 errorMessageLabel.text = ""
                 setErrorViewHidden(hidden: true)

@@ -12,15 +12,15 @@ import WebKit
 class WebContentView: AppViewController {
     
     private let viewModel: WebContentViewModel
-        
-    private var webView: WKWebView!
+    private let webView: WKWebView = WKWebView(frame: UIScreen.main.bounds)
+    private let screenAccessibility: AccessibilityStrings.Screen?
     
     @IBOutlet weak private var loadingView: UIActivityIndicatorView!
         
-    init(viewModel: WebContentViewModel, navigationBar: AppNavigationBar?) {
+    init(viewModel: WebContentViewModel, navigationBar: AppNavigationBar?, screenAccessibility: AccessibilityStrings.Screen?) {
         
-        self.webView = WKWebView(frame: UIScreen.main.bounds)
         self.viewModel = viewModel
+        self.screenAccessibility = screenAccessibility
         
         super.init(nibName: String(describing: WebContentView.self), bundle: nil, navigationBar: navigationBar)
     }
@@ -36,7 +36,11 @@ class WebContentView: AppViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         print("view didload: \(type(of: self))")
-            
+        
+        if let screenAccessibility = screenAccessibility {
+            addScreenAccessibility(screenAccessibility: screenAccessibility)
+        }
+        
         setupLayout()
         setupBinding()
     }
@@ -87,7 +91,7 @@ class WebContentView: AppViewController {
 
 extension WebContentView: WKNavigationDelegate {
     
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation) {
                 
         finishedLoadingWebView()
     }

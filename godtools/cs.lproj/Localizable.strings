@@ -39,20 +39,8 @@
 "allTools.spotlight.description" = "Tady jsou nějaké nástroje, o kterých jsme si mysleli, že by vás mohly zaujmout";
 "allTools.categories.title" = "Kategorie";
 "tool_menu_item.lessons" = "Lekce";
-"parallelLanguage.yesButton.title" = "Ano";
-"parallelLanguage.noButton.title" = "Ne, děkuji";
-"parallelLanguage.getStartedButton.title" = "Začít";
-"parallelLanguage.selectLanguageButton.title" = "Vybrat jazyk";
-"parellelLanguage.prompt" = "Chcete si nastavit druhý jazyk?";
 "onboardingTutorial.beginButton.title" = "Začněte";
-"onboardingQuickStart.2.title" = "Chci se s někým podělit o evangelium";
-"onboardingQuickStart.2.button.title" = "Vyberte si jeden z našich nástrojů";
 "onboardingTutorial.nextButton.title" = "Další";
-"onboardingQuickStart.title" = "Odkazy pro rychlý start";
-"onboardingQuickStart.0.title" = "Chci prozkoumat křesťanství";
-"onboardingQuickStart.0.button.title" = "Přečtěte si naše články";
-"onboardingQuickStart.1.title" = "Chci se dozvědět, jak vést rozhovory o evangeliu";
-"onboardingQuickStart.1.button.title" = "Vyzkoušejte naše lekce";
 "tool_offline_favorite_message" = "Klepnutím na ikonu srdíčka přidáte nástroj do svých oblíbených a budete jej mít k dispozici offline.";
 
 /* This is a category description of a tool that helps you start a conversation */

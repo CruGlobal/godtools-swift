@@ -269,7 +269,7 @@ class FileCache {
             
             // delete directory since contents were moved
             do {
-               try fileManager.removeItem(at: childDirectory)
+                try fileManager.removeItem(at: childDirectory)
             }
             catch let error {
                 return error

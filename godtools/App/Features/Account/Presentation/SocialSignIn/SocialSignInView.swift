@@ -11,18 +11,22 @@ import SwiftUI
 struct SocialSignInView: View {
     
     private let backgroundColor: Color
+    private let screenAccessibility: AccessibilityStrings.Screen
     
     @ObservedObject private var viewModel: SocialSignInViewModel
     
-    init(viewModel: SocialSignInViewModel, backgroundColor: Color) {
+    init(viewModel: SocialSignInViewModel, backgroundColor: Color, screenAccessibility: AccessibilityStrings.Screen) {
         
         self.viewModel = viewModel
         self.backgroundColor = backgroundColor
+        self.screenAccessibility = screenAccessibility
     }
     
     var body: some View {
         
         GeometryReader { geometry in
+            
+            AccessibilityScreenElementView(screenAccessibility: screenAccessibility)
             
             ZStack(alignment: .top) {
                 backgroundColor

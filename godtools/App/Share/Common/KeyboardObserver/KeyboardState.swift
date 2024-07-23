@@ -10,8 +10,8 @@ import Foundation
 
 enum KeyboardState {
     
-    case willShow
-    case willHide
-    case didShow
     case didHide
+    case didShow
+    case willHide
+    case willShow
 }

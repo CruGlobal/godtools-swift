@@ -1,0 +1,31 @@
+name: Swift Lint
+
+on:
+  pull_request:
+    branches: [ develop, master, feature/*, releases/* ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  swift_lint:
+    runs-on: macos-14
+    env:
+      FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT: 60
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install SwiftLint
+        run: brew install swiftlint
+
+      - name: Pod Install
+        uses: ./.github/actions/pod-install
+
+      - name: Swift Lint
+        run: bundle exec fastlane cru_shared_lane_swift_lint config_file:./.swiftlint.yml raise_if_swiftlint_error:true

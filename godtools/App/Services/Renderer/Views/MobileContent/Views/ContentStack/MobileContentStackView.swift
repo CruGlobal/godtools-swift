@@ -325,7 +325,7 @@ extension MobileContentStackView {
         }
     }
     
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
             
         guard let objectValue = object as? NSObject else {
             return
@@ -552,10 +552,9 @@ extension MobileContentStackView {
             }
         }
         
-        for childView in childViews {
-            if childView.visibilityState == .visible {
-                addTopAndBottomConstraintsToChildView(childView: childView)
-            }
+        for childView in childViews where childView.visibilityState == .visible {
+            
+            addTopAndBottomConstraintsToChildView(childView: childView)
         }
         
         childrenParentView.layoutIfNeeded()

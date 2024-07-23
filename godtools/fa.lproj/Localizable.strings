@@ -40,20 +40,8 @@
 "allTools.spotlight.description" = "ممکن است این ابزارها را بپسندید";
 "allTools.categories.title" = "دسته‌بندی‌ها";
 "tool_menu_item.lessons" = "درس‌ها";
-"parallelLanguage.yesButton.title" = "بله";
-"parallelLanguage.noButton.title" = "خیر، متشکرم";
-"parallelLanguage.getStartedButton.title" = "شروع کنید";
-"parallelLanguage.selectLanguageButton.title" = "انتخاب زبان";
-"parellelLanguage.prompt" = "مایلید زبان دومی تنظیم کنید؟";
 "onboardingTutorial.beginButton.title" = "شروع";
-"onboardingQuickStart.2.title" = "می‌خواهم انجیل را با دیگری به اشتراک بگذارم";
-"onboardingQuickStart.2.button.title" = "یکی از ابزارهای ما را انتخاب کنید";
 "onboardingTutorial.nextButton.title" = "بعدی";
-"onboardingQuickStart.title" = "لینک‌های شروع سریع";
-"onboardingQuickStart.0.title" = "می‌خواهم با مسیحیت آشنا شوم";
-"onboardingQuickStart.0.button.title" = "خواندن مقاله‌های ما";
-"onboardingQuickStart.1.title" = "می‌خواهم در مورد گفت‌وگوهای مربوط به انجیل بیشتر بدانم";
-"onboardingQuickStart.1.button.title" = "درس‌های ما را امتحان کنید";
 "tool_offline_favorite_message" = "با ضربه زدن روی آیکون قلب، که ابزار را به موارد دلخواه اضافه می‌کند، آن را به صورت آفلاین در دسترس قرار دهید.";
 
 /* This is a category description of a tool that helps you start a conversation */

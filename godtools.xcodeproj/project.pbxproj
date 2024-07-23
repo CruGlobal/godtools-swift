@@ -106,6 +106,7 @@
 		450FB8902BFBA1060015D945 /* RealmDatabaseDeleteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457E7A372BE5B39800265D92 /* RealmDatabaseDeleteTests.swift */; };
 		450FB8912BFBA1060015D945 /* RealmDatabaseReadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AA12D82BE55CF300C85BFF /* RealmDatabaseReadTests.swift */; };
 		450FB8922BFBA1060015D945 /* RealmDatabaseWriteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AA12DC2BE5741000C85BFF /* RealmDatabaseWriteTests.swift */; };
+		450FC7592C49591700F87282 /* MenuFlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450FC7582C49591700F87282 /* MenuFlowTests.swift */; };
 		4512C80A2B322D5900D162F3 /* ToolSettingsShareableItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4512C8082B322D5900D162F3 /* ToolSettingsShareableItemViewModel.swift */; };
 		4512C80B2B322D5900D162F3 /* ToolSettingsShareableItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4512C8092B322D5900D162F3 /* ToolSettingsShareableItemView.swift */; };
 		4512C80F2B322E4900D162F3 /* ToolSettingsLanguageDropDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4512C80E2B322E4900D162F3 /* ToolSettingsLanguageDropDownView.swift */; };
@@ -1726,6 +1727,7 @@
 		450F94D627A1F0F6009DEA43 /* MobileContentCardCollectionPageCardViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentCardCollectionPageCardViewModel.swift; sourceTree = "<group>"; };
 		450F94D727A1F0F6009DEA43 /* MobileContentCardCollectionPageCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentCardCollectionPageCardView.swift; sourceTree = "<group>"; };
 		450F94DE27A1F38E009DEA43 /* MobileContentCardCollectionPageItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentCardCollectionPageItemView.swift; sourceTree = "<group>"; };
+		450FC7582C49591700F87282 /* MenuFlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuFlowTests.swift; sourceTree = "<group>"; };
 		4512C8082B322D5900D162F3 /* ToolSettingsShareableItemViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolSettingsShareableItemViewModel.swift; sourceTree = "<group>"; };
 		4512C8092B322D5900D162F3 /* ToolSettingsShareableItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolSettingsShareableItemView.swift; sourceTree = "<group>"; };
 		4512C80E2B322E4900D162F3 /* ToolSettingsLanguageDropDownView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolSettingsLanguageDropDownView.swift; sourceTree = "<group>"; };
@@ -3840,6 +3842,14 @@
 				450F94DE27A1F38E009DEA43 /* MobileContentCardCollectionPageItemView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		450FC7572C49590D00F87282 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				450FC7582C49591700F87282 /* MenuFlowTests.swift */,
+			);
+			path = Menu;
 			sourceTree = "<group>";
 		};
 		4511D244286CB9D200276174 /* Data */ = {
@@ -7586,6 +7596,7 @@
 				45DC19162BB5B34D007542A5 /* BaseFlowTests.swift */,
 				45DC19132BB5B338007542A5 /* ChooseAppLanguage */,
 				45DC19102BB5AB21007542A5 /* LanguageSettings */,
+				450FC7572C49590D00F87282 /* Menu */,
 				45A415EE2A99429B0030E2C7 /* Onboarding */,
 			);
 			path = Flows;
@@ -11914,6 +11925,7 @@
 			files = (
 				459B7E692ABA3A4A0088F44B /* LaunchEnvironmentKey.swift in Sources */,
 				45A415F42A99429C0030E2C7 /* XCUIApplication+Query.swift in Sources */,
+				450FC7592C49591700F87282 /* MenuFlowTests.swift in Sources */,
 				45FBE5722AB8A33200BFBE92 /* AccessibilityStrings.swift in Sources */,
 				45D318F12AE6F9D300D74A87 /* LanguageCodeDomainModel.swift in Sources */,
 				45DEF4DE2AE9538C000C8F4B /* XCTestCase+AssertScreenDoesNotExist.swift in Sources */,

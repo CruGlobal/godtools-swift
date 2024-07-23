@@ -17,20 +17,8 @@
 "training_tip_quote" = "अवतरण";
 "training_tip_tip" = "टीप";
 "close" = "बंद";
-"parallelLanguage.yesButton.title" = "होय";
-"parallelLanguage.noButton.title" = "नाही धन्यवाद";
-"parallelLanguage.getStartedButton.title" = "सुरु करा";
-"parallelLanguage.selectLanguageButton.title" = "एक भाषा निवडा";
-"parellelLanguage.prompt" = "आपण अतिरिक्त भाषा सेट करू इच्छिता?";
 "onboardingTutorial.beginButton.title" = "सुरू करा";
-"onboardingQuickStart.2.title" = "मला गॉस्पेल कुणाशी तरी शेअर करायचे आहे";
-"onboardingQuickStart.2.button.title" = "आमच्या टूल्सपैकी एक निवडा";
 "onboardingTutorial.nextButton.title" = "यापुढील";
-"onboardingQuickStart.title" = "झटपट सुरुवात लिंक्स";
-"onboardingQuickStart.0.title" = "मला ख्रिश्चनिटी विषयी जाणून घ्यायचे आहे";
-"onboardingQuickStart.0.button.title" = "आमचे लेख वाचा";
-"onboardingQuickStart.1.title" = "मला गॉस्पेल-विषयक संभाषणे करण्याबद्दल जाणून घ्यायचे आहे";
-"onboardingQuickStart.1.button.title" = "आमचे धडे घेऊन पहा";
 "tool_offline_favorite_message" = "साधनाला आपल्या पसंतीत जोडणाऱ्या 'ह्रदय' चिन्हावर टॅप करून ते साधन ऑफलाइन उपलब्ध करा.";
 
 /* This is a category description of a tool that helps you start a conversation */

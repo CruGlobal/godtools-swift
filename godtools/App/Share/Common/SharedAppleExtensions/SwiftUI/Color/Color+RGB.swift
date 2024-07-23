@@ -9,7 +9,7 @@
 import Foundation
 import SwiftUI
 
-public extension Color {
+extension Color {
     
     static func getColorWithRGB(red: CGFloat, green: CGFloat, blue: CGFloat, opacity: CGFloat) -> Color {
         Color(.sRGB, red: red / 255, green: green / 255, blue: blue / 255, opacity: opacity)

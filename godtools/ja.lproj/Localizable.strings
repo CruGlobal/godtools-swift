@@ -41,20 +41,8 @@
 "allTools.spotlight.description" = "あなたにおすすめのツールです";
 "allTools.categories.title" = "カテゴリー";
 "tool_menu_item.lessons" = "レッスン";
-"parallelLanguage.yesButton.title" = "はい";
-"parallelLanguage.noButton.title" = "いいえ、結構です";
-"parallelLanguage.getStartedButton.title" = "開始する";
-"parallelLanguage.selectLanguageButton.title" = "言語を選択";
-"parellelLanguage.prompt" = "第二言語を設定しますか？";
 "onboardingTutorial.beginButton.title" = "始める";
-"onboardingQuickStart.2.title" = "キリストの教えを誰かと共有したい";
-"onboardingQuickStart.2.button.title" = "ツールを一つお選びください";
 "onboardingTutorial.nextButton.title" = "次";
-"onboardingQuickStart.title" = "クイックスタートリンク";
-"onboardingQuickStart.0.title" = "キリスト教について知りたい";
-"onboardingQuickStart.0.button.title" = "記事をお読みください";
-"onboardingQuickStart.1.title" = "キリストの教えについて会話をする方法を知りたい";
-"onboardingQuickStart.1.button.title" = "レッスンをお試しください";
 "tool_offline_favorite_message" = "ハートアイコンをタップすると、お気に入りに追加され、オフラインで利用できるようになります。";
 
 /* This is a category description of a tool that helps you start a conversation */

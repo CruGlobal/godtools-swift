@@ -39,7 +39,8 @@ struct LessonEvaluationView: View {
                             buttonSize: closeButtonSize,
                             tapped: {
                                 viewModel.closeTapped()
-                        })
+                            }
+                        )
                         .padding([.top], closeButtonTop)
                         .padding([.trailing], 5)
                     }

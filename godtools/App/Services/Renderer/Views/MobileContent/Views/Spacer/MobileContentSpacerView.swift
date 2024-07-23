@@ -13,7 +13,7 @@ class MobileContentSpacerView: MobileContentView {
     
     private let viewModel: MobileContentSpacerViewModel
     
-    private var heightConstraint: NSLayoutConstraint!
+    private var heightConstraint: NSLayoutConstraint?
     
     init(viewModel: MobileContentSpacerViewModel) {
         
@@ -23,7 +23,7 @@ class MobileContentSpacerView: MobileContentView {
     
         super.init(viewModel: viewModel, frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: height))
         
-        heightConstraint = NSLayoutConstraint(
+        let heightConstraint = NSLayoutConstraint(
             item: self,
             attribute: .height,
             relatedBy: .equal,
@@ -36,6 +36,8 @@ class MobileContentSpacerView: MobileContentView {
         heightConstraint.priority = UILayoutPriority(1000)
         
         addConstraint(heightConstraint)
+        
+        self.heightConstraint = heightConstraint
     }
     
     required init?(coder: NSCoder) {
@@ -47,7 +49,7 @@ class MobileContentSpacerView: MobileContentView {
     }
     
     func setHeight(height: CGFloat) {
-        heightConstraint.constant = height
+        heightConstraint?.constant = height
     }
     
     // MARK: - MobileContentView
@@ -56,4 +58,3 @@ class MobileContentSpacerView: MobileContentView {
         return .spacer
     }
 }
-
