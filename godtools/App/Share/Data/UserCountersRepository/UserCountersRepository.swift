@@ -65,7 +65,7 @@ class UserCountersRepository {
             .eraseToAnyPublisher()
     }
     
-    func incrementCachedUserCounterBy1(id: String) -> AnyPublisher<UserCounterDataModel, Error> {
+    func incrementCachedUserCounterBy1(id: String) -> AnyPublisher<[UserCounterDataModel], Error> {
         
         return cache.incrementUserCounterBy1(id: id)
     }

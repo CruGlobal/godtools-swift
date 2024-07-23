@@ -22,7 +22,7 @@ final class UserCountersRepositoryTests: XCTestCase {
         userCountersApi = UserCountersAPIMock()
         cancellables = Set<AnyCancellable>()
         
-        let realmDatabase = RealmDatabase(databaseConfiguration: RealmDatabaseMockConfiguration())
+        let realmDatabase = TestsInMemoryRealmDatabase()
         let userCountersCacheSync = RealmUserCountersCacheSync(realmDatabase: realmDatabase)
         let userCountersCache = RealmUserCountersCache(realmDatabase: realmDatabase, userCountersSync: userCountersCacheSync)
         
@@ -67,9 +67,9 @@ final class UserCountersRepositoryTests: XCTestCase {
 
                 expectation.fulfill()
 
-            } receiveValue: { userCounter in
+            } receiveValue: { (userCounters: [UserCounterDataModel]) in
 
-                updatedUserCounter = userCounter
+                updatedUserCounter = userCounters.first
             }
             .store(in: &cancellables)
 

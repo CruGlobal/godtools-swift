@@ -14,51 +14,22 @@ class RealmDatabase {
     
     private let databaseConfiguration: RealmDatabaseConfiguration
     private let config: Realm.Configuration
-    private let backgroundQueue: DispatchQueue = DispatchQueue(label: "realm.background_queue")
+    private let realmInstanceCreator: RealmInstanceCreator
     
-    private lazy var isInMemory: Bool = {
-        return config.inMemoryIdentifier != nil
-    }()
-    private lazy var inMemRealm: Realm = {
-        return try! Realm(configuration: config)
-    }()
-    
-    init(databaseConfiguration: RealmDatabaseConfiguration) {
+    init(databaseConfiguration: RealmDatabaseConfiguration, realmInstanceCreationType: RealmInstanceCreationType = .alwaysCreatesANewRealmInstance) {
         
         self.databaseConfiguration = databaseConfiguration
         config = databaseConfiguration.getRealmConfig()
+        realmInstanceCreator = RealmInstanceCreator(config: config, creationType: realmInstanceCreationType)
     }
 
     func openRealm() -> Realm {
-        if isInMemory {
-            
-            return inMemRealm
-        }
         
-        return try! Realm(configuration: config)
+        return realmInstanceCreator.createRealm()
     }
     
     func background(async: @escaping ((_ realm: Realm) -> Void)) {
-        if isInMemory {
-            async(inMemRealm)
-            return
-        }
-        
-        backgroundQueue.async {
-            autoreleasepool {
                 
-                let realm: Realm
-               
-                do {
-                    realm = try Realm(configuration: self.config)
-                }
-                catch let error {
-                    assertionFailure("RealmDatabase: Did fail to initialize background realm with error: \(error.localizedDescription) ")
-                    realm = try! Realm(configuration: self.config)
-                }
-                
-                async(realm)
-            }
-        }
+        realmInstanceCreator.createBackgroundRealm(async: async)
     }
 }

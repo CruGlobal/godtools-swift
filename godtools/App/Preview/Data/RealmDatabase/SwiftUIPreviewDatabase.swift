@@ -11,9 +11,9 @@ import RealmSwift
 
 class SwiftUIPreviewDatabase: RealmDatabase {
     
-    override init(databaseConfiguration: RealmDatabaseConfiguration) {
+    override init(databaseConfiguration: RealmDatabaseConfiguration, realmInstanceCreationType: RealmInstanceCreationType = .alwaysCreatesANewRealmInstance) {
         
-        super.init(databaseConfiguration: databaseConfiguration)
+        super.init(databaseConfiguration: databaseConfiguration, realmInstanceCreationType: realmInstanceCreationType)
         
         let objects: [Object] = getResources() + getLanguages()
         
