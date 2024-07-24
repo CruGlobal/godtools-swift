@@ -235,4 +235,6 @@ Programu inaweza kupakuliwa kwenye https://godtoolsapp.com";
 
 // Language Name Strings
 "language_name_fa" = "Kipersia (Kifarsi)";
-
+"language_name_fil" = "Kifilipino (Kitagalog)";
+"language_name_fil-x-taglish" = "Kitaglish";
+"language_name_sid" = "Kisidama";

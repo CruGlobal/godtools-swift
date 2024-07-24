@@ -84,4 +84,7 @@
 
 // Language Name Strings
 "language_name_fa" = "ፐርሽያን (ፋርሲ)";
+"language_name_fil" = "ፊሊፒኖ (ታጋሎግ)";
 
+"onboardingTutorial.0.title" = "ለእያንዳንዱ ውይይት ተዘጋጅተዋል";
+"onboardingTutorial.1.title" = "ከሁሉም ጋር ስለ እግዚአብሔር ተነጋገሩ";
