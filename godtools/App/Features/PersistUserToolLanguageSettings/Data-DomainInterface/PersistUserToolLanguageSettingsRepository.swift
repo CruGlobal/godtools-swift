@@ -17,13 +17,12 @@ class PersistUserToolLanguageSettingsRepository: PersistUserToolLanguageSettings
         self.userToolSettingsRepository = userToolSettingsRepository
     }
     
-    func persistUserToolLanguageSettingsPublisher(toolId: String, primaryLanguageId: String, parallelLanguageId: String?, selectedLanguageId: String) -> AnyPublisher<Bool, Never> {
+    func persistUserToolLanguageSettingsPublisher(toolId: String, primaryLanguageId: String, parallelLanguageId: String?) -> AnyPublisher<Bool, Never> {
         
         userToolSettingsRepository.storeUserToolSettings(
             toolId: toolId,
             primaryLanguageId: primaryLanguageId,
-            parallelLanguageId: parallelLanguageId,
-            selectedLanguageId: selectedLanguageId
+            parallelLanguageId: parallelLanguageId
         )
         
         return Just(true)
