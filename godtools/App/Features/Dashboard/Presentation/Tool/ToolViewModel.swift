@@ -219,8 +219,7 @@ class ToolViewModel: MobileContentPagesViewModel {
                         .persistUserToolSettingsPublisher(
                             with: renderer.value.resource.id,
                             primaryLanguageId: languages.primaryLanguageId,
-                            parallelLanguageId: languages.parallelLanguageId,
-                            selectedLanguageId: languages.selectedLanguageId
+                            parallelLanguageId: languages.parallelLanguageId
                         )
                 }
                 .switchToLatest()
