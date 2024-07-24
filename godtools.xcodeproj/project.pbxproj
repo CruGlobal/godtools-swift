@@ -1550,7 +1550,6 @@
 		D4BE3F6E2C0907E900887BFD /* RealmUserToolSettingsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BE3F6D2C0907E900887BFD /* RealmUserToolSettingsCache.swift */; };
 		D4BE3F702C0907FC00887BFD /* RealmUserToolSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BE3F6F2C0907FC00887BFD /* RealmUserToolSettings.swift */; };
 		D4BE3F722C0909BA00887BFD /* UserToolSettingsDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BE3F712C0909BA00887BFD /* UserToolSettingsDataModel.swift */; };
-		D4BE3F782C0E967200887BFD /* UserToolSettingsDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BE3F772C0E967200887BFD /* UserToolSettingsDomainModel.swift */; };
 		D4C14E9229411A35001465F1 /* MobileContentAuthTokenDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C14E9129411A35001465F1 /* MobileContentAuthTokenDataModel.swift */; };
 		D4C759212BB643EF00D6AEB2 /* SearchBarLegacy.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C759202BB643EF00D6AEB2 /* SearchBarLegacy.swift */; };
 		D4E243CC29EDC6A100EA4BB7 /* SendFeedbackWebContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E243CB29EDC6A100EA4BB7 /* SendFeedbackWebContent.swift */; };
@@ -3259,7 +3258,6 @@
 		D4BE3F6D2C0907E900887BFD /* RealmUserToolSettingsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmUserToolSettingsCache.swift; sourceTree = "<group>"; };
 		D4BE3F6F2C0907FC00887BFD /* RealmUserToolSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmUserToolSettings.swift; sourceTree = "<group>"; };
 		D4BE3F712C0909BA00887BFD /* UserToolSettingsDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserToolSettingsDataModel.swift; sourceTree = "<group>"; };
-		D4BE3F772C0E967200887BFD /* UserToolSettingsDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserToolSettingsDomainModel.swift; sourceTree = "<group>"; };
 		D4C14E9129411A35001465F1 /* MobileContentAuthTokenDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentAuthTokenDataModel.swift; sourceTree = "<group>"; };
 		D4C759202BB643EF00D6AEB2 /* SearchBarLegacy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarLegacy.swift; sourceTree = "<group>"; };
 		D4E243CB29EDC6A100EA4BB7 /* SendFeedbackWebContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendFeedbackWebContent.swift; sourceTree = "<group>"; };
@@ -10039,7 +10037,6 @@
 				4512D4CB2B29127200DFAFB3 /* ToolSettingsToolLanguageDomainModel.swift */,
 				4512D4CC2B29127200DFAFB3 /* ToolSettingsToolLanguagesListInterfaceStringsDomainModel.swift */,
 				450B7FC12B2B53A2000B9035 /* ToolSettingsToolLanguagesListTypeDomainModel.swift */,
-				D4BE3F772C0E967200887BFD /* UserToolSettingsDomainModel.swift */,
 				45C649BD2B31E178000249E0 /* ViewShareToolDomainModel.swift */,
 				45EA5AA02B2246A800D9E330 /* ViewToolSettingsDomainModel.swift */,
 				4512D4CA2B29127200DFAFB3 /* ViewToolSettingsToolLanguagesListDomainModel.swift */,
@@ -12895,7 +12892,6 @@
 				45AC9DEC2B28A9CD00DEEBFE /* DownloadableLanguageItemView.swift in Sources */,
 				45AE974C27C97A9500C2CB33 /* Tabs+MobileContentRenderableModel.swift in Sources */,
 				45AE974427C97A9400C2CB33 /* Modal+MobileContentRenderableModel.swift in Sources */,
-				D4BE3F782C0E967200887BFD /* UserToolSettingsDomainModel.swift in Sources */,
 				D4AFA44F2BAD0A9200318023 /* GetToolFilterCategoriesInterfaceStringsRepository.swift in Sources */,
 				4529B96E289345480011F16B /* TranslationManifestParserType.swift in Sources */,
 				4555840C269F2DA500C3FF14 /* MobileContentErrorViewModel.swift in Sources */,
