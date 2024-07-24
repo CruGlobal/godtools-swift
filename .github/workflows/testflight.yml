@@ -14,7 +14,6 @@ concurrency:
 jobs:
   distribute_to_testflight:
     runs-on: macos-14
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
     env:
       FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT: 60
     steps:
