@@ -1,3 +1,4 @@
+"language_name_fil" = "ፊሊፒኖ (ታጋሎግ)";
 "language_name_fil-x-taglish" = "ታግሊሽ";
 "language_name_sid" = "ሲዳማ";
 "onboardingTutorial.chooseLanguageButton.title" = "ቋንቋ ይምረጡ";
@@ -172,9 +173,9 @@
 "lesson_evaluation.wasThisHelpful" = "ይህ ትምህርት ለእርስዎ ጠቃሚ ነበር?";
 "lesson_evaluation.shareFaith" = "መንፈሳዊ ውይይት ለመጀመር ምን ያህል ዝግጁ ነዎት?";
 "lesson_evaluation.sendButtonTitle" = "አስተያይት ይላኩ";
-"onboardingTutorial.0.title" = "ለእያንዳንዱ ውይይት ዝግጁ";
+"onboardingTutorial.0.title" = "ለእያንዳንዱ ውይይት ተዘጋጅተዋል";
 "onboardingTutorial.0.videoLink.title" = "ቪዲዮ ይመልከቱ";
-"onboardingTutorial.1.title" = "ከማንም ጋር ስለ እግዚአብሔር ተነጋገሩ";
+"onboardingTutorial.1.title" = "ከሁሉም ጋር ስለ እግዚአብሔር ተነጋገሩ";
 "onboardingTutorial.1.message" = "GodTools ስለ እግዚአብሔር ትርጉም ያለው ንግግሮች እንዲያደርጉ ያግዝዎታል።";
 "onboardingTutorial.2.title" = "አስፈላጊ ለሆኑ ቅፅበቶች ይዘጋጁ";
 "onboardingTutorial.2.message" = "ስለ እምነት ውይይቶችን እንዴት ከህይወቶ ጋር በማዋሀድ በቀላሉ ማውራት እንደሚችሉ ይወቁ።";
