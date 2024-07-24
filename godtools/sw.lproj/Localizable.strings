@@ -1,3 +1,56 @@
+"language_name_fil" = "Kifilipino (Kitagalog)";
+"language_name_fil-x-taglish" = "Kitaglish";
+"language_name_sid" = "Kisidama";
+"onboardingTutorial.chooseLanguageButton.title" = "Chagua lugha";
+"languageSettings.confirmAppLanguage.message" = "Umechagua %@ kama lugha ya programu yako. Hii itabadilisha lugha nzima ya programu ya GodTools. Una uhakika?";
+"languageSettings.confirmAppLanguage.changeLanguageButton.title" = "Badili lugha";
+"languageSettings.confirmAppLanguage.nevermindButton.title" = "Sio lazima";
+"languageSettings.appInterface.title" = "Lugha ya kiolesura cha Programu";
+"languageSettings.appInterface.message" = "Chagua lugha ambayo ungependa programu nzima ioneshwe kwayo.";
+"languageSettings.appInterface.languagesAvailable" = "Lugha zinazopatikana";
+"languageSettings.toolLanguagesAvailableOffline.title" = "Lugha za kifaa zinazopatikana bila ya mtandao";
+"languageSettings.toolLanguagesAvailableOffline.message" = "Pakua vifaa vyote kwa lugha moja ili viweze kupatikana hata kama huna huduma ya WiFi au mtandao wa kwenye simu. Weka lugha ya kifaa kupitia kitufe cha chaguo ndani ya kifaa hicho.";
+"languageSettings.toolLanguagesAvailableOffline.editDownloadedLanguagesButton.title" = "Hariri lugha zilizopakuliwa";
+"allTools.filter.title" = "Chagua";
+"allTools.filter.anyCategory" = "Aina yoyote";
+"allTools.filter.anyLanguage" = "Lugha yoyote";
+"languageSettings.appLanguage.title" = "Lugha ya Programu";
+"authError.userAccountAlreadyExists.message" = "Akaunti ya mtumiaji tayari ipo";
+"authError.userAccountNotFound.message" = "Akaunti ya mtumiaji haipo";
+"createAccount.title" = "Unda Akaunti";
+"createAccount.subtitle" = "Jisajili kwa kuunda akaunti ili uweze kuona shuhuda halisi, kutiwa moyo na kupata mwongozo wa matumizi rahisi.";
+"confirmDeleteAccount.confirmButton.title" = "Futa Akaunti";
+"accountDeletedAlert.title" = "Akaunti imefutwa";
+"accountDeletedAlert.message" = "Akaunti yako imefutwa";
+"deleteAccount.title" = "Usiondoke mapema";
+"deleteAccount.subtitle" = "Ikiwa utafuta akaunti yako, hautaweza kufikia zana ulizopenda au shughuli za akaunti yako.";
+"deleteAccount.confirmButton.title" = "Futa akaunti yangu";
+"deleteAccount.cancelButton.title" = "Tunza akaunti yangu";
+"signIn.title" = "Ingia";
+"signIn.subtitle" = "Jisajili kwa kuunda akaunti ili uweze kuona shuhuda halisi, kutiwa moyo na kupata mwongozo wa matumizi rahisi.";
+"signIn.google" = "Ingia kwa kutumia Google";
+"signIn.facebook" = "Ingia kwa kutumia Facebook";
+"menu_getStarted" = "Anza";
+"menu_support" = "Msaada";
+"menu_about" = "Kuhusu";
+"menu.sendFeedback" = "Toa mrejesho";
+"menu.reportABug" = "Ripoti hitilafu";
+"menu.askAQuestion" = "Uliza swali";
+"menu.leaveAReview" = "Acha maoni";
+"account.badges.sectionTitle" = "Vyeti vyako";
+"account.activity.sectionTitle" = "Shughuli zako";
+
+/* Just translate "Joined" - leave the %@ - this is the date they started using GodTools */
+"account.joinedOn" = "Jumuika %@";
+
+"account.globalActivity.title" = "Shughuli za kiulimwengu";
+"toolDetails.conversationStarters.title" = "Vianzisho vya mazungumzo";
+
+/* A list of the main points of the tool will live behind a section called "Outline" */
+"toolDetails.outline.title" = "Muhtasari";
+
+"toolDetails.bibleReferences.title" = "Marejeleo ya Biblia";
+
 /* This About refers to the whole app. */
 "aboutApp.navTitle" = "Kuhusu";
 
@@ -7,6 +60,7 @@
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "Haipatikani kwenye %@";
 
+"menu.deleteAccount" = "Futa Akaunti";
 "tool_menu_item.tools" = "Zana";
 "lessons.pageTitle" = "Mafunzo kwa ajili yako";
 "lessons.pageSubtitle" = "Mawazo ya vitendo ya kujenga mahusiano na kuanza mazungumzo yenye maana.";
@@ -39,22 +93,48 @@
 "allTools.spotlight.title" = "Mwangaza wa Zana";
 "allTools.spotlight.description" = "Hapa kuna baadhi ya zana ambazo tulifikiri unaweza kuzipenda";
 "allTools.categories.title" = "Aina";
+"training_tip_ask" = "Uliza";
+"training_tip_consider" = "Zingatia";
+"training_tip_prepare" = "Jiandae";
+"training_tip_quote" = "Nukuu";
+"training_tip_tip" = "Mwongozo";
+"start_training" = "Anza Kufunza";
+"close" = "Funga";
 "tool_menu_item.lessons" = "Masomo";
-"parallelLanguage.yesButton.title" = "Ndio";
-"parallelLanguage.noButton.title" = "Hapana Asante";
-"parallelLanguage.getStartedButton.title" = "Anza";
-"parallelLanguage.selectLanguageButton.title" = "Chagua lugha";
-"parellelLanguage.prompt" = "Je, ungependa kuweka lugha ya sekondari?";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.continueButton.title.closeTutorial" = "Funga mafunzo";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.tool.title" = "Zana";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.tool.message" = "Kila kifaa kimetengenezwa kwaajili ya hatua tofauti za mazungumzo - kabla, wakati wa au baada ya mazungumzo.";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.toolTip.title" = "Miongozo ya kifaa";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.toolTip.message" = "Miongozo ya GodTools inakusaidia wakati unamuelewesha mtu kuhusu Injili na kukutana na Yesu.";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.screenShare.title" = "Kushirikisha skrini";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.screenShare.message" = "Sasa unapotumia kifaa hiki kujadili Injili, unaweza kushirikisha skrini yako hata ukiwa mbali na mtu mwingine.";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.lesson.title" = "Masomo";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.lesson.message" = "Katika kila somo la GodTools utajifunza kitu kitakachokusaidia kuwa na mazungumzo ya kweli kuhusu Mungu.";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.findTutorial.title" = "Utapata mafunzo haya kwenye menyu wakati wowote unapoyahitaji.";
+
 "onboardingTutorial.beginButton.title" = "Anza";
-"onboardingQuickStart.2.title" = "Ninataka kushirikisha mwingine na injili";
-"onboardingQuickStart.2.button.title" = "Chagua moja ya zana zetu";
 "onboardingTutorial.nextButton.title" = "Ijayo";
-"onboardingQuickStart.title" = "Viungo muhimo vya kuanza";
-"onboardingQuickStart.0.title" = "Ninataka kuchunguza Ukristo";
-"onboardingQuickStart.0.button.title" = "Soma makala yetu";
-"onboardingQuickStart.1.title" = "Ninataka kuanza kuwa na mazungumzo ya injili";
-"onboardingQuickStart.1.button.title" = "Jaribu Masomo yetu";
-"tool_offline_favorite_message" = "Fanya zana ipatikane nje ya mkondo kwa kudonoa ikoni ya moyo inayoiongeza kwenye Vipendwa vyako.";
+"tool_offline_favorite_message" = "Fanya zana ipatikane bila mtandao kwa kugusa ikoni ya moyo, ambayo itaongeza zana hiyo kwenye vipendwa vyako.";
 
 /* This is a category description of a tool that helps you start a conversation */
 "tool_category_conversation_starter" = "Kianzilishi cha Gumzo";
@@ -76,6 +156,16 @@
 Kama hutapokea ujumbe huu hadi baadaye, kiungo kinaweza kukosa kufanya kazi. Tunaweza kujaribu wakati mwingine.";
 "exit_tract_remote_share_session.message" = "Ondoka sasa kutoka kipindi cha kuchangia ukiwa mbali?";
 "load_tool_remote_session.message" = "Anza Kuchangia kupitia kuonyesha Skrini...";
+"learn_to_share_tool.learn_to_share.title" = "Jifunze kusambaza hiki kifaa kwa mtu yeyote";
+"learn_to_share_tool.learn_to_share.message" = "Jifunze kutumia mbinu nyingi za kifaa kwa kadri unavyohitaji ili uwe na uwezo wa kushirikisha kifaa hiki kwa wengine.";
+"learn_to_share_tool.tips_light_the_way.title" = "Njia za kukuongoza";
+"learn_to_share_tool.tips_light_the_way.message" = "Kwenye skrini fulani, utaona alama mbalimbali. Bonyeza alama itakayoonesha mbinu itakayokusaidia kuzungumzia maudhui yaliyo kwenye skrini.";
+"learn_to_share_tool.light_up_the_tips.title" = "Zingatia mbinu";
+"learn_to_share_tool.light_up_the_tips.message" = "Ukizingatia mbinu, inakuwa umekamilisha sehemu hiyo ya mafunzo. Huna haja ya kutumia kila mbinu katika kila mazungumzo.";
+"lesson_evaluation.title" = "Tathmini";
+"lesson_evaluation.wasThisHelpful" = "Je, somo hili limekuwa na msaada kwako?";
+"lesson_evaluation.shareFaith" = "Je, uko tayari kuanza kufanya mazungumzo ya kiroho?";
+"lesson_evaluation.sendButtonTitle" = "Toa mrejesho";
 "onboardingTutorial.0.title" = "Tayari kwa mazungumzo yote";
 "onboardingTutorial.0.videoLink.title" = "Tazama Video";
 "onboardingTutorial.1.title" = "Ongea kuhusu Mungu na yeyote yule";
@@ -120,10 +210,10 @@ Kama hutapokea ujumbe huu hadi baadaye, kiungo kinaweza kukosa kufanya kazi. Tun
 "no_more_tools" = "Umepakua zana zote zilizopo.";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
-"my_tools" = "Zana Zangu";
+"my_tools" = "Vipendwa";
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
-"find_tools" = "Pata Zana";
+"find_tools" = "Zana Zote";
 
 "unavailable" = "Hazipatikani";
 
@@ -136,9 +226,13 @@ Kama hutapokea ujumbe huu hadi baadaye, kiungo kinaweza kukosa kufanya kazi. Tun
 "okay" = "Sawa";
 // Menu
 "menu_general" = "Kuu";
-"menu_share" = "Shirikisha";
+"menu_account" = "Akaunti";
+"menu_share" = "Sambaza";
 "menu_legal" = "Kisheria";
 "language_settings" = "Mipangilio ya Lugha";
+"menu.tutorial" = "Mafunzo";
+"menu.my_account" = "Akaunti yangu";
+
 // Login
 "login" = "Ingia";
 "logout" = "Toka";
@@ -151,10 +245,10 @@ Kama hutapokea ujumbe huu hadi baadaye, kiungo kinaweza kukosa kufanya kazi. Tun
 "contact_us" = "Wasiliana Nasi";
 "preview_mode_translators_only" = "Angalia Hali (Watafsiri Pekee)";
 "share_god_tools" = "Shirikisha wenzako kwa programu ya GodTools";
-"share_a_story_with_us" = "Tushirikishe Kwenye Hadithi Yako";
-"terms_of_use" = "Masharti ya Matumizi";
-"privacy_policy" = "Sera ya Faragha";
-"copyright_info" = "Maelezo ya Hakimiliki";
+"share_a_story_with_us" = "Tushirikishe shuhuda";
+"terms_of_use" = "Masharti ya matumizi";
+"privacy_policy" = "Sera ya faragha";
+"copyright_info" = "Taarifa za Hakimiliki";
 "share_god_tools_share_sheet_text" = "Pakua programu ya GodTools: https://godtoolsapp.com
 
 Toleo la mtandao linaweza kupatikana kwenye https://knowgod.com/";
@@ -162,8 +256,8 @@ Toleo la mtandao linaweza kupatikana kwenye https://knowgod.com/";
 // Add Tools
 "add_tools" = "Ongeza Vifaa";
 
-"total_views" = "Asilimia (%d) ya maoni";
-"total_languages" = "Asilimia (%d) ya lugha";
+"total_views" = "Maoni %d";
+"total_languages" = "Lugha %d";
 
 // Language Settings
 "primary_language" = "Lugha ya Msingi";
@@ -214,6 +308,8 @@ Programu inaweza kupakuliwa kwenye https://godtoolsapp.com";
 
 // About
 "general_about_1" = "GodTools inakusaidia kueneza imani yako kwa njia rahisi na ya wazi.";
+// Tutorial
+"tutorial.tutorialItem.0.title" = "Tazama";
 "general_about_2" = "Vifaa hivi vinasaidia kumwambia mtu kwa ujasiri jinsi wanaweza kuanzisha uhusiano na Mungu kupitia Yesu Kristo, hata kama hujawahi kushiriki imani yako kabla au wanasema ama wanaongea lugha tofauti.";
 "general_about_3" = "Chagua kutoka kwa aina mbalimbali za zana kulingana na upendeleo wako na watumiaji wako. Sio zana zote zinazopatikana kwa kila lugha.";
 "general_about_4" = "Viungo vya rasilimali nyingine vinajumuishwa mwishoni mwa kila chombo.";
@@ -226,15 +322,26 @@ Programu inaweza kupakuliwa kwenye https://godtoolsapp.com";
 "general_about_9" = "Unapopata hatua ya kushiriki imani yako, kumbuka kwamba Mungu ndiye anayebadilisha moyo. Mpende kila mtu vizuri kwa kusikiliza kwa ufahamu.";
 "general_about_10" = "\"Hebu mazungumzo yako yote yawe kamili ya neema, iliyohifadhiwa na chumvi, ili uweze kujua jinsi ya kujibu kila mtu.\" Wakolosai, sura ya Nne, aya ya sita (Wakolosai  4:6).";
 
+// OpenTutorial
+"openTutorial.showTutorialLabel.text" = "Onesha mafunzo";
 // Downloads
 "Download in progress" = "Kupakua kunaendelea";
+
+"openTutorial.openTutorialButton.title" = "Fungua Mafunzo";
 
 // Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "Iliyopita";
 "card_status2" = "Ijayo";
 
+"account.activity.title" = "Shughuli";
+
 // Language Name Strings
 "language_name_fa" = "Kipersia (Kifarsi)";
-"language_name_fil" = "Kifilipino (Kitagalog)";
-"language_name_fil-x-taglish" = "Kitaglish";
-"language_name_sid" = "Kisidama";
+
+// Account Activity
+"accountActivity.globalAnalytics.header.title" = "Shughuli za kiulimwengu";
+"accountActivity.globalAnalytics.users.title" = "Watumiaji \nMaalumu";
+"accountActivity.globalAnalytics.gospelPresentation.title" = "Mawasilisho ya Injili";
+"accountActivity.globalAnalytics.launches.title" = "Vipindi";
+"accountActivity.globalAnalytics.countries.title" = "Nchi";
+

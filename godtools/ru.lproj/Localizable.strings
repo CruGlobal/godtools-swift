@@ -1,3 +1,4 @@
+"language_name_fil" = "Филиппинский (Тагальский)";
 "language_name_fil-x-taglish" = "Тагальский";
 "language_name_sid" = "Сидамо";
 "onboardingTutorial.chooseLanguageButton.title" = "Выбрать язык";
@@ -44,48 +45,6 @@
 "menu.leaveAReview" = "Оставить отзыв";
 "account.badges.sectionTitle" = "Ваши значки";
 "account.activity.sectionTitle" = "Ваша активность";
-
-/* This is a title on a dashboard that will show the Number of Times a person has opened a tool */
-"account.activity.toolOpens" = "Открыто инструментов";
-
-/* This is a title on a dashboard that will show the Number of Times a person has completed a lesson */
-"account.activity.lessonCompletion" = "Пройдено уроков";
-
-/* This is a title on a dashboard that will show the Number of Times a person has used the screen share function */
-"account.activity.screenShares" = "Экраны";
-
-/* This is a title on a dashboard that will show the Number of Times a person has shared a link */
-"account.activity.linksShared" = "Отправленные ссылки";
-
-/* This is a title on a dashboard that will show the Number of different languages they have used */
-"account.activity.languagesUsed" = "Языки";
-
-"account.activity.sessions" = "Сессии";
-"badges.tipsCompleted.singular" = "Пройдено 1 подсказок по обучению";
-
-/* leave %d in phrase - this is the number of articles that the user has read */
-"badges.articlesOpened.plural" = "Прочитайте статьи (%d)";
-
-/* when they have read only 1 articles */
-"badges.articlesOpened.singular" = "Прочитайте 1 статью";
-
-/* leave %d in phrase - this is the number of images that the user has shared */
-"badges.imagesShared.plural" = "Отправлено %d изображений";
-
-"badges.imagesShared.singular" = "Отправлено 1 изображений";
-
-/* leave %d in phrase - this is the number of lessons that the user has completed */
-"badges.lessonsCompleted.plural" = "Завершены %d уроки";
-
-"badges.lessonsCompleted.singular" = "Завершены 1 уроки";
-
-/* leave %d in phrase - this is the number of tools that the user has opened */
-"badges.toolsOpened.plural" = "Открыты %d инструменты";
-
-"badges.toolsOpened.singular" = "Открыты 1 инструменты";
-
-/* leave %d in phrase - this is the number of tips that the user has completed */
-"badges.tipsCompleted.plural" = "Пройдено %d подсказок по обучению";
 
 /* Just translate "Joined" - leave the %@ - this is the date they started using GodTools */
 "account.joinedOn" = "Присоединилось %@";
@@ -150,12 +109,6 @@
 "start_training" = "Начать обучение";
 "close" = "Закрыть";
 "tool_menu_item.lessons" = "Уроки";
-"parallelLanguage.yesButton.title" = "Да";
-"parallelLanguage.noButton.title" = "Нет, спасибо";
-"parallelLanguage.selectButton.title" = "Выбрать";
-"parallelLanguage.getStartedButton.title" = "Начать";
-"parallelLanguage.selectLanguageButton.title" = "Выберите язык";
-"parellelLanguage.prompt" = "Хотите установить второй язык?";
 
 /* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.continueButton.title.closeTutorial" = "Закрыть руководство";
@@ -188,14 +141,7 @@
 "tutorial.findTutorial.title" = "Это руководство будет доступно для повторного просмотра в меню";
 
 "onboardingTutorial.beginButton.title" = "Начать";
-"onboardingQuickStart.2.title" = "Я хочу поделиться Евангелием с другими";
-"onboardingQuickStart.2.button.title" = "Выберите один из наших инструментов";
 "onboardingTutorial.nextButton.title" = "Дальше";
-"onboardingQuickStart.title" = "Ссылки для быстрого начала";
-"onboardingQuickStart.0.title" = "Я хочу больше узнать об Иисусе.";
-"onboardingQuickStart.0.button.title" = "Прочитайте наши статьи";
-"onboardingQuickStart.1.title" = "Я хочу научиться вести разговоры о Евангелии";
-"onboardingQuickStart.1.button.title" = "Попробуйте наши уроки";
 "tool_offline_favorite_message" = "Нажав на значок сердца, вы добавите инструмент в избранное, что сделает его доступным, даже когда вы не в сети.";
 
 /* This is a category description of a tool that helps you start a conversation */
@@ -442,5 +388,3 @@
 "onboardingTutorial.appUsageItem.3.message" = "Выберите свой язык из 90+ представленных в приложении";
 "onboardingTutorial.appUsageItem.4.message" = "Помогите другим в их духовном росте";
 "onboardingTutorial.showMoreButton.title" = "Покажите еще";
-
-"language_name_fil" = "Филиппинский (Тагальский)";

@@ -1,3 +1,4 @@
+"language_name_fil" = "Filipino (Tagalog)";
 "language_name_fil-x-taglish" = "Taglish";
 "language_name_sid" = "Sidamo";
 "onboardingTutorial.chooseLanguageButton.title" = "Elegir idioma";
@@ -44,48 +45,6 @@
 "menu.leaveAReview" = "Deja una opinión";
 "account.badges.sectionTitle" = "Tus insignias";
 "account.activity.sectionTitle" = "Tu actividad";
-
-/* This is a title on a dashboard that will show the Number of Times a person has opened a tool */
-"account.activity.toolOpens" = "Herramientas abiertas";
-
-/* This is a title on a dashboard that will show the Number of Times a person has completed a lesson */
-"account.activity.lessonCompletion" = "Lecciones completada";
-
-/* This is a title on a dashboard that will show the Number of Times a person has used the screen share function */
-"account.activity.screenShares" = "Pantalla Compartidas";
-
-/* This is a title on a dashboard that will show the Number of Times a person has shared a link */
-"account.activity.linksShared" = "Enlace compartido";
-
-/* This is a title on a dashboard that will show the Number of different languages they have used */
-"account.activity.languagesUsed" = "Idioma utilizados";
-
-"account.activity.sessions" = "Sesiones";
-"badges.tipsCompleted.singular" = "Tip de entrenamiento 1 completado";
-
-/* leave %d in phrase - this is the number of articles that the user has read */
-"badges.articlesOpened.plural" = "Leer %d artículos";
-
-/* when they have read only 1 articles */
-"badges.articlesOpened.singular" = "Leer 1 artículo";
-
-/* leave %d in phrase - this is the number of images that the user has shared */
-"badges.imagesShared.plural" = "Imagen %d compartida";
-
-"badges.imagesShared.singular" = "Imagen 1 compartida";
-
-/* leave %d in phrase - this is the number of lessons that the user has completed */
-"badges.lessonsCompleted.plural" = "Lección %d completada";
-
-"badges.lessonsCompleted.singular" = "Lección 1 completada";
-
-/* leave %d in phrase - this is the number of tools that the user has opened */
-"badges.toolsOpened.plural" = "Herramienta %d abierta";
-
-"badges.toolsOpened.singular" = "Herramienta 1 abierta";
-
-/* leave %d in phrase - this is the number of tips that the user has completed */
-"badges.tipsCompleted.plural" = "Tips de entrenamiento %d completado";
 
 /* Just translate "Joined" - leave the %@ - this is the date they started using GodTools */
 "account.joinedOn" = "Unirse %@";
@@ -150,12 +109,6 @@
 "start_training" = "Comenzar entrenamiento";
 "close" = "Cerrar";
 "tool_menu_item.lessons" = "Lecciones";
-"parallelLanguage.yesButton.title" = "Sí";
-"parallelLanguage.noButton.title" = "No, gracias";
-"parallelLanguage.selectButton.title" = "Seleccione";
-"parallelLanguage.getStartedButton.title" = "Comenzar";
-"parallelLanguage.selectLanguageButton.title" = "Seleccione un idioma";
-"parellelLanguage.prompt" = "¿Quiere establecer un idioma secundario?";
 
 /* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.continueButton.title.closeTutorial" = "Cerrar tutorial";
@@ -188,14 +141,7 @@
 "tutorial.findTutorial.title" = "Encuentra este tutorial en el menú siempre que lo necesites.";
 
 "onboardingTutorial.beginButton.title" = "Comenzar";
-"onboardingQuickStart.2.title" = "Quiero compartir el evangelio con alguien";
-"onboardingQuickStart.2.button.title" = "Elige una de nuestras herramientas";
 "onboardingTutorial.nextButton.title" = "Siguiente";
-"onboardingQuickStart.title" = "Enlaces rápidos de inicio";
-"onboardingQuickStart.0.title" = "Deseo aprender más sobre Jesús";
-"onboardingQuickStart.0.button.title" = "Lee nuestros artículos";
-"onboardingQuickStart.1.title" = "Quiero aprender a tener conversaciones sobre el evangelio";
-"onboardingQuickStart.1.button.title" = "Intenta nuestras Lecciones";
 "tool_offline_favorite_message" = "Haz que una herramienta esté disponible sin conexión tocando el icono de corazón, que la agrega a tus favoritos.";
 
 /* This is a category description of a tool that helps you start a conversation */
@@ -443,5 +389,3 @@ La aplicación se puede descargar en https://godtoolsapp.com";
 "onboardingTutorial.appUsageItem.3.message" = "Elige ente más de 90 idiomas";
 "onboardingTutorial.appUsageItem.4.message" = "Ayuda a los demás a iniciarse en el cristianismo";
 "onboardingTutorial.showMoreButton.title" = "Mostrarme más";
-
-"language_name_fil" = "Filipino (Tagalog)";

@@ -1,3 +1,4 @@
+"language_name_fil" = "فلپائینی(تاگالوگ)";
 "language_name_fil-x-taglish" = "Taglish";
 "language_name_sid" = "Sidama";
 "onboardingTutorial.chooseLanguageButton.title" = "زبان منتخب کریں";
@@ -44,48 +45,6 @@
 "menu.leaveAReview" = "ایک جائزہ چھوڑیں";
 "account.badges.sectionTitle" = "آپ کےنشانات";
 "account.activity.sectionTitle" = "آپ کی سرگرمی";
-
-/* This is a title on a dashboard that will show the Number of Times a person has opened a tool */
-"account.activity.toolOpens" = "طریقہ  کھلتا ہے";
-
-/* This is a title on a dashboard that will show the Number of Times a person has completed a lesson */
-"account.activity.lessonCompletion" = "سبق کی تکمیل";
-
-/* This is a title on a dashboard that will show the Number of Times a person has used the screen share function */
-"account.activity.screenShares" = "سکرین شئیرز";
-
-/* This is a title on a dashboard that will show the Number of Times a person has shared a link */
-"account.activity.linksShared" = "شئیر کئے گئےلِنکس";
-
-/* This is a title on a dashboard that will show the Number of different languages they have used */
-"account.activity.languagesUsed" = "استعمال کی گئی زبانیں";
-
-"account.activity.sessions" = "سیشنز";
-"badges.tipsCompleted.singular" = " فی صد تربیتی تجاویز 1";
-
-/* leave %d in phrase - this is the number of articles that the user has read */
-"badges.articlesOpened.plural" = "فیصد %d مضامین پڑھیں";
-
-/* when they have read only 1 articles */
-"badges.articlesOpened.singular" = "1 مضمون پڑھیں";
-
-/* leave %d in phrase - this is the number of images that the user has shared */
-"badges.imagesShared.plural" = "فی صد تصاوی شئیر کی گئیں%d";
-
-"badges.imagesShared.singular" = "ایک تصویر شئیر کی";
-
-/* leave %d in phrase - this is the number of lessons that the user has completed */
-"badges.lessonsCompleted.plural" = "فی صداسباق مکمل کئے گئے%d";
-
-"badges.lessonsCompleted.singular" = "ایک  سبق ختم  کر لیا";
-
-/* leave %d in phrase - this is the number of tools that the user has opened */
-"badges.toolsOpened.plural" = "فیصد ٹول کھولے گئے%d";
-
-"badges.toolsOpened.singular" = "ایک ٹول کھول لیا";
-
-/* leave %d in phrase - this is the number of tips that the user has completed */
-"badges.tipsCompleted.plural" = " فی صد تربیتی تجاویز %d";
 
 /* Just translate "Joined" - leave the %@ - this is the date they started using GodTools */
 "account.joinedOn" = " فی صد تربیتی تجاویز %@";
@@ -150,12 +109,6 @@
 "start_training" = "مشق شروع کریں";
 "close" = "ہوگیا / کر لیا";
 "tool_menu_item.lessons" = "اسباق";
-"parallelLanguage.yesButton.title" = "جی ہاں";
-"parallelLanguage.noButton.title" = "نہیں، شکریہ";
-"parallelLanguage.selectButton.title" = "سلیکٹ کریں";
-"parallelLanguage.getStartedButton.title" = "شروعات";
-"parallelLanguage.selectLanguageButton.title" = "کوئی زبان منتخب کریں";
-"parellelLanguage.prompt" = "کیا آپ کوئی ثانوی زبان سیٹ کرنا چاہیں گے؟";
 
 /* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.continueButton.title.closeTutorial" = "ٹیوٹوریل بند کریں";
@@ -188,14 +141,7 @@
 "tutorial.findTutorial.title" = "جب بھی آپ کو اس ٹیوٹوریل کی ضرورت ہو، اسےفہرست میں تلاش کریں۔";
 
 "onboardingTutorial.beginButton.title" = "شروع کریں";
-"onboardingQuickStart.2.title" = "میں کسی کے ساتھ انجیل ساجھا کرنا چاہتا ہوں";
-"onboardingQuickStart.2.button.title" = "ہمارے ٹولز میں سے کسی ایک کا انتخاب کریں";
 "onboardingTutorial.nextButton.title" = "اگلا";
-"onboardingQuickStart.title" = "فوری آغاز کے لنکس";
-"onboardingQuickStart.0.title" = "میں عیسائیت کو دریافت کرنا چاہتا ہوں";
-"onboardingQuickStart.0.button.title" = "ہمارے مضامین پڑھیں";
-"onboardingQuickStart.1.title" = "میں انجیل کے متعلق گفتگو کرنے کے بارے میں جاننا چاہتا ہوں";
-"onboardingQuickStart.1.button.title" = "ہمارے سبق آزمائیں";
 "tool_offline_favorite_message" = "دل کے آئیکن پر ٹیپ کر کے کسی ٹول کو آف لائن دستیاب کرائیں جو اسے آپ کے پسندیدگان میں شامل کر دیتا ہے۔";
 
 /* This is a category description of a tool that helps you start a conversation */
@@ -418,5 +364,3 @@ https://godtoolsapp.com";
 "accountActivity.globalAnalytics.countries.title" = "ممالک";
 
 "onboardingTutorial.showMoreButton.title" = "مزید دکھائیے ";
-
-"language_name_fil" = "فلپائینی(تاگالوگ)";

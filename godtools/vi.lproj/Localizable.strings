@@ -1,3 +1,4 @@
+"language_name_fil" = "Tiếng Philippines (Tagalog)";
 "language_name_fil-x-taglish" = "Taglish";
 "language_name_sid" = "Sidama";
 "onboardingTutorial.chooseLanguageButton.title" = "Chọn ngôn ngữ";
@@ -44,48 +45,6 @@
 "menu.leaveAReview" = "Để lại đánh giá";
 "account.badges.sectionTitle" = "Huy hiệu";
 "account.activity.sectionTitle" = "Hoạt động của bạn";
-
-/* This is a title on a dashboard that will show the Number of Times a person has opened a tool */
-"account.activity.toolOpens" = "Mở công cụ";
-
-/* This is a title on a dashboard that will show the Number of Times a person has completed a lesson */
-"account.activity.lessonCompletion" = "Hoàn thành bài học";
-
-/* This is a title on a dashboard that will show the Number of Times a person has used the screen share function */
-"account.activity.screenShares" = "Chia sẻ màn hình";
-
-/* This is a title on a dashboard that will show the Number of Times a person has shared a link */
-"account.activity.linksShared" = "Chia sẻ liên kết";
-
-/* This is a title on a dashboard that will show the Number of different languages they have used */
-"account.activity.languagesUsed" = "Ngôn ngữ sử dụng";
-
-"account.activity.sessions" = "Phần";
-"badges.tipsCompleted.singular" = "Đã hoàn thành %1$,d gợi ý hướng dẫn";
-
-/* leave %d in phrase - this is the number of articles that the user has read */
-"badges.articlesOpened.plural" = "Đọc %d bài viết";
-
-/* when they have read only 1 articles */
-"badges.articlesOpened.singular" = "Đọc 1 bài viết";
-
-/* leave %d in phrase - this is the number of images that the user has shared */
-"badges.imagesShared.plural" = "Đã chia sẻ %d hình ảnh";
-
-"badges.imagesShared.singular" = "Đã chia sẻ 1 hình ảnh";
-
-/* leave %d in phrase - this is the number of lessons that the user has completed */
-"badges.lessonsCompleted.plural" = "Đã hoàn thành %d bài học";
-
-"badges.lessonsCompleted.singular" = "Đã hoàn thành 1 bài học";
-
-/* leave %d in phrase - this is the number of tools that the user has opened */
-"badges.toolsOpened.plural" = "Đã mở %d công cụ";
-
-"badges.toolsOpened.singular" = "Đã mở 1 công cụ";
-
-/* leave %d in phrase - this is the number of tips that the user has completed */
-"badges.tipsCompleted.plural" = "Đã hoàn thành %d gợi ý hướng dẫn";
 
 /* Just translate "Joined" - leave the %@ - this is the date they started using GodTools */
 "account.joinedOn" = "Tham gia %@";
@@ -150,12 +109,6 @@
 "start_training" = "Bắt đầu";
 "close" = "Đóng";
 "tool_menu_item.lessons" = "Bài học";
-"parallelLanguage.yesButton.title" = "Rồi";
-"parallelLanguage.noButton.title" = "Không, cám ơn";
-"parallelLanguage.selectButton.title" = "Chọn";
-"parallelLanguage.getStartedButton.title" = "Bắt đầu";
-"parallelLanguage.selectLanguageButton.title" = "Chọn một ngôn ngữ";
-"parellelLanguage.prompt" = "Bạn có muốn thiết lập ngôn ngữ thứ hai không?";
 
 /* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.continueButton.title.closeTutorial" = "Đóng hướng dẫn";
@@ -188,14 +141,7 @@
 "tutorial.findTutorial.title" = "Bạn có thể tìm thấy phần hướng dẫn trong mục lục bất cứ lúc nào.";
 
 "onboardingTutorial.beginButton.title" = "Bắt đầu";
-"onboardingQuickStart.2.title" = "Tôi muốn chia sẻ Phúc Âm với người khác";
-"onboardingQuickStart.2.button.title" = "Chọn một trong số bốn công cụ";
 "onboardingTutorial.nextButton.title" = "Tiếp theo";
-"onboardingQuickStart.title" = "Đường link";
-"onboardingQuickStart.0.title" = "Tôi muốn biết nhiều hơn về Chúa";
-"onboardingQuickStart.0.button.title" = "Đọc bài viết";
-"onboardingQuickStart.1.title" = "Tôi muốn học biết về việc chia sẻ Phúc Âm";
-"onboardingQuickStart.1.button.title" = "Xem bài học";
 "tool_offline_favorite_message" = "Để sử dụng công cụ khi không có mạng internet, bấm vào biểu tượng trái tim để đưa công cụ vào phần Ưa thích của bạn.";
 
 /* This is a category description of a tool that helps you start a conversation */
@@ -441,5 +387,3 @@ Nhấn nút \"Giới thiệu\" để biết thêm về công cụ.";
 "onboardingTutorial.appUsageItem.3.message" = "Chọn từ hơn 90 ngôn ngữ";
 "onboardingTutorial.appUsageItem.4.message" = "Trợ giúp ai đó bắt đầu với tư cách là Cơ đốc Nhân";
 "onboardingTutorial.showMoreButton.title" = "Cho tôi xem nhiều hơn";
-
-"language_name_fil" = "Tiếng Philippines (Tagalog)";

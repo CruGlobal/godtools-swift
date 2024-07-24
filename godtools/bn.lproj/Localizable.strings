@@ -1,3 +1,4 @@
+"language_name_fil" = "ফিলিপিনো (ট্যাগালগ)";
 "language_name_fil-x-taglish" = "ট্যাগলিশ";
 "language_name_sid" = "সিডামা";
 "onboardingTutorial.chooseLanguageButton.title" = "ভাষা মনোনয়ন";
@@ -44,48 +45,6 @@
 "menu.leaveAReview" = "কোনো পর্যালোচনা রেখে যান";
 "account.badges.sectionTitle" = "আপনার ব্যাজগুলি";
 "account.activity.sectionTitle" = "আপনার কার্যকলাপ";
-
-/* This is a title on a dashboard that will show the Number of Times a person has opened a tool */
-"account.activity.toolOpens" = "সাধনী খুলে যায়";
-
-/* This is a title on a dashboard that will show the Number of Times a person has completed a lesson */
-"account.activity.lessonCompletion" = "পাঠ সম্পূর্ণ";
-
-/* This is a title on a dashboard that will show the Number of Times a person has used the screen share function */
-"account.activity.screenShares" = "স্ক্রিন শেয়ারগুলি";
-
-/* This is a title on a dashboard that will show the Number of Times a person has shared a link */
-"account.activity.linksShared" = "লিঙ্কগুলি শেয়ার করা হয়েছে";
-
-/* This is a title on a dashboard that will show the Number of different languages they have used */
-"account.activity.languagesUsed" = "ব্যবহৃত ভাষাগুলি";
-
-"account.activity.sessions" = "সেশনস";
-"badges.tipsCompleted.singular" = "1 প্রশিক্ষণের পরামর্শ সম্পূর্ণ করেছি";
-
-/* leave %d in phrase - this is the number of articles that the user has read */
-"badges.articlesOpened.plural" = "%d প্রবন্ধগুলি পড়ুন";
-
-/* when they have read only 1 articles */
-"badges.articlesOpened.singular" = "1 প্রবন্ধ পড়ুন";
-
-/* leave %d in phrase - this is the number of images that the user has shared */
-"badges.imagesShared.plural" = "%d চিত্রগুলি শেয়ার করেছি";
-
-"badges.imagesShared.singular" = "1 চিত্র শেয়ার করেছি";
-
-/* leave %d in phrase - this is the number of lessons that the user has completed */
-"badges.lessonsCompleted.plural" = "%d পাঠগুলি সম্পূর্ণ করেছি";
-
-"badges.lessonsCompleted.singular" = "1 পাঠ সম্পূর্ণ করেছি";
-
-/* leave %d in phrase - this is the number of tools that the user has opened */
-"badges.toolsOpened.plural" = "%d সাধনীসমূহ খুলেছি";
-
-"badges.toolsOpened.singular" = "1 সাধনী খুলেছি";
-
-/* leave %d in phrase - this is the number of tips that the user has completed */
-"badges.tipsCompleted.plural" = "%d প্রশিক্ষণের পরামর্শ সম্পূর্ণ করেছি";
 
 /* Just translate "Joined" - leave the %@ - this is the date they started using GodTools */
 "account.joinedOn" = "%@ যোগ দিয়েছেন";
@@ -150,12 +109,6 @@
 "start_training" = "প্রশিক্ষণ শুরু করুন";
 "close" = "বন্ধ করুন";
 "tool_menu_item.lessons" = "পাঠসমূহ";
-"parallelLanguage.yesButton.title" = "হ্যা";
-"parallelLanguage.noButton.title" = "না, ধন্যবাদ";
-"parallelLanguage.selectButton.title" = "নির্বাচন করুন";
-"parallelLanguage.getStartedButton.title" = "শুরু করুন";
-"parallelLanguage.selectLanguageButton.title" = "একটি ভাষা বেছে নিন";
-"parellelLanguage.prompt" = "আপনি কি একটি দ্বিতীয় ভাষা স্থাপন করতে চান?";
 
 /* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.continueButton.title.closeTutorial" = "টিউটোরিয়াল বন্ধ করুন";
@@ -188,14 +141,7 @@
 "tutorial.findTutorial.title" = "যখনই আপনার প্রয়োজন হবে তখনই মেনুতে এই টিউটোরিয়ালটি খুঁজুন।";
 
 "onboardingTutorial.beginButton.title" = "শুরু করুন";
-"onboardingQuickStart.2.title" = "অন্য কারো সাথে সুসমাচার শেয়ার করতে চাই";
-"onboardingQuickStart.2.button.title" = "আমাদের যেকোন একটি টুল বেছে নিন";
 "onboardingTutorial.nextButton.title" = "পরবর্তী";
-"onboardingQuickStart.title" = "দ্রুত শুরু করার লিংক";
-"onboardingQuickStart.0.title" = "আমি যীশু সম্পর্কে আরো জানতে চাই";
-"onboardingQuickStart.0.button.title" = "আমাদের প্রবন্ধটি  পড়ুন";
-"onboardingQuickStart.1.title" = "আমি সুসমাচার বিষয়ক কথোপকথন সম্পর্কে জানতে চাই";
-"onboardingQuickStart.1.button.title" = "আমাদের পাঠগুলো একবার দেখুন";
 "tool_offline_favorite_message" = "একটি টুলকে অফলাইনে উপলব্ধ করুন হার্ট আইকনকে ট্যাপ করার দ্বারা যা এটিকে আপনার পছন্দের সঙ্গে যুক্ত করে I";
 
 /* This is a category description of a tool that helps you start a conversation */
@@ -429,5 +375,3 @@ knowgod.com. আপনার নিজের সাইটে স্থাপ  �
 "onboardingTutorial.appUsageItem.3.message" = "90 টি ভাষার অধিক থেকে পছন্দ করুন";
 "onboardingTutorial.appUsageItem.4.message" = "একজন খ্রীষ্টান হিসাবে শুরু করতে কাউকে সাহায্য করুন";
 "onboardingTutorial.showMoreButton.title" = "আমাকে আরও দেখান";
-
-"language_name_fil" = "ফিলিপিনো (ট্যাগালগ)";

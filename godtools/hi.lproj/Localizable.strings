@@ -1,3 +1,4 @@
+"language_name_fil" = "फिलिपीनी";
 "language_name_fil-x-taglish" = "टाग्लिश";
 "language_name_sid" = "सिदामा";
 "onboardingTutorial.chooseLanguageButton.title" = "भाषा चुनें";
@@ -44,48 +45,6 @@
 "menu.leaveAReview" = "समीक्षा लिखें";
 "account.badges.sectionTitle" = "आपके बैज";
 "account.activity.sectionTitle" = "आपकी गतिविधियाँ";
-
-/* This is a title on a dashboard that will show the Number of Times a person has opened a tool */
-"account.activity.toolOpens" = "टूल खुले";
-
-/* This is a title on a dashboard that will show the Number of Times a person has completed a lesson */
-"account.activity.lessonCompletion" = "पाठ पूरे किए";
-
-/* This is a title on a dashboard that will show the Number of Times a person has used the screen share function */
-"account.activity.screenShares" = "स्क्रीन शेयर किए";
-
-/* This is a title on a dashboard that will show the Number of Times a person has shared a link */
-"account.activity.linksShared" = "लिंक्स शेयर किए";
-
-/* This is a title on a dashboard that will show the Number of different languages they have used */
-"account.activity.languagesUsed" = "भाषाएँ प्रयोग किए";
-
-"account.activity.sessions" = "सत्र";
-"badges.tipsCompleted.singular" = "1 प्रशिक्षण सुझाव पूरा किया";
-
-/* leave %d in phrase - this is the number of articles that the user has read */
-"badges.articlesOpened.plural" = "%d लेख पढ़ लिए";
-
-/* when they have read only 1 articles */
-"badges.articlesOpened.singular" = "1 लेख पढ़ा";
-
-/* leave %d in phrase - this is the number of images that the user has shared */
-"badges.imagesShared.plural" = "%d चित्र शेयर किए";
-
-"badges.imagesShared.singular" = "1 तस्वीर शेयर की";
-
-/* leave %d in phrase - this is the number of lessons that the user has completed */
-"badges.lessonsCompleted.plural" = "%d पाठ पूरे किए";
-
-"badges.lessonsCompleted.singular" = "1 लेसन पूरा किया";
-
-/* leave %d in phrase - this is the number of tools that the user has opened */
-"badges.toolsOpened.plural" = "%d टूल्स खोले";
-
-"badges.toolsOpened.singular" = "1 टूल खोला";
-
-/* leave %d in phrase - this is the number of tips that the user has completed */
-"badges.tipsCompleted.plural" = "%d प्रशिक्षण सुझाव पूरे किए";
 
 /* Just translate "Joined" - leave the %@ - this is the date they started using GodTools */
 "account.joinedOn" = "जॉइंड %@";
@@ -150,12 +109,6 @@
 "start_training" = "प्रशिक्षण शुरू करें";
 "close" = "बन्द करें";
 "tool_menu_item.lessons" = "अध्याय";
-"parallelLanguage.yesButton.title" = "हां";
-"parallelLanguage.noButton.title" = "नहीं, धन्यवाद";
-"parallelLanguage.selectButton.title" = "चुनें";
-"parallelLanguage.getStartedButton.title" = "शुरू करें";
-"parallelLanguage.selectLanguageButton.title" = "एक भाषा चुनें";
-"parellelLanguage.prompt" = "क्या आप कोई द्वितीय भाषा सेट करना चाहेंगे?";
 
 /* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.continueButton.title.closeTutorial" = "GodTools का उपयोग शुरू करें";
@@ -188,14 +141,7 @@
 "tutorial.findTutorial.title" = "दुबारा देखने के लिए यह ट्यूटोरियल मेन्यु में उपलब्ध है";
 
 "onboardingTutorial.beginButton.title" = "शुरू करें";
-"onboardingQuickStart.2.title" = "मुझे इंजील किसी के साथ साझा करना है";
-"onboardingQuickStart.2.button.title" = "हमारा कोई टूल चुनें";
 "onboardingTutorial.nextButton.title" = "अगला";
-"onboardingQuickStart.title" = "तुरंत शुरुआत के लिंक";
-"onboardingQuickStart.0.title" = "मुझे यीशु के बारे में अधिक जानना है";
-"onboardingQuickStart.0.button.title" = "हमारे लेख पढ़ें";
-"onboardingQuickStart.1.title" = "मुझे इंजील वार्तालापों के बारे में जानना है";
-"onboardingQuickStart.1.button.title" = "हमारे अध्याय आज़माएँ";
 "tool_offline_favorite_message" = "टूल को पसंदीदा में जोड़ने वाले 'दिल' चिन्ह को टैप करके आप उस टूल को ऑफलाइन उपलब्ध कर सकते हैं।";
 
 /* This is a category description of a tool that helps you start a conversation */
@@ -440,5 +386,3 @@
 "onboardingTutorial.appUsageItem.3.message" = "90 से अधिक भाषाओं में से चुनें";
 "onboardingTutorial.appUsageItem.4.message" = "किसी को मसीही के रूप में आरम्भ करने में मदद करें।";
 "onboardingTutorial.showMoreButton.title" = "अधिक दिखाएं";
-
-"language_name_fil" = "फिलिपीनी";

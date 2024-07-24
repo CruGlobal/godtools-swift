@@ -40,11 +40,6 @@
 "allTools.spotlight.description" = "Siit leiad mõned tööriistad, mis sulle meeldida võiksid.";
 "allTools.categories.title" = "Liigid";
 "tool_menu_item.lessons" = "Koolitus";
-"parallelLanguage.yesButton.title" = "Jah";
-"parallelLanguage.noButton.title" = "Ei, aitäh";
-"parallelLanguage.getStartedButton.title" = "Alustamine";
-"parallelLanguage.selectLanguageButton.title" = "Vali keel";
-"parellelLanguage.prompt" = "Kas soovid seadistada teise keele?";
 "tool_offline_favorite_message" = "Tee tööriist kättesaadavaks võrguühenduseta, puudutades südameikoonil, et lisada see lemmikute hulka.";
 
 /* This is a category description of a tool that helps you start a conversation */

@@ -1,3 +1,4 @@
+"language_name_fil" = "الفلبينية (تاجالوج)";
 "language_name_fil-x-taglish" = "Taglish";
 "language_name_sid" = "Sidama";
 "onboardingTutorial.chooseLanguageButton.title" = "اختر اللغة";
@@ -44,48 +45,6 @@
 "menu.leaveAReview" = "ترك تعليق";
 "account.badges.sectionTitle" = "شاراتك";
 "account.activity.sectionTitle" = "نشاط حركتك";
-
-/* This is a title on a dashboard that will show the Number of Times a person has opened a tool */
-"account.activity.toolOpens" = "تفتح الأداة";
-
-/* This is a title on a dashboard that will show the Number of Times a person has completed a lesson */
-"account.activity.lessonCompletion" = "الدروس المتممة";
-
-/* This is a title on a dashboard that will show the Number of Times a person has used the screen share function */
-"account.activity.screenShares" = "مشاركة الشاشة";
-
-/* This is a title on a dashboard that will show the Number of Times a person has shared a link */
-"account.activity.linksShared" = "الروابط المشتركة";
-
-/* This is a title on a dashboard that will show the Number of different languages they have used */
-"account.activity.languagesUsed" = "اللغات المستخدمة";
-
-"account.activity.sessions" = "الجلسات";
-"badges.tipsCompleted.singular" = "تم إتمام نصيحة تدريبية 1";
-
-/* leave %d in phrase - this is the number of articles that the user has read */
-"badges.articlesOpened.plural" = "تمت قراءة %d مقالات";
-
-/* when they have read only 1 articles */
-"badges.articlesOpened.singular" = "تمت قراءة مقال 1";
-
-/* leave %d in phrase - this is the number of images that the user has shared */
-"badges.imagesShared.plural" = "صور مشاركة  %d";
-
-"badges.imagesShared.singular" = "تم مشاركة  صورة واحدة";
-
-/* leave %d in phrase - this is the number of lessons that the user has completed */
-"badges.lessonsCompleted.plural" = "%d دروس مكتملة";
-
-"badges.lessonsCompleted.singular" = "درس 1 مكتمل";
-
-/* leave %d in phrase - this is the number of tools that the user has opened */
-"badges.toolsOpened.plural" = "%d أدوات مفتوحة";
-
-"badges.toolsOpened.singular" = "أداة واحدة مفتوحة";
-
-/* leave %d in phrase - this is the number of tips that the user has completed */
-"badges.tipsCompleted.plural" = "%d نصائح تدريبية مكتملة";
 
 /* Just translate "Joined" - leave the %@ - this is the date they started using GodTools */
 "account.joinedOn" = "تم الانضمام في %@";
@@ -150,12 +109,6 @@
 "start_training" = "ابدأ التدريب";
 "close" = "إغلاق";
 "tool_menu_item.lessons" = "الدروس";
-"parallelLanguage.yesButton.title" = "نعم";
-"parallelLanguage.noButton.title" = "لا شكراً";
-"parallelLanguage.selectButton.title" = "تحديد";
-"parallelLanguage.getStartedButton.title" = "ابدأ";
-"parallelLanguage.selectLanguageButton.title" = "تحديد اللغة";
-"parellelLanguage.prompt" = "هل ترغب في تعيين لغة ثانوية؟";
 
 /* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.continueButton.title.closeTutorial" = "إغلاق البرنامج التعليمي";
@@ -188,14 +141,7 @@
 "tutorial.findTutorial.title" = "ابحث عن هذا البرنامج التعليمي في القائمة متى احتجت إليه.";
 
 "onboardingTutorial.beginButton.title" = "ابدأ";
-"onboardingQuickStart.2.title" = "أريد أن أشارك الكتاب المقدس مع أحد الأشخاص";
-"onboardingQuickStart.2.button.title" = "اختر أحد أدواتنا";
 "onboardingTutorial.nextButton.title" = "التالي";
-"onboardingQuickStart.title" = "روابط بداية سريعة";
-"onboardingQuickStart.0.title" = "أريد معرفة المزيد عن يسوع.";
-"onboardingQuickStart.0.button.title" = "اقرأ مقالاتنا";
-"onboardingQuickStart.1.title" = "أريد أن أتعلم كيفية إجراء حوارًا باستخدام الكتاب المقدس";
-"onboardingQuickStart.1.button.title" = "جرّب دروسنا";
 "tool_offline_favorite_message" = "اجعل الأداة متوفرة في وضع عدم الاتصال عبر النقر على أيقونة القلب الذي يضيفها إلى المفضلة.";
 
 /* This is a category description of a tool that helps you start a conversation */
@@ -422,5 +368,3 @@ https://godtoolsapp.com
 "accountActivity.globalAnalytics.countries.title" = "البلدان";
 
 "onboardingTutorial.showMoreButton.title" = "أعرض لي المزيد";
-
-"language_name_fil" = "الفلبينية (تاجالوج)";

@@ -1,3 +1,4 @@
+"language_name_fil" = "菲律宾语（他加禄语）";
 "language_name_fil-x-taglish" = "他加禄语";
 "language_name_sid" = "西达玛语";
 "onboardingTutorial.chooseLanguageButton.title" = "选择语言";
@@ -44,48 +45,6 @@
 "menu.leaveAReview" = "发表评论";
 "account.badges.sectionTitle" = "您的徽章";
 "account.activity.sectionTitle" = "您的活动";
-
-/* This is a title on a dashboard that will show the Number of Times a person has opened a tool */
-"account.activity.toolOpens" = "打开工具";
-
-/* This is a title on a dashboard that will show the Number of Times a person has completed a lesson */
-"account.activity.lessonCompletion" = "完成课节";
-
-/* This is a title on a dashboard that will show the Number of Times a person has used the screen share function */
-"account.activity.screenShares" = "屏幕共享";
-
-/* This is a title on a dashboard that will show the Number of Times a person has shared a link */
-"account.activity.linksShared" = "分享链接";
-
-/* This is a title on a dashboard that will show the Number of different languages they have used */
-"account.activity.languagesUsed" = "使用语言";
-
-"account.activity.sessions" = "会话";
-"badges.tipsCompleted.singular" = "完成了1 个培训提示";
-
-/* leave %d in phrase - this is the number of articles that the user has read */
-"badges.articlesOpened.plural" = "阅读%d篇文章";
-
-/* when they have read only 1 articles */
-"badges.articlesOpened.singular" = "阅读1篇文章";
-
-/* leave %d in phrase - this is the number of images that the user has shared */
-"badges.imagesShared.plural" = "分享了 %d 张图片";
-
-"badges.imagesShared.singular" = "分享了1 张图片";
-
-/* leave %d in phrase - this is the number of lessons that the user has completed */
-"badges.lessonsCompleted.plural" = "完成了 %d 节课";
-
-"badges.lessonsCompleted.singular" = "完成了 1 节课";
-
-/* leave %d in phrase - this is the number of tools that the user has opened */
-"badges.toolsOpened.plural" = "打开了 %d 个工具";
-
-"badges.toolsOpened.singular" = "打开了 1 个工具";
-
-/* leave %d in phrase - this is the number of tips that the user has completed */
-"badges.tipsCompleted.plural" = "完成了 %d 个培训提示";
 
 /* Just translate "Joined" - leave the %@ - this is the date they started using GodTools */
 "account.joinedOn" = "已加入%@";
@@ -150,12 +109,6 @@
 "start_training" = "开始培训";
 "close" = "关闭";
 "tool_menu_item.lessons" = "课程 ";
-"parallelLanguage.yesButton.title" = "是";
-"parallelLanguage.noButton.title" = "不了，谢谢";
-"parallelLanguage.selectButton.title" = "选择";
-"parallelLanguage.getStartedButton.title" = "开始体验";
-"parallelLanguage.selectLanguageButton.title" = "选择语言";
-"parellelLanguage.prompt" = "您想设置第二语言吗？";
 
 /* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.continueButton.title.closeTutorial" = "关闭教程";
@@ -188,14 +141,7 @@
 "tutorial.findTutorial.title" = "在你需要的时候，到菜单中随时查找本教程";
 
 "onboardingTutorial.beginButton.title" = "开始";
-"onboardingQuickStart.2.title" = "我想与他人分享福音";
-"onboardingQuickStart.2.button.title" = "选择我们的一个工具";
 "onboardingTutorial.nextButton.title" = "下一个";
-"onboardingQuickStart.title" = "快速入门链接";
-"onboardingQuickStart.0.title" = "我想更多了解耶稣是谁。";
-"onboardingQuickStart.0.button.title" = "阅读我们的文章";
-"onboardingQuickStart.1.title" = "我想了解如何进行福音对话";
-"onboardingQuickStart.1.button.title" = "试听我们的课程";
 "tool_offline_favorite_message" = "要离线使用某个工具，请点击心形图标将其添加到收藏夹。";
 
 /* This is a category description of a tool that helps you start a conversation */
@@ -440,5 +386,3 @@
 "onboardingTutorial.appUsageItem.3.message" = "超过90种语言可供选择";
 "onboardingTutorial.appUsageItem.4.message" = "帮助他人成为基督徒";
 "onboardingTutorial.showMoreButton.title" = "显示更多";
-
-"language_name_fil" = "菲律宾语（他加禄语）";
