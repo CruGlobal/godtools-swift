@@ -1,8 +1,8 @@
 //
-//  GetAppLanguagesInterfaceStringsRepositoryTests.swift
+//  GetLessonFilterLanguagesInterfaceStringsRepositoryTests.swift
 //  godtoolsTests
 //
-//  Created by Levi Eggert on 4/5/24.
+//  Created by Levi Eggert on 7/12/24.
 //  Copyright © 2024 Cru. All rights reserved.
 //
 
@@ -12,37 +12,37 @@ import Combine
 import Quick
 import Nimble
 
-class GetAppLanguagesInterfaceStringsRepositoryTests: QuickSpec {
+class GetLessonFilterLanguagesInterfaceStringsRepositoryTests: QuickSpec {
     
     override class func spec() {
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        describe("User is viewing the app languages.") {
+        describe("User is viewing the lesson filter languages.") {
          
             context("When the app language is switched from English to Spanish.") {
                 
-                let navTitleKey: String = "languageSettings.appLanguage.title"
-                
-                let localizableStrings: [MockLocalizationServices.LocaleId: [MockLocalizationServices.StringKey: String]] = [
-                    LanguageCodeDomainModel.english.value: [
-                        navTitleKey: "App Language"
-                    ],
-                    LanguageCodeDomainModel.spanish.value: [
-                        navTitleKey: "Idioma de la aplicación"
-                    ]
-                ]
-                
-                let getAppLanguagesInterfaceStringsRepository = GetAppLanguagesInterfaceStringsRepository(
-                    localizationServices: MockLocalizationServices(localizableStrings: localizableStrings)
-                )
-                
                 it("The interface strings should be translated into Spanish.") {
+                    
+                    let navTitleKey: String = LessonFilterStringKeys.navTitle.rawValue
+                    
+                    let localizableStrings: [MockLocalizationServices.LocaleId: [MockLocalizationServices.StringKey: String]] = [
+                        LanguageCodeDomainModel.english.value: [
+                            navTitleKey: "Lesson language"
+                        ],
+                        LanguageCodeDomainModel.spanish.value: [
+                            navTitleKey: "Idioma de la lección"
+                        ]
+                    ]
+                    
+                    let getLessonFilterLanguagesInterfaceStringsRepository = GetLessonFilterLanguagesInterfaceStringsRepository(
+                        localizationServices: MockLocalizationServices(localizableStrings: localizableStrings)
+                    )
                     
                     let appLanguagePublisher: CurrentValueSubject<AppLanguageDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
                     
-                    var englishInterfaceStringsRef: AppLanguagesInterfaceStringsDomainModel?
-                    var spanishInterfaceStringsRef: AppLanguagesInterfaceStringsDomainModel?
+                    var englishInterfaceStringsRef: LessonFilterLanguagesInterfaceStringsDomainModel?
+                    var spanishInterfaceStringsRef: LessonFilterLanguagesInterfaceStringsDomainModel?
                     
                     var sinkCount: Int = 0
                     var sinkCompleted: Bool = false
@@ -50,13 +50,13 @@ class GetAppLanguagesInterfaceStringsRepositoryTests: QuickSpec {
                     waitUntil { done in
                         
                         appLanguagePublisher
-                            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<AppLanguagesInterfaceStringsDomainModel, Never> in
+                            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<LessonFilterLanguagesInterfaceStringsDomainModel, Never> in
                                 
-                                return getAppLanguagesInterfaceStringsRepository
-                                    .getStringsPublisher(translateInLanguage: appLanguage)
+                                return getLessonFilterLanguagesInterfaceStringsRepository
+                                    .getStringsPublisher(translateInAppLanguage: appLanguage)
                                     .eraseToAnyPublisher()
                             })
-                            .sink { (interfaceStrings: AppLanguagesInterfaceStringsDomainModel) in
+                            .sink { (interfaceStrings: LessonFilterLanguagesInterfaceStringsDomainModel) in
                                 
                                 guard !sinkCompleted else {
                                     return
@@ -84,12 +84,10 @@ class GetAppLanguagesInterfaceStringsRepositoryTests: QuickSpec {
                             .store(in: &cancellables)
                     }
 
-                    expect(englishInterfaceStringsRef?.navTitle).to(equal("App Language"))
-                    
-                    expect(spanishInterfaceStringsRef?.navTitle).to(equal("Idioma de la aplicación"))
+                    expect(englishInterfaceStringsRef?.navTitle).to(equal("Lesson language"))
+                    expect(spanishInterfaceStringsRef?.navTitle).to(equal("Idioma de la lección"))
                 }
             }
         }
     }
 }
-

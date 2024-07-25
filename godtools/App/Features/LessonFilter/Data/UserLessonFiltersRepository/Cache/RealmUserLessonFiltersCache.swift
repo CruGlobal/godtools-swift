@@ -22,6 +22,7 @@ class RealmUserLessonFiltersCache {
         
         return realmDatabase.openRealm().objects(RealmUserLessonLanguageFilter.self)
             .objectWillChange
+            .prepend(Void())
             .eraseToAnyPublisher()
     }
     

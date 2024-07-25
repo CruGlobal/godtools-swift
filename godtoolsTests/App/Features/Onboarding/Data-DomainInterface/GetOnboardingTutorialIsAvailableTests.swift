@@ -16,6 +16,8 @@ class GetOnboardingTutorialIsAvailableTests: QuickSpec {
     
     override class func spec() {
         
+        var cancellables: Set<AnyCancellable> = Set()
+        
         describe("User launches the app.") {
          
             context("When the app is launched for the first time and the onboarding tutorial has not been viewed.") {
@@ -32,7 +34,7 @@ class GetOnboardingTutorialIsAvailableTests: QuickSpec {
                     
                     waitUntil { done in
                           
-                        _ = getOnboardingIsAvailable
+                        getOnboardingIsAvailable
                             .isAvailablePublisher()
                             .sink { (isAvailable: Bool) in
                                 
@@ -46,6 +48,7 @@ class GetOnboardingTutorialIsAvailableTests: QuickSpec {
                                 
                                 done()
                             }
+                            .store(in: &cancellables)
                         
                     }
 
@@ -67,7 +70,7 @@ class GetOnboardingTutorialIsAvailableTests: QuickSpec {
                     
                     waitUntil { done in
                           
-                        _ = getOnboardingIsAvailable
+                        getOnboardingIsAvailable
                             .isAvailablePublisher()
                             .sink { (isAvailable: Bool) in
                                 
@@ -81,6 +84,7 @@ class GetOnboardingTutorialIsAvailableTests: QuickSpec {
                                 
                                 done()
                             }
+                            .store(in: &cancellables)
                         
                     }
 
@@ -102,7 +106,7 @@ class GetOnboardingTutorialIsAvailableTests: QuickSpec {
                     
                     waitUntil { done in
                           
-                        _ = getOnboardingIsAvailable
+                        getOnboardingIsAvailable
                             .isAvailablePublisher()
                             .sink { (isAvailable: Bool) in
                                 
@@ -116,6 +120,7 @@ class GetOnboardingTutorialIsAvailableTests: QuickSpec {
                                 
                                 done()
                             }
+                            .store(in: &cancellables)
                         
                     }
 

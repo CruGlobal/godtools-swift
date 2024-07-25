@@ -16,6 +16,8 @@ class GetOnboardingTutorialInterfaceStringsRepositoryTests: QuickSpec {
     
     override class func spec() {
         
+        var cancellables: Set<AnyCancellable> = Set()
+        
         describe("User is viewing the onboarding tutorial.") {
          
             context("When the app language is switched from English to Spanish.") {
@@ -52,7 +54,7 @@ class GetOnboardingTutorialInterfaceStringsRepositoryTests: QuickSpec {
                     
                     waitUntil { done in
                         
-                        _ = appLanguagePublisher
+                        appLanguagePublisher
                             .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<OnboardingTutorialInterfaceStringsDomainModel, Never> in
                                 
                                 return getOnboardingTutorialInterfaceStringsRepository
@@ -84,6 +86,7 @@ class GetOnboardingTutorialInterfaceStringsRepositoryTests: QuickSpec {
                                     appLanguagePublisher.send(LanguageCodeDomainModel.spanish.rawValue)
                                 }
                             }
+                            .store(in: &cancellables)
                     }
 
                     expect(englishInterfaceStringsRef?.chooseAppLanguageButtonTitle).to(equal("Choose Language"))

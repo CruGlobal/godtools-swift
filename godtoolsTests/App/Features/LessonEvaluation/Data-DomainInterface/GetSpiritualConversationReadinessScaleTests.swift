@@ -16,6 +16,8 @@ class GetSpiritualConversationReadinessScaleTests: QuickSpec {
     
     override class func spec() {
         
+        var cancellables: Set<AnyCancellable> = Set()
+        
         describe("User is evaluating a lesson.") {
         
             context("When viewing the ready to share faith scale minimum and maximum values.") {
@@ -33,7 +35,7 @@ class GetSpiritualConversationReadinessScaleTests: QuickSpec {
                     
                     waitUntil { done in
                         
-                        _ = getSpiritualConversationReadinessScale
+                        getSpiritualConversationReadinessScale
                             .getScalePublisher(scale: 5, translateInAppLanguage: LanguageCodeDomainModel.english.rawValue)
                             .sink { (readinessScale: SpiritualConversationReadinessScaleDomainModel) in
                                 
@@ -52,6 +54,7 @@ class GetSpiritualConversationReadinessScaleTests: QuickSpec {
                                     done()
                                 }
                             }
+                            .store(in: &cancellables)
                     }
 
                     expect(readinessScaleRef?.minScale.integerValue).to(equal(1))
@@ -74,7 +77,7 @@ class GetSpiritualConversationReadinessScaleTests: QuickSpec {
                     
                     waitUntil { done in
                         
-                        _ = getSpiritualConversationReadinessScale
+                        getSpiritualConversationReadinessScale
                             .getScalePublisher(scale: 5, translateInAppLanguage: LanguageCodeDomainModel.english.rawValue)
                             .sink { (readinessScale: SpiritualConversationReadinessScaleDomainModel) in
                                 
@@ -93,6 +96,7 @@ class GetSpiritualConversationReadinessScaleTests: QuickSpec {
                                     done()
                                 }
                             }
+                            .store(in: &cancellables)
                     }
 
                     expect(readinessScaleRef?.minScale.valueTranslatedInAppLanguage).to(equal("1"))
@@ -116,7 +120,7 @@ class GetSpiritualConversationReadinessScaleTests: QuickSpec {
                     
                     waitUntil { done in
                         
-                        _ = getSpiritualConversationReadinessScale
+                        getSpiritualConversationReadinessScale
                             .getScalePublisher(scale: 5, translateInAppLanguage: LanguageCodeDomainModel.arabic.rawValue)
                             .sink { (readinessScale: SpiritualConversationReadinessScaleDomainModel) in
                                 
@@ -135,6 +139,7 @@ class GetSpiritualConversationReadinessScaleTests: QuickSpec {
                                     done()
                                 }
                             }
+                            .store(in: &cancellables)
                     }
 
                     expect(readinessScaleRef?.minScale.valueTranslatedInAppLanguage).to(equal("١"))
@@ -158,7 +163,7 @@ class GetSpiritualConversationReadinessScaleTests: QuickSpec {
                     
                     waitUntil { done in
                         
-                        _ = getSpiritualConversationReadinessScale
+                        getSpiritualConversationReadinessScale
                             .getScalePublisher(scale: -10, translateInAppLanguage: LanguageCodeDomainModel.english.rawValue)
                             .sink { (readinessScale: SpiritualConversationReadinessScaleDomainModel) in
                                 
@@ -177,6 +182,7 @@ class GetSpiritualConversationReadinessScaleTests: QuickSpec {
                                     done()
                                 }
                             }
+                            .store(in: &cancellables)
                     }
 
                     expect(readinessScaleRef?.scale.integerValue).to(equal(1))
@@ -199,7 +205,7 @@ class GetSpiritualConversationReadinessScaleTests: QuickSpec {
                     
                     waitUntil { done in
                         
-                        _ = getSpiritualConversationReadinessScale
+                        getSpiritualConversationReadinessScale
                             .getScalePublisher(scale: 99999, translateInAppLanguage: LanguageCodeDomainModel.english.rawValue)
                             .sink { (readinessScale: SpiritualConversationReadinessScaleDomainModel) in
                                 
@@ -218,6 +224,7 @@ class GetSpiritualConversationReadinessScaleTests: QuickSpec {
                                     done()
                                 }
                             }
+                            .store(in: &cancellables)
                     }
 
                     expect(readinessScaleRef?.scale.integerValue).to(equal(10))
