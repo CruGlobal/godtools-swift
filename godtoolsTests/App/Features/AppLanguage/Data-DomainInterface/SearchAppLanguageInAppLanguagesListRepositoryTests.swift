@@ -16,6 +16,8 @@ class SearchAppLanguageInAppLanguagesListRepositoryTests: QuickSpec {
     
     override class func spec() {
         
+        var cancellables: Set<AnyCancellable> = Set()
+        
         describe("User is searching an app language in the app languages list.") {
             
             let searchAppLanguageList = SearchAppLanguageInAppLanguagesListRepository(
@@ -105,7 +107,7 @@ class SearchAppLanguageInAppLanguagesListRepositoryTests: QuickSpec {
                     
                     waitUntil { done in
                         
-                        _ = searchAppLanguageList
+                        searchAppLanguageList
                             .getSearchResultsPublisher(searchText: "e", appLanguagesList: appLanguagesList)
                             .sink { (result: [AppLanguageListItemDomainModel]) in
                             
@@ -119,6 +121,7 @@ class SearchAppLanguageInAppLanguagesListRepositoryTests: QuickSpec {
                                 
                                 done()
                             }
+                            .store(in: &cancellables)
                     }
                     
                     let expectedLanguages: [String] = ["zh-Hans", "zh-Hant", "en", "fr", "id", "lv", "pt", "es", "vi"]
@@ -137,7 +140,7 @@ class SearchAppLanguageInAppLanguagesListRepositoryTests: QuickSpec {
                     
                     waitUntil { done in
                         
-                        _ = searchAppLanguageList
+                        searchAppLanguageList
                             .getSearchResultsPublisher(searchText: "Ind", appLanguagesList: appLanguagesList)
                             .sink { (result: [AppLanguageListItemDomainModel]) in
                             
@@ -151,6 +154,7 @@ class SearchAppLanguageInAppLanguagesListRepositoryTests: QuickSpec {
                                 
                                 done()
                             }
+                            .store(in: &cancellables)
                     }
                     
                     let expectedLanguages: [String] = ["hi", "id"]

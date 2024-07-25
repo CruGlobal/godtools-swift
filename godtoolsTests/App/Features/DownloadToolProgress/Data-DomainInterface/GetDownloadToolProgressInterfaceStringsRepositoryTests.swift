@@ -17,6 +17,8 @@ class GetDownloadToolProgressInterfaceStringsRepositoryTests: QuickSpec {
     
     override class func spec() {
     
+        var cancellables: Set<AnyCancellable> = Set()
+        
         describe("User tapped a tool and is viewing downloading tool progress.") {
          
             let realmDatabase: RealmDatabase = TestsInMemoryRealmDatabase()
@@ -81,7 +83,7 @@ class GetDownloadToolProgressInterfaceStringsRepositoryTests: QuickSpec {
                     
                     waitUntil { done in
                         
-                        _ = getDownloadToolProgressInterfaceStringsRepository
+                        getDownloadToolProgressInterfaceStringsRepository
                             .getStringsPublisher(toolId: favoritedToolId, translateInAppLanguage: LanguageCodeDomainModel.english.value)
                             .sink { (interfaceStrings: DownloadToolProgressInterfaceStringsDomainModel) in
                                 
@@ -100,6 +102,7 @@ class GetDownloadToolProgressInterfaceStringsRepositoryTests: QuickSpec {
                                     done()
                                 }
                             }
+                            .store(in: &cancellables)
                     }
 
                     expect(interfaceStringsRef?.downloadMessage).to(equal(downloadToolMessage))
@@ -117,7 +120,7 @@ class GetDownloadToolProgressInterfaceStringsRepositoryTests: QuickSpec {
                     
                     waitUntil { done in
                         
-                        _ = getDownloadToolProgressInterfaceStringsRepository
+                        getDownloadToolProgressInterfaceStringsRepository
                             .getStringsPublisher(toolId: unFavoritedToolId, translateInAppLanguage: LanguageCodeDomainModel.english.value)
                             .sink { (interfaceStrings: DownloadToolProgressInterfaceStringsDomainModel) in
                                 
@@ -136,6 +139,7 @@ class GetDownloadToolProgressInterfaceStringsRepositoryTests: QuickSpec {
                                     done()
                                 }
                             }
+                            .store(in: &cancellables)
                     }
 
                     expect(interfaceStringsRef?.downloadMessage).to(equal(favoriteThisToolForOfflineUseMessage))
@@ -153,7 +157,7 @@ class GetDownloadToolProgressInterfaceStringsRepositoryTests: QuickSpec {
                     
                     waitUntil { done in
                         
-                        _ = getDownloadToolProgressInterfaceStringsRepository
+                        getDownloadToolProgressInterfaceStringsRepository
                             .getStringsPublisher(toolId: unFavoritableToolId, translateInAppLanguage: LanguageCodeDomainModel.english.value)
                             .sink { (interfaceStrings: DownloadToolProgressInterfaceStringsDomainModel) in
                                 
@@ -172,6 +176,7 @@ class GetDownloadToolProgressInterfaceStringsRepositoryTests: QuickSpec {
                                     done()
                                 }
                             }
+                            .store(in: &cancellables)
                     }
 
                     expect(interfaceStringsRef?.downloadMessage).to(equal(downloadToolMessage))

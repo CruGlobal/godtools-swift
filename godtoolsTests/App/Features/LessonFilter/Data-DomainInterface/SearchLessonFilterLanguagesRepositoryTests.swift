@@ -16,6 +16,8 @@ class SearchLessonFilterLanguagesRepositoryTests: QuickSpec {
     
     override class func spec() {
      
+        var cancellables: Set<AnyCancellable> = Set()
+        
         describe("User is searching a language in the lesson filter languages list.") {
             
             let searchLessonFilterLanguagesRepository = SearchLessonFilterLanguagesRepository(
@@ -42,7 +44,7 @@ class SearchLessonFilterLanguagesRepositoryTests: QuickSpec {
                     
                     waitUntil { done in
                         
-                        _ = searchLessonFilterLanguagesRepository
+                        searchLessonFilterLanguagesRepository
                             .getSearchResultsPublisher(for: lowercasedSingleLetterSearchString, in: allLanguages)
                             .sink { (languages: [LessonLanguageFilterDomainModel]) in
                                 
@@ -56,6 +58,7 @@ class SearchLessonFilterLanguagesRepositoryTests: QuickSpec {
                                 
                                 done()
                             }
+                            .store(in: &cancellables)
                     }
                     
                     let expectedLanguages: [String] = ["soccer", "soCCer", "Church", "church"]
@@ -89,7 +92,7 @@ class SearchLessonFilterLanguagesRepositoryTests: QuickSpec {
                     
                     waitUntil { done in
                         
-                        _ = searchLessonFilterLanguagesRepository
+                        searchLessonFilterLanguagesRepository
                             .getSearchResultsPublisher(for: uppercasedSingleLetterSearchString, in: allLanguages)
                             .sink { (languages: [LessonLanguageFilterDomainModel]) in
                                 
@@ -103,6 +106,7 @@ class SearchLessonFilterLanguagesRepositoryTests: QuickSpec {
                                 
                                 done()
                             }
+                            .store(in: &cancellables)
                     }
                     
                     let expectedLanguages: [String] = ["foody", "Yellow", "may"]
@@ -138,7 +142,7 @@ class SearchLessonFilterLanguagesRepositoryTests: QuickSpec {
                     
                     waitUntil { done in
                         
-                        _ = searchLessonFilterLanguagesRepository
+                        searchLessonFilterLanguagesRepository
                             .getSearchResultsPublisher(for: multiTextSearchString, in: allLanguages)
                             .sink { (languages: [LessonLanguageFilterDomainModel]) in
                                 
@@ -152,6 +156,7 @@ class SearchLessonFilterLanguagesRepositoryTests: QuickSpec {
                                 
                                 done()
                             }
+                            .store(in: &cancellables)
                     }
                     
                     let expectedLanguages: [String] = ["blAnd", "land", "WAND", "wander", "pAnda", "sanded"]
