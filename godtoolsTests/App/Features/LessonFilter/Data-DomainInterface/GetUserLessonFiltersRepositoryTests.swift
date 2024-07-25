@@ -16,6 +16,8 @@ import RealmSwift
 class GetUserLessonFiltersRepositoryTests: QuickSpec {
     
     override class func spec() {
+    
+        var cancellables: Set<AnyCancellable> = Set()
         
         describe("User is viewing the language filter in the lessons list.") {
          
@@ -51,7 +53,7 @@ class GetUserLessonFiltersRepositoryTests: QuickSpec {
                     
                     waitUntil { done in
                         
-                        _ = getUserLessonFiltersRepository
+                        getUserLessonFiltersRepository
                             .getUserLessonLanguageFilterPublisher(translatedInAppLanguage: appLanguageSpanish)
                             .sink { (lessonLanguageFilter: LessonLanguageFilterDomainModel?) in
                                 
@@ -65,6 +67,7 @@ class GetUserLessonFiltersRepositoryTests: QuickSpec {
                                 
                                 done()
                             }
+                            .store(in: &cancellables)
                         
                     }
                     
@@ -115,7 +118,7 @@ class GetUserLessonFiltersRepositoryTests: QuickSpec {
                     
                     waitUntil { done in
                         
-                        _ = getUserLessonFiltersRepository
+                        getUserLessonFiltersRepository
                             .getUserLessonLanguageFilterPublisher(translatedInAppLanguage: appLanguageFrench)
                             .sink { (lessonLanguageFilter: LessonLanguageFilterDomainModel?) in
                                 
@@ -129,6 +132,7 @@ class GetUserLessonFiltersRepositoryTests: QuickSpec {
                                 
                                 done()
                             }
+                            .store(in: &cancellables)
                         
                     }
                     
@@ -171,7 +175,7 @@ class GetUserLessonFiltersRepositoryTests: QuickSpec {
                     
                     waitUntil { done in
                         
-                        _ = getUserLessonFiltersRepository
+                        getUserLessonFiltersRepository
                             .getUserLessonLanguageFilterPublisher(translatedInAppLanguage: appLanguageFrench)
                             .sink { (lessonLanguageFilter: LessonLanguageFilterDomainModel?) in
                                 
@@ -194,13 +198,14 @@ class GetUserLessonFiltersRepositoryTests: QuickSpec {
                                     done()
                                 }
                             }
+                            .store(in: &cancellables)
                     }
                     
                     expect(originalLessonLanguageFilterRef?.languageName).to(equal("Français"))
                     expect(originalLessonLanguageFilterRef?.translatedName).to(equal("Français"))
                     
                     expect(selectedLessonLanguageFilterRef?.languageName).to(equal("Español"))
-                    expect(selectedLessonLanguageFilterRef?.translatedName).to(equal("Español"))
+                    expect(selectedLessonLanguageFilterRef?.translatedName).to(equal("Espagnol"))
                 }
             }
         }
