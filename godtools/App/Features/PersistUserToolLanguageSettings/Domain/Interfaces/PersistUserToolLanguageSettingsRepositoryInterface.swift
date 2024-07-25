@@ -11,5 +11,5 @@ import Combine
 
 protocol PersistUserToolLanguageSettingsRepositoryInterface {
     
-    func persistUserToolLanguageSettingsPublisher(toolId: String, primaryLanguageId: String, parallelLanguageId: String?, selectedLanguageId: String) -> AnyPublisher<Bool, Never>
+    func persistUserToolLanguageSettingsPublisher(toolId: String, primaryLanguageId: String, parallelLanguageId: String?) -> AnyPublisher<Bool, Never>
 }

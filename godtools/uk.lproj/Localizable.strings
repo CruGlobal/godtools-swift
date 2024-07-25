@@ -40,20 +40,8 @@
 "allTools.spotlight.description" = "Вам можуть сподобатися ці інструменти";
 "allTools.categories.title" = "Категорії";
 "tool_menu_item.lessons" = "Уроки";
-"parallelLanguage.yesButton.title" = "Так";
-"parallelLanguage.noButton.title" = "Ні, дякую";
-"parallelLanguage.getStartedButton.title" = "Розпочати";
-"parallelLanguage.selectLanguageButton.title" = "Оберіть мову";
-"parellelLanguage.prompt" = "Хочете встановити додаткову мову?";
 "onboardingTutorial.beginButton.title" = "Почати";
-"onboardingQuickStart.2.title" = "Я хочу поділитися Благою Вісткою з іншими";
-"onboardingQuickStart.2.button.title" = "Виберіть один із наших інструментів";
 "onboardingTutorial.nextButton.title" = "Далі";
-"onboardingQuickStart.title" = "Стартові посилання";
-"onboardingQuickStart.0.title" = "Я хочу дізнатися про християнство";
-"onboardingQuickStart.0.button.title" = "Прочитайте наші статті";
-"onboardingQuickStart.1.title" = "Я хочу навчитися вести євангельські розмови";
-"onboardingQuickStart.1.button.title" = "Спробуйте наші уроки";
 "tool_offline_favorite_message" = "Інструмент буде доступним у режимі офлайн, якщо торкнутись значка серця. Його буде додано до улюбленого.";
 
 /* This is a category description of a tool that helps you start a conversation */

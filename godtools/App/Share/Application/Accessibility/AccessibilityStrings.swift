@@ -70,6 +70,7 @@ class AccessibilityStrings {
         case favoriteTool = "Favorite Tool"
         case languageSettings = "Language Settings"
         case leaveAReview = "Leave A Review"
+        case lessonsLanguageFilter = "Lessons Language Filter"
         case login = "Login"
         case logout = "Logout"
         case nextOnboardingTutorial = "Next Onboarding Tutorial Button"

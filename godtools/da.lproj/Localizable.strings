@@ -40,20 +40,8 @@
 "allTools.spotlight.description" = "Her er nogle værktøjer, vi troede, du kunne lide";
 "allTools.categories.title" = "Kategorier";
 "tool_menu_item.lessons" = "Lektioner";
-"parallelLanguage.yesButton.title" = "Ja";
-"parallelLanguage.noButton.title" = "Nej tak";
-"parallelLanguage.getStartedButton.title" = "Kom i gang";
-"parallelLanguage.selectLanguageButton.title" = "Vælg et sprog";
-"parellelLanguage.prompt" = "Vil du gerne angive et sekundært sprog?";
 "onboardingTutorial.beginButton.title" = "Begynd";
-"onboardingQuickStart.2.title" = "Jeg vil gerne dele evangeliet med nogen";
-"onboardingQuickStart.2.button.title" = "Vælg et af vores værktøjer";
 "onboardingTutorial.nextButton.title" = "Næste";
-"onboardingQuickStart.title" = "Link til hurtig start";
-"onboardingQuickStart.0.title" = "Jeg vil gerne udforske kristendommen";
-"onboardingQuickStart.0.button.title" = "Læs vores artikler";
-"onboardingQuickStart.1.title" = "Jeg vil gerne lære om evangeliesamtaler";
-"onboardingQuickStart.1.button.title" = "Prøv vores lektioner";
 "tool_offline_favorite_message" = "Gør et værktøj tilgængeligt offline ved at trykke på hjerteikonet, som tilføjer det til dine favoritter.";
 
 /* This is a category description of a tool that helps you start a conversation */

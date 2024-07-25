@@ -17,13 +17,12 @@ class UserToolSettingsRepository {
         self.cache = cache
     }
     
-    func storeUserToolSettings(toolId: String, primaryLanguageId: String, parallelLanguageId: String?, selectedLanguageId: String) {
+    func storeUserToolSettings(toolId: String, primaryLanguageId: String, parallelLanguageId: String?) {
         
         let dataModel = UserToolSettingsDataModel(
             toolId: toolId,
             primaryLanguageId: primaryLanguageId,
-            parallelLanguageId: parallelLanguageId, 
-            selectedLanguageId: selectedLanguageId
+            parallelLanguageId: parallelLanguageId
         )
         
         cache.storeUserToolSettings(dataModel: dataModel)

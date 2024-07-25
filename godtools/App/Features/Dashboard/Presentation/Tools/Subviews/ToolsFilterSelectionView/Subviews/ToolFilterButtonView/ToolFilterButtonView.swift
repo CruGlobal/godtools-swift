@@ -14,12 +14,12 @@ struct ToolFilterButtonView: View {
     private static let cornerRadius: CGFloat = height / 2
     
     private let buttonTitle: String
-    private let width: CGFloat
+    private let width: CGFloat?
     private let backgroundColor: Color = Color.white
     private let accessibility: AccessibilityStrings.Button
     private let tappedClosure: (() -> Void)?
         
-    init(title: String, width: CGFloat, accessibility: AccessibilityStrings.Button, tappedClosure: (() -> Void)?) {
+    init(title: String, width: CGFloat? = nil, accessibility: AccessibilityStrings.Button, tappedClosure: (() -> Void)?) {
         
         self.buttonTitle = title
         self.width = width
