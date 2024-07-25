@@ -5,9 +5,6 @@
 "toolDetails.about.title" = "Rreth";
 
 "toolSettings.languagesAvailable.title" = "Gjuhët";
-"parallelLanguage.yesButton.title" = "Po";
-"parallelLanguage.noButton.title" = "Jo faleminderit";
-"parallelLanguage.selectButton.title" = "Përzgjidh";
 "share_link" = "Tregoju të tjerëve";
 
 /* This is an invitation for a user to open a tool */

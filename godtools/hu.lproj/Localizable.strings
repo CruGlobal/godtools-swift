@@ -40,20 +40,8 @@
 "allTools.spotlight.description" = "Íme néhány eszköz, amelyről úgy gondoltuk, hogy tetszeni fog";
 "allTools.categories.title" = "Kategóriák";
 "tool_menu_item.lessons" = "Szentleckék";
-"parallelLanguage.yesButton.title" = "Igen";
-"parallelLanguage.noButton.title" = "Köszönöm, nem";
-"parallelLanguage.getStartedButton.title" = "Első lépések";
-"parallelLanguage.selectLanguageButton.title" = "Válassz ki egy nyelvet";
-"parellelLanguage.prompt" = "Másodlagos nyelvet szeretnél beállítani?";
 "onboardingTutorial.beginButton.title" = "Kezdés";
-"onboardingQuickStart.2.title" = "Szeretném megosztani valakivel az evangéliumot";
-"onboardingQuickStart.2.button.title" = "Próbáld ki valamelyik eszközünket";
 "onboardingTutorial.nextButton.title" = "Következő";
-"onboardingQuickStart.title" = "Gyorsindítási hivatkozások";
-"onboardingQuickStart.0.title" = "Szeretném felfedezni a kereszténységet";
-"onboardingQuickStart.0.button.title" = "Olvasd el a cikkeinket";
-"onboardingQuickStart.1.title" = "Szeretném megtudni, hogyan folytassak beszélgetéseket az evangéliumról.";
-"onboardingQuickStart.1.button.title" = "Próbáld ki a Leckéinket";
 "tool_offline_favorite_message" = "Offline elérhetővé teheted az eszközt a szív ikonra kattintva, amivel hozzáadod a kedvenceidhez.";
 
 /* This is a category description of a tool that helps you start a conversation */

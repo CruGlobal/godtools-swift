@@ -11,13 +11,13 @@ import Combine
 
 class UserCountersRepository {
     
-    private let api: UserCountersAPI
+    private let api: UserCountersAPIType
     private let cache: RealmUserCountersCache
     private let remoteUserCountersSync: RemoteUserCountersSync
     
     private var cancellables: Set<AnyCancellable> = Set()
     
-    init(api: UserCountersAPI, cache: RealmUserCountersCache, remoteUserCountersSync: RemoteUserCountersSync) {
+    init(api: UserCountersAPIType, cache: RealmUserCountersCache, remoteUserCountersSync: RemoteUserCountersSync) {
         self.api = api
         self.cache = cache
         self.remoteUserCountersSync = remoteUserCountersSync
@@ -63,7 +63,7 @@ class UserCountersRepository {
             .eraseToAnyPublisher()
     }
     
-    func incrementCachedUserCounterBy1(id: String) -> AnyPublisher<UserCounterDataModel, Error> {
+    func incrementCachedUserCounterBy1(id: String) -> AnyPublisher<[UserCounterDataModel], Error> {
         
         return cache.incrementUserCounterBy1(id: id)
     }

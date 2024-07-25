@@ -19,6 +19,7 @@ class AppFeatureDiContainer {
     let globalActivity: GlobalActivityDiContainer
     let learnToShareTool: LearnToShareToolDiContainer
     let lessonEvaluation: LessonEvaluationFeatureDiContainer
+    let lessonFilter: LessonFilterDiContainer
     let lessons: LessonsFeatureDiContainer
     let onboarding: OnboardingDiContainer
     let shareables: ShareablesDiContainer
@@ -31,7 +32,7 @@ class AppFeatureDiContainer {
     let toolShortcutLinks: ToolShortcutLinksDiContainer
     let tutorial: TutorialFeatureDiContainer
     
-    init(account: AccountDiContainer, appLanguage: AppLanguageFeatureDiContainer, dashboard: DashboardDiContainer, downloadToolProgress: DownloadToolProgressFeatureDiContainer, favorites: FavoritesDiContainer, featuredLessons: FeaturedLessonsDiContainer, globalActivity: GlobalActivityDiContainer, learnToShareTool: LearnToShareToolDiContainer, lessonEvaluation: LessonEvaluationFeatureDiContainer, lessons: LessonsFeatureDiContainer, onboarding: OnboardingDiContainer, shareables: ShareablesDiContainer, shareGodTools: ShareGodToolsDiContainer, spotlightTools: SpotlightToolsDiContainer, toolDetails: ToolDetailsFeatureDiContainer, toolScreenShare: ToolScreenShareFeatureDiContainer, toolSettings: ToolSettingsDiContainer, toolsFilter: ToolsFilterFeatureDiContainer, toolShortcutLinks: ToolShortcutLinksDiContainer, tutorial: TutorialFeatureDiContainer) {
+    init(account: AccountDiContainer, appLanguage: AppLanguageFeatureDiContainer, dashboard: DashboardDiContainer, downloadToolProgress: DownloadToolProgressFeatureDiContainer, favorites: FavoritesDiContainer, featuredLessons: FeaturedLessonsDiContainer, globalActivity: GlobalActivityDiContainer, learnToShareTool: LearnToShareToolDiContainer, lessonEvaluation: LessonEvaluationFeatureDiContainer, lessonFilter: LessonFilterDiContainer, lessons: LessonsFeatureDiContainer, onboarding: OnboardingDiContainer, shareables: ShareablesDiContainer, shareGodTools: ShareGodToolsDiContainer, spotlightTools: SpotlightToolsDiContainer, toolDetails: ToolDetailsFeatureDiContainer, toolScreenShare: ToolScreenShareFeatureDiContainer, toolSettings: ToolSettingsDiContainer, toolsFilter: ToolsFilterFeatureDiContainer, toolShortcutLinks: ToolShortcutLinksDiContainer, tutorial: TutorialFeatureDiContainer) {
         
         self.account = account
         self.appLanguage = appLanguage
@@ -42,6 +43,7 @@ class AppFeatureDiContainer {
         self.globalActivity = globalActivity
         self.learnToShareTool = learnToShareTool
         self.lessonEvaluation = lessonEvaluation
+        self.lessonFilter = lessonFilter
         self.lessons = lessons
         self.onboarding = onboarding
         self.shareables = shareables

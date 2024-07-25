@@ -2,6 +2,22 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+<key>lessons.filter.lessonsAvailable</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@lessonCount@</string>
+<key>lessonCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>%d Lesson available</string>
+<key>other</key>
+<string>%d Lessons available</string>
+</dict>
+</dict>
 <key>account.activity.toolOpens</key>
 <dict>
 <key>NSStringLocalizedFormatKey</key>
@@ -13,9 +29,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Tool open</string>
+<string>Zana imefunguliwa</string>
 <key>other</key>
-<string>Tool opens</string>
+<string>Zana inafunguka</string>
 </dict>
 </dict>
 <key>account.activity.lessonCompletions</key>
@@ -29,9 +45,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Lesson completion</string>
+<string>Ukamilishaji wa somo</string>
 <key>other</key>
-<string>Lesson completions</string>
+<string>Ukamilishaji wa masomo</string>
 </dict>
 </dict>
 <key>account.activity.screenShares</key>
@@ -45,9 +61,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Screen share</string>
+<string>Shirikisha skrini</string>
 <key>other</key>
-<string>Screen shares</string>
+<string>Skrini inashirikisha</string>
 </dict>
 </dict>
 <key>account.activity.linksShared</key>
@@ -61,9 +77,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Link share</string>
+<string>Kiungo kimeshirikishwa</string>
 <key>other</key>
-<string>Link shares</string>
+<string>Viungo vilivyoshirikishwa</string>
 </dict>
 </dict>
 <key>account.activity.languagesUsed</key>
@@ -77,9 +93,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Language used</string>
+<string>Lugha inayotumika</string>
 <key>other</key>
-<string>Languages used</string>
+<string>Lugha zinazopatikana</string>
 </dict>
 </dict>
 <key>account.activity.sessions</key>
@@ -93,9 +109,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Session</string>
+<string>Kipindi</string>
 <key>other</key>
-<string>Sessions</string>
+<string>Vipindi</string>
 </dict>
 </dict>
 <key>tools.filter.toolsAvailable</key>
@@ -109,9 +125,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>%d Tool available</string>
+<string>%d Vifaa vinavyopatikana</string>
 <key>other</key>
-<string>%d Tools available</string>
+<string>%d Vifaa vinavyopatikana</string>
 </dict>
 </dict>
 <key>languageSettings.appLanguage.numberAvailable</key>
@@ -125,9 +141,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>1 Language available</string>
+<string>%d Lugha zinazopatikana</string>
 <key>other</key>
-<string>%d Languages available</string>
+<string>%d Lugha zinazopatikana</string>
 </dict>
 </dict>
 <key>badges.imagesShared</key>
@@ -141,9 +157,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Shared 1 image</string>
+<string>Picha 1 zilizoshirikishwa</string>
 <key>other</key>
-<string>Shared %d images</string>
+<string>Picha %d zilizoshirikishwa</string>
 </dict>
 </dict>
 <key>badges.articlesOpened</key>
@@ -157,9 +173,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Read 1 article</string>
+<string>Vifungu %d vilivyofunguliwa</string>
 <key>other</key>
-<string>Read %d articles</string>
+<string>Vifungu %d vilivyofunguliwa</string>
 </dict>
 </dict>
 <key>badges.lessonsCompleted</key>
@@ -173,9 +189,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Completed 1 lesson</string>
+<string>Masomo %d yaliyokamilishwa</string>
 <key>other</key>
-<string>Completed %d lessons</string>
+<string>Masomo %d yaliyokamilishwa</string>
 </dict>
 </dict>
 <key>badges.toolsOpened</key>
@@ -189,9 +205,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Opened 1 tool</string>
+<string>Zana %d zilizofunguliwa</string>
 <key>other</key>
-<string>Opened %d tools</string>
+<string>Zana %d zilizofunguliwa</string>
 </dict>
 </dict>
 <key>badges.tipsCompleted</key>
@@ -205,9 +221,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Completed 1 training tip</string>
+<string>Miongozo ya mafunzo %d iliyokamilishwa</string>
 <key>other</key>
-<string>Completed %d training tips</string>
+<string>Miongozo ya mafunzo %d iliyokamilishwa</string>
 </dict>
 </dict>
 </dict>

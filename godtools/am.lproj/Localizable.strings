@@ -1,36 +1,37 @@
+"language_name_fil" = "ፊሊፒኖ (ታጋሎግ)";
 "language_name_fil-x-taglish" = "ታግሊሽ";
 "language_name_sid" = "ሲዳማ";
-"onboardingTutorial.chooseLanguageButton.title" = "ቋንቋ ምረጥ";
-"languageSettings.confirmAppLanguage.message" = "%@ የመተግበሪያ ዋና ቋንቋ አድርገህ መርጠሀል። ይህ የመላው GodTools መተግበሪያን ቋንቋ ይለውጣል። እርግጠኛ ነህ?";
-"languageSettings.confirmAppLanguage.changeLanguageButton.title" = "ቋንቋ ቀይር";
+"onboardingTutorial.chooseLanguageButton.title" = "ቋንቋ ይምረጡ";
+"languageSettings.confirmAppLanguage.message" = "%@ የመተግበሪያ ዋና ቋንቋ አድርገው መርጠዋል። ይህ የመላው GodTools መተግበሪያን ቋንቋ ይለውጣል። እርግጠኛ ኖት?";
+"languageSettings.confirmAppLanguage.changeLanguageButton.title" = "ቋንቋ ቀይሩ";
 "languageSettings.confirmAppLanguage.nevermindButton.title" = "ግድ የለም";
 "languageSettings.downloadableLanguages.title" = "ሊወርዱ የሚችሉ ቋንቋዎች";
 "languageSettings.appInterface.title" = "የመተግበሪያ በይነገጽ ቋንቋ";
 "languageSettings.appInterface.message" = "በመላው መተግበሪያ እንዲታይ የሚፈልጉትን ቋንቋ ያዘጋጁ።";
 "languageSettings.appInterface.languagesAvailable" = "የቀረቡ ቋንቋዎች";
-"languageSettings.toolLanguagesAvailableOffline.title" = "የመተግበሪያ ቋንቋዎች ያለኢንተርኔት የሚሰሩ";
+"languageSettings.toolLanguagesAvailableOffline.title" = "ያለኢንተርኔት የሚሰሩ የመተግበሪያ ቋንቋዎች";
 "languageSettings.toolLanguagesAvailableOffline.message" = "ከዋይፋይ ወይም ከአገልግሎት መስጫ ክልል ውጪ ቢሆኑም እንኳ መጠቀም እንዲችሉ በመረጡት ቋንቋ ቡክሌቶቹን ያውርዱ። የመተግበሪያ ቋንቋ የአማራጮች ቁልፍን በመጫን ይምረጡ።";
 "languageSettings.toolLanguagesAvailableOffline.editDownloadedLanguagesButton.title" = "የወረዱ ቋንቋዎችን ያስተካክሉ";
-"allTools.filter.title" = "አጣራ";
+"allTools.filter.title" = "አጣሩ";
 "allTools.filter.anyCategory" = "ማንኛውም ምድብ";
 "allTools.filter.anyLanguage" = "ማንኛውም ቋንቋ";
-"allTools.filter.navBar.language" = "በቋንቋ አጣራ";
-"allTools.filter.navBar.category" = "በምድብ አጣራ";
+"allTools.filter.navBar.language" = "በቋንቋ አጣሩ";
+"allTools.filter.navBar.category" = "በምድብ አጣሩ";
 "languageSettings.appLanguage.title" = "የመተግበሪያ ቋንቋ";
 "authError.userAccountAlreadyExists.message" = "የተጠቃሚ መለያ አስቀድሞ አለ።";
 "authError.userAccountNotFound.message" = "የተጠቃሚ መለያ አልተገኘም።";
-"createAccount.title" = "መለያ ፍጠር";
+"createAccount.title" = "መለያ ይፍጠሩ";
 "createAccount.subtitle" = "እውነተኛ ታሪኮችን፣ ማበረታቻዎችን እና ተግባራዊ ምክሮችን በእጅዎ ለማግኘት መለያ ይፍጠሩ።";
 "deleteAccountProgress.title" = "መለያን በመሰረዝ ላይ...";
-"confirmDeleteAccount.title" = "እርግጠኛ ነህ?";
-"confirmDeleteAccount.confirmButton.title" = "መለያ አጥፋ";
+"confirmDeleteAccount.title" = "እርግጠኛ ኖት?";
+"confirmDeleteAccount.confirmButton.title" = "መለያ አጥፉ";
 "accountDeletedAlert.title" = "መለያ ተሰርዟል";
-"accountDeletedAlert.message" = "መለያህ ተሰርዟል።";
-"deleteAccount.title" = "ቶሎ እንዳትሄድ";
+"accountDeletedAlert.message" = "መለያው ተሰርዟል።";
+"deleteAccount.title" = "ቶሎ እንዳትሄዱ";
 "deleteAccount.subtitle" = "መለያዎን ካጠትፉ የሚወዷቸውን መሳሪያዎች ወይም የመለያ እንቅስቃሴ ማግኘት አይችሉም።";
 "deleteAccount.confirmButton.title" = "መለያዬን አጥፋ";
 "deleteAccount.cancelButton.title" = "መለያዬን አታጥፋ";
-"signIn.title" = "ግባ";
+"signIn.title" = "ይግቡ";
 "signIn.subtitle" = "እውነተኛ ታሪኮችን፣ ማበረታቻዎችን እና ተግባራዊ ምክሮችን በእጅዎ ለማግኘት ወደ መለያዎ ይግቡ።";
 "signIn.google" = "በGoogle ይግቡ";
 "signIn.facebook" = "በFacebook ይግቡ";
@@ -38,54 +39,12 @@
 "menu_getStarted" = "እንጀምር";
 "menu_support" = "ድጋፍ";
 "menu_about" = "ስለዚህ አፕሊኬሽን";
-"menu.sendFeedback" = "አስተያይት ላክ";
+"menu.sendFeedback" = "አስተያይት ይላኩ";
 "menu.reportABug" = "ስህተት ሪፖርት ያድርጉ";
-"menu.askAQuestion" = "ጥያቄ ጠይቅ";
+"menu.askAQuestion" = "ጥያቄ ይጠይቁ";
 "menu.leaveAReview" = "አስተይያት ይፃፉ";
-"account.badges.sectionTitle" = "ባጆችህ";
-"account.activity.sectionTitle" = "የአንተ እንቅስቃሴ";
-
-/* This is a title on a dashboard that will show the Number of Times a person has opened a tool */
-"account.activity.toolOpens" = "የተከፈቱ ቡክሌቶች";
-
-/* This is a title on a dashboard that will show the Number of Times a person has completed a lesson */
-"account.activity.lessonCompletion" = "የትምህርት ማጠናቀቂያዎች";
-
-/* This is a title on a dashboard that will show the Number of Times a person has used the screen share function */
-"account.activity.screenShares" = "ስክሪን ማጋራቶች";
-
-/* This is a title on a dashboard that will show the Number of Times a person has shared a link */
-"account.activity.linksShared" = "ማስፈንጠሪያ ማጋራቶች";
-
-/* This is a title on a dashboard that will show the Number of different languages they have used */
-"account.activity.languagesUsed" = "የተጠቀሙዋቸው ቋንቋዎች";
-
-"account.activity.sessions" = "ክፍለ ጊዜዎች";
-"badges.tipsCompleted.singular" = "የተጠናቀቁ 1 የሥልጠና ምክሮች";
-
-/* leave %d in phrase - this is the number of articles that the user has read */
-"badges.articlesOpened.plural" = "%d  ጽሑፎችን ያንብቡ";
-
-/* when they have read only 1 articles */
-"badges.articlesOpened.singular" = "1 ጽሑፍ ያንብቡ";
-
-/* leave %d in phrase - this is the number of images that the user has shared */
-"badges.imagesShared.plural" = "የተጋሩ %d ምስሎች";
-
-"badges.imagesShared.singular" = "የተጋሩ 1 ምስሎች";
-
-/* leave %d in phrase - this is the number of lessons that the user has completed */
-"badges.lessonsCompleted.plural" = "የተጠናቀቁ %d ትምህርቶች";
-
-"badges.lessonsCompleted.singular" = "የተጠናቀቁ 1 ትምህርቶች";
-
-/* leave %d in phrase - this is the number of tools that the user has opened */
-"badges.toolsOpened.plural" = "%d መሳሪያዎች ተከፍተዋል";
-
-"badges.toolsOpened.singular" = "1 መሳሪያዎች ተከፍተዋል";
-
-/* leave %d in phrase - this is the number of tips that the user has completed */
-"badges.tipsCompleted.plural" = "የተጠናቀቁ %d የሥልጠና ምክሮች";
+"account.badges.sectionTitle" = "ባጆች";
+"account.activity.sectionTitle" = "የአርሶ እንቅስቃሴ";
 
 /* Just translate "Joined" - leave the %@ - this is the date they started using GodTools */
 "account.joinedOn" = "%@ ተቀላቅሏል";
@@ -105,9 +64,9 @@
 "toolDetails.about.title" = "ስለ";
 
 /* This means that the tool/resource is not available in the currently selected language. */
-"lessonCard.languageNotAvailable" = "በ%@ ቋንቋ የለም";
+"lessonCard.languageNotAvailable" = "በ%@ የለም";
 
-"menu.deleteAccount" = "መለያ አጥፋ";
+"menu.deleteAccount" = "መለያ ያጥፉ";
 "alert.mailAppUnavailable.title" = "የMail መተግበሪያ የለም";
 "alert.mailAppUnavailable.message" = "የMail  መተግበሪያ በትክክል አልተዋቀረም ወይም በዚህ ስልክ ላይ አይገኝም። ";
 "tool_menu_item.tools" = "ቡክሌቶች";
@@ -116,9 +75,9 @@
 "toolSettings.languagesAvailable.title" = "የቀረቡ ቋንቋዎች";
 "toolDetails.versions.message" = "ከዚህ በታች የዚህ መሣሪያ የተለየ ስሪት ይምረጡ። ለእያንዳንዱ እትም ልዩ ዘይቤ እና ይዘት ስላለው ለውይይትዎ የተሻለውን ማግኘት ይችላሉ።የአንድን ቡክሌት የተለያዩ ስሪቶችን ወደ ምርጫዎ ማስገባት ይችላሉ።";
 "favorites.noTools.title" = "የተመረጡ ቡክሌቶች የሉም";
-"favorites.noTools.description" = "ቡክሌቱን ወደ ምርጫዎ ለማስገባት እና ከኢንተርኔት ውጭ የሚገኝ ለማድረግ የልብ ምልክቱን ይንኩ።";
-"favorites.noTools.button" = "ወደ ቡክሌቶች ሂድ";
-"toolSettings.shareImagePreview.shareImageButton.title" = "ምስል አጋራ";
+"favorites.noTools.description" = "ቡክሌቱን ወደ ምርጫዎ ለማስገባት እና ከኢንተርኔት ውጭ የሚገኝ ለማድረግ የልብ ምልክቱን ይጫኑ።";
+"favorites.noTools.button" = "ወደ ቡክሌቶች ይሂዱ";
+"toolSettings.shareImagePreview.shareImageButton.title" = "ምስል ያጋሩ";
 "favorites.pageTitle" = "ወደ GodTools እንኳን በደህና መጡ";
 "favorites.favoriteLessons.title" = "ተለይቶ የቀረበ ትምህርት";
 "favorites.favoriteTools.title" = "የእርስዎ ተመራጭ ቡክሌቶች";
@@ -132,32 +91,26 @@
 "toolDetails.versions.title" = "ስሪቶች";
 "toolDetails.learnToShareToolButton.title" = "ይህን ቡክሌት ማጋራት ይማሩ";
 "toolSettings.title" = "የመተግበሪያ አማራጮች";
-"toolSettings.option.shareLink.title" = "መስፈንጠሪያ አጋራ";
-"toolSettings.option.screenShare.title" = "ስክሪን አጋራ";
+"toolSettings.option.shareLink.title" = "መስፈንጠሪያ ያጋሩ";
+"toolSettings.option.screenShare.title" = "ስክሪን ያጋሩ";
 "toolSettings.option.trainingTips.show.title" = "የስልጠና ምክሮች";
 "toolSettings.option.trainingTips.hide.title" = "ጠቃሚ ምክሮችን ደብቅ";
 "toolSettings.chooseLanguage.title" = "ሁለት ቋንቋ";
 "toolSettings.chooseLanguage.noParallelLanguageTitle" = "ትይዪ";
 "toolSettings.shareables.title" = "ተዛማጅ ግራፊክስ";
 "allTools.spotlight.title" = "የተመረጡ ቡክሌቶች";
-"allTools.spotlight.description" = "ሊወዷቸው ይችልሉ ብለን ያሰብናቸውን ቡክሌቶች ከታች ያገኛሉ።";
-"training_tip_ask" = "ጠይቅ";
+"allTools.spotlight.description" = "ሊወዷቸው ይችላሉ ብለን ያሰብናቸውን ቡክሌቶች ከታች ያገኛሉ።";
+"training_tip_ask" = "ይጠይቁ";
 "training_tip_consider" = "አስቡበት";
-"training_tip_prepare" = "አዘጋጅ";
+"training_tip_prepare" = "ያዘጋጁ";
 "training_tip_quote" = "ጥቅስ";
 "training_tip_tip" = "ጠቃሚ ምክር";
-"start_training" = "ስልጠናውን ጀምር";
-"close" = "ዝጋ";
+"start_training" = "ስልጠናውን ይጀምሩ";
+"close" = "ይዝጉ";
 "tool_menu_item.lessons" = "ትምህርቶች";
-"parallelLanguage.yesButton.title" = "አዎ";
-"parallelLanguage.noButton.title" = "አይ አልፈልግም";
-"parallelLanguage.selectButton.title" = "ምረጥ";
-"parallelLanguage.getStartedButton.title" = "እንጀምር";
-"parallelLanguage.selectLanguageButton.title" = "ቋንቋ ምረጥ";
-"parellelLanguage.prompt" = "ሁለተኛ ቋንቋ መምረጥ ይፈልጋሉ?";
 
 /* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
-"tutorial.continueButton.title.closeTutorial" = "አጋዥ ስልጠናን ዝጋ";
+"tutorial.continueButton.title.closeTutorial" = "አጋዥ ስልጠናን ይዝጉ";
 
 /* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.tool.title" = "ቡክሌቶች";
@@ -175,7 +128,7 @@
 "tutorial.screenShare.title" = "ስክሪን ማጋራት";
 
 /* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
-"tutorial.screenShare.message" = "አሁን ስክሪንህን ማጋራት ትችላለህ ስለዚህ ስለ ወንጌል ለመወያየት ቡክሌቱን ስትጠቀም ሌላው ሰው መከተል ይችላል።";
+"tutorial.screenShare.message" = "አሁን ስክሪኖን ማጋራት ይችላሉ። ስለዚህ ስለ ወንጌል ለመወያየት ቡክሌቱን ሲጠቀሙ ሌላው ሰው መከተል ይችላል።";
 
 /* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.lesson.title" = "ትምህርቶች";
@@ -186,15 +139,8 @@
 /* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.findTutorial.title" = "ይህንን አጋዥ ስልጠና በሚፈልጉበት ጊዜ በማውጫ ውስጥ ያግኙት።";
 
-"onboardingTutorial.beginButton.title" = "ጀምር";
-"onboardingQuickStart.2.title" = "ለአንድ ሰው ወንጌልን ማካፈል እፈልጋለሁ";
-"onboardingQuickStart.2.button.title" = "ከቡክሌቶች ውስጥ አንዱን ይምረጡ";
+"onboardingTutorial.beginButton.title" = "ይጀምሩ";
 "onboardingTutorial.nextButton.title" = "ቀጣይ";
-"onboardingQuickStart.title" = "በፍጥነት ለመጀመር የሚረዱ ማስፈንጠሪያዎች";
-"onboardingQuickStart.0.title" = "ስለ ኢየሱስ የበለጠ ማወቅ እፈልጋለሁ።";
-"onboardingQuickStart.0.button.title" = "ጽሑፎቻችንን ያንብቡ";
-"onboardingQuickStart.1.title" = "ስለ ወንጌል ማውራትን መማር እፈልጋለሁ";
-"onboardingQuickStart.1.button.title" = "ትምህርቶቻችንን ይሞክሩ";
 "tool_offline_favorite_message" = "ወደ ምርጫዎ የሚያክለውን የልብ ምልክት በመጫን ቡክሌቱን ከመስመር ውጭ የሚገኝ ያድርጉት።";
 
 /* This is a category description of a tool that helps you start a conversation */
@@ -203,9 +149,9 @@
 /* This phrase describes a category of tool that helps someone grow in their Christian faith */
 "tool_category_growth" = "የክርስቲያን እድገት";
 
-"share_link" = "መስፈንጠሪያ አጋራ";
+"share_link" = "መስፈንጠሪያ ያጋሩ";
 "share_tool_menu.remote_share_tool" = "ስክሪን ያጋሩ";
-"share_tool_menu.send_tool" = "ይህን ቡክሌት ላክ";
+"share_tool_menu.send_tool" = "ይህን ቡክሌት ይላኩ";
 "share_tool_screen_tutorial.share_your_screen.title" = "ስክሪን ያጋሩ";
 "share_tool_screen_tutorial.share_your_screen.message" = "ይህ አማራጭ ይህን ቡክሌት የሚከፍት ማስፈንጠሪያ ለጓደኛ ይልካል። ማስፈንጠሪያው ሲከፈት የስክሪን ማጋሪያ ክፍለ ጊዜ ይጀምራል።";
 "share_tool_screen_tutorial.mirrored_experience.title" = "የተጋራ ይዘት";
@@ -223,13 +169,13 @@
 "learn_to_share_tool.tips_light_the_way.message" = "በተመረጡ ስክሪኖች ላይ የተለያዩ ምልክቶችን ታያለህ። ስለ ስክሪኑ ይዘት ለመናገር የሚረዳዎትን ጠቃሚ ምክር ለማየት ምልክቱን ይጫኑ።";
 "learn_to_share_tool.light_up_the_tips.title" = "ምክሮቹን ያብሩ";
 "learn_to_share_tool.light_up_the_tips.message" = "ጠቃሚ ምክር ሲበራ ያንን ስልጠና ጨርሰዋል። በእያንዳንዱ ውይይት ውስጥ እያንዳንዱን ጠቃሚ ምክር መጠቀም አያስፈልግዎትም.";
-"lesson_evaluation.title" = "ገምግም";
+"lesson_evaluation.title" = "ይገምግሙ";
 "lesson_evaluation.wasThisHelpful" = "ይህ ትምህርት ለእርስዎ ጠቃሚ ነበር?";
 "lesson_evaluation.shareFaith" = "መንፈሳዊ ውይይት ለመጀመር ምን ያህል ዝግጁ ነዎት?";
-"lesson_evaluation.sendButtonTitle" = "አስተያይት ላክ";
-"onboardingTutorial.0.title" = "ለእያንዳንዱ ውይይት ዝግጁ";
-"onboardingTutorial.0.videoLink.title" = "ቪዲዮ ተመልከት";
-"onboardingTutorial.1.title" = "ከማንም ጋር ስለ እግዚአብሔር ተነጋገሩ";
+"lesson_evaluation.sendButtonTitle" = "አስተያይት ይላኩ";
+"onboardingTutorial.0.title" = "ለእያንዳንዱ ውይይት ተዘጋጅተዋል";
+"onboardingTutorial.0.videoLink.title" = "ቪዲዮ ይመልከቱ";
+"onboardingTutorial.1.title" = "ከሁሉም ጋር ስለ እግዚአብሔር ተነጋገሩ";
 "onboardingTutorial.1.message" = "GodTools ስለ እግዚአብሔር ትርጉም ያለው ንግግሮች እንዲያደርጉ ያግዝዎታል።";
 "onboardingTutorial.2.title" = "አስፈላጊ ለሆኑ ቅፅበቶች ይዘጋጁ";
 "onboardingTutorial.2.message" = "ስለ እምነት ውይይቶችን እንዴት ከህይወቶ ጋር በማዋሀድ በቀላሉ ማውራት እንደሚችሉ ይወቁ።";
@@ -240,22 +186,22 @@
 "tool_category_training" = "ስልጠና";
 
 /* This is an invitation for a user to open a tool */
-"open" = "ክፈት";
+"open" = "ይክፈቱ";
 
 /* A user will be selecting a heart to indicated that it is one of their favorite tools. */
-"add_to_favorites" = "ወደ ምርጫዎች ጨምር";
+"add_to_favorites" = "ወደ ምርጫዎች ይጨምሩ";
 
 /* A user will be selecting this option to remove the tool from their Favorites screen */
-"remove_from_favorites" = "ከምርጫዎችህ አውጣ";
+"remove_from_favorites" = "ከምርጫዎቾ ያውጡ";
 
 /* This is a loading screen */
-"loading_unfavorited_tool" = "ቡክሌቱ እየወረደ ነው። ለወደፊቱ  ይህን ቡክሌት ያለ በይነመረብ ግንኙነት ለማግኘት የኔ ምርጫ ውስጥ አስገባው።";
+"loading_unfavorited_tool" = "ቡክሌቱ እየወረደ ነው። ለወደፊቱ  ይህን ቡክሌት ያለ በይነመረብ ግንኙነት ለማግኘት የኔ ምርጫ ውስጥ ያስገቡት።";
 
 /* This is a loading screen */
 "loading_favorited_tool" = "ለዚህ ቡክሌት በጣም የቅርብ ጊዜውን ትርጉም በማውረድ ላይ።";
 
 /* Adds a question mark */
-"remove_from_favorites_title" = "ከምርጫዎችህ አውጣ? ";
+"remove_from_favorites_title" = "ከምርጫዎቾ ይውጣ? ";
 
 /* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
 "remove_from_favorites_message" = "እርግጠኛ ነዎት %@ን ከምርጫዎ ማስወገድ ይፈልጋሉ? ";
@@ -282,7 +228,7 @@
 "find_tools" = "ሁሉም ቡክሌቶች";
 
 // Navigation Bar
-"navigationBar.navigationItem.skip" = "እለፍ";
+"navigationBar.navigationItem.skip" = "ይለፉ";
 
 // Onboarding
 "add_new_tools" = "አዲስ መሳሪያን ይጨምሩ";
@@ -293,11 +239,11 @@
 "menu_legal" = "ሕጋዊ";
 "language_settings" = "የቋንቋ ቅንብሮች";
 "menu.tutorial" = "አጋዥ ስልጠና";
-"menu.my_account" = "የኔ መለያ";
+"menu.my_account" = "የእርሶ መለያ";
 
 // Login
-"login" = "ግባ";
-"logout" = "ዉጣ";
+"login" = "ይግቡ";
+"logout" = "ይዉጡ";
 "create_account" = "ይመዝገቡ";
 // Tool Detail
 "about" = "ስለዚህ አፕሊኬሽን";
@@ -341,17 +287,17 @@
 
 // Buttons
 "download" = "ያዉርዱ";
-"dismiss" = "አጥፋ";
+"dismiss" = "ያጥፉ";
 "done" = "ሆኗል";
 "remove" = "ያጥፉ";
-"clear" = "አጥፋ";
+"clear" = "ያጥፉ";
 /* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "ክፈት";
+"toolinfo_opentool" = "ይክፈቱ";
 
 // Alerts
 "error" = "ስህተት";
 "OK" = "እሺ";
-"cancel" = "ውጣ";
+"cancel" = "ይውጡ";
 "required_field_missing" = "\"%@\" አስፈላጊ ገጽታ ነው";
 
 "onboardingTutorial.getStartedButton.title" = "እንጀምር";
@@ -359,8 +305,8 @@
 // About
 "general_about_1" = "GodTools እምነትዎን በቀላል እና በግልጽ መንገድ እንዲያካፍሉ ይረዳዎታል";
 // Tutorial
-"tutorial.tutorialItem.0.title" = "ተመልከት";
-"general_about_2" = "ይህ መተግበርያ ሰዎች ከእግዚአብሄር ጋር በልጁ በኢየሱስ ክርስቶስ በኩል ግንኙነት እንዲኖራቸዉ በድፍረት እንዲያግዙ ይረዳዎታል። ከዚህ በፊት እምነትዎን አካፍለዉ የማያዉቁ ቢሆኑ እና የሌላ ቋንቋ ተናጋሪ ሰዉ ቢገጥምዎ ይህ መተግበርያ በደንብ ያግዛዎታል።";
+"tutorial.tutorialItem.0.title" = "ይመልከቱ";
+"general_about_2" = "ይህ መተግበርያ ሰዎች ከእግዚአብሔር ጋር በልጁ በኢየሱስ ክርስቶስ በኩል ግንኙነት እንዲኖራቸዉ በድፍረት እንዲያግዙ ይረዳዎታል። ከዚህ በፊት እምነትዎን አካፍለዉ የማያዉቁ ቢሆኑ እና የሌላ ቋንቋ ተናጋሪ ሰዉ ቢገጥምዎ ይህ መተግበርያ በደንብ ያግዛዎታል።";
 "general_about_3" = "ከብዙ አይነት መተግበሪያ(መሳሪያ) የሚሆኖትን ለተመልካቹም የሚመቸዉን ይምረጡ።";
 "general_about_4" = "ከሁሉም መተግበሪያ(መሳሪያ) መጨረሻ ላይ ወደ ምንጩ የሚወስድ ጠቋሚ (ሊንክ) ይገኛል።";
 "general_about_5" = "አዳዲስ መተግበሪያዎችን(አገልግሎቶችን) እና ቋንቋን አንዴ ለማዉረድ ኢንተርኔት ኮኔክሽን ያስፈልጋል። አንድ ጊዜ ከወረደ በዃላ ግን እንደዚዉ ይሰራል።";
@@ -368,18 +314,18 @@
 "general_about_7" = "እዚህ ላይ ያሉትን አገልግሎቶችን ኦንላይን knowgod.com ላይ ማግኘት ይችላሉ። የራስዎም ሳይት ላይ መጠቀም ይችላሉ።";
 "tutorial.tutorialItem.3.title" = "ይህ አጋዥ ስልጠና በማውጫው ውስጥ እንደገና ለማየት ይገኛል።";
 "general_about_8" = "ለተጨማሪ መረጃ godtoolsapp.com ይመልከቱ";
-"tutorial.continueButton.title.continue" = "ቀጥል";
+"tutorial.continueButton.title.continue" = "ይቀጥሉ";
 "general_about_9" = "እምነትዎን ለማካፈል ሲነሱ የሰዉን ልብ የሚቀይረዉ እግዚአብሄር መሆኑን ያስታዉሱ። ሁሉንም ሰዉ በትክክል መዉደድ እና ማዳመጥ ያስፈልጋል።";
-"tutorial.continueButton.title.startUsingGodTools" = "GodTools መጠቀም ይጀምር";
+"tutorial.continueButton.title.startUsingGodTools" = "GodTools መጠቀም ይጀምሩ";
 
 "general_about_10" = "ለእያንዳንዱ እንዴት እንድትመልሱ እንደሚገባችሁ ታውቁ ዘንድ ንግግራችሁ ሁልጊዜ፥ በጨው እንደ ተቀመመ፥ በጸጋ ይሁን። ቆላስይስ 4:6";
 
 // OpenTutorial
 "openTutorial.showTutorialLabel.text" = "አጋዥ ስልጠና አሳየኝ";
 // Downloads
-"Download in progress" = "በሂደት ላይ አውርድሂደት ላይ አውርድ";
+"Download in progress" = "በሂደት ላይ";
 
-"openTutorial.openTutorialButton.title" = "አጋዥ ስልጠናን ክፈት";
+"openTutorial.openTutorialButton.title" = "አጋዥ ስልጠናን ይክፈቱ";
 
 // Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "ቀዳሚ።";
@@ -395,11 +341,11 @@
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "ዓለም አቀፋዊ እንቅስቃሴ";
 "accountActivity.globalAnalytics.users.title" = "ልዩ ተጠቃሚዎች";
-"onboardingWelcome.titleLabel.tagline" = "እምነትህን እንድታካፍል መርዳት";
+"onboardingWelcome.titleLabel.tagline" = "እምነትዎን እንዲያካፍሉ መርዳት";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "የወንጌል ግብዣዎች";
 "accountActivity.globalAnalytics.launches.title" = "ክፍለ ጊዜዎች";
 // OnboardingTutorial
-"onboardingTutorial.aboutAppItem.0.title" = "ለሌሎች አካፍል";
+"onboardingTutorial.aboutAppItem.0.title" = "ለሌሎች ያካፍሉ";
 "accountActivity.globalAnalytics.countries.title" = "ሀገሮች";
 
 "onboardingTutorial.showMoreButton.title" = "ተጨማሪ አሳየኝ";

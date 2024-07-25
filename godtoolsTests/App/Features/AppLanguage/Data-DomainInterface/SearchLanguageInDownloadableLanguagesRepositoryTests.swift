@@ -16,6 +16,8 @@ class SearchLanguageInDownloadableLanguagesRepositoryTests: QuickSpec {
     
     override class func spec() {
         
+        var cancellables: Set<AnyCancellable> = Set()
+        
         let downloadableLanguagesList = [
             DownloadableLanguageListItemDomainModel(
                 languageId: "0",
@@ -99,7 +101,7 @@ class SearchLanguageInDownloadableLanguagesRepositoryTests: QuickSpec {
                     
                     waitUntil { done in
                         
-                        _ = searchLanguageInDownloadableLanguages
+                        searchLanguageInDownloadableLanguages
                             .getSearchResultsPublisher(searchText: "c", downloadableLanguagesList: downloadableLanguagesList)
                             .sink { (result: [DownloadableLanguageListItemDomainModel]) in
                                 
@@ -113,6 +115,7 @@ class SearchLanguageInDownloadableLanguagesRepositoryTests: QuickSpec {
                                 
                                 done()
                             }
+                            .store(in: &cancellables)
                     }
                                         
                     let expectedLanguageIds: [String] = ["1", "2", "4", "7"]
@@ -131,7 +134,7 @@ class SearchLanguageInDownloadableLanguagesRepositoryTests: QuickSpec {
                     
                     waitUntil { done in
                         
-                        _ = searchLanguageInDownloadableLanguages
+                        searchLanguageInDownloadableLanguages
                             .getSearchResultsPublisher(searchText: "Ber", downloadableLanguagesList: downloadableLanguagesList)
                             .sink { (result: [DownloadableLanguageListItemDomainModel]) in
                                 
@@ -145,6 +148,7 @@ class SearchLanguageInDownloadableLanguagesRepositoryTests: QuickSpec {
                                 
                                 done()
                             }
+                            .store(in: &cancellables)
                     }
                                         
                     let expectedLanguageIds: [String] = ["2", "6", "7"]

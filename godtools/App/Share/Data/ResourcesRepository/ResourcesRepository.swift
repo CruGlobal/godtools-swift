@@ -195,12 +195,23 @@ extension ResourcesRepository {
 
 extension ResourcesRepository {
     
-    func getAllLessons(sorted: Bool) -> [ResourceModel] {
-        return cache.getAllLessons(sorted: sorted)
+    func getAllLessons(filterByLanguageId: String? = nil, sorted: Bool) -> [ResourceModel] {
+        return cache.getAllLessons(
+            filterByLanguageId: filterByLanguageId,
+            sorted: sorted
+        )
+    }
+    
+    func getAllLessonsCount(filterByLanguageId: String?) -> Int {
+        return cache.getAllLessonsCount(filterByLanguageId: filterByLanguageId)
     }
     
     func getFeaturedLessons(sorted: Bool) -> [ResourceModel] {
         return cache.getFeaturedLessons(sorted: sorted)
+    }
+    
+    func getAllLessonLanguageIds() -> [String] {
+        return cache.getAllLessonLanguageIds()
     }
 }
 

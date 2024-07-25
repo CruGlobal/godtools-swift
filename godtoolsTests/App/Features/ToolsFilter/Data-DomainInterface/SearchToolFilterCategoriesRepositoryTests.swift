@@ -15,7 +15,9 @@ import Nimble
 class SearchToolFilterCategoriesRepositoryTests: QuickSpec {
     
     override class func spec() {
-     
+    
+        var cancellables: Set<AnyCancellable> = Set()
+        
         describe("User is searching a category in the tools filter categories list.") {
             
             let searchCategoriesRepository = SearchToolFilterCategoriesRepository(
@@ -42,7 +44,7 @@ class SearchToolFilterCategoriesRepositoryTests: QuickSpec {
                     
                     waitUntil { done in
                         
-                        _ = searchCategoriesRepository
+                        searchCategoriesRepository
                             .getSearchResultsPublisher(for: lowercasedSingleLetterSearchString, in: allCategories)
                             .sink { (categories: [CategoryFilterDomainModel]) in
                                 
@@ -56,6 +58,7 @@ class SearchToolFilterCategoriesRepositoryTests: QuickSpec {
                                 
                                 done()
                             }
+                            .store(in: &cancellables)
                     }
                     
                     let expectedCategories: [String] = ["soccer", "soCCer", "Church", "church"]
@@ -89,7 +92,7 @@ class SearchToolFilterCategoriesRepositoryTests: QuickSpec {
                     
                     waitUntil { done in
                         
-                        _ = searchCategoriesRepository
+                        searchCategoriesRepository
                             .getSearchResultsPublisher(for: uppercasedSingleLetterSearchString, in: allCategories)
                             .sink { (categories: [CategoryFilterDomainModel]) in
                                 
@@ -103,6 +106,7 @@ class SearchToolFilterCategoriesRepositoryTests: QuickSpec {
                                 
                                 done()
                             }
+                            .store(in: &cancellables)
                     }
                     
                     let expectedCategories: [String] = ["foody", "Yellow", "may"]
@@ -138,7 +142,7 @@ class SearchToolFilterCategoriesRepositoryTests: QuickSpec {
                     
                     waitUntil { done in
                         
-                        _ = searchCategoriesRepository
+                        searchCategoriesRepository
                             .getSearchResultsPublisher(for: multiTextSearchString, in: allCategories)
                             .sink { (categories: [CategoryFilterDomainModel]) in
                                 
@@ -152,6 +156,7 @@ class SearchToolFilterCategoriesRepositoryTests: QuickSpec {
                                 
                                 done()
                             }
+                            .store(in: &cancellables)
                     }
                     
                     let expectedCategories: [String] = ["blAnd", "land", "WAND", "wander", "pAnda", "sanded"]

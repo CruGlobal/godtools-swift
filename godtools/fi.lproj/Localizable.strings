@@ -40,11 +40,6 @@
 "allTools.spotlight.description" = "Tässä on työkaluja, joista saattaisit pitää";
 "allTools.categories.title" = "Kategoriat";
 "tool_menu_item.lessons" = "Oppitunnit";
-"parallelLanguage.yesButton.title" = "Kyllä";
-"parallelLanguage.noButton.title" = "Ei, kiitos";
-"parallelLanguage.getStartedButton.title" = "Aloittaminen";
-"parallelLanguage.selectLanguageButton.title" = "Valitse kieli";
-"parellelLanguage.prompt" = "Haluatko määrittää toissijaisen kielen?";
 "tool_offline_favorite_message" = "Ota työkalu käyttöön offline-tilassa sydänkuvaketta napauttamalla, jolloin se lisätään suosikkeihisi.";
 
 /* This is a category description of a tool that helps you start a conversation */

@@ -12,15 +12,17 @@ struct DashboardTabBarItemView: View {
     
     private let unSelectedColor = Color(red: 170 / 255, green: 170 / 255, blue: 170 / 255)
     private let selectedColor = ColorPalette.gtBlue.color
+    private let buttonAccessibility: AccessibilityStrings.Button
         
     private var viewModel: DashboardTabBarItemViewModel
     
     @Binding private var currentTab: Int
     
-    init(viewModel: DashboardTabBarItemViewModel, currentTab: Binding<Int>) {
+    init(viewModel: DashboardTabBarItemViewModel, currentTab: Binding<Int>, buttonAccessibility: AccessibilityStrings.Button) {
         
         self.viewModel = viewModel
         self._currentTab = currentTab
+        self.buttonAccessibility = buttonAccessibility
     }
     
     private var isSelected: Bool {
@@ -41,6 +43,8 @@ struct DashboardTabBarItemView: View {
                     .foregroundColor(isSelected ? selectedColor : unSelectedColor)
             }
         }
+        .accessibility(addTraits: .isButton)
+        .accessibilityIdentifier(buttonAccessibility.id)
         .onTapGesture {
             currentTab = viewModel.tabIndex
         }
@@ -55,7 +59,8 @@ struct DashboardTabBarItemView_Preview: PreviewProvider {
         
         DashboardTabBarItemView(
             viewModel: DashboardTabBarItemViewModel(tabIndex: 0, title: "Lessons", imageName: ""),
-            currentTab: $currentTab
+            currentTab: $currentTab,
+            buttonAccessibility: .dashboardTabLessons
         )
     }
 }

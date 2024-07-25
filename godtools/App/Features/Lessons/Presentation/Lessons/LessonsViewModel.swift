@@ -14,6 +14,7 @@ class LessonsViewModel: ObservableObject {
         
     private let resourcesRepository: ResourcesRepository
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
+    private let getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase
     private let viewLessonsUseCase: ViewLessonsUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
@@ -24,17 +25,21 @@ class LessonsViewModel: ObservableObject {
     private weak var flowDelegate: FlowDelegate?
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    @Published private var lessonFilterLanguageSelection: LessonLanguageFilterDomainModel?
     
     @Published var sectionTitle: String = ""
     @Published var subtitle: String = ""
+    @Published var languageFilterTitle: String = ""
+    @Published var languageFilterButtonTitle: String = ""
     @Published var lessons: [LessonListItemDomainModel] = []
     @Published var isLoadingLessons: Bool = true
         
-    init(flowDelegate: FlowDelegate, resourcesRepository: ResourcesRepository, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewLessonsUseCase: ViewLessonsUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, attachmentsRepository: AttachmentsRepository) {
+    init(flowDelegate: FlowDelegate, resourcesRepository: ResourcesRepository, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase, viewLessonsUseCase: ViewLessonsUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, attachmentsRepository: AttachmentsRepository) {
         
         self.flowDelegate = flowDelegate
         self.resourcesRepository = resourcesRepository
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
+        self.getUserLessonFiltersUseCase = getUserLessonFiltersUseCase
         self.viewLessonsUseCase = viewLessonsUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
@@ -45,22 +50,41 @@ class LessonsViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
+        Publishers.CombineLatest(
+            $appLanguage,
+            $lessonFilterLanguageSelection
+        )
+        .dropFirst()
+        .map { (appLanguage, languageFilter) in
+        
+            viewLessonsUseCase
+                .viewPublisher(appLanguage: appLanguage, filterLessonsByLanguage: languageFilter)
+        }
+        .switchToLatest()
+        .receive(on: DispatchQueue.main)
+        .sink { [weak self] (domainModel: ViewLessonsDomainModel) in
+                            
+            self?.sectionTitle = domainModel.interfaceStrings.title
+            self?.subtitle = domainModel.interfaceStrings.subtitle
+            self?.languageFilterTitle = domainModel.interfaceStrings.languageFilterTitle
+            
+            self?.lessons = domainModel.lessons
+            self?.isLoadingLessons = false
+        }
+        .store(in: &cancellables)
+    
         $appLanguage
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
             
-                viewLessonsUseCase
-                    .viewPublisher(appLanguage: appLanguage)
+                getUserLessonFiltersUseCase.getUserToolFiltersPublisher(translatedInAppLanguage: appLanguage)
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (domainModel: ViewLessonsDomainModel) in
-                                
-                self?.sectionTitle = domainModel.interfaceStrings.title
-                self?.subtitle = domainModel.interfaceStrings.subtitle
+            .sink { [weak self] userFilters in
                 
-                self?.lessons = domainModel.lessons
-                self?.isLoadingLessons = false
+                self?.languageFilterButtonTitle = userFilters.languageFilter?.translatedName ?? ""
+                self?.lessonFilterLanguageSelection = userFilters.languageFilter
             }
             .store(in: &cancellables)
     }
@@ -151,6 +175,10 @@ extension LessonsViewModel {
     func pageViewed() {
         
         trackPageViewed()
+    }
+    
+    func lessonLanguageFilterTapped() {
+        flowDelegate?.navigate(step: .lessonLanguageFilterTappedFromLessons)
     }
     
     func lessonCardTapped(lessonListItem: LessonListItemDomainModel) {

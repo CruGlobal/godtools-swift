@@ -25,6 +25,8 @@ struct TutorialView: View {
         
         GeometryReader { geometry in
             
+            AccessibilityScreenElementView(screenAccessibility: .tutorial)
+            
             VStack(alignment: .center, spacing: 0) {
                 
                 FixedVerticalSpacer(height: 50)

@@ -314,7 +314,6 @@ class AppDataLayerDependencies {
     
     func getTranslatedToolCategory() -> GetTranslatedToolCategory {
         return GetTranslatedToolCategory(
-            languagesRepository: getLanguagesRepository(), 
             localizationServices: getLocalizationServices(),
             resourcesRepository: getResourcesRepository()
         )

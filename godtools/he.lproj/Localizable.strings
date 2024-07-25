@@ -40,20 +40,8 @@
 "allTools.spotlight.description" = "הנה כמה כלים שחשבנו שאולי תאהב";
 "allTools.categories.title" = "קטגוריות";
 "tool_menu_item.lessons" = "שיעורים";
-"parallelLanguage.yesButton.title" = "כן";
-"parallelLanguage.noButton.title" = "לא תודה";
-"parallelLanguage.getStartedButton.title" = "בואו נתחיל";
-"parallelLanguage.selectLanguageButton.title" = "בחרו שפה";
-"parellelLanguage.prompt" = "האם ברצונכם להגדיר שפה שניה?";
 "onboardingTutorial.beginButton.title" = "התחלה";
-"onboardingQuickStart.2.title" = "אני רוצה לחלוק את הבשורה עם מישהו";
-"onboardingQuickStart.2.button.title" = "בחרו את אחד מהכלים שלנו";
 "onboardingTutorial.nextButton.title" = "הבא";
-"onboardingQuickStart.title" = "קישורי התחלה מהירה";
-"onboardingQuickStart.0.title" = "אני רוצה לחקור את הנצרות";
-"onboardingQuickStart.0.button.title" = "קראו את המאמרים שלנו";
-"onboardingQuickStart.1.title" = "אני רוצה ללמוד על ניהול שיחות בשורה";
-"onboardingQuickStart.1.button.title" = "נסה את השיעורים שלנו";
 "tool_offline_favorite_message" = "הפוך כלי לזמין במצב לא מקוון על ידי הקשה על סמל הלב שמוסיף אותו למועדפים שלך.";
 
 /* This is a category description of a tool that helps you start a conversation */
