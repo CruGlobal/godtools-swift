@@ -1384,6 +1384,7 @@
 		45F267A328907F67006679F2 /* RealmResourcesCacheSyncResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F267A228907F67006679F2 /* RealmResourcesCacheSyncResult.swift */; };
 		45F305832A9BAF4200BDFB93 /* SwiftUIPreviewDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F305822A9BAF4200BDFB93 /* SwiftUIPreviewDatabase.swift */; };
 		45F305872A9BB6B100BDFB93 /* AppConfigInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F305862A9BB6B100BDFB93 /* AppConfigInterface.swift */; };
+		45F357B62C52E49200F31EB2 /* GetLessonFilterLanguagesRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F357B52C52E49200F31EB2 /* GetLessonFilterLanguagesRepositoryTests.swift */; };
 		45F378F32B23641F00EEF039 /* ViewLearnToShareToolUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F378F22B23641F00EEF039 /* ViewLearnToShareToolUseCase.swift */; };
 		45F378FB2B23642600EEF039 /* GetLearnToShareToolInterfaceStringsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F378F52B23642600EEF039 /* GetLearnToShareToolInterfaceStringsRepository.swift */; };
 		45F378FC2B23642600EEF039 /* GetLearnToShareToolTutorialItemsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F378F62B23642600EEF039 /* GetLearnToShareToolTutorialItemsRepository.swift */; };
@@ -3018,6 +3019,7 @@
 		45F267A228907F67006679F2 /* RealmResourcesCacheSyncResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmResourcesCacheSyncResult.swift; sourceTree = "<group>"; };
 		45F305822A9BAF4200BDFB93 /* SwiftUIPreviewDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIPreviewDatabase.swift; sourceTree = "<group>"; };
 		45F305862A9BB6B100BDFB93 /* AppConfigInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfigInterface.swift; sourceTree = "<group>"; };
+		45F357B52C52E49200F31EB2 /* GetLessonFilterLanguagesRepositoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetLessonFilterLanguagesRepositoryTests.swift; sourceTree = "<group>"; };
 		45F378F22B23641F00EEF039 /* ViewLearnToShareToolUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewLearnToShareToolUseCase.swift; sourceTree = "<group>"; };
 		45F378F52B23642600EEF039 /* GetLearnToShareToolInterfaceStringsRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetLearnToShareToolInterfaceStringsRepository.swift; sourceTree = "<group>"; };
 		45F378F62B23642600EEF039 /* GetLearnToShareToolTutorialItemsRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetLearnToShareToolTutorialItemsRepository.swift; sourceTree = "<group>"; };
@@ -3700,6 +3702,7 @@
 			isa = PBXGroup;
 			children = (
 				4505F5A32C4154D100F60F94 /* GetLessonFilterLanguagesInterfaceStringsRepositoryTests.swift */,
+				45F357B52C52E49200F31EB2 /* GetLessonFilterLanguagesRepositoryTests.swift */,
 				4505F5A12C4154AF00F60F94 /* GetUserLessonFiltersRepositoryTests.swift */,
 				4505F5A52C41570E00F60F94 /* SearchLessonFilterLanguagesRepositoryTests.swift */,
 			);
@@ -13675,6 +13678,7 @@
 				45EB68E12C334D84008A5FF2 /* MockLocalizationServices.swift in Sources */,
 				45368A182ABB2D850028A570 /* TestRealmObject.swift in Sources */,
 				453E2A122BC8C8810047D4C6 /* GetToolsRepositoryTests.swift in Sources */,
+				45F357B62C52E49200F31EB2 /* GetLessonFilterLanguagesRepositoryTests.swift in Sources */,
 				45368A192ABB2D850028A570 /* DeepLinkingServiceTests.swift in Sources */,
 				45192F522C470AEC005740E5 /* UserCountersAPIMock.swift in Sources */,
 				455280B4295F65C300672A1B /* LanguageDirectionDomainModel.swift in Sources */,
