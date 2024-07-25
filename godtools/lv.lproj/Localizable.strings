@@ -1,3 +1,6 @@
+"language_name_fil" = "filipīniešu (tagalu)";
+"lessons.filter.navBar.language" = "Nodarbības valoda";
+"lessons.languageFilter.title" = "Nodarbības";
 "language_name_fil-x-taglish" = "tagļu";
 "language_name_sid" = "sidamas";
 "onboardingTutorial.chooseLanguageButton.title" = "Izvēlies valodu";
@@ -35,7 +38,7 @@
 "signIn.google" = "Pierakstīties ar Google";
 "signIn.facebook" = "Ienākt, izmantojot Facebook";
 "signIn.apple" = "Turpināt, izmantojot Apple";
-"menu_getStarted" = "Sākt";
+"menu_getStarted" = "Sākt lietot";
 "menu_support" = "Atbalsts";
 "menu_about" = "Par lietotni";
 "menu.sendFeedback" = "Nosūtīt atsauksmes";
@@ -156,7 +159,7 @@
 "share_tool_screen_tutorial.share_your_screen.message" = "Šī funkcija nosūtīs draugam saiti uz šo rīku. Pēc saites atvēršanas sāksies ekrāna koplietošana.";
 "share_tool_screen_tutorial.mirrored_experience.title" = "Kopīga lietošana";
 "share_tool_screen_tutorial.mirrored_experience.message" = "Ritinot rīku savā tālrunī, tava drauga ekrānā notiks tas pats. Šī funkcija ļauj vienlaicīgi izmantot vienu rīku 2 dažādās ierīcēs.";
-"share_tool_screen_tutorial.get_started.title" = "Sākt";
+"share_tool_screen_tutorial.get_started.title" = "Sākt lietot";
 "share_tool_screen_tutorial.get_started.message" = "Lai sāktu ekrāna koplietošanu, nosūti saiti vienam vai vairākiem cilvēkiem.";
 "share_tool_remote_link_message" = "Sveiki! Pievienojies man lietotnē 'GodTools', izmantojot ekrāna koplietošanas funkciju. Lūk, saite: %@
 
@@ -319,7 +322,7 @@ Lietotni var lejupielādēt savā tālrunī šeit: https://ej.uz/GodTools";
 "cancel" = "Atcelt";
 "required_field_missing" = "Lauks \"%@\" aizpildāms obligāti!";
 
-"onboardingTutorial.getStartedButton.title" = "Sākt";
+"onboardingTutorial.getStartedButton.title" = "Sākt lietot";
 
 // About
 "general_about_1" = "'GodTools' var palīdzēt pastāstīt citiem par Jēzu Kristu ērtā un vienkārša veidā.";

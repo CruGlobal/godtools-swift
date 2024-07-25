@@ -21,6 +21,32 @@ class RealmDatabase {
         self.databaseConfiguration = databaseConfiguration
         config = databaseConfiguration.getRealmConfig()
         realmInstanceCreator = RealmInstanceCreator(config: config, creationType: realmInstanceCreationType)
+        
+        _ = checkForUnsupportedFileFormatVersionAndDeleteRealmFilesIfNeeded(config: config)
+    }
+    
+    private func checkForUnsupportedFileFormatVersionAndDeleteRealmFilesIfNeeded(config: Realm.Configuration) -> Error? {
+
+        do {
+            _ = try Realm(configuration: config)
+        }
+        catch let realmConfigError as NSError {
+
+            if realmConfigError.code == Realm.Error.unsupportedFileFormatVersion.rawValue {
+                
+                do {
+                    _ = try Realm.deleteFiles(for: config)
+                }
+                catch let deleteFilesError {
+                    return deleteFilesError
+                }
+            }
+            else {
+                return realmConfigError
+            }
+        }
+
+        return nil
     }
 
     func openRealm() -> Realm {
