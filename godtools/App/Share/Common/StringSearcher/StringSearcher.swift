@@ -24,7 +24,37 @@ class StringSearcher {
         }
     }
     
+    func search(for searchText: String, in searchables: [StringSearchable]) -> [StringSearchable] {
+        if searchText.isEmpty {
+            
+            return searchables
+            
+        } else {
+            
+            let lowercasedSearchText = searchText.lowercased()
+            
+            return getSearchResults(for: lowercasedSearchText, in: searchables)
+        }
+    }
+    
     private func getSearchResults<T: StringSearchable>(for searchText: String, in searchables: [T]) -> [T] {
+        
+        return searchables.filter { searchable in
+            
+            for searchableString in searchable.searchableStrings {
+                
+                let lowercasedSearchableString = searchableString.lowercased()
+                
+                if lowercasedSearchableString.contains(searchText) {
+                    return true
+                }
+            }
+            
+            return false
+        }
+    }
+    
+    private func getSearchResults(for searchText: String, in searchables: [StringSearchable]) -> [StringSearchable] {
         
         return searchables.filter { searchable in
             

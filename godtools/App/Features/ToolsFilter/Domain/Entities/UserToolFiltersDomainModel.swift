@@ -10,6 +10,6 @@ import Foundation
 
 struct UserToolFiltersDomainModel {
     
-    let categoryFilter: CategoryFilterDomainModel
+    let categoryFilter: CategoryFilterDomainModelInterface
     let languageFilter: LanguageFilterDomainModel
 }

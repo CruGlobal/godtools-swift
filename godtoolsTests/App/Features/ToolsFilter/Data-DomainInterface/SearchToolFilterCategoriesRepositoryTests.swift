@@ -26,13 +26,13 @@ class SearchToolFilterCategoriesRepositoryTests: QuickSpec {
             
             context("When a user inputs a lowercased single letter search string \(lowercasedSingleLetterSearchString)") {
                 
-                let allCategories: [CategoryFilterDomainModel] = [
-                    .category(categoryId: "", translatedName: "Church", toolsAvailableText: ""),
-                    .category(categoryId: "", translatedName: "church", toolsAvailableText: ""),
-                    .category(categoryId: "", translatedName: "food", toolsAvailableText: ""),
-                    .category(categoryId: "", translatedName: "Food", toolsAvailableText: ""),
-                    .category(categoryId: "", translatedName: "soccer", toolsAvailableText: ""),
-                    .category(categoryId: "", translatedName: "soCCer", toolsAvailableText: "")
+                let allCategories: [CategoryFilterDomainModelInterface] = [
+                    CategoryFilterDomainModel(categoryId: "", translatedName: "Church", toolsAvailableText: ""),
+                    CategoryFilterDomainModel(categoryId: "", translatedName: "church", toolsAvailableText: ""),
+                    CategoryFilterDomainModel(categoryId: "", translatedName: "food", toolsAvailableText: ""),
+                    CategoryFilterDomainModel(categoryId: "", translatedName: "Food", toolsAvailableText: ""),
+                    CategoryFilterDomainModel(categoryId: "", translatedName: "soccer", toolsAvailableText: ""),
+                    CategoryFilterDomainModel(categoryId: "", translatedName: "soCCer", toolsAvailableText: "")
                 ]
                 
                 it("I expect all categories that contain the lowercased single letter search string \(lowercasedSingleLetterSearchString) ignoring case.") {
@@ -44,7 +44,7 @@ class SearchToolFilterCategoriesRepositoryTests: QuickSpec {
                         
                         _ = searchCategoriesRepository
                             .getSearchResultsPublisher(for: lowercasedSingleLetterSearchString, in: allCategories)
-                            .sink { (categories: [CategoryFilterDomainModel]) in
+                            .sink { (categories: [CategoryFilterDomainModelInterface]) in
                                 
                                 guard !sinkCompleted else {
                                     return
@@ -71,15 +71,15 @@ class SearchToolFilterCategoriesRepositoryTests: QuickSpec {
             
             context("When a user inputs an uppercased single letter search string \(uppercasedSingleLetterSearchString)") {
                 
-                let allCategories: [CategoryFilterDomainModel] = [
-                    .category(categoryId: "", translatedName: "Church", toolsAvailableText: ""),
-                    .category(categoryId: "", translatedName: "church", toolsAvailableText: ""),
-                    .category(categoryId: "", translatedName: "foody", toolsAvailableText: ""),
-                    .category(categoryId: "", translatedName: "Food", toolsAvailableText: ""),
-                    .category(categoryId: "", translatedName: "soccer", toolsAvailableText: ""),
-                    .category(categoryId: "", translatedName: "soCCer", toolsAvailableText: ""),
-                    .category(categoryId: "", translatedName: "Yellow", toolsAvailableText: ""),
-                    .category(categoryId: "", translatedName: "may", toolsAvailableText: "")
+                let allCategories: [CategoryFilterDomainModelInterface] = [
+                    CategoryFilterDomainModel(categoryId: "", translatedName: "Church", toolsAvailableText: ""),
+                    CategoryFilterDomainModel(categoryId: "", translatedName: "church", toolsAvailableText: ""),
+                    CategoryFilterDomainModel(categoryId: "", translatedName: "foody", toolsAvailableText: ""),
+                    CategoryFilterDomainModel(categoryId: "", translatedName: "Food", toolsAvailableText: ""),
+                    CategoryFilterDomainModel(categoryId: "", translatedName: "soccer", toolsAvailableText: ""),
+                    CategoryFilterDomainModel(categoryId: "", translatedName: "soCCer", toolsAvailableText: ""),
+                    CategoryFilterDomainModel(categoryId: "", translatedName: "Yellow", toolsAvailableText: ""),
+                    CategoryFilterDomainModel(categoryId: "", translatedName: "may", toolsAvailableText: "")
                 ]
                 
                 it("I expect all categories that contain the uppercased single letter search string \(uppercasedSingleLetterSearchString) ignoring case.") {
@@ -91,7 +91,7 @@ class SearchToolFilterCategoriesRepositoryTests: QuickSpec {
                         
                         _ = searchCategoriesRepository
                             .getSearchResultsPublisher(for: uppercasedSingleLetterSearchString, in: allCategories)
-                            .sink { (categories: [CategoryFilterDomainModel]) in
+                            .sink { (categories: [CategoryFilterDomainModelInterface]) in
                                 
                                 guard !sinkCompleted else {
                                     return
@@ -118,17 +118,17 @@ class SearchToolFilterCategoriesRepositoryTests: QuickSpec {
             
             context("When a user inputs a multi-text search string \(multiTextSearchString)") {
                 
-                let allCategories: [CategoryFilterDomainModel] = [
-                    .category(categoryId: "", translatedName: "blAnd", toolsAvailableText: ""),
-                    .category(categoryId: "", translatedName: "land", toolsAvailableText: ""),
-                    .category(categoryId: "", translatedName: "Canned", toolsAvailableText: ""),
-                    .category(categoryId: "", translatedName: "WAND", toolsAvailableText: ""),
-                    .category(categoryId: "", translatedName: "wander", toolsAvailableText: ""),
-                    .category(categoryId: "", translatedName: "pAnda", toolsAvailableText: ""),
-                    .category(categoryId: "", translatedName: "bran", toolsAvailableText: ""),
-                    .category(categoryId: "", translatedName: "Tan", toolsAvailableText: ""),
-                    .category(categoryId: "", translatedName: "Tanned", toolsAvailableText: ""),
-                    .category(categoryId: "", translatedName: "sanded", toolsAvailableText: "")
+                let allCategories: [CategoryFilterDomainModelInterface] = [
+                    CategoryFilterDomainModel(categoryId: "", translatedName: "blAnd", toolsAvailableText: ""),
+                    CategoryFilterDomainModel(categoryId: "", translatedName: "land", toolsAvailableText: ""),
+                    CategoryFilterDomainModel(categoryId: "", translatedName: "Canned", toolsAvailableText: ""),
+                    CategoryFilterDomainModel(categoryId: "", translatedName: "WAND", toolsAvailableText: ""),
+                    CategoryFilterDomainModel(categoryId: "", translatedName: "wander", toolsAvailableText: ""),
+                    CategoryFilterDomainModel(categoryId: "", translatedName: "pAnda", toolsAvailableText: ""),
+                    CategoryFilterDomainModel(categoryId: "", translatedName: "bran", toolsAvailableText: ""),
+                    CategoryFilterDomainModel(categoryId: "", translatedName: "Tan", toolsAvailableText: ""),
+                    CategoryFilterDomainModel(categoryId: "", translatedName: "Tanned", toolsAvailableText: ""),
+                    CategoryFilterDomainModel(categoryId: "", translatedName: "sanded", toolsAvailableText: "")
                 ]
                 
                 it("I expect all categories that contain the multi-text search string \(multiTextSearchString) ignoring case.") {
@@ -140,7 +140,7 @@ class SearchToolFilterCategoriesRepositoryTests: QuickSpec {
                         
                         _ = searchCategoriesRepository
                             .getSearchResultsPublisher(for: multiTextSearchString, in: allCategories)
-                            .sink { (categories: [CategoryFilterDomainModel]) in
+                            .sink { (categories: [CategoryFilterDomainModelInterface]) in
                                 
                                 guard !sinkCompleted else {
                                     return

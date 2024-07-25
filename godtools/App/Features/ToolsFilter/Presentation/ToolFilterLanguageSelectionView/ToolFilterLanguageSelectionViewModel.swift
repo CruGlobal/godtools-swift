@@ -27,7 +27,7 @@ class ToolFilterLanguageSelectionViewModel: ObservableObject {
     @Published private var allLanguages: [LanguageFilterDomainModel] = [LanguageFilterDomainModel]()
     
     @Published var languageSearchResults: [LanguageFilterDomainModel] = [LanguageFilterDomainModel]()
-    @Published var selectedCategory: CategoryFilterDomainModel = .anyCategory(text: "Any category", toolsAvailableText: "")
+    @Published var selectedCategory: CategoryFilterDomainModelInterface = AnyCategoryFilterDomainModel(text: "Any category", toolsAvailableText: "")
     @Published var selectedLanguage: LanguageFilterDomainModel = .anyLanguage(text: "Any language", toolsAvailableText: "")
     @Published var searchText: String = ""
     @Published var navTitle: String = ""

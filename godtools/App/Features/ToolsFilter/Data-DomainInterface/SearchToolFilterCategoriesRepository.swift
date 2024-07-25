@@ -18,11 +18,11 @@ class SearchToolFilterCategoriesRepository: SearchToolFilterCategoriesRepository
         self.stringSearcher = stringSearcher
     }
     
-    func getSearchResultsPublisher(for searchText: String, in toolFilterCategories: [CategoryFilterDomainModel]) -> AnyPublisher<[CategoryFilterDomainModel], Never> {
+    func getSearchResultsPublisher(for searchText: String, in toolFilterCategories: [CategoryFilterDomainModelInterface]) -> AnyPublisher<[CategoryFilterDomainModelInterface], Never> {
         
-        let searchResults = stringSearcher.search(for: searchText, in: toolFilterCategories)
+        let searchResults = stringSearcher.search(for: searchText, in: toolFilterCategories) as? [CategoryFilterDomainModelInterface]
         
-        return Just(searchResults)
+        return Just(searchResults ?? [])
             .eraseToAnyPublisher()
     }
 }

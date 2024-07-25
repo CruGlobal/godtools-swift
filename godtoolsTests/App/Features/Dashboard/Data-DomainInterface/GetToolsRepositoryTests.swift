@@ -234,7 +234,7 @@ class GetToolsRepositoryTests: QuickSpec {
                     var toolsList: [ToolListItemDomainModel] = Array()
                     var sinkCompleted: Bool = false
                     
-                    let growthCategoryFilter: CategoryFilterDomainModel = .category(categoryId: categoryGrowth, translatedName: "", toolsAvailableText: "")
+                    let growthCategoryFilter: CategoryFilterDomainModelInterface = CategoryFilterDomainModel(categoryId: categoryGrowth, translatedName: "", toolsAvailableText: "")
                     
                     waitUntil { done in
                         

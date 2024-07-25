@@ -8,73 +8,29 @@
 
 import Foundation
 
-enum CategoryFilterDomainModel {
-    case anyCategory(text: String, toolsAvailableText: String)
-    case category(categoryId: String, translatedName: String, toolsAvailableText: String)
-}
-
-extension CategoryFilterDomainModel: StringSearchable {
+struct CategoryFilterDomainModel: CategoryFilterDomainModelInterface {
     
-    var searchableStrings: [String] {
-        
-        switch self {
-        case .anyCategory(let text, _):
-            return [text]
-        case .category(_, let translatedName, _):
-            return [translatedName]
-        }
-    }
-}
-
-extension CategoryFilterDomainModel {
+    let categoryId: String
+    let translatedName: String
+    let toolsAvailableText: String
     
     var id: String? {
-        
-        switch self {
-        case .anyCategory:
-            return nil
-        case .category(let id, _, _):
-            return id
-        }
+        return categoryId
     }
     
     var filterId: String {
-        
-        switch self {
-        case .anyCategory:
-            return "any_category"
-        case .category(let id, _, _):
-            return id
-        }
+        return categoryId
     }
     
     var categoryButtonText: String {
-        
-        switch self {
-        case .anyCategory(let text, _):
-            return text
-        case .category(_, let translatedName, _):
-            return translatedName
-        }
+        return translatedName
     }
     
     var primaryText: String {
-        
-        switch self {
-        case .anyCategory(let text, _):
-            return text
-        case .category(_, let translatedName, _):
-            return translatedName
-        }
+        return translatedName
     }
     
-    var toolsAvailableText: String {
-        
-        switch self {
-        case .anyCategory(_, let toolsAvailableText):
-            return toolsAvailableText
-        case .category(_, _, let toolsAvailableText):
-            return toolsAvailableText
-        }
+    var searchableStrings: [String] {
+        return [translatedName]
     }
 }
