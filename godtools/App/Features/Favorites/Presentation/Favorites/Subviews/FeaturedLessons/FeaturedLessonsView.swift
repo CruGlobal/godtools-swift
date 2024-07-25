@@ -44,8 +44,9 @@ struct FeaturedLessonsView: View {
                         geometry: geometry,
                         cardTappedClosure: {
                         
-                        lessonTappedClosure?(featuredLesson)
-                    })
+                            lessonTappedClosure?(featuredLesson)
+                        }
+                    )
                 }
             }
             .padding([.top], lessonCardSpacing)

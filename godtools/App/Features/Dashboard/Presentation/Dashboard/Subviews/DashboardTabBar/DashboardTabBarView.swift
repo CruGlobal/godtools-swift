@@ -29,7 +29,8 @@ struct DashboardTabBarView: View {
                                             
                         DashboardTabBarItemView(
                             viewModel: viewModel.getTabBarItemViewModel(tabIndex: index),
-                            currentTab: $viewModel.currentTab
+                            currentTab: $viewModel.currentTab,
+                            buttonAccessibility: getTabBarItemButtonAccessibility(tabIndex: index)
                         )
                         .frame(maxWidth: .infinity)
                     }
@@ -40,7 +41,8 @@ struct DashboardTabBarView: View {
                         
                         DashboardTabBarItemView(
                             viewModel: viewModel.getTabBarItemViewModel(tabIndex: index),
-                            currentTab: $viewModel.currentTab
+                            currentTab: $viewModel.currentTab,
+                            buttonAccessibility: getTabBarItemButtonAccessibility(tabIndex: index)
                         )
                         .frame(maxWidth: .infinity)
                     }
@@ -56,6 +58,21 @@ struct DashboardTabBarView: View {
                 .shadow(color: .black.opacity(0.25), radius: 3, y: -2.5)
         )
         .environment(\.layoutDirection, .leftToRight)
+    }
+    
+    private func getTabBarItemButtonAccessibility(tabIndex: Int) -> AccessibilityStrings.Button {
+        
+        switch viewModel.tabs[tabIndex] {
+            
+        case .lessons:
+            return .dashboardTabLessons
+            
+        case .favorites:
+            return .dashboardTabFavorites
+            
+        case .tools:
+            return .dashboardTabTools
+        }
     }
 }
 

@@ -20,11 +20,11 @@ class ViewLessonsUseCase {
         self.getLessonsListRepository = getLessonsListRepository
     }
     
-    func viewPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewLessonsDomainModel, Never> {
+    func viewPublisher(appLanguage: AppLanguageDomainModel, filterLessonsByLanguage: LessonLanguageFilterDomainModel?) -> AnyPublisher<ViewLessonsDomainModel, Never> {
         
         return Publishers.CombineLatest(
             getInterfaceStringsRepository.getStringsPublisher(translateInLanguage: appLanguage),
-            getLessonsListRepository.getLessonsListPublisher(appLanguage: appLanguage)
+            getLessonsListRepository.getLessonsListPublisher(appLanguage: appLanguage, filterLessonsByLanguage: filterLessonsByLanguage)
         )
         .flatMap({ (interfaceStrings: LessonsInterfaceStringsDomainModel, lessons: [LessonListItemDomainModel]) -> AnyPublisher<ViewLessonsDomainModel, Never> in
             

@@ -38,6 +38,7 @@ struct ToolsFilterSectionView: View {
                 ToolFilterButtonView(
                     title: viewModel.categoryFilterButtonTitle,
                     width: buttonWidth,
+                    accessibility: .toolsCategoryFilter,
                     tappedClosure: {
                         
                         viewModel.toolCategoryFilterTapped()
@@ -47,6 +48,7 @@ struct ToolsFilterSectionView: View {
                 ToolFilterButtonView(
                     title: viewModel.languageFilterButtonTitle,
                     width: buttonWidth,
+                    accessibility: .toolsLanguageFilter,
                     tappedClosure: {
                         
                         viewModel.toolLanguageFilterTapped()

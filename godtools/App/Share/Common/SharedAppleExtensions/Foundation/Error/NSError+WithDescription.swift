@@ -8,7 +8,7 @@
 
 import Foundation
 
-public extension NSError {
+extension NSError {
     
     static func errorWithDescription(description: String) -> NSError {
         

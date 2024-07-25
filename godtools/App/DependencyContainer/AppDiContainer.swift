@@ -36,6 +36,7 @@ class AppDiContainer {
         let globalActivityDiContainer = GlobalActivityDiContainer(coreDataLayer: dataLayer)
         let learnToShareToolDiContainer = LearnToShareToolDiContainer(coreDataLayer: dataLayer)
         let lessonEvaluationDiContainer = LessonEvaluationFeatureDiContainer(coreDataLayer: dataLayer)
+        let lessonFilterDiContainer = LessonFilterDiContainer(coreDataLayer: dataLayer)
         let lessonsDiContainer = LessonsFeatureDiContainer(coreDataLayer: dataLayer)
         let onboardingDiContainer = OnboardingDiContainer(coreDataLayer: dataLayer)
         let shareablesDiContainer: ShareablesDiContainer = ShareablesDiContainer(coreDataLayer: dataLayer)
@@ -58,6 +59,7 @@ class AppDiContainer {
             globalActivity: globalActivityDiContainer,
             learnToShareTool: learnToShareToolDiContainer,
             lessonEvaluation: lessonEvaluationDiContainer,
+            lessonFilter: lessonFilterDiContainer,
             lessons: lessonsDiContainer,
             onboarding: onboardingDiContainer,
             shareables: shareablesDiContainer,

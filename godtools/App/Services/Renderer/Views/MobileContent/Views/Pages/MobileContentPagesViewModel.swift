@@ -540,7 +540,7 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
             return nil
         }
                 
-        let renderPageResult: Result<MobileContentView, Error> =  currentPageRenderer.value.renderPageModel(
+        let renderPageResult: Result<MobileContentView, Error> = currentPageRenderer.value.renderPageModel(
             pageModel: pageModels[page],
             page: page,
             numberOfPages: pageModels.count,
@@ -743,7 +743,9 @@ extension MobileContentPagesViewModel {
     
     private func countLanguageUsage(localeId: String) {
         
-        if languageUsageAlreadyCountedThisSession(localeId: localeId) { return }
+        if languageUsageAlreadyCountedThisSession(localeId: localeId) {
+            return
+        }
         
         let locale = Locale(identifier: localeId)
         

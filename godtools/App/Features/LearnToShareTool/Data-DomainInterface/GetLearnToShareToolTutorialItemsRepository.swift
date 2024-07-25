@@ -32,7 +32,7 @@ class GetLearnToShareToolTutorialItemsRepository: GetLearnToShareToolTutorialIte
             ),
             LearnToShareToolItemDomainModel(
                 imageName: nil,
-                animationName:  "training_tip_callout",
+                animationName: "training_tip_callout",
                 title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "learn_to_share_tool.tips_light_the_way.title"),
                 message: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "learn_to_share_tool.tips_light_the_way.message")
             ),

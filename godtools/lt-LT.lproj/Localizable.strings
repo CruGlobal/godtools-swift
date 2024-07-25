@@ -40,20 +40,8 @@
 "allTools.spotlight.description" = "Čia pateikiami kai kurie įrankiai, kurie mūsų manymu, jums gali patikti.";
 "allTools.categories.title" = "Kategorijos";
 "tool_menu_item.lessons" = "Pamokos";
-"parallelLanguage.yesButton.title" = "Taip";
-"parallelLanguage.noButton.title" = "Ne, ačiū";
-"parallelLanguage.getStartedButton.title" = "Pradėkite";
-"parallelLanguage.selectLanguageButton.title" = "Pasirinkite kalbą";
-"parellelLanguage.prompt" = "Ar norėtumėte nustatyti papildomą kalbą?";
 "onboardingTutorial.beginButton.title" = "Pradėti";
-"onboardingQuickStart.2.title" = "Noriu su kuo nors pasidalyti evangelija";
-"onboardingQuickStart.2.button.title" = "Pasirinkite vieną iš mūsų įrankių";
 "onboardingTutorial.nextButton.title" = "Kitas";
-"onboardingQuickStart.title" = "Greitos pradžios nuorodos";
-"onboardingQuickStart.0.title" = "Noriu susipažinti su Krikščionybe";
-"onboardingQuickStart.0.button.title" = "Skaitykite mūsų straipsnius";
-"onboardingQuickStart.1.title" = "Noriu sužinoti, kaip rengti pokalbius apie evangeliją";
-"onboardingQuickStart.1.button.title" = "Išbandykite mūsų pamokas";
 "tool_offline_favorite_message" = "Įrankį galima naudoti atsijungus, paspaudus širdelės piktogramą, kuri prideda ją prie mėgstamiausių.";
 
 /* This is a category description of a tool that helps you start a conversation */

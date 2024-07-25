@@ -30,15 +30,14 @@ class GetUserActivityUseCase {
         return userCounterRepository
             .getUserCountersChanged(reloadFromRemote: true)
             .flatMap { _ in
-                    
+                
                 let allUserCounters = self.getAllUserCounters()
-                    
+                
                 let userActivityDomainModel = self.getUserActivityDomainModel(from: allUserCounters, translatedInAppLanguage: appLanguage)
-                    
-                    return Just(userActivityDomainModel)
-                    
-                }
-                .eraseToAnyPublisher()
+                
+                return Just(userActivityDomainModel)
+            }
+            .eraseToAnyPublisher()
     }
     
     private func getAllUserCounters() -> [UserCounterDomainModel] {

@@ -1,3 +1,6 @@
+"language_name_fil" = "filipīniešu (tagalu)";
+"lessons.filter.navBar.language" = "Nodarbības valoda";
+"lessons.languageFilter.title" = "Nodarbības";
 "language_name_fil-x-taglish" = "tagļu";
 "language_name_sid" = "sidamas";
 "onboardingTutorial.chooseLanguageButton.title" = "Izvēlies valodu";
@@ -35,7 +38,7 @@
 "signIn.google" = "Pierakstīties ar Google";
 "signIn.facebook" = "Ienākt, izmantojot Facebook";
 "signIn.apple" = "Turpināt, izmantojot Apple";
-"menu_getStarted" = "Sākt";
+"menu_getStarted" = "Sākt lietot";
 "menu_support" = "Atbalsts";
 "menu_about" = "Par lietotni";
 "menu.sendFeedback" = "Nosūtīt atsauksmes";
@@ -44,48 +47,6 @@
 "menu.leaveAReview" = "Atstāt atsauksmi";
 "account.badges.sectionTitle" = "Tavi žetoni";
 "account.activity.sectionTitle" = "Tava aktivitāte";
-
-/* This is a title on a dashboard that will show the Number of Times a person has opened a tool */
-"account.activity.toolOpens" = "Atvērtie rīki";
-
-/* This is a title on a dashboard that will show the Number of Times a person has completed a lesson */
-"account.activity.lessonCompletion" = "Pabeigtās nodarbības";
-
-/* This is a title on a dashboard that will show the Number of Times a person has used the screen share function */
-"account.activity.screenShares" = "Kopīgotie ekrāni";
-
-/* This is a title on a dashboard that will show the Number of Times a person has shared a link */
-"account.activity.linksShared" = "Kopīgotās saites";
-
-/* This is a title on a dashboard that will show the Number of different languages they have used */
-"account.activity.languagesUsed" = "Izmantotās valodas";
-
-"account.activity.sessions" = "Sesijas";
-"badges.tipsCompleted.singular" = "Izmantoti apmācības padomi: %d";
-
-/* leave %d in phrase - this is the number of articles that the user has read */
-"badges.articlesOpened.plural" = "Atvērto rakstu skaits: %d";
-
-/* when they have read only 1 articles */
-"badges.articlesOpened.singular" = "Atvērto rakstu skaits: %d";
-
-/* leave %d in phrase - this is the number of images that the user has shared */
-"badges.imagesShared.plural" = "Kopīgoto attēlu skaits: %d";
-
-"badges.imagesShared.singular" = "Kopīgoto attēlu skaits: %d";
-
-/* leave %d in phrase - this is the number of lessons that the user has completed */
-"badges.lessonsCompleted.plural" = "Pabeigta(s) nodarbība(s): %d";
-
-"badges.lessonsCompleted.singular" = "Pabeigta(s) nodarbība(s): %d";
-
-/* leave %d in phrase - this is the number of tools that the user has opened */
-"badges.toolsOpened.plural" = "Atvērto rīku skaits: %d";
-
-"badges.toolsOpened.singular" = "Atvērto rīku skaits: %d";
-
-/* leave %d in phrase - this is the number of tips that the user has completed */
-"badges.tipsCompleted.plural" = "Izmantoti apmācības padomi: %d";
 
 /* Just translate "Joined" - leave the %@ - this is the date they started using GodTools */
 "account.joinedOn" = "Pievienojās %@";
@@ -150,12 +111,6 @@
 "start_training" = "Sākt apmācību";
 "close" = "Aizvērt";
 "tool_menu_item.lessons" = "Nodarbības";
-"parallelLanguage.yesButton.title" = "Jā";
-"parallelLanguage.noButton.title" = "Nē, paldies";
-"parallelLanguage.selectButton.title" = "Izvēlēties";
-"parallelLanguage.getStartedButton.title" = "Sākt";
-"parallelLanguage.selectLanguageButton.title" = "Izvēlies valodu";
-"parellelLanguage.prompt" = "Vai vēlies iestatīt paralēlo valodu?";
 
 /* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.continueButton.title.closeTutorial" = "Aizvērt pamācību";
@@ -188,14 +143,7 @@
 "tutorial.findTutorial.title" = "Šo pamācību vari atrast izvēlnē, kad vien tā ir nepieciešama.";
 
 "onboardingTutorial.beginButton.title" = "Sākt";
-"onboardingQuickStart.2.title" = "Vēlos kādam pastāstīt Labo vēsti";
-"onboardingQuickStart.2.button.title" = "Izvēlies kādu no mūsu rīkiem";
 "onboardingTutorial.nextButton.title" = "Tālāk";
-"onboardingQuickStart.title" = "Ātrās sākšanas saites";
-"onboardingQuickStart.0.title" = "Vēlos uzzināt vairāk par Jēzu";
-"onboardingQuickStart.0.button.title" = "Lasi mūsu rakstus";
-"onboardingQuickStart.1.title" = "Vēlos uzzināt, kā veidot sarunas par Labo vēsti";
-"onboardingQuickStart.1.button.title" = "Izmēģini mūsu nodarbības";
 "tool_offline_favorite_message" = "Padari rīku pieejamu bezsaistē, nospiežot sirds ikonu, lai pievienotu to izlasei.";
 
 /* This is a category description of a tool that helps you start a conversation */
@@ -211,7 +159,7 @@
 "share_tool_screen_tutorial.share_your_screen.message" = "Šī funkcija nosūtīs draugam saiti uz šo rīku. Pēc saites atvēršanas sāksies ekrāna koplietošana.";
 "share_tool_screen_tutorial.mirrored_experience.title" = "Kopīga lietošana";
 "share_tool_screen_tutorial.mirrored_experience.message" = "Ritinot rīku savā tālrunī, tava drauga ekrānā notiks tas pats. Šī funkcija ļauj vienlaicīgi izmantot vienu rīku 2 dažādās ierīcēs.";
-"share_tool_screen_tutorial.get_started.title" = "Sākt";
+"share_tool_screen_tutorial.get_started.title" = "Sākt lietot";
 "share_tool_screen_tutorial.get_started.message" = "Lai sāktu ekrāna koplietošanu, nosūti saiti vienam vai vairākiem cilvēkiem.";
 "share_tool_remote_link_message" = "Sveiki! Pievienojies man lietotnē 'GodTools', izmantojot ekrāna koplietošanas funkciju. Lūk, saite: %@
 
@@ -374,7 +322,7 @@ Lietotni var lejupielādēt savā tālrunī šeit: https://ej.uz/GodTools";
 "cancel" = "Atcelt";
 "required_field_missing" = "Lauks \"%@\" aizpildāms obligāti!";
 
-"onboardingTutorial.getStartedButton.title" = "Sākt";
+"onboardingTutorial.getStartedButton.title" = "Sākt lietot";
 
 // About
 "general_about_1" = "'GodTools' var palīdzēt pastāstīt citiem par Jēzu Kristu ērtā un vienkārša veidā.";

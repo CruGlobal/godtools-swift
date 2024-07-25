@@ -43,20 +43,8 @@
 "training_tip_consider" = "Обмисли";
 "close" = "Затвори";
 "tool_menu_item.lessons" = "Уроци";
-"parallelLanguage.yesButton.title" = "Да";
-"parallelLanguage.noButton.title" = "Не, благодаря";
-"parallelLanguage.getStartedButton.title" = "Започнете";
-"parallelLanguage.selectLanguageButton.title" = "Изберете език";
-"parellelLanguage.prompt" = "Искате ли да зададете втори език?";
 "onboardingTutorial.beginButton.title" = "Начало";
-"onboardingQuickStart.2.title" = "Искам да споделя Евангелието с някого";
-"onboardingQuickStart.2.button.title" = "Избери един от инструментите ни";
 "onboardingTutorial.nextButton.title" = "Напред";
-"onboardingQuickStart.title" = "Връзки за бързо начало";
-"onboardingQuickStart.0.title" = "Искам да науча още за християнството";
-"onboardingQuickStart.0.button.title" = "Четете статиите ни";
-"onboardingQuickStart.1.title" = "Искам да науча още за разговорите относно Евангелието";
-"onboardingQuickStart.1.button.title" = "Опитай уроците ни";
 "tool_offline_favorite_message" = "Направете инструмента достъпен офлайн чрез докосване на иконката сърце, което ще го добави към Вашите любими.";
 
 /* This is a category description of a tool that helps you start a conversation */

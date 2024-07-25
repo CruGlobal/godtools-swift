@@ -8,7 +8,7 @@
 
 import UIKit
 
-public extension UIImageView {
+extension UIImageView {
     
     func setImageColor(color: UIColor) {
         

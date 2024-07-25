@@ -28,8 +28,8 @@ struct ToolDomainModel: ToolListItemDomainModelInterface {
 }
 
 extension ToolDomainModel: Equatable {
-    static func ==(lhs: ToolDomainModel, rhs: ToolDomainModel) -> Bool {
-        return lhs.dataModelId == rhs.dataModelId
+    static func == (this: ToolDomainModel, that: ToolDomainModel) -> Bool {
+        return this.dataModelId == that.dataModelId
     }
 }
 

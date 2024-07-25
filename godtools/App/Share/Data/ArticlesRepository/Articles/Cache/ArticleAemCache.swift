@@ -45,7 +45,6 @@ class ArticleAemCache {
         return getAemCacheObject(realm: realm, aemUri: aemUri)
     }
 
-    
     private func getAemCacheObject(realm: Realm, aemUri: String) -> ArticleAemCacheObject? {
         
         guard let realmAemData = realm.object(ofType: RealmArticleAemData.self, forPrimaryKey: aemUri) else {
@@ -91,11 +90,7 @@ class ArticleAemCache {
                 let dataIsNotCached: Bool
                 let uuidChanged: Bool
                 
-                if let aemCacheObject = self.getAemCacheObject(realm: realm, aemUri: aemData.aemUri),
-                   let cachedUUID = aemCacheObject.aemData.articleJcrContent?.uuid,
-                   let uuid = aemData.articleJcrContent?.uuid,
-                   !cachedUUID.isEmpty,
-                   !uuid.isEmpty {
+                if let aemCacheObject = self.getAemCacheObject(realm: realm, aemUri: aemData.aemUri), let cachedUUID = aemCacheObject.aemData.articleJcrContent?.uuid, let uuid = aemData.articleJcrContent?.uuid, !cachedUUID.isEmpty, !uuid.isEmpty {
                     
                     dataIsNotCached = false
                     uuidChanged = cachedUUID != uuid

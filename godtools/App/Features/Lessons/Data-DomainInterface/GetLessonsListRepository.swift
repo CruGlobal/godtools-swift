@@ -24,7 +24,7 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
         self.getTranslatedToolLanguageAvailability = getTranslatedToolLanguageAvailability
     }
     
-    func getLessonsListPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[LessonListItemDomainModel], Never> {
+    func getLessonsListPublisher(appLanguage: AppLanguageDomainModel, filterLessonsByLanguage: LessonLanguageFilterDomainModel?) -> AnyPublisher<[LessonListItemDomainModel], Never> {
         
         let appLanguageModel: LanguageModel? = languagesRepository.getLanguage(code: appLanguage)
         
@@ -32,14 +32,24 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
             .getResourcesChangedPublisher()
             .flatMap({ (resourcesDidChange: Void) -> AnyPublisher<[LessonListItemDomainModel], Never> in
                 
-                let lessons: [ResourceModel] = self.resourcesRepository.getAllLessons(sorted: true)
+                let lessons: [ResourceModel] = self.resourcesRepository.getAllLessons(filterByLanguageId: filterLessonsByLanguage?.languageId, sorted: true)
                 
                 let lessonListItems: [LessonListItemDomainModel] = lessons.map { (resource: ResourceModel) in
 
                     let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel
                     
-                    if let language = appLanguageModel {
-                        toolLanguageAvailability = self.getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(resource: resource, language: language, translateInLanguage: language)
+                    if let translationModel = appLanguageModel {
+                        
+                        let language: LanguageModel
+                        
+                        if let filterLanguageId = filterLessonsByLanguage?.languageId, let filterLanguageModel = self.languagesRepository.getLanguage(id: filterLanguageId) {
+                            
+                            language = filterLanguageModel
+                        } else {
+                            language = translationModel
+                        }
+                        
+                        toolLanguageAvailability = self.getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(resource: resource, language: language, translateInLanguage: translationModel)
                     }
                     else {
                         toolLanguageAvailability = ToolLanguageAvailabilityDomainModel(availabilityString: "", isAvailable: false)

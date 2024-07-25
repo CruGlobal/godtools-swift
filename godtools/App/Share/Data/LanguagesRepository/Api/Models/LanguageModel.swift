@@ -54,7 +54,7 @@ struct LanguageModel: LanguageModelType, Codable {
             tempCode = "fil-x-taglish"
         }
         
-        code = tempCode//try attributesContainer?.decodeIfPresent(BCP47LanguageIdentifier.self, forKey: .code) ?? "" // TODO: (GT-2399) Remove tempCode and replace with commented out line.
+        code = tempCode// try attributesContainer?.decodeIfPresent(BCP47LanguageIdentifier.self, forKey: .code) ?? "" // TODO: (GT-2399) Remove tempCode and replace with commented out line.
         direction = try attributesContainer?.decodeIfPresent(String.self, forKey: .direction) ?? ""
         name = try attributesContainer?.decodeIfPresent(String.self, forKey: .name) ?? ""
         forceLanguageName = try attributesContainer?.decodeIfPresent(Bool.self, forKey: .forceLanguageName) ?? false
@@ -72,7 +72,7 @@ struct LanguageModel: LanguageModelType, Codable {
 }
 
 extension LanguageModel: Equatable {
-    static func ==(lhs: LanguageModel, rhs: LanguageModel) -> Bool {
-        return lhs.id == rhs.id
+    static func == (this: LanguageModel, that: LanguageModel) -> Bool {
+        return this.id == that.id
     }
 }

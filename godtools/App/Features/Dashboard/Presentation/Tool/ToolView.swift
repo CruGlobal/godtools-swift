@@ -30,10 +30,6 @@ class ToolView: MobileContentPagesView {
         print("view didload: \(type(of: self))")
     }
     
-    override func setupLayout() {
-        super.setupLayout()
-    }
-    
     override func setupBinding() {
         super.setupBinding()
         
@@ -50,10 +46,6 @@ class ToolView: MobileContentPagesView {
                 toolView.viewModel.subscribedForRemoteSharePublishing(page: page, pagePositions: toolPagePositions)
             }
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
     }
     
     override func didConfigurePageView(pageView: MobileContentPageView) {

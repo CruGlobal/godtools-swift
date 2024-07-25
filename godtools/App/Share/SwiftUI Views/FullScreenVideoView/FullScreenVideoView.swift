@@ -44,7 +44,6 @@ struct FullScreenVideoView: View {
                 })
                 .frame(width: videoWidth, height: videoHeight)
                 
-                
                 Spacer()
             }
         }

@@ -49,7 +49,10 @@ extension DownloadableLanguageListItemDomainModel: Identifiable {
     }
         
     func wasDownloadedBefore(date: Date) -> Bool {
-        guard let downloadedAt = downloadStatus.downloadedAt else { return false }
+        
+        guard let downloadedAt = downloadStatus.downloadedAt else {
+            return false
+        }
         
         return downloadedAt < date
     }

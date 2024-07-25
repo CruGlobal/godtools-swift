@@ -69,11 +69,9 @@ class MobileContentPageRenderer {
             
             let pageModel: Page = pageModels[pageIndex]
             
-            for listener in pageModel.listeners {
-               
-                if eventIds.contains(listener) {
-                    return pageIndex
-                }
+            for listener in pageModel.listeners where eventIds.contains(listener) {
+                
+                return pageIndex
             }
         }
         

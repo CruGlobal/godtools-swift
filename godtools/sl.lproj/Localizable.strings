@@ -40,20 +40,8 @@
 "allTools.spotlight.description" = "Tukaj je nekaj orodij, ki bi vam lahko bila všeč";
 "allTools.categories.title" = "Kategorije";
 "tool_menu_item.lessons" = "Lekcije";
-"parallelLanguage.yesButton.title" = "Ja";
-"parallelLanguage.noButton.title" = "Ne, hvala";
-"parallelLanguage.getStartedButton.title" = "Začetek";
-"parallelLanguage.selectLanguageButton.title" = "Izberi jezik";
-"parellelLanguage.prompt" = "Ali želite nastaviti sekundarni jezik?";
 "onboardingTutorial.beginButton.title" = "Začni";
-"onboardingQuickStart.2.title" = "Želim deliti evangelij z nekom";
-"onboardingQuickStart.2.button.title" = "Izberite eno od naših orodij";
 "onboardingTutorial.nextButton.title" = "Naprej";
-"onboardingQuickStart.title" = "Povezave za hitri začetek";
-"onboardingQuickStart.0.title" = "Želim raziskati krščanstvo";
-"onboardingQuickStart.0.button.title" = "Preberite naše članke";
-"onboardingQuickStart.1.title" = "Želim se naučiti pogovorov o evangeliju";
-"onboardingQuickStart.1.button.title" = "Preizkusite naše lekcije";
 "tool_offline_favorite_message" = "Če želite, da bo orodje na voljo brez povezave, se dotaknite ikone srca in jo dodajte med priljubljene.";
 
 /* This is a category description of a tool that helps you start a conversation */

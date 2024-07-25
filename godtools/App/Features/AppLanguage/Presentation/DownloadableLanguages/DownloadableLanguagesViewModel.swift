@@ -171,5 +171,3 @@ extension DownloadableLanguagesViewModel {
             .store(in: &DownloadableLanguagesViewModel.backgrounDownloadCancellables)
     }
 }
-
-

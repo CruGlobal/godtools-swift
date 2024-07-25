@@ -140,7 +140,7 @@ extension KeyboardNotificationObserver {
     @objc func handleNotification(notification: Notification) {
         
         if notification.name == UIResponder.keyboardWillShowNotification {
-            log(string:"\nKeyboardNotificationObserver: UIKeyboardWillShow()")
+            log(string: "\nKeyboardNotificationObserver: UIKeyboardWillShow()")
             
             if let keyboardInfo = notification.userInfo {
                 if let keyboardAnimationDurationNumber = keyboardInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber {
@@ -164,7 +164,7 @@ extension KeyboardNotificationObserver {
         }
         else if notification.name == UIResponder.keyboardDidShowNotification {
             
-            log(string:"\nKeyboardNotificationObserver: UIKeyboardDidShow()")
+            log(string: "\nKeyboardNotificationObserver: UIKeyboardDidShow()")
             
             keyboardIsUp = true
             
@@ -178,7 +178,7 @@ extension KeyboardNotificationObserver {
         }
         else if notification.name == UIResponder.keyboardWillHideNotification {
             
-            log(string:"\nKeyboardNotificationObserver: UIKeyboardWillHide()")
+            log(string: "\nKeyboardNotificationObserver: UIKeyboardWillHide()")
             
             keyboardIsUp = false
             
@@ -196,7 +196,7 @@ extension KeyboardNotificationObserver {
         }
         else if notification.name == UIResponder.keyboardDidChangeFrameNotification {
             
-            log(string:"\nKeyboardNotificationObserver: UIKeyboardDidChangeFrame()")
+            log(string: "\nKeyboardNotificationObserver: UIKeyboardDidChangeFrame()")
             
             if keyboardIsUp {
                 updateKeyboardHeightIfNeededFromKeyboardNotification(

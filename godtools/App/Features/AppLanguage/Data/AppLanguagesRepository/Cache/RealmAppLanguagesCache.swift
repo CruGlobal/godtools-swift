@@ -20,8 +20,9 @@ class RealmAppLanguagesCache {
     }
     
     func observeChangesPublisher() -> AnyPublisher<Void, Never> {
-        return realmDatabase.openRealm().objects(RealmAppLanguage.self).objectWillChange
-            .eraseToAnyPublisher()
+        return realmDatabase.openRealm()
+            .objects(RealmAppLanguage.self)
+            .objectWillChange
             .prepend(Void())
             .eraseToAnyPublisher()
     }

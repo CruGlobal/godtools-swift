@@ -37,7 +37,7 @@ class FadeAnimationTransition: NSObject, UIViewControllerAnimatedTransitioning {
             let fromView: UIView = fromViewController.view
             let toView: UIView = toViewController.view
                         
-            switch (self.fade) {
+            switch fade {
             
             case .fadeIn:
                 

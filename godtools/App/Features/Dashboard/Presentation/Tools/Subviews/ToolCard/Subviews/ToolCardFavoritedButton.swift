@@ -10,6 +10,8 @@ import SwiftUI
 
 struct ToolCardFavoritedButton: View {
     
+    private let accessibility: AccessibilityStrings.Button = .toggleToolFavorite
+    
     let isFavorited: Bool
     let tappedClosure: (() -> Void)?
     
@@ -28,6 +30,7 @@ struct ToolCardFavoritedButton: View {
                 .clipped()
         }
         .frame(width: 44, height: 44)
+        .accessibilityIdentifier(accessibility.id)
     }
 }
 

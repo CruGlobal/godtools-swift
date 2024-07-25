@@ -11,9 +11,9 @@ import RealmSwift
 
 class SwiftUIPreviewDatabase: RealmDatabase {
     
-    override init(databaseConfiguration: RealmDatabaseConfiguration) {
+    override init(databaseConfiguration: RealmDatabaseConfiguration, realmInstanceCreationType: RealmInstanceCreationType = .alwaysCreatesANewRealmInstance) {
         
-        super.init(databaseConfiguration: databaseConfiguration)
+        super.init(databaseConfiguration: databaseConfiguration, realmInstanceCreationType: realmInstanceCreationType)
         
         let objects: [Object] = getResources() + getLanguages()
         
@@ -33,17 +33,17 @@ class SwiftUIPreviewDatabase: RealmDatabase {
     
     private func getResources() -> [RealmResource] {
         
-        let resource_1 = RealmResource()
+        let resourceKgpGospel = RealmResource()
         
-        resource_1.abbreviation = "kgp"
-        resource_1.attrCategory = "gospel"
-        resource_1.attrSpotlight = true
-        resource_1.id = "1"
-        resource_1.name = "Preview Resource"
-        resource_1.resourceDescription = ""
-        resource_1.totalViews = 12579
+        resourceKgpGospel.abbreviation = "kgp"
+        resourceKgpGospel.attrCategory = "gospel"
+        resourceKgpGospel.attrSpotlight = true
+        resourceKgpGospel.id = "1"
+        resourceKgpGospel.name = "Preview Resource"
+        resourceKgpGospel.resourceDescription = ""
+        resourceKgpGospel.totalViews = 12579
         
-        return [resource_1]
+        return [resourceKgpGospel]
     }
     
     private func getLanguages() -> [RealmLanguage] {

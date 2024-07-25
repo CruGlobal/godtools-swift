@@ -16,7 +16,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
+  download_and_commit_onesky_translations:
     runs-on: macos-14
     env:
       FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT: 60

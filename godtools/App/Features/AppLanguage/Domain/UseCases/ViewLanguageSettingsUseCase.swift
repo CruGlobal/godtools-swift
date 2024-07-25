@@ -14,7 +14,7 @@ class ViewLanguageSettingsUseCase {
     private let getInterfaceStringsRepository: GetLanguageSettingsInterfaceStringsRepositoryInterface
     private let getDownloadedLanguagesListRepositoryInterface: GetDownloadedLanguagesListRepositoryInterface
     
-    init(getInterfaceStringsRepository: GetLanguageSettingsInterfaceStringsRepositoryInterface,  getDownloadedLanguagesListRepositoryInterface: GetDownloadedLanguagesListRepositoryInterface) {
+    init(getInterfaceStringsRepository: GetLanguageSettingsInterfaceStringsRepositoryInterface, getDownloadedLanguagesListRepositoryInterface: GetDownloadedLanguagesListRepositoryInterface) {
         
         self.getInterfaceStringsRepository = getInterfaceStringsRepository
         self.getDownloadedLanguagesListRepositoryInterface = getDownloadedLanguagesListRepositoryInterface

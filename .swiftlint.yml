@@ -1,0 +1,142 @@
+# By default, SwiftLint uses a set of sensible default rules you can adjust:
+disabled_rules: # rule identifiers turned on by default to exclude from running
+  - cyclomatic_complexity #disabling for now as this touches many files.
+  - empty_enum_arguments #disabling for now as this touches many files.
+  - function_body_length #disabling for now as this touches many files.
+  - function_parameter_count #disabling for now as this touches many files.
+  - inclusive_language
+  - multiple_closures_with_trailing_closure #disabling for now as this touches many files.
+  - opening_brace #disabling for now as this touches many files.
+  - redundant_string_enum_value
+  - statement_position #disabling for now as this touches many files.
+  - todo #disabling for now as this touches many files.
+  - trailing_whitespace #disabling for now as this touches many files.  Command swiftlint --fix is a way to fix whitespace.
+  - unused_closure_parameter #disabling for now as this touches many files.
+opt_in_rules: # some rules are turned off by default, so you need to opt-in
+  - closure_end_indentation
+  # - closure_spacing  #disabling for now as this touches many files.
+  - collection_alignment
+  - comma_inheritance
+  - conditional_returns_on_newline
+  # - convenience_type #disabling for now as this touches many files.
+  - discouraged_none_name
+  - discouraged_object_literal
+  # - empty_count #disabling for now as this touches many files.
+  - empty_string
+  - enum_case_associated_values_count
+  # - explicit_enum_raw_value #disabling for now as this touches many files.
+  # - explicit_type_interface
+  - fallthrough
+  - fatal_error_message
+  - file_name_no_space
+  # - file_types_order #Curious about this one. ~Levi
+  - first_where
+  - force_unwrapping
+  - function_default_parameter_at_end
+  - ibinspectable_in_extension
+  - identical_operands
+  # - implicit_return #disabling for now as this touches many files.
+  - implicitly_unwrapped_optional
+  - indentation_width
+  - last_where
+  - let_var_whitespace
+  - literal_expression_end_indentation
+  # - multiline_arguments #Disabling this rule as UIView.animate would fail when using animate and completion together.
+  # - multiline_arguments_brackets #disabling for now as this touches many files.
+  - multiline_function_chains
+  - multiline_literal_brackets
+  - multiline_parameters
+  - multiline_parameters_brackets
+  - no_extension_access_modifier
+  # - no_magic_numbers #disabling for now as this touches many files.
+  # - one_declaration_per_file #SwiftUI Preview breaks this, may need to update preview to use macros.
+  - operator_usage_whitespace
+  # - prefer_self_in_static_references #disabling for now as this touches many files.
+  - prefer_self_type_over_type_of_self
+  - private_action
+  - private_outlet
+  - private_subject
+  - private_swiftui_state
+  # - sorted_enum_cases #disabling for now as this touches many files.
+  - strict_fileprivate
+  - switch_case_on_newline
+  - toggle_bool
+  # - trailing_closure #disabling for now as this touches many files.
+  - unowned_variable_capture
+  - weak_delegate
+  - yoda_condition
+
+# Alternatively, specify all rules explicitly by uncommenting this option:
+# only_rules: # delete `disabled_rules` & `opt_in_rules` if using this
+#   - empty_parameters
+#   - vertical_whitespace
+
+analyzer_rules: # rules run by `swiftlint analyze`
+  - capture_variable
+  - explicit_self
+  - unused_import
+
+# Case-sensitive paths to include during linting. Directory paths supplied on the
+# command line will be ignored.
+included: 
+  - godtools/App
+excluded: # case-sensitive paths to ignore during linting. Takes precedence over `included`
+  - godtools/App/Flows/Flow/FlowStep.swift
+  - Carthage
+  - Pods
+  - Sources/ExcludedFolder
+  - Sources/ExcludedFile.swift
+  - Sources/*/ExcludedFile.swift # exclude files with a wildcard
+
+# If true, SwiftLint will not fail if no lintable files are found.
+allow_zero_lintable_files: false
+
+# If true, SwiftLint will treat all warnings as errors.
+strict: false
+
+# The path to a baseline file, which will be used to filter out detected violations.
+baseline: Baseline.json
+
+# The path to save detected violations to as a new baseline.
+write_baseline: Baseline.json
+
+# If true, SwiftLint will check for updates after linting or analyzing.
+check_for_updates: true
+
+# configurable rules can be customized from this configuration file
+# binary rules can set their severity level
+force_cast: warning # implicitly
+force_try:
+  severity: warning # explicitly
+# rules that have both warning and error levels, can set just the warning level
+# implicitly
+line_length: 1200
+# they can set both implicitly with an array
+type_body_length:
+  - 500 # warning
+  - 600 # error
+# or they can set both explicitly
+file_length:
+  warning: 1500
+  error: 2000
+# naming rules can set warnings/errors for min_length and max_length
+# additionally they can set excluded names
+type_name:
+  min_length: 4 # only warning
+  max_length: # warning and error
+    warning: 80
+    error: 90
+  excluded: iPhone # excluded via string
+  allowed_symbols: ["_"] # these are allowed in type names
+identifier_name:
+  min_length: # only min_length
+    warning: 1
+    error: 1 # only error
+  max_length: # warning and error
+    warning: 80
+    error: 90
+  excluded: # excluded via string array
+    - id
+    - URL
+    - GlobalAPIKey
+reporter: "xcode" # reporter type (xcode, json, csv, checkstyle, codeclimate, junit, html, emoji, sonarqube, markdown, github-actions-logging, summary)

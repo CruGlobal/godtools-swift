@@ -147,7 +147,7 @@ extension ToolScreenShareTutorialViewModel {
     }
     
     private func nextPageTapped() {
-        currentPage = currentPage + 1
+        currentPage += 1
     }
     
     private func shareLinkTapped() {

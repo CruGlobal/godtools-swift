@@ -45,6 +45,7 @@ struct AllYourFavoriteToolsView: View {
                                 geometry: geometry,
                                 layout: .landscape,
                                 showsCategory: true,
+                                accessibility: .favoriteTool,
                                 favoriteTappedClosure: {
                                     
                                     viewModel.unfavoriteToolTapped(tool: tool)

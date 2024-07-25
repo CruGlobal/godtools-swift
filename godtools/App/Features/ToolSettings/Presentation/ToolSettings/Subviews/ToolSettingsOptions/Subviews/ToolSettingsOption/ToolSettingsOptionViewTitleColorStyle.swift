@@ -10,8 +10,8 @@ import SwiftUI
 
 enum ToolSettingsOptionViewTitleColorStyle {
     
-    case lightBackground
     case darkBackground
+    case lightBackground
     
     func getColor() -> Color {
         switch self {

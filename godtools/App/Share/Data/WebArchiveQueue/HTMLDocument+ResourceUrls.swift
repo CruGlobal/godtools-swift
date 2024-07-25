@@ -14,10 +14,10 @@ extension HTMLDocument {
     func getHTMLReferences(host: String, includeJavascript: Bool) -> [String] {
         
         var references: [String] = Array()
-        references += xpath("//img[@src]").compactMap{ $0["src"] } // images
-        references += xpath("//link[@rel='stylesheet'][@href]").compactMap{ $0["href"] } // css
+        references += xpath("//img[@src]").compactMap { $0["src"] } // images
+        references += xpath("//link[@rel='stylesheet'][@href]").compactMap { $0["href"] } // css
         if includeJavascript {
-            references += xpath("//script[@src]").compactMap{ $0["src"] } // javascript
+            references += xpath("//script[@src]").compactMap { $0["src"] } // javascript
         }
         
         return references.map { ref in

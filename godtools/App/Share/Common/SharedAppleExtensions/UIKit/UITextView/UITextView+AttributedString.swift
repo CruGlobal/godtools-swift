@@ -8,7 +8,7 @@
 
 import UIKit
 
-public extension UITextView {
+extension UITextView {
     
     private func getAttributedString() -> NSMutableAttributedString {
         return attributedText.mutableCopy() as? NSMutableAttributedString ?? NSMutableAttributedString()

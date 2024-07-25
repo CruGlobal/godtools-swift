@@ -10,6 +10,8 @@ import SwiftUI
 
 struct GTWhiteButton: View {
     
+    private let accessibility: AccessibilityStrings.Button?
+    
     let title: String
     let font: Font
     let width: CGFloat
@@ -17,11 +19,12 @@ struct GTWhiteButton: View {
     let cornerRadius: CGFloat
     let action: () -> Void
     
-    init(title: String, font: Font? = nil, fontSize: CGFloat? = nil, width: CGFloat, height: CGFloat, cornerRadius: CGFloat = 6, action: @escaping () -> Void) {
+    init(title: String, font: Font? = nil, fontSize: CGFloat? = nil, width: CGFloat, height: CGFloat, cornerRadius: CGFloat = 6, accessibility: AccessibilityStrings.Button? = nil, action: @escaping () -> Void) {
         self.title = title
         self.width = width
         self.height = height
         self.cornerRadius = cornerRadius
+        self.accessibility = accessibility
         self.action = action
         
         if let font = font {
@@ -62,6 +65,7 @@ struct GTWhiteButton: View {
         .background(Color.white)
         .accentColor(ColorPalette.gtBlue.color)
         .cornerRadius(cornerRadius)
+        .accessibilityIdentifier(accessibility?.id ?? "")
         .overlay(
             RoundedRectangle(cornerRadius: cornerRadius)
                 .stroke(ColorPalette.gtBlue.color, lineWidth: 1)

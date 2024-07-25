@@ -31,10 +31,8 @@ class FirebaseDebugArguments {
         
         var newArguments: [String] = toArguments
         
-        for argument in arguments {
-            if !newArguments.contains(argument) {
-                newArguments.append(argument)
-            }
+        for argument in arguments where !newArguments.contains(argument) {
+            newArguments.append(argument)
         }
         
         return newArguments

@@ -13,6 +13,17 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 # Available Actions
 
+### cru_shared_lane_swift_lint
+
+```sh
+[bundle exec] fastlane cru_shared_lane_swift_lint
+```
+
+
+
+----
+
+
 ## iOS
 
 ### ios release

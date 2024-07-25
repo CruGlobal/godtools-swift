@@ -26,13 +26,17 @@ class RealmResourcesCache {
     }
     
     func getResourcesChangedPublisher() -> AnyPublisher<Void, Never> {
-        return realmDatabase.openRealm().objects(RealmResource.self).objectWillChange
+        return realmDatabase.openRealm()
+            .objects(RealmResource.self)
+            .objectWillChange
             .eraseToAnyPublisher()
     }
     
     func getResource(id: String) -> ResourceModel? {
         
-        guard let realmResource = realmDatabase.openRealm().object(ofType: RealmResource.self, forPrimaryKey: id) else {
+        guard let realmResource = realmDatabase.openRealm()
+            .object(ofType: RealmResource.self, forPrimaryKey: id) else {
+            
             return nil
         }
         
@@ -41,7 +45,11 @@ class RealmResourcesCache {
     
     func getResource(abbreviation: String) -> ResourceModel? {
         
-        guard let realmResource = realmDatabase.openRealm().objects(RealmResource.self).filter("\(#keyPath(RealmResource.abbreviation)) = '\(abbreviation)'").first else {
+        guard let realmResource = realmDatabase.openRealm()
+            .objects(RealmResource.self)
+            .filter("\(#keyPath(RealmResource.abbreviation)) = '\(abbreviation)'")
+            .first else {
+            
             return nil
         }
         
@@ -50,15 +58,18 @@ class RealmResourcesCache {
     
     func getResources(ids: [String]) -> [ResourceModel] {
         
-        return realmDatabase.openRealm().objects(RealmResource.self)
+        return realmDatabase.openRealm()
+            .objects(RealmResource.self)
             .filter("\(#keyPath(RealmResource.id)) IN %@", ids)
-            .map{
+            .map {
                 ResourceModel(model: $0)
             }
     }
     
     func getResources(sorted: Bool = false) -> [ResourceModel] {
-        var realmResources = realmDatabase.openRealm().objects(RealmResource.self)
+        
+        var realmResources = realmDatabase.openRealm()
+            .objects(RealmResource.self)
         
         if sorted {
             realmResources = realmResources.sorted(byKeyPath: #keyPath(RealmResource.attrDefaultOrder), ascending: true)
@@ -68,13 +79,15 @@ class RealmResourcesCache {
     }
     
     func getResources(with metaToolIds: [String?]) -> [ResourceModel] {
-        return realmDatabase.openRealm().objects(RealmResource.self)
+        return realmDatabase.openRealm()
+            .objects(RealmResource.self)
             .filter(NSPredicate(format: "%K IN %@", #keyPath(RealmResource.metatoolId), metaToolIds))
             .map { ResourceModel(model: $0)}
     }
     
     func getResources(with resourceType: ResourceType) -> [ResourceModel] {
-        return realmDatabase.openRealm().objects(RealmResource.self)
+        return realmDatabase.openRealm()
+            .objects(RealmResource.self)
             .where { $0.resourceType == resourceType.rawValue }
             .map { ResourceModel(model: $0) }
     }
@@ -275,9 +288,12 @@ extension RealmResourcesCache {
 
 extension RealmResourcesCache {
     
-    func getAllLessons(additionalAttributeFilters: [NSPredicate]? = nil, sorted: Bool) -> [ResourceModel] {
-       
+    func getAllLessonsResults(filterByLanguageId: String? = nil, additionalAttributeFilters: [NSPredicate]? = nil, sorted: Bool) -> Results<RealmResource> {
         var filterByAttributes: [NSPredicate] = Array()
+        
+        if let filterByLanguageId = filterByLanguageId {
+            filterByAttributes.append(ResourcesFilter.getLanguageModelIdPredicate(languageModelId: filterByLanguageId))
+        }
         
         if let additionalAttributeFilters = additionalAttributeFilters, !additionalAttributeFilters.isEmpty {
             filterByAttributes.append(contentsOf: additionalAttributeFilters)
@@ -303,9 +319,30 @@ extension RealmResourcesCache {
         }
         
         return allLessons
+    }
+    
+    func getAllLessons(filterByLanguageId: String? = nil, additionalAttributeFilters: [NSPredicate]? = nil, sorted: Bool) -> [ResourceModel] {
+        
+        return getAllLessonsResults(filterByLanguageId: filterByLanguageId, additionalAttributeFilters: additionalAttributeFilters, sorted: sorted)
             .map {
                 ResourceModel(model: $0)
             }
+    }
+    
+    func getAllLessonsCount(filterByLanguageId: String?) -> Int {
+                
+        return getAllLessonsResults(filterByLanguageId: filterByLanguageId, sorted: false).count
+    }
+    
+    func getAllLessonLanguageIds() -> [String] {
+        
+        let allLessonIds = getAllLessonsResults(sorted: false)
+            .flatMap { $0.getLanguages() }
+            .map { $0.id }
+        
+        let uniqueLanguageIds = Set(allLessonIds)
+        
+        return Array(uniqueLanguageIds)
     }
     
     func getFeaturedLessons(sorted: Bool) -> [ResourceModel] {
@@ -328,7 +365,7 @@ extension RealmResourcesCache {
         
         let realm: Realm = realmDatabase.openRealm()
         
-        return realm.objects(RealmResource.self).filter(filterPredicate).map{
+        return realm.objects(RealmResource.self).filter(filterPredicate).map {
             ResourceModel(model: $0)
         }
     }

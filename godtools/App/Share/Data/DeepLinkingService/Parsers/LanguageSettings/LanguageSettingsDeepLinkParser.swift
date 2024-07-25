@@ -14,7 +14,7 @@ class LanguageSettingsDeepLinkParser: DeepLinkUrlParserType {
         
     }
     
-    func parse(url: URL, pathComponents: [String], queryParameters: [String : Any]) -> ParsedDeepLinkType? {
+    func parse(url: URL, pathComponents: [String], queryParameters: [String: Any]) -> ParsedDeepLinkType? {
         
         return .languageSettings
     }

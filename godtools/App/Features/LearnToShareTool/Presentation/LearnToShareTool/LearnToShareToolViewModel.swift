@@ -121,7 +121,7 @@ extension LearnToShareToolViewModel {
             return
         }
         
-        currentPage = currentPage - 1
+        currentPage -= 1
     }
     
     @objc func closeTapped() {
@@ -134,7 +134,7 @@ extension LearnToShareToolViewModel {
             flowDelegate?.navigate(step: .continueTappedFromLearnToShareTool(toolId: toolId, primaryLanguage: toolPrimaryLanguage, parallelLanguage: toolParallelLanguage, selectedLanguageIndex: toolSelectedLanguageIndex))
         }
         else {
-            currentPage = currentPage + 1
+            currentPage += 1
         }
     }
 }
