@@ -17,4 +17,3 @@ struct AuthUserDomainModel {
     let name: String?
     let ssoGuid: String?
 }
-

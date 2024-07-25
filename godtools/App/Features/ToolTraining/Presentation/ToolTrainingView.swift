@@ -193,9 +193,14 @@ extension ToolTrainingView: PageNavigationCollectionViewDelegate {
     
     func pageNavigation(pageNavigation: PageNavigationCollectionView, cellForPageAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell: ToolTrainingTipView = pageNavigation.getReusablePageCell(
+        guard let cell = pageNavigation.getReusablePageCell(
             cellReuseIdentifier: ToolTrainingTipView.reuseIdentifier,
-            indexPath: indexPath) as! ToolTrainingTipView
+            indexPath: indexPath) as? ToolTrainingTipView else {
+                
+                assertionFailure("Failed to dequeue reusable cell with identifier :\(ToolTrainingTipView.reuseIdentifier)")
+                
+                return UICollectionViewCell()
+            }
 
         let mobileContentView: MobileContentView? = viewModel.tipPageWillAppear(
             page: indexPath.row,

@@ -38,7 +38,7 @@ struct OpenTutorialBannerView: View {
                         .font(FontLibrary.sfProTextRegular.font(size: 17))
                         .onTapGesture {
                             openTutorialTappedClosure?()
-                    }
+                        }
                     
                     Image(ImageCatalog.openTutorialArrow.name)
                         .resizable()

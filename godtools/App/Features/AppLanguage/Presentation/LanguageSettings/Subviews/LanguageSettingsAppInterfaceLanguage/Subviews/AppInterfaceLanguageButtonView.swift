@@ -69,4 +69,3 @@ struct AppInterfaceLanguageButtonView: View {
         }
     }
 }
-

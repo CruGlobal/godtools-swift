@@ -15,4 +15,3 @@ struct MobileContentButtonIcon {
     let gravity: Gravity.Horizontal
     let image: UIImage
 }
-

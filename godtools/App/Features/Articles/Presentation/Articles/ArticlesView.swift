@@ -116,9 +116,14 @@ extension ArticlesView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell: ArticleCell = articlesTableView.dequeueReusableCell(
+        guard let cell: ArticleCell = articlesTableView.dequeueReusableCell(
             withIdentifier: ArticleCell.reuseIdentifier,
-            for: indexPath) as! ArticleCell
+            for: indexPath) as? ArticleCell else {
+            
+            assertionFailure("Failed to dequeue reusable cell with identifier :\(ArticleCell.reuseIdentifier)")
+            
+            return UITableViewCell()
+        }
         
         cell.configure(viewModel: viewModel.articleWillAppear(index: indexPath.row))
         

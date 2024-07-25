@@ -62,4 +62,3 @@ struct ToolDetailsToggleFavoriteButton: View {
         )
     }
 }
-

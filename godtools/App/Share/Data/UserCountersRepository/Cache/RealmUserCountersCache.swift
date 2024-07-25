@@ -23,14 +23,17 @@ class RealmUserCountersCache {
     
     func getUserCountersChanged() -> AnyPublisher<Void, Never> {
         
-        return realmDatabase.openRealm().objects(RealmUserCounter.self)
+        return realmDatabase.openRealm()
+            .objects(RealmUserCounter.self)
             .objectWillChange
             .eraseToAnyPublisher()
     }
     
     func getUserCounter(id: String) -> UserCounterDataModel? {
         
-        guard let realmUserCounter = realmDatabase.openRealm().object(ofType: RealmUserCounter.self, forPrimaryKey: id) else {
+        guard let realmUserCounter = realmDatabase.openRealm()
+            .object(ofType: RealmUserCounter.self, forPrimaryKey: id) else {
+           
             return nil
         }
         
@@ -39,48 +42,38 @@ class RealmUserCountersCache {
     
     func getAllUserCounters() -> [UserCounterDataModel] {
         
-        return realmDatabase.openRealm().objects(RealmUserCounter.self)
+        return realmDatabase.openRealm()
+            .objects(RealmUserCounter.self)
             .map { UserCounterDataModel(realmUserCounter: $0) }
     }
     
     func getUserCountersWithIncrementGreaterThanZero() -> [UserCounterDataModel] {
         
-        return realmDatabase.openRealm().objects(RealmUserCounter.self)
+        return realmDatabase.openRealm()
+            .objects(RealmUserCounter.self)
             .filter(NSPredicate(format: "%K > 0", #keyPath(RealmUserCounter.incrementValue)))
             .map { UserCounterDataModel(realmUserCounter: $0) }
     }
     
-    func incrementUserCounterBy1(id: String) -> AnyPublisher<UserCounterDataModel, Error> {
+    func incrementUserCounterBy1(id: String) -> AnyPublisher<[UserCounterDataModel], Error> {
         
         return userCountersSync.incrementUserCounterBy1(id: id)
     }
     
     func deleteAllUserCounters() -> AnyPublisher<Void, Error> {
         
-        return Future() { promise in
-            
-            self.realmDatabase.background { realm in
-                
-                let userCounters = realm.objects(RealmUserCounter.self)
-                
-                do {
-                    
-                    try realm.write {
-                        realm.delete(userCounters)
-                    }
-                    
-                    promise(.success(()))
-                }
-                catch let error {
-                    
-                    promise(.failure(error))
-                }
-            }
-        }
-        .eraseToAnyPublisher()
+        let realm: Realm = realmDatabase.openRealm()
+        
+        let userCounters: Results<RealmUserCounter> = realmDatabase.readObjects(realm: realm)
+        
+        _ = realmDatabase.deleteObjects(realm: realm, objects: Array(userCounters))
+        
+        return Just(Void())
+            .setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
     }
     
-    func syncUserCounter(_ userCounter: UserCounterDecodable, incrementValueBeforeRemoteUpdate: Int) -> AnyPublisher<UserCounterDataModel, Error> {
+    func syncUserCounter(_ userCounter: UserCounterDecodable, incrementValueBeforeRemoteUpdate: Int) -> AnyPublisher<[UserCounterDataModel], Error> {
         
         return userCountersSync.syncUserCounter(userCounter, incrementValueBeforeRemoteUpdate: incrementValueBeforeRemoteUpdate)
     }

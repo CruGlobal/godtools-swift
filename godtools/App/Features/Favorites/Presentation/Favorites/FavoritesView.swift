@@ -64,9 +64,10 @@ struct FavoritesView: View {
                             geometry: geometry,
                             contentHorizontalInsets: contentHorizontalInsets,
                             lessonTappedClosure: { (featuredLesson: FeaturedLessonDomainModel) in
-                            
-                            viewModel.featuredLessonTapped(featuredLesson: featuredLesson)
-                        })
+                                
+                                viewModel.featuredLessonTapped(featuredLesson: featuredLesson)
+                            }
+                        )
                         .padding([.top], 30)
                         
                         YourFavoriteToolsView(

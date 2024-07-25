@@ -40,20 +40,8 @@
 "allTools.spotlight.description" = "Ακολουθούν ορισμένα εργαλεία που πιστεύαμε ότι μπορεί να σας αρέσουν";
 "allTools.categories.title" = "Κατηγορίες";
 "tool_menu_item.lessons" = "Μαθήματα";
-"parallelLanguage.yesButton.title" = "Ναι";
-"parallelLanguage.noButton.title" = "Όχι ευχαριστώ";
-"parallelLanguage.getStartedButton.title" = "Αρχίστε";
-"parallelLanguage.selectLanguageButton.title" = "Επιλέξτε μία γλώσσα";
-"parellelLanguage.prompt" = "Θα θέλατε να ορίσετε μία δευτερεύουσα γλώσσα;";
 "onboardingTutorial.beginButton.title" = "Αρχίστε";
-"onboardingQuickStart.2.title" = "Θέλω να μοιραστώ το Ευαγγέλιο με κάποιον";
-"onboardingQuickStart.2.button.title" = "Διαλέξτε ένα από τα εργαλεία μας";
 "onboardingTutorial.nextButton.title" = "Επόμενο";
-"onboardingQuickStart.title" = "Σύνδεσμοι γρήγορης εκκίνησης";
-"onboardingQuickStart.0.title" = "Θέλω να εξερευνήσω τον Χριστιανισμό";
-"onboardingQuickStart.0.button.title" = "Διαβάστε τα άρθρα μας";
-"onboardingQuickStart.1.title" = "Θέλω να μάθω πώς να κάνω συζητήσεις για το Ευαγγέλιο";
-"onboardingQuickStart.1.button.title" = "Δοκιμάστε τα μαθήματά μας";
 "tool_offline_favorite_message" = "Κάντε το εργαλείο διαθέσιμο offline πατώντας το εικονίδιο με την καρδιά που το προσθέτει στα αγαπημένα σας.";
 
 /* This is a category description of a tool that helps you start a conversation */

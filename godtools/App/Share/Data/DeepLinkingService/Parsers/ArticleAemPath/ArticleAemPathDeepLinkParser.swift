@@ -14,7 +14,7 @@ class ArticleAemPathDeepLinkParser: DeepLinkUrlParserType {
         
     }
     
-    func parse(url: URL, pathComponents: [String], queryParameters: [String : Any]) -> ParsedDeepLinkType? {
+    func parse(url: URL, pathComponents: [String], queryParameters: [String: Any]) -> ParsedDeepLinkType? {
                       
         guard let aemUri = queryParameters["uri"] as? String else {
             return nil

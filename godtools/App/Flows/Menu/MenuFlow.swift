@@ -146,7 +146,11 @@ class MenuFlow: Flow {
         case .sendFeedbackTappedFromMenu:
             let sendFeedbackWebContent = SendFeedbackWebContent(localizationServices: appDiContainer.dataLayer.getLocalizationServices())
             
-            pushWebContentView(webContent: sendFeedbackWebContent, backTappedFromWebContentStep: .backTappedFromSendFeedback)
+            pushWebContentView(
+                webContent: sendFeedbackWebContent,
+                screenAccessibility: .sendFeedback,
+                backTappedFromWebContentStep: .backTappedFromSendFeedback
+            )
             
         case .backTappedFromSendFeedback:
             navigationController.popViewController(animated: true)
@@ -154,7 +158,11 @@ class MenuFlow: Flow {
         case .reportABugTappedFromMenu:
             let reportABugWebContent = ReportABugWebContent(localizationServices: appDiContainer.dataLayer.getLocalizationServices())
             
-            pushWebContentView(webContent: reportABugWebContent, backTappedFromWebContentStep: .backTappedFromReportABug)
+            pushWebContentView(
+                webContent: reportABugWebContent,
+                screenAccessibility: .reportABug,
+                backTappedFromWebContentStep: .backTappedFromReportABug
+            )
             
         case .backTappedFromReportABug:
             navigationController.popViewController(animated: true)
@@ -162,7 +170,11 @@ class MenuFlow: Flow {
         case .askAQuestionTappedFromMenu:
             let askAQuestionWebContent = AskAQuestionWebContent(localizationServices: appDiContainer.dataLayer.getLocalizationServices())
             
-            pushWebContentView(webContent: askAQuestionWebContent, backTappedFromWebContentStep: .backTappedFromAskAQuestion)
+            pushWebContentView(
+                webContent: askAQuestionWebContent,
+                screenAccessibility: .askAQuestion,
+                backTappedFromWebContentStep: .backTappedFromAskAQuestion
+            )
             
         case .backTappedFromAskAQuestion:
             navigationController.popViewController(animated: true)
@@ -182,7 +194,11 @@ class MenuFlow: Flow {
         case .shareAStoryWithUsTappedFromMenu:
             let shareStoryWebContent = ShareAStoryWithUsWebContent(localizationServices: appDiContainer.dataLayer.getLocalizationServices())
             
-            pushWebContentView(webContent: shareStoryWebContent, backTappedFromWebContentStep: .backTappedFromShareAStoryWithUs)
+            pushWebContentView(
+                webContent: shareStoryWebContent,
+                screenAccessibility: .shareAStoryWithUs,
+                backTappedFromWebContentStep: .backTappedFromShareAStoryWithUs
+            )
             
         case .backTappedFromShareAStoryWithUs:
             navigationController.popViewController(animated: true)
@@ -191,7 +207,11 @@ class MenuFlow: Flow {
             
             let termsOfUserWebContent = TermsOfUseWebContent(localizationServices: appDiContainer.dataLayer.getLocalizationServices())
             
-            pushWebContentView(webContent: termsOfUserWebContent, backTappedFromWebContentStep: .backTappedFromTermsOfUse)
+            pushWebContentView(
+                webContent: termsOfUserWebContent,
+                screenAccessibility: .termsOfUse,
+                backTappedFromWebContentStep: .backTappedFromTermsOfUse
+            )
             
         case .backTappedFromTermsOfUse:
             navigationController.popViewController(animated: true)
@@ -200,7 +220,11 @@ class MenuFlow: Flow {
             
             let privacyPolicyWebContent = PrivacyPolicyWebContent(localizationServices: appDiContainer.dataLayer.getLocalizationServices())
             
-            pushWebContentView(webContent: privacyPolicyWebContent, backTappedFromWebContentStep: .backTappedFromPrivacyPolicy)
+            pushWebContentView(
+                webContent: privacyPolicyWebContent,
+                screenAccessibility: .privacyPolicy,
+                backTappedFromWebContentStep: .backTappedFromPrivacyPolicy
+            )
             
         case .backTappedFromPrivacyPolicy:
             navigationController.popViewController(animated: true)
@@ -209,7 +233,11 @@ class MenuFlow: Flow {
             
             let copyrightInfoWebContent = CopyrightInfoWebContent(localizationServices: appDiContainer.dataLayer.getLocalizationServices())
             
-            pushWebContentView(webContent: copyrightInfoWebContent, backTappedFromWebContentStep: .backTappedFromCopyrightInfo)
+            pushWebContentView(
+                webContent: copyrightInfoWebContent,
+                screenAccessibility: .copyrightInfo,
+                backTappedFromWebContentStep: .backTappedFromCopyrightInfo
+            )
             
         case .backTappedFromCopyrightInfo:
             navigationController.popViewController(animated: true)
@@ -256,6 +284,89 @@ class MenuFlow: Flow {
             break
         }
     }
+}
+
+// MARK: - Share GodTools
+
+extension MenuFlow {
+    
+    private func getShareGodToolsView() -> UIViewController {
+        
+        guard let domainModel = viewShareGodToolsDomainModel else {
+            let viewModel = AlertMessageViewModel(title: "Internal Error", message: "Failed to fetch data for share godtools modal.", cancelTitle: nil, acceptTitle: "OK", acceptHandler: nil)
+            return AlertMessageView(viewModel: viewModel).controller
+        }
+        
+        let viewModel = ShareGodToolsViewModel(
+            viewShareGodToolsDomainModel: domainModel
+        )
+        
+        let view = ShareGodToolsView(viewModel: viewModel)
+        
+        return view
+    }
+}
+
+// MARK: - Language Settings
+
+extension MenuFlow {
+    
+    private func navigateToLanguageSettings(deepLink: ParsedDeepLinkType?) {
+        
+        let languageSettingsFlow = LanguageSettingsFlow(
+            flowDelegate: self,
+            appDiContainer: appDiContainer,
+            sharedNavigationController: navigationController,
+            deepLink: deepLink
+        )
+        
+        self.languageSettingsFlow = languageSettingsFlow
+    }
+    
+    private func closeLanguageSettings() {
+        
+        guard languageSettingsFlow != nil else {
+            return
+        }
+        
+        navigationController.popViewController(animated: true)
+        
+        self.languageSettingsFlow = nil
+    }
+}
+
+// MARK: - Tutorial
+
+extension MenuFlow {
+    
+    private func navigateToTutorial() {
+        
+        let tutorialFlow = TutorialFlow(
+            flowDelegate: self,
+            appDiContainer: appDiContainer,
+            sharedNavigationController: nil
+        )
+        
+        navigationController.present(tutorialFlow.navigationController, animated: true, completion: nil)
+        
+        self.tutorialFlow = tutorialFlow
+    }
+    
+    private func dismissTutorial() {
+        
+        guard tutorialFlow != nil else {
+            return
+        }
+        
+        navigationController.dismiss(animated: true, completion: nil)
+        
+        self.tutorialFlow = nil
+    }
+}
+
+// MARK: - Menu
+
+extension MenuFlow {
     
     private func getMenuView() -> UIViewController {
             
@@ -296,17 +407,11 @@ class MenuFlow: Flow {
         
         return hostingView
     }
-    
-    private func presentSocialAuthError(authError: AuthErrorDomainModel) {
-            
-        let errorIsUserCancelled: Bool = authError.getError()?.code == NSUserCancelledError
-        
-        guard !errorIsUserCancelled else {
-            return
-        }
+}
 
-        presentAlertMessage(appLanguage: appLanguage, alertMessage: self.getAuthErrorAlertMessage(authError: authError))
-    }
+// MARK: - Social SignIn
+
+extension MenuFlow {
     
     private func getSocialSignInView(authenticationType: SocialSignInAuthenticationType) -> UIViewController {
         
@@ -323,7 +428,20 @@ class MenuFlow: Flow {
             authenticateUserUseCase: appDiContainer.feature.account.domainLayer.getAuthenticateUserUseCase()
         )
         
-        let view = SocialSignInView(viewModel: viewModel, backgroundColor: viewBackgroundColor)
+        let screenAccessibility: AccessibilityStrings.Screen
+        
+        switch authenticationType {
+        case .createAccount:
+            screenAccessibility = .createAccount
+        case .login:
+            screenAccessibility = .login
+        }
+        
+        let view = SocialSignInView(
+            viewModel: viewModel,
+            backgroundColor: viewBackgroundColor,
+            screenAccessibility: screenAccessibility
+        )
         
         let closeButton = AppCloseBarItem(
             color: .white,
@@ -356,6 +474,22 @@ class MenuFlow: Flow {
                 
         return modal
     }
+}
+
+// MARK: - Social Auth Error
+
+extension MenuFlow {
+    
+    private func presentSocialAuthError(authError: AuthErrorDomainModel) {
+            
+        let errorIsUserCancelled: Bool = authError.getError()?.code == NSUserCancelledError
+        
+        guard !errorIsUserCancelled else {
+            return
+        }
+
+        presentAlertMessage(appLanguage: appLanguage, alertMessage: self.getAuthErrorAlertMessage(authError: authError))
+    }
     
     private func getAuthErrorAlertMessage(authError: AuthErrorDomainModel) -> AlertMessageType {
         
@@ -380,7 +514,12 @@ class MenuFlow: Flow {
             message: message
         )
     }
-    
+}
+
+// MARK: - Account
+
+extension MenuFlow {
+ 
     private func getAccountView() -> UIViewController {
         
         let viewModel = AccountViewModel(
@@ -413,6 +552,11 @@ class MenuFlow: Flow {
         
         return hostingView
     }
+}
+
+// MARK: - Delete Account
+
+extension MenuFlow {
     
     private func getDeleteAccountView() -> UIViewController {
         
@@ -514,8 +658,13 @@ class MenuFlow: Flow {
                 
         return modal
     }
+}
+
+// MARK: - Web Content
+
+extension MenuFlow {
     
-    private func getWebContentView(webContent: WebContentType, backTappedFromWebContentStep: FlowStep) -> UIViewController {
+    private func getWebContentView(webContent: WebContentType, screenAccessibility: AccessibilityStrings.Screen?, backTappedFromWebContentStep: FlowStep) -> UIViewController {
         
         let viewModel = WebContentViewModel(
             flowDelegate: self,
@@ -537,95 +686,21 @@ class MenuFlow: Flow {
                 backButton: backButton,
                 leadingItems: [],
                 trailingItems: []
-            )
+            ),
+            screenAccessibility: screenAccessibility
         )
         
         return view
     }
     
-    private func pushWebContentView(webContent: WebContentType, backTappedFromWebContentStep: FlowStep) {
+    private func pushWebContentView(webContent: WebContentType, screenAccessibility: AccessibilityStrings.Screen?, backTappedFromWebContentStep: FlowStep) {
         
         let view = getWebContentView(
             webContent: webContent,
+            screenAccessibility: screenAccessibility,
             backTappedFromWebContentStep: backTappedFromWebContentStep
         )
         
         navigationController.pushViewController(view, animated: true)
-    }
-}
-
-extension MenuFlow {
-    
-    private func getShareGodToolsView() -> UIViewController {
-        
-        guard let domainModel = viewShareGodToolsDomainModel else {
-            let viewModel = AlertMessageViewModel(title: "Internal Error", message: "Failed to fetch data for share godtools modal.", cancelTitle: nil, acceptTitle: "OK", acceptHandler: nil)
-            return AlertMessageView(viewModel: viewModel).controller
-        }
-        
-        let viewModel = ShareGodToolsViewModel(
-            viewShareGodToolsDomainModel: domainModel
-        )
-        
-        let view = ShareGodToolsView(viewModel: viewModel)
-        
-        return view
-    }
-}
-
-// MARK: - Language Settings
-
-extension MenuFlow {
-    
-    private func navigateToLanguageSettings(deepLink: ParsedDeepLinkType?) {
-        
-        let languageSettingsFlow = LanguageSettingsFlow(
-            flowDelegate: self,
-            appDiContainer: appDiContainer,
-            sharedNavigationController: navigationController,
-            deepLink: deepLink
-        )
-        
-        self.languageSettingsFlow = languageSettingsFlow
-    }
-    
-    private func closeLanguageSettings() {
-        
-        guard languageSettingsFlow != nil else {
-            return
-        }
-        
-        navigationController.popViewController(animated: true)
-        
-        self.languageSettingsFlow = nil
-    }
-}
-
-// MARK: - Tutorial
-
-extension MenuFlow {
-    
-    private func navigateToTutorial() {
-        
-        let tutorialFlow = TutorialFlow(
-            flowDelegate: self,
-            appDiContainer: appDiContainer,
-            sharedNavigationController: nil
-        )
-        
-        navigationController.present(tutorialFlow.navigationController, animated: true, completion: nil)
-        
-        self.tutorialFlow = tutorialFlow
-    }
-    
-    private func dismissTutorial() {
-        
-        guard tutorialFlow != nil else {
-            return
-        }
-        
-        navigationController.dismiss(animated: true, completion: nil)
-        
-        self.tutorialFlow = nil
     }
 }

@@ -71,7 +71,7 @@ class FirebaseAnalytics {
         previousTrackedScreenName = screenName
     }
     
-    func trackAction(screenName: String, siteSection: String, siteSubSection: String, contentLanguage: String?, secondaryContentLanguage: String?, actionName: String, data: [String : Any]?) {
+    func trackAction(screenName: String, siteSection: String, siteSubSection: String, contentLanguage: String?, secondaryContentLanguage: String?, actionName: String, data: [String: Any]?) {
         
         internalTrackEvent(
             screenName: screenName,
@@ -129,10 +129,8 @@ class FirebaseAnalytics {
             var parameters: [String: Any] = baseParameters
             
             if let data = data {
-                for (key, value) in data {
-                    if parameters[key] == nil {
-                        parameters[key] = value
-                    }
+                for (key, value) in data where parameters[key] == nil {
+                    parameters[key] = value
                 }
             }
             
@@ -192,10 +190,13 @@ class FirebaseAnalytics {
     private func log(method: String, label: String?, labelValue: String?, data: [String: Any]?) {
         
         if loggingEnabled {
+            
             print("\nFirebaseAnalytics \(method)")
+            
             if let label = label, let labelValue = labelValue {
-               print("  \(label): \(labelValue)")
+                print("  \(label): \(labelValue)")
             }
+            
             if let data = data {
                 print("  data: \(data)")
             }

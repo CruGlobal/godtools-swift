@@ -539,7 +539,7 @@ extension AppFlow {
             color: .white,
             target: viewModel,
             action: #selector(viewModel.menuTapped),
-            accessibilityIdentifier: nil
+            accessibilityIdentifier: AccessibilityStrings.Button.dashboardMenu.id
         )
         
         let hostingController = AppHostingController<DashboardView>(
@@ -758,14 +758,12 @@ extension AppFlow {
         let userToolSettingsRepository: UserToolSettingsRepository = appDiContainer.feature.toolSettings.dataLayer.getUserToolSettingsRepository()
         
         if let userToolSettings = userToolSettingsRepository.getUserToolSettings(toolId: toolDataModelId) {
-
-            let selectedLanguageIndex: Int = userToolSettings.selectedLanguageId == userToolSettings.primaryLanguageId ? 0 : 1
             
             navigateToTool(
                 toolDataModelId: toolDataModelId,
                 primaryLanguageId: userToolSettings.primaryLanguageId,
                 parallelLanguageId: userToolSettings.parallelLanguageId,
-                selectedLanguageIndex: selectedLanguageIndex,
+                selectedLanguageIndex: 0,
                 trainingTipsEnabled: trainingTipsEnabled,
                 shouldPersistToolSettings: true
             )
@@ -987,7 +985,7 @@ extension AppFlow {
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             viewSearchBarUseCase: appDiContainer.domainLayer.getViewSearchBarUseCase(),
             flowDelegate: self
-         )
+        )
         
         let view = ToolFilterCategorySelectionView(viewModel: viewModel)
         

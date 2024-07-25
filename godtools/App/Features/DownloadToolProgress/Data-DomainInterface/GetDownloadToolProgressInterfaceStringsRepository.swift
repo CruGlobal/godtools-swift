@@ -56,7 +56,7 @@ class GetDownloadToolProgressInterfaceStringsRepository: GetDownloadToolProgress
         }
         
         let interfaceStrings = DownloadToolProgressInterfaceStringsDomainModel(
-            downloadMessage:  downloadMessage
+            downloadMessage: downloadMessage
         )
         
         return Just(interfaceStrings)

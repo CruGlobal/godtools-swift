@@ -22,7 +22,7 @@ class GlobalActivityDataLayerDependencies {
     private func getGlobalAnalyticsRepository() -> GlobalAnalyticsRepository {
         
         return GlobalAnalyticsRepository(
-            api:  MobileContentGlobalAnalyticsApi(
+            api: MobileContentGlobalAnalyticsApi(
                 baseUrl: coreDataLayer.getAppConfig().getMobileContentApiBaseUrl(),
                 ignoreCacheSession: coreDataLayer.getSharedIgnoreCacheSession()
             ),

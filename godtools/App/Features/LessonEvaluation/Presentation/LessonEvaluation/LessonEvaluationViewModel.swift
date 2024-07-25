@@ -36,7 +36,7 @@ class LessonEvaluationViewModel: ObservableObject {
     @Published var noButtonTitle: String = ""
     @Published var shareFaithReadiness: String = ""
     @Published var sendFeedbackButtonTitle: String = ""
-    @Published var readyToShareFaithScale: SpiritualConversationReadinessScaleDomainModel? = nil
+    @Published var readyToShareFaithScale: SpiritualConversationReadinessScaleDomainModel?
     @Published var readyToShareFaithScaleIntValue: Int = 6
     
     init(flowDelegate: FlowDelegate, lessonId: String, pageIndexReached: Int, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLessonEvaluationInterfaceStringsUseCase: GetLessonEvaluationInterfaceStringsUseCase, didChangeScaleForSpiritualConversationReadinessUseCase: DidChangeScaleForSpiritualConversationReadinessUseCase, evaluateLessonUseCase: EvaluateLessonUseCase, cancelLessonEvaluationUseCase: CancelLessonEvaluationUseCase) {

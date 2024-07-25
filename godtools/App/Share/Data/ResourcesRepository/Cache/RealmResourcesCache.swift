@@ -26,13 +26,17 @@ class RealmResourcesCache {
     }
     
     func getResourcesChangedPublisher() -> AnyPublisher<Void, Never> {
-        return realmDatabase.openRealm().objects(RealmResource.self).objectWillChange
+        return realmDatabase.openRealm()
+            .objects(RealmResource.self)
+            .objectWillChange
             .eraseToAnyPublisher()
     }
     
     func getResource(id: String) -> ResourceModel? {
         
-        guard let realmResource = realmDatabase.openRealm().object(ofType: RealmResource.self, forPrimaryKey: id) else {
+        guard let realmResource = realmDatabase.openRealm()
+            .object(ofType: RealmResource.self, forPrimaryKey: id) else {
+            
             return nil
         }
         
@@ -41,7 +45,11 @@ class RealmResourcesCache {
     
     func getResource(abbreviation: String) -> ResourceModel? {
         
-        guard let realmResource = realmDatabase.openRealm().objects(RealmResource.self).filter("\(#keyPath(RealmResource.abbreviation)) = '\(abbreviation)'").first else {
+        guard let realmResource = realmDatabase.openRealm()
+            .objects(RealmResource.self)
+            .filter("\(#keyPath(RealmResource.abbreviation)) = '\(abbreviation)'")
+            .first else {
+            
             return nil
         }
         
@@ -50,15 +58,18 @@ class RealmResourcesCache {
     
     func getResources(ids: [String]) -> [ResourceModel] {
         
-        return realmDatabase.openRealm().objects(RealmResource.self)
+        return realmDatabase.openRealm()
+            .objects(RealmResource.self)
             .filter("\(#keyPath(RealmResource.id)) IN %@", ids)
-            .map{
+            .map {
                 ResourceModel(model: $0)
             }
     }
     
     func getResources(sorted: Bool = false) -> [ResourceModel] {
-        var realmResources = realmDatabase.openRealm().objects(RealmResource.self)
+        
+        var realmResources = realmDatabase.openRealm()
+            .objects(RealmResource.self)
         
         if sorted {
             realmResources = realmResources.sorted(byKeyPath: #keyPath(RealmResource.attrDefaultOrder), ascending: true)
@@ -68,13 +79,15 @@ class RealmResourcesCache {
     }
     
     func getResources(with metaToolIds: [String?]) -> [ResourceModel] {
-        return realmDatabase.openRealm().objects(RealmResource.self)
+        return realmDatabase.openRealm()
+            .objects(RealmResource.self)
             .filter(NSPredicate(format: "%K IN %@", #keyPath(RealmResource.metatoolId), metaToolIds))
             .map { ResourceModel(model: $0)}
     }
     
     func getResources(with resourceType: ResourceType) -> [ResourceModel] {
-        return realmDatabase.openRealm().objects(RealmResource.self)
+        return realmDatabase.openRealm()
+            .objects(RealmResource.self)
             .where { $0.resourceType == resourceType.rawValue }
             .map { ResourceModel(model: $0) }
     }
@@ -352,7 +365,7 @@ extension RealmResourcesCache {
         
         let realm: Realm = realmDatabase.openRealm()
         
-        return realm.objects(RealmResource.self).filter(filterPredicate).map{
+        return realm.objects(RealmResource.self).filter(filterPredicate).map {
             ResourceModel(model: $0)
         }
     }

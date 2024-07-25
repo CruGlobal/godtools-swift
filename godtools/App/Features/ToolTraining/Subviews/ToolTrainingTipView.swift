@@ -15,10 +15,6 @@ class ToolTrainingTipView: UICollectionViewCell {
     
     private var mobileContentView: MobileContentView?
         
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-    
     override func prepareForReuse() {
         super.prepareForReuse()
         

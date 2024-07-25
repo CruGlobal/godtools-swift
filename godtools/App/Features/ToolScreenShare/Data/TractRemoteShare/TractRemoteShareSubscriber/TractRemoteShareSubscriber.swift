@@ -112,7 +112,7 @@ class TractRemoteShareSubscriber: NSObject {
         }
     }
     
-    // MARK:  Timeout Timer
+    // MARK: Timeout Timer
     
     private func startTimeoutTimer() {
         
@@ -146,7 +146,7 @@ class TractRemoteShareSubscriber: NSObject {
         if loggingEnabled {
             print("\n TractRemoteShareSubscriber \(method)")
             if let label = label, let labelValue = labelValue {
-               print("  \(label): \(labelValue)")
+                print("  \(label): \(labelValue)")
             }
         }
     }

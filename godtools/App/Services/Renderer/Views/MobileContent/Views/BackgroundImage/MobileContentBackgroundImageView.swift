@@ -77,7 +77,7 @@ class MobileContentBackgroundImageView: UIImageView {
         lastRenderedParentBounds = parentBounds
     }
     
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
             
         guard let parentView = self.superview else {
             return

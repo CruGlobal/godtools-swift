@@ -57,7 +57,7 @@ class AppsFlyerAnalytics: NSObject {
         }
     }
     
-    func trackAction(actionName: String, data: [String : Any]?) {
+    func trackAction(actionName: String, data: [String: Any]?) {
                 
         serialQueue.async { [weak self] in
             
@@ -77,13 +77,17 @@ class AppsFlyerAnalytics: NSObject {
     private func log(method: String, label: String?, labelValue: String?, data: [String: Any]?) {
         
         if loggingEnabled {
+            
             print("\nAppsFlyer \(method)")
+            
             if let label = label, let labelValue = labelValue {
-               print("  \(label): \(labelValue)")
+                print("  \(label): \(labelValue)")
             }
+            
             if let data = data {
                 print("  data: \(data)")
             }
+            
             if let customData = appsFlyer.appsFlyerLib.customData {
                 print("  customData: \(customData)")
             }

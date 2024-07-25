@@ -31,13 +31,13 @@ class AppBuild {
             configuration = .release
         }
         else if let buildConfiguration = buildConfiguration {
-            configuration =  buildConfiguration
+            configuration = buildConfiguration
         }
         else if isDebug {
             configuration = .staging
         }
         else {
-            configuration =  .release
+            configuration = .release
         }
         
         switch configuration {

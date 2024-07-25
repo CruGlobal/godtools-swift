@@ -8,7 +8,7 @@
 
 import UIKit
 
-public extension UIView {
+extension UIView {
     
     func constrainEdgesToView(view: UIView, edgeInsets: UIEdgeInsets = .zero, horizontalConstraintType: UIViewHorizontalContraintType = .leadingAndTrailing) {
         

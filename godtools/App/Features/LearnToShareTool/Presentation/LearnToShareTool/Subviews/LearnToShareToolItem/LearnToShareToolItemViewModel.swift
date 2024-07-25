@@ -37,7 +37,7 @@ class LearnToShareToolItemViewModel: ObservableObject {
         }
         else {
             
-            assetContent = .none
+            assetContent = .noAsset
         }
     }
     

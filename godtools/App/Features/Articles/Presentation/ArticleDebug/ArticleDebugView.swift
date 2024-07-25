@@ -53,5 +53,3 @@ struct ArticleDebugView: View {
         }
     }
 }
-
-

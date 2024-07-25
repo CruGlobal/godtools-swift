@@ -14,4 +14,11 @@ class ShareGodToolsView: UIActivityViewController {
         
         super.init(activityItems: [viewModel.shareMessage], applicationActivities: nil)
     }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        print("view didload: \(type(of: self))")
+        
+        addScreenAccessibility(screenAccessibility: .shareGodTools)
+    }
 }
