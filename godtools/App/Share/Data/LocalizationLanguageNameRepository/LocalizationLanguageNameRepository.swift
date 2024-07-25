@@ -11,7 +11,7 @@ import LocalizationServices
 
 class LocalizationLanguageNameRepository: LocalizationLanguageNameRepositoryInterface {
     
-    private static let supportedLanguageIds: [BCP47LanguageIdentifier] = ["fa", "fil-x-taglish", "sid"] // NOTE: If this list grows too large it could impact performance where UI lists of language names are displayed since it would require opening a bundle for every language in this list. ~Levi
+    private static let supportedLanguageIds: [BCP47LanguageIdentifier] = ["fa", "fil", "fil-x-taglish", "sid"] // NOTE: If this list grows too large it could impact performance where UI lists of language names are displayed since it would require opening a bundle for every language in this list. ~Levi
     
     private let localizationServices: LocalizationServicesInterface
     
