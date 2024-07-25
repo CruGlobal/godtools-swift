@@ -138,7 +138,12 @@
 		45131A142AB4995F0085AF0D /* ApplicationLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45131A132AB4995F0085AF0D /* ApplicationLayout.swift */; };
 		45131A162AB499770085AF0D /* ApplicationLayoutDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45131A152AB499770085AF0D /* ApplicationLayoutDirection.swift */; };
 		4515E9BF284FD2A600D3D197 /* MobileContentRendererNavigationDeepLinkType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4515E9BE284FD2A600D3D197 /* MobileContentRendererNavigationDeepLinkType.swift */; };
+		4518450D2C47F46C004564B9 /* RealmInstanceCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4518450B2C47F46C004564B9 /* RealmInstanceCreator.swift */; };
+		4518450F2C47F47B004564B9 /* RealmInstanceCreationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4518450E2C47F47B004564B9 /* RealmInstanceCreationType.swift */; };
 		4518D7502AD5833A0050C168 /* ToolDetailsInterfaceStringsDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4518D74F2AD5833A0050C168 /* ToolDetailsInterfaceStringsDomainModel.swift */; };
+		45192F4C2C470AD4005740E5 /* UserCountersAPIType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45192F4B2C470AD4005740E5 /* UserCountersAPIType.swift */; };
+		45192F522C470AEC005740E5 /* UserCountersAPIMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45192F4E2C470AEC005740E5 /* UserCountersAPIMock.swift */; };
+		45192F532C470AEC005740E5 /* UserCountersRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45192F4F2C470AEC005740E5 /* UserCountersRepositoryTests.swift */; };
 		451A17522756C10400D35D78 /* tutorial_screenshare.json in Resources */ = {isa = PBXBuildFile; fileRef = 451A174F2756C10400D35D78 /* tutorial_screenshare.json */; };
 		451A17532756C10400D35D78 /* tutorial_lessons.json in Resources */ = {isa = PBXBuildFile; fileRef = 451A17502756C10400D35D78 /* tutorial_lessons.json */; };
 		451A17542756C10400D35D78 /* tutorial_tooltip.json in Resources */ = {isa = PBXBuildFile; fileRef = 451A17512756C10400D35D78 /* tutorial_tooltip.json */; };
@@ -1782,7 +1787,12 @@
 		45131A132AB4995F0085AF0D /* ApplicationLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationLayout.swift; sourceTree = "<group>"; };
 		45131A152AB499770085AF0D /* ApplicationLayoutDirection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationLayoutDirection.swift; sourceTree = "<group>"; };
 		4515E9BE284FD2A600D3D197 /* MobileContentRendererNavigationDeepLinkType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentRendererNavigationDeepLinkType.swift; sourceTree = "<group>"; };
+		4518450B2C47F46C004564B9 /* RealmInstanceCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmInstanceCreator.swift; sourceTree = "<group>"; };
+		4518450E2C47F47B004564B9 /* RealmInstanceCreationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmInstanceCreationType.swift; sourceTree = "<group>"; };
 		4518D74F2AD5833A0050C168 /* ToolDetailsInterfaceStringsDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolDetailsInterfaceStringsDomainModel.swift; sourceTree = "<group>"; };
+		45192F4B2C470AD4005740E5 /* UserCountersAPIType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCountersAPIType.swift; sourceTree = "<group>"; };
+		45192F4E2C470AEC005740E5 /* UserCountersAPIMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCountersAPIMock.swift; sourceTree = "<group>"; };
+		45192F4F2C470AEC005740E5 /* UserCountersRepositoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCountersRepositoryTests.swift; sourceTree = "<group>"; };
 		451A174F2756C10400D35D78 /* tutorial_screenshare.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tutorial_screenshare.json; sourceTree = "<group>"; };
 		451A17502756C10400D35D78 /* tutorial_lessons.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tutorial_lessons.json; sourceTree = "<group>"; };
 		451A17512756C10400D35D78 /* tutorial_tooltip.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tutorial_tooltip.json; sourceTree = "<group>"; };
@@ -3658,6 +3668,7 @@
 			isa = PBXGroup;
 			children = (
 				4505213A295F3B9C0018ABD0 /* UserCountersAPI.swift */,
+				45192F4B2C470AD4005740E5 /* UserCountersAPIType.swift */,
 				4505213B295F3B9C0018ABD0 /* Models */,
 			);
 			path = Api;
@@ -4139,6 +4150,24 @@
 				45131A152AB499770085AF0D /* ApplicationLayoutDirection.swift */,
 			);
 			path = ApplicationLayout;
+			sourceTree = "<group>";
+		};
+		4518450C2C47F46C004564B9 /* RealmInstanceCreator */ = {
+			isa = PBXGroup;
+			children = (
+				4518450B2C47F46C004564B9 /* RealmInstanceCreator.swift */,
+				4518450E2C47F47B004564B9 /* RealmInstanceCreationType.swift */,
+			);
+			path = RealmInstanceCreator;
+			sourceTree = "<group>";
+		};
+		45192F502C470AEC005740E5 /* UserCountersRepository */ = {
+			isa = PBXGroup;
+			children = (
+				45192F4E2C470AEC005740E5 /* UserCountersAPIMock.swift */,
+				45192F4F2C470AEC005740E5 /* UserCountersRepositoryTests.swift */,
+			);
+			path = UserCountersRepository;
 			sourceTree = "<group>";
 		};
 		451CCF0B27A9A98800E8D2D3 /* Models */ = {
@@ -4729,6 +4758,7 @@
 				45EB68E02C334D84008A5FF2 /* LocalizationServices */,
 				45368A062ABB2D840028A570 /* RealmDatabase */,
 				459ABF5E2B0BB2910034499D /* ResourcesRepository */,
+				45192F502C470AEC005740E5 /* UserCountersRepository */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -8601,6 +8631,7 @@
 				45B54C542A2641FE0042CD0E /* RealmDatabase+Read.swift */,
 				45B54C552A2641FE0042CD0E /* RealmDatabase+Write.swift */,
 				4556CEA229F2D57800643BBC /* Configuration */,
+				4518450C2C47F46C004564B9 /* RealmInstanceCreator */,
 			);
 			path = RealmDatabase;
 			sourceTree = "<group>";
@@ -12827,6 +12858,7 @@
 				4569C5022AC367BD0004BCDE /* GetInterfaceStringInAppLanguageUseCase.swift in Sources */,
 				45880D822BD2BA97008F021C /* ShareGodToolsViewModel.swift in Sources */,
 				4537EBF12BA1ECF90024793C /* LanguageSettingsDeepLinkParser.swift in Sources */,
+				4518450D2C47F46C004564B9 /* RealmInstanceCreator.swift in Sources */,
 				456AC19E2B8CEE6200169C11 /* ToolSettingsLanguages.swift in Sources */,
 				45D63E73288F698C009B4610 /* LanguageModel.swift in Sources */,
 				45B3F4662AC3B1B800D61BFD /* GetAppInterfaceLayoutDirectionInterface.swift in Sources */,
@@ -13332,6 +13364,7 @@
 				45A835282AD1AE12004F5593 /* ToolDetailsFeatureDiContainer.swift in Sources */,
 				45EF23AE2B3731A300E49716 /* JsonApiResponseDataArray.swift in Sources */,
 				455EE8312AEC576F00C3205C /* DownloadToolProgressViewModel.swift in Sources */,
+				45192F4C2C470AD4005740E5 /* UserCountersAPIType.swift in Sources */,
 				45965D4D2B4488BD001C9AA5 /* GetDashboardInterfaceStringsRepositoryInterface.swift in Sources */,
 				45860A96292437420089C836 /* DownloadProgressView.swift in Sources */,
 				450D4FA72B7FF959001DD006 /* ViewToolsUseCase.swift in Sources */,
@@ -13374,6 +13407,7 @@
 				45B3F46C2AC3B5DC00D61BFD /* GetInterfaceLayoutDirectionUseCase.swift in Sources */,
 				456BB02427C583650087CCA4 /* MobileContentTextLabelAttributes.swift in Sources */,
 				459E86B628ED1A9B00E197A5 /* AppsFlyerConfiguration.swift in Sources */,
+				4518450F2C47F47B004564B9 /* RealmInstanceCreationType.swift in Sources */,
 				45131A102AB498AD0085AF0D /* ImageCatalog.swift in Sources */,
 				4512D4CD2B29127200DFAFB3 /* ViewToolSettingsToolLanguagesListDomainModel.swift in Sources */,
 				45920D442A8D1C9700E336A8 /* ToolCardFavoritedButton.swift in Sources */,
@@ -13570,8 +13604,10 @@
 				45368A182ABB2D850028A570 /* TestRealmObject.swift in Sources */,
 				453E2A122BC8C8810047D4C6 /* GetToolsRepositoryTests.swift in Sources */,
 				45368A192ABB2D850028A570 /* DeepLinkingServiceTests.swift in Sources */,
+				45192F522C470AEC005740E5 /* UserCountersAPIMock.swift in Sources */,
 				455280B4295F65C300672A1B /* LanguageDirectionDomainModel.swift in Sources */,
 				45CC43012C38982800B0D82B /* MockLocaleLanguageRegionName.swift in Sources */,
+				45192F532C470AEC005740E5 /* UserCountersRepositoryTests.swift in Sources */,
 				45A45CED2731B8C5005D4E74 /* MobileContentBackgroundImageRenderer.swift in Sources */,
 				450ADC452BECFE2F00988455 /* MockAppLanguagesRepositorySync.swift in Sources */,
 				457719AF2BE00FA600E7E4D8 /* MockDeviceSystemLanguage.swift in Sources */,
