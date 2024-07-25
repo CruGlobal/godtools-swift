@@ -1,5 +1,5 @@
 //
-//  CategoryFilterDomainModelInterface.swift
+//  ToolFilterCategoryDomainModelInterface.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 7/24/24.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol CategoryFilterDomainModelInterface: StringSearchable {
+protocol ToolFilterCategoryDomainModelInterface: StringSearchable {
     
     var id: String? { get }
     var filterId: String { get }

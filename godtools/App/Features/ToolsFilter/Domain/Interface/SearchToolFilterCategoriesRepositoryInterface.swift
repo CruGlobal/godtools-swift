@@ -11,5 +11,5 @@ import Combine
 
 protocol SearchToolFilterCategoriesRepositoryInterface {
     
-    func getSearchResultsPublisher(for searchText: String, in toolFilterCategories: [CategoryFilterDomainModelInterface]) -> AnyPublisher<[CategoryFilterDomainModelInterface], Never>
+    func getSearchResultsPublisher(for searchText: String, in toolFilterCategories: [ToolFilterCategoryDomainModelInterface]) -> AnyPublisher<[ToolFilterCategoryDomainModelInterface], Never>
 }

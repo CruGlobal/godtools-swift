@@ -24,13 +24,13 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
     private lazy var searchBarViewModel = SearchBarViewModel(getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, viewSearchBarUseCase: viewSearchBarUseCase)
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
-    @Published private var allCategories: [CategoryFilterDomainModelInterface] = [CategoryFilterDomainModelInterface]()
+    @Published private var allCategories: [ToolFilterCategoryDomainModelInterface] = [ToolFilterCategoryDomainModelInterface]()
     
     @Published var searchText: String = ""
     @Published var selectedLanguage: ToolFilterLanguageDomainModelInterface = ToolFilterAnyLanguageDomainModel(text: "", toolsAvailableText: "")
-    @Published var selectedCategory: CategoryFilterDomainModelInterface = AnyCategoryFilterDomainModel(text: "", toolsAvailableText: "")
+    @Published var selectedCategory: ToolFilterCategoryDomainModelInterface = ToolFilterAnyCategoryDomainModel(text: "", toolsAvailableText: "")
     @Published var navTitle: String = ""
-    @Published var categorySearchResults: [CategoryFilterDomainModelInterface] = [CategoryFilterDomainModelInterface]()
+    @Published var categorySearchResults: [ToolFilterCategoryDomainModelInterface] = [ToolFilterCategoryDomainModelInterface]()
     
     init(viewToolFilterCategoriesUseCase: ViewToolFilterCategoriesUseCase, searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase, getUserToolFiltersUseCase: GetUserToolFiltersUseCase, storeUserToolFiltersUseCase: StoreUserToolFiltersUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, flowDelegate: FlowDelegate) {
         
@@ -112,7 +112,7 @@ extension ToolFilterCategorySelectionViewModel {
         return searchBarViewModel
     }
     
-    func rowTapped(with category: CategoryFilterDomainModelInterface) {
+    func rowTapped(with category: ToolFilterCategoryDomainModelInterface) {
         
         selectedCategory = category
         

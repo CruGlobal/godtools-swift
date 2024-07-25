@@ -1,5 +1,5 @@
 //
-//  CategoryFilterDomainModel.swift
+//  ToolFilterCategoryDomainModel.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 8/29/22.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct CategoryFilterDomainModel: CategoryFilterDomainModelInterface {
+struct ToolFilterCategoryDomainModel: ToolFilterCategoryDomainModelInterface {
     
     let categoryId: String
     let translatedName: String

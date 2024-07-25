@@ -1,5 +1,5 @@
 //
-//  AnyCategoryFilterDomainModel.swift
+//  ToolFilterAnyCategoryDomainModel.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 7/24/24.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct AnyCategoryFilterDomainModel: CategoryFilterDomainModelInterface {
+struct ToolFilterAnyCategoryDomainModel: ToolFilterCategoryDomainModelInterface {
     
     let text: String
     let toolsAvailableText: String

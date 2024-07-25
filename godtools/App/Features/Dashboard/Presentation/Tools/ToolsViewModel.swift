@@ -33,7 +33,7 @@ class ToolsViewModel: ObservableObject {
     private weak var flowDelegate: FlowDelegate?
 
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
-    @Published private var toolFilterCategorySelection: CategoryFilterDomainModelInterface = AnyCategoryFilterDomainModel(text: "", toolsAvailableText: "")
+    @Published private var toolFilterCategorySelection: ToolFilterCategoryDomainModelInterface = ToolFilterAnyCategoryDomainModel(text: "", toolsAvailableText: "")
     @Published private var toolFilterLanguageSelection: ToolFilterLanguageDomainModelInterface = ToolFilterAnyLanguageDomainModel(text: "", toolsAvailableText: "")
     
     @Published var favoritingToolBannerMessage: String = ""
