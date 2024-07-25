@@ -14,12 +14,13 @@ class RealmDatabase {
     
     private let databaseConfiguration: RealmDatabaseConfiguration
     private let config: Realm.Configuration
-    private let backgroundQueue: DispatchQueue = DispatchQueue(label: "realm.background_queue")
+    private let realmInstanceCreator: RealmInstanceCreator
     
-    init(databaseConfiguration: RealmDatabaseConfiguration) {
+    init(databaseConfiguration: RealmDatabaseConfiguration, realmInstanceCreationType: RealmInstanceCreationType = .alwaysCreatesANewRealmInstance) {
         
         self.databaseConfiguration = databaseConfiguration
         config = databaseConfiguration.getRealmConfig()
+        realmInstanceCreator = RealmInstanceCreator(config: config, creationType: realmInstanceCreationType)
         
         _ = checkForUnsupportedFileFormatVersionAndDeleteRealmFilesIfNeeded(config: config)
     }
@@ -49,26 +50,12 @@ class RealmDatabase {
     }
 
     func openRealm() -> Realm {
-        return try! Realm(configuration: config)
+        
+        return realmInstanceCreator.createRealm()
     }
     
     func background(async: @escaping ((_ realm: Realm) -> Void)) {
                 
-        backgroundQueue.async {
-            autoreleasepool {
-                
-                let realm: Realm
-               
-                do {
-                    realm = try Realm(configuration: self.config)
-                }
-                catch let error {
-                    assertionFailure("RealmDatabase: Did fail to initialize background realm with error: \(error.localizedDescription) ")
-                    realm = try! Realm(configuration: self.config)
-                }
-                
-                async(realm)
-            }
-        }
+        realmInstanceCreator.createBackgroundRealm(async: async)
     }
 }
