@@ -34,7 +34,7 @@ class ToolsViewModel: ObservableObject {
 
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     @Published private var toolFilterCategorySelection: CategoryFilterDomainModelInterface = AnyCategoryFilterDomainModel(text: "", toolsAvailableText: "")
-    @Published private var toolFilterLanguageSelection: LanguageFilterDomainModel = .anyLanguage(text: "", toolsAvailableText: "")
+    @Published private var toolFilterLanguageSelection: ToolFilterLanguageDomainModelInterface = ToolFilterAnyLanguageDomainModel(text: "", toolsAvailableText: "")
     
     @Published var favoritingToolBannerMessage: String = ""
     @Published var showsFavoritingToolBanner: Bool = false

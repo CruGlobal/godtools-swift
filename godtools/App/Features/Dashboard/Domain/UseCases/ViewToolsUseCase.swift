@@ -20,7 +20,7 @@ class ViewToolsUseCase {
         self.getToolsRepository = getToolsRepository
     }
     
-    func viewPublisher(translatedInAppLanguage: AppLanguageDomainModel, languageForAvailabilityText: LanguageDomainModel?, filterToolsByCategory: CategoryFilterDomainModelInterface?, filterToolsByLanguage: LanguageFilterDomainModel?) -> AnyPublisher<ViewToolsDomainModel, Never> {
+    func viewPublisher(translatedInAppLanguage: AppLanguageDomainModel, languageForAvailabilityText: LanguageDomainModel?, filterToolsByCategory: CategoryFilterDomainModelInterface?, filterToolsByLanguage: ToolFilterLanguageDomainModelInterface?) -> AnyPublisher<ViewToolsDomainModel, Never> {
         
         return Publishers.CombineLatest(
             getInterfaceStringsRepository.getStringsPublisher(translateInLanguage: translatedInAppLanguage),

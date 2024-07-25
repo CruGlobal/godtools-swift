@@ -18,11 +18,11 @@ class SearchToolFilterLanguagesRepository: SearchToolFilterLanguagesRepositoryIn
         self.stringSearcher = stringSearcher
     }
     
-    func getSearchResultsPublisher(for searchText: String, in toolFilterLanguages: [LanguageFilterDomainModel]) -> AnyPublisher<[LanguageFilterDomainModel], Never> {
+    func getSearchResultsPublisher(for searchText: String, in toolFilterLanguages: [ToolFilterLanguageDomainModelInterface]) -> AnyPublisher<[ToolFilterLanguageDomainModelInterface], Never> {
         
-        let searchResults = stringSearcher.search(for: searchText, in: toolFilterLanguages)
+        let searchResults = stringSearcher.search(for: searchText, in: toolFilterLanguages) as? [ToolFilterLanguageDomainModelInterface]
         
-        return Just(searchResults)
+        return Just(searchResults ?? [])
             .eraseToAnyPublisher()
     }
 }

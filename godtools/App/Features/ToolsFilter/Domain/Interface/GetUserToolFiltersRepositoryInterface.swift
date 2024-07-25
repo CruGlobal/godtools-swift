@@ -12,5 +12,5 @@ import Combine
 protocol GetUserToolFiltersRepositoryInterface {
     
     func getUserCategoryFilterPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<CategoryFilterDomainModelInterface, Never>
-    func getUserLanguageFilterPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<LanguageFilterDomainModel, Never>
+    func getUserLanguageFilterPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolFilterLanguageDomainModelInterface, Never>
 }

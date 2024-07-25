@@ -24,11 +24,11 @@ class ToolFilterLanguageSelectionViewModel: ObservableObject {
     private lazy var searchBarViewModel = SearchBarViewModel(getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, viewSearchBarUseCase: viewSearchBarUseCase)
         
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
-    @Published private var allLanguages: [LanguageFilterDomainModel] = [LanguageFilterDomainModel]()
+    @Published private var allLanguages: [ToolFilterLanguageDomainModelInterface] = [ToolFilterLanguageDomainModelInterface]()
     
-    @Published var languageSearchResults: [LanguageFilterDomainModel] = [LanguageFilterDomainModel]()
+    @Published var languageSearchResults: [ToolFilterLanguageDomainModelInterface] = [ToolFilterLanguageDomainModelInterface]()
     @Published var selectedCategory: CategoryFilterDomainModelInterface = AnyCategoryFilterDomainModel(text: "Any category", toolsAvailableText: "")
-    @Published var selectedLanguage: LanguageFilterDomainModel = .anyLanguage(text: "Any language", toolsAvailableText: "")
+    @Published var selectedLanguage: ToolFilterLanguageDomainModelInterface = ToolFilterAnyLanguageDomainModel(text: "", toolsAvailableText: "")
     @Published var searchText: String = ""
     @Published var navTitle: String = ""
     
@@ -116,7 +116,7 @@ extension ToolFilterLanguageSelectionViewModel {
         return searchBarViewModel
     }
         
-    func rowTapped(with language: LanguageFilterDomainModel) {
+    func rowTapped(with language: ToolFilterLanguageDomainModelInterface) {
         
         selectedLanguage = language
         

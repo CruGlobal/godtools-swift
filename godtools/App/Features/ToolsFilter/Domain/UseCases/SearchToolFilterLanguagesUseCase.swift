@@ -18,7 +18,7 @@ class SearchToolFilterLanguagesUseCase {
         self.searchToolFilterLanguagesRepository = searchToolFilterLanguagesRepository
     }
     
-    func getSearchResultsPublisher(for searchText: String, in toolFilterLanguages: [LanguageFilterDomainModel]) -> AnyPublisher<[LanguageFilterDomainModel], Never> {
+    func getSearchResultsPublisher(for searchText: String, in toolFilterLanguages: [ToolFilterLanguageDomainModelInterface]) -> AnyPublisher<[ToolFilterLanguageDomainModelInterface], Never> {
         
         return searchToolFilterLanguagesRepository.getSearchResultsPublisher(for: searchText, in: toolFilterLanguages)
     }
