@@ -16,6 +16,8 @@ class GetAppLanguagesInterfaceStringsRepositoryTests: QuickSpec {
     
     override class func spec() {
         
+        var cancellables: Set<AnyCancellable> = Set()
+        
         describe("User is viewing the app languages.") {
          
             context("When the app language is switched from English to Spanish.") {
@@ -47,7 +49,7 @@ class GetAppLanguagesInterfaceStringsRepositoryTests: QuickSpec {
                     
                     waitUntil { done in
                         
-                        _ = appLanguagePublisher
+                        appLanguagePublisher
                             .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<AppLanguagesInterfaceStringsDomainModel, Never> in
                                 
                                 return getAppLanguagesInterfaceStringsRepository
@@ -79,6 +81,7 @@ class GetAppLanguagesInterfaceStringsRepositoryTests: QuickSpec {
                                     appLanguagePublisher.send(LanguageCodeDomainModel.spanish.rawValue)
                                 }
                             }
+                            .store(in: &cancellables)
                     }
 
                     expect(englishInterfaceStringsRef?.navTitle).to(equal("App Language"))

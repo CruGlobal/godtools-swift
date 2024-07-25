@@ -15,7 +15,6 @@ class RealmUserToolSettings: Object {
     @Persisted var toolId: String = ""
     @Persisted var primaryLanguageId: String = ""
     @Persisted var parallelLanguageId: String?
-    @Persisted var selectedLanguageId: String = ""
     
     override static func primaryKey() -> String? {
         return "toolId"
@@ -27,6 +26,5 @@ class RealmUserToolSettings: Object {
         toolId = dataModel.toolId
         primaryLanguageId = dataModel.primaryLanguageId
         parallelLanguageId = dataModel.parallelLanguageId
-        selectedLanguageId = dataModel.selectedLanguageId
     }
 }

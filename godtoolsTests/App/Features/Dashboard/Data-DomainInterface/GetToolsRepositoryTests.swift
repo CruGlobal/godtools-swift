@@ -17,6 +17,8 @@ class GetToolsRepositoryTests: QuickSpec {
     
     override class func spec() {
         
+        var cancellables: Set<AnyCancellable> = Set()
+        
         describe("User is viewing the tools list.") {
          
             let realmDatabase: RealmDatabase = TestsInMemoryRealmDatabase()
@@ -207,7 +209,7 @@ class GetToolsRepositoryTests: QuickSpec {
                     
                     waitUntil { done in
                         
-                        _ = getToolsRepository
+                        getToolsRepository
                             .getToolsPublisher(translatedInAppLanguage: "", languageForAvailabilityText: nil, filterToolsByCategory: nil, filterToolsByLanguage: nil)
                             .sink { (tools: [ToolListItemDomainModel]) in
                                 
@@ -221,6 +223,7 @@ class GetToolsRepositoryTests: QuickSpec {
                                 
                                 done()
                             }
+                            .store(in: &cancellables)
                     }
                     
                     expect(toolsList.map({$0.id}).sorted()).to(equal(allTools.map({$0.id}).sorted()))
@@ -238,7 +241,7 @@ class GetToolsRepositoryTests: QuickSpec {
                     
                     waitUntil { done in
                         
-                        _ = getToolsRepository
+                        getToolsRepository
                             .getToolsPublisher(translatedInAppLanguage: "", languageForAvailabilityText: nil, filterToolsByCategory: growthCategoryFilter, filterToolsByLanguage: nil)
                             .sink { (tools: [ToolListItemDomainModel]) in
                                 
@@ -252,6 +255,7 @@ class GetToolsRepositoryTests: QuickSpec {
                                 
                                 done()
                             }
+                            .store(in: &cancellables)
                     }
                     
                     expect(toolsList.map({$0.id}).sorted()).to(equal(growthTools.map({$0.id}).sorted()))
@@ -271,7 +275,7 @@ class GetToolsRepositoryTests: QuickSpec {
                     
                     waitUntil { done in
                         
-                        _ = getToolsRepository
+                        getToolsRepository
                             .getToolsPublisher(translatedInAppLanguage: "", languageForAvailabilityText: nil, filterToolsByCategory: nil, filterToolsByLanguage: languageFilter)
                             .sink { (tools: [ToolListItemDomainModel]) in
                                 
@@ -285,6 +289,7 @@ class GetToolsRepositoryTests: QuickSpec {
                                 
                                 done()
                             }
+                            .store(in: &cancellables)
                     }
                     
                     expect(toolsList.map({$0.id}).sorted()).to(equal(russianTools.map({$0.id}).sorted()))
@@ -304,7 +309,7 @@ class GetToolsRepositoryTests: QuickSpec {
                     
                     waitUntil { done in
                         
-                        _ = getToolsRepository
+                        getToolsRepository
                             .getToolsPublisher(translatedInAppLanguage: "", languageForAvailabilityText: nil, filterToolsByCategory: nil, filterToolsByLanguage: languageFilter)
                             .sink { (tools: [ToolListItemDomainModel]) in
                                 
@@ -318,6 +323,7 @@ class GetToolsRepositoryTests: QuickSpec {
                                 
                                 done()
                             }
+                            .store(in: &cancellables)
                     }
                     
                     expect(toolsList.map({$0.id}).sorted()).to(equal(spanishTools.map({$0.id}).sorted()))
