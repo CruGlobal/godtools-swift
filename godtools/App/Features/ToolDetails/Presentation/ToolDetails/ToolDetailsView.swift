@@ -29,6 +29,8 @@ struct ToolDetailsView: View {
         
         GeometryReader { geometry in
             
+            AccessibilityScreenElementView(screenAccessibility: .toolDetails)
+            
             let contentWidth: CGFloat = geometry.size.width - contentInsets.leading - contentInsets.trailing
               
             ScrollView(.vertical, showsIndicators: true) {

@@ -16,12 +16,14 @@ struct ToolFilterButtonView: View {
     private let buttonTitle: String
     private let width: CGFloat?
     private let backgroundColor: Color = Color.white
+    private let accessibility: AccessibilityStrings.Button
     private let tappedClosure: (() -> Void)?
         
-    init(title: String, width: CGFloat? = nil, tappedClosure: (() -> Void)?) {
+    init(title: String, width: CGFloat? = nil, accessibility: AccessibilityStrings.Button, tappedClosure: (() -> Void)?) {
         
         self.buttonTitle = title
         self.width = width
+        self.accessibility = accessibility
         self.tappedClosure = tappedClosure
     }
     
@@ -62,6 +64,7 @@ struct ToolFilterButtonView: View {
         .frame(width: width, height: ToolFilterButtonView.height)
         .background(backgroundColor)
         .cornerRadius(ToolFilterButtonView.cornerRadius)
+        .accessibilityIdentifier(accessibility.id)
         .shadow(color: Color.black.opacity(0.25), radius: 3, y: 3)
         .overlay(
             RoundedRectangle(cornerRadius: ToolFilterButtonView.cornerRadius)
@@ -80,6 +83,7 @@ struct ToolFilterButtonView_Previews: PreviewProvider {
         ToolFilterButtonView(
             title: "Button Title",
             width: 40,
+            accessibility: .toolsCategoryFilter,
             tappedClosure: nil
         )
     }
