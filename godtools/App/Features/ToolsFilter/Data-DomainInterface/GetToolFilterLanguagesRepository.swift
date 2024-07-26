@@ -113,21 +113,14 @@ extension GetToolFilterLanguagesRepository {
         let languageName = getTranslatedLanguageName.getLanguageName(language: languageModel, translatedInLanguage: languageModel.code)
         let translatedLanguageName = getTranslatedLanguageName.getLanguageName(language: languageModel, translatedInLanguage: translatedInAppLanguage)
         
-        let languageDomainModel = LanguageDomainModel(
-            analyticsContentLanguage: languageModel.code,
-            dataModelId: languageModel.id,
-            direction: languageModel.direction == "rtl" ? .rightToLeft : .leftToRight,
-            localeIdentifier: languageModel.code,
-            translatedName: translatedLanguageName
-        )
-        
         let toolsAvailableText: String = getToolsAvailableText(toolsAvailableCount: toolsAvailableCount, translatedInAppLanguage: translatedInAppLanguage)
         
         return ToolFilterLanguageDomainModel(
             languageName: languageName,
-            translatedName: languageDomainModel.translatedName,
+            translatedName: translatedLanguageName,
             toolsAvailableText: toolsAvailableText,
-            language: languageDomainModel
+            languageId: languageModel.id,
+            languageLocaleId: languageModel.code
         )
     }
     

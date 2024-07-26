@@ -11,5 +11,5 @@ import Combine
 
 protocol GetSpotlightToolsRepositoryInterface {
     
-    func getSpotlightToolsPublisher(translatedInAppLanguage: AppLanguageDomainModel, languageForAvailabilityText: LanguageDomainModel?) -> AnyPublisher<[SpotlightToolListItemDomainModel], Never>
+    func getSpotlightToolsPublisher(translatedInAppLanguage: AppLanguageDomainModel, languageIdForAvailabilityText: String?) -> AnyPublisher<[SpotlightToolListItemDomainModel], Never>
 }

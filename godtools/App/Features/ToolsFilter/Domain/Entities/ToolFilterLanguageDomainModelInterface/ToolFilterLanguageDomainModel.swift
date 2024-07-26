@@ -13,30 +13,36 @@ struct ToolFilterLanguageDomainModel: ToolFilterLanguageDomainModelInterface {
     let languageName: String
     let toolsAvailableText: String
     
-    private let _translatedName: String
-    private let _language: LanguageDomainModel
+    private let translatedLanguageName: String
+    private let languageId: String
+    private let languageLocaleId: BCP47LanguageIdentifier
     
-    init(languageName: String, translatedName: String, toolsAvailableText: String, language: LanguageDomainModel) {
+    init(languageName: String, translatedName: String, toolsAvailableText: String, languageId: String, languageLocaleId: BCP47LanguageIdentifier) {
         self.languageName = languageName
         self.toolsAvailableText = toolsAvailableText
-        self._translatedName = translatedName
-        self._language = language
+        self.translatedLanguageName = translatedName
+        self.languageId = languageId
+        self.languageLocaleId = languageLocaleId
     }
     
     var id: String? {
-        return _language.id
+        return languageId
     }
     
     var filterId: String {
-        return _language.id
+        return languageId
     }
     
-    var language: LanguageDomainModel? {
-        return _language
+    var languageDataModelId: String? {
+        return languageId
+    }
+    
+    var languageLocale: BCP47LanguageIdentifier? {
+        return languageLocaleId
     }
     
     var languageButtonText: String {
-        return _translatedName
+        return translatedLanguageName
     }
     
     var primaryText: String {
@@ -44,16 +50,10 @@ struct ToolFilterLanguageDomainModel: ToolFilterLanguageDomainModelInterface {
     }
     
     var translatedName: String? {
-        return _translatedName
+        return translatedLanguageName
     }
     
     var searchableStrings: [String] {
-        var searchableStrings = [languageName]
-        
-        if let translatedName = translatedName {
-            searchableStrings.append(translatedName)
-        }
-        
-        return searchableStrings
+        return [languageName, translatedLanguageName]
     }
 }

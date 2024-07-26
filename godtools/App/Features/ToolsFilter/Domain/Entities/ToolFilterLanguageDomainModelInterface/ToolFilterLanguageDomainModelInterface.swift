@@ -15,6 +15,7 @@ protocol ToolFilterLanguageDomainModelInterface: StringSearchable {
     var primaryText: String { get }
     var toolsAvailableText: String { get }
     var translatedName: String? { get }
-    var language: LanguageDomainModel? { get }
+    var languageDataModelId: String? { get }
+    var languageLocale: BCP47LanguageIdentifier? { get }
     var languageButtonText: String { get }
 }

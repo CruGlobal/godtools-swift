@@ -16,7 +16,8 @@ struct ToolFilterAnyLanguageDomainModel: ToolFilterLanguageDomainModelInterface 
     let id: String? = nil
     let filterId: String = "any_language"
     let translatedName: String? = nil
-    let language: LanguageDomainModel? = nil
+    let languageDataModelId: String? = nil
+    var languageLocale: BCP47LanguageIdentifier? = nil
     
     var primaryText: String {
         return text

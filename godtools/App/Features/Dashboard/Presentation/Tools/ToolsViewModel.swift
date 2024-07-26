@@ -79,13 +79,13 @@ class ToolsViewModel: ObservableObject {
             Publishers.CombineLatest(
                 viewToolsUseCase.viewPublisher(
                     translatedInAppLanguage: appLanguage,
-                    languageForAvailabilityText: toolFilterLanguage.language,
+                    languageIdForAvailabilityText: toolFilterLanguage.languageDataModelId,
                     filterToolsByCategory: toolFilterCategory,
                     filterToolsByLanguage: toolFilterLanguage
                 ),
                 getSpotlightToolsUseCase.getSpotlightToolsPublisher(
                     translatedInAppLanguage: appLanguage,
-                    languageForAvailabilityText: toolFilterLanguage.language
+                    languageIdForAvailabilityText: toolFilterLanguage.languageDataModelId
                 )
             )
         }
