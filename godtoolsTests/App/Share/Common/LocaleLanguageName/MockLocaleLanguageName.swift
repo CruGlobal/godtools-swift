@@ -21,6 +21,38 @@ class MockLocaleLanguageName: LocaleLanguageNameInterface {
         
         self.languageNames = languageNames
     }
+    
+    static func defaultMockLocaleLanguageName() -> MockLocaleLanguageName {
+        
+        let languageNames: [MockLocaleLanguageName.LanguageCode: [MockLocaleLanguageName.TranslateInLocaleId: MockLocaleLanguageName.LanguageName]] = [
+            LanguageCodeDomainModel.english.rawValue: [
+                LanguageCodeDomainModel.czech.rawValue: "Angličtina",
+                LanguageCodeDomainModel.english.rawValue: "English",
+                LanguageCodeDomainModel.french.rawValue: "Anglais",
+                LanguageCodeDomainModel.portuguese.rawValue: "Inglês",
+                LanguageCodeDomainModel.russian.rawValue: "Английский",
+                LanguageCodeDomainModel.spanish.rawValue: "Inglés"
+            ],
+            LanguageCodeDomainModel.french.rawValue: [
+                LanguageCodeDomainModel.czech.rawValue: "francouzština",
+                LanguageCodeDomainModel.english.rawValue: "French",
+                LanguageCodeDomainModel.french.rawValue: "Français",
+                LanguageCodeDomainModel.portuguese.rawValue: "Francês",
+                LanguageCodeDomainModel.russian.rawValue: "Французский",
+                LanguageCodeDomainModel.spanish.rawValue: "Francés"
+            ],
+            LanguageCodeDomainModel.spanish.rawValue: [
+                LanguageCodeDomainModel.czech.rawValue: "španělština",
+                LanguageCodeDomainModel.english.rawValue: "Spanish",
+                LanguageCodeDomainModel.french.rawValue: "Espagnol",
+                LanguageCodeDomainModel.portuguese.rawValue: "Espanhol",
+                LanguageCodeDomainModel.russian.rawValue: "испанский",
+                LanguageCodeDomainModel.spanish.rawValue: "Español"
+            ]
+        ]
+        
+        return MockLocaleLanguageName(languageNames: languageNames)
+    }
 
     func getLanguageName(forLanguageCode: String, translatedInLanguageId: BCP47LanguageIdentifier?) -> String? {
         
