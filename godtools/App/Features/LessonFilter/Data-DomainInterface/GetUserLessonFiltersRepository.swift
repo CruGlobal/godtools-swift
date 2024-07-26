@@ -19,7 +19,7 @@ class GetUserLessonFiltersRepository: GetUserLessonFiltersRepositoryInterface {
         self.getLessonFilterLanguagesRepository = getLessonFilterLanguagesRepository
     }
     
-    func getUserLessonLanguageFilterPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<LessonLanguageFilterDomainModel?, Never> {
+    func getUserLessonLanguageFilterPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<LessonFilterLanguageDomainModel?, Never> {
         
         return userLessonFiltersRepository.getUserLessonLanguageFilterChangedPublisher()
             .map {

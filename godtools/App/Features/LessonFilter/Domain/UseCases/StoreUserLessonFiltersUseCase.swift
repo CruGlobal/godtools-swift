@@ -17,7 +17,7 @@ class StoreUserLessonFiltersUseCase {
         self.storeUserLessonFiltersRepository = storeUserLessonFiltersRepository
     }
     
-    func storeLanguageFilterPublisher(_ languageFilter: LessonLanguageFilterDomainModel) -> AnyPublisher<Void, Never> {
+    func storeLanguageFilterPublisher(_ languageFilter: LessonFilterLanguageDomainModel) -> AnyPublisher<Void, Never> {
         
         return storeUserLessonFiltersRepository.storeUserLanguageFilterPublisher(languageFilter)
             .eraseToAnyPublisher()
