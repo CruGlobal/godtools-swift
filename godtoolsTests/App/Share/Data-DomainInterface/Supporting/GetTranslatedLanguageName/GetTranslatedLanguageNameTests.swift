@@ -23,32 +23,10 @@ class GetTranslatedLanguageNameTests: QuickSpec {
                 LanguageCodeDomainModel.russian.rawValue: "Ruso"
             ]
         ]
-        
-        let languageNames: [MockLocaleLanguageName.LanguageCode: [MockLocaleLanguageName.TranslateInLocaleId: MockLocaleLanguageName.LanguageName]] = [
-            LanguageCodeDomainModel.english.rawValue: [
-                LanguageCodeDomainModel.english.rawValue: "English",
-                LanguageCodeDomainModel.portuguese.rawValue: "Inglês",
-                LanguageCodeDomainModel.spanish.rawValue: "Inglés",
-                LanguageCodeDomainModel.russian.rawValue: "Английский"
-            ],
-            LanguageCodeDomainModel.french.rawValue: [
-                LanguageCodeDomainModel.czech.rawValue: "francouzština",
-                LanguageCodeDomainModel.english.rawValue: "French",
-                LanguageCodeDomainModel.portuguese.rawValue: "Francês",
-                LanguageCodeDomainModel.spanish.rawValue: "Francés",
-                LanguageCodeDomainModel.russian.rawValue: "Французский"
-            ],
-            LanguageCodeDomainModel.spanish.rawValue: [
-                LanguageCodeDomainModel.english.rawValue: "Spanish",
-                LanguageCodeDomainModel.portuguese.rawValue: "Espanhol",
-                LanguageCodeDomainModel.spanish.rawValue: "Español",
-                LanguageCodeDomainModel.russian.rawValue: "испанский"
-            ]
-        ]
-                
+              
         let getTranslatedLanguageName = GetTranslatedLanguageName(
             localizationLanguageNameRepository: MockLocalizationLanguageNameRepository(localizationServices: MockLocalizationServices(localizableStrings: localizableStrings)),
-            localeLanguageName: MockLocaleLanguageName(languageNames: languageNames),
+            localeLanguageName: MockLocaleLanguageName.defaultMockLocaleLanguageName(),
             localeRegionName: MockLocaleLanguageRegionName(regionNames: [:]),
             localeScriptName: MockLocaleLanguageScriptName(scriptNames: [:])
         )

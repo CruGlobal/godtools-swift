@@ -256,41 +256,12 @@ class GetUserLessonFiltersRepositoryTests: QuickSpec {
         
         return MockLocalizationServices(localizableStrings: localizableStrings)
     }
-    
-    private static func getLocaleLanguageName() -> MockLocaleLanguageName {
-        
-        let languageNames: [MockLocaleLanguageName.LanguageCode: [MockLocaleLanguageName.TranslateInLocaleId: MockLocaleLanguageName.LanguageName]] = [
-            LanguageCodeDomainModel.english.rawValue: [
-                LanguageCodeDomainModel.english.rawValue: "English",
-                LanguageCodeDomainModel.french.rawValue: "Anglais",
-                LanguageCodeDomainModel.portuguese.rawValue: "Inglês",
-                LanguageCodeDomainModel.spanish.rawValue: "Inglés",
-                LanguageCodeDomainModel.russian.rawValue: "Английский"
-            ],
-            LanguageCodeDomainModel.french.rawValue: [
-                LanguageCodeDomainModel.english.rawValue: "French",
-                LanguageCodeDomainModel.french.rawValue: "Français",
-                LanguageCodeDomainModel.portuguese.rawValue: "Francês",
-                LanguageCodeDomainModel.spanish.rawValue: "Francés",
-                LanguageCodeDomainModel.russian.rawValue: "Французский"
-            ],
-            LanguageCodeDomainModel.spanish.rawValue: [
-                LanguageCodeDomainModel.english.rawValue: "Spanish",
-                LanguageCodeDomainModel.french.rawValue: "Espagnol",
-                LanguageCodeDomainModel.portuguese.rawValue: "Espanhol",
-                LanguageCodeDomainModel.spanish.rawValue: "Español",
-                LanguageCodeDomainModel.russian.rawValue: "испанский"
-            ]
-        ]
-        
-        return MockLocaleLanguageName(languageNames: languageNames)
-    }
-    
+
     private static func getTranslatedLanguageName() -> GetTranslatedLanguageName {
         
         let getTranslatedLanguageName = GetTranslatedLanguageName(
             localizationLanguageNameRepository: MockLocalizationLanguageNameRepository(localizationServices: GetUserLessonFiltersRepositoryTests.getLocalizationServices()),
-            localeLanguageName: GetUserLessonFiltersRepositoryTests.getLocaleLanguageName(),
+            localeLanguageName: MockLocaleLanguageName.defaultMockLocaleLanguageName(),
             localeRegionName: MockLocaleLanguageRegionName(regionNames: [:]),
             localeScriptName: MockLocaleLanguageScriptName(scriptNames: [:])
         )
