@@ -13,13 +13,13 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>%d Lesson available</string>
+<string>Доступен %d Уроки</string>
 <key>few</key>
-<string/>
+<string>Доступны %d Уроки</string>
 <key>many</key>
-<string/>
+<string>Доступны %d Уроки</string>
 <key>other</key>
-<string>%d Lessons available</string>
+<string>Доступны %d Уроки</string>
 </dict>
 </dict>
 <key>account.activity.toolOpens</key>
@@ -33,13 +33,13 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Tool open</string>
+<string>Инструмент открыт</string>
 <key>few</key>
-<string/>
+<string>Инструмента открыто</string>
 <key>many</key>
-<string/>
+<string>Инструментов открыто</string>
 <key>other</key>
-<string>Tool opens</string>
+<string>Инструмента открыто</string>
 </dict>
 </dict>
 <key>account.activity.lessonCompletions</key>
@@ -53,13 +53,13 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Lesson completion</string>
+<string>Урок пройден</string>
 <key>few</key>
-<string/>
+<string>Урока пройдено</string>
 <key>many</key>
-<string/>
+<string>Уроков пройдено</string>
 <key>other</key>
-<string>Lesson completions</string>
+<string>Урока пройдено</string>
 </dict>
 </dict>
 <key>account.activity.screenShares</key>
@@ -73,13 +73,13 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Screen share</string>
+<string>Раз показан экран</string>
 <key>few</key>
-<string/>
+<string>Раза показан экран</string>
 <key>many</key>
-<string/>
+<string>Раз показан экран</string>
 <key>other</key>
-<string>Screen shares</string>
+<string>Раза показан экран</string>
 </dict>
 </dict>
 <key>account.activity.linksShared</key>
@@ -93,13 +93,13 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Link share</string>
+<string>Ссылкой поделились</string>
 <key>few</key>
-<string/>
+<string>Ссылками поделились</string>
 <key>many</key>
-<string/>
+<string>Ссылками поделились</string>
 <key>other</key>
-<string>Link shares</string>
+<string>Ссылками поделились</string>
 </dict>
 </dict>
 <key>account.activity.languagesUsed</key>
@@ -113,13 +113,13 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Language used</string>
+<string>Язык использован</string>
 <key>few</key>
-<string/>
+<string>Языка использовано</string>
 <key>many</key>
-<string/>
+<string>Языков использовано</string>
 <key>other</key>
-<string>Languages used</string>
+<string>Языка использовано</string>
 </dict>
 </dict>
 <key>account.activity.sessions</key>
@@ -133,13 +133,13 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Session</string>
+<string>Сессия</string>
 <key>few</key>
-<string/>
+<string>Сессии</string>
 <key>many</key>
-<string/>
+<string>Сессий</string>
 <key>other</key>
-<string>Sessions</string>
+<string>Сессии</string>
 </dict>
 </dict>
 <key>tools.filter.toolsAvailable</key>
@@ -193,13 +193,13 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Shared 1 image</string>
+<string>Отправлено 1 изображение</string>
 <key>few</key>
-<string/>
+<string>Отправлено %d изображения</string>
 <key>many</key>
-<string/>
+<string>Отправлено %d изображений</string>
 <key>other</key>
-<string>Shared %d images</string>
+<string>Отправлено %d изображения</string>
 </dict>
 </dict>
 <key>badges.articlesOpened</key>
@@ -213,13 +213,13 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Read 1 article</string>
+<string>Прочитана 1 статья</string>
 <key>few</key>
-<string/>
+<string>Прочитано %d статьи</string>
 <key>many</key>
-<string/>
+<string>Прочитано %d статей</string>
 <key>other</key>
-<string>Read %d articles</string>
+<string>Прочитано %d статьи</string>
 </dict>
 </dict>
 <key>badges.lessonsCompleted</key>
@@ -233,13 +233,13 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Completed 1 lesson</string>
+<string>Завершен 1 урок</string>
 <key>few</key>
-<string/>
+<string>Завершено %d урока</string>
 <key>many</key>
-<string/>
+<string>Завершено %d уроков</string>
 <key>other</key>
-<string>Completed %d lessons</string>
+<string>Завершено %d урока</string>
 </dict>
 </dict>
 <key>badges.toolsOpened</key>
@@ -253,13 +253,13 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Opened 1 tool</string>
+<string>Открыт 1 инструмент</string>
 <key>few</key>
-<string/>
+<string>Открыто %d инструмента</string>
 <key>many</key>
-<string/>
+<string>Открыто %d инструментов</string>
 <key>other</key>
-<string>Opened %d tools</string>
+<string>Открыто %d инструмента</string>
 </dict>
 </dict>
 <key>badges.tipsCompleted</key>
@@ -273,13 +273,13 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Completed 1 training tip</string>
+<string>Пройдена 1 подсказка по обучению</string>
 <key>few</key>
-<string/>
+<string>Пройдено %d подсказки по обучению</string>
 <key>many</key>
-<string/>
+<string>Пройдено %d подсказок по обучению</string>
 <key>other</key>
-<string>Completed %d training tips</string>
+<string>Пройдено %d подсказки по обучению</string>
 </dict>
 </dict>
 </dict>

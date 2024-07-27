@@ -13,9 +13,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>%d Lesson available</string>
+<string>%d अध्याय उपलब्ध हैं</string>
 <key>other</key>
-<string>%d Lessons available</string>
+<string>%d अध्याय उपलब्ध हैं</string>
 </dict>
 </dict>
 <key>account.activity.toolOpens</key>
@@ -77,9 +77,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Link share</string>
+<string>लिंक साझा किए गए</string>
 <key>other</key>
-<string>Link shares</string>
+<string>लिंक साझा किए गए</string>
 </dict>
 </dict>
 <key>account.activity.languagesUsed</key>
@@ -173,9 +173,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Read 1 article</string>
+<string>%d लेख पढ़ लिए</string>
 <key>other</key>
-<string>Read %d articles</string>
+<string>%d लेख पढ़ लिए</string>
 </dict>
 </dict>
 <key>badges.lessonsCompleted</key>
@@ -221,9 +221,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Completed 1 training tip</string>
+<string>%d प्रशिक्षण सुझाव पूरे किए</string>
 <key>other</key>
-<string>Completed %d training tips</string>
+<string>%d प्रशिक्षण सुझाव पूरे किए</string>
 </dict>
 </dict>
 </dict>

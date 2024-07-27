@@ -13,7 +13,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>%d Lessons available</string>
+<string>이용 가능한 수업: %d</string>
 </dict>
 </dict>
 <key>account.activity.toolOpens</key>
@@ -27,7 +27,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Tool opens</string>
+<string>도구 열기</string>
 </dict>
 </dict>
 <key>account.activity.lessonCompletions</key>
@@ -41,7 +41,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Lesson completions</string>
+<string>완료한 수업</string>
 </dict>
 </dict>
 <key>account.activity.screenShares</key>
@@ -55,7 +55,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Screen shares</string>
+<string>공유한 화면</string>
 </dict>
 </dict>
 <key>account.activity.linksShared</key>
@@ -69,7 +69,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Link shares</string>
+<string>공유된 링크 수</string>
 </dict>
 </dict>
 <key>account.activity.languagesUsed</key>
@@ -83,7 +83,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Languages used</string>
+<string>사용한 언어</string>
 </dict>
 </dict>
 <key>account.activity.sessions</key>
@@ -97,7 +97,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Sessions</string>
+<string>세션</string>
 </dict>
 </dict>
 <key>tools.filter.toolsAvailable</key>
@@ -111,7 +111,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>%d Tools available</string>
+<string>이용 가능한 도구 수: %d</string>
 </dict>
 </dict>
 <key>languageSettings.appLanguage.numberAvailable</key>
@@ -125,7 +125,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>%d Languages available</string>
+<string>이용 가능한 언어 수: %d</string>
 </dict>
 </dict>
 <key>badges.imagesShared</key>
@@ -139,7 +139,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Shared %d images</string>
+<string>공유한 이미지 수: %d</string>
 </dict>
 </dict>
 <key>badges.articlesOpened</key>
@@ -153,7 +153,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Read %d articles</string>
+<string>열어본 글 수: %d</string>
 </dict>
 </dict>
 <key>badges.lessonsCompleted</key>
@@ -167,7 +167,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Completed %d lessons</string>
+<string>완료한 수업 수: %d</string>
 </dict>
 </dict>
 <key>badges.toolsOpened</key>
@@ -181,7 +181,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Opened %d tools</string>
+<string>열어본 도구 수: %d</string>
 </dict>
 </dict>
 <key>badges.tipsCompleted</key>
@@ -195,7 +195,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Completed %d training tips</string>
+<string>완료한 트레이닝 팁 수: %d</string>
 </dict>
 </dict>
 </dict>
