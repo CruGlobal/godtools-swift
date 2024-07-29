@@ -11,5 +11,5 @@ import Foundation
 struct ViewToolFilterLanguagesDomainModel {
     
     let interfaceStrings: ToolFilterLanguagesInterfaceStringsDomainModel
-    let languageFilters: [ToolFilterLanguageDomainModelInterface]
+    let languageFilters: [ToolFilterLanguageDomainModel]
 }

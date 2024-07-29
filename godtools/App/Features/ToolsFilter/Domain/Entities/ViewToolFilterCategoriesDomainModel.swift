@@ -11,5 +11,5 @@ import Foundation
 struct ViewToolFilterCategoriesDomainModel {
     
     let interfaceStrings: ToolFilterCategoriesInterfaceStringsDomainModel
-    let categoryFilters: [ToolFilterCategoryDomainModelInterface]
+    let categoryFilters: [ToolFilterCategoryDomainModel]
 }

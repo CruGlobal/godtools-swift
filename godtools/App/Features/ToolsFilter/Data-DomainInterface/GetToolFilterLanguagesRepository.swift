@@ -25,7 +25,7 @@ class GetToolFilterLanguagesRepository: GetToolFilterLanguagesRepositoryInterfac
         self.localizationServices = localizationServices
     }
     
-    func getToolFilterLanguagesPublisher(translatedInAppLanguage: AppLanguageDomainModel, filteredByCategoryId: String?) -> AnyPublisher<[ToolFilterLanguageDomainModelInterface], Never> {
+    func getToolFilterLanguagesPublisher(translatedInAppLanguage: AppLanguageDomainModel, filteredByCategoryId: String?) -> AnyPublisher<[ToolFilterLanguageDomainModel], Never> {
         
         return resourcesRepository.getResourcesChangedPublisher()
             .flatMap { _ in
@@ -40,12 +40,12 @@ class GetToolFilterLanguagesRepository: GetToolFilterLanguagesRepositoryInterfac
             .eraseToAnyPublisher()
     }
     
-    func getAnyLanguageFilterDomainModel(translatedInAppLanguage: AppLanguageDomainModel) -> ToolFilterLanguageDomainModelInterface {
+    func getAnyLanguageFilterDomainModel(translatedInAppLanguage: AppLanguageDomainModel) -> ToolFilterLanguageDomainModel {
         
         return createAnyLanguageDomainModel(translatedInAppLanguage: translatedInAppLanguage, filteredByCategoryId: nil)
     }
     
-    func getLanguageFilter(from languageId: String?, translatedInAppLanguage: AppLanguageDomainModel) -> ToolFilterLanguageDomainModelInterface? {
+    func getLanguageFilter(from languageId: String?, translatedInAppLanguage: AppLanguageDomainModel) -> ToolFilterLanguageDomainModel? {
         
         guard let languageId = languageId,
             let language = languagesRepository.getLanguage(id: languageId)
@@ -61,26 +61,26 @@ class GetToolFilterLanguagesRepository: GetToolFilterLanguagesRepositoryInterfac
 
 extension GetToolFilterLanguagesRepository {
     
-    private func getLanguageFilterPublisher(from languageId: String?, translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolFilterLanguageDomainModelInterface?, Never> {
+    private func getLanguageFilterPublisher(from languageId: String?, translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolFilterLanguageDomainModel?, Never> {
         
         guard let languageId = languageId,
             let language = languagesRepository.getLanguage(id: languageId)
         else {
-            return Just<ToolFilterLanguageDomainModelInterface?>(nil)
+            return Just<ToolFilterLanguageDomainModel?>(nil)
                 .eraseToAnyPublisher()
         }
         
         let languageFilter = createLanguageFilterDomainModel(with: language, translatedInAppLanguage: translatedInAppLanguage, filteredByCategoryId: nil)
         
-        return Just<ToolFilterLanguageDomainModelInterface?>(languageFilter)
+        return Just<ToolFilterLanguageDomainModel?>(languageFilter)
             .eraseToAnyPublisher()
     }
     
-    private func createLanguageFilterDomainModelList(from languageIds: [String], translatedInAppLanguage: AppLanguageDomainModel, filteredByCategoryId: String?) -> [ToolFilterLanguageDomainModelInterface] {
+    private func createLanguageFilterDomainModelList(from languageIds: [String], translatedInAppLanguage: AppLanguageDomainModel, filteredByCategoryId: String?) -> [ToolFilterLanguageDomainModel] {
                 
         let anyLanguage = createAnyLanguageDomainModel(translatedInAppLanguage: translatedInAppLanguage, filteredByCategoryId: filteredByCategoryId)
         
-        let languages: [ToolFilterLanguageDomainModelInterface] = languagesRepository.getLanguages(ids: languageIds)
+        let languages: [ToolFilterLanguageDomainModel] = languagesRepository.getLanguages(ids: languageIds)
             .compactMap { languageModel in
                 
                 let toolsAvailableCount: Int = getToolsAvailableCount(for: languageModel.id, filteredByCategoryId: filteredByCategoryId)
@@ -106,7 +106,7 @@ extension GetToolFilterLanguagesRepository {
         return [anyLanguage] + languages
     }
     
-    private func createLanguageFilterDomainModel(with languageModel: LanguageModel, translatedInAppLanguage: AppLanguageDomainModel, filteredByCategoryId: String?) -> ToolFilterLanguageDomainModelInterface {
+    private func createLanguageFilterDomainModel(with languageModel: LanguageModel, translatedInAppLanguage: AppLanguageDomainModel, filteredByCategoryId: String?) -> ToolFilterLanguageDomainModel {
         
         let toolsAvailableCount: Int = getToolsAvailableCount(for: languageModel.id, filteredByCategoryId: filteredByCategoryId)
         
@@ -124,7 +124,7 @@ extension GetToolFilterLanguagesRepository {
         )
     }
     
-    private func createAnyLanguageDomainModel(translatedInAppLanguage: AppLanguageDomainModel, filteredByCategoryId: String?) -> ToolFilterLanguageDomainModelInterface {
+    private func createAnyLanguageDomainModel(translatedInAppLanguage: AppLanguageDomainModel, filteredByCategoryId: String?) -> ToolFilterLanguageDomainModel {
         
         let anyLanguageTranslation: String = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: translatedInAppLanguage.localeId, key: ToolStringKeys.ToolFilter.anyLanguageFilterText.rawValue)
         

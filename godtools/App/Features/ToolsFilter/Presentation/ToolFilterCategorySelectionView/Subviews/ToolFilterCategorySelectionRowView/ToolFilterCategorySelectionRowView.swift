@@ -12,10 +12,10 @@ struct ToolFilterCategorySelectionRowView: View {
     
     private static let lightGrey = Color.getColorWithRGB(red: 151, green: 151, blue: 151, opacity: 1)
     
-    private let category: ToolFilterCategoryDomainModelInterface
+    private let category: ToolFilterCategoryDomainModel
     private let isSelected: Bool
     
-    init(category: ToolFilterCategoryDomainModelInterface, isSelected: Bool) {
+    init(category: ToolFilterCategoryDomainModel, isSelected: Bool) {
         self.category = category
         self.isSelected = isSelected
     }

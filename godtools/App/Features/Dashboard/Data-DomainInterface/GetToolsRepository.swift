@@ -30,7 +30,7 @@ class GetToolsRepository: GetToolsRepositoryInterface {
         self.getTranslatedToolLanguageAvailability = getTranslatedToolLanguageAvailability
     }
     
-    func getToolsPublisher(translatedInAppLanguage: AppLanguageDomainModel, languageIdForAvailabilityText: String?, filterToolsByCategory: ToolFilterCategoryDomainModelInterface?, filterToolsByLanguage: ToolFilterLanguageDomainModelInterface?) -> AnyPublisher<[ToolListItemDomainModel], Never> {
+    func getToolsPublisher(translatedInAppLanguage: AppLanguageDomainModel, languageIdForAvailabilityText: String?, filterToolsByCategory: ToolFilterCategoryDomainModel?, filterToolsByLanguage: ToolFilterLanguageDomainModel?) -> AnyPublisher<[ToolListItemDomainModel], Never> {
         
         let languageForAvailabilityTextModel: LanguageModel? 
         

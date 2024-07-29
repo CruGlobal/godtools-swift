@@ -21,7 +21,7 @@ class GetToolFilterCategoriesRepository: GetToolFilterCategoriesRepositoryInterf
         self.localizationServices = localizationServices
     }
     
-    func getToolFilterCategoriesPublisher(translatedInAppLanguage: AppLanguageDomainModel, filteredByLanguageId: BCP47LanguageIdentifier?) -> AnyPublisher<[ToolFilterCategoryDomainModelInterface], Never> {
+    func getToolFilterCategoriesPublisher(translatedInAppLanguage: AppLanguageDomainModel, filteredByLanguageId: BCP47LanguageIdentifier?) -> AnyPublisher<[ToolFilterCategoryDomainModel], Never> {
         
         return resourcesRepository.getResourcesChangedPublisher()
             .flatMap { _ in
@@ -36,12 +36,12 @@ class GetToolFilterCategoriesRepository: GetToolFilterCategoriesRepositoryInterf
             .eraseToAnyPublisher()
     }
     
-    func getAnyCategoryFilterDomainModel(translatedInAppLanguage: AppLanguageDomainModel) -> ToolFilterCategoryDomainModelInterface {
+    func getAnyCategoryFilterDomainModel(translatedInAppLanguage: AppLanguageDomainModel) -> ToolFilterCategoryDomainModel {
         
         return createAnyCategoryDomainModel(translatedInAppLanguage: translatedInAppLanguage, filteredByLanguageId: nil)
     }
     
-    func getCategoryFilter(from categoryId: String?, translatedInAppLanguage: AppLanguageDomainModel) -> ToolFilterCategoryDomainModelInterface? {
+    func getCategoryFilter(from categoryId: String?, translatedInAppLanguage: AppLanguageDomainModel) -> ToolFilterCategoryDomainModel? {
         
         guard let categoryId = categoryId else {
             return nil
@@ -55,11 +55,11 @@ class GetToolFilterCategoriesRepository: GetToolFilterCategoriesRepositoryInterf
 
 extension GetToolFilterCategoriesRepository {
     
-    private func createCategoryDomainModels(from ids: [String], translatedInAppLanguage: AppLanguageDomainModel, filteredByLanguageId: String?) -> [ToolFilterCategoryDomainModelInterface] {
+    private func createCategoryDomainModels(from ids: [String], translatedInAppLanguage: AppLanguageDomainModel, filteredByLanguageId: String?) -> [ToolFilterCategoryDomainModel] {
         
         let anyCategory = createAnyCategoryDomainModel(translatedInAppLanguage: translatedInAppLanguage, filteredByLanguageId: filteredByLanguageId)
         
-        let categories: [ToolFilterCategoryDomainModelInterface] = ids.compactMap { categoryId in
+        let categories: [ToolFilterCategoryDomainModel] = ids.compactMap { categoryId in
             
             let toolsAvailableCount: Int = getToolsAvailableCount(for: categoryId, filteredByLanguageId: filteredByLanguageId)
             
@@ -77,7 +77,7 @@ extension GetToolFilterCategoriesRepository {
         return [anyCategory] + categories
     }
     
-    private func createCategoryDomainModel(with categoryId: String, translatedInAppLanguage: AppLanguageDomainModel, filteredByLanguageId: String?) -> ToolFilterCategoryDomainModelInterface {
+    private func createCategoryDomainModel(with categoryId: String, translatedInAppLanguage: AppLanguageDomainModel, filteredByLanguageId: String?) -> ToolFilterCategoryDomainModel {
         
         let toolsAvailableCount: Int = getToolsAvailableCount(for: categoryId, filteredByLanguageId: filteredByLanguageId)
         
@@ -92,7 +92,7 @@ extension GetToolFilterCategoriesRepository {
         )
     }
     
-    private func createAnyCategoryDomainModel(translatedInAppLanguage: AppLanguageDomainModel, filteredByLanguageId: String?) -> ToolFilterCategoryDomainModelInterface {
+    private func createAnyCategoryDomainModel(translatedInAppLanguage: AppLanguageDomainModel, filteredByLanguageId: String?) -> ToolFilterCategoryDomainModel {
         
         let anyCategoryTranslation: String = localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: translatedInAppLanguage.localeId, key: ToolStringKeys.ToolFilter.anyCategoryFilterText.rawValue)
     

@@ -68,8 +68,8 @@ enum FlowStep {
     case languageTappedFromToolLanguageFilter
     case backTappedFromToolCategoryFilter
     case backTappedFromToolLanguageFilter
-    case spotlightToolTappedFromTools(spotlightTool: SpotlightToolListItemDomainModel, toolFilterLanguage: ToolFilterLanguageDomainModelInterface?)
-    case toolTappedFromTools(tool: ToolListItemDomainModel, toolFilterLanguage: ToolFilterLanguageDomainModelInterface?)
+    case spotlightToolTappedFromTools(spotlightTool: SpotlightToolListItemDomainModel, toolFilterLanguage: ToolFilterLanguageDomainModel?)
+    case toolTappedFromTools(tool: ToolListItemDomainModel, toolFilterLanguage: ToolFilterLanguageDomainModel?)
     
     // toolDetails
     case backTappedFromToolDetails
