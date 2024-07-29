@@ -24,13 +24,13 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
     private lazy var searchBarViewModel = SearchBarViewModel(getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, viewSearchBarUseCase: viewSearchBarUseCase)
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
-    @Published private var allCategories: [ToolFilterCategoryDomainModelInterface] = [ToolFilterCategoryDomainModelInterface]()
+    @Published private var allCategories: [ToolFilterCategoryDomainModel] = [ToolFilterCategoryDomainModel]()
     
     @Published var searchText: String = ""
     @Published var selectedLanguage: ToolFilterLanguageDomainModel = ToolFilterAnyLanguageDomainModel(text: "", toolsAvailableText: "")
-    @Published var selectedCategory: ToolFilterCategoryDomainModelInterface = ToolFilterAnyCategoryDomainModel(text: "", toolsAvailableText: "")
+    @Published var selectedCategory: ToolFilterCategoryDomainModel = ToolFilterAnyCategoryDomainModel(text: "", toolsAvailableText: "")
     @Published var navTitle: String = ""
-    @Published var categorySearchResults: [ToolFilterCategoryDomainModelInterface] = [ToolFilterCategoryDomainModelInterface]()
+    @Published var categorySearchResults: [ToolFilterCategoryDomainModel] = [ToolFilterCategoryDomainModel]()
     
     init(viewToolFilterCategoriesUseCase: ViewToolFilterCategoriesUseCase, searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase, getUserToolFiltersUseCase: GetUserToolFiltersUseCase, storeUserToolFiltersUseCase: StoreUserToolFiltersUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, flowDelegate: FlowDelegate) {
         
@@ -112,7 +112,7 @@ extension ToolFilterCategorySelectionViewModel {
         return searchBarViewModel
     }
     
-    func rowTapped(with category: ToolFilterCategoryDomainModelInterface) {
+    func rowTapped(with category: ToolFilterCategoryDomainModel) {
         
         selectedCategory = category
         
