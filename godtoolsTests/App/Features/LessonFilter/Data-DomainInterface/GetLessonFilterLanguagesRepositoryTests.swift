@@ -14,6 +14,8 @@ import Nimble
 
 class GetLessonFilterLanguagesRepositoryTests: QuickSpec {
     
+    private static let englishLessonsAvailableText: String = "lessons available"
+    
     override class func spec() {
                 
         var cancellables: Set<AnyCancellable> = Set()
@@ -50,8 +52,9 @@ class GetLessonFilterLanguagesRepositoryTests: QuickSpec {
         let getLessonFilterLanguagesRepository = GetLessonFilterLanguagesRepository(
             resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),
             languagesRepository: testsDiContainer.dataLayer.getLanguagesRepository(),
-            getTranslatedLanguageName: GetLessonFilterLanguagesRepositoryTests.getTranslatedLanguageName(),
-            localizationServices: GetLessonFilterLanguagesRepositoryTests.getLocalizationServices()
+            getTranslatedLanguageName: Self.getTranslatedLanguageName(),
+            localizationServices: Self.getLocalizationServices(),
+            stringWithLocaleCount: Self.getStringWithLocaleCount()
         )
         
         describe("User is viewing the lesson language filter languages list.") {
@@ -85,26 +88,26 @@ class GetLessonFilterLanguagesRepositoryTests: QuickSpec {
 
                     }
                     
-                    let afrikaansLanguage: LessonLanguageFilterDomainModel = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.afrikaans.rawValue})!
-                    let czechLanguage: LessonLanguageFilterDomainModel = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.czech.rawValue})!
-                    let englishLanguage: LessonLanguageFilterDomainModel = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.english.rawValue})!
-                    let frenchLanguage: LessonLanguageFilterDomainModel = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.french.rawValue})!
-                    let spanishLanguage: LessonLanguageFilterDomainModel = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.spanish.rawValue})!
+                    let afrikaansLanguage: LessonLanguageFilterDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.afrikaans.rawValue})
+                    let czechLanguage: LessonLanguageFilterDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.czech.rawValue})
+                    let englishLanguage: LessonLanguageFilterDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.english.rawValue})
+                    let frenchLanguage: LessonLanguageFilterDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.french.rawValue})
+                    let spanishLanguage: LessonLanguageFilterDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.spanish.rawValue})
 
-                    expect(afrikaansLanguage.languageName).to(equal("Afrikaans"))
-                    expect(afrikaansLanguage.translatedName).to(equal("африкаанс"))
+                    expect(afrikaansLanguage?.languageName).to(equal("Afrikaans"))
+                    expect(afrikaansLanguage?.translatedName).to(equal("африкаанс"))
                     
-                    expect(czechLanguage.languageName).to(equal("čeština"))
-                    expect(czechLanguage.translatedName).to(equal("Чешский"))
+                    expect(czechLanguage?.languageName).to(equal("čeština"))
+                    expect(czechLanguage?.translatedName).to(equal("Чешский"))
                     
-                    expect(englishLanguage.languageName).to(equal("English"))
-                    expect(englishLanguage.translatedName).to(equal("Английский"))
+                    expect(englishLanguage?.languageName).to(equal("English"))
+                    expect(englishLanguage?.translatedName).to(equal("Английский"))
                     
-                    expect(frenchLanguage.languageName).to(equal("Français"))
-                    expect(frenchLanguage.translatedName).to(equal("Французский"))
+                    expect(frenchLanguage?.languageName).to(equal("Français"))
+                    expect(frenchLanguage?.translatedName).to(equal("Французский"))
                     
-                    expect(spanishLanguage.languageName).to(equal("Español"))
-                    expect(spanishLanguage.translatedName).to(equal("испанский"))
+                    expect(spanishLanguage?.languageName).to(equal("Español"))
+                    expect(spanishLanguage?.translatedName).to(equal("испанский"))
                 }
             }
             
@@ -181,6 +184,49 @@ class GetLessonFilterLanguagesRepositoryTests: QuickSpec {
                     expect(languagesRef[4].translatedName).to(equal("Inglés"))
                 }
             }
+            
+            context("When my app language is english.") {
+                
+                let appLanguageEnglish: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+                
+                it("I expect to see the number of lessons available per language translated in my app language english.") {
+
+                    var languagesRef: [LessonLanguageFilterDomainModel] = Array()
+                    var sinkCompleted: Bool = false
+
+                    waitUntil { done in
+
+                        getLessonFilterLanguagesRepository
+                            .getLessonFilterLanguagesPublisher(translatedInAppLanguage: appLanguageEnglish)
+                            .sink { (languages: [LessonLanguageFilterDomainModel]) in
+
+                                guard !sinkCompleted else {
+                                    return
+                                }
+
+                                sinkCompleted = true
+
+                                languagesRef = languages
+
+                                done()
+                            }
+                            .store(in: &cancellables)
+
+                    }
+                    
+                    let afrikaansLanguage: LessonLanguageFilterDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.afrikaans.rawValue})
+                    let czechLanguage: LessonLanguageFilterDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.czech.rawValue})
+                    let englishLanguage: LessonLanguageFilterDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.english.rawValue})
+                    let frenchLanguage: LessonLanguageFilterDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.french.rawValue})
+                    let spanishLanguage: LessonLanguageFilterDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.spanish.rawValue})
+
+                    expect(afrikaansLanguage?.lessonsAvailableText).to(equal("\(Self.englishLessonsAvailableText) 1"))
+                    expect(czechLanguage?.lessonsAvailableText).to(equal("\(Self.englishLessonsAvailableText) 1"))
+                    expect(englishLanguage?.lessonsAvailableText).to(equal("\(Self.englishLessonsAvailableText) 5"))
+                    expect(frenchLanguage?.lessonsAvailableText).to(equal("\(Self.englishLessonsAvailableText) 2"))
+                    expect(spanishLanguage?.lessonsAvailableText).to(equal("\(Self.englishLessonsAvailableText) 3"))
+                }
+            }
         }
     }
     
@@ -209,7 +255,13 @@ class GetLessonFilterLanguagesRepositoryTests: QuickSpec {
     
     private static func getLocalizationServices() -> MockLocalizationServices {
         
-        return MockLocalizationServices.languageNamesLocalizationServices()
+        let localizableStrings: [MockLocalizationServices.LocaleId: [MockLocalizationServices.StringKey: String]] = [
+            LanguageCodeDomainModel.english.rawValue: [LessonFilterStringKeys.lessonsAvailableText.rawValue: Self.englishLessonsAvailableText]
+        ]
+        
+        return MockLocalizationServices.languageNamesLocalizationServices(
+            addAdditionalLocalizableStrings: localizableStrings
+        )
     }
     
     private static func getTranslatedLanguageName() -> GetTranslatedLanguageName {
@@ -222,5 +274,10 @@ class GetLessonFilterLanguagesRepositoryTests: QuickSpec {
         )
         
         return getTranslatedLanguageName
+    }
+    
+    private static func getStringWithLocaleCount() -> StringWithLocaleCountInterface {
+        
+        return MockStringWithLocaleCount()
     }
 }

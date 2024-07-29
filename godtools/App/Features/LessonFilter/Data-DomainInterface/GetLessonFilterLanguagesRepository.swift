@@ -16,12 +16,14 @@ class GetLessonFilterLanguagesRepository: GetLessonFilterLanguagesRepositoryInte
     private let languagesRepository: LanguagesRepository
     private let getTranslatedLanguageName: GetTranslatedLanguageName
     private let localizationServices: LocalizationServicesInterface
+    private let stringWithLocaleCount: StringWithLocaleCountInterface
     
-    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, getTranslatedLanguageName: GetTranslatedLanguageName, localizationServices: LocalizationServicesInterface) {
+    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, getTranslatedLanguageName: GetTranslatedLanguageName, localizationServices: LocalizationServicesInterface, stringWithLocaleCount: StringWithLocaleCountInterface) {
         self.resourcesRepository = resourcesRepository
         self.languagesRepository = languagesRepository
         self.getTranslatedLanguageName = getTranslatedLanguageName
         self.localizationServices = localizationServices
+        self.stringWithLocaleCount = stringWithLocaleCount
     }
     
     func getLessonFilterLanguagesPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<[LessonLanguageFilterDomainModel], Never> {
@@ -108,8 +110,6 @@ extension GetLessonFilterLanguagesRepository {
             key: LessonFilterStringKeys.lessonsAvailableText.rawValue
         )
         
-        let localizedString = String(format: formatString, locale: Locale(identifier: translatedInAppLanguage), lessonsAvailableCount)
-        
-        return localizedString
+        return stringWithLocaleCount.getString(format: formatString, locale: Locale(identifier: translatedInAppLanguage), count: lessonsAvailableCount)
     }
 }

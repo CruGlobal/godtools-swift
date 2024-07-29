@@ -649,6 +649,9 @@
 		45838F0329E847D4003B5578 /* ToolDetailsSectionDescriptionTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45838F0229E847D3003B5578 /* ToolDetailsSectionDescriptionTextView.swift */; };
 		458539322C57C08000748BAF /* MockRealmResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458539312C57C08000748BAF /* MockRealmResource.swift */; };
 		458539362C57C0AA00748BAF /* MockRealmLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458539352C57C0AA00748BAF /* MockRealmLanguage.swift */; };
+		458539392C57DF0200748BAF /* StringWithLocaleCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458539382C57DF0200748BAF /* StringWithLocaleCount.swift */; };
+		4585393B2C57DF0A00748BAF /* StringWithLocaleCountInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4585393A2C57DF0A00748BAF /* StringWithLocaleCountInterface.swift */; };
+		4585393E2C57E00800748BAF /* MockStringWithLocaleCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4585393D2C57E00800748BAF /* MockStringWithLocaleCount.swift */; };
 		458585DD2924593F005042C2 /* GetAccountCreationIsSupportedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458585DC2924593F005042C2 /* GetAccountCreationIsSupportedUseCase.swift */; };
 		458585DF2924596C005042C2 /* AccountCreationIsSupportedDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458585DE2924596C005042C2 /* AccountCreationIsSupportedDomainModel.swift */; };
 		4585BF5E2AC38D1B00A6D720 /* LanguageCodeDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4585BF5D2AC38D1B00A6D720 /* LanguageCodeDomainModel.swift */; };
@@ -2311,6 +2314,9 @@
 		45838F0229E847D3003B5578 /* ToolDetailsSectionDescriptionTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolDetailsSectionDescriptionTextView.swift; sourceTree = "<group>"; };
 		458539312C57C08000748BAF /* MockRealmResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRealmResource.swift; sourceTree = "<group>"; };
 		458539352C57C0AA00748BAF /* MockRealmLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRealmLanguage.swift; sourceTree = "<group>"; };
+		458539382C57DF0200748BAF /* StringWithLocaleCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringWithLocaleCount.swift; sourceTree = "<group>"; };
+		4585393A2C57DF0A00748BAF /* StringWithLocaleCountInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringWithLocaleCountInterface.swift; sourceTree = "<group>"; };
+		4585393D2C57E00800748BAF /* MockStringWithLocaleCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockStringWithLocaleCount.swift; sourceTree = "<group>"; };
 		458585DC2924593F005042C2 /* GetAccountCreationIsSupportedUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAccountCreationIsSupportedUseCase.swift; sourceTree = "<group>"; };
 		458585DE2924596C005042C2 /* AccountCreationIsSupportedDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCreationIsSupportedDomainModel.swift; sourceTree = "<group>"; };
 		4585BF5D2AC38D1B00A6D720 /* LanguageCodeDomainModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageCodeDomainModel.swift; sourceTree = "<group>"; };
@@ -4789,6 +4795,7 @@
 				45CC42FD2C38982800B0D82B /* LocaleLanguageRegionName */,
 				45CC42FF2C38982800B0D82B /* LocaleLanguageScriptName */,
 				453689FF2ABB2D840028A570 /* SharedAppleExtensions */,
+				4585393C2C57DFFE00748BAF /* StringWithLocaleCount */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -6812,6 +6819,23 @@
 			path = Cache;
 			sourceTree = "<group>";
 		};
+		458539372C57DEF200748BAF /* StringWithLocaleCount */ = {
+			isa = PBXGroup;
+			children = (
+				458539382C57DF0200748BAF /* StringWithLocaleCount.swift */,
+				4585393A2C57DF0A00748BAF /* StringWithLocaleCountInterface.swift */,
+			);
+			path = StringWithLocaleCount;
+			sourceTree = "<group>";
+		};
+		4585393C2C57DFFE00748BAF /* StringWithLocaleCount */ = {
+			isa = PBXGroup;
+			children = (
+				4585393D2C57E00800748BAF /* MockStringWithLocaleCount.swift */,
+			);
+			path = StringWithLocaleCount;
+			sourceTree = "<group>";
+		};
 		458585DB29245934005042C2 /* GetAccountCreationIsSupportedUseCase */ = {
 			isa = PBXGroup;
 			children = (
@@ -8583,6 +8607,7 @@
 				455EE8472AEC5F4A00C3205C /* ProgressTimer */,
 				45EB9B4429F16CF200CA74A8 /* SharedAppleExtensions */,
 				D4670B0A2AFAA17C00FAD896 /* StringSearcher */,
+				458539372C57DEF200748BAF /* StringWithLocaleCount */,
 				45E4DBB52BECFB09006ED2F3 /* SyncInvalidator */,
 				45D63E54288F67F8009B4610 /* URLSession */,
 			);
@@ -12539,6 +12564,7 @@
 				458CFE8D29D4E0B9007B423C /* LoadingArticleView.swift in Sources */,
 				454B47E22AE0228200C7B5E7 /* GetOnboardingTutorialInterfaceStringsRepository.swift in Sources */,
 				D4AFA4492BAC955E00318023 /* GetToolFilterLanguagesInterfaceStringsRepository.swift in Sources */,
+				4585393B2C57DF0A00748BAF /* StringWithLocaleCountInterface.swift in Sources */,
 				458721342BFB7EFB005DA242 /* GetDeleteAccountInterfaceStringsRepository.swift in Sources */,
 				45039E122B1F5AEA009E1D96 /* ViewToolDetailsDomainModel.swift in Sources */,
 				45F7162C290A12D70019B715 /* ShareAStoryWithUsWebContent.swift in Sources */,
@@ -13311,6 +13337,7 @@
 				4573133D28C1821100481640 /* ToolDetailsAboutView.swift in Sources */,
 				45CE958A2B7C053500A09340 /* StoreInitialAppLanguage.swift in Sources */,
 				458721262BFB7756005DA242 /* DeleteAccountProgressViewModel.swift in Sources */,
+				458539392C57DF0200748BAF /* StringWithLocaleCount.swift in Sources */,
 				45E347992A49C0EC0014CCD1 /* AnimatableValue.swift in Sources */,
 				45AAC28E2BB3069D000AE690 /* ViewGlobalActivityThisWeekUseCase.swift in Sources */,
 				45C1521F2A43D1BD00F2A1E8 /* ShareToolView.swift in Sources */,
@@ -13727,6 +13754,7 @@
 				45CC43002C38982800B0D82B /* MockLocaleLanguageName.swift in Sources */,
 				450FB8892BFBA0EB0015D945 /* SearchToolFilterCategoriesRepositoryTests.swift in Sources */,
 				450192EE2C54345F00F202F7 /* GetLessonsListRepositoryTests.swift in Sources */,
+				4585393E2C57E00800748BAF /* MockStringWithLocaleCount.swift in Sources */,
 				45AFC62D27CD74100090E381 /* MobileContentBackgroundImageAlignment.swift in Sources */,
 				458539362C57C0AA00748BAF /* MockRealmLanguage.swift in Sources */,
 				45E1986B2BA488C800BF14F3 /* TestsInMemoryRealmDatabase.swift in Sources */,
