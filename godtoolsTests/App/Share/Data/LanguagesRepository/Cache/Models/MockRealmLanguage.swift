@@ -1,15 +1,15 @@
 //
-//  MockLanguagesRepository.swift
+//  MockRealmLanguage.swift
 //  godtoolsTests
 //
-//  Created by Levi Eggert on 7/26/24.
+//  Created by Levi Eggert on 7/29/24.
 //  Copyright © 2024 Cru. All rights reserved.
 //
 
 import Foundation
 @testable import godtools
 
-class MockLanguagesRepository {
+class MockRealmLanguage {
     
     static func getLanguage(language: LanguageCodeDomainModel, name: String, id: String = UUID().uuidString) -> RealmLanguage {
         

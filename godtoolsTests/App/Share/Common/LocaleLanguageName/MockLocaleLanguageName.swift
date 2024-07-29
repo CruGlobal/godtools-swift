@@ -25,6 +25,14 @@ class MockLocaleLanguageName: LocaleLanguageNameInterface {
     static func defaultMockLocaleLanguageName() -> MockLocaleLanguageName {
         
         let languageNames: [MockLocaleLanguageName.LanguageCode: [MockLocaleLanguageName.TranslateInLocaleId: MockLocaleLanguageName.LanguageName]] = [
+            LanguageCodeDomainModel.afrikaans.rawValue: [
+                LanguageCodeDomainModel.afrikaans.rawValue: "Afrikaans",
+                LanguageCodeDomainModel.english.rawValue: "Afrikaans"
+            ],
+            LanguageCodeDomainModel.czech.rawValue: [
+                LanguageCodeDomainModel.czech.rawValue: "čeština",
+                LanguageCodeDomainModel.english.rawValue: "Czech"
+            ],
             LanguageCodeDomainModel.english.rawValue: [
                 LanguageCodeDomainModel.czech.rawValue: "Angličtina",
                 LanguageCodeDomainModel.english.rawValue: "English",
