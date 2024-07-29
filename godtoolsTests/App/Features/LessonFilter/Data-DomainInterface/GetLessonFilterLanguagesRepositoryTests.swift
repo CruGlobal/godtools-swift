@@ -148,7 +148,7 @@ class GetLessonFilterLanguagesRepositoryTests: QuickSpec {
                 }
             }
             
-            context("When my app language is russian.") {
+            context("When my app language is spanish.") {
                 
                 let appLanguageSpanish: AppLanguageDomainModel = LanguageCodeDomainModel.spanish.rawValue
                 
