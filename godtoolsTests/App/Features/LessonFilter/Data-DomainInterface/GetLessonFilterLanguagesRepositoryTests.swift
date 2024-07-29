@@ -11,7 +11,6 @@ import Foundation
 import Combine
 import Quick
 import Nimble
-import RealmSwift
 
 class GetLessonFilterLanguagesRepositoryTests: QuickSpec {
     
@@ -19,53 +18,138 @@ class GetLessonFilterLanguagesRepositoryTests: QuickSpec {
                 
         var cancellables: Set<AnyCancellable> = Set()
         
-        describe("User is viewing the lessons list.") {
+        let allLanguages: [RealmLanguage] = GetLessonFilterLanguagesRepositoryTests.getAllLanguages()
+        
+        let tracts = [
+            MockRealmResource.createTract(addLanguages: [.english, .arabic, .czech, .spanish], fromLanguages: allLanguages),
+            MockRealmResource.createTract(addLanguages: [.spanish], fromLanguages: allLanguages),
+            MockRealmResource.createTract(addLanguages: [.afrikaans, .arabic], fromLanguages: allLanguages),
+            MockRealmResource.createTract(addLanguages: [.czech, .french, .hebrew], fromLanguages: allLanguages),
+            MockRealmResource.createTract(addLanguages: [.english, .chinese], fromLanguages: allLanguages),
+            MockRealmResource.createTract(addLanguages: [.english, .russian], fromLanguages: allLanguages),
+            MockRealmResource.createTract(addLanguages: [.english, .portuguese], fromLanguages: allLanguages),
+            MockRealmResource.createTract(addLanguages: [.english, .latvian], fromLanguages: allLanguages)
+        ]
+        
+        let lessons = [
+            MockRealmResource.createLesson(addLanguages: [.english], fromLanguages: allLanguages),
+            MockRealmResource.createLesson(addLanguages: [.english, .spanish], fromLanguages: allLanguages),
+            MockRealmResource.createLesson(addLanguages: [.afrikaans, .spanish], fromLanguages: allLanguages),
+            MockRealmResource.createLesson(addLanguages: [.czech, .french], fromLanguages: allLanguages),
+            MockRealmResource.createLesson(addLanguages: [.english, .french, .spanish], fromLanguages: allLanguages),
+            MockRealmResource.createLesson(addLanguages: [.english], fromLanguages: allLanguages),
+            MockRealmResource.createLesson(addLanguages: [.english], fromLanguages: allLanguages)
+        ]
+                        
+        let realmDatabase: RealmDatabase = TestsInMemoryRealmDatabase(
+            addObjectsToDatabase: allLanguages + tracts + lessons
+        )
+        
+        let testsDiContainer = TestsDiContainer(realmDatabase: realmDatabase)
+        
+        let getLessonFilterLanguagesRepository = GetLessonFilterLanguagesRepository(
+            resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),
+            languagesRepository: testsDiContainer.dataLayer.getLanguagesRepository(),
+            getTranslatedLanguageName: GetLessonFilterLanguagesRepositoryTests.getTranslatedLanguageName(),
+            localizationServices: GetLessonFilterLanguagesRepositoryTests.getLocalizationServices()
+        )
+        
+        describe("User is viewing the lesson language filter languages list.") {
          
-            context("When my lesson language filter is spanish.") {
+            context("When my app language is russian.") {
+                
+                let appLanguageRussian: AppLanguageDomainModel = LanguageCodeDomainModel.russian.rawValue
+                
+                it("I expect to see languages translated in my app language russian and translated in their original language.") {
+
+                    var languagesRef: [LessonLanguageFilterDomainModel] = Array()
+                    var sinkCompleted: Bool = false
+
+                    waitUntil { done in
+
+                        getLessonFilterLanguagesRepository
+                            .getLessonFilterLanguagesPublisher(translatedInAppLanguage: appLanguageRussian)
+                            .sink { (languages: [LessonLanguageFilterDomainModel]) in
+
+                                guard !sinkCompleted else {
+                                    return
+                                }
+
+                                sinkCompleted = true
+
+                                languagesRef = languages
+
+                                done()
+                            }
+                            .store(in: &cancellables)
+
+                    }
+                    
+                    let afrikaansLanguage: LessonLanguageFilterDomainModel = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.afrikaans.rawValue})!
+                    let czechLanguage: LessonLanguageFilterDomainModel = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.czech.rawValue})!
+                    let englishLanguage: LessonLanguageFilterDomainModel = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.english.rawValue})!
+                    let frenchLanguage: LessonLanguageFilterDomainModel = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.french.rawValue})!
+                    let spanishLanguage: LessonLanguageFilterDomainModel = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.spanish.rawValue})!
+
+                    expect(afrikaansLanguage.languageName).to(equal("Afrikaans"))
+                    expect(afrikaansLanguage.translatedName).to(equal("африкаанс"))
+                    
+                    expect(czechLanguage.languageName).to(equal("čeština"))
+                    expect(czechLanguage.translatedName).to(equal("Чешский"))
+                    
+                    expect(englishLanguage.languageName).to(equal("English"))
+                    expect(englishLanguage.translatedName).to(equal("Английский"))
+                    
+                    expect(frenchLanguage.languageName).to(equal("Français"))
+                    expect(frenchLanguage.translatedName).to(equal("Французский"))
+                    
+                    expect(spanishLanguage.languageName).to(equal("Español"))
+                    expect(spanishLanguage.translatedName).to(equal("испанский"))
+                }
+            }
+            
+            context("When my app language is english.") {
+                
+                let appLanguageEnglish: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+                
+                it("I expect to see languages sorted by language name translated in app language english.") {
+
+                    var languagesRef: [LessonLanguageFilterDomainModel] = Array()
+                    var sinkCompleted: Bool = false
+
+                    waitUntil { done in
+
+                        getLessonFilterLanguagesRepository
+                            .getLessonFilterLanguagesPublisher(translatedInAppLanguage: appLanguageEnglish)
+                            .sink { (languages: [LessonLanguageFilterDomainModel]) in
+
+                                guard !sinkCompleted else {
+                                    return
+                                }
+
+                                sinkCompleted = true
+
+                                languagesRef = languages
+
+                                done()
+                            }
+                            .store(in: &cancellables)
+
+                    }
+
+                    expect(languagesRef[0].translatedName).to(equal("Afrikaans"))
+                    expect(languagesRef[1].translatedName).to(equal("Czech"))
+                    expect(languagesRef[2].translatedName).to(equal("English"))
+                    expect(languagesRef[3].translatedName).to(equal("French"))
+                    expect(languagesRef[4].translatedName).to(equal("Spanish"))
+                }
+            }
+            
+            context("When my app language is russian.") {
                 
                 let appLanguageSpanish: AppLanguageDomainModel = LanguageCodeDomainModel.spanish.rawValue
                 
-                let realmDatabase: RealmDatabase = TestsInMemoryRealmDatabase()
-                
-                let allLanguages: [RealmLanguage] = GetLessonFilterLanguagesRepositoryTests.getAllLanguages()
-                
-                let tracts = [
-                    MockResourcesRepository.getTract(addLanguages: [.english, .arabic, .czech, .spanish], fromLanguages: allLanguages),
-                    MockResourcesRepository.getTract(addLanguages: [.spanish], fromLanguages: allLanguages),
-                    MockResourcesRepository.getTract(addLanguages: [.afrikaans, .arabic], fromLanguages: allLanguages),
-                    MockResourcesRepository.getTract(addLanguages: [.czech, .french, .hebrew], fromLanguages: allLanguages)
-                ]
-                
-                let lessons = [
-                    MockResourcesRepository.getLesson(addLanguages: [.english], fromLanguages: allLanguages, id: "0"),
-                    MockResourcesRepository.getLesson(addLanguages: [.english, .spanish], fromLanguages: allLanguages, id: "1"),
-                    MockResourcesRepository.getLesson(addLanguages: [.afrikaans, .spanish], fromLanguages: allLanguages, id: "2"),
-                    MockResourcesRepository.getLesson(addLanguages: [.czech, .french], fromLanguages: allLanguages, id: "3")
-                ]
-                
-                let realmObjectsToAdd: [Object] = allLanguages + tracts + lessons
-                
-                let realm: Realm = realmDatabase.openRealm()
-                            
-                do {
-                    try realm.write {
-                        realm.add(realmObjectsToAdd, update: .all)
-                    }
-                }
-                catch _ {
-                    
-                }
-                
-                let testsDiContainer = TestsDiContainer(realmDatabase: realmDatabase)
-                
-                let getLessonFilterLanguagesRepository = GetLessonFilterLanguagesRepository(
-                    resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),
-                    languagesRepository: testsDiContainer.dataLayer.getLanguagesRepository(),
-                    getTranslatedLanguageName: GetLessonFilterLanguagesRepositoryTests.getTranslatedLanguageName(),
-                    localizationServices: GetLessonFilterLanguagesRepositoryTests.getLocalizationServices()
-                )
-                
-                it("I expect to see lesson 1 and lesson 2 and I should not see lesson 0 and lesson 3.") {
+                it("I expect to see languages sorted by language name translated in app language spanish.") {
 
                     var languagesRef: [LessonLanguageFilterDomainModel] = Array()
                     var sinkCompleted: Bool = false
@@ -90,7 +174,11 @@ class GetLessonFilterLanguagesRepositoryTests: QuickSpec {
 
                     }
 
-                    expect(languagesRef.count).to(equal(0))
+                    expect(languagesRef[0].translatedName).to(equal("africaans"))
+                    expect(languagesRef[1].translatedName).to(equal("Checo"))
+                    expect(languagesRef[2].translatedName).to(equal("Español"))
+                    expect(languagesRef[3].translatedName).to(equal("Francés"))
+                    expect(languagesRef[4].translatedName).to(equal("Inglés"))
                 }
             }
         }
@@ -99,28 +187,29 @@ class GetLessonFilterLanguagesRepositoryTests: QuickSpec {
     private static func getAllLanguages() -> [RealmLanguage] {
         
         return [
-            MockLanguagesRepository.getLanguage(language: .arabic, name: "arabic Name"),
-            MockLanguagesRepository.getLanguage(language: .english, name: "english Name"),
-            MockLanguagesRepository.getLanguage(language: .french, name: "french Name"),
-            MockLanguagesRepository.getLanguage(language: .russian, name: "russian Name"),
-            MockLanguagesRepository.getLanguage(language: .spanish, name: "spanish Name"),
-            MockLanguagesRepository.getLanguage(language: .czech, name: "czech Name"),
-            MockLanguagesRepository.getLanguage(language: .hebrew, name: "hebrew Name")
+            getRealmLanguage(languageCode: .afrikaans),
+            getRealmLanguage(languageCode: .arabic),
+            getRealmLanguage(languageCode: .chinese),
+            getRealmLanguage(languageCode: .czech),
+            getRealmLanguage(languageCode: .english),
+            getRealmLanguage(languageCode: .french),
+            getRealmLanguage(languageCode: .hebrew),
+            getRealmLanguage(languageCode: .latvian),
+            getRealmLanguage(languageCode: .portuguese),
+            getRealmLanguage(languageCode: .russian),
+            getRealmLanguage(languageCode: .spanish),
+            getRealmLanguage(languageCode: .vietnamese)
         ]
+    }
+    
+    private static func getRealmLanguage(languageCode: LanguageCodeDomainModel) -> RealmLanguage {
+        
+        return MockRealmLanguage.getLanguage(language: languageCode, name: languageCode.rawValue + " Name", id: languageCode.rawValue)
     }
     
     private static func getLocalizationServices() -> MockLocalizationServices {
         
-        let localizableStrings: [MockLocalizationServices.LocaleId: [MockLocalizationServices.StringKey: String]] = [
-            LanguageCodeDomainModel.spanish.value: [
-                LanguageCodeDomainModel.english.rawValue: "Inglés",
-                LanguageCodeDomainModel.french.rawValue: "Francés",
-                LanguageCodeDomainModel.spanish.rawValue: "Español",
-                LanguageCodeDomainModel.russian.rawValue: "Ruso"
-            ]
-        ]
-        
-        return MockLocalizationServices(localizableStrings: localizableStrings)
+        return MockLocalizationServices.languageNamesLocalizationServices()
     }
     
     private static func getTranslatedLanguageName() -> GetTranslatedLanguageName {
