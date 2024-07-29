@@ -13,7 +13,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>%d Lessons available</string>
+<string>%d 种可用课程</string>
 </dict>
 </dict>
 <key>account.activity.toolOpens</key>
@@ -69,7 +69,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Link shares</string>
+<string>共享链接</string>
 </dict>
 </dict>
 <key>account.activity.languagesUsed</key>

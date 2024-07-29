@@ -13,9 +13,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>%d Lesson available</string>
+<string>اسباق دستیاب ہیں۔%d</string>
 <key>other</key>
-<string>%d Lessons available</string>
+<string>اسباق دستیاب ہیں۔%d</string>
 </dict>
 </dict>
 <key>account.activity.toolOpens</key>
@@ -77,9 +77,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Link share</string>
+<string>لنکس کا اشتراک کیا گیا۔</string>
 <key>other</key>
-<string>Link shares</string>
+<string>لنکس کا اشتراک کیا گیا۔</string>
 </dict>
 </dict>
 <key>account.activity.languagesUsed</key>
