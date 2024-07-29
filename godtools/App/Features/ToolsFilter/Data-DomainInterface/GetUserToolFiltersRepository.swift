@@ -44,7 +44,7 @@ class GetUserToolFiltersRepository: GetUserToolFiltersRepositoryInterface {
             .eraseToAnyPublisher()
     }
     
-    func getUserLanguageFilterPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolFilterLanguageDomainModelInterface, Never> {
+    func getUserLanguageFilterPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolFilterLanguageDomainModel, Never> {
         
         return userToolFiltersRepository.getUserToolLanguageFilterChangedPublisher()
             .map {

@@ -11,5 +11,5 @@ import Foundation
 struct ToolFilterSelection {
     
     var selectedCategory: ToolFilterCategoryDomainModelInterface
-    var selectedLanguage: ToolFilterLanguageDomainModelInterface
+    var selectedLanguage: ToolFilterLanguageDomainModel
 }
