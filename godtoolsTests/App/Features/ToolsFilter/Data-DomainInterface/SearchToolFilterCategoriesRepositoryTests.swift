@@ -28,7 +28,7 @@ class SearchToolFilterCategoriesRepositoryTests: QuickSpec {
             
             context("When a user inputs a lowercased single letter search string \(lowercasedSingleLetterSearchString)") {
                 
-                let allCategories: [ToolFilterCategoryDomainModelInterface] = [
+                let allCategories: [ToolFilterCategoryDomainModel] = [
                     ToolFilterCategoryDomainModel(categoryId: "", translatedName: "Church", toolsAvailableText: ""),
                     ToolFilterCategoryDomainModel(categoryId: "", translatedName: "church", toolsAvailableText: ""),
                     ToolFilterCategoryDomainModel(categoryId: "", translatedName: "food", toolsAvailableText: ""),
@@ -46,7 +46,7 @@ class SearchToolFilterCategoriesRepositoryTests: QuickSpec {
                         
                         searchCategoriesRepository
                             .getSearchResultsPublisher(for: lowercasedSingleLetterSearchString, in: allCategories)
-                            .sink { (categories: [ToolFilterCategoryDomainModelInterface]) in
+                            .sink { (categories: [ToolFilterCategoryDomainModel]) in
                                 
                                 guard !sinkCompleted else {
                                     return
@@ -74,7 +74,7 @@ class SearchToolFilterCategoriesRepositoryTests: QuickSpec {
             
             context("When a user inputs an uppercased single letter search string \(uppercasedSingleLetterSearchString)") {
                 
-                let allCategories: [ToolFilterCategoryDomainModelInterface] = [
+                let allCategories: [ToolFilterCategoryDomainModel] = [
                     ToolFilterCategoryDomainModel(categoryId: "", translatedName: "Church", toolsAvailableText: ""),
                     ToolFilterCategoryDomainModel(categoryId: "", translatedName: "church", toolsAvailableText: ""),
                     ToolFilterCategoryDomainModel(categoryId: "", translatedName: "foody", toolsAvailableText: ""),
@@ -94,7 +94,7 @@ class SearchToolFilterCategoriesRepositoryTests: QuickSpec {
                         
                         searchCategoriesRepository
                             .getSearchResultsPublisher(for: uppercasedSingleLetterSearchString, in: allCategories)
-                            .sink { (categories: [ToolFilterCategoryDomainModelInterface]) in
+                            .sink { (categories: [ToolFilterCategoryDomainModel]) in
                                 
                                 guard !sinkCompleted else {
                                     return
@@ -122,7 +122,7 @@ class SearchToolFilterCategoriesRepositoryTests: QuickSpec {
             
             context("When a user inputs a multi-text search string \(multiTextSearchString)") {
                 
-                let allCategories: [ToolFilterCategoryDomainModelInterface] = [
+                let allCategories: [ToolFilterCategoryDomainModel] = [
                     ToolFilterCategoryDomainModel(categoryId: "", translatedName: "blAnd", toolsAvailableText: ""),
                     ToolFilterCategoryDomainModel(categoryId: "", translatedName: "land", toolsAvailableText: ""),
                     ToolFilterCategoryDomainModel(categoryId: "", translatedName: "Canned", toolsAvailableText: ""),
@@ -144,7 +144,7 @@ class SearchToolFilterCategoriesRepositoryTests: QuickSpec {
                         
                         searchCategoriesRepository
                             .getSearchResultsPublisher(for: multiTextSearchString, in: allCategories)
-                            .sink { (categories: [ToolFilterCategoryDomainModelInterface]) in
+                            .sink { (categories: [ToolFilterCategoryDomainModel]) in
                                 
                                 guard !sinkCompleted else {
                                     return

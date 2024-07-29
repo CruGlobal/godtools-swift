@@ -238,7 +238,7 @@ class GetToolsRepositoryTests: QuickSpec {
                     var sinkCompleted: Bool = false
                     
                     let growthCategoryFilter = ToolFilterCategoryDomainModel(categoryId: categoryGrowth, translatedName: "", toolsAvailableText: "")
-                    let anyLanguageFilter = ToolFilterAnyLanguageDomainModel(text: "", toolsAvailableText: "", languageLocale: nil)
+                    let anyLanguageFilter = ToolFilterAnyLanguageDomainModel(text: "", toolsAvailableText: "")
                     
                     waitUntil { done in
                         
