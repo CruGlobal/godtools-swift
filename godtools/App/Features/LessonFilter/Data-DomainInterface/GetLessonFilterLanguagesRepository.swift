@@ -24,7 +24,7 @@ class GetLessonFilterLanguagesRepository: GetLessonFilterLanguagesRepositoryInte
         self.localizationServices = localizationServices
     }
     
-    func getLessonFilterLanguagesPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<[LessonLanguageFilterDomainModel], Never> {
+    func getLessonFilterLanguagesPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<[LessonFilterLanguageDomainModel], Never> {
         
         return resourcesRepository.getResourcesChangedPublisher()
             .flatMap { _ in
@@ -38,7 +38,7 @@ class GetLessonFilterLanguagesRepository: GetLessonFilterLanguagesRepositoryInte
             .eraseToAnyPublisher()
     }
     
-    func getLessonLanguageFilterFromLanguageCode(languageCode: String?, translatedInAppLanguage: AppLanguageDomainModel) -> LessonLanguageFilterDomainModel? {
+    func getLessonLanguageFilterFromLanguageCode(languageCode: String?, translatedInAppLanguage: AppLanguageDomainModel) -> LessonFilterLanguageDomainModel? {
         
         guard let languageCode = languageCode,
               let language = languagesRepository.getLanguage(code: languageCode)
@@ -49,7 +49,7 @@ class GetLessonFilterLanguagesRepository: GetLessonFilterLanguagesRepositoryInte
         return createLessonLanguageFilterDomainModel(with: language, translatedInAppLanguage: translatedInAppLanguage)
     }
     
-    func getLessonLanguageFilterFromLanguageId(languageId: String?, translatedInAppLanguage: AppLanguageDomainModel) -> LessonLanguageFilterDomainModel? {
+    func getLessonLanguageFilterFromLanguageId(languageId: String?, translatedInAppLanguage: AppLanguageDomainModel) -> LessonFilterLanguageDomainModel? {
         
         guard let languageId = languageId,
               let language = languagesRepository.getLanguage(id: languageId)
@@ -63,9 +63,9 @@ class GetLessonFilterLanguagesRepository: GetLessonFilterLanguagesRepositoryInte
 
 extension GetLessonFilterLanguagesRepository {
     
-    private func createLessonLanguageFilterDomainModelList(from languageIds: [String], translatedInAppLanguage: AppLanguageDomainModel) -> [LessonLanguageFilterDomainModel] {
+    private func createLessonLanguageFilterDomainModelList(from languageIds: [String], translatedInAppLanguage: AppLanguageDomainModel) -> [LessonFilterLanguageDomainModel] {
         
-        let languages: [LessonLanguageFilterDomainModel] = languagesRepository.getLanguages(ids: languageIds)
+        let languages: [LessonFilterLanguageDomainModel] = languagesRepository.getLanguages(ids: languageIds)
             .compactMap { languageModel in
                 
                 let lessonsAvailableCount: Int = resourcesRepository.getAllLessonsCount(filterByLanguageId: languageModel.id)
@@ -84,7 +84,7 @@ extension GetLessonFilterLanguagesRepository {
         return languages
     }
     
-    private func createLessonLanguageFilterDomainModel(with languageModel: LanguageModel, translatedInAppLanguage: AppLanguageDomainModel) -> LessonLanguageFilterDomainModel? {
+    private func createLessonLanguageFilterDomainModel(with languageModel: LanguageModel, translatedInAppLanguage: AppLanguageDomainModel) -> LessonFilterLanguageDomainModel? {
         
         let lessonsAvailableCount: Int = resourcesRepository.getAllLessonsCount(filterByLanguageId: languageModel.id)
 
@@ -93,7 +93,7 @@ extension GetLessonFilterLanguagesRepository {
         
         let lessonsAvailableText: String = getLessonsAvailableText(lessonsAvailableCount: lessonsAvailableCount, translatedInAppLanguage: translatedInAppLanguage)
         
-        return LessonLanguageFilterDomainModel(
+        return LessonFilterLanguageDomainModel(
             languageId: languageModel.id,
             languageName: languageName,
             translatedName: translatedLanguageName,

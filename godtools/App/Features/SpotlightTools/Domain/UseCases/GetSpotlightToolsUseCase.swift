@@ -17,10 +17,10 @@ class GetSpotlightToolsUseCase {
         self.getSpotlightToolsRepository = getSpotlightToolsRepository
     }
     
-    func getSpotlightToolsPublisher(translatedInAppLanguage: AppLanguageDomainModel, languageForAvailabilityText: LanguageDomainModel?) -> AnyPublisher<[SpotlightToolListItemDomainModel], Never> {
+    func getSpotlightToolsPublisher(translatedInAppLanguage: AppLanguageDomainModel, languageIdForAvailabilityText: String?) -> AnyPublisher<[SpotlightToolListItemDomainModel], Never> {
         
         return getSpotlightToolsRepository
-            .getSpotlightToolsPublisher(translatedInAppLanguage: translatedInAppLanguage, languageForAvailabilityText: languageForAvailabilityText)
+            .getSpotlightToolsPublisher(translatedInAppLanguage: translatedInAppLanguage, languageIdForAvailabilityText: languageIdForAvailabilityText)
             .eraseToAnyPublisher()
     }
 }

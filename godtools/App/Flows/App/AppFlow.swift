@@ -176,7 +176,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
             let toolDetails = getToolDetails(
                 toolId: spotlightTool.dataModelId,
-                parallelLanguage: toolFilterLanguage?.language?.localeIdentifier,
+                parallelLanguage: toolFilterLanguage?.languageLocale,
                 selectedLanguageIndex: 1
             )
             
@@ -186,7 +186,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
             let toolDetails = getToolDetails(
                 toolId: tool.dataModelId,
-                parallelLanguage: toolFilterLanguage?.language?.localeIdentifier,
+                parallelLanguage: toolFilterLanguage?.languageLocale,
                 selectedLanguageIndex: 1
             )
             

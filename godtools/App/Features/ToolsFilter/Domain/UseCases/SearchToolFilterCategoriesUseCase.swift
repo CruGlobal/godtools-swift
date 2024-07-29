@@ -18,7 +18,7 @@ class SearchToolFilterCategoriesUseCase {
         self.searchToolFilterCategoriesRepository = searchToolFilterCategoriesRepository
     }
     
-    func getSearchResultsPublisher(for searchText: String, in toolFilterCategories: [CategoryFilterDomainModel]) -> AnyPublisher<[CategoryFilterDomainModel], Never> {
+    func getSearchResultsPublisher(for searchText: String, in toolFilterCategories: [ToolFilterCategoryDomainModel]) -> AnyPublisher<[ToolFilterCategoryDomainModel], Never> {
         
         return searchToolFilterCategoriesRepository.getSearchResultsPublisher(for: searchText, in: toolFilterCategories)
     }

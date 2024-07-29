@@ -1,5 +1,5 @@
 //
-//  LessonLanguageFilterDomainModel.swift
+//  LessonFilterLanguageDomainModel.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 7/1/24.
@@ -8,21 +8,21 @@
 
 import Foundation
 
-struct LessonLanguageFilterDomainModel {
+struct LessonFilterLanguageDomainModel {
     let languageId: String
     let languageName: String
     let translatedName: String
     let lessonsAvailableText: String
 }
 
-extension LessonLanguageFilterDomainModel: StringSearchable {
+extension LessonFilterLanguageDomainModel: StringSearchable {
     
     var searchableStrings: [String] {
         return [languageName, translatedName]
     }
 }
 
-extension LessonLanguageFilterDomainModel: Identifiable {
+extension LessonFilterLanguageDomainModel: Identifiable {
     
     var id: String {
         return languageId
