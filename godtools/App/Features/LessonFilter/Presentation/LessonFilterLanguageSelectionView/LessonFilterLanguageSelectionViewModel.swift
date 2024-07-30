@@ -25,11 +25,11 @@ class LessonFilterLanguageSelectionViewModel: ObservableObject {
     private lazy var searchBarViewModel = SearchBarViewModel(getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, viewSearchBarUseCase: viewSearchBarUseCase)
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
-    @Published private var allLanguages: [LessonLanguageFilterDomainModel] = Array()
+    @Published private var allLanguages: [LessonFilterLanguageDomainModel] = Array()
     
     @Published var searchText: String = ""
-    @Published var languageSearchResults: [LessonLanguageFilterDomainModel] = Array()
-    @Published var selectedLanguage: LessonLanguageFilterDomainModel?
+    @Published var languageSearchResults: [LessonFilterLanguageDomainModel] = Array()
+    @Published var selectedLanguage: LessonFilterLanguageDomainModel?
     @Published var navTitle: String = ""
     
     init(viewLessonFilterLanguagesUseCase: ViewLessonFilterLanguagesUseCase, getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase, storeUserLessonFiltersUseCase: StoreUserLessonFiltersUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, searchLessonFilterLanguagesUseCase: SearchLessonFilterLanguagesUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, flowDelegate: FlowDelegate) {
@@ -84,7 +84,7 @@ class LessonFilterLanguageSelectionViewModel: ObservableObject {
             $searchText,
             $allLanguages
         )
-        .flatMap { (searchText: String, languages: [LessonLanguageFilterDomainModel]) in
+        .flatMap { (searchText: String, languages: [LessonFilterLanguageDomainModel]) in
             
             searchLessonFilterLanguagesUseCase.getSearchResultsPublisher(for: searchText, in: languages)
         }
@@ -102,7 +102,7 @@ extension LessonFilterLanguageSelectionViewModel {
         flowDelegate?.navigate(step: .backTappedFromLessonLanguageFilter)
     }
     
-    func languageTapped(_ language: LessonLanguageFilterDomainModel) {
+    func languageTapped(_ language: LessonFilterLanguageDomainModel) {
         
         selectedLanguage = language
         

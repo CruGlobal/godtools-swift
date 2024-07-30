@@ -13,9 +13,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>%d Lesson available</string>
+<string>%d  ትምህርት ይገኛል</string>
 <key>other</key>
-<string>%d Lessons available</string>
+<string>%d  ትምህርቶች ይገኛሉ</string>
 </dict>
 </dict>
 <key>account.activity.toolOpens</key>

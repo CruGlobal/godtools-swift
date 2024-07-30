@@ -277,6 +277,10 @@ class AppDataLayerDependencies {
         return sharedUserDefaultsCache
     }
     
+    func getStringWithLocaleCount() -> StringWithLocaleCountInterface {
+        return StringWithLocaleCount()
+    }
+    
     func getToolDownloader() -> ToolDownloader {
         return ToolDownloader(
             resourcesRepository: getResourcesRepository(),

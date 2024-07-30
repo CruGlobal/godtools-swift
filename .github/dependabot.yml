@@ -10,3 +10,13 @@ updates:
   assignees:
   - frett
   - levieggertcru
+- package-ecosystem: swift
+  directory: "/"
+  schedule:
+    interval: daily
+  reviewers:
+  - frett
+  - levieggertcru
+  assignees:
+  - frett
+  - levieggertcru

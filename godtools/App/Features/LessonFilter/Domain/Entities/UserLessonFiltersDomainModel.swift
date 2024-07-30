@@ -10,5 +10,5 @@ import Foundation
 
 struct UserLessonFiltersDomainModel {
     
-    let languageFilter: LessonLanguageFilterDomainModel?
+    let languageFilter: LessonFilterLanguageDomainModel?
 }

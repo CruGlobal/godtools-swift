@@ -1,4 +1,6 @@
 "language_name_fil" = "फिलिपीनी";
+"lessons.filter.navBar.language" = "पाठ की भाषा";
+"lessons.languageFilter.title" = "इसमें पाठ:";
 "language_name_fil-x-taglish" = "टाग्लिश";
 "language_name_sid" = "सिदामा";
 "onboardingTutorial.chooseLanguageButton.title" = "भाषा चुनें";

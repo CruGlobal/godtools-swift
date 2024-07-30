@@ -20,7 +20,7 @@ class ViewLessonsUseCase {
         self.getLessonsListRepository = getLessonsListRepository
     }
     
-    func viewPublisher(appLanguage: AppLanguageDomainModel, filterLessonsByLanguage: LessonLanguageFilterDomainModel?) -> AnyPublisher<ViewLessonsDomainModel, Never> {
+    func viewPublisher(appLanguage: AppLanguageDomainModel, filterLessonsByLanguage: LessonFilterLanguageDomainModel?) -> AnyPublisher<ViewLessonsDomainModel, Never> {
         
         return Publishers.CombineLatest(
             getInterfaceStringsRepository.getStringsPublisher(translateInLanguage: appLanguage),
