@@ -32,7 +32,11 @@ class AppLanguagesApi {
             AppLanguageCodable(languageCode: "vi", languageDirection: .leftToRight, languageScriptCode: nil),
             AppLanguageCodable(languageCode: "lv", languageDirection: .leftToRight, languageScriptCode: nil),
             AppLanguageCodable(languageCode: "bn", languageDirection: .leftToRight, languageScriptCode: nil),
-            AppLanguageCodable(languageCode: "ur", languageDirection: .rightToLeft, languageScriptCode: nil)
+            AppLanguageCodable(languageCode: "ur", languageDirection: .rightToLeft, languageScriptCode: nil),
+            AppLanguageCodable(languageCode: "sw", languageDirection: .rightToLeft, languageScriptCode: nil),
+            AppLanguageCodable(languageCode: "de", languageDirection: .rightToLeft, languageScriptCode: nil),
+            AppLanguageCodable(languageCode: "ja", languageDirection: .rightToLeft, languageScriptCode: nil),
+            AppLanguageCodable(languageCode: "ko", languageDirection: .rightToLeft, languageScriptCode: nil)
         ]
         
         return Just(allAppLanguages).setFailureType(to: Error.self)
