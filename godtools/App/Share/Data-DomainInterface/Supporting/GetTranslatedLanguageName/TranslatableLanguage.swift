@@ -15,4 +15,5 @@ protocol TranslatableLanguage {
     var fallbackName: String { get }
     var regionCode: String? { get }
     var scriptCode: String? { get }
+    var forceLanguageName: Bool { get }
 }

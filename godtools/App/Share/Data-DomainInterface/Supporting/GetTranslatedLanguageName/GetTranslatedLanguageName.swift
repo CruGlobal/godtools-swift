@@ -26,6 +26,10 @@ class GetTranslatedLanguageName {
     
     func getLanguageName(language: TranslatableLanguage, translatedInLanguage: BCP47LanguageIdentifier) -> String {
         
+        if language.forceLanguageName {
+            return language.fallbackName
+        }
+        
         guard !translatedInLanguage.isEmpty else {
             return language.fallbackName
         }

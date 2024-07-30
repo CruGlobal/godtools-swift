@@ -98,4 +98,8 @@ extension BCP47LanguageIdentifier: TranslatableLanguage {
     var fallbackName: String {
         return ""
     }
+    
+    var forceLanguageName: Bool {
+        return false
+    }
 }
