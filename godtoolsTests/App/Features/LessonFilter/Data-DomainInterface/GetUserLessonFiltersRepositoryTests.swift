@@ -48,14 +48,14 @@ class GetUserLessonFiltersRepositoryTests: QuickSpec {
                         getLessonFilterLanguagesRepository: GetUserLessonFiltersRepositoryTests.getLessonFilterLanguagesRepository(testsDiContainer: testsDiContainer)
                     )
                     
-                    var lessonLanguageFilterRef: LessonLanguageFilterDomainModel?
+                    var lessonLanguageFilterRef: LessonFilterLanguageDomainModel?
                     var sinkCompleted: Bool = false
                     
                     waitUntil { done in
                         
                         getUserLessonFiltersRepository
                             .getUserLessonLanguageFilterPublisher(translatedInAppLanguage: appLanguageSpanish)
-                            .sink { (lessonLanguageFilter: LessonLanguageFilterDomainModel?) in
+                            .sink { (lessonLanguageFilter: LessonFilterLanguageDomainModel?) in
                                 
                                 guard !sinkCompleted else {
                                     return
@@ -113,14 +113,14 @@ class GetUserLessonFiltersRepositoryTests: QuickSpec {
                         getLessonFilterLanguagesRepository: GetUserLessonFiltersRepositoryTests.getLessonFilterLanguagesRepository(testsDiContainer: testsDiContainer)
                     )
                     
-                    var lessonLanguageFilterRef: LessonLanguageFilterDomainModel?
+                    var lessonLanguageFilterRef: LessonFilterLanguageDomainModel?
                     var sinkCompleted: Bool = false
                     
                     waitUntil { done in
                         
                         getUserLessonFiltersRepository
                             .getUserLessonLanguageFilterPublisher(translatedInAppLanguage: appLanguageFrench)
-                            .sink { (lessonLanguageFilter: LessonLanguageFilterDomainModel?) in
+                            .sink { (lessonLanguageFilter: LessonFilterLanguageDomainModel?) in
                                 
                                 guard !sinkCompleted else {
                                     return
@@ -168,8 +168,8 @@ class GetUserLessonFiltersRepositoryTests: QuickSpec {
                         getLessonFilterLanguagesRepository: GetUserLessonFiltersRepositoryTests.getLessonFilterLanguagesRepository(testsDiContainer: testsDiContainer)
                     )
                     
-                    var originalLessonLanguageFilterRef: LessonLanguageFilterDomainModel?
-                    var selectedLessonLanguageFilterRef: LessonLanguageFilterDomainModel?
+                    var originalLessonLanguageFilterRef: LessonFilterLanguageDomainModel?
+                    var selectedLessonLanguageFilterRef: LessonFilterLanguageDomainModel?
                     var sinkCount: Int = 0
                     var sinkCompleted: Bool = false
                     
@@ -177,7 +177,7 @@ class GetUserLessonFiltersRepositoryTests: QuickSpec {
                         
                         getUserLessonFiltersRepository
                             .getUserLessonLanguageFilterPublisher(translatedInAppLanguage: appLanguageFrench)
-                            .sink { (lessonLanguageFilter: LessonLanguageFilterDomainModel?) in
+                            .sink { (lessonLanguageFilter: LessonFilterLanguageDomainModel?) in
                                 
                                 guard !sinkCompleted else {
                                     return

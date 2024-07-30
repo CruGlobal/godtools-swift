@@ -33,8 +33,8 @@ class ToolsViewModel: ObservableObject {
     private weak var flowDelegate: FlowDelegate?
 
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
-    @Published private var toolFilterCategorySelection: CategoryFilterDomainModel = .anyCategory(text: "", toolsAvailableText: "")
-    @Published private var toolFilterLanguageSelection: LanguageFilterDomainModel = .anyLanguage(text: "", toolsAvailableText: "")
+    @Published private var toolFilterCategorySelection: ToolFilterCategoryDomainModel = ToolFilterAnyCategoryDomainModel(text: "", toolsAvailableText: "")
+    @Published private var toolFilterLanguageSelection: ToolFilterLanguageDomainModel = ToolFilterAnyLanguageDomainModel(text: "", toolsAvailableText: "")
     
     @Published var favoritingToolBannerMessage: String = ""
     @Published var showsFavoritingToolBanner: Bool = false
@@ -79,13 +79,13 @@ class ToolsViewModel: ObservableObject {
             Publishers.CombineLatest(
                 viewToolsUseCase.viewPublisher(
                     translatedInAppLanguage: appLanguage,
-                    languageForAvailabilityText: toolFilterLanguage.language,
+                    languageIdForAvailabilityText: toolFilterLanguage.languageDataModelId,
                     filterToolsByCategory: toolFilterCategory,
                     filterToolsByLanguage: toolFilterLanguage
                 ),
                 getSpotlightToolsUseCase.getSpotlightToolsPublisher(
                     translatedInAppLanguage: appLanguage,
-                    languageForAvailabilityText: toolFilterLanguage.language
+                    languageIdForAvailabilityText: toolFilterLanguage.languageDataModelId
                 )
             )
         }

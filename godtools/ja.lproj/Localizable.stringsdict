@@ -13,7 +13,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>%d Lessons available</string>
+<string>%d 個のレッスンが利用可能</string>
 </dict>
 </dict>
 <key>account.activity.toolOpens</key>
@@ -27,7 +27,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Tool opens</string>
+<string>開いたツール</string>
 </dict>
 </dict>
 <key>account.activity.lessonCompletions</key>
@@ -41,7 +41,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Lesson completions</string>
+<string>修了したレッスン</string>
 </dict>
 </dict>
 <key>account.activity.screenShares</key>
@@ -55,7 +55,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Screen shares</string>
+<string>シェアしたスクリーン</string>
 </dict>
 </dict>
 <key>account.activity.linksShared</key>
@@ -69,7 +69,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Link shares</string>
+<string>リンクのシェア</string>
 </dict>
 </dict>
 <key>account.activity.languagesUsed</key>
@@ -83,7 +83,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Languages used</string>
+<string>使用した言語</string>
 </dict>
 </dict>
 <key>account.activity.sessions</key>
@@ -97,7 +97,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Sessions</string>
+<string>セッション</string>
 </dict>
 </dict>
 <key>tools.filter.toolsAvailable</key>
@@ -111,7 +111,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>%d Tools available</string>
+<string>%d 個のツールがあります</string>
 </dict>
 </dict>
 <key>languageSettings.appLanguage.numberAvailable</key>
@@ -125,7 +125,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>%d Languages available</string>
+<string>%d 個の言語が利用できます</string>
 </dict>
 </dict>
 <key>badges.imagesShared</key>
@@ -139,7 +139,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Shared %d images</string>
+<string>%d 個の画像をシェアしました</string>
 </dict>
 </dict>
 <key>badges.articlesOpened</key>
@@ -153,7 +153,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Read %d articles</string>
+<string>%d 本の記事を開きました</string>
 </dict>
 </dict>
 <key>badges.lessonsCompleted</key>
@@ -167,7 +167,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Completed %d lessons</string>
+<string>%d 本のレッスンを修了しました</string>
 </dict>
 </dict>
 <key>badges.toolsOpened</key>
@@ -181,7 +181,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Opened %d tools</string>
+<string>%d 個のツールを開きました</string>
 </dict>
 </dict>
 <key>badges.tipsCompleted</key>
@@ -195,7 +195,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Completed %d training tips</string>
+<string>%d 個のトレーニングのヒントを完了しました</string>
 </dict>
 </dict>
 </dict>

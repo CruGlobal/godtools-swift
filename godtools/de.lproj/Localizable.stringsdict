@@ -13,9 +13,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>%d Lesson available</string>
+<string>%d Lektionen verfügbar</string>
 <key>other</key>
-<string>%d Lessons available</string>
+<string>%d Lektionen verfügbar</string>
 </dict>
 </dict>
 <key>account.activity.toolOpens</key>
@@ -29,9 +29,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Tool open</string>
+<string>Tool wird geöffnet</string>
 <key>other</key>
-<string>Tool opens</string>
+<string>Tool wird geöffnet</string>
 </dict>
 </dict>
 <key>account.activity.lessonCompletions</key>
@@ -45,9 +45,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Lesson completion</string>
+<string>Abgeschlossene Lektionen</string>
 <key>other</key>
-<string>Lesson completions</string>
+<string>Abgeschlossene Lektionen</string>
 </dict>
 </dict>
 <key>account.activity.screenShares</key>
@@ -61,9 +61,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Screen share</string>
+<string>Bildschirmfreigaben</string>
 <key>other</key>
-<string>Screen shares</string>
+<string>Bildschirmfreigaben</string>
 </dict>
 </dict>
 <key>account.activity.linksShared</key>
@@ -77,9 +77,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Link share</string>
+<string>Geteilten Link</string>
 <key>other</key>
-<string>Link shares</string>
+<string>Geteilten Links</string>
 </dict>
 </dict>
 <key>account.activity.languagesUsed</key>
@@ -93,9 +93,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Language used</string>
+<string>Verwendete Sprachen</string>
 <key>other</key>
-<string>Languages used</string>
+<string>Verwendete Sprachen</string>
 </dict>
 </dict>
 <key>account.activity.sessions</key>
@@ -109,9 +109,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Session</string>
+<string>Sitzungen</string>
 <key>other</key>
-<string>Sessions</string>
+<string>Sitzungen</string>
 </dict>
 </dict>
 <key>tools.filter.toolsAvailable</key>
@@ -125,9 +125,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>%d Tool available</string>
+<string>%d Tool verfügbar</string>
 <key>other</key>
-<string>%d Tools available</string>
+<string>%d Tools verfügbar</string>
 </dict>
 </dict>
 <key>languageSettings.appLanguage.numberAvailable</key>
@@ -141,9 +141,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>1 Language available</string>
+<string>%d Sprachen verfügbar</string>
 <key>other</key>
-<string>%d Languages available</string>
+<string>%d Sprachen verfügbar</string>
 </dict>
 </dict>
 <key>badges.imagesShared</key>
@@ -157,9 +157,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Shared 1 image</string>
+<string>%d Bilder geteilt</string>
 <key>other</key>
-<string>Shared %d images</string>
+<string>%d Bilder geteilt</string>
 </dict>
 </dict>
 <key>badges.articlesOpened</key>
@@ -173,9 +173,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Read 1 article</string>
+<string>%d Artikel geöffnet</string>
 <key>other</key>
-<string>Read %d articles</string>
+<string>%d Artikel geöffnet</string>
 </dict>
 </dict>
 <key>badges.lessonsCompleted</key>
@@ -189,9 +189,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Completed 1 lesson</string>
+<string>%d Lektionen abgeschlossen</string>
 <key>other</key>
-<string>Completed %d lessons</string>
+<string>%d Lektionen abgeschlossen</string>
 </dict>
 </dict>
 <key>badges.toolsOpened</key>
@@ -205,9 +205,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Opened 1 tool</string>
+<string>%d Tools geöffnet</string>
 <key>other</key>
-<string>Opened %d tools</string>
+<string>%d Tools geöffnet</string>
 </dict>
 </dict>
 <key>badges.tipsCompleted</key>
@@ -221,9 +221,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Completed 1 training tip</string>
+<string>%d Übungstipps abgeschlossen</string>
 <key>other</key>
-<string>Completed %d training tips</string>
+<string>%d Übungstipps abgeschlossen</string>
 </dict>
 </dict>
 </dict>

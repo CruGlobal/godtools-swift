@@ -12,10 +12,10 @@ struct LessonFilterLanguageSelectionRowView: View {
     
     private static let lightGrey = Color.getColorWithRGB(red: 151, green: 151, blue: 151, opacity: 1)
     
-    private let language: LessonLanguageFilterDomainModel
+    private let language: LessonFilterLanguageDomainModel
     private let isSelected: Bool
     
-    init(language: LessonLanguageFilterDomainModel, isSelected: Bool) {
+    init(language: LessonFilterLanguageDomainModel, isSelected: Bool) {
         self.language = language
         self.isSelected = isSelected
     }

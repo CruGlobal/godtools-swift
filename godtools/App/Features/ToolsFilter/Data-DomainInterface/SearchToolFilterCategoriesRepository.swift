@@ -18,7 +18,7 @@ class SearchToolFilterCategoriesRepository: SearchToolFilterCategoriesRepository
         self.stringSearcher = stringSearcher
     }
     
-    func getSearchResultsPublisher(for searchText: String, in toolFilterCategories: [CategoryFilterDomainModel]) -> AnyPublisher<[CategoryFilterDomainModel], Never> {
+    func getSearchResultsPublisher(for searchText: String, in toolFilterCategories: [ToolFilterCategoryDomainModel]) -> AnyPublisher<[ToolFilterCategoryDomainModel], Never> {
         
         let searchResults = stringSearcher.search(for: searchText, in: toolFilterCategories)
         

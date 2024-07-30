@@ -11,5 +11,5 @@ import Combine
 
 protocol SearchLessonFilterLanguagesRepositoryInterface {
     
-    func getSearchResultsPublisher(for searchText: String, in lessonFilterLanguages: [LessonLanguageFilterDomainModel]) -> AnyPublisher<[LessonLanguageFilterDomainModel], Never>
+    func getSearchResultsPublisher(for searchText: String, in lessonFilterLanguages: [LessonFilterLanguageDomainModel]) -> AnyPublisher<[LessonFilterLanguageDomainModel], Never>
 }

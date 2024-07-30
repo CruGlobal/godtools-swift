@@ -13,7 +13,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>%d Lessons available</string>
+<string>%d 個可用 課程</string>
 </dict>
 </dict>
 <key>account.activity.toolOpens</key>
@@ -27,7 +27,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Tool opens</string>
+<string>開啟的工具</string>
 </dict>
 </dict>
 <key>account.activity.lessonCompletions</key>
@@ -41,7 +41,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Lesson completions</string>
+<string>完成的課程</string>
 </dict>
 </dict>
 <key>account.activity.screenShares</key>
@@ -55,7 +55,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Screen shares</string>
+<string>螢幕分享次數</string>
 </dict>
 </dict>
 <key>account.activity.linksShared</key>
@@ -69,7 +69,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Link shares</string>
+<string>連結分享次數</string>
 </dict>
 </dict>
 <key>account.activity.languagesUsed</key>
@@ -83,7 +83,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Languages used</string>
+<string>使用過的語言</string>
 </dict>
 </dict>
 <key>account.activity.sessions</key>
@@ -97,7 +97,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Sessions</string>
+<string>會議</string>
 </dict>
 </dict>
 <key>tools.filter.toolsAvailable</key>
@@ -139,7 +139,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Shared %d images</string>
+<string>分享 %d 張圖片</string>
 </dict>
 </dict>
 <key>badges.articlesOpened</key>
@@ -153,7 +153,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Read %d articles</string>
+<string>閱讀 %d 篇文章</string>
 </dict>
 </dict>
 <key>badges.lessonsCompleted</key>
@@ -167,7 +167,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Completed %d lessons</string>
+<string>完成 %d 個課程</string>
 </dict>
 </dict>
 <key>badges.toolsOpened</key>
@@ -181,7 +181,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Opened %d tools</string>
+<string>開啟 %d 個工具</string>
 </dict>
 </dict>
 <key>badges.tipsCompleted</key>
@@ -195,7 +195,7 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>other</key>
-<string>Completed %d training tips</string>
+<string>完成 %d 個訓練技巧</string>
 </dict>
 </dict>
 </dict>

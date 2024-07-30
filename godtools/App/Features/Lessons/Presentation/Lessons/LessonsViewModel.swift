@@ -25,7 +25,7 @@ class LessonsViewModel: ObservableObject {
     private weak var flowDelegate: FlowDelegate?
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
-    @Published private var lessonFilterLanguageSelection: LessonLanguageFilterDomainModel?
+    @Published private var lessonFilterLanguageSelection: LessonFilterLanguageDomainModel?
     
     @Published var sectionTitle: String = ""
     @Published var subtitle: String = ""

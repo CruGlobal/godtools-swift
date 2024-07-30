@@ -17,7 +17,7 @@ class SearchLessonFilterLanguagesRepository: SearchLessonFilterLanguagesReposito
         self.stringSearcher = stringSearcher
     }
     
-    func getSearchResultsPublisher(for searchText: String, in lessonFilterLanguages: [LessonLanguageFilterDomainModel]) -> AnyPublisher<[LessonLanguageFilterDomainModel], Never> {
+    func getSearchResultsPublisher(for searchText: String, in lessonFilterLanguages: [LessonFilterLanguageDomainModel]) -> AnyPublisher<[LessonFilterLanguageDomainModel], Never> {
         
         let searchResults = stringSearcher.search(for: searchText, in: lessonFilterLanguages)
         
