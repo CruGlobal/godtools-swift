@@ -1,4 +1,6 @@
 "language_name_fil" = "Philippine (Tagalog)";
+"lessons.filter.navBar.language" = "Langue de la leçon";
+"lessons.languageFilter.title" = "Leçons en :";
 "language_name_fil-x-taglish" = "Taglish";
 "language_name_sid" = "Sidama";
 "onboardingTutorial.chooseLanguageButton.title" = "Choisir la langue";

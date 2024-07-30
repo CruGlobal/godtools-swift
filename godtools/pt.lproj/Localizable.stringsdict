@@ -13,9 +13,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>%d Lesson available</string>
+<string>Sessões %d disponível</string>
 <key>other</key>
-<string>%d Lessons available</string>
+<string>Sessōes %d disponível</string>
 </dict>
 </dict>
 <key>account.activity.toolOpens</key>
@@ -29,9 +29,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Tool open</string>
+<string>Ferramenta abre</string>
 <key>other</key>
-<string>Tool opens</string>
+<string>Ferramenta abres</string>
 </dict>
 </dict>
 <key>account.activity.lessonCompletions</key>
@@ -77,9 +77,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Link share</string>
+<string>Link compartilhado</string>
 <key>other</key>
-<string>Link shares</string>
+<string>Links compartilhados</string>
 </dict>
 </dict>
 <key>account.activity.languagesUsed</key>
@@ -173,9 +173,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Read 1 article</string>
+<string>%d artigo lidos</string>
 <key>other</key>
-<string>Read %d articles</string>
+<string>%d artigos lidos</string>
 </dict>
 </dict>
 <key>badges.lessonsCompleted</key>

@@ -1,4 +1,6 @@
 "language_name_fil" = "菲律賓文 (他加祿語)";
+"lessons.filter.navBar.language" = "課程語言";
+"lessons.languageFilter.title" = "課程語言：";
 "language_name_fil-x-taglish" = "塔吉什語";
 "language_name_sid" = "希達馬語";
 "onboardingTutorial.chooseLanguageButton.title" = "選擇語言";

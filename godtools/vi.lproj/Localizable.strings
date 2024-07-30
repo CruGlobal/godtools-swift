@@ -1,4 +1,6 @@
 "language_name_fil" = "Tiếng Philippines (Tagalog)";
+"lessons.filter.navBar.language" = "Ngôn ngữ bài học";
+"lessons.languageFilter.title" = "Bài học bằng:";
 "language_name_fil-x-taglish" = "Taglish";
 "language_name_sid" = "Sidama";
 "onboardingTutorial.chooseLanguageButton.title" = "Chọn ngôn ngữ";

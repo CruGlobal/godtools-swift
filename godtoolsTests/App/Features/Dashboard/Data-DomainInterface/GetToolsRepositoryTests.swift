@@ -210,7 +210,7 @@ class GetToolsRepositoryTests: QuickSpec {
                     waitUntil { done in
                         
                         getToolsRepository
-                            .getToolsPublisher(translatedInAppLanguage: "", languageForAvailabilityText: nil, filterToolsByCategory: nil, filterToolsByLanguage: nil)
+                            .getToolsPublisher(translatedInAppLanguage: "", languageIdForAvailabilityText: nil, filterToolsByCategory: nil, filterToolsByLanguage: nil)
                             .sink { (tools: [ToolListItemDomainModel]) in
                                 
                                 guard !sinkCompleted else {
@@ -237,12 +237,13 @@ class GetToolsRepositoryTests: QuickSpec {
                     var toolsList: [ToolListItemDomainModel] = Array()
                     var sinkCompleted: Bool = false
                     
-                    let growthCategoryFilter: CategoryFilterDomainModel = .category(categoryId: categoryGrowth, translatedName: "", toolsAvailableText: "")
+                    let growthCategoryFilter = ToolFilterCategoryDomainModel(categoryId: categoryGrowth, translatedName: "", toolsAvailableText: "")
+                    let anyLanguageFilter = ToolFilterAnyLanguageDomainModel(text: "", toolsAvailableText: "")
                     
                     waitUntil { done in
                         
                         getToolsRepository
-                            .getToolsPublisher(translatedInAppLanguage: "", languageForAvailabilityText: nil, filterToolsByCategory: growthCategoryFilter, filterToolsByLanguage: nil)
+                            .getToolsPublisher(translatedInAppLanguage: "", languageIdForAvailabilityText: nil, filterToolsByCategory: growthCategoryFilter, filterToolsByLanguage: anyLanguageFilter)
                             .sink { (tools: [ToolListItemDomainModel]) in
                                 
                                 guard !sinkCompleted else {
@@ -269,14 +270,14 @@ class GetToolsRepositoryTests: QuickSpec {
                     var toolsList: [ToolListItemDomainModel] = Array()
                     var sinkCompleted: Bool = false
                     
-                    let languageModel = LanguageDomainModel(analyticsContentLanguage: "", dataModelId: russianLanguage.id, direction: .leftToRight, localeIdentifier: "", translatedName: "")
-                    
-                    let languageFilter: LanguageFilterDomainModel = .language(languageName: "", toolsAvailableText: "", languageModel: languageModel)
+                    let anyCategoryFilter = ToolFilterAnyCategoryDomainModel(text: "", toolsAvailableText: "")
+                                        
+                    let russianLanguageFilter = ToolFilterLanguageDomainModel(languageName: "", translatedName: "", toolsAvailableText: "", languageId: russianLanguage.id, languageLocaleId: "")
                     
                     waitUntil { done in
                         
                         getToolsRepository
-                            .getToolsPublisher(translatedInAppLanguage: "", languageForAvailabilityText: nil, filterToolsByCategory: nil, filterToolsByLanguage: languageFilter)
+                            .getToolsPublisher(translatedInAppLanguage: "", languageIdForAvailabilityText: nil, filterToolsByCategory: anyCategoryFilter, filterToolsByLanguage: russianLanguageFilter)
                             .sink { (tools: [ToolListItemDomainModel]) in
                                 
                                 guard !sinkCompleted else {
@@ -303,14 +304,14 @@ class GetToolsRepositoryTests: QuickSpec {
                     var toolsList: [ToolListItemDomainModel] = Array()
                     var sinkCompleted: Bool = false
                     
-                    let languageModel = LanguageDomainModel(analyticsContentLanguage: "", dataModelId: spanishLanguage.id, direction: .leftToRight, localeIdentifier: "", translatedName: "")
+                    let anyCategoryFilter = ToolFilterAnyCategoryDomainModel(text: "", toolsAvailableText: "")
                     
-                    let languageFilter: LanguageFilterDomainModel = .language(languageName: "", toolsAvailableText: "", languageModel: languageModel)
+                    let spanishLanguageFilter = ToolFilterLanguageDomainModel(languageName: "", translatedName: "", toolsAvailableText: "", languageId: spanishLanguage.id, languageLocaleId: "")
                     
                     waitUntil { done in
                         
                         getToolsRepository
-                            .getToolsPublisher(translatedInAppLanguage: "", languageForAvailabilityText: nil, filterToolsByCategory: nil, filterToolsByLanguage: languageFilter)
+                            .getToolsPublisher(translatedInAppLanguage: "", languageIdForAvailabilityText: nil, filterToolsByCategory: anyCategoryFilter, filterToolsByLanguage: spanishLanguageFilter)
                             .sink { (tools: [ToolListItemDomainModel]) in
                                 
                                 guard !sinkCompleted else {

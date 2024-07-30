@@ -18,7 +18,7 @@ class SearchToolFilterLanguagesRepository: SearchToolFilterLanguagesRepositoryIn
         self.stringSearcher = stringSearcher
     }
     
-    func getSearchResultsPublisher(for searchText: String, in toolFilterLanguages: [LanguageFilterDomainModel]) -> AnyPublisher<[LanguageFilterDomainModel], Never> {
+    func getSearchResultsPublisher(for searchText: String, in toolFilterLanguages: [ToolFilterLanguageDomainModel]) -> AnyPublisher<[ToolFilterLanguageDomainModel], Never> {
         
         let searchResults = stringSearcher.search(for: searchText, in: toolFilterLanguages)
         

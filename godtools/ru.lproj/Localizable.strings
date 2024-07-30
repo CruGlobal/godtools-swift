@@ -1,4 +1,6 @@
 "language_name_fil" = "Филиппинский (Тагальский)";
+"lessons.filter.navBar.language" = "Язык урока";
+"lessons.languageFilter.title" = "Язык уроков:";
 "language_name_fil-x-taglish" = "Тагальский";
 "language_name_sid" = "Сидамо";
 "onboardingTutorial.chooseLanguageButton.title" = "Выбрать язык";

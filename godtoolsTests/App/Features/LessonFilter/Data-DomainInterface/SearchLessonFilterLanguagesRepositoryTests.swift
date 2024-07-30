@@ -28,13 +28,13 @@ class SearchLessonFilterLanguagesRepositoryTests: QuickSpec {
             
             context("When a user inputs a lowercased single letter search string \(lowercasedSingleLetterSearchString)") {
                 
-                let allLanguages: [LessonLanguageFilterDomainModel] = [
-                    LessonLanguageFilterDomainModel(languageId: "",  languageName: "", translatedName: "Church", lessonsAvailableText: ""),
-                    LessonLanguageFilterDomainModel(languageId: "",  languageName: "", translatedName: "church", lessonsAvailableText: ""),
-                    LessonLanguageFilterDomainModel(languageId: "",  languageName: "", translatedName: "food", lessonsAvailableText: ""),
-                    LessonLanguageFilterDomainModel(languageId: "",  languageName: "", translatedName: "Food", lessonsAvailableText: ""),
-                    LessonLanguageFilterDomainModel(languageId: "",  languageName: "", translatedName: "soccer", lessonsAvailableText: ""),
-                    LessonLanguageFilterDomainModel(languageId: "",  languageName: "", translatedName: "soCCer", lessonsAvailableText: "")
+                let allLanguages: [LessonFilterLanguageDomainModel] = [
+                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "Church", lessonsAvailableText: ""),
+                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "church", lessonsAvailableText: ""),
+                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "food", lessonsAvailableText: ""),
+                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "Food", lessonsAvailableText: ""),
+                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "soccer", lessonsAvailableText: ""),
+                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "soCCer", lessonsAvailableText: "")
                 ]
                 
                 it("I expect all languages that contain the lowercased single letter search string \(lowercasedSingleLetterSearchString) ignoring case.") {
@@ -46,7 +46,7 @@ class SearchLessonFilterLanguagesRepositoryTests: QuickSpec {
                         
                         searchLessonFilterLanguagesRepository
                             .getSearchResultsPublisher(for: lowercasedSingleLetterSearchString, in: allLanguages)
-                            .sink { (languages: [LessonLanguageFilterDomainModel]) in
+                            .sink { (languages: [LessonFilterLanguageDomainModel]) in
                                 
                                 guard !sinkCompleted else {
                                     return
@@ -74,15 +74,15 @@ class SearchLessonFilterLanguagesRepositoryTests: QuickSpec {
             
             context("When a user inputs an uppercased single letter search string \(uppercasedSingleLetterSearchString)") {
                 
-                let allLanguages: [LessonLanguageFilterDomainModel] = [
-                    LessonLanguageFilterDomainModel(languageId: "",  languageName: "", translatedName: "Church", lessonsAvailableText: ""),
-                    LessonLanguageFilterDomainModel(languageId: "",  languageName: "", translatedName: "church", lessonsAvailableText: ""),
-                    LessonLanguageFilterDomainModel(languageId: "",  languageName: "", translatedName: "foody", lessonsAvailableText: ""),
-                    LessonLanguageFilterDomainModel(languageId: "",  languageName: "", translatedName: "Food", lessonsAvailableText: ""),
-                    LessonLanguageFilterDomainModel(languageId: "",  languageName: "", translatedName: "soccer", lessonsAvailableText: ""),
-                    LessonLanguageFilterDomainModel(languageId: "",  languageName: "", translatedName: "soCCer", lessonsAvailableText: ""),
-                    LessonLanguageFilterDomainModel(languageId: "",  languageName: "", translatedName: "Yellow", lessonsAvailableText: ""),
-                    LessonLanguageFilterDomainModel(languageId: "",  languageName: "", translatedName: "may", lessonsAvailableText: "")
+                let allLanguages: [LessonFilterLanguageDomainModel] = [
+                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "Church", lessonsAvailableText: ""),
+                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "church", lessonsAvailableText: ""),
+                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "foody", lessonsAvailableText: ""),
+                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "Food", lessonsAvailableText: ""),
+                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "soccer", lessonsAvailableText: ""),
+                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "soCCer", lessonsAvailableText: ""),
+                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "Yellow", lessonsAvailableText: ""),
+                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "may", lessonsAvailableText: "")
                 ]
                 
                 it("I expect all languages that contain the uppercased single letter search string \(uppercasedSingleLetterSearchString) ignoring case.") {
@@ -94,7 +94,7 @@ class SearchLessonFilterLanguagesRepositoryTests: QuickSpec {
                         
                         searchLessonFilterLanguagesRepository
                             .getSearchResultsPublisher(for: uppercasedSingleLetterSearchString, in: allLanguages)
-                            .sink { (languages: [LessonLanguageFilterDomainModel]) in
+                            .sink { (languages: [LessonFilterLanguageDomainModel]) in
                                 
                                 guard !sinkCompleted else {
                                     return
@@ -122,17 +122,17 @@ class SearchLessonFilterLanguagesRepositoryTests: QuickSpec {
             
             context("When a user inputs a multi-text search string \(multiTextSearchString)") {
                 
-                let allLanguages: [LessonLanguageFilterDomainModel] = [
-                    LessonLanguageFilterDomainModel(languageId: "",  languageName: "", translatedName: "blAnd", lessonsAvailableText: ""),
-                    LessonLanguageFilterDomainModel(languageId: "",  languageName: "", translatedName: "land", lessonsAvailableText: ""),
-                    LessonLanguageFilterDomainModel(languageId: "",  languageName: "", translatedName: "Canned", lessonsAvailableText: ""),
-                    LessonLanguageFilterDomainModel(languageId: "",  languageName: "", translatedName: "WAND", lessonsAvailableText: ""),
-                    LessonLanguageFilterDomainModel(languageId: "",  languageName: "", translatedName: "wander", lessonsAvailableText: ""),
-                    LessonLanguageFilterDomainModel(languageId: "",  languageName: "", translatedName: "pAnda", lessonsAvailableText: ""),
-                    LessonLanguageFilterDomainModel(languageId: "",  languageName: "", translatedName: "bran", lessonsAvailableText: ""),
-                    LessonLanguageFilterDomainModel(languageId: "",  languageName: "", translatedName: "Tan", lessonsAvailableText: ""),
-                    LessonLanguageFilterDomainModel(languageId: "",  languageName: "", translatedName: "Tanned", lessonsAvailableText: ""),
-                    LessonLanguageFilterDomainModel(languageId: "",  languageName: "", translatedName: "sanded", lessonsAvailableText: "")
+                let allLanguages: [LessonFilterLanguageDomainModel] = [
+                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "blAnd", lessonsAvailableText: ""),
+                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "land", lessonsAvailableText: ""),
+                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "Canned", lessonsAvailableText: ""),
+                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "WAND", lessonsAvailableText: ""),
+                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "wander", lessonsAvailableText: ""),
+                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "pAnda", lessonsAvailableText: ""),
+                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "bran", lessonsAvailableText: ""),
+                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "Tan", lessonsAvailableText: ""),
+                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "Tanned", lessonsAvailableText: ""),
+                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "sanded", lessonsAvailableText: "")
                 ]
                 
                 it("I expect all languages that contain the multi-text search string \(multiTextSearchString) ignoring case.") {
@@ -144,7 +144,7 @@ class SearchLessonFilterLanguagesRepositoryTests: QuickSpec {
                         
                         searchLessonFilterLanguagesRepository
                             .getSearchResultsPublisher(for: multiTextSearchString, in: allLanguages)
-                            .sink { (languages: [LessonLanguageFilterDomainModel]) in
+                            .sink { (languages: [LessonFilterLanguageDomainModel]) in
                                 
                                 guard !sinkCompleted else {
                                     return
