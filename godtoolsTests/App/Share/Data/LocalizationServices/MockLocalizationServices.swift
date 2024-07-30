@@ -61,11 +61,12 @@ class MockLocalizationServices: LocalizationServicesInterface {
         ]
     }
     
-    static func languageNamesLocalizationServices(addAdditionalLocalizableStrings: [LocaleId: [StringKey: String]]) -> MockLocalizationServices {
+    static func createLanguageNamesLocalizationServices(addAdditionalLocalizableStrings: [LocaleId: [StringKey: String]]? = nil) -> MockLocalizationServices {
         
         var mutableLocalizedLanguageNames: [MockLocalizationServices.LocaleId: [MockLocalizationServices.StringKey: String]] = getLocalizedLanguageNames()
 
-        if !addAdditionalLocalizableStrings.isEmpty {
+        if let addAdditionalLocalizableStrings = addAdditionalLocalizableStrings, !addAdditionalLocalizableStrings.isEmpty {
+            
             for (localeId, localeIdStrings) in addAdditionalLocalizableStrings {
                 
                 var mutableLocaleIdStrings: [StringKey: StringKey] = localeIdStrings

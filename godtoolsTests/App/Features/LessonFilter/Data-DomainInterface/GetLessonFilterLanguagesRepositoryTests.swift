@@ -259,7 +259,7 @@ class GetLessonFilterLanguagesRepositoryTests: QuickSpec {
             LanguageCodeDomainModel.english.rawValue: [LessonFilterStringKeys.lessonsAvailableText.rawValue: Self.englishLessonsAvailableText]
         ]
         
-        return MockLocalizationServices.languageNamesLocalizationServices(
+        return MockLocalizationServices.createLanguageNamesLocalizationServices(
             addAdditionalLocalizableStrings: localizableStrings
         )
     }
