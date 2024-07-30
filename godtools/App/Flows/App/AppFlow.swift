@@ -202,8 +202,13 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                 navigateToTool(toolDataModelId: toolId, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, selectedLanguageIndex: selectedLanguageIndex, trainingTipsEnabled: false)
             }
             
-        case .lessonTappedFromLessonsList(let lessonListItem):
-            navigateToToolInAppLanguage(toolDataModelId: lessonListItem.dataModelId, trainingTipsEnabled: false)
+        case .lessonTappedFromLessonsList(let lessonListItem, let languageFilter):
+            
+            if let languageFilter = languageFilter {
+                navigateToTool(toolDataModelId: lessonListItem.dataModelId, languageIds: [languageFilter.languageId], selectedLanguageIndex: 0, trainingTipsEnabled: false)
+            } else {
+                navigateToToolInAppLanguage(toolDataModelId: lessonListItem.dataModelId, trainingTipsEnabled: false)
+            }
             
         case .lessonLanguageFilterTappedFromLessons:
             navigationController.pushViewController(getLessonLanguageFilterSelection(), animated: true)

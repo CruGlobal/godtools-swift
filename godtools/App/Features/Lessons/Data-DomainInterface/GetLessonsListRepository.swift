@@ -36,31 +36,23 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
                 
                 let lessonListItems: [LessonListItemDomainModel] = lessons.map { (resource: ResourceModel) in
 
-                    let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel
+                    let filterLanguageModel: LanguageModel?
+                    if let filterLanguageId = filterLessonsByLanguage?.languageId {
+                        
+                        filterLanguageModel = self.languagesRepository.getLanguage(id: filterLanguageId)
+                    } else {
+                        filterLanguageModel = nil
+                    }
                     
-                    if let translationModel = appLanguageModel {
-                        
-                        let language: LanguageModel
-                        
-                        if let filterLanguageId = filterLessonsByLanguage?.languageId, let filterLanguageModel = self.languagesRepository.getLanguage(id: filterLanguageId) {
-                            
-                            language = filterLanguageModel
-                        } else {
-                            language = translationModel
-                        }
-                        
-                        toolLanguageAvailability = self.getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(resource: resource, language: language, translateInLanguage: translationModel)
-                    }
-                    else {
-                        toolLanguageAvailability = ToolLanguageAvailabilityDomainModel(availabilityString: "", isAvailable: false)
-                    }
+                    let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel = self.getToolLanguageAvailability(appLanguage: appLanguage, filterLanguageModel: filterLanguageModel, resource: resource)
+                    let lessonName: String = self.getTranslatedToolName.getToolName(resource: resource, translateInLanguage: filterLanguageModel?.code ?? appLanguage)
                 
                     return LessonListItemDomainModel(
                         analyticsToolName: resource.abbreviation,
                         availabilityInAppLanguage: toolLanguageAvailability,
                         bannerImageId: resource.attrBanner,
                         dataModelId: resource.id,
-                        name: self.getTranslatedToolName.getToolName(resource: resource, translateInLanguage: appLanguage)
+                        name: lessonName
                     )
                 }
                 
@@ -68,5 +60,27 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
+    }
+}
+
+extension GetLessonsListRepository {
+    
+    private func getToolLanguageAvailability(appLanguage: AppLanguageDomainModel, filterLanguageModel: LanguageModel?, resource: ResourceModel) -> ToolLanguageAvailabilityDomainModel {
+
+        if let appLanguageModel = languagesRepository.getLanguage(code: appLanguage) {
+            
+            let language: LanguageModel
+            
+            if let filterLanguageModel = filterLanguageModel {
+                language = filterLanguageModel
+            } else {
+                language = appLanguageModel
+            }
+            
+            return self.getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(resource: resource, language: language, translateInLanguage: appLanguageModel)
+        }
+        else {
+            return ToolLanguageAvailabilityDomainModel(availabilityString: "", isAvailable: false)
+        }
     }
 }
