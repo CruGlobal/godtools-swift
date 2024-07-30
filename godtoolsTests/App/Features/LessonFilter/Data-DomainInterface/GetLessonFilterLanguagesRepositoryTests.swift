@@ -65,14 +65,14 @@ class GetLessonFilterLanguagesRepositoryTests: QuickSpec {
                 
                 it("I expect to see languages translated in my app language russian and translated in their original language.") {
 
-                    var languagesRef: [LessonLanguageFilterDomainModel] = Array()
+                    var languagesRef: [LessonFilterLanguageDomainModel] = Array()
                     var sinkCompleted: Bool = false
 
                     waitUntil { done in
 
                         getLessonFilterLanguagesRepository
                             .getLessonFilterLanguagesPublisher(translatedInAppLanguage: appLanguageRussian)
-                            .sink { (languages: [LessonLanguageFilterDomainModel]) in
+                            .sink { (languages: [LessonFilterLanguageDomainModel]) in
 
                                 guard !sinkCompleted else {
                                     return
@@ -88,11 +88,11 @@ class GetLessonFilterLanguagesRepositoryTests: QuickSpec {
 
                     }
                     
-                    let afrikaansLanguage: LessonLanguageFilterDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.afrikaans.rawValue})
-                    let czechLanguage: LessonLanguageFilterDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.czech.rawValue})
-                    let englishLanguage: LessonLanguageFilterDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.english.rawValue})
-                    let frenchLanguage: LessonLanguageFilterDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.french.rawValue})
-                    let spanishLanguage: LessonLanguageFilterDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.spanish.rawValue})
+                    let afrikaansLanguage: LessonFilterLanguageDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.afrikaans.rawValue})
+                    let czechLanguage: LessonFilterLanguageDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.czech.rawValue})
+                    let englishLanguage: LessonFilterLanguageDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.english.rawValue})
+                    let frenchLanguage: LessonFilterLanguageDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.french.rawValue})
+                    let spanishLanguage: LessonFilterLanguageDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.spanish.rawValue})
 
                     expect(afrikaansLanguage?.languageName).to(equal("Afrikaans"))
                     expect(afrikaansLanguage?.translatedName).to(equal("африкаанс"))
@@ -117,14 +117,14 @@ class GetLessonFilterLanguagesRepositoryTests: QuickSpec {
                 
                 it("I expect to see languages sorted by language name translated in app language english.") {
 
-                    var languagesRef: [LessonLanguageFilterDomainModel] = Array()
+                    var languagesRef: [LessonFilterLanguageDomainModel] = Array()
                     var sinkCompleted: Bool = false
 
                     waitUntil { done in
 
                         getLessonFilterLanguagesRepository
                             .getLessonFilterLanguagesPublisher(translatedInAppLanguage: appLanguageEnglish)
-                            .sink { (languages: [LessonLanguageFilterDomainModel]) in
+                            .sink { (languages: [LessonFilterLanguageDomainModel]) in
 
                                 guard !sinkCompleted else {
                                     return
@@ -154,14 +154,14 @@ class GetLessonFilterLanguagesRepositoryTests: QuickSpec {
                 
                 it("I expect to see languages sorted by language name translated in app language spanish.") {
 
-                    var languagesRef: [LessonLanguageFilterDomainModel] = Array()
+                    var languagesRef: [LessonFilterLanguageDomainModel] = Array()
                     var sinkCompleted: Bool = false
 
                     waitUntil { done in
 
                         getLessonFilterLanguagesRepository
                             .getLessonFilterLanguagesPublisher(translatedInAppLanguage: appLanguageSpanish)
-                            .sink { (languages: [LessonLanguageFilterDomainModel]) in
+                            .sink { (languages: [LessonFilterLanguageDomainModel]) in
 
                                 guard !sinkCompleted else {
                                     return
@@ -191,14 +191,14 @@ class GetLessonFilterLanguagesRepositoryTests: QuickSpec {
                 
                 it("I expect to see the number of lessons available per language translated in my app language english.") {
 
-                    var languagesRef: [LessonLanguageFilterDomainModel] = Array()
+                    var languagesRef: [LessonFilterLanguageDomainModel] = Array()
                     var sinkCompleted: Bool = false
 
                     waitUntil { done in
 
                         getLessonFilterLanguagesRepository
                             .getLessonFilterLanguagesPublisher(translatedInAppLanguage: appLanguageEnglish)
-                            .sink { (languages: [LessonLanguageFilterDomainModel]) in
+                            .sink { (languages: [LessonFilterLanguageDomainModel]) in
 
                                 guard !sinkCompleted else {
                                     return
@@ -214,11 +214,11 @@ class GetLessonFilterLanguagesRepositoryTests: QuickSpec {
 
                     }
                     
-                    let afrikaansLanguage: LessonLanguageFilterDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.afrikaans.rawValue})
-                    let czechLanguage: LessonLanguageFilterDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.czech.rawValue})
-                    let englishLanguage: LessonLanguageFilterDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.english.rawValue})
-                    let frenchLanguage: LessonLanguageFilterDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.french.rawValue})
-                    let spanishLanguage: LessonLanguageFilterDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.spanish.rawValue})
+                    let afrikaansLanguage: LessonFilterLanguageDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.afrikaans.rawValue})
+                    let czechLanguage: LessonFilterLanguageDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.czech.rawValue})
+                    let englishLanguage: LessonFilterLanguageDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.english.rawValue})
+                    let frenchLanguage: LessonFilterLanguageDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.french.rawValue})
+                    let spanishLanguage: LessonFilterLanguageDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.spanish.rawValue})
 
                     expect(afrikaansLanguage?.lessonsAvailableText).to(equal("\(Self.englishLessonsAvailableText) 1"))
                     expect(czechLanguage?.lessonsAvailableText).to(equal("\(Self.englishLessonsAvailableText) 1"))
