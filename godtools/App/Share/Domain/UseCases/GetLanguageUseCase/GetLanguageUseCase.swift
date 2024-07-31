@@ -59,7 +59,7 @@ class GetLanguageUseCase {
         return LanguageDomainModel(
             analyticsContentLanguage: language.code,
             dataModelId: language.id,
-            direction: language.direction == "rtl" ? .rightToLeft : .leftToRight,
+            direction: language.directionString == "rtl" ? .rightToLeft : .leftToRight,
             localeIdentifier: language.code,
             translatedName: getTranslatedName(language: language, localizationServices: localizationServices)
         )

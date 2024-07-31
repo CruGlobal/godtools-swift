@@ -11,7 +11,7 @@ import Foundation
 struct LanguageModel: LanguageModelType, Codable {
     
     let code: BCP47LanguageIdentifier
-    let direction: String
+    let directionString: String
     let id: String
     let name: String
     let type: String
@@ -55,7 +55,7 @@ struct LanguageModel: LanguageModelType, Codable {
         }
         
         code = tempCode// try attributesContainer?.decodeIfPresent(BCP47LanguageIdentifier.self, forKey: .code) ?? "" // TODO: (GT-2399) Remove tempCode and replace with commented out line.
-        direction = try attributesContainer?.decodeIfPresent(String.self, forKey: .direction) ?? ""
+        directionString = try attributesContainer?.decodeIfPresent(String.self, forKey: .direction) ?? ""
         name = try attributesContainer?.decodeIfPresent(String.self, forKey: .name) ?? ""
         forceLanguageName = try attributesContainer?.decodeIfPresent(Bool.self, forKey: .forceLanguageName) ?? false
     }
@@ -63,7 +63,7 @@ struct LanguageModel: LanguageModelType, Codable {
     init(model: LanguageModelType) {
         
         code = model.code
-        direction = model.direction
+        directionString = model.directionString
         id = model.id
         name = model.name
         type = model.type
@@ -74,5 +74,16 @@ struct LanguageModel: LanguageModelType, Codable {
 extension LanguageModel: Equatable {
     static func == (this: LanguageModel, that: LanguageModel) -> Bool {
         return this.id == that.id
+    }
+}
+
+extension LanguageModel {
+    enum Direction {
+        case leftToRight
+        case rightToLeft
+    }
+    
+    var direction: Direction {
+        return directionString == "rtl" ? .rightToLeft : .leftToRight
     }
 }

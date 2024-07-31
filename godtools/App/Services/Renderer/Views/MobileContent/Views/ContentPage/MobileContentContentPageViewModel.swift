@@ -44,7 +44,7 @@ extension MobileContentContentPageViewModel {
             screenName: getPageAnalyticsScreenName(),
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
-            contentLanguage: renderedPageContext.language.localeIdentifier,
+            contentLanguage: renderedPageContext.language.localeId,
             contentLanguageSecondary: nil
         )
     }

@@ -21,6 +21,6 @@ class MobileContentTabsViewModel: MobileContentViewModel {
     }
     
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
-        return UISemanticContentAttribute.from(languageDirection: renderedPageContext.language.direction)
+        return renderedPageContext.language.direction == .leftToRight ? UISemanticContentAttribute.forceLeftToRight : UISemanticContentAttribute.forceRightToLeft
     }
 }

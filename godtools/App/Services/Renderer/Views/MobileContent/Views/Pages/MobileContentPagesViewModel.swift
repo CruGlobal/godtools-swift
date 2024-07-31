@@ -35,7 +35,7 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
     private(set) weak var window: UIViewController?
     
     @Published private(set) var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
-    @Published private(set) var languages: [LanguageDomainModel] = Array()
+    @Published private(set) var languages: [LanguageModel] = Array()
     @Published private(set) var languageNames: [String] = Array()
     @Published private(set) var selectedLanguageIndex: Int
     
@@ -71,10 +71,10 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
             $appLanguage.dropFirst()
         )
         .receive(on: DispatchQueue.main)
-        .sink { [weak self] (languages: [LanguageDomainModel], appLanguage: AppLanguageDomainModel) in
+        .sink { [weak self] (languages: [LanguageModel], appLanguage: AppLanguageDomainModel) in
             
-            self?.languageNames = languages.map({ (language: LanguageDomainModel) in
-                getTranslatedLanguageName.getLanguageName(language: language.localeIdentifier, translatedInLanguage: appLanguage)
+            self?.languageNames = languages.map({ (language: LanguageModel) in
+                getTranslatedLanguageName.getLanguageName(language: language, translatedInLanguage: appLanguage)
             })
         }
         .store(in: &cancellables)
@@ -86,14 +86,14 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
             }
             .store(in: &cancellables)
         
-        countLanguageUsage(localeId: currentPageRenderer.value.language.localeIdentifier)
+        countLanguageUsage(localeId: currentPageRenderer.value.language.localeId)
     }
     
     var resource: ResourceModel {
         return renderer.value.resource
     }
     
-    func getSelectedLanguage() -> LanguageDomainModel? {
+    func getSelectedLanguage() -> LanguageModel? {
         
         guard selectedLanguageIndex >= 0 && selectedLanguageIndex < languages.count else {
             return nil
@@ -176,7 +176,7 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
     }
     
     var layoutDirection: UISemanticContentAttribute {
-        return UISemanticContentAttribute.from(languageDirection: renderer.value.primaryLanguage.direction)
+        return UISemanticContentAttribute.from(languageDirection: renderer.value.primaryLanguage.direction == .leftToRight ? .leftToRight : .rightToLeft)
     }
     
     func setRendererPrimaryLanguage(primaryLanguageId: String, parallelLanguageId: String?, selectedLanguageId: String?) {
@@ -643,7 +643,7 @@ extension MobileContentPagesViewModel {
         for pageRenderer in renderer.value.pageRenderers {
             
             let resource: ResourceModel = pageRenderer.resource
-            let language: LanguageDomainModel = pageRenderer.language
+            let language: LanguageModel = pageRenderer.language
             let currentTranslation: TranslationModel = pageRenderer.translation
             
             guard let latestTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageId: language.id) else {
@@ -679,7 +679,7 @@ extension MobileContentPagesViewModel {
                 for pageRenderer in currentRenderer.pageRenderers {
                     
                     let resource: ResourceModel = pageRenderer.resource
-                    let language: LanguageDomainModel = pageRenderer.language
+                    let language: LanguageModel = pageRenderer.language
                     let currentTranslation: TranslationModel = pageRenderer.translation
                     
                     let updatedManifest: Manifest
@@ -721,7 +721,7 @@ extension MobileContentPagesViewModel {
     
     private func trackContentEvent(eventId: EventId) {
         
-        let language: LanguageDomainModel = currentPageRenderer.value.language
+        let language: LanguageModel = currentPageRenderer.value.language
         
         mobileContentEventAnalytics.trackContentEvent(
             eventId: eventId,
@@ -730,10 +730,10 @@ extension MobileContentPagesViewModel {
         )
     }
     
-    private func countLanguageUsageIfLanguageChanged(updatedLanguage: LanguageDomainModel) {
+    private func countLanguageUsageIfLanguageChanged(updatedLanguage: LanguageModel) {
         
-        let updatedLocaleId = updatedLanguage.localeIdentifier
-        let languageChanged: Bool = currentPageRenderer.value.language.localeIdentifier != updatedLocaleId
+        let updatedLocaleId = updatedLanguage.localeId
+        let languageChanged: Bool = currentPageRenderer.value.language.localeId != updatedLocaleId
         
         if languageChanged {
             

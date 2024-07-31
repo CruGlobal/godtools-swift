@@ -11,7 +11,7 @@ import Foundation
 protocol LanguageModelType {
     
     var code: BCP47LanguageIdentifier { get }
-    var direction: String { get }
+    var directionString: String { get }
     var id: String { get }
     var name: String { get }
     var type: String { get }
