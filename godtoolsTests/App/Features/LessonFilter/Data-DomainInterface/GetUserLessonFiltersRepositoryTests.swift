@@ -40,12 +40,12 @@ class GetUserLessonFiltersRepositoryTests: QuickSpec {
                     let realmObjectsToAdd: [Object] = [spanishLanguage, spanishLesson_0]
                     
                     let testsDiContainer = TestsDiContainer(
-                        realmDatabase: GetUserLessonFiltersRepositoryTests.getRealmDatabase(addRealmObjects: realmObjectsToAdd)
+                        realmDatabase: Self.getRealmDatabase(addRealmObjects: realmObjectsToAdd)
                     )
                     
                     let getUserLessonFiltersRepository = GetUserLessonFiltersRepository(
-                        userLessonFiltersRepository: GetUserLessonFiltersRepositoryTests.getUserLessonFiltersRepository(testsDiContainer: testsDiContainer),
-                        getLessonFilterLanguagesRepository: GetUserLessonFiltersRepositoryTests.getLessonFilterLanguagesRepository(testsDiContainer: testsDiContainer)
+                        userLessonFiltersRepository: Self.getUserLessonFiltersRepository(testsDiContainer: testsDiContainer),
+                        getLessonFilterLanguagesRepository: Self.getLessonFilterLanguagesRepository(testsDiContainer: testsDiContainer)
                     )
                     
                     var lessonLanguageFilterRef: LessonFilterLanguageDomainModel?
@@ -105,12 +105,12 @@ class GetUserLessonFiltersRepositoryTests: QuickSpec {
                     let realmObjectsToAdd: [Object] = [spanishLanguage, frenchLanguage, spanishLesson_0, frenchTract_0]
                     
                     let testsDiContainer = TestsDiContainer(
-                        realmDatabase: GetUserLessonFiltersRepositoryTests.getRealmDatabase(addRealmObjects: realmObjectsToAdd)
+                        realmDatabase: Self.getRealmDatabase(addRealmObjects: realmObjectsToAdd)
                     )
                     
                     let getUserLessonFiltersRepository = GetUserLessonFiltersRepository(
-                        userLessonFiltersRepository: GetUserLessonFiltersRepositoryTests.getUserLessonFiltersRepository(testsDiContainer: testsDiContainer),
-                        getLessonFilterLanguagesRepository: GetUserLessonFiltersRepositoryTests.getLessonFilterLanguagesRepository(testsDiContainer: testsDiContainer)
+                        userLessonFiltersRepository: Self.getUserLessonFiltersRepository(testsDiContainer: testsDiContainer),
+                        getLessonFilterLanguagesRepository: Self.getLessonFilterLanguagesRepository(testsDiContainer: testsDiContainer)
                     )
                     
                     var lessonLanguageFilterRef: LessonFilterLanguageDomainModel?
@@ -158,14 +158,14 @@ class GetUserLessonFiltersRepositoryTests: QuickSpec {
                     frenchLanguage.name = "French Name"
                     
                     let testsDiContainer = TestsDiContainer(
-                        realmDatabase: GetUserLessonFiltersRepositoryTests.getRealmDatabase(addRealmObjects: [spanishLanguage, frenchLanguage])
+                        realmDatabase: Self.getRealmDatabase(addRealmObjects: [spanishLanguage, frenchLanguage])
                     )
                     
-                    let userLessonFiltersRepository: UserLessonFiltersRepository = GetUserLessonFiltersRepositoryTests.getUserLessonFiltersRepository(testsDiContainer: testsDiContainer)
+                    let userLessonFiltersRepository: UserLessonFiltersRepository = Self.getUserLessonFiltersRepository(testsDiContainer: testsDiContainer)
                     
                     let getUserLessonFiltersRepository = GetUserLessonFiltersRepository(
                         userLessonFiltersRepository: userLessonFiltersRepository,
-                        getLessonFilterLanguagesRepository: GetUserLessonFiltersRepositoryTests.getLessonFilterLanguagesRepository(testsDiContainer: testsDiContainer)
+                        getLessonFilterLanguagesRepository: Self.getLessonFilterLanguagesRepository(testsDiContainer: testsDiContainer)
                     )
                     
                     var originalLessonLanguageFilterRef: LessonFilterLanguageDomainModel?
@@ -241,8 +241,9 @@ class GetUserLessonFiltersRepositoryTests: QuickSpec {
         return GetLessonFilterLanguagesRepository(
             resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),
             languagesRepository: testsDiContainer.dataLayer.getLanguagesRepository(),
-            getTranslatedLanguageName: GetUserLessonFiltersRepositoryTests.getTranslatedLanguageName(),
-            localizationServices: GetUserLessonFiltersRepositoryTests.getLocalizationServices()
+            getTranslatedLanguageName: Self.getTranslatedLanguageName(),
+            localizationServices: Self.getLocalizationServices(),
+            stringWithLocaleCount: Self.getStringWithLocaleCount()
         )
     }
     
@@ -256,45 +257,21 @@ class GetUserLessonFiltersRepositoryTests: QuickSpec {
         
         return MockLocalizationServices(localizableStrings: localizableStrings)
     }
-    
-    private static func getLocaleLanguageName() -> MockLocaleLanguageName {
-        
-        let languageNames: [MockLocaleLanguageName.LanguageCode: [MockLocaleLanguageName.TranslateInLocaleId: MockLocaleLanguageName.LanguageName]] = [
-            LanguageCodeDomainModel.english.rawValue: [
-                LanguageCodeDomainModel.english.rawValue: "English",
-                LanguageCodeDomainModel.french.rawValue: "Anglais",
-                LanguageCodeDomainModel.portuguese.rawValue: "Inglês",
-                LanguageCodeDomainModel.spanish.rawValue: "Inglés",
-                LanguageCodeDomainModel.russian.rawValue: "Английский"
-            ],
-            LanguageCodeDomainModel.french.rawValue: [
-                LanguageCodeDomainModel.english.rawValue: "French",
-                LanguageCodeDomainModel.french.rawValue: "Français",
-                LanguageCodeDomainModel.portuguese.rawValue: "Francês",
-                LanguageCodeDomainModel.spanish.rawValue: "Francés",
-                LanguageCodeDomainModel.russian.rawValue: "Французский"
-            ],
-            LanguageCodeDomainModel.spanish.rawValue: [
-                LanguageCodeDomainModel.english.rawValue: "Spanish",
-                LanguageCodeDomainModel.french.rawValue: "Espagnol",
-                LanguageCodeDomainModel.portuguese.rawValue: "Espanhol",
-                LanguageCodeDomainModel.spanish.rawValue: "Español",
-                LanguageCodeDomainModel.russian.rawValue: "испанский"
-            ]
-        ]
-        
-        return MockLocaleLanguageName(languageNames: languageNames)
-    }
-    
+
     private static func getTranslatedLanguageName() -> GetTranslatedLanguageName {
         
         let getTranslatedLanguageName = GetTranslatedLanguageName(
-            localizationLanguageNameRepository: MockLocalizationLanguageNameRepository(localizationServices: GetUserLessonFiltersRepositoryTests.getLocalizationServices()),
-            localeLanguageName: GetUserLessonFiltersRepositoryTests.getLocaleLanguageName(),
+            localizationLanguageNameRepository: MockLocalizationLanguageNameRepository(localizationServices: Self.getLocalizationServices()),
+            localeLanguageName: MockLocaleLanguageName.defaultMockLocaleLanguageName(),
             localeRegionName: MockLocaleLanguageRegionName(regionNames: [:]),
             localeScriptName: MockLocaleLanguageScriptName(scriptNames: [:])
         )
         
         return getTranslatedLanguageName
+    }
+    
+    private static func getStringWithLocaleCount() -> StringWithLocaleCountInterface {
+        
+        return MockStringWithLocaleCount()
     }
 }
