@@ -14,6 +14,7 @@ struct MockTranslatableLanguage: TranslatableLanguage {
     let languageCode: String
     let localeId: BCP47LanguageIdentifier
     let fallbackName: String
+    let forceLanguageName: Bool
     let regionCode: String?
     let scriptCode: String?
 }
