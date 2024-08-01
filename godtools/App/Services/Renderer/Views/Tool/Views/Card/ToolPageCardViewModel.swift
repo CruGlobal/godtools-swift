@@ -145,7 +145,7 @@ class ToolPageCardViewModel: MobileContentViewModel {
     }
     
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
-        return UISemanticContentAttribute.from(languageDirection: renderedPageContext.language.direction == .leftToRight ? .leftToRight : .rightToLeft)
+        return UISemanticContentAttribute.from(languageDirection: LanguageDirectionDomainModel(languageModel: renderedPageContext.language))
     }
     
     func containsDismissListener(eventId: EventId) -> Bool {
@@ -176,7 +176,7 @@ extension ToolPageCardViewModel {
         return MobileContentBackgroundImageViewModel(
             backgroundImageModel: backgroundImageModel,
             manifestResourcesCache: renderedPageContext.resourcesCache,
-            languageDirection: renderedPageContext.language.direction == .leftToRight ? .leftToRight : .rightToLeft
+            languageDirection: LanguageDirectionDomainModel(languageModel: renderedPageContext.language)
         )
     }
         

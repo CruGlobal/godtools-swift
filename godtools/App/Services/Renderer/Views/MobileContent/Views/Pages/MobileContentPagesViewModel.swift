@@ -176,7 +176,7 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
     }
     
     var layoutDirection: UISemanticContentAttribute {
-        return UISemanticContentAttribute.from(languageDirection: renderer.value.primaryLanguage.direction == .leftToRight ? .leftToRight : .rightToLeft)
+        return UISemanticContentAttribute.from(languageDirection: LanguageDirectionDomainModel(languageModel: renderer.value.primaryLanguage))
     }
     
     func setRendererPrimaryLanguage(primaryLanguageId: String, parallelLanguageId: String?, selectedLanguageId: String?) {

@@ -21,7 +21,7 @@ class ToolPageCallToActionViewModel: MobileContentViewModel {
     }
     
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
-        return UISemanticContentAttribute.from(languageDirection: renderedPageContext.primaryRendererLanguage.direction == .leftToRight ? .leftToRight : .rightToLeft)
+        return UISemanticContentAttribute.from(languageDirection: LanguageDirectionDomainModel(languageModel: renderedPageContext.primaryRendererLanguage))
     }
     
     var title: String? {

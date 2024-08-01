@@ -89,7 +89,7 @@ extension MobileContentPageViewModel {
         return MobileContentBackgroundImageViewModel(
             backgroundImageModel: model,
             manifestResourcesCache: renderedPageContext.resourcesCache,
-            languageDirection: renderedPageContext.language.direction == .rightToLeft ? .rightToLeft : .leftToRight
+            languageDirection: LanguageDirectionDomainModel(languageModel: renderedPageContext.language)
         )
     }
     
