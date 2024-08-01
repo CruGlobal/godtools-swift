@@ -19,11 +19,11 @@ class MobileContentRenderedPageContext {
     let resourcesCache: MobileContentRendererManifestResourcesCache
     let resource: ResourceModel
     let appLanguage: AppLanguageDomainModel
-    let language: LanguageDomainModel
+    let language: LanguageModel
     let translation: TranslationModel
     let viewRenderer: MobileContentViewRenderer
     let navigation: MobileContentRendererNavigation
-    let primaryRendererLanguage: LanguageDomainModel
+    let primaryRendererLanguage: LanguageModel
     let primaryLanguageLayoutDirection: ApplicationLayoutDirection
     let rendererState: State
     let trainingTipsEnabled: Bool
@@ -31,7 +31,7 @@ class MobileContentRenderedPageContext {
     
     private weak var weakWindow: UIViewController?
     
-    init(pageModel: Page, page: Int, isLastPage: Bool, window: UIViewController, safeArea: UIEdgeInsets, manifest: Manifest, resourcesCache: MobileContentRendererManifestResourcesCache, resource: ResourceModel, appLanguage: AppLanguageDomainModel, language: LanguageDomainModel, translation: TranslationModel, viewRenderer: MobileContentViewRenderer, navigation: MobileContentRendererNavigation, primaryRendererLanguage: LanguageDomainModel, rendererState: State, trainingTipsEnabled: Bool, pageViewDataCache: MobileContentPageViewDataCache) {
+    init(pageModel: Page, page: Int, isLastPage: Bool, window: UIViewController, safeArea: UIEdgeInsets, manifest: Manifest, resourcesCache: MobileContentRendererManifestResourcesCache, resource: ResourceModel, appLanguage: AppLanguageDomainModel, language: LanguageModel, translation: TranslationModel, viewRenderer: MobileContentViewRenderer, navigation: MobileContentRendererNavigation, primaryRendererLanguage: LanguageModel, rendererState: State, trainingTipsEnabled: Bool, pageViewDataCache: MobileContentPageViewDataCache) {
         
         self.pageModel = pageModel
         self.page = page

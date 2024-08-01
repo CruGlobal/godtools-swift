@@ -89,13 +89,13 @@ extension MobileContentPageViewModel {
         return MobileContentBackgroundImageViewModel(
             backgroundImageModel: model,
             manifestResourcesCache: renderedPageContext.resourcesCache,
-            languageDirection: renderedPageContext.language.direction
+            languageDirection: LanguageDirectionDomainModel(languageModel: renderedPageContext.language)
         )
     }
     
     func buttonWithUrlTapped(url: URL) {
                              
-        renderedPageContext.navigation.buttonWithUrlTapped(url: url, screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection, contentLanguage: renderedPageContext.language.localeIdentifier)
+        renderedPageContext.navigation.buttonWithUrlTapped(url: url, screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection, contentLanguage: renderedPageContext.language.localeId)
     }
     
     func trainingTipTapped(event: TrainingTipEvent) {

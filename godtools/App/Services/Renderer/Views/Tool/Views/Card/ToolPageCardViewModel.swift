@@ -121,7 +121,7 @@ class ToolPageCardViewModel: MobileContentViewModel {
     }
     
     var previousButtonTitle: String? {
-        return localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: renderedPageContext.language.localeIdentifier, key: "card_status1")
+        return localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: renderedPageContext.language.localeId, key: "card_status1")
     }
     
     var previousButtonTitleColor: UIColor {
@@ -133,7 +133,7 @@ class ToolPageCardViewModel: MobileContentViewModel {
     }
     
     var nextButtonTitle: String? {
-        return localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: renderedPageContext.language.localeIdentifier, key: "card_status2")
+        return localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: renderedPageContext.language.localeId, key: "card_status2")
     }
     
     var nextButtonTitleColor: UIColor {
@@ -145,7 +145,7 @@ class ToolPageCardViewModel: MobileContentViewModel {
     }
     
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
-        return UISemanticContentAttribute.from(languageDirection: renderedPageContext.language.direction)
+        return UISemanticContentAttribute.from(languageDirection: LanguageDirectionDomainModel(languageModel: renderedPageContext.language))
     }
     
     func containsDismissListener(eventId: EventId) -> Bool {
@@ -176,7 +176,7 @@ extension ToolPageCardViewModel {
         return MobileContentBackgroundImageViewModel(
             backgroundImageModel: backgroundImageModel,
             manifestResourcesCache: renderedPageContext.resourcesCache,
-            languageDirection: renderedPageContext.language.direction
+            languageDirection: LanguageDirectionDomainModel(languageModel: renderedPageContext.language)
         )
     }
         
@@ -188,7 +188,7 @@ extension ToolPageCardViewModel {
             screenName: analyticsScreenName,
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
-            contentLanguage: renderedPageContext.language.localeIdentifier,
+            contentLanguage: renderedPageContext.language.localeId,
             contentLanguageSecondary: nil
         )
     }

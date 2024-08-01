@@ -51,7 +51,7 @@ class SwiftUIPreviewDatabase: RealmDatabase {
         let english = RealmLanguage()
         
         english.code = "en"
-        english.direction = "ltr"
+        english.directionString = "ltr"
         english.id = "1"
         english.name = "English"
         

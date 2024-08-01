@@ -25,4 +25,8 @@ extension AppLanguageDataModel: TranslatableLanguage {
     var fallbackName: String {
         return ""
     }
+    
+    var forceLanguageName: Bool {
+        return false
+    }
 }

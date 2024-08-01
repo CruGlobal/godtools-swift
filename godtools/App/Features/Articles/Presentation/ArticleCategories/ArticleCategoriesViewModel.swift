@@ -15,7 +15,7 @@ import LocalizationServices
 class ArticleCategoriesViewModel {
         
     private let resource: ResourceModel
-    private let language: LanguageDomainModel
+    private let language: LanguageModel
     private let manifest: Manifest
     private let articleManifestAemRepository: ArticleManifestAemRepository
     private let localizationServices: LocalizationServices
@@ -34,7 +34,7 @@ class ArticleCategoriesViewModel {
     let numberOfCategories: ObservableValue<Int> = ObservableValue(value: 0)
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
         
-    init(flowDelegate: FlowDelegate, resource: ResourceModel, language: LanguageDomainModel, manifest: Manifest, articleManifestAemRepository: ArticleManifestAemRepository, manifestResourcesCache: MobileContentRendererManifestResourcesCache, localizationServices: LocalizationServices, incrementUserCounterUseCase: IncrementUserCounterUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(flowDelegate: FlowDelegate, resource: ResourceModel, language: LanguageModel, manifest: Manifest, articleManifestAemRepository: ArticleManifestAemRepository, manifestResourcesCache: MobileContentRendererManifestResourcesCache, localizationServices: LocalizationServices, incrementUserCounterUseCase: IncrementUserCounterUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -85,7 +85,7 @@ class ArticleCategoriesViewModel {
         
         isLoading.accept(value: true)
         
-        downloadArticlesReceipt = articleManifestAemRepository.downloadAndCacheManifestAemUrisReceipt(manifest: manifest, languageCode: language.localeIdentifier, forceDownload: forceDownload, completion: { [weak self] (result: ArticleAemRepositoryResult) in
+        downloadArticlesReceipt = articleManifestAemRepository.downloadAndCacheManifestAemUrisReceipt(manifest: manifest, languageCode: language.localeId, forceDownload: forceDownload, completion: { [weak self] (result: ArticleAemRepositoryResult) in
             
             DispatchQueue.main.async { [weak self] in
                 self?.isLoading.accept(value: false)

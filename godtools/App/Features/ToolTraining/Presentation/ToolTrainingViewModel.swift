@@ -67,7 +67,7 @@ class ToolTrainingViewModel: NSObject {
         return pageRenderer.resource
     }
     
-    private var language: LanguageDomainModel {
+    private var language: LanguageModel {
         return pageRenderer.language
     }
     
@@ -93,10 +93,10 @@ class ToolTrainingViewModel: NSObject {
         
         let continueTitle: String
         if page < (numberOfTipPages.value - 1) {
-            continueTitle = localizationServices.stringForLocaleElseEnglish(localeIdentifier: renderedPageContext.language.localeIdentifier, key: LocalizableStringKeys.cardNextButtonTitle.key)
+            continueTitle = localizationServices.stringForLocaleElseEnglish(localeIdentifier: renderedPageContext.language.localeId, key: LocalizableStringKeys.cardNextButtonTitle.key)
         }
         else {
-            continueTitle = localizationServices.stringForLocaleElseEnglish(localeIdentifier: renderedPageContext.language.localeIdentifier, key: LocalizableStringKeys.close.key)
+            continueTitle = localizationServices.stringForLocaleElseEnglish(localeIdentifier: renderedPageContext.language.localeId, key: LocalizableStringKeys.close.key)
         }
         continueButtonTitle.accept(value: continueTitle)
 
@@ -139,7 +139,7 @@ class ToolTrainingViewModel: NSObject {
             localizedTipTitle = ""
         }
         
-        let tipTitle: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: renderedPageContext.language.localeIdentifier, key: localizedTipTitle)
+        let tipTitle: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: renderedPageContext.language.localeId, key: localizedTipTitle)
         
         trainingTipBackgroundImage.accept(value: UIImage(named: tipBackgroundImageName))
         trainingTipForegroundImage.accept(value: UIImage(named: tipImageName))
@@ -185,7 +185,7 @@ extension ToolTrainingViewModel {
     
     func buttonWithUrlTapped(url: URL) {
         
-        renderedPageContext.navigation.buttonWithUrlTapped(url: url, screenName: getExitAnalyticsScreenName(), siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection, contentLanguage: renderedPageContext.language.localeIdentifier)
+        renderedPageContext.navigation.buttonWithUrlTapped(url: url, screenName: getExitAnalyticsScreenName(), siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection, contentLanguage: renderedPageContext.language.localeId)
     }
     
     func tipPageWillAppear(page: Int, window: UIViewController, safeArea: UIEdgeInsets) -> MobileContentView? {
