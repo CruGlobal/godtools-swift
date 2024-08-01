@@ -29,7 +29,7 @@ class SetUserPreferredAppLanguageRepository: SetUserPreferredAppLanguageReposito
             userLessonFiltersRepository.storeUserLessonLanguageFilter(with: languageModelId)
         }
         
-        return userAppLanguageRepository.storeLanguagePublisher(languageId: appLanguage)
+        return userAppLanguageRepository.storeLanguagePublisher(appLanguageId: appLanguage)
             .map { _ in
                 return appLanguage
             }
