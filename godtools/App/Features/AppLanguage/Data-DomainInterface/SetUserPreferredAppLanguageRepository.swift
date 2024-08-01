@@ -12,15 +12,24 @@ import Combine
 class SetUserPreferredAppLanguageRepository: SetUserPreferredAppLanguageRepositoryInterface {
     
     private let userAppLanguageRepository: UserAppLanguageRepository
+    private let userLessonFiltersRepository: UserLessonFiltersRepository
+    private let languagesRepository: LanguagesRepository
     
-    init(userAppLanguageRepository: UserAppLanguageRepository) {
+    init(userAppLanguageRepository: UserAppLanguageRepository, userLessonFiltersRepository: UserLessonFiltersRepository, languagesRepository: LanguagesRepository) {
         
         self.userAppLanguageRepository = userAppLanguageRepository
+        self.userLessonFiltersRepository = userLessonFiltersRepository
+        self.languagesRepository = languagesRepository
     }
     
     func setLanguagePublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<AppLanguageDomainModel, Never> {
         
-        userAppLanguageRepository.storeLanguagePublisher(languageId: appLanguage)
+        if let languageModelId = languagesRepository.getLanguage(code: appLanguage)?.id {
+            
+            userLessonFiltersRepository.storeUserLessonLanguageFilter(with: languageModelId)
+        }
+        
+        return userAppLanguageRepository.storeLanguagePublisher(languageId: appLanguage)
             .map { _ in
                 return appLanguage
             }
