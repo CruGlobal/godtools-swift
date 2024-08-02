@@ -170,7 +170,7 @@ class StoreInitialAppLanguageTests: QuickSpec {
                 
                 let userAppLanguageCache: RealmUserAppLanguageCache = RealmUserAppLanguageCache(realmDatabase: testsRealmDatabase)
                 
-                userAppLanguageCache.storeLanguage(languageId: "es")
+                userAppLanguageCache.storeLanguage(appLanguageId: "es")
                 
                 let appLanguagesRepository: AppLanguagesRepository = testsDiContainer.feature.appLanguage.dataLayer.getAppLanguagesRepository(
                     realmDatabase: testsRealmDatabase,

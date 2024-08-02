@@ -59,13 +59,13 @@ class RealmUserAppLanguageCache {
         )
     }
     
-    func storeLanguage(languageId: BCP47LanguageIdentifier) {
+    func storeLanguage(appLanguageId: BCP47LanguageIdentifier) {
         
         let realm: Realm = realmDatabase.openRealm()
         
         let realmUserAppLanguage = RealmUserAppLanguage()
         realmUserAppLanguage.id = RealmUserAppLanguageCache.sharedUserId
-        realmUserAppLanguage.languageId = languageId
+        realmUserAppLanguage.languageId = appLanguageId
         
         do {
             

@@ -727,7 +727,7 @@ extension AppFlow {
             
             let userAppLanguageRepository: UserAppLanguageRepository = appDiContainer.feature.appLanguage.dataLayer.getUserAppLanguageRepository()
             
-            userAppLanguageRepository.storeLanguagePublisher(languageId: appLanguage)
+            userAppLanguageRepository.storeLanguagePublisher(appLanguageId: appLanguage)
                 .sink { _ in
                     
                 }

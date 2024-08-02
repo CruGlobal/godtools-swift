@@ -150,7 +150,9 @@ class AppLanguageFeatureDataLayerDependencies {
     
     func getSetUserPreferredAppLanguageRepositoryInterface() -> SetUserPreferredAppLanguageRepositoryInterface {
         return SetUserPreferredAppLanguageRepository(
-            userAppLanguageRepository: getUserAppLanguageRepository()
+            userAppLanguageRepository: getUserAppLanguageRepository(),
+            userLessonFiltersRepository: coreDataLayer.getUserLessonFiltersRepository(),
+            languagesRepository: coreDataLayer.getLanguagesRepository()
         )
     }
     

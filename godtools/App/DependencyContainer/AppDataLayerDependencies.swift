@@ -409,6 +409,14 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getUserLessonFiltersRepository() -> UserLessonFiltersRepository {
+        return UserLessonFiltersRepository(
+            cache: RealmUserLessonFiltersCache(
+                realmDatabase: sharedRealmDatabase
+            )
+        )
+    }
+    
     func getViewedTrainingTipsService() -> ViewedTrainingTipsService {
         return ViewedTrainingTipsService(
             cache: ViewedTrainingTipsUserDefaultsCache(sharedUserDefaults: sharedUserDefaultsCache)

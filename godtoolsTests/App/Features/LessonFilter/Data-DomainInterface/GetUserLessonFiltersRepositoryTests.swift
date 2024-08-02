@@ -233,7 +233,7 @@ class GetUserLessonFiltersRepositoryTests: QuickSpec {
     
     private static func getUserLessonFiltersRepository(testsDiContainer: TestsDiContainer) -> UserLessonFiltersRepository {
         
-        return testsDiContainer.feature.lessonFilter.dataLayer.getUserLessonFiltersRepository()
+        return testsDiContainer.dataLayer.getUserLessonFiltersRepository()
     }
     
     private static func getLessonFilterLanguagesRepository(testsDiContainer: TestsDiContainer) -> GetLessonFilterLanguagesRepository {
