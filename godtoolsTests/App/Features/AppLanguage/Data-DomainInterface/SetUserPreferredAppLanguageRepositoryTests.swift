@@ -41,7 +41,7 @@ class SetUserPreferredAppLanguageRepositoryTests: QuickSpec {
             
             context("When the app language is switched from English to Spanish") {
                 
-                it("The user's lesson language filter update to Spanish") {
+                it("The user's lesson language filter should update to Spanish") {
                     
                     let appLanguagePublisher: CurrentValueSubject<AppLanguageDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
                     
