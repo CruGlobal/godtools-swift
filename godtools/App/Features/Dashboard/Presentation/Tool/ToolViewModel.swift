@@ -117,18 +117,18 @@ class ToolViewModel: MobileContentPagesViewModel {
         return resource.abbreviation
     }
         
-    private var parallelLanguage: LanguageDomainModel? {
+    private var parallelLanguage: LanguageModel? {
         if renderer.value.pageRenderers.count > 1 {
             return renderer.value.pageRenderers[1].language
         }
         return nil
     }
     
-    private func getPageRenderer(language: LanguageDomainModel) -> MobileContentPageRenderer? {
+    private func getPageRenderer(language: LanguageModel) -> MobileContentPageRenderer? {
         
-        let languageLocaleId: String = language.localeIdentifier.lowercased()
+        let languageLocaleId: String = language.localeId.lowercased()
         
-        for pageRenderer in renderer.value.pageRenderers where pageRenderer.language.localeIdentifier.lowercased() == languageLocaleId {
+        for pageRenderer in renderer.value.pageRenderers where pageRenderer.language.localeId.lowercased() == languageLocaleId {
             return pageRenderer
         }
         
@@ -147,13 +147,13 @@ class ToolViewModel: MobileContentPagesViewModel {
         toolOpenedAnalytics.trackToolOpened(resource: resource)
     }
     
-    private func trackLanguageTapped(tappedLanguage: LanguageDomainModel) {
+    private func trackLanguageTapped(tappedLanguage: LanguageModel) {
         
-        let primaryLanguage: LanguageDomainModel = languages[0]
-        let parallelLanguage: LanguageDomainModel? = languages[safe: 1]
+        let primaryLanguage: LanguageModel = languages[0]
+        let parallelLanguage: LanguageModel? = languages[safe: 1]
                 
         let trackTappedLanguageData: [String: Any] = [
-            AnalyticsConstants.Keys.contentLanguageSecondary: parallelLanguage?.localeIdentifier ?? "",
+            AnalyticsConstants.Keys.contentLanguageSecondary: parallelLanguage?.localeId ?? "",
             AnalyticsConstants.ActionNames.parallelLanguageToggled: tappedLanguage.id == parallelLanguage?.id
         ]
         
@@ -162,8 +162,8 @@ class ToolViewModel: MobileContentPagesViewModel {
             actionName: AnalyticsConstants.ActionNames.parallelLanguageToggled,
             siteSection: analyticsSiteSection,
             siteSubSection: "",
-            contentLanguage: primaryLanguage.localeIdentifier,
-            contentLanguageSecondary: parallelLanguage?.localeIdentifier,
+            contentLanguage: primaryLanguage.localeId,
+            contentLanguageSecondary: parallelLanguage?.localeId,
             url: nil,
             data: trackTappedLanguageData
         )
@@ -272,7 +272,7 @@ extension ToolViewModel {
     
     func languageTapped(index: Int, page: Int, pagePositions: ToolPagePositions) {
                 
-        let tappedLanguage: LanguageDomainModel = languages[index]
+        let tappedLanguage: LanguageModel = languages[index]
         
         if let pageRenderer = getPageRenderer(language: tappedLanguage) {
             setPageRenderer(pageRenderer: pageRenderer, navigationEvent: nil, pagePositions: pagePositions)
@@ -363,18 +363,18 @@ extension ToolViewModel {
         let page: Int? = attributes?.page
         let cardPosition: Int? = attributes?.card
         
-        let navBarLanguages: [LanguageDomainModel] = languages
-        let currentNavBarLanguage: LanguageDomainModel = languages[selectedLanguageIndex]
-        var remoteShareLanguage: LanguageDomainModel = currentNavBarLanguage
+        let navBarLanguages: [LanguageModel] = languages
+        let currentNavBarLanguage: LanguageModel = languages[selectedLanguageIndex]
+        var remoteShareLanguage: LanguageModel = currentNavBarLanguage
         var remoteShareLanguageIndex: Int?
         
         if let locale = attributes?.locale, !locale.isEmpty {
             
             for index in 0 ..< navBarLanguages.count {
                 
-                let language: LanguageDomainModel = navBarLanguages[index]
+                let language: LanguageModel = navBarLanguages[index]
 
-                if locale.lowercased() == language.localeIdentifier.lowercased() {
+                if locale.lowercased() == language.localeId.lowercased() {
                     remoteShareLanguage = language
                     remoteShareLanguageIndex = index
                     break
@@ -414,7 +414,7 @@ extension ToolViewModel {
             return
         }
         
-        let localeId: String = languages[selectedLanguageIndex].localeIdentifier
+        let localeId: String = languages[selectedLanguageIndex].localeId
                 
         let event = TractRemoteSharePublisherNavigationEvent(
             card: pagePositions.cardPosition,

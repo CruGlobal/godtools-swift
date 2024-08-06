@@ -27,14 +27,6 @@ class LessonFilterDataLayerDependencies {
             stringWithLocaleCount: coreDataLayer.getStringWithLocaleCount()
         )
     }
-    
-    func getUserLessonFiltersRepository() -> UserLessonFiltersRepository {
-        return UserLessonFiltersRepository(
-            cache: RealmUserLessonFiltersCache(
-                realmDatabase: coreDataLayer.getSharedRealmDatabase()
-            )
-        )
-    }
         
     // MARK: - Domain Interface
     
@@ -55,12 +47,12 @@ class LessonFilterDataLayerDependencies {
     }
     
     func getStoreUserLessonFiltersRepositoryInterface() -> StoreUserLessonFiltersRepositoryInterface {
-        return StoreUserLessonFiltersRepository(userLessonFiltersRepository: getUserLessonFiltersRepository())
+        return StoreUserLessonFiltersRepository(userLessonFiltersRepository: coreDataLayer.getUserLessonFiltersRepository())
     }
     
     func getUserLessonFiltersRepositoryInterface() -> GetUserLessonFiltersRepositoryInterface {
         return GetUserLessonFiltersRepository(
-            userLessonFiltersRepository: getUserLessonFiltersRepository(),
+            userLessonFiltersRepository: coreDataLayer.getUserLessonFiltersRepository(),
             getLessonFilterLanguagesRepository: getLessonFilterLanguagesRepository()
         )
     }

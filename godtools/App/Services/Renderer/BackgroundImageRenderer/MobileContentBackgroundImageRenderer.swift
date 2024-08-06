@@ -8,6 +8,7 @@
 
 import UIKit
 import GodToolsToolParser
+@testable import godtools
 
 class MobileContentBackgroundImageRenderer: MobileContentBackgroundImageRendererType {
     

@@ -51,7 +51,7 @@ class StoreInitialAppLanguage: StoreInitialAppLanguageInterface {
             }
             
             return self.userAppLanguageRepository
-                .storeLanguagePublisher(languageId: appLanguageToStore)
+                .storeLanguagePublisher(appLanguageId: appLanguageToStore)
                 .map { (success: Bool) in
                     appLanguageToStore
                 }

@@ -12,10 +12,11 @@ import RealmSwift
 class RealmLanguage: Object, LanguageModelType {
     
     @objc dynamic var code: String = ""
-    @objc dynamic var direction: String = ""
+    @objc dynamic var directionString: String = ""
     @objc dynamic var id: String = ""
     @objc dynamic var name: String = ""
     @objc dynamic var type: String = ""
+    @objc dynamic var forceLanguageName: Bool = false
     
     override static func primaryKey() -> String? {
         return "id"
@@ -28,9 +29,10 @@ class RealmLanguage: Object, LanguageModelType {
     func mapFrom(model: LanguageModel) {
         
         code = model.code
-        direction = model.direction
+        directionString = model.directionString
         id = model.id
         name = model.name
         type = model.type
+        forceLanguageName = model.forceLanguageName
     }
 }

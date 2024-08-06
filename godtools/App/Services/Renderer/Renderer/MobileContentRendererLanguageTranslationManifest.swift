@@ -12,6 +12,6 @@ import GodToolsToolParser
 struct MobileContentRendererLanguageTranslationManifest {
     
     let manifest: Manifest
-    let language: LanguageDomainModel
+    let language: LanguageModel
     let translation: TranslationModel
 }

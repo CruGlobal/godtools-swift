@@ -91,8 +91,7 @@ class AppDomainLayerDependencies {
         return GetToolTranslationsFilesUseCase(
             resourcesRepository: dataLayer.getResourcesRepository(),
             translationsRepository: dataLayer.getTranslationsRepository(),
-            languagesRepository: dataLayer.getLanguagesRepository(),
-            getLanguageUseCase: getLanguageUseCase()
+            languagesRepository: dataLayer.getLanguagesRepository()
         )
     }
     

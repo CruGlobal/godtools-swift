@@ -21,7 +21,7 @@ class MobileContentRendererEventAnalyticsTracking {
         self.firebaseAnalytics = firebaseAnalytics
     }
     
-    func trackContentEvent(eventId: EventId, resource: ResourceModel, language: LanguageDomainModel) {
+    func trackContentEvent(eventId: EventId, resource: ResourceModel, language: LanguageModel) {
         
         let data: [String: Any] = [
             MobileContentRendererEventAnalyticsTracking.paramEventId: eventId.description()
@@ -31,7 +31,7 @@ class MobileContentRendererEventAnalyticsTracking {
             screenName: "",
             siteSection: resource.abbreviation,
             siteSubSection: "",
-            contentLanguage: language.localeIdentifier,
+            contentLanguage: language.localeId,
             secondaryContentLanguage: nil,
             actionName: MobileContentRendererEventAnalyticsTracking.actionContentEvent,
             data: data
