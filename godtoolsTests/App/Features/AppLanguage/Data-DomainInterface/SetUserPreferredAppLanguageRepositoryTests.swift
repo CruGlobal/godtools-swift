@@ -36,17 +36,18 @@ class SetUserPreferredAppLanguageRepositoryTests: QuickSpec {
             userLessonFiltersRepository: testsDiContainer.dataLayer.getUserLessonFiltersRepository(),
             getLessonFilterLanguagesRepository: testsDiContainer.feature.lessonFilter.dataLayer.getLessonFilterLanguagesRepository()
         )
-        
+                
         describe("User is viewing the language settings.") {
             
             context("When the app language is switched from English to Spanish") {
                 
                 it("The user's lesson language filter should update to Spanish") {
-                    
-                    let appLanguagePublisher: CurrentValueSubject<AppLanguageDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
-                    
+                                        
                     let appLanguageSpanish: AppLanguageDomainModel = LanguageCodeDomainModel.spanish.rawValue
+                    let realmLanguageSpanish = allLanguages.first(where: { $0.code == appLanguageSpanish.languageCode })
+
                     var lessonLanguageFilterRef: LessonFilterLanguageDomainModel?
+                    var sinkCompleted: Bool = false
                     
                     waitUntil { done in
                         
@@ -56,7 +57,11 @@ class SetUserPreferredAppLanguageRepositoryTests: QuickSpec {
                                 return getUserLessonFiltersRepository.getUserLessonLanguageFilterPublisher(translatedInAppLanguage: appLanguageSpanish)
                             }
                             .sink { lessonFilterLanguage in
+                                if sinkCompleted {
+                                    return
+                                }
                                 
+                                sinkCompleted = true
                                 lessonLanguageFilterRef = lessonFilterLanguage
                                 
                                 done()
@@ -64,7 +69,8 @@ class SetUserPreferredAppLanguageRepositoryTests: QuickSpec {
                             .store(in: &cancellables)
                     }
                     
-                    expect(lessonLanguageFilterRef?.languageId).to(equal(appLanguageSpanish.localeId))
+                    expect(realmLanguageSpanish).toNot(beNil())
+                    expect(lessonLanguageFilterRef?.languageId).to(equal(realmLanguageSpanish?.id))
                 }
             }
         }
@@ -90,7 +96,7 @@ class SetUserPreferredAppLanguageRepositoryTests: QuickSpec {
     
     private static func getRealmLanguage(languageCode: LanguageCodeDomainModel) -> RealmLanguage {
         
-        return MockRealmLanguage.getLanguage(language: languageCode, name: languageCode.rawValue + " Name", id: languageCode.rawValue)
+        return MockRealmLanguage.getLanguage(language: languageCode, name: languageCode.rawValue + " Name")
     }
     
     private static func getLocalizationServices() -> MockLocalizationServices {
