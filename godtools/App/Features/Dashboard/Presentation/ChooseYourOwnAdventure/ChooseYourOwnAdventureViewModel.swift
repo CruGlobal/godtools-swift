@@ -172,6 +172,25 @@ extension ChooseYourOwnAdventureViewModel {
         }
     }
     
+    @objc func toolSettingsTapped() {
+        
+//        let toolSettingsObserver = createToolSettingsObserver()
+//        
+//        trackActionAnalyticsUseCase
+//            .trackAction(
+//                screenName: analyticsScreenName,
+//                actionName: "Tool Settings",
+//                siteSection: analyticsSiteSection,
+//                siteSubSection: "",
+//                contentLanguage: nil,
+//                contentLanguageSecondary: nil,
+//                url: nil,
+//                data: [ToolAnalyticsActionNames.shared.ACTION_SETTINGS: 1]
+//            )
+//        
+//        flowDelegate?.navigate(step: .toolSettingsTappedFromTool(toolSettingsObserver: toolSettingsObserver))
+    }
+    
     func languageTapped(index: Int) {
         
         let pageRenderer: MobileContentPageRenderer = renderer.value.pageRenderers[index]

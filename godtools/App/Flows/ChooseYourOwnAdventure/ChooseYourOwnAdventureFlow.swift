@@ -110,18 +110,30 @@ extension ChooseYourOwnAdventureFlow {
             hidesBarItemPublisher: viewModel.$hidesBackButton.eraseToAnyPublisher(),
             layoutDirectionPublisher: Just(navBarLayoutDirection).eraseToAnyPublisher()
         )
-                
-        var chooseYourOwnAdventureView: ChooseYourOwnAdventureView?
+        
+        let toolSettingsBarItem = NavBarItem(
+            controllerType: .base,
+            itemData: NavBarItemData(
+                contentType: .image(value: ImageCatalog.navToolSettings.uiImage),
+                style: .plain,
+                color: nil,
+                target: viewModel,
+                action: #selector(viewModel.toolSettingsTapped),
+                accessibilityIdentifier: nil
+            ),
+            hidesBarItemPublisher: nil
+        )
         
         let navigationBar = AppNavigationBar(
             appearance: viewModel.navBarAppearance,
             backButton: nil,
             leadingItems: [homeButton, backButton],
-            trailingItems: [],
+            trailingItems: [toolSettingsBarItem],
             titleView: nil,
             title: nil
         )
         
+        var chooseYourOwnAdventureView: ChooseYourOwnAdventureView?
         let view = ChooseYourOwnAdventureView(viewModel: viewModel, navigationBar: navigationBar)
         
         chooseYourOwnAdventureView = view
