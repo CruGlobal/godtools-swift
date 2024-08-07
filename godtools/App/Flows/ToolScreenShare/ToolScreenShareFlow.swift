@@ -12,7 +12,7 @@ import Combine
 
 class ToolScreenShareFlow: Flow {
 
-    private let toolSettingsObserver: ToolSettingsObserver
+    private let toolSettingsObserver: TractToolSettingsObserver
     
     private var toolScreenShareTutorialModal: UIViewController?
     private var creatingToolScreenShareSessionModal: UIViewController?
@@ -27,7 +27,7 @@ class ToolScreenShareFlow: Flow {
     let appDiContainer: AppDiContainer
     let navigationController: AppNavigationController
     
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, toolSettingsObserver: ToolSettingsObserver) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, toolSettingsObserver: TractToolSettingsObserver) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer

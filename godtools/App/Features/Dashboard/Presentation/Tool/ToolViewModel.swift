@@ -169,7 +169,7 @@ class ToolViewModel: MobileContentPagesViewModel {
         )
     }
     
-    private func createToolSettingsObserver() -> ToolSettingsObserver {
+    private func createToolSettingsObserver() -> TractToolSettingsObserver {
         
         let languages = ToolSettingsLanguages(
             primaryLanguageId: languages[0].id,
@@ -177,7 +177,7 @@ class ToolViewModel: MobileContentPagesViewModel {
             selectedLanguageId: languages[selectedLanguageIndex].id
         )
         
-        let toolSettingsObserver = ToolSettingsObserver(
+        let toolSettingsObserver = TractToolSettingsObserver(
             toolId: renderer.value.resource.id,
             languages: languages,
             pageNumber: currentRenderedPageNumber,

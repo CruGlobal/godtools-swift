@@ -14,6 +14,7 @@ class ChooseYourOwnAdventureFlow: ToolNavigationFlow {
         
     private let appLanguage: AppLanguageDomainModel
     
+    private var toolSettingsFlow: ToolSettingsFlow?
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
@@ -47,6 +48,19 @@ class ChooseYourOwnAdventureFlow: ToolNavigationFlow {
     func navigate(step: FlowStep) {
         
         switch step {
+        case .toolSettingsTappedFromChooseYourOwnAdventure(let toolSettingsObserver):
+            
+            let toolSettingsFlow = ToolSettingsFlow(
+                flowDelegate: self,
+                appDiContainer: appDiContainer,
+                sharedNavigationController: navigationController,
+                toolSettingsObserver: toolSettingsObserver
+            )
+            
+            navigationController.present(toolSettingsFlow.getInitialView(), animated: true)
+            
+            self.toolSettingsFlow = toolSettingsFlow
+            
         case .backTappedFromChooseYourOwnAdventure:
             closeTool()
             

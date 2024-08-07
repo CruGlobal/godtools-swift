@@ -1565,6 +1565,7 @@
 		D4C14E9229411A35001465F1 /* MobileContentAuthTokenDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C14E9129411A35001465F1 /* MobileContentAuthTokenDataModel.swift */; };
 		D4C26CA62C518EF70082B479 /* ToolFilterAnyCategoryDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C26CA52C518EF70082B479 /* ToolFilterAnyCategoryDomainModel.swift */; };
 		D4C26CAA2C529C090082B479 /* ToolFilterAnyLanguageDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C26CA92C529C090082B479 /* ToolFilterAnyLanguageDomainModel.swift */; };
+		D4C26CB42C62EB2D0082B479 /* CYOAToolSettingsObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C26CB32C62EB2D0082B479 /* CYOAToolSettingsObserver.swift */; };
 		D4C2A5532C2E31C10035AB4D /* LessonFilterLanguageSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C2A5522C2E31C10035AB4D /* LessonFilterLanguageSelectionView.swift */; };
 		D4C2A5552C2E32030035AB4D /* LessonFilterLanguageSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C2A5542C2E32030035AB4D /* LessonFilterLanguageSelectionViewModel.swift */; };
 		D4C2A5602C30906C0035AB4D /* ViewLessonFilterLanguagesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C2A55F2C30906C0035AB4D /* ViewLessonFilterLanguagesUseCase.swift */; };
@@ -3320,6 +3321,7 @@
 		D4C14E9129411A35001465F1 /* MobileContentAuthTokenDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentAuthTokenDataModel.swift; sourceTree = "<group>"; };
 		D4C26CA52C518EF70082B479 /* ToolFilterAnyCategoryDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolFilterAnyCategoryDomainModel.swift; sourceTree = "<group>"; };
 		D4C26CA92C529C090082B479 /* ToolFilterAnyLanguageDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolFilterAnyLanguageDomainModel.swift; sourceTree = "<group>"; };
+		D4C26CB32C62EB2D0082B479 /* CYOAToolSettingsObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CYOAToolSettingsObserver.swift; sourceTree = "<group>"; };
 		D4C2A5522C2E31C10035AB4D /* LessonFilterLanguageSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonFilterLanguageSelectionView.swift; sourceTree = "<group>"; };
 		D4C2A5542C2E32030035AB4D /* LessonFilterLanguageSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonFilterLanguageSelectionViewModel.swift; sourceTree = "<group>"; };
 		D4C2A55F2C30906C0035AB4D /* ViewLessonFilterLanguagesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewLessonFilterLanguagesUseCase.swift; sourceTree = "<group>"; };
@@ -6525,6 +6527,7 @@
 			isa = PBXGroup;
 			children = (
 				456AC1972B8CE89E00169C11 /* ToolSettingsObserver.swift */,
+				D4C26CB32C62EB2D0082B479 /* CYOAToolSettingsObserver.swift */,
 				456AC19D2B8CEE6200169C11 /* ToolSettingsLanguages.swift */,
 			);
 			path = Observer;
@@ -13087,6 +13090,7 @@
 				45006D482B80EB9B002E480D /* GetToolsRepositoryInterface.swift in Sources */,
 				45E3476B2A49BE230014CCD1 /* Flow+PresentNativeMailApp.swift in Sources */,
 				4534F9222AE99EEA00A7A071 /* LessonEvaluationFeatureDiContainer.swift in Sources */,
+				D4C26CB42C62EB2D0082B479 /* CYOAToolSettingsObserver.swift in Sources */,
 				4535BE152B348BF100A8B62F /* ReviewShareShareableViewModel.swift in Sources */,
 				45E347892A49C0120014CCD1 /* ProgressBarView.swift in Sources */,
 				454CC4132C5D268B00046437 /* LanguageDirectionDomainModel.swift in Sources */,

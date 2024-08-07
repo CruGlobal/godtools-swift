@@ -169,6 +169,7 @@ enum FlowStep {
     case didFailToDownloadArticleFromLoadingArticle(alertMessage: AlertMessageType)
     
     // choose your own adventure
+    case toolSettingsTappedFromChooseYourOwnAdventure(toolSettingsObserver: ToolSettingsObserver)
     case backTappedFromChooseYourOwnAdventure
     case chooseYourOwnAdventureFlowCompleted(state: ChooseYourOwnAdventureFlowCompletedState)
         
