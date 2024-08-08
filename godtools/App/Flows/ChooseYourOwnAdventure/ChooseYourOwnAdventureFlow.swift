@@ -61,6 +61,14 @@ class ChooseYourOwnAdventureFlow: ToolNavigationFlow {
             
             self.toolSettingsFlow = toolSettingsFlow
             
+        case .toolSettingsFlowCompleted(let state):
+            
+            guard toolSettingsFlow != nil else { return }
+            
+            navigationController.dismiss(animated: true)
+            
+            toolSettingsFlow = nil
+            
         case .backTappedFromChooseYourOwnAdventure:
             closeTool()
             
