@@ -1,5 +1,5 @@
 //
-//  ToolViewModel.swift
+//  TractViewModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 10/30/20.
@@ -10,7 +10,7 @@ import UIKit
 import GodToolsToolParser
 import Combine
 
-class ToolViewModel: MobileContentPagesViewModel {
+class TractViewModel: MobileContentPagesViewModel {
     
     private let tractRemoteSharePublisher: TractRemoteSharePublisher
     private let tractRemoteShareSubscriber: TractRemoteShareSubscriber
@@ -237,7 +237,7 @@ class ToolViewModel: MobileContentPagesViewModel {
 
 // MARK: - Inputs
 
-extension ToolViewModel {
+extension TractViewModel {
     
     @objc func homeTapped() {
         
@@ -325,7 +325,7 @@ extension ToolViewModel {
 
 // MARK: - Remote Share Subscriber / Publisher
 
-extension ToolViewModel {
+extension TractViewModel {
     
     private func trackShareScreenOpened() {
         

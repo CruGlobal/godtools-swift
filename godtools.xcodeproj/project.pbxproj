@@ -1140,8 +1140,8 @@
 		45C152482A43D21D00F2A1E8 /* ToolSettingsTopBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C152462A43D21D00F2A1E8 /* ToolSettingsTopBarView.swift */; };
 		45C1527F2A44888100F2A1E8 /* LessonEvaluationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C152782A44888100F2A1E8 /* LessonEvaluationView.swift */; };
 		45C152812A44888100F2A1E8 /* LessonEvaluationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C1527A2A44888100F2A1E8 /* LessonEvaluationViewModel.swift */; };
-		45C1529F2A44896C00F2A1E8 /* ToolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C1528E2A44896C00F2A1E8 /* ToolView.swift */; };
-		45C152A52A44896C00F2A1E8 /* ToolViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C152982A44896C00F2A1E8 /* ToolViewModel.swift */; };
+		45C1529F2A44896C00F2A1E8 /* TractView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C1528E2A44896C00F2A1E8 /* TractView.swift */; };
+		45C152A52A44896C00F2A1E8 /* TractViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C152982A44896C00F2A1E8 /* TractViewModel.swift */; };
 		45C152A62A44896C00F2A1E8 /* ChooseYourOwnAdventureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C1529A2A44896C00F2A1E8 /* ChooseYourOwnAdventureView.swift */; };
 		45C152A92A44896C00F2A1E8 /* ChooseYourOwnAdventureViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C1529E2A44896C00F2A1E8 /* ChooseYourOwnAdventureViewModel.swift */; };
 		45C1A43528256B3300B8469A /* ProcessedEventResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C1A43428256B3300B8469A /* ProcessedEventResult.swift */; };
@@ -2779,8 +2779,8 @@
 		45C152462A43D21D00F2A1E8 /* ToolSettingsTopBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolSettingsTopBarView.swift; sourceTree = "<group>"; };
 		45C152782A44888100F2A1E8 /* LessonEvaluationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LessonEvaluationView.swift; sourceTree = "<group>"; };
 		45C1527A2A44888100F2A1E8 /* LessonEvaluationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LessonEvaluationViewModel.swift; sourceTree = "<group>"; };
-		45C1528E2A44896C00F2A1E8 /* ToolView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolView.swift; sourceTree = "<group>"; };
-		45C152982A44896C00F2A1E8 /* ToolViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolViewModel.swift; sourceTree = "<group>"; };
+		45C1528E2A44896C00F2A1E8 /* TractView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractView.swift; sourceTree = "<group>"; };
+		45C152982A44896C00F2A1E8 /* TractViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractViewModel.swift; sourceTree = "<group>"; };
 		45C1529A2A44896C00F2A1E8 /* ChooseYourOwnAdventureView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseYourOwnAdventureView.swift; sourceTree = "<group>"; };
 		45C1529E2A44896C00F2A1E8 /* ChooseYourOwnAdventureViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseYourOwnAdventureViewModel.swift; sourceTree = "<group>"; };
 		45C1A43428256B3300B8469A /* ProcessedEventResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProcessedEventResult.swift; sourceTree = "<group>"; };
@@ -9272,13 +9272,13 @@
 			path = Subviews;
 			sourceTree = "<group>";
 		};
-		45C1528D2A44896C00F2A1E8 /* Tool */ = {
+		45C1528D2A44896C00F2A1E8 /* Tract */ = {
 			isa = PBXGroup;
 			children = (
-				45C1528E2A44896C00F2A1E8 /* ToolView.swift */,
-				45C152982A44896C00F2A1E8 /* ToolViewModel.swift */,
+				45C1528E2A44896C00F2A1E8 /* TractView.swift */,
+				45C152982A44896C00F2A1E8 /* TractViewModel.swift */,
 			);
-			path = Tool;
+			path = Tract;
 			sourceTree = "<group>";
 		};
 		45C152992A44896C00F2A1E8 /* ChooseYourOwnAdventure */ = {
@@ -11442,7 +11442,7 @@
 			children = (
 				45C152992A44896C00F2A1E8 /* ChooseYourOwnAdventure */,
 				D473469329072A3300579463 /* Dashboard */,
-				45C1528D2A44896C00F2A1E8 /* Tool */,
+				45C1528D2A44896C00F2A1E8 /* Tract */,
 				D473469629072A8700579463 /* Tools */,
 			);
 			path = Presentation;
@@ -12562,7 +12562,7 @@
 				459BF77E2AFEE0320053BA09 /* ToolScreenShareTutorialViewDataModel.swift in Sources */,
 				45EB9B7229F16CF200CA74A8 /* UILabel+AttributedString.swift in Sources */,
 				45B54C572A2641FE0042CD0E /* RealmDatabase+Read.swift in Sources */,
-				45C152A52A44896C00F2A1E8 /* ToolViewModel.swift in Sources */,
+				45C152A52A44896C00F2A1E8 /* TractViewModel.swift in Sources */,
 				45B6482025E58EE70098BAF1 /* (null) in Sources */,
 				45645C162AFE774900BD233D /* GetShareToolScreenShareSessionInterfaceStringsRepository.swift in Sources */,
 				45AD1BD925938A4F00A096A0 /* AlertMessageView.swift in Sources */,
@@ -13381,7 +13381,7 @@
 				4598BD202BF7DF6800196463 /* AuthUserDomainModel.swift in Sources */,
 				45B338312AF42A9400D18C63 /* GetTutorialInterfaceStringsRepository.swift in Sources */,
 				453D2F822AD88C2B001C44E3 /* GetLanguageSettingsInterfaceStringsRepository.swift in Sources */,
-				45C1529F2A44896C00F2A1E8 /* ToolView.swift in Sources */,
+				45C1529F2A44896C00F2A1E8 /* TractView.swift in Sources */,
 				45BDA5CE2954F67D007E259B /* RealmResourceView.swift in Sources */,
 				45C1523C2A43D1BD00F2A1E8 /* ToolSettingsViewModel.swift in Sources */,
 				450EE28629A6648900524F64 /* ToolPathDeepLinkParser.swift in Sources */,
