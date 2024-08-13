@@ -6533,10 +6533,8 @@
 			isa = PBXGroup;
 			children = (
 				456AC1972B8CE89E00169C11 /* ToolSettingsObserver.swift */,
-				D4C26CB32C62EB2D0082B479 /* TractToolSettingsObserver.swift */,
-				456AC19D2B8CEE6200169C11 /* ToolSettingsLanguages.swift */,
-				D4C26CB52C6A98480082B479 /* CYOAToolSettingsObserver.swift */,
-				D4C26CB72C6A98950082B479 /* RemoteShareable.swift */,
+				D47EAFC52C6ADD5C0071E6CA /* Subclasses */,
+				D47EAFC62C6ADD730071E6CA /* Protocols */,
 			);
 			path = Observer;
 			sourceTree = "<group>";
@@ -11497,6 +11495,24 @@
 				D47DF0432B28F9560079219B /* RealmDownloadedLanguagesCache.swift */,
 			);
 			path = Cache;
+			sourceTree = "<group>";
+		};
+		D47EAFC52C6ADD5C0071E6CA /* Subclasses */ = {
+			isa = PBXGroup;
+			children = (
+				D4C26CB52C6A98480082B479 /* CYOAToolSettingsObserver.swift */,
+				456AC19D2B8CEE6200169C11 /* ToolSettingsLanguages.swift */,
+				D4C26CB32C62EB2D0082B479 /* TractToolSettingsObserver.swift */,
+			);
+			path = Subclasses;
+			sourceTree = "<group>";
+		};
+		D47EAFC62C6ADD730071E6CA /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				D4C26CB72C6A98950082B479 /* RemoteShareable.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 		D4B05FF3291061E8005852D0 /* MobileContentAuthTokenRepository */ = {

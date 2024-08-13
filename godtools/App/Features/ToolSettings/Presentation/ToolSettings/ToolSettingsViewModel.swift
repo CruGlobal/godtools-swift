@@ -47,7 +47,7 @@ class ToolSettingsViewModel: ObservableObject {
         self.viewToolSettingsUseCase = viewToolSettingsUseCase
         self.getShareablesUseCase = getShareablesUseCase
         self.getShareableImageUseCase = getShareableImageUseCase
-        self.hidesShareScreenButton = (toolSettingsObserver is RemoteShareable) == false
+        self.hidesShareScreenButton = toolSettingsObserver.isRemoteShareable == false
         
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()

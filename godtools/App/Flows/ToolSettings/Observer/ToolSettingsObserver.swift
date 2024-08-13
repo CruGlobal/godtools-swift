@@ -24,3 +24,9 @@ class ToolSettingsObserver: ObservableObject {
         self.trainingTipsEnabled = trainingTipsEnabled
     }
 }
+
+extension ToolSettingsObserver {
+    var isRemoteShareable: Bool {
+        return self is RemoteShareable
+    }
+}
