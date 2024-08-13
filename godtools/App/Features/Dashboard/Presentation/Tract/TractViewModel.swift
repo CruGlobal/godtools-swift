@@ -1,5 +1,5 @@
 //
-//  ToolViewModel.swift
+//  TractViewModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 10/30/20.
@@ -10,7 +10,7 @@ import UIKit
 import GodToolsToolParser
 import Combine
 
-class ToolViewModel: MobileContentPagesViewModel {
+class TractViewModel: MobileContentPagesViewModel {
     
     private let tractRemoteSharePublisher: TractRemoteSharePublisher
     private let tractRemoteShareSubscriber: TractRemoteShareSubscriber
@@ -169,7 +169,7 @@ class ToolViewModel: MobileContentPagesViewModel {
         )
     }
     
-    private func createToolSettingsObserver() -> ToolSettingsObserver {
+    private func createToolSettingsObserver() -> TractToolSettingsObserver {
         
         let languages = ToolSettingsLanguages(
             primaryLanguageId: languages[0].id,
@@ -177,7 +177,7 @@ class ToolViewModel: MobileContentPagesViewModel {
             selectedLanguageId: languages[selectedLanguageIndex].id
         )
         
-        let toolSettingsObserver = ToolSettingsObserver(
+        let toolSettingsObserver = TractToolSettingsObserver(
             toolId: renderer.value.resource.id,
             languages: languages,
             pageNumber: currentRenderedPageNumber,
@@ -237,7 +237,7 @@ class ToolViewModel: MobileContentPagesViewModel {
 
 // MARK: - Inputs
 
-extension ToolViewModel {
+extension TractViewModel {
     
     @objc func homeTapped() {
         
@@ -325,7 +325,7 @@ extension ToolViewModel {
 
 // MARK: - Remote Share Subscriber / Publisher
 
-extension ToolViewModel {
+extension TractViewModel {
     
     private func trackShareScreenOpened() {
         
