@@ -84,7 +84,7 @@ enum FlowStep {
     // tool
     case homeTappedFromTool(isScreenSharing: Bool)
     case backTappedFromTool
-    case toolSettingsTappedFromTool(toolSettingsObserver: TractToolSettingsObserver)
+    case toolSettingsTappedFromTool(toolSettingsObserver: ToolSettingsObserver)
     case tractFlowCompleted(state: TractFlowCompletedState)
         
     // tutorial
@@ -169,7 +169,7 @@ enum FlowStep {
     case didFailToDownloadArticleFromLoadingArticle(alertMessage: AlertMessageType)
     
     // choose your own adventure
-    case toolSettingsTappedFromChooseYourOwnAdventure(toolSettingsObserver: CYOAToolSettingsObserver)
+    case toolSettingsTappedFromChooseYourOwnAdventure(toolSettingsObserver: ToolSettingsObserver)
     case backTappedFromChooseYourOwnAdventure
     case chooseYourOwnAdventureFlowCompleted(state: ChooseYourOwnAdventureFlowCompletedState)
         

@@ -23,7 +23,6 @@ class TractViewModel: MobileContentPagesViewModel {
     private var cancellables: Set<AnyCancellable> = Set()
     private var remoteShareIsActive: Bool = false
     private var shouldPersistToolSettings: Bool = false
-    private var toolSettingsObserver: ToolSettingsObserver?
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -169,45 +168,24 @@ class TractViewModel: MobileContentPagesViewModel {
         )
     }
     
-    private func createToolSettingsObserver() -> TractToolSettingsObserver {
-        
-        let languages = ToolSettingsLanguages(
-            primaryLanguageId: languages[0].id,
-            parallelLanguageId: languages[safe: 1]?.id,
-            selectedLanguageId: languages[selectedLanguageIndex].id
-        )
-        
-        let toolSettingsObserver = TractToolSettingsObserver(
+    override func createToolSettingsObserver(with toolSettingsLanguages: ToolSettingsLanguages) -> TractToolSettingsObserver {
+        let tractToolSettingsObserver = TractToolSettingsObserver(
             toolId: renderer.value.resource.id,
-            languages: languages,
+            languages: toolSettingsLanguages,
             pageNumber: currentRenderedPageNumber,
             trainingTipsEnabled: trainingTipsEnabled,
             tractRemoteSharePublisher: tractRemoteSharePublisher
         )
         
-        toolSettingsObserver.$languages
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (languages: ToolSettingsLanguages) in
-                
-                self?.setRendererPrimaryLanguage(
-                    primaryLanguageId: languages.primaryLanguageId,
-                    parallelLanguageId: languages.parallelLanguageId,
-                    selectedLanguageId: languages.selectedLanguageId
-                )
-            }
-            .store(in: &cancellables)
-        
-        toolSettingsObserver.$trainingTipsEnabled
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (trainingTipsEnabled: Bool) in
-                
-                self?.setTrainingTipsEnabled(enabled: trainingTipsEnabled)
-            }
-            .store(in: &cancellables)
+        return tractToolSettingsObserver
+    }
+    
+    override func attachToolSettingsObservers() {
+        super.attachToolSettingsObservers()
         
         if shouldPersistToolSettings {
             
-            toolSettingsObserver.$languages
+            toolSettingsObserver?.$languages
                 .map { [weak self] (languages: ToolSettingsLanguages) in
                     
                     guard let self = self else {
@@ -229,9 +207,6 @@ class TractViewModel: MobileContentPagesViewModel {
                 })
                 .store(in: &cancellables)
         }
-        
-        self.toolSettingsObserver = toolSettingsObserver
-        return toolSettingsObserver
     }
 }
 
@@ -253,7 +228,7 @@ extension TractViewModel {
     
     @objc func toolSettingsTapped() {
         
-        let toolSettingsObserver = createToolSettingsObserver()
+        let toolSettingsObserver = setupToolSettingsObserver()
         
         trackActionAnalyticsUseCase
             .trackAction(
@@ -292,7 +267,7 @@ extension TractViewModel {
                 selectedLanguageId: tappedLanguage.id
             )
         } else {
-            _ = createToolSettingsObserver()
+            _ = setupToolSettingsObserver()
         }
         
         trackLanguageTapped(tappedLanguage: tappedLanguage)
