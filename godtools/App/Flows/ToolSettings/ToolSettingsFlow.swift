@@ -255,13 +255,13 @@ extension ToolSettingsFlow {
 extension ToolSettingsFlow {
     
     private func presentToolScreenShareFlow() {
-        guard let tractToolSettingsObserver = toolSettingsObserver as? TractToolSettingsObserver else { return }
+        guard let toolSettingsObserver = toolSettingsObserver as? ToolScreenShareFlow.ToolScreenShareSettingsObserver else { return }
         
         let toolScreenShareFlow = ToolScreenShareFlow(
             flowDelegate: self,
             appDiContainer: appDiContainer,
             sharedNavigationController: navigationController,
-            toolSettingsObserver: tractToolSettingsObserver
+            toolSettingsObserver: toolSettingsObserver
         )
         
         self.toolScreenShareFlow = toolScreenShareFlow

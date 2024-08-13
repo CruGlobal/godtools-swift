@@ -1565,7 +1565,9 @@
 		D4C14E9229411A35001465F1 /* MobileContentAuthTokenDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C14E9129411A35001465F1 /* MobileContentAuthTokenDataModel.swift */; };
 		D4C26CA62C518EF70082B479 /* ToolFilterAnyCategoryDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C26CA52C518EF70082B479 /* ToolFilterAnyCategoryDomainModel.swift */; };
 		D4C26CAA2C529C090082B479 /* ToolFilterAnyLanguageDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C26CA92C529C090082B479 /* ToolFilterAnyLanguageDomainModel.swift */; };
-		D4C26CB42C62EB2D0082B479 /* CYOAToolSettingsObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C26CB32C62EB2D0082B479 /* CYOAToolSettingsObserver.swift */; };
+		D4C26CB42C62EB2D0082B479 /* TractToolSettingsObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C26CB32C62EB2D0082B479 /* TractToolSettingsObserver.swift */; };
+		D4C26CB62C6A98480082B479 /* CYOAToolSettingsObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C26CB52C6A98480082B479 /* CYOAToolSettingsObserver.swift */; };
+		D4C26CB82C6A98950082B479 /* RemoteShareable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C26CB72C6A98950082B479 /* RemoteShareable.swift */; };
 		D4C2A5532C2E31C10035AB4D /* LessonFilterLanguageSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C2A5522C2E31C10035AB4D /* LessonFilterLanguageSelectionView.swift */; };
 		D4C2A5552C2E32030035AB4D /* LessonFilterLanguageSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C2A5542C2E32030035AB4D /* LessonFilterLanguageSelectionViewModel.swift */; };
 		D4C2A5602C30906C0035AB4D /* ViewLessonFilterLanguagesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C2A55F2C30906C0035AB4D /* ViewLessonFilterLanguagesUseCase.swift */; };
@@ -3321,7 +3323,9 @@
 		D4C14E9129411A35001465F1 /* MobileContentAuthTokenDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentAuthTokenDataModel.swift; sourceTree = "<group>"; };
 		D4C26CA52C518EF70082B479 /* ToolFilterAnyCategoryDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolFilterAnyCategoryDomainModel.swift; sourceTree = "<group>"; };
 		D4C26CA92C529C090082B479 /* ToolFilterAnyLanguageDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolFilterAnyLanguageDomainModel.swift; sourceTree = "<group>"; };
-		D4C26CB32C62EB2D0082B479 /* CYOAToolSettingsObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CYOAToolSettingsObserver.swift; sourceTree = "<group>"; };
+		D4C26CB32C62EB2D0082B479 /* TractToolSettingsObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractToolSettingsObserver.swift; sourceTree = "<group>"; };
+		D4C26CB52C6A98480082B479 /* CYOAToolSettingsObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CYOAToolSettingsObserver.swift; sourceTree = "<group>"; };
+		D4C26CB72C6A98950082B479 /* RemoteShareable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteShareable.swift; sourceTree = "<group>"; };
 		D4C2A5522C2E31C10035AB4D /* LessonFilterLanguageSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonFilterLanguageSelectionView.swift; sourceTree = "<group>"; };
 		D4C2A5542C2E32030035AB4D /* LessonFilterLanguageSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonFilterLanguageSelectionViewModel.swift; sourceTree = "<group>"; };
 		D4C2A55F2C30906C0035AB4D /* ViewLessonFilterLanguagesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewLessonFilterLanguagesUseCase.swift; sourceTree = "<group>"; };
@@ -6527,8 +6531,10 @@
 			isa = PBXGroup;
 			children = (
 				456AC1972B8CE89E00169C11 /* ToolSettingsObserver.swift */,
-				D4C26CB32C62EB2D0082B479 /* CYOAToolSettingsObserver.swift */,
+				D4C26CB32C62EB2D0082B479 /* TractToolSettingsObserver.swift */,
 				456AC19D2B8CEE6200169C11 /* ToolSettingsLanguages.swift */,
+				D4C26CB52C6A98480082B479 /* CYOAToolSettingsObserver.swift */,
+				D4C26CB72C6A98950082B479 /* RemoteShareable.swift */,
 			);
 			path = Observer;
 			sourceTree = "<group>";
@@ -12687,6 +12693,7 @@
 				D4C2A57D2C348E2A0035AB4D /* SearchLessonFilterLanguagesUseCase.swift in Sources */,
 				45043FA12BFB875A00324573 /* GetDeleteAccountProgressInterfaceStringsInterface.swift in Sources */,
 				45645C1D2AFE7A5600BD233D /* ShareToolScreenShareSessionDomainModel.swift in Sources */,
+				D4C26CB82C6A98950082B479 /* RemoteShareable.swift in Sources */,
 				458721252BFB7756005DA242 /* DeleteAccountProgressView.swift in Sources */,
 				454CA1FC2B7BC3DC009A3976 /* GetAppLanguageRepositoryInterface.swift in Sources */,
 				450D4FA92B7FF963001DD006 /* ViewToolsDomainModel.swift in Sources */,
@@ -12805,6 +12812,7 @@
 				45E4DBB92BECFB09006ED2F3 /* SyncInvalidator.swift in Sources */,
 				45EB9B7629F16CF200CA74A8 /* UIView+Constraints.swift in Sources */,
 				455EE8442AEC59EB00C3205C /* DownloadToolProgressFeatureDataLayerDependencies.swift in Sources */,
+				D4C26CB62C6A98480082B479 /* CYOAToolSettingsObserver.swift in Sources */,
 				4598BD2B2BF7DF6800196463 /* SocialSignInAuthenticationType.swift in Sources */,
 				D4BC79E429AE995A0040651B /* GetTrainingTipCompletedUseCase.swift in Sources */,
 				45DC190F2BB59A0C007542A5 /* UITestsDeepLinkParser.swift in Sources */,
@@ -13090,7 +13098,7 @@
 				45006D482B80EB9B002E480D /* GetToolsRepositoryInterface.swift in Sources */,
 				45E3476B2A49BE230014CCD1 /* Flow+PresentNativeMailApp.swift in Sources */,
 				4534F9222AE99EEA00A7A071 /* LessonEvaluationFeatureDiContainer.swift in Sources */,
-				D4C26CB42C62EB2D0082B479 /* CYOAToolSettingsObserver.swift in Sources */,
+				D4C26CB42C62EB2D0082B479 /* TractToolSettingsObserver.swift in Sources */,
 				4535BE152B348BF100A8B62F /* ReviewShareShareableViewModel.swift in Sources */,
 				45E347892A49C0120014CCD1 /* ProgressBarView.swift in Sources */,
 				454CC4132C5D268B00046437 /* LanguageDirectionDomainModel.swift in Sources */,

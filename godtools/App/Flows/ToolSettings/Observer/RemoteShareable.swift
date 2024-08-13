@@ -1,5 +1,5 @@
 //
-//  CYOAToolSettingsObserver.swift
+//  RemoteShareable.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 8/12/24.
@@ -8,6 +8,7 @@
 
 import Foundation
 
-class CYOAToolSettingsObserver: ToolSettingsObserver {
+protocol RemoteShareable {
     
+    var tractRemoteSharePublisher: TractRemoteSharePublisher { get }
 }

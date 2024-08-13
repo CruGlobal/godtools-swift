@@ -175,19 +175,7 @@ extension ChooseYourOwnAdventureViewModel {
     @objc func toolSettingsTapped() {
         
         let toolSettingsObserver = createToolSettingsObserver()
-//        
-//        trackActionAnalyticsUseCase
-//            .trackAction(
-//                screenName: analyticsScreenName,
-//                actionName: "Tool Settings",
-//                siteSection: analyticsSiteSection,
-//                siteSubSection: "",
-//                contentLanguage: nil,
-//                contentLanguageSecondary: nil,
-//                url: nil,
-//                data: [ToolAnalyticsActionNames.shared.ACTION_SETTINGS: 1]
-//            )
-//        
+        
         flowDelegate?.navigate(step: .toolSettingsTappedFromChooseYourOwnAdventure(toolSettingsObserver: toolSettingsObserver))
     }
     
@@ -200,7 +188,7 @@ extension ChooseYourOwnAdventureViewModel {
 
 extension ChooseYourOwnAdventureViewModel {
     
-    private func createToolSettingsObserver() -> ToolSettingsObserver {
+    private func createToolSettingsObserver() -> CYOAToolSettingsObserver {
         
         let languages = ToolSettingsLanguages(
             primaryLanguageId: languages[0].id,
@@ -208,7 +196,7 @@ extension ChooseYourOwnAdventureViewModel {
             selectedLanguageId: languages[selectedLanguageIndex].id
         )
         
-        let toolSettingsObserver = ToolSettingsObserver(
+        let toolSettingsObserver = CYOAToolSettingsObserver(
             toolId: renderer.value.resource.id,
             languages: languages,
             pageNumber: currentRenderedPageNumber,
@@ -235,7 +223,6 @@ extension ChooseYourOwnAdventureViewModel {
             }
             .store(in: &cancellables)
         
-//        self.toolSettingsObserver = toolSettingsObserver
         return toolSettingsObserver
     }
 }

@@ -31,6 +31,7 @@ class ToolSettingsViewModel: ObservableObject {
     @Published var trainingTipsIcon: SwiftUI.Image = Image("")
     @Published var trainingTipsTitle: String = ""
     @Published var hidesTrainingTipsButton: Bool = true
+    @Published var hidesShareScreenButton: Bool = true
     @Published var chooseLanguageTitle: String = ""
     @Published var chooseLanguageToggleMessage: String = ""
     @Published var primaryLanguageTitle: String = ""
@@ -46,6 +47,7 @@ class ToolSettingsViewModel: ObservableObject {
         self.viewToolSettingsUseCase = viewToolSettingsUseCase
         self.getShareablesUseCase = getShareablesUseCase
         self.getShareableImageUseCase = getShareableImageUseCase
+        self.hidesShareScreenButton = (toolSettingsObserver is RemoteShareable) == false
         
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()

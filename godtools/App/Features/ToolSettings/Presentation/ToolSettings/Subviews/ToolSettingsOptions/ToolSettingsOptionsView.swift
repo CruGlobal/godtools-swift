@@ -38,15 +38,18 @@ struct ToolSettingsOptionsView: View {
                         }
                     )
                     
-                    ToolSettingsOptionView(
-                        viewBackground: .color(color: Color(.sRGB, red: 245 / 256, green: 245 / 256, blue: 245 / 256, opacity: 1)),
-                        title: viewModel.screenShareTitle,
-                        titleColorStyle: .lightBackground,
-                        iconImage: ImageCatalog.toolSettingsOptionScreenShare.image,
-                        tappedClosure: {
-                            viewModel.screenShareTapped()
-                        }
-                    )
+                    if !viewModel.hidesShareScreenButton {
+                        
+                        ToolSettingsOptionView(
+                            viewBackground: .color(color: Color(.sRGB, red: 245 / 256, green: 245 / 256, blue: 245 / 256, opacity: 1)),
+                            title: viewModel.screenShareTitle,
+                            titleColorStyle: .lightBackground,
+                            iconImage: ImageCatalog.toolSettingsOptionScreenShare.image,
+                            tappedClosure: {
+                                viewModel.screenShareTapped()
+                            }
+                        )
+                    }
                     
                     if !viewModel.hidesTrainingTipsButton {
                         
