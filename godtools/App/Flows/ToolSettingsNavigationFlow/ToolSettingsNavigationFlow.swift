@@ -27,4 +27,15 @@ extension ToolSettingsNavigationFlow {
         
         self.toolSettingsFlow = toolSettingsFlow
     }
+    
+    func closeToolSettings() {
+        
+        guard toolSettingsFlow != nil else {
+            return
+        }
+    
+        navigationController.dismiss(animated: true)
+        
+        toolSettingsFlow = nil
+    }
 }

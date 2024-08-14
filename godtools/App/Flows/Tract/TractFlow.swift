@@ -102,13 +102,7 @@ class TractFlow: ToolNavigationFlow, ToolSettingsNavigationFlow {
             
         case .toolSettingsFlowCompleted(let state):
             
-            guard toolSettingsFlow != nil else {
-                return
-            }
-        
-            navigationController.dismiss(animated: true)
-            
-            toolSettingsFlow = nil
+            closeToolSettings()
                         
         case .tractFlowCompleted( _):
             
