@@ -131,7 +131,7 @@ class MobileContentButtonView: MobileContentView {
                     toItem: buttonTitle,
                     attribute: .leading,
                     multiplier: 1,
-                    constant: buttonImagePaddingToButtonTitle * -1
+                    constant: 0
                 )
                 
                 buttonView.addConstraint(trailing)
@@ -145,7 +145,7 @@ class MobileContentButtonView: MobileContentView {
                     toItem: buttonTitle,
                     attribute: .trailing,
                     multiplier: 1,
-                    constant: buttonImagePaddingToButtonTitle
+                    constant: 0
                 )
                 
                 buttonView.addConstraint(leading)
@@ -159,7 +159,7 @@ class MobileContentButtonView: MobileContentView {
                     toItem: buttonTitle,
                     attribute: .leading,
                     multiplier: 1,
-                    constant: buttonImagePaddingToButtonTitle * -1
+                    constant: 0
                 )
                 
                 buttonView.addConstraint(trailing)
@@ -197,7 +197,7 @@ class MobileContentButtonView: MobileContentView {
         let buttonViewWidth: CGFloat = getButtonViewWidth()
         
         let minSuggestedButtonTitleWidth: CGFloat = buttonViewWidth / 4
-        var suggestedButtonTitleWidth: CGFloat = buttonViewWidth - (buttonIconSize.width * 2) - (buttonImagePaddingToButtonTitle * 2) - (buttonImagePaddingToButtonTitle * 2)
+        var suggestedButtonTitleWidth: CGFloat = buttonViewWidth - (buttonIconSize.width * 2) - (buttonImagePaddingToButtonTitle * 4)
         
         if suggestedButtonTitleWidth < minSuggestedButtonTitleWidth {
             suggestedButtonTitleWidth = minSuggestedButtonTitleWidth
@@ -207,7 +207,7 @@ class MobileContentButtonView: MobileContentView {
             return suggestedButtonTitleWidth
         }
         
-        return buttonTitleSizeToFitSize.width
+        return buttonTitleSizeToFitSize.width + (buttonImagePaddingToButtonTitle * 2)
     }
     
     private func getButtonIconSize() -> CGSize? {
