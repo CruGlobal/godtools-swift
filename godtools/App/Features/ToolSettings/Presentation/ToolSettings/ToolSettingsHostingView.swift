@@ -79,8 +79,8 @@ extension ToolSettingsHostingView: TransparentModalCustomView {
         
         view.translatesAutoresizingMaskIntoConstraints = false
         
-        view.constrainLeadingToView(view: parent, constant: modalHorizontalPadding)
-        view.constrainTrailingToView(view: parent, constant: modalHorizontalPadding)
+        _ = view.constrainLeadingToView(view: parent, constant: modalHorizontalPadding)
+        _ = view.constrainTrailingToView(view: parent, constant: modalHorizontalPadding)
         modalBottomToParent = view.constrainBottomToView(view: parent, constant: 0)
         _ = view.addHeightConstraint(constant: getModalHeight())
         
