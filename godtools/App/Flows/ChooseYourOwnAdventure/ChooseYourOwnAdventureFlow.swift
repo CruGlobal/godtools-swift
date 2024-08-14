@@ -10,11 +10,11 @@ import UIKit
 import GodToolsToolParser
 import Combine
 
-class ChooseYourOwnAdventureFlow: ToolNavigationFlow {
+class ChooseYourOwnAdventureFlow: ToolNavigationFlow, ToolSettingsNavigationFlow {
         
     private let appLanguage: AppLanguageDomainModel
     
-    private var toolSettingsFlow: ToolSettingsFlow?
+    internal var toolSettingsFlow: ToolSettingsFlow?
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
@@ -50,16 +50,7 @@ class ChooseYourOwnAdventureFlow: ToolNavigationFlow {
         switch step {
         case .toolSettingsTappedFromChooseYourOwnAdventure(let toolSettingsObserver):
             
-            let toolSettingsFlow = ToolSettingsFlow(
-                flowDelegate: self,
-                appDiContainer: appDiContainer,
-                sharedNavigationController: navigationController,
-                toolSettingsObserver: toolSettingsObserver
-            )
-            
-            navigationController.present(toolSettingsFlow.getInitialView(), animated: true)
-            
-            self.toolSettingsFlow = toolSettingsFlow
+            openToolSettings(with: toolSettingsObserver)
             
         case .toolSettingsFlowCompleted(let state):
             

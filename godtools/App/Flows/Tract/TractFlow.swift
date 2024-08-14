@@ -11,11 +11,11 @@ import GodToolsToolParser
 import Combine
 import LocalizationServices
 
-class TractFlow: ToolNavigationFlow, Flow {
+class TractFlow: ToolNavigationFlow, ToolSettingsNavigationFlow {
         
     private let appLanguage: AppLanguageDomainModel
     
-    private var toolSettingsFlow: ToolSettingsFlow?
+    internal var toolSettingsFlow: ToolSettingsFlow?
     private var cancellables: Set<AnyCancellable> = Set()
         
     private weak var flowDelegate: FlowDelegate?
@@ -98,16 +98,7 @@ class TractFlow: ToolNavigationFlow, Flow {
             
         case .toolSettingsTappedFromTool(let toolSettingsObserver):
                     
-            let toolSettingsFlow = ToolSettingsFlow(
-                flowDelegate: self,
-                appDiContainer: appDiContainer,
-                sharedNavigationController: navigationController,
-                toolSettingsObserver: toolSettingsObserver
-            )
-            
-            navigationController.present(toolSettingsFlow.getInitialView(), animated: true)
-            
-            self.toolSettingsFlow = toolSettingsFlow
+            openToolSettings(with: toolSettingsObserver)
             
         case .toolSettingsFlowCompleted(let state):
             
