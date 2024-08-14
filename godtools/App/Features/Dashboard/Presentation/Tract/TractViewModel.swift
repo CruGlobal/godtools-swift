@@ -228,7 +228,7 @@ extension TractViewModel {
     
     @objc func toolSettingsTapped() {
         
-        let toolSettingsObserver = setupToolSettingsObserver()
+        let toolSettingsObserver = setUpToolSettingsObserver()
         
         trackActionAnalyticsUseCase
             .trackAction(
@@ -267,7 +267,7 @@ extension TractViewModel {
                 selectedLanguageId: tappedLanguage.id
             )
         } else {
-            _ = setupToolSettingsObserver()
+            _ = setUpToolSettingsObserver()
         }
         
         trackLanguageTapped(tappedLanguage: tappedLanguage)

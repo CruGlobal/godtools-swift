@@ -14,8 +14,8 @@ class ChooseYourOwnAdventureFlow: ToolNavigationFlow, ToolSettingsNavigationFlow
         
     private let appLanguage: AppLanguageDomainModel
     
-    internal var toolSettingsFlow: ToolSettingsFlow?
     private var cancellables: Set<AnyCancellable> = Set()
+    internal var toolSettingsFlow: ToolSettingsFlow?
     
     private weak var flowDelegate: FlowDelegate?
     

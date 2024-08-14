@@ -212,7 +212,7 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
             .store(in: &cancellables)
     }
     
-    func setupToolSettingsObserver() -> ToolSettingsObserver {
+    func setUpToolSettingsObserver() -> ToolSettingsObserver {
         
         let languages = createToolSettingsLanguages()
         

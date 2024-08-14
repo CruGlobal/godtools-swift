@@ -185,7 +185,7 @@ extension ChooseYourOwnAdventureViewModel {
     
     @objc func toolSettingsTapped() {
         
-        let toolSettingsObserver = setupToolSettingsObserver()
+        let toolSettingsObserver = setUpToolSettingsObserver()
         
         flowDelegate?.navigate(step: .toolSettingsTappedFromChooseYourOwnAdventure(toolSettingsObserver: toolSettingsObserver))
     }
