@@ -10,13 +10,13 @@ import Foundation
 import UIKit
 
 class MobileContentButtonView: MobileContentView {
-    
-    private static let buttonHeight: CGFloat = 50
-    
+        
     private let viewModel: MobileContentButtonViewModel
     private let buttonView: UIView = UIView()
     private let buttonTitle: UILabel = UILabel()
     private let buttonImagePaddingToButtonTitle: CGFloat = 12
+    private let minimumButtonHeight: CGFloat = 21
+    private let buttonTopAndBottomPaddingToTitle: CGFloat = 8
     
     private var buttonTitleSizeToFitSize: CGSize?
     private var buttonImageView: UIImageView?
@@ -92,7 +92,7 @@ class MobileContentButtonView: MobileContentView {
         _ = buttonView.constrainBottomToView(view: self)
         
         _ = buttonView.addHeightConstraint(
-            constant: Self.buttonHeight,
+            constant: minimumButtonHeight,
             relatedBy: .greaterThanOrEqual,
             priority: 1000
         )
@@ -106,9 +106,9 @@ class MobileContentButtonView: MobileContentView {
         // buttonTitle
         buttonView.addSubview(buttonTitle)
         buttonTitle.translatesAutoresizingMaskIntoConstraints = false
-        _ = buttonTitle.constrainTopToView(view: buttonView)
-        _ = buttonTitle.constrainBottomToView(view: buttonView)
-        
+        _ = buttonTitle.constrainTopToView(view: buttonView, constant: buttonTopAndBottomPaddingToTitle)
+        _ = buttonTitle.constrainBottomToView(view: buttonView, constant: buttonTopAndBottomPaddingToTitle)
+                
         if let buttonImageView = buttonImageView, let buttonIcon = viewModel.icon, let buttonIconSize = getButtonIconSize(), let buttonTitleWidth = getButtonTitleWidth() {
             
             buttonTitle.constrainCenterHorizontallyInView(view: buttonView)
