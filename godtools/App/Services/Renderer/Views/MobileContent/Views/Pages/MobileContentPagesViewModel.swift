@@ -190,8 +190,8 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
         return toolSettingsObserver
     }
     
-    func attachToolSettingsObservers() {
-        toolSettingsObserver?.$languages
+    func attachObserversForToolSettings(_ toolSettingsObserver: ToolSettingsObserver) -> ToolSettingsObserver {
+        toolSettingsObserver.$languages
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (languages: ToolSettingsLanguages) in
                 
@@ -203,23 +203,24 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
             }
             .store(in: &cancellables)
         
-        toolSettingsObserver?.$trainingTipsEnabled
+        toolSettingsObserver.$trainingTipsEnabled
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (trainingTipsEnabled: Bool) in
                 
                 self?.setTrainingTipsEnabled(enabled: trainingTipsEnabled)
             }
             .store(in: &cancellables)
+        
+        return toolSettingsObserver
     }
     
     func setUpToolSettingsObserver() -> ToolSettingsObserver {
         
         let languages = createToolSettingsLanguages()
         
-        let toolSettingsObserver = createToolSettingsObserver(with: languages)
-        attachToolSettingsObservers()
-        
+        let toolSettingsObserver = attachObserversForToolSettings(createToolSettingsObserver(with: languages))
         self.toolSettingsObserver = toolSettingsObserver
+        
         return toolSettingsObserver
     }
     

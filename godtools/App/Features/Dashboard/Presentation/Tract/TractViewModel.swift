@@ -180,12 +180,13 @@ class TractViewModel: MobileContentPagesViewModel {
         return tractToolSettingsObserver
     }
     
-    override func attachToolSettingsObservers() {
-        super.attachToolSettingsObservers()
+    override func attachObserversForToolSettings(_ toolSettingsObserver: ToolSettingsObserver) -> ToolSettingsObserver {
+        
+        let attachedToolSettingsObserver = super.attachObserversForToolSettings(toolSettingsObserver)
         
         if shouldPersistToolSettings {
             
-            toolSettingsObserver?.$languages
+            attachedToolSettingsObserver.$languages
                 .map { [weak self] (languages: ToolSettingsLanguages) in
                     
                     guard let self = self else {
@@ -207,6 +208,8 @@ class TractViewModel: MobileContentPagesViewModel {
                 })
                 .store(in: &cancellables)
         }
+        
+        return attachedToolSettingsObserver
     }
 }
 
