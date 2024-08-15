@@ -31,6 +31,7 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
     private(set) var currentRenderedPageNumber: Int = 0
     private(set) var highestPageNumberViewed: Int = 0
     private(set) var trainingTipsEnabled: Bool = false
+    private(set) var toolSettingsObserver: ToolSettingsObserver?
     
     private(set) weak var window: UIViewController?
     
@@ -42,8 +43,6 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
     let rendererWillChangeSignal: Signal = Signal()
     let pageNavigationEventSignal: SignalValue<MobileContentPagesNavigationEvent> = SignalValue()
     let incrementUserCounterUseCase: IncrementUserCounterUseCase
-    
-    var toolSettingsObserver: ToolSettingsObserver?
     
     init(renderer: MobileContentRenderer, initialPage: MobileContentPagesPage?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTranslatedLanguageName: GetTranslatedLanguageName, initialPageRenderingType: MobileContentPagesInitialPageRenderingType, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?) {
         

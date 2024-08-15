@@ -16,7 +16,6 @@ class TractFlow: ToolNavigationFlow, ToolSettingsNavigationFlow {
     private let appLanguage: AppLanguageDomainModel
     
     private var cancellables: Set<AnyCancellable> = Set()
-    internal var toolSettingsFlow: ToolSettingsFlow?
         
     private weak var flowDelegate: FlowDelegate?
     
@@ -28,6 +27,7 @@ class TractFlow: ToolNavigationFlow, ToolSettingsNavigationFlow {
     var lessonFlow: LessonFlow?
     var tractFlow: TractFlow?
     var downloadToolTranslationFlow: DownloadToolTranslationsFlow?
+    var toolSettingsFlow: ToolSettingsFlow?
     
     init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController?, appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?, shouldPersistToolSettings: Bool) {
         
