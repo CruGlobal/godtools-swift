@@ -12,20 +12,20 @@ extension UIView {
     
     func constrainEdgesToView(view: UIView, edgeInsets: UIEdgeInsets = .zero, horizontalConstraintType: UIViewHorizontalContraintType = .leadingAndTrailing) {
         
-        constrainTopToView(view: view, constant: edgeInsets.top)
+        _ = constrainTopToView(view: view, constant: edgeInsets.top)
         _ = constrainBottomToView(view: view, constant: edgeInsets.bottom)
         
         switch horizontalConstraintType {
         case .leadingAndTrailing:
-            constrainLeadingToView(view: view, constant: edgeInsets.left)
-            constrainTrailingToView(view: view, constant: edgeInsets.right)
+            _ = constrainLeadingToView(view: view, constant: edgeInsets.left)
+            _ = constrainTrailingToView(view: view, constant: edgeInsets.right)
         case .leftAndRight:
             constrainLeftToView(view: view, constant: edgeInsets.left)
             constrainRightToView(view: view, constant: edgeInsets.right)
         }
     }
     
-    func constrainTopToView(view: UIView, constant: CGFloat = 0) {
+    func constrainTopToView(view: UIView, constant: CGFloat = 0) -> NSLayoutConstraint {
         
         let top: NSLayoutConstraint = NSLayoutConstraint(
             item: self,
@@ -38,6 +38,8 @@ extension UIView {
         )
         
         view.addConstraint(top)
+        
+        return top
     }
     
     func constrainBottomToView(view: UIView, constant: CGFloat = 0) -> NSLayoutConstraint {
@@ -87,7 +89,7 @@ extension UIView {
         view.addConstraint(right)
     }
     
-    func constrainLeadingToView(view: UIView, constant: CGFloat = 0) {
+    func constrainLeadingToView(view: UIView, constant: CGFloat = 0) -> NSLayoutConstraint {
         
         let leading: NSLayoutConstraint = NSLayoutConstraint(
             item: self,
@@ -100,9 +102,11 @@ extension UIView {
         )
         
         view.addConstraint(leading)
+        
+        return leading
     }
     
-    func constrainTrailingToView(view: UIView, constant: CGFloat = 0) {
+    func constrainTrailingToView(view: UIView, constant: CGFloat = 0) -> NSLayoutConstraint {
         
         let trailing: NSLayoutConstraint = NSLayoutConstraint(
             item: self,
@@ -115,6 +119,8 @@ extension UIView {
         )
         
         view.addConstraint(trailing)
+        
+        return trailing
     }
     
     func constrainCenterHorizontallyInView(view: UIView) {

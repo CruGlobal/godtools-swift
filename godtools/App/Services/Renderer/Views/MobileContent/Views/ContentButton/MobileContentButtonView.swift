@@ -10,16 +10,18 @@ import Foundation
 import UIKit
 
 class MobileContentButtonView: MobileContentView {
-    
-    private static let buttonHeight: CGFloat = 50
-    
+        
     private let viewModel: MobileContentButtonViewModel
     private let buttonView: UIView = UIView()
     private let buttonTitle: UILabel = UILabel()
     private let buttonImagePaddingToButtonTitle: CGFloat = 12
+    private let minimumButtonHeight: CGFloat = 21
+    private let buttonTopAndBottomPaddingToTitle: CGFloat = 8
     
+    private var buttonTitleSizeToFitSize: CGSize?
     private var buttonImageView: UIImageView?
     private var buttonViewWidthConstraint: NSLayoutConstraint?
+    private var buttonTitleWidthForIconConstraint: NSLayoutConstraint?
     
     init(viewModel: MobileContentButtonViewModel) {
         
@@ -28,6 +30,7 @@ class MobileContentButtonView: MobileContentView {
         super.init(viewModel: viewModel, frame: UIScreen.main.bounds)
         
         setupLayout()
+        addSubviewsAndConstraints(buttonView: buttonView, buttonTitle: buttonTitle, buttonImageView: buttonImageView)
         setupBinding()
     }
     
@@ -42,11 +45,9 @@ class MobileContentButtonView: MobileContentView {
     }
     
     private func setupLayout() {
-        
+                
         backgroundColor = .clear
-        
-        let buttonIcon: MobileContentButtonIcon? = viewModel.icon
-        
+                
         // buttonView
         buttonView.backgroundColor = viewModel.backgroundColor
         buttonView.layer.cornerRadius = 5
@@ -55,29 +56,6 @@ class MobileContentButtonView: MobileContentView {
             buttonView.layer.borderColor = borderColor.cgColor
             buttonView.layer.borderWidth = borderWidth
         }
-        
-        addSubview(buttonView)
-        buttonView.translatesAutoresizingMaskIntoConstraints = false
-        buttonView.constrainTopToView(view: self)
-        _ = buttonView.constrainBottomToView(view: self)
-        _ = buttonView.addHeightConstraint(
-            constant: MobileContentButtonView.buttonHeight,
-            relatedBy: .greaterThanOrEqual,
-            priority: 1000
-        )
-        
-        buttonView.constrainCenterHorizontallyInView(view: self)
-        
-        let buttonViewWidth: CGFloat
-        
-        switch viewModel.buttonWidth {
-        case .percentageOfContainer(let widthPercentageOfContainer):
-            buttonViewWidth = containerWidth * widthPercentageOfContainer
-        case .points(let widthPoints):
-            buttonViewWidth = widthPoints
-        }
-        
-        buttonViewWidthConstraint = buttonView.addWidthConstraint(constant: buttonViewWidth)
         
         // buttonTitle
         buttonTitle.isUserInteractionEnabled = false
@@ -88,31 +66,60 @@ class MobileContentButtonView: MobileContentView {
         buttonTitle.font = viewModel.font
         buttonTitle.text = viewModel.title
         buttonTitle.textColor = viewModel.titleColor
+              
+        buttonTitle.sizeToFit()
+        buttonTitleSizeToFitSize = buttonTitle.frame.size
         
-        buttonView.addSubview(buttonTitle)
-        buttonTitle.translatesAutoresizingMaskIntoConstraints = false
-        buttonTitle.constrainTopToView(view: self)
-        _ = buttonTitle.constrainBottomToView(view: self)
-        
-        if buttonIcon == nil {
-            buttonTitle.constrainLeadingToView(view: self)
-            buttonTitle.constrainTrailingToView(view: self)
-        }
-        else {
-            buttonTitle.constrainCenterHorizontallyInView(view: self)
-        }
-                
         // buttonImageView
-        if let buttonIcon = buttonIcon {
+        if let buttonIcon = viewModel.icon {
             
             let buttonImageView: UIImageView = UIImageView(image: buttonIcon.image)
             buttonImageView.isUserInteractionEnabled = false
             buttonImageView.backgroundColor = .clear
             
+            self.buttonImageView = buttonImageView
+        }
+    }
+    
+    private func addSubviewsAndConstraints(buttonView: UIView, buttonTitle: UILabel, buttonImageView: UIImageView?) {
+        
+        translatesAutoresizingMaskIntoConstraints = false
+        
+        // buttonView
+        addSubview(buttonView)
+        buttonView.translatesAutoresizingMaskIntoConstraints = false
+        _ = buttonView.constrainTopToView(view: self)
+        _ = buttonView.constrainBottomToView(view: self)
+        
+        _ = buttonView.addHeightConstraint(
+            constant: minimumButtonHeight,
+            relatedBy: .greaterThanOrEqual,
+            priority: 1000
+        )
+        
+        buttonView.constrainCenterHorizontallyInView(view: self)
+        
+        let buttonViewWidth: CGFloat = getButtonViewWidth()
+        
+        buttonViewWidthConstraint = buttonView.addWidthConstraint(constant: buttonViewWidth)
+        
+        // buttonTitle
+        buttonView.addSubview(buttonTitle)
+        buttonTitle.translatesAutoresizingMaskIntoConstraints = false
+        _ = buttonTitle.constrainTopToView(view: buttonView, constant: buttonTopAndBottomPaddingToTitle)
+        _ = buttonTitle.constrainBottomToView(view: buttonView, constant: buttonTopAndBottomPaddingToTitle)
+                
+        if let buttonImageView = buttonImageView, let buttonIcon = viewModel.icon, let buttonIconSize = getButtonIconSize(), let buttonTitleWidth = getButtonTitleWidth() {
+            
+            buttonTitle.constrainCenterHorizontallyInView(view: buttonView)
+            buttonTitleWidthForIconConstraint = buttonTitle.addWidthConstraint(constant: buttonTitleWidth)
+                        
             buttonView.addSubview(buttonImageView)
             buttonImageView.translatesAutoresizingMaskIntoConstraints = false
             buttonImageView.constrainCenterVerticallyInView(view: self)
-                        
+            _ = buttonImageView.addWidthConstraint(constant: buttonIconSize.width)
+            _ = buttonImageView.addHeightConstraint(constant: buttonIconSize.height)
+            
             switch buttonIcon.gravity {
             
             case .start:
@@ -124,10 +131,10 @@ class MobileContentButtonView: MobileContentView {
                     toItem: buttonTitle,
                     attribute: .leading,
                     multiplier: 1,
-                    constant: buttonImagePaddingToButtonTitle * -1
+                    constant: 0
                 )
                 
-                addConstraint(trailing)
+                buttonView.addConstraint(trailing)
                 
             case .end:
                 
@@ -138,10 +145,10 @@ class MobileContentButtonView: MobileContentView {
                     toItem: buttonTitle,
                     attribute: .trailing,
                     multiplier: 1,
-                    constant: buttonImagePaddingToButtonTitle
+                    constant: 0
                 )
                 
-                addConstraint(leading)
+                buttonView.addConstraint(leading)
             
             default:
                 
@@ -152,17 +159,67 @@ class MobileContentButtonView: MobileContentView {
                     toItem: buttonTitle,
                     attribute: .leading,
                     multiplier: 1,
-                    constant: buttonImagePaddingToButtonTitle * -1
+                    constant: 0
                 )
                 
-                addConstraint(trailing)
+                buttonView.addConstraint(trailing)
             }
-            
-            _ = buttonImageView.addWidthConstraint(constant: CGFloat(buttonIcon.size))
-            _ = buttonImageView.addHeightConstraint(constant: CGFloat(buttonIcon.size))
-            
-            self.buttonImageView = buttonImageView
         }
+        else {
+            
+            _ = buttonTitle.constrainLeadingToView(view: buttonView)
+            _ = buttonTitle.constrainTrailingToView(view: buttonView)
+        }
+    }
+    
+    private func getButtonViewWidth() -> CGFloat {
+        
+        let buttonViewWidth: CGFloat
+        
+        switch viewModel.buttonWidth {
+        
+        case .percentageOfContainer(let widthPercentageOfContainer):
+            buttonViewWidth = containerWidth * widthPercentageOfContainer
+        
+        case .points(let widthPoints):
+            buttonViewWidth = widthPoints
+        }
+        
+        return buttonViewWidth
+    }
+    
+    private func getButtonTitleWidth() -> CGFloat? {
+        
+        guard let buttonTitleSizeToFitSize = self.buttonTitleSizeToFitSize, let buttonIconSize = getButtonIconSize() else {
+            return nil
+        }
+        
+        let buttonViewWidth: CGFloat = getButtonViewWidth()
+        
+        let minSuggestedButtonTitleWidth: CGFloat = buttonViewWidth / 4
+        var suggestedButtonTitleWidth: CGFloat = buttonViewWidth - (buttonIconSize.width * 2) - (buttonImagePaddingToButtonTitle * 4)
+        
+        if suggestedButtonTitleWidth < minSuggestedButtonTitleWidth {
+            suggestedButtonTitleWidth = minSuggestedButtonTitleWidth
+        }
+        
+        if buttonTitleSizeToFitSize.width > suggestedButtonTitleWidth {
+            return suggestedButtonTitleWidth
+        }
+        
+        return buttonTitleSizeToFitSize.width + (buttonImagePaddingToButtonTitle * 2)
+    }
+    
+    private func getButtonIconSize() -> CGSize? {
+        
+        guard let buttonIcon = viewModel.icon else {
+            return nil
+        }
+        
+        let buttonIconWidth: CGFloat = CGFloat(buttonIcon.size)
+        let buttonIconHeight: CGFloat = CGFloat(buttonIcon.size)
+        
+        return CGSize(width: buttonIconWidth, height: buttonIconHeight)
     }
     
     private func setupBinding() {
@@ -177,14 +234,15 @@ class MobileContentButtonView: MobileContentView {
     }
     
     private func layoutButtonViewWidthIfNeeded() {
-        
-        switch viewModel.buttonWidth {
-        case .percentageOfContainer(let value):
-            buttonViewWidthConstraint?.constant = containerWidth * value
-            layoutIfNeeded()
-        case .points( _):
-            break
+                
+        buttonViewWidthConstraint?.constant = getButtonViewWidth()
+            
+        if let buttonTitleWidth = getButtonTitleWidth() {
+            
+            buttonTitleWidthForIconConstraint?.constant = buttonTitleWidth
         }
+
+        layoutIfNeeded()
     }
     
     // MARK: - MobileContentView
