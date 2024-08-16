@@ -11,11 +11,10 @@ import GodToolsToolParser
 import Combine
 import LocalizationServices
 
-class TractFlow: ToolNavigationFlow, Flow {
+class TractFlow: ToolNavigationFlow, ToolSettingsNavigationFlow {
         
     private let appLanguage: AppLanguageDomainModel
     
-    private var toolSettingsFlow: ToolSettingsFlow?
     private var cancellables: Set<AnyCancellable> = Set()
         
     private weak var flowDelegate: FlowDelegate?
@@ -28,6 +27,7 @@ class TractFlow: ToolNavigationFlow, Flow {
     var lessonFlow: LessonFlow?
     var tractFlow: TractFlow?
     var downloadToolTranslationFlow: DownloadToolTranslationsFlow?
+    var toolSettingsFlow: ToolSettingsFlow?
     
     init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController?, appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?, shouldPersistToolSettings: Bool) {
         
@@ -98,26 +98,11 @@ class TractFlow: ToolNavigationFlow, Flow {
             
         case .toolSettingsTappedFromTool(let toolSettingsObserver):
                     
-            let toolSettingsFlow = ToolSettingsFlow(
-                flowDelegate: self,
-                appDiContainer: appDiContainer,
-                sharedNavigationController: navigationController,
-                toolSettingsObserver: toolSettingsObserver
-            )
-            
-            navigationController.present(toolSettingsFlow.getInitialView(), animated: true)
-            
-            self.toolSettingsFlow = toolSettingsFlow
+            openToolSettings(with: toolSettingsObserver)
             
         case .toolSettingsFlowCompleted(let state):
             
-            guard toolSettingsFlow != nil else {
-                return
-            }
-        
-            navigationController.dismiss(animated: true)
-            
-            toolSettingsFlow = nil
+            closeToolSettings()
                         
         case .tractFlowCompleted( _):
             

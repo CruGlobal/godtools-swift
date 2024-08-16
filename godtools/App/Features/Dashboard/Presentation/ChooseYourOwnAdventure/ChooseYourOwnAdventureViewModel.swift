@@ -146,6 +146,17 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
         
         return navigationEvent
     }
+    
+    override func createToolSettingsObserver(with toolSettingsLanguages: ToolSettingsLanguages) -> CYOAToolSettingsObserver {
+        let cyoaToolSettingsObserver = CYOAToolSettingsObserver(
+            toolId: renderer.value.resource.id,
+            languages: toolSettingsLanguages,
+            pageNumber: currentRenderedPageNumber,
+            trainingTipsEnabled: trainingTipsEnabled
+        )
+        
+        return cyoaToolSettingsObserver
+    }
 }
 
 // MARK: - Inputs
@@ -174,7 +185,7 @@ extension ChooseYourOwnAdventureViewModel {
     
     @objc func toolSettingsTapped() {
         
-        let toolSettingsObserver = createToolSettingsObserver()
+        let toolSettingsObserver = setUpToolSettingsObserver()
         
         flowDelegate?.navigate(step: .toolSettingsTappedFromChooseYourOwnAdventure(toolSettingsObserver: toolSettingsObserver))
     }
@@ -183,46 +194,5 @@ extension ChooseYourOwnAdventureViewModel {
         
         let pageRenderer: MobileContentPageRenderer = renderer.value.pageRenderers[index]
         setPageRenderer(pageRenderer: pageRenderer, navigationEvent: nil, pagePositions: nil)
-    }
-}
-
-extension ChooseYourOwnAdventureViewModel {
-    
-    private func createToolSettingsObserver() -> CYOAToolSettingsObserver {
-        
-        let languages = ToolSettingsLanguages(
-            primaryLanguageId: languages[0].id,
-            parallelLanguageId: languages[safe: 1]?.id,
-            selectedLanguageId: languages[selectedLanguageIndex].id
-        )
-        
-        let toolSettingsObserver = CYOAToolSettingsObserver(
-            toolId: renderer.value.resource.id,
-            languages: languages,
-            pageNumber: currentRenderedPageNumber,
-            trainingTipsEnabled: trainingTipsEnabled
-        )
-        
-        toolSettingsObserver.$languages
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (languages: ToolSettingsLanguages) in
-                
-                self?.setRendererPrimaryLanguage(
-                    primaryLanguageId: languages.primaryLanguageId,
-                    parallelLanguageId: languages.parallelLanguageId,
-                    selectedLanguageId: languages.selectedLanguageId
-                )
-            }
-            .store(in: &cancellables)
-        
-        toolSettingsObserver.$trainingTipsEnabled
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (trainingTipsEnabled: Bool) in
-                
-                self?.setTrainingTipsEnabled(enabled: trainingTipsEnabled)
-            }
-            .store(in: &cancellables)
-        
-        return toolSettingsObserver
     }
 }
