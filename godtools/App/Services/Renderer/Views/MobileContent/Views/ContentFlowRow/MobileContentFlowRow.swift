@@ -112,7 +112,7 @@ class MobileContentFlowRow: MobileContentView {
                 
         flowItem.translatesAutoresizingMaskIntoConstraints = false
         
-        flowItem.constrainTopToView(view: self)
+        _ = flowItem.constrainTopToView(view: self)
         _ = flowItem.constrainBottomToView(view: self)
         flowItem.setWidthConstraint(constant: flowItemWidth)
                         

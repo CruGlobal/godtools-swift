@@ -45,13 +45,6 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getLanguageUseCase() -> GetLanguageUseCase {
-        return GetLanguageUseCase(
-            languagesRepository: dataLayer.getLanguagesRepository(),
-            localizationServices: dataLayer.getLocalizationServices()
-        )
-    }
-    
     func getLogOutUserUseCase() -> LogOutUserUseCase {
         return LogOutUserUseCase(
             userAuthentication: dataLayer.getUserAuthentication(),
