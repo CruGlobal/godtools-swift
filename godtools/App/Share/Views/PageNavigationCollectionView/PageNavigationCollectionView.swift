@@ -32,7 +32,7 @@ class PageNavigationCollectionView: UIView, NibBased {
     }
     
     private let layoutType: PageNavigationCollectionViewLayoutType
-    private let loggingEnabled: Bool = true
+    private let loggingEnabled: Bool = false
     
     private var layout: UICollectionViewFlowLayout = PageNavigationCollectionView.getDefaultFlowLayout()
     private var currentPageNavigation: PageNavigationCollectionView.CurrentNavigation?
