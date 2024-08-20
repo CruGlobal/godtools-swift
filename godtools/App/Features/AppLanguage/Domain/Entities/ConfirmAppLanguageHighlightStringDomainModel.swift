@@ -12,4 +12,8 @@ struct ConfirmAppLanguageHighlightStringDomainModel {
     
     let highlightText: String
     let formatString: String
+    
+    static func emptyStrings() -> ConfirmAppLanguageHighlightStringDomainModel {
+        return ConfirmAppLanguageHighlightStringDomainModel(highlightText: "", formatString: "")
+    }
 }

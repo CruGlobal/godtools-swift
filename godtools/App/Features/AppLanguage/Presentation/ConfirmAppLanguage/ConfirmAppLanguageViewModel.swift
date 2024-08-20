@@ -20,8 +20,8 @@ class ConfirmAppLanguageViewModel: ObservableObject {
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     
-    @Published var messageInNewlySelectedLanguage: NSAttributedString = NSAttributedString()
-    @Published var messageInCurrentLanguage: NSAttributedString = NSAttributedString()
+    @Published var messageInNewlySelectedLanguageHighlightModel: ConfirmAppLanguageHighlightStringDomainModel = ConfirmAppLanguageHighlightStringDomainModel.emptyStrings()
+    @Published var messageInCurrentLanguageHighlightModel: ConfirmAppLanguageHighlightStringDomainModel = ConfirmAppLanguageHighlightStringDomainModel.emptyStrings()
     @Published var changeLanguageButtonTitle: String = ""
     @Published var nevermindButtonTitle: String = ""
 
@@ -51,8 +51,8 @@ class ConfirmAppLanguageViewModel: ObservableObject {
                 guard let self = self else { return }
                 let interfaceStrings = domainModel.interfaceStrings
                 
-                self.messageInNewlySelectedLanguage = getAttributedMessageString(highlightStringDomainModel: interfaceStrings.messageInNewlySelectedLanguageHighlightModel)
-                self.messageInCurrentLanguage = getAttributedMessageString(highlightStringDomainModel: interfaceStrings.messageInCurrentLanguageHighlightModel)
+                self.messageInNewlySelectedLanguageHighlightModel = interfaceStrings.messageInNewlySelectedLanguageHighlightModel
+                self.messageInCurrentLanguageHighlightModel = interfaceStrings.messageInCurrentLanguageHighlightModel
                 self.changeLanguageButtonTitle = interfaceStrings.changeLanguageButtonText
                 self.nevermindButtonTitle = interfaceStrings.nevermindButtonText
             }
@@ -61,17 +61,6 @@ class ConfirmAppLanguageViewModel: ObservableObject {
     
     deinit {
         print("x deinit: \(type(of: self))")
-    }
-    
-    private func getAttributedMessageString(highlightStringDomainModel: ConfirmAppLanguageHighlightStringDomainModel) -> NSAttributedString {
-        
-        let formatStringAttributed = NSAttributedString(string: highlightStringDomainModel.formatString)
-        let highlightTextAttributed = NSAttributedString(
-            string: highlightStringDomainModel.highlightText,
-            attributes: [NSAttributedString.Key.foregroundColor: ColorPalette.gtBlue.uiColor]
-        )
-        
-        return NSAttributedString(format: formatStringAttributed, args: highlightTextAttributed)
     }
 }
 
