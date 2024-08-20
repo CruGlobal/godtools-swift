@@ -48,19 +48,30 @@ class ConfirmAppLanguageViewModel: ObservableObject {
             .switchToLatest()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] domainModel in
-                
+                guard let self = self else { return }
                 let interfaceStrings = domainModel.interfaceStrings
                 
-                self?.messageInNewlySelectedLanguage = interfaceStrings.messageInNewlySelectedLanguage
-                self?.messageInCurrentLanguage = interfaceStrings.messageInCurrentLanguage
-                self?.changeLanguageButtonTitle = interfaceStrings.changeLanguageButtonText
-                self?.nevermindButtonTitle = interfaceStrings.nevermindButtonText
+                self.messageInNewlySelectedLanguage = getAttributedMessageString(highlightStringDomainModel: interfaceStrings.messageInNewlySelectedLanguageHighlightModel)
+                self.messageInCurrentLanguage = getAttributedMessageString(highlightStringDomainModel: interfaceStrings.messageInCurrentLanguageHighlightModel)
+                self.changeLanguageButtonTitle = interfaceStrings.changeLanguageButtonText
+                self.nevermindButtonTitle = interfaceStrings.nevermindButtonText
             }
             .store(in: &cancellables)
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
+    }
+    
+    private func getAttributedMessageString(highlightStringDomainModel: ConfirmAppLanguageHighlightStringDomainModel) -> NSAttributedString {
+        
+        let formatStringAttributed = NSAttributedString(string: highlightStringDomainModel.formatString)
+        let highlightTextAttributed = NSAttributedString(
+            string: highlightStringDomainModel.highlightText,
+            attributes: [NSAttributedString.Key.foregroundColor: ColorPalette.gtBlue.uiColor]
+        )
+        
+        return NSAttributedString(format: formatStringAttributed, args: highlightTextAttributed)
     }
 }
 
