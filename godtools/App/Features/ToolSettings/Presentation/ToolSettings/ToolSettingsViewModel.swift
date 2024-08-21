@@ -32,6 +32,7 @@ class ToolSettingsViewModel: ObservableObject {
     @Published var trainingTipsTitle: String = ""
     @Published var hidesTrainingTipsButton: Bool = true
     @Published var hidesShareScreenButton: Bool = true
+    @Published var hidesShareLinkButton: Bool = true
     @Published var chooseLanguageTitle: String = ""
     @Published var chooseLanguageToggleMessage: String = ""
     @Published var primaryLanguageTitle: String = ""
@@ -48,6 +49,7 @@ class ToolSettingsViewModel: ObservableObject {
         self.getShareablesUseCase = getShareablesUseCase
         self.getShareableImageUseCase = getShareableImageUseCase
         self.hidesShareScreenButton = toolSettingsObserver.isRemoteShareable == false
+        self.hidesShareLinkButton = toolSettingsObserver.isLinkShareable == false
         
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()

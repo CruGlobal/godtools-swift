@@ -8,7 +8,7 @@
 
 import Foundation
 
-class TractToolSettingsObserver: ToolSettingsObserver, RemoteShareable {
+class TractToolSettingsObserver: ToolSettingsObserver, RemoteShareable, LinkShareable {
     
     let tractRemoteSharePublisher: TractRemoteSharePublisher
     

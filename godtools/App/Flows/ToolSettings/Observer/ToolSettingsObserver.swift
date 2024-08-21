@@ -29,4 +29,8 @@ extension ToolSettingsObserver {
     var isRemoteShareable: Bool {
         return self is RemoteShareable
     }
+    
+    var isLinkShareable: Bool {
+        return self is LinkShareable
+    }
 }
