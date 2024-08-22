@@ -52,9 +52,9 @@ struct ConfirmAppLanguageView: View {
                 FixedVerticalSpacer(height: 10)
                 
                 Group {
-                    attributedMessageView(attributedString: viewModel.messageInCurrentLanguage, fontSize: 18)
+                    attributedMessageView(attributedString: getAttributedMessageString(highlightStringDomainModel: viewModel.messageInCurrentLanguageHighlightModel), fontSize: 18)
                     
-                    attributedMessageView(attributedString: viewModel.messageInNewlySelectedLanguage, fontSize: 18)
+                    attributedMessageView(attributedString: getAttributedMessageString(highlightStringDomainModel: viewModel.messageInNewlySelectedLanguageHighlightModel), fontSize: 18)
                 }
                 .padding(.horizontal, 10)
                 
@@ -97,5 +97,16 @@ struct ConfirmAppLanguageView: View {
         }
         .font(FontLibrary.sfProTextRegular.font(size: fontSize))
         .foregroundColor(ColorPalette.gtGrey.color)
+    }
+    
+    private func getAttributedMessageString(highlightStringDomainModel: ConfirmAppLanguageHighlightStringDomainModel) -> NSAttributedString {
+        
+        let formatStringAttributed = NSAttributedString(string: highlightStringDomainModel.formatString)
+        let highlightTextAttributed = NSAttributedString(
+            string: highlightStringDomainModel.highlightText,
+            attributes: [NSAttributedString.Key.foregroundColor: ColorPalette.gtBlue.uiColor]
+        )
+        
+        return NSAttributedString(format: formatStringAttributed, args: highlightTextAttributed)
     }
 }

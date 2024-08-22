@@ -26,8 +26,8 @@ class GetConfirmAppLanguageInterfaceStringsRepository: GetConfirmAppLanguageInte
         let appLanguageLocaleId: String = translateInAppLanguage
         
         let interfaceStrings = ConfirmAppLanguageInterfaceStringsDomainModel(
-            messageInNewlySelectedLanguage: getAttributedMessageStringPublisher(selectedLanguage: selectedLanguage, localeId: selectedLanguage),
-            messageInCurrentLanguage: getAttributedMessageStringPublisher(selectedLanguage: selectedLanguage, localeId: appLanguageLocaleId),
+            messageInNewlySelectedLanguageHighlightModel: getHighlightMessageStringDomainModel(selectedLanguage: selectedLanguage, localeId: selectedLanguage),
+            messageInCurrentLanguageHighlightModel: getHighlightMessageStringDomainModel(selectedLanguage: selectedLanguage, localeId: appLanguageLocaleId),
             changeLanguageButtonText: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguageLocaleId, key: "languageSettings.confirmAppLanguage.changeLanguageButton.title"),
             nevermindButtonText: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguageLocaleId, key: "languageSettings.confirmAppLanguage.nevermindButton.title")
         )
@@ -36,18 +36,11 @@ class GetConfirmAppLanguageInterfaceStringsRepository: GetConfirmAppLanguageInte
             .eraseToAnyPublisher()
     }
     
-    private func getAttributedMessageStringPublisher(selectedLanguage: AppLanguageDomainModel, localeId: String) -> NSAttributedString {
+    private func getHighlightMessageStringDomainModel(selectedLanguage: AppLanguageDomainModel, localeId: String) -> ConfirmAppLanguageHighlightStringDomainModel {
         
         let formatString = localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "languageSettings.confirmAppLanguage.message")
-        
         let languageName = getTranslatedLanguageName.getLanguageName(language: selectedLanguage, translatedInLanguage: localeId)
-        let languageNameAttributed = NSAttributedString(
-            string: languageName,
-            attributes: [NSAttributedString.Key.foregroundColor: ColorPalette.gtBlue.uiColor]
-        )
         
-        let attributedString = NSAttributedString(format: NSAttributedString(string: formatString), args: languageNameAttributed)
-        
-        return attributedString
+        return ConfirmAppLanguageHighlightStringDomainModel(highlightText: languageName, formatString: formatString)
     }
 }
