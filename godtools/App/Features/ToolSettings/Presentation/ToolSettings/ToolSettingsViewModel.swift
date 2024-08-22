@@ -127,6 +127,10 @@ class ToolSettingsViewModel: ObservableObject {
 
 extension ToolSettingsViewModel {
     
+    var hidesAllIconButtons: Bool {
+        return hidesTrainingTipsButton && hidesShareScreenButton && hidesShareLinkButton
+    }
+    
     func getShareableItemViewModel(shareable: ShareableDomainModel) -> ToolSettingsShareableItemViewModel {
         
         return ToolSettingsShareableItemViewModel(
