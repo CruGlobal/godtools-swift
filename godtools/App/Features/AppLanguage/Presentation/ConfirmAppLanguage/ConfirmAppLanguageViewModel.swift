@@ -20,8 +20,8 @@ class ConfirmAppLanguageViewModel: ObservableObject {
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     
-    @Published var messageInNewlySelectedLanguage: NSAttributedString = NSAttributedString()
-    @Published var messageInCurrentLanguage: NSAttributedString = NSAttributedString()
+    @Published var messageInNewlySelectedLanguageHighlightModel: ConfirmAppLanguageHighlightStringDomainModel = ConfirmAppLanguageHighlightStringDomainModel.emptyStrings()
+    @Published var messageInCurrentLanguageHighlightModel: ConfirmAppLanguageHighlightStringDomainModel = ConfirmAppLanguageHighlightStringDomainModel.emptyStrings()
     @Published var changeLanguageButtonTitle: String = ""
     @Published var nevermindButtonTitle: String = ""
 
@@ -48,13 +48,13 @@ class ConfirmAppLanguageViewModel: ObservableObject {
             .switchToLatest()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] domainModel in
-                
+                guard let self = self else { return }
                 let interfaceStrings = domainModel.interfaceStrings
                 
-                self?.messageInNewlySelectedLanguage = interfaceStrings.messageInNewlySelectedLanguage
-                self?.messageInCurrentLanguage = interfaceStrings.messageInCurrentLanguage
-                self?.changeLanguageButtonTitle = interfaceStrings.changeLanguageButtonText
-                self?.nevermindButtonTitle = interfaceStrings.nevermindButtonText
+                self.messageInNewlySelectedLanguageHighlightModel = interfaceStrings.messageInNewlySelectedLanguageHighlightModel
+                self.messageInCurrentLanguageHighlightModel = interfaceStrings.messageInCurrentLanguageHighlightModel
+                self.changeLanguageButtonTitle = interfaceStrings.changeLanguageButtonText
+                self.nevermindButtonTitle = interfaceStrings.nevermindButtonText
             }
             .store(in: &cancellables)
     }
