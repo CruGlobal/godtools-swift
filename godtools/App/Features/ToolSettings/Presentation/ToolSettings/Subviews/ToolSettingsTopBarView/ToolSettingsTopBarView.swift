@@ -36,6 +36,5 @@ struct ToolSettingsTopBarView: View {
             .frame(minWidth: 44, minHeight: 44)
         }
         .padding(EdgeInsets(top: 0, leading: leadingInset, bottom: 0, trailing: trailingInset))
-        .frame(height: 50)
     }
 }

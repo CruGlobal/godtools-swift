@@ -1603,6 +1603,7 @@
 		D4E243CC29EDC6A100EA4BB7 /* SendFeedbackWebContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E243CB29EDC6A100EA4BB7 /* SendFeedbackWebContent.swift */; };
 		D4E243CE29EDCA5700EA4BB7 /* ReportABugWebContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E243CD29EDCA5700EA4BB7 /* ReportABugWebContent.swift */; };
 		D4E243D029EDD2E800EA4BB7 /* AskAQuestionWebContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E243CF29EDD2E800EA4BB7 /* AskAQuestionWebContent.swift */; };
+		D4E7EE052C780C8800F75DA6 /* LinkShareable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EEB67C2C75371E006F0D39 /* LinkShareable.swift */; };
 		D4EAF2F92C0F95D900AEC36C /* UserToolSettingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EAF2F82C0F95D900AEC36C /* UserToolSettingsRepository.swift */; };
 		D4EEB67B2C7518AF006F0D39 /* ConfirmAppLanguageHighlightStringDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EEB67A2C7518AF006F0D39 /* ConfirmAppLanguageHighlightStringDomainModel.swift */; };
 		D4EFC9632B49B28200B0D34A /* LanguageDownloadErrorAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EFC9622B49B28200B0D34A /* LanguageDownloadErrorAlertView.swift */; };
@@ -3366,6 +3367,7 @@
 		D4E243CF29EDD2E800EA4BB7 /* AskAQuestionWebContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskAQuestionWebContent.swift; sourceTree = "<group>"; };
 		D4EAF2F82C0F95D900AEC36C /* UserToolSettingsRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserToolSettingsRepository.swift; sourceTree = "<group>"; };
 		D4EEB67A2C7518AF006F0D39 /* ConfirmAppLanguageHighlightStringDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmAppLanguageHighlightStringDomainModel.swift; sourceTree = "<group>"; };
+		D4EEB67C2C75371E006F0D39 /* LinkShareable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkShareable.swift; sourceTree = "<group>"; };
 		D4EFC9622B49B28200B0D34A /* LanguageDownloadErrorAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageDownloadErrorAlertView.swift; sourceTree = "<group>"; };
 		D4EFC9642B49B29D00B0D34A /* LanguageDownloadErrorAlertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageDownloadErrorAlertViewModel.swift; sourceTree = "<group>"; };
 		D4F0457A2BBB464D00B115C9 /* RealmUserToolFiltersCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmUserToolFiltersCache.swift; sourceTree = "<group>"; };
@@ -6538,6 +6540,7 @@
 			isa = PBXGroup;
 			children = (
 				456AC1972B8CE89E00169C11 /* ToolSettingsObserver.swift */,
+				456AC19D2B8CEE6200169C11 /* ToolSettingsLanguages.swift */,
 				D47EAFC52C6ADD5C0071E6CA /* Subclasses */,
 				D47EAFC62C6ADD730071E6CA /* Protocols */,
 			);
@@ -11507,7 +11510,6 @@
 			isa = PBXGroup;
 			children = (
 				D4C26CB52C6A98480082B479 /* CYOAToolSettingsObserver.swift */,
-				456AC19D2B8CEE6200169C11 /* ToolSettingsLanguages.swift */,
 				D4C26CB32C62EB2D0082B479 /* TractToolSettingsObserver.swift */,
 			);
 			path = Subclasses;
@@ -11516,6 +11518,7 @@
 		D47EAFC62C6ADD730071E6CA /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				D4EEB67C2C75371E006F0D39 /* LinkShareable.swift */,
 				D4C26CB72C6A98950082B479 /* RemoteShareable.swift */,
 			);
 			path = Protocols;
@@ -12785,6 +12788,7 @@
 				454CA2002B7BD30B009A3976 /* ViewAppLanguagesDomainModel.swift in Sources */,
 				45E4DBBB2BECFB09006ED2F3 /* SyncInvalidatorManager.swift in Sources */,
 				D40D77BA2AAF9891008D3642 /* ToolsFilterSectionView.swift in Sources */,
+				D4E7EE052C780C8800F75DA6 /* LinkShareable.swift in Sources */,
 				453F84C22A029FC00005101E /* ArticleAemCacheObject.swift in Sources */,
 				45B6FF2B2BAA39660037B240 /* ViewToolFilterCategoriesUseCase.swift in Sources */,
 				4598BD1F2BF7DF6800196463 /* AuthErrorDomainModel.swift in Sources */,
