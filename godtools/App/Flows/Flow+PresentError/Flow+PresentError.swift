@@ -43,6 +43,18 @@ extension Flow {
                 key: LocalizableStringKeys.noInternet.key
             )
         }
+        else if error.isNetworkConnectionLost {
+            
+            title = localizationServices.stringForLocaleElseEnglish(
+                localeIdentifier: appLanguage,
+                key: LocalizableStringKeys.noInternetTitle.key
+            )
+            
+            message = localizationServices.stringForLocaleElseEnglish(
+                localeIdentifier: appLanguage,
+                key: LocalizableStringKeys.networkConnectionLost.key
+            )
+        }
         else {
             
             title = defaultErrorTitle

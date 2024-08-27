@@ -29,6 +29,7 @@ enum LocalizableStringKeys: String {
     case languageSettingsToolLanguagesAvailableOfflineTitle = "languageSettings.toolLanguagesAvailableOffline.title"
     case languageSettingsToolLanguagesAvailableOfflineMessage = "languageSettings.toolLanguagesAvailableOffline.message"
     case languageSettingsToolLanguagesAvailableOfflineEditDownloadedLanguagesButtonTitle = "languageSettings.toolLanguagesAvailableOffline.editDownloadedLanguagesButton.title"
+    case networkConnectionLost = "network_connection_lost"
     case noInternet = "no_internet"
     case noInternetTitle = "no_internet_title"
     case ok = "OK"
