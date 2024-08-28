@@ -27,12 +27,14 @@ class MobileContentRendererAnalytics {
     func trackEvents(events: [AnalyticsEvent], renderedPageContext: MobileContentRenderedPageContext) {
         
         for event in events {
+            if !event.shouldTrigger(state: renderedPageContext.rendererState) { break }
             trackEvent(event: event, renderedPageContext: renderedPageContext)
+            event.recordTriggered(state: renderedPageContext.rendererState)
         }
     }
     
     private func trackEvent(event: AnalyticsEvent, renderedPageContext: MobileContentRenderedPageContext) {
-
+        
         let action = event.action
         guard !action.isEmpty else {
             return
