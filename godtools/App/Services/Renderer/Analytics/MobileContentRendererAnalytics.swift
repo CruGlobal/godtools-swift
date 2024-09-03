@@ -27,7 +27,7 @@ class MobileContentRendererAnalytics {
     func trackEvents(events: [AnalyticsEvent], renderedPageContext: MobileContentRenderedPageContext) {
         
         for event in events {
-            if !event.shouldTrigger(state: renderedPageContext.rendererState) { break }
+            if !event.shouldTrigger(state: renderedPageContext.rendererState) { continue }
             trackEvent(event: event, renderedPageContext: renderedPageContext)
             event.recordTriggered(state: renderedPageContext.rendererState)
         }
