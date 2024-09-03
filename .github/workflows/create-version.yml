@@ -170,7 +170,7 @@ jobs:
         run: |
           sed -i "s/MARKETING_VERSION = ${{ needs.current_version.outputs.version }}/MARKETING_VERSION = ${{ needs.new_version.outputs.version }}/g" godtools.xcodeproj/project.pbxproj
       - name: Create Version Branch and PR
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v7
         with:
           branch: "versions/${{ needs.new_version.outputs.version }}"
           title: "Version ${{needs.new_version.outputs.version}}"
