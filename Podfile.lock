@@ -1,16 +1,16 @@
 PODS:
-  - GodToolsShared (1.0.1)
+  - GodToolsShared (1.0.2-SNAPSHOT)
 
 DEPENDENCIES:
-  - GodToolsShared (= 1.0.1)
+  - GodToolsShared (= 1.0.2-SNAPSHOT)
 
 SPEC REPOS:
   https://github.com/CruGlobal/cocoapods-specs.git:
     - GodToolsShared
 
 SPEC CHECKSUMS:
-  GodToolsShared: 88f4b3a0ad35c81fd9ed818286a1ce402d1b0468
+  GodToolsShared: 7d61e3f9d3bcfd5154691229cbea4246e3b8b1e9
 
-PODFILE CHECKSUM: ec953de20c20647dabc4d87ffeef0341767af679
+PODFILE CHECKSUM: 82ec7be5d2ae1e600f649bc8aee5e53dcedf45ec
 
 COCOAPODS: 1.15.2
