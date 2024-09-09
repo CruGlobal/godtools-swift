@@ -43,6 +43,10 @@ class ToolDownloader {
                 if let resourceBannerAbout = attachmentsRepository.getAttachmentModel(id: resource.attrBannerAbout) {
                     attachments.append(resourceBannerAbout)
                 }
+                
+                if let resourceAboutBannerAnimation = attachmentsRepository.getAttachmentModel(id: resource.attrAboutBannerAnimation) {
+                    attachments.append(resourceAboutBannerAnimation)
+                }
             }
             
             for language in tool.languages {
