@@ -1,5 +1,5 @@
 //
-//  ToolView.swift
+//  TractView.swift
 //  godtools
 //
 //  Created by Levi Eggert on 10/30/20.
@@ -8,11 +8,11 @@
 
 import UIKit
 
-class ToolView: MobileContentPagesView {
+class TractView: MobileContentPagesView {
     
-    private let viewModel: ToolViewModel
+    private let viewModel: TractViewModel
                     
-    init(viewModel: ToolViewModel, navigationBar: AppNavigationBar?) {
+    init(viewModel: TractViewModel, navigationBar: AppNavigationBar?) {
         self.viewModel = viewModel
         super.init(viewModel: viewModel, navigationBar: navigationBar)
     }
@@ -81,7 +81,7 @@ class ToolView: MobileContentPagesView {
 
 // MARK: - ToolPageViewDelegate
 
-extension ToolView: ToolPageViewDelegate {
+extension TractView: ToolPageViewDelegate {
     
     func toolPageCardPositionChanged(pageView: ToolPageView, page: Int, cardPosition: Int?, animated: Bool) {
 

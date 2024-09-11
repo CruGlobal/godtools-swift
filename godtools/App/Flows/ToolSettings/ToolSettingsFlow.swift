@@ -255,6 +255,7 @@ extension ToolSettingsFlow {
 extension ToolSettingsFlow {
     
     private func presentToolScreenShareFlow() {
+        guard let toolSettingsObserver = toolSettingsObserver as? ToolScreenShareFlow.ToolScreenShareSettingsObserver else { return }
         
         let toolScreenShareFlow = ToolScreenShareFlow(
             flowDelegate: self,

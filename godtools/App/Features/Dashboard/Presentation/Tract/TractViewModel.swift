@@ -1,5 +1,5 @@
 //
-//  ToolViewModel.swift
+//  TractViewModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 10/30/20.
@@ -10,7 +10,7 @@ import UIKit
 import GodToolsToolParser
 import Combine
 
-class ToolViewModel: MobileContentPagesViewModel {
+class TractViewModel: MobileContentPagesViewModel {
     
     private let tractRemoteSharePublisher: TractRemoteSharePublisher
     private let tractRemoteShareSubscriber: TractRemoteShareSubscriber
@@ -23,7 +23,6 @@ class ToolViewModel: MobileContentPagesViewModel {
     private var cancellables: Set<AnyCancellable> = Set()
     private var remoteShareIsActive: Bool = false
     private var shouldPersistToolSettings: Bool = false
-    private var toolSettingsObserver: ToolSettingsObserver?
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -169,45 +168,25 @@ class ToolViewModel: MobileContentPagesViewModel {
         )
     }
     
-    private func createToolSettingsObserver() -> ToolSettingsObserver {
-        
-        let languages = ToolSettingsLanguages(
-            primaryLanguageId: languages[0].id,
-            parallelLanguageId: languages[safe: 1]?.id,
-            selectedLanguageId: languages[selectedLanguageIndex].id
-        )
-        
-        let toolSettingsObserver = ToolSettingsObserver(
+    override func createToolSettingsObserver(with toolSettingsLanguages: ToolSettingsLanguages) -> TractToolSettingsObserver {
+        let tractToolSettingsObserver = TractToolSettingsObserver(
             toolId: renderer.value.resource.id,
-            languages: languages,
+            languages: toolSettingsLanguages,
             pageNumber: currentRenderedPageNumber,
             trainingTipsEnabled: trainingTipsEnabled,
             tractRemoteSharePublisher: tractRemoteSharePublisher
         )
         
-        toolSettingsObserver.$languages
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (languages: ToolSettingsLanguages) in
-                
-                self?.setRendererPrimaryLanguage(
-                    primaryLanguageId: languages.primaryLanguageId,
-                    parallelLanguageId: languages.parallelLanguageId,
-                    selectedLanguageId: languages.selectedLanguageId
-                )
-            }
-            .store(in: &cancellables)
+        return tractToolSettingsObserver
+    }
+    
+    override func attachObserversForToolSettings(_ toolSettingsObserver: ToolSettingsObserver) -> ToolSettingsObserver {
         
-        toolSettingsObserver.$trainingTipsEnabled
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (trainingTipsEnabled: Bool) in
-                
-                self?.setTrainingTipsEnabled(enabled: trainingTipsEnabled)
-            }
-            .store(in: &cancellables)
+        let attachedToolSettingsObserver = super.attachObserversForToolSettings(toolSettingsObserver)
         
         if shouldPersistToolSettings {
             
-            toolSettingsObserver.$languages
+            attachedToolSettingsObserver.$languages
                 .map { [weak self] (languages: ToolSettingsLanguages) in
                     
                     guard let self = self else {
@@ -230,14 +209,13 @@ class ToolViewModel: MobileContentPagesViewModel {
                 .store(in: &cancellables)
         }
         
-        self.toolSettingsObserver = toolSettingsObserver
-        return toolSettingsObserver
+        return attachedToolSettingsObserver
     }
 }
 
 // MARK: - Inputs
 
-extension ToolViewModel {
+extension TractViewModel {
     
     @objc func homeTapped() {
         
@@ -253,7 +231,7 @@ extension ToolViewModel {
     
     @objc func toolSettingsTapped() {
         
-        let toolSettingsObserver = createToolSettingsObserver()
+        let toolSettingsObserver = setUpToolSettingsObserver()
         
         trackActionAnalyticsUseCase
             .trackAction(
@@ -292,7 +270,7 @@ extension ToolViewModel {
                 selectedLanguageId: tappedLanguage.id
             )
         } else {
-            _ = createToolSettingsObserver()
+            _ = setUpToolSettingsObserver()
         }
         
         trackLanguageTapped(tappedLanguage: tappedLanguage)
@@ -325,7 +303,7 @@ extension ToolViewModel {
 
 // MARK: - Remote Share Subscriber / Publisher
 
-extension ToolViewModel {
+extension TractViewModel {
     
     private func trackShareScreenOpened() {
         

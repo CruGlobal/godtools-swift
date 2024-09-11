@@ -28,25 +28,31 @@ struct ToolSettingsOptionsView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
                     
-                    ToolSettingsOptionView(
-                        viewBackground: .color(color: Color(.sRGB, red: 59 / 256, green: 164 / 256, blue: 219 / 256, opacity: 1)),
-                        title: viewModel.shareLinkTitle,
-                        titleColorStyle: .darkBackground,
-                        iconImage: ImageCatalog.toolSettingsOptionShareLink.image,
-                        tappedClosure: {
-                            viewModel.shareLinkTapped()
-                        }
-                    )
+                    if !viewModel.hidesShareLinkButton {
+                        
+                        ToolSettingsOptionView(
+                            viewBackground: .color(color: Color(.sRGB, red: 59 / 256, green: 164 / 256, blue: 219 / 256, opacity: 1)),
+                            title: viewModel.shareLinkTitle,
+                            titleColorStyle: .darkBackground,
+                            iconImage: ImageCatalog.toolSettingsOptionShareLink.image,
+                            tappedClosure: {
+                                viewModel.shareLinkTapped()
+                            }
+                        )
+                    }
                     
-                    ToolSettingsOptionView(
-                        viewBackground: .color(color: Color(.sRGB, red: 245 / 256, green: 245 / 256, blue: 245 / 256, opacity: 1)),
-                        title: viewModel.screenShareTitle,
-                        titleColorStyle: .lightBackground,
-                        iconImage: ImageCatalog.toolSettingsOptionScreenShare.image,
-                        tappedClosure: {
-                            viewModel.screenShareTapped()
-                        }
-                    )
+                    if !viewModel.hidesShareScreenButton {
+                        
+                        ToolSettingsOptionView(
+                            viewBackground: .color(color: Color(.sRGB, red: 245 / 256, green: 245 / 256, blue: 245 / 256, opacity: 1)),
+                            title: viewModel.screenShareTitle,
+                            titleColorStyle: .lightBackground,
+                            iconImage: ImageCatalog.toolSettingsOptionScreenShare.image,
+                            tappedClosure: {
+                                viewModel.screenShareTapped()
+                            }
+                        )
+                    }
                     
                     if !viewModel.hidesTrainingTipsButton {
                         

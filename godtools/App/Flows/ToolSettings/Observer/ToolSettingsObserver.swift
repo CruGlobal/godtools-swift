@@ -15,14 +15,22 @@ class ToolSettingsObserver: ObservableObject {
     
     let toolId: String
     let pageNumber: Int
-    let tractRemoteSharePublisher: TractRemoteSharePublisher
     
-    init(toolId: String, languages: ToolSettingsLanguages, pageNumber: Int, trainingTipsEnabled: Bool, tractRemoteSharePublisher: TractRemoteSharePublisher) {
+    init(toolId: String, languages: ToolSettingsLanguages, pageNumber: Int, trainingTipsEnabled: Bool) {
         
         self.toolId = toolId
         self.languages = languages
         self.pageNumber = pageNumber
         self.trainingTipsEnabled = trainingTipsEnabled
-        self.tractRemoteSharePublisher = tractRemoteSharePublisher
+    }
+}
+
+extension ToolSettingsObserver {
+    var isRemoteShareable: Bool {
+        return self is RemoteShareable
+    }
+    
+    var isLinkShareable: Bool {
+        return self is LinkShareable
     }
 }
