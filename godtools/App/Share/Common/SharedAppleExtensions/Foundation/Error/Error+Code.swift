@@ -22,6 +22,10 @@ extension Error {
         return code == Int(CFNetworkErrors.cfurlErrorNotConnectedToInternet.rawValue)
     }
     
+    var isNetworkConnectionLost: Bool {
+        return code == Int(CFNetworkErrors.cfErrorHTTPConnectionLost.rawValue)
+    }
+    
     var isUserCancelled: Bool {
         return code == NSUserCancelledError
     }

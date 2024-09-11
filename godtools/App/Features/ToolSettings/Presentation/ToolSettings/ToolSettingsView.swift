@@ -11,7 +11,7 @@ import SwiftUI
 struct ToolSettingsView: View {
     
     private let contentInsets: EdgeInsets = EdgeInsets(top: 20, leading: 20, bottom: 0, trailing: 20)
-    private let separatorLineSpacing: CGFloat = 20
+    private let separatorLineSpacing: CGFloat = 25
     private let bottomSpace: CGFloat = 15
     
     @ObservedObject private var viewModel: ToolSettingsViewModel
@@ -24,7 +24,7 @@ struct ToolSettingsView: View {
     var body: some View {
         GeometryReader { geometry in
             
-            VStack {
+            VStack(spacing: 0) {
                 
                 ToolSettingsTopBarView(
                     viewModel: viewModel,
@@ -32,20 +32,29 @@ struct ToolSettingsView: View {
                     trailingInset: contentInsets.trailing
                 )
                 
+                FixedVerticalSpacer(height: 10)
+                
                 ScrollView(.vertical, showsIndicators: true) {
-                    VStack {
+                    VStack(spacing: 0) {
                         
-                        ToolSettingsOptionsView(
-                            viewModel: viewModel,
-                            leadingInset: contentInsets.leading,
-                            trailingInset: contentInsets.trailing
-                        )
+                        if viewModel.hidesAllIconButtons == false {
+                            
+                            ToolSettingsOptionsView(
+                                viewModel: viewModel,
+                                leadingInset: contentInsets.leading,
+                                trailingInset: contentInsets.trailing
+                            )
+                            
+                            FixedVerticalSpacer(height: separatorLineSpacing)
+                        }
        
                         ToolSettingsSeparatorView(
-                            separatorSpacing: separatorLineSpacing,
+                            separatorSpacing: 0,
                             separatorLeadingInset: contentInsets.leading,
                             separatorTrailingInset: contentInsets.trailing
                         )
+                        
+                        FixedVerticalSpacer(height: separatorLineSpacing)
                         
                         ToolSettingsChooseLanguageView(
                             viewModel: viewModel,
