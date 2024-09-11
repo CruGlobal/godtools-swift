@@ -1599,6 +1599,7 @@
 		D4E243CC29EDC6A100EA4BB7 /* SendFeedbackWebContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E243CB29EDC6A100EA4BB7 /* SendFeedbackWebContent.swift */; };
 		D4E243CE29EDCA5700EA4BB7 /* ReportABugWebContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E243CD29EDCA5700EA4BB7 /* ReportABugWebContent.swift */; };
 		D4E243D029EDD2E800EA4BB7 /* AskAQuestionWebContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E243CF29EDD2E800EA4BB7 /* AskAQuestionWebContent.swift */; };
+		D4E7EE072C90E5D800F75DA6 /* LessonCompletionProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E7EE062C90E5D800F75DA6 /* LessonCompletionProgressBar.swift */; };
 		D4EAF2F92C0F95D900AEC36C /* UserToolSettingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EAF2F82C0F95D900AEC36C /* UserToolSettingsRepository.swift */; };
 		D4EFC9632B49B28200B0D34A /* LanguageDownloadErrorAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EFC9622B49B28200B0D34A /* LanguageDownloadErrorAlertView.swift */; };
 		D4EFC9652B49B29D00B0D34A /* LanguageDownloadErrorAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EFC9642B49B29D00B0D34A /* LanguageDownloadErrorAlertViewModel.swift */; };
@@ -3355,6 +3356,7 @@
 		D4E243CB29EDC6A100EA4BB7 /* SendFeedbackWebContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendFeedbackWebContent.swift; sourceTree = "<group>"; };
 		D4E243CD29EDCA5700EA4BB7 /* ReportABugWebContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportABugWebContent.swift; sourceTree = "<group>"; };
 		D4E243CF29EDD2E800EA4BB7 /* AskAQuestionWebContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskAQuestionWebContent.swift; sourceTree = "<group>"; };
+		D4E7EE062C90E5D800F75DA6 /* LessonCompletionProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonCompletionProgressBar.swift; sourceTree = "<group>"; };
 		D4EAF2F82C0F95D900AEC36C /* UserToolSettingsRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserToolSettingsRepository.swift; sourceTree = "<group>"; };
 		D4EFC9622B49B28200B0D34A /* LanguageDownloadErrorAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageDownloadErrorAlertView.swift; sourceTree = "<group>"; };
 		D4EFC9642B49B29D00B0D34A /* LanguageDownloadErrorAlertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageDownloadErrorAlertViewModel.swift; sourceTree = "<group>"; };
@@ -7961,6 +7963,7 @@
 			isa = PBXGroup;
 			children = (
 				45A8BDDC2ACC9F47007A1EBB /* LessonCardView.swift */,
+				D4E7EE062C90E5D800F75DA6 /* LessonCompletionProgressBar.swift */,
 				45A8BDDD2ACC9F47007A1EBB /* LessonCardViewModel.swift */,
 			);
 			path = LessonCard;
@@ -12472,6 +12475,7 @@
 				453A2EFE2B3636E400C8F865 /* DownloadToolLanguageRepositoryInterface.swift in Sources */,
 				45920D502A8D3D1800E336A8 /* ToolsView.swift in Sources */,
 				45BDA61D2954FE3E007E259B /* CategoryArticleUUID.swift in Sources */,
+				D4E7EE072C90E5D800F75DA6 /* LessonCompletionProgressBar.swift in Sources */,
 				D47DF03F2B28E8AD0079219B /* DownloadedLanguagesRepository.swift in Sources */,
 				4534F91C2AE99E8D00A7A071 /* GetLessonEvaluationInterfaceStringsUseCase.swift in Sources */,
 				4573133E28C1821100481640 /* ToolDetailsVersionsCardViewModel.swift in Sources */,

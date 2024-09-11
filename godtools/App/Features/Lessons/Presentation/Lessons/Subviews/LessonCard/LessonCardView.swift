@@ -53,9 +53,14 @@ struct LessonCardView: View {
                     
                     FixedVerticalSpacer(height: 9)
                     
-                    HStack {
+                    HStack(alignment: .center, spacing: 10) {
+                        let completion = [0, 6, 23, 47, 99].randomElement() ?? 1
+                        Text("\(completion)% Complete")
+                            .font(FontLibrary.sfProDisplayRegular.font(size: 12))
+                            .foregroundColor(ColorPalette.gtBlue.color)
                         
-                        Spacer()
+                        LessonCompletionProgressBar(lessonCompletionProgress: Double(completion)/100)
+                            .padding(.bottom, 5)
                         
                         ToolCardLanguageAvailabilityView(
                             languageAvailability: viewModel.appLanguageAvailability
