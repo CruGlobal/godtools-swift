@@ -9,6 +9,8 @@
 import Foundation
 import RequestOperation
 
+// TODO: Don't commit.  Remove this file after updating RequestOperation. ~Levi
+@available(*, deprecated)
 extension Error {
     
     func decodeRequestOperationErrorToMobileContentApiError() -> MobileContentApiError {
