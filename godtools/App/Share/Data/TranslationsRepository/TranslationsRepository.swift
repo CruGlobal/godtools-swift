@@ -388,9 +388,9 @@ extension TranslationsRepository {
     private func getTranslationFileFromRemote(translation: TranslationModel, fileName: String) -> AnyPublisher<FileCacheLocation, Error> {
         
         return api.getTranslationFile(fileName: fileName)
-            .flatMap({ responseObject -> AnyPublisher<FileCacheLocation, Error> in
+            .flatMap({ (response: RequestDataResponse) -> AnyPublisher<FileCacheLocation, Error> in
                 
-                return self.resourcesFileCache.storeTranslationFile(translationId: translation.id, fileName: fileName, fileData: responseObject.data)
+                return self.resourcesFileCache.storeTranslationFile(translationId: translation.id, fileName: fileName, fileData: response.data)
                     .eraseToAnyPublisher()
             })
             .flatMap({ fileLocation -> AnyPublisher<FileCacheLocation, Error> in
@@ -404,9 +404,9 @@ extension TranslationsRepository {
     private func downloadAndCacheTranslationZipFiles(translation: TranslationModel) -> AnyPublisher<TranslationFilesDataModel, Error> {
         
         return api.getTranslationZipFile(translationId: translation.id)
-            .flatMap({ responseObject -> AnyPublisher<TranslationFilesDataModel, Error> in
+            .flatMap({ (response: RequestDataResponse) -> AnyPublisher<TranslationFilesDataModel, Error> in
                 
-                return self.resourcesFileCache.storeTranslationZipFile(translationId: translation.id, zipFileData: responseObject.data)
+                return self.resourcesFileCache.storeTranslationZipFile(translationId: translation.id, zipFileData: response.data)
                     .flatMap({ files -> AnyPublisher<TranslationFilesDataModel, Error> in
                         
                         return self.didDownloadTranslationAndRelatedFiles(translation: translation, files: files)
