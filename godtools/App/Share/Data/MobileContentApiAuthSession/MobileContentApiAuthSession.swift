@@ -28,12 +28,14 @@ class MobileContentApiAuthSession {
     func sendGetRequestIgnoringCache(with urlString: String) -> AnyPublisher<Data, Error> {
         
         let urlRequest = requestBuilder.build(
-            session: ignoreCacheSession,
-            urlString: urlString,
-            method: .get,
-            headers: nil,
-            httpBody: nil,
-            queryItems: nil
+            parameters: RequestBuilderParameters(
+                urlSession: ignoreCacheSession,
+                urlString: urlString,
+                method: .get,
+                headers: nil,
+                httpBody: nil,
+                queryItems: nil
+            )
         )
         
         return sendAuthenticatedRequest(urlRequest: urlRequest, urlSession: ignoreCacheSession)

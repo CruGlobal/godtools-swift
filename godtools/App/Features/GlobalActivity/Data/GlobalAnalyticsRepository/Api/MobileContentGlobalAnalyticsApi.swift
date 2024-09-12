@@ -27,12 +27,14 @@ class MobileContentGlobalAnalyticsApi {
     private func getGlobalAnalyticsUrlRequest() -> URLRequest {
         
         let urlRequest: URLRequest = requestBuilder.build(
-            session: session,
-            urlString: baseUrl + "/analytics/global",
-            method: .get,
-            headers: nil,
-            httpBody: nil,
-            queryItems: nil
+            parameters: RequestBuilderParameters(
+                urlSession: session,
+                urlString: baseUrl + "/analytics/global",
+                method: .get,
+                headers: nil,
+                httpBody: nil,
+                queryItems: nil
+            )
         )
         
         return urlRequest

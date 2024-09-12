@@ -27,12 +27,14 @@ class MobileContentTranslationsApi {
     private func getTranslationFileRequest(fileName: String) -> URLRequest {
         
         return requestBuilder.build(
-            session: session,
-            urlString: baseUrl + "/translations/files/" + fileName,
-            method: .get,
-            headers: nil,
-            httpBody: nil,
-            queryItems: nil
+            parameters: RequestBuilderParameters(
+                urlSession: session,
+                urlString: baseUrl + "/translations/files/" + fileName,
+                method: .get,
+                headers: nil,
+                httpBody: nil,
+                queryItems: nil
+            )
         )
     }
     
@@ -49,12 +51,14 @@ class MobileContentTranslationsApi {
     private func getTranslationZipFileRequest(translationId: String) -> URLRequest {
         
         return requestBuilder.build(
-            session: session,
-            urlString: baseUrl + "/translations/" + translationId,
-            method: .get,
-            headers: nil,
-            httpBody: nil,
-            queryItems: nil
+            parameters: RequestBuilderParameters(
+                urlSession: session,
+                urlString: baseUrl + "/translations/" + translationId,
+                method: .get,
+                headers: nil,
+                httpBody: nil,
+                queryItems: nil
+            )
         )
     }
     

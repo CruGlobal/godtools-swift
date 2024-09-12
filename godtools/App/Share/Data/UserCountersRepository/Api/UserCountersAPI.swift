@@ -55,12 +55,14 @@ class UserCountersAPI: UserCountersAPIType {
         ]
         
         return requestBuilder.build(
-            session: ignoreCacheSession,
-            urlString: baseURL + "/users/me/counters",
-            method: .get,
-            headers: headers,
-            httpBody: nil,
-            queryItems: nil
+            parameters: RequestBuilderParameters(
+                urlSession: ignoreCacheSession,
+                urlString: baseURL + "/users/me/counters",
+                method: .get,
+                headers: headers,
+                httpBody: nil,
+                queryItems: nil
+            )
         )
     }
     
@@ -80,12 +82,14 @@ class UserCountersAPI: UserCountersAPIType {
         ]
         
         return requestBuilder.build(
-            session: ignoreCacheSession,
-            urlString: baseURL + "/users/me/counters/\(id)",
-            method: .patch,
-            headers: headers,
-            httpBody: body,
-            queryItems: nil
+            parameters: RequestBuilderParameters(
+                urlSession: ignoreCacheSession,
+                urlString: baseURL + "/users/me/counters/\(id)",
+                method: .patch,
+                headers: headers,
+                httpBody: body,
+                queryItems: nil
+            )
         )
     }
 }

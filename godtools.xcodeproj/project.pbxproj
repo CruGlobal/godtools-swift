@@ -1117,6 +1117,9 @@
 		45BDA64C2954FF08007E259B /* WebArchiveOperationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BDA6422954FF08007E259B /* WebArchiveOperationError.swift */; };
 		45BDA64D2954FF08007E259B /* WebArchiveOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BDA6432954FF08007E259B /* WebArchiveOperation.swift */; };
 		45BDA64E2954FF08007E259B /* WebArchiveQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BDA6442954FF08007E259B /* WebArchiveQueue.swift */; };
+		45BE0E7A2C921FB100EF40C8 /* URLSession+SendUrlRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BE0E792C921FB100EF40C8 /* URLSession+SendUrlRequest.swift */; };
+		45BE0E7C2C921FC600EF40C8 /* UrlRequestResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BE0E7B2C921FC600EF40C8 /* UrlRequestResponse.swift */; };
+		45BE0E7E2C92291400EF40C8 /* Error+UrlRequestResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BE0E7D2C92291400EF40C8 /* Error+UrlRequestResponse.swift */; };
 		45BE4A7B2AF28776004021DA /* NSAttributedString+Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BE4A7A2AF28776004021DA /* NSAttributedString+Format.swift */; };
 		45BE4A7D2AF28788004021DA /* SF-Pro-Display-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 45BE4A7C2AF28788004021DA /* SF-Pro-Display-Regular.otf */; };
 		45BE4A812AF287D2004021DA /* ConfirmAppLanguageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BE4A7F2AF287D2004021DA /* ConfirmAppLanguageViewModel.swift */; };
@@ -2762,6 +2765,9 @@
 		45BDA6422954FF08007E259B /* WebArchiveOperationError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebArchiveOperationError.swift; sourceTree = "<group>"; };
 		45BDA6432954FF08007E259B /* WebArchiveOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebArchiveOperation.swift; sourceTree = "<group>"; };
 		45BDA6442954FF08007E259B /* WebArchiveQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebArchiveQueue.swift; sourceTree = "<group>"; };
+		45BE0E792C921FB100EF40C8 /* URLSession+SendUrlRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+SendUrlRequest.swift"; sourceTree = "<group>"; };
+		45BE0E7B2C921FC600EF40C8 /* UrlRequestResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlRequestResponse.swift; sourceTree = "<group>"; };
+		45BE0E7D2C92291400EF40C8 /* Error+UrlRequestResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Error+UrlRequestResponse.swift"; sourceTree = "<group>"; };
 		45BE4A7A2AF28776004021DA /* NSAttributedString+Format.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Format.swift"; sourceTree = "<group>"; };
 		45BE4A7C2AF28788004021DA /* SF-Pro-Display-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Regular.otf"; sourceTree = "<group>"; };
 		45BE4A7F2AF287D2004021DA /* ConfirmAppLanguageViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmAppLanguageViewModel.swift; sourceTree = "<group>"; };
@@ -3975,6 +3981,7 @@
 		4511D244286CB9D200276174 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				45BE0E782C921FA100EF40C8 /* RequestOperation-Remove */,
 				459E86B228ED1A9B00E197A5 /* AppsFlyer */,
 				45BDA5D32954FE3E007E259B /* ArticlesRepository */,
 				45D63E79288F75B0009B4610 /* AttachmentsRepository */,
@@ -9100,6 +9107,16 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		45BE0E782C921FA100EF40C8 /* RequestOperation-Remove */ = {
+			isa = PBXGroup;
+			children = (
+				45BE0E7D2C92291400EF40C8 /* Error+UrlRequestResponse.swift */,
+				45BE0E792C921FB100EF40C8 /* URLSession+SendUrlRequest.swift */,
+				45BE0E7B2C921FC600EF40C8 /* UrlRequestResponse.swift */,
+			);
+			path = "RequestOperation-Remove";
+			sourceTree = "<group>";
+		};
 		45BE4A792AF28776004021DA /* NSAttributedString */ = {
 			isa = PBXGroup;
 			children = (
@@ -12853,6 +12870,7 @@
 				D4C26CB62C6A98480082B479 /* CYOAToolSettingsObserver.swift in Sources */,
 				4598BD2B2BF7DF6800196463 /* SocialSignInAuthenticationType.swift in Sources */,
 				D4BC79E429AE995A0040651B /* GetTrainingTipCompletedUseCase.swift in Sources */,
+				45BE0E7C2C921FC600EF40C8 /* UrlRequestResponse.swift in Sources */,
 				45DC190F2BB59A0C007542A5 /* UITestsDeepLinkParser.swift in Sources */,
 				45E347802A49BFEB0014CCD1 /* GTWhiteButton.swift in Sources */,
 				45B6FF3C2BAA39840037B240 /* SearchToolFilterLanguagesRepository.swift in Sources */,
@@ -12928,6 +12946,7 @@
 				D4C2A57F2C348F4E0035AB4D /* SearchLessonFilterLanguagesRepositoryInterface.swift in Sources */,
 				45EA98FC2AFD683100E7EA9A /* CreatingToolScreenShareSessionTimedOutDomainModel.swift in Sources */,
 				D4AFA44D2BAD0A4500318023 /* GetToolFilterCategoriesInterfaceStringsRepositoryInterface.swift in Sources */,
+				45BE0E7E2C92291400EF40C8 /* Error+UrlRequestResponse.swift in Sources */,
 				453C9D192A97C11700177499 /* MobileContentViewRenderer.swift in Sources */,
 				45AE973B27C97A9400C2CB33 /* MultiplatformHeading.swift in Sources */,
 				4512D4E02B29129100DFAFB3 /* ToolSettingsToolLanguagesListView.swift in Sources */,
@@ -13704,6 +13723,7 @@
 				D4C2A5762C344CFA0035AB4D /* LessonFilterDomainLayerDependencies.swift in Sources */,
 				457579E226E96ABE00C898D2 /* MobileContentMultiSelectViewModel.swift in Sources */,
 				453F84C02A029FC00005101E /* ArticleAemCacheArchivedObject.swift in Sources */,
+				45BE0E7A2C921FB100EF40C8 /* URLSession+SendUrlRequest.swift in Sources */,
 				45D63EA1288F77D4009B4610 /* ResourcesPlusLatestTranslationsAndAttachmentsModel.swift in Sources */,
 				45645C122AFE76DF00BD233D /* ShareToolScreenShareSessionInterfaceStringsDomainModel.swift in Sources */,
 				45CBDA012BA38EF60007DEC8 /* LaunchCountRepositoryInterface.swift in Sources */,
@@ -15123,7 +15143,7 @@
 			repositoryURL = "https://github.com/CruGlobal/request-operation-ios.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 1.5.1;
+				minimumVersion = 1.8.4;
 			};
 		};
 		45D40C662A5315B400E8E4AE /* XCRemoteSwiftPackageReference "Starscream" */ = {

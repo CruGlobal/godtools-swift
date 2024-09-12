@@ -25,12 +25,14 @@ class MobileContentResourcesApi {
     private func getResourcesPlusLatestTranslationsAndAttachmentsRequest() -> URLRequest {
         
         return requestBuilder.build(
-            session: session,
-            urlString: baseUrl + "/resources?filter[system]=GodTools&include=latest-translations,attachments",
-            method: .get,
-            headers: nil,
-            httpBody: nil,
-            queryItems: nil
+            parameters: RequestBuilderParameters(
+                urlSession: session,
+                urlString: baseUrl + "/resources?filter[system]=GodTools&include=latest-translations,attachments",
+                method: .get,
+                headers: nil,
+                httpBody: nil,
+                queryItems: nil
+            )
         )
     }
     

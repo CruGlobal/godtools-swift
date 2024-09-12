@@ -65,12 +65,14 @@ class MobileContentAuthTokenAPI {
         ]
         
         return requestBuilder.build(
-            session: session,
-            urlString: baseURL + "/auth",
-            method: .post,
-            headers: headers,
-            httpBody: body,
-            queryItems: nil
+            parameters: RequestBuilderParameters(
+                urlSession: session,
+                urlString: baseURL + "/auth",
+                method: .post,
+                headers: headers,
+                httpBody: body,
+                queryItems: nil
+            )
         )
     }
     

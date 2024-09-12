@@ -29,12 +29,14 @@ class MobileContentLanguagesApi {
     private func getLanguagesRequest() -> URLRequest {
         
         return requestBuilder.build(
-            session: session,
-            urlString: baseUrl + Path.languages,
-            method: .get,
-            headers: nil,
-            httpBody: nil,
-            queryItems: nil
+            parameters: RequestBuilderParameters(
+                urlSession: session,
+                urlString: baseUrl + Path.languages,
+                method: .get,
+                headers: nil,
+                httpBody: nil,
+                queryItems: nil
+            )
         )
     }
     
