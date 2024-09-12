@@ -96,7 +96,9 @@ class MobileContentApiAuthSession {
 
         let authenticatedRequest: URLRequest = buildAuthenticatedRequest(from: urlRequest, authToken: authToken)
 
-        return session.sendUrlRequestPublisher(urlRequest: authenticatedRequest)
+        let requestSender = RequestSender(session: session)
+        
+        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest)
             .map {
                 $0.data
             }
