@@ -16,13 +16,13 @@ class MobileContentLanguagesApi {
         static let languages = "/languages"
     }
     
-    private let session: URLSession
     private let requestBuilder: RequestBuilder = RequestBuilder()
+    private let requestSender: RequestSender
     private let baseUrl: String
     
     init(config: AppConfig, ignoreCacheSession: IgnoreCacheSession) {
             
-        session = ignoreCacheSession.session
+        requestSender = RequestSender(session: ignoreCacheSession.session)
         baseUrl = config.getMobileContentApiBaseUrl()
     }
     
@@ -30,7 +30,7 @@ class MobileContentLanguagesApi {
         
         return requestBuilder.build(
             parameters: RequestBuilderParameters(
-                urlSession: session,
+                urlSession: requestSender.session,
                 urlString: baseUrl + Path.languages,
                 method: .get,
                 headers: nil,
@@ -44,9 +44,12 @@ class MobileContentLanguagesApi {
         
         let urlRequest: URLRequest = getLanguagesRequest()
         
-        return session.sendAndDecodeUrlRequestPublisher(urlRequest: urlRequest)
-            .map { (languagesResponse: JsonApiResponseData<[LanguageModel]>) in
-                return languagesResponse.data
+        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest)
+            .decodeRequestDataResponseForSuccessCodable()
+            .map { (response: RequestCodableResponse<JsonApiResponseDataArray<LanguageModel>, NoResponseCodable>) in
+                
+                let languages: [LanguageModel] = response.successCodable?.dataArray ?? []
+                return languages
             }
             .eraseToAnyPublisher()
     }
