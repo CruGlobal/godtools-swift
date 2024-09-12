@@ -15,12 +15,12 @@ class MobileContentGlobalAnalyticsApi {
     static let sharedGlobalAnalyticsId: String = "1"
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
-    private let session: URLSession
+    private let requestSender: RequestSender
     private let baseUrl: String
     
     init(baseUrl: String, ignoreCacheSession: IgnoreCacheSession) {
         
-        session = ignoreCacheSession.session
+        requestSender = RequestSender(session: ignoreCacheSession.session)
         self.baseUrl = baseUrl
     }
         
@@ -28,7 +28,7 @@ class MobileContentGlobalAnalyticsApi {
         
         let urlRequest: URLRequest = requestBuilder.build(
             parameters: RequestBuilderParameters(
-                urlSession: session,
+                urlSession: requestSender.session,
                 urlString: baseUrl + "/analytics/global",
                 method: .get,
                 headers: nil,
@@ -44,9 +44,15 @@ class MobileContentGlobalAnalyticsApi {
         
         let urlRequest: URLRequest = getGlobalAnalyticsUrlRequest()
         
-        return session.sendAndDecodeUrlRequestPublisher(urlRequest: urlRequest)
-            .map { (response: JsonApiResponseData<MobileContentGlobalAnalyticsDecodable>) in
-                return response.data
+        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest)
+            .decodeRequestDataResponseForSuccessCodable()
+            .map { (response: RequestCodableResponse<JsonApiResponseDataObject<MobileContentGlobalAnalyticsDecodable>, NoResponseCodable>) in
+                
+                guard let analytics = response.successCodable?.data else {
+                    return MobileContentGlobalAnalyticsDecodable.createEmpty()
+                }
+                
+                return analytics
             }
             .eraseToAnyPublisher()
     }
