@@ -92,7 +92,7 @@ class MobileContentAuthTokenAPI {
                         .eraseToAnyPublisher()
                 }
                 
-                if let authTokenDecodable = response.successCodable?.data {
+                if let authTokenDecodable = response.successCodable?.dataObject {
                     return Just(authTokenDecodable)
                         .setFailureType(to: MobileContentApiError.self)
                         .eraseToAnyPublisher()

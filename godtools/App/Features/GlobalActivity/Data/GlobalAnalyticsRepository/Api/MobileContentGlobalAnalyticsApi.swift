@@ -48,7 +48,7 @@ class MobileContentGlobalAnalyticsApi {
             .decodeRequestDataResponseForSuccessCodable()
             .map { (response: RequestCodableResponse<JsonApiResponseDataObject<MobileContentGlobalAnalyticsDecodable>, NoResponseCodable>) in
                 
-                guard let analytics = response.successCodable?.data else {
+                guard let analytics = response.successCodable?.dataObject else {
                     return MobileContentGlobalAnalyticsDecodable.createEmpty()
                 }
                 
