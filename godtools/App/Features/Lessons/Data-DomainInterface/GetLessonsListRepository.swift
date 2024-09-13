@@ -47,12 +47,15 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
                     let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel = self.getToolLanguageAvailability(appLanguage: appLanguage, filterLanguageModel: filterLanguageModel, resource: resource)
                     let lessonName: String = self.getTranslatedToolName.getToolName(resource: resource, translateInLanguage: filterLanguageModel?.code ?? appLanguage)
                 
+                    let randomProgress = [0.0, 0.2, 0.4, 0.5, 0.7, 0.9, 1.0].randomElement() ?? 0.0
                     return LessonListItemDomainModel(
                         analyticsToolName: resource.abbreviation,
                         availabilityInAppLanguage: toolLanguageAvailability,
                         bannerImageId: resource.attrBanner,
                         dataModelId: resource.id,
-                        name: lessonName
+                        name: lessonName,
+                        completionProgress: randomProgress,
+                        completionString: "\(Int(randomProgress*100))% Complete"
                     )
                 }
                 

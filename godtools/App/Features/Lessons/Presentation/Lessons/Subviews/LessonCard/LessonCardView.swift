@@ -54,12 +54,11 @@ struct LessonCardView: View {
                     FixedVerticalSpacer(height: 9)
                     
                     HStack(alignment: .center, spacing: 10) {
-                        let completion = [0, 6, 23, 47, 99].randomElement() ?? 1
-                        Text("\(completion)% Complete")
+                        Text(viewModel.completionString)
                             .font(FontLibrary.sfProDisplayRegular.font(size: 12))
                             .foregroundColor(ColorPalette.gtBlue.color)
                         
-                        LessonCompletionProgressBar(lessonCompletionProgress: Double(completion)/100)
+                        LessonCompletionProgressBar(lessonCompletionProgress: viewModel.lessonCompletionProgress)
                             .padding(.bottom, 5)
                         
                         ToolCardLanguageAvailabilityView(
@@ -93,7 +92,9 @@ struct LessonCardView_Previews: PreviewProvider {
             availabilityInAppLanguage: ToolLanguageAvailabilityDomainModel(availabilityString: "available in language", isAvailable: true),
             bannerImageId: "1",
             dataModelId: "1",
-            name: "Five Reasons to be Courageous"
+            name: "Five Reasons to be Courageous",
+            completionProgress: 0.5,
+            completionString: "50% Complete"
         )
         
         let viewModel = LessonCardViewModel(
