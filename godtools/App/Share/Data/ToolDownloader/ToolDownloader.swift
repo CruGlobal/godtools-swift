@@ -96,7 +96,7 @@ class ToolDownloader {
     
     private func downloadToolTranslationsAndArticlesRequest(translations: [TranslationModel]) -> AnyPublisher<[Void], Never> {
         
-        let requests = translations.map { (translation: TranslationModel) in
+        let downloadTranslationsRequests = translations.map { (translation: TranslationModel) in
             self.translationsRepository.downloadAndCacheTranslationFiles(translation: translation)
                 .catch({ (error: Error) in
                     return Just(TranslationFilesDataModel(files: [], translation: translation))
@@ -121,7 +121,7 @@ class ToolDownloader {
                 .eraseToAnyPublisher()
         }
         
-        return Publishers.MergeMany(requests)
+        return Publishers.MergeMany(downloadTranslationsRequests)
             .collect()
             .eraseToAnyPublisher()
     }
