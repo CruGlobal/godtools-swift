@@ -346,7 +346,13 @@ extension TranslationsRepository {
             })
             .catch({ (error: Error) in
                 
-                return self.downloadAndCacheTranslationZipFiles(translation: translation)
+                if !error.isUrlErrorNotConnectedToInternetCode {
+                    return self.downloadAndCacheTranslationZipFiles(translation: translation)
+                }
+                else {
+                    return Fail(error: error)
+                        .eraseToAnyPublisher()
+                }
             })
             .eraseToAnyPublisher()
     }
