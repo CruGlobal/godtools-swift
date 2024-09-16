@@ -466,16 +466,19 @@ extension AppFlow {
         
         resourcesRepository
             .syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsIgnoringErrorPublisher()
-            .flatMap({ _ -> AnyPublisher<Void, Never> in
+            .setFailureType(to: Error.self)
+            .flatMap({ (result: RealmResourcesCacheSyncResult) -> AnyPublisher<Void, Error> in
                 
                 return self.toolLanguageDownloader
                     .syncDownloadedLanguagesPublisher()
                     .eraseToAnyPublisher()
             })
             .receive(on: DispatchQueue.main)
-            .sink { _ in
+            .sink(receiveCompletion: { _ in
                 
-            }
+            }, receiveValue: { _ in
+                
+            })
             .store(in: &cancellables)
         
         _ = followUpsService.postFailedFollowUpsIfNeeded()
