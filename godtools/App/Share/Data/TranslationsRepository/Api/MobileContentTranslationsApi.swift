@@ -43,6 +43,7 @@ class MobileContentTranslationsApi {
         let urlRequest: URLRequest = getTranslationFileRequest(fileName: fileName)
         
         return requestSender.sendDataTaskPublisher(urlRequest: urlRequest)
+            .validate()
             .eraseToAnyPublisher()
     }
     
@@ -67,6 +68,7 @@ class MobileContentTranslationsApi {
         let urlRequest: URLRequest = getTranslationZipFileRequest(translationId: translationId)
         
         return requestSender.sendDataTaskPublisher(urlRequest: urlRequest)
+            .validate()
             .eraseToAnyPublisher()
     }
 }

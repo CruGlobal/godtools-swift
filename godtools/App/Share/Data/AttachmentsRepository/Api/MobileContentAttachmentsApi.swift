@@ -26,6 +26,7 @@ class MobileContentAttachmentsApi {
         let urlRequest: URLRequest = URLRequest(url: url)
         
         return requestSender.sendDataTaskPublisher(urlRequest: urlRequest)
+            .validate()
             .eraseToAnyPublisher()
     }
 }

@@ -99,6 +99,7 @@ class MobileContentApiAuthSession {
         let requestSender = RequestSender(session: session)
         
         return requestSender.sendDataTaskPublisher(urlRequest: urlRequest)
+            .validate()
             .map {
                 $0.data
             }
