@@ -1,0 +1,16 @@
+current directory: /Users/runner/work/godtools-swift/godtools-swift/vendor/bundle/ruby/3.3.0/gems/json-2.7.2/ext/json
+/Users/runner/hostedtoolcache/Ruby/3.3.5/arm64/bin/ruby extconf.rb
+creating Makefile
+
+current directory: /Users/runner/work/godtools-swift/godtools-swift/vendor/bundle/ruby/3.3.0/gems/json-2.7.2/ext/json
+make DESTDIR\= sitearchdir\=./.gem.20240904-2372-yf4uk6 sitelibdir\=./.gem.20240904-2372-yf4uk6 clean
+
+current directory: /Users/runner/work/godtools-swift/godtools-swift/vendor/bundle/ruby/3.3.0/gems/json-2.7.2/ext/json
+make DESTDIR\= sitearchdir\=./.gem.20240904-2372-yf4uk6 sitelibdir\=./.gem.20240904-2372-yf4uk6
+make: Nothing to be done for `all'.
+
+current directory: /Users/runner/work/godtools-swift/godtools-swift/vendor/bundle/ruby/3.3.0/gems/json-2.7.2/ext/json
+make DESTDIR\= sitearchdir\=./.gem.20240904-2372-yf4uk6 sitelibdir\=./.gem.20240904-2372-yf4uk6 install
+
+current directory: /Users/runner/work/godtools-swift/godtools-swift/vendor/bundle/ruby/3.3.0/gems/json-2.7.2/ext/json
+make DESTDIR\= sitearchdir\=./.gem.20240904-2372-yf4uk6 sitelibdir\=./.gem.20240904-2372-yf4uk6 clean
