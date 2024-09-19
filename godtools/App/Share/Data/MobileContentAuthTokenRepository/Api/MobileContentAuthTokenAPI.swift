@@ -12,14 +12,14 @@ import Combine
 
 class MobileContentAuthTokenAPI {
     
-    private let session: URLSession
     private let requestBuilder: RequestBuilder = RequestBuilder()
+    private let requestSender: RequestSender
     private let baseURL: String
     
     init(config: AppConfig, ignoreCacheSession: IgnoreCacheSession) {
         
-        self.session = ignoreCacheSession.session
-        self.baseURL = config.getMobileContentApiBaseUrl()
+        requestSender = RequestSender(session: ignoreCacheSession.session)
+        baseURL = config.getMobileContentApiBaseUrl()
     }
     
     private func getAuthTokenRequest(providerToken: MobileContentAuthProviderToken, createUser: Bool) -> URLRequest {
@@ -65,12 +65,14 @@ class MobileContentAuthTokenAPI {
         ]
         
         return requestBuilder.build(
-            session: session,
-            urlString: baseURL + "/auth",
-            method: .post,
-            headers: headers,
-            httpBody: body,
-            queryItems: nil
+            parameters: RequestBuilderParameters(
+                urlSession: requestSender.session,
+                urlString: baseURL + "/auth",
+                method: .post,
+                headers: headers,
+                httpBody: body,
+                queryItems: nil
+            )
         )
     }
     
@@ -78,12 +80,26 @@ class MobileContentAuthTokenAPI {
         
         let urlRequest: URLRequest = getAuthTokenRequest(providerToken: providerToken, createUser: createUser)
         
-        return session.sendAndDecodeUrlRequestPublisher(urlRequest: urlRequest)
-            .map { (response: JsonApiResponseData<MobileContentAuthTokenDecodable>) in
-                return response.data
-            }
+        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest)
+            .decodeRequestDataResponseForSuccessOrFailureCodable()
             .mapError { (error: Error) in
-                return error.decodeRequestOperationErrorToMobileContentApiError()
+                return MobileContentApiError.other(error: error)
+            }
+            .flatMap { (response: RequestCodableResponse<JsonApiResponseDataObject<MobileContentAuthTokenDecodable>, MobileContentApiErrorsCodable>) -> AnyPublisher<MobileContentAuthTokenDecodable, MobileContentApiError> in
+                                
+                if let mobileContentApiErrors = response.failureCodable {
+                    return Fail(error: MobileContentApiError.responseError(responseErrors: mobileContentApiErrors.errors))
+                        .eraseToAnyPublisher()
+                }
+                
+                if let authTokenDecodable = response.successCodable?.dataObject {
+                    return Just(authTokenDecodable)
+                        .setFailureType(to: MobileContentApiError.self)
+                        .eraseToAnyPublisher()
+                }
+                
+                return Fail(error: MobileContentApiError.other(error: NSError.errorWithDescription(description: "Unable to fetch mobile content api auth token. Unknown reason.")))
+                    .eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
     }

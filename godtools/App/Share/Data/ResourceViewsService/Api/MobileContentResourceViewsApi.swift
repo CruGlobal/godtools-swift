@@ -38,12 +38,14 @@ class MobileContentResourceViewsApi {
         ]
         
         return requestBuilder.build(
-            session: session,
-            urlString: baseUrl + "/views",
-            method: .post,
-            headers: headers,
-            httpBody: body,
-            queryItems: nil
+            parameters: RequestBuilderParameters(
+                urlSession: session,
+                urlString: baseUrl + "/views",
+                method: .post,
+                headers: headers,
+                httpBody: body,
+                queryItems: nil
+            )
         )
     }
     

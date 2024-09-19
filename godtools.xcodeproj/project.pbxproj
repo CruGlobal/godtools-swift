@@ -590,7 +590,6 @@
 		457102002AB9DDDB00D1BFFC /* MobileContentApiErrorCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457101FE2AB9DDDB00D1BFFC /* MobileContentApiErrorCodable.swift */; };
 		457102012AB9DDDB00D1BFFC /* MobileContentApiErrorsCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457101FF2AB9DDDB00D1BFFC /* MobileContentApiErrorsCodable.swift */; };
 		4571020B2AB9E55F00D1BFFC /* MobileContentApiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4571020A2AB9E55F00D1BFFC /* MobileContentApiError.swift */; };
-		4571020D2AB9E58200D1BFFC /* RequestOperationError+MobileContentApiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4571020C2AB9E58200D1BFFC /* RequestOperationError+MobileContentApiError.swift */; };
 		45723DF72ABA24CE00C697E6 /* MobileContentApiErrorCodableCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45723DF62ABA24CE00C697E6 /* MobileContentApiErrorCodableCode.swift */; };
 		4572E4B228CBCF120014DB2E /* FavoritingToolMessageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4572E4B128CBCF110014DB2E /* FavoritingToolMessageCache.swift */; };
 		4573133728C1821100481640 /* ToolDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4573132928C1821100481640 /* ToolDetailsViewModel.swift */; };
@@ -2261,7 +2260,6 @@
 		457101FE2AB9DDDB00D1BFFC /* MobileContentApiErrorCodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentApiErrorCodable.swift; sourceTree = "<group>"; };
 		457101FF2AB9DDDB00D1BFFC /* MobileContentApiErrorsCodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentApiErrorsCodable.swift; sourceTree = "<group>"; };
 		4571020A2AB9E55F00D1BFFC /* MobileContentApiError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentApiError.swift; sourceTree = "<group>"; };
-		4571020C2AB9E58200D1BFFC /* RequestOperationError+MobileContentApiError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RequestOperationError+MobileContentApiError.swift"; sourceTree = "<group>"; };
 		45723DF62ABA24CE00C697E6 /* MobileContentApiErrorCodableCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentApiErrorCodableCode.swift; sourceTree = "<group>"; };
 		4572E4B128CBCF110014DB2E /* FavoritingToolMessageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritingToolMessageCache.swift; sourceTree = "<group>"; };
 		4573132928C1821100481640 /* ToolDetailsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolDetailsViewModel.swift; sourceTree = "<group>"; };
@@ -6605,7 +6603,6 @@
 			isa = PBXGroup;
 			children = (
 				4571020A2AB9E55F00D1BFFC /* MobileContentApiError.swift */,
-				4571020C2AB9E58200D1BFFC /* RequestOperationError+MobileContentApiError.swift */,
 			);
 			path = ApiError;
 			sourceTree = "<group>";
@@ -13499,7 +13496,6 @@
 				45EB9B7F29F16CF200CA74A8 /* Collection+SafeLookup.swift in Sources */,
 				4598BD192BF7DF6800196463 /* AccountDataLayerDependencies.swift in Sources */,
 				45C649BE2B31E178000249E0 /* ViewShareToolDomainModel.swift in Sources */,
-				4571020D2AB9E58200D1BFFC /* RequestOperationError+MobileContentApiError.swift in Sources */,
 				455EE8302AEC576F00C3205C /* DownloadToolProgressView.swift in Sources */,
 				457739ED27A0985A00999270 /* MobileContentFlowRowItem.swift in Sources */,
 				45BF6EBF27050D35003596A4 /* FadeAnimationTransition.swift in Sources */,
@@ -15107,7 +15103,7 @@
 			repositoryURL = "https://github.com/realm/realm-swift.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 10.50.0;
+				minimumVersion = 20.0.0;
 			};
 		};
 		45B4FDBB2BE1787000E5E35B /* XCRemoteSwiftPackageReference "AppsFlyerFramework-Strict" */ = {
@@ -15123,7 +15119,7 @@
 			repositoryURL = "https://github.com/CruGlobal/request-operation-ios.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 1.5.1;
+				minimumVersion = 1.10.3;
 			};
 		};
 		45D40C662A5315B400E8E4AE /* XCRemoteSwiftPackageReference "Starscream" */ = {
