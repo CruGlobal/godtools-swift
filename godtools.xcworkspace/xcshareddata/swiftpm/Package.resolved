@@ -240,8 +240,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/CruGlobal/request-operation-ios.git",
       "state" : {
-        "revision" : "165a4124e396214b759e40f1e4e69575d2a257f2",
-        "version" : "1.5.1"
+        "revision" : "4faace31da2e61d1c81c8ea0ecf6c78062817823",
+        "version" : "1.10.3"
       }
     },
     {

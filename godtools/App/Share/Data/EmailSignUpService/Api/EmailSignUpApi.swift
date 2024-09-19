@@ -36,12 +36,14 @@ class EmailSignUpApi {
         }
         
         let request: URLRequest = requestBuilder.build(
-            session: session,
-            urlString: baseUrl + "/forms",
-            method: .post,
-            headers: ["Content-Type": "application/json"],
-            httpBody: body,
-            queryItems: nil
+            parameters: RequestBuilderParameters(
+                urlSession: session,
+                urlString: baseUrl + "/forms",
+                method: .post,
+                headers: ["Content-Type": "application/json"],
+                httpBody: body,
+                queryItems: nil
+            )
         )
         
         return request

@@ -40,12 +40,14 @@ class FollowUpsApi {
         ]
         
         return requestBuilder.build(
-            session: session,
-            urlString: baseUrl + "/follow_ups",
-            method: .post,
-            headers: headers,
-            httpBody: body,
-            queryItems: nil
+            parameters: RequestBuilderParameters(
+                urlSession: session,
+                urlString: baseUrl + "/follow_ups",
+                method: .post,
+                headers: headers,
+                httpBody: body,
+                queryItems: nil
+            )
         )
     }
     

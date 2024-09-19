@@ -12,25 +12,27 @@ import Combine
 
 class MobileContentResourcesApi {
     
-    private let session: URLSession
     private let requestBuilder: RequestBuilder = RequestBuilder()
+    private let requestSender: RequestSender
     private let baseUrl: String
     
     init(config: AppConfig, ignoreCacheSession: IgnoreCacheSession) {
                     
-        self.session = ignoreCacheSession.session
-        self.baseUrl = config.getMobileContentApiBaseUrl()
+        requestSender = RequestSender(session: ignoreCacheSession.session)
+        baseUrl = config.getMobileContentApiBaseUrl()
     }
     
     private func getResourcesPlusLatestTranslationsAndAttachmentsRequest() -> URLRequest {
         
         return requestBuilder.build(
-            session: session,
-            urlString: baseUrl + "/resources?filter[system]=GodTools&include=latest-translations,attachments",
-            method: .get,
-            headers: nil,
-            httpBody: nil,
-            queryItems: nil
+            parameters: RequestBuilderParameters(
+                urlSession: requestSender.session,
+                urlString: baseUrl + "/resources?filter[system]=GodTools&include=latest-translations,attachments",
+                method: .get,
+                headers: nil,
+                httpBody: nil,
+                queryItems: nil
+            )
         )
     }
     
@@ -38,7 +40,13 @@ class MobileContentResourcesApi {
         
         let urlRequest: URLRequest = getResourcesPlusLatestTranslationsAndAttachmentsRequest()
         
-        return session.sendAndDecodeUrlRequestPublisher(urlRequest: urlRequest)
+        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest)
+            .decodeRequestDataResponseForSuccessCodable()
+            .map { (response: RequestCodableResponse<ResourcesPlusLatestTranslationsAndAttachmentsModel, NoResponseCodable>) in
+                
+                let resources: ResourcesPlusLatestTranslationsAndAttachmentsModel = response.successCodable ?? ResourcesPlusLatestTranslationsAndAttachmentsModel.emptyModel
+                return resources
+            }
             .eraseToAnyPublisher()
     }
 }

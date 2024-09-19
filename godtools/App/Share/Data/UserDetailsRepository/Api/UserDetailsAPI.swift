@@ -43,12 +43,14 @@ class UserDetailsAPI {
         ]
         
         return requestBuilder.build(
-            session: ignoreCacheSession,
-            urlString: baseURL + "/users/me",
-            method: .get,
-            headers: headers,
-            httpBody: nil,
-            queryItems: nil
+            parameters: RequestBuilderParameters(
+                urlSession: ignoreCacheSession,
+                urlString: baseURL + "/users/me",
+                method: .get,
+                headers: headers,
+                httpBody: nil,
+                queryItems: nil
+            )
         )
     }
     
@@ -71,12 +73,14 @@ class UserDetailsAPI {
         ]
         
         return requestBuilder.build(
-            session: ignoreCacheSession,
-            urlString: baseURL + "/users/me",
-            method: .delete,
-            headers: headers,
-            httpBody: nil,
-            queryItems: nil
+            parameters: RequestBuilderParameters(
+                urlSession: ignoreCacheSession,
+                urlString: baseURL + "/users/me",
+                method: .delete,
+                headers: headers,
+                httpBody: nil,
+                queryItems: nil
+            )
         )
     }
 }
