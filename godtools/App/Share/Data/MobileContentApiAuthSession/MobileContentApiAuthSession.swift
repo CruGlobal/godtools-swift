@@ -94,11 +94,9 @@ class MobileContentApiAuthSession {
     
     private func attemptDataTaskWithAuthToken(_ authToken: String, urlRequest: URLRequest, session: URLSession) -> AnyPublisher<Data, Error> {
 
-        let authenticatedRequest: URLRequest = buildAuthenticatedRequest(from: urlRequest, authToken: authToken)
-
         let requestSender = RequestSender(session: session)
         
-        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest)
+        return requestSender.sendDataTaskPublisher(urlRequest: buildAuthenticatedRequest(from: urlRequest, authToken: authToken))
             .validate()
             .map {
                 $0.data
