@@ -53,3 +53,4 @@ jobs:
           branch: 'latest-onesky-translations'
           token: ${{ secrets.CREATE_PULL_REQUEST_ACCESS_TOKEN }}
           title: 'Latest OneSky Translations'
+          add-paths: godtools/*
