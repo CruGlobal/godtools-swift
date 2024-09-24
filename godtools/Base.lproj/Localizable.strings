@@ -1,3 +1,4 @@
+"network_connection_lost" = "The network connection was lost.";
 "language_name_fil" = "Filipino (Tagalog)";
 "lessons.filter.navBar.language" = "Lesson language";
 "lessons.languageFilter.title" = "Lessons in:";
@@ -297,7 +298,6 @@ An online version can be found at https://knowgod.com/";
 "download_error" = "Download Error";
 "no_internet_title" = "No internet connection";
 "no_internet" = "Please check your internet connection and try again.";
-"network_connection_lost" = "The network connection was lost.";
 
 "the_tool_you_requested_is_loading" = "The tool you requested is loading...";
 "loading" = "Loading...";
