@@ -26,9 +26,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Bundle Install
-        run: bundle install
-
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+          
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -51,3 +53,4 @@ jobs:
           branch: 'latest-onesky-translations'
           token: ${{ secrets.CREATE_PULL_REQUEST_ACCESS_TOKEN }}
           title: 'Latest OneSky Translations'
+          add-paths: godtools/*
