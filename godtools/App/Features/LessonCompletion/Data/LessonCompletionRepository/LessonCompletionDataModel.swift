@@ -12,7 +12,9 @@ struct LessonCompletionDataModel {
     
     let lessonId: String
     let progress: Double
-    
+}
+
+extension LessonCompletionDataModel {
     init(realmLessonCompletion: RealmLessonCompletion) {
         lessonId = realmLessonCompletion.lessonId
         progress = realmLessonCompletion.progress

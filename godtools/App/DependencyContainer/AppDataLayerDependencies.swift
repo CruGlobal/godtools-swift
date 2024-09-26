@@ -147,6 +147,12 @@ class AppDataLayerDependencies {
         return sharedInfoPlist
     }
     
+    func getLessonCompletionRepository() -> LessonCompletionRepository {
+        return LessonCompletionRepository(
+            cache: RealmLessonCompletionCache(realmDatabase: sharedRealmDatabase)
+        )
+    }
+    
     func getLanguagesRepository() -> LanguagesRepository {
         
         let api = MobileContentLanguagesApi(

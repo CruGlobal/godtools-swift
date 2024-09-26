@@ -15,13 +15,15 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
     private let languagesRepository: LanguagesRepository
     private let getTranslatedToolName: GetTranslatedToolName
     private let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability
+    private let lessonCompletionRepository: LessonCompletionRepository
     
-    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, getTranslatedToolName: GetTranslatedToolName, getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability) {
+    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, getTranslatedToolName: GetTranslatedToolName, getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability, lessonCompletionRepository: LessonCompletionRepository) {
         
         self.resourcesRepository = resourcesRepository
         self.languagesRepository = languagesRepository
         self.getTranslatedToolName = getTranslatedToolName
         self.getTranslatedToolLanguageAvailability = getTranslatedToolLanguageAvailability
+        self.lessonCompletionRepository = lessonCompletionRepository
     }
     
     func getLessonsListPublisher(appLanguage: AppLanguageDomainModel, filterLessonsByLanguage: LessonFilterLanguageDomainModel?) -> AnyPublisher<[LessonListItemDomainModel], Never> {
@@ -47,15 +49,15 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
                     let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel = self.getToolLanguageAvailability(appLanguage: appLanguage, filterLanguageModel: filterLanguageModel, resource: resource)
                     let lessonName: String = self.getTranslatedToolName.getToolName(resource: resource, translateInLanguage: filterLanguageModel?.code ?? appLanguage)
                 
-                    let randomProgress = [0.0, 0.2, 0.4, 0.5, 0.7, 0.9, 1.0].randomElement() ?? 0.0
+                    let progress = self.lessonCompletionRepository.getLessonCompletion(lessonId: resource.id)?.progress ?? 0.0
                     return LessonListItemDomainModel(
                         analyticsToolName: resource.abbreviation,
                         availabilityInAppLanguage: toolLanguageAvailability,
                         bannerImageId: resource.attrBanner,
                         dataModelId: resource.id,
                         name: lessonName,
-                        completionProgress: randomProgress,
-                        completionString: "\(Int(randomProgress*100))% Complete"
+                        completionProgress: progress,
+                        completionString: "\(Int(progress*100))% Complete"
                     )
                 }
                 
