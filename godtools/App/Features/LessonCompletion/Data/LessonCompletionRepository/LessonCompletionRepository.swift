@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 class LessonCompletionRepository {
     
@@ -14,6 +15,10 @@ class LessonCompletionRepository {
     
     init(cache: RealmLessonCompletionCache) {
         self.cache = cache
+    }
+    
+    func getLessonCompletionChangedPublisher() -> AnyPublisher<Void, Never> {
+        return cache.getUserLessonCompletionChangedPublisher()
     }
     
     func storeLessonCompletion(_ lessonCompletion: LessonCompletionDataModel) {

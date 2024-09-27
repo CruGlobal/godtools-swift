@@ -19,7 +19,7 @@ class StoreLessonProgressRepository: StoreLessonProgressRepositoryInterface {
     
     func storeLessonProgress(lessonId: String, lastViewedPageId: String, lastViewedPageNumber: Int, totalPageCount: Int) -> AnyPublisher<Void, Never> {
         
-        let lessonCompletion = LessonCompletionDataModel(lessonId: lessonId, progress: Double(lastViewedPageNumber / totalPageCount))
+        let lessonCompletion = LessonCompletionDataModel(lessonId: lessonId, progress: Double(lastViewedPageNumber) / Double(totalPageCount))
         
         lessonCompletionRepository.storeLessonCompletion(lessonCompletion)
         

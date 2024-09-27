@@ -18,6 +18,15 @@ class RealmLessonCompletionCache {
         self.realmDatabase = realmDatabase
     }
     
+    func getUserLessonCompletionChangedPublisher() -> AnyPublisher<Void, Never> {
+        
+        return realmDatabase.openRealm()
+            .objects(RealmLessonCompletion.self)
+            .objectWillChange
+            .prepend(Void())
+            .eraseToAnyPublisher()
+    }
+    
     func getUserLessonCompletion(lessonId: String) -> LessonCompletionDataModel? {
         
         if let realmLessonCompletion = realmDatabase.openRealm().object(ofType: RealmLessonCompletion.self, forPrimaryKey: lessonId) {

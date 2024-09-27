@@ -30,41 +30,44 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
         
         let appLanguageModel: LanguageModel? = languagesRepository.getLanguage(code: appLanguage)
         
-        return resourcesRepository
-            .getResourcesChangedPublisher()
-            .flatMap({ (resourcesDidChange: Void) -> AnyPublisher<[LessonListItemDomainModel], Never> in
+        return Publishers.CombineLatest(
+            resourcesRepository.getResourcesChangedPublisher(),
+            lessonCompletionRepository.getLessonCompletionChangedPublisher()
+        )
+        .flatMap({ (resourcesDidChange: Void, lessonCompletionDidChange: Void) -> AnyPublisher<[LessonListItemDomainModel], Never> in
+            
+            let lessons: [ResourceModel] = self.resourcesRepository.getAllLessons(filterByLanguageId: filterLessonsByLanguage?.languageId, sorted: true)
+            
+            let lessonListItems: [LessonListItemDomainModel] = lessons.map { (resource: ResourceModel) in
                 
-                let lessons: [ResourceModel] = self.resourcesRepository.getAllLessons(filterByLanguageId: filterLessonsByLanguage?.languageId, sorted: true)
-                
-                let lessonListItems: [LessonListItemDomainModel] = lessons.map { (resource: ResourceModel) in
-
-                    let filterLanguageModel: LanguageModel?
-                    if let filterLanguageId = filterLessonsByLanguage?.languageId {
-                        
-                        filterLanguageModel = self.languagesRepository.getLanguage(id: filterLanguageId)
-                    } else {
-                        filterLanguageModel = nil
-                    }
+                let filterLanguageModel: LanguageModel?
+                if let filterLanguageId = filterLessonsByLanguage?.languageId {
                     
-                    let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel = self.getToolLanguageAvailability(appLanguage: appLanguage, filterLanguageModel: filterLanguageModel, resource: resource)
-                    let lessonName: String = self.getTranslatedToolName.getToolName(resource: resource, translateInLanguage: filterLanguageModel?.code ?? appLanguage)
-                
-                    let progress = self.lessonCompletionRepository.getLessonCompletion(lessonId: resource.id)?.progress ?? 0.0
-                    return LessonListItemDomainModel(
-                        analyticsToolName: resource.abbreviation,
-                        availabilityInAppLanguage: toolLanguageAvailability,
-                        bannerImageId: resource.attrBanner,
-                        dataModelId: resource.id,
-                        name: lessonName,
-                        completionProgress: progress,
-                        completionString: "\(Int(progress*100))% Complete"
-                    )
+                    filterLanguageModel = self.languagesRepository.getLanguage(id: filterLanguageId)
+                } else {
+                    filterLanguageModel = nil
                 }
                 
-                return Just(lessonListItems)
-                    .eraseToAnyPublisher()
-            })
-            .eraseToAnyPublisher()
+                let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel = self.getToolLanguageAvailability(appLanguage: appLanguage, filterLanguageModel: filterLanguageModel, resource: resource)
+                let lessonName: String = self.getTranslatedToolName.getToolName(resource: resource, translateInLanguage: filterLanguageModel?.code ?? appLanguage)
+                
+                let progress = self.lessonCompletionRepository.getLessonCompletion(lessonId: resource.id)?.progress ?? 0.0
+                return LessonListItemDomainModel(
+                    analyticsToolName: resource.abbreviation,
+                    availabilityInAppLanguage: toolLanguageAvailability,
+                    bannerImageId: resource.attrBanner,
+                    dataModelId: resource.id,
+                    name: lessonName,
+                    completionProgress: progress,
+                    completionString: "\(Int(progress*100))% Complete"
+                )
+            }
+            
+            return Just(lessonListItems)
+                .eraseToAnyPublisher()
+        })
+        .eraseToAnyPublisher()
+
     }
 }
 
