@@ -1,5 +1,5 @@
 //
-//  LessonCompletionDomainModel.swift
+//  UserLessonProgressDomainModel.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 9/24/24.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct LessonCompletionDomainModel {
+struct UserLessonProgressDomainModel {
     let lessonId: String
     let progress: Double
 }

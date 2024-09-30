@@ -1,5 +1,5 @@
 //
-//  StoreLessonProgressRepositoryInterface.swift
+//  StoreUserLessonProgressRepositoryInterface.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 9/26/24.
@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-protocol StoreLessonProgressRepositoryInterface {
+protocol StoreUserLessonProgressRepositoryInterface {
     
     func storeLessonProgress(lessonId: String, lastViewedPageId: String, lastViewedPageNumber: Int, totalPageCount: Int) -> AnyPublisher<Void, Never>
 }

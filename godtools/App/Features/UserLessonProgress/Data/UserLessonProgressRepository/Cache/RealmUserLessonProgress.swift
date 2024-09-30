@@ -1,5 +1,5 @@
 //
-//  RealmLessonCompletion.swift
+//  RealmUserLessonProgress.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 9/25/24.
@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class RealmLessonCompletion: Object {
+class RealmUserLessonProgress: Object {
     
     @objc dynamic var lessonId: String = ""
     @objc dynamic var progress: Double = 0.0

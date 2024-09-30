@@ -15,26 +15,24 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
     private let languagesRepository: LanguagesRepository
     private let getTranslatedToolName: GetTranslatedToolName
     private let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability
-    private let lessonCompletionRepository: LessonCompletionRepository
+    private let lessonProgressRepository: UserLessonProgressRepository
     
-    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, getTranslatedToolName: GetTranslatedToolName, getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability, lessonCompletionRepository: LessonCompletionRepository) {
+    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, getTranslatedToolName: GetTranslatedToolName, getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability, lessonProgressRepository: UserLessonProgressRepository) {
         
         self.resourcesRepository = resourcesRepository
         self.languagesRepository = languagesRepository
         self.getTranslatedToolName = getTranslatedToolName
         self.getTranslatedToolLanguageAvailability = getTranslatedToolLanguageAvailability
-        self.lessonCompletionRepository = lessonCompletionRepository
+        self.lessonProgressRepository = lessonProgressRepository
     }
     
     func getLessonsListPublisher(appLanguage: AppLanguageDomainModel, filterLessonsByLanguage: LessonFilterLanguageDomainModel?) -> AnyPublisher<[LessonListItemDomainModel], Never> {
-        
-        let appLanguageModel: LanguageModel? = languagesRepository.getLanguage(code: appLanguage)
-        
+                
         return Publishers.CombineLatest(
             resourcesRepository.getResourcesChangedPublisher(),
-            lessonCompletionRepository.getLessonCompletionChangedPublisher()
+            lessonProgressRepository.getLessonProgressChangedPublisher()
         )
-        .flatMap({ (resourcesDidChange: Void, lessonCompletionDidChange: Void) -> AnyPublisher<[LessonListItemDomainModel], Never> in
+        .flatMap({ (resourcesDidChange: Void, lessonProgressDidChange: Void) -> AnyPublisher<[LessonListItemDomainModel], Never> in
             
             let lessons: [ResourceModel] = self.resourcesRepository.getAllLessons(filterByLanguageId: filterLessonsByLanguage?.languageId, sorted: true)
             
@@ -51,7 +49,7 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
                 let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel = self.getToolLanguageAvailability(appLanguage: appLanguage, filterLanguageModel: filterLanguageModel, resource: resource)
                 let lessonName: String = self.getTranslatedToolName.getToolName(resource: resource, translateInLanguage: filterLanguageModel?.code ?? appLanguage)
                 
-                let progress = self.lessonCompletionRepository.getLessonCompletion(lessonId: resource.id)?.progress ?? 0.0
+                let progress = self.lessonProgressRepository.getLessonProgress(lessonId: resource.id)?.progress ?? 0.0
                 return LessonListItemDomainModel(
                     analyticsToolName: resource.abbreviation,
                     availabilityInAppLanguage: toolLanguageAvailability,
