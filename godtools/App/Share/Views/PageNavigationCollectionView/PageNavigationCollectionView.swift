@@ -533,12 +533,15 @@ extension PageNavigationCollectionView {
         guard item >= 0 && item < getNumberOfPages() else {
             return false
         }
-                
-        collectionView.scrollToItem(
-            at: IndexPath(item: item, section: 0),
-            at: .centeredHorizontally,
-            animated: animated
-        )
+        
+        DispatchQueue.main.async {
+            
+            self.collectionView.scrollToItem(
+                at: IndexPath(item: item, section: 0),
+                at: .centeredHorizontally,
+                animated: animated
+            )
+        }
         
         return true
     }

@@ -10,5 +10,6 @@ import Foundation
 
 struct UserLessonProgressDomainModel {
     let lessonId: String
+    let lastViewedPageId: String
     let progress: Double
 }

@@ -43,6 +43,7 @@ class RealmUserLessonProgressCache {
         
         let realmLessonProgress = RealmUserLessonProgress()
         realmLessonProgress.lessonId = lessonProgress.lessonId
+        realmLessonProgress.lastViewedPageId = lessonProgress.lastViewedPageId
         realmLessonProgress.progress = lessonProgress.progress
         
         do {

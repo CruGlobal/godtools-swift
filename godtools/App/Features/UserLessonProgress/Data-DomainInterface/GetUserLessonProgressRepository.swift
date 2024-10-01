@@ -21,7 +21,11 @@ class GetUserLessonProgressRepository: GetUserLessonProgressRepositoryInterface 
         
         if let lessonProgress = lessonProgressRepository.getLessonProgress(lessonId: lessonId) {
             
-            let domainModel = UserLessonProgressDomainModel(lessonId: lessonId, progress: lessonProgress.progress)
+            let domainModel = UserLessonProgressDomainModel(
+                lessonId: lessonId,
+                lastViewedPageId: lessonProgress.lastViewedPageId,
+                progress: lessonProgress.progress
+            )
             
             return Just(domainModel)
                 .eraseToAnyPublisher()

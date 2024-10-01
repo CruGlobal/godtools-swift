@@ -20,8 +20,8 @@ class StoreUserLessonProgressUseCase {
     func storeLessonProgress(lessonId: String, lastViewedPageId: String, lastViewedPageNumber: Int, totalPageCount: Int) -> AnyPublisher<Void, Never> {
         
         return storeLessonProgressRepository.storeLessonProgress(
-            lessonId: lessonId, lastViewedPageId:
-                lastViewedPageId,
+            lessonId: lessonId, 
+            lastViewedPageId: lastViewedPageId,
             lastViewedPageNumber: lastViewedPageNumber,
             totalPageCount: totalPageCount
         )
