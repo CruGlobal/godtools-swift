@@ -54,6 +54,9 @@ class FavoritedToolsLatestToolDownloader: FavoritedToolsLatestToolDownloaderInte
                 .map { _ in
                     return Void()
                 }
+                .catch { _ in
+                    return Just(Void())
+                }
                 .eraseToAnyPublisher()
         })
         .eraseToAnyPublisher()
