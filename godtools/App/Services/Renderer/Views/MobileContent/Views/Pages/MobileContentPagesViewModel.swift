@@ -327,8 +327,14 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
         switch initialPage {
         
         case .pageId(let value):
-            return allPages.first(where: {$0.id == value})
+            var page = allPages.first(where: {$0.id == value})
+            
+            while(page?.isHidden == true) {
+                page = page?.previousPage
+            }
        
+            return page
+            
         case .pageNumber(let value):
             
             if value >= 0 && value < allPages.count {
