@@ -44,7 +44,7 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
                 mobileContentAnalytics: mobileContentAnalytics
             )
             
-            let toolPageViewFactory = ToolPageViewFactory(
+            let tractPageViewFactory = TractPageViewFactory(
                 trackScreenViewAnalyticsUseCase: trackScreenViewAnalyticsUseCase,
                 mobileContentAnalytics: mobileContentAnalytics,
                 localizationServices: localizationServices,
@@ -57,11 +57,11 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
                 getTrainingTipCompletedUseCase: getTrainingTipCompletedUseCase
             )
             
-            pageViewFactories = [lessonPageViewFactory, toolPageViewFactory, trainingViewFactory]
+            pageViewFactories = [lessonPageViewFactory, tractPageViewFactory, trainingViewFactory]
         
         case .tract:
             
-            let toolPageViewFactory = ToolPageViewFactory(
+            let tractPageViewFactory = TractPageViewFactory(
                 trackScreenViewAnalyticsUseCase: trackScreenViewAnalyticsUseCase,
                 mobileContentAnalytics: mobileContentAnalytics,
                 localizationServices: localizationServices,
@@ -74,7 +74,7 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
                 getTrainingTipCompletedUseCase: getTrainingTipCompletedUseCase
             )
             
-            pageViewFactories = [toolPageViewFactory, trainingViewFactory]
+            pageViewFactories = [tractPageViewFactory, trainingViewFactory]
         
         case .trainingTip:
             

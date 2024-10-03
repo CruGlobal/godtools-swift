@@ -248,7 +248,7 @@ extension TractViewModel {
         flowDelegate?.navigate(step: .toolSettingsTappedFromTool(toolSettingsObserver: toolSettingsObserver))
     }
     
-    func languageTapped(index: Int, page: Int, pagePositions: ToolPagePositions) {
+    func languageTapped(index: Int, page: Int, pagePositions: TractPagePositions) {
                 
         let tappedLanguage: LanguageModel = languages[index]
         
@@ -276,7 +276,7 @@ extension TractViewModel {
         trackLanguageTapped(tappedLanguage: tappedLanguage)
     }
     
-    func subscribedForRemoteSharePublishing(page: Int, pagePositions: ToolPagePositions) {
+    func subscribedForRemoteSharePublishing(page: Int, pagePositions: TractPagePositions) {
      
         sendRemoteShareNavigationEvent(
             page: page,
@@ -284,7 +284,7 @@ extension TractViewModel {
         )
     }
     
-    func pageChanged(page: Int, pagePositions: ToolPagePositions) {
+    func pageChanged(page: Int, pagePositions: TractPagePositions) {
         
         sendRemoteShareNavigationEvent(
             page: page,
@@ -292,7 +292,7 @@ extension TractViewModel {
         )
     }
     
-    func cardChanged(page: Int, pagePositions: ToolPagePositions) {
+    func cardChanged(page: Int, pagePositions: TractPagePositions) {
         
         sendRemoteShareNavigationEvent(
             page: page,
@@ -361,7 +361,7 @@ extension TractViewModel {
         }
         
         let navBarLanguageChanged: Bool = remoteShareLanguage.id != currentNavBarLanguage.id
-        let pagePositions: MobileContentViewPositionState? = ToolPagePositions(cardPosition: cardPosition)
+        let pagePositions: MobileContentViewPositionState? = TractPagePositions(cardPosition: cardPosition)
         
         let navigationEvent = MobileContentPagesNavigationEvent(
             pageNavigation: PageNavigationCollectionViewNavigationModel(
@@ -386,7 +386,7 @@ extension TractViewModel {
         }
     }
     
-    private func sendRemoteShareNavigationEvent(page: Int, pagePositions: ToolPagePositions) {
+    private func sendRemoteShareNavigationEvent(page: Int, pagePositions: TractPagePositions) {
         
         guard tractRemoteSharePublisher.isSubscriberChannelIdCreatedForPublish else {
             return
