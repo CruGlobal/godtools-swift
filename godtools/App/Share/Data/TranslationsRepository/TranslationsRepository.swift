@@ -322,7 +322,7 @@ extension TranslationsRepository {
     func downloadAndCacheTranslationFiles(translation: TranslationModel) -> AnyPublisher<TranslationFilesDataModel, Error> {
         
         return getTranslationFileFromCacheElseRemote(translation: translation, fileName: translation.manifestName)
-            .flatMap({ fileCacheLocation -> AnyPublisher<Manifest, Error> in
+            .flatMap({ (fileCacheLocation: FileCacheLocation) -> AnyPublisher<Manifest, Error> in
                 
                 let manifestParser: TranslationManifestParser = TranslationManifestParser.getManifestParser(type: .manifestOnly, infoPlist: self.infoPlist, resourcesFileCache: self.resourcesFileCache, appBuild: self.appBuild)
                 
@@ -331,13 +331,13 @@ extension TranslationsRepository {
             })
             .flatMap({ (manifest: Manifest) -> AnyPublisher<TranslationFilesDataModel, Error> in
                 
-                let requests = manifest.relatedFiles.map {
+                let requestsForRelatedFiles = manifest.relatedFiles.map {
                     self.getTranslationFileFromCacheElseRemote(translation: translation, fileName: $0)
                 }
                 
-                return Publishers.MergeMany(requests)
+                return Publishers.MergeMany(requestsForRelatedFiles)
                     .collect()
-                    .flatMap({ files -> AnyPublisher<TranslationFilesDataModel, Error> in
+                    .flatMap({ (files: [FileCacheLocation]) -> AnyPublisher<TranslationFilesDataModel, Error> in
                         
                         return self.didDownloadTranslationAndRelatedFiles(translation: translation, files: files)
                             .eraseToAnyPublisher()
@@ -346,7 +346,13 @@ extension TranslationsRepository {
             })
             .catch({ (error: Error) in
                 
-                return self.downloadAndCacheTranslationZipFiles(translation: translation)
+                if !error.isUrlErrorNotConnectedToInternetCode {
+                    return self.downloadAndCacheTranslationZipFiles(translation: translation)
+                }
+                else {
+                    return Fail(error: error)
+                        .eraseToAnyPublisher()
+                }
             })
             .eraseToAnyPublisher()
     }
@@ -359,7 +365,7 @@ extension TranslationsRepository {
                 return self.getTranslationFileFromRemote(translation: translation, fileName: fileName)
                     .eraseToAnyPublisher()
             })
-            .flatMap({ fileCacheLocation -> AnyPublisher<FileCacheLocation, Error> in
+            .flatMap({ (fileCacheLocation: FileCacheLocation) -> AnyPublisher<FileCacheLocation, Error> in
                 
                 return Just(fileCacheLocation).setFailureType(to: Error.self)
                     .eraseToAnyPublisher()

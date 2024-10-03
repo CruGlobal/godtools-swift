@@ -14,6 +14,8 @@ class LanguageSettingsFlow: Flow, ChooseAppLanguageNavigationFlow {
         
     private weak var flowDelegate: FlowDelegate?
     
+    @Published private var appLanguage: AppLanguageDomainModel = ""
+    
     let appDiContainer: AppDiContainer
     let navigationController: AppNavigationController
     
@@ -37,6 +39,12 @@ class LanguageSettingsFlow: Flow, ChooseAppLanguageNavigationFlow {
             
             sharedNavigationController.pushViewController(initialView, animated: true)
         }
+        
+        appDiContainer.feature.appLanguage.domainLayer
+            .getCurrentAppLanguageUseCase()
+            .getLanguagePublisher()
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$appLanguage)
     }
     
     deinit {
@@ -53,7 +61,7 @@ class LanguageSettingsFlow: Flow, ChooseAppLanguageNavigationFlow {
         case .chooseAppLanguageTappedFromLanguageSettings:
             navigateToChooseAppLanguageFlow()
             
-        case .chooseAppLanguageFlowCompleted(let state):
+        case .chooseAppLanguageFlowCompleted( _):
             navigateBackFromChooseAppLanguageFlow()
         
         case .editDownloadedLanguagesTappedFromLanguageSettings:
@@ -63,8 +71,7 @@ class LanguageSettingsFlow: Flow, ChooseAppLanguageNavigationFlow {
             navigationController.popViewController(animated: true)
             
         case .showLanguageDownloadErrorAlert(let error):
-            let alertView = getLanguageDownloadErrorAlertView(error: error)
-            navigationController.present(alertView, animated: true)
+            presentError(appLanguage: appLanguage, error: error)
             
         default:
             break
@@ -134,13 +141,5 @@ extension LanguageSettingsFlow {
         )
         
         return hostingView
-    }
-    
-    func getLanguageDownloadErrorAlertView(error: Error) -> UIViewController {
-        
-        let viewModel = LanguageDownloadErrorAlertViewModel(error: error)
-        let view = LanguageDownloadErrorAlertView(viewModel: viewModel)
-        
-        return view.controller
     }
 }

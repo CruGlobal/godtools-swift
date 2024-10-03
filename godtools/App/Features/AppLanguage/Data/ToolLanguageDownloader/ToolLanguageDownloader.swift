@@ -24,19 +24,21 @@ class ToolLanguageDownloader {
         self.downloadedLanguagesRepository = downloadedLanguagesRepository
     }
     
-    func downloadToolLanguagePublisher(languageId: String) -> AnyPublisher<ToolDownloaderDataModel, Never> {
+    func downloadToolLanguagePublisher(languageId: String) -> AnyPublisher<ToolDownloaderDataModel, Error> {
         
         guard let languageModel = languagesRepository.getLanguage(id: languageId) else {
             
-            let emptyDownload = ToolDownloaderDataModel(attachments: [], progress: 1, translations: [])
+            let error: Error = NSError.errorWithDomain(domain: "ToolLanguageDownloader", code: -1, description: "Internal Error in ToolLanguageDownloader.  Failed to fetch language with language id: \(languageId)")
             
-            return Just(emptyDownload)
+            return Fail(error: error)
                 .eraseToAnyPublisher()
         }
                 
         let includeToolTypes: [ResourceType] = ResourceType.toolTypes + [.lesson]
         
-        let tools: [ResourceModel] = resourcesRepository.getCachedResourcesByFilter(filter: ResourcesFilter(category: nil, languageModelCode: languageModel.code, resourceTypes: includeToolTypes))
+        let tools: [ResourceModel] = resourcesRepository.getCachedResourcesByFilter(
+            filter: ResourcesFilter(category: nil, languageModelCode: languageModel.code, resourceTypes: includeToolTypes)
+        )
         
         let downloadTools: [DownloadToolDataModel] = tools.map({
             DownloadToolDataModel(toolId: $0.id, languages: [languageModel.code])
@@ -46,12 +48,12 @@ class ToolLanguageDownloader {
             .eraseToAnyPublisher()
     }
     
-    func syncDownloadedLanguagesPublisher() -> AnyPublisher<Void, Never> {
+    func syncDownloadedLanguagesPublisher() -> AnyPublisher<Void, Error> {
         
         return downloadedLanguagesRepository.getDownloadedLanguagesPublisher(completedDownloadsOnly: false)
-            .flatMap({ (downloadedLanguages: [DownloadedLanguageDataModel]) -> AnyPublisher<Void, Never> in
+            .flatMap({ (downloadedLanguages: [DownloadedLanguageDataModel]) -> AnyPublisher<Void, Error> in
                                 
-                let downloadToolLanguageRequests = downloadedLanguages.map({
+                let downloadToolLanguageRequests: [AnyPublisher<ToolDownloaderDataModel, Error>] = downloadedLanguages.map({
                     self.downloadToolLanguagePublisher(languageId: $0.languageId)
                 })
                                 

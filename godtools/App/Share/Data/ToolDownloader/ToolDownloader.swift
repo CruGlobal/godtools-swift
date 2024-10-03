@@ -27,7 +27,7 @@ class ToolDownloader {
         self.articleManifestAemRepository = articleManifestAemRepository
     }
     
-    func downloadToolsPublisher(tools: [DownloadToolDataModel]) -> AnyPublisher<ToolDownloaderDataModel, Never> {
+    func downloadToolsPublisher(tools: [DownloadToolDataModel]) -> AnyPublisher<ToolDownloaderDataModel, Error> {
         
         var translations: [TranslationModel] = Array()
         var attachments: [AttachmentModel] = Array()
@@ -56,27 +56,23 @@ class ToolDownloader {
             }
         }
         
-        let translationsAndArticlesRequest: AnyPublisher<Void, Never> =
+        let translationsAndArticlesRequest: AnyPublisher<Void, Error> =
         downloadToolTranslationsAndArticlesRequest(translations: translations)
             .map { _ in
                 Void()
             }
             .eraseToAnyPublisher()
         
-        let attachmentsRequests: [AnyPublisher<Void, Never>] = attachments
+        let attachmentsRequests: [AnyPublisher<Void, Error>] = attachments
             .map { (attachment: AttachmentModel) in
                 self.attachmentsRepository.downloadAndCacheAttachmentIfNeeded(attachment: attachment)
                     .map { _ in
                         return Void()
                     }
-                    .catch { (error: Error) in
-                        return Just(Void())
-                            .eraseToAnyPublisher()
-                    }
                     .eraseToAnyPublisher()
             }
         
-        let requests: [AnyPublisher<Void, Never>] = attachmentsRequests + [translationsAndArticlesRequest]
+        let requests: [AnyPublisher<Void, Error>] = attachmentsRequests + [translationsAndArticlesRequest]
         
         var downloadCount: Double = 0
         
@@ -94,43 +90,40 @@ class ToolDownloader {
             .eraseToAnyPublisher()
     }
     
-    private func downloadToolTranslationsAndArticlesRequest(translations: [TranslationModel]) -> AnyPublisher<[Void], Never> {
+    private func downloadToolTranslationsAndArticlesRequest(translations: [TranslationModel]) -> AnyPublisher<[Void], Error> {
         
-        let requests = translations.map { (translation: TranslationModel) in
+        let downloadTranslationsRequests = translations.map { (translation: TranslationModel) in
             self.translationsRepository.downloadAndCacheTranslationFiles(translation: translation)
-                .catch({ (error: Error) in
-                    return Just(TranslationFilesDataModel(files: [], translation: translation))
-                        .eraseToAnyPublisher()
-                })
-                .flatMap({ (dataModel: TranslationFilesDataModel) -> AnyPublisher<Void, Never> in
+                .flatMap({ (dataModel: TranslationFilesDataModel) -> AnyPublisher<Void, Error> in
                     
                     let resource: ResourceModel? = dataModel.translation.resource
                     let resourceIsArticle: Bool = resource?.resourceTypeEnum == .article
                     
-                    if resourceIsArticle, let languageCode = dataModel.translation.language?.code {
+                    guard resourceIsArticle, let languageCode = dataModel.translation.language?.code else {
                         
-                        return self.downloadArticlesPublisher(
-                            translation: dataModel.translation,
-                            languageCode: languageCode
-                        )
+                        return Just(Void())
+                            .setFailureType(to: Error.self)
+                            .eraseToAnyPublisher()
                     }
                     
-                    return Just(Void())
-                        .eraseToAnyPublisher()
+                    return self.downloadArticlesPublisher(
+                        translation: dataModel.translation,
+                        languageCode: languageCode
+                    )
                 })
                 .eraseToAnyPublisher()
         }
         
-        return Publishers.MergeMany(requests)
+        return Publishers.MergeMany(downloadTranslationsRequests)
             .collect()
             .eraseToAnyPublisher()
     }
     
-    private func downloadArticlesPublisher(translation: TranslationModel, languageCode: String) -> AnyPublisher<Void, Never> {
+    private func downloadArticlesPublisher(translation: TranslationModel, languageCode: String) -> AnyPublisher<Void, Error> {
         
         return translationsRepository
             .getTranslationManifestFromCache(translation: translation, manifestParserType: .manifestOnly, includeRelatedFiles: false)
-            .flatMap({ (dataModel: TranslationManifestFileDataModel) -> AnyPublisher<ArticleAemRepositoryResult, Never> in
+            .flatMap({ (dataModel: TranslationManifestFileDataModel) -> AnyPublisher<ArticleAemRepositoryResult, Error> in
                                 
                 return self.articleManifestAemRepository
                     .downloadAndCacheManifestAemUrisPublisher(
@@ -138,17 +131,12 @@ class ToolDownloader {
                         languageCode: languageCode,
                         forceDownload: true
                     )
-            })
-            .flatMap({ (result: ArticleAemRepositoryResult) -> AnyPublisher<Void, Never> in
-                
-                return Just(Void())
+                    .setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             })
-            .catch({ (error: Error) in
-                
-                return Just(Void())
-                    .eraseToAnyPublisher()
-            })
+            .map { _ in
+                Void()
+            }
             .eraseToAnyPublisher()
     }
 }
