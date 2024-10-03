@@ -14,10 +14,12 @@ class MobileContentPageViewModel: MobileContentViewModel {
     
     private let pageModel: Page
     private let hidesBackgroundImage: Bool
+    private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
         
-    init(pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics, hidesBackgroundImage: Bool) {
+    init(pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, hidesBackgroundImage: Bool) {
         
         self.pageModel = pageModel
+        self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.hidesBackgroundImage = hidesBackgroundImage
         
         super.init(baseModel: pageModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
@@ -44,6 +46,22 @@ class MobileContentPageViewModel: MobileContentViewModel {
     
     var backgroundColor: UIColor {
         return pageModel.backgroundColor
+    }
+    
+    func pageDidAppear() {
+     
+        trackScreenAnalytics()
+    }
+    
+    func trackScreenAnalytics() {
+        
+        trackScreenViewAnalyticsUseCase.trackScreen(
+            screenName: analyticsScreenName,
+            siteSection: analyticsSiteSection,
+            siteSubSection: analyticsSiteSubSection,
+            contentLanguage: renderedPageContext.language.localeId,
+            contentLanguageSecondary: nil
+        )
     }
 }
 

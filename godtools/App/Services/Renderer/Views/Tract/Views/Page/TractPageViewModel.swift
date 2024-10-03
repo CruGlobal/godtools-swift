@@ -12,7 +12,6 @@ import GodToolsToolParser
 class TractPageViewModel: MobileContentPageViewModel {
     
     private let pageModel: TractPage
-    private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let visibleAnalyticsEventsObjects: [MobileContentRendererAnalyticsEvent]
     
     private var cardPosition: Int?
@@ -22,7 +21,6 @@ class TractPageViewModel: MobileContentPageViewModel {
     init(pageModel: TractPage, renderedPageContext: MobileContentRenderedPageContext, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, mobileContentAnalytics: MobileContentRendererAnalytics) {
                 
         self.pageModel = pageModel
-        self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.hidesCallToAction = pageModel.isLastPage
                 
         self.visibleAnalyticsEventsObjects = MobileContentRendererAnalyticsEvent.initAnalyticsEvents(
@@ -31,7 +29,7 @@ class TractPageViewModel: MobileContentPageViewModel {
             renderedPageContext: renderedPageContext
         )
         
-        super.init(pageModel: pageModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics, hidesBackgroundImage: false)
+        super.init(pageModel: pageModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics, trackScreenViewAnalyticsUseCase: trackScreenViewAnalyticsUseCase, hidesBackgroundImage: false)
     }
     
     deinit {
@@ -70,6 +68,13 @@ class TractPageViewModel: MobileContentPageViewModel {
     var page: Int {
         return renderedPageContext.page
     }
+    
+    override func pageDidAppear() {
+        
+        super.viewDidAppear(visibleAnalyticsEvents: visibleAnalyticsEventsObjects)
+        
+        super.pageDidAppear()
+    }
 }
 
 // MARK: - Inputs
@@ -89,19 +94,6 @@ extension TractPageViewModel {
         }
         
         return nil
-    }
-    
-    func pageDidAppear() {
-        
-        super.viewDidAppear(visibleAnalyticsEvents: visibleAnalyticsEventsObjects)
-                
-        trackScreenViewAnalyticsUseCase.trackScreen(
-            screenName: analyticsScreenName,
-            siteSection: analyticsSiteSection,
-            siteSubSection: analyticsSiteSubSection,
-            contentLanguage: renderedPageContext.language.localeId,
-            contentLanguageSecondary: nil
-        )
     }
     
     func didChangeCardPosition(cardPosition: Int?) {

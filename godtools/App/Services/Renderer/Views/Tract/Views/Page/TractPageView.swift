@@ -131,12 +131,6 @@ class TractPageView: MobileContentPageView {
         updateHeroPosition(numberOfVisibleCards: viewModel.numberOfVisibleCards)
     }
     
-    override func viewDidAppear() {
-        super.viewDidAppear()
-        
-        viewModel.pageDidAppear()
-    }
-    
     // MARK: -
     
     private func getCardContentInsets() -> UIEdgeInsets {

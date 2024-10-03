@@ -102,12 +102,6 @@ class MobileContentCardCollectionPageView: MobileContentPageView {
         cardPageNavigationView.reloadData()
     }
     
-    override func viewDidAppear() {
-        super.viewDidAppear()
-        
-        viewModel.pageDidAppear()
-    }
-    
     @objc private func previousCardButtonTapped() {
         
         cardPageNavigationView.scrollToPreviousPage(animated: true)
