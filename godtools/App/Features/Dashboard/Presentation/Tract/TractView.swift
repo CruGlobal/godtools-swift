@@ -40,17 +40,17 @@ class TractView: MobileContentPagesView {
             if didSubscribeForRemoteSharePublishing {
                 let page: Int = toolView.pageNavigationView.getCurrentPage()
                 let pagePositions: MobileContentViewPositionState? = toolView.getPagePositions(page: page)
-                guard let toolPagePositions = pagePositions as? ToolPagePositions else {
+                guard let tractPagePositions = pagePositions as? TractPagePositions else {
                     return
                 }
-                toolView.viewModel.subscribedForRemoteSharePublishing(page: page, pagePositions: toolPagePositions)
+                toolView.viewModel.subscribedForRemoteSharePublishing(page: page, pagePositions: tractPagePositions)
             }
         }
     }
     
     override func didConfigurePageView(pageView: MobileContentPageView) {
-        if let toolPageView = pageView as? ToolPageView {
-            toolPageView.setToolPageDelegate(delegate: self)
+        if let tractPageView = pageView as? TractPageView {
+            tractPageView.setTractPageDelegate(delegate: self)
         }
     }
     
@@ -59,11 +59,11 @@ class TractView: MobileContentPagesView {
                 
         let pagePositions: MobileContentViewPositionState? = getPagePositions(page: page)
         
-        guard let toolPagePositions = pagePositions as? ToolPagePositions else {
+        guard let tractPagePositions = pagePositions as? TractPagePositions else {
             return
         }
         
-        viewModel.pageChanged(page: page, pagePositions: toolPagePositions)
+        viewModel.pageChanged(page: page, pagePositions: tractPagePositions)
     }
     
     func languageTapped(index: Int) {
@@ -71,28 +71,28 @@ class TractView: MobileContentPagesView {
         let page: Int = pageNavigationView.getCurrentPage()
         let pagePositions: MobileContentViewPositionState? = getCurrentPagePositions()
         
-        guard let toolPagePositions = pagePositions as? ToolPagePositions else {
+        guard let tractPagePositions = pagePositions as? TractPagePositions else {
             return
         }
         
-        viewModel.languageTapped(index: index, page: page, pagePositions: toolPagePositions)
+        viewModel.languageTapped(index: index, page: page, pagePositions: tractPagePositions)
     }
 }
 
-// MARK: - ToolPageViewDelegate
+// MARK: - TractPageViewDelegate
 
-extension TractView: ToolPageViewDelegate {
+extension TractView: TractPageViewDelegate {
     
-    func toolPageCardPositionChanged(pageView: ToolPageView, page: Int, cardPosition: Int?, animated: Bool) {
+    func tractPageCardPositionChanged(pageView: TractPageView, page: Int, cardPosition: Int?, animated: Bool) {
 
-        let pagePositionsForCardChange = ToolPagePositions(
+        let pagePositionsForCardChange = TractPagePositions(
             cardPosition: cardPosition
         )
         
         viewModel.pageChanged(page: page, pagePositions: pagePositionsForCardChange)
     }
     
-    func toolPageCallToActionNextButtonTapped(pageView: ToolPageView, page: Int) {
+    func tractPageCallToActionNextButtonTapped(pageView: TractPageView, page: Int) {
         viewModel.navigateToNextPage(animated: true)
     }
 }
