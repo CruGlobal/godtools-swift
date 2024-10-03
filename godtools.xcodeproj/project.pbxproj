@@ -1000,6 +1000,8 @@
 		45AF07142B0663FD000EACF2 /* LocaleLanguageScriptName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AF07132B0663FD000EACF2 /* LocaleLanguageScriptName.swift */; };
 		45AF47ED2B35E03500361EA7 /* GetToolSettingsToolHasTipsRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AF47EC2B35E03500361EA7 /* GetToolSettingsToolHasTipsRepositoryInterface.swift */; };
 		45AF47EF2B35E08C00361EA7 /* GetToolSettingsToolHasTipsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AF47EE2B35E08C00361EA7 /* GetToolSettingsToolHasTipsRepository.swift */; };
+		45B05E2F2CAF2118001AEFD8 /* CYOAPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B05E2E2CAF2113001AEFD8 /* CYOAPageView.swift */; };
+		45B05E312CAF212A001AEFD8 /* CYOAPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B05E302CAF2126001AEFD8 /* CYOAPageViewModel.swift */; };
 		45B212AC2922965F00C9A94D /* RealmDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B212AA2922965F00C9A94D /* RealmDatabase.swift */; };
 		45B212B629229CBA00C9A94D /* SwiftUIPreviewDiContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B212B529229CBA00C9A94D /* SwiftUIPreviewDiContainer.swift */; };
 		45B3382B2AF42A3900D18C63 /* GetTutorialInterfaceStringsRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B3382A2AF42A3900D18C63 /* GetTutorialInterfaceStringsRepositoryInterface.swift */; };
@@ -2651,6 +2653,8 @@
 		45AF07132B0663FD000EACF2 /* LocaleLanguageScriptName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocaleLanguageScriptName.swift; sourceTree = "<group>"; };
 		45AF47EC2B35E03500361EA7 /* GetToolSettingsToolHasTipsRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetToolSettingsToolHasTipsRepositoryInterface.swift; sourceTree = "<group>"; };
 		45AF47EE2B35E08C00361EA7 /* GetToolSettingsToolHasTipsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetToolSettingsToolHasTipsRepository.swift; sourceTree = "<group>"; };
+		45B05E2E2CAF2113001AEFD8 /* CYOAPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CYOAPageView.swift; sourceTree = "<group>"; };
+		45B05E302CAF2126001AEFD8 /* CYOAPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CYOAPageViewModel.swift; sourceTree = "<group>"; };
 		45B212AA2922965F00C9A94D /* RealmDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmDatabase.swift; sourceTree = "<group>"; };
 		45B212B529229CBA00C9A94D /* SwiftUIPreviewDiContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftUIPreviewDiContainer.swift; sourceTree = "<group>"; };
 		45B2E71A2BC045410077A3C3 /* GetAppLanguagesInterfaceStringsRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAppLanguagesInterfaceStringsRepositoryTests.swift; sourceTree = "<group>"; };
@@ -6567,6 +6571,7 @@
 			isa = PBXGroup;
 			children = (
 				4578176D279C7CC800ED50F2 /* ViewFactory */,
+				45B05E2D2CAF2108001AEFD8 /* Views */,
 			);
 			path = ChooseYourOwnAdventure;
 			sourceTree = "<group>";
@@ -8613,6 +8618,23 @@
 				45300B802C34283200E6F97D /* LocaleLanguageScriptNameInterface.swift */,
 			);
 			path = LocaleLanguageScriptName;
+			sourceTree = "<group>";
+		};
+		45B05E2C2CAF2108001AEFD8 /* Page */ = {
+			isa = PBXGroup;
+			children = (
+				45B05E2E2CAF2113001AEFD8 /* CYOAPageView.swift */,
+				45B05E302CAF2126001AEFD8 /* CYOAPageViewModel.swift */,
+			);
+			path = Page;
+			sourceTree = "<group>";
+		};
+		45B05E2D2CAF2108001AEFD8 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				45B05E2C2CAF2108001AEFD8 /* Page */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		45B212A82922965F00C9A94D /* RealmDatabase */ = {
@@ -12702,6 +12724,7 @@
 				453F84C62A029FC00005101E /* ArticleAemRepository.swift in Sources */,
 				45131A0E2AB498AD0085AF0D /* LaunchEnvironmentKey.swift in Sources */,
 				459BD08B289AD4310075901B /* DetermineDeepLinkedToolTranslationsToDownload.swift in Sources */,
+				45B05E312CAF212A001AEFD8 /* CYOAPageViewModel.swift in Sources */,
 				45AE974727C97A9400C2CB33 /* Header+MobileContentRenderableModel.swift in Sources */,
 				45B3F4482AC3A86100D61BFD /* RealmUserAppLanguage.swift in Sources */,
 				D47DF0442B28F9560079219B /* RealmDownloadedLanguagesCache.swift in Sources */,
@@ -13372,6 +13395,7 @@
 				455583F8269F2DA500C3FF14 /* MobileContentLinkViewModel.swift in Sources */,
 				45A8BE0A2ACC9FD5007A1EBB /* LessonsFeatureDataLayerDependencies.swift in Sources */,
 				45E8FAA62882FD4B00D7D569 /* ResourcesSHA256FileCache.swift in Sources */,
+				45B05E2F2CAF2118001AEFD8 /* CYOAPageView.swift in Sources */,
 				453F84C92A029FC00005101E /* ArticleAemDataParserError.swift in Sources */,
 				455583F7269F2DA500C3FF14 /* MobileContentLinkView.swift in Sources */,
 				450E64D62B570DBD00A74F6D /* BCP47LanguageIdentifier+TranslatableLanguage.swift in Sources */,

@@ -11,18 +11,18 @@ import GodToolsToolParser
 
 class MobileContentContentPageViewModel: MobileContentPageViewModel {
     
-    private let contentPage: Page
-    private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
+    let contentPage: Page
+    let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     
-    init(contentPage: Page, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
+    init(contentPage: Page, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, hidesBackgroundImage: Bool = false) {
         
         self.contentPage = contentPage
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         
-        super.init(pageModel: contentPage, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics, hidesBackgroundImage: false)
+        super.init(pageModel: contentPage, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics, hidesBackgroundImage: hidesBackgroundImage)
     }
     
-    private func getPageAnalyticsScreenName() -> String {
+    override var analyticsScreenName: String {
         
         let resource: ResourceModel = renderedPageContext.resource
         let pageId: String = renderedPageContext.pageModel.id
@@ -41,7 +41,7 @@ extension MobileContentContentPageViewModel {
     func pageDidAppear() {
         
         trackScreenViewAnalyticsUseCase.trackScreen(
-            screenName: getPageAnalyticsScreenName(),
+            screenName: analyticsScreenName,
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
             contentLanguage: renderedPageContext.language.localeId,
