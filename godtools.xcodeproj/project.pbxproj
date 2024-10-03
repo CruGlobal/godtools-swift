@@ -11246,13 +11246,6 @@
 			path = Subviews;
 			sourceTree = "<group>";
 		};
-		D40D77BD2AB23183008D3642 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
 		D4159D512C2CE0240088A203 /* PersistUserToolLanguageSettings */ = {
 			isa = PBXGroup;
 			children = (
@@ -11473,7 +11466,6 @@
 				D40D77B42AA900FB008D3642 /* ToolStringKeys.swift */,
 				45920D4E2A8D3D1800E336A8 /* ToolsView.swift */,
 				45920D4D2A8D3D1800E336A8 /* ToolsViewModel.swift */,
-				D40D77BD2AB23183008D3642 /* Models */,
 				45DD84C42A8BD53E0066A020 /* Subviews */,
 			);
 			path = Tools;
