@@ -11,18 +11,16 @@ import GodToolsToolParser
 
 class MobileContentContentPageViewModel: MobileContentPageViewModel {
     
-    private let contentPage: Page
-    private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
+    let contentPage: Page
     
-    init(contentPage: Page, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
+    init(contentPage: Page, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, hidesBackgroundImage: Bool = false) {
         
         self.contentPage = contentPage
-        self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         
-        super.init(pageModel: contentPage, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics, hidesBackgroundImage: false)
+        super.init(pageModel: contentPage, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics, trackScreenViewAnalyticsUseCase: trackScreenViewAnalyticsUseCase, hidesBackgroundImage: hidesBackgroundImage)
     }
     
-    private func getPageAnalyticsScreenName() -> String {
+    override var analyticsScreenName: String {
         
         let resource: ResourceModel = renderedPageContext.resource
         let pageId: String = renderedPageContext.pageModel.id
@@ -31,21 +29,5 @@ class MobileContentContentPageViewModel: MobileContentPageViewModel {
         let screenName: String = resource.abbreviation + separator + pageId
         
         return screenName
-    }
-}
-
-// MARK: - Inputs
-
-extension MobileContentContentPageViewModel {
-    
-    func pageDidAppear() {
-        
-        trackScreenViewAnalyticsUseCase.trackScreen(
-            screenName: getPageAnalyticsScreenName(),
-            siteSection: analyticsSiteSection,
-            siteSubSection: analyticsSiteSubSection,
-            contentLanguage: renderedPageContext.language.localeId,
-            contentLanguageSecondary: nil
-        )
     }
 }

@@ -16,7 +16,7 @@ class MobileContentPageRenderer {
     let sharedState: State
     let resource: ResourceModel
     let appLanguage: AppLanguageDomainModel
-    let primaryLanguage: LanguageModel
+    let rendererLanguages: MobileContentRendererLanguages
     let manifest: Manifest
     let language: LanguageModel
     let translation: TranslationModel
@@ -24,12 +24,12 @@ class MobileContentPageRenderer {
     let viewRenderer: MobileContentViewRenderer
     let pagesViewDataCache: MobileContentPageRendererPagesViewDataCache = MobileContentPageRendererPagesViewDataCache()
     
-    init(sharedState: State, resource: ResourceModel, appLanguage: AppLanguageDomainModel, primaryLanguage: LanguageModel, languageTranslationManifest: MobileContentRendererLanguageTranslationManifest, pageViewFactories: MobileContentRendererPageViewFactories, navigation: MobileContentRendererNavigation, manifestResourcesCache: MobileContentRendererManifestResourcesCache) {
+    init(sharedState: State, resource: ResourceModel, appLanguage: AppLanguageDomainModel, rendererLanguages: MobileContentRendererLanguages, languageTranslationManifest: MobileContentRendererLanguageTranslationManifest, pageViewFactories: MobileContentRendererPageViewFactories, navigation: MobileContentRendererNavigation, manifestResourcesCache: MobileContentRendererManifestResourcesCache) {
         
         self.sharedState = sharedState
         self.resource = resource
         self.appLanguage = appLanguage
-        self.primaryLanguage = primaryLanguage
+        self.rendererLanguages = rendererLanguages
         self.manifest = languageTranslationManifest.manifest
         self.language = languageTranslationManifest.language
         self.translation = languageTranslationManifest.translation
@@ -80,7 +80,7 @@ class MobileContentPageRenderer {
     
     // MARK: - Page Renderering
     
-    private func getRenderedPageContext(pageModel: Page, page: Int, numberOfPages: Int, window: UIViewController, safeArea: UIEdgeInsets, manifest: Manifest, manifestResourcesCache: MobileContentRendererManifestResourcesCache, resource: ResourceModel, language: LanguageModel, translation: TranslationModel, viewRenderer: MobileContentViewRenderer, primaryLanguage: LanguageModel, sharedState: State, trainingTipsEnabled: Bool) -> MobileContentRenderedPageContext {
+    private func getRenderedPageContext(pageModel: Page, page: Int, numberOfPages: Int, window: UIViewController, safeArea: UIEdgeInsets, manifest: Manifest, manifestResourcesCache: MobileContentRendererManifestResourcesCache, resource: ResourceModel, language: LanguageModel, translation: TranslationModel, viewRenderer: MobileContentViewRenderer, rendererLanguages: MobileContentRendererLanguages, sharedState: State, trainingTipsEnabled: Bool) -> MobileContentRenderedPageContext {
         
         let renderedPageContext = MobileContentRenderedPageContext(
             pageModel: pageModel,
@@ -96,7 +96,7 @@ class MobileContentPageRenderer {
             translation: translation,
             viewRenderer: viewRenderer,
             navigation: navigation,
-            primaryRendererLanguage: primaryLanguage,
+            rendererLanguages: rendererLanguages,
             rendererState: sharedState,
             trainingTipsEnabled: trainingTipsEnabled,
             pageViewDataCache: pagesViewDataCache.getPageViewDataCache(page: pageModel)
@@ -119,7 +119,7 @@ class MobileContentPageRenderer {
             language: language,
             translation: translation,
             viewRenderer: viewRenderer,
-            primaryLanguage: primaryLanguage,
+            rendererLanguages: rendererLanguages,
             sharedState: sharedState,
             trainingTipsEnabled: trainingTipsEnabled
         )

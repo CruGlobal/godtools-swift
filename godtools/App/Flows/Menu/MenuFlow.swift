@@ -189,7 +189,7 @@ class MenuFlow: Flow {
                 return
             }
             
-            navigateToURL(url: writeReviewURL, screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, contentLanguage: contentLanguage, contentLanguageSecondary: contentLanguageSecondary)
+            navigateToURL(url: writeReviewURL, screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, appLanguage: appLanguage, contentLanguage: contentLanguage, contentLanguageSecondary: contentLanguageSecondary)
             
         case .shareAStoryWithUsTappedFromMenu:
             let shareStoryWebContent = ShareAStoryWithUsWebContent(localizationServices: appDiContainer.dataLayer.getLocalizationServices())

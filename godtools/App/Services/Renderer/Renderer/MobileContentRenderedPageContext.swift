@@ -23,15 +23,15 @@ class MobileContentRenderedPageContext {
     let translation: TranslationModel
     let viewRenderer: MobileContentViewRenderer
     let navigation: MobileContentRendererNavigation
-    let primaryRendererLanguage: LanguageModel
     let primaryLanguageLayoutDirection: ApplicationLayoutDirection
+    let rendererLanguages: MobileContentRendererLanguages
     let rendererState: State
     let trainingTipsEnabled: Bool
     let pageViewDataCache: MobileContentPageViewDataCache
     
     private weak var weakWindow: UIViewController?
     
-    init(pageModel: Page, page: Int, isLastPage: Bool, window: UIViewController, safeArea: UIEdgeInsets, manifest: Manifest, resourcesCache: MobileContentRendererManifestResourcesCache, resource: ResourceModel, appLanguage: AppLanguageDomainModel, language: LanguageModel, translation: TranslationModel, viewRenderer: MobileContentViewRenderer, navigation: MobileContentRendererNavigation, primaryRendererLanguage: LanguageModel, rendererState: State, trainingTipsEnabled: Bool, pageViewDataCache: MobileContentPageViewDataCache) {
+    init(pageModel: Page, page: Int, isLastPage: Bool, window: UIViewController, safeArea: UIEdgeInsets, manifest: Manifest, resourcesCache: MobileContentRendererManifestResourcesCache, resource: ResourceModel, appLanguage: AppLanguageDomainModel, language: LanguageModel, translation: TranslationModel, viewRenderer: MobileContentViewRenderer, navigation: MobileContentRendererNavigation, rendererLanguages: MobileContentRendererLanguages, rendererState: State, trainingTipsEnabled: Bool, pageViewDataCache: MobileContentPageViewDataCache) {
         
         self.pageModel = pageModel
         self.page = page
@@ -46,8 +46,8 @@ class MobileContentRenderedPageContext {
         self.translation = translation
         self.viewRenderer = viewRenderer
         self.navigation = navigation
-        self.primaryRendererLanguage = primaryRendererLanguage
-        self.primaryLanguageLayoutDirection = primaryRendererLanguage.direction == .rightToLeft ? .rightToLeft : .leftToRight
+        self.primaryLanguageLayoutDirection = rendererLanguages.primaryLanguage.direction == .rightToLeft ? .rightToLeft : .leftToRight
+        self.rendererLanguages = rendererLanguages
         self.rendererState = rendererState
         self.trainingTipsEnabled = trainingTipsEnabled
         self.pageViewDataCache = pageViewDataCache
@@ -65,5 +65,9 @@ class MobileContentRenderedPageContext {
         }
         
         return window
+    }
+    
+    var primaryRendererLanguage: LanguageModel {
+        return rendererLanguages.primaryLanguage
     }
 }

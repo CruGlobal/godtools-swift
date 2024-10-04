@@ -29,6 +29,7 @@ class TrackShareShareableTap: TrackShareShareableTapInterface {
             actionName: AnalyticsConstants.ActionNames.shareShareable,
             siteSection: resource?.abbreviation ?? "",
             siteSubSection: "",
+            appLanguage: nil,
             contentLanguage: nil,
             secondaryContentLanguage: nil,
             url: nil,

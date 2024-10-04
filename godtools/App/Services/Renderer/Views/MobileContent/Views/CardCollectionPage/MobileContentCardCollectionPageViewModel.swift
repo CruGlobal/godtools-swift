@@ -22,14 +22,14 @@ class MobileContentCardCollectionPageViewModel: MobileContentPageViewModel {
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.numberOfCards = cardCollectionPage.cards.count
         
-        super.init(pageModel: cardCollectionPage, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics, hidesBackgroundImage: false)
+        super.init(pageModel: cardCollectionPage, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics, trackScreenViewAnalyticsUseCase: trackScreenViewAnalyticsUseCase, hidesBackgroundImage: false)
     }
     
     var layoutDirection: ApplicationLayoutDirection {
         return renderedPageContext.primaryLanguageLayoutDirection
     }
     
-    private func getPageAnalyticsScreenName() -> String {
+    override var analyticsScreenName: String {
         
         let resource: ResourceModel = renderedPageContext.resource
         let pageId: String = renderedPageContext.pageModel.id
@@ -87,17 +87,6 @@ class MobileContentCardCollectionPageViewModel: MobileContentPageViewModel {
 
 extension MobileContentCardCollectionPageViewModel {
     
-    func pageDidAppear() {
-        
-        trackScreenViewAnalyticsUseCase.trackScreen(
-            screenName: getPageAnalyticsScreenName(),
-            siteSection: analyticsSiteSection,
-            siteSubSection: analyticsSiteSubSection,
-            contentLanguage: renderedPageContext.language.localeId,
-            contentLanguageSecondary: nil
-        )
-    }
-    
     func cardWillAppear(card: Int) -> MobileContentView? {
         
         let view: MobileContentView? = renderedPageContext.viewRenderer.recurseAndRender(
@@ -115,8 +104,9 @@ extension MobileContentCardCollectionPageViewModel {
             screenName: getCardAnalyticsScreenName(card: card),
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
-            contentLanguage: renderedPageContext.language.localeId,
-            contentLanguageSecondary: nil
-        )        
+            appLanguage: renderedPageContext.appLanguage,
+            contentLanguage: renderedPageContext.rendererLanguages.primaryLanguage.localeId,
+            contentLanguageSecondary: renderedPageContext.rendererLanguages.parallelLanguage?.localeId
+        )
     }
 }

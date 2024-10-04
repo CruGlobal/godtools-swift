@@ -14,6 +14,7 @@ struct TrackScreenViewAnalyticsPropertiesDomainModel {
     let screenName: String
     let siteSection: String
     let siteSubSection: String
+    let appLanguage: String?
     let contentLanguage: String?
     let contentLanguageSecondary: String?
     let data: [String: Any]?

@@ -61,6 +61,7 @@ extension ShareToolViewModel {
             screenName: analyticsScreenName,
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
+            appLanguage: nil,
             contentLanguage: nil,
             contentLanguageSecondary: nil
         )
@@ -70,6 +71,7 @@ extension ShareToolViewModel {
             actionName: AnalyticsConstants.ActionNames.shareIconEngaged,
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
+            appLanguage: nil,
             contentLanguage: nil,
             contentLanguageSecondary: nil,
             url: nil,

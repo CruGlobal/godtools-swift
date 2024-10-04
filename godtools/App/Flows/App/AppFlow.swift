@@ -366,7 +366,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             }
             
         case .urlLinkTappedFromToolDetail(let url, let screenName, let siteSection, let siteSubSection, let contentLanguage, let contentLanguageSecondary):
-            navigateToURL(url: url, screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, contentLanguage: contentLanguage, contentLanguageSecondary: contentLanguageSecondary)
+            navigateToURL(url: url, screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, appLanguage: appLanguage, contentLanguage: contentLanguage, contentLanguageSecondary: contentLanguageSecondary)
             
         case .showOnboardingTutorial(let animated):
             navigateToOnboarding(animated: animated)

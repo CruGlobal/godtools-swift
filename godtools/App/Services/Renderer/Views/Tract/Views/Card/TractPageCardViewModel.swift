@@ -71,7 +71,7 @@ class TractPageCardViewModel: MobileContentViewModel {
     private var analyticsScreenName: String {
         
         let resource: ResourceModel = renderedPageContext.resource
-        let page: Int = renderedPageContext.page
+        let page: Int32 = renderedPageContext.pageModel.position
         let cardPosition: Int = Int(cardModel.position)
         
         let pageAnalyticsScreenName: String = resource.abbreviation + "-" + String(page)
@@ -188,8 +188,9 @@ extension TractPageCardViewModel {
             screenName: analyticsScreenName,
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
-            contentLanguage: renderedPageContext.language.localeId,
-            contentLanguageSecondary: nil
+            appLanguage: renderedPageContext.appLanguage,
+            contentLanguage: renderedPageContext.rendererLanguages.primaryLanguage.localeId,
+            contentLanguageSecondary: renderedPageContext.rendererLanguages.parallelLanguage?.localeId
         )
     }
     

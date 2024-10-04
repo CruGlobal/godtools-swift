@@ -10,7 +10,7 @@ import Foundation
 
 extension AppsFlyerAnalytics: MobileContentRendererAnalyticsSystem {
     
-    func trackMobileContentAction(screenName: String, siteSection: String, action: String, data: [String: Any]?) {
+    func trackMobileContentAction(context: MobileContentRenderedPageContext, screenName: String, siteSection: String, action: String, data: [String: Any]?) {
         trackAction(actionName: action, data: data)
     }
 }

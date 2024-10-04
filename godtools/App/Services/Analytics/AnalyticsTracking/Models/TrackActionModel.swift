@@ -14,6 +14,7 @@ struct TrackActionModel {
     let actionName: String
     let siteSection: String
     let siteSubSection: String
+    let appLanguage: String?
     let contentLanguage: String?
     let secondaryContentLanguage: String?
     let url: String?

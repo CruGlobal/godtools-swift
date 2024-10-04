@@ -160,6 +160,7 @@ class OnboardingTutorialViewModel: ObservableObject {
                 screenName: pageAnalytics.screenName,
                 siteSection: pageAnalytics.siteSection,
                 siteSubSection: pageAnalytics.siteSubsection,
+                appLanguage: nil,
                 contentLanguage: pageAnalytics.contentLanguage,
                 contentLanguageSecondary: pageAnalytics.contentLanguageSecondary
             )
@@ -226,6 +227,7 @@ extension OnboardingTutorialViewModel {
             actionName: "Onboarding Skip",
             siteSection: pageAnalytics.siteSection,
             siteSubSection: pageAnalytics.siteSubsection,
+            appLanguage: nil,
             contentLanguage: pageAnalytics.contentLanguage,
             contentLanguageSecondary: pageAnalytics.contentLanguageSecondary,
             url: nil,
@@ -250,6 +252,7 @@ extension OnboardingTutorialViewModel {
                 actionName: "Onboarding Start",
                 siteSection: pageAnalytics.siteSection,
                 siteSubSection: pageAnalytics.siteSubsection,
+                appLanguage: nil,
                 contentLanguage: pageAnalytics.contentLanguage,
                 contentLanguageSecondary: pageAnalytics.contentLanguageSecondary,
                 url: nil,
@@ -271,6 +274,7 @@ extension OnboardingTutorialViewModel {
         trackTutorialVideoAnalytics.trackVideoPlayed(
             videoId: readyForEveryConversationYoutubeVideoId,
             screenName: pageAnalytics.screenName,
+            appLanguage: appLanguage,
             contentLanguage: pageAnalytics.contentLanguage,
             secondaryContentLanguage: pageAnalytics.contentLanguageSecondary
         )
