@@ -15107,7 +15107,7 @@
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 10.24.0;
+				minimumVersion = 11.3.0;
 			};
 		};
 		4581EAA12BFBE194008115FF /* XCRemoteSwiftPackageReference "realm-swift" */ = {
@@ -15123,7 +15123,7 @@
 			repositoryURL = "https://github.com/AppsFlyerSDK/AppsFlyerFramework-Strict";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 6.14.3;
+				minimumVersion = 6.15.3;
 			};
 		};
 		45CF096E2784B910007F13D3 /* XCRemoteSwiftPackageReference "request-operation-ios" */ = {
@@ -15155,7 +15155,7 @@
 			repositoryURL = "https://github.com/CruGlobal/social-authentication-ios.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.5.0;
+				minimumVersion = 0.6.0;
 			};
 		};
 		45E39EDA27457E0C006A59E4 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
@@ -15163,7 +15163,7 @@
 			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 4.4.3;
+				minimumVersion = 4.5.0;
 			};
 		};
 		45E7D4C22977430A008C7503 /* XCRemoteSwiftPackageReference "ZipArchive" */ = {
@@ -15171,7 +15171,7 @@
 			repositoryURL = "https://github.com/ZipArchive/ZipArchive.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 2.5.5;
+				minimumVersion = 2.6.0;
 			};
 		};
 		45F486ED2B76D500004E0E27 /* XCRemoteSwiftPackageReference "Quick" */ = {
@@ -15192,7 +15192,7 @@
 		};
 		45F6718F2C3343ED0017C8C2 /* XCRemoteSwiftPackageReference "localization-services-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/CruGlobal/localization-services-ios";
+			repositoryURL = "https://github.com/CruGlobal/localization-services-ios.git";
 			requirement = {
 				kind = upToNextMinorVersion;
 				minimumVersion = 0.2.1;
