@@ -15,8 +15,7 @@ struct LessonListItemDomainModel: LessonListItemDomainModelInterface {
     let bannerImageId: String
     let dataModelId: String
     let name: String
-    let completionProgress: Double
-    let completionString: String
+    let lessonProgress: LessonListItemProgressDomainModel
 }
 
 extension LessonListItemDomainModel: Identifiable {

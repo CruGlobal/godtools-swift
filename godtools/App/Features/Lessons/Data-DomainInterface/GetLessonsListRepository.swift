@@ -49,15 +49,20 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
                 let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel = self.getToolLanguageAvailability(appLanguage: appLanguage, filterLanguageModel: filterLanguageModel, resource: resource)
                 let lessonName: String = self.getTranslatedToolName.getToolName(resource: resource, translateInLanguage: filterLanguageModel?.code ?? appLanguage)
                 
-                let progress = self.lessonProgressRepository.getLessonProgress(lessonId: resource.id)?.progress ?? 0.0
+                let lessonProgress: LessonListItemProgressDomainModel
+                if let progress = self.lessonProgressRepository.getLessonProgress(lessonId: resource.id)?.progress {
+                    lessonProgress = LessonListItemProgressDomainModel(shouldShowLessonProgress: true, completionProgress: progress, progressString: "\(Int(progress*100))% Complete")
+                } else {
+                    lessonProgress = LessonListItemProgressDomainModel.hiddenProgessDomainModel()
+                }
+                
                 return LessonListItemDomainModel(
                     analyticsToolName: resource.abbreviation,
                     availabilityInAppLanguage: toolLanguageAvailability,
                     bannerImageId: resource.attrBanner,
                     dataModelId: resource.id,
                     name: lessonName,
-                    completionProgress: progress,
-                    completionString: "\(Int(progress*100))% Complete"
+                    lessonProgress: lessonProgress
                 )
             }
             

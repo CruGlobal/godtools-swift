@@ -54,12 +54,17 @@ struct LessonCardView: View {
                     FixedVerticalSpacer(height: 9)
                     
                     HStack(alignment: .center, spacing: 10) {
-                        Text(viewModel.completionString)
-                            .font(FontLibrary.sfProDisplayRegular.font(size: 12))
-                            .foregroundColor(ColorPalette.gtBlue.color)
-                        
-                        LessonCompletionProgressBar(lessonCompletionProgress: viewModel.lessonCompletionProgress)
-                            .padding(.bottom, 5)
+                       
+                        if viewModel.shouldShowLessonProgress {
+                            Text(viewModel.completionString)
+                                .font(FontLibrary.sfProDisplayRegular.font(size: 12))
+                                .foregroundColor(ColorPalette.gtBlue.color)
+                            
+                            LessonCompletionProgressBar(lessonCompletionProgress: viewModel.lessonCompletionProgress)
+                                .padding(.bottom, 5)
+                        } else {
+                            Spacer()
+                        }
                         
                         ToolCardLanguageAvailabilityView(
                             languageAvailability: viewModel.appLanguageAvailability
@@ -93,8 +98,7 @@ struct LessonCardView_Previews: PreviewProvider {
             bannerImageId: "1",
             dataModelId: "1",
             name: "Five Reasons to be Courageous",
-            completionProgress: 0.5,
-            completionString: "50% Complete"
+            lessonProgress: LessonListItemProgressDomainModel(shouldShowLessonProgress: true, completionProgress: 0.5, progressString: "Progress string")
         )
         
         let viewModel = LessonCardViewModel(

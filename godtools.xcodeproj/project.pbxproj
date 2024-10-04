@@ -1596,6 +1596,7 @@
 		D4C2A5982C3CAC420035AB4D /* StoreUserLessonFiltersRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C2A5972C3CAC420035AB4D /* StoreUserLessonFiltersRepositoryInterface.swift */; };
 		D4C2A59A2C3CAD0E0035AB4D /* StoreUserLessonFiltersRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C2A5992C3CAD0E0035AB4D /* StoreUserLessonFiltersRepository.swift */; };
 		D4C759212BB643EF00D6AEB2 /* SearchBarLegacy.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C759202BB643EF00D6AEB2 /* SearchBarLegacy.swift */; };
+		D4D6614A2CB077D0006B20BF /* LessonListItemProgressDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D661492CB077D0006B20BF /* LessonListItemProgressDomainModel.swift */; };
 		D4E243CC29EDC6A100EA4BB7 /* SendFeedbackWebContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E243CB29EDC6A100EA4BB7 /* SendFeedbackWebContent.swift */; };
 		D4E243CE29EDCA5700EA4BB7 /* ReportABugWebContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E243CD29EDCA5700EA4BB7 /* ReportABugWebContent.swift */; };
 		D4E243D029EDD2E800EA4BB7 /* AskAQuestionWebContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E243CF29EDD2E800EA4BB7 /* AskAQuestionWebContent.swift */; };
@@ -3367,6 +3368,7 @@
 		D4C2A5972C3CAC420035AB4D /* StoreUserLessonFiltersRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreUserLessonFiltersRepositoryInterface.swift; sourceTree = "<group>"; };
 		D4C2A5992C3CAD0E0035AB4D /* StoreUserLessonFiltersRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreUserLessonFiltersRepository.swift; sourceTree = "<group>"; };
 		D4C759202BB643EF00D6AEB2 /* SearchBarLegacy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarLegacy.swift; sourceTree = "<group>"; };
+		D4D661492CB077D0006B20BF /* LessonListItemProgressDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonListItemProgressDomainModel.swift; sourceTree = "<group>"; };
 		D4E243CB29EDC6A100EA4BB7 /* SendFeedbackWebContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendFeedbackWebContent.swift; sourceTree = "<group>"; };
 		D4E243CD29EDCA5700EA4BB7 /* ReportABugWebContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportABugWebContent.swift; sourceTree = "<group>"; };
 		D4E243CF29EDD2E800EA4BB7 /* AskAQuestionWebContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskAQuestionWebContent.swift; sourceTree = "<group>"; };
@@ -8046,6 +8048,7 @@
 			children = (
 				45A8BDF42ACC9F9F007A1EBB /* LessonListItemDomainModel.swift */,
 				45DBE62F2ACDAEC4008A93BF /* LessonListItemDomainModelInterface.swift */,
+				D4D661492CB077D0006B20BF /* LessonListItemProgressDomainModel.swift */,
 				458D01822B1E4ED30029523C /* LessonsInterfaceStringsDomainModel.swift */,
 				458D01802B1E4D0B0029523C /* ViewLessonsDomainModel.swift */,
 			);
@@ -12795,6 +12798,7 @@
 				45C152A92A44896C00F2A1E8 /* ChooseYourOwnAdventureViewModel.swift in Sources */,
 				453F84C62A029FC00005101E /* ArticleAemRepository.swift in Sources */,
 				45131A0E2AB498AD0085AF0D /* LaunchEnvironmentKey.swift in Sources */,
+				D4D6614A2CB077D0006B20BF /* LessonListItemProgressDomainModel.swift in Sources */,
 				459BD08B289AD4310075901B /* DetermineDeepLinkedToolTranslationsToDownload.swift in Sources */,
 				45AE974727C97A9400C2CB33 /* Header+MobileContentRenderableModel.swift in Sources */,
 				45B3F4482AC3A86100D61BFD /* RealmUserAppLanguage.swift in Sources */,

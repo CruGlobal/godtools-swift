@@ -50,8 +50,7 @@ class GetFeaturedLessonsRepository: GetFeaturedLessonsRepositoryInterface {
                         bannerImageId: resource.attrBanner,
                         dataModelId: resource.id,
                         name: self.getTranslatedToolName.getToolName(resource: resource, translateInLanguage: appLanguage),
-                        completionProgress: 0.0,
-                        completionString: ""
+                        lessonProgress: LessonListItemProgressDomainModel.hiddenProgessDomainModel()
                     )
                 }
                 
