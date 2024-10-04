@@ -54,6 +54,7 @@ class MobileContentRendererAnalytics {
             let screenName = resourceAbbreviation + "-" + String(pageNumber)
             
             analyticsSystem.trackMobileContentAction(
+                context: renderedPageContext,
                 screenName: screenName,
                 siteSection: resourceAbbreviation,
                 action: action,

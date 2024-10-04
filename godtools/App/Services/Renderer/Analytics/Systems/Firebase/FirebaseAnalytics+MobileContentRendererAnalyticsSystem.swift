@@ -10,14 +10,14 @@ import Foundation
 
 extension FirebaseAnalytics: MobileContentRendererAnalyticsSystem {
     
-    func trackMobileContentAction(screenName: String, siteSection: String, action: String, data: [String: Any]?) {
+    func trackMobileContentAction(context: MobileContentRenderedPageContext, screenName: String, siteSection: String, action: String, data: [String: Any]?) {
         
         trackAction(
             screenName: screenName,
             siteSection: siteSection,
             siteSubSection: "",
-            contentLanguage: nil,
-            secondaryContentLanguage: nil,
+            contentLanguage: context.rendererLanguages.primaryLanguage.localeId,
+            secondaryContentLanguage: context.rendererLanguages.parallelLanguage?.localeId,
             actionName: action,
             data: data
         )
