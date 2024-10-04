@@ -157,6 +157,7 @@
 		451CCF2027A9DB2D00E8D2D3 /* PageNavigationCollectionViewNavigationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CCF1F27A9DB2D00E8D2D3 /* PageNavigationCollectionViewNavigationModel.swift */; };
 		451CEDFD282C3239006E5105 /* ToolSettingsFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CEDFC282C3239006E5105 /* ToolSettingsFlow.swift */; };
 		451CF5952C4AAC5500CD65C4 /* AppFlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CF5942C4AAC5500CD65C4 /* AppFlowTests.swift */; };
+		451E94F32CB014B500D858B4 /* MobileContentRendererLanguages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451E94F22CB014B400D858B4 /* MobileContentRendererLanguages.swift */; };
 		4521B2802B32851F00C8A473 /* GetShareableImageRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4521B27F2B32851F00C8A473 /* GetShareableImageRepositoryInterface.swift */; };
 		4521B2822B32853E00C8A473 /* GetShareableImageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4521B2812B32853E00C8A473 /* GetShareableImageRepository.swift */; };
 		452259AE2ABCBCA90070F7F3 /* AnalyticsContainer+TrackScreenViewAnalyticsInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452259AD2ABCBCA90070F7F3 /* AnalyticsContainer+TrackScreenViewAnalyticsInterface.swift */; };
@@ -1821,6 +1822,7 @@
 		451CCF1F27A9DB2D00E8D2D3 /* PageNavigationCollectionViewNavigationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageNavigationCollectionViewNavigationModel.swift; sourceTree = "<group>"; };
 		451CEDFC282C3239006E5105 /* ToolSettingsFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolSettingsFlow.swift; sourceTree = "<group>"; };
 		451CF5942C4AAC5500CD65C4 /* AppFlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFlowTests.swift; sourceTree = "<group>"; };
+		451E94F22CB014B400D858B4 /* MobileContentRendererLanguages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentRendererLanguages.swift; sourceTree = "<group>"; };
 		451F7A802ABD2F1100006EF2 /* Quick.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Quick.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		451F7A822ABD2F1400006EF2 /* Nimble.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4521B27F2B32851F00C8A473 /* GetShareableImageRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetShareableImageRepositoryInterface.swift; sourceTree = "<group>"; };
@@ -5855,14 +5857,15 @@
 		45558456269F2F9E00C3FF14 /* Renderer */ = {
 			isa = PBXGroup;
 			children = (
+				4555845B269F2F9E00C3FF14 /* Events */,
 				4567CE3E27CD0C6B00C3B543 /* MobileContentPageRenderer.swift */,
 				45558459269F2F9E00C3FF14 /* MobileContentRenderedPageContext.swift */,
 				457E199927C6E3AF00BABD49 /* MobileContentRenderer.swift */,
+				451E94F22CB014B400D858B4 /* MobileContentRendererLanguages.swift */,
 				4567CE4227CD15D300C3B543 /* MobileContentRendererLanguageTranslationManifest.swift */,
 				45BD7A6F26A235780007426B /* MobileContentRendererPageViewFactories.swift */,
 				45BD7A7126A235F60007426B /* MobileContentRendererPageViewFactoriesType.swift */,
 				453C9D182A97C11700177499 /* MobileContentViewRenderer.swift */,
-				4555845B269F2F9E00C3FF14 /* Events */,
 				45AC77D429DCA25500A2224B /* ViewDataCache */,
 			);
 			path = Renderer;
@@ -13060,6 +13063,7 @@
 				45D63EA4288F77D4009B4610 /* ResourceType.swift in Sources */,
 				45880D762BD2B785008F021C /* ShareGodToolsDataLayerDependencies.swift in Sources */,
 				45B6FF362BAA39790037B240 /* ViewToolFilterCategoriesDomainModel.swift in Sources */,
+				451E94F32CB014B500D858B4 /* MobileContentRendererLanguages.swift in Sources */,
 				45965D4B2B4486E1001C9AA5 /* DashboardInterfaceStringsDomainModel.swift in Sources */,
 				45F71679290A13530019B715 /* EmailSignUpApi.swift in Sources */,
 				4565BA9B2BBB3B0E002688C1 /* GetTranslatedNumberCount.swift in Sources */,

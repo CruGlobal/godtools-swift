@@ -135,7 +135,7 @@ class MobileContentRendererNavigation {
             sharedState: State(),
             resource: event.renderedPageContext.resource,
             appLanguage: appLanguage,
-            primaryLanguage: event.renderedPageContext.primaryRendererLanguage,
+            rendererLanguages: event.renderedPageContext.rendererLanguages,
             languageTranslationManifest: languageTranslationManifest,
             pageViewFactories: pageViewFactories,
             navigation: navigation,

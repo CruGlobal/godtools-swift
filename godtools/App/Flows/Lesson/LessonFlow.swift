@@ -48,7 +48,7 @@ class LessonFlow: ToolNavigationFlow, Flow {
             flowDelegate: self,
             renderer: renderer,
             resource: renderer.resource,
-            primaryLanguage: renderer.primaryLanguage,
+            primaryLanguage: renderer.languages.primaryLanguage,
             initialPage: initialPage,
             resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
             translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
