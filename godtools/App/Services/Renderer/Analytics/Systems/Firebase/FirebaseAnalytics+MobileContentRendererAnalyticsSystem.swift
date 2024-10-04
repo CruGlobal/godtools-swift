@@ -16,6 +16,7 @@ extension FirebaseAnalytics: MobileContentRendererAnalyticsSystem {
             screenName: screenName,
             siteSection: siteSection,
             siteSubSection: "",
+            appLanguage: context.appLanguage,
             contentLanguage: context.rendererLanguages.primaryLanguage.localeId,
             secondaryContentLanguage: context.rendererLanguages.parallelLanguage?.localeId,
             actionName: action,

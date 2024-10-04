@@ -107,6 +107,7 @@ class ToolDetailsViewModel: ObservableObject {
                 screenName: weakSelf.getAnalyticsScreenName(analyticsToolAbbreviation: analyticsToolAbbreviation),
                 siteSection: weakSelf.getAnalyticsScreenName(analyticsToolAbbreviation: analyticsToolAbbreviation),
                 siteSubSection: weakSelf.analyticsSiteSubSection,
+                appLanguage: nil,
                 contentLanguage: nil,
                 contentLanguageSecondary: nil
             )
@@ -222,6 +223,7 @@ class ToolDetailsViewModel: ObservableObject {
             actionName: AnalyticsConstants.ActionNames.openDetails,
             siteSection: "",
             siteSubSection: "",
+            appLanguage: nil,
             contentLanguage: nil,
             contentLanguageSecondary: nil,
             url: nil,
@@ -254,6 +256,7 @@ extension ToolDetailsViewModel {
             actionName: AnalyticsConstants.ActionNames.toolOpened,
             siteSection: getAnalyticsSiteSection(analyticsToolAbbreviation: analyticsToolAbbreviation),
             siteSubSection: analyticsSiteSubSection,
+            appLanguage: nil,
             contentLanguage: nil,
             contentLanguageSecondary: nil,
             url: nil,

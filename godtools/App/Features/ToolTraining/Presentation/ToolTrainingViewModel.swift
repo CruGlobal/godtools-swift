@@ -219,6 +219,7 @@ extension ToolTrainingViewModel {
             screenName: getTipPageAnalyticsScreenName(tipPage: page),
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
+            appLanguage: nil,
             contentLanguage: nil,
             contentLanguageSecondary: nil
         )

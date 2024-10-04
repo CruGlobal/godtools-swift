@@ -21,6 +21,7 @@ struct AnalyticsConstants {
     }
     
     struct Keys {
+        static let appLanguage = "cru.applanguage"
         static let appName = "cru.appname"
         static let contentLanguage = "cru.contentlanguage"
         static let contentLanguageSecondary = "cru.contentlanguagesecondary"

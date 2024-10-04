@@ -56,12 +56,13 @@ class FirebaseAnalytics {
         setUserProperty(key: AnalyticsConstants.Keys.ssoguid, value: isLoggedIn ? loggedInUserProperties?.ssoguid : nil)
     }
     
-    func trackScreenView(screenName: String, siteSection: String, siteSubSection: String, contentLanguage: String?, secondaryContentLanguage: String?) {
+    func trackScreenView(screenName: String, siteSection: String, siteSubSection: String, appLanguage: String?, contentLanguage: String?, secondaryContentLanguage: String?) {
         
         internalTrackEvent(
             screenName: screenName,
             siteSection: siteSection,
             siteSubSection: siteSubSection,
+            appLanguage: appLanguage,
             contentLanguage: contentLanguage,
             secondaryContentLanguage: secondaryContentLanguage,
             previousScreenName: previousTrackedScreenName,
@@ -71,12 +72,13 @@ class FirebaseAnalytics {
         previousTrackedScreenName = screenName
     }
     
-    func trackAction(screenName: String, siteSection: String, siteSubSection: String, contentLanguage: String?, secondaryContentLanguage: String?, actionName: String, data: [String: Any]?) {
+    func trackAction(screenName: String, siteSection: String, siteSubSection: String, appLanguage: String?, contentLanguage: String?, secondaryContentLanguage: String?, actionName: String, data: [String: Any]?) {
         
         internalTrackEvent(
             screenName: screenName,
             siteSection: siteSection,
             siteSubSection: siteSubSection,
+            appLanguage: appLanguage,
             contentLanguage: contentLanguage,
             secondaryContentLanguage: secondaryContentLanguage,
             previousScreenName: previousTrackedScreenName,
@@ -85,12 +87,13 @@ class FirebaseAnalytics {
         )
     }
     
-    func trackExitLink(screenName: String, siteSection: String, siteSubSection: String, contentLanguage: String?, secondaryContentLanguage: String?, url: String) {
+    func trackExitLink(screenName: String, siteSection: String, siteSubSection: String, appLanguage: String?, contentLanguage: String?, secondaryContentLanguage: String?, url: String) {
         
         internalTrackEvent(
             screenName: screenName,
             siteSection: siteSection,
             siteSubSection: siteSubSection,
+            appLanguage: appLanguage,
             contentLanguage: contentLanguage,
             secondaryContentLanguage: secondaryContentLanguage,
             previousScreenName: previousTrackedScreenName,
@@ -107,7 +110,7 @@ class FirebaseAnalytics {
         }
     }
     
-    private func internalTrackEvent(screenName: String?, siteSection: String?, siteSubSection: String?, contentLanguage: String?, secondaryContentLanguage: String?, previousScreenName: String, eventName: String, data: [String: Any]?) {
+    private func internalTrackEvent(screenName: String?, siteSection: String?, siteSubSection: String?, appLanguage: String?, contentLanguage: String?, secondaryContentLanguage: String?, previousScreenName: String, eventName: String, data: [String: Any]?) {
         
         assertFailureIfNotConfigured()
         
@@ -121,6 +124,7 @@ class FirebaseAnalytics {
                 screenName: screenName,
                 siteSection: siteSection,
                 siteSubSection: siteSubSection,
+                appLanguage: appLanguage,
                 contentLanguage: contentLanguage,
                 secondaryContentLanguage: secondaryContentLanguage,
                 previousScreenName: previousScreenName
@@ -171,12 +175,13 @@ class FirebaseAnalytics {
         )
     }
     
-    private func createBaseProperties(screenName: String?, siteSection: String?, siteSubSection: String?, contentLanguage: String?, secondaryContentLanguage: String?, previousScreenName: String?) -> [String: String] {
+    private func createBaseProperties(screenName: String?, siteSection: String?, siteSubSection: String?, appLanguage: String?, contentLanguage: String?, secondaryContentLanguage: String?, previousScreenName: String?) -> [String: String] {
         assertFailureIfNotConfigured()
         
         var properties: [String: String] = [:]
                 
         properties[AnalyticsConstants.Keys.appName] = AnalyticsConstants.Values.godTools
+        properties[AnalyticsConstants.Keys.appLanguage] = appLanguage
         properties[AnalyticsConstants.Keys.contentLanguage] = contentLanguage
         properties[AnalyticsConstants.Keys.contentLanguageSecondary] = secondaryContentLanguage
         properties[AnalyticsConstants.Keys.previousScreenName] = previousScreenName

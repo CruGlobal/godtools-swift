@@ -156,6 +156,7 @@ class ToolsViewModel: ObservableObject {
             actionName: AnalyticsConstants.ActionNames.openDetails,
             siteSection: "",
             siteSubSection: "",
+            appLanguage: nil,
             contentLanguage: nil,
             contentLanguageSecondary: nil,
             url: nil,
@@ -172,6 +173,7 @@ class ToolsViewModel: ObservableObject {
             screenName: analyticsScreenName,
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
+            appLanguage: nil,
             contentLanguage: nil,
             contentLanguageSecondary: nil
         )
@@ -181,6 +183,7 @@ class ToolsViewModel: ObservableObject {
             actionName: AnalyticsConstants.ActionNames.viewedToolsAction,
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
+            appLanguage: nil,
             contentLanguage: nil,
             contentLanguageSecondary: nil,
             url: nil,

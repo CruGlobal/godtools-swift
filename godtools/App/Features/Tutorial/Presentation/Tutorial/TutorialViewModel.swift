@@ -126,6 +126,7 @@ class TutorialViewModel: ObservableObject {
             screenName: analyticsScreenName,
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
+            appLanguage: nil,
             contentLanguage: nil,
             contentLanguageSecondary: nil
         )
@@ -135,6 +136,7 @@ class TutorialViewModel: ObservableObject {
             actionName: analyticsScreenName,
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
+            appLanguage: nil,
             contentLanguage: nil,
             contentLanguageSecondary: nil,
             url: nil,
@@ -182,6 +184,7 @@ extension TutorialViewModel {
             tutorialVideoAnalytics.trackVideoPlayed(
                 videoId: videoId,
                 screenName: getAnalyticsScreenName(tutorialItemIndex: tutorialPageIndex),
+                appLanguage: appLanguage,
                 contentLanguage: nil,
                 secondaryContentLanguage: nil
             )

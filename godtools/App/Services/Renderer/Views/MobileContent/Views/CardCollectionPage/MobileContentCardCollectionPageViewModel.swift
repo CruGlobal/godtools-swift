@@ -104,8 +104,9 @@ extension MobileContentCardCollectionPageViewModel {
             screenName: getCardAnalyticsScreenName(card: card),
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
-            contentLanguage: renderedPageContext.language.localeId,
-            contentLanguageSecondary: nil
-        )        
+            appLanguage: renderedPageContext.appLanguage,
+            contentLanguage: renderedPageContext.rendererLanguages.primaryLanguage.localeId,
+            contentLanguageSecondary: renderedPageContext.rendererLanguages.parallelLanguage?.localeId
+        )
     }
 }

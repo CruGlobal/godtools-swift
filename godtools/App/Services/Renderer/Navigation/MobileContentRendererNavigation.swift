@@ -66,6 +66,7 @@ class MobileContentRendererNavigation {
                 screenName: analyticsScreenName,
                 siteSection: analyticsSiteSection,
                 siteSubSection: analyticsSiteSubSection,
+                appLanguage: appLanguage,
                 contentLanguage: languages.primaryLanguage.localeId,
                 contentLanguageSecondary: languages.parallelLanguage?.localeId
             )

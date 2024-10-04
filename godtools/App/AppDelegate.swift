@@ -184,6 +184,7 @@ extension AppDelegate {
                 actionName: AnalyticsConstants.ActionNames.toolOpenedShortcut,
                 siteSection: "",
                 siteSubSection: "",
+                appLanguage: nil,
                 contentLanguage: nil,
                 contentLanguageSecondary: nil,
                 url: nil,

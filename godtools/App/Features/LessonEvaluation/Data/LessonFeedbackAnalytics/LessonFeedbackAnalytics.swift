@@ -49,6 +49,7 @@ class LessonFeedbackAnalytics {
             screenName: "",
             siteSection: lesson.abbreviation,
             siteSubSection: "",
+            appLanguage: nil,
             contentLanguage: nil,
             secondaryContentLanguage: nil,
             actionName: LessonFeedbackAnalytics.trackLessonFeedbackActionName,

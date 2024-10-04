@@ -23,6 +23,7 @@ class TrackActionAnalytics {
             screenName: trackAction.screenName,
             siteSection: trackAction.siteSection,
             siteSubSection: trackAction.siteSubSection,
+            appLanguage: trackAction.appLanguage,
             contentLanguage: trackAction.contentLanguage,
             secondaryContentLanguage: trackAction.secondaryContentLanguage,
             actionName: trackAction.actionName,

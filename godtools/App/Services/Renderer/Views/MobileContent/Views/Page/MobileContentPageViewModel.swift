@@ -69,6 +69,7 @@ class MobileContentPageViewModel: MobileContentViewModel {
             screenName: analyticsScreenName,
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
+            appLanguage: renderedPageContext.appLanguage,
             contentLanguage: renderedPageContext.rendererLanguages.primaryLanguage.localeId,
             contentLanguageSecondary: renderedPageContext.rendererLanguages.parallelLanguage?.localeId
         )

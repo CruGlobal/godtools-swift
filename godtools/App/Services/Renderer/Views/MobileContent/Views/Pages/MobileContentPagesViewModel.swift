@@ -780,7 +780,8 @@ extension MobileContentPagesViewModel {
         mobileContentEventAnalytics.trackContentEvent(
             eventId: eventId,
             resource: resource,
-            language: language
+            appLanguage: renderer.value.appLanguage,
+            languages: renderer.value.languages
         )
     }
     

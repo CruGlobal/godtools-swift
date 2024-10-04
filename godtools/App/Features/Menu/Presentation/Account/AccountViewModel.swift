@@ -141,6 +141,7 @@ class AccountViewModel: ObservableObject {
             screenName: screenName,
             siteSection: "account",
             siteSubSection: "",
+            appLanguage: nil,
             contentLanguage: nil,
             contentLanguageSecondary: nil
         )
