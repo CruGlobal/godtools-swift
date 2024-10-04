@@ -38,7 +38,7 @@ class MobileContentRendererNavigation {
         print("x deinit: \(type(of: self))")
     }
     
-    func buttonWithUrlTapped(url: URL, screenName: String, siteSection: String, siteSubSection: String, contentLanguage: String?) {
+    func buttonWithUrlTapped(url: URL, analyticsScreenName: String, analyticsSiteSection: String, analyticsSiteSubSection: String, languages: MobileContentRendererLanguages) {
         
         let deepLinkingService: DeepLinkingService = appDiContainer.dataLayer.getDeepLinkingService()
         let deepLink: ParsedDeepLinkType? = deepLinkingService.parseDeepLink(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
@@ -61,7 +61,14 @@ class MobileContentRendererNavigation {
         }
         else {
             
-            parentFlow?.navigateToURL(url: url, screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, contentLanguage: contentLanguage, contentLanguageSecondary: nil)
+            parentFlow?.navigateToURL(
+                url: url,
+                screenName: analyticsScreenName,
+                siteSection: analyticsSiteSection,
+                siteSubSection: analyticsSiteSubSection,
+                contentLanguage: languages.primaryLanguage.localeId,
+                contentLanguageSecondary: languages.parallelLanguage?.localeId
+            )
         }
     }
     

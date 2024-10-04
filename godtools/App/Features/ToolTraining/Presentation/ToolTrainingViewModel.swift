@@ -185,7 +185,13 @@ extension ToolTrainingViewModel {
     
     func buttonWithUrlTapped(url: URL) {
         
-        renderedPageContext.navigation.buttonWithUrlTapped(url: url, screenName: getExitAnalyticsScreenName(), siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection, contentLanguage: renderedPageContext.language.localeId)
+        renderedPageContext.navigation.buttonWithUrlTapped(
+            url: url,
+            analyticsScreenName: getExitAnalyticsScreenName(),
+            analyticsSiteSection: analyticsSiteSection,
+            analyticsSiteSubSection: analyticsSiteSubSection,
+            languages: renderedPageContext.rendererLanguages
+        )
     }
     
     func tipPageWillAppear(page: Int, window: UIViewController, safeArea: UIEdgeInsets) -> MobileContentView? {

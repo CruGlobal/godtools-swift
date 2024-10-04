@@ -123,7 +123,13 @@ extension MobileContentPageViewModel {
     
     func buttonWithUrlTapped(url: URL) {
                              
-        renderedPageContext.navigation.buttonWithUrlTapped(url: url, screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection, contentLanguage: renderedPageContext.language.localeId)
+        renderedPageContext.navigation.buttonWithUrlTapped(
+            url: url,
+            analyticsScreenName: analyticsScreenName,
+            analyticsSiteSection: analyticsSiteSection,
+            analyticsSiteSubSection: analyticsSiteSubSection,
+            languages: renderedPageContext.rendererLanguages
+        )
     }
     
     func trainingTipTapped(event: TrainingTipEvent) {
