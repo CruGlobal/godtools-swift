@@ -32,7 +32,7 @@ class TractPageViewModel: MobileContentPageViewModel {
     override var analyticsScreenName: String {
         
         let resource: ResourceModel = renderedPageContext.resource
-        let page: Int = renderedPageContext.page
+        let page: Int32 = renderedPageContext.pageModel.position
         
         let cardAnalyticsScreenName: String
         
