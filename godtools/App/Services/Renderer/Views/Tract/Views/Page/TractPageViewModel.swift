@@ -12,7 +12,6 @@ import GodToolsToolParser
 class TractPageViewModel: MobileContentPageViewModel {
     
     private let pageModel: TractPage
-    private let visibleAnalyticsEventsObjects: [MobileContentRendererAnalyticsEvent]
     
     private var cardPosition: Int?
     
@@ -23,12 +22,6 @@ class TractPageViewModel: MobileContentPageViewModel {
         self.pageModel = pageModel
         self.hidesCallToAction = pageModel.isLastPage
                 
-        self.visibleAnalyticsEventsObjects = MobileContentRendererAnalyticsEvent.initAnalyticsEvents(
-            analyticsEvents: pageModel.getAnalyticsEvents(type: .visible),
-            mobileContentAnalytics: mobileContentAnalytics,
-            renderedPageContext: renderedPageContext
-        )
-        
         super.init(pageModel: pageModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics, trackScreenViewAnalyticsUseCase: trackScreenViewAnalyticsUseCase, hidesBackgroundImage: false)
     }
     
@@ -70,9 +63,7 @@ class TractPageViewModel: MobileContentPageViewModel {
     }
     
     override func pageDidAppear() {
-        
-        super.viewDidAppear(visibleAnalyticsEvents: visibleAnalyticsEventsObjects)
-        
+                
         super.pageDidAppear()
     }
 }

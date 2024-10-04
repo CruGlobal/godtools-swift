@@ -13,14 +13,22 @@ import SwiftUI
 class MobileContentPageViewModel: MobileContentViewModel {
     
     private let pageModel: Page
-    private let hidesBackgroundImage: Bool
+    private let visibleAnalyticsEventsObjects: [MobileContentRendererAnalyticsEvent]
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
+    private let hidesBackgroundImage: Bool
+    
         
     init(pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, hidesBackgroundImage: Bool) {
         
         self.pageModel = pageModel
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.hidesBackgroundImage = hidesBackgroundImage
+        
+        self.visibleAnalyticsEventsObjects = MobileContentRendererAnalyticsEvent.initAnalyticsEvents(
+            analyticsEvents: pageModel.getAnalyticsEvents(type: .visible),
+            mobileContentAnalytics: mobileContentAnalytics,
+            renderedPageContext: renderedPageContext
+        )
         
         super.init(baseModel: pageModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }
@@ -50,6 +58,8 @@ class MobileContentPageViewModel: MobileContentViewModel {
     
     func pageDidAppear() {
      
+        super.viewDidAppear(visibleAnalyticsEvents: visibleAnalyticsEventsObjects)
+        
         trackScreenAnalytics()
     }
     
