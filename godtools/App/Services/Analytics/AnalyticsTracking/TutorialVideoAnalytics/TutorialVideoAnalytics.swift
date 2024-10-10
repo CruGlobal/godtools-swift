@@ -17,13 +17,14 @@ class TutorialVideoAnalytics {
         self.trackActionAnalytics = trackActionAnalytics
     }
     
-    func trackVideoPlayed(videoId: String, screenName: String, contentLanguage: String?, secondaryContentLanguage: String?) {
+    func trackVideoPlayed(videoId: String, screenName: String, appLanguage: String?, contentLanguage: String?, secondaryContentLanguage: String?) {
             
         let trackAction = TrackActionModel(
             screenName: screenName,
             actionName: AnalyticsConstants.ActionNames.tutorialVideo,
             siteSection: "",
             siteSubSection: "",
+            appLanguage: appLanguage,
             contentLanguage: contentLanguage,
             secondaryContentLanguage: secondaryContentLanguage,
             url: nil,
