@@ -20,13 +20,6 @@ class UserLessonProgressDataLayerDependencies {
     
     // MARK: - Domain Interface
     
-    func getUserLessonProgressRepositoryInterface() -> GetUserLessonProgressRepositoryInterface {
-        return GetUserLessonProgressRepository(
-            userLessonProgressRepository: coreDataLayer.getUserLessonProgressRepository(), 
-            userCountersRepository: coreDataLayer.getUserCountersRepository()
-        )
-    }
-    
     func getStoreUserLessonProgressRepositoryInterface() -> StoreUserLessonProgressRepositoryInterface {
         return StoreUserLessonProgressRepository(
             lessonProgressRepository: coreDataLayer.getUserLessonProgressRepository()

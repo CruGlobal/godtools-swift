@@ -18,12 +18,6 @@ class UserLessonProgressDomainLayerDependencies {
         self.coreDataLayer = coreDataLayer
     }
     
-    func getUserLessonProgressUseCase() -> GetUserLessonProgressUseCase {
-        return GetUserLessonProgressUseCase(
-            getLessonProgressRepository: dataLayer.getUserLessonProgressRepositoryInterface()
-        )
-    }
-    
     func getStoreUserLessonProgressUseCase() -> StoreUserLessonProgressUseCase {
         return StoreUserLessonProgressUseCase(
             storeLessonProgressRepository: dataLayer.getStoreUserLessonProgressRepositoryInterface()
