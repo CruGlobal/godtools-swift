@@ -22,7 +22,8 @@ class UserLessonProgressDataLayerDependencies {
     
     func getUserLessonProgressRepositoryInterface() -> GetUserLessonProgressRepositoryInterface {
         return GetUserLessonProgressRepository(
-            userLessonProgressRepository: coreDataLayer.getUserLessonProgressRepository()
+            userLessonProgressRepository: coreDataLayer.getUserLessonProgressRepository(), 
+            userCountersRepository: coreDataLayer.getUserCountersRepository()
         )
     }
     

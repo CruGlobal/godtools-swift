@@ -1604,7 +1604,7 @@
 		D4E7EE0A2CA3413A00F75DA6 /* GetUserLessonProgressRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E7EE092CA3413A00F75DA6 /* GetUserLessonProgressRepository.swift */; };
 		D4E7EE142CA3427500F75DA6 /* GetUserLessonProgressRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E7EE132CA3427500F75DA6 /* GetUserLessonProgressRepositoryInterface.swift */; };
 		D4E7EE162CA3437F00F75DA6 /* UserLessonProgressDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E7EE152CA3437F00F75DA6 /* UserLessonProgressDomainModel.swift */; };
-		D4E7EE1A2CA345DD00F75DA6 /* LessonCompletionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E7EE192CA345DD00F75DA6 /* LessonCompletionRepository.swift */; };
+		D4E7EE1A2CA345DD00F75DA6 /* UserLessonProgressRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E7EE192CA345DD00F75DA6 /* UserLessonProgressRepository.swift */; };
 		D4E7EE1C2CA48E6200F75DA6 /* RealmUserLessonProgressCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E7EE1B2CA48E6200F75DA6 /* RealmUserLessonProgressCache.swift */; };
 		D4E7EE1E2CA48F0000F75DA6 /* UserLessonProgressDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E7EE1D2CA48F0000F75DA6 /* UserLessonProgressDataModel.swift */; };
 		D4E7EE202CA48F2300F75DA6 /* RealmUserLessonProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E7EE1F2CA48F2300F75DA6 /* RealmUserLessonProgress.swift */; };
@@ -3376,7 +3376,7 @@
 		D4E7EE092CA3413A00F75DA6 /* GetUserLessonProgressRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserLessonProgressRepository.swift; sourceTree = "<group>"; };
 		D4E7EE132CA3427500F75DA6 /* GetUserLessonProgressRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserLessonProgressRepositoryInterface.swift; sourceTree = "<group>"; };
 		D4E7EE152CA3437F00F75DA6 /* UserLessonProgressDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLessonProgressDomainModel.swift; sourceTree = "<group>"; };
-		D4E7EE192CA345DD00F75DA6 /* LessonCompletionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonCompletionRepository.swift; sourceTree = "<group>"; };
+		D4E7EE192CA345DD00F75DA6 /* UserLessonProgressRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLessonProgressRepository.swift; sourceTree = "<group>"; };
 		D4E7EE1B2CA48E6200F75DA6 /* RealmUserLessonProgressCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmUserLessonProgressCache.swift; sourceTree = "<group>"; };
 		D4E7EE1D2CA48F0000F75DA6 /* UserLessonProgressDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLessonProgressDataModel.swift; sourceTree = "<group>"; };
 		D4E7EE1F2CA48F2300F75DA6 /* RealmUserLessonProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmUserLessonProgress.swift; sourceTree = "<group>"; };
@@ -11899,7 +11899,7 @@
 			isa = PBXGroup;
 			children = (
 				D4E7EE1D2CA48F0000F75DA6 /* UserLessonProgressDataModel.swift */,
-				D4E7EE192CA345DD00F75DA6 /* LessonCompletionRepository.swift */,
+				D4E7EE192CA345DD00F75DA6 /* UserLessonProgressRepository.swift */,
 				D4E7EE182CA345D200F75DA6 /* Cache */,
 			);
 			path = UserLessonProgressRepository;
@@ -12594,7 +12594,7 @@
 				D4BC79E829B130970040651B /* SetCompletedTrainingTipUseCase.swift in Sources */,
 				45B3382F2AF42A6400D18C63 /* TutorialInterfaceStringsDomainModel.swift in Sources */,
 				D4E7EE262CA5E62B00F75DA6 /* StoreUserLessonProgressRepository.swift in Sources */,
-				D4E7EE1A2CA345DD00F75DA6 /* LessonCompletionRepository.swift in Sources */,
+				D4E7EE1A2CA345DD00F75DA6 /* UserLessonProgressRepository.swift in Sources */,
 				45B6480B25E581660098BAF1 /* (null) in Sources */,
 				458B91B12B7D5D6800785C6F /* ConfirmRemoveToolFromFavoritesAlertViewModel.swift in Sources */,
 				4512D4D32B29127C00DFAFB3 /* GetToolSettingsToolLanguagesListInterfaceStringsRepository.swift in Sources */,

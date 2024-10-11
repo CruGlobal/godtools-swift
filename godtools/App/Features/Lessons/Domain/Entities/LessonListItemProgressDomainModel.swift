@@ -8,15 +8,24 @@
 
 import Foundation
 
-struct LessonListItemProgressDomainModel {
-    
-    let shouldShowLessonProgress: Bool
-    let completionProgress: Double
-    let progressString: String
+enum LessonListItemProgressDomainModel {
+    case hidden
+    case inProgress(completionProgress: Double, progressString: String)
+    case complete(completeString: String)
 }
 
 extension LessonListItemProgressDomainModel {
-    static func hiddenProgessDomainModel() -> LessonListItemProgressDomainModel {
-        return LessonListItemProgressDomainModel(shouldShowLessonProgress: false, completionProgress: 0, progressString: "")
+    var isHidden: Bool {
+        switch self {
+        case .hidden: return true
+        default: return false
+        }
+    }
+    
+    var isComplete: Bool {
+        switch self {
+        case .complete: return true
+        default: return false
+        }
     }
 }

@@ -8,6 +8,7 @@
 
 import Foundation
 import Combine
+import GodToolsToolParser
 
 class GetLessonsListRepository: GetLessonsListRepositoryInterface {
     
@@ -16,14 +17,16 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
     private let getTranslatedToolName: GetTranslatedToolName
     private let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability
     private let lessonProgressRepository: UserLessonProgressRepository
-    
-    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, getTranslatedToolName: GetTranslatedToolName, getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability, lessonProgressRepository: UserLessonProgressRepository) {
+    private let userCountersRepository: UserCountersRepository
+
+    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, getTranslatedToolName: GetTranslatedToolName, getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability, lessonProgressRepository: UserLessonProgressRepository, userCountersRepository: UserCountersRepository) {
         
         self.resourcesRepository = resourcesRepository
         self.languagesRepository = languagesRepository
         self.getTranslatedToolName = getTranslatedToolName
         self.getTranslatedToolLanguageAvailability = getTranslatedToolLanguageAvailability
         self.lessonProgressRepository = lessonProgressRepository
+        self.userCountersRepository = userCountersRepository
     }
     
     func getLessonsListPublisher(appLanguage: AppLanguageDomainModel, filterLessonsByLanguage: LessonFilterLanguageDomainModel?) -> AnyPublisher<[LessonListItemDomainModel], Never> {
@@ -49,12 +52,7 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
                 let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel = self.getToolLanguageAvailability(appLanguage: appLanguage, filterLanguageModel: filterLanguageModel, resource: resource)
                 let lessonName: String = self.getTranslatedToolName.getToolName(resource: resource, translateInLanguage: filterLanguageModel?.code ?? appLanguage)
                 
-                let lessonProgress: LessonListItemProgressDomainModel
-                if let progress = self.lessonProgressRepository.getLessonProgress(lessonId: resource.id)?.progress {
-                    lessonProgress = LessonListItemProgressDomainModel(shouldShowLessonProgress: true, completionProgress: progress, progressString: "\(Int(progress*100))% Complete")
-                } else {
-                    lessonProgress = LessonListItemProgressDomainModel.hiddenProgessDomainModel()
-                }
+                let lessonProgress: LessonListItemProgressDomainModel = self.getLessonProgress(lesson: resource)
                 
                 return LessonListItemDomainModel(
                     analyticsToolName: resource.abbreviation,
@@ -92,6 +90,25 @@ extension GetLessonsListRepository {
         }
         else {
             return ToolLanguageAvailabilityDomainModel(availabilityString: "", isAvailable: false)
+        }
+    }
+    
+    func getLessonProgress(lesson: ResourceModel) -> LessonListItemProgressDomainModel {
+        
+        let lessonId = lesson.id
+        let lessonCompletionUserCounterId = UserCounterNames.shared.LESSON_COMPLETION(tool: lesson.abbreviation)
+        if self.userCountersRepository.getUserCounter(id: lessonCompletionUserCounterId) != nil {
+            
+            return .complete(completeString: "Complete")
+        }
+        else if let lessonProgress = self.lessonProgressRepository.getLessonProgress(lessonId: lessonId) {
+            
+            let progress = lessonProgress.progress
+            
+            return .inProgress(completionProgress: progress, progressString: "\(Int(progress*100))% Complete")
+           
+        } else {
+            return .hidden
         }
     }
 }

@@ -33,10 +33,17 @@ class LessonCardViewModel: ObservableObject {
         self.appLanguageAvailability = lessonListItem.availabilityInAppLanguage.availabilityString
         
         let lessonProgress = lessonListItem.lessonProgress
-        if lessonProgress.shouldShowLessonProgress {
-            self.shouldShowLessonProgress = true
-            self.lessonCompletionProgress = lessonProgress.completionProgress
-            self.completionString = lessonProgress.progressString
+        switch lessonProgress {
+        case .hidden:
+            self.completionString = ""
+            
+        case .inProgress(let completionProgress, let progressString):
+            shouldShowLessonProgress = true
+            self.lessonCompletionProgress = completionProgress
+            self.completionString = progressString
+            
+        case .complete(let completeString):
+            self.completionString = completeString
         }
         
         downloadBannerImage()

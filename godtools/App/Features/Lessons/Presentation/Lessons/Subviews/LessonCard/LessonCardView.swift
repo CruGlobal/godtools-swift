@@ -55,11 +55,11 @@ struct LessonCardView: View {
                     
                     HStack(alignment: .center, spacing: 10) {
                        
+                        Text(viewModel.completionString)
+                            .font(FontLibrary.sfProDisplayRegular.font(size: 12))
+                            .foregroundColor(ColorPalette.gtBlue.color)
+                        
                         if viewModel.shouldShowLessonProgress {
-                            Text(viewModel.completionString)
-                                .font(FontLibrary.sfProDisplayRegular.font(size: 12))
-                                .foregroundColor(ColorPalette.gtBlue.color)
-                            
                             LessonCompletionProgressBar(lessonCompletionProgress: viewModel.lessonCompletionProgress)
                                 .padding(.bottom, 5)
                         } else {
@@ -98,7 +98,7 @@ struct LessonCardView_Previews: PreviewProvider {
             bannerImageId: "1",
             dataModelId: "1",
             name: "Five Reasons to be Courageous",
-            lessonProgress: LessonListItemProgressDomainModel(shouldShowLessonProgress: true, completionProgress: 0.5, progressString: "Progress string")
+            lessonProgress: LessonListItemProgressDomainModel.inProgress(completionProgress: 0.7, progressString: "70% Complete")
         )
         
         let viewModel = LessonCardViewModel(
