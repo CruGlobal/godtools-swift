@@ -1,3 +1,6 @@
+"lessons.completionProgress" = "%@ Complete";
+"lessons.lessonCompleted" = "Completed";
+
 "language_name_fil" = "Filipino (Tagalog)";
 "lessons.filter.navBar.language" = "Lesson language";
 "lessons.languageFilter.title" = "Lessons in:";
