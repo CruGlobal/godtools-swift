@@ -13,12 +13,12 @@ import Combine
 class MobileContentTranslationsApi {
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
-    private let session: URLSession
+    private let requestSender: RequestSender
     private let baseUrl: String
     
     required init(config: AppConfig, ignoreCacheSession: IgnoreCacheSession) {
                     
-        session = ignoreCacheSession.session
+        requestSender = RequestSender(session: ignoreCacheSession.session)
         baseUrl = config.getMobileContentApiBaseUrl()
     }
     
@@ -27,20 +27,23 @@ class MobileContentTranslationsApi {
     private func getTranslationFileRequest(fileName: String) -> URLRequest {
         
         return requestBuilder.build(
-            session: session,
-            urlString: baseUrl + "/translations/files/" + fileName,
-            method: .get,
-            headers: nil,
-            httpBody: nil,
-            queryItems: nil
+            parameters: RequestBuilderParameters(
+                urlSession: requestSender.session,
+                urlString: baseUrl + "/translations/files/" + fileName,
+                method: .get,
+                headers: nil,
+                httpBody: nil,
+                queryItems: nil
+            )
         )
     }
     
-    func getTranslationFile(fileName: String) -> AnyPublisher<UrlRequestResponse, Error> {
+    func getTranslationFile(fileName: String) -> AnyPublisher<RequestDataResponse, Error> {
         
         let urlRequest: URLRequest = getTranslationFileRequest(fileName: fileName)
         
-        return session.sendUrlRequestPublisher(urlRequest: urlRequest)
+        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest)
+            .validate()
             .eraseToAnyPublisher()
     }
     
@@ -49,20 +52,23 @@ class MobileContentTranslationsApi {
     private func getTranslationZipFileRequest(translationId: String) -> URLRequest {
         
         return requestBuilder.build(
-            session: session,
-            urlString: baseUrl + "/translations/" + translationId,
-            method: .get,
-            headers: nil,
-            httpBody: nil,
-            queryItems: nil
+            parameters: RequestBuilderParameters(
+                urlSession: requestSender.session,
+                urlString: baseUrl + "/translations/" + translationId,
+                method: .get,
+                headers: nil,
+                httpBody: nil,
+                queryItems: nil
+            )
         )
     }
     
-    func getTranslationZipFile(translationId: String) -> AnyPublisher<UrlRequestResponse, Error> {
+    func getTranslationZipFile(translationId: String) -> AnyPublisher<RequestDataResponse, Error> {
         
         let urlRequest: URLRequest = getTranslationZipFileRequest(translationId: translationId)
         
-        return session.sendUrlRequestPublisher(urlRequest: urlRequest)
+        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest)
+            .validate()
             .eraseToAnyPublisher()
     }
 }

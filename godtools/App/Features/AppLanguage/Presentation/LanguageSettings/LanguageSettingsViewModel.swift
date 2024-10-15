@@ -100,6 +100,7 @@ extension LanguageSettingsViewModel {
             screenName: "Language Settings",
             siteSection: "menu",
             siteSubSection: "",
+            appLanguage: appLanguage,
             contentLanguage: nil,
             contentLanguageSecondary: nil
         )

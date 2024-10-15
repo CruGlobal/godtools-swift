@@ -12,20 +12,21 @@ import RequestOperation
 
 class MobileContentAttachmentsApi {
     
-    private let session: URLSession
+    private let requestSender: RequestSender
     private let baseUrl: String
     
     init(config: AppConfig, ignoreCacheSession: IgnoreCacheSession) {
                     
-        session = ignoreCacheSession.session
+        requestSender = RequestSender(session: ignoreCacheSession.session)
         baseUrl = config.getMobileContentApiBaseUrl()
     }
     
-    func getAttachmentFile(url: URL) -> AnyPublisher<UrlRequestResponse, Error> {
+    func getAttachmentFile(url: URL) -> AnyPublisher<RequestDataResponse, Error> {
         
         let urlRequest: URLRequest = URLRequest(url: url)
         
-        return session.sendUrlRequestPublisher(urlRequest: urlRequest)
+        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest)
+            .validate()
             .eraseToAnyPublisher()
     }
 }

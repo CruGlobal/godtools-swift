@@ -27,12 +27,14 @@ class MobileContentRendererAnalytics {
     func trackEvents(events: [AnalyticsEvent], renderedPageContext: MobileContentRenderedPageContext) {
         
         for event in events {
+            if !event.shouldTrigger(state: renderedPageContext.rendererState) { continue }
             trackEvent(event: event, renderedPageContext: renderedPageContext)
+            event.recordTriggered(state: renderedPageContext.rendererState)
         }
     }
     
     private func trackEvent(event: AnalyticsEvent, renderedPageContext: MobileContentRenderedPageContext) {
-
+        
         let action = event.action
         guard !action.isEmpty else {
             return
@@ -48,10 +50,11 @@ class MobileContentRendererAnalytics {
             }
              
             let resourceAbbreviation = renderedPageContext.resource.abbreviation
-            let pageNumber = renderedPageContext.page
+            let pageNumber = renderedPageContext.pageModel.position
             let screenName = resourceAbbreviation + "-" + String(pageNumber)
             
             analyticsSystem.trackMobileContentAction(
+                context: renderedPageContext,
                 screenName: screenName,
                 siteSection: resourceAbbreviation,
                 action: action,

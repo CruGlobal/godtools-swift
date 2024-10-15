@@ -14,6 +14,7 @@ struct TrackActionAnalyticsPropertiesDomainModel {
     let actionName: String
     let siteSection: String
     let siteSubSection: String
+    let appLanguage: String?
     let contentLanguage: String?
     let contentLanguageSecondary: String?
     let url: String?

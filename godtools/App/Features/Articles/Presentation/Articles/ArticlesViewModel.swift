@@ -241,6 +241,7 @@ extension ArticlesViewModel {
             screenName: analyticsScreenName,
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
+            appLanguage: appLanguage,
             contentLanguage: nil,
             contentLanguageSecondary: nil
         )

@@ -22,21 +22,37 @@ class DownloadToolLanguageRepository: DownloadToolLanguageRepositoryInterface {
         self.toolLanguageDownloader = toolLanguageDownloader
     }
     
-    func downloadToolTranslations(for languageId: String, languageCode: BCP47LanguageIdentifier) -> AnyPublisher<Double, Never> {
+    func downloadToolTranslations(for languageId: String, languageCode: BCP47LanguageIdentifier) -> AnyPublisher<Double, Error> {
             
         downloadedLanguagesRepository.storeDownloadedLanguage(languageId: languageId, downloadComplete: false)
         
         return toolLanguageDownloader
             .downloadToolLanguagePublisher(languageId: languageId)
-            .map {
+            .catch { (downloadError: Error) -> AnyPublisher<ToolDownloaderDataModel, Error> in
                 
-                let progress = $0.progress
+                return self.downloadedLanguagesRepository.deleteDownloadedLanguagePublisher(languageId: languageId)
+                    .catch { (deleteError: Error) -> AnyPublisher<Void, Error> in
+                       
+                        assertionFailure("Failed to delete object in RealmDatabase. \(deleteError.localizedDescription)")
+                        
+                        return Fail(error: downloadError)
+                            .eraseToAnyPublisher()
+                    }
+                    .flatMap({ (void: Void) -> AnyPublisher<ToolDownloaderDataModel, Error> in
+                        return Fail(error: downloadError)
+                            .eraseToAnyPublisher()
+                    })
+                    .eraseToAnyPublisher()
+            }
+            .map { (dataModel: ToolDownloaderDataModel) in
+                
+                let progress = dataModel.progress
                 
                 if progress >= 1 {
                     self.downloadedLanguagesRepository.storeDownloadedLanguage(languageId: languageId, downloadComplete: true)
                 }
                 
-                return $0.progress
+                return dataModel.progress
             }
             .eraseToAnyPublisher()
     }

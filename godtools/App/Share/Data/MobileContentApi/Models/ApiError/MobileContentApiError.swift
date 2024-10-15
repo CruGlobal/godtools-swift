@@ -11,7 +11,7 @@ import Foundation
 enum MobileContentApiError: Error {
     
     case other(error: Error)
-    case responseError(responseErrors: [MobileContentApiErrorCodable], error: Error)
+    case responseError(responseErrors: [MobileContentApiErrorCodable], error: Error = NSError.errorWithDescription(description: "Bad request from mobile content api.  Check responseErrors: [MobileContentApiErrorCodable]."))
 }
 
 extension MobileContentApiError {

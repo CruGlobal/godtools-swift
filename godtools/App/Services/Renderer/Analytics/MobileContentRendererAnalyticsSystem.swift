@@ -10,5 +10,5 @@ import Foundation
 
 protocol MobileContentRendererAnalyticsSystem {
     
-    func trackMobileContentAction(screenName: String, siteSection: String, action: String, data: [String: Any]?)
+    func trackMobileContentAction(context: MobileContentRenderedPageContext, screenName: String, siteSection: String, action: String, data: [String: Any]?)
 }

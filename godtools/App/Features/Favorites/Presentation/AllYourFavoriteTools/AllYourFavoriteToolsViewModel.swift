@@ -96,6 +96,7 @@ class AllYourFavoriteToolsViewModel: ObservableObject {
             screenName: analyticsScreenName,
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
+            appLanguage: nil,
             contentLanguage: nil,
             contentLanguageSecondary: nil
         )
@@ -108,6 +109,7 @@ class AllYourFavoriteToolsViewModel: ObservableObject {
             actionName: AnalyticsConstants.ActionNames.toolOpened,
             siteSection: "",
             siteSubSection: "",
+            appLanguage: nil,
             contentLanguage: nil,
             contentLanguageSecondary: nil,
             url: nil,
@@ -125,6 +127,7 @@ class AllYourFavoriteToolsViewModel: ObservableObject {
             actionName: AnalyticsConstants.ActionNames.openDetails,
             siteSection: "",
             siteSubSection: "",
+            appLanguage: nil,
             contentLanguage: nil,
             contentLanguageSecondary: nil,
             url: nil,

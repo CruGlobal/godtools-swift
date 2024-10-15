@@ -366,7 +366,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             }
             
         case .urlLinkTappedFromToolDetail(let url, let screenName, let siteSection, let siteSubSection, let contentLanguage, let contentLanguageSecondary):
-            navigateToURL(url: url, screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, contentLanguage: contentLanguage, contentLanguageSecondary: contentLanguageSecondary)
+            navigateToURL(url: url, screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, appLanguage: appLanguage, contentLanguage: contentLanguage, contentLanguageSecondary: contentLanguageSecondary)
             
         case .showOnboardingTutorial(let animated):
             navigateToOnboarding(animated: animated)
@@ -466,16 +466,19 @@ extension AppFlow {
         
         resourcesRepository
             .syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsIgnoringErrorPublisher()
-            .flatMap({ _ -> AnyPublisher<Void, Never> in
+            .setFailureType(to: Error.self)
+            .flatMap({ (result: RealmResourcesCacheSyncResult) -> AnyPublisher<Void, Error> in
                 
                 return self.toolLanguageDownloader
                     .syncDownloadedLanguagesPublisher()
                     .eraseToAnyPublisher()
             })
             .receive(on: DispatchQueue.main)
-            .sink { _ in
+            .sink(receiveCompletion: { _ in
                 
-            }
+            }, receiveValue: { _ in
+                
+            })
             .store(in: &cancellables)
         
         _ = followUpsService.postFailedFollowUpsIfNeeded()

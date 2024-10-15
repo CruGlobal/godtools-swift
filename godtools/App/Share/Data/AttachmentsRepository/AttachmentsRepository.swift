@@ -205,16 +205,16 @@ extension AttachmentsRepository {
         }
         
         return api.getAttachmentFile(url: url)
-            .flatMap({ (requestResponse: UrlRequestResponse) -> AnyPublisher<(Data, FileCacheLocation), Error> in
+            .flatMap({ (response: RequestDataResponse) -> AnyPublisher<(Data, FileCacheLocation), Error> in
                 
-                let justData = Just(requestResponse.data)
+                let justData = Just(response.data)
                     .setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
                 
                 let storeAttachment = self.resourcesFileCache.storeAttachmentFile(
                     attachmentId: attachment.id,
                     fileName: attachment.sha256,
-                    fileData: requestResponse.data
+                    fileData: response.data
                 )
                 
                 return justData.zip(storeAttachment)

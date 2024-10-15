@@ -120,6 +120,7 @@ extension ArticleCategoriesViewModel {
             screenName: analyticsScreenName,
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
+            appLanguage: nil,
             contentLanguage: nil,
             contentLanguageSecondary: nil
         )

@@ -58,6 +58,12 @@ class MobileContentPageView: MobileContentView, NibBased {
         }
     }
     
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        
+        viewModel.pageDidAppear()
+    }
+    
     private func addBackgroundImageBoundsChangeObserving() {
         
         backgroundImageView?.addParentBoundsChangeObserver(parentView: backgroundImageParent)

@@ -17,12 +17,13 @@ class TrackExitLinkAnalyticsUseCase {
         self.trackExitLinkAnalytics = trackExitLinkAnalytics
     }
     
-    func trackExitLinkAnalytics(screenName: String, siteSection: String, siteSubSection: String, contentLanguage: String?, contentLanguageSecondary: String?, url: URL) {
+    func trackExitLinkAnalytics(screenName: String, siteSection: String, siteSubSection: String, appLanguage: String?, contentLanguage: String?, contentLanguageSecondary: String?, url: URL) {
         
         let properties = TrackExitLinkAnalyticsPropertiesDomainModel(
             screenName: screenName,
             siteSection: siteSection,
             siteSubSection: siteSubSection,
+            appLanguage: appLanguage,
             contentLanguage: contentLanguage,
             contentLanguageSecondary: contentLanguageSecondary,
             url: url

@@ -146,6 +146,17 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
         
         return navigationEvent
     }
+    
+    override func createToolSettingsObserver(with toolSettingsLanguages: ToolSettingsLanguages) -> CYOAToolSettingsObserver {
+        let cyoaToolSettingsObserver = CYOAToolSettingsObserver(
+            toolId: renderer.value.resource.id,
+            languages: toolSettingsLanguages,
+            pageNumber: currentRenderedPageNumber,
+            trainingTipsEnabled: trainingTipsEnabled
+        )
+        
+        return cyoaToolSettingsObserver
+    }
 }
 
 // MARK: - Inputs
@@ -170,6 +181,13 @@ extension ChooseYourOwnAdventureViewModel {
             
             super.navigateToPage(page: previousPage, animated: true)
         }
+    }
+    
+    @objc func toolSettingsTapped() {
+        
+        let toolSettingsObserver = setUpToolSettingsObserver()
+        
+        flowDelegate?.navigate(step: .toolSettingsTappedFromChooseYourOwnAdventure(toolSettingsObserver: toolSettingsObserver))
     }
     
     func languageTapped(index: Int) {

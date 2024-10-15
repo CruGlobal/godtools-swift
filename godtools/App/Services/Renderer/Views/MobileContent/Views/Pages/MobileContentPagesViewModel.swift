@@ -32,6 +32,7 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
     private(set) var currentRenderedPageNumber: Int = 0
     private(set) var highestPageNumberViewed: Int = 0
     private(set) var trainingTipsEnabled: Bool = false
+    private(set) var toolSettingsObserver: ToolSettingsObserver?
     
     private(set) weak var window: UIViewController?
     
@@ -171,6 +172,59 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
         return pageModels[index]
     }
     
+    func createToolSettingsLanguages() -> ToolSettingsLanguages {
+        return ToolSettingsLanguages(
+            primaryLanguageId: languages[0].id,
+            parallelLanguageId: languages[safe: 1]?.id,
+            selectedLanguageId: languages[selectedLanguageIndex].id
+        )
+    }
+    
+    func createToolSettingsObserver(with toolSettingsLanguages: ToolSettingsLanguages) -> ToolSettingsObserver {
+        let toolSettingsObserver = ToolSettingsObserver(
+            toolId: renderer.value.resource.id,
+            languages: toolSettingsLanguages,
+            pageNumber: currentRenderedPageNumber,
+            trainingTipsEnabled: trainingTipsEnabled
+        )
+        
+        return toolSettingsObserver
+    }
+    
+    func attachObserversForToolSettings(_ toolSettingsObserver: ToolSettingsObserver) -> ToolSettingsObserver {
+        toolSettingsObserver.$languages
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (languages: ToolSettingsLanguages) in
+                
+                self?.setRendererPrimaryLanguage(
+                    primaryLanguageId: languages.primaryLanguageId,
+                    parallelLanguageId: languages.parallelLanguageId,
+                    selectedLanguageId: languages.selectedLanguageId
+                )
+            }
+            .store(in: &cancellables)
+        
+        toolSettingsObserver.$trainingTipsEnabled
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (trainingTipsEnabled: Bool) in
+                
+                self?.setTrainingTipsEnabled(enabled: trainingTipsEnabled)
+            }
+            .store(in: &cancellables)
+        
+        return toolSettingsObserver
+    }
+    
+    func setUpToolSettingsObserver() -> ToolSettingsObserver {
+        
+        let languages = createToolSettingsLanguages()
+        
+        let toolSettingsObserver = attachObserversForToolSettings(createToolSettingsObserver(with: languages))
+        self.toolSettingsObserver = toolSettingsObserver
+        
+        return toolSettingsObserver
+    }
+    
     // MARK: - Renderer / Page Renderer
     
     var primaryPageRenderer: MobileContentPageRenderer {
@@ -178,7 +232,7 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
     }
     
     var layoutDirection: UISemanticContentAttribute {
-        return UISemanticContentAttribute.from(languageDirection: LanguageDirectionDomainModel(languageModel: renderer.value.primaryLanguage))
+        return UISemanticContentAttribute.from(languageDirection: LanguageDirectionDomainModel(languageModel: renderer.value.languages.primaryLanguage))
     }
     
     func setRendererPrimaryLanguage(primaryLanguageId: String, parallelLanguageId: String?, selectedLanguageId: String?) {
@@ -747,7 +801,8 @@ extension MobileContentPagesViewModel {
         mobileContentEventAnalytics.trackContentEvent(
             eventId: eventId,
             resource: resource,
-            language: language
+            appLanguage: renderer.value.appLanguage,
+            languages: renderer.value.languages
         )
     }
     

@@ -30,6 +30,20 @@ struct MobileContentGlobalAnalyticsDecodable: Codable {
         case gospelPresentations = "gospel-presentations"
     }
     
+    static func createEmpty() -> MobileContentGlobalAnalyticsDecodable {
+        return MobileContentGlobalAnalyticsDecodable(countries: 0, id: "", gospelPresentations: 0, launches: 0, type: "", users: 0)
+    }
+    
+    init(countries: Int, id: String, gospelPresentations: Int, launches: Int, type: String, users: Int) {
+        
+        self.countries = countries
+        self.id = id
+        self.gospelPresentations = gospelPresentations
+        self.launches = launches
+        self.type = type
+        self.users = users
+    }
+    
     init(from decoder: Decoder) throws {
         
         let container = try decoder.container(keyedBy: RootKeys.self)
