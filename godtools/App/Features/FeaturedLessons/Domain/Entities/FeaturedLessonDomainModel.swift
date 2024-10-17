@@ -9,12 +9,12 @@
 import Foundation
 
 struct FeaturedLessonDomainModel: LessonListItemDomainModelInterface {
-        
     let analyticsToolName: String
     let availabilityInAppLanguage: ToolLanguageAvailabilityDomainModel
     let bannerImageId: String
     let dataModelId: String
     let name: String
+    var lessonProgress: LessonListItemProgressDomainModel
 }
 
 extension FeaturedLessonDomainModel: Identifiable {
