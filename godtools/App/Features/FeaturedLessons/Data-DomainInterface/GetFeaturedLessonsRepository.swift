@@ -15,16 +15,14 @@ class GetFeaturedLessonsRepository: GetFeaturedLessonsRepositoryInterface {
     private let languagesRepository: LanguagesRepository
     private let getTranslatedToolName: GetTranslatedToolName
     private let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability
-    private let lessonProgressRepository: UserLessonProgressRepository
     private let getLessonListItemProgressRepository: GetLessonListItemProgressRepository
     
-    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, getTranslatedToolName: GetTranslatedToolName, getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability, lessonProgressRepository: UserLessonProgressRepository, getLessonListItemProgressRepository: GetLessonListItemProgressRepository) {
+    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, getTranslatedToolName: GetTranslatedToolName, getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability, getLessonListItemProgressRepository: GetLessonListItemProgressRepository) {
         
         self.resourcesRepository = resourcesRepository
         self.languagesRepository = languagesRepository
         self.getTranslatedToolName = getTranslatedToolName
         self.getTranslatedToolLanguageAvailability = getTranslatedToolLanguageAvailability
-        self.lessonProgressRepository = lessonProgressRepository
         self.getLessonListItemProgressRepository = getLessonListItemProgressRepository
     }
     
@@ -34,7 +32,7 @@ class GetFeaturedLessonsRepository: GetFeaturedLessonsRepositoryInterface {
         
         return Publishers.CombineLatest(
             resourcesRepository.getResourcesChangedPublisher(),
-            lessonProgressRepository.getLessonProgressChangedPublisher()
+            getLessonListItemProgressRepository.getLessonListItemProgressChanged()
         )
         .flatMap({ (resourcesChanged: Void, lessonProgressDidChange: Void) -> AnyPublisher<[FeaturedLessonDomainModel], Never> in
             

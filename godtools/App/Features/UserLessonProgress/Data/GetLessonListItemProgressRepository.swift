@@ -9,6 +9,7 @@
 import Foundation
 import GodToolsToolParser
 import LocalizationServices
+import Combine
 
 class GetLessonListItemProgressRepository {
     
@@ -20,6 +21,10 @@ class GetLessonListItemProgressRepository {
         self.lessonProgressRepository = lessonProgressRepository
         self.userCountersRepository = userCountersRepository
         self.localizationServices = localizationServices
+    }
+    
+    func getLessonListItemProgressChanged() -> AnyPublisher<Void, Never> {
+        return lessonProgressRepository.getLessonProgressChangedPublisher()
     }
     
     func getLessonProgress(lesson: ResourceModel, appLanguage: AppLanguageDomainModel) -> LessonListItemProgressDomainModel {
