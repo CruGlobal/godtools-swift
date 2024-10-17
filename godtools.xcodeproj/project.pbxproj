@@ -1610,7 +1610,6 @@
 		D4E243CE29EDCA5700EA4BB7 /* ReportABugWebContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E243CD29EDCA5700EA4BB7 /* ReportABugWebContent.swift */; };
 		D4E243D029EDD2E800EA4BB7 /* AskAQuestionWebContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E243CF29EDD2E800EA4BB7 /* AskAQuestionWebContent.swift */; };
 		D4E7EE072C90E5D800F75DA6 /* LessonCompletionProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E7EE062C90E5D800F75DA6 /* LessonCompletionProgressBar.swift */; };
-		D4E7EE162CA3437F00F75DA6 /* UserLessonProgressDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E7EE152CA3437F00F75DA6 /* UserLessonProgressDomainModel.swift */; };
 		D4E7EE1A2CA345DD00F75DA6 /* UserLessonProgressRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E7EE192CA345DD00F75DA6 /* UserLessonProgressRepository.swift */; };
 		D4E7EE1C2CA48E6200F75DA6 /* RealmUserLessonProgressCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E7EE1B2CA48E6200F75DA6 /* RealmUserLessonProgressCache.swift */; };
 		D4E7EE1E2CA48F0000F75DA6 /* UserLessonProgressDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E7EE1D2CA48F0000F75DA6 /* UserLessonProgressDataModel.swift */; };
@@ -3386,7 +3385,6 @@
 		D4E243CD29EDCA5700EA4BB7 /* ReportABugWebContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportABugWebContent.swift; sourceTree = "<group>"; };
 		D4E243CF29EDD2E800EA4BB7 /* AskAQuestionWebContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskAQuestionWebContent.swift; sourceTree = "<group>"; };
 		D4E7EE062C90E5D800F75DA6 /* LessonCompletionProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonCompletionProgressBar.swift; sourceTree = "<group>"; };
-		D4E7EE152CA3437F00F75DA6 /* UserLessonProgressDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLessonProgressDomainModel.swift; sourceTree = "<group>"; };
 		D4E7EE192CA345DD00F75DA6 /* UserLessonProgressRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLessonProgressRepository.swift; sourceTree = "<group>"; };
 		D4E7EE1B2CA48E6200F75DA6 /* RealmUserLessonProgressCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmUserLessonProgressCache.swift; sourceTree = "<group>"; };
 		D4E7EE1D2CA48F0000F75DA6 /* UserLessonProgressDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLessonProgressDataModel.swift; sourceTree = "<group>"; };
@@ -11919,7 +11917,6 @@
 		D4E7EE102CA3424300F75DA6 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				D4E7EE152CA3437F00F75DA6 /* UserLessonProgressDomainModel.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -13078,7 +13075,6 @@
 				45DF34522A28D41600BB717E /* AppBuild.swift in Sources */,
 				45C925022B45E7AA005947DB /* AppHomeBarItem.swift in Sources */,
 				45AE975227C97A9500C2CB33 /* CardCollectionPageCard+MobileContentRenderableModel.swift in Sources */,
-				D4E7EE162CA3437F00F75DA6 /* UserLessonProgressDomainModel.swift in Sources */,
 				45AE974627C97A9400C2CB33 /* Button+MobileContentRenderableModel.swift in Sources */,
 				45AAC2AA2BB30F0A000AE690 /* MobileContentGlobalAnalyticsApi.swift in Sources */,
 				45BB42A22CBEA16700290F64 /* ToolSettingsNavigationFlow.swift in Sources */,
