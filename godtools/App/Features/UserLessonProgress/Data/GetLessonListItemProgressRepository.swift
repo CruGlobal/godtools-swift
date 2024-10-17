@@ -48,7 +48,7 @@ class GetLessonListItemProgressRepository {
                 locale: Locale(identifier: appLanguage.localeId),
                 percentageString
             )
-            return .inProgress(completionProgress: progress, progressString: progressString)
+            return .inProgress(progress: progress, progressString: progressString)
             
         } else {
             return .hidden

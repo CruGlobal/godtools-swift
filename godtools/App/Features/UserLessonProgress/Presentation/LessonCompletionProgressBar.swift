@@ -12,7 +12,7 @@ struct LessonCompletionProgressBar: View {
     
     private let progressBarHeight: CGFloat = 7
     
-    let lessonCompletionProgress: Double
+    let lessonProgress: Double
     
     var body: some View {
         GeometryReader { geometry in
@@ -26,16 +26,16 @@ struct LessonCompletionProgressBar: View {
                 
                 Rectangle()
                     .fill(ColorPalette.gtBlue.color)
-                    .frame(width: getProgressBarCompletionWidth(lessonCompletion: lessonCompletionProgress, progressBarWidth: progressBarWidth), height: progressBarHeight)
+                    .frame(width: getProgressWidth(lessonProgress: lessonProgress, progressBarWidth: progressBarWidth), height: progressBarHeight)
                     .cornerRadius(6)
             }
         }
         .frame(height: .zero)
     }
     
-    private func getProgressBarCompletionWidth(lessonCompletion: Double, progressBarWidth: CGFloat) -> CGFloat {
+    private func getProgressWidth(lessonProgress: Double, progressBarWidth: CGFloat) -> CGFloat {
         
-        let width: CGFloat = lessonCompletion * progressBarWidth
+        let width: CGFloat = lessonProgress * progressBarWidth
         
         if width < 0 {
             return 0

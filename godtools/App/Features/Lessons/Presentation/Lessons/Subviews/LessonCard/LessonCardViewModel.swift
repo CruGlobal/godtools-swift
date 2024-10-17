@@ -20,7 +20,7 @@ class LessonCardViewModel: ObservableObject {
     @Published var appLanguageAvailability: String = ""
     @Published var bannerImageData: OptionalImageData?
     @Published var shouldShowLessonProgress: Bool = false
-    @Published var lessonCompletionProgress: Double = 0
+    @Published var lessonProgress: Double = 0
     @Published var completionString: String = ""
     @Published var attachmentsDownloadProgressValue: Double = 0
     @Published var translationDownloadProgressValue: Double = 0
@@ -35,15 +35,17 @@ class LessonCardViewModel: ObservableObject {
         let lessonProgress = lessonListItem.lessonProgress
         switch lessonProgress {
         case .hidden:
-            self.completionString = ""
+            shouldShowLessonProgress = false
+            completionString = ""
             
-        case .inProgress(let completionProgress, let progressString):
+        case .inProgress(let progress, let progressString):
             shouldShowLessonProgress = true
-            self.lessonCompletionProgress = completionProgress
-            self.completionString = progressString
+            self.lessonProgress = progress
+            completionString = progressString
             
         case .complete(let completeString):
-            self.completionString = completeString
+            shouldShowLessonProgress = false
+            completionString = completeString
         }
         
         downloadBannerImage()

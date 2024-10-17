@@ -10,6 +10,6 @@ import Foundation
 
 enum LessonListItemProgressDomainModel {
     case hidden
-    case inProgress(completionProgress: Double, progressString: String)
+    case inProgress(progress: Double, progressString: String)
     case complete(completeString: String)
 }

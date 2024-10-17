@@ -60,7 +60,7 @@ struct LessonCardView: View {
                             .foregroundColor(ColorPalette.gtBlue.color)
                         
                         if viewModel.shouldShowLessonProgress {
-                            LessonCompletionProgressBar(lessonCompletionProgress: viewModel.lessonCompletionProgress)
+                            LessonCompletionProgressBar(lessonProgress: viewModel.lessonProgress)
                                 .padding(.bottom, 5)
                         } else {
                             Spacer()
@@ -98,7 +98,7 @@ struct LessonCardView_Previews: PreviewProvider {
             bannerImageId: "1",
             dataModelId: "1",
             name: "Five Reasons to be Courageous",
-            lessonProgress: LessonListItemProgressDomainModel.inProgress(completionProgress: 0.7, progressString: "70% Complete")
+            lessonProgress: LessonListItemProgressDomainModel.inProgress(progress: 0.7, progressString: "70% Complete")
         )
         
         let viewModel = LessonCardViewModel(
