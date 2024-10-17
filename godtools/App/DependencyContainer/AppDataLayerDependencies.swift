@@ -165,6 +165,14 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getLessonListItemProgressRepository() -> GetLessonListItemProgressRepository {
+        return GetLessonListItemProgressRepository(
+            lessonProgressRepository: getUserLessonProgressRepository(),
+            userCountersRepository: getUserCountersRepository(),
+            localizationServices: getLocalizationServices()
+        )
+    }
+    
     func getLocalizationLanguageNameRepository() -> LocalizationLanguageNameRepository {
         return LocalizationLanguageNameRepository(
             localizationServices: getLocalizationServices()

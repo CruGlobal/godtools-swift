@@ -8,8 +8,6 @@
 
 import Foundation
 import Combine
-import GodToolsToolParser
-import LocalizationServices
 
 class GetLessonsListRepository: GetLessonsListRepositoryInterface {
     
@@ -18,18 +16,16 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
     private let getTranslatedToolName: GetTranslatedToolName
     private let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability
     private let lessonProgressRepository: UserLessonProgressRepository
-    private let userCountersRepository: UserCountersRepository
-    private let localizationServices: LocalizationServices
+    private let getLessonListItemProgressRepository: GetLessonListItemProgressRepository
 
-    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, getTranslatedToolName: GetTranslatedToolName, getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability, lessonProgressRepository: UserLessonProgressRepository, userCountersRepository: UserCountersRepository, localizationServices: LocalizationServices) {
+    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, getTranslatedToolName: GetTranslatedToolName, getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability, lessonProgressRepository: UserLessonProgressRepository, getLessonListItemProgressRepository: GetLessonListItemProgressRepository) {
         
         self.resourcesRepository = resourcesRepository
         self.languagesRepository = languagesRepository
         self.getTranslatedToolName = getTranslatedToolName
         self.getTranslatedToolLanguageAvailability = getTranslatedToolLanguageAvailability
         self.lessonProgressRepository = lessonProgressRepository
-        self.userCountersRepository = userCountersRepository
-        self.localizationServices = localizationServices
+        self.getLessonListItemProgressRepository = getLessonListItemProgressRepository
     }
     
     func getLessonsListPublisher(appLanguage: AppLanguageDomainModel, filterLessonsByLanguage: LessonFilterLanguageDomainModel?) -> AnyPublisher<[LessonListItemDomainModel], Never> {
@@ -55,7 +51,7 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
                 let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel = self.getToolLanguageAvailability(appLanguage: appLanguage, filterLanguageModel: filterLanguageModel, resource: resource)
                 let lessonName: String = self.getTranslatedToolName.getToolName(resource: resource, translateInLanguage: filterLanguageModel?.code ?? appLanguage)
                 
-                let lessonProgress: LessonListItemProgressDomainModel = self.getLessonProgress(lesson: resource, appLanguage: appLanguage)
+                let lessonProgress: LessonListItemProgressDomainModel = self.getLessonListItemProgressRepository.getLessonProgress(lesson: resource, appLanguage: appLanguage)
                 
                 return LessonListItemDomainModel(
                     analyticsToolName: resource.abbreviation,
@@ -94,44 +90,5 @@ extension GetLessonsListRepository {
         else {
             return ToolLanguageAvailabilityDomainModel(availabilityString: "", isAvailable: false)
         }
-    }
-    
-    func getLessonProgress(lesson: ResourceModel, appLanguage: AppLanguageDomainModel) -> LessonListItemProgressDomainModel {
-        
-        let lessonId = lesson.id
-        let lessonCompletionUserCounterId = UserCounterNames.shared.LESSON_COMPLETION(tool: lesson.abbreviation)
-        if self.userCountersRepository.getUserCounter(id: lessonCompletionUserCounterId) != nil {
-            
-            let completeString = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage.localeId, key: "lessons.lessonCompleted")
-            return .complete(completeString: completeString)
-        }
-        else if let lessonProgress = self.lessonProgressRepository.getLessonProgress(lessonId: lessonId) {
-            
-            let progress = lessonProgress.progress
-            
-            let formatString = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage.localeId, key: "lessons.completionProgress")
-            let percentageString = formatProgressPercentage(progress: progress, appLanguage: appLanguage)
-            
-            let progressString = String(
-                format: formatString,
-                locale: Locale(identifier: appLanguage.localeId), 
-                percentageString
-            )
-            return .inProgress(completionProgress: progress, progressString: progressString)
-           
-        } else {
-            return .hidden
-        }
-    }
-    
-    func formatProgressPercentage(progress: Double, appLanguage: AppLanguageDomainModel) -> String {
-        
-        let numberFormatter = NumberFormatter()
-        numberFormatter.numberStyle = .percent
-        numberFormatter.maximumFractionDigits = 0
-        numberFormatter.minimumFractionDigits = 0
-        numberFormatter.locale = Locale(identifier: appLanguage.localeId)
-        
-        return numberFormatter.string(from: NSNumber(value: progress)) ?? "\(progress)%"
     }
 }

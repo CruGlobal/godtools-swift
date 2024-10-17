@@ -34,8 +34,7 @@ class LessonsFeatureDataLayerDependencies {
             getTranslatedToolName: coreDataLayer.getTranslatedToolName(),
             getTranslatedToolLanguageAvailability: coreDataLayer.getTranslatedToolLanguageAvailability(),
             lessonProgressRepository: coreDataLayer.getUserLessonProgressRepository(), 
-            userCountersRepository: coreDataLayer.getUserCountersRepository(), 
-            localizationServices: coreDataLayer.getLocalizationServices()
+            getLessonListItemProgressRepository: coreDataLayer.getLessonListItemProgressRepository()
         )
     }
 }
