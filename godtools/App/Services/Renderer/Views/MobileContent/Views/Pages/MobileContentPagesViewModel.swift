@@ -17,7 +17,6 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
     private let mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getTranslatedLanguageName: GetTranslatedLanguageName
-    private let storeLessonProgressUseCase: StoreUserLessonProgressUseCase?
     private let initialPageRenderingType: MobileContentPagesInitialPageRenderingType
     private let initialPage: MobileContentPagesPage
     private let initialSelectedLanguageIndex: Int
@@ -45,7 +44,7 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
     let pageNavigationEventSignal: SignalValue<MobileContentPagesNavigationEvent> = SignalValue()
     let incrementUserCounterUseCase: IncrementUserCounterUseCase
     
-    init(renderer: MobileContentRenderer, initialPage: MobileContentPagesPage?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTranslatedLanguageName: GetTranslatedLanguageName, storeLessonProgressUseCase: StoreUserLessonProgressUseCase?, initialPageRenderingType: MobileContentPagesInitialPageRenderingType, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?) {
+    init(renderer: MobileContentRenderer, initialPage: MobileContentPagesPage?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTranslatedLanguageName: GetTranslatedLanguageName, initialPageRenderingType: MobileContentPagesInitialPageRenderingType, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?) {
         
         self.renderer = CurrentValueSubject(renderer)
         self.currentPageRenderer = CurrentValueSubject(renderer.pageRenderers[0])
@@ -55,7 +54,6 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
         self.mobileContentEventAnalytics = mobileContentEventAnalytics
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getTranslatedLanguageName = getTranslatedLanguageName
-        self.storeLessonProgressUseCase = storeLessonProgressUseCase
         self.initialPageRenderingType = initialPageRenderingType
         self.trainingTipsEnabled = trainingTipsEnabled
         self.incrementUserCounterUseCase = incrementUserCounterUseCase
@@ -633,19 +631,6 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
         if let currentPage = getPage(index: page) {
             
             updateCachedPageDataForPageChange(currentPage: currentPage)
-            
-            let resourceId = currentPageRenderer.value.resource.id
-
-            storeLessonProgressUseCase?.storeLessonProgress(
-                lessonId: resourceId,
-                lastViewedPageId: currentPage.id,
-                lastViewedPageNumber: page,
-                totalPageCount: pageModels.count
-            )
-            .sink { _ in
-                
-            }
-            .store(in: &cancellables)
         }
         
         currentRenderedPageNumber = page
