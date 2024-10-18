@@ -11,9 +11,9 @@ import RealmSwift
 
 class RealmUserLessonProgress: Object {
     
-    @objc dynamic var lessonId: String = ""
-    @objc dynamic var lastViewedPageId: String = ""
-    @objc dynamic var progress: Double = 0.0
+    @Persisted var lessonId: String = ""
+    @Persisted var lastViewedPageId: String = ""
+    @Persisted var progress: Double = 0.0
     
     override class func primaryKey() -> String? {
         return "lessonId"
