@@ -14,7 +14,7 @@ struct FeaturedLessonDomainModel: LessonListItemDomainModelInterface {
     let bannerImageId: String
     let dataModelId: String
     let name: String
-    var lessonProgress: LessonListItemProgressDomainModel
+    let lessonProgress: LessonListItemProgressDomainModel
 }
 
 extension FeaturedLessonDomainModel: Identifiable {

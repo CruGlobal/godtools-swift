@@ -11893,6 +11893,7 @@
 		D4E7EE0B2CA3415300F75DA6 /* Data-DomainInterface */ = {
 			isa = PBXGroup;
 			children = (
+				D4960CC12CBDE40B0090B114 /* GetLessonListItemProgressRepository.swift */,
 				D4E7EE252CA5E62B00F75DA6 /* StoreUserLessonProgressRepository.swift */,
 			);
 			path = "Data-DomainInterface";
@@ -11930,7 +11931,6 @@
 			isa = PBXGroup;
 			children = (
 				D4E7EE172CA345C800F75DA6 /* UserLessonProgressRepository */,
-				D4960CC12CBDE40B0090B114 /* GetLessonListItemProgressRepository.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
