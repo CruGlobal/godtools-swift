@@ -1,6 +1,5 @@
 "lessons.lessonCompleted" = "Completed";
 "lessons.completionProgress" = "%@ Complete";
-
 "network_connection_lost" = "The network connection was lost.";
 "language_name_fil" = "Filipino (Tagalog)";
 "lessons.filter.navBar.language" = "Lesson language";
