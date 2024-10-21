@@ -17,7 +17,7 @@ class StoreUserLessonProgressUseCase {
         self.storeLessonProgressRepository = storeLessonProgressRepository
     }
     
-    func storeLessonProgress(lessonId: String, lastViewedPageId: String, lastViewedPageNumber: Int, totalPageCount: Int) -> AnyPublisher<Void, Never> {
+    func storeLessonProgress(lessonId: String, lastViewedPageId: String, lastViewedPageNumber: Int, totalPageCount: Int) -> AnyPublisher<UserLessonProgressDomainModel, Error> {
         
         return storeLessonProgressRepository.storeLessonProgress(
             lessonId: lessonId, 

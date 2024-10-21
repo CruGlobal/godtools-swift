@@ -17,7 +17,7 @@ class StoreUserLessonProgressRepository: StoreUserLessonProgressRepositoryInterf
         self.lessonProgressRepository = lessonProgressRepository
     }
     
-    func storeLessonProgress(lessonId: String, lastViewedPageId: String, lastViewedPageNumber: Int, totalPageCount: Int) -> AnyPublisher<Void, Never> {
+    func storeLessonProgress(lessonId: String, lastViewedPageId: String, lastViewedPageNumber: Int, totalPageCount: Int) -> AnyPublisher<UserLessonProgressDomainModel, Error> {
         
         let lessonProgress = UserLessonProgressDataModel(
             lessonId: lessonId,
@@ -25,9 +25,10 @@ class StoreUserLessonProgressRepository: StoreUserLessonProgressRepositoryInterf
             progress: Double(lastViewedPageNumber) / Double(totalPageCount)
         )
         
-        lessonProgressRepository.storeLessonProgress(lessonProgress)
-        
-        return Just(Void())
+        return lessonProgressRepository.storeLessonProgress(lessonProgress)
+            .map {
+                UserLessonProgressDomainModel(dataModel: $0)
+            }
             .eraseToAnyPublisher()
     }
 }

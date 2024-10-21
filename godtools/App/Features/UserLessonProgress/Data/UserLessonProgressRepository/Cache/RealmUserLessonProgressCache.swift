@@ -29,7 +29,7 @@ class RealmUserLessonProgressCache {
     
     func getUserLessonProgress(lessonId: String) -> UserLessonProgressDataModel? {
         
-        if let realmLessonProgress = realmDatabase.openRealm().object(ofType: RealmUserLessonProgress.self, forPrimaryKey: lessonId) {
+        if let realmLessonProgress: RealmUserLessonProgress = realmDatabase.readObject(primaryKey: lessonId) {
             
             return UserLessonProgressDataModel(realmUserLessonProgress: realmLessonProgress)
         } else {
@@ -37,23 +37,26 @@ class RealmUserLessonProgressCache {
         }
     }
     
-    func storeUserLessonProgress(_ lessonProgress: UserLessonProgressDataModel) {
+    func storeUserLessonProgress(_ lessonProgress: UserLessonProgressDataModel) -> AnyPublisher<UserLessonProgressDataModel, Error> {
         
-        let realm: Realm = realmDatabase.openRealm()
-        
-        let realmLessonProgress = RealmUserLessonProgress()
-        realmLessonProgress.lessonId = lessonProgress.lessonId
-        realmLessonProgress.lastViewedPageId = lessonProgress.lastViewedPageId
-        realmLessonProgress.progress = lessonProgress.progress
-        
-        do {
+        return realmDatabase.writeObjectsPublisher { realm in
             
-            try realm.write {
-                realm.add(realmLessonProgress, update: .modified)
+            let realmLessonProgress = RealmUserLessonProgress()
+            realmLessonProgress.lessonId = lessonProgress.lessonId
+            realmLessonProgress.lastViewedPageId = lessonProgress.lastViewedPageId
+            realmLessonProgress.progress = lessonProgress.progress
+            
+            return [realmLessonProgress]
+            
+        } mapInBackgroundClosure: { (objects: [RealmUserLessonProgress]) in
+            
+            objects.map {
+                UserLessonProgressDataModel(realmUserLessonProgress: $0)
             }
         }
-        catch let error {
-            print(error)
+        .map { _ in
+            return lessonProgress
         }
+        .eraseToAnyPublisher()
     }
 }

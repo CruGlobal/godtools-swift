@@ -21,7 +21,7 @@ class UserLessonProgressRepository {
         return cache.getUserLessonProgressChangedPublisher()
     }
     
-    func storeLessonProgress(_ lessonProgress: UserLessonProgressDataModel) {
+    func storeLessonProgress(_ lessonProgress: UserLessonProgressDataModel) -> AnyPublisher<UserLessonProgressDataModel, Error> {
         cache.storeUserLessonProgress(lessonProgress)
     }
     
