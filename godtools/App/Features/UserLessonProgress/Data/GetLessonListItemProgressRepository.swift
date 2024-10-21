@@ -16,11 +16,13 @@ class GetLessonListItemProgressRepository {
     private let lessonProgressRepository: UserLessonProgressRepository
     private let userCountersRepository: UserCountersRepository
     private let localizationServices: LocalizationServices
+    private let getTranslatedPercentage: GetTranslatedPercentage
     
-    init(lessonProgressRepository: UserLessonProgressRepository, userCountersRepository: UserCountersRepository, localizationServices: LocalizationServices) {
+    init(lessonProgressRepository: UserLessonProgressRepository, userCountersRepository: UserCountersRepository, localizationServices: LocalizationServices, getTranslatedPercentage: GetTranslatedPercentage) {
         self.lessonProgressRepository = lessonProgressRepository
         self.userCountersRepository = userCountersRepository
         self.localizationServices = localizationServices
+        self.getTranslatedPercentage = getTranslatedPercentage
     }
     
     func getLessonListItemProgressChanged() -> AnyPublisher<Void, Never> {
@@ -41,7 +43,7 @@ class GetLessonListItemProgressRepository {
             let progress = lessonProgress.progress
             
             let formatString = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage.localeId, key: "lessons.completionProgress")
-            let percentageString = formatProgressPercentage(progress: progress, appLanguage: appLanguage)
+            let percentageString = getTranslatedPercentage.getTranslatedPercentage(percentValue: progress, translateInLanguage: appLanguage)
             
             let progressString = String(
                 format: formatString,
@@ -53,19 +55,5 @@ class GetLessonListItemProgressRepository {
         } else {
             return .hidden
         }
-    }
-}
-
-extension GetLessonListItemProgressRepository {
-    
-    private func formatProgressPercentage(progress: Double, appLanguage: AppLanguageDomainModel) -> String {
-        
-        let numberFormatter = NumberFormatter()
-        numberFormatter.numberStyle = .percent
-        numberFormatter.maximumFractionDigits = 0
-        numberFormatter.minimumFractionDigits = 0
-        numberFormatter.locale = Locale(identifier: appLanguage.localeId)
-        
-        return numberFormatter.string(from: NSNumber(value: progress)) ?? "\(progress)%"
     }
 }

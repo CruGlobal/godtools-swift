@@ -169,7 +169,8 @@ class AppDataLayerDependencies {
         return GetLessonListItemProgressRepository(
             lessonProgressRepository: getUserLessonProgressRepository(),
             userCountersRepository: getUserCountersRepository(),
-            localizationServices: getLocalizationServices()
+            localizationServices: getLocalizationServices(), 
+            getTranslatedPercentage: getTranslatedPercentage()
         )
     }
     
@@ -322,6 +323,10 @@ class AppDataLayerDependencies {
     
     func getTranslatedNumberCount() -> GetTranslatedNumberCount {
         return GetTranslatedNumberCount()
+    }
+    
+    func getTranslatedPercentage() -> GetTranslatedPercentage {
+        return GetTranslatedPercentage()
     }
     
     func getTranslatedToolCategory() -> GetTranslatedToolCategory {
