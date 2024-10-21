@@ -1,3 +1,5 @@
+"lessons.lessonCompleted" = "Pabeigts";
+"lessons.completionProgress" = "%@ pabeigts";
 "network_connection_lost" = "Tīkla savienojums tika pārtraukts.";
 "language_name_fil" = "filipīniešu (tagalu)";
 "lessons.filter.navBar.language" = "Nodarbības valoda";
