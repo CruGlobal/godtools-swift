@@ -71,7 +71,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
         return []
     }
     
-    override func getPageNavigationEvent(page: Page, animated: Bool) -> MobileContentPagesNavigationEvent {
+    override func getPageNavigationEvent(page: Page, animated: Bool, reloadCollectionViewDataNeeded: Bool) -> MobileContentPagesNavigationEvent {
         
         let pages: [Page] = super.getPages()
         

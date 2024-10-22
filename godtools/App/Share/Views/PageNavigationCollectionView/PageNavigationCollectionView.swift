@@ -534,14 +534,11 @@ extension PageNavigationCollectionView {
             return false
         }
         
-        DispatchQueue.main.async {
-            
-            self.collectionView.scrollToItem(
-                at: IndexPath(item: item, section: 0),
-                at: .centeredHorizontally,
-                animated: animated
-            )
-        }
+        collectionView.scrollToItem(
+            at: IndexPath(item: item, section: 0),
+            at: .centeredHorizontally,
+            animated: animated
+        )
         
         return true
     }
