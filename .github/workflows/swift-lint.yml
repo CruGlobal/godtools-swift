@@ -13,7 +13,7 @@ concurrency:
 
 jobs:
   swift_lint:
-    runs-on: macos-14
+    runs-on: macos-15
     env:
       FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT: 60
 
