@@ -21,6 +21,6 @@ extension Flow {
             url: url
         )
                 
-        UIApplication.shared.open(url)
+        ExitAppToUrl.open(url: url)
     }
 }
