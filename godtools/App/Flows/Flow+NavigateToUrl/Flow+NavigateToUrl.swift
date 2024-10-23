@@ -21,7 +21,7 @@ extension Flow {
             contentLanguageSecondary: contentLanguageSecondary,
             url: url
         )
-                
-        UIApplication.shared.open(url)
+            
+        appDiContainer.getUrlOpener().open(url: url)
     }
 }
