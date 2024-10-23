@@ -53,10 +53,10 @@ class DownloadToolTranslationsFlow: Flow {
         }, receiveValue: { [weak self] (toolTranslations: ToolTranslationsDomainModel) in
             
             if let downloadToolProgressView = self?.downloadToolProgressView {
-                
-                downloadToolProgressView.completeDownloadProgress {
-                    self?.dismissDownloadTool(completion: nil)
-                    self?.didDownloadToolTranslations(.success(toolTranslations))
+                downloadToolProgressView.completeDownloadProgress { [weak self] in
+                    self?.dismissDownloadTool(completion: { [weak self] in
+                        self?.didDownloadToolTranslations(.success(toolTranslations))
+                    })
                 }
             }
             else {
