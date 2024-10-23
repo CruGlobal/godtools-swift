@@ -407,7 +407,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             let didParseDeepLinkFromUrl: Bool = deepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
             
             if !didParseDeepLinkFromUrl {
-                ExitAppToUrl.open(url: url)
+                appDiContainer.getUrlOpener().open(url: url)
             }
             
         case .learnToShareToolTappedFromToolDetails(let toolId, let primaryLanguage, let parallelLanguage, let selectedLanguageIndex):

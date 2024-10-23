@@ -20,7 +20,7 @@ extension Flow {
             contentLanguageSecondary: contentLanguageSecondary,
             url: url
         )
-                
-        ExitAppToUrl.open(url: url)
+            
+        appDiContainer.getUrlOpener().open(url: url)
     }
 }

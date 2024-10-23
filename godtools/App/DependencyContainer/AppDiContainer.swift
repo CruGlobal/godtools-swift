@@ -80,6 +80,10 @@ class AppDiContainer {
         return CardJumpService(cardJumpCache: CardJumpUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache))
     }
     
+    func getUrlOpener() -> UrlOpenerInterface {
+        return OpenUrlWithSwiftUI() // TODO: GT-2466 Return OpenUrlWithUIKit() once supporting FBSDK 17.3+ ~Levi
+    }
+    
     func getFirebaseConfiguration() -> FirebaseConfiguration {
         return FirebaseConfiguration(config: dataLayer.getAppConfig())
     }
