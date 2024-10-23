@@ -145,7 +145,8 @@ class GetLessonsListRepositoryTests: QuickSpec {
             resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),
             languagesRepository: testsDiContainer.dataLayer.getLanguagesRepository(),
             getTranslatedToolName: Self.getTranslatedToolName(testsDiContainer: testsDiContainer),
-            getTranslatedToolLanguageAvailability: Self.getTranslatedToolLanguageAvailability(testsDiContainer: testsDiContainer)
+            getTranslatedToolLanguageAvailability: Self.getTranslatedToolLanguageAvailability(testsDiContainer: testsDiContainer), 
+            getLessonListItemProgressRepository: testsDiContainer.dataLayer.getLessonListItemProgressRepository()
         )
         
         describe("User is viewing the lessons list.") {
