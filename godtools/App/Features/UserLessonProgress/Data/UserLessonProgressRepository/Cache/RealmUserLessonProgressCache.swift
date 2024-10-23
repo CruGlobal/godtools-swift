@@ -39,7 +39,7 @@ class RealmUserLessonProgressCache {
     
     func storeUserLessonProgress(_ lessonProgress: UserLessonProgressDataModel) -> AnyPublisher<UserLessonProgressDataModel, Error> {
         
-        return realmDatabase.writeObjectsPublisher { realm in
+        return realmDatabase.writeObjectsPublisher(updatePolicy: .modified) { realm in
             
             let realmLessonProgress = RealmUserLessonProgress()
             realmLessonProgress.lessonId = lessonProgress.lessonId
