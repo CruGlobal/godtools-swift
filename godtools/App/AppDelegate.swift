@@ -12,7 +12,6 @@ import SocialAuthentication
 import FacebookCore
 import FirebaseDynamicLinks
 
-@UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
                
     private lazy var appBuild: AppBuild = {
