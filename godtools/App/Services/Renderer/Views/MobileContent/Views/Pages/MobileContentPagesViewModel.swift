@@ -377,8 +377,19 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
         switch initialPage {
         
         case .pageId(let value):
-            return allPages.first(where: {$0.id == value})
-       
+            var page = allPages.first(where: {$0.id == value})
+            
+            while(page?.isHidden == true) {
+                page = page?.previousPage
+            }
+                        
+            let visiblePages = pageRenderer.getVisiblePageModels()
+            if page?.id == visiblePages.last?.id {
+                page = visiblePages.first
+            }
+            
+            return page
+            
         case .pageNumber(let value):
             
             if value >= 0 && value < allPages.count {
@@ -420,7 +431,7 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
             return nil
         }
         
-        return getPageNavigationEvent(page: initialPage, animated: false)
+        return getPageNavigationEvent(page: initialPage, animated: false, reloadCollectionViewDataNeeded: true)
     }
     
     private func checkIfEventIsPageListenerAndNavigate(eventId: EventId) -> Bool {
@@ -461,7 +472,7 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
         sendPageNavigationEvent(navigationEvent: navigationEvent)
     }
         
-    func getPageNavigationEvent(page: Page, animated: Bool) -> MobileContentPagesNavigationEvent {
+    func getPageNavigationEvent(page: Page, animated: Bool, reloadCollectionViewDataNeeded: Bool = false) -> MobileContentPagesNavigationEvent {
                 
         let currentRenderedPages: [Page] = pageModels
                 
@@ -508,7 +519,7 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
                 navigationDirection: nil,
                 page: pageIndexToNavigateTo,
                 animated: animated,
-                reloadCollectionViewDataNeeded: false,
+                reloadCollectionViewDataNeeded: reloadCollectionViewDataNeeded,
                 insertPages: insertPages,
                 deletePages: nil
             ),
