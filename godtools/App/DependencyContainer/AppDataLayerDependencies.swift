@@ -170,7 +170,8 @@ class AppDataLayerDependencies {
             lessonProgressRepository: getUserLessonProgressRepository(),
             userCountersRepository: getUserCountersRepository(),
             localizationServices: getLocalizationServices(), 
-            getTranslatedPercentage: getTranslatedPercentage()
+            getTranslatedPercentage: getTranslatedPercentage(), 
+            appBuild: getAppBuild()
         )
     }
     

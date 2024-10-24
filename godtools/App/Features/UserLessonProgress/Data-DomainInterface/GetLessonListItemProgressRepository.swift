@@ -17,12 +17,14 @@ class GetLessonListItemProgressRepository {
     private let userCountersRepository: UserCountersRepository
     private let localizationServices: LocalizationServices
     private let getTranslatedPercentage: GetTranslatedPercentage
+    private let appBuild: AppBuild
     
-    init(lessonProgressRepository: UserLessonProgressRepository, userCountersRepository: UserCountersRepository, localizationServices: LocalizationServices, getTranslatedPercentage: GetTranslatedPercentage) {
+    init(lessonProgressRepository: UserLessonProgressRepository, userCountersRepository: UserCountersRepository, localizationServices: LocalizationServices, getTranslatedPercentage: GetTranslatedPercentage, appBuild: AppBuild) {
         self.lessonProgressRepository = lessonProgressRepository
         self.userCountersRepository = userCountersRepository
         self.localizationServices = localizationServices
         self.getTranslatedPercentage = getTranslatedPercentage
+        self.appBuild = appBuild
     }
     
     func getLessonListItemProgressChanged() -> AnyPublisher<Void, Never> {
@@ -31,14 +33,20 @@ class GetLessonListItemProgressRepository {
     
     func getLessonProgress(lesson: ResourceModel, appLanguage: AppLanguageDomainModel) -> LessonListItemProgressDomainModel {
         
-        let lessonId = lesson.id
-        let lessonCompletionUserCounterId = UserCounterNames.shared.LESSON_COMPLETION(tool: lesson.abbreviation)
+        let lessonCompletionUserCounterId: String
+        // TODO: Currently this is here to fix a random crash in godtoolsTests (See GT-2467).  Is this the best way to prevent this code from running in godtoolsTests?  Investigate this more.
+        if appBuild.isTestsTarget {
+            lessonCompletionUserCounterId = "lesson_completions.\(lesson.abbreviation)"
+        } else {
+            lessonCompletionUserCounterId = UserCounterNames.shared.LESSON_COMPLETION(tool: lesson.abbreviation)
+        }
+
         if self.userCountersRepository.getUserCounter(id: lessonCompletionUserCounterId) != nil {
             
             let completeString = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage.localeId, key: "lessons.lessonCompleted")
             return .complete(completeString: completeString)
         }
-        else if let lessonProgress = self.lessonProgressRepository.getLessonProgress(lessonId: lessonId) {
+        else if let lessonProgress = self.lessonProgressRepository.getLessonProgress(lessonId: lesson.id) {
             
             let progress = lessonProgress.progress
             
