@@ -1,4 +1,4 @@
-name: Update Swift Package Dependencies
+name: Update Xcode Project Swift Package Dependencies
 
 on: 
   schedule:
@@ -12,7 +12,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  update_swift_package_dependencies:
+  update_xcode_project_swift_package_dependencies:
     runs-on: macos-15
 
     steps:
@@ -35,5 +35,5 @@ jobs:
         with:
           branch: 'dependencies/xcode-swift-package-dependencies'
           delete-branch: true
-          commit-message: 'Update Xcode Dependencies'
-          title: 'Updated Xcode Dependencies'
+          commit-message: 'Update Xcode Project Swift Package Dependencies'
+          title: 'Updated Xcode Project Swift Package Dependencies'
