@@ -13,7 +13,7 @@ class LessonViewModel: MobileContentPagesViewModel {
     
     private weak var flowDelegate: FlowDelegate?
     private let storeLessonProgressUseCase: StoreUserLessonProgressUseCase
-    private var storeLessonProgressCancellable: AnyCancellable?
+    private static var storeLessonProgressCancellable: AnyCancellable?
     
     let progress: ObservableValue<AnimatableValue<CGFloat>> = ObservableValue(value: AnimatableValue(value: 0, animated: false))
     
@@ -55,19 +55,19 @@ class LessonViewModel: MobileContentPagesViewModel {
         if let currentPage = getPage(index: page) {
             let resourceId = currentPageRenderer.value.resource.id
 
-            if let storeLessonProgressCancellable = storeLessonProgressCancellable {
+            if let storeLessonProgressCancellable = LessonViewModel.storeLessonProgressCancellable {
                 storeLessonProgressCancellable.cancel()
-                self.storeLessonProgressCancellable = nil
+                LessonViewModel.storeLessonProgressCancellable = nil
             }
             
-            storeLessonProgressCancellable = storeLessonProgressUseCase.storeLessonProgress(
+            LessonViewModel.storeLessonProgressCancellable = storeLessonProgressUseCase.storeLessonProgress(
                 lessonId: resourceId,
                 lastViewedPageId: currentPage.id,
                 lastViewedPageNumber: page,
                 totalPageCount: getPages().count
             )
             .sink(receiveCompletion: { _ in
-                print("store")
+                
             }, receiveValue: { _ in
                 
             })
