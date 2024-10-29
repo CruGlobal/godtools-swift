@@ -30,7 +30,7 @@ jobs:
           failWhenOutdated: false
 
       - name: Create Pull Request
-      if: steps.resolution.outputs.dependenciesChanged == 'true'
+        if: steps.resolution.outputs.dependenciesChanged == 'true'
         uses: peter-evans/create-pull-request@v7
         with:
           branch: 'dependencies/xcode-swift-package-dependencies'
