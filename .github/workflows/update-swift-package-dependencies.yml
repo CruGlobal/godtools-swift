@@ -1,0 +1,39 @@
+name: Update Xcode Project Swift Package Dependencies
+
+on: 
+  schedule:
+    - cron: '0 0 * * 5'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  update_xcode_project_swift_package_dependencies:
+    runs-on: macos-15
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Resolve Dependencies
+        id: resolution
+        uses: GetSidetrack/action-xcodeproj-spm-update@main
+        with:
+          directory: godtools
+          workspace: 'godtools.xcworkspace'
+          scheme: 'GodTools-Production'
+          forceResolution: true
+          failWhenOutdated: false
+
+      - name: Create Pull Request
+        if: steps.resolution.outputs.dependenciesChanged == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: 'dependencies/xcode-swift-package-dependencies'
+          delete-branch: true
+          commit-message: 'Update Xcode Project Swift Package Dependencies'
+          title: 'Updated Xcode Project Swift Package Dependencies'
