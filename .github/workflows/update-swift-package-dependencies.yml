@@ -23,7 +23,6 @@ jobs:
         id: resolution
         uses: GetSidetrack/action-xcodeproj-spm-update@main
         with:
-          directory: godtools
           workspace: 'godtools.xcworkspace'
           scheme: 'GodTools-Production'
           forceResolution: true
