@@ -36,11 +36,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }()
     
     private lazy var appDiContainer: AppDiContainer = {
-        AppDiContainer(appBuild: appBuild, appConfig: appConfig, infoPlist: infoPlist, realmDatabase: realmDatabase)
+        AppDiContainer(
+            appBuild: appBuild,
+            appConfig: appConfig,
+            infoPlist: infoPlist,
+            realmDatabase: realmDatabase,
+            appMessagingEnabled: true
+        )
     }()
     
     private lazy var appFlow: AppFlow = {
-        AppFlow(appDiContainer: appDiContainer, appDeepLinkingService: appDeepLinkingService)
+        AppFlow(
+            appDiContainer: appDiContainer,
+            appDeepLinkingService: appDeepLinkingService
+        )
     }()
     
     private var toolShortcutLinks: ToolShortcutLinksView?
