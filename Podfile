@@ -5,8 +5,6 @@ source 'https://github.com/CruGlobal/cocoapods-specs.git'
 # Uncomment this line to define a global platform for your project
 platform :ios, '14.0'
 
-use_frameworks!
-
 # Specs finder:
 # https://github.com/CocoaPods/Specs/find/master
 
