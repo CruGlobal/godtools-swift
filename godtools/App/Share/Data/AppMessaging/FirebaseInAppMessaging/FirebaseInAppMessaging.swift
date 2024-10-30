@@ -9,37 +9,22 @@
 import Foundation
 import FirebaseInAppMessaging
 
-protocol FirebaseInAppMessagingDelegate: AnyObject {
-    
-    func firebaseInAppMessageActionTappedWithUrl(url: URL)
-}
-
-class FirebaseInAppMessaging: NSObject {
+class FirebaseInAppMessaging: NSObject, AppMessagingInterface {
     
     static let shared: FirebaseInAppMessaging = FirebaseInAppMessaging()
     
     private let sharedInAppMessaging: InAppMessaging = InAppMessaging.inAppMessaging()
     
-    private weak var delegate: FirebaseInAppMessagingDelegate?
-    
+    private(set) weak var messagingDelegate: AppMessagingDelegate?
+        
     private override init() {
         
         super.init()
     }
     
-    func setDelegate(delegate: FirebaseInAppMessagingDelegate?) {
+    func setMessagingDelegate(messagingDelegate: AppMessagingDelegate?) {
         
-        if self.delegate != nil && delegate != nil {
-            assertionFailure("\nWARNING: Attempting to set delegate that has already been set on \(String(describing: self.delegate)).  Is this intended?\n")
-        }
-        
-        sharedInAppMessaging.delegate = self
-        self.delegate = delegate
-    }
-    
-    func triggerInAppMessage(eventName: String) {
-        
-        sharedInAppMessaging.triggerEvent(eventName)
+        self.messagingDelegate = messagingDelegate
     }
 }
 
@@ -50,7 +35,7 @@ extension FirebaseInAppMessaging: InAppMessagingDisplayDelegate {
     func messageClicked(_ inAppMessage: InAppMessagingDisplayMessage, with action: InAppMessagingAction) {
         
         if let url = action.actionURL {
-            delegate?.firebaseInAppMessageActionTappedWithUrl(url: url)
+            messagingDelegate?.actionTappedWithUrl(url: url)
         }
     }
         
