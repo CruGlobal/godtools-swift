@@ -19,13 +19,15 @@ class AppDataLayerDependencies {
     private let sharedIgnoreCacheSession: IgnoreCacheSession = IgnoreCacheSession()
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
     private let sharedAnalytics: AnalyticsContainer
+    private let appMessagingEnabled: Bool
     
-    init(appBuild: AppBuild, appConfig: AppConfig, infoPlist: InfoPlist, realmDatabase: RealmDatabase) {
+    init(appBuild: AppBuild, appConfig: AppConfig, infoPlist: InfoPlist, realmDatabase: RealmDatabase, appMessagingEnabled: Bool) {
         
         sharedAppBuild = appBuild
         sharedAppConfig = appConfig
         sharedInfoPlist = infoPlist
         sharedRealmDatabase = realmDatabase
+        self.appMessagingEnabled = appMessagingEnabled
         
         sharedAnalytics = AnalyticsContainer(
             appsFlyerAnalytics: AppsFlyerAnalytics(appsFlyer: AppsFlyer.shared, loggingEnabled: appBuild.configuration == .analyticsLogging),
@@ -51,6 +53,15 @@ class AppDataLayerDependencies {
     
     func getAppConfig() -> AppConfig {
         return sharedAppConfig
+    }
+    
+    func getAppMessaging() -> AppMessagingInterface? {
+        
+        guard appMessagingEnabled else {
+            return nil
+        }
+        
+        return FirebaseInAppMessaging.shared
     }
     
     func getArticleAemRepository() -> ArticleAemRepository {
@@ -120,10 +131,6 @@ class AppDataLayerDependencies {
     
     func getFavoritingToolMessageCache() -> FavoritingToolMessageCache {
         return FavoritingToolMessageCache(userDefaultsCache: sharedUserDefaultsCache)
-    }
-    
-    func getFirebaseInAppMessaging() -> AppMessagingInterface {
-        return FirebaseInAppMessaging.shared
     }
     
     func getFollowUpsService() -> FollowUpsService {
