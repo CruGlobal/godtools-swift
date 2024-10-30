@@ -43,18 +43,31 @@ class LessonFlow: ToolNavigationFlow, Flow {
             appLanguage: appLanguage,
             toolTranslations: toolTranslations
         )
-              
+        
+        let initialPageOrPreviousProgress: MobileContentPagesPage?
+        if let page = initialPage {
+            initialPageOrPreviousProgress = page
+            
+        } else if let lessonProgress = appDiContainer.dataLayer.getUserLessonProgressRepository().getLessonProgress(lessonId: renderer.resource.id) {
+            
+            initialPageOrPreviousProgress = .pageId(value: lessonProgress.lastViewedPageId)
+            
+        } else {
+            initialPageOrPreviousProgress = nil
+        }
+        
         let viewModel = LessonViewModel(
             flowDelegate: self,
             renderer: renderer,
             resource: renderer.resource,
             primaryLanguage: renderer.languages.primaryLanguage,
-            initialPage: initialPage,
+            initialPage: initialPageOrPreviousProgress,
             resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
             translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
             mobileContentEventAnalytics: appDiContainer.getMobileContentRendererEventAnalyticsTracking(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getTranslatedLanguageName: appDiContainer.dataLayer.getTranslatedLanguageName(),
+            storeLessonProgressUseCase: appDiContainer.feature.lessonProgress.domainLayer.getStoreUserLessonProgressUseCase(),
             trainingTipsEnabled: trainingTipsEnabled,
             incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase()
         )

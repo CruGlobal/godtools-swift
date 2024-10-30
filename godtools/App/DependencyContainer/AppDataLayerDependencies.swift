@@ -165,6 +165,15 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getLessonListItemProgressRepository() -> GetLessonListItemProgressRepository {
+        return GetLessonListItemProgressRepository(
+            lessonProgressRepository: getUserLessonProgressRepository(),
+            userCountersRepository: getUserCountersRepository(),
+            localizationServices: getLocalizationServices(), 
+            getTranslatedPercentage: getTranslatedPercentage()
+        )
+    }
+    
     func getLocalizationLanguageNameRepository() -> LocalizationLanguageNameRepository {
         return LocalizationLanguageNameRepository(
             localizationServices: getLocalizationServices()
@@ -316,6 +325,10 @@ class AppDataLayerDependencies {
         return GetTranslatedNumberCount()
     }
     
+    func getTranslatedPercentage() -> GetTranslatedPercentage {
+        return GetTranslatedPercentage()
+    }
+    
     func getTranslatedToolCategory() -> GetTranslatedToolCategory {
         return GetTranslatedToolCategory(
             localizationServices: getLocalizationServices(),
@@ -412,6 +425,14 @@ class AppDataLayerDependencies {
     func getUserLessonFiltersRepository() -> UserLessonFiltersRepository {
         return UserLessonFiltersRepository(
             cache: RealmUserLessonFiltersCache(
+                realmDatabase: sharedRealmDatabase
+            )
+        )
+    }
+    
+    func getUserLessonProgressRepository() -> UserLessonProgressRepository {
+        return UserLessonProgressRepository(
+            cache: RealmUserLessonProgressCache(
                 realmDatabase: sharedRealmDatabase
             )
         )
