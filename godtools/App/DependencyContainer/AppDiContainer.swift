@@ -19,12 +19,19 @@ class AppDiContainer {
     let domainLayer: AppDomainLayerDependencies
     let feature: AppFeatureDiContainer
         
-    init(appBuild: AppBuild, appConfig: AppConfig, infoPlist: InfoPlist, realmDatabase: RealmDatabase) {
+    init(appBuild: AppBuild, appConfig: AppConfig, infoPlist: InfoPlist, realmDatabase: RealmDatabase, appMessagingEnabled: Bool) {
                
         self.appBuild = appBuild
         self.realmDatabase = realmDatabase
         
-        dataLayer = AppDataLayerDependencies(appBuild: appBuild, appConfig: appConfig, infoPlist: infoPlist, realmDatabase: realmDatabase)
+        dataLayer = AppDataLayerDependencies(
+            appBuild: appBuild,
+            appConfig: appConfig,
+            infoPlist: infoPlist,
+            realmDatabase: realmDatabase,
+            appMessagingEnabled: appMessagingEnabled
+        )
+        
         domainLayer = AppDomainLayerDependencies(dataLayer: dataLayer)
         
         let accountDiContainer = AccountDiContainer(coreDataLayer: dataLayer)

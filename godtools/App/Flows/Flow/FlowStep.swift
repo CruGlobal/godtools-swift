@@ -18,7 +18,7 @@ enum FlowStep {
     case deepLink(deepLinkType: ParsedDeepLinkType)
     case showOnboardingTutorial(animated: Bool)
     case onboardingFlowCompleted(onboardingFlowCompletedState: OnboardingFlowCompletedState?)
-    case buttonWithUrlTappedFromFirebaseInAppMessage(url: URL)
+    case buttonWithUrlTappedFromAppMessage(url: URL)
     case menuTappedFromTools
     case openTutorialTappedFromTools
     

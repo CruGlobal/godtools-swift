@@ -20,7 +20,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
     private let followUpsService: FollowUpsService
     private let resourceViewsService: ResourceViewsService
     private let deepLinkingService: DeepLinkingService
-    private let inAppMessaging: FirebaseInAppMessaging
+    private let appMessaging: AppMessagingInterface
     private let dashboardTabObserver = CurrentValueSubject<DashboardTabTypeDomainModel, Never>(AppFlow.defaultStartingDashboardTab)
     
     private var onboardingFlow: OnboardingFlow?
@@ -66,7 +66,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         self.followUpsService = appDiContainer.dataLayer.getFollowUpsService()
         self.resourceViewsService = appDiContainer.dataLayer.getResourceViewsService()
         self.deepLinkingService = appDeepLinkingService
-        self.inAppMessaging = appDiContainer.dataLayer.getFirebaseInAppMessaing()
+        self.appMessaging = appDiContainer.dataLayer.getAppMessaging()
         
         super.init()
         
@@ -81,7 +81,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         addUIApplicationLifeCycleObservers()
         addDeepLinkingObservers()
         
-        inAppMessaging.setDelegate(delegate: self)
+        appMessaging.setMessagingDelegate(messagingDelegate: self)
         
         appDiContainer.feature.appLanguage.domainLayer
             .getCurrentAppLanguageUseCase()
@@ -402,7 +402,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         case .languageSettingsFlowCompleted( _):
             closeLanguageSettings()
             
-        case .buttonWithUrlTappedFromFirebaseInAppMessage(let url):
+        case .buttonWithUrlTappedFromAppMessage(let url):
                         
             let didParseDeepLinkFromUrl: Bool = deepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
             
@@ -1385,11 +1385,11 @@ extension AppFlow {
     }
 }
 
-// MARK: - FirebaseInAppMessagingDelegate
+// MARK: - AppMessagingDelegate
 
-extension AppFlow: FirebaseInAppMessagingDelegate {
+extension AppFlow: AppMessagingDelegate {
     
-    func firebaseInAppMessageActionTappedWithUrl(url: URL) {
-        navigate(step: .buttonWithUrlTappedFromFirebaseInAppMessage(url: url))
+    func actionTappedWithUrl(url: URL) {
+        navigate(step: .buttonWithUrlTappedFromAppMessage(url: url))
     }
 }

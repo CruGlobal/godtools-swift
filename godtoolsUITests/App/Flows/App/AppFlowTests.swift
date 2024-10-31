@@ -58,7 +58,7 @@ extension AppFlowTests {
         
         lessonsTab.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .dashboardLessons)
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .dashboardLessons, waitForExistence: 1)
     }
     
     private func tabToFavorites() {
@@ -69,7 +69,7 @@ extension AppFlowTests {
         
         favoritesTab.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .dashboardFavorites)
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .dashboardFavorites, waitForExistence: 1)
     }
     
     private func tabToTools() {
@@ -80,7 +80,7 @@ extension AppFlowTests {
         
         toolsTab.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .dashboardTools)
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .dashboardTools, waitForExistence: 1)
     }
     
     func testLessonsTabTappedNavigatesToLessons() {
@@ -114,16 +114,14 @@ extension AppFlowTests {
         launchApp()
         
         tabToFavorites()
-        
-        let toolDetailsButtons = app.buttons[AccessibilityStrings.Button.toolDetails.id]
-        
+                
         let toolDetails = app.queryFirstButtonMatching(buttonAccessibility: .toolDetails)
         
         XCTAssertTrue(toolDetails.exists)
         
         toolDetails.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .toolDetails)
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .toolDetails, waitForExistence: 1)
     }
     
     func testToolDetailsNavigatesBackToFavoritesWhenOpenedFromFavorites() {
@@ -146,7 +144,7 @@ extension AppFlowTests {
         
         toolDetailsNavBack.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .dashboardFavorites)
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .dashboardFavorites, waitForExistence: 1)
     }
 }
 
