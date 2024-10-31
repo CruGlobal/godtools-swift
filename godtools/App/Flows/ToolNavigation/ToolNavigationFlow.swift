@@ -35,13 +35,14 @@ extension ToolNavigationFlow {
             determineToolTranslationsToDownload: determineDeepLinkedToolTranslationsToDownload,
             liveShareStream: toolDeepLink.liveShareStream,
             selectedLanguageIndex: toolDeepLink.selectedLanguageIndex,
-            trainingTipsEnabled: false,
-            initialPage: toolDeepLink.mobileContentPage, 
+            trainingTipsEnabled: false, 
+            initialPageConfig: nil,
+            initialPage: toolDeepLink.mobileContentPage,
             shouldPersistToolSettings: false
         )
     }
     
-    func navigateToTool(appLanguage: AppLanguageDomainModel, resourceId: String, languageIds: [String], liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?, shouldPersistToolSettings: Bool) {
+    func navigateToTool(appLanguage: AppLanguageDomainModel, resourceId: String, languageIds: [String], liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?, initialPageConfig: MobileContentPagesInitialPageConfig? = nil,  shouldPersistToolSettings: Bool) {
         
         let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(
             resourceId: resourceId,
@@ -55,13 +56,14 @@ extension ToolNavigationFlow {
             determineToolTranslationsToDownload: determineToolTranslationsToDownload,
             liveShareStream: liveShareStream,
             selectedLanguageIndex: selectedLanguageIndex,
-            trainingTipsEnabled: trainingTipsEnabled,
-            initialPage: initialPage, 
+            trainingTipsEnabled: trainingTipsEnabled, 
+            initialPageConfig: initialPageConfig,
+            initialPage: initialPage,
             shouldPersistToolSettings: shouldPersistToolSettings
         )
     }
     
-    private func navigateToToolAndDetermineToolTranslationsToDownload(appLanguage: AppLanguageDomainModel, determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?, shouldPersistToolSettings: Bool) {
+    private func navigateToToolAndDetermineToolTranslationsToDownload(appLanguage: AppLanguageDomainModel, determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPageConfig: MobileContentPagesInitialPageConfig?, initialPage: MobileContentPagesPage?, shouldPersistToolSettings: Bool) {
         
         let didDownloadToolTranslationsClosure = { [weak self] (result: Result<ToolTranslationsDomainModel, Error>) in
                         
@@ -76,6 +78,7 @@ extension ToolNavigationFlow {
                     selectedLanguageIndex: selectedLanguageIndex,
                     trainingTipsEnabled: trainingTipsEnabled,
                     initialPage: initialPage,
+                    initialPageConfig: initialPageConfig,
                     shouldPersistToolSettings: shouldPersistToolSettings
                 )
                 
@@ -96,7 +99,7 @@ extension ToolNavigationFlow {
         self.downloadToolTranslationFlow = downloadToolTranslationFlow
     }
     
-    private func navigateToTool(appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?, shouldPersistToolSettings: Bool) {
+    private func navigateToTool(appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?, initialPageConfig: MobileContentPagesInitialPageConfig?, shouldPersistToolSettings: Bool) {
         
         let resourceType: ResourceType = toolTranslations.tool.resourceTypeEnum
         
@@ -120,7 +123,8 @@ extension ToolNavigationFlow {
                 appLanguage: appLanguage,
                 toolTranslations: toolTranslations,
                 trainingTipsEnabled: trainingTipsEnabled,
-                initialPage: initialPage
+                initialPage: initialPage,
+                initialPageConfig: initialPageConfig
             )
             
         case .tract:

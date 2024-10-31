@@ -374,6 +374,10 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
     
     private func getInitialPageModel(pageRenderer: MobileContentPageRenderer) -> Page? {
             
+        if initialPageConfig.shouldRestartAtBeginning {
+            return pageRenderer.getVisiblePageModels().first
+        }
+        
         let allPages: [Page] = pageRenderer.getAllPageModels()
         
         var page: Page?

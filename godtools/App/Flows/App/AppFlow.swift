@@ -204,10 +204,20 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
         case .lessonTappedFromLessonsList(let lessonListItem, let languageFilter):
             
-            if let languageFilter = languageFilter {
-                navigateToTool(toolDataModelId: lessonListItem.dataModelId, languageIds: [languageFilter.languageId], selectedLanguageIndex: 0, trainingTipsEnabled: false)
+            if lessonListItem.lessonProgress.inProgress {
+                let resumeLessonModal = getResumeLessonModal(startOverClosure: {
+                   
+                    self.navigateToLesson(restartAtBeginning: true, lessonListItem: lessonListItem, languageFilter: languageFilter)
+                    
+                }, continueClosure: {
+                    
+                    self.navigateToLesson(restartAtBeginning: false, lessonListItem: lessonListItem, languageFilter: languageFilter)
+                })
+                
+                navigationController.present(resumeLessonModal, animated: true)
+                
             } else {
-                navigateToToolInAppLanguage(toolDataModelId: lessonListItem.dataModelId, trainingTipsEnabled: false)
+                navigateToLesson(restartAtBeginning: false, lessonListItem: lessonListItem, languageFilter: languageFilter)
             }
             
         case .lessonLanguageFilterTappedFromLessons:
@@ -745,7 +755,7 @@ extension AppFlow {
 
 extension AppFlow {
     
-    private func navigateToToolInAppLanguage(toolDataModelId: String, trainingTipsEnabled: Bool, shouldPersistToolSettings: Bool = false) {
+    private func navigateToToolInAppLanguage(toolDataModelId: String, trainingTipsEnabled: Bool, shouldPersistToolSettings: Bool = false, initialPageConfig: MobileContentPagesInitialPageConfig? = nil) {
         
         let languagesRepository: LanguagesRepository = appDiContainer.dataLayer.getLanguagesRepository()
         
@@ -758,7 +768,7 @@ extension AppFlow {
             languageIds = Array()
         }
         
-        navigateToTool(toolDataModelId: toolDataModelId, languageIds: languageIds, selectedLanguageIndex: nil, trainingTipsEnabled: trainingTipsEnabled, shouldPersistToolSettings: shouldPersistToolSettings)
+        navigateToTool(toolDataModelId: toolDataModelId, languageIds: languageIds, selectedLanguageIndex: nil, trainingTipsEnabled: trainingTipsEnabled, shouldPersistToolSettings: shouldPersistToolSettings, initialPageConfig: initialPageConfig)
     }
     
     private func navigateToToolWithUserToolLanguageSettingsApplied(toolDataModelId: String, trainingTipsEnabled: Bool) {
@@ -811,8 +821,23 @@ extension AppFlow {
         
         navigateToTool(toolDataModelId: toolDataModelId, languageIds: languageIds, selectedLanguageIndex: selectedLanguageIndex, trainingTipsEnabled: trainingTipsEnabled, shouldPersistToolSettings: shouldPersistToolSettings)
     }
+    
+    private func navigateToLesson(restartAtBeginning: Bool, lessonListItem: LessonListItemDomainModel, languageFilter: LessonFilterLanguageDomainModel?) {
         
-    private func navigateToTool(toolDataModelId: String, languageIds: [String], selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, shouldPersistToolSettings: Bool = false) {
+        let initialPageConfig = MobileContentPagesInitialPageConfig(
+            shouldRestartAtBeginning: restartAtBeginning,
+            shouldNavigateToStartPageIfLastPage: true,
+            shouldNavigateToPreviousVisiblePageIfHiddenPage: true
+        )
+        
+        if let languageFilter = languageFilter {
+            navigateToTool(toolDataModelId: lessonListItem.dataModelId, languageIds: [languageFilter.languageId], selectedLanguageIndex: 0, trainingTipsEnabled: false, initialPageConfig: initialPageConfig)
+        } else {
+            navigateToToolInAppLanguage(toolDataModelId: lessonListItem.dataModelId, trainingTipsEnabled: false, initialPageConfig: initialPageConfig)
+        }
+    }
+        
+    private func navigateToTool(toolDataModelId: String, languageIds: [String], selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, shouldPersistToolSettings: Bool = false, initialPageConfig: MobileContentPagesInitialPageConfig? = nil) {
         
         let languagesRepository: LanguagesRepository = appDiContainer.dataLayer.getLanguagesRepository()
         
@@ -835,6 +860,7 @@ extension AppFlow {
             selectedLanguageIndex: selectedLanguageIndex,
             trainingTipsEnabled: trainingTipsEnabled,
             initialPage: nil, 
+            initialPageConfig: initialPageConfig,
             shouldPersistToolSettings: shouldPersistToolSettings
         )
     }
@@ -865,6 +891,22 @@ extension AppFlow {
         navigationController.popViewController(animated: true)
         
         self.languageSettingsFlow = nil
+    }
+}
+
+// MARK: - Lesson
+
+extension AppFlow {
+    
+    private func getResumeLessonModal(startOverClosure: @escaping () -> Void, continueClosure: @escaping () -> Void) -> UIViewController {
+        let resumeLessonModal = ResumeLessonProgressModal(startOverClosure: startOverClosure, continueClosure: continueClosure)
+        
+        let hostingView = AppHostingController<ResumeLessonProgressModal>(
+            rootView: resumeLessonModal,
+            navigationBar: nil
+        )
+        
+        return hostingView
     }
 }
 

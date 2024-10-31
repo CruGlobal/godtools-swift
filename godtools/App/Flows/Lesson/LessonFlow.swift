@@ -24,7 +24,7 @@ class LessonFlow: ToolNavigationFlow, Flow {
     var tractFlow: TractFlow?
     var downloadToolTranslationFlow: DownloadToolTranslationsFlow?
     
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?, initialPageConfig: MobileContentPagesInitialPageConfig?) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
@@ -61,7 +61,8 @@ class LessonFlow: ToolNavigationFlow, Flow {
             renderer: renderer,
             resource: renderer.resource,
             primaryLanguage: renderer.languages.primaryLanguage,
-            initialPage: initialPageOrPreviousProgress,
+            initialPage: initialPageOrPreviousProgress, 
+            initialPageConfig: initialPageConfig,
             resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
             translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
             mobileContentEventAnalytics: appDiContainer.getMobileContentRendererEventAnalyticsTracking(),
