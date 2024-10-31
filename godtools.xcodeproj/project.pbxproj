@@ -158,6 +158,10 @@
 		451CEDFD282C3239006E5105 /* ToolSettingsFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CEDFC282C3239006E5105 /* ToolSettingsFlow.swift */; };
 		451CF5952C4AAC5500CD65C4 /* AppFlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CF5942C4AAC5500CD65C4 /* AppFlowTests.swift */; };
 		451F1EDB2CD3AF14006CCF4E /* DisabledInAppMessaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451F1EDA2CD3AF13006CCF4E /* DisabledInAppMessaging.swift */; };
+		451F1EE02CD3B125006CCF4E /* LaunchEnvironmentWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451F1EDF2CD3B11D006CCF4E /* LaunchEnvironmentWriter.swift */; };
+		451F1EE12CD3B125006CCF4E /* LaunchEnvironmentWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451F1EDF2CD3B11D006CCF4E /* LaunchEnvironmentWriter.swift */; };
+		451F1EE32CD3B38B006CCF4E /* LaunchEnvironmentReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451F1EE22CD3B387006CCF4E /* LaunchEnvironmentReader.swift */; };
+		451F1EE42CD3B38B006CCF4E /* LaunchEnvironmentReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451F1EE22CD3B387006CCF4E /* LaunchEnvironmentReader.swift */; };
 		4521B2802B32851F00C8A473 /* GetShareableImageRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4521B27F2B32851F00C8A473 /* GetShareableImageRepositoryInterface.swift */; };
 		4521B2822B32853E00C8A473 /* GetShareableImageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4521B2812B32853E00C8A473 /* GetShareableImageRepository.swift */; };
 		452259AE2ABCBCA90070F7F3 /* AnalyticsContainer+TrackScreenViewAnalyticsInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452259AD2ABCBCA90070F7F3 /* AnalyticsContainer+TrackScreenViewAnalyticsInterface.swift */; };
@@ -1845,6 +1849,8 @@
 		451CEDFC282C3239006E5105 /* ToolSettingsFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolSettingsFlow.swift; sourceTree = "<group>"; };
 		451CF5942C4AAC5500CD65C4 /* AppFlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFlowTests.swift; sourceTree = "<group>"; };
 		451F1EDA2CD3AF13006CCF4E /* DisabledInAppMessaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisabledInAppMessaging.swift; sourceTree = "<group>"; };
+		451F1EDF2CD3B11D006CCF4E /* LaunchEnvironmentWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchEnvironmentWriter.swift; sourceTree = "<group>"; };
+		451F1EE22CD3B387006CCF4E /* LaunchEnvironmentReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchEnvironmentReader.swift; sourceTree = "<group>"; };
 		451F7A802ABD2F1100006EF2 /* Quick.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Quick.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		451F7A822ABD2F1400006EF2 /* Nimble.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4521B27F2B32851F00C8A473 /* GetShareableImageRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetShareableImageRepositoryInterface.swift; sourceTree = "<group>"; };
@@ -4221,6 +4227,8 @@
 			isa = PBXGroup;
 			children = (
 				45131A062AB498AD0085AF0D /* LaunchEnvironmentKey.swift */,
+				451F1EE22CD3B387006CCF4E /* LaunchEnvironmentReader.swift */,
+				451F1EDF2CD3B11D006CCF4E /* LaunchEnvironmentWriter.swift */,
 			);
 			path = LaunchEnvironment;
 			sourceTree = "<group>";
@@ -12581,6 +12589,7 @@
 				459B7E692ABA3A4A0088F44B /* LaunchEnvironmentKey.swift in Sources */,
 				45A415F42A99429C0030E2C7 /* XCUIApplication+Query.swift in Sources */,
 				450FC7592C49591700F87282 /* MenuFlowTests.swift in Sources */,
+				451F1EE42CD3B38B006CCF4E /* LaunchEnvironmentReader.swift in Sources */,
 				45FBE5722AB8A33200BFBE92 /* AccessibilityStrings.swift in Sources */,
 				45D318F12AE6F9D300D74A87 /* LanguageCodeDomainModel.swift in Sources */,
 				45DEF4DE2AE9538C000C8F4B /* XCTestCase+AssertScreenDoesNotExist.swift in Sources */,
@@ -12592,6 +12601,7 @@
 				45A415F32A99429C0030E2C7 /* OnboardingFlowTests.swift in Sources */,
 				45DC19122BB5AB2C007542A5 /* LanguageSettingsFlowTests.swift in Sources */,
 				45DC19172BB5B34D007542A5 /* BaseFlowTests.swift in Sources */,
+				451F1EE02CD3B125006CCF4E /* LaunchEnvironmentWriter.swift in Sources */,
 				459B7E6A2ABA3A510088F44B /* AccessibilityStrings.swift in Sources */,
 				452556472C383CFA00AA0046 /* AppLanguageDataModelInterface.swift in Sources */,
 			);
@@ -13110,6 +13120,7 @@
 				45E347792A49BFD00014CCD1 /* CloseButton.swift in Sources */,
 				45FE5990298A9D760030C080 /* VideoViewConfiguration.swift in Sources */,
 				452F27A72B83A35800844B9A /* GetOptInOnboardingBannerEnabledUseCase.swift in Sources */,
+				451F1EE12CD3B125006CCF4E /* LaunchEnvironmentWriter.swift in Sources */,
 				458B91C12B7D672100785C6F /* FavoritesInterfaceStringsDomainModel.swift in Sources */,
 				45325F23285CF8B40078D932 /* SegmentControl.swift in Sources */,
 				45F3AF082B5EC64F00CE8D41 /* UIViewHorizontalContraintType.swift in Sources */,
@@ -13970,6 +13981,7 @@
 				D4C2A5762C344CFA0035AB4D /* LessonFilterDomainLayerDependencies.swift in Sources */,
 				457579E226E96ABE00C898D2 /* MobileContentMultiSelectViewModel.swift in Sources */,
 				453F84C02A029FC00005101E /* ArticleAemCacheArchivedObject.swift in Sources */,
+				451F1EE32CD3B38B006CCF4E /* LaunchEnvironmentReader.swift in Sources */,
 				45D63EA1288F77D4009B4610 /* ResourcesPlusLatestTranslationsAndAttachmentsModel.swift in Sources */,
 				45645C122AFE76DF00BD233D /* ShareToolScreenShareSessionInterfaceStringsDomainModel.swift in Sources */,
 				45CBDA012BA38EF60007DEC8 /* LaunchCountRepositoryInterface.swift in Sources */,

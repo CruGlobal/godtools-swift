@@ -27,6 +27,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         InfoPlist()
     }()
     
+    private lazy var launchEnvironmentReader: LaunchEnvironmentReader = {
+        return LaunchEnvironmentReader.createFromProcessInfo()
+    }()
+    
     private lazy var realmDatabase: RealmDatabase = {
         RealmDatabase(databaseConfiguration: RealmDatabaseProductionConfiguration())
     }()
@@ -41,7 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             appConfig: appConfig,
             infoPlist: infoPlist,
             realmDatabase: realmDatabase,
-            appMessagingEnabled: true
+            appMessagingEnabled: launchEnvironmentReader.getAppMessagingIsEnabled() ?? true
         )
     }()
     
@@ -99,7 +103,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         application.registerForRemoteNotifications()
         
-        let uiTestsDeepLinkString: String? = ProcessInfo.processInfo.environment[LaunchEnvironmentKey.urlDeeplink.value]
+        let uiTestsDeepLinkString: String? = launchEnvironmentReader.getUrlDeepLink()
                 
         if let uiTestsDeepLinkString = uiTestsDeepLinkString, !uiTestsDeepLinkString.isEmpty, let url = URL(string: uiTestsDeepLinkString) {
             _ = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
