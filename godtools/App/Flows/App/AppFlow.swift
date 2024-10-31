@@ -20,7 +20,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
     private let followUpsService: FollowUpsService
     private let resourceViewsService: ResourceViewsService
     private let deepLinkingService: DeepLinkingService
-    private let appMessaging: AppMessagingInterface?
+    private let appMessaging: AppMessagingInterface
     private let dashboardTabObserver = CurrentValueSubject<DashboardTabTypeDomainModel, Never>(AppFlow.defaultStartingDashboardTab)
     
     private var onboardingFlow: OnboardingFlow?
@@ -81,7 +81,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         addUIApplicationLifeCycleObservers()
         addDeepLinkingObservers()
         
-        appMessaging?.setMessagingDelegate(messagingDelegate: self)
+        appMessaging.setMessagingDelegate(messagingDelegate: self)
         
         appDiContainer.feature.appLanguage.domainLayer
             .getCurrentAppLanguageUseCase()

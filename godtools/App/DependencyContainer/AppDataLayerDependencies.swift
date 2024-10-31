@@ -55,10 +55,10 @@ class AppDataLayerDependencies {
         return sharedAppConfig
     }
     
-    func getAppMessaging() -> AppMessagingInterface? {
+    func getAppMessaging() -> AppMessagingInterface {
         
         guard appMessagingEnabled else {
-            return nil
+            return DisabledInAppMessaging()
         }
         
         return FirebaseInAppMessaging.shared
