@@ -55,17 +55,9 @@ class MobileContentPagesView: AppViewController {
             return
         }
         didLayoutSubviews = true
-                
-        var safeAreaTopInset: CGFloat
-        let safeAreaBottomInset: CGFloat
-        
-        if #available(iOS 11.0, *) {
-            safeAreaTopInset = view.safeAreaInsets.top
-            safeAreaBottomInset = view.safeAreaInsets.bottom
-        } else {
-            safeAreaTopInset = topLayoutGuide.length
-            safeAreaBottomInset = bottomLayoutGuide.length
-        }
+                        
+        var safeAreaTopInset: CGFloat = view.safeAreaInsets.top
+        let safeAreaBottomInset: CGFloat = view.safeAreaInsets.bottom
         
         if safeAreaTopInset == 0 {
             safeAreaTopInset = safeAreaView.convert(.zero, to: nil).y

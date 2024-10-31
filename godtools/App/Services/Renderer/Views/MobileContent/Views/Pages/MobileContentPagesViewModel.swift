@@ -19,6 +19,7 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
     private let getTranslatedLanguageName: GetTranslatedLanguageName
     private let initialPageRenderingType: MobileContentPagesInitialPageRenderingType
     private let initialPage: MobileContentPagesPage
+    private let initialPageConfig: MobileContentPagesInitialPageConfig
     private let initialSelectedLanguageIndex: Int
     
     private var safeArea: UIEdgeInsets?
@@ -44,11 +45,12 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
     let pageNavigationEventSignal: SignalValue<MobileContentPagesNavigationEvent> = SignalValue()
     let incrementUserCounterUseCase: IncrementUserCounterUseCase
     
-    init(renderer: MobileContentRenderer, initialPage: MobileContentPagesPage?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTranslatedLanguageName: GetTranslatedLanguageName, initialPageRenderingType: MobileContentPagesInitialPageRenderingType, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?) {
+    init(renderer: MobileContentRenderer, initialPage: MobileContentPagesPage?, initialPageConfig: MobileContentPagesInitialPageConfig?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTranslatedLanguageName: GetTranslatedLanguageName, initialPageRenderingType: MobileContentPagesInitialPageRenderingType, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?) {
         
         self.renderer = CurrentValueSubject(renderer)
         self.currentPageRenderer = CurrentValueSubject(renderer.pageRenderers[0])
         self.initialPage = initialPage ?? .pageNumber(value: 0)
+        self.initialPageConfig = initialPageConfig ?? MobileContentPagesInitialPageConfig(shouldNavigateToStartPageIfLastPage: false, shouldNavigateToPreviousVisiblePageIfHiddenPage: false)
         self.resourcesRepository = resourcesRepository
         self.translationsRepository = translationsRepository
         self.mobileContentEventAnalytics = mobileContentEventAnalytics
@@ -230,7 +232,7 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
     }
     
     var layoutDirection: UISemanticContentAttribute {
-        return UISemanticContentAttribute.from(languageDirection: LanguageDirectionDomainModel(languageModel: renderer.value.primaryLanguage))
+        return UISemanticContentAttribute.from(languageDirection: LanguageDirectionDomainModel(languageModel: renderer.value.languages.primaryLanguage))
     }
     
     func setRendererPrimaryLanguage(primaryLanguageId: String, parallelLanguageId: String?, selectedLanguageId: String?) {
@@ -373,20 +375,54 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
     private func getInitialPageModel(pageRenderer: MobileContentPageRenderer) -> Page? {
             
         let allPages: [Page] = pageRenderer.getAllPageModels()
-                
+        
+        var page: Page?
         switch initialPage {
         
         case .pageId(let value):
-            return allPages.first(where: {$0.id == value})
-       
+            page = allPages.first(where: {$0.id == value})
+            
         case .pageNumber(let value):
             
             if value >= 0 && value < allPages.count {
-                return allPages[value]
+                page = allPages[value]
+            } else {
+                page = nil
             }
-            
-            return nil
         }
+        
+        guard page != nil else { return page }
+        
+        if initialPageConfig.shouldNavigateToPreviousVisiblePageIfHiddenPage {
+            page = getPreviousVisiblePageIfHidden(page: page)
+        }
+        
+        if initialPageConfig.shouldNavigateToStartPageIfLastPage {
+            page = getStartPageIfLastPage(page: page, pageRenderer: pageRenderer)
+        }
+        
+        return page
+    }
+    
+    private func getPreviousVisiblePageIfHidden(page: Page?) -> Page? {
+        var page = page
+        
+        while(page?.isHidden == true) {
+            page = page?.previousPage
+        }
+        
+        return page
+    }
+    
+    private func getStartPageIfLastPage(page: Page?, pageRenderer: MobileContentPageRenderer) -> Page? {
+        var page = page
+        let visiblePages = pageRenderer.getVisiblePageModels()
+        
+        if page?.id == visiblePages.last?.id {
+            page = visiblePages.first
+        }
+        
+        return page
     }
     
     func getInitialPages(pageRenderer: MobileContentPageRenderer) -> [Page] {
@@ -420,7 +456,7 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
             return nil
         }
         
-        return getPageNavigationEvent(page: initialPage, animated: false)
+        return getPageNavigationEvent(page: initialPage, animated: false, reloadCollectionViewDataNeeded: true)
     }
     
     private func checkIfEventIsPageListenerAndNavigate(eventId: EventId) -> Bool {
@@ -461,7 +497,7 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
         sendPageNavigationEvent(navigationEvent: navigationEvent)
     }
         
-    func getPageNavigationEvent(page: Page, animated: Bool) -> MobileContentPagesNavigationEvent {
+    func getPageNavigationEvent(page: Page, animated: Bool, reloadCollectionViewDataNeeded: Bool = false) -> MobileContentPagesNavigationEvent {
                 
         let currentRenderedPages: [Page] = pageModels
                 
@@ -508,7 +544,7 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
                 navigationDirection: nil,
                 page: pageIndexToNavigateTo,
                 animated: animated,
-                reloadCollectionViewDataNeeded: false,
+                reloadCollectionViewDataNeeded: reloadCollectionViewDataNeeded,
                 insertPages: insertPages,
                 deletePages: nil
             ),
@@ -780,7 +816,8 @@ extension MobileContentPagesViewModel {
         mobileContentEventAnalytics.trackContentEvent(
             eventId: eventId,
             resource: resource,
-            language: language
+            appLanguage: renderer.value.appLanguage,
+            languages: renderer.value.languages
         )
     }
     

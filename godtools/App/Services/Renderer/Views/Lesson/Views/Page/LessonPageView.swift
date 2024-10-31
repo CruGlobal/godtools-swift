@@ -67,12 +67,6 @@ class LessonPageView: MobileContentPageView {
             addContentView(contentView: contentView)
         }
     }
-    
-    override func viewDidAppear() {
-        super.viewDidAppear()
-        
-        viewModel.pageDidAppear()
-    }
 }
 
 // MARK: - ContentView

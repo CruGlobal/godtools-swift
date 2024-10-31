@@ -37,9 +37,12 @@ class BaseFlowTests: XCTestCase {
         self.app = XCUIApplication()
         self.flowDeepLinkUrl = flowDeepLinkUrl
         self.initialScreen = initialScreen
+        
+        let launchEnvironmentWriter = LaunchEnvironmentWriter()
+                                
+        launchEnvironmentWriter.setAppMessagingIsEnabled(launchEnvironment: &app.launchEnvironment, enabled: false)
+        launchEnvironmentWriter.setUrlDeepLink(launchEnvironment: &app.launchEnvironment, url: flowDeepLinkUrl)
                         
-        app.launchEnvironment[LaunchEnvironmentKey.urlDeeplink.value] = flowDeepLinkUrl
-                
         app.launch()
                 
         checkInitialScreenExists(app: app)

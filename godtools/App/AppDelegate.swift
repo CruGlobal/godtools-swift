@@ -12,7 +12,6 @@ import SocialAuthentication
 import FacebookCore
 import FirebaseDynamicLinks
 
-@UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
                
     private lazy var appBuild: AppBuild = {
@@ -27,6 +26,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         InfoPlist()
     }()
     
+    private lazy var launchEnvironmentReader: LaunchEnvironmentReader = {
+        return LaunchEnvironmentReader.createFromProcessInfo()
+    }()
+    
     private lazy var realmDatabase: RealmDatabase = {
         RealmDatabase(databaseConfiguration: RealmDatabaseProductionConfiguration())
     }()
@@ -36,11 +39,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }()
     
     private lazy var appDiContainer: AppDiContainer = {
-        AppDiContainer(appBuild: appBuild, appConfig: appConfig, infoPlist: infoPlist, realmDatabase: realmDatabase)
+        AppDiContainer(
+            appBuild: appBuild,
+            appConfig: appConfig,
+            infoPlist: infoPlist,
+            realmDatabase: realmDatabase,
+            appMessagingEnabled: launchEnvironmentReader.getAppMessagingIsEnabled() ?? true
+        )
     }()
     
     private lazy var appFlow: AppFlow = {
-        AppFlow(appDiContainer: appDiContainer, appDeepLinkingService: appDeepLinkingService)
+        AppFlow(
+            appDiContainer: appDiContainer,
+            appDeepLinkingService: appDeepLinkingService
+        )
     }()
     
     private var toolShortcutLinks: ToolShortcutLinksView?
@@ -90,7 +102,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         application.registerForRemoteNotifications()
         
-        let uiTestsDeepLinkString: String? = ProcessInfo.processInfo.environment[LaunchEnvironmentKey.urlDeeplink.value]
+        let uiTestsDeepLinkString: String? = launchEnvironmentReader.getUrlDeepLink()
                 
         if let uiTestsDeepLinkString = uiTestsDeepLinkString, !uiTestsDeepLinkString.isEmpty, let url = URL(string: uiTestsDeepLinkString) {
             _ = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
@@ -184,6 +196,7 @@ extension AppDelegate {
                 actionName: AnalyticsConstants.ActionNames.toolOpenedShortcut,
                 siteSection: "",
                 siteSubSection: "",
+                appLanguage: nil,
                 contentLanguage: nil,
                 contentLanguageSecondary: nil,
                 url: nil,

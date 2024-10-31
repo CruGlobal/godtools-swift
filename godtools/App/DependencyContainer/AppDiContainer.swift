@@ -19,12 +19,19 @@ class AppDiContainer {
     let domainLayer: AppDomainLayerDependencies
     let feature: AppFeatureDiContainer
         
-    init(appBuild: AppBuild, appConfig: AppConfig, infoPlist: InfoPlist, realmDatabase: RealmDatabase) {
+    init(appBuild: AppBuild, appConfig: AppConfig, infoPlist: InfoPlist, realmDatabase: RealmDatabase, appMessagingEnabled: Bool) {
                
         self.appBuild = appBuild
         self.realmDatabase = realmDatabase
         
-        dataLayer = AppDataLayerDependencies(appBuild: appBuild, appConfig: appConfig, infoPlist: infoPlist, realmDatabase: realmDatabase)
+        dataLayer = AppDataLayerDependencies(
+            appBuild: appBuild,
+            appConfig: appConfig,
+            infoPlist: infoPlist,
+            realmDatabase: realmDatabase,
+            appMessagingEnabled: appMessagingEnabled
+        )
+        
         domainLayer = AppDomainLayerDependencies(dataLayer: dataLayer)
         
         let accountDiContainer = AccountDiContainer(coreDataLayer: dataLayer)
@@ -38,6 +45,7 @@ class AppDiContainer {
         let lessonEvaluationDiContainer = LessonEvaluationFeatureDiContainer(coreDataLayer: dataLayer)
         let lessonFilterDiContainer = LessonFilterDiContainer(coreDataLayer: dataLayer)
         let lessonsDiContainer = LessonsFeatureDiContainer(coreDataLayer: dataLayer)
+        let lessonProgressDiContainer = UserLessonProgressDiContainer(coreDataLayer: dataLayer)
         let onboardingDiContainer = OnboardingDiContainer(coreDataLayer: dataLayer)
         let shareablesDiContainer: ShareablesDiContainer = ShareablesDiContainer(coreDataLayer: dataLayer)
         let shareGodToolsDiContainer = ShareGodToolsDiContainer(coreDataLayer: dataLayer)
@@ -60,7 +68,8 @@ class AppDiContainer {
             learnToShareTool: learnToShareToolDiContainer,
             lessonEvaluation: lessonEvaluationDiContainer,
             lessonFilter: lessonFilterDiContainer,
-            lessons: lessonsDiContainer,
+            lessons: lessonsDiContainer, 
+            lessonProgress: lessonProgressDiContainer,
             onboarding: onboardingDiContainer,
             shareables: shareablesDiContainer,
             shareGodTools: shareGodToolsDiContainer,
@@ -78,6 +87,10 @@ class AppDiContainer {
     
     func getCardJumpService() -> CardJumpService {
         return CardJumpService(cardJumpCache: CardJumpUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache))
+    }
+    
+    func getUrlOpener() -> UrlOpenerInterface {
+        return OpenUrlWithSwiftUI() // TODO: GT-2466 Return OpenUrlWithUIKit() once supporting FBSDK 17.3+ ~Levi
     }
     
     func getFirebaseConfiguration() -> FirebaseConfiguration {

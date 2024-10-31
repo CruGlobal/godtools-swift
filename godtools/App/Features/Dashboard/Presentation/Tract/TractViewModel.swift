@@ -56,7 +56,7 @@ class TractViewModel: MobileContentPagesViewModel {
         
         languageFont = FontLibrary.systemUIFont(size: 14, weight: .regular)
         
-        super.init(renderer: renderer, initialPage: initialPage, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, getTranslatedLanguageName: getTranslatedLanguageName, initialPageRenderingType: .visiblePages, trainingTipsEnabled: trainingTipsEnabled, incrementUserCounterUseCase: incrementUserCounterUseCase, selectedLanguageIndex: selectedLanguageIndex)
+        super.init(renderer: renderer, initialPage: initialPage, initialPageConfig: nil, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, getTranslatedLanguageName: getTranslatedLanguageName, initialPageRenderingType: .visiblePages, trainingTipsEnabled: trainingTipsEnabled, incrementUserCounterUseCase: incrementUserCounterUseCase, selectedLanguageIndex: selectedLanguageIndex)
         
         setupBinding()
     }
@@ -161,6 +161,7 @@ class TractViewModel: MobileContentPagesViewModel {
             actionName: AnalyticsConstants.ActionNames.parallelLanguageToggled,
             siteSection: analyticsSiteSection,
             siteSubSection: "",
+            appLanguage: nil,
             contentLanguage: primaryLanguage.localeId,
             contentLanguageSecondary: parallelLanguage?.localeId,
             url: nil,
@@ -239,6 +240,7 @@ extension TractViewModel {
                 actionName: "Tool Settings",
                 siteSection: analyticsSiteSection,
                 siteSubSection: "",
+                appLanguage: nil,
                 contentLanguage: nil,
                 contentLanguageSecondary: nil,
                 url: nil,
@@ -248,7 +250,7 @@ extension TractViewModel {
         flowDelegate?.navigate(step: .toolSettingsTappedFromTool(toolSettingsObserver: toolSettingsObserver))
     }
     
-    func languageTapped(index: Int, page: Int, pagePositions: ToolPagePositions) {
+    func languageTapped(index: Int, page: Int, pagePositions: TractPagePositions) {
                 
         let tappedLanguage: LanguageModel = languages[index]
         
@@ -276,7 +278,7 @@ extension TractViewModel {
         trackLanguageTapped(tappedLanguage: tappedLanguage)
     }
     
-    func subscribedForRemoteSharePublishing(page: Int, pagePositions: ToolPagePositions) {
+    func subscribedForRemoteSharePublishing(page: Int, pagePositions: TractPagePositions) {
      
         sendRemoteShareNavigationEvent(
             page: page,
@@ -284,7 +286,7 @@ extension TractViewModel {
         )
     }
     
-    func pageChanged(page: Int, pagePositions: ToolPagePositions) {
+    func pageChanged(page: Int, pagePositions: TractPagePositions) {
         
         sendRemoteShareNavigationEvent(
             page: page,
@@ -292,7 +294,7 @@ extension TractViewModel {
         )
     }
     
-    func cardChanged(page: Int, pagePositions: ToolPagePositions) {
+    func cardChanged(page: Int, pagePositions: TractPagePositions) {
         
         sendRemoteShareNavigationEvent(
             page: page,
@@ -312,6 +314,7 @@ extension TractViewModel {
             actionName: AnalyticsConstants.ActionNames.shareScreenOpened,
             siteSection: analyticsSiteSection,
             siteSubSection: "",
+            appLanguage: nil,
             contentLanguage: nil,
             contentLanguageSecondary: nil,
             url: nil,
@@ -361,7 +364,7 @@ extension TractViewModel {
         }
         
         let navBarLanguageChanged: Bool = remoteShareLanguage.id != currentNavBarLanguage.id
-        let pagePositions: MobileContentViewPositionState? = ToolPagePositions(cardPosition: cardPosition)
+        let pagePositions: MobileContentViewPositionState? = TractPagePositions(cardPosition: cardPosition)
         
         let navigationEvent = MobileContentPagesNavigationEvent(
             pageNavigation: PageNavigationCollectionViewNavigationModel(
@@ -386,7 +389,7 @@ extension TractViewModel {
         }
     }
     
-    private func sendRemoteShareNavigationEvent(page: Int, pagePositions: ToolPagePositions) {
+    private func sendRemoteShareNavigationEvent(page: Int, pagePositions: TractPagePositions) {
         
         guard tractRemoteSharePublisher.isSubscriberChannelIdCreatedForPublish else {
             return

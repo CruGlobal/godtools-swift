@@ -46,14 +46,14 @@ class ChooseYourOwnAdventurePageViewFactory: MobileContentPageViewFactoryType {
                 itemSpacing = 20
             }
             
-            let viewModel = MobileContentContentPageViewModel(
+            let viewModel = CYOAPageViewModel(
                 contentPage: contentPage,
                 renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics,
                 trackScreenViewAnalyticsUseCase: trackScreenViewAnalyticsUseCase
             )
             
-            let view = MobileContentContentPageView(
+            let view = CYOAPageView(
                 viewModel: viewModel,
                 contentInsets: contentInsets,
                 itemSpacing: itemSpacing

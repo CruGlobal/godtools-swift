@@ -13,12 +13,22 @@ import SwiftUI
 class MobileContentPageViewModel: MobileContentViewModel {
     
     private let pageModel: Page
+    private let visibleAnalyticsEventsObjects: [MobileContentRendererAnalyticsEvent]
+    private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let hidesBackgroundImage: Bool
+    
         
-    init(pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics, hidesBackgroundImage: Bool) {
+    init(pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, hidesBackgroundImage: Bool) {
         
         self.pageModel = pageModel
+        self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.hidesBackgroundImage = hidesBackgroundImage
+        
+        self.visibleAnalyticsEventsObjects = MobileContentRendererAnalyticsEvent.initAnalyticsEvents(
+            analyticsEvents: pageModel.getAnalyticsEvents(type: .visible),
+            mobileContentAnalytics: mobileContentAnalytics,
+            renderedPageContext: renderedPageContext
+        )
         
         super.init(baseModel: pageModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }
@@ -26,7 +36,7 @@ class MobileContentPageViewModel: MobileContentViewModel {
     var analyticsScreenName: String {
         
         let resource: ResourceModel = renderedPageContext.resource
-        let page: Int = renderedPageContext.page
+        let page: Int32 = renderedPageContext.pageModel.position
         
         return resource.abbreviation + "-" + String(page)
     }
@@ -44,6 +54,25 @@ class MobileContentPageViewModel: MobileContentViewModel {
     
     var backgroundColor: UIColor {
         return pageModel.backgroundColor
+    }
+    
+    func pageDidAppear() {
+     
+        super.viewDidAppear(visibleAnalyticsEvents: visibleAnalyticsEventsObjects)
+        
+        trackScreenAnalytics()
+    }
+    
+    func trackScreenAnalytics() {
+        
+        trackScreenViewAnalyticsUseCase.trackScreen(
+            screenName: analyticsScreenName,
+            siteSection: analyticsSiteSection,
+            siteSubSection: analyticsSiteSubSection,
+            appLanguage: renderedPageContext.appLanguage,
+            contentLanguage: renderedPageContext.rendererLanguages.primaryLanguage.localeId,
+            contentLanguageSecondary: renderedPageContext.rendererLanguages.parallelLanguage?.localeId
+        )
     }
 }
 
@@ -95,7 +124,13 @@ extension MobileContentPageViewModel {
     
     func buttonWithUrlTapped(url: URL) {
                              
-        renderedPageContext.navigation.buttonWithUrlTapped(url: url, screenName: analyticsScreenName, siteSection: analyticsSiteSection, siteSubSection: analyticsSiteSubSection, contentLanguage: renderedPageContext.language.localeId)
+        renderedPageContext.navigation.buttonWithUrlTapped(
+            url: url,
+            analyticsScreenName: analyticsScreenName,
+            analyticsSiteSection: analyticsSiteSection,
+            analyticsSiteSubSection: analyticsSiteSubSection,
+            languages: renderedPageContext.rendererLanguages
+        )
     }
     
     func trainingTipTapped(event: TrainingTipEvent) {

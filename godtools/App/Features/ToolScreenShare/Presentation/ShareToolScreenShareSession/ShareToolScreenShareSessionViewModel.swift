@@ -37,6 +37,7 @@ extension ShareToolScreenShareSessionViewModel {
             actionName: AnalyticsConstants.ActionNames.shareScreenEngaged,
             siteSection: "",
             siteSubSection: "",
+            appLanguage: nil,
             contentLanguage: nil,
             contentLanguageSecondary: nil,
             url: nil,

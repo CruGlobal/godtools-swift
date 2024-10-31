@@ -19,13 +19,14 @@ class TrackScreenViewAnalyticsUseCase {
         self.trackScreenViewAnalytics = trackScreenViewAnalytics
     }
     
-    func trackScreen(screenName: String, siteSection: String, siteSubSection: String, contentLanguage: String?, contentLanguageSecondary: String?) {
+    func trackScreen(screenName: String, siteSection: String, siteSubSection: String, appLanguage: String?, contentLanguage: String?, contentLanguageSecondary: String?) {
         
         let properties = TrackScreenViewAnalyticsPropertiesDomainModel(
             previousScreenName: lastTrackedScreenName,
             screenName: screenName,
             siteSection: siteSection,
             siteSubSection: siteSubSection,
+            appLanguage: appLanguage,
             contentLanguage: contentLanguage,
             contentLanguageSecondary: contentLanguageSecondary,
             data: nil

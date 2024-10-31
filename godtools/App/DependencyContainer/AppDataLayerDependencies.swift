@@ -19,13 +19,15 @@ class AppDataLayerDependencies {
     private let sharedIgnoreCacheSession: IgnoreCacheSession = IgnoreCacheSession()
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
     private let sharedAnalytics: AnalyticsContainer
+    private let appMessagingEnabled: Bool
     
-    init(appBuild: AppBuild, appConfig: AppConfig, infoPlist: InfoPlist, realmDatabase: RealmDatabase) {
+    init(appBuild: AppBuild, appConfig: AppConfig, infoPlist: InfoPlist, realmDatabase: RealmDatabase, appMessagingEnabled: Bool) {
         
         sharedAppBuild = appBuild
         sharedAppConfig = appConfig
         sharedInfoPlist = infoPlist
         sharedRealmDatabase = realmDatabase
+        self.appMessagingEnabled = appMessagingEnabled
         
         sharedAnalytics = AnalyticsContainer(
             appsFlyerAnalytics: AppsFlyerAnalytics(appsFlyer: AppsFlyer.shared, loggingEnabled: appBuild.configuration == .analyticsLogging),
@@ -51,6 +53,15 @@ class AppDataLayerDependencies {
     
     func getAppConfig() -> AppConfig {
         return sharedAppConfig
+    }
+    
+    func getAppMessaging() -> AppMessagingInterface {
+        
+        guard appMessagingEnabled else {
+            return DisabledInAppMessaging()
+        }
+        
+        return FirebaseInAppMessaging.shared
     }
     
     func getArticleAemRepository() -> ArticleAemRepository {
@@ -122,10 +133,6 @@ class AppDataLayerDependencies {
         return FavoritingToolMessageCache(userDefaultsCache: sharedUserDefaultsCache)
     }
     
-    func getFirebaseInAppMessaing() -> FirebaseInAppMessaging {
-        return FirebaseInAppMessaging.shared
-    }
-    
     func getFollowUpsService() -> FollowUpsService {
         
         let api = FollowUpsApi(
@@ -162,6 +169,15 @@ class AppDataLayerDependencies {
         return LanguagesRepository(
             api: api,
             cache: cache
+        )
+    }
+    
+    func getLessonListItemProgressRepository() -> GetLessonListItemProgressRepository {
+        return GetLessonListItemProgressRepository(
+            lessonProgressRepository: getUserLessonProgressRepository(),
+            userCountersRepository: getUserCountersRepository(),
+            localizationServices: getLocalizationServices(), 
+            getTranslatedPercentage: getTranslatedPercentage()
         )
     }
     
@@ -316,6 +332,10 @@ class AppDataLayerDependencies {
         return GetTranslatedNumberCount()
     }
     
+    func getTranslatedPercentage() -> GetTranslatedPercentage {
+        return GetTranslatedPercentage()
+    }
+    
     func getTranslatedToolCategory() -> GetTranslatedToolCategory {
         return GetTranslatedToolCategory(
             localizationServices: getLocalizationServices(),
@@ -412,6 +432,14 @@ class AppDataLayerDependencies {
     func getUserLessonFiltersRepository() -> UserLessonFiltersRepository {
         return UserLessonFiltersRepository(
             cache: RealmUserLessonFiltersCache(
+                realmDatabase: sharedRealmDatabase
+            )
+        )
+    }
+    
+    func getUserLessonProgressRepository() -> UserLessonProgressRepository {
+        return UserLessonProgressRepository(
+            cache: RealmUserLessonProgressCache(
                 realmDatabase: sharedRealmDatabase
             )
         )

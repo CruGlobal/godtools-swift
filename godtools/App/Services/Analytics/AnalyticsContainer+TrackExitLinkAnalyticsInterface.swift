@@ -16,6 +16,7 @@ extension AnalyticsContainer: TrackExitLinkAnalyticsInterface {
             screenName: properties.screenName,
             siteSection: properties.siteSection,
             siteSubSection: properties.siteSubSection,
+            appLanguage: properties.appLanguage,
             contentLanguage: properties.contentLanguage,
             secondaryContentLanguage: properties.contentLanguageSecondary,
             url: properties.url.absoluteString

@@ -21,7 +21,8 @@ class TestsDiContainer: AppDiContainer {
             appBuild: appBuild,
             appConfig: appConfig,
             infoPlist: InfoPlist(),
-            realmDatabase: realmDatabase
+            realmDatabase: realmDatabase,
+            appMessagingEnabled: false
         )
     }
 }

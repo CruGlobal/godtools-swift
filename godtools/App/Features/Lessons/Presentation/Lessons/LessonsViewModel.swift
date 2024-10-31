@@ -113,6 +113,7 @@ class LessonsViewModel: ObservableObject {
             screenName: analyticsScreenName,
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
+            appLanguage: nil,
             contentLanguage: nil,
             contentLanguageSecondary: nil
         )
@@ -122,6 +123,7 @@ class LessonsViewModel: ObservableObject {
             actionName: AnalyticsConstants.ActionNames.viewedLessonsAction,
             siteSection: "",
             siteSubSection: "",
+            appLanguage: nil,
             contentLanguage: nil,
             contentLanguageSecondary: nil,
             url: nil,
@@ -136,6 +138,7 @@ class LessonsViewModel: ObservableObject {
             actionName: AnalyticsConstants.ActionNames.lessonOpenTapped,
             siteSection: "",
             siteSubSection: "",
+            appLanguage: nil,
             contentLanguage: nil,
             contentLanguageSecondary: nil,
             url: nil,

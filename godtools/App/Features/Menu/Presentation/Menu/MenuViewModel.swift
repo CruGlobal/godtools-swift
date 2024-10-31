@@ -181,6 +181,7 @@ extension MenuViewModel {
             screenName: getMenuAnalyticsScreenName(),
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
+            appLanguage: nil,
             contentLanguage: nil,
             contentLanguageSecondary: nil
         )
@@ -258,6 +259,7 @@ extension MenuViewModel {
             screenName: getShareStoryAnalyticsScreenName(),
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
+            appLanguage: nil,
             contentLanguage: nil,
             contentLanguageSecondary: nil
         )
@@ -272,6 +274,7 @@ extension MenuViewModel {
             actionName: AnalyticsConstants.ActionNames.shareIconEngaged,
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
+            appLanguage: nil,
             contentLanguage: nil,
             contentLanguageSecondary: nil,
             url: nil,
@@ -282,6 +285,7 @@ extension MenuViewModel {
             screenName: getShareAppAnalyticsScreenName(),
             siteSection: analyticsSiteSection,
             siteSubSection: analyticsSiteSubSection,
+            appLanguage: nil,
             contentLanguage: nil,
             contentLanguageSecondary: nil
         )
