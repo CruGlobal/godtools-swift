@@ -45,14 +45,14 @@ class AppFlowTests: BaseFlowTests {
 
 extension AppFlowTests {
     
-    private func getDashboardTabButton(buttonAccessibility: AccessibilityStrings.Button) -> XCUIElement {
+    private func getDashboardTabButton(buttonAccessibility: AccessibilityStrings.Button, waitForExistence: TimeInterval?) -> XCUIElement {
                 
-        return app.queryFirstButtonMatching(buttonAccessibility: buttonAccessibility)
+        return app.queryFirstButtonMatching(buttonAccessibility: buttonAccessibility, waitForExistence: waitForExistence)
     }
     
     private func tabToLessons() {
         
-        let lessonsTab = getDashboardTabButton(buttonAccessibility: .dashboardTabLessons)
+        let lessonsTab = getDashboardTabButton(buttonAccessibility: .dashboardTabLessons, waitForExistence: 1)
         
         XCTAssertTrue(lessonsTab.exists)
         
@@ -63,7 +63,7 @@ extension AppFlowTests {
     
     private func tabToFavorites() {
         
-        let favoritesTab = getDashboardTabButton(buttonAccessibility: .dashboardTabFavorites)
+        let favoritesTab = getDashboardTabButton(buttonAccessibility: .dashboardTabFavorites, waitForExistence: 1)
         
         XCTAssertTrue(favoritesTab.exists)
         
@@ -74,7 +74,7 @@ extension AppFlowTests {
     
     private func tabToTools() {
         
-        let toolsTab = getDashboardTabButton(buttonAccessibility: .dashboardTabTools)
+        let toolsTab = getDashboardTabButton(buttonAccessibility: .dashboardTabTools, waitForExistence: 1)
         
         XCTAssertTrue(toolsTab.exists)
         
