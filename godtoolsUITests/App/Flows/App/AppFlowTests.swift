@@ -45,45 +45,30 @@ class AppFlowTests: BaseFlowTests {
 
 extension AppFlowTests {
     
-    private func getDashboardTabButton(buttonAccessibility: AccessibilityStrings.Button, waitForExistence: TimeInterval?) -> XCUIElement {
-                
-        return app.queryFirstButtonMatching(buttonAccessibility: buttonAccessibility, waitForExistence: waitForExistence)
+    private func tabToScreenInDashboard(tabAccessibility: AccessibilityStrings.Button, dashboardScreenAccessibility: AccessibilityStrings.Screen) {
+        
+        let tab = app.queryButton(buttonAccessibility: tabAccessibility)
+        
+        XCTAssertTrue(tab.exists)
+        
+        tab.tap()
+        
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: dashboardScreenAccessibility, waitForExistence: 1)
     }
     
     private func tabToLessons() {
         
-        let lessonsTab = getDashboardTabButton(buttonAccessibility: .dashboardTabLessons, waitForExistence: 1)
-        
-        XCTAssertTrue(lessonsTab.exists)
-        
-        //lessonsTab.tap()
-        
-        let coordinate: XCUICoordinate = lessonsTab.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
-        coordinate.tap()
-        
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .dashboardLessons, waitForExistence: 1)
+        tabToScreenInDashboard(tabAccessibility: .dashboardTabLessons, dashboardScreenAccessibility: .dashboardLessons)
     }
     
     private func tabToFavorites() {
         
-        let favoritesTab = getDashboardTabButton(buttonAccessibility: .dashboardTabFavorites, waitForExistence: 1)
-        
-        XCTAssertTrue(favoritesTab.exists)
-        
-        favoritesTab.tap()
-        
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .dashboardFavorites, waitForExistence: 1)
+        tabToScreenInDashboard(tabAccessibility: .dashboardTabFavorites, dashboardScreenAccessibility: .dashboardFavorites)
     }
     
     private func tabToTools() {
         
-        let toolsTab = getDashboardTabButton(buttonAccessibility: .dashboardTabTools, waitForExistence: 1)
-        
-        XCTAssertTrue(toolsTab.exists)
-        
-        toolsTab.tap()
-        
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .dashboardTools, waitForExistence: 1)
+        tabToScreenInDashboard(tabAccessibility: .dashboardTabTools, dashboardScreenAccessibility: .dashboardTools)
     }
     
     func testLessonsTabTappedNavigatesToLessons() {

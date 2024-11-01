@@ -31,6 +31,21 @@ struct DashboardTabBarItemView: View {
      
     var body: some View {
         
+        Button(action: {
+            
+            currentTab = viewModel.tabIndex
+        }) {
+            
+            ZStack {
+                Rectangle()
+                    .fill(Color.red)
+                    .frame(width: 30, height: 30)
+            }
+                
+        }
+        .accessibilityIdentifier(buttonAccessibility.id)
+        
+        /*
         ZStack(alignment: .center) {
             
             VStack(alignment: .center, spacing: 5) {
@@ -48,6 +63,7 @@ struct DashboardTabBarItemView: View {
         .onTapGesture {
             currentTab = viewModel.tabIndex
         }
+         */
     }
 }
 
