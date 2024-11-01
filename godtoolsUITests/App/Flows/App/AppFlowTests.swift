@@ -56,7 +56,10 @@ extension AppFlowTests {
         
         XCTAssertTrue(lessonsTab.exists)
         
-        lessonsTab.tap()
+        //lessonsTab.tap()
+        
+        let coordinate: XCUICoordinate = lessonsTab.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+        coordinate.tap()
         
         assertIfScreenDoesNotExist(app: app, screenAccessibility: .dashboardLessons, waitForExistence: 1)
     }
