@@ -12,11 +12,11 @@ import XCTest
 
 class AppFlowTests: BaseFlowTests {
     
-    private func launchApp(flowDeepLinkUrl: String = "godtools://org.cru.godtools/dashboard/favorites", checkInitialScreenExists: AccessibilityStrings.Screen = .dashboardFavorites) {
+    override func launchApp(flowDeepLinkUrl: String? = nil, checkInitialScreenExists: AccessibilityStrings.Screen? = nil) {
         
         super.launchApp(
-            flowDeepLinkUrl: flowDeepLinkUrl,
-            checkInitialScreenExists: checkInitialScreenExists
+            flowDeepLinkUrl: flowDeepLinkUrl ?? "godtools://org.cru.godtools/dashboard/favorites",
+            checkInitialScreenExists: checkInitialScreenExists ?? .dashboardFavorites
         )
     }
     

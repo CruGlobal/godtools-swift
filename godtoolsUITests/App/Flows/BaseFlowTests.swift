@@ -32,7 +32,7 @@ class BaseFlowTests: XCTestCase {
         super.tearDown()
     }
     
-    func launchApp(flowDeepLinkUrl: String, checkInitialScreenExists: AccessibilityStrings.Screen?) {
+    func launchApp(flowDeepLinkUrl: String, checkInitialScreenExists: AccessibilityStrings.Screen) {
         
         self.app = XCUIApplication()
         self.flowDeepLinkUrl = flowDeepLinkUrl
