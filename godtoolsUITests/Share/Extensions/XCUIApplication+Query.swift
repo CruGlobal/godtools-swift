@@ -16,7 +16,7 @@ extension XCUIApplication {
         return descendants(matching: .any).matching(NSPredicate(format: "identifier == %@", id)).allElementsBoundByIndex.first
     }
     
-    func queryScreen(screenAccessibility: AccessibilityStrings.Screen) -> XCUIElement {
+    func queryScreen(screenAccessibility: AccessibilityStrings.Screen, waitForExistence: TimeInterval?) -> XCUIElement {
         
         // NOTE:
         //  I needed to place screen accessibility id's on an element within the screen view hierarchy rather than
@@ -27,12 +27,46 @@ extension XCUIApplication {
         //
         // ~Levi
         
+        if let waitForExistence = waitForExistence, queryScreen(screenAccessibility: screenAccessibility).waitForExistence(timeout: waitForExistence) {
+            
+            return queryScreen(screenAccessibility: screenAccessibility)
+        }
+        else {
+            
+            return queryScreen(screenAccessibility: screenAccessibility)
+        }
+    }
+    
+    func queryScreen(screenAccessibility: AccessibilityStrings.Screen) -> XCUIElement {
         return staticTexts[screenAccessibility.id]
     }
     
-    func queryButton(buttonAccessibility: AccessibilityStrings.Button) -> XCUIElement {
+    func queryButton(buttonAccessibility: AccessibilityStrings.Button, waitForExistence: TimeInterval?) -> XCUIElement {
         
+        if let waitForExistence = waitForExistence, queryButton(buttonAccessibility: buttonAccessibility).waitForExistence(timeout: waitForExistence) {
+            
+            return queryButton(buttonAccessibility: buttonAccessibility)
+        }
+        else {
+            
+            return queryButton(buttonAccessibility: buttonAccessibility)
+        }
+    }
+    
+    func queryButton(buttonAccessibility: AccessibilityStrings.Button) -> XCUIElement {
         return buttons[buttonAccessibility.id]
+    }
+    
+    func queryFirstButtonMatching(buttonAccessibility: AccessibilityStrings.Button, waitForExistence: TimeInterval?) -> XCUIElement {
+        
+        if let waitForExistence = waitForExistence, queryFirstButtonMatching(buttonAccessibility: buttonAccessibility).waitForExistence(timeout: waitForExistence) {
+            
+            return queryFirstButtonMatching(buttonAccessibility: buttonAccessibility)
+        }
+        else {
+            
+            return queryFirstButtonMatching(buttonAccessibility: buttonAccessibility)
+        }
     }
     
     func queryFirstButtonMatching(buttonAccessibility: AccessibilityStrings.Button) -> XCUIElement {

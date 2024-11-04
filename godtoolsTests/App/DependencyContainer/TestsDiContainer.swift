@@ -22,7 +22,7 @@ class TestsDiContainer: AppDiContainer {
             appConfig: appConfig,
             infoPlist: InfoPlist(),
             realmDatabase: realmDatabase,
-            appMessagingEnabled: false
+            firebaseEnabled: false
         )
     }
 }
