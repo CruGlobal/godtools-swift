@@ -102,16 +102,16 @@ struct DashboardView_Previews: PreviewProvider {
     
     private static let diContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
     private static let flowDelegate: FlowDelegate = MockFlowDelegate()
-    private static let dashboardDependencies: DashboardPresentationLayerDependencies = DashboardPresentationLayerDependencies(appDiContainer: DashboardView_Previews.diContainer, flowDelegate: DashboardView_Previews.flowDelegate)
+    private static let dashboardDependencies: DashboardPresentationLayerDependencies = DashboardPresentationLayerDependencies(appDiContainer: Self.diContainer, flowDelegate: Self.flowDelegate)
         
     static func getDashboardViewModel() -> DashboardViewModel {
         
-        let appDiContainer: AppDiContainer = DashboardView_Previews.diContainer
+        let appDiContainer: AppDiContainer = Self.diContainer
         
         let viewModel = DashboardViewModel(
             startingTab: .favorites,
-            flowDelegate: DashboardView_Previews.flowDelegate,
-            dashboardPresentationLayerDependencies: DashboardView_Previews.dashboardDependencies,
+            flowDelegate: Self.flowDelegate,
+            dashboardPresentationLayerDependencies: Self.dashboardDependencies,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             viewDashboardUseCase: appDiContainer.feature.dashboard.domainLayer.getViewDashboardUseCase(), 
             dashboardTabObserver: CurrentValueSubject(.favorites)
@@ -122,6 +122,6 @@ struct DashboardView_Previews: PreviewProvider {
     
     static var previews: some View {
     
-        DashboardView(viewModel: DashboardView_Previews.getDashboardViewModel())
+        DashboardView(viewModel: Self.getDashboardViewModel())
     }
 }
