@@ -12,11 +12,11 @@ import XCTest
 
 class AppFlowTests: BaseFlowTests {
     
-    private func launchApp() {
+    private func launchApp(flowDeepLinkUrl: String = "godtools://org.cru.godtools/dashboard/favorites", checkInitialScreenExists: AccessibilityStrings.Screen = .dashboardFavorites) {
         
         super.launchApp(
-            flowDeepLinkUrl: "godtools://org.cru.godtools/dashboard/favorites",
-            initialScreen: .dashboardFavorites
+            flowDeepLinkUrl: flowDeepLinkUrl,
+            checkInitialScreenExists: checkInitialScreenExists
         )
     }
     
@@ -24,7 +24,7 @@ class AppFlowTests: BaseFlowTests {
         
         launchApp()
         
-        super.checkInitialScreenExists(app: app)
+        super.assertIfInitialScreenDoesntExist(app: app)
     }
     
     func testNavigationToMenu() {
@@ -72,23 +72,32 @@ extension AppFlowTests {
     }
     
     func testLessonsTabTappedNavigatesToLessons() {
-        
-        launchApp()
-        
+                
+        launchApp(
+            flowDeepLinkUrl: "godtools://org.cru.godtools/dashboard/favorites",
+            checkInitialScreenExists: .dashboardFavorites
+        )
+                
         tabToLessons()
     }
     
     func testFavoritesTabTappedNavigatesToFavorites() {
         
-        launchApp()
-        
+        launchApp(
+            flowDeepLinkUrl: "godtools://org.cru.godtools/dashboard/tools",
+            checkInitialScreenExists: .dashboardTools
+        )
+                        
         tabToFavorites()
     }
     
     func testToolsTabTappedNavigatesToTools() {
         
-        launchApp()
-        
+        launchApp(
+            flowDeepLinkUrl: "godtools://org.cru.godtools/dashboard/favorites",
+            checkInitialScreenExists: .dashboardFavorites
+        )
+                
         tabToTools()
     }
 }

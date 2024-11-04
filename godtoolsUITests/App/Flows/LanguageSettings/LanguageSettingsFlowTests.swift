@@ -16,7 +16,7 @@ class LanguageSettingsFlowTests: BaseFlowTests {
         
         super.launchApp(
             flowDeepLinkUrl: "godtools://org.cru.godtools/ui_tests/settings/language",
-            initialScreen: .languageSettings
+            checkInitialScreenExists: .languageSettings
         )
     }
     
@@ -34,7 +34,7 @@ class LanguageSettingsFlowTests: BaseFlowTests {
         
         launchApp()
         
-        super.checkInitialScreenExists(app: app)
+        super.assertIfInitialScreenDoesntExist(app: app)
     }
     
     func testNavigationToAppLanguagesList() {
