@@ -47,7 +47,7 @@ extension AppFlowTests {
     
     private func tabToScreenInDashboard(tabAccessibility: AccessibilityStrings.Button, dashboardScreenAccessibility: AccessibilityStrings.Screen) {
         
-        let tab = app.queryButton(buttonAccessibility: tabAccessibility)
+        let tab = app.queryFirstButtonMatching(buttonAccessibility: tabAccessibility)
         
         XCTAssertTrue(tab.exists)
         
