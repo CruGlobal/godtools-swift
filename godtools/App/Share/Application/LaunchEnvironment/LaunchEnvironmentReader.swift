@@ -21,9 +21,9 @@ class LaunchEnvironmentReader {
         return LaunchEnvironmentReader(launchEnvironment: ProcessInfo.processInfo.environment)
     }
     
-    func getAppMessagingIsEnabled() -> Bool? {
+    func getFirebaseEnabled() -> Bool? {
         
-        guard let stringBool = launchEnvironment[LaunchEnvironmentKey.appMessagingIsEnabled.value] else {
+        guard let stringBool = launchEnvironment[LaunchEnvironmentKey.firebaseEnabled.value] else {
             return nil
         }
         
