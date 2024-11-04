@@ -22,14 +22,7 @@ class AppsFlyer {
     }
     
     var appsFlyerLib: AppsFlyerLib {
-        assertFailureIfNotConfigured()
         return sharedAppsFlyerLib
-    }
-    
-    private func assertFailureIfNotConfigured() {
-        if !isConfigured {
-            assertionFailure("AppsFlyer has not been configured.  Be sure to call configure on application didFinishLaunching.")
-        }
     }
     
     func configure(configuration: AppsFlyerConfiguration, deepLinkDelegate: DeepLinkDelegate) {
