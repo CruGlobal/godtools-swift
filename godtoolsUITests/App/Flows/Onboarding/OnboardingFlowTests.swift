@@ -18,7 +18,7 @@ class OnboardingFlowTests: BaseFlowTests {
                 
         super.launchApp(
             flowDeepLinkUrl: "godtools://org.cru.godtools/ui_tests/onboarding" + "?" + "appLanguageCode=" + languageCode,
-            initialScreen: .onboardingTutorial
+            checkInitialScreenExists: .onboardingTutorial
         )
     }
     
@@ -74,7 +74,7 @@ class OnboardingFlowTests: BaseFlowTests {
         
         closeVideoButton.tap()
         
-        super.checkInitialScreenExists(app: app)
+        super.assertIfInitialScreenDoesntExist(app: app)
     }
     
     func testNavigationThroughTutorialPagesUsingNextTutorialPageButton() {

@@ -19,15 +19,15 @@ class AppDataLayerDependencies {
     private let sharedIgnoreCacheSession: IgnoreCacheSession = IgnoreCacheSession()
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
     private let sharedAnalytics: AnalyticsContainer
-    private let appMessagingEnabled: Bool
+    private let firebaseEnabled: Bool
     
-    init(appBuild: AppBuild, appConfig: AppConfig, infoPlist: InfoPlist, realmDatabase: RealmDatabase, appMessagingEnabled: Bool) {
+    init(appBuild: AppBuild, appConfig: AppConfig, infoPlist: InfoPlist, realmDatabase: RealmDatabase, firebaseEnabled: Bool) {
         
         sharedAppBuild = appBuild
         sharedAppConfig = appConfig
         sharedInfoPlist = infoPlist
         sharedRealmDatabase = realmDatabase
-        self.appMessagingEnabled = appMessagingEnabled
+        self.firebaseEnabled = firebaseEnabled
         
         sharedAnalytics = AnalyticsContainer(
             appsFlyerAnalytics: AppsFlyerAnalytics(appsFlyer: AppsFlyer.shared, loggingEnabled: appBuild.configuration == .analyticsLogging),
@@ -57,7 +57,7 @@ class AppDataLayerDependencies {
     
     func getAppMessaging() -> AppMessagingInterface {
         
-        guard appMessagingEnabled else {
+        guard firebaseEnabled else {
             return DisabledInAppMessaging()
         }
         

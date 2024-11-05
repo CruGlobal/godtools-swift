@@ -48,9 +48,7 @@ class AppsFlyerAnalytics: NSObject {
     func trackAppLaunch() {
                     
         serialQueue.async { [weak self] in
-            
-            self?.assertFailureIfNotConfigured()
-        
+                    
             self?.appsFlyer.appsFlyerLib.start()
                         
             self?.log(method: "trackAppLaunch()", label: nil, labelValue: nil, data: nil)
@@ -60,17 +58,9 @@ class AppsFlyerAnalytics: NSObject {
     func trackAction(actionName: String, data: [String: Any]?) {
                 
         serialQueue.async { [weak self] in
-            
-            self?.assertFailureIfNotConfigured()
-            
+                        
             self?.appsFlyer.appsFlyerLib.logEvent(actionName, withValues: data)
             self?.log(method: "trackEvent()", label: "eventName", labelValue: actionName, data: data)
-        }
-    }
-    
-    private func assertFailureIfNotConfigured() {
-        if !isConfigured {
-            assertionFailure("AppsFlyer has not been configured.  Call configure() on application didFinishLaunching.")
         }
     }
     

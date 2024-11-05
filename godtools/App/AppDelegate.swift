@@ -44,7 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             appConfig: appConfig,
             infoPlist: infoPlist,
             realmDatabase: realmDatabase,
-            appMessagingEnabled: launchEnvironmentReader.getAppMessagingIsEnabled() ?? true
+            firebaseEnabled: firebaseEnabled
         )
     }()
     
@@ -56,6 +56,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }()
     
     private var toolShortcutLinks: ToolShortcutLinksView?
+    private var firebaseEnabled: Bool {
+        return launchEnvironmentReader.getFirebaseEnabled() ?? true
+    }
     
     var window: UIWindow?
     
@@ -74,8 +77,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if appBuild.configuration == .analyticsLogging {
             appDiContainer.getFirebaseDebugArguments().enable()
         }
-                
-        appDiContainer.getFirebaseConfiguration().configure()
+            
+        if firebaseEnabled {
+            appDiContainer.getFirebaseConfiguration().configure()
+        }
         
         if appBuild.configuration == .release {
             GodToolsParserLogger.shared.start()

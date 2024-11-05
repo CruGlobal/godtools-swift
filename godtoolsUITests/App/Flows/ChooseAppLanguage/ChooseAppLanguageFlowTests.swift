@@ -16,7 +16,7 @@ class ChooseAppLanguageFlowTests: BaseFlowTests {
         
         super.launchApp(
             flowDeepLinkUrl: "godtools://org.cru.godtools/ui_tests/settings/app_languages",
-            initialScreen: .appLanguages
+            checkInitialScreenExists: .appLanguages
         )
     }
     

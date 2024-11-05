@@ -147,7 +147,8 @@ extension ToolNavigationFlow {
                 appLanguage: appLanguage,
                 toolTranslations: toolTranslations,
                 initialPage: initialPage,
-                selectedLanguageIndex: selectedLanguageIndex
+                selectedLanguageIndex: selectedLanguageIndex,
+                trainingTipsEnabled: trainingTipsEnabled
             )
             
         case .metaTool:

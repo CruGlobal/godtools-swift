@@ -16,7 +16,7 @@ class MenuFlowTests: BaseFlowTests {
         
         super.launchApp(
             flowDeepLinkUrl: "godtools://org.cru.godtools/dashboard/tools",
-            initialScreen: .dashboardTools
+            checkInitialScreenExists: .dashboardTools
         )
     }
     
@@ -24,7 +24,7 @@ class MenuFlowTests: BaseFlowTests {
         
         launchApp()
         
-        super.checkInitialScreenExists(app: app)
+        super.assertIfInitialScreenDoesntExist(app: app)
     }
     
     func testNavigationToMenu() {

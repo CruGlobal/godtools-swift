@@ -14,8 +14,8 @@ class LaunchEnvironmentWriter {
         
     }
     
-    func setAppMessagingIsEnabled(launchEnvironment: inout [String: String], enabled: Bool) {
-        launchEnvironment[LaunchEnvironmentKey.appMessagingIsEnabled.value] = String(enabled)
+    func setFirebaseEnabled(launchEnvironment: inout [String: String], enabled: Bool) {
+        launchEnvironment[LaunchEnvironmentKey.firebaseEnabled.value] = String(enabled)
     }
     
     func setUrlDeepLink(launchEnvironment: inout [String: String], url: String) {
