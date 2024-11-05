@@ -66,7 +66,7 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
         case .chooseAppLanguageTappedFromOnboardingTutorial:
             navigateToChooseAppLanguageFlow()
             
-        case .chooseAppLanguageFlowCompleted(let state):
+        case .chooseAppLanguageFlowCompleted( _):
             navigateBackFromChooseAppLanguageFlow()
             
         case .videoButtonTappedFromOnboardingTutorial(let youtubeVideoId):

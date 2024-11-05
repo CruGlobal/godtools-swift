@@ -114,9 +114,7 @@ class MenuFlow: Flow {
             navigationController.dismiss(animated: true)
                                 
         case .userCompletedSignInFromCreateAccount(let authError):
-            
-            let appLanguage: AppLanguageDomainModel = self.appLanguage
-            
+                        
             navigationController.dismissPresented(animated: true) { [weak self] in
                 if let authError = authError {
                     self?.presentSocialAuthError(authError: authError)
@@ -124,9 +122,7 @@ class MenuFlow: Flow {
             }
             
         case .userCompletedSignInFromLogin(let authError):
-            
-            let appLanguage: AppLanguageDomainModel = self.appLanguage
-            
+                        
             navigationController.dismissPresented(animated: true) { [weak self] in
                 if let authError = authError {
                     self?.presentSocialAuthError(authError: authError)

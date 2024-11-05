@@ -57,7 +57,7 @@ class ChooseYourOwnAdventureFlow: ToolNavigationFlow, ToolSettingsNavigationFlow
             
             openToolSettings(with: toolSettingsObserver)
             
-        case .toolSettingsFlowCompleted(let state):
+        case .toolSettingsFlowCompleted( _):
             
             closeToolSettings()
             
