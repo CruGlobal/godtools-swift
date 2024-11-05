@@ -154,7 +154,7 @@ class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
                 description: description,
                 name: name,
                 numberOfLanguages: numberOfLanguagesString,
-                toolLanguageName: toolPrimaryLanguageName ?? "",
+                toolLanguageName: toolPrimaryLanguageName,
                 toolLanguageNameIsSupported: getToolSupportsLanguage(resource: resourceVariant, language: toolPrimaryLanguage),
                 toolParallelLanguageName: toolParallelLanguageName,
                 toolParallelLanguageNameIsSupported: getToolSupportsLanguage(resource: resourceVariant, language: toolParallelLanguage)
