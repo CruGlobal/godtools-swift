@@ -109,7 +109,6 @@ class AppDomainLayerDependencies {
     func getTrainingTipCompletedUseCase() -> GetTrainingTipCompletedUseCase {
         return GetTrainingTipCompletedUseCase(
             repository: dataLayer.getCompletedTrainingTipRepository(),
-            service: dataLayer.getViewedTrainingTipsService(),
             setCompletedTrainingTipUseCase: getSetCompletedTrainingTipUseCase()
         )
     }
