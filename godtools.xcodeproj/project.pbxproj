@@ -1308,7 +1308,6 @@
 		45E347682A49BE230014CCD1 /* FlowStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E3475B2A49BE220014CCD1 /* FlowStep.swift */; };
 		45E347692A49BE230014CCD1 /* Flow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E3475C2A49BE220014CCD1 /* Flow.swift */; };
 		45E3476A2A49BE230014CCD1 /* FlowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E3475D2A49BE220014CCD1 /* FlowDelegate.swift */; };
-		45E3476B2A49BE230014CCD1 /* Flow+PresentNativeMailApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E3475F2A49BE220014CCD1 /* Flow+PresentNativeMailApp.swift */; };
 		45E3476C2A49BE230014CCD1 /* MockFlowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E347612A49BE220014CCD1 /* MockFlowDelegate.swift */; };
 		45E3476D2A49BE230014CCD1 /* Flow+NavigateToUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E347632A49BE220014CCD1 /* Flow+NavigateToUrl.swift */; };
 		45E3476E2A49BE230014CCD1 /* Flow+PresentAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E347652A49BE230014CCD1 /* Flow+PresentAlert.swift */; };
@@ -1435,10 +1434,6 @@
 		45F7162C290A12D70019B715 /* ShareAStoryWithUsWebContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F715CD290A12D70019B715 /* ShareAStoryWithUsWebContent.swift */; };
 		45F7162D290A12D70019B715 /* WebContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F715CE290A12D70019B715 /* WebContentView.swift */; };
 		45F7162E290A12D70019B715 /* WebContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45F715CF290A12D70019B715 /* WebContentView.xib */; };
-		45F7162F290A12D70019B715 /* MailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F715D1290A12D70019B715 /* MailView.swift */; };
-		45F71630290A12D70019B715 /* MailViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F715D2290A12D70019B715 /* MailViewModelType.swift */; };
-		45F71631290A12D70019B715 /* MailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F715D3290A12D70019B715 /* MailViewModel.swift */; };
-		45F71632290A12D70019B715 /* MailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45F715D4290A12D70019B715 /* MailView.xib */; };
 		45F7164F290A12D70019B715 /* AccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F715FB290A12D70019B715 /* AccountViewModel.swift */; };
 		45F71664290A12D70019B715 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F71612290A12D70019B715 /* AccountView.swift */; };
 		45F71665290A12D70019B715 /* GetUserIsAuthenticatedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F71616290A12D70019B715 /* GetUserIsAuthenticatedUseCase.swift */; };
@@ -2980,7 +2975,6 @@
 		45E3475B2A49BE220014CCD1 /* FlowStep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlowStep.swift; sourceTree = "<group>"; };
 		45E3475C2A49BE220014CCD1 /* Flow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Flow.swift; sourceTree = "<group>"; };
 		45E3475D2A49BE220014CCD1 /* FlowDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlowDelegate.swift; sourceTree = "<group>"; };
-		45E3475F2A49BE220014CCD1 /* Flow+PresentNativeMailApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Flow+PresentNativeMailApp.swift"; sourceTree = "<group>"; };
 		45E347612A49BE220014CCD1 /* MockFlowDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockFlowDelegate.swift; sourceTree = "<group>"; };
 		45E347632A49BE220014CCD1 /* Flow+NavigateToUrl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Flow+NavigateToUrl.swift"; sourceTree = "<group>"; };
 		45E347652A49BE230014CCD1 /* Flow+PresentAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Flow+PresentAlert.swift"; sourceTree = "<group>"; };
@@ -3101,10 +3095,6 @@
 		45F715CD290A12D70019B715 /* ShareAStoryWithUsWebContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareAStoryWithUsWebContent.swift; sourceTree = "<group>"; };
 		45F715CE290A12D70019B715 /* WebContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebContentView.swift; sourceTree = "<group>"; };
 		45F715CF290A12D70019B715 /* WebContentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebContentView.xib; sourceTree = "<group>"; };
-		45F715D1290A12D70019B715 /* MailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MailView.swift; sourceTree = "<group>"; };
-		45F715D2290A12D70019B715 /* MailViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MailViewModelType.swift; sourceTree = "<group>"; };
-		45F715D3290A12D70019B715 /* MailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MailViewModel.swift; sourceTree = "<group>"; };
-		45F715D4290A12D70019B715 /* MailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MailView.xib; sourceTree = "<group>"; };
 		45F715FB290A12D70019B715 /* AccountViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewModel.swift; sourceTree = "<group>"; };
 		45F71612290A12D70019B715 /* AccountView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		45F71616290A12D70019B715 /* GetUserIsAuthenticatedUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetUserIsAuthenticatedUseCase.swift; sourceTree = "<group>"; };
@@ -8298,7 +8288,6 @@
 				45E347622A49BE220014CCD1 /* Flow+NavigateToUrl */,
 				45E347642A49BE230014CCD1 /* Flow+PresentAlert */,
 				45E347662A49BE230014CCD1 /* Flow+PresentError */,
-				45E3475E2A49BE220014CCD1 /* Flow+PresentNativeMailApp */,
 				45FB15F527DBDDB50009DF8E /* LanguageSettings */,
 				45FB15F727DBDDB50009DF8E /* LearnToShareTool */,
 				45FB15E827DBDDB40009DF8E /* Lesson */,
@@ -10128,14 +10117,6 @@
 			path = Flow;
 			sourceTree = "<group>";
 		};
-		45E3475E2A49BE220014CCD1 /* Flow+PresentNativeMailApp */ = {
-			isa = PBXGroup;
-			children = (
-				45E3475F2A49BE220014CCD1 /* Flow+PresentNativeMailApp.swift */,
-			);
-			path = "Flow+PresentNativeMailApp";
-			sourceTree = "<group>";
-		};
 		45E347602A49BE220014CCD1 /* MockFlowDelegate */ = {
 			isa = PBXGroup;
 			children = (
@@ -10757,7 +10738,6 @@
 			isa = PBXGroup;
 			children = (
 				45F715FA290A12D70019B715 /* Account */,
-				45F715D0290A12D70019B715 /* Mail */,
 				453A9EEF2A044FF6007BB892 /* Menu */,
 				45F715C2290A12D70019B715 /* WebContent */,
 			);
@@ -10789,17 +10769,6 @@
 				45F715CA290A12D70019B715 /* WebContentType.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		45F715D0290A12D70019B715 /* Mail */ = {
-			isa = PBXGroup;
-			children = (
-				45F715D1290A12D70019B715 /* MailView.swift */,
-				45F715D4290A12D70019B715 /* MailView.xib */,
-				45F715D3290A12D70019B715 /* MailViewModel.swift */,
-				45F715D2290A12D70019B715 /* MailViewModelType.swift */,
-			);
-			path = Mail;
 			sourceTree = "<group>";
 		};
 		45F715FA290A12D70019B715 /* Account */ = {
@@ -12331,7 +12300,6 @@
 				D471CFC128B3D6A200DCE61C /* Preview Assets.xcassets in Resources */,
 				4590F73927B17018007424F4 /* MobileContentCardCollectionPageCardView.xib in Resources */,
 				455582E2269F2C1000C3FF14 /* TrainingTipView.xib in Resources */,
-				45F71632290A12D70019B715 /* MailView.xib in Resources */,
 				45F3D39929A50B1300446F69 /* onboarding_talk_about_god.json in Resources */,
 				D1838479257E86B3004F5674 /* container in Resources */,
 				451A17522756C10400D35D78 /* tutorial_screenshare.json in Resources */,
@@ -13213,7 +13181,6 @@
 				45070A812ACF42AD00229EDD /* AppBackBarItem.swift in Sources */,
 				D4C2A5982C3CAC420035AB4D /* StoreUserLessonFiltersRepositoryInterface.swift in Sources */,
 				455A6C6E27C16FFB00968277 /* MobileContentButtonIcon.swift in Sources */,
-				45F7162F290A12D70019B715 /* MailView.swift in Sources */,
 				4552F54B2AD4745A0075415E /* TrackActionAnalyticsUseCase.swift in Sources */,
 				45AD1BDC25938A4F00A096A0 /* AlertMessageViewModel.swift in Sources */,
 				45A8BDE52ACC9F47007A1EBB /* LessonCardViewModel.swift in Sources */,
@@ -13356,7 +13323,6 @@
 				458D5BA12A3A07570078B015 /* MobileContentPagesNavigationEvent.swift in Sources */,
 				457579E426E96ABE00C898D2 /* MobileContentMultiSelectView.swift in Sources */,
 				45931FF92B34C1E3008034C8 /* ViewReviewShareShareableDomainModel.swift in Sources */,
-				45F71630290A12D70019B715 /* MailViewModelType.swift in Sources */,
 				45E4DBCC2BECFB20006ED2F3 /* AppLanguageDataModelInterface.swift in Sources */,
 				45AAC29A2BB307FE000AE690 /* GlobalActivityDiContainer.swift in Sources */,
 				452486CE2B07C987007AD932 /* SearchToolFilterLanguagesUseCase.swift in Sources */,
@@ -13367,7 +13333,6 @@
 				45FB160D27DBDDB60009DF8E /* TractFlow.swift in Sources */,
 				458B91B42B7D5D6800785C6F /* AllYourFavoriteToolsView.swift in Sources */,
 				4534F9332AE9AF2C00A7A071 /* LessonFeedbackAnalytics.swift in Sources */,
-				45F71631290A12D70019B715 /* MailViewModel.swift in Sources */,
 				4595E0DD2A8527F300D88DAE /* UserDetailsDataModel.swift in Sources */,
 				45D63E5B288F6896009B4610 /* TranslationModel.swift in Sources */,
 				452DFB482B7FE24F003A4A59 /* LanguageSupportable.swift in Sources */,
@@ -13384,7 +13349,6 @@
 				D4E7EE1C2CA48E6200F75DA6 /* RealmUserLessonProgressCache.swift in Sources */,
 				452F27A62B83A35800844B9A /* DownloadLatestToolsForFavoritedToolsUseCase.swift in Sources */,
 				45006D482B80EB9B002E480D /* GetToolsRepositoryInterface.swift in Sources */,
-				45E3476B2A49BE230014CCD1 /* Flow+PresentNativeMailApp.swift in Sources */,
 				4534F9222AE99EEA00A7A071 /* LessonEvaluationFeatureDiContainer.swift in Sources */,
 				4535BE152B348BF100A8B62F /* ReviewShareShareableViewModel.swift in Sources */,
 				45E347892A49C0120014CCD1 /* ProgressBarView.swift in Sources */,
