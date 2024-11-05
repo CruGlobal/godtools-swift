@@ -35,7 +35,12 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
                 mobileContentAnalytics: mobileContentAnalytics
             )
             
-            pageViewFactories = [chooseYourOwnAdventureViewFactory]
+            let trainingViewFactory: TrainingViewFactory = TrainingViewFactory(
+                mobileContentAnalytics: mobileContentAnalytics,
+                getTrainingTipCompletedUseCase: getTrainingTipCompletedUseCase
+            )
+            
+            pageViewFactories = [chooseYourOwnAdventureViewFactory, trainingViewFactory]
             
         case .lesson:
             
