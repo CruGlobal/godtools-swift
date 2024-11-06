@@ -131,7 +131,8 @@ extension OnboardingFlow {
         let view = OnboardingTutorialView(viewModel: viewModel)
         
         let skipButton = AppSkipBarItem(
-            getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             target: viewModel,
             action: #selector(viewModel.skipTapped),
             accessibilityIdentifier: AccessibilityStrings.Button.skipOnboardingTutorial.id,

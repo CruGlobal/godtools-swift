@@ -71,10 +71,6 @@ class TractFlow: ToolNavigationFlow, ToolSettingsNavigationFlow {
             
             if isScreenSharing {
                 
-                let acceptHandler = CallbackHandler { [weak self] in
-                    self?.closeTool()
-                }
-                
                 let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
                                 
                 let viewModel = AlertMessageViewModel(
@@ -82,7 +78,8 @@ class TractFlow: ToolNavigationFlow, ToolSettingsNavigationFlow {
                     message: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "exit_tract_remote_share_session.message"),
                     cancelTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "no").uppercased(),
                     acceptTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "yes").uppercased(),
-                    acceptHandler: acceptHandler
+                    flowDelegate: self,
+                    acceptTappedFlowStep: .acceptTappedFromExitToolRemoteShare
                 )
                 
                 let view = AlertMessageView(viewModel: viewModel)
@@ -92,6 +89,9 @@ class TractFlow: ToolNavigationFlow, ToolSettingsNavigationFlow {
             else {
                 closeTool()
             }
+            
+        case .acceptTappedFromExitToolRemoteShare:
+            closeTool()
             
         case .backTappedFromTool:
             closeTool()

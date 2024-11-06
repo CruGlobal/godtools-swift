@@ -61,7 +61,7 @@ class NavBarItemController {
         
         switch controllerType {
        
-        case .appInterfaceString(let getInterfaceStringInAppLanguageUseCase):
+        case .appInterfaceString(let getCurrentAppLanguageUseCase, let localizationServices):
             
             if let interfaceStringBarItem = navBarItem as? AppInterfaceStringBarItem {
                 
@@ -70,7 +70,8 @@ class NavBarItemController {
                     navBarItem: interfaceStringBarItem,
                     itemBarPosition: itemBarPosition,
                     itemIndex: itemIndex,
-                    getInterfaceStringInAppLanguageUseCase: getInterfaceStringInAppLanguageUseCase
+                    getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase,
+                    localizationServices: localizationServices
                 )
             }
             else {

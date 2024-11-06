@@ -8,17 +8,18 @@
 
 import UIKit
 import Combine
+import LocalizationServices
 
 class AppInterfaceStringBarItem: NavBarItem {
     
     let localizedStringKey: String
     
-    init(getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, localizedStringKey: String, style: UIBarButtonItem.Style?, color: UIColor?, target: AnyObject, action: Selector, accessibilityIdentifier: String?, hidesBarItemPublisher: AnyPublisher<Bool, Never>? = nil) {
+    init(getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, localizationServices: LocalizationServicesInterface, localizedStringKey: String, style: UIBarButtonItem.Style?, color: UIColor?, target: AnyObject, action: Selector, accessibilityIdentifier: String?, hidesBarItemPublisher: AnyPublisher<Bool, Never>? = nil) {
         
         self.localizedStringKey = localizedStringKey
         
         super.init(
-            controllerType: .appInterfaceString(getInterfaceStringInAppLanguageUseCase: getInterfaceStringInAppLanguageUseCase),
+            controllerType: .appInterfaceString(getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, localizationServices: localizationServices),
             itemData: NavBarItemData(
                 contentType: .title(value: ""),
                 style: style,

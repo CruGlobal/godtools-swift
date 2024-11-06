@@ -289,7 +289,7 @@ extension MenuFlow {
     private func getShareGodToolsView() -> UIViewController {
         
         guard let domainModel = viewShareGodToolsDomainModel else {
-            let viewModel = AlertMessageViewModel(title: "Internal Error", message: "Failed to fetch data for share godtools modal.", cancelTitle: nil, acceptTitle: "OK", acceptHandler: nil)
+            let viewModel = AlertMessageViewModel(title: "Internal Error", message: "Failed to fetch data for share godtools modal.", cancelTitle: nil, acceptTitle: "OK")
             return AlertMessageView(viewModel: viewModel).controller
         }
         
@@ -382,7 +382,8 @@ extension MenuFlow {
         let view = MenuView(viewModel: viewModel)
         
         let doneButton = AppInterfaceStringBarItem(
-            getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             localizedStringKey: "done",
             style: .done,
             color: nil,

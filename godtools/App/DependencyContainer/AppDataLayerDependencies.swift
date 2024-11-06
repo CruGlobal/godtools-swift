@@ -448,12 +448,4 @@ class AppDataLayerDependencies {
     func getWebArchiveQueue() -> WebArchiveQueue {
         return WebArchiveQueue(ignoreCacheSession: sharedIgnoreCacheSession)
     }
-    
-    // MARK: - Domain Interface
-    
-    func getInterfaceStringForLanguageRepositoryInterface() -> GetInterfaceStringForLanguageRepositoryInterface {
-        return GetInterfaceStringForLanguageRepository(
-            localizationServices: getLocalizationServices()
-        )
-    }
 }

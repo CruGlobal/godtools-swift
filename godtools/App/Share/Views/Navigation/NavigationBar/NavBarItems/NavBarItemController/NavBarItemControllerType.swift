@@ -9,10 +9,11 @@
 import Foundation
 import UIKit
 import Combine
+import LocalizationServices
 
 enum NavBarItemControllerType {
      
-    case appInterfaceString(getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase)
+    case appInterfaceString(getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, localizationServices: LocalizationServicesInterface)
     case appLayoutDirection(layoutDirectionPublisher: AnyPublisher<UISemanticContentAttribute, Never>?)
     case base
 }

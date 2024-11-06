@@ -24,8 +24,7 @@ extension Flow {
             title: title,
             message: message,
             cancelTitle: nil,
-            acceptTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.ok.key),
-            acceptHandler: nil
+            acceptTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.ok.key)
         )
         
         let view = AlertMessageView(viewModel: viewModel)

@@ -16,7 +16,7 @@ class RealmDatabaseProductionConfiguration: RealmDatabaseConfiguration {
     
     init() {
         
-        let migrationBlock = { (migration: Migration, oldSchemaVersion: UInt64) in
+        let migrationBlock = { @Sendable (migration: Migration, oldSchemaVersion: UInt64) in
                                     
             if (oldSchemaVersion < 1) {
                 // Nothing to do!
