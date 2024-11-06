@@ -147,8 +147,7 @@ class ToolScreenShareFlow: Flow {
                         title: "Error",
                         message: "Failed to create remote share url.",
                         cancelTitle: nil,
-                        acceptTitle: "OK",
-                        acceptHandler: nil
+                        acceptTitle: "OK"
                     )
                     let view = AlertMessageView(viewModel: viewModel)
                     

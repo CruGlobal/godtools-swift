@@ -289,7 +289,7 @@ extension MenuFlow {
     private func getShareGodToolsView() -> UIViewController {
         
         guard let domainModel = viewShareGodToolsDomainModel else {
-            let viewModel = AlertMessageViewModel(title: "Internal Error", message: "Failed to fetch data for share godtools modal.", cancelTitle: nil, acceptTitle: "OK", acceptHandler: nil)
+            let viewModel = AlertMessageViewModel(title: "Internal Error", message: "Failed to fetch data for share godtools modal.", cancelTitle: nil, acceptTitle: "OK")
             return AlertMessageView(viewModel: viewModel).controller
         }
         
