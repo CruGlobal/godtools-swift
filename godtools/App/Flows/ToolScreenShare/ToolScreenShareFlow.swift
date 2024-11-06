@@ -267,7 +267,8 @@ extension ToolScreenShareFlow {
         )
         
         let skipButton = AppSkipBarItem(
-            getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             target: viewModel,
             action: #selector(viewModel.skipTapped),
             accessibilityIdentifier: nil,

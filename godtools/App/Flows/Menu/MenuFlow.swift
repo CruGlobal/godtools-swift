@@ -382,7 +382,8 @@ extension MenuFlow {
         let view = MenuView(viewModel: viewModel)
         
         let doneButton = AppInterfaceStringBarItem(
-            getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             localizedStringKey: "done",
             style: .done,
             color: nil,

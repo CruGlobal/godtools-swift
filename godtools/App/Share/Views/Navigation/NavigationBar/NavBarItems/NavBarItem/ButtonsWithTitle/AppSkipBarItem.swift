@@ -8,13 +8,15 @@
 
 import Foundation
 import Combine
+import LocalizationServices
 
 class AppSkipBarItem: AppInterfaceStringBarItem {
     
-    init(getInterfaceStringInAppLanguageUseCase: GetInterfaceStringInAppLanguageUseCase, target: AnyObject, action: Selector, accessibilityIdentifier: String?, hidesBarItemPublisher: AnyPublisher<Bool, Never>? = nil) {
+    init(getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, localizationServices: LocalizationServicesInterface, target: AnyObject, action: Selector, accessibilityIdentifier: String?, hidesBarItemPublisher: AnyPublisher<Bool, Never>? = nil) {
         
         super.init(
-            getInterfaceStringInAppLanguageUseCase: getInterfaceStringInAppLanguageUseCase,
+            getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase,
+            localizationServices: localizationServices,
             localizedStringKey: "navigationBar.navigationItem.skip",
             style: .plain,
             color: ColorPalette.gtBlue.uiColor,

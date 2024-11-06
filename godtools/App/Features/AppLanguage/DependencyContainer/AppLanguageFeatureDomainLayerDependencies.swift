@@ -43,13 +43,6 @@ class AppLanguageFeatureDomainLayerDependencies {
         )
     }
     
-    func getInterfaceStringInAppLanguageUseCase() -> GetInterfaceStringInAppLanguageUseCase {
-        return GetInterfaceStringInAppLanguageUseCase(
-            getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase(),
-            getInterfaceStringRepositoryInterface: coreDataLayer.getInterfaceStringForLanguageRepositoryInterface()
-        )
-    }
-    
     func getRemoveDownloadedToolLanguageUseCase() -> RemoveDownloadedToolLanguageUseCase {
         return RemoveDownloadedToolLanguageUseCase(
             removeDownloadedToolLanguageRepository: dataLayer.getRemoveDownloadedToolLanguageRepositoryInterface()
