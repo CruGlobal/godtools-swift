@@ -798,7 +798,6 @@
 		459A668C289B0E3A00DACBF8 /* GetToolTranslationsFilesFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459A668B289B0E3A00DACBF8 /* GetToolTranslationsFilesFilter.swift */; };
 		459ABF612B0BB29D0034499D /* RealmResourcesCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459ABF602B0BB29D0034499D /* RealmResourcesCacheTests.swift */; };
 		459B7E692ABA3A4A0088F44B /* LaunchEnvironmentKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45131A062AB498AD0085AF0D /* LaunchEnvironmentKey.swift */; };
-		459B7E6A2ABA3A510088F44B /* AccessibilityStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45131A0C2AB498AD0085AF0D /* AccessibilityStrings.swift */; };
 		459BD08A289AD4310075901B /* DetermineToolTranslationsToDownloadError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459BD083289AD4310075901B /* DetermineToolTranslationsToDownloadError.swift */; };
 		459BD08B289AD4310075901B /* DetermineDeepLinkedToolTranslationsToDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459BD084289AD4310075901B /* DetermineDeepLinkedToolTranslationsToDownload.swift */; };
 		459BD08C289AD4310075901B /* DetermineToolTranslationsToDownloadType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459BD085289AD4310075901B /* DetermineToolTranslationsToDownloadType.swift */; };
@@ -1474,7 +1473,6 @@
 		45FB1CC1295F4184002BACD9 /* UISemanticContentAttribute+LanguageDirectionDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FB1CBF295F4184002BACD9 /* UISemanticContentAttribute+LanguageDirectionDomainModel.swift */; };
 		45FB1CC2295F4184002BACD9 /* LayoutDirection+LanguageDirectionDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FB1CC0295F4184002BACD9 /* LayoutDirection+LanguageDirectionDomainModel.swift */; };
 		45FBE5722AB8A33200BFBE92 /* AccessibilityStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45131A0C2AB498AD0085AF0D /* AccessibilityStrings.swift */; };
-		45FBE5732AB8A33700BFBE92 /* LaunchEnvironmentKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45131A062AB498AD0085AF0D /* LaunchEnvironmentKey.swift */; };
 		45FC123927A833BF00F4EC4F /* NavBarSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FC123827A833BF00F4EC4F /* NavBarSelectorView.swift */; };
 		45FE598E298A98B70030C080 /* FullScreenVideoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FE598D298A98B70030C080 /* FullScreenVideoViewModel.swift */; };
 		45FE5990298A9D760030C080 /* VideoViewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FE598F298A9D760030C080 /* VideoViewConfiguration.swift */; };
@@ -12125,8 +12123,9 @@
 		4F5732811EA69CF00082035C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1020;
-				LastUpgradeCheck = 1010;
+				LastUpgradeCheck = 1600;
 				ORGANIZATIONNAME = Cru;
 				TargetAttributes = {
 					17339879230736A400A715B4 = {
@@ -12550,7 +12549,6 @@
 				45FBE5722AB8A33200BFBE92 /* AccessibilityStrings.swift in Sources */,
 				45D318F12AE6F9D300D74A87 /* LanguageCodeDomainModel.swift in Sources */,
 				45DEF4DE2AE9538C000C8F4B /* XCTestCase+AssertScreenDoesNotExist.swift in Sources */,
-				45FBE5732AB8A33700BFBE92 /* LaunchEnvironmentKey.swift in Sources */,
 				4585E4B82B05895200223A9B /* BCP47LanguageIdentifier.swift in Sources */,
 				45DC19152BB5B33F007542A5 /* ChooseAppLanguageFlowTests.swift in Sources */,
 				451CF5952C4AAC5500CD65C4 /* AppFlowTests.swift in Sources */,
@@ -12559,7 +12557,6 @@
 				45DC19122BB5AB2C007542A5 /* LanguageSettingsFlowTests.swift in Sources */,
 				45DC19172BB5B34D007542A5 /* BaseFlowTests.swift in Sources */,
 				451F1EE02CD3B125006CCF4E /* LaunchEnvironmentWriter.swift in Sources */,
-				459B7E6A2ABA3A510088F44B /* AccessibilityStrings.swift in Sources */,
 				452556472C383CFA00AA0046 /* AppLanguageDataModelInterface.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -14318,6 +14315,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -14519,6 +14517,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -14720,6 +14719,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -14919,6 +14919,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -15161,6 +15162,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
