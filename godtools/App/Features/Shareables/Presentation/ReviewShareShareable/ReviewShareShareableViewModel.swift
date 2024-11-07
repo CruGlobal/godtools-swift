@@ -42,6 +42,11 @@ class ReviewShareShareableViewModel: ObservableObject {
         self.getShareableImageUseCase = getShareableImageUseCase
         self.trackShareShareableTapUseCase = trackShareShareableTapUseCase
         
+        getCurrentAppLanguageUseCase
+        .getLanguagePublisher()
+        .receive(on: DispatchQueue.main)
+        .assign(to: &$appLanguage)
+        
         $appLanguage
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
