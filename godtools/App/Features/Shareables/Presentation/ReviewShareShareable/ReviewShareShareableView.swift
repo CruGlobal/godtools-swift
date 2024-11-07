@@ -12,6 +12,7 @@ struct ReviewShareShareableView: View {
     
     private let maxPreviewImageSize: CGFloat = 250
     private let bottomSpacing: CGFloat = 50
+    private let shareButtonSize: CGSize = CGSize(width: 200, height: 60)
     
     @ObservedObject private var viewModel: ReviewShareShareableViewModel
     
@@ -50,15 +51,21 @@ struct ReviewShareShareableView: View {
                     viewModel.shareImageTapped()
                 }) {
                     
-                    HStack(alignment: .center, spacing: 8) {
-                        Image(ImageCatalog.toolSettingsShareImageButtonIcon.name)
-                        Text(viewModel.shareImageButtonTitle)
-                            .foregroundColor(.white)
+                    ZStack {
+                     
+                        Rectangle()
+                            .fill(ColorPalette.gtBlue.color)
+                            .frame(width: shareButtonSize.width, height: shareButtonSize.height)
+                            .cornerRadius(6)
+                        
+                        HStack(alignment: .center, spacing: 8) {
+                            Image(ImageCatalog.toolSettingsShareImageButtonIcon.name)
+                            Text(viewModel.shareImageButtonTitle)
+                                .foregroundColor(.white)
+                        }
                     }
                 }
-                .frame(width: 200, height: 50, alignment: .center)
-                .background(ColorPalette.gtBlue.color)
-                .cornerRadius(6)
+                .frame(width: shareButtonSize.width, height: shareButtonSize.height, alignment: .center)
             }
             .frame(width: geometry.size.width)
             .padding(EdgeInsets(top: 0, leading: 0, bottom: bottomSpacing, trailing: 0))
