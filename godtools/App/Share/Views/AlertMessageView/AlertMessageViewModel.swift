@@ -10,22 +10,30 @@ import Foundation
 
 class AlertMessageViewModel: AlertMessageViewModelType {
     
+    private let acceptTappedFlowStep: FlowStep?
+    
+    private weak var flowDelegate: FlowDelegate?
+    
     let title: String?
     let message: String?
     let cancelTitle: String?
     let acceptTitle: String
-    let acceptHandler: CallbackHandler?
     
-    init(title: String?, message: String?, cancelTitle: String?, acceptTitle: String, acceptHandler: CallbackHandler?) {
+    init(title: String?, message: String?, cancelTitle: String?, acceptTitle: String, flowDelegate: FlowDelegate? = nil, acceptTappedFlowStep: FlowStep? = nil) {
+        
+        self.flowDelegate = flowDelegate
+        self.acceptTappedFlowStep = acceptTappedFlowStep
         
         self.title = title
         self.message = message
         self.cancelTitle = cancelTitle
         self.acceptTitle = acceptTitle
-        self.acceptHandler = acceptHandler
     }
     
     func acceptTapped() {
-        acceptHandler?.handle()
+        
+        if let step = acceptTappedFlowStep {
+            flowDelegate?.navigate(step: step)
+        }
     }
 }

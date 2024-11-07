@@ -161,8 +161,7 @@ extension ToolNavigationFlow {
                 title: "Internal Error",
                 message: "Attempted to navigate to a tool with an unknown resource type.",
                 cancelTitle: nil,
-                acceptTitle: "OK",
-                acceptHandler: nil
+                acceptTitle: "OK"
             )
             let view = AlertMessageView(viewModel: viewModel)
             

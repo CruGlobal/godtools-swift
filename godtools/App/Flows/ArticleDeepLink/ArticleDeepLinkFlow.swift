@@ -74,8 +74,7 @@ class ArticleDeepLinkFlow: Flow {
                     title: alertMessage.title,
                     message: alertMessage.message,
                     cancelTitle: nil,
-                    acceptTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.ok.key),
-                    acceptHandler: nil
+                    acceptTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.ok.key)
                 )
                 
                 let view = AlertMessageView(viewModel: viewModel)

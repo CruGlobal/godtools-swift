@@ -810,9 +810,7 @@ extension MobileContentPagesViewModel {
     }
     
     private func trackContentEvent(eventId: EventId) {
-        
-        let language: LanguageModel = currentPageRenderer.value.language
-        
+                
         mobileContentEventAnalytics.trackContentEvent(
             eventId: eventId,
             resource: resource,

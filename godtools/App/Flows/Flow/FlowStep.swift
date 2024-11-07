@@ -86,6 +86,7 @@ enum FlowStep {
     case backTappedFromTool
     case toolSettingsTappedFromTool(toolSettingsObserver: ToolSettingsObserver)
     case tractFlowCompleted(state: TractFlowCompletedState)
+    case acceptTappedFromExitToolRemoteShare
         
     // tutorial
     case closeTappedFromTutorial

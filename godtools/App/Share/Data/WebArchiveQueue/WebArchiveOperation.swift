@@ -10,7 +10,7 @@ import Foundation
 import Fuzi
 import RequestOperation
 
-class WebArchiveOperation: Operation {
+class WebArchiveOperation: Operation, @unchecked Sendable {
     
     typealias Completion = ((_ result: Result<WebArchiveOperationResult, WebArchiveOperationError>) -> Void)
     

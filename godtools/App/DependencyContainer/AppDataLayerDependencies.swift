@@ -445,21 +445,7 @@ class AppDataLayerDependencies {
         )
     }
     
-    func getViewedTrainingTipsService() -> ViewedTrainingTipsService {
-        return ViewedTrainingTipsService(
-            cache: ViewedTrainingTipsUserDefaultsCache(sharedUserDefaults: sharedUserDefaultsCache)
-        )
-    }
-    
     func getWebArchiveQueue() -> WebArchiveQueue {
         return WebArchiveQueue(ignoreCacheSession: sharedIgnoreCacheSession)
-    }
-    
-    // MARK: - Domain Interface
-    
-    func getInterfaceStringForLanguageRepositoryInterface() -> GetInterfaceStringForLanguageRepositoryInterface {
-        return GetInterfaceStringForLanguageRepository(
-            localizationServices: getLocalizationServices()
-        )
     }
 }

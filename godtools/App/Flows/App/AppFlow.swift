@@ -783,9 +783,7 @@ extension AppFlow {
     }
     
     private func navigateToTool(toolDataModelId: String, primaryLanguageId: String, parallelLanguageId: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, shouldPersistToolSettings: Bool = false) {
-        
-        let languagesRepository: LanguagesRepository = appDiContainer.dataLayer.getLanguagesRepository()
-        
+                
         var languageIds: [String] = [primaryLanguageId]
         
         if let parallelLanguageId = parallelLanguageId {
