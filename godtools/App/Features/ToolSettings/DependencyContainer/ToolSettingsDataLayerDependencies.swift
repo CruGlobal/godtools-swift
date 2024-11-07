@@ -19,21 +19,7 @@ class ToolSettingsDataLayerDependencies {
     
     // MARK: - Data Layer Classes
     
-    func getUserToolSettingsRepository() -> UserToolSettingsRepository {
-        return UserToolSettingsRepository(cache: getRealmUserToolSettingsCache())
-    }
-    
-    func getRealmUserToolSettingsCache() -> RealmUserToolSettingsCache {
-        return RealmUserToolSettingsCache(realmDatabase: coreDataLayer.getSharedRealmDatabase())
-    }
-    
     // MARK: - Domain Interface
-    
-    func getPersistUserToolLanguageSettingsRepositoryInterface() -> PersistUserToolLanguageSettingsRepositoryInterface {
-        return PersistUserToolLanguageSettingsRepository(
-            userToolSettingsRepository: getUserToolSettingsRepository()
-        )
-    }
     
     func getShareToolInterfaceStringsRepositoryInterface() -> GetShareToolInterfaceStringsRepositoryInterface {
         return GetShareToolInterfaceStringsRepository(
