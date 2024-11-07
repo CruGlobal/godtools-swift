@@ -22,9 +22,16 @@ class LessonViewModel: MobileContentPagesViewModel {
         self.flowDelegate = flowDelegate
         self.storeLessonProgressUseCase = storeLessonProgressUseCase
         
-        let initialPageConfig = initialPageConfig ?? MobileContentPagesInitialPageConfig(shouldRestartAtBeginning: true, shouldNavigateToStartPageIfLastPage: true, shouldNavigateToPreviousVisiblePageIfHiddenPage: true)
+        let initialPageConfig = MobileContentPagesInitialPageConfig(shouldRestartAtBeginning: false, shouldNavigateToStartPageIfLastPage: true, shouldNavigateToPreviousVisiblePageIfHiddenPage: true)
         
         super.init(renderer: renderer, initialPage: initialPage, initialPageConfig: initialPageConfig, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, getTranslatedLanguageName: getTranslatedLanguageName, initialPageRenderingType: .visiblePages, trainingTipsEnabled: trainingTipsEnabled, incrementUserCounterUseCase: incrementUserCounterUseCase, selectedLanguageIndex: nil)
+           
+        if let initialPage = initialPage, isFirstOrLastVisiblePage(page: initialPage) == false {
+            
+            flowDelegate.navigate(step: .presentResumeLessonModal {
+                self.navigateToFirstPage(animated: true)
+            })
+        }
     }
     
     deinit {

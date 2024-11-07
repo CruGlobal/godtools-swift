@@ -13,14 +13,3 @@ enum LessonListItemProgressDomainModel {
     case inProgress(progress: Double, progressString: String)
     case complete(completeString: String)
 }
-
-extension LessonListItemProgressDomainModel {
-    var inProgress: Bool {
-        switch self {
-            case .inProgress: 
-                return true
-            default: 
-                return false
-        }
-    }
-}

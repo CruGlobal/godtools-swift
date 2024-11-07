@@ -95,6 +95,17 @@ class LessonFlow: ToolNavigationFlow, Flow {
         case .deepLink( _):
             break
         
+        case .presentResumeLessonModal(let startOverClosure):
+            let resumeLessonModal = getResumeLessonModal(startOverClosure: {
+                startOverClosure()
+                self.navigationController.dismissPresented(animated: true, completion: nil)
+                
+            }, continueClosure: {
+                self.navigationController.dismissPresented(animated: true, completion: nil)
+            })
+            
+            navigationController.present(resumeLessonModal, animated: true)
+            
         case .closeTappedFromLesson(let lessonId, let highestPageNumberViewed):
             closeTool(lessonId: lessonId, highestPageNumberViewed: highestPageNumberViewed)
                                                 
@@ -134,6 +145,17 @@ class LessonFlow: ToolNavigationFlow, Flow {
         default:
             break
         }
+    }
+    
+    private func getResumeLessonModal(startOverClosure: @escaping () -> Void, continueClosure: @escaping () -> Void) -> UIViewController {
+        let resumeLessonModal = ResumeLessonProgressModal(startOverClosure: startOverClosure, continueClosure: continueClosure)
+        
+        let hostingView = AppHostingController<ResumeLessonProgressModal>(
+            rootView: resumeLessonModal,
+            navigationBar: nil
+        )
+        
+        return hostingView
     }
     
     private func closeTool(lessonId: String, highestPageNumberViewed: Int) {

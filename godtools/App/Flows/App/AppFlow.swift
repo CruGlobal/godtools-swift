@@ -203,23 +203,8 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             }
             
         case .lessonTappedFromLessonsList(let lessonListItem, let languageFilter):
-            
-            if lessonListItem.lessonProgress.inProgress {
-                let resumeLessonModal = getResumeLessonModal(startOverClosure: {
-                   
-                    self.navigateToLesson(restartAtBeginning: true, lessonListItem: lessonListItem, languageFilter: languageFilter)
-                    
-                }, continueClosure: {
-                    
-                    self.navigateToLesson(restartAtBeginning: false, lessonListItem: lessonListItem, languageFilter: languageFilter)
-                })
-                
-                navigationController.present(resumeLessonModal, animated: true)
-                
-            } else {
-                navigateToLesson(restartAtBeginning: false, lessonListItem: lessonListItem, languageFilter: languageFilter)
-            }
-            
+            navigateToLesson(restartAtBeginning: false, lessonListItem: lessonListItem, languageFilter: languageFilter)
+
         case .lessonLanguageFilterTappedFromLessons:
             navigationController.pushViewController(getLessonLanguageFilterSelection(), animated: true)
             
@@ -891,22 +876,6 @@ extension AppFlow {
         navigationController.popViewController(animated: true)
         
         self.languageSettingsFlow = nil
-    }
-}
-
-// MARK: - Lesson
-
-extension AppFlow {
-    
-    private func getResumeLessonModal(startOverClosure: @escaping () -> Void, continueClosure: @escaping () -> Void) -> UIViewController {
-        let resumeLessonModal = ResumeLessonProgressModal(startOverClosure: startOverClosure, continueClosure: continueClosure)
-        
-        let hostingView = AppHostingController<ResumeLessonProgressModal>(
-            rootView: resumeLessonModal,
-            navigationBar: nil
-        )
-        
-        return hostingView
     }
 }
 
