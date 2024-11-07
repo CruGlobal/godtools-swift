@@ -23,6 +23,15 @@ class UserAuthentication {
         self.mobileContentAuthTokenRepository = mobileContentAuthTokenRepository
     }
     
+    var isAuthenticated: Bool {
+        
+        guard let authTokenData = mobileContentAuthTokenRepository.getCachedAuthTokenModel() else {
+            return false
+        }
+        
+        return !authTokenData.isExpired
+    }
+    
     func getIsAuthenticatedChangedPublisher() -> AnyPublisher<Bool, Never> {
         
         return mobileContentAuthTokenRepository.getAuthTokenChangedPublisher()
@@ -60,10 +69,6 @@ class UserAuthentication {
     
     func getLastAuthenticatedProviderType() -> AuthenticationProviderType? {
         return lastAuthenticatedProviderCache.getLastAuthenticatedProvider()
-    }
-    
-    func getPersistedResponse() -> AuthenticationProviderResponse? {
-        return getLastAuthenticatedProvider()?.getPersistedResponse()
     }
     
     func renewTokenPublisher() -> AnyPublisher<MobileContentAuthTokenDataModel, MobileContentApiError> {

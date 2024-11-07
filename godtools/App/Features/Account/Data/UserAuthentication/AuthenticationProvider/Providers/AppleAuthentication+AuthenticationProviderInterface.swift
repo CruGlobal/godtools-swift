@@ -45,13 +45,6 @@ extension AppleAuthentication: AuthenticationProviderInterface {
         return .success(response)
     }
     
-    func getPersistedResponse() -> AuthenticationProviderResponse? {
-        
-        // TODO: - access token renewal will come through MobileContentAPI?
-        
-        return nil
-    }
-    
     func authenticatePublisher(presentingViewController: UIViewController) -> AnyPublisher<AuthenticationProviderResponse, Error> {
         
         return authenticatePublisher()
