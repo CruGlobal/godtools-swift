@@ -21,9 +21,8 @@ class RealmGlobalAnalyticsCache {
     
     func getGlobalAnalyticsChangedPublisher(id: String) -> AnyPublisher<GlobalAnalyticsDataModel?, Never> {
         
-        return realmDatabase.openRealm()
-            .objects(RealmGlobalAnalytics.self)
-            .objectWillChange
+        return realmDatabase
+            .observeCollectionChangesPublisher(objectClass: RealmGlobalAnalytics.self, prepend: false)
             .map { _ in
                 
                 return self.getGlobalAnalytics(id: id)

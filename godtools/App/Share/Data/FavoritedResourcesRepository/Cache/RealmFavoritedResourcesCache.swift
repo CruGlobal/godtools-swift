@@ -25,9 +25,8 @@ class RealmFavoritedResourcesCache {
     
     func getFavoritedResourcesChangedPublisher() -> AnyPublisher<Void, Never> {
         
-        return realmDatabase.openRealm()
-            .objects(RealmFavoritedResource.self)
-            .objectWillChange
+        return realmDatabase
+            .observeCollectionChangesPublisher(objectClass: RealmFavoritedResource.self, prepend: false)
             .eraseToAnyPublisher()
     }
     

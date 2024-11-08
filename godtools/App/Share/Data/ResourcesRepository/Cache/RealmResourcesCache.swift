@@ -26,9 +26,9 @@ class RealmResourcesCache {
     }
     
     func getResourcesChangedPublisher() -> AnyPublisher<Void, Never> {
-        return realmDatabase.openRealm()
-            .objects(RealmResource.self)
-            .objectWillChange
+        
+        return realmDatabase
+            .observeCollectionChangesPublisher(objectClass: RealmResource.self, prepend: false)
             .eraseToAnyPublisher()
     }
     

@@ -23,9 +23,8 @@ class RealmUserCountersCache {
     
     func getUserCountersChanged() -> AnyPublisher<Void, Never> {
         
-        return realmDatabase.openRealm()
-            .objects(RealmUserCounter.self)
-            .objectWillChange
+        return realmDatabase
+            .observeCollectionChangesPublisher(objectClass: RealmUserCounter.self, prepend: false)
             .eraseToAnyPublisher()
     }
     

@@ -20,10 +20,8 @@ class RealmUserLessonProgressCache {
     
     func getUserLessonProgressChangedPublisher() -> AnyPublisher<Void, Never> {
         
-        return realmDatabase.openRealm()
-            .objects(RealmUserLessonProgress.self)
-            .objectWillChange
-            .prepend(Void())
+        return realmDatabase
+            .observeCollectionChangesPublisher(objectClass: RealmUserLessonProgress.self, prepend: true)
             .eraseToAnyPublisher()
     }
     

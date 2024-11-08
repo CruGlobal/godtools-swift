@@ -20,9 +20,8 @@ class RealmUserLessonFiltersCache {
     
     func getUserLessonLanguageFilterChangedPublisher() -> AnyPublisher<Void, Never> {
         
-        return realmDatabase.openRealm().objects(RealmUserLessonLanguageFilter.self)
-            .objectWillChange
-            .prepend(Void())
+        return realmDatabase
+            .observeCollectionChangesPublisher(objectClass: RealmUserLessonLanguageFilter.self, prepend: true)
             .eraseToAnyPublisher()
     }
     
