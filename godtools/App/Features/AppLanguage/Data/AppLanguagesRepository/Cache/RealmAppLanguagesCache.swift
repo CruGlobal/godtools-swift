@@ -22,7 +22,7 @@ class RealmAppLanguagesCache {
     func observeChangesPublisher() -> AnyPublisher<Void, Never> {
         
         return realmDatabase
-            .observeCollectionChangesPublisher(objectClass: RealmLanguage.self, prepend: true)
+            .observeCollectionChangesPublisher(objectClass: RealmAppLanguage.self, prepend: true)
             .eraseToAnyPublisher()
     }
 
