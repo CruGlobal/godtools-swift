@@ -1300,7 +1300,6 @@
 		45E3476D2A49BE230014CCD1 /* Flow+NavigateToUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E347632A49BE220014CCD1 /* Flow+NavigateToUrl.swift */; };
 		45E3476E2A49BE230014CCD1 /* Flow+PresentAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E347652A49BE230014CCD1 /* Flow+PresentAlert.swift */; };
 		45E3476F2A49BE230014CCD1 /* Flow+PresentError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E347672A49BE230014CCD1 /* Flow+PresentError.swift */; };
-		45E347782A49BFD00014CCD1 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E347712A49BFD00014CCD1 /* ActivityIndicator.swift */; };
 		45E347792A49BFD00014CCD1 /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E347732A49BFD00014CCD1 /* CloseButton.swift */; };
 		45E3477A2A49BFD00014CCD1 /* AccordionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E347752A49BFD00014CCD1 /* AccordionView.swift */; };
 		45E347802A49BFEB0014CCD1 /* GTWhiteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E3477D2A49BFEB0014CCD1 /* GTWhiteButton.swift */; };
@@ -2956,7 +2955,6 @@
 		45E347632A49BE220014CCD1 /* Flow+NavigateToUrl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Flow+NavigateToUrl.swift"; sourceTree = "<group>"; };
 		45E347652A49BE230014CCD1 /* Flow+PresentAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Flow+PresentAlert.swift"; sourceTree = "<group>"; };
 		45E347672A49BE230014CCD1 /* Flow+PresentError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Flow+PresentError.swift"; sourceTree = "<group>"; };
-		45E347712A49BFD00014CCD1 /* ActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		45E347732A49BFD00014CCD1 /* CloseButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
 		45E347752A49BFD00014CCD1 /* AccordionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccordionView.swift; sourceTree = "<group>"; };
 		45E3477D2A49BFEB0014CCD1 /* GTWhiteButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTWhiteButton.swift; sourceTree = "<group>"; };
@@ -10075,14 +10073,6 @@
 			path = "Flow+PresentError";
 			sourceTree = "<group>";
 		};
-		45E347702A49BFD00014CCD1 /* ActivityIndicator */ = {
-			isa = PBXGroup;
-			children = (
-				45E347712A49BFD00014CCD1 /* ActivityIndicator.swift */,
-			);
-			path = ActivityIndicator;
-			sourceTree = "<group>";
-		};
 		45E347722A49BFD00014CCD1 /* CloseButton */ = {
 			isa = PBXGroup;
 			children = (
@@ -11356,7 +11346,6 @@
 			isa = PBXGroup;
 			children = (
 				45E347742A49BFD00014CCD1 /* AccordionView */,
-				45E347702A49BFD00014CCD1 /* ActivityIndicator */,
 				45325F1B285CF8B40078D932 /* AnimatedSwiftUIView */,
 				D45922DC286A2B0A00904B87 /* BannerView */,
 				45A880012A8FA85D002B4DBE /* CenteredCircularProgress */,
@@ -13732,7 +13721,6 @@
 				457C36E82A96607F001288D8 /* PageNavigationCollectionViewLayoutType.swift in Sources */,
 				45EA98F62AFD676900E7EA9A /* CreatingToolScreenShareSessionTimedOutInterfaceStringsDomainModel.swift in Sources */,
 				D43FC1C62B6996D000F8310E /* DownloadedLanguageListItemDomainModel.swift in Sources */,
-				45E347782A49BFD00014CCD1 /* ActivityIndicator.swift in Sources */,
 				45D63E52288F67CE009B4610 /* AppDomainLayerDependencies.swift in Sources */,
 				458CFE8F29D4E0B9007B423C /* ArticleWebViewModelFlowType.swift in Sources */,
 				45A835282AD1AE12004F5593 /* ToolDetailsFeatureDiContainer.swift in Sources */,
