@@ -23,7 +23,7 @@ extension Error {
     }
     
     var isNetworkConnectionLost: Bool {
-        return code == Int(CFNetworkErrors.cfErrorHTTPConnectionLost.rawValue)
+        return code == Int(CFNetworkErrors.cfErrorHTTPConnectionLost.rawValue) || code == Int(CFNetworkErrors.cfurlErrorNetworkConnectionLost.rawValue)
     }
     
     var isUserCancelled: Bool {
