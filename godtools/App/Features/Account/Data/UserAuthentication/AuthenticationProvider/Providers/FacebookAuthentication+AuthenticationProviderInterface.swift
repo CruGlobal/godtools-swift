@@ -40,18 +40,6 @@ extension FacebookAuthentication: AuthenticationProviderInterface {
         return .success(response)
     }
     
-    func getPersistedResponse() -> AuthenticationProviderResponse? {
-                
-        switch getResponseForPersistedData() {
-        
-        case .success(let response):
-            return response
-            
-        case .failure( _):
-            return nil
-        }
-    }
-    
     func authenticatePublisher(presentingViewController: UIViewController) -> AnyPublisher<AuthenticationProviderResponse, Error> {
         
         return authenticatePublisher(from: presentingViewController)

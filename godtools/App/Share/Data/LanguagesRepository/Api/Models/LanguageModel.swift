@@ -47,14 +47,7 @@ struct LanguageModel: LanguageModelType, Codable {
         }
         
         // attributes
-        
-        // TODO: (GT-2399) Remove tempCode override.  This is a temporary Taglish label until production switches to the fil-x-taglish language tag.
-        var tempCode: String = try attributesContainer?.decodeIfPresent(BCP47LanguageIdentifier.self, forKey: .code) ?? ""
-        if tempCode == "en-PH" {
-            tempCode = "fil-x-taglish"
-        }
-        
-        code = tempCode// try attributesContainer?.decodeIfPresent(BCP47LanguageIdentifier.self, forKey: .code) ?? "" // TODO: (GT-2399) Remove tempCode and replace with commented out line.
+        code = try attributesContainer?.decodeIfPresent(BCP47LanguageIdentifier.self, forKey: .code) ?? ""
         directionString = try attributesContainer?.decodeIfPresent(String.self, forKey: .direction) ?? ""
         name = try attributesContainer?.decodeIfPresent(String.self, forKey: .name) ?? ""
         forceLanguageName = try attributesContainer?.decodeIfPresent(Bool.self, forKey: .forceLanguageName) ?? false

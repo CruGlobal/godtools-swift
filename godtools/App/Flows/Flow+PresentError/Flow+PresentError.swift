@@ -21,13 +21,6 @@ extension Flow {
 
         let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
         
-        let defaultErrorTitle: String = localizationServices.stringForLocaleElseEnglish(
-            localeIdentifier: appLanguage,
-            key: LocalizableStringKeys.error.key
-        )
-        
-        let defaultErrorMessage: String = error.localizedDescription
-        
         let title: String
         let message: String
         
@@ -57,8 +50,12 @@ extension Flow {
         }
         else {
             
-            title = defaultErrorTitle
-            message = defaultErrorMessage
+            title = localizationServices.stringForLocaleElseEnglish(
+                localeIdentifier: appLanguage,
+                key: LocalizableStringKeys.error.key
+            )
+            
+            message = error.localizedDescription + "\n error code: \(error.code)"
         }
         
         presentAlert(

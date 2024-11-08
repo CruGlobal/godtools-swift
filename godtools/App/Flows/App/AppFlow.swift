@@ -763,7 +763,7 @@ extension AppFlow {
     
     private func navigateToToolWithUserToolLanguageSettingsApplied(toolDataModelId: String, trainingTipsEnabled: Bool) {
         
-        let userToolSettingsRepository: UserToolSettingsRepository = appDiContainer.feature.toolSettings.dataLayer.getUserToolSettingsRepository()
+        let userToolSettingsRepository: UserToolSettingsRepository = appDiContainer.feature.persistFavoritedToolLanguageSettings.dataLayer.getUserToolSettingsRepository()
         
         if let userToolSettings = userToolSettingsRepository.getUserToolSettings(toolId: toolDataModelId) {
             

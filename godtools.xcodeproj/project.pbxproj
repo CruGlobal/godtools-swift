@@ -622,6 +622,9 @@
 		457FEF032CBEA43B0092E84B /* CYOAPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457FEF002CBEA43B0092E84B /* CYOAPageViewModel.swift */; };
 		457FEF042CBEA43B0092E84B /* CYOAPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457FEEFF2CBEA43B0092E84B /* CYOAPageView.swift */; };
 		4581657626F4DD4D000D660F /* MobileContentRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4581657526F4DD4D000D660F /* MobileContentRowView.swift */; };
+		4581696F2CDD011600039D03 /* PersistUserToolLanguageSettingsDataLayerDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4581696C2CDD011600039D03 /* PersistUserToolLanguageSettingsDataLayerDependencies.swift */; };
+		458169702CDD011600039D03 /* PersistUserToolLanguageSettingsDiContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4581696D2CDD011600039D03 /* PersistUserToolLanguageSettingsDiContainer.swift */; };
+		458169712CDD011600039D03 /* PersistUserToolLanguageSettingsDomainLayerDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4581696E2CDD011600039D03 /* PersistUserToolLanguageSettingsDomainLayerDependencies.swift */; };
 		4581D97F297AD21E00D056D6 /* JsonApiResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4581D97E297AD21E00D056D6 /* JsonApiResponseData.swift */; };
 		4581EAA32BFBE194008115FF /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4581EAA22BFBE194008115FF /* RealmSwift */; };
 		4581EAA52BFBE257008115FF /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4581EAA42BFBE257008115FF /* RealmSwift */; };
@@ -2306,6 +2309,9 @@
 		457FEEFF2CBEA43B0092E84B /* CYOAPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CYOAPageView.swift; sourceTree = "<group>"; };
 		457FEF002CBEA43B0092E84B /* CYOAPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CYOAPageViewModel.swift; sourceTree = "<group>"; };
 		4581657526F4DD4D000D660F /* MobileContentRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentRowView.swift; sourceTree = "<group>"; };
+		4581696C2CDD011600039D03 /* PersistUserToolLanguageSettingsDataLayerDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistUserToolLanguageSettingsDataLayerDependencies.swift; sourceTree = "<group>"; };
+		4581696D2CDD011600039D03 /* PersistUserToolLanguageSettingsDiContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistUserToolLanguageSettingsDiContainer.swift; sourceTree = "<group>"; };
+		4581696E2CDD011600039D03 /* PersistUserToolLanguageSettingsDomainLayerDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistUserToolLanguageSettingsDomainLayerDependencies.swift; sourceTree = "<group>"; };
 		4581D97E297AD21E00D056D6 /* JsonApiResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonApiResponseData.swift; sourceTree = "<group>"; };
 		45828BC7279CCB5300F6B5F3 /* MobileContentCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentCardView.swift; sourceTree = "<group>"; };
 		45828BC9279CCB6900F6B5F3 /* MobileContentCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentCardViewModel.swift; sourceTree = "<group>"; };
@@ -6712,6 +6718,16 @@
 				4581657526F4DD4D000D660F /* MobileContentRowView.swift */,
 			);
 			path = ContentRow;
+			sourceTree = "<group>";
+		};
+		4581696B2CDD008400039D03 /* DependencyContainer */ = {
+			isa = PBXGroup;
+			children = (
+				4581696D2CDD011600039D03 /* PersistUserToolLanguageSettingsDiContainer.swift */,
+				4581696C2CDD011600039D03 /* PersistUserToolLanguageSettingsDataLayerDependencies.swift */,
+				4581696E2CDD011600039D03 /* PersistUserToolLanguageSettingsDomainLayerDependencies.swift */,
+			);
+			path = DependencyContainer;
 			sourceTree = "<group>";
 		};
 		4581C58D285A5C7A0078425B /* ToolTraining */ = {
@@ -11327,6 +11343,7 @@
 			children = (
 				D4159D572C2CE1D50088A203 /* Data */,
 				D4159D562C2CE18C0088A203 /* Data-DomainInterface */,
+				4581696B2CDD008400039D03 /* DependencyContainer */,
 				D4159D522C2CE0B80088A203 /* Domain */,
 			);
 			path = PersistUserToolLanguageSettings;
@@ -13525,6 +13542,9 @@
 				D4C2A5642C3090C10035AB4D /* LessonFilterLanguagesInterfaceStringsDomainModel.swift in Sources */,
 				45E3476A2A49BE230014CCD1 /* FlowDelegate.swift in Sources */,
 				45D4A6CD29B126BB00DED984 /* MobileContentPagesPage.swift in Sources */,
+				4581696F2CDD011600039D03 /* PersistUserToolLanguageSettingsDataLayerDependencies.swift in Sources */,
+				458169702CDD011600039D03 /* PersistUserToolLanguageSettingsDiContainer.swift in Sources */,
+				458169712CDD011600039D03 /* PersistUserToolLanguageSettingsDomainLayerDependencies.swift in Sources */,
 				4598BD0D2BF7DF6800196463 /* AppleAuthentication+AuthenticationProviderInterface.swift in Sources */,
 				45677783287DB21F0044AEB2 /* ToolTrainingAnimatedTransitioning.swift in Sources */,
 				45AD20BB25938F1A00A096A0 /* ObservableValue.swift in Sources */,
