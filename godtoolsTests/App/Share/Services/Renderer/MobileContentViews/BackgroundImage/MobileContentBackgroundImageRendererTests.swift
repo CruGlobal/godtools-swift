@@ -40,7 +40,7 @@ class MobileContentBackgroundImageRendererTests: XCTestCase {
         let scale: ImageScaleType = .fit
         let horizontal: Gravity.Horizontal = .center
         let vertical: Gravity.Vertical = .center
-        let languageDirection: LanguageDirection = .leftToRight
+        let languageDirection: LanguageDirectionDomainModel = .leftToRight
         
         let container: CGRect = CGRect(x: 0, y: 0, width: 320, height: 568)
         
@@ -137,7 +137,7 @@ class MobileContentBackgroundImageRendererTests: XCTestCase {
         let scale: ImageScaleType = .fill
         let horizontal: Gravity.Horizontal = .center
         let vertical: Gravity.Vertical = .center
-        let languageDirection: LanguageDirection = .leftToRight
+        let languageDirection: LanguageDirectionDomainModel = .leftToRight
         
         let container: CGRect = CGRect(x: 0, y: 0, width: 320, height: 568)
         
@@ -234,7 +234,7 @@ class MobileContentBackgroundImageRendererTests: XCTestCase {
         let scale: ImageScaleType = .fillX
         let horizontal: Gravity.Horizontal = .center
         let vertical: Gravity.Vertical = .bottom
-        let languageDirection: LanguageDirection = .leftToRight
+        let languageDirection: LanguageDirectionDomainModel = .leftToRight
         
         let container: CGRect = CGRect(x: 0, y: 0, width: 414, height: 896)
         

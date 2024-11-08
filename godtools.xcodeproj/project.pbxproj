@@ -1065,6 +1065,7 @@
 		45B6FF492BAA39DE0037B240 /* SearchAppLanguageInAppLanguagesListRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B6FF472BAA39DE0037B240 /* SearchAppLanguageInAppLanguagesListRepositoryInterface.swift */; };
 		45B8C1A52AEA9FBC0099F8C2 /* GetLessonEvaluatedRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B8C1A42AEA9FBC0099F8C2 /* GetLessonEvaluatedRepositoryInterface.swift */; };
 		45B8C1A72AEA9FC80099F8C2 /* GetLessonEvaluatedRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B8C1A62AEA9FC80099F8C2 /* GetLessonEvaluatedRepository.swift */; };
+		45B9B07B2CDEB2D6001DF554 /* MobileContentBackgroundImageRendererTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45368A142ABB2D840028A570 /* MobileContentBackgroundImageRendererTests.swift */; };
 		45BB427E2CBE9E0D00290F64 /* TractPageModalView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45BB42702CBE9E0D00290F64 /* TractPageModalView.xib */; };
 		45BB427F2CBE9E0D00290F64 /* TractPageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45BB42792CBE9E0D00290F64 /* TractPageView.xib */; };
 		45BB42802CBE9E0D00290F64 /* TractPageCallToActionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45BB42542CBE9E0D00290F64 /* TractPageCallToActionView.xib */; };
@@ -13927,6 +13928,7 @@
 				45243C5B2C5828C600BD6F49 /* MockRealmTranslation.swift in Sources */,
 				45CBDA092BA3930B0007DEC8 /* MockLaunchCountRepository.swift in Sources */,
 				45EB68E12C334D84008A5FF2 /* MockLocalizationServices.swift in Sources */,
+				45B9B07B2CDEB2D6001DF554 /* MobileContentBackgroundImageRendererTests.swift in Sources */,
 				45368A182ABB2D850028A570 /* TestRealmObject.swift in Sources */,
 				453E2A122BC8C8810047D4C6 /* GetToolsRepositoryTests.swift in Sources */,
 				45F357B62C52E49200F31EB2 /* GetLessonFilterLanguagesRepositoryTests.swift in Sources */,
