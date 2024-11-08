@@ -29,9 +29,9 @@ class UserCountersAPI: UserCountersAPIType {
         let fetchRequest = getUserCountersRequest()
         
         return authSession.sendAuthenticatedRequest(urlRequest: fetchRequest, urlSession: ignoreCacheSession)
-            .decode(type: JsonApiResponseData<[UserCounterDecodable]>.self, decoder: JSONDecoder())
+            .decode(type: JsonApiResponseDataArray<UserCounterDecodable>.self, decoder: JSONDecoder())
             .map {
-                return $0.data
+                return $0.dataArray
             }
             .eraseToAnyPublisher()
     }
@@ -41,9 +41,9 @@ class UserCountersAPI: UserCountersAPIType {
         let incrementRequest = getIncrementUserCountersRequest(id: id, increment: increment)
         
         return authSession.sendAuthenticatedRequest(urlRequest: incrementRequest, urlSession: ignoreCacheSession)
-            .decode(type: JsonApiResponseData<UserCounterDecodable>.self, decoder: JSONDecoder())
+            .decode(type: JsonApiResponseDataObject<UserCounterDecodable>.self, decoder: JSONDecoder())
             .map {
-                return $0.data
+                return $0.dataObject
             }
             .eraseToAnyPublisher()
     }

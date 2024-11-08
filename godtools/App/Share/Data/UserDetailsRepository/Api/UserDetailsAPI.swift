@@ -29,9 +29,9 @@ class UserDetailsAPI {
         let urlRequest: URLRequest = getAuthUserDetailsRequest()
         
         return authSession.sendAuthenticatedRequest(urlRequest: urlRequest, urlSession: ignoreCacheSession)
-            .decode(type: JsonApiResponseData<MobileContentApiUsersMeCodable>.self, decoder: JSONDecoder())
+            .decode(type: JsonApiResponseDataObject<MobileContentApiUsersMeCodable>.self, decoder: JSONDecoder())
             .map {
-                return $0.data
+                return $0.dataObject
             }
             .eraseToAnyPublisher()
     }
