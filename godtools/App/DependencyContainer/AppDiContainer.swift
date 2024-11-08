@@ -150,10 +150,6 @@ class AppDiContainer {
         )
     }
     
-    func getToolOpenedAnalytics() -> ToolOpenedAnalytics {
-        return ToolOpenedAnalytics()
-    }
-    
     func getToolTrainingTipsOnboardingViews() -> ToolTrainingTipsOnboardingViewsService {
         return ToolTrainingTipsOnboardingViewsService(
             cache: ToolTrainingTipsOnboardingViewsUserDefaultsCache(

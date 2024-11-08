@@ -948,7 +948,6 @@
 		45AD202B25938A9800A096A0 /* CardJumpUserDefaultsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1EE725938A9800A096A0 /* CardJumpUserDefaultsCache.swift */; };
 		45AD202C25938A9800A096A0 /* SharedUserDefaultsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1EE925938A9800A096A0 /* SharedUserDefaultsCache.swift */; };
 		45AD204E25938AC300A096A0 /* TrackActionAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD203925938AC300A096A0 /* TrackActionAnalytics.swift */; };
-		45AD205125938AC300A096A0 /* ToolOpenedAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD203C25938AC300A096A0 /* ToolOpenedAnalytics.swift */; };
 		45AD205625938AC300A096A0 /* AnalyticsConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD204225938AC300A096A0 /* AnalyticsConstants.swift */; };
 		45AD205825938AC300A096A0 /* FirebaseAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD204525938AC300A096A0 /* FirebaseAnalytics.swift */; };
 		45AD205D25938AC300A096A0 /* AnalyticsContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD204C25938AC300A096A0 /* AnalyticsContainer.swift */; };
@@ -2608,7 +2607,6 @@
 		45AD1EE725938A9800A096A0 /* CardJumpUserDefaultsCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardJumpUserDefaultsCache.swift; sourceTree = "<group>"; };
 		45AD1EE925938A9800A096A0 /* SharedUserDefaultsCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedUserDefaultsCache.swift; sourceTree = "<group>"; };
 		45AD203925938AC300A096A0 /* TrackActionAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackActionAnalytics.swift; sourceTree = "<group>"; };
-		45AD203C25938AC300A096A0 /* ToolOpenedAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolOpenedAnalytics.swift; sourceTree = "<group>"; };
 		45AD204225938AC300A096A0 /* AnalyticsConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsConstants.swift; sourceTree = "<group>"; };
 		45AD204525938AC300A096A0 /* FirebaseAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseAnalytics.swift; sourceTree = "<group>"; };
 		45AD204C25938AC300A096A0 /* AnalyticsContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsContainer.swift; sourceTree = "<group>"; };
@@ -8484,7 +8482,6 @@
 				D1CE0957273EAC0D00C8832C /* TutorialVideoAnalytics */,
 				D1DD79FB26690C5F000F1351 /* Models */,
 				45AD203925938AC300A096A0 /* TrackActionAnalytics.swift */,
-				45AD203C25938AC300A096A0 /* ToolOpenedAnalytics.swift */,
 			);
 			path = AnalyticsTracking;
 			sourceTree = "<group>";
@@ -12855,7 +12852,6 @@
 				D43FC1BE2B62EFD800F8310E /* View+AppLifecycle.swift in Sources */,
 				4592156A2B82955300387AC5 /* GetSpotlightToolsRepository.swift in Sources */,
 				45ACBE062B1F64230017D17E /* LessonViewModel.swift in Sources */,
-				45AD205125938AC300A096A0 /* ToolOpenedAnalytics.swift in Sources */,
 				45300B7F2C34282900E6F97D /* LocaleLanguageRegionNameInterface.swift in Sources */,
 				45C2AF4A2A81764D004958AB /* GTPageControlAttributes.swift in Sources */,
 				45AE974B27C97A9500C2CB33 /* Animation+MobileContentRenderableModel.swift in Sources */,
