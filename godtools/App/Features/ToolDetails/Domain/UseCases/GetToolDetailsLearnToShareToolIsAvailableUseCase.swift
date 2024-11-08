@@ -18,9 +18,13 @@ class GetToolDetailsLearnToShareToolIsAvailableUseCase {
         self.getToolDetailsLearnToShareToolIsAvailableRepository = getToolDetailsLearnToShareToolIsAvailableRepository
     }
     
-    func getIsAvailablePublisher(toolId: String, language: BCP47LanguageIdentifier) -> AnyPublisher<Bool, Never> {
+    func getIsAvailablePublisher(toolId: String, primaryLanguage: BCP47LanguageIdentifier, parallelLanguage: BCP47LanguageIdentifier?) -> AnyPublisher<Bool, Never> {
         
-        return self.getToolDetailsLearnToShareToolIsAvailableRepository.getIsAvailablePublisher(toolId: toolId, language: language)
-            .eraseToAnyPublisher()
+        return self.getToolDetailsLearnToShareToolIsAvailableRepository.getIsAvailablePublisher(
+            toolId: toolId,
+            primaryLanguage: primaryLanguage,
+            parallelLanguage: parallelLanguage
+        )
+        .eraseToAnyPublisher()
     }
 }
