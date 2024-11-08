@@ -10,6 +10,5 @@ import Foundation
 
 enum IncomingDeepLinkType {
     
-    case appsFlyer(data: [AnyHashable: Any])
     case url(incomingUrl: IncomingDeepLinkUrl)
 }

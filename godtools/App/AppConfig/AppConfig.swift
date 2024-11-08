@@ -21,20 +21,7 @@ class AppConfig: AppConfigInterface {
     func getAppleAppId() -> String {
         return "542773210"
     }
-    
-    func getAppsFlyerConfiguration() -> AppsFlyerConfiguration {
         
-        return AppsFlyerConfiguration(
-            appleAppId: getAppleAppId(),
-            appsFlyerDevKey: "QdbVaVHi9bHRchUTWtoaij",
-            shouldUseUninstallSandbox: appBuild.isDebug
-        )
-    }
-    
-    func getAppsFlyerDevKey() -> String {
-        return "QdbVaVHi9bHRchUTWtoaij"
-    }
-    
     func getFacebookConfiguration() -> FacebookConfiguration {
         
         return FacebookConfiguration(

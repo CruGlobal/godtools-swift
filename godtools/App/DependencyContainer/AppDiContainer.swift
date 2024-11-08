@@ -150,10 +150,6 @@ class AppDiContainer {
         )
     }
     
-    func getToolOpenedAnalytics() -> ToolOpenedAnalytics {
-        return ToolOpenedAnalytics(appsFlyerAnalytics: dataLayer.getAnalytics().appsFlyerAnalytics)
-    }
-    
     func getToolTrainingTipsOnboardingViews() -> ToolTrainingTipsOnboardingViewsService {
         return ToolTrainingTipsOnboardingViewsService(
             cache: ToolTrainingTipsOnboardingViewsUserDefaultsCache(

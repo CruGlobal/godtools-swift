@@ -75,12 +75,6 @@ class GodToolsDeepLinkingManifest: DeepLinkingManifestType {
                 path: "deeplink/settings/language",
                 parserClass: LanguageSettingsDeepLinkParser.self
             ),
-            DeepLinkingParserManifestAppsFlyer(
-                parserClass: AppsFlyerDeepLinkValueParser.self
-            ),
-            DeepLinkingParserManifestAppsFlyer(
-                parserClass: LegacyAppsFlyerDeepLinkValueParser.self
-            ),
             DeepLinkingParserManifestUrl(
                 scheme: "godtools",
                 host: "org.cru.godtools",
