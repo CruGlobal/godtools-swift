@@ -193,7 +193,11 @@ class ToolDetailsViewModel: ObservableObject {
             .map { (toolId: String) in
                 
                 getToolDetailsLearnToShareToolIsAvailableUseCase
-                    .getIsAvailablePublisher(toolId: toolId, language: primaryLanguage)
+                    .getIsAvailablePublisher(
+                        toolId: toolId,
+                        primaryLanguage: primaryLanguage,
+                        parallelLanguage: parallelLanguage
+                    )
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)

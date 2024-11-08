@@ -47,7 +47,7 @@ extension TranslationsRepository {
         return cache.getTranslationsSortedByLatestVersion(resourceId: resourceId, languageId: languageId).first
     }
     
-    func getLatestTranslation(resourceId: String, languageCode: String) -> TranslationModel? {
+    func getLatestTranslation(resourceId: String, languageCode: BCP47LanguageIdentifier) -> TranslationModel? {
         return cache.getTranslationsSortedByLatestVersion(resourceId: resourceId, languageCode: languageCode).first
     }
 }
