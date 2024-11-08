@@ -30,7 +30,6 @@ class AppDataLayerDependencies {
         self.firebaseEnabled = firebaseEnabled
         
         sharedAnalytics = AnalyticsContainer(
-            appsFlyerAnalytics: AppsFlyerAnalytics(appsFlyer: AppsFlyer.shared, loggingEnabled: appBuild.configuration == .analyticsLogging),
             firebaseAnalytics: FirebaseAnalytics(appBuild: appBuild, loggingEnabled: appBuild.configuration == .analyticsLogging)
         )
     }
@@ -271,10 +270,6 @@ class AppDataLayerDependencies {
         return GetSearchBarInterfaceStringsRepository(
             localizationServices: getLocalizationServices()
         )
-    }
-    
-    func getSharedAppsFlyer() -> AppsFlyer {
-        return AppsFlyer.shared
     }
     
     func getSharedIgnoreCacheSession() -> IgnoreCacheSession {

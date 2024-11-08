@@ -12,8 +12,6 @@ import SocialAuthentication
 protocol AppConfigInterface {
     
     func getAppleAppId() -> String
-    func getAppsFlyerConfiguration() -> AppsFlyerConfiguration
-    func getAppsFlyerDevKey() -> String
     func getFacebookConfiguration() -> FacebookConfiguration
     func getFirebaseGoogleServiceFileName() -> String
     func getGoogleAuthenticationConfiguration() -> GoogleAuthenticationConfiguration

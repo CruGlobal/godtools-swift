@@ -11,21 +11,22 @@ import Foundation
 class ToolOpenedAnalytics {
     
     private let keyFirstToolOpened: String = "toolOpenedAnalytics.keyFirstToolOpened"
-    private let appsFlyerAnalytics: AppsFlyerAnalytics
     
-    required init(appsFlyerAnalytics: AppsFlyerAnalytics) {
-        self.appsFlyerAnalytics = appsFlyerAnalytics
+    init() {
+
     }
     
     func trackToolOpened(resource: ResourceModel) {
-        appsFlyerAnalytics.trackAction(actionName: "tool-opened", data: nil)
+        // TODO: Should we send to Firebase? Commented in https://jira.cru.org/browse/GT-1535. ~Levi
+        //appsFlyerAnalytics.trackAction(actionName: "tool-opened", data: nil)
     }
     
     func trackFirstToolOpenedIfNeeded(resource: ResourceModel) {
         
         if !firstToolOpened {
 
-            appsFlyerAnalytics.trackAction(actionName: "first-tool-opened", data: nil)
+            // TODO: Should we send to Firebase? Commented in https://jira.cru.org/browse/GT-1535. ~Levi
+            //appsFlyerAnalytics.trackAction(actionName: "first-tool-opened", data: nil)
                         
             defaults.set(true, forKey: keyFirstToolOpened)
             defaults.synchronize()

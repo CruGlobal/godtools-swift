@@ -42,9 +42,6 @@ class DeepLinkingParserManifestUrl: DeepLinkingParserManifestType {
             }
             
             return parserClass.init()
-            
-        default:
-            return nil
         }
     }
     
