@@ -15,22 +15,21 @@ class TranslationManifestParser {
     private let parser: ManifestParser
     private let parserConfig: ParserConfig
     private let resourcesFileCache: ResourcesSHA256FileCache
-    private let appBuild: AppBuild
     
-    static func getManifestParser(type: TranslationManifestParserType, infoPlist: InfoPlist, resourcesFileCache: ResourcesSHA256FileCache, appBuild: AppBuild) -> TranslationManifestParser {
+    static func getManifestParser(type: TranslationManifestParserType, infoPlist: InfoPlist, resourcesFileCache: ResourcesSHA256FileCache) -> TranslationManifestParser {
         
         switch type {
                 
         case .manifestOnly:
             let parserConfig = ParserConfig().withParseRelated(enabled: false)
-            return TranslationManifestParser(parserConfig: parserConfig, resourcesFileCache: resourcesFileCache, appBuild: appBuild)
+            return TranslationManifestParser(parserConfig: parserConfig, resourcesFileCache: resourcesFileCache)
         
         case .renderer:
-            return ParseTranslationManifestForRenderer(infoPlist: infoPlist, resourcesFileCache: resourcesFileCache, appBuild: appBuild)
+            return ParseTranslationManifestForRenderer(infoPlist: infoPlist, resourcesFileCache: resourcesFileCache)
         }
     }
     
-    init(parserConfig: ParserConfig, resourcesFileCache: ResourcesSHA256FileCache, appBuild: AppBuild) {
+    init(parserConfig: ParserConfig, resourcesFileCache: ResourcesSHA256FileCache) {
         
         self.parser = ManifestParser(
             parserFactory: TranslationManifestParserFactory(resourcesFileCache: resourcesFileCache),
@@ -39,7 +38,6 @@ class TranslationManifestParser {
         
         self.parserConfig = parserConfig
         self.resourcesFileCache = resourcesFileCache
-        self.appBuild = appBuild
     }
     
     func parsePublisher(manifestName: String) -> AnyPublisher<Manifest, Error> {
@@ -63,13 +61,6 @@ class TranslationManifestParser {
     
     private func parseAsync(manifestName: String, completion: @escaping ((_ result: Result<Manifest, Error>) -> Void)) {
                 
-        // TODO: Currently this is here to fix a random crash in godtoolsTests (See GT-2047).  Is this the best way to prevent this code from running in godtoolsTests?  Investigate this more. ~Levi
-        
-        guard !appBuild.isTestsTarget else {
-            completion(.failure(NSError.errorWithDescription(description: "Running tests will not parse manifest.")))
-            return
-        }
-        
         let location: FileCacheLocation = FileCacheLocation(relativeUrlString: manifestName)
         
         switch resourcesFileCache.getFileExists(location: location) {
