@@ -163,50 +163,29 @@ extension AppNavigationBar {
             navigationBar.titleTextAttributes = navigationBarAppearance.titleTextAttributes
         }
         
-        if #available(iOS 13, *) {
+        let appearance = UINavigationBarAppearance()
+                    
+        if navigationBarAppearance.isTranslucent {
             
-            let appearance = UINavigationBarAppearance()
-                        
-            if navigationBarAppearance.isTranslucent {
-                
-                appearance.configureWithTransparentBackground()
-                appearance.backgroundImage = UIImage.createImageWithColor(color: navigationBarAppearance.backgroundColor)
-                appearance.backgroundColor = .clear
-            }
-            else {
-                
-                appearance.configureWithOpaqueBackground()
-                appearance.backgroundImage = nil
-                appearance.backgroundColor = navigationBarAppearance.backgroundColor
-            }
-            
-            appearance.shadowColor = .clear
-            
-            if !navigationBarAppearance.titleTextAttributes.isEmpty {
-                appearance.titleTextAttributes = navigationBarAppearance.titleTextAttributes
-            }
-            
-            navigationBar.standardAppearance = appearance
-            navigationBar.scrollEdgeAppearance = appearance
+            appearance.configureWithTransparentBackground()
+            appearance.backgroundImage = UIImage.createImageWithColor(color: navigationBarAppearance.backgroundColor)
+            appearance.backgroundColor = .clear
         }
         else {
             
-            if navigationBarAppearance.isTranslucent {
-                
-                navigationBar.barTintColor = .clear
-                
-                let backgroundImage: UIImage? = navigationBarAppearance.backgroundColor == .clear ? UIImage() : UIImage.createImageWithColor(color: navigationBarAppearance.backgroundColor)
-                
-                navigationBar.setBackgroundImage(backgroundImage, for: .default)
-            }
-            else {
-               
-                navigationBar.barTintColor = navigationBarAppearance.backgroundColor
-                navigationBar.setBackgroundImage(nil, for: .default)
-            }
-            
-            navigationBar.shadowImage = UIImage()
+            appearance.configureWithOpaqueBackground()
+            appearance.backgroundImage = nil
+            appearance.backgroundColor = navigationBarAppearance.backgroundColor
         }
+        
+        appearance.shadowColor = .clear
+        
+        if !navigationBarAppearance.titleTextAttributes.isEmpty {
+            appearance.titleTextAttributes = navigationBarAppearance.titleTextAttributes
+        }
+        
+        navigationBar.standardAppearance = appearance
+        navigationBar.scrollEdgeAppearance = appearance
     }
 }
 

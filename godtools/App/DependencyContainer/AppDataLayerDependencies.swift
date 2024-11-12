@@ -30,7 +30,6 @@ class AppDataLayerDependencies {
         self.firebaseEnabled = firebaseEnabled
         
         sharedAnalytics = AnalyticsContainer(
-            appsFlyerAnalytics: AppsFlyerAnalytics(appsFlyer: AppsFlyer.shared, loggingEnabled: appBuild.configuration == .analyticsLogging),
             firebaseAnalytics: FirebaseAnalytics(appBuild: appBuild, loggingEnabled: appBuild.configuration == .analyticsLogging)
         )
     }
@@ -273,10 +272,6 @@ class AppDataLayerDependencies {
         )
     }
     
-    func getSharedAppsFlyer() -> AppsFlyer {
-        return AppsFlyer.shared
-    }
-    
     func getSharedIgnoreCacheSession() -> IgnoreCacheSession {
         return sharedIgnoreCacheSession
     }
@@ -362,7 +357,6 @@ class AppDataLayerDependencies {
     func getTranslationsRepository() -> TranslationsRepository {        
         return TranslationsRepository(
             infoPlist: getInfoPlist(),
-            appBuild: getAppBuild(),
             api: MobileContentTranslationsApi(config: getAppConfig(), ignoreCacheSession: sharedIgnoreCacheSession),
             cache: RealmTranslationsCache(realmDatabase: sharedRealmDatabase),
             resourcesFileCache: getResourcesFileCache(),

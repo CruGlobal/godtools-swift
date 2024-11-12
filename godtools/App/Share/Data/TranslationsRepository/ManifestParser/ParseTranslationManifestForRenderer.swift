@@ -19,7 +19,7 @@ class ParseTranslationManifestForRenderer: TranslationManifestParser {
         ParserConfig.companion.FEATURE_MULTISELECT
     ]
         
-    init(infoPlist: InfoPlist, resourcesFileCache: ResourcesSHA256FileCache, appBuild: AppBuild) {
+    init(infoPlist: InfoPlist, resourcesFileCache: ResourcesSHA256FileCache) {
             
         let appVersion: String? = infoPlist.appVersion
         
@@ -35,8 +35,7 @@ class ParseTranslationManifestForRenderer: TranslationManifestParser {
         
         super.init(
             parserConfig: parserConfig,
-            resourcesFileCache: resourcesFileCache,
-            appBuild: appBuild
+            resourcesFileCache: resourcesFileCache
         )
     }
 }

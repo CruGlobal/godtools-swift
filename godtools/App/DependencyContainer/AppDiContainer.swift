@@ -54,7 +54,7 @@ class AppDiContainer {
         let toolDetailsDiContainer = ToolDetailsFeatureDiContainer(coreDataLayer: dataLayer)
         let toolScreenShareDiContainer = ToolScreenShareFeatureDiContainer(coreDataLayer: dataLayer)
         let toolSettingsDiContainer = ToolSettingsDiContainer(coreDataLayer: dataLayer)
-        let toolsFilterDiContainer = ToolsFilterFeatureDiContainer(coreDataLayer: dataLayer, coreDomainLayer: domainLayer)
+        let toolsFilterDiContainer = ToolsFilterFeatureDiContainer(coreDataLayer: dataLayer)
         let toolShortcutLinks = ToolShortcutLinksDiContainer(coreDataLayer: dataLayer)
         let tutorialDiContainer = TutorialFeatureDiContainer(coreDataLayer: dataLayer)
         
@@ -148,10 +148,6 @@ class AppDiContainer {
         return MobileContentRendererUserAnalytics(
             incrementUserCounterUseCase: domainLayer.getIncrementUserCounterUseCase()
         )
-    }
-    
-    func getToolOpenedAnalytics() -> ToolOpenedAnalytics {
-        return ToolOpenedAnalytics(appsFlyerAnalytics: dataLayer.getAnalytics().appsFlyerAnalytics)
     }
     
     func getToolTrainingTipsOnboardingViews() -> ToolTrainingTipsOnboardingViewsService {

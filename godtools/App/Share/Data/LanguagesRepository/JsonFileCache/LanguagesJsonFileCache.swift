@@ -8,6 +8,7 @@
 
 import Foundation
 import Combine
+import RequestOperation
 
 class LanguagesJsonFileCache {
     
@@ -36,8 +37,8 @@ class LanguagesJsonFileCache {
             }
             
             do {
-                let responseData: JsonApiResponseData<[LanguageModel]> = try JSONDecoder().decode(JsonApiResponseData<[LanguageModel]>.self, from: data)
-                return .success(responseData.data)
+                let responseData: JsonApiResponseDataArray<LanguageModel> = try JSONDecoder().decode(JsonApiResponseDataArray<LanguageModel>.self, from: data)
+                return .success(responseData.dataArray)
             }
             catch let error {
                 return .failure(error)

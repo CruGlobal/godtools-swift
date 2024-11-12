@@ -170,7 +170,6 @@ extension TractFlow {
             mobileContentEventAnalytics: appDiContainer.getMobileContentRendererEventAnalyticsTracking(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getTranslatedLanguageName: appDiContainer.dataLayer.getTranslatedLanguageName(),
-            toolOpenedAnalytics: appDiContainer.getToolOpenedAnalytics(),
             liveShareStream: liveShareStream,
             initialPage: initialPage,
             trainingTipsEnabled: trainingTipsEnabled,

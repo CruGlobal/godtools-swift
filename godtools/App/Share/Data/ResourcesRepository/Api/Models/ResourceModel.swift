@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RequestOperation
 
 struct ResourceModel: ResourceModelType, Decodable, Identifiable {
     
@@ -159,16 +160,16 @@ struct ResourceModel: ResourceModelType, Decodable, Identifiable {
         attachmentIds = attachments.map({$0.id})
         
         do {
-            let metatool = try relationshipsContainer?.decodeIfPresent(JsonApiResponseData<JsonApiResponseBaseData>.self, forKey: .metatool)
-            metatoolId = metatool?.data.id
+            let metatool = try relationshipsContainer?.decodeIfPresent(JsonApiResponseDataObject<JsonApiResponseBaseData>.self, forKey: .metatool)
+            metatoolId = metatool?.dataObject.id
         }
         catch {
             metatoolId = nil
         }
         
         do {
-            let defaultVariant = try relationshipsContainer?.decodeIfPresent(JsonApiResponseData<JsonApiResponseBaseData>.self, forKey: .defaultVariant)
-            defaultVariantId = defaultVariant?.data.id
+            let defaultVariant = try relationshipsContainer?.decodeIfPresent(JsonApiResponseDataObject<JsonApiResponseBaseData>.self, forKey: .defaultVariant)
+            defaultVariantId = defaultVariant?.dataObject.id
         }
         catch {
             defaultVariantId = nil

@@ -33,14 +33,6 @@ class DeepLinkingService: NSObject {
             
             switch incomingDeepLink {
             
-            case .appsFlyer(let data):
-                
-                guard let appsFlyerParser = parser as? DeepLinkAppsFlyerParserType else {
-                    continue
-                }
-                
-                parsedDeepLink = appsFlyerParser.parse(data: data)
-            
             case .url(let incomingUrl):
                 
                 guard let urlParser = parser as? DeepLinkUrlParserType else {
