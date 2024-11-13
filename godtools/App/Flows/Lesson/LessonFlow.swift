@@ -155,6 +155,9 @@ class LessonFlow: ToolNavigationFlow, Flow {
             navigationBar: nil
         )
         
+        hostingView.view.backgroundColor = .clear
+        hostingView.modalPresentationStyle = .overFullScreen
+        
         return hostingView
     }
     

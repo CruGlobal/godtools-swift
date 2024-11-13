@@ -1547,6 +1547,7 @@
 		D4960CC82CC6DEAE0090B114 /* UserLessonProgressDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4960CC72CC6DEAE0090B114 /* UserLessonProgressDomainModel.swift */; };
 		D4960CCC2CCC2C290090B114 /* MobileContentPagesInitialPageConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4960CCB2CCC2C290090B114 /* MobileContentPagesInitialPageConfig.swift */; };
 		D4960CCE2CD177980090B114 /* ResumeLessonProgressModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4960CCD2CD177980090B114 /* ResumeLessonProgressModal.swift */; };
+		D4960CD02CE429D80090B114 /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4960CCF2CE429D80090B114 /* VisualEffectView.swift */; };
 		D496B9062A9E702200CBEA19 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D496B9052A9E702200CBEA19 /* SearchBar.swift */; };
 		D4997E0E28D4CED800205B4C /* YouTubeiOSPlayerHelper in Frameworks */ = {isa = PBXBuildFile; productRef = D4997E0D28D4CED800205B4C /* YouTubeiOSPlayerHelper */; };
 		D4AFA4452BAC93B400318023 /* ToolFilterLanguagesInterfaceStringsDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4AFA4442BAC93B400318023 /* ToolFilterLanguagesInterfaceStringsDomainModel.swift */; };
@@ -3262,6 +3263,7 @@
 		D4960CC72CC6DEAE0090B114 /* UserLessonProgressDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLessonProgressDomainModel.swift; sourceTree = "<group>"; };
 		D4960CCB2CCC2C290090B114 /* MobileContentPagesInitialPageConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentPagesInitialPageConfig.swift; sourceTree = "<group>"; };
 		D4960CCD2CD177980090B114 /* ResumeLessonProgressModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeLessonProgressModal.swift; sourceTree = "<group>"; };
+		D4960CCF2CE429D80090B114 /* VisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
 		D496B9052A9E702200CBEA19 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		D4AFA4442BAC93B400318023 /* ToolFilterLanguagesInterfaceStringsDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolFilterLanguagesInterfaceStringsDomainModel.swift; sourceTree = "<group>"; };
 		D4AFA4462BAC950800318023 /* GetToolFilterLanguagesInterfaceStringsRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetToolFilterLanguagesInterfaceStringsRepositoryInterface.swift; sourceTree = "<group>"; };
@@ -11451,6 +11453,7 @@
 				45325F20285CF8B40078D932 /* TextWithLinks */,
 				45E585242A8E77F3005B20A6 /* TwoRowHStack */,
 				45325F1D285CF8B40078D932 /* VideoView */,
+				D4960CD12CE42A280090B114 /* VisualEffectView */,
 			);
 			path = "SwiftUI Views";
 			sourceTree = "<group>";
@@ -11593,6 +11596,14 @@
 				D4960CC52CC6D77B0090B114 /* GetTranslatedPercentage.swift */,
 			);
 			path = GetTranslatedPercentage;
+			sourceTree = "<group>";
+		};
+		D4960CD12CE42A280090B114 /* VisualEffectView */ = {
+			isa = PBXGroup;
+			children = (
+				D4960CCF2CE429D80090B114 /* VisualEffectView.swift */,
+			);
+			path = VisualEffectView;
 			sourceTree = "<group>";
 		};
 		D4B05FF3291061E8005852D0 /* MobileContentAuthTokenRepository */ = {
@@ -12830,6 +12841,7 @@
 				4534F91E2AE99EAA00A7A071 /* GetLessonEvaluationInterfaceStringsRepositoryInterface.swift in Sources */,
 				458B91AF2B7D5D6800785C6F /* YourFavoriteToolsHeaderView.swift in Sources */,
 				D455F3FE29805BF0009D5F93 /* GetUserActivityBadgeUseCase.swift in Sources */,
+				D4960CD02CE429D80090B114 /* VisualEffectView.swift in Sources */,
 				4534F9282AE9A15E00A7A071 /* LessonEvaluationInterfaceStringsDomainModel.swift in Sources */,
 				45880D812BD2BA97008F021C /* ShareGodToolsView.swift in Sources */,
 				456BD2CC27020C75004D7B19 /* MobileContentViewHeightConstraintType.swift in Sources */,
