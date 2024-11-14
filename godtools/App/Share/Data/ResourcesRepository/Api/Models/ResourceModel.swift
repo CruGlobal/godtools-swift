@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import RequestOperation
 
 struct ResourceModel: ResourceModelType, Decodable, Identifiable {
     
@@ -160,7 +159,7 @@ struct ResourceModel: ResourceModelType, Decodable, Identifiable {
         attachmentIds = attachments.map({$0.id})
         
         do {
-            let metatool = try relationshipsContainer?.decodeIfPresent(JsonApiResponseDataObject<JsonApiResponseBaseData>.self, forKey: .metatool)
+            let metatool = try relationshipsContainer?.decodeIfPresent(ScriptJsonApiResponseDataObject<ScriptJsonApiResponseBaseData>.self, forKey: .metatool)
             metatoolId = metatool?.dataObject.id
         }
         catch {
@@ -168,7 +167,7 @@ struct ResourceModel: ResourceModelType, Decodable, Identifiable {
         }
         
         do {
-            let defaultVariant = try relationshipsContainer?.decodeIfPresent(JsonApiResponseDataObject<JsonApiResponseBaseData>.self, forKey: .defaultVariant)
+            let defaultVariant = try relationshipsContainer?.decodeIfPresent(ScriptJsonApiResponseDataObject<ScriptJsonApiResponseBaseData>.self, forKey: .defaultVariant)
             defaultVariantId = defaultVariant?.dataObject.id
         }
         catch {
@@ -176,7 +175,7 @@ struct ResourceModel: ResourceModelType, Decodable, Identifiable {
         }
         
         do {
-            let variants = try relationshipsContainer?.decodeIfPresent(JsonApiResponseDataArray<JsonApiResponseBaseData>.self, forKey: .variants)?.dataArray ?? []
+            let variants = try relationshipsContainer?.decodeIfPresent(ScriptJsonApiResponseDataArray<ScriptJsonApiResponseBaseData>.self, forKey: .variants)?.dataArray ?? []
             variantIds = variants.map({$0.id})
         }
         catch {
