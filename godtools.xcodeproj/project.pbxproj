@@ -731,6 +731,9 @@
 		458E410B2A9CCE55009769DF /* AppBuildConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458E410A2A9CCE55009769DF /* AppBuildConfiguration.swift */; };
 		458E93412B62A06F0087D45D /* AppShareBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458E93402B62A06F0087D45D /* AppShareBarItem.swift */; };
 		458E93432B62A0B50087D45D /* AppDebugBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458E93422B62A0B50087D45D /* AppDebugBarItem.swift */; };
+		4590E0412CE6268A00096D76 /* ScriptJsonApiResponseDataArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4590E03C2CE6268A00096D76 /* ScriptJsonApiResponseDataArray.swift */; };
+		4590E0422CE6268A00096D76 /* ScriptJsonApiResponseBaseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4590E03B2CE6268A00096D76 /* ScriptJsonApiResponseBaseData.swift */; };
+		4590E0432CE6268A00096D76 /* ScriptJsonApiResponseDataObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4590E03D2CE6268A00096D76 /* ScriptJsonApiResponseDataObject.swift */; };
 		4590F73927B17018007424F4 /* MobileContentCardCollectionPageCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4590F73827B17018007424F4 /* MobileContentCardCollectionPageCardView.xib */; };
 		45920D342A8D17FE00E336A8 /* ToolSpotlightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45920D332A8D17FD00E336A8 /* ToolSpotlightView.swift */; };
 		45920D442A8D1C9700E336A8 /* ToolCardFavoritedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45920D3B2A8D1C9600E336A8 /* ToolCardFavoritedButton.swift */; };
@@ -2397,6 +2400,9 @@
 		458E410A2A9CCE55009769DF /* AppBuildConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBuildConfiguration.swift; sourceTree = "<group>"; };
 		458E93402B62A06F0087D45D /* AppShareBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppShareBarItem.swift; sourceTree = "<group>"; };
 		458E93422B62A0B50087D45D /* AppDebugBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDebugBarItem.swift; sourceTree = "<group>"; };
+		4590E03B2CE6268A00096D76 /* ScriptJsonApiResponseBaseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptJsonApiResponseBaseData.swift; sourceTree = "<group>"; };
+		4590E03C2CE6268A00096D76 /* ScriptJsonApiResponseDataArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptJsonApiResponseDataArray.swift; sourceTree = "<group>"; };
+		4590E03D2CE6268A00096D76 /* ScriptJsonApiResponseDataObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptJsonApiResponseDataObject.swift; sourceTree = "<group>"; };
 		4590F73827B17018007424F4 /* MobileContentCardCollectionPageCardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MobileContentCardCollectionPageCardView.xib; sourceTree = "<group>"; };
 		45920D332A8D17FD00E336A8 /* ToolSpotlightView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolSpotlightView.swift; sourceTree = "<group>"; };
 		45920D3B2A8D1C9600E336A8 /* ToolCardFavoritedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolCardFavoritedButton.swift; sourceTree = "<group>"; };
@@ -7261,6 +7267,32 @@
 			path = GetUserActivityStatsUseCase;
 			sourceTree = "<group>";
 		};
+		4590E03E2CE6268A00096D76 /* JsonApi */ = {
+			isa = PBXGroup;
+			children = (
+				4590E03B2CE6268A00096D76 /* ScriptJsonApiResponseBaseData.swift */,
+				4590E03C2CE6268A00096D76 /* ScriptJsonApiResponseDataArray.swift */,
+				4590E03D2CE6268A00096D76 /* ScriptJsonApiResponseDataObject.swift */,
+			);
+			path = JsonApi;
+			sourceTree = "<group>";
+		};
+		4590E03F2CE6268A00096D76 /* Codable */ = {
+			isa = PBXGroup;
+			children = (
+				4590E03E2CE6268A00096D76 /* JsonApi */,
+			);
+			path = Codable;
+			sourceTree = "<group>";
+		};
+		4590E0402CE6268A00096D76 /* RequestOperation */ = {
+			isa = PBXGroup;
+			children = (
+				4590E03F2CE6268A00096D76 /* Codable */,
+			);
+			path = RequestOperation;
+			sourceTree = "<group>";
+		};
 		45920D322A8D17FD00E336A8 /* ToolSpotlight */ = {
 			isa = PBXGroup;
 			children = (
@@ -9485,6 +9517,7 @@
 		45D5433228B4001400C4E70F /* DownloadInitialResources */ = {
 			isa = PBXGroup;
 			children = (
+				4590E0402CE6268A00096D76 /* RequestOperation */,
 				45D5433528B4001400C4E70F /* DownloadInitialResourcesScript.swift */,
 				45D5433428B4001400C4E70F /* GetResourcesAndLanguagesData.swift */,
 				45D5433328B4001400C4E70F /* GetResourcesAttachments.swift */,
@@ -12279,7 +12312,7 @@
 		};
 		451C8B7628AEC6AD00E98AFA /* Download Initial Resources */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 12;
 			files = (
 			);
 			inputFileListPaths = (
@@ -12300,15 +12333,18 @@
 				"$(SRCROOT)/Scripts/Scripts/DownloadInitialResources/GetResourcesAndLanguagesData.swift",
 				"$(SRCROOT)/Scripts/Scripts/DownloadInitialResources/GetResourcesAttachments.swift",
 				"$(SRCROOT)/godtools/App/Share/Common/BCP47LanguageIdentifier/BCP47LanguageIdentifier.swift",
+				"$(SRCROOT)/Scripts/Scripts/DownloadInitialResources/RequestOperation/Codable/JsonApi/ScriptJsonApiResponseBaseData.swift",
+				"$(SRCROOT)/Scripts/Scripts/DownloadInitialResources/RequestOperation/Codable/JsonApi/ScriptJsonApiResponseDataArray.swift",
+				"$(SRCROOT)/Scripts/Scripts/DownloadInitialResources/RequestOperation/Codable/JsonApi/ScriptJsonApiResponseDataObject.swift",
 			);
 			name = "Download Initial Resources";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "xcrun --sdk macosx swiftc -parse-as-library $SCRIPT_INPUT_FILE_0 $SCRIPT_INPUT_FILE_1 $SCRIPT_INPUT_FILE_2 $SCRIPT_INPUT_FILE_3 $SCRIPT_INPUT_FILE_4 $SCRIPT_INPUT_FILE_5 $SCRIPT_INPUT_FILE_6 $SCRIPT_INPUT_FILE_7 $SCRIPT_INPUT_FILE_8 $SCRIPT_INPUT_FILE_9 $SCRIPT_INPUT_FILE_10 $SCRIPT_INPUT_FILE_11 $SCRIPT_INPUT_FILE_12 $SCRIPT_INPUT_FILE_13 $SCRIPT_INPUT_FILE_14 \\\n  -o DownloadInitialResourcesScript\n  \n./DownloadInitialResourcesScript\n";
+			shellScript = "xcrun --sdk macosx swiftc -parse-as-library $SCRIPT_INPUT_FILE_0 $SCRIPT_INPUT_FILE_1 $SCRIPT_INPUT_FILE_2 $SCRIPT_INPUT_FILE_3 $SCRIPT_INPUT_FILE_4 $SCRIPT_INPUT_FILE_5 $SCRIPT_INPUT_FILE_6 $SCRIPT_INPUT_FILE_7 $SCRIPT_INPUT_FILE_8 $SCRIPT_INPUT_FILE_9 $SCRIPT_INPUT_FILE_10 $SCRIPT_INPUT_FILE_11 $SCRIPT_INPUT_FILE_12 $SCRIPT_INPUT_FILE_13 $SCRIPT_INPUT_FILE_14 $SCRIPT_INPUT_FILE_15 $SCRIPT_INPUT_FILE_16 $SCRIPT_INPUT_FILE_17 \\\n  -o DownloadInitialResourcesScript\n  \n./DownloadInitialResourcesScript\n";
 		};
 		45AD220F2593C66B00A096A0 /* Run Crashlytics */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -13759,6 +13795,9 @@
 				4512C8202B3236C000D162F3 /* GetShareablesRepositoryInterface.swift in Sources */,
 				4535BE142B348BF100A8B62F /* ShareShareableViewModel.swift in Sources */,
 				45B6FF3D2BAA39840037B240 /* SearchToolFilterCategoriesRepository.swift in Sources */,
+				4590E0412CE6268A00096D76 /* ScriptJsonApiResponseDataArray.swift in Sources */,
+				4590E0422CE6268A00096D76 /* ScriptJsonApiResponseBaseData.swift in Sources */,
+				4590E0432CE6268A00096D76 /* ScriptJsonApiResponseDataObject.swift in Sources */,
 				45F3D39229A4FC9A00446F69 /* OnboardingTutorialReadyForEveryConversationViewModel.swift in Sources */,
 				45E4DBBA2BECFB09006ED2F3 /* SyncInvalidatorTimeInterval.swift in Sources */,
 				450D63AC2AC8A84600B90319 /* TrackActionAnalyticsPropertiesDomainModel.swift in Sources */,
