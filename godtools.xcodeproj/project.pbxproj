@@ -1548,6 +1548,11 @@
 		D4960CCC2CCC2C290090B114 /* MobileContentPagesInitialPageConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4960CCB2CCC2C290090B114 /* MobileContentPagesInitialPageConfig.swift */; };
 		D4960CCE2CD177980090B114 /* ResumeLessonProgressModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4960CCD2CD177980090B114 /* ResumeLessonProgressModal.swift */; };
 		D4960CD02CE429D80090B114 /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4960CCF2CE429D80090B114 /* VisualEffectView.swift */; };
+		D4960CD32CE688140090B114 /* GetResumeLessonProgressModalInterfaceStringsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4960CD22CE688140090B114 /* GetResumeLessonProgressModalInterfaceStringsRepository.swift */; };
+		D4960CD52CE6886B0090B114 /* ResumeLessonProgressModalInterfaceStringsDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4960CD42CE6886B0090B114 /* ResumeLessonProgressModalInterfaceStringsDomainModel.swift */; };
+		D4960CD82CE6934E0090B114 /* ResumeLessonProgressModalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4960CD72CE6934E0090B114 /* ResumeLessonProgressModalViewModel.swift */; };
+		D4960CDA2CE694280090B114 /* GetResumeLessonProgressModalInterfaceStringsRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4960CD92CE694280090B114 /* GetResumeLessonProgressModalInterfaceStringsRepositoryInterface.swift */; };
+		D4960CDC2CE694F00090B114 /* GetResumeLessonProgressModalInterfaceStringsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4960CDB2CE694F00090B114 /* GetResumeLessonProgressModalInterfaceStringsUseCase.swift */; };
 		D496B9062A9E702200CBEA19 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D496B9052A9E702200CBEA19 /* SearchBar.swift */; };
 		D4997E0E28D4CED800205B4C /* YouTubeiOSPlayerHelper in Frameworks */ = {isa = PBXBuildFile; productRef = D4997E0D28D4CED800205B4C /* YouTubeiOSPlayerHelper */; };
 		D4AFA4452BAC93B400318023 /* ToolFilterLanguagesInterfaceStringsDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4AFA4442BAC93B400318023 /* ToolFilterLanguagesInterfaceStringsDomainModel.swift */; };
@@ -3264,6 +3269,11 @@
 		D4960CCB2CCC2C290090B114 /* MobileContentPagesInitialPageConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentPagesInitialPageConfig.swift; sourceTree = "<group>"; };
 		D4960CCD2CD177980090B114 /* ResumeLessonProgressModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeLessonProgressModal.swift; sourceTree = "<group>"; };
 		D4960CCF2CE429D80090B114 /* VisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
+		D4960CD22CE688140090B114 /* GetResumeLessonProgressModalInterfaceStringsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetResumeLessonProgressModalInterfaceStringsRepository.swift; sourceTree = "<group>"; };
+		D4960CD42CE6886B0090B114 /* ResumeLessonProgressModalInterfaceStringsDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeLessonProgressModalInterfaceStringsDomainModel.swift; sourceTree = "<group>"; };
+		D4960CD72CE6934E0090B114 /* ResumeLessonProgressModalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeLessonProgressModalViewModel.swift; sourceTree = "<group>"; };
+		D4960CD92CE694280090B114 /* GetResumeLessonProgressModalInterfaceStringsRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetResumeLessonProgressModalInterfaceStringsRepositoryInterface.swift; sourceTree = "<group>"; };
+		D4960CDB2CE694F00090B114 /* GetResumeLessonProgressModalInterfaceStringsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetResumeLessonProgressModalInterfaceStringsUseCase.swift; sourceTree = "<group>"; };
 		D496B9052A9E702200CBEA19 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		D4AFA4442BAC93B400318023 /* ToolFilterLanguagesInterfaceStringsDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolFilterLanguagesInterfaceStringsDomainModel.swift; sourceTree = "<group>"; };
 		D4AFA4462BAC950800318023 /* GetToolFilterLanguagesInterfaceStringsRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetToolFilterLanguagesInterfaceStringsRepositoryInterface.swift; sourceTree = "<group>"; };
@@ -11586,6 +11596,7 @@
 			isa = PBXGroup;
 			children = (
 				D4960CC72CC6DEAE0090B114 /* UserLessonProgressDomainModel.swift */,
+				D4960CD42CE6886B0090B114 /* ResumeLessonProgressModalInterfaceStringsDomainModel.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -11604,6 +11615,15 @@
 				D4960CCF2CE429D80090B114 /* VisualEffectView.swift */,
 			);
 			path = VisualEffectView;
+			sourceTree = "<group>";
+		};
+		D4960CD62CE693320090B114 /* ResumeLessonProgressModal */ = {
+			isa = PBXGroup;
+			children = (
+				D4960CCD2CD177980090B114 /* ResumeLessonProgressModal.swift */,
+				D4960CD72CE6934E0090B114 /* ResumeLessonProgressModalViewModel.swift */,
+			);
+			path = ResumeLessonProgressModal;
 			sourceTree = "<group>";
 		};
 		D4B05FF3291061E8005852D0 /* MobileContentAuthTokenRepository */ = {
@@ -11910,6 +11930,7 @@
 			isa = PBXGroup;
 			children = (
 				D4960CC12CBDE40B0090B114 /* GetLessonListItemProgressRepository.swift */,
+				D4960CD22CE688140090B114 /* GetResumeLessonProgressModalInterfaceStringsRepository.swift */,
 				D4E7EE252CA5E62B00F75DA6 /* StoreUserLessonProgressRepository.swift */,
 			);
 			path = "Data-DomainInterface";
@@ -11929,7 +11950,7 @@
 			isa = PBXGroup;
 			children = (
 				D4E7EE062C90E5D800F75DA6 /* LessonCompletionProgressBar.swift */,
-				D4960CCD2CD177980090B114 /* ResumeLessonProgressModal.swift */,
+				D4960CD62CE693320090B114 /* ResumeLessonProgressModal */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -11955,6 +11976,7 @@
 		D4E7EE112CA3424A00F75DA6 /* Interface */ = {
 			isa = PBXGroup;
 			children = (
+				D4960CD92CE694280090B114 /* GetResumeLessonProgressModalInterfaceStringsRepositoryInterface.swift */,
 				D4E7EE232CA5E61900F75DA6 /* StoreLessonProgressRepositoryInterface.swift */,
 			);
 			path = Interface;
@@ -11963,6 +11985,7 @@
 		D4E7EE122CA3425600F75DA6 /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				D4960CDB2CE694F00090B114 /* GetResumeLessonProgressModalInterfaceStringsUseCase.swift */,
 				D4E7EE212CA5E5CA00F75DA6 /* StoreUserLessonProgressUseCase.swift */,
 			);
 			path = UseCases;
@@ -12526,6 +12549,7 @@
 				45D63E89288F75B0009B4610 /* AttachmentModel.swift in Sources */,
 				4561B406295B32E700F5AF5B /* OnboardingTutorialViewModel.swift in Sources */,
 				45AD20BD25938F1A00A096A0 /* Signal.swift in Sources */,
+				D4960CD82CE6934E0090B114 /* ResumeLessonProgressModalViewModel.swift in Sources */,
 				4561AC9C279C4CD4003718C0 /* MobileContentCardCollectionPageViewModel.swift in Sources */,
 				450D7B0428E32965006C3FDF /* DownloadedTranslationDataModel.swift in Sources */,
 				45BE4A862AF287F0004021DA /* ViewConfirmAppLanguageUseCase.swift in Sources */,
@@ -12545,6 +12569,7 @@
 				45EC5CF228CA2A4A0000AA2E /* ResourceModel+LanguageSupportable.swift in Sources */,
 				4563D99F2A94FC4700E0701C /* InfoPlist.swift in Sources */,
 				455EE8462AEC59F500C3205C /* DownloadToolProgressFeatureDomainLayerDependencies.swift in Sources */,
+				D4960CD32CE688140090B114 /* GetResumeLessonProgressModalInterfaceStringsRepository.swift in Sources */,
 				454ADAE42ABDDC5200037C27 /* ChooseAppLanguageFlow.swift in Sources */,
 				4526EDD62AEB330100D1A3D4 /* OverlayNavigationController.swift in Sources */,
 				455583C4269F2DA500C3FF14 /* MobileContentPageViewFactoryType.swift in Sources */,
@@ -12740,6 +12765,7 @@
 				459BF7812AFEE0320053BA09 /* ToolScreenShareTutorialViewsRepository.swift in Sources */,
 				45F71626290A12D70019B715 /* WebContent.swift in Sources */,
 				4561C41227C6891600C4A367 /* MobileContentAccordionSectionViewModel.swift in Sources */,
+				D4960CD52CE6886B0090B114 /* ResumeLessonProgressModalInterfaceStringsDomainModel.swift in Sources */,
 				45CE95882B7C04B000A09340 /* StoreInitialAppLanguageInterface.swift in Sources */,
 				4572E4B228CBCF120014DB2E /* FavoritingToolMessageCache.swift in Sources */,
 				45EB9B7529F16CF200CA74A8 /* UIView+Animations.swift in Sources */,
@@ -13408,6 +13434,7 @@
 				45BDA64E2954FF08007E259B /* WebArchiveQueue.swift in Sources */,
 				453E00022B29F16D00029402 /* GetToolSettingsParallelLanguageRepository.swift in Sources */,
 				45E8FAA42882FD4B00D7D569 /* SHA256FileModelType.swift in Sources */,
+				D4960CDC2CE694F00090B114 /* GetResumeLessonProgressModalInterfaceStringsUseCase.swift in Sources */,
 				452486D32B07C98B007AD932 /* StoreUserToolFiltersRepositoryInterface.swift in Sources */,
 				45A464CD2A7BE18800E8BAF0 /* FirebaseAnalytics+MobileContentRendererAnalyticsSystem.swift in Sources */,
 				4573133928C1821100481640 /* ToolDetailsVersionsView.swift in Sources */,
@@ -13865,6 +13892,7 @@
 				453F84D62A029FC00005101E /* ArticleAemRepositoryType.swift in Sources */,
 				455582EA269F2C1000C3FF14 /* TrainingPageViewModel.swift in Sources */,
 				D409F2B3292BEDEC00D9D2FE /* GetUserAccountDetailsUseCase.swift in Sources */,
+				D4960CDA2CE694280090B114 /* GetResumeLessonProgressModalInterfaceStringsRepositoryInterface.swift in Sources */,
 				458CFEA629D4E172007B423C /* UserActivityStatDomainModel.swift in Sources */,
 				450D4FAB2B7FFA23001DD006 /* ToolsInterfaceStringsDomainModel.swift in Sources */,
 				45AD1BDE25938A4F00A096A0 /* GTSegment.swift in Sources */,

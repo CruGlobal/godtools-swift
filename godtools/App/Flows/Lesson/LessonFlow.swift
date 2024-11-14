@@ -148,7 +148,14 @@ class LessonFlow: ToolNavigationFlow, Flow {
     }
     
     private func getResumeLessonModal(startOverClosure: @escaping () -> Void, continueClosure: @escaping () -> Void) -> UIViewController {
-        let resumeLessonModal = ResumeLessonProgressModal(startOverClosure: startOverClosure, continueClosure: continueClosure)
+        let viewModel = ResumeLessonProgressModalViewModel(
+            getInterfaceStringsUseCase: appDiContainer.feature.lessonProgress.domainLayer.getResumeLessonProgressModalInterfaceStringsUseCase(),
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            startOverClosure: startOverClosure,
+            continueClosure: continueClosure
+        )
+        
+        let resumeLessonModal = ResumeLessonProgressModal(viewModel: viewModel)
         
         let hostingView = AppHostingController<ResumeLessonProgressModal>(
             rootView: resumeLessonModal,
@@ -157,6 +164,7 @@ class LessonFlow: ToolNavigationFlow, Flow {
         
         hostingView.view.backgroundColor = .clear
         hostingView.modalPresentationStyle = .overFullScreen
+        hostingView.modalTransitionStyle = .crossDissolve
         
         return hostingView
     }

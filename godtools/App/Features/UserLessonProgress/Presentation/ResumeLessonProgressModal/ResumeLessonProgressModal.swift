@@ -14,12 +14,11 @@ struct ResumeLessonProgressModal: View {
     private let modalInset: CGFloat = 28
     private let buttonInset: CGFloat = 20
     private let buttonSpace: CGFloat = 12
-    private let startOverClosure: () -> Void
-    private let continueClosure: () -> Void
+
+    @ObservedObject private var viewModel: ResumeLessonProgressModalViewModel
     
-    init(startOverClosure: @escaping () -> Void, continueClosure: @escaping () -> Void) {
-        self.startOverClosure = startOverClosure
-        self.continueClosure = continueClosure
+    init(viewModel: ResumeLessonProgressModalViewModel) {
+        self.viewModel = viewModel
     }
     
     var body: some View {
@@ -39,23 +38,23 @@ struct ResumeLessonProgressModal: View {
                 }
                 
                 VStack(spacing: 0) {
-                    Text("Resume Progress")
+                    Text(viewModel.interfaceStringsDomainModel.title)
                         .font(FontLibrary.sfProTextRegular.font(size: 28))
                         .foregroundColor(ColorPalette.gtGrey.color)
                         .padding(.top, 30)
                         .padding(.bottom, 15)
                     
-                    Text("Pickup where you left off?")
+                    Text(viewModel.interfaceStringsDomainModel.subtitle)
                         .font(FontLibrary.sfProTextRegular.font(size: 16))
                         .foregroundColor(ColorPalette.gtGrey.color)
                         .padding(.bottom, 35)
                     
                     HStack(spacing: buttonSpace) {
-                        GTWhiteButton(title: "Start Over", width: buttonWidth, height: buttonHeight) {
-                            startOverClosure()
+                        GTWhiteButton(title: viewModel.interfaceStringsDomainModel.startOverButtonText, width: buttonWidth, height: buttonHeight) {
+                            viewModel.startOverButtonTapped()
                         }
-                        GTBlueButton(title: "Continue", width: buttonWidth, height: buttonHeight) {
-                            continueClosure()
+                        GTBlueButton(title: viewModel.interfaceStringsDomainModel.continueButtonText, width: buttonWidth, height: buttonHeight) {
+                            viewModel.continueButtonTapped()
                         }
                     }
                     .padding(.horizontal, buttonInset)
