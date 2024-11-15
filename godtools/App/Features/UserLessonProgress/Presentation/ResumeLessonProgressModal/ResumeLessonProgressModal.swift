@@ -23,9 +23,10 @@ struct ResumeLessonProgressModal: View {
     
     var body: some View {
         GeometryReader { geometry in
-            let totalSpaceAroundButtons = (buttonInset * 2) + buttonSpace
             let totalSpaceAroundModal = modalInset * 2
-            let buttonWidth = (geometry.size.width - totalSpaceAroundModal - totalSpaceAroundButtons) / 2
+            let modalWidth = geometry.size.width - totalSpaceAroundModal
+            let totalSpaceAroundButtons = (buttonInset * 2) + buttonSpace
+            let buttonWidth = (modalWidth - totalSpaceAroundButtons) / 2
             
             ZStack {
                 if #available(iOS 15.0, *) {
@@ -47,6 +48,8 @@ struct ResumeLessonProgressModal: View {
                     Text(viewModel.interfaceStringsDomainModel.subtitle)
                         .font(FontLibrary.sfProTextRegular.font(size: 16))
                         .foregroundColor(ColorPalette.gtGrey.color)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, buttonInset + 20)
                         .padding(.bottom, 35)
                     
                     HStack(spacing: buttonSpace) {
@@ -63,6 +66,7 @@ struct ResumeLessonProgressModal: View {
                 .background(Color.white)
                 .cornerRadius(6)
                 .shadow(color: Color.black.opacity(0.25), radius: 3, y: 3)
+                .frame(width: modalWidth)
                 .overlay(
                     RoundedRectangle(cornerRadius: 6)
                         .strokeBorder(Color.clear, lineWidth: 2)
