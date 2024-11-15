@@ -740,7 +740,7 @@ extension AppFlow {
 
 extension AppFlow {
     
-    private func navigateToToolInAppLanguage(toolDataModelId: String, trainingTipsEnabled: Bool, shouldPersistToolSettings: Bool = false, initialPageConfig: MobileContentPagesInitialPageConfig? = nil) {
+    private func navigateToToolInAppLanguage(toolDataModelId: String, trainingTipsEnabled: Bool, shouldPersistToolSettings: Bool = false) {
         
         let languagesRepository: LanguagesRepository = appDiContainer.dataLayer.getLanguagesRepository()
         
@@ -753,7 +753,7 @@ extension AppFlow {
             languageIds = Array()
         }
         
-        navigateToTool(toolDataModelId: toolDataModelId, languageIds: languageIds, selectedLanguageIndex: nil, trainingTipsEnabled: trainingTipsEnabled, shouldPersistToolSettings: shouldPersistToolSettings, initialPageConfig: initialPageConfig)
+        navigateToTool(toolDataModelId: toolDataModelId, languageIds: languageIds, selectedLanguageIndex: nil, trainingTipsEnabled: trainingTipsEnabled, shouldPersistToolSettings: shouldPersistToolSettings)
     }
     
     private func navigateToToolWithUserToolLanguageSettingsApplied(toolDataModelId: String, trainingTipsEnabled: Bool) {
@@ -807,20 +807,14 @@ extension AppFlow {
     
     private func navigateToLesson(restartAtBeginning: Bool, lessonListItem: LessonListItemDomainModel, languageFilter: LessonFilterLanguageDomainModel?) {
         
-        let initialPageConfig = MobileContentPagesInitialPageConfig(
-            shouldRestartAtBeginning: restartAtBeginning,
-            shouldNavigateToStartPageIfLastPage: true,
-            shouldNavigateToPreviousVisiblePageIfHiddenPage: true
-        )
-        
         if let languageFilter = languageFilter {
-            navigateToTool(toolDataModelId: lessonListItem.dataModelId, languageIds: [languageFilter.languageId], selectedLanguageIndex: 0, trainingTipsEnabled: false, initialPageConfig: initialPageConfig)
+            navigateToTool(toolDataModelId: lessonListItem.dataModelId, languageIds: [languageFilter.languageId], selectedLanguageIndex: 0, trainingTipsEnabled: false)
         } else {
-            navigateToToolInAppLanguage(toolDataModelId: lessonListItem.dataModelId, trainingTipsEnabled: false, initialPageConfig: initialPageConfig)
+            navigateToToolInAppLanguage(toolDataModelId: lessonListItem.dataModelId, trainingTipsEnabled: false)
         }
     }
         
-    private func navigateToTool(toolDataModelId: String, languageIds: [String], selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, shouldPersistToolSettings: Bool = false, initialPageConfig: MobileContentPagesInitialPageConfig? = nil) {
+    private func navigateToTool(toolDataModelId: String, languageIds: [String], selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, shouldPersistToolSettings: Bool = false) {
         
         let languagesRepository: LanguagesRepository = appDiContainer.dataLayer.getLanguagesRepository()
         
@@ -843,7 +837,6 @@ extension AppFlow {
             selectedLanguageIndex: selectedLanguageIndex,
             trainingTipsEnabled: trainingTipsEnabled,
             initialPage: nil, 
-            initialPageConfig: initialPageConfig,
             shouldPersistToolSettings: shouldPersistToolSettings
         )
     }
