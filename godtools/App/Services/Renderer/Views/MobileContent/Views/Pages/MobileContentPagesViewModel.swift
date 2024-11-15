@@ -183,8 +183,8 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
             return firstVisiblePage?.id == id || lastVisiblePage?.id == id
             
         case .pageNumber(let pageNumber):
-            let visiblePageCount = visiblePages.count
-            return pageNumber == 0 || pageNumber == visiblePageCount
+            let lastVisiblePageNumber = visiblePages.count - 1
+            return pageNumber == 0 || pageNumber == lastVisiblePageNumber
         }
     }
     

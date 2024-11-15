@@ -35,7 +35,7 @@ extension ToolNavigationFlow {
             determineToolTranslationsToDownload: determineDeepLinkedToolTranslationsToDownload,
             liveShareStream: toolDeepLink.liveShareStream,
             selectedLanguageIndex: toolDeepLink.selectedLanguageIndex,
-            trainingTipsEnabled: false, 
+            trainingTipsEnabled: false,
             initialPage: toolDeepLink.mobileContentPage,
             shouldPersistToolSettings: false
         )
@@ -55,7 +55,7 @@ extension ToolNavigationFlow {
             determineToolTranslationsToDownload: determineToolTranslationsToDownload,
             liveShareStream: liveShareStream,
             selectedLanguageIndex: selectedLanguageIndex,
-            trainingTipsEnabled: trainingTipsEnabled, 
+            trainingTipsEnabled: trainingTipsEnabled,
             initialPage: initialPage,
             shouldPersistToolSettings: shouldPersistToolSettings
         )

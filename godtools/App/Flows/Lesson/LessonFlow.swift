@@ -61,7 +61,7 @@ class LessonFlow: ToolNavigationFlow, Flow {
             renderer: renderer,
             resource: renderer.resource,
             primaryLanguage: renderer.languages.primaryLanguage,
-            initialPage: initialPageOrPreviousProgress, 
+            initialPage: initialPageOrPreviousProgress,
             resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
             translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
             mobileContentEventAnalytics: appDiContainer.getMobileContentRendererEventAnalyticsTracking(),

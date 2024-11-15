@@ -203,7 +203,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             }
             
         case .lessonTappedFromLessonsList(let lessonListItem, let languageFilter):
-            navigateToLesson(restartAtBeginning: false, lessonListItem: lessonListItem, languageFilter: languageFilter)
+            navigateToLesson(lessonListItem: lessonListItem, languageFilter: languageFilter)
 
         case .lessonLanguageFilterTappedFromLessons:
             navigationController.pushViewController(getLessonLanguageFilterSelection(), animated: true)
@@ -805,7 +805,7 @@ extension AppFlow {
         navigateToTool(toolDataModelId: toolDataModelId, languageIds: languageIds, selectedLanguageIndex: selectedLanguageIndex, trainingTipsEnabled: trainingTipsEnabled, shouldPersistToolSettings: shouldPersistToolSettings)
     }
     
-    private func navigateToLesson(restartAtBeginning: Bool, lessonListItem: LessonListItemDomainModel, languageFilter: LessonFilterLanguageDomainModel?) {
+    private func navigateToLesson(lessonListItem: LessonListItemDomainModel, languageFilter: LessonFilterLanguageDomainModel?) {
         
         if let languageFilter = languageFilter {
             navigateToTool(toolDataModelId: lessonListItem.dataModelId, languageIds: [languageFilter.languageId], selectedLanguageIndex: 0, trainingTipsEnabled: false)

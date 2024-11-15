@@ -38,8 +38,6 @@ enum FlowStep {
 
     // lesson
     case presentResumeLessonModal(startOverClosure: () -> Void)
-    case startOverTappedFromResumeLessonModal
-    case resumeTappedFromResumeLessonModal
     case closeTappedFromLesson(lessonId: String, highestPageNumberViewed: Int)
     case lessonFlowCompleted(state: LessonFlowCompletedState)
     
