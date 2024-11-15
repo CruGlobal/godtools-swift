@@ -147,8 +147,7 @@ class ToolScreenShareFlow: Flow {
                         title: "Error",
                         message: "Failed to create remote share url.",
                         cancelTitle: nil,
-                        acceptTitle: "OK",
-                        acceptHandler: nil
+                        acceptTitle: "OK"
                     )
                     let view = AlertMessageView(viewModel: viewModel)
                     
@@ -267,7 +266,8 @@ extension ToolScreenShareFlow {
         )
         
         let skipButton = AppSkipBarItem(
-            getInterfaceStringInAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getInterfaceStringInAppLanguageUseCase(),
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             target: viewModel,
             action: #selector(viewModel.skipTapped),
             accessibilityIdentifier: nil,

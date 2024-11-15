@@ -9,7 +9,7 @@
 import Foundation
 import RequestOperation
 
-class ArticleAemDownloadOperation: Operation {
+class ArticleAemDownloadOperation: Operation, @unchecked Sendable {
     
     typealias Completion = ((_ response: RequestResponse, _ result: Result<ArticleAemData, ArticleAemDownloadOperationError>) -> Void)
     

@@ -45,7 +45,6 @@ class FirebaseAnalytics {
     }
     
     func setLoggedInStateUserProperties(isLoggedIn: Bool, loggedInUserProperties: FirebaseAnalyticsLoggedInUserProperties?) {
-        assertFailureIfNotConfigured()
         
         let userId: String? = loggedInUserProperties?.grMasterPersonId ?? loggedInUserProperties?.ssoguid
         
@@ -104,16 +103,8 @@ class FirebaseAnalytics {
         )
     }
         
-    private func assertFailureIfNotConfigured() {
-        if !isConfigured {
-            assertionFailure("FirebaseAnalytics has not been configured.  Call configure() on application didFinishLaunching.")
-        }
-    }
-    
     private func internalTrackEvent(screenName: String?, siteSection: String?, siteSubSection: String?, appLanguage: String?, contentLanguage: String?, secondaryContentLanguage: String?, previousScreenName: String, eventName: String, data: [String: Any]?) {
-        
-        assertFailureIfNotConfigured()
-        
+                
         DispatchQueue.global().async { [weak self] in
             
             guard let firebaseAnalytics = self else {
@@ -176,7 +167,6 @@ class FirebaseAnalytics {
     }
     
     private func createBaseProperties(screenName: String?, siteSection: String?, siteSubSection: String?, appLanguage: String?, contentLanguage: String?, secondaryContentLanguage: String?, previousScreenName: String?) -> [String: String] {
-        assertFailureIfNotConfigured()
         
         var properties: [String: String] = [:]
                 

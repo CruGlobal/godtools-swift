@@ -16,7 +16,6 @@ class MobileContentRendererAnalytics {
     init(analytics: AnalyticsContainer, userAnalytics: MobileContentRendererUserAnalytics) {
         
         let analyticsSystems: [AnalyticsEvent.System: MobileContentRendererAnalyticsSystem] = [
-            .appsflyer: analytics.appsFlyerAnalytics,
             .firebase: analytics.firebaseAnalytics,
             .user: userAnalytics
         ]

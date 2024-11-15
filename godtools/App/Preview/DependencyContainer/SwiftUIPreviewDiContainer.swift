@@ -25,7 +25,8 @@ class SwiftUIPreviewDiContainer {
             appBuild: appBuild,
             appConfig: AppConfig(appBuild: appBuild),
             infoPlist: InfoPlist(),
-            realmDatabase: SwiftUIPreviewDiContainer.previewDatabase
+            realmDatabase: SwiftUIPreviewDiContainer.previewDatabase,
+            firebaseEnabled: false
         )
     }
 }

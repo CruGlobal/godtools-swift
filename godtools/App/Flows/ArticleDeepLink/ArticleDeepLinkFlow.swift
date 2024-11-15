@@ -39,6 +39,8 @@ class ArticleDeepLinkFlow: Flow {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (appLanguage: AppLanguageDomainModel) in
                 
+                self?.appLanguage = appLanguage
+                
                 if let aemCacheObject = appDiContainer.dataLayer.getArticleAemRepository().getAemCacheObject(aemUri: aemUri) {
                     
                     self?.navigateToArticleWebView(aemCacheObject: aemCacheObject, animated: true)
@@ -74,8 +76,7 @@ class ArticleDeepLinkFlow: Flow {
                     title: alertMessage.title,
                     message: alertMessage.message,
                     cancelTitle: nil,
-                    acceptTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.ok.key),
-                    acceptHandler: nil
+                    acceptTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.ok.key)
                 )
                 
                 let view = AlertMessageView(viewModel: viewModel)

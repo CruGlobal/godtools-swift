@@ -7,12 +7,10 @@
 //
 
 import UIKit
-import AppsFlyerLib
 import SocialAuthentication
 import FacebookCore
 import FirebaseDynamicLinks
 
-@UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
                
     private lazy var appBuild: AppBuild = {
@@ -27,6 +25,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         InfoPlist()
     }()
     
+    private lazy var launchEnvironmentReader: LaunchEnvironmentReader = {
+        return LaunchEnvironmentReader.createFromProcessInfo()
+    }()
+    
     private lazy var realmDatabase: RealmDatabase = {
         RealmDatabase(databaseConfiguration: RealmDatabaseProductionConfiguration())
     }()
@@ -36,14 +38,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }()
     
     private lazy var appDiContainer: AppDiContainer = {
-        AppDiContainer(appBuild: appBuild, appConfig: appConfig, infoPlist: infoPlist, realmDatabase: realmDatabase)
+        AppDiContainer(
+            appBuild: appBuild,
+            appConfig: appConfig,
+            infoPlist: infoPlist,
+            realmDatabase: realmDatabase,
+            firebaseEnabled: firebaseEnabled
+        )
     }()
     
     private lazy var appFlow: AppFlow = {
-        AppFlow(appDiContainer: appDiContainer, appDeepLinkingService: appDeepLinkingService)
+        AppFlow(
+            appDiContainer: appDiContainer,
+            appDeepLinkingService: appDeepLinkingService
+        )
     }()
     
     private var toolShortcutLinks: ToolShortcutLinksView?
+    private var firebaseEnabled: Bool {
+        return launchEnvironmentReader.getFirebaseEnabled() ?? true
+    }
     
     var window: UIWindow?
     
@@ -62,19 +76,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if appBuild.configuration == .analyticsLogging {
             appDiContainer.getFirebaseDebugArguments().enable()
         }
-                
-        appDiContainer.getFirebaseConfiguration().configure()
+            
+        if firebaseEnabled {
+            appDiContainer.getFirebaseConfiguration().configure()
+        }
         
         if appBuild.configuration == .release {
             GodToolsParserLogger.shared.start()
         }
-                
-        appDiContainer.dataLayer.getSharedAppsFlyer().configure(configuration: appConfig.getAppsFlyerConfiguration(), deepLinkDelegate: self)
-        
+                        
         appDiContainer.dataLayer.getAnalytics().firebaseAnalytics.configure()
-        
-        appDiContainer.dataLayer.getAnalytics().appsFlyerAnalytics.configure()
-        
+                
         ConfigureFacebookOnAppLaunch.configure(
             application: application,
             launchOptions: launchOptions,
@@ -90,7 +102,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         application.registerForRemoteNotifications()
         
-        let uiTestsDeepLinkString: String? = ProcessInfo.processInfo.environment[LaunchEnvironmentKey.urlDeeplink.value]
+        let uiTestsDeepLinkString: String? = launchEnvironmentReader.getUrlDeepLink()
                 
         if let uiTestsDeepLinkString = uiTestsDeepLinkString, !uiTestsDeepLinkString.isEmpty, let url = URL(string: uiTestsDeepLinkString) {
             _ = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
@@ -116,8 +128,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(_ application: UIApplication) {
         
         reloadShortcutItems(application: application)
-                
-        appDiContainer.dataLayer.getAnalytics().appsFlyerAnalytics.trackAppLaunch()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
@@ -151,17 +161,14 @@ extension AppDelegate {
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
        
-        appDiContainer.dataLayer.getSharedAppsFlyer().registerUninstall(deviceToken: deviceToken)
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
        
-        appDiContainer.dataLayer.getSharedAppsFlyer().handlePushNotification(userInfo: userInfo)
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         
-        appDiContainer.dataLayer.getSharedAppsFlyer().handlePushNotification(userInfo: userInfo)
     }
 }
 
@@ -211,9 +218,7 @@ extension AppDelegate {
 extension AppDelegate {
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
-        
-        appDiContainer.dataLayer.getSharedAppsFlyer().handleOpenUrl(url: url, options: options)
-        
+                
         if let firebaseDynamicLinkUrl = DynamicLinks.dynamicLinks().dynamicLink(fromCustomSchemeURL: url)?.url {
             _ = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: firebaseDynamicLinkUrl)))
             return true
@@ -238,9 +243,7 @@ extension AppDelegate {
 extension AppDelegate {
     
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
-        
-        appDiContainer.dataLayer.getSharedAppsFlyer().continueUserActivity(userActivity: userActivity)
-        
+                
         if userActivity.activityType != NSUserActivityTypeBrowsingWeb {
             return false
         }
@@ -271,19 +274,5 @@ extension AppDelegate {
         }
         
         return false
-    }
-}
-
-// MARK: - AppsFlyer DeepLinkDelegate
-
-extension AppDelegate: DeepLinkDelegate {
-    
-    func didResolveDeepLink(_ result: DeepLinkResult) {
-        
-        guard let data = result.deepLink?.clickEvent else {
-            return
-        }
-        
-        _ = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .appsFlyer(data: data))
     }
 }

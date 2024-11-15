@@ -8,8 +8,7 @@
 
 import SwiftUI
 
-// Replaced by SearchBar for iOS 15+
-@available(*, deprecated)
+@available(iOS, deprecated: 14.0, obsoleted: 15.0, message: "For iOS 14 use SearchBarLegacy.swift and iOS 15 and up use SearchBar.swift")
 struct SearchBarLegacy: View {
     
     @ObservedObject private var viewModel: SearchBarViewModel

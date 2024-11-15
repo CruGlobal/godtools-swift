@@ -12,11 +12,11 @@ import XCTest
 
 class AppFlowTests: BaseFlowTests {
     
-    private func launchApp() {
+    override func launchApp(flowDeepLinkUrl: String? = nil, checkInitialScreenExists: AccessibilityStrings.Screen? = nil) {
         
         super.launchApp(
-            flowDeepLinkUrl: "godtools://org.cru.godtools/dashboard/favorites",
-            initialScreen: .dashboardFavorites
+            flowDeepLinkUrl: flowDeepLinkUrl ?? "godtools://org.cru.godtools/dashboard/favorites",
+            checkInitialScreenExists: checkInitialScreenExists ?? .dashboardFavorites
         )
     }
     
@@ -24,7 +24,7 @@ class AppFlowTests: BaseFlowTests {
         
         launchApp()
         
-        super.checkInitialScreenExists(app: app)
+        super.assertIfInitialScreenDoesntExist(app: app)
     }
     
     func testNavigationToMenu() {
@@ -45,62 +45,59 @@ class AppFlowTests: BaseFlowTests {
 
 extension AppFlowTests {
     
-    private func getDashboardTabButton(buttonAccessibility: AccessibilityStrings.Button) -> XCUIElement {
-                
-        return app.queryFirstButtonMatching(buttonAccessibility: buttonAccessibility)
+    private func tabToScreenInDashboard(tabAccessibility: AccessibilityStrings.Button, dashboardScreenAccessibility: AccessibilityStrings.Screen) {
+        
+        let tab = app.queryFirstButtonMatching(buttonAccessibility: tabAccessibility)
+        
+        XCTAssertTrue(tab.exists)
+        
+        tab.tap()
+        
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: dashboardScreenAccessibility, waitForExistence: 1)
     }
     
     private func tabToLessons() {
         
-        let lessonsTab = getDashboardTabButton(buttonAccessibility: .dashboardTabLessons)
-        
-        XCTAssertTrue(lessonsTab.exists)
-        
-        lessonsTab.tap()
-        
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .dashboardLessons)
+        tabToScreenInDashboard(tabAccessibility: .dashboardTabLessons, dashboardScreenAccessibility: .dashboardLessons)
     }
     
     private func tabToFavorites() {
         
-        let favoritesTab = getDashboardTabButton(buttonAccessibility: .dashboardTabFavorites)
-        
-        XCTAssertTrue(favoritesTab.exists)
-        
-        favoritesTab.tap()
-        
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .dashboardFavorites)
+        tabToScreenInDashboard(tabAccessibility: .dashboardTabFavorites, dashboardScreenAccessibility: .dashboardFavorites)
     }
     
     private func tabToTools() {
         
-        let toolsTab = getDashboardTabButton(buttonAccessibility: .dashboardTabTools)
-        
-        XCTAssertTrue(toolsTab.exists)
-        
-        toolsTab.tap()
-        
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .dashboardTools)
+        tabToScreenInDashboard(tabAccessibility: .dashboardTabTools, dashboardScreenAccessibility: .dashboardTools)
     }
     
     func testLessonsTabTappedNavigatesToLessons() {
-        
-        launchApp()
-        
+                
+        launchApp(
+            flowDeepLinkUrl: "godtools://org.cru.godtools/dashboard/favorites",
+            checkInitialScreenExists: .dashboardFavorites
+        )
+                
         tabToLessons()
     }
     
     func testFavoritesTabTappedNavigatesToFavorites() {
         
-        launchApp()
-        
+        launchApp(
+            flowDeepLinkUrl: "godtools://org.cru.godtools/dashboard/tools",
+            checkInitialScreenExists: .dashboardTools
+        )
+                        
         tabToFavorites()
     }
     
     func testToolsTabTappedNavigatesToTools() {
         
-        launchApp()
-        
+        launchApp(
+            flowDeepLinkUrl: "godtools://org.cru.godtools/dashboard/favorites",
+            checkInitialScreenExists: .dashboardFavorites
+        )
+                
         tabToTools()
     }
 }
@@ -114,16 +111,14 @@ extension AppFlowTests {
         launchApp()
         
         tabToFavorites()
-        
-        let toolDetailsButtons = app.buttons[AccessibilityStrings.Button.toolDetails.id]
-        
+                
         let toolDetails = app.queryFirstButtonMatching(buttonAccessibility: .toolDetails)
         
         XCTAssertTrue(toolDetails.exists)
         
         toolDetails.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .toolDetails)
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .toolDetails, waitForExistence: 1)
     }
     
     func testToolDetailsNavigatesBackToFavoritesWhenOpenedFromFavorites() {
@@ -146,7 +141,7 @@ extension AppFlowTests {
         
         toolDetailsNavBack.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .dashboardFavorites)
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .dashboardFavorites, waitForExistence: 1)
     }
 }
 

@@ -59,11 +59,7 @@ class ArticleCategoriesView: AppViewController {
         let cellAspectRatio: CGSize = CGSize(width: 15, height: 8)
         categoriesTableView.rowHeight = floor(UIScreen.main.bounds.size.width / cellAspectRatio.width * cellAspectRatio.height)
         
-        if #available(iOS 10.0, *) {
-            categoriesTableView.refreshControl = refreshArticlesControl
-        } else {
-            categoriesTableView.addSubview(refreshArticlesControl)
-        }
+        categoriesTableView.refreshControl = refreshArticlesControl
     }
     
     private func setupBinding() {

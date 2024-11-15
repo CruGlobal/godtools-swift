@@ -151,7 +151,8 @@ extension ToolNavigationFlow {
                 appLanguage: appLanguage,
                 toolTranslations: toolTranslations,
                 initialPage: initialPage,
-                selectedLanguageIndex: selectedLanguageIndex
+                selectedLanguageIndex: selectedLanguageIndex,
+                trainingTipsEnabled: trainingTipsEnabled
             )
             
         case .metaTool:
@@ -164,8 +165,7 @@ extension ToolNavigationFlow {
                 title: "Internal Error",
                 message: "Attempted to navigate to a tool with an unknown resource type.",
                 cancelTitle: nil,
-                acceptTitle: "OK",
-                acceptHandler: nil
+                acceptTitle: "OK"
             )
             let view = AlertMessageView(viewModel: viewModel)
             

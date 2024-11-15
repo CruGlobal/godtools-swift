@@ -28,7 +28,7 @@ class ChooseYourOwnAdventureFlow: ToolNavigationFlow, ToolSettingsNavigationFlow
     var tractFlow: TractFlow?
     var downloadToolTranslationFlow: DownloadToolTranslationsFlow?
     
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel, initialPage: MobileContentPagesPage?, selectedLanguageIndex: Int?) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel, initialPage: MobileContentPagesPage?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
@@ -36,7 +36,12 @@ class ChooseYourOwnAdventureFlow: ToolNavigationFlow, ToolSettingsNavigationFlow
         self.appLanguage = appLanguage
         
         sharedNavigationController.pushViewController(
-            getChooseYourOwnAdventureView(toolTranslations: toolTranslations, initialPage: initialPage, selectedLanguageIndex: selectedLanguageIndex),
+            getChooseYourOwnAdventureView(
+                toolTranslations: toolTranslations,
+                initialPage: initialPage,
+                selectedLanguageIndex: selectedLanguageIndex,
+                trainingTipsEnabled: trainingTipsEnabled
+            ),
             animated: true
         )
     }
@@ -52,7 +57,7 @@ class ChooseYourOwnAdventureFlow: ToolNavigationFlow, ToolSettingsNavigationFlow
             
             openToolSettings(with: toolSettingsObserver)
             
-        case .toolSettingsFlowCompleted(let state):
+        case .toolSettingsFlowCompleted( _):
             
             closeToolSettings()
             
@@ -71,7 +76,7 @@ class ChooseYourOwnAdventureFlow: ToolNavigationFlow, ToolSettingsNavigationFlow
 
 extension ChooseYourOwnAdventureFlow {
     
-    private func getChooseYourOwnAdventureView(toolTranslations: ToolTranslationsDomainModel, initialPage: MobileContentPagesPage?, selectedLanguageIndex: Int?) -> UIViewController {
+    private func getChooseYourOwnAdventureView(toolTranslations: ToolTranslationsDomainModel, initialPage: MobileContentPagesPage?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool) -> UIViewController {
         
         let navigation: MobileContentRendererNavigation = appDiContainer.getMobileContentRendererNavigation(
             parentFlow: self,
@@ -97,7 +102,7 @@ extension ChooseYourOwnAdventureFlow {
             mobileContentEventAnalytics: appDiContainer.getMobileContentRendererEventAnalyticsTracking(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getTranslatedLanguageName: appDiContainer.dataLayer.getTranslatedLanguageName(),
-            trainingTipsEnabled: false,
+            trainingTipsEnabled: trainingTipsEnabled,
             incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase(),
             selectedLanguageIndex: selectedLanguageIndex
         )

@@ -17,7 +17,6 @@ class TractViewModel: MobileContentPagesViewModel {
     private let resourceViewsService: ResourceViewsService
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let persistUserToolLanguageSettingsUseCase: PersistUserToolLanguageSettingsUseCase
-    private let toolOpenedAnalytics: ToolOpenedAnalytics
     private let liveShareStream: String?
     
     private var cancellables: Set<AnyCancellable> = Set()
@@ -32,14 +31,13 @@ class TractViewModel: MobileContentPagesViewModel {
     
     @Published var hidesRemoteShareIsActive: Bool = true
         
-    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, resourceViewsService: ResourceViewsService, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTranslatedLanguageName: GetTranslatedLanguageName, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, initialPage: MobileContentPagesPage?, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?, persistUserToolLanguageSettingsUseCase: PersistUserToolLanguageSettingsUseCase, shouldPersistToolSettings: Bool) {
+    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, resourceViewsService: ResourceViewsService, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTranslatedLanguageName: GetTranslatedLanguageName, liveShareStream: String?, initialPage: MobileContentPagesPage?, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?, persistUserToolLanguageSettingsUseCase: PersistUserToolLanguageSettingsUseCase, shouldPersistToolSettings: Bool) {
         
         self.flowDelegate = flowDelegate
         self.tractRemoteSharePublisher = tractRemoteSharePublisher
         self.tractRemoteShareSubscriber = tractRemoteShareSubscriber
         self.resourceViewsService = resourceViewsService
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
-        self.toolOpenedAnalytics = toolOpenedAnalytics
         self.liveShareStream = liveShareStream
         self.persistUserToolLanguageSettingsUseCase = persistUserToolLanguageSettingsUseCase
         self.shouldPersistToolSettings = shouldPersistToolSettings
@@ -141,9 +139,6 @@ class TractViewModel: MobileContentPagesViewModel {
         subscribeToLiveShareStreamIfNeeded()
         
         _ = resourceViewsService.postNewResourceView(resourceId: resource.id)
-        
-        toolOpenedAnalytics.trackFirstToolOpenedIfNeeded(resource: resource)
-        toolOpenedAnalytics.trackToolOpened(resource: resource)
     }
     
     private func trackLanguageTapped(tappedLanguage: LanguageModel) {

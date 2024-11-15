@@ -19,12 +19,19 @@ class AppDiContainer {
     let domainLayer: AppDomainLayerDependencies
     let feature: AppFeatureDiContainer
         
-    init(appBuild: AppBuild, appConfig: AppConfig, infoPlist: InfoPlist, realmDatabase: RealmDatabase) {
+    init(appBuild: AppBuild, appConfig: AppConfig, infoPlist: InfoPlist, realmDatabase: RealmDatabase, firebaseEnabled: Bool) {
                
         self.appBuild = appBuild
         self.realmDatabase = realmDatabase
         
-        dataLayer = AppDataLayerDependencies(appBuild: appBuild, appConfig: appConfig, infoPlist: infoPlist, realmDatabase: realmDatabase)
+        dataLayer = AppDataLayerDependencies(
+            appBuild: appBuild,
+            appConfig: appConfig,
+            infoPlist: infoPlist,
+            realmDatabase: realmDatabase,
+            firebaseEnabled: firebaseEnabled
+        )
+        
         domainLayer = AppDomainLayerDependencies(dataLayer: dataLayer)
         
         let accountDiContainer = AccountDiContainer(coreDataLayer: dataLayer)
@@ -40,13 +47,14 @@ class AppDiContainer {
         let lessonsDiContainer = LessonsFeatureDiContainer(coreDataLayer: dataLayer)
         let lessonProgressDiContainer = UserLessonProgressDiContainer(coreDataLayer: dataLayer)
         let onboardingDiContainer = OnboardingDiContainer(coreDataLayer: dataLayer)
+        let persistFavoritedToolLanguageSettingsDiContainer = PersistUserToolLanguageSettingsDiContainer(coreDataLayer: dataLayer)
         let shareablesDiContainer: ShareablesDiContainer = ShareablesDiContainer(coreDataLayer: dataLayer)
         let shareGodToolsDiContainer = ShareGodToolsDiContainer(coreDataLayer: dataLayer)
         let spotlightToolsDiContainer = SpotlightToolsDiContainer(coreDataLayer: dataLayer)
         let toolDetailsDiContainer = ToolDetailsFeatureDiContainer(coreDataLayer: dataLayer)
         let toolScreenShareDiContainer = ToolScreenShareFeatureDiContainer(coreDataLayer: dataLayer)
         let toolSettingsDiContainer = ToolSettingsDiContainer(coreDataLayer: dataLayer)
-        let toolsFilterDiContainer = ToolsFilterFeatureDiContainer(coreDataLayer: dataLayer, coreDomainLayer: domainLayer)
+        let toolsFilterDiContainer = ToolsFilterFeatureDiContainer(coreDataLayer: dataLayer)
         let toolShortcutLinks = ToolShortcutLinksDiContainer(coreDataLayer: dataLayer)
         let tutorialDiContainer = TutorialFeatureDiContainer(coreDataLayer: dataLayer)
         
@@ -64,6 +72,7 @@ class AppDiContainer {
             lessons: lessonsDiContainer, 
             lessonProgress: lessonProgressDiContainer,
             onboarding: onboardingDiContainer,
+            persistFavoritedToolLanguageSettings: persistFavoritedToolLanguageSettingsDiContainer,
             shareables: shareablesDiContainer,
             shareGodTools: shareGodToolsDiContainer,
             spotlightTools: spotlightToolsDiContainer,
@@ -80,6 +89,10 @@ class AppDiContainer {
     
     func getCardJumpService() -> CardJumpService {
         return CardJumpService(cardJumpCache: CardJumpUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache))
+    }
+    
+    func getUrlOpener() -> UrlOpenerInterface {
+        return OpenUrlWithSwiftUI() // TODO: GT-2466 Return OpenUrlWithUIKit() once supporting FBSDK 17.3+ ~Levi
     }
     
     func getFirebaseConfiguration() -> FirebaseConfiguration {
@@ -135,10 +148,6 @@ class AppDiContainer {
         return MobileContentRendererUserAnalytics(
             incrementUserCounterUseCase: domainLayer.getIncrementUserCounterUseCase()
         )
-    }
-    
-    func getToolOpenedAnalytics() -> ToolOpenedAnalytics {
-        return ToolOpenedAnalytics(appsFlyerAnalytics: dataLayer.getAnalytics().appsFlyerAnalytics)
     }
     
     func getToolTrainingTipsOnboardingViews() -> ToolTrainingTipsOnboardingViewsService {

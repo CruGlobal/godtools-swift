@@ -159,23 +159,23 @@ struct ResourceModel: ResourceModelType, Decodable, Identifiable {
         attachmentIds = attachments.map({$0.id})
         
         do {
-            let metatool = try relationshipsContainer?.decodeIfPresent(JsonApiResponseData<JsonApiResponseBaseData>.self, forKey: .metatool)
-            metatoolId = metatool?.data.id
+            let metatool = try relationshipsContainer?.decodeIfPresent(ScriptJsonApiResponseDataObject<ScriptJsonApiResponseBaseData>.self, forKey: .metatool)
+            metatoolId = metatool?.dataObject.id
         }
         catch {
             metatoolId = nil
         }
         
         do {
-            let defaultVariant = try relationshipsContainer?.decodeIfPresent(JsonApiResponseData<JsonApiResponseBaseData>.self, forKey: .defaultVariant)
-            defaultVariantId = defaultVariant?.data.id
+            let defaultVariant = try relationshipsContainer?.decodeIfPresent(ScriptJsonApiResponseDataObject<ScriptJsonApiResponseBaseData>.self, forKey: .defaultVariant)
+            defaultVariantId = defaultVariant?.dataObject.id
         }
         catch {
             defaultVariantId = nil
         }
         
         do {
-            let variants = try relationshipsContainer?.decodeIfPresent(JsonApiResponseDataArray<JsonApiResponseBaseData>.self, forKey: .variants)?.dataArray ?? []
+            let variants = try relationshipsContainer?.decodeIfPresent(ScriptJsonApiResponseDataArray<ScriptJsonApiResponseBaseData>.self, forKey: .variants)?.dataArray ?? []
             variantIds = variants.map({$0.id})
         }
         catch {

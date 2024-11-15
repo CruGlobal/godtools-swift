@@ -19,16 +19,17 @@ class AppDataLayerDependencies {
     private let sharedIgnoreCacheSession: IgnoreCacheSession = IgnoreCacheSession()
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
     private let sharedAnalytics: AnalyticsContainer
+    private let firebaseEnabled: Bool
     
-    init(appBuild: AppBuild, appConfig: AppConfig, infoPlist: InfoPlist, realmDatabase: RealmDatabase) {
+    init(appBuild: AppBuild, appConfig: AppConfig, infoPlist: InfoPlist, realmDatabase: RealmDatabase, firebaseEnabled: Bool) {
         
         sharedAppBuild = appBuild
         sharedAppConfig = appConfig
         sharedInfoPlist = infoPlist
         sharedRealmDatabase = realmDatabase
+        self.firebaseEnabled = firebaseEnabled
         
         sharedAnalytics = AnalyticsContainer(
-            appsFlyerAnalytics: AppsFlyerAnalytics(appsFlyer: AppsFlyer.shared, loggingEnabled: appBuild.configuration == .analyticsLogging),
             firebaseAnalytics: FirebaseAnalytics(appBuild: appBuild, loggingEnabled: appBuild.configuration == .analyticsLogging)
         )
     }
@@ -51,6 +52,15 @@ class AppDataLayerDependencies {
     
     func getAppConfig() -> AppConfig {
         return sharedAppConfig
+    }
+    
+    func getAppMessaging() -> AppMessagingInterface {
+        
+        guard firebaseEnabled else {
+            return DisabledInAppMessaging()
+        }
+        
+        return FirebaseInAppMessaging.shared
     }
     
     func getArticleAemRepository() -> ArticleAemRepository {
@@ -120,10 +130,6 @@ class AppDataLayerDependencies {
     
     func getFavoritingToolMessageCache() -> FavoritingToolMessageCache {
         return FavoritingToolMessageCache(userDefaultsCache: sharedUserDefaultsCache)
-    }
-    
-    func getFirebaseInAppMessaing() -> FirebaseInAppMessaging {
-        return FirebaseInAppMessaging.shared
     }
     
     func getFollowUpsService() -> FollowUpsService {
@@ -266,10 +272,6 @@ class AppDataLayerDependencies {
         )
     }
     
-    func getSharedAppsFlyer() -> AppsFlyer {
-        return AppsFlyer.shared
-    }
-    
     func getSharedIgnoreCacheSession() -> IgnoreCacheSession {
         return sharedIgnoreCacheSession
     }
@@ -355,7 +357,6 @@ class AppDataLayerDependencies {
     func getTranslationsRepository() -> TranslationsRepository {        
         return TranslationsRepository(
             infoPlist: getInfoPlist(),
-            appBuild: getAppBuild(),
             api: MobileContentTranslationsApi(config: getAppConfig(), ignoreCacheSession: sharedIgnoreCacheSession),
             cache: RealmTranslationsCache(realmDatabase: sharedRealmDatabase),
             resourcesFileCache: getResourcesFileCache(),
@@ -438,21 +439,7 @@ class AppDataLayerDependencies {
         )
     }
     
-    func getViewedTrainingTipsService() -> ViewedTrainingTipsService {
-        return ViewedTrainingTipsService(
-            cache: ViewedTrainingTipsUserDefaultsCache(sharedUserDefaults: sharedUserDefaultsCache)
-        )
-    }
-    
     func getWebArchiveQueue() -> WebArchiveQueue {
         return WebArchiveQueue(ignoreCacheSession: sharedIgnoreCacheSession)
-    }
-    
-    // MARK: - Domain Interface
-    
-    func getInterfaceStringForLanguageRepositoryInterface() -> GetInterfaceStringForLanguageRepositoryInterface {
-        return GetInterfaceStringForLanguageRepository(
-            localizationServices: getLocalizationServices()
-        )
     }
 }

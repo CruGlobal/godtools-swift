@@ -14,5 +14,6 @@ enum LaunchEnvironmentKey: String {
         return rawValue
     }
     
+    case firebaseEnabled
     case urlDeeplink
 }
