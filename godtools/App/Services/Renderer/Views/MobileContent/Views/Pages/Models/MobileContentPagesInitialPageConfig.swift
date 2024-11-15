@@ -10,13 +10,11 @@ import Foundation
 
 struct MobileContentPagesInitialPageConfig {
     
-    let shouldRestartAtBeginning: Bool
     let shouldNavigateToStartPageIfLastPage: Bool
     let shouldNavigateToPreviousVisiblePageIfHiddenPage: Bool
     
-    init(shouldRestartAtBeginning: Bool = false, shouldNavigateToStartPageIfLastPage: Bool = false, shouldNavigateToPreviousVisiblePageIfHiddenPage: Bool = false) {
+    init(shouldNavigateToStartPageIfLastPage: Bool = false, shouldNavigateToPreviousVisiblePageIfHiddenPage: Bool = false) {
         
-        self.shouldRestartAtBeginning = shouldRestartAtBeginning
         self.shouldNavigateToStartPageIfLastPage = shouldNavigateToStartPageIfLastPage
         self.shouldNavigateToPreviousVisiblePageIfHiddenPage = shouldNavigateToPreviousVisiblePageIfHiddenPage
     }
