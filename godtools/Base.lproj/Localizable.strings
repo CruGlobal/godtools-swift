@@ -2,7 +2,6 @@
 "lessons.resumeLessonModal.subtitle" = "Would you like to pick up where you left off?";
 "lessons.resumeLessonModal.startOverButton" = "Start over";
 "lessons.resumeLessonModal.continueButton" = "Continue";
-
 "lessons.lessonCompleted" = "Completed";
 "lessons.completionProgress" = "%@ Complete";
 "network_connection_lost" = "The network connection was lost.";
