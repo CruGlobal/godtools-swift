@@ -12,6 +12,7 @@ import GodToolsToolParser
 class LessonFlow: ToolNavigationFlow, Flow {
     
     private let appLanguage: AppLanguageDomainModel
+    private var lessonViewModel: LessonViewModel? = nil
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -71,12 +72,20 @@ class LessonFlow: ToolNavigationFlow, Flow {
             trainingTipsEnabled: trainingTipsEnabled,
             incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase()
         )
+        lessonViewModel = viewModel
         
         let view = LessonView(viewModel: viewModel, navigationBar: nil)
                 
         navigationController.pushViewController(view, animated: true)
         
         configureNavigationBar(shouldAnimateNavigationBarHiddenState: true)
+        
+        if let initialPage = initialPageOrPreviousProgress, viewModel.isFirstOrLastVisiblePage(page: initialPage) == false {
+            
+            let resumeLessonModal = getResumeLessonModal()
+            
+            navigationController.present(resumeLessonModal, animated: true)
+        }
     }
     
     deinit {
@@ -93,17 +102,13 @@ class LessonFlow: ToolNavigationFlow, Flow {
         
         case .deepLink( _):
             break
-        
-        case .presentResumeLessonModal(let startOverClosure):
-            let resumeLessonModal = getResumeLessonModal(startOverClosure: {
-                startOverClosure()
-                self.navigationController.dismissPresented(animated: true, completion: nil)
-                
-            }, continueClosure: {
-                self.navigationController.dismissPresented(animated: true, completion: nil)
-            })
             
-            navigationController.present(resumeLessonModal, animated: true)
+        case .startOverTappedFromResumeLessonModal:
+            navigationController.dismissPresented(animated: true, completion: nil)
+            lessonViewModel?.navigateToFirstPage(animated: true)
+            
+        case .continueTappedFromResumeLessonModal:
+            navigationController.dismissPresented(animated: true, completion: nil)
             
         case .closeTappedFromLesson(let lessonId, let highestPageNumberViewed):
             closeTool(lessonId: lessonId, highestPageNumberViewed: highestPageNumberViewed)
@@ -146,12 +151,11 @@ class LessonFlow: ToolNavigationFlow, Flow {
         }
     }
     
-    private func getResumeLessonModal(startOverClosure: @escaping () -> Void, continueClosure: @escaping () -> Void) -> UIViewController {
+    private func getResumeLessonModal() -> UIViewController {
         let viewModel = ResumeLessonProgressModalViewModel(
+            flowDelegate: self,
             getInterfaceStringsUseCase: appDiContainer.feature.lessonProgress.domainLayer.getResumeLessonProgressModalInterfaceStringsUseCase(),
-            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            startOverClosure: startOverClosure,
-            continueClosure: continueClosure
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase()
         )
         
         let resumeLessonModal = ResumeLessonProgressModal(viewModel: viewModel)

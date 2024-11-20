@@ -11,10 +11,9 @@ import Combine
 
 class ResumeLessonProgressModalViewModel: ObservableObject {
     
+    private weak var flowDelegate: FlowDelegate?
     private let getInterfaceStringsUseCase: GetResumeLessonProgressModalInterfaceStringsUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
-    private let startOverClosure: () -> Void
-    private let continueClosure: () -> Void
     
     private var cancellables: Set<AnyCancellable> = Set()
     
@@ -22,11 +21,10 @@ class ResumeLessonProgressModalViewModel: ObservableObject {
     
     @Published var interfaceStringsDomainModel: ResumeLessonProgressModalInterfaceStringsDomainModel = ResumeLessonProgressModalInterfaceStringsDomainModel.emptyStrings()
     
-    init(getInterfaceStringsUseCase: GetResumeLessonProgressModalInterfaceStringsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, startOverClosure: @escaping () -> Void, continueClosure: @escaping () -> Void) {
+    init(flowDelegate: FlowDelegate, getInterfaceStringsUseCase: GetResumeLessonProgressModalInterfaceStringsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase) {
+        self.flowDelegate = flowDelegate
         self.getInterfaceStringsUseCase = getInterfaceStringsUseCase
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
-        self.startOverClosure = startOverClosure
-        self.continueClosure = continueClosure
         
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
@@ -50,10 +48,10 @@ class ResumeLessonProgressModalViewModel: ObservableObject {
     // MARK: - Inputs
     
     func startOverButtonTapped() {
-        startOverClosure()
+        flowDelegate?.navigate(step: .startOverTappedFromResumeLessonModal)
     }
     
     func continueButtonTapped() {
-        continueClosure()
+        flowDelegate?.navigate(step: .continueTappedFromResumeLessonModal)
     }
 }
