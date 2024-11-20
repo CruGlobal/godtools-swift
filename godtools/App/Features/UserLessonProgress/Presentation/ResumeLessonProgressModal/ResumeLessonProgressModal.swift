@@ -53,10 +53,10 @@ struct ResumeLessonProgressModal: View {
                         .padding(.bottom, 35)
                     
                     HStack(spacing: buttonSpace) {
-                        GTWhiteButton(title: viewModel.interfaceStringsDomainModel.startOverButtonText, width: buttonWidth, height: buttonHeight) {
+                        GTWhiteButton(title: viewModel.interfaceStringsDomainModel.startOverButtonText, fontSize: 15, width: buttonWidth, height: buttonHeight) {
                             viewModel.startOverButtonTapped()
                         }
-                        GTBlueButton(title: viewModel.interfaceStringsDomainModel.continueButtonText, width: buttonWidth, height: buttonHeight) {
+                        GTBlueButton(title: viewModel.interfaceStringsDomainModel.continueButtonText, fontSize: 15, width: buttonWidth, height: buttonHeight) {
                             viewModel.continueButtonTapped()
                         }
                     }
