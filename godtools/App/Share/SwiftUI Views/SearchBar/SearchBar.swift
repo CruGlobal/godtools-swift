@@ -10,7 +10,6 @@ import SwiftUI
 
 // adapted from https://www.appcoda.com/swiftui-search-bar/
 
-@available(iOS 15.0, *)
 struct SearchBar: View {
     
     @ObservedObject private var viewModel: SearchBarViewModel
