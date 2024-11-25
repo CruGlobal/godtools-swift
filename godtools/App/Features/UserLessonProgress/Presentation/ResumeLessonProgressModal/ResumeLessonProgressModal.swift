@@ -29,14 +29,9 @@ struct ResumeLessonProgressModal: View {
             let buttonWidth = (modalWidth - totalSpaceAroundButtons) / 2
             
             ZStack {
-                if #available(iOS 15.0, *) {
-                    Color.clear
-                        .edgesIgnoringSafeArea(.all)
-                        .background(.ultraThinMaterial)
-                } else {
-                    VisualEffectView(effect: UIBlurEffect(style: .systemUltraThinMaterial))
-                        .edgesIgnoringSafeArea(.all)
-                }
+                Color.clear
+                    .edgesIgnoringSafeArea(.all)
+                    .background(.ultraThinMaterial)
                 
                 VStack(spacing: 0) {
                     Text(viewModel.interfaceStringsDomainModel.title)
