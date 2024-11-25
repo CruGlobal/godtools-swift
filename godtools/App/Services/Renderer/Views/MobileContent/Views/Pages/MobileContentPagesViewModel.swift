@@ -172,22 +172,6 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
         return pageModels[index]
     }
     
-    func isFirstOrLastVisiblePage(page: MobileContentPagesPage) -> Bool {
-        let visiblePages = currentPageRenderer.value.getVisiblePageModels()
-        
-        switch page {
-        case .pageId(let id):
-            let firstVisiblePage = visiblePages.first
-            let lastVisiblePage = visiblePages.last
-            
-            return firstVisiblePage?.id == id || lastVisiblePage?.id == id
-            
-        case .pageNumber(let pageNumber):
-            let lastVisiblePageNumber = visiblePages.count - 1
-            return pageNumber == 0 || pageNumber == lastVisiblePageNumber
-        }
-    }
-    
     func createToolSettingsLanguages() -> ToolSettingsLanguages {
         return ToolSettingsLanguages(
             primaryLanguageId: languages[0].id,
