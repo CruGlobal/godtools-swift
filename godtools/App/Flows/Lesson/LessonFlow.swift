@@ -10,12 +10,12 @@ import UIKit
 import GodToolsToolParser
 
 class LessonFlow: ToolNavigationFlow, Flow {
-    
+
     private let toolTranslations: ToolTranslationsDomainModel
     private let appLanguage: AppLanguageDomainModel
     private let trainingTipsEnabled: Bool
     
-    private var tool: ResourceModel {
+    private var lesson: ResourceModel {
         return toolTranslations.tool
     }
     
@@ -38,20 +38,12 @@ class LessonFlow: ToolNavigationFlow, Flow {
         self.toolTranslations = toolTranslations
         self.appLanguage = appLanguage
         self.trainingTipsEnabled = trainingTipsEnabled
-              
-        let lessonProgressLastViewedPageId: String? = getUserLessonProgress()?.lastViewedPageId
-        
-        let primaryLanguageManifest: Manifest? = toolTranslations.languageTranslationManifests.first?.manifest
-        let visiblePages: [Page] = (primaryLanguageManifest?.pages ?? Array()).filter({!$0.isHidden})
-        let hasLessonProgress: Bool = lessonProgressLastViewedPageId != nil
-        let lessonProgressIsFirstPage: Bool = lessonProgressLastViewedPageId == visiblePages.first?.id
-        let lessonProgressIsLastPage: Bool = lessonProgressLastViewedPageId == visiblePages.last?.id
         
         if let initialPage = initialPage {
             
             navigateToLesson(initialPage: initialPage, animated: true)
         }
-        else if hasLessonProgress && !lessonProgressIsFirstPage && !lessonProgressIsLastPage {
+        else if shouldNavigateToResumeLesson {
             
             let resumeLessonModal = getResumeLessonModal()
             
@@ -67,13 +59,26 @@ class LessonFlow: ToolNavigationFlow, Flow {
         print("x deinit: \(type(of: self))")
     }
     
-    private func getUserLessonProgress() -> UserLessonProgressDataModel? {
-        return appDiContainer.dataLayer.getUserLessonProgressRepository().getLessonProgress(lessonId: tool.id)
+    private var shouldNavigateToResumeLesson:  Bool {
+        
+        let lessonProgressLastViewedPageId: String? = userLessonProgress?.lastViewedPageId
+        
+        let primaryLanguageManifest: Manifest? = toolTranslations.languageTranslationManifests.first?.manifest
+        let visiblePages: [Page] = (primaryLanguageManifest?.pages ?? Array()).filter({!$0.isHidden})
+        let hasLessonProgress: Bool = lessonProgressLastViewedPageId != nil
+        let lessonProgressIsFirstPage: Bool = lessonProgressLastViewedPageId == visiblePages.first?.id
+        let lessonProgressIsLastPage: Bool = lessonProgressLastViewedPageId == visiblePages.last?.id
+        
+        return hasLessonProgress && !lessonProgressIsFirstPage && !lessonProgressIsLastPage
     }
     
-    private func getUserLessonProgressPage() -> MobileContentPagesPage? {
+    private var userLessonProgress: UserLessonProgressDataModel? {
+        return appDiContainer.dataLayer.getUserLessonProgressRepository().getLessonProgress(lessonId: lesson.id)
+    }
+    
+    private var userLessonProgressPage: MobileContentPagesPage? {
         
-        guard let pageId = getUserLessonProgress()?.lastViewedPageId else {
+        guard let pageId = userLessonProgress?.lastViewedPageId else {
             return nil
         }
         
@@ -96,7 +101,7 @@ class LessonFlow: ToolNavigationFlow, Flow {
             navigationController.dismissPresented(animated: true, completion: nil)
             
         case .continueTappedFromResumeLessonModal:
-            navigateToLesson(initialPage: getUserLessonProgressPage(), animated: false)
+            navigateToLesson(initialPage: userLessonProgressPage, animated: false)
             navigationController.dismissPresented(animated: true, completion: nil)
             
         case .closeTappedFromLesson(let lessonId, let highestPageNumberViewed):
@@ -154,6 +159,8 @@ class LessonFlow: ToolNavigationFlow, Flow {
         flowDelegate?.navigate(step: .lessonFlowCompleted(state: .userClosedLesson(lessonId: lessonId, highestPageNumberViewed: highestPageNumberViewed)))
     }
 }
+
+// MARK: - Views
 
 extension LessonFlow {
     
@@ -215,6 +222,8 @@ extension LessonFlow {
         return hostingView
     }
 }
+
+// MARK: - MobileContentRendererNavigationDelegate
 
 extension LessonFlow: MobileContentRendererNavigationDelegate {
     
