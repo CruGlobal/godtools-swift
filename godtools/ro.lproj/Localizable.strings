@@ -1,3 +1,73 @@
+/* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
+"lessons.resumeLessonModal.title" = "Reia progresul";
+
+"lessons.resumeLessonModal.subtitle" = "Ai vrea să reiai de unde ai rămas?";
+"lessons.resumeLessonModal.startOverButton" = "Începe de la capăt";
+"lessons.resumeLessonModal.continueButton" = "Continuă";
+"lessons.lessonCompleted" = "Finalizat";
+"lessons.completionProgress" = "%@ Finalizat";
+"network_connection_lost" = "Conexiunea la rețea a fost întreruptă.";
+"language_name_fil" = "Filipineză (Tagalog)";
+"lessons.filter.navBar.language" = "Limba lecției";
+"lessons.languageFilter.title" = "Lecțiile în:";
+"language_name_fil-x-taglish" = "Taglish";
+"language_name_sid" = "Sidama";
+"onboardingTutorial.chooseLanguageButton.title" = "Alege limba";
+"languageSettings.confirmAppLanguage.message" = "Ați selectat %@ ca limbă a aplicației. Acest lucru va schimba limba întregii aplicații GodTools. Esti sigur?";
+"languageSettings.confirmAppLanguage.changeLanguageButton.title" = "Schimbă limba";
+"languageSettings.confirmAppLanguage.nevermindButton.title" = "Anulează";
+"languageSettings.downloadableLanguages.title" = "Limbi descărcabile";
+"languageSettings.appInterface.title" = "Limba de interfață a aplicației";
+"languageSettings.appInterface.message" = "Setează limba în care dorești să fie afișată întreaga aplicație.";
+"languageSettings.appInterface.languagesAvailable" = "Limbi disponibile";
+"languageSettings.toolLanguagesAvailableOffline.title" = "Limbi pentru instrumente disponibile offline";
+"languageSettings.toolLanguagesAvailableOffline.message" = "Descărcați toate instrumentele într-o limbă pentru a le face disponibile chiar dacă nu aveți acces WiFi sau serviciul celular. Setați limba instrumentului prin intermediul butonului de opțiuni din cadrul unui instrument.";
+"languageSettings.toolLanguagesAvailableOffline.editDownloadedLanguagesButton.title" = "Editează limbile descărcate";
+"allTools.filter.title" = "Filtru";
+"allTools.filter.anyCategory" = "Orice categorie";
+"allTools.filter.anyLanguage" = "Orice limbă";
+"allTools.filter.navBar.language" = "Filtrează după limbă";
+"allTools.filter.navBar.category" = "Filtrează după categorie";
+"languageSettings.appLanguage.title" = "Limba aplicației";
+"authError.userAccountAlreadyExists.message" = "Contul de utilizator deja există.";
+"authError.userAccountNotFound.message" = "Contul de utilizator nu a fost găsit.";
+"createAccount.title" = "Creează cont";
+"createAccount.subtitle" = "Creează un cont pentru a avea la îndemână povești reale, încurajare și sfaturi practice.";
+"deleteAccountProgress.title" = "Se șterge contul...";
+"confirmDeleteAccount.title" = "Ești sigur?";
+"confirmDeleteAccount.confirmButton.title" = "Şterge contul";
+"accountDeletedAlert.title" = "Cont șters";
+"accountDeletedAlert.message" = "Contul dvs. a fost șters.";
+"deleteAccount.title" = "Nu pleca atât de repede";
+"deleteAccount.subtitle" = "Dacă îți ștergi contul, nu vei putea accesa instrumentele sau activitatea contului.";
+"deleteAccount.confirmButton.title" = "Ștergeți-mi contul";
+"deleteAccount.cancelButton.title" = "Păstrează-mi contul";
+"signIn.title" = "Conectare";
+"signIn.subtitle" = "Conectează-te la contul dvs. pentru a avea la îndemână povești reale, încurajare și sfaturi practice.";
+"signIn.google" = "Conectează-te cu Google";
+"signIn.facebook" = "Conectează-te cu Facebook";
+"signIn.apple" = "Continuă cu Apple";
+"menu_getStarted" = "Începe";
+"menu_support" = "Suport";
+"menu_about" = "Despre";
+"menu.sendFeedback" = "Trimite feedback";
+"menu.reportABug" = "Raportează o eroare";
+"menu.askAQuestion" = "Pune o întrebare";
+"menu.leaveAReview" = "Scrie părerea ta";
+"account.badges.sectionTitle" = "Insignele tale";
+"account.activity.sectionTitle" = "Activitatea ta";
+
+/* Just translate "Joined" - leave the %@ - this is the date they started using GodTools */
+"account.joinedOn" = "S-a alăturat %@";
+
+"account.globalActivity.title" = "Activitate Globală";
+"toolDetails.conversationStarters.title" = "Inițierea conversației";
+
+/* A list of the main points of the tool will live behind a section called "Outline" */
+"toolDetails.outline.title" = "Contur";
+
+"toolDetails.bibleReferences.title" = "Referințe biblice";
+
 /* This About refers to the whole app. */
 "aboutApp.navTitle" = "Despre noi";
 
@@ -7,48 +77,89 @@
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "Indisponibil în %@";
 
+"menu.deleteAccount" = "Șterge contul";
+"alert.mailAppUnavailable.title" = "Aplicația de Email Indisponibilă";
+"alert.mailAppUnavailable.message" = "Aplicația nativă de Email fie nu este configurată, fie nu este disponibilă pe acest dispozitiv. ";
 "tool_menu_item.tools" = "Instrumentele";
 "lessons.pageTitle" = "Lecții create pentru tine";
 "lessons.pageSubtitle" = "Idei practice pentru a construi relații și a începe conversații relevante.";
 "toolSettings.languagesAvailable.title" = "Limbi disponibile";
-"toolDetails.versions.message" = "Alege o versiune diferită a instrumentului de mai jos. Fiecare versiune are un stil și un conținut unice pentru a le găsi pe cele care se potrivesc cel mai bine conversației tale. Poți adăuga la favorite mai multe versiuni ale aceluiași instrument.";
-"favorites.noTools.title" = "Niciun instrument preferat de afișat";
+"toolDetails.versions.message" = "Alege o versiune diferită a instrumentului de mai jos. Fiecare versiune are un stil și un conținut unic pentru a le găsi pe cele care se potrivesc cel mai bine conversației tale. Poți adăuga la favorite mai multe versiuni ale aceluiași instrument.";
+"favorites.noTools.title" = "Niciun instrument favorit de afișat";
 "favorites.noTools.description" = "Atinge pictograma inimă pentru a adăuga la favorite un instrument și a-l face disponibil offline.";
 "favorites.noTools.button" = "Accesează Instrumentele";
 "toolSettings.shareImagePreview.shareImageButton.title" = "Partajare imagine";
 "favorites.pageTitle" = "Bun venit la GodTools";
 "favorites.favoriteLessons.title" = "Lecție recomandată";
-"favorites.favoriteTools.title" = "Instrumentele tale preferate";
+"favorites.favoriteTools.title" = "Instrumentele tale favorite";
 "favorites.favoriteTools.viewAll" = "Vezi tot";
 "favorites.favoriteLessons.details" = "Detalii";
 
 /* The meaning is "I don't want to set a second language".  Language is no language or None */
 "toolSettings.languagesList.deleteLanguage.title" = "Niciuna";
 
-"toolSettings.chooseLanguage.toggleMessage" = "Comută între două limbi diferite în acest instrument.";
+"toolSettings.chooseLanguage.toggleMessage" = "Schimbă între două limbi diferite în acest instrument.";
 "toolDetails.versions.title" = "Versiuni";
 "toolDetails.learnToShareToolButton.title" = "Află cum să partajezi acest instrument";
-"toolSettings.title" = "Opțiuni de instrumente";
+"toolSettings.title" = "Opțiuni pentru Instrumente";
 "toolSettings.option.shareLink.title" = "Partajează un link";
 "toolSettings.option.screenShare.title" = "Partajează ecranul";
-"toolSettings.option.trainingTips.show.title" = "Recomandări de instruire";
+"toolSettings.option.trainingTips.show.title" = "Recomandări de antrenare";
 "toolSettings.option.trainingTips.hide.title" = "Ascunde recomandările";
-"toolSettings.chooseLanguage.title" = "Limbă secundară";
-"toolSettings.chooseLanguage.noParallelLanguageTitle" = "secundară";
+"toolSettings.chooseLanguage.title" = "Limbă Secundară";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "Secundară";
 "toolSettings.shareables.title" = "Grafice asociate";
-"allTools.spotlight.title" = "Recomandări de instrumente";
+"allTools.spotlight.title" = "Instrumentele Recomandate";
 "allTools.spotlight.description" = "Iată câteva instrumente care credem că îți vor plăcea";
 "allTools.categories.title" = "Categorii";
+"training_tip_ask" = "Întreabă";
+"training_tip_consider" = "Gândește";
+"training_tip_prepare" = "Pregătește-te";
+"training_tip_quote" = "Citat";
+"training_tip_tip" = "Recomandări";
+"start_training" = "Începe Antrenarea";
+"close" = "Închide";
 "tool_menu_item.lessons" = "Lecții";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.continueButton.title.closeTutorial" = "Închide tutorialul";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.tool.title" = "Instrumente";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.tool.message" = "Fiecare instrument este creat pentru o etapă diferită a conversației – înainte, în timpul conversației sau după.";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.toolTip.title" = "Recomandări pentru instrumente";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.toolTip.message" = "Recomandările GodTools te ghidează pe măsură ce ajuți pe cineva să înțeleagă Evanghelia și să-L întâlnească pe Isus.";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.screenShare.title" = "Partajarea ecranului";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.screenShare.message" = "Acum poți partaja ecranul de la distanță, astfel încât cealaltă persoană să poată urmări în timp ce utilizezi un instrument pentru a discuta Evanghelia.";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.lesson.title" = "Lecții";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.lesson.message" = "În fiecare lecție GodTools înveți ceva care să te ajute să ai conversații reale despre Dumnezeu.";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.findTutorial.title" = "Poți găsi acest tutorial în meniu oricând ai nevoie.";
+
 "onboardingTutorial.beginButton.title" = "Începe";
 "onboardingTutorial.nextButton.title" = "Următorul";
 "tool_offline_favorite_message" = "Un instrument va fi disponibil offline dacă apeși pictograma inimă, care îl adaugă la Favorite.";
 
 /* This is a category description of a tool that helps you start a conversation */
-"tool_category_conversation_starter" = "Inițierea Conversațiilor";
+"tool_category_conversation_starter" = "Inițierea Conversației";
 
 /* This phrase describes a category of tool that helps someone grow in their Christian faith */
-"tool_category_growth" = "Creșterea în credință";
+"tool_category_growth" = "Creșterea în Credință";
 
 "share_link" = "Partajează un link";
 "share_tool_menu.remote_share_tool" = "Partajează ecranul";
@@ -59,20 +170,32 @@
 "share_tool_screen_tutorial.mirrored_experience.message" = "Pe măsură ce derulezi instrumentul pe telefonul tău, ecranul prietenului tău va răspunde la fel. Acest lucru vă permite să folosiți un instrument împreună pe 2 dispozitive în același timp.";
 "share_tool_screen_tutorial.get_started.title" = "Să începem";
 "share_tool_screen_tutorial.get_started.message" = "Trimite linkul către una sau mai multe persoane pentru a începe o sesiune de partajare ecran acum.";
-"share_tool_remote_link_message" = "Bună, urmează-mă în GodTools prin partajarea ecranului. Iată linkul: %@ Dacă nu primești acest mesaj până mai târziu, este posibil ca linkul să nu funcționeze. Poți încerca ulterior.";
+"share_tool_remote_link_message" = "Bună, urmează-mă în GodTools prin partajarea ecranului. Iată linkul: %@
+
+Dacă ai primit acest mesaj prea târziu, este posibil ca linkul să nu funcționeze. Mai târziu putem să mai încercăm.";
 "exit_tract_remote_share_session.message" = "Părăsești sesiunea de partajare la distanță acum?";
 "load_tool_remote_session.message" = "Începe partajarea ecranului...";
-"onboardingTutorial.0.title" = "Pregătită pentru fiecare conversație";
-"onboardingTutorial.0.videoLink.title" = "Urmărește videoclipul";
+"learn_to_share_tool.learn_to_share.title" = "Învață să împărtășești acest instrument cu oricine";
+"learn_to_share_tool.learn_to_share.message" = "Exersează să folosești atâtea recomandări câte ai nevoie pentru a te simți încrezător în împărtășirea acestui instrument cu ceilalți.";
+"learn_to_share_tool.tips_light_the_way.title" = "Recomandări pentru a lumina calea";
+"learn_to_share_tool.tips_light_the_way.message" = "Pe ecranele selectate, vei vedea o varietate de pictograme. Apăsă pictograma pentru a vedea o recomandare care te va ajuta să vorbești despre conținutul de pe ecran. Dacă un ecran nu are pictogramă, citește conținutul și discută după cum este necesar.";
+"learn_to_share_tool.light_up_the_tips.title" = "Descoperă recomandările";
+"learn_to_share_tool.light_up_the_tips.message" = "Când o recomandare este descoperită, ai terminat acea parte de antrenare. Exersează să folosești atâtea recomandări câte ai nevoie pentru a te simți încrezător în a explica instrumentul";
+"lesson_evaluation.title" = "Părerea ta";
+"lesson_evaluation.wasThisHelpful" = "Ți-a fost de ajutor această lecție?";
+"lesson_evaluation.shareFaith" = "Cât de pregătit te simți să începi o conversație spirituală?";
+"lesson_evaluation.sendButtonTitle" = "Trimite feedback";
+"onboardingTutorial.0.title" = "Pregătit pentru fiecare conversație";
+"onboardingTutorial.0.videoLink.title" = "Urmărește videoul";
 "onboardingTutorial.1.title" = "Discută despre Dumnezeu cu oricine";
 "onboardingTutorial.1.message" = "GodTools te ajută să ai conversații constructive despre Dumnezeu.";
 "onboardingTutorial.2.title" = "Pregătește-te pentru momentele care contează";
 "onboardingTutorial.2.message" = "Află cum să faci conversațiile despre credință o parte normală din viața ta.";
 "onboardingTutorial.3.title" = "Ajută pe cineva să-l descopere pe Iisus";
-"onboardingTutorial.3.message" = "GodTools este ghidul tău pentru propovăduirea Bibliei într-un mod clar și relevant.";
+"onboardingTutorial.3.message" = "GodTools este ghidul tău pentru împărtășirea evangheliei într-un mod clar și relevant.";
 
 /* This is a category. The content will include training of how to share your faith. */
-"tool_category_training" = "Instruire";
+"tool_category_training" = "Antrenare";
 
 /* This is an invitation for a user to open a tool */
 "open" = "Deschide";
@@ -91,16 +214,21 @@
 "loading_favorited_tool" = "Se descarcă cea mai nouă traducere pentru acest instrument.";
 
 /* Adds a question mark */
-"remove_from_favorites_title" = "Elimini din Favorite? ";
+"remove_from_favorites_title" = "Elimină din Favorite? ";
 
 /* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
 "remove_from_favorites_message" = "Sigur vrei să elimini %@ din Favorite?";
 
 /* Gospel indicates the gospel of Jesus Christ */
-"tool_category_gospel" = "Invitație să descoperi Biblia";
+"tool_category_gospel" = "Gospel Invitation";
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "Articole";
+
+"articles.downloadArticlesButton.title.retryDownload" = "Reîncearcă Descărcarea";
+
+/* This is to let users know which version of the app is installed on their phone */
+"menu_version" = "Versiune";
 "language_onboard" = "Peste 90 de limbi";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -123,13 +251,17 @@
 "okay" = "Ok";
 // Menu
 "menu_general" = "General";
+"menu_account" = "Cont";
 "menu_share" = "Distribuie";
 "menu_legal" = "Juridic";
 "language_settings" = "Setări de limbă";
+"menu.tutorial" = "Tutorial";
+"menu.my_account" = "Contul meu";
+
 // Login
 "login" = "Conectare";
 "logout" = "Deconectare";
-"create_account" = "Creați cont";
+"create_account" = "Creează cont";
 "account_login" = "Conectare la cont";
 
 // Tool Detail
@@ -138,10 +270,10 @@
 "contact_us" = "Contactează-ne";
 "preview_mode_translators_only" = "Mod previzualizare (doar traducători)";
 "share_god_tools" = "Distribuie aplicația GodTools";
-"share_a_story_with_us" = "Împărtășește o poveste cu noi";
+"share_a_story_with_us" = "Împărtășește o experiență cu noi";
 "terms_of_use" = "Condiții de utilizare";
 "privacy_policy" = "Politica de confidențialitate";
-"copyright_info" = "Informații copyright";
+"copyright_info" = "Informații Copyright";
 "share_god_tools_share_sheet_text" = "Descarcă aplicația GodTools: https://godtoolsapp.com
 
 Găsești versiunea online aici https://knowgod.com/";
@@ -155,7 +287,7 @@ Găsești versiunea online aici https://knowgod.com/";
 // Language Settings
 "primary_language" = "Limba principală";
 "select_primary_language" = "Selectează o limbă principală";
-"parallel_language" = "Limbă secundară";
+"parallel_language" = "Limbă Secundară";
 "select_parallel_language" = "Selectează o limbă secundară";
 "share_god_tools_native_language" = "Distribuie GodTools unei persoane în limba nativă a acesteia";
 "not_every_tool_is_available" = "Nu toate instrumentele sunt disponibile în toate limbile";
@@ -189,7 +321,7 @@ Aplicația poate fi descărcată de pe https://godtoolsapp.com";
 "remove" = "Elimină";
 "clear" = "Șterge";
 /* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "Deschide instrumentul";
+"toolinfo_opentool" = "Deschide Instrumentul";
 
 // Alerts
 "error" = "Eroare";
@@ -197,26 +329,52 @@ Aplicația poate fi descărcată de pe https://godtoolsapp.com";
 "cancel" = "Anulează";
 "required_field_missing" = "\"%@\" este un câmp obligatoriu.";
 
+"onboardingTutorial.getStartedButton.title" = "Să începem";
+
 // About
 "general_about_1" = "GodTools te ajută să-ți împărtășești credința în mod ușor și simplu.";
+// Tutorial
+"tutorial.tutorialItem.0.title" = "Privește";
 "general_about_2" = "Aceste instrumente te ajută să explici celorlalți cum pot pune bazele unei relații cu Dumnezeu prin Iisus Hristos, chiar dacă nu ți-ai împărtășit credința până acum sau persoanele vorbesc o altă limbă.";
 "general_about_3" = "Alege din varietatea de instrumente pe baza preferințelor tale și a audienței. Nu toate instrumentele sunt disponibile în toate limbile.";
 "general_about_4" = "La sfârșitul fiecărui instrument sunt incluse link-uri către alte resurse.";
 "general_about_5" = "Este nevoie de conexiune online pentru a descărca fiecare instrument și/sau limbă nouă. După descărcare, acestea pot fi folosite offline.";
 "general_about_6" = "Întrebări? Sugestii? Solicitări? Contactați-ne la support@godtoolsapp.com";
 "general_about_7" = "Puteți găsi versiunea online a instrumentelor pe knowgod.com. Implementați-o pe site-ul vostru!";
+"tutorial.tutorialItem.3.title" = "Acest tutorial este iarăși disponibil în meniu";
 "general_about_8" = "Vizitați godtoolsapp.com pentru mai multe informații.";
-"tutorial.continueButton.title.continue" = "Continuaţi";
-"general_about_9" = "Atunci când adopți inițiativa de a-ți împărtăși credința, nu uita că Dumnezeu este cel care schimbă inimile. Iubește fiecare persoană și ascult-o pentru a o înțelege.";
+"tutorial.continueButton.title.continue" = "Continuă";
+"general_about_9" = "Pe măsură ce iei inițiativa de a-ți împărtăși credința, nu uita că Dumnezeu este Cel care schimbă inimile. Iubește fiecare persoană și ascult-o pentru a o înțelege.";
+"tutorial.continueButton.title.startUsingGodTools" = "Începe să folosești GodTools";
+
 "general_about_10" = "„Vorbirea voastră să fie totdeauna cu har, dreasă cu sare, ca să ştiţi cum trebuie să răspundeţi fiecăruia.” Coloseni 4:6";
 
+// OpenTutorial
+"openTutorial.showTutorialLabel.text" = "Arată-mi un Tutorial";
 // Downloads
 "Download in progress" = "Descărcare în curs";
 
+"openTutorial.openTutorialButton.title" = "Deschide Tutorialul";
+
 // Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
-"card_status1" = "Ant.";
+"card_status1" = "Anterior";
+// Account
+"account.navTitle" = "Profilul Meu";
 "card_status2" = "Următorul";
+
+"account.activity.title" = "Activitate";
 
 // Language Name Strings
 "language_name_fa" = "Persană (Farsi)";
 
+// Account Activity
+"accountActivity.globalAnalytics.header.title" = "Activitate Globală";
+"accountActivity.globalAnalytics.users.title" = "Utilizatori\nUnici";
+"onboardingWelcome.titleLabel.tagline" = "Te ajutăm să-ți împărtășești credința";
+"accountActivity.globalAnalytics.gospelPresentation.title" = "Prezentări ale\nEvangheliei";
+"accountActivity.globalAnalytics.launches.title" = "Sesiuni";
+// OnboardingTutorial
+"onboardingTutorial.aboutAppItem.0.title" = "Distribuie cu ceilalți";
+"accountActivity.globalAnalytics.countries.title" = "Țări";
+
+"onboardingTutorial.showMoreButton.title" = "Arată-mi mai mult";

@@ -1,3 +1,11 @@
+/* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
+"lessons.resumeLessonModal.title" = "進捗を再開";
+
+"lessons.resumeLessonModal.subtitle" = "中断したところから再開しますか？";
+"lessons.resumeLessonModal.startOverButton" = "やり直す";
+"lessons.resumeLessonModal.continueButton" = "続行";
+"lessons.lessonCompleted" = "完了";
+"lessons.completionProgress" = "%@完了";
 "network_connection_lost" = "ネットワーク接続が失われました。";
 "language_name_fil" = "フィリピン（タガログ）語";
 "lessons.filter.navBar.language" = "レッスン言語";
