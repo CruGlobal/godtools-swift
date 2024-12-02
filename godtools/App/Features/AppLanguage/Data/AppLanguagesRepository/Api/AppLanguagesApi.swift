@@ -31,6 +31,7 @@ class AppLanguagesApi {
             AppLanguageCodable(languageCode: "ko", languageDirection: .leftToRight, languageScriptCode: nil),
             AppLanguageCodable(languageCode: "lv", languageDirection: .leftToRight, languageScriptCode: nil),
             AppLanguageCodable(languageCode: "pt", languageDirection: .leftToRight, languageScriptCode: nil),
+            AppLanguageCodable(languageCode: "ro", languageDirection: .leftToRight, languageScriptCode: nil),
             AppLanguageCodable(languageCode: "ru", languageDirection: .leftToRight, languageScriptCode: nil),
             AppLanguageCodable(languageCode: "sw", languageDirection: .leftToRight, languageScriptCode: nil),
             AppLanguageCodable(languageCode: "ur", languageDirection: .rightToLeft, languageScriptCode: nil),
