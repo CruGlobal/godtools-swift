@@ -244,8 +244,6 @@
 		45325F25285CF8B40078D932 /* AnimatedSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45325F1C285CF8B40078D932 /* AnimatedSwiftUIView.swift */; };
 		45325F26285CF8B40078D932 /* VideoViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45325F1E285CF8B40078D932 /* VideoViewRepresentable.swift */; };
 		45325F27285CF8B40078D932 /* VideoViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45325F1F285CF8B40078D932 /* VideoViewCoordinator.swift */; };
-		45325F28285CF8B40078D932 /* TextWithLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45325F21285CF8B40078D932 /* TextWithLinks.swift */; };
-		45325F29285CF8B40078D932 /* TextViewLinksCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45325F22285CF8B40078D932 /* TextViewLinksCoordinator.swift */; };
 		45325F2D285CF8DA0078D932 /* ViewGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45325F2B285CF8D90078D932 /* ViewGeometry.swift */; };
 		45325F2E285CF8DA0078D932 /* ViewSizePreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45325F2C285CF8D90078D932 /* ViewSizePreferenceKey.swift */; };
 		4533C4CE28AC2C4C00F9628B /* LaunchCountRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4533C4CD28AC2C4C00F9628B /* LaunchCountRepository.swift */; };
@@ -372,7 +370,6 @@
 		453F84DC2A02A0390005101E /* ArticleCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453F84D92A02A0390005101E /* ArticleCategory.swift */; };
 		45430CF12B1FB43E002B94A3 /* TextWithLinksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45430CF02B1FB43E002B94A3 /* TextWithLinksView.swift */; };
 		45430CF62B1FB638002B94A3 /* String+ToUrlMarkdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45430CF52B1FB638002B94A3 /* String+ToUrlMarkdown.swift */; };
-		45430CF82B1FBA2A002B94A3 /* BackwardsCompatibleTextWithLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45430CF72B1FBA2A002B94A3 /* BackwardsCompatibleTextWithLinks.swift */; };
 		454ADAD52ABDD9D400037C27 /* LanguageSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454ADACE2ABDD9D400037C27 /* LanguageSettingsViewModel.swift */; };
 		454ADAD62ABDD9D400037C27 /* AppInterfaceLanguageButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454ADAD22ABDD9D400037C27 /* AppInterfaceLanguageButtonView.swift */; };
 		454ADAD72ABDD9D400037C27 /* LanguageSettingsAppInterfaceLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454ADAD32ABDD9D400037C27 /* LanguageSettingsAppInterfaceLanguageView.swift */; };
@@ -1601,7 +1598,6 @@
 		D4C2A5962C3CAC240035AB4D /* StoreUserLessonFiltersUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C2A5952C3CAC240035AB4D /* StoreUserLessonFiltersUseCase.swift */; };
 		D4C2A5982C3CAC420035AB4D /* StoreUserLessonFiltersRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C2A5972C3CAC420035AB4D /* StoreUserLessonFiltersRepositoryInterface.swift */; };
 		D4C2A59A2C3CAD0E0035AB4D /* StoreUserLessonFiltersRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C2A5992C3CAD0E0035AB4D /* StoreUserLessonFiltersRepository.swift */; };
-		D4C759212BB643EF00D6AEB2 /* SearchBarLegacy.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C759202BB643EF00D6AEB2 /* SearchBarLegacy.swift */; };
 		D4D6614A2CB077D0006B20BF /* LessonListItemProgressDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D661492CB077D0006B20BF /* LessonListItemProgressDomainModel.swift */; };
 		D4E243CC29EDC6A100EA4BB7 /* SendFeedbackWebContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E243CB29EDC6A100EA4BB7 /* SendFeedbackWebContent.swift */; };
 		D4E243CE29EDCA5700EA4BB7 /* ReportABugWebContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E243CD29EDCA5700EA4BB7 /* ReportABugWebContent.swift */; };
@@ -1917,8 +1913,6 @@
 		45325F1C285CF8B40078D932 /* AnimatedSwiftUIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedSwiftUIView.swift; sourceTree = "<group>"; };
 		45325F1E285CF8B40078D932 /* VideoViewRepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoViewRepresentable.swift; sourceTree = "<group>"; };
 		45325F1F285CF8B40078D932 /* VideoViewCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoViewCoordinator.swift; sourceTree = "<group>"; };
-		45325F21285CF8B40078D932 /* TextWithLinks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextWithLinks.swift; sourceTree = "<group>"; };
-		45325F22285CF8B40078D932 /* TextViewLinksCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextViewLinksCoordinator.swift; sourceTree = "<group>"; };
 		45325F2B285CF8D90078D932 /* ViewGeometry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewGeometry.swift; sourceTree = "<group>"; };
 		45325F2C285CF8D90078D932 /* ViewSizePreferenceKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewSizePreferenceKey.swift; sourceTree = "<group>"; };
 		4533C4CD28AC2C4C00F9628B /* LaunchCountRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchCountRepository.swift; sourceTree = "<group>"; };
@@ -2050,7 +2044,6 @@
 		453FE09E2BBEDC770090DED1 /* SearchToolFilterCategoriesRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchToolFilterCategoriesRepositoryTests.swift; sourceTree = "<group>"; };
 		45430CF02B1FB43E002B94A3 /* TextWithLinksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWithLinksView.swift; sourceTree = "<group>"; };
 		45430CF52B1FB638002B94A3 /* String+ToUrlMarkdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ToUrlMarkdown.swift"; sourceTree = "<group>"; };
-		45430CF72B1FBA2A002B94A3 /* BackwardsCompatibleTextWithLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackwardsCompatibleTextWithLinks.swift; sourceTree = "<group>"; };
 		454ADACE2ABDD9D400037C27 /* LanguageSettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageSettingsViewModel.swift; sourceTree = "<group>"; };
 		454ADAD22ABDD9D400037C27 /* AppInterfaceLanguageButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppInterfaceLanguageButtonView.swift; sourceTree = "<group>"; };
 		454ADAD32ABDD9D400037C27 /* LanguageSettingsAppInterfaceLanguageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageSettingsAppInterfaceLanguageView.swift; sourceTree = "<group>"; };
@@ -3373,7 +3366,6 @@
 		D4C2A5952C3CAC240035AB4D /* StoreUserLessonFiltersUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreUserLessonFiltersUseCase.swift; sourceTree = "<group>"; };
 		D4C2A5972C3CAC420035AB4D /* StoreUserLessonFiltersRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreUserLessonFiltersRepositoryInterface.swift; sourceTree = "<group>"; };
 		D4C2A5992C3CAD0E0035AB4D /* StoreUserLessonFiltersRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreUserLessonFiltersRepository.swift; sourceTree = "<group>"; };
-		D4C759202BB643EF00D6AEB2 /* SearchBarLegacy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarLegacy.swift; sourceTree = "<group>"; };
 		D4D661492CB077D0006B20BF /* LessonListItemProgressDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonListItemProgressDomainModel.swift; sourceTree = "<group>"; };
 		D4E243CB29EDC6A100EA4BB7 /* SendFeedbackWebContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendFeedbackWebContent.swift; sourceTree = "<group>"; };
 		D4E243CD29EDCA5700EA4BB7 /* ReportABugWebContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportABugWebContent.swift; sourceTree = "<group>"; };
@@ -4637,9 +4629,6 @@
 		45325F20285CF8B40078D932 /* TextWithLinks */ = {
 			isa = PBXGroup;
 			children = (
-				45430CF72B1FBA2A002B94A3 /* BackwardsCompatibleTextWithLinks.swift */,
-				45325F21285CF8B40078D932 /* TextWithLinks.swift */,
-				45325F22285CF8B40078D932 /* TextViewLinksCoordinator.swift */,
 				45430CF02B1FB43E002B94A3 /* TextWithLinksView.swift */,
 			);
 			path = TextWithLinks;
@@ -11245,7 +11234,6 @@
 			isa = PBXGroup;
 			children = (
 				D496B9052A9E702200CBEA19 /* SearchBar.swift */,
-				D4C759202BB643EF00D6AEB2 /* SearchBarLegacy.swift */,
 				45ACEE1B2AD0493F004B62E4 /* SearchBarView.swift */,
 				D40D77BE2AB36766008D3642 /* SearchBarViewModel.swift */,
 			);
@@ -11969,6 +11957,7 @@
 				4F12296920852BE3008842CC /* Frameworks */,
 				4F12296A20852BE3008842CC /* Resources */,
 				452556462C383C3F00AA0046 /* Embed Frameworks */,
+				2D5EA523440839626249CDB4 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -12005,6 +11994,7 @@
 				45B10ADF2BF3F270004342AB /* Embed Frameworks */,
 				45AD220F2593C66B00A096A0 /* Run Crashlytics */,
 				451C8B7628AEC6AD00E98AFA /* Download Initial Resources */,
+				7A035592B08A8E100C0CD795 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -12039,6 +12029,7 @@
 				684328EE1EB7CF66005E9131 /* Frameworks */,
 				684328EF1EB7CF66005E9131 /* Resources */,
 				45C382C02BF3FC5600378656 /* Embed Frameworks */,
+				CD25C11DF6C494453DB97F93 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -12333,6 +12324,24 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		2D5EA523440839626249CDB4 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-godtoolsUITests/Pods-godtoolsUITests-frameworks.sh",
+				"${PODS_ROOT}/GodToolsShared/build/cocoapods/framework/GodToolsToolParser.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GodToolsToolParser.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-godtoolsUITests/Pods-godtoolsUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		451C8B7628AEC6AD00E98AFA /* Download Initial Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 8;
@@ -12409,6 +12418,42 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7A035592B08A8E100C0CD795 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-godtools/Pods-godtools-frameworks.sh",
+				"${PODS_ROOT}/GodToolsShared/build/cocoapods/framework/GodToolsToolParser.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GodToolsToolParser.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-godtools/Pods-godtools-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CD25C11DF6C494453DB97F93 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests-frameworks.sh",
+				"${PODS_ROOT}/GodToolsShared/build/cocoapods/framework/GodToolsToolParser.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GodToolsToolParser.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -12668,7 +12713,6 @@
 				45828BD3279CCBD200F6B5F3 /* MobileContentFlowViewModel.swift in Sources */,
 				4598BD2A2BF7DF6800196463 /* SocialSignInButtonView.swift in Sources */,
 				4598BD132BF7DF6800196463 /* AuthenticationProviderType.swift in Sources */,
-				45325F29285CF8B40078D932 /* TextViewLinksCoordinator.swift in Sources */,
 				453F84C42A029FC00005101E /* RealmArticleAemData.swift in Sources */,
 				459BF7812AFEE0320053BA09 /* ToolScreenShareTutorialViewsRepository.swift in Sources */,
 				45F71626290A12D70019B715 /* WebContent.swift in Sources */,
@@ -12856,7 +12900,6 @@
 				45E60D022AEAE1E600E14BEA /* CircledTextView.swift in Sources */,
 				450D7B0328E32965006C3FDF /* TrackDownloadedTranslationsRepository.swift in Sources */,
 				45FB161327DBDDB60009DF8E /* ChooseYourOwnAdventureFlowCompletedState.swift in Sources */,
-				45430CF82B1FBA2A002B94A3 /* BackwardsCompatibleTextWithLinks.swift in Sources */,
 				45AD20BC25938F1A00A096A0 /* SignalValue.swift in Sources */,
 				455E98B029A42ABB00D1EF35 /* OnboardingTutorialMediaViewModel.swift in Sources */,
 				45F7B0B82AF18E9000A0E7B4 /* GetMenuInterfaceStringsRepositoryInterface.swift in Sources */,
@@ -13075,7 +13118,6 @@
 				45C152482A43D21D00F2A1E8 /* ToolSettingsTopBarView.swift in Sources */,
 				D4C2A5622C30909D0035AB4D /* GetLessonFilterLanguagesInterfaceStringsRepositoryInterface.swift in Sources */,
 				4573134028C1821200481640 /* ToolDetailsPrimaryButtonsView.swift in Sources */,
-				45325F28285CF8B40078D932 /* TextWithLinks.swift in Sources */,
 				D4E7EE1E2CA48F0000F75DA6 /* UserLessonProgressDataModel.swift in Sources */,
 				4567CE4327CD15D300C3B543 /* MobileContentRendererLanguageTranslationManifest.swift in Sources */,
 				453F0B6226EA369000436EE4 /* MobileContentMultiSelectOptionViewModel.swift in Sources */,
@@ -13664,7 +13706,6 @@
 				455EE83C2AEC586200C3205C /* GetDownloadToolProgressInterfaceStringsUseCase.swift in Sources */,
 				D4B05FF529106212005852D0 /* MobileContentAuthTokenRepository.swift in Sources */,
 				45F7B0B32AF18E3D00A0E7B4 /* GetMenuInterfaceStringsUseCase.swift in Sources */,
-				D4C759212BB643EF00D6AEB2 /* SearchBarLegacy.swift in Sources */,
 				45880D872BD2BBAF008F021C /* ViewShareGodToolsUseCase.swift in Sources */,
 				45FE825A2ACE5D8C00930C39 /* NavBarItemController.swift in Sources */,
 				4570C3032ADDC86600F0B83B /* AppNavigationBarAppearance.swift in Sources */,

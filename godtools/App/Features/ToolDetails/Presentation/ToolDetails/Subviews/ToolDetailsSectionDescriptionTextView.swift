@@ -30,14 +30,13 @@ struct ToolDetailsSectionDescriptionTextView: View {
         
         VStack(alignment: .center, spacing: 0) {
            
-            BackwardsCompatibleTextWithLinks(
-                geometry: geometry,
-                text: text,
-                textColor: textColor,
-                textFont: textFont,
-                fontSize: fontSize,
+            TextWithLinksView(
+                stringContainingUrls: text,
+                textColor: textColor.color,
+                font: textFont.font(size: fontSize),
                 lineSpacing: lineSpacing,
-                urlTappedClosure: { (url: URL) in
+                textAlignment: .leading,
+                handleUrlClosure: { (url: URL) in
                     
                     viewModel.urlTapped(url: url)
                 }
