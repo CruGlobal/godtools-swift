@@ -203,13 +203,8 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             }
             
         case .lessonTappedFromLessonsList(let lessonListItem, let languageFilter):
-            
-            if let languageFilter = languageFilter {
-                navigateToTool(toolDataModelId: lessonListItem.dataModelId, languageIds: [languageFilter.languageId], selectedLanguageIndex: 0, trainingTipsEnabled: false)
-            } else {
-                navigateToToolInAppLanguage(toolDataModelId: lessonListItem.dataModelId, trainingTipsEnabled: false)
-            }
-            
+            navigateToLesson(lessonListItem: lessonListItem, languageFilter: languageFilter)
+
         case .lessonLanguageFilterTappedFromLessons:
             navigationController.pushViewController(getLessonLanguageFilterSelection(), animated: true)
             
@@ -808,6 +803,15 @@ extension AppFlow {
         }
         
         navigateToTool(toolDataModelId: toolDataModelId, languageIds: languageIds, selectedLanguageIndex: selectedLanguageIndex, trainingTipsEnabled: trainingTipsEnabled, shouldPersistToolSettings: shouldPersistToolSettings)
+    }
+    
+    private func navigateToLesson(lessonListItem: LessonListItemDomainModel, languageFilter: LessonFilterLanguageDomainModel?) {
+        
+        if let languageFilter = languageFilter {
+            navigateToTool(toolDataModelId: lessonListItem.dataModelId, languageIds: [languageFilter.languageId], selectedLanguageIndex: 0, trainingTipsEnabled: false)
+        } else {
+            navigateToToolInAppLanguage(toolDataModelId: lessonListItem.dataModelId, trainingTipsEnabled: false)
+        }
     }
         
     private func navigateToTool(toolDataModelId: String, languageIds: [String], selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, shouldPersistToolSettings: Bool = false) {
