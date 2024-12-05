@@ -1,4 +1,6 @@
+/* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
 "lessons.resumeLessonModal.title" = "Atsākt progresu";
+
 "lessons.resumeLessonModal.subtitle" = "Vai vēlies turpināt iesākto?";
 "lessons.resumeLessonModal.startOverButton" = "Sākt no sākuma";
 "lessons.resumeLessonModal.continueButton" = "Turpināt";

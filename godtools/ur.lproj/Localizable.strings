@@ -1,3 +1,11 @@
+/* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
+"lessons.resumeLessonModal.title" = "پیش رفت دوبارہ شروع کریں";
+
+"lessons.resumeLessonModal.subtitle" = "کیا آپ وہاں سے دوبارہ آغاز کرنا چاہیں گے جہاں آپ نے چھوڑا تھا؟";
+"lessons.resumeLessonModal.startOverButton" = "دوبارہ شروع کریں";
+"lessons.resumeLessonModal.continueButton" = "جاری رکھیں";
+"lessons.lessonCompleted" = "مکمل ہوا";
+"lessons.completionProgress" = "%@ کامل";
 "network_connection_lost" = "نیٹ ورک کنکشن ختم ہوگیا۔";
 "language_name_fil" = "فلپائینی(تاگالوگ)";
 "lessons.filter.navBar.language" = "سبق کی زبان";

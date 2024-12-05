@@ -1,3 +1,11 @@
+/* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
+"lessons.resumeLessonModal.title" = "Reprendre la progression";
+
+"lessons.resumeLessonModal.subtitle" = "Souhaitez-vous reprendre là où vous vous étiez arrêté?";
+"lessons.resumeLessonModal.startOverButton" = "Recommencer";
+"lessons.resumeLessonModal.continueButton" = "Continuer";
+"lessons.lessonCompleted" = "Terminé";
+"lessons.completionProgress" = "%@ Terminer";
 "network_connection_lost" = "La connexion réseau a été perdue.";
 "language_name_fil" = "Philippine (Tagalog)";
 "lessons.filter.navBar.language" = "Langue de la leçon";
