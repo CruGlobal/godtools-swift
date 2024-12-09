@@ -36,7 +36,7 @@ extension ToolNavigationFlow {
             liveShareStream: toolDeepLink.liveShareStream,
             selectedLanguageIndex: toolDeepLink.selectedLanguageIndex,
             trainingTipsEnabled: false,
-            initialPage: toolDeepLink.mobileContentPage, 
+            initialPage: toolDeepLink.mobileContentPage,
             shouldPersistToolSettings: false
         )
     }
@@ -56,7 +56,7 @@ extension ToolNavigationFlow {
             liveShareStream: liveShareStream,
             selectedLanguageIndex: selectedLanguageIndex,
             trainingTipsEnabled: trainingTipsEnabled,
-            initialPage: initialPage, 
+            initialPage: initialPage,
             shouldPersistToolSettings: shouldPersistToolSettings
         )
     }

@@ -20,6 +20,12 @@ class UserLessonProgressDataLayerDependencies {
     
     // MARK: - Domain Interface
     
+    func getResumeLessonProgressModalInterfaceStringsRepositoryInterface() -> GetResumeLessonProgressModalInterfaceStringsRepositoryInterface {
+        return GetResumeLessonProgressModalInterfaceStringsRepository(
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
+    
     func getStoreUserLessonProgressRepositoryInterface() -> StoreUserLessonProgressRepositoryInterface {
         return StoreUserLessonProgressRepository(
             lessonProgressRepository: coreDataLayer.getUserLessonProgressRepository()

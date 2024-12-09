@@ -1,3 +1,11 @@
+/* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
+"lessons.resumeLessonModal.title" = "恢復進度";
+
+"lessons.resumeLessonModal.subtitle" = "您想繼續從上次停止的地方開始嗎？";
+"lessons.resumeLessonModal.startOverButton" = "重新開始";
+"lessons.resumeLessonModal.continueButton" = "繼續";
+"lessons.lessonCompleted" = "完成";
+"lessons.completionProgress" = "完成 %@";
 "network_connection_lost" = "網絡連接已丟失。";
 "language_name_fil" = "菲律賓文 (他加祿語)";
 "lessons.filter.navBar.language" = "課程語言";

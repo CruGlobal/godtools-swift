@@ -1,3 +1,11 @@
+/* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
+"lessons.resumeLessonModal.title" = "Rejelea Maendeleo";
+
+"lessons.resumeLessonModal.subtitle" = "Je, ungependa kuendelea kutoka mahali ulipoachia?";
+"lessons.resumeLessonModal.startOverButton" = "Anza upya";
+"lessons.resumeLessonModal.continueButton" = "Endelea";
+"lessons.lessonCompleted" = "Imekamilika";
+"lessons.completionProgress" = "%@ Kamili";
 "network_connection_lost" = "Mtandao umepotea.";
 "language_name_fil" = "Kifilipino (Kitagalog)";
 "lessons.filter.navBar.language" = "Lugha ya somo";

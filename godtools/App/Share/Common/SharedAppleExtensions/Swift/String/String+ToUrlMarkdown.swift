@@ -8,7 +8,6 @@
 
 import Foundation
 
-@available(iOS 15.0, *)
 extension String {
     
     func toUrlMarkdown(attributedStringOptions: AttributedString.MarkdownParsingOptions? = nil) -> Result<AttributedString, Error> {
