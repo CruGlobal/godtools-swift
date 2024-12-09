@@ -373,7 +373,7 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
     }
     
     private func getInitialPageModel(pageRenderer: MobileContentPageRenderer) -> Page? {
-            
+        
         let allPages: [Page] = pageRenderer.getAllPageModels()
         
         var page: Page?
@@ -470,6 +470,15 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
         navigateToPage(page: pageListeningForEvent, animated: true)
         
         return true
+    }
+    
+    func navigateToFirstPage(animated: Bool) {
+        
+        guard let page = getPage(index: 0) else {
+            return
+        }
+        
+        navigateToPage(page: page, animated: animated)
     }
     
     func navigateToPreviousPage(animated: Bool) {

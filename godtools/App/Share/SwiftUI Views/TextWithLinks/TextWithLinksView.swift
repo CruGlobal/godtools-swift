@@ -8,7 +8,6 @@
 
 import SwiftUI
 
-@available(iOS 15.0, *)
 struct TextWithLinksView: View {
     
     private let markdownText: AttributedString

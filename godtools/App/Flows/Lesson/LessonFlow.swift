@@ -10,8 +10,14 @@ import UIKit
 import GodToolsToolParser
 
 class LessonFlow: ToolNavigationFlow, Flow {
-    
+
+    private let toolTranslations: ToolTranslationsDomainModel
     private let appLanguage: AppLanguageDomainModel
+    private let trainingTipsEnabled: Bool
+    
+    private var lesson: ResourceModel {
+        return toolTranslations.tool
+    }
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -29,58 +35,54 @@ class LessonFlow: ToolNavigationFlow, Flow {
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController
+        self.toolTranslations = toolTranslations
         self.appLanguage = appLanguage
-               
-        let navigation: MobileContentRendererNavigation = appDiContainer.getMobileContentRendererNavigation(
-            parentFlow: self,
-            navigationDelegate: self,
-            appLanguage: appLanguage
-        )
+        self.trainingTipsEnabled = trainingTipsEnabled
         
-        let renderer: MobileContentRenderer = appDiContainer.getMobileContentRenderer(
-            type: .lesson,
-            navigation: navigation,
-            appLanguage: appLanguage,
-            toolTranslations: toolTranslations
-        )
-        
-        let initialPageOrPreviousProgress: MobileContentPagesPage?
-        if let page = initialPage {
-            initialPageOrPreviousProgress = page
+        if let initialPage = initialPage {
             
-        } else if let lessonProgress = appDiContainer.dataLayer.getUserLessonProgressRepository().getLessonProgress(lessonId: renderer.resource.id) {
-            
-            initialPageOrPreviousProgress = .pageId(value: lessonProgress.lastViewedPageId)
-            
-        } else {
-            initialPageOrPreviousProgress = nil
+            navigateToLesson(initialPage: initialPage, animated: true)
         }
-        
-        let viewModel = LessonViewModel(
-            flowDelegate: self,
-            renderer: renderer,
-            resource: renderer.resource,
-            primaryLanguage: renderer.languages.primaryLanguage,
-            initialPage: initialPageOrPreviousProgress,
-            resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
-            translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
-            mobileContentEventAnalytics: appDiContainer.getMobileContentRendererEventAnalyticsTracking(),
-            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            getTranslatedLanguageName: appDiContainer.dataLayer.getTranslatedLanguageName(),
-            storeLessonProgressUseCase: appDiContainer.feature.lessonProgress.domainLayer.getStoreUserLessonProgressUseCase(),
-            trainingTipsEnabled: trainingTipsEnabled,
-            incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase()
-        )
-        
-        let view = LessonView(viewModel: viewModel, navigationBar: nil)
-                
-        navigationController.pushViewController(view, animated: true)
-        
-        configureNavigationBar(shouldAnimateNavigationBarHiddenState: true)
+        else if shouldNavigateToResumeLesson {
+            
+            let resumeLessonModal = getResumeLessonModal()
+            
+            navigationController.present(resumeLessonModal, animated: true)
+        }
+        else {
+            
+            navigateToLesson(initialPage: initialPage, animated: true)
+        }
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
+    }
+    
+    private var shouldNavigateToResumeLesson:  Bool {
+        
+        let lessonProgressLastViewedPageId: String? = userLessonProgress?.lastViewedPageId
+        
+        let primaryLanguageManifest: Manifest? = toolTranslations.languageTranslationManifests.first?.manifest
+        let visiblePages: [Page] = (primaryLanguageManifest?.pages ?? Array()).filter({!$0.isHidden})
+        let hasLessonProgress: Bool = lessonProgressLastViewedPageId != nil
+        let lessonProgressIsFirstPage: Bool = lessonProgressLastViewedPageId == visiblePages.first?.id
+        let lessonProgressIsLastPage: Bool = lessonProgressLastViewedPageId == visiblePages.last?.id
+        
+        return hasLessonProgress && !lessonProgressIsFirstPage && !lessonProgressIsLastPage
+    }
+    
+    private var userLessonProgress: UserLessonProgressDataModel? {
+        return appDiContainer.dataLayer.getUserLessonProgressRepository().getLessonProgress(lessonId: lesson.id)
+    }
+    
+    private var userLessonProgressPage: MobileContentPagesPage? {
+        
+        guard let pageId = userLessonProgress?.lastViewedPageId else {
+            return nil
+        }
+        
+        return .pageId(value: pageId)
     }
     
     private func configureNavigationBar(shouldAnimateNavigationBarHiddenState: Bool) {
@@ -93,7 +95,15 @@ class LessonFlow: ToolNavigationFlow, Flow {
         
         case .deepLink( _):
             break
-        
+            
+        case .startOverTappedFromResumeLessonModal:
+            navigateToLesson(initialPage: nil, animated: false)
+            navigationController.dismissPresented(animated: true, completion: nil)
+            
+        case .continueTappedFromResumeLessonModal:
+            navigateToLesson(initialPage: userLessonProgressPage, animated: false)
+            navigationController.dismissPresented(animated: true, completion: nil)
+            
         case .closeTappedFromLesson(let lessonId, let highestPageNumberViewed):
             closeTool(lessonId: lessonId, highestPageNumberViewed: highestPageNumberViewed)
                                                 
@@ -135,11 +145,85 @@ class LessonFlow: ToolNavigationFlow, Flow {
         }
     }
     
+    private func navigateToLesson(initialPage: MobileContentPagesPage?, animated: Bool) {
+        
+        let lessonView = getLessonView(initialPage: initialPage)
+                
+        navigationController.pushViewController(lessonView, animated: animated)
+        
+        configureNavigationBar(shouldAnimateNavigationBarHiddenState: true)
+    }
+    
     private func closeTool(lessonId: String, highestPageNumberViewed: Int) {
                 
         flowDelegate?.navigate(step: .lessonFlowCompleted(state: .userClosedLesson(lessonId: lessonId, highestPageNumberViewed: highestPageNumberViewed)))
     }
 }
+
+// MARK: - Views
+
+extension LessonFlow {
+    
+    private func getLessonView(initialPage: MobileContentPagesPage?) -> UIViewController {
+        
+        let navigation: MobileContentRendererNavigation = appDiContainer.getMobileContentRendererNavigation(
+            parentFlow: self,
+            navigationDelegate: self,
+            appLanguage: appLanguage
+        )
+        
+        let renderer = appDiContainer.getMobileContentRenderer(
+            type: .lesson,
+            navigation: navigation,
+            appLanguage: appLanguage,
+            toolTranslations: toolTranslations
+        )
+        
+        let viewModel = LessonViewModel(
+            flowDelegate: self,
+            renderer: renderer,
+            resource: renderer.resource,
+            primaryLanguage: renderer.languages.primaryLanguage,
+            initialPage: initialPage,
+            resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
+            translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
+            mobileContentEventAnalytics: appDiContainer.getMobileContentRendererEventAnalyticsTracking(),
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            getTranslatedLanguageName: appDiContainer.dataLayer.getTranslatedLanguageName(),
+            storeLessonProgressUseCase: appDiContainer.feature.lessonProgress.domainLayer.getStoreUserLessonProgressUseCase(),
+            trainingTipsEnabled: trainingTipsEnabled,
+            incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase()
+        )
+        
+        let view = LessonView(viewModel: viewModel, navigationBar: nil)
+        
+        return view
+    }
+    
+    private func getResumeLessonModal() -> UIViewController {
+        
+        let viewModel = ResumeLessonProgressModalViewModel(
+            flowDelegate: self,
+            getInterfaceStringsUseCase: appDiContainer.feature.lessonProgress.domainLayer.getResumeLessonProgressModalInterfaceStringsUseCase(),
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase()
+        )
+        
+        let resumeLessonModal = ResumeLessonProgressModal(viewModel: viewModel)
+        
+        let hostingView = AppHostingController<ResumeLessonProgressModal>(
+            rootView: resumeLessonModal,
+            navigationBar: nil
+        )
+        
+        hostingView.view.backgroundColor = .clear
+        hostingView.modalPresentationStyle = .overFullScreen
+        hostingView.modalTransitionStyle = .crossDissolve
+        
+        return hostingView
+    }
+}
+
+// MARK: - MobileContentRendererNavigationDelegate
 
 extension LessonFlow: MobileContentRendererNavigationDelegate {
     
