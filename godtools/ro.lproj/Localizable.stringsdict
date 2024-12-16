@@ -15,7 +15,7 @@
 <key>one</key>
 <string>%d Lecție disponibilă</string>
 <key>few</key>
-<string>Lecții disponibile</string>
+<string>%d Lecții disponibile</string>
 <key>other</key>
 <string>%d Lecții disponibile</string>
 </dict>
@@ -141,7 +141,7 @@
 <key>one</key>
 <string>%d Instrument disponibil</string>
 <key>few</key>
-<string>Instrumente disponibile</string>
+<string>%d Instrumente disponibile</string>
 <key>other</key>
 <string>%d Instrumente disponibile</string>
 </dict>

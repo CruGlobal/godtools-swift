@@ -220,7 +220,7 @@ Dacă ai primit acest mesaj prea târziu, este posibil ca linkul să nu funcțio
 "remove_from_favorites_message" = "Sigur vrei să elimini %@ din Favorite?";
 
 /* Gospel indicates the gospel of Jesus Christ */
-"tool_category_gospel" = "Gospel Invitation";
+"tool_category_gospel" = "Invitație la Evanghelie";
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "Articole";

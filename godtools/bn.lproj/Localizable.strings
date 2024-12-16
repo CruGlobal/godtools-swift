@@ -84,7 +84,7 @@
 "favorites.favoriteLessons.title" = "বিশেষ পাঠসমূহ";
 "favorites.favoriteTools.title" = "আপনার প্রিয় টুলসগুলো";
 "favorites.favoriteTools.viewAll" = "সব দেখুন";
-"favorites.favoriteLessons.details" = "বিস্তারিত";
+"favorites.favoriteLessons.details" = "বিশদ";
 
 /* The meaning is "I don't want to set a second language".  Language is no language or None */
 "toolSettings.languagesList.deleteLanguage.title" = "কোনটাই না";
