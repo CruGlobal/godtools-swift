@@ -93,7 +93,7 @@
 "favorites.favoriteLessons.title" = "Lección destacada";
 "favorites.favoriteTools.title" = "Tus herramientas favoritas";
 "favorites.favoriteTools.viewAll" = "Ver todo";
-"favorites.favoriteLessons.details" = "Ver detalles";
+"favorites.favoriteLessons.details" = "Detalles";
 
 /* The meaning is "I don't want to set a second language".  Language is no language or None */
 "toolSettings.languagesList.deleteLanguage.title" = "Ninguno";
