@@ -19,8 +19,4 @@ class MobileContentTabsViewModel: MobileContentViewModel {
         
         super.init(baseModel: tabsModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }
-    
-    var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
-        return UISemanticContentAttribute.from(languageDirection: LanguageDirectionDomainModel(languageModel: renderedPageContext.language))
-    }
 }

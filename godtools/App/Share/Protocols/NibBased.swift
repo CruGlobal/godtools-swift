@@ -44,4 +44,8 @@ extension NibBased where Self: UIView {
                 
         return rootNibView
     }
+    
+    var rootNibView: UIView? {
+        return subviews.first
+    }
 }

@@ -28,10 +28,6 @@ class TractPageHeaderViewModel: MobileContentViewModel {
         }
     }
     
-    var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
-        return UISemanticContentAttribute.from(languageDirection: LanguageDirectionDomainModel(languageModel: renderedPageContext.language))
-    }
-    
     var backgroundColor: UIColor {
         return headerModel.backgroundColor
     }

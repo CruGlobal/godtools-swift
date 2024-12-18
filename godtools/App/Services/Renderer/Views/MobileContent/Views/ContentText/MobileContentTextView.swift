@@ -69,6 +69,8 @@ class MobileContentTextView: MobileContentView, NibBased {
             loadNib()
         }
         
+        rootNibView?.semanticContentAttribute = viewModel.languageDirectionSemanticContentAttribute
+        
         setupBinding()
     }
     
