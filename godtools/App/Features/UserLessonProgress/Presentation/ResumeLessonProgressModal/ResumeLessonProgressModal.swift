@@ -12,7 +12,7 @@ struct ResumeLessonProgressModal: View {
     
     private let buttonHeight: CGFloat = 48
     private let modalInset: CGFloat = 28
-    private let buttonInset: CGFloat = 20
+    private let buttonInset: CGFloat = 40
     private let buttonSpace: CGFloat = 12
 
     @ObservedObject private var viewModel: ResumeLessonProgressModalViewModel
@@ -25,8 +25,8 @@ struct ResumeLessonProgressModal: View {
         GeometryReader { geometry in
             let totalSpaceAroundModal = modalInset * 2
             let modalWidth = geometry.size.width - totalSpaceAroundModal
-            let totalSpaceAroundButtons = (buttonInset * 2) + buttonSpace
-            let buttonWidth = (modalWidth - totalSpaceAroundButtons) / 2
+            let totalSpaceAroundButtons = buttonInset * 2
+            let buttonWidth = (modalWidth - totalSpaceAroundButtons)
             
             ZStack {
                 Color.clear
@@ -44,10 +44,10 @@ struct ResumeLessonProgressModal: View {
                         .font(FontLibrary.sfProTextRegular.font(size: 16))
                         .foregroundColor(ColorPalette.gtGrey.color)
                         .multilineTextAlignment(.center)
-                        .padding(.horizontal, buttonInset + 20)
+                        .padding(.horizontal, buttonInset)
                         .padding(.bottom, 35)
                     
-                    HStack(spacing: buttonSpace) {
+                    VStack(spacing: buttonSpace) {
                         GTWhiteButton(title: viewModel.interfaceStringsDomainModel.startOverButtonText, fontSize: 15, width: buttonWidth, height: buttonHeight) {
                             viewModel.startOverButtonTapped()
                         }
