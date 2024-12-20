@@ -12167,7 +12167,7 @@
 			);
 			mainGroup = 4F5732801EA69CF00082035C;
 			packageReferences = (
-				45E39EDA27457E0C006A59E4 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				45E39EDA27457E0C006A59E4 /* XCRemoteSwiftPackageReference "lottie-spm" */,
 				45CF096E2784B910007F13D3 /* XCRemoteSwiftPackageReference "request-operation-ios" */,
 				D4997E0C28D4CED800205B4C /* XCRemoteSwiftPackageReference "youtube-ios-player-helper" */,
 				45E7D4C22977430A008C7503 /* XCRemoteSwiftPackageReference "ZipArchive" */,
@@ -15256,7 +15256,7 @@
 			repositoryURL = "https://github.com/realm/realm-swift.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 10.50.0;
+				minimumVersion = 20.0.0;
 			};
 		};
 		45CF096E2784B910007F13D3 /* XCRemoteSwiftPackageReference "request-operation-ios" */ = {
@@ -15291,12 +15291,12 @@
 				minimumVersion = 0.5.0;
 			};
 		};
-		45E39EDA27457E0C006A59E4 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+		45E39EDA27457E0C006A59E4 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
+			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 4.4.3;
+				minimumVersion = 4.5.0;
 			};
 		};
 		45E7D4C22977430A008C7503 /* XCRemoteSwiftPackageReference "ZipArchive" */ = {
@@ -15379,7 +15379,7 @@
 		};
 		45A416052A9943D50030E2C7 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 45E39EDA27457E0C006A59E4 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			package = 45E39EDA27457E0C006A59E4 /* XCRemoteSwiftPackageReference "lottie-spm" */;
 			productName = Lottie;
 		};
 		45A416072A9943D50030E2C7 /* RequestOperation */ = {
@@ -15454,7 +15454,7 @@
 		};
 		45E39EDB27457E0C006A59E4 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 45E39EDA27457E0C006A59E4 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			package = 45E39EDA27457E0C006A59E4 /* XCRemoteSwiftPackageReference "lottie-spm" */;
 			productName = Lottie;
 		};
 		45E7D4C32977430A008C7503 /* ZipArchive */ = {
