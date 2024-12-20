@@ -45,6 +45,7 @@ struct AllYourFavoriteToolsView: View {
                                 geometry: geometry,
                                 layout: .landscape,
                                 showsCategory: true,
+                                navButtonTitleHorizontalPadding: YourFavoriteToolsView.toolCardNavButtonTitleHorizontalPadding,
                                 accessibility: .favoriteTool,
                                 favoriteTappedClosure: {
                                     

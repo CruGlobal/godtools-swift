@@ -15,16 +15,20 @@ struct GTBlueButton: View {
     let width: CGFloat
     let height: CGFloat
     let cornerRadius: CGFloat
+    let titleHorizontalPadding: CGFloat?
+    let titleVerticalPadding: CGFloat?
     let highlightsTitleOnTap: Bool
     let accessibility: AccessibilityStrings.Button?
     let action: () -> Void
     
-    init(title: String, font: Font? = nil, fontSize: CGFloat? = nil, width: CGFloat, height: CGFloat, cornerRadius: CGFloat = 6, highlightsTitleOnTap: Bool = true, accessibility: AccessibilityStrings.Button? = nil, action: @escaping () -> Void) {
+    init(title: String, font: Font? = nil, fontSize: CGFloat? = nil, width: CGFloat, height: CGFloat, cornerRadius: CGFloat = 6, titleHorizontalPadding: CGFloat? = nil, titleVerticalPadding: CGFloat? = nil, highlightsTitleOnTap: Bool = true, accessibility: AccessibilityStrings.Button? = nil, action: @escaping () -> Void) {
         
         self.title = title
         self.width = width
         self.height = height
         self.cornerRadius = cornerRadius
+        self.titleHorizontalPadding = titleHorizontalPadding
+        self.titleVerticalPadding = titleVerticalPadding
         self.highlightsTitleOnTap = highlightsTitleOnTap
         self.accessibility = accessibility
         self.action = action
@@ -80,7 +84,8 @@ struct GTBlueButton: View {
         Text(title)
             .font(font)
             .foregroundColor(Color.white)
-            .padding()
+            .padding([.leading, .trailing], titleHorizontalPadding)
+            .padding([.top, .bottom], titleVerticalPadding)
     }
 }
 
