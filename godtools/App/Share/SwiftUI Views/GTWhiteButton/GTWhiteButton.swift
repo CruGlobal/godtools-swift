@@ -17,13 +17,17 @@ struct GTWhiteButton: View {
     let width: CGFloat
     let height: CGFloat
     let cornerRadius: CGFloat
+    let titleHorizontalPadding: CGFloat?
+    let titleVerticalPadding: CGFloat?
     let action: () -> Void
     
-    init(title: String, font: Font? = nil, fontSize: CGFloat? = nil, width: CGFloat, height: CGFloat, cornerRadius: CGFloat = 6, accessibility: AccessibilityStrings.Button? = nil, action: @escaping () -> Void) {
+    init(title: String, font: Font? = nil, fontSize: CGFloat? = nil, width: CGFloat, height: CGFloat, cornerRadius: CGFloat = 6, titleHorizontalPadding: CGFloat? = nil, titleVerticalPadding: CGFloat? = nil, accessibility: AccessibilityStrings.Button? = nil, action: @escaping () -> Void) {
         self.title = title
         self.width = width
         self.height = height
         self.cornerRadius = cornerRadius
+        self.titleHorizontalPadding = titleHorizontalPadding
+        self.titleVerticalPadding = titleVerticalPadding
         self.accessibility = accessibility
         self.action = action
         
@@ -58,7 +62,8 @@ struct GTWhiteButton: View {
                 Text(title)
                     .font(font)
                     .foregroundColor(ColorPalette.gtBlue.color)
-                    .padding()
+                    .padding([.leading, .trailing], titleHorizontalPadding)
+                    .padding([.top, .bottom], titleVerticalPadding)
             }
         }
         .frame(width: width, height: height, alignment: .center)
