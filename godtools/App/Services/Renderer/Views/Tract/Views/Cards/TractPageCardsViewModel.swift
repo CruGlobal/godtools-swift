@@ -8,13 +8,14 @@
 
 import Foundation
 import GodToolsToolParser
+import Combine
 
-class TractPageCardsViewModel: MobileContentViewModel {
+class TractPageCardsViewModel: MobileContentViewModel, ObservableObject {
     
     private let cards: [TractPage.Card]
     private let cardJumpService: CardJumpService
-    
-    let hidesCardJump: ObservableValue<Bool> = ObservableValue(value: true)
+        
+    @Published private(set) var showsCardJump: Bool = false
     
     init(cards: [TractPage.Card], renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics, cardJumpService: CardJumpService) {
                 
@@ -25,7 +26,7 @@ class TractPageCardsViewModel: MobileContentViewModel {
         
         setupBinding()
         
-        hidesCardJump.accept(value: cardJumpService.didShowCardJump)
+        showsCardJump = !cardJumpService.didShowCardJump
     }
     
     deinit {
@@ -36,7 +37,7 @@ class TractPageCardsViewModel: MobileContentViewModel {
     private func setupBinding() {
         
         cardJumpService.didSaveCardJumpShownSignal.addObserver(self) { [weak self] in
-            self?.hidesCardJump.accept(value: true)
+            self?.showsCardJump = false
         }
     }
 }

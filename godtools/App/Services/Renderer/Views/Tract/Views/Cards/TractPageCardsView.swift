@@ -8,6 +8,7 @@
 
 import UIKit
 import GodToolsToolParser
+import Combine
 
 protocol TractPageCardsViewDelegate: AnyObject {
     
@@ -29,6 +30,7 @@ class TractPageCardsView: MobileContentView {
     private var cardParentContentInsets: UIEdgeInsets = .zero
     private var currentCardPosition: Int?
     private var isObservingCardJump: Bool = false
+    private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var renderedCardsParentView: UIView?
     private weak var delegate: TractPageCardsViewDelegate?
@@ -71,32 +73,34 @@ class TractPageCardsView: MobileContentView {
         
         isObservingCardJump = true
         
-        viewModel.hidesCardJump.addObserver(self) { [weak self] (hidesCardJump: Bool) in
-            
-            guard let cardsView = self else {
-                return
-            }
-            
-            let firstCard: TractPageCardView? = cardsView.renderedCards.first
-            let firstCardTopConstraint: NSLayoutConstraint? = cardsView.cardTopConstraints.first
-            let cardsParent: UIView? = cardsView.renderedCardsParentView
-            
-            if hidesCardJump, let cardBounceAnimation = self?.cardBounceAnimation {
-                cardBounceAnimation.stopAnimation(forceStop: true)
-            }
-            else if !hidesCardJump, let firstCard = firstCard, let firstCardTopConstraint = firstCardTopConstraint, let cardsParent = cardsParent {
+        viewModel.$showsCardJump
+            .sink { [weak self] (showsCardJump: Bool) in
                 
-                let cardBounceAnimation = TractPageCardBounceAnimation(
-                    card: firstCard,
-                    cardTopConstraint: firstCardTopConstraint,
-                    cardStartingTopConstant: cardsView.getCardTopConstant(state: .starting, cardPosition: 0),
-                    layoutView: cardsParent,
-                    delegate: cardsView
-                )
-                cardBounceAnimation.startAnimation()
-                self?.cardBounceAnimation = cardBounceAnimation
+                guard let weakSelf = self else {
+                    return
+                }
+                
+                let firstCard: TractPageCardView? = weakSelf.renderedCards.first
+                let firstCardTopConstraint: NSLayoutConstraint? = weakSelf.cardTopConstraints.first
+                let cardsParent: UIView? = weakSelf.renderedCardsParentView
+                
+                if !showsCardJump, let cardBounceAnimation = weakSelf.cardBounceAnimation {
+                    cardBounceAnimation.stopAnimation(forceStop: true)
+                }
+                else if showsCardJump, let firstCard = firstCard, let firstCardTopConstraint = firstCardTopConstraint, let cardsParent = cardsParent {
+                    
+                    let cardBounceAnimation = TractPageCardBounceAnimation(
+                        card: firstCard,
+                        cardTopConstraint: firstCardTopConstraint,
+                        cardStartingTopConstant: weakSelf.getCardTopConstant(state: .starting, cardPosition: 0),
+                        layoutView: cardsParent,
+                        delegate: weakSelf
+                    )
+                    cardBounceAnimation.startAnimation()
+                    self?.cardBounceAnimation = cardBounceAnimation
+                }
             }
-        }
+            .store(in: &cancellables)
     }
     
     // MARK: - MobileContentView
