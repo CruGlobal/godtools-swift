@@ -25,7 +25,9 @@ class TractPageCardsViewModel: MobileContentViewModel, ObservableObject {
         self.cards = cards
         self.cardJumpService = cardJumpService
         
-        isShowingCardJump = !cardJumpService.didShowCardJump
+        let isLiveShareStreaming: Bool = (renderedPageContext.userInfo?[TractViewModel.isLiveShareStreamingKey] as? Bool) ?? false
+        
+        isShowingCardJump = !cardJumpService.didShowCardJump && !isLiveShareStreaming
         
         super.init(baseModels: cards, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
                 

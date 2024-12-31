@@ -80,7 +80,7 @@ class MobileContentPageRenderer {
     
     // MARK: - Page Renderering
     
-    private func getRenderedPageContext(pageModel: Page, page: Int, numberOfPages: Int, window: UIViewController, safeArea: UIEdgeInsets, manifest: Manifest, manifestResourcesCache: MobileContentRendererManifestResourcesCache, resource: ResourceModel, language: LanguageModel, translation: TranslationModel, viewRenderer: MobileContentViewRenderer, rendererLanguages: MobileContentRendererLanguages, sharedState: State, trainingTipsEnabled: Bool) -> MobileContentRenderedPageContext {
+    private func getRenderedPageContext(pageModel: Page, page: Int, numberOfPages: Int, window: UIViewController, safeArea: UIEdgeInsets, manifest: Manifest, manifestResourcesCache: MobileContentRendererManifestResourcesCache, resource: ResourceModel, language: LanguageModel, translation: TranslationModel, viewRenderer: MobileContentViewRenderer, rendererLanguages: MobileContentRendererLanguages, sharedState: State, trainingTipsEnabled: Bool, userInfo: [String: Any]?) -> MobileContentRenderedPageContext {
         
         let renderedPageContext = MobileContentRenderedPageContext(
             pageModel: pageModel,
@@ -99,13 +99,14 @@ class MobileContentPageRenderer {
             rendererLanguages: rendererLanguages,
             rendererState: sharedState,
             trainingTipsEnabled: trainingTipsEnabled,
-            pageViewDataCache: pagesViewDataCache.getPageViewDataCache(page: pageModel)
+            pageViewDataCache: pagesViewDataCache.getPageViewDataCache(page: pageModel),
+            userInfo: userInfo
         )
         
         return renderedPageContext
     }
     
-    func renderPageModel(pageModel: Page, page: Int, numberOfPages: Int, window: UIViewController, safeArea: UIEdgeInsets, trainingTipsEnabled: Bool) -> Result<MobileContentView, Error> {
+    func renderPageModel(pageModel: Page, page: Int, numberOfPages: Int, window: UIViewController, safeArea: UIEdgeInsets, trainingTipsEnabled: Bool, userInfo: [String: Any]?) -> Result<MobileContentView, Error> {
         
         let renderedPageContext: MobileContentRenderedPageContext = getRenderedPageContext(
             pageModel: pageModel,
@@ -121,7 +122,8 @@ class MobileContentPageRenderer {
             viewRenderer: viewRenderer,
             rendererLanguages: rendererLanguages,
             sharedState: sharedState,
-            trainingTipsEnabled: trainingTipsEnabled
+            trainingTipsEnabled: trainingTipsEnabled,
+            userInfo: userInfo
         )
         
         guard let renderableView = viewRenderer.recurseAndRender(renderableModel: pageModel, renderableModelParent: nil, renderedPageContext: renderedPageContext) else {

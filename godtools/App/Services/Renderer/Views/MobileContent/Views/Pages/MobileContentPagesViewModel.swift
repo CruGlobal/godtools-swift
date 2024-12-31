@@ -627,6 +627,10 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
         pageNavigationEventSignal.accept(value: navigationEvent)
     }
     
+    func configureRendererPageContextUserInfo(userInfo: inout [String: Any], page: Int) {
+        // Subclasses can override to attach additional info.
+    }
+    
     // MARK: - Page Life Cycle
     
     func pageWillAppear(page: Int) -> MobileContentView? {
@@ -638,6 +642,10 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
         guard page >= 0 && page < pageModels.count else {
             return nil
         }
+        
+        var userInfo: [String: Any] = Dictionary()
+        
+        configureRendererPageContextUserInfo(userInfo: &userInfo, page: page)
                 
         let renderPageResult: Result<MobileContentView, Error> = currentPageRenderer.value.renderPageModel(
             pageModel: pageModels[page],
@@ -645,7 +653,8 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
             numberOfPages: pageModels.count,
             window: window,
             safeArea: safeArea,
-            trainingTipsEnabled: trainingTipsEnabled
+            trainingTipsEnabled: trainingTipsEnabled,
+            userInfo: userInfo
         )
         
         switch renderPageResult {
