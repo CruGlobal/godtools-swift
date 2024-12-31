@@ -68,7 +68,7 @@ struct YourFavoriteToolsView: View {
                                     viewModel.toolTapped(tool: tool)
                                 }
                             )
-                            .animation(Animation.easeOut(duration: 0.2))
+                            .animation(.easeOut, value: 0.2)
                             .transition(AnyTransition.opacity.combined(with: .slide))
                         }
                     }
