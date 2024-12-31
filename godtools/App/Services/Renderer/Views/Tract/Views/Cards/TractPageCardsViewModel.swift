@@ -26,13 +26,18 @@ class TractPageCardsViewModel: MobileContentViewModel, ObservableObject {
         
         super.init(baseModels: cards, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
                 
-        showsCardJump = !cardJumpService.didShowCardJump
-                
-        cardJumpService.didSaveCardJumpPublisher
-            .sink { [weak self] _ in
-                self?.showsCardJump = false
-            }
-            .store(in: &cancellables)
+        //showsCardJump = !cardJumpService.didShowCardJump
+        showsCardJump = true
+        
+        if showsCardJump {
+         
+            cardJumpService.didSaveCardJumpPublisher
+                .prefix(1)
+                .sink { [weak self] _ in
+                    self?.showsCardJump = false
+                }
+                .store(in: &cancellables)
+        }
     }
 }
 
