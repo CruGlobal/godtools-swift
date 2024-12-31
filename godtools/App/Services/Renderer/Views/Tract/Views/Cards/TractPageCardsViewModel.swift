@@ -14,6 +14,8 @@ class TractPageCardsViewModel: MobileContentViewModel, ObservableObject {
     
     private let cards: [TractPage.Card]
     private let cardJumpService: CardJumpService
+    
+    private var cancellables: Set<AnyCancellable> = Set()
         
     @Published private(set) var showsCardJump: Bool = false
     
@@ -23,22 +25,14 @@ class TractPageCardsViewModel: MobileContentViewModel, ObservableObject {
         self.cardJumpService = cardJumpService
         
         super.init(baseModels: cards, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
-        
-        setupBinding()
-        
+                
         showsCardJump = !cardJumpService.didShowCardJump
-    }
-    
-    deinit {
-        
-        cardJumpService.didSaveCardJumpShownSignal.removeObserver(self)
-    }
-    
-    private func setupBinding() {
-        
-        cardJumpService.didSaveCardJumpShownSignal.addObserver(self) { [weak self] in
-            self?.showsCardJump = false
-        }
+                
+        cardJumpService.didSaveCardJumpPublisher
+            .sink { [weak self] _ in
+                self?.showsCardJump = false
+            }
+            .store(in: &cancellables)
     }
 }
 

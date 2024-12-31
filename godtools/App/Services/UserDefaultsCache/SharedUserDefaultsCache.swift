@@ -12,7 +12,7 @@ class SharedUserDefaultsCache {
     
     private let userDefaults: UserDefaults = UserDefaults.standard
     
-    required init() {
+    init() {
         
     }
     
