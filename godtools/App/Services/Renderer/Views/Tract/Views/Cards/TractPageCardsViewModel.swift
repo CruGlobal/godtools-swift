@@ -14,6 +14,7 @@ class TractPageCardsViewModel: MobileContentViewModel, ObservableObject {
     
     private let cards: [TractPage.Card]
     private let cardJumpService: CardJumpService
+    private let isShowingCardJump: Bool
     
     private var cancellables: Set<AnyCancellable> = Set()
         
@@ -24,11 +25,13 @@ class TractPageCardsViewModel: MobileContentViewModel, ObservableObject {
         self.cards = cards
         self.cardJumpService = cardJumpService
         
+        isShowingCardJump = !cardJumpService.didShowCardJump
+        
         super.init(baseModels: cards, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
                 
-        showsCardJump = !cardJumpService.didShowCardJump
+        showsCardJump = isShowingCardJump
         
-        if showsCardJump {
+        if isShowingCardJump {
          
             cardJumpService.didSaveCardJumpPublisher
                 .prefix(1)
@@ -38,6 +41,15 @@ class TractPageCardsViewModel: MobileContentViewModel, ObservableObject {
                 .store(in: &cancellables)
         }
     }
+    
+    private func saveDidShowCardJump() {
+        
+        guard isShowingCardJump else {
+            return
+        }
+        
+        cardJumpService.saveDidShowCardJump()
+    }
 }
 
 // MARK: - Inputs
@@ -45,14 +57,14 @@ class TractPageCardsViewModel: MobileContentViewModel, ObservableObject {
 extension TractPageCardsViewModel {
     
     func cardHeaderTapped() {
-        cardJumpService.saveDidShowCardJump()
+        saveDidShowCardJump()
     }
     
     func cardSwipedUp() {
-        cardJumpService.saveDidShowCardJump()
+        saveDidShowCardJump()
     }
     
     func cardBounceAnimationFinished() {
-        cardJumpService.saveDidShowCardJump()
+        saveDidShowCardJump()
     }
 }
