@@ -26,8 +26,7 @@ class TractPageCardsViewModel: MobileContentViewModel, ObservableObject {
         
         super.init(baseModels: cards, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
                 
-        //showsCardJump = !cardJumpService.didShowCardJump
-        showsCardJump = true
+        showsCardJump = !cardJumpService.didShowCardJump
         
         if showsCardJump {
          
