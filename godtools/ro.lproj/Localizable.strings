@@ -198,7 +198,7 @@ Dacă ai primit acest mesaj prea târziu, este posibil ca linkul să nu funcțio
 "tool_category_training" = "Antrenare";
 
 /* This is an invitation for a user to open a tool */
-"open" = "Deschide";
+"open" = "Începe";
 
 /* A user will be selecting a heart to indicated that it is one of their favorite tools. */
 "add_to_favorites" = "Adaugă la Favorite";
@@ -220,7 +220,7 @@ Dacă ai primit acest mesaj prea târziu, este posibil ca linkul să nu funcțio
 "remove_from_favorites_message" = "Sigur vrei să elimini %@ din Favorite?";
 
 /* Gospel indicates the gospel of Jesus Christ */
-"tool_category_gospel" = "Gospel Invitation";
+"tool_category_gospel" = "Invitație la Evanghelie";
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "Articole";

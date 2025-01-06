@@ -144,10 +144,6 @@ class TractPageCardViewModel: MobileContentViewModel {
         return FontLibrary.systemUIFont(size: 18, weight: .regular)
     }
     
-    var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
-        return UISemanticContentAttribute.from(languageDirection: LanguageDirectionDomainModel(languageModel: renderedPageContext.language))
-    }
-    
     func containsDismissListener(eventId: EventId) -> Bool {
         return cardModel.dismissListeners.contains(eventId)
     }

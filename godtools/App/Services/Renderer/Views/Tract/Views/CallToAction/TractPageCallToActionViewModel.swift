@@ -20,7 +20,7 @@ class TractPageCallToActionViewModel: MobileContentViewModel {
         super.init(baseModel: callToActionModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }
     
-    var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
+    override var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
         return UISemanticContentAttribute.from(languageDirection: LanguageDirectionDomainModel(languageModel: renderedPageContext.primaryRendererLanguage))
     }
     
