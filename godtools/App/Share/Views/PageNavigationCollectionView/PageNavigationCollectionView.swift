@@ -279,6 +279,11 @@ class PageNavigationCollectionView: UIView, NibBased {
     }
     
     func getNumberOfPages() -> Int {
+        
+        guard collectionView != nil else {
+            return 0
+        }
+        
         return collectionView.numberOfItems(inSection: 0)
     }
 
@@ -375,12 +380,20 @@ extension PageNavigationCollectionView {
     
     private func mostVisiblePageChanged(pageCell: UICollectionViewCell, page: Int) {
         
+        guard getNumberOfPages() > 0 else {
+            return
+        }
+        
         logMessage(message: "most visible page changed: \(page)")
         
         delegate?.pageNavigationDidChangeMostVisiblePage?(pageNavigation: self, pageCell: pageCell, page: page)
     }
     
     private func pageDidAppear(pageCell: UICollectionViewCell, page: Int) {
+        
+        guard getNumberOfPages() > 0 else {
+            return
+        }
         
         logMessage(message: "page did appear: \(page)")
         
@@ -389,12 +402,29 @@ extension PageNavigationCollectionView {
     
     private func pageDidDisappear(pageCell: UICollectionViewCell, page: Int) {
         
+        guard getNumberOfPages() > 0 else {
+            return
+        }
+        
         logMessage(message: "page did disappear: \(page)")
         
         delegate?.pageNavigationPageDidDisappear?(pageNavigation: self, pageCell: pageCell, page: page)
     }
     
+    private func didScroll(page: Int) {
+        
+        guard getNumberOfPages() > 0 else {
+            return
+        }
+        
+        delegate?.pageNavigationDidScroll?(pageNavigation: self, page: page)
+    }
+    
     private func didScrollToPage(pageCell: UICollectionViewCell, page: Int) {
+        
+        guard getNumberOfPages() > 0 else {
+            return
+        }
         
         logMessage(message: "did scroll to page: \(getCurrentPage())")
         
@@ -660,8 +690,8 @@ extension PageNavigationCollectionView: UIScrollViewDelegate {
         
         let currentPage: Int = getPageBasedOnContentOffset(contentOffset: scrollView.contentOffset)
                 
-        delegate?.pageNavigationDidScroll?(pageNavigation: self, page: currentPage)
-        
+        didScroll(page: currentPage)
+                
         if internalCurrentChangedPage != currentPage {
             internalCurrentChangedPage = currentPage
             let indexPath = IndexPath(item: currentPage, section: 0)
