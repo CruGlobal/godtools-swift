@@ -225,9 +225,10 @@ class WebArchiveOperation: Operation, @unchecked Sendable {
                 do {
                     let webArchiveResource: WebArchiveResource = WebArchiveResource(url: url, data: data, mimeType: mimeType)
                     let mainResource: WebArchiveMainResource = WebArchiveMainResource(baseResource: webArchiveResource)
-                    let htmlDocument: HTMLDocument = try HTMLDocument(string: htmlString, encoding: .utf8)
-                    let resourceUrls: [String] = htmlDocument.getHTMLReferences(host: host, includeJavascript: includeJavascript)
-                    complete(.success(HTMLDocumentData(mainResource: mainResource, htmlDocument: htmlDocument, resourceUrls: resourceUrls)))
+                    //let htmlDocument: HTMLDocument = try HTMLDocument(string: htmlString, encoding: .utf8) // NOTE: Was getting a bad access starting in Xcode 16.2 (https://github.com/cezheng/Fuzi/issues/130). ~Levi
+                    let htmlDocumentWrapper = try HTMLDocumentWrapper(string: htmlString, encoding: .utf8)
+                    let resourceUrls: [String] = htmlDocumentWrapper.htmlDocument.getHTMLReferences(host: host, includeJavascript: includeJavascript)
+                    complete(.success(HTMLDocumentData(mainResource: mainResource, resourceUrls: resourceUrls)))
                 }
                 catch let parseHtmlDocumentError {
                     complete(.failure(.failedToParseHtmlDocument(error: parseHtmlDocumentError)))
