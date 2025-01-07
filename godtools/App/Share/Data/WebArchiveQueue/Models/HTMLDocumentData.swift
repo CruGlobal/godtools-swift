@@ -9,8 +9,14 @@
 import Foundation
 import Fuzi
 
-struct HTMLDocumentData {
+class HTMLDocumentData {
+    
     let mainResource: WebArchiveMainResource
-    let htmlDocument: HTMLDocument
     let resourceUrls: [String]
+    
+    init(mainResource: WebArchiveMainResource, resourceUrls: [String]) {
+        
+        self.mainResource = mainResource
+        self.resourceUrls = resourceUrls
+    }
 }

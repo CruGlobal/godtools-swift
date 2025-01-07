@@ -584,6 +584,7 @@
 		45738FA92AF067DF0006E9F0 /* YoutubePlayerParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45738FA82AF067DF0006E9F0 /* YoutubePlayerParameters.swift */; };
 		457579E226E96ABE00C898D2 /* MobileContentMultiSelectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457579DF26E96ABE00C898D2 /* MobileContentMultiSelectViewModel.swift */; };
 		457579E426E96ABE00C898D2 /* MobileContentMultiSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457579E126E96ABE00C898D2 /* MobileContentMultiSelectView.swift */; };
+		457609122D2D6C55005F218D /* HTMLDocumentWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457609112D2D6C42005F218D /* HTMLDocumentWrapper.swift */; };
 		457719AB2BE00F4100E7E4D8 /* DeviceSystemLanguageInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457719AA2BE00F4100E7E4D8 /* DeviceSystemLanguageInterface.swift */; };
 		457719AF2BE00FA600E7E4D8 /* MockDeviceSystemLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457719AE2BE00FA600E7E4D8 /* MockDeviceSystemLanguage.swift */; };
 		457739E827A0955000999270 /* MobileContentViewWidth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457739E727A0955000999270 /* MobileContentViewWidth.swift */; };
@@ -2260,6 +2261,7 @@
 		45738FA82AF067DF0006E9F0 /* YoutubePlayerParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubePlayerParameters.swift; sourceTree = "<group>"; };
 		457579DF26E96ABE00C898D2 /* MobileContentMultiSelectViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentMultiSelectViewModel.swift; sourceTree = "<group>"; };
 		457579E126E96ABE00C898D2 /* MobileContentMultiSelectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentMultiSelectView.swift; sourceTree = "<group>"; };
+		457609112D2D6C42005F218D /* HTMLDocumentWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLDocumentWrapper.swift; sourceTree = "<group>"; };
 		4576FCD427EA0B6100CB9CC6 /* ps */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ps; path = ps.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4576FCD527EA0BC200CB9CC6 /* ckb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ckb; path = ckb.lproj/Localizable.strings; sourceTree = "<group>"; };
 		457719A82BE00EC900E7E4D8 /* StoreInitialAppLanguageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreInitialAppLanguageTests.swift; sourceTree = "<group>"; };
@@ -9134,6 +9136,7 @@
 		45BDA6392954FF08007E259B /* WebArchiveQueue */ = {
 			isa = PBXGroup;
 			children = (
+				457609112D2D6C42005F218D /* HTMLDocumentWrapper.swift */,
 				45BDA63A2954FF08007E259B /* HTMLDocument+ResourceUrls.swift */,
 				45BDA6432954FF08007E259B /* WebArchiveOperation.swift */,
 				45BDA6442954FF08007E259B /* WebArchiveQueue.swift */,
@@ -13941,6 +13944,7 @@
 				45AE975827C97A9500C2CB33 /* MultiSelectOption+MobileContentRenderableModel.swift in Sources */,
 				452486BC2B07C894007AD932 /* ToolFilterCategorySelectionRowView.swift in Sources */,
 				D409F2C2292D4FF600D9D2FE /* UserAccountDetailsDomainModel.swift in Sources */,
+				457609122D2D6C55005F218D /* HTMLDocumentWrapper.swift in Sources */,
 				45558416269F2F6100C3FF14 /* MobileContentRendererAnalyticsSystem.swift in Sources */,
 				D4C26CA62C518EF70082B479 /* ToolFilterAnyCategoryDomainModel.swift in Sources */,
 				4598BD1E2BF7DF6800196463 /* AuthenticateUserAuthTypeDomainModel.swift in Sources */,

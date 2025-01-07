@@ -7,16 +7,22 @@
 //
 
 import Foundation
+import Combine
 
 class CardJumpService {
     
     private let cardJumpCache: CardJumpUserDefaultsCache
     
-    let didSaveCardJumpShownSignal: Signal = Signal()
+    private let didSaveCardJumpShownSubject: PassthroughSubject<Void, Never> = PassthroughSubject()
     
-    required init(cardJumpCache: CardJumpUserDefaultsCache) {
+    init(cardJumpCache: CardJumpUserDefaultsCache) {
         
         self.cardJumpCache = cardJumpCache
+    }
+    
+    var didSaveCardJumpPublisher: AnyPublisher<Void, Never> {
+        return didSaveCardJumpShownSubject
+            .eraseToAnyPublisher()
     }
     
     var didShowCardJump: Bool {
@@ -24,9 +30,7 @@ class CardJumpService {
     }
     
     func saveDidShowCardJump() {
-        if !didShowCardJump {
-            cardJumpCache.cacheDidShowCardJump()
-            didSaveCardJumpShownSignal.accept()
-        }
+        cardJumpCache.cacheDidShowCardJump()
+        didSaveCardJumpShownSubject.send(Void())
     }
 }

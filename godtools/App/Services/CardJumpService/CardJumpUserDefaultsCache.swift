@@ -12,7 +12,7 @@ class CardJumpUserDefaultsCache {
     
     private let sharedUserDefaultsCache: SharedUserDefaultsCache
     
-    required init(sharedUserDefaultsCache: SharedUserDefaultsCache) {
+    init(sharedUserDefaultsCache: SharedUserDefaultsCache) {
         
         self.sharedUserDefaultsCache = sharedUserDefaultsCache
     }
