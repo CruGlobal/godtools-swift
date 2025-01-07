@@ -52,7 +52,7 @@ struct LessonCardView: View {
                         .lineLimit(3)
                         .padding(.trailing, 41)
                         .frame(width: cardWidth - (padding * 2), alignment: .leading)
-                        .environment(\.layoutDirection, viewModel.titleLayoutDirection)                        
+                        .environment(\.layoutDirection, viewModel.titleLayoutDirection)
                     
                     FixedVerticalSpacer(height: 9)
                     
@@ -102,7 +102,7 @@ struct LessonCardView_Previews: PreviewProvider {
             bannerImageId: "1",
             dataModelId: "1",
             name: "Five Reasons to be Courageous", 
-            nameDirection: .rightToLeft,
+            nameLanguageDirection: .rightToLeft,
             lessonProgress: LessonListItemProgressDomainModel.inProgress(progress: 0.7, progressString: "70% Complete")
         )
         

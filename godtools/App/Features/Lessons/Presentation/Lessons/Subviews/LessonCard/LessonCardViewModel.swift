@@ -31,7 +31,7 @@ class LessonCardViewModel: ObservableObject {
         self.lessonListItem = lessonListItem
         self.attachmentsRepository = attachmentsRepository
         self.title = lessonListItem.name
-        self.titleLayoutDirection = lessonListItem.nameDirection == .leftToRight ? .leftToRight : .rightToLeft
+        self.titleLayoutDirection = lessonListItem.nameLanguageDirection == .leftToRight ? .leftToRight : .rightToLeft
         self.appLanguageAvailability = lessonListItem.availabilityInAppLanguage.availabilityString
         
         let lessonProgress = lessonListItem.lessonProgress
