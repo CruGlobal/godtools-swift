@@ -74,7 +74,6 @@ struct LessonCardView: View {
                         )
                     }
                 }
-
                 .padding(EdgeInsets(top: padding, leading: padding, bottom: padding, trailing: padding))
             }
         }
