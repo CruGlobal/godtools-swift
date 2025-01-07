@@ -12,6 +12,8 @@ import Combine
 
 class TractViewModel: MobileContentPagesViewModel {
     
+    static let isLiveShareStreamingKey: String = "TractViewModel.isLiveShareStreamKey"
+    
     private let tractRemoteSharePublisher: TractRemoteSharePublisher
     private let tractRemoteShareSubscriber: TractRemoteShareSubscriber
     private let resourceViewsService: ResourceViewsService
@@ -69,6 +71,13 @@ class TractViewModel: MobileContentPagesViewModel {
         tractRemoteShareSubscriber.navigationEventSignal.removeObserver(self)
         tractRemoteShareSubscriber.subscribedToChannelObserver.removeObserver(self)
         tractRemoteShareSubscriber.unsubscribe(disconnectSocket: true)
+    }
+    
+    private var isLiveStreaming: Bool {
+        
+        let liveShareStreamChannelIdIsEmpty: Bool = (liveShareStream?.isEmpty) ?? true
+        
+        return tractRemoteSharePublisher.webSocketIsConnected || tractRemoteShareSubscriber.webSocketIsConnected || !liveShareStreamChannelIdIsEmpty
     }
     
     private func setupBinding() {
@@ -206,6 +215,13 @@ class TractViewModel: MobileContentPagesViewModel {
         }
         
         return attachedToolSettingsObserver
+    }
+    
+    override func configureRendererPageContextUserInfo(userInfo: inout [String: Any], page: Int) {
+        
+        userInfo[TractViewModel.isLiveShareStreamingKey] = isLiveStreaming
+        
+        super.configureRendererPageContextUserInfo(userInfo: &userInfo, page: page)
     }
 }
 
