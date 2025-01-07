@@ -13,6 +13,8 @@ class MobileContentEmbeddedVideoView: MobileContentView {
     
     private let viewModel: MobileContentEmbeddedVideoViewModel
     private let videoView: YTPlayerView = YTPlayerView()
+    private let loadingContainerView: UIView = UIView()
+    private let loadingView: UIActivityIndicatorView = UIActivityIndicatorView(style: .medium)
     
     init(viewModel: MobileContentEmbeddedVideoViewModel) {
         
@@ -21,6 +23,8 @@ class MobileContentEmbeddedVideoView: MobileContentView {
         super.init(viewModel: viewModel, frame: UIScreen.main.bounds)
                 
         setupLayout()
+        
+        setLoadingViewHidden(hidden: false, animated: false)
         
         videoView.delegate = self
         videoView.load(withVideoId: viewModel.videoId, playerVars: viewModel.youtubePlayerParameters)
@@ -41,12 +45,50 @@ class MobileContentEmbeddedVideoView: MobileContentView {
     
     private func setupLayout() {
         
+        let parentView: UIView = self
+        
         // videoView
         videoView.backgroundColor = .clear
-        let parentView: UIView = self
         parentView.addSubview(videoView)
         videoView.translatesAutoresizingMaskIntoConstraints = false
         videoView.constrainEdgesToView(view: parentView)
+        
+        // loadingContainerView
+        loadingContainerView.backgroundColor = ColorPalette.gtLightestGrey.uiColor
+        parentView.addSubview(loadingContainerView)
+        loadingContainerView.translatesAutoresizingMaskIntoConstraints = false
+        loadingContainerView.constrainEdgesToView(view: parentView)
+        
+        // loadingView
+        loadingView.hidesWhenStopped = false
+        loadingContainerView.addSubview(loadingView)
+        loadingView.translatesAutoresizingMaskIntoConstraints = false
+        loadingView.constrainCenterHorizontallyInView(view: parentView)
+        loadingView.constrainCenterVerticallyInView(view: parentView)
+        loadingView.color = .white
+    }
+    
+    private func setLoadingViewHidden(hidden: Bool, animated: Bool) {
+        
+        let videoView: MobileContentEmbeddedVideoView = self
+        let loadingViewAlpha: CGFloat = hidden ? 0 : 1
+        
+        hidden ? loadingView.stopAnimating() : loadingView.startAnimating()
+        
+        if animated {
+            
+            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut) {
+                videoView.loadingContainerView.alpha = loadingViewAlpha
+            } completion: { (finished: Bool) in
+                if finished && hidden {
+                    videoView.loadingView.stopAnimating()
+                }
+            }
+
+        }
+        else {
+            loadingContainerView.alpha = loadingViewAlpha
+        }
     }
     
     // MARK: - MobileContentView
@@ -74,6 +116,8 @@ extension MobileContentEmbeddedVideoView: YTPlayerViewDelegate {
         if let lastTrackedElapsedTime = viewModel.getLastTrackedElapsedTime() {
             videoView.cueVideo(byId: viewModel.videoId, startSeconds: lastTrackedElapsedTime)
         }
+        
+        setLoadingViewHidden(hidden: true, animated: true)
     }
     
     internal func playerView(_ playerView: YTPlayerView, didChangeTo state: YTPlayerState) {
