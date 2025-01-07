@@ -57,6 +57,7 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
                     bannerImageId: resource.attrBanner,
                     dataModelId: resource.id,
                     name: lessonName,
+                    nameDirection: filterLanguageModel?.direction ?? .leftToRight,
                     lessonProgress: lessonProgress
                 )
             }

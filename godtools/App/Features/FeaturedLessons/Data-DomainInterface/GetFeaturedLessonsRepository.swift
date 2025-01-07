@@ -56,7 +56,8 @@ class GetFeaturedLessonsRepository: GetFeaturedLessonsRepositoryInterface {
                     availabilityInAppLanguage: toolLanguageAvailability,
                     bannerImageId: resource.attrBanner,
                     dataModelId: resource.id,
-                    name: self.getTranslatedToolName.getToolName(resource: resource, translateInLanguage: appLanguage),
+                    name: self.getTranslatedToolName.getToolName(resource: resource, translateInLanguage: appLanguage), 
+                    nameDirection: .leftToRight,
                     lessonProgress: lessonProgress
                 )
             }
