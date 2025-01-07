@@ -8,8 +8,14 @@
 
 import Foundation
 
-struct WebArchiveOperationResult {
+class WebArchiveOperationResult {
     
     let webArchiveUrl: WebArchiveUrl
     let webArchivePlistData: Data
+    
+    init(webArchiveUrl: WebArchiveUrl, webArchivePlistData: Data) {
+        
+        self.webArchiveUrl = webArchiveUrl
+        self.webArchivePlistData = webArchivePlistData
+    }
 }

@@ -8,11 +8,18 @@
 
 import Foundation
 
-struct WebArchiveQueueResult {
+class WebArchiveQueueResult {
     
     let successfulArchives: [WebArchiveOperationResult]
     let failedArchives: [WebArchiveOperationError]
     let totalAttemptedArchives: Int
+    
+    init(successfulArchives: [WebArchiveOperationResult], failedArchives: [WebArchiveOperationError], totalAttemptedArchives: Int) {
+        
+        self.successfulArchives = successfulArchives
+        self.failedArchives = failedArchives
+        self.totalAttemptedArchives = totalAttemptedArchives
+    }
     
     var networkFailed: Bool {
         
