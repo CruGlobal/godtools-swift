@@ -17,6 +17,7 @@ class LessonCardViewModel: ObservableObject {
     private var getBannerImageCancellable: AnyCancellable?
         
     @Published var title: String = ""
+    @Published var titleLayoutDirection: LayoutDirection = .rightToLeft
     @Published var appLanguageAvailability: String = ""
     @Published var bannerImageData: OptionalImageData?
     @Published var shouldShowLessonProgress: Bool = false
@@ -30,6 +31,7 @@ class LessonCardViewModel: ObservableObject {
         self.lessonListItem = lessonListItem
         self.attachmentsRepository = attachmentsRepository
         self.title = lessonListItem.name
+        self.titleLayoutDirection = lessonListItem.nameLanguageDirection == .leftToRight ? .leftToRight : .rightToLeft
         self.appLanguageAvailability = lessonListItem.availabilityInAppLanguage.availabilityString
         
         let lessonProgress = lessonListItem.lessonProgress
