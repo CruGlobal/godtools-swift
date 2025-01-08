@@ -51,13 +51,20 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
                 
                 let lessonProgress: LessonListItemProgressDomainModel = self.getLessonListItemProgressRepository.getLessonProgress(lesson: resource, appLanguage: appLanguage)
                 
+                let nameLanguageDirection: LanguageDirectionDomainModel
+                if let filterLanguageModel = filterLanguageModel {
+                    nameLanguageDirection = LanguageDirectionDomainModel(languageModel: filterLanguageModel)
+                } else {
+                    nameLanguageDirection = .leftToRight
+                }
+                
                 return LessonListItemDomainModel(
                     analyticsToolName: resource.abbreviation,
                     availabilityInAppLanguage: toolLanguageAvailability,
                     bannerImageId: resource.attrBanner,
                     dataModelId: resource.id,
                     name: lessonName,
-                    nameLanguageDirection: filterLanguageModel?.direction ?? .leftToRight,
+                    nameLanguageDirection: nameLanguageDirection,
                     lessonProgress: lessonProgress
                 )
             }

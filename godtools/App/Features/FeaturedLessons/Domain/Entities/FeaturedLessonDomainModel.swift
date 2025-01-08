@@ -14,7 +14,7 @@ struct FeaturedLessonDomainModel: LessonListItemDomainModelInterface {
     let bannerImageId: String
     let dataModelId: String
     let name: String
-    let nameLanguageDirection: LanguageModel.Direction
+    let nameLanguageDirection: LanguageDirectionDomainModel
     let lessonProgress: LessonListItemProgressDomainModel
 }
 
