@@ -27,7 +27,7 @@ class TractPageModalView: MobileContentView, NibBased {
     init(viewModel: TractPageModalViewModel) {
         
         self.viewModel = viewModel
-        self.contentStackView = MobileContentStackView(viewModel: viewModel, contentInsets: .zero, itemSpacing: 15, scrollIsEnabled: true)
+        self.contentStackView = MobileContentStackView(viewModel: viewModel, contentInsets: .zero, scrollIsEnabled: true)
         
         super.init(viewModel: viewModel, frame: UIScreen.main.bounds)
         

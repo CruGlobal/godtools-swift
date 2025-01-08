@@ -56,7 +56,7 @@ class TractPageCardView: MobileContentView, NibBased {
     init(viewModel: TractPageCardViewModel) {
                 
         self.viewModel = viewModel
-        self.contentStackView = MobileContentStackView(viewModel: viewModel, contentInsets: UIEdgeInsets(top: 15, left: 15, bottom: 0, right: 15), itemSpacing: 20, scrollIsEnabled: true)
+        self.contentStackView = MobileContentStackView(viewModel: viewModel, contentInsets: UIEdgeInsets(top: 15, left: 15, bottom: 0, right: 15), scrollIsEnabled: true)
         
         super.init(viewModel: viewModel, frame: UIScreen.main.bounds)
                 

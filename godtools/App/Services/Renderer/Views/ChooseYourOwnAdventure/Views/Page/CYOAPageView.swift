@@ -12,11 +12,11 @@ class CYOAPageView: MobileContentContentPageView {
     
     private let viewModel: CYOAPageViewModel
     
-    init(viewModel: CYOAPageViewModel, contentInsets: UIEdgeInsets, itemSpacing: CGFloat) {
+    init(viewModel: CYOAPageViewModel, contentInsets: UIEdgeInsets) {
         
         self.viewModel = viewModel
         
-        super.init(viewModel: viewModel, contentInsets: contentInsets, itemSpacing: itemSpacing)
+        super.init(viewModel: viewModel, contentInsets: contentInsets)
     }
     
     @MainActor required init?(coder: NSCoder) {
