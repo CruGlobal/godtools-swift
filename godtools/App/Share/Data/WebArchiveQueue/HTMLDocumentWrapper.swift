@@ -11,22 +11,28 @@ import Fuzi
 import libxml2
 
 // NOTE:  Wrapper for addressing bad access starting in Xcode 16.2 Fuzi version 3.1.3. (https://github.com/cezheng/Fuzi/issues/130)
+// Will fix by implementing change from open PR (https://github.com/cezheng/Fuzi/pull/131).
+// TODO: GT-2492 Once merged we can remove this wrapper. ~Levi
 
 class HTMLDocumentWrapper {
     
     let htmlDocument: HTMLDocument
     
     init(string: String, encoding: String.Encoding = String.Encoding.utf8) throws {
-        
+                
         guard let cChars = string.cString(using: encoding) else {
             throw XMLError.invalidData
         }
         
-        let buffer = cChars.withUnsafeBufferPointer { buffer in
-            UnsafeBufferPointer(rebasing: buffer[0..<buffer.count])
+        let mutablebuffer = UnsafeMutableBufferPointer<CChar>.allocate(capacity: cChars.count)
+        _ = mutablebuffer.initialize(from: cChars)
+        
+        defer {
+            mutablebuffer.deallocate()
         }
-                
-        // NOTE: Seems to solve bad access at line 130 in Document.swift Fuzi version 3.1.3. "guard let document = type(of: self).parse(buffer: buffer, options: options)" ~Levi
+
+        let buffer = UnsafeBufferPointer(mutablebuffer)
+
         let htmlDocument = try HTMLDocument(buffer: buffer)
         
         self.htmlDocument = htmlDocument
