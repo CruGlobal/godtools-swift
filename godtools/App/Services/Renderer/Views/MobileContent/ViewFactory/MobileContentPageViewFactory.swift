@@ -31,7 +31,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 mobileContentAnalytics: mobileContentAnalytics
             )
             
-            let view = MobileContentParagraphView(viewModel: viewModel, contentInsets: .zero, scrollIsEnabled: false)
+            let view = MobileContentParagraphView(viewModel: viewModel, scrollIsEnabled: false)
             
             return view
         }
