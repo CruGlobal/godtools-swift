@@ -66,7 +66,7 @@ struct DownloadableLanguageItemView: View {
                 
             } label: {
                 
-                LanguageDownloadIcon(languageDownloadStatus: downloadableLanguage.downloadStatus, animationDownloadProgress: animationDownloadProgress, shouldConfirmDownloadRemoval: shouldConfirmDownloadRemoval)
+                LanguageDownloadIcon(state: getLanguageDownloadIconState())
             }
         }
         .onChange(of: downloadableLanguage.downloadStatus, perform: { newDownloadStatus in
@@ -113,6 +113,43 @@ struct DownloadableLanguageItemView: View {
             
             continueDownloadProgressAnimationIfNeeded()
         }
+    }
+    
+    private func getLanguageDownloadIconState() -> LanguageDownloadIconState {
+        
+        switch downloadableLanguage.downloadStatus {
+        case .notDownloaded:
+            return .notDownloaded
+            
+        case .downloading(let progress):
+            
+            if let downloadProgress = animationDownloadProgress ?? progress {
+                
+                return .downloading(progress: downloadProgress)
+            } else {
+                return .notDownloaded
+            }
+            
+        case .downloaded:
+            if shouldConfirmDownloadRemoval {
+                return .remove
+                
+            } else if shouldFinishDownloadAnimation(), let animationDownloadProgress = animationDownloadProgress {
+                
+                return .downloading(progress: animationDownloadProgress)
+                
+            } else {
+                return .downloaded
+            }
+        }
+    }
+
+    private func shouldFinishDownloadAnimation() -> Bool {
+        guard let animationDownloadProgress = animationDownloadProgress else {
+            return false
+        }
+
+        return animationDownloadProgress <= 1
     }
     
     private func didTapItem() {
