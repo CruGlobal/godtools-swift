@@ -1,17 +1,30 @@
 {
-  "extends": ["config:base"],
+  "extends": [
+    "config:recommended"
+  ],
   "dependencyDashboard": true,
-  "labels": ["dependencies"],
-  "lockFileMaintenance": { "enabled": true },
+  "labels": [
+    "dependencies"
+  ],
+  "lockFileMaintenance": {
+    "enabled": true
+  },
   "packageRules": [
     {
-      "matchManagers": ["bundler"],
+      "matchManagers": [
+        "bundler"
+      ],
       "rangeStrategy": "update-lockfile"
     },
     {
-      "matchManagers": ["cocoapods"],
+      "matchManagers": [
+        "cocoapods"
+      ],
       "enabled": true,
-      "labels": ["dependencies", "cocoapods"],
+      "labels": [
+        "dependencies",
+        "cocoapods"
+      ],
       "additionalBranchPrefix": "cocoapods/"
     }
   ]
