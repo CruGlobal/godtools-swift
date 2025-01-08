@@ -1,3 +1,12 @@
+/* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
+"lessons.resumeLessonModal.title" = "প্রগতি পুনরায় চালু করুন";
+
+"lessons.resumeLessonModal.subtitle" = "আপনি কি যেখানে ছেড়ে গেছেন তা থেকে পুনরায় শুরু করতে চান?";
+"lessons.resumeLessonModal.startOverButton" = "পুনরায় শুরু করুন";
+"lessons.resumeLessonModal.continueButton" = "অগ্রসর হন";
+"lessons.lessonCompleted" = "সম্পূর্ণ";
+"lessons.completionProgress" = "%@ সম্পূর্ণ করুন";
+"network_connection_lost" = "নেটওয়ার্ক সংযোগ হারিয়ে গিয়েছিল।";
 "language_name_fil" = "ফিলিপিনো (ট্যাগালগ)";
 "lessons.filter.navBar.language" = "শিক্ষার পাঠের ভাষা";
 "lessons.languageFilter.title" = "এগুলিতে পাঠসমূহ:";
