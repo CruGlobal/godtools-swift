@@ -51,12 +51,20 @@ class GetFeaturedLessonsRepository: GetFeaturedLessonsRepositoryInterface {
                 
                 let lessonProgress = self.getLessonListItemProgressRepository.getLessonProgress(lesson: resource, appLanguage: appLanguage)
                 
+                let nameLanguageDirection: LanguageDirectionDomainModel
+                if let filterLanguageModel = appLanguageModel {
+                    nameLanguageDirection = LanguageDirectionDomainModel(languageModel: filterLanguageModel)
+                } else {
+                    nameLanguageDirection = .leftToRight
+                }
+                
                 return FeaturedLessonDomainModel(
                     analyticsToolName: resource.abbreviation,
                     availabilityInAppLanguage: toolLanguageAvailability,
                     bannerImageId: resource.attrBanner,
                     dataModelId: resource.id,
-                    name: self.getTranslatedToolName.getToolName(resource: resource, translateInLanguage: appLanguage),
+                    name: self.getTranslatedToolName.getToolName(resource: resource, translateInLanguage: appLanguage), 
+                    nameLanguageDirection: nameLanguageDirection,
                     lessonProgress: lessonProgress
                 )
             }

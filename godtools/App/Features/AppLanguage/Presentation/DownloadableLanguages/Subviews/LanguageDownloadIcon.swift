@@ -12,14 +12,10 @@ struct LanguageDownloadIcon: View {
     
     private static let lightGrey = Color.getColorWithRGB(red: 151, green: 151, blue: 151, opacity: 1)
     
-    private let languageDownloadStatus: LanguageDownloadStatusDomainModel
-    private let animationDownloadProgress: Double?
-    private let shouldConfirmDownloadRemoval: Bool
+    private let state: LanguageDownloadIconState
     
-    init(languageDownloadStatus: LanguageDownloadStatusDomainModel, animationDownloadProgress: Double?, shouldConfirmDownloadRemoval: Bool) {
-        self.languageDownloadStatus = languageDownloadStatus
-        self.animationDownloadProgress = animationDownloadProgress
-        self.shouldConfirmDownloadRemoval = shouldConfirmDownloadRemoval
+    init(state: LanguageDownloadIconState) {
+        self.state = state
     }
 
     var body: some View {
@@ -37,43 +33,22 @@ struct LanguageDownloadIcon: View {
     
     @ViewBuilder private func innerIcon() -> some View {
         
-        switch languageDownloadStatus {
+        switch state {
         case .notDownloaded:
-            
-            notDownloadedIcon()
+            Image(systemName: "arrow.down.to.line")
+                .imageScale(.small)
             
         case .downloading(let progress):
+            drawProgressInCircle(progress: progress)
             
-            if let downloadProgress = self.animationDownloadProgress ?? progress {
-            
-                drawProgressInCircle(progress: downloadProgress)
-                
-            } else {
-                
-                notDownloadedIcon()
-            }
-                        
         case .downloaded:
+            Image(systemName: "checkmark")
+                .imageScale(.small)
             
-            if shouldConfirmDownloadRemoval {
-              
-                Image(systemName: "xmark")
-                    .imageScale(.small)
-                
-            } else if shouldFinishAnimatingDownloadProgress(), let animationDownloadProgress = animationDownloadProgress {
-
-                drawProgressInCircle(progress: animationDownloadProgress)
-                
-            } else {
-                Image(systemName: "checkmark")
-                    .imageScale(.small)
-            }
+        case .remove:
+            Image(systemName: "xmark")
+                .imageScale(.small)
         }
-    }
-    
-    @ViewBuilder private func notDownloadedIcon() -> some View {
-        Image(systemName: "arrow.down.to.line")
-            .imageScale(.small)
     }
     
     @ViewBuilder private func drawProgressInCircle(progress: Double) -> some View {
@@ -105,36 +80,19 @@ struct LanguageDownloadIcon: View {
     }
     
     private func iconColor() -> Color {
-        switch languageDownloadStatus {
-            
+    
+        switch state {
         case .notDownloaded:
             return LanguageDownloadIcon.lightGrey
             
-        case .downloading(let progress):
-            
-            let downloadProgress = self.animationDownloadProgress ?? progress
-            if downloadProgress != nil {
-                return ColorPalette.gtBlue.color
-            } else {
-                return LanguageDownloadIcon.lightGrey
-            }
+        case .downloading:
+            return ColorPalette.gtBlue.color
             
         case .downloaded:
+            return ColorPalette.gtBlue.color
             
-            if shouldConfirmDownloadRemoval {
-                return Color(.sRGB, red: 229 / 255, green: 91 / 255, blue: 54 / 255, opacity: 1.0)
-            } else {
-                return ColorPalette.gtBlue.color
-            }
+        case .remove:
+            return Color(.sRGB, red: 229 / 255, green: 91 / 255, blue: 54 / 255, opacity: 1.0)
         }
-    }
-    
-    private func shouldFinishAnimatingDownloadProgress() -> Bool {
-        
-        guard let animationDownloadProgress = animationDownloadProgress else {
-            return false
-        }
-        
-        return animationDownloadProgress <= 1
     }
 }
