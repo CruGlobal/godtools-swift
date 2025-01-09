@@ -13,6 +13,7 @@ struct LessonCardView: View {
     private let geometry: GeometryProxy
     private let backgroundColor: Color = Color.white
     private let cornerRadius: CGFloat = 6
+    private let padding: CGFloat = 15
     private let cardWidth: CGFloat
     private let bannerImageAspectRatio: CGSize = CGSize(width: 335, height: 87)
     private let cardTappedClosure: (() -> Void)?
@@ -50,6 +51,8 @@ struct LessonCardView: View {
                         .lineSpacing(2)
                         .lineLimit(3)
                         .padding(.trailing, 41)
+                        .frame(width: cardWidth - (padding * 2), alignment: .leading)
+                        .environment(\.layoutDirection, viewModel.titleLayoutDirection)
                     
                     FixedVerticalSpacer(height: 9)
                     
@@ -71,7 +74,7 @@ struct LessonCardView: View {
                         )
                     }
                 }
-                .padding(EdgeInsets(top: 15, leading: 15, bottom: 15, trailing: 15))
+                .padding(EdgeInsets(top: padding, leading: padding, bottom: padding, trailing: padding))
             }
         }
         .frame(width: cardWidth)
@@ -97,7 +100,8 @@ struct LessonCardView_Previews: PreviewProvider {
             availabilityInAppLanguage: ToolLanguageAvailabilityDomainModel(availabilityString: "available in language", isAvailable: true),
             bannerImageId: "1",
             dataModelId: "1",
-            name: "Five Reasons to be Courageous",
+            name: "Five Reasons to be Courageous", 
+            nameLanguageDirection: .rightToLeft,
             lessonProgress: LessonListItemProgressDomainModel.inProgress(progress: 0.7, progressString: "70% Complete")
         )
         

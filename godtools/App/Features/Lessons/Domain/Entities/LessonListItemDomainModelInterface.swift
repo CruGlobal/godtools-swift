@@ -13,5 +13,6 @@ protocol LessonListItemDomainModelInterface {
     var availabilityInAppLanguage: ToolLanguageAvailabilityDomainModel { get }
     var bannerImageId: String { get }
     var name: String { get }
+    var nameLanguageDirection: LanguageDirectionDomainModel { get }
     var lessonProgress: LessonListItemProgressDomainModel { get }
 }

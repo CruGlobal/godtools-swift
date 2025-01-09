@@ -15,6 +15,7 @@ struct LessonListItemDomainModel: LessonListItemDomainModelInterface {
     let bannerImageId: String
     let dataModelId: String
     let name: String
+    let nameLanguageDirection: LanguageDirectionDomainModel
     let lessonProgress: LessonListItemProgressDomainModel
 }
 
