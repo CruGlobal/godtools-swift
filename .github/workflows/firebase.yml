@@ -31,11 +31,11 @@ jobs:
       - name: Increment Xcode Project Build Number
         run: bundle exec fastlane cru_shared_lane_increment_xcode_project_build_number
 
-      - name: Build And Deploy For TestFlight Release
+      - name: Build And Deploy For Firebase Distribution
         env:
           MATCH_GIT_BASIC_AUTHORIZATION_PAT: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION_PAT }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-        run: bundle exec fastlane cru_shared_lane_build_and_deploy_for_testflight_release is_running_in_ci:true gym_destination:generic/platform=iOS
+        run: bundle exec fastlane cru_shared_lane_build_and_deploy_for_testflight_release is_running_in_ci:true gym_destination:generic/platform=iOS distribute_to_firebase:true distribute_to_testflight:false firebase_googleservice_info_plist_path:"godtools/GoogleService-Info-Debug.plist" firebase_groups:"ios-testers"
 
       - name: Archive Fastlane Gym Logs
         if: always()
