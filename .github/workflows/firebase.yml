@@ -29,7 +29,7 @@ jobs:
         run: echo $APP_STORE_CONNECT_API_JSON_PAYLOAD > fastlane/AppleAppStoreApi.json
 
       - name: Increment Xcode Project Build Number
-        run: bundle exec fastlane cru_shared_lane_increment_xcode_project_build_number
+        run: bundle exec fastlane cru_shared_lane_increment_xcode_project_build_number_from_latest_firebase_distribution firebase_googleservice_info_plist_path:"godtools/GoogleService-Info-Debug.plist"
 
       - name: Build And Deploy For Firebase Distribution
         env:
