@@ -26,7 +26,7 @@ jobs:
       - name: Add Firebase Service Account Key
         env:
           FIREBASE_SERVICE_ACCOUNT_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
-        run: echo $FIREBASE_SERVICE_ACCOUNT_KEY > firebase/firebase_service_account_key.json
+        run: echo $FIREBASE_SERVICE_ACCOUNT_KEY > firebase_service_account_key.json
 
       - name: Import App Store Connect API Key
         env:
@@ -34,13 +34,13 @@ jobs:
         run: echo $APP_STORE_CONNECT_API_JSON_PAYLOAD > fastlane/AppleAppStoreApi.json
 
       - name: Increment Xcode Project Build Number
-        run: bundle exec fastlane cru_shared_lane_increment_xcode_project_build_number_from_latest_firebase_distribution firebase_googleservice_info_plist_path:"godtools/GoogleService-Info-Debug.plist" firebase_service_credentials_file:"firebase/firebase_service_account_key.json"
+        run: bundle exec fastlane cru_shared_lane_increment_xcode_project_build_number_from_latest_firebase_distribution firebase_googleservice_info_plist_path:"godtools/GoogleService-Info-Debug.plist" firebase_service_credentials_file:"firebase_service_account_key.json"
 
       - name: Build And Deploy For Firebase Distribution
         env:
           MATCH_GIT_BASIC_AUTHORIZATION_PAT: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION_PAT }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-        run: bundle exec fastlane cru_shared_lane_build_and_deploy_for_testflight_release is_running_in_ci:true gym_destination:generic/platform=iOS distribute_to_firebase:true distribute_to_testflight:false firebase_googleservice_info_plist_path:"godtools/GoogleService-Info-Debug.plist" firebase_groups:"ios-testers" firebase_service_credentials_file:"firebase/firebase_service_account_key.json"
+        run: bundle exec fastlane cru_shared_lane_build_and_deploy_for_testflight_release is_running_in_ci:true gym_destination:generic/platform=iOS distribute_to_firebase:true distribute_to_testflight:false firebase_googleservice_info_plist_path:"godtools/GoogleService-Info-Debug.plist" firebase_groups:"ios-testers" firebase_service_credentials_file:"firebase_service_account_key.json"
 
       - name: Archive Fastlane Gym Logs
         if: always()
