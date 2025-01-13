@@ -25,7 +25,7 @@ jobs:
 
       - name: Add Firebase Service Account Key
         env:
-          FIREBASE_API_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
+          FIREBASE_SERVICE_ACCOUNT_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
         run: echo $FIREBASE_SERVICE_ACCOUNT_KEY > firebase/firebase_service_account_key.json
 
       - name: Import App Store Connect API Key
