@@ -16,7 +16,7 @@ class TractPageHeroView: MobileContentStackView {
         
         self.viewModel = viewModel
         
-        super.init(viewModel: viewModel, contentInsets: .zero, itemSpacing: 20, scrollIsEnabled: true)
+        super.init(viewModel: viewModel, contentInsets: .zero, scrollIsEnabled: true)
     }
     
     required init?(coder: NSCoder) {

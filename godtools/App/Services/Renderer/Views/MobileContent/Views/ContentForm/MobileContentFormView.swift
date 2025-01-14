@@ -21,7 +21,7 @@ class MobileContentFormView: MobileContentStackView {
         
         self.viewModel = viewModel
             
-        super.init(viewModel: viewModel, contentInsets: .zero, itemSpacing: 15, scrollIsEnabled: false)
+        super.init(viewModel: viewModel, contentInsets: .zero, scrollIsEnabled: false)
         
         setupLayout()
         setupBinding()        

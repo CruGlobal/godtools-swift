@@ -27,11 +27,11 @@ class MobileContentStackView: MobileContentView {
     private var isObservingBoundsChanges: Bool = false
     private var lastRenderedParentBounds: CGRect?
             
-    init(viewModel: MobileContentViewModel, contentInsets: UIEdgeInsets, itemSpacing: CGFloat, scrollIsEnabled: Bool) {
+    init(viewModel: MobileContentViewModel, contentInsets: UIEdgeInsets, scrollIsEnabled: Bool) {
                 
         super.init(viewModel: viewModel, frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: itemSpacing))
         
-        configureLayout(contentInsets: contentInsets, itemSpacing: itemSpacing, scrollIsEnabled: scrollIsEnabled)
+        configureLayout(contentInsets: contentInsets, scrollIsEnabled: scrollIsEnabled)
     }
     
     required init?(coder: NSCoder) {
@@ -363,7 +363,7 @@ extension MobileContentStackView {
 
 extension MobileContentStackView {
     
-    func configureLayout(contentInsets: UIEdgeInsets?, itemSpacing: CGFloat?, scrollIsEnabled: Bool?) {
+    func configureLayout(contentInsets: UIEdgeInsets?, scrollIsEnabled: Bool?) {
         
         removeBoundsChangeObserverOnChildrenParentView()
 
@@ -378,10 +378,6 @@ extension MobileContentStackView {
         //
         if let contentInsets = contentInsets {
             self.contentInsets = contentInsets
-        }
-        
-        if let itemSpacing = itemSpacing {
-            self.itemSpacing = itemSpacing
         }
         
         if let scrollIsEnabled = scrollIsEnabled {

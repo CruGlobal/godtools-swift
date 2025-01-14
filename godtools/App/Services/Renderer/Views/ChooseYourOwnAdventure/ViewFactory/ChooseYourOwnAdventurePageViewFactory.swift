@@ -25,7 +25,6 @@ class ChooseYourOwnAdventurePageViewFactory: MobileContentPageViewFactoryType {
         if let contentPage = renderableModel as? ContentPage {
             
             let contentInsets: UIEdgeInsets
-            let itemSpacing: CGFloat
             
             let isIntroPage: Bool = contentPage.id == "intro"
             let isCategoriesPage: Bool = contentPage.id == "categories"
@@ -33,17 +32,14 @@ class ChooseYourOwnAdventurePageViewFactory: MobileContentPageViewFactoryType {
             if isIntroPage {
                 
                 contentInsets = UIEdgeInsets(top: 0, left: 60, bottom: 0, right: 60)
-                itemSpacing = 28
             }
             else if isCategoriesPage {
                 
                 contentInsets = UIEdgeInsets(top: 30, left: 20, bottom: 0, right: 20)
-                itemSpacing = 30
             }
             else {
                 
                 contentInsets = .zero
-                itemSpacing = 20
             }
             
             let viewModel = CYOAPageViewModel(
@@ -55,8 +51,7 @@ class ChooseYourOwnAdventurePageViewFactory: MobileContentPageViewFactoryType {
             
             let view = CYOAPageView(
                 viewModel: viewModel,
-                contentInsets: contentInsets,
-                itemSpacing: itemSpacing
+                contentInsets: contentInsets
             )
             
             return view

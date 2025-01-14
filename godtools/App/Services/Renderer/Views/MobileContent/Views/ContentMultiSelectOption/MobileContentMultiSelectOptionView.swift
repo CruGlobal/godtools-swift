@@ -19,7 +19,7 @@ class MobileContentMultiSelectOptionView: MobileContentStackView {
         
         self.viewModel = viewModel
         
-        super.init(viewModel: viewModel, contentInsets: UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12), itemSpacing: 10, scrollIsEnabled: false)
+        super.init(viewModel: viewModel, contentInsets: UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12), scrollIsEnabled: false)
         
         setupLayout()
         setupBinding()

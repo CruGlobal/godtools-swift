@@ -31,7 +31,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 mobileContentAnalytics: mobileContentAnalytics
             )
             
-            let view = MobileContentParagraphView(viewModel: viewModel, contentInsets: .zero, itemSpacing: 5, scrollIsEnabled: false)
+            let view = MobileContentParagraphView(viewModel: viewModel, scrollIsEnabled: false)
             
             return view
         }
@@ -113,7 +113,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 trackScreenViewAnalyticsUseCase: trackScreenViewAnalyticsUseCase
             )
             
-            let view = MobileContentContentPageView(viewModel: viewModel, contentInsets: .zero, itemSpacing: 20)
+            let view = MobileContentContentPageView(viewModel: viewModel, contentInsets: .zero)
             
             return view
         }
@@ -153,7 +153,6 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             return MobileContentStackView(
                 viewModel: viewModel,
                 contentInsets: contentModel.contentInsets,
-                itemSpacing: contentModel.itemSpacing,
                 scrollIsEnabled: contentModel.scrollIsEnabled
             )
         }
