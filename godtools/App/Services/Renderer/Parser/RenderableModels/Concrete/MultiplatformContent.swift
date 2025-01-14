@@ -13,14 +13,12 @@ class MultiplatformContent {
     
     let content: [Content]
     let contentInsets: UIEdgeInsets
-    let itemSpacing: CGFloat
     let scrollIsEnabled: Bool
     
-    init(content: [Content], contentInsets: UIEdgeInsets, itemSpacing: CGFloat, scrollIsEnabled: Bool) {
+    init(content: [Content], contentInsets: UIEdgeInsets, scrollIsEnabled: Bool) {
         
         self.content = content
         self.contentInsets = contentInsets
-        self.itemSpacing = itemSpacing
         self.scrollIsEnabled = scrollIsEnabled
     }
 }

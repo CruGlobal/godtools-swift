@@ -20,7 +20,6 @@ extension LessonPage: MobileContentRenderableModel {
         let multiplatformContent = MultiplatformContent(
             content: content,
             contentInsets: UIEdgeInsets(top: 0, left: contentHorizontalInsets, bottom: 0, right: contentHorizontalInsets),
-            itemSpacing: 20,
             scrollIsEnabled: true
         )
         

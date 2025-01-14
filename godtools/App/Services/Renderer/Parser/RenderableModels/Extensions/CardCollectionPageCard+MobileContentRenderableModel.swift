@@ -17,7 +17,6 @@ extension CardCollectionPage.Card: MobileContentRenderableModel {
         let content = MultiplatformContent(
             content: content,
             contentInsets: UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20),
-            itemSpacing: 10,
             scrollIsEnabled: true
         )
         

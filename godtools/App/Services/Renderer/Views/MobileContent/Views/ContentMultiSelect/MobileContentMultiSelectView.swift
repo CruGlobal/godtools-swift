@@ -26,7 +26,7 @@ class MobileContentMultiSelectView: MobileContentStackView {
         self.itemSpacing = itemSpacing
         self.isSingleColumn = isSingleColumn
         
-        super.init(viewModel: viewModel, contentInsets: .zero, itemSpacing: itemSpacing, scrollIsEnabled: false)
+        super.init(viewModel: viewModel, contentInsets: .zero, scrollIsEnabled: false)
         
         setupLayout()
     }
