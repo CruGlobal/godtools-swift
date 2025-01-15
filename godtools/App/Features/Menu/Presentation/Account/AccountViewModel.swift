@@ -19,6 +19,7 @@ class AccountViewModel: ObservableObject {
     private let viewGlobalActivityThisWeekUseCase: ViewGlobalActivityThisWeekUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let viewAccountUseCase: ViewAccountUseCase
+    private let getGlobalActivityEnabledUseCase: GetGlobalActivityEnabledUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
     
@@ -26,6 +27,8 @@ class AccountViewModel: ObservableObject {
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     @Published private var didPullToRefresh: Void = ()
+    
+    @Published private(set) var globalActivityIsEnabled: Bool = false
     
     @Published var navTitle: String = ""
     @Published var isLoadingProfile: Bool = true
@@ -41,7 +44,7 @@ class AccountViewModel: ObservableObject {
     @Published var globalActivitiesThisWeek: [GlobalActivityThisWeekDomainModel] = Array()
     @Published var stats = [UserActivityStatDomainModel]()
         
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase, getUserActivityUseCase: GetUserActivityUseCase, viewGlobalActivityThisWeekUseCase: ViewGlobalActivityThisWeekUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, viewAccountUseCase: ViewAccountUseCase) {
+    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase, getUserActivityUseCase: GetUserActivityUseCase, viewGlobalActivityThisWeekUseCase: ViewGlobalActivityThisWeekUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, viewAccountUseCase: ViewAccountUseCase, getGlobalActivityEnabledUseCase: GetGlobalActivityEnabledUseCase) {
         
         self.flowDelegate = flowDelegate
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
@@ -50,6 +53,7 @@ class AccountViewModel: ObservableObject {
         self.getUserActivityUseCase = getUserActivityUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.viewAccountUseCase = viewAccountUseCase
+        self.getGlobalActivityEnabledUseCase = getGlobalActivityEnabledUseCase
         
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
@@ -129,6 +133,11 @@ class AccountViewModel: ObservableObject {
             self?.stats = userActivity.stats
         }
         .store(in: &cancellables)
+        
+        getGlobalActivityEnabledUseCase
+            .getEnabledPublisher()
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$globalActivityIsEnabled)
     }
     
     deinit {
