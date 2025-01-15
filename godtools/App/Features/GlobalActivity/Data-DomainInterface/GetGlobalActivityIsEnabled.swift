@@ -21,7 +21,7 @@ class GetGlobalActivityIsEnabled: GetGlobalActivityIsEnabledInterface {
     func getIsEnabledPublisher() -> AnyPublisher<Bool, Never> {
         
         return remoteConfigRepository
-            .getRemoteConfigChangedPublisher()
+            .getRemoteConfigPublisher()
             .map { (dataModel: RemoteConfigDataModel?) in
                 return dataModel?.globalActivityIsEnabled ?? false
             }

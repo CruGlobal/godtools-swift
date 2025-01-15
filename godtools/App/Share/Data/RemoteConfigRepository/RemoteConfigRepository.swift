@@ -14,18 +14,22 @@ class RemoteConfigRepository {
     
     private static let sharedRemoteConfigId: String = "RemoteConfigRepository.shared.remoteConfig.id"
     
-    private let api: RemoteConfigApiInterface
-    private let cache: RemoteConfigCache
+    private let remoteDatabase: RemoteConfigRemoteDatabaseInterface
     
-    init(api: RemoteConfigApiInterface, cache: RemoteConfigCache) {
+    init(remoteDatabase: RemoteConfigRemoteDatabaseInterface) {
         
-        self.api = api
-        self.cache = cache
+        self.remoteDatabase = remoteDatabase
     }
     
-    func getRemoteConfigChangedPublisher(id: String = RemoteConfigRepository.sharedRemoteConfigId) -> AnyPublisher<RemoteConfigDataModel?, Never> {
+    func syncDataPublisher() -> AnyPublisher<Void, Never> {
         
-        return cache.getRemoteConfigChangedPublisher(id: id)
+        return remoteDatabase.syncFromRemoteDatabasePublisher()
+            .eraseToAnyPublisher()
+    }
+    
+    func getRemoteConfigPublisher(id: String = RemoteConfigRepository.sharedRemoteConfigId) -> AnyPublisher<RemoteConfigDataModel?, Never> {
+        
+        return remoteDatabase.getRemoteConfigPublisher()
             .eraseToAnyPublisher()
     }
 }

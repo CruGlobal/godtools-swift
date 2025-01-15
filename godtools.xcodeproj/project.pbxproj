@@ -61,6 +61,9 @@
 		45074B462D37FEC3004083F3 /* GetGlobalActivityEnabledUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45074B452D37FEC3004083F3 /* GetGlobalActivityEnabledUseCase.swift */; };
 		45074B482D38017D004083F3 /* GetGlobalActivityIsEnabledInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45074B472D380147004083F3 /* GetGlobalActivityIsEnabledInterface.swift */; };
 		45074B4A2D3801BE004083F3 /* GetGlobalActivityIsEnabled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45074B492D3801BA004083F3 /* GetGlobalActivityIsEnabled.swift */; };
+		45074B502D380F81004083F3 /* FirebaseRemoteConfigSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 45074B4F2D380F81004083F3 /* FirebaseRemoteConfigSwift */; };
+		45074B572D384B7B004083F3 /* FirebaseRemoteConfigWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45074B532D384B7B004083F3 /* FirebaseRemoteConfigWrapper.swift */; };
+		45074B582D384B7B004083F3 /* RemoteConfigRemoteDatabaseInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45074B552D384B7B004083F3 /* RemoteConfigRemoteDatabaseInterface.swift */; };
 		450A3A4B282D38C300FC2E14 /* TransparentModalCustomViewLayoutType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450A3A4A282D38C300FC2E14 /* TransparentModalCustomViewLayoutType.swift */; };
 		450ADC452BECFE2F00988455 /* MockAppLanguagesRepositorySync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450ADC442BECFE2F00988455 /* MockAppLanguagesRepositorySync.swift */; };
 		450B7FC22B2B53A2000B9035 /* ToolSettingsToolLanguagesListTypeDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450B7FC12B2B53A2000B9035 /* ToolSettingsToolLanguagesListTypeDomainModel.swift */; };
@@ -409,10 +412,6 @@
 		4550BC722A33B2CD00256DEE /* UserIsAuthenticatedDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4550BC712A33B2CD00256DEE /* UserIsAuthenticatedDomainModel.swift */; };
 		455258492D36F66E00FAC98D /* RemoteConfigRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455258472D36F66E00FAC98D /* RemoteConfigRepository.swift */; };
 		4552584A2D36F66E00FAC98D /* RemoteConfigDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455258462D36F66E00FAC98D /* RemoteConfigDataModel.swift */; };
-		4552584E2D36F6D700FAC98D /* RemoteConfigCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4552584D2D36F6D200FAC98D /* RemoteConfigCache.swift */; };
-		455258512D36F72E00FAC98D /* RealmRemoteConfigObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455258502D36F71800FAC98D /* RealmRemoteConfigObject.swift */; };
-		455258542D36F82B00FAC98D /* RemoteConfigApiInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455258532D36F82600FAC98D /* RemoteConfigApiInterface.swift */; };
-		455258582D37007E00FAC98D /* FirebaseRemoteConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455258572D37007800FAC98D /* FirebaseRemoteConfig.swift */; };
 		4552F54A2AD4745A0075415E /* TrackScreenViewAnalyticsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4552F5472AD474590075415E /* TrackScreenViewAnalyticsUseCase.swift */; };
 		4552F54B2AD4745A0075415E /* TrackActionAnalyticsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4552F5482AD4745A0075415E /* TrackActionAnalyticsUseCase.swift */; };
 		4552F54C2AD4745A0075415E /* TrackExitLinkAnalyticsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4552F5492AD4745A0075415E /* TrackExitLinkAnalyticsUseCase.swift */; };
@@ -1756,6 +1755,8 @@
 		45074B452D37FEC3004083F3 /* GetGlobalActivityEnabledUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetGlobalActivityEnabledUseCase.swift; sourceTree = "<group>"; };
 		45074B472D380147004083F3 /* GetGlobalActivityIsEnabledInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetGlobalActivityIsEnabledInterface.swift; sourceTree = "<group>"; };
 		45074B492D3801BA004083F3 /* GetGlobalActivityIsEnabled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetGlobalActivityIsEnabled.swift; sourceTree = "<group>"; };
+		45074B532D384B7B004083F3 /* FirebaseRemoteConfigWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseRemoteConfigWrapper.swift; sourceTree = "<group>"; };
+		45074B552D384B7B004083F3 /* RemoteConfigRemoteDatabaseInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteConfigRemoteDatabaseInterface.swift; sourceTree = "<group>"; };
 		450A3A4A282D38C300FC2E14 /* TransparentModalCustomViewLayoutType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentModalCustomViewLayoutType.swift; sourceTree = "<group>"; };
 		450ADC442BECFE2F00988455 /* MockAppLanguagesRepositorySync.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockAppLanguagesRepositorySync.swift; sourceTree = "<group>"; };
 		450B7FC12B2B53A2000B9035 /* ToolSettingsToolLanguagesListTypeDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolSettingsToolLanguagesListTypeDomainModel.swift; sourceTree = "<group>"; };
@@ -2094,10 +2095,6 @@
 		4550BC712A33B2CD00256DEE /* UserIsAuthenticatedDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIsAuthenticatedDomainModel.swift; sourceTree = "<group>"; };
 		455258462D36F66E00FAC98D /* RemoteConfigDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteConfigDataModel.swift; sourceTree = "<group>"; };
 		455258472D36F66E00FAC98D /* RemoteConfigRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteConfigRepository.swift; sourceTree = "<group>"; };
-		4552584D2D36F6D200FAC98D /* RemoteConfigCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteConfigCache.swift; sourceTree = "<group>"; };
-		455258502D36F71800FAC98D /* RealmRemoteConfigObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmRemoteConfigObject.swift; sourceTree = "<group>"; };
-		455258532D36F82600FAC98D /* RemoteConfigApiInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteConfigApiInterface.swift; sourceTree = "<group>"; };
-		455258572D37007800FAC98D /* FirebaseRemoteConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseRemoteConfig.swift; sourceTree = "<group>"; };
 		4552F5472AD474590075415E /* TrackScreenViewAnalyticsUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackScreenViewAnalyticsUseCase.swift; sourceTree = "<group>"; };
 		4552F5482AD4745A0075415E /* TrackActionAnalyticsUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackActionAnalyticsUseCase.swift; sourceTree = "<group>"; };
 		4552F5492AD4745A0075415E /* TrackExitLinkAnalyticsUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackExitLinkAnalyticsUseCase.swift; sourceTree = "<group>"; };
@@ -3472,6 +3469,7 @@
 				457771B629A00C5C00EA8115 /* FirebaseDynamicLinks in Frameworks */,
 				45E7D4C42977430A008C7503 /* ZipArchive in Frameworks */,
 				D4997E0E28D4CED800205B4C /* YouTubeiOSPlayerHelper in Frameworks */,
+				45074B502D380F81004083F3 /* FirebaseRemoteConfigSwift in Frameworks */,
 				457771B429A00C5C00EA8115 /* FirebaseCrashlytics in Frameworks */,
 				45E39EDC27457E0C006A59E4 /* Lottie in Frameworks */,
 				457771B829A00C5C00EA8115 /* FirebaseInAppMessaging-Beta in Frameworks */,
@@ -3810,6 +3808,23 @@
 				45070A7C2ACF42AD00229EDD /* AppSkipBarItem.swift */,
 			);
 			path = ButtonsWithTitle;
+			sourceTree = "<group>";
+		};
+		45074B542D384B7B004083F3 /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				45074B532D384B7B004083F3 /* FirebaseRemoteConfigWrapper.swift */,
+			);
+			path = Firebase;
+			sourceTree = "<group>";
+		};
+		45074B562D384B7B004083F3 /* RemoteDatabase */ = {
+			isa = PBXGroup;
+			children = (
+				45074B542D384B7B004083F3 /* Firebase */,
+				45074B552D384B7B004083F3 /* RemoteConfigRemoteDatabaseInterface.swift */,
+			);
+			path = RemoteDatabase;
 			sourceTree = "<group>";
 		};
 		450ADC412BECFE1F00988455 /* Data */ = {
@@ -5523,46 +5538,11 @@
 		455258482D36F66E00FAC98D /* RemoteConfigRepository */ = {
 			isa = PBXGroup;
 			children = (
-				455258522D36F82200FAC98D /* Api */,
-				4552584B2D36F6CE00FAC98D /* Cache */,
+				45074B562D384B7B004083F3 /* RemoteDatabase */,
 				455258472D36F66E00FAC98D /* RemoteConfigRepository.swift */,
 				455258462D36F66E00FAC98D /* RemoteConfigDataModel.swift */,
 			);
 			path = RemoteConfigRepository;
-			sourceTree = "<group>";
-		};
-		4552584B2D36F6CE00FAC98D /* Cache */ = {
-			isa = PBXGroup;
-			children = (
-				4552584D2D36F6D200FAC98D /* RemoteConfigCache.swift */,
-				4552584F2D36F6F400FAC98D /* Models */,
-			);
-			path = Cache;
-			sourceTree = "<group>";
-		};
-		4552584F2D36F6F400FAC98D /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				455258502D36F71800FAC98D /* RealmRemoteConfigObject.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		455258522D36F82200FAC98D /* Api */ = {
-			isa = PBXGroup;
-			children = (
-				455258562D37007400FAC98D /* Firebase */,
-				455258532D36F82600FAC98D /* RemoteConfigApiInterface.swift */,
-			);
-			path = Api;
-			sourceTree = "<group>";
-		};
-		455258562D37007400FAC98D /* Firebase */ = {
-			isa = PBXGroup;
-			children = (
-				455258572D37007800FAC98D /* FirebaseRemoteConfig.swift */,
-			);
-			path = Firebase;
 			sourceTree = "<group>";
 		};
 		455582D0269F2C1000C3FF14 /* Views */ = {
@@ -12088,6 +12068,7 @@
 				45D40C6A2A5315D500E8E4AE /* Fuzi */,
 				4581EAA22BFBE194008115FF /* RealmSwift */,
 				45F671902C3344010017C8C2 /* LocalizationServices */,
+				45074B4F2D380F81004083F3 /* FirebaseRemoteConfigSwift */,
 			);
 			productName = godtools;
 			productReference = 4F5732891EA69CF00082035C /* godtools.app */;
@@ -12851,7 +12832,6 @@
 				45F7162C290A12D70019B715 /* ShareAStoryWithUsWebContent.swift in Sources */,
 				D47DF0422B28F94A0079219B /* RealmDownloadedLanguage.swift in Sources */,
 				45AE975127C97A9500C2CB33 /* Image+MobileContentRenderableModel.swift in Sources */,
-				4552584E2D36F6D700FAC98D /* RemoteConfigCache.swift in Sources */,
 				454B47D12AE01F9E00C7B5E7 /* GetOnboardingTutorialIsAvailableUseCase.swift in Sources */,
 				D4B060072915647B005852D0 /* KeychainServiceResponse.swift in Sources */,
 				45A8352A2AD1AE12004F5593 /* ToolDetailsFeatureDataLayerDependencies.swift in Sources */,
@@ -13045,7 +13025,6 @@
 				457FEEFE2CBEA3C90092E84B /* LinkShareable.swift in Sources */,
 				454CA2042B7BD358009A3976 /* ViewAppLanguagesUseCase.swift in Sources */,
 				452D55372A33615900DE70BF /* MenuAccountSectionVisibility.swift in Sources */,
-				455258582D37007E00FAC98D /* FirebaseRemoteConfig.swift in Sources */,
 				4598BD122BF7DF6800196463 /* AuthenticationProviderInterface.swift in Sources */,
 				45373D762BE110390058E990 /* LocalizableStringKeys.swift in Sources */,
 				453AC11428F4A10400291791 /* FollowUpsService.swift in Sources */,
@@ -13116,7 +13095,6 @@
 				45EA98F82AFD67CA00E7EA9A /* GetCreatingToolScreenShareSessionTimedOutInterfaceStringsRepositoryInterface.swift in Sources */,
 				45F3D39129A4FC9A00446F69 /* OnboardingTutorialReadyForEveryConversationView.swift in Sources */,
 				458CFEA229D4E15D007B423C /* MenuStringKeys.swift in Sources */,
-				455258512D36F72E00FAC98D /* RealmRemoteConfigObject.swift in Sources */,
 				45C152342A43D1BD00F2A1E8 /* ToolSettingsOptionsView.swift in Sources */,
 				45369AD22AFA7FA500BD10F0 /* ToolScreenShareTutorialDomainModel.swift in Sources */,
 				45BDA64D2954FF08007E259B /* WebArchiveOperation.swift in Sources */,
@@ -13308,7 +13286,6 @@
 				457766F12AD71C070093B19A /* GetToolDetailsMediaRepository.swift in Sources */,
 				45F305832A9BAF4200BDFB93 /* SwiftUIPreviewDatabase.swift in Sources */,
 				450EE28829A6648900524F64 /* DashboardPathDeepLinkParser.swift in Sources */,
-				455258542D36F82B00FAC98D /* RemoteConfigApiInterface.swift in Sources */,
 				45AC9DEE2B28A9CD00DEEBFE /* DownloadableLanguagesViewModel.swift in Sources */,
 				4585BF642AC391D200A6D720 /* SetAppLanguageUseCase.swift in Sources */,
 				457739E827A0955000999270 /* MobileContentViewWidth.swift in Sources */,
@@ -13397,6 +13374,8 @@
 				45060D1E2B38815600A2A44C /* ResourcesFilter.swift in Sources */,
 				455583EA269F2DA500C3FF14 /* MobileContentView.swift in Sources */,
 				45BB42A42CBEA1C300290F64 /* MobileContentRendererLanguages.swift in Sources */,
+				45074B572D384B7B004083F3 /* FirebaseRemoteConfigWrapper.swift in Sources */,
+				45074B582D384B7B004083F3 /* RemoteConfigRemoteDatabaseInterface.swift in Sources */,
 				45E8FAAB2883020A00D7D569 /* FileCacheLocation.swift in Sources */,
 				45EA5AB22B22482900D9E330 /* ToolSettingsDomainLayerDependencies.swift in Sources */,
 				D1CE0959273EACCC00C8832C /* TutorialVideoAnalytics.swift in Sources */,
@@ -15332,7 +15311,7 @@
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 10.24.0;
+				minimumVersion = 11.7.0;
 			};
 		};
 		4581EAA12BFBE194008115FF /* XCRemoteSwiftPackageReference "realm-swift" */ = {
@@ -15426,6 +15405,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		45074B4F2D380F81004083F3 /* FirebaseRemoteConfigSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 457771B029A00C5C00EA8115 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseRemoteConfigSwift;
+		};
 		452556432C383C3F00AA0046 /* RealmSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 4581EAA12BFBE194008115FF /* XCRemoteSwiftPackageReference "realm-swift" */;
