@@ -11,9 +11,7 @@ import Foundation
 import Combine
 
 class RemoteConfigRepository {
-    
-    private static let sharedRemoteConfigId: String = "RemoteConfigRepository.shared.remoteConfig.id"
-    
+        
     private let remoteDatabase: RemoteConfigRemoteDatabaseInterface
     
     init(remoteDatabase: RemoteConfigRemoteDatabaseInterface) {
@@ -27,7 +25,7 @@ class RemoteConfigRepository {
             .eraseToAnyPublisher()
     }
     
-    func getRemoteConfigPublisher(id: String = RemoteConfigRepository.sharedRemoteConfigId) -> AnyPublisher<RemoteConfigDataModel?, Never> {
+    func getRemoteConfigPublisher() -> AnyPublisher<RemoteConfigDataModel?, Never> {
         
         return remoteDatabase.getRemoteConfigPublisher()
             .eraseToAnyPublisher()
