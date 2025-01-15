@@ -62,8 +62,10 @@
 		45074B482D38017D004083F3 /* GetGlobalActivityIsEnabledInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45074B472D380147004083F3 /* GetGlobalActivityIsEnabledInterface.swift */; };
 		45074B4A2D3801BE004083F3 /* GetGlobalActivityIsEnabled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45074B492D3801BA004083F3 /* GetGlobalActivityIsEnabled.swift */; };
 		45074B502D380F81004083F3 /* FirebaseRemoteConfigSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 45074B4F2D380F81004083F3 /* FirebaseRemoteConfigSwift */; };
-		45074B572D384B7B004083F3 /* FirebaseRemoteConfigWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45074B532D384B7B004083F3 /* FirebaseRemoteConfigWrapper.swift */; };
 		45074B582D384B7B004083F3 /* RemoteConfigRemoteDatabaseInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45074B552D384B7B004083F3 /* RemoteConfigRemoteDatabaseInterface.swift */; };
+		45074B5C2D384FD2004083F3 /* FirebaseRemoteConfigSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 45074B5B2D384FD2004083F3 /* FirebaseRemoteConfigSwift */; };
+		45074B602D385193004083F3 /* DisabledRemoteConfigDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45074B5F2D38518A004083F3 /* DisabledRemoteConfigDatabase.swift */; };
+		45074B622D3851AD004083F3 /* FirebaseRemoteConfigWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45074B612D3851AD004083F3 /* FirebaseRemoteConfigWrapper.swift */; };
 		450A3A4B282D38C300FC2E14 /* TransparentModalCustomViewLayoutType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450A3A4A282D38C300FC2E14 /* TransparentModalCustomViewLayoutType.swift */; };
 		450ADC452BECFE2F00988455 /* MockAppLanguagesRepositorySync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450ADC442BECFE2F00988455 /* MockAppLanguagesRepositorySync.swift */; };
 		450B7FC22B2B53A2000B9035 /* ToolSettingsToolLanguagesListTypeDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450B7FC12B2B53A2000B9035 /* ToolSettingsToolLanguagesListTypeDomainModel.swift */; };
@@ -1755,8 +1757,9 @@
 		45074B452D37FEC3004083F3 /* GetGlobalActivityEnabledUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetGlobalActivityEnabledUseCase.swift; sourceTree = "<group>"; };
 		45074B472D380147004083F3 /* GetGlobalActivityIsEnabledInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetGlobalActivityIsEnabledInterface.swift; sourceTree = "<group>"; };
 		45074B492D3801BA004083F3 /* GetGlobalActivityIsEnabled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetGlobalActivityIsEnabled.swift; sourceTree = "<group>"; };
-		45074B532D384B7B004083F3 /* FirebaseRemoteConfigWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseRemoteConfigWrapper.swift; sourceTree = "<group>"; };
 		45074B552D384B7B004083F3 /* RemoteConfigRemoteDatabaseInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteConfigRemoteDatabaseInterface.swift; sourceTree = "<group>"; };
+		45074B5F2D38518A004083F3 /* DisabledRemoteConfigDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisabledRemoteConfigDatabase.swift; sourceTree = "<group>"; };
+		45074B612D3851AD004083F3 /* FirebaseRemoteConfigWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseRemoteConfigWrapper.swift; sourceTree = "<group>"; };
 		450A3A4A282D38C300FC2E14 /* TransparentModalCustomViewLayoutType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentModalCustomViewLayoutType.swift; sourceTree = "<group>"; };
 		450ADC442BECFE2F00988455 /* MockAppLanguagesRepositorySync.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockAppLanguagesRepositorySync.swift; sourceTree = "<group>"; };
 		450B7FC12B2B53A2000B9035 /* ToolSettingsToolLanguagesListTypeDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolSettingsToolLanguagesListTypeDomainModel.swift; sourceTree = "<group>"; };
@@ -3451,6 +3454,7 @@
 				45A416122A9943D50030E2C7 /* FirebaseCrashlytics in Frameworks */,
 				45A4160E2A9943D50030E2C7 /* ZipArchive in Frameworks */,
 				45A416102A9943D50030E2C7 /* FirebaseAnalytics in Frameworks */,
+				45074B5C2D384FD2004083F3 /* FirebaseRemoteConfigSwift in Frameworks */,
 				45A416162A9943D50030E2C7 /* FirebaseInAppMessaging-Beta in Frameworks */,
 				1B1A4359D05325DC53708408 /* libPods-godtoolsUITests.a in Frameworks */,
 			);
@@ -3810,18 +3814,11 @@
 			path = ButtonsWithTitle;
 			sourceTree = "<group>";
 		};
-		45074B542D384B7B004083F3 /* Firebase */ = {
-			isa = PBXGroup;
-			children = (
-				45074B532D384B7B004083F3 /* FirebaseRemoteConfigWrapper.swift */,
-			);
-			path = Firebase;
-			sourceTree = "<group>";
-		};
 		45074B562D384B7B004083F3 /* RemoteDatabase */ = {
 			isa = PBXGroup;
 			children = (
-				45074B542D384B7B004083F3 /* Firebase */,
+				45074B5F2D38518A004083F3 /* DisabledRemoteConfigDatabase.swift */,
+				45074B612D3851AD004083F3 /* FirebaseRemoteConfigWrapper.swift */,
 				45074B552D384B7B004083F3 /* RemoteConfigRemoteDatabaseInterface.swift */,
 			);
 			path = RemoteDatabase;
@@ -12031,6 +12028,7 @@
 				45A416192A9943D50030E2C7 /* Starscream */,
 				45A4161B2A9943D50030E2C7 /* Fuzi */,
 				452556432C383C3F00AA0046 /* RealmSwift */,
+				45074B5B2D384FD2004083F3 /* FirebaseRemoteConfigSwift */,
 			);
 			productName = godtoolsUITests;
 			productReference = 4F12296C20852BE3008842CC /* godtoolsUITests.xctest */;
@@ -12929,6 +12927,7 @@
 				4512D4D22B29127C00DFAFB3 /* GetToolSettingsToolLanguagesListRepository.swift in Sources */,
 				458CFE8E29D4E0B9007B423C /* ArticleWebView.swift in Sources */,
 				4598BD0E2BF7DF6800196463 /* FacebookAuthentication+AuthenticationProviderInterface.swift in Sources */,
+				45074B622D3851AD004083F3 /* FirebaseRemoteConfigWrapper.swift in Sources */,
 				45131A0D2AB498AD0085AF0D /* ColorPalette.swift in Sources */,
 				456AC1912B8CCA6100169C11 /* TrackShareShareableTap.swift in Sources */,
 				45E4DBCD2BECFB20006ED2F3 /* AppLanguagesRepositorySyncInterface.swift in Sources */,
@@ -13374,7 +13373,6 @@
 				45060D1E2B38815600A2A44C /* ResourcesFilter.swift in Sources */,
 				455583EA269F2DA500C3FF14 /* MobileContentView.swift in Sources */,
 				45BB42A42CBEA1C300290F64 /* MobileContentRendererLanguages.swift in Sources */,
-				45074B572D384B7B004083F3 /* FirebaseRemoteConfigWrapper.swift in Sources */,
 				45074B582D384B7B004083F3 /* RemoteConfigRemoteDatabaseInterface.swift in Sources */,
 				45E8FAAB2883020A00D7D569 /* FileCacheLocation.swift in Sources */,
 				45EA5AB22B22482900D9E330 /* ToolSettingsDomainLayerDependencies.swift in Sources */,
@@ -13751,6 +13749,7 @@
 				454BFDA52AFD8CD200104BC8 /* TractRemoteShareSubscriberError.swift in Sources */,
 				45070A822ACF42AD00229EDD /* AppSkipBarItem.swift in Sources */,
 				45AD202C25938A9800A096A0 /* SharedUserDefaultsCache.swift in Sources */,
+				45074B602D385193004083F3 /* DisabledRemoteConfigDatabase.swift in Sources */,
 				D4C2A59A2C3CAD0E0035AB4D /* StoreUserLessonFiltersRepository.swift in Sources */,
 				45AE973E27C97A9400C2CB33 /* MultiplatformModals.swift in Sources */,
 				4578783527C41C50004552D5 /* BackgroundImageModel.swift in Sources */,
@@ -15406,6 +15405,11 @@
 
 /* Begin XCSwiftPackageProductDependency section */
 		45074B4F2D380F81004083F3 /* FirebaseRemoteConfigSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 457771B029A00C5C00EA8115 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseRemoteConfigSwift;
+		};
+		45074B5B2D384FD2004083F3 /* FirebaseRemoteConfigSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 457771B029A00C5C00EA8115 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseRemoteConfigSwift;

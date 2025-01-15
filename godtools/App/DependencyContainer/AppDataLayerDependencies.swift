@@ -229,8 +229,9 @@ class AppDataLayerDependencies {
     }
     
     func getRemoteConfigRepository() -> RemoteConfigRepository {
+        
         return RemoteConfigRepository(
-            remoteDatabase: FirebaseRemoteConfigWrapper()
+            remoteDatabase: firebaseEnabled ? FirebaseRemoteConfigWrapper() : DisabledRemoteConfigDatabase()
         )
     }
     
