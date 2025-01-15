@@ -15,6 +15,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
     
     private static let defaultStartingDashboardTab: DashboardTabTypeDomainModel = .favorites
     
+    private let remoteConfigRepository: RemoteConfigRepository
     private let resourcesRepository: ResourcesRepository
     private let toolLanguageDownloader: ToolLanguageDownloader
     private let followUpsService: FollowUpsService
@@ -61,6 +62,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         
         self.appDiContainer = appDiContainer
         self.navigationController = AppNavigationController(navigationBarAppearance: navigationBarAppearance)
+        self.remoteConfigRepository = appDiContainer.dataLayer.getRemoteConfigRepository()
         self.resourcesRepository = appDiContainer.dataLayer.getResourcesRepository()
         self.toolLanguageDownloader = appDiContainer.feature.appLanguage.dataLayer.getToolLanguageDownloader()
         self.followUpsService = appDiContainer.dataLayer.getFollowUpsService()
@@ -488,6 +490,13 @@ extension AppFlow {
 
             } receiveValue: { authUser in
 
+            }
+            .store(in: &cancellables)
+        
+        remoteConfigRepository
+            .syncDataPublisher()
+            .sink { _ in
+                
             }
             .store(in: &cancellables)
     }
