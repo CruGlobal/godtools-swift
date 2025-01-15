@@ -8,7 +8,7 @@
 
 import Foundation
 import Combine
-import FirebaseRemoteConfigInternal
+import FirebaseRemoteConfig
 
 class FirebaseRemoteConfigWrapper: RemoteConfigRemoteDatabaseInterface {
     
