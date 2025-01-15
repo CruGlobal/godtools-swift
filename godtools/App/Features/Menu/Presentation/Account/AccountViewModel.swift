@@ -135,7 +135,7 @@ class AccountViewModel: ObservableObject {
         .store(in: &cancellables)
         
         getGlobalActivityEnabledUseCase
-            .getEnabledPublisher()
+            .getIsEnabledPublisher()
             .receive(on: DispatchQueue.main)
             .assign(to: &$globalActivityIsEnabled)
     }

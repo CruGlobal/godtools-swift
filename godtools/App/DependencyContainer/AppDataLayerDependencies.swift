@@ -228,6 +228,13 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getRemoteConfigRepository() -> RemoteConfigRepository {
+        return RemoteConfigRepository(
+            api: FirebaseRemoteConfig(),
+            cache: RemoteConfigCache(realmDatabase: sharedRealmDatabase)
+        )
+    }
+    
     func getResourcesFileCache() -> ResourcesSHA256FileCache {
         return ResourcesSHA256FileCache(realmDatabase: sharedRealmDatabase)
     }

@@ -11,12 +11,16 @@ import Combine
 
 class GetGlobalActivityEnabledUseCase {
     
-    init() {
+    private let getGlobalActivityIsEnabled: GetGlobalActivityIsEnabledInterface
+    
+    init(getGlobalActivityIsEnabled: GetGlobalActivityIsEnabledInterface) {
         
+        self.getGlobalActivityIsEnabled = getGlobalActivityIsEnabled
     }
     
-    func getEnabledPublisher() -> AnyPublisher<Bool, Never> {
-        return Just(false)
+    func getIsEnabledPublisher() -> AnyPublisher<Bool, Never> {
+        
+        return getGlobalActivityIsEnabled.getIsEnabledPublisher()
             .eraseToAnyPublisher()
     }
 }

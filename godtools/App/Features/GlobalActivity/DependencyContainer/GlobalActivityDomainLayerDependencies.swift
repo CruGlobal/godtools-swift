@@ -18,7 +18,9 @@ class GlobalActivityDomainLayerDependencies {
     }
     
     func getGlobalActivityEnabledUseCase() -> GetGlobalActivityEnabledUseCase {
-        return GetGlobalActivityEnabledUseCase()
+        return GetGlobalActivityEnabledUseCase(
+            getGlobalActivityIsEnabled: dataLayer.getGlobalActivityIsEnabled()
+        )
     }
     
     func getViewGlobalActivityThisWeekUseCase() -> ViewGlobalActivityThisWeekUseCase {
