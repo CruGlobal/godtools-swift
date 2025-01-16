@@ -10,5 +10,5 @@ import Foundation
 
 struct RemoteConfigDataModel {
     
-    let globalActivityIsEnabled: Bool
+    let globalActivityIsEnabled: Bool?
 }

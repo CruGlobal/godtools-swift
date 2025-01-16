@@ -43,11 +43,9 @@ class FirebaseRemoteConfigWrapper: RemoteConfigRemoteDatabaseInterface {
         
         let globalActivityIsEnabledValue: RemoteConfigValue? = remoteConfig.configValue(forKey: "ui_account_globalactivity_enabled")
         
-        guard let globalActivityIsEnabled = globalActivityIsEnabledValue?.boolValue else {
-            return nil
-        }
-        
-        return RemoteConfigDataModel(globalActivityIsEnabled: globalActivityIsEnabled)
+        return RemoteConfigDataModel(
+            globalActivityIsEnabled: globalActivityIsEnabledValue?.boolValue
+        )
     }
 }
 
