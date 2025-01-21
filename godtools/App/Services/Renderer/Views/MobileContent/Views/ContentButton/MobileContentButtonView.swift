@@ -11,12 +11,16 @@ import UIKit
 
 class MobileContentButtonView: MobileContentView {
         
+    private static let topPadding: CGFloat = 4
+    private static let bottomPadding: CGFloat = 4
+    
     private let viewModel: MobileContentButtonViewModel
     private let buttonView: UIView = UIView()
     private let buttonTitle: UILabel = UILabel()
     private let buttonImagePaddingToButtonTitle: CGFloat = 12
     private let minimumButtonHeight: CGFloat = 21
     private let buttonTopAndBottomPaddingToTitle: CGFloat = 8
+    private let contentInsets: UIEdgeInsets
     
     private var buttonTitleSizeToFitSize: CGSize?
     private var buttonImageView: UIImageView?
@@ -26,6 +30,7 @@ class MobileContentButtonView: MobileContentView {
     init(viewModel: MobileContentButtonViewModel) {
         
         self.viewModel = viewModel
+        self.contentInsets = UIEdgeInsets(top: Self.topPadding, left: 0, bottom: Self.bottomPadding, right: 0)
         
         super.init(viewModel: viewModel, frame: UIScreen.main.bounds)
         
@@ -88,8 +93,8 @@ class MobileContentButtonView: MobileContentView {
         // buttonView
         addSubview(buttonView)
         buttonView.translatesAutoresizingMaskIntoConstraints = false
-        _ = buttonView.constrainTopToView(view: self)
-        _ = buttonView.constrainBottomToView(view: self)
+        _ = buttonView.constrainTopToView(view: self, constant: contentInsets.top)
+        _ = buttonView.constrainBottomToView(view: self, constant: contentInsets.bottom)
         
         _ = buttonView.addHeightConstraint(
             constant: minimumButtonHeight,
