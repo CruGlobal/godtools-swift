@@ -13,7 +13,6 @@ struct AccountSectionsView: View {
     static let sectionTitleFont: Font = FontLibrary.sfProTextRegular.font(size: 22)
     static let sectionTitleColor: Color = ColorPalette.gtGrey.color
     
-    private let sections: [AccountSectionType] = [.activity, .globalActivity]
     private let sectionHorizontalPadding: CGFloat = 20
     
     @State private var selectedSegmentIndex: Int = 0
@@ -28,11 +27,24 @@ struct AccountSectionsView: View {
         self.geometry = geometry
     }
     
+    private var accountSections: [AccountSectionType] {
+        
+        var accountSections: [AccountSectionType] = Array()
+        
+        accountSections.append(.activity)
+        
+        if viewModel.globalActivityIsEnabled {
+            accountSections.append(.globalActivity)
+        }
+        
+        return accountSections
+    }
+    
     var body: some View {
         
         let sectionFrameWidth: CGFloat = geometry.size.width - (sectionHorizontalPadding * 2)
         
-        let segmentTitles: [String] = sections.map({
+        let segmentTitles: [String] = accountSections.map({
             switch $0 {
             case .activity:
                 return viewModel.activityButtonTitle
@@ -49,7 +61,7 @@ struct AccountSectionsView: View {
                 
                 SegmentControl(selectedIndex: $selectedSegmentIndex, segments: segmentTitles, segmentTappedClosure: { (index: Int) in
                     
-                    switch sections[selectedSegmentIndex] {
+                    switch accountSections[selectedSegmentIndex] {
                     case .activity:
                         viewModel.activityViewed()
                     case .globalActivity:
@@ -66,7 +78,7 @@ struct AccountSectionsView: View {
             
             VStack(alignment: .leading, spacing: 0) {
              
-                switch sections[selectedSegmentIndex] {
+                switch accountSections[selectedSegmentIndex] {
                     
                 case .activity:
                     
@@ -86,7 +98,7 @@ struct AccountSectionsView: View {
             .frame(width: sectionFrameWidth, alignment: .leading)
             .padding(EdgeInsets(top: 20, leading: sectionHorizontalPadding, bottom: 20, trailing: sectionHorizontalPadding))
             .onAppear {
-                switch sections[selectedSegmentIndex] {
+                switch accountSections[selectedSegmentIndex] {
                 case .activity:
                     viewModel.activityViewed()
                 case .globalActivity:
