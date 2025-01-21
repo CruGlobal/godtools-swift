@@ -34,6 +34,12 @@ class GlobalActivityDataLayerDependencies {
     
     // MARK: - Domain Interface
     
+    func getGlobalActivityIsEnabled() -> GetGlobalActivityIsEnabledInterface {
+        return GetGlobalActivityIsEnabled(
+            remoteConfigRepository: coreDataLayer.getRemoteConfigRepository()
+        )
+    }
+    
     func getGlobalActivityThisWeekRepository() -> GetGlobalActivityThisWeekRepositoryInterface {
         
         return GetGlobalActivityThisWeekRepository(

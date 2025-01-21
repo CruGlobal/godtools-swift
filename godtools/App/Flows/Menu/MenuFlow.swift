@@ -526,7 +526,8 @@ extension MenuFlow {
             getUserActivityUseCase: appDiContainer.domainLayer.getUserActivityUseCase(),
             viewGlobalActivityThisWeekUseCase: appDiContainer.feature.globalActivity.domainLayer.getViewGlobalActivityThisWeekUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
-            viewAccountUseCase: appDiContainer.domainLayer.getViewAccountUseCase()
+            viewAccountUseCase: appDiContainer.domainLayer.getViewAccountUseCase(),
+            getGlobalActivityEnabledUseCase: appDiContainer.feature.globalActivity.domainLayer.getGlobalActivityEnabledUseCase()
         )
         
         let view = AccountView(viewModel: viewModel)
