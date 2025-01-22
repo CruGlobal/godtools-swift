@@ -15,7 +15,6 @@ class MobileContentTextView: MobileContentView, NibBased {
         case loadFromNib
     }
     
-    private static let defaultLineSpacing: CGFloat = 2
     private static let defaultNumberOfLines: Int = 0
     
     private let viewType: ViewType
@@ -81,7 +80,6 @@ class MobileContentTextView: MobileContentView, NibBased {
     private func setupBinding() {
         
         let font: UIFont
-        let lineSpacing: CGFloat = additionalLabelAttributes?.lineSpacing ?? MobileContentTextView.defaultLineSpacing
         let numberOfLines: Int = additionalLabelAttributes?.numberOfLines ?? MobileContentTextView.defaultNumberOfLines
         
         if let additionalLabelAttributes = self.additionalLabelAttributes {
@@ -101,7 +99,6 @@ class MobileContentTextView: MobileContentView, NibBased {
         textLabel.text = viewModel.text
         textLabel.textColor = viewModel.textColor
         textLabel.textAlignment = viewModel.textAlignment
-        textLabel.setLineSpacing(lineSpacing: lineSpacing)
         
         if viewModel.shouldUnderlineText, let labelText = viewModel.text {
             textLabel.underline(labelText: labelText)
@@ -113,7 +110,7 @@ class MobileContentTextView: MobileContentView, NibBased {
             
             let lineHeight = viewModel.font.lineHeight
             
-            let minimumHeight = (lineHeight * minimumLines) + (lineSpacing * (minimumLines - 1))
+            let minimumHeight = lineHeight * minimumLines
             
             _ = textLabel.addHeightConstraint(constant: minimumHeight, relatedBy: NSLayoutConstraint.Relation.greaterThanOrEqual, priority: 1000)
         }
