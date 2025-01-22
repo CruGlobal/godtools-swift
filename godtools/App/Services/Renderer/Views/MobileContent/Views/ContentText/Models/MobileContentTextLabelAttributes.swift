@@ -12,6 +12,5 @@ struct MobileContentTextLabelAttributes {
     
     let fontSize: CGFloat
     let fontWeight: UIFont.Weight
-    let lineSpacing: CGFloat?
     let numberOfLines: Int?
 }
