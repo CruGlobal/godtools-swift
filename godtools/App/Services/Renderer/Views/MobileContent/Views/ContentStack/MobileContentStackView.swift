@@ -812,8 +812,21 @@ extension MobileContentStackView {
     
     private func addWidthAndHeightConstraintsToChildViewWithMaxWidthSize(childView: MobileContentView, maxWidthSize: CGFloat, maintainsAspectRatioSize: CGSize?) {
         
-        let size: CGSize = calculateSizeFromWidth(width: maxWidthSize, maintainsAspectRatioSize: maintainsAspectRatioSize)
-        let clampedSize: CGSize = clampSizeToChildrenParentSizeAndInsets(size: size)
+        let parentWidth: CGFloat = childrenParentView.frame.size.width
+        let parentWidthMinusContentHorizontalInsets: CGFloat = parentWidth - (contentInsets.left + contentInsets.right)
+        let clampedMaxWidthSizeForHorizontalInsets: CGFloat
+        
+        if maxWidthSize > parentWidthMinusContentHorizontalInsets {
+            clampedMaxWidthSizeForHorizontalInsets = parentWidthMinusContentHorizontalInsets
+        }
+        else {
+            clampedMaxWidthSizeForHorizontalInsets = maxWidthSize
+        }
+        
+        let size: CGSize = calculateSizeFromWidth(
+            width: clampedMaxWidthSizeForHorizontalInsets,
+            maintainsAspectRatioSize: maintainsAspectRatioSize
+        )
         
         var widthConstraint: NSLayoutConstraint?
         var heightConstraint: NSLayoutConstraint?
@@ -833,17 +846,17 @@ extension MobileContentStackView {
         }
         
         if let widthConstraint = widthConstraint {
-            widthConstraint.constant = clampedSize.width
+            widthConstraint.constant = size.width
         }
         else {
-            _ = childView.addWidthConstraint(constant: clampedSize.width, priority: 1000)
+            _ = childView.addWidthConstraint(constant: size.width, priority: 1000)
         }
         
         if let heightConstraint = heightConstraint {
-            heightConstraint.constant = clampedSize.height
+            heightConstraint.constant = size.height
         }
         else {
-            _ = childView.addHeightConstraint(constant: clampedSize.height, priority: 1000)
+            _ = childView.addHeightConstraint(constant: size.height, priority: 1000)
         }
     }
     
@@ -865,31 +878,6 @@ extension MobileContentStackView {
         }
         
         return CGSize(width: width, height: height)
-    }
-    
-    private func clampSizeToChildrenParentSizeAndInsets(size: CGSize) -> CGSize {
-        
-        let parentWidth: CGFloat = childrenParentView.frame.size.width
-        let parentWidthMinusContentInsets: CGFloat = parentWidth - (contentInsets.left + contentInsets.right)
-        
-        let pointsToTrim: CGFloat
-        
-        if size.width > parentWidthMinusContentInsets && parentWidthMinusContentInsets > 0 {
-            pointsToTrim = size.width - parentWidthMinusContentInsets
-        }
-        else if size.width > parentWidth && parentWidth > 0 {
-            pointsToTrim = size.width - parentWidth
-        }
-        else {
-            pointsToTrim = 0
-        }
-        
-        let clampedSize: CGSize = CGSize(
-            width: floor(size.width - pointsToTrim),
-            height: floor(size.height - pointsToTrim)
-        )
-                
-        return clampedSize
     }
 }
 
