@@ -68,9 +68,6 @@
 
 "toolDetails.bibleReferences.title" = "참고한 성경";
 
-/* This About refers to the whole app. */
-"aboutApp.navTitle" = "소개";
-
 /* This About refers to a specific tool in the app. */
 "toolDetails.about.title" = "대하여";
 

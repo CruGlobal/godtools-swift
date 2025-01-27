@@ -1,6 +1,3 @@
-/* This About refers to the whole app. */
-"aboutApp.navTitle" = "О нас";
-
 /* This About refers to a specific tool in the app. */
 "toolDetails.about.title" = "О приложении";
 "language_onboard" = "Более 90 языков";

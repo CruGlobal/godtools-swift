@@ -68,9 +68,6 @@
 
 "toolDetails.bibleReferences.title" = "الشواهد الكتابية";
 
-/* This About refers to the whole app. */
-"aboutApp.navTitle" = "حول";
-
 /* This About refers to a specific tool in the app. */
 "toolDetails.about.title" = "حول";
 
