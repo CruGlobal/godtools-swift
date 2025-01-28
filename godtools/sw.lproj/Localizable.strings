@@ -68,9 +68,6 @@
 
 "toolDetails.bibleReferences.title" = "Marejeleo ya Biblia";
 
-/* This About refers to the whole app. */
-"aboutApp.navTitle" = "Kuhusu";
-
 /* This About refers to a specific tool in the app. */
 "toolDetails.about.title" = "Kuhusu";
 

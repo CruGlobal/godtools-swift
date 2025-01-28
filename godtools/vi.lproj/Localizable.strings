@@ -68,9 +68,6 @@
 
 "toolDetails.bibleReferences.title" = "Tham khảo Kinh Thánh";
 
-/* This About refers to the whole app. */
-"aboutApp.navTitle" = "Giới thiệu";
-
 /* This About refers to a specific tool in the app. */
 "toolDetails.about.title" = "Về...";
 
@@ -373,7 +370,7 @@ Nhấn nút \"Giới thiệu\" để biết thêm về công cụ.";
 "account.activity.title" = "Hoạt động";
 
 // Language Name Strings
-"language_name_fa" = "Ba Tư (Farsi)";
+"language_name_fa" = "Tiếng Iran (Ba Tư)";
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "Hoạt động toàn cầu";
