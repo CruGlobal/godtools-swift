@@ -1,6 +1,3 @@
-/* This About refers to the whole app. */
-"aboutApp.navTitle" = "మా గురించి";
-
 /* This About refers to a specific tool in the app. */
 "toolDetails.about.title" = "గూర్చి";
 

@@ -68,9 +68,6 @@
 
 "toolDetails.bibleReferences.title" = "የመጽሐፍ ቅዱስ ማጣቀሻዎች";
 
-/* This About refers to the whole app. */
-"aboutApp.navTitle" = "ስለዚህ አፕሊኬሽን";
-
 /* This About refers to a specific tool in the app. */
 "toolDetails.about.title" = "ስለ";
 

@@ -68,9 +68,6 @@
 
 "toolDetails.bibleReferences.title" = "Referințe biblice";
 
-/* This About refers to the whole app. */
-"aboutApp.navTitle" = "Despre noi";
-
 /* This About refers to a specific tool in the app. */
 "toolDetails.about.title" = "Despre";
 
