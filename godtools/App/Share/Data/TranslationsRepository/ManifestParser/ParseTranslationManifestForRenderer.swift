@@ -16,7 +16,8 @@ class ParseTranslationManifestForRenderer: TranslationManifestParser {
         ParserConfig.companion.FEATURE_ANIMATION,
         ParserConfig.companion.FEATURE_CONTENT_CARD,
         ParserConfig.companion.FEATURE_FLOW,
-        ParserConfig.companion.FEATURE_MULTISELECT
+        ParserConfig.companion.FEATURE_MULTISELECT,
+        ParserConfig.companion.FEATURE_PAGE_COLLECTION
     ]
         
     init(infoPlist: InfoPlist, resourcesFileCache: ResourcesSHA256FileCache) {
