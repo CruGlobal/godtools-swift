@@ -476,8 +476,8 @@ extension MobileContentStackView {
             let isAutoSpacer: Bool
             let spacerView: MobileContentSpacerView? = childView as? MobileContentSpacerView
             
-            if let spacerView = spacerView, autoSpacerViews.firstIndex(of: spacerView) != nil {
-                isAutoSpacer = true
+            if let spacerView = spacerView {
+                isAutoSpacer = spacerView.isAuto
             }
             else {
                 isAutoSpacer = false

@@ -30,4 +30,14 @@ class MobileContentSpacerViewModel: MobileContentViewModel {
         
         super.init(baseModel: spacerModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }
+    
+    var isAuto: Bool {
+        
+        switch spacerModel.mode {
+        case .auto_:
+            return true
+        default:
+            return false
+        }
+    }
 }
