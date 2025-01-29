@@ -473,9 +473,17 @@ extension MobileContentStackView {
         
         for childView in childViews {
             
-            let isSpacerView: Bool = childView is MobileContentSpacerView
+            let isAutoSpacer: Bool
+            let spacerView: MobileContentSpacerView? = childView as? MobileContentSpacerView
             
-            if !isSpacerView && childView.visibilityState != .gone {
+            if let spacerView = spacerView {
+                isAutoSpacer = spacerView.isAuto
+            }
+            else {
+                isAutoSpacer = false
+            }
+                        
+            if !isAutoSpacer && childView.visibilityState != .gone {
                 
                 heightOfChildrenAndItemSpacing += childView.frame.size.height
             }
