@@ -17,7 +17,6 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
     private let mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getTranslatedLanguageName: GetTranslatedLanguageName
-    private let initialPageRenderingType: MobileContentPagesInitialPageRenderingType
     private let initialPage: MobileContentPagesPage
     private let initialPageConfig: MobileContentPagesInitialPageConfig
     private let initialSelectedLanguageIndex: Int
@@ -45,7 +44,7 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
     let pageNavigationEventSignal: SignalValue<MobileContentPagesNavigationEvent> = SignalValue()
     let incrementUserCounterUseCase: IncrementUserCounterUseCase
     
-    init(renderer: MobileContentRenderer, initialPage: MobileContentPagesPage?, initialPageConfig: MobileContentPagesInitialPageConfig?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTranslatedLanguageName: GetTranslatedLanguageName, initialPageRenderingType: MobileContentPagesInitialPageRenderingType, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?) {
+    init(renderer: MobileContentRenderer, initialPage: MobileContentPagesPage?, initialPageConfig: MobileContentPagesInitialPageConfig?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTranslatedLanguageName: GetTranslatedLanguageName, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?) {
         
         self.renderer = CurrentValueSubject(renderer)
         self.currentPageRenderer = CurrentValueSubject(renderer.pageRenderers[0])
@@ -56,7 +55,6 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
         self.mobileContentEventAnalytics = mobileContentEventAnalytics
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getTranslatedLanguageName = getTranslatedLanguageName
-        self.initialPageRenderingType = initialPageRenderingType
         self.trainingTipsEnabled = trainingTipsEnabled
         self.incrementUserCounterUseCase = incrementUserCounterUseCase
         self.initialSelectedLanguageIndex = selectedLanguageIndex ?? 0

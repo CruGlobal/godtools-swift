@@ -1130,7 +1130,6 @@
 		45BE4A822AF287D2004021DA /* ConfirmAppLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BE4A802AF287D2004021DA /* ConfirmAppLanguageView.swift */; };
 		45BE4A842AF287E3004021DA /* ConfirmAppLanguageInterfaceStringsDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BE4A832AF287E3004021DA /* ConfirmAppLanguageInterfaceStringsDomainModel.swift */; };
 		45BE4A862AF287F0004021DA /* ViewConfirmAppLanguageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BE4A852AF287F0004021DA /* ViewConfirmAppLanguageUseCase.swift */; };
-		45BF2B9E27A9573F00D23EDA /* MobileContentPagesInitialPageRenderingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BF2B9D27A9573F00D23EDA /* MobileContentPagesInitialPageRenderingType.swift */; };
 		45BF6EBA27050A29003596A4 /* TransparentModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BF6EB927050A29003596A4 /* TransparentModalView.swift */; };
 		45BF6EBC27050A3F003596A4 /* TransparentModalView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45BF6EBB27050A3F003596A4 /* TransparentModalView.xib */; };
 		45BF6EBF27050D35003596A4 /* FadeAnimationTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BF6EBE27050D35003596A4 /* FadeAnimationTransition.swift */; };
@@ -2801,7 +2800,6 @@
 		45BE4A802AF287D2004021DA /* ConfirmAppLanguageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmAppLanguageView.swift; sourceTree = "<group>"; };
 		45BE4A832AF287E3004021DA /* ConfirmAppLanguageInterfaceStringsDomainModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmAppLanguageInterfaceStringsDomainModel.swift; sourceTree = "<group>"; };
 		45BE4A852AF287F0004021DA /* ViewConfirmAppLanguageUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewConfirmAppLanguageUseCase.swift; sourceTree = "<group>"; };
-		45BF2B9D27A9573F00D23EDA /* MobileContentPagesInitialPageRenderingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentPagesInitialPageRenderingType.swift; sourceTree = "<group>"; };
 		45BF6EB927050A29003596A4 /* TransparentModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentModalView.swift; sourceTree = "<group>"; };
 		45BF6EBB27050A3F003596A4 /* TransparentModalView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransparentModalView.xib; sourceTree = "<group>"; };
 		45BF6EBE27050D35003596A4 /* FadeAnimationTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FadeAnimationTransition.swift; sourceTree = "<group>"; };
@@ -5862,7 +5860,6 @@
 			isa = PBXGroup;
 			children = (
 				D4960CCB2CCC2C290090B114 /* MobileContentPagesInitialPageConfig.swift */,
-				45BF2B9D27A9573F00D23EDA /* MobileContentPagesInitialPageRenderingType.swift */,
 				458D5B9F2A3A07560078B015 /* MobileContentPagesNavigationEvent.swift */,
 				45D4A6CC29B126BB00DED984 /* MobileContentPagesPage.swift */,
 			);
@@ -13158,7 +13155,6 @@
 				4552F54B2AD4745A0075415E /* TrackActionAnalyticsUseCase.swift in Sources */,
 				45AD1BDC25938A4F00A096A0 /* AlertMessageViewModel.swift in Sources */,
 				45A8BDE52ACC9F47007A1EBB /* LessonCardViewModel.swift in Sources */,
-				45BF2B9E27A9573F00D23EDA /* MobileContentPagesInitialPageRenderingType.swift in Sources */,
 				45AD202A25938A9800A096A0 /* CardJumpService.swift in Sources */,
 				452F278E2B83930500844B9A /* ToggleToolFavoritedUseCase.swift in Sources */,
 				45FB161727DBDDB60009DF8E /* ArticleFlow.swift in Sources */,
