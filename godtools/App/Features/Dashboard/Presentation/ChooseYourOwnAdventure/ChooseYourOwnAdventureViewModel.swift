@@ -10,7 +10,7 @@ import UIKit
 import GodToolsToolParser
 import Combine
 
-class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
+class ChooseYourOwnAdventureViewModel: MobileContentRendererViewModel {
                 
     private var cancellables: Set<AnyCancellable> = Set()
     
@@ -22,7 +22,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
     @Published var hidesHomeButton: Bool = false
     @Published var hidesBackButton: Bool = true
         
-    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, initialPage: MobileContentPagesPage?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTranslatedLanguageName: GetTranslatedLanguageName, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?) {
+    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, initialPage: MobileContentRendererInitialPage?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTranslatedLanguageName: GetTranslatedLanguageName, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?) {
         
         self.flowDelegate = flowDelegate
                         

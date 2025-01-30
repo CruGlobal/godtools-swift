@@ -35,17 +35,11 @@ class MobileContentPagesView: AppViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    deinit {
-        UIApplication.shared.isIdleTimerDisabled = false
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupLayout()
         setupBinding()
-        
-        UIApplication.shared.isIdleTimerDisabled = true
     }
     
     override func viewDidLayoutSubviews() {
@@ -98,16 +92,6 @@ class MobileContentPagesView: AppViewController {
     
     func setupBinding() {
 
-        viewModel.rendererWillChangeSignal.addObserver(self) { [weak self] in
-            
-            guard let weakSelf = self else {
-                return
-            }
-            
-            weakSelf.initialPagePositions.removeAll()
-            weakSelf.initialPagePositions = weakSelf.getAllVisiblePagesPositions()
-        }
-        
         viewModel.pageNavigationEventSignal.addObserver(self) { [weak self] (navigationEvent: MobileContentPagesNavigationEvent) in
             
             guard let weakSelf = self else {
@@ -198,6 +182,14 @@ class MobileContentPagesView: AppViewController {
         }
         
         pageView.setPositionStateForViewHierarchy(positionState: pagePositions, animated: animated)
+    }
+    
+    func clearInitialPagePositions() {
+        initialPagePositions.removeAll()
+    }
+    
+    func resetInitialPagePositionsToAllVisiblePagePositions() {
+        initialPagePositions = getAllVisiblePagesPositions()
     }
 }
 
