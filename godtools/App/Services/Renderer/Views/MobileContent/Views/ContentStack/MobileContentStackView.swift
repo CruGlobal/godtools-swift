@@ -467,7 +467,8 @@ extension MobileContentStackView {
         parentView.layoutIfNeeded()
         parentView.superview?.layoutIfNeeded()
                 
-        let parentHeight: CGFloat = parentView.frame.size.height
+        let verticalContentInsets: CGFloat = contentInsets.top + contentInsets.bottom
+        let parentHeight: CGFloat = parentView.frame.size.height - verticalContentInsets
         
         var heightOfChildrenAndItemSpacing: CGFloat = 0
         
@@ -524,7 +525,7 @@ extension MobileContentStackView {
 extension MobileContentStackView {
     
     private func addChildView(childView: MobileContentView) {
-             
+                     
         let childContentView: UIView = childView
                       
         childrenParentView.addSubview(childContentView)
