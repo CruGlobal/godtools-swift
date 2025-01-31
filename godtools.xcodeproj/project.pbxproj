@@ -605,7 +605,6 @@
 		457766F92AD72DF70093B19A /* GetToolDetailsLearnToShareToolIsAvailableUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457766F82AD72DF70093B19A /* GetToolDetailsLearnToShareToolIsAvailableUseCase.swift */; };
 		457766FB2AD72F3C0093B19A /* GetToolDetailsLearnToShareToolIsAvailableRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457766FA2AD72F3C0093B19A /* GetToolDetailsLearnToShareToolIsAvailableRepositoryInterface.swift */; };
 		457766FD2AD72F590093B19A /* GetToolDetailsLearnToShareToolIsAvailableRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457766FC2AD72F590093B19A /* GetToolDetailsLearnToShareToolIsAvailableRepository.swift */; };
-		4578176F279C7CDA00ED50F2 /* ChooseYourOwnAdventurePageViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4578176E279C7CDA00ED50F2 /* ChooseYourOwnAdventurePageViewFactory.swift */; };
 		4578783027C41C08004552D5 /* MobileContentBackgroundImageAlignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4578782F27C41C08004552D5 /* MobileContentBackgroundImageAlignment.swift */; };
 		4578783527C41C50004552D5 /* BackgroundImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4578783327C41C50004552D5 /* BackgroundImageModel.swift */; };
 		4578ED2A2D4C2A190032EFD5 /* MobileContentRendererView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4578ED292D4C2A130032EFD5 /* MobileContentRendererView.swift */; };
@@ -2297,7 +2296,6 @@
 		457766F82AD72DF70093B19A /* GetToolDetailsLearnToShareToolIsAvailableUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetToolDetailsLearnToShareToolIsAvailableUseCase.swift; sourceTree = "<group>"; };
 		457766FA2AD72F3C0093B19A /* GetToolDetailsLearnToShareToolIsAvailableRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetToolDetailsLearnToShareToolIsAvailableRepositoryInterface.swift; sourceTree = "<group>"; };
 		457766FC2AD72F590093B19A /* GetToolDetailsLearnToShareToolIsAvailableRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetToolDetailsLearnToShareToolIsAvailableRepository.swift; sourceTree = "<group>"; };
-		4578176E279C7CDA00ED50F2 /* ChooseYourOwnAdventurePageViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseYourOwnAdventurePageViewFactory.swift; sourceTree = "<group>"; };
 		4578782F27C41C08004552D5 /* MobileContentBackgroundImageAlignment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentBackgroundImageAlignment.swift; sourceTree = "<group>"; };
 		4578783327C41C50004552D5 /* BackgroundImageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundImageModel.swift; sourceTree = "<group>"; };
 		4578ED292D4C2A130032EFD5 /* MobileContentRendererView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentRendererView.swift; sourceTree = "<group>"; };
@@ -5547,7 +5545,6 @@
 		455582D0269F2C1000C3FF14 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				4578176C279C7CA100ED50F2 /* ChooseYourOwnAdventure */,
 				45558343269F2D1000C3FF14 /* Lesson */,
 				45558358269F2DA400C3FF14 /* MobileContent */,
 				45BB427D2CBE9E0D00290F64 /* Tract */,
@@ -6643,22 +6640,6 @@
 				457739EC27A0985A00999270 /* MobileContentFlowRowItem.swift */,
 			);
 			path = ContentFlowRow;
-			sourceTree = "<group>";
-		};
-		4578176C279C7CA100ED50F2 /* ChooseYourOwnAdventure */ = {
-			isa = PBXGroup;
-			children = (
-				4578176D279C7CC800ED50F2 /* ViewFactory */,
-			);
-			path = ChooseYourOwnAdventure;
-			sourceTree = "<group>";
-		};
-		4578176D279C7CC800ED50F2 /* ViewFactory */ = {
-			isa = PBXGroup;
-			children = (
-				4578176E279C7CDA00ED50F2 /* ChooseYourOwnAdventurePageViewFactory.swift */,
-			);
-			path = ViewFactory;
 			sourceTree = "<group>";
 		};
 		4578782E27C41C08004552D5 /* Models */ = {
@@ -12844,7 +12825,6 @@
 				D4B060072915647B005852D0 /* KeychainServiceResponse.swift in Sources */,
 				45A8352A2AD1AE12004F5593 /* ToolDetailsFeatureDataLayerDependencies.swift in Sources */,
 				45074B4A2D3801BE004083F3 /* GetGlobalActivityIsEnabled.swift in Sources */,
-				4578176F279C7CDA00ED50F2 /* ChooseYourOwnAdventurePageViewFactory.swift in Sources */,
 				4564E20E2B1E181000DA4040 /* ToolShortcutLinksDiContainer.swift in Sources */,
 				4598BD2D2BF7DF6800196463 /* SocialSignInViewModel.swift in Sources */,
 				D45922D62867998200904B87 /* BannerTextStyle.swift in Sources */,
