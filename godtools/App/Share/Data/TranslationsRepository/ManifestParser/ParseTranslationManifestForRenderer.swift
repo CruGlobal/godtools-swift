@@ -11,14 +11,7 @@ import GodToolsToolParser
 import Combine
 
 class ParseTranslationManifestForRenderer: TranslationManifestParser {
-        
-    private static let defaultEnabledFeatures: [String] = [
-        ParserConfig.companion.FEATURE_ANIMATION,
-        ParserConfig.companion.FEATURE_CONTENT_CARD,
-        ParserConfig.companion.FEATURE_FLOW,
-        ParserConfig.companion.FEATURE_MULTISELECT
-    ]
-        
+         
     init(infoPlist: InfoPlist, resourcesFileCache: ResourcesSHA256FileCache, remoteConfigRepository: RemoteConfigRepository) {
             
         let appVersion: String? = infoPlist.appVersion
@@ -30,7 +23,7 @@ class ParseTranslationManifestForRenderer: TranslationManifestParser {
         let parserConfig = ParserConfig()
             .withParsePages(enabled: true)
             .withParseTips(enabled: true)
-            .withSupportedFeatures(features: Set(Self.getEnabledFeatures(remoteConfigRepository: remoteConfigRepository)))
+            .withSupportedFeatures(features: Set(Self.getSupportedFeatures(remoteConfigRepository: remoteConfigRepository)))
             .withAppVersion(deviceType: .ios, version: appVersion)
         
         super.init(
@@ -39,16 +32,23 @@ class ParseTranslationManifestForRenderer: TranslationManifestParser {
         )
     }
     
-    private static func getEnabledFeatures(remoteConfigRepository: RemoteConfigRepository) -> [String] {
+    private static func getSupportedFeatures(remoteConfigRepository: RemoteConfigRepository) -> [String] {
         
-        var features: [String] = Self.defaultEnabledFeatures
+        let defaultFeatures: [String] = [
+            ParserConfig.companion.FEATURE_ANIMATION,
+            ParserConfig.companion.FEATURE_CONTENT_CARD,
+            ParserConfig.companion.FEATURE_FLOW,
+            ParserConfig.companion.FEATURE_MULTISELECT
+        ]
+        
+        var optionalFeatures: [String] = Array()
         
         let remoteConfigData: RemoteConfigDataModel? = remoteConfigRepository.getRemoteConfig()
         
         if let pageCollectionIsEnabled = remoteConfigData?.toolContentFeaturePageCollectionPageEnabled, pageCollectionIsEnabled {
-            features.append(ParserConfig.companion.FEATURE_PAGE_COLLECTION)
+            optionalFeatures.append(ParserConfig.companion.FEATURE_PAGE_COLLECTION)
         }
         
-        return features
+        return defaultFeatures + optionalFeatures
     }
 }
