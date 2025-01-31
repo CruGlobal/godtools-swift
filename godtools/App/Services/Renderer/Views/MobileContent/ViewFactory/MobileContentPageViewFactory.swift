@@ -113,7 +113,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 trackScreenViewAnalyticsUseCase: trackScreenViewAnalyticsUseCase
             )
             
-            let view = MobileContentContentPageView(viewModel: viewModel, contentInsets: .zero)
+            let view = MobileContentContentPageView(viewModel: viewModel)
             
             return view
         }
