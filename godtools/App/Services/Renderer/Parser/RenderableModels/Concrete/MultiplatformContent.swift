@@ -12,10 +12,10 @@ import GodToolsToolParser
 class MultiplatformContent {
     
     let content: [Content]
-    let contentInsets: UIEdgeInsets
+    let contentInsets: UIEdgeInsets?
     let scrollIsEnabled: Bool
     
-    init(content: [Content], contentInsets: UIEdgeInsets, scrollIsEnabled: Bool) {
+    init(content: [Content], contentInsets: UIEdgeInsets?, scrollIsEnabled: Bool) {
         
         self.content = content
         self.contentInsets = contentInsets
