@@ -17,7 +17,7 @@ extension ContentPage: MobileContentRenderableModel {
                 
         let multiplatformContent: MultiplatformContent = MultiplatformContent(
             content: content,
-            contentInsets: .zero,
+            contentInsets: nil,
             scrollIsEnabled: true
         )
 

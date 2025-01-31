@@ -141,6 +141,10 @@ class MobileContentStackView: MobileContentView {
         return scrollView?.contentSize ?? childrenParentView.frame.size
     }
     
+    func getContentInsets() -> UIEdgeInsets {
+        return contentInsets
+    }
+    
     func setScrollViewContentSize(size: CGSize) {
         scrollView?.contentSize = size
     }
@@ -363,7 +367,7 @@ extension MobileContentStackView {
 
 extension MobileContentStackView {
     
-    func configureLayout(contentInsets: UIEdgeInsets?, scrollIsEnabled: Bool?, itemSpacing: CGFloat? = nil) {
+    private func configureLayout(contentInsets: UIEdgeInsets?, scrollIsEnabled: Bool?, itemSpacing: CGFloat? = nil) {
         
         removeBoundsChangeObserverOnChildrenParentView()
 
@@ -525,7 +529,7 @@ extension MobileContentStackView {
 extension MobileContentStackView {
     
     private func addChildView(childView: MobileContentView) {
-                     
+                             
         let childContentView: UIView = childView
                       
         childrenParentView.addSubview(childContentView)

@@ -63,8 +63,7 @@ extension MobileContentContentPageView {
         
         contentStackView.translatesAutoresizingMaskIntoConstraints = false
         contentStackView.constrainEdgesToView(view: self)
-        contentStackView.configureLayout(contentInsets: nil, scrollIsEnabled: true)
-        
+                
         self.contentStackView = contentStackView
     }
 }
