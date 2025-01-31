@@ -324,6 +324,19 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
+        else if let pageCollection = renderableModel as? PageCollectionPage {
+            
+            let viewModel = MobileContentPageCollectionViewModel(
+                pageCollectionPage: pageCollection,
+                renderedPageContext: renderedPageContext,
+                mobileContentAnalytics: mobileContentAnalytics,
+                trackScreenViewAnalyticsUseCase: trackScreenViewAnalyticsUseCase
+            )
+            
+            let view = MobileContentPageCollectionView(viewModel: viewModel)
+            
+            return view
+        }
         
         return nil
     }

@@ -448,7 +448,7 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
     // MARK: - Page Life Cycle
     
     override func pageWillAppear(page: Int) -> MobileContentView? {
-        
+                
         guard let window = self.window, let safeArea = self.safeArea else {
             return nil
         }
