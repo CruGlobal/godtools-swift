@@ -367,7 +367,8 @@ class AppDataLayerDependencies {
             api: MobileContentTranslationsApi(config: getAppConfig(), ignoreCacheSession: sharedIgnoreCacheSession),
             cache: RealmTranslationsCache(realmDatabase: sharedRealmDatabase),
             resourcesFileCache: getResourcesFileCache(),
-            trackDownloadedTranslationsRepository: getTrackDownloadedTranslationsRepository()
+            trackDownloadedTranslationsRepository: getTrackDownloadedTranslationsRepository(),
+            remoteConfigRepository: getRemoteConfigRepository()
         )
     }
     

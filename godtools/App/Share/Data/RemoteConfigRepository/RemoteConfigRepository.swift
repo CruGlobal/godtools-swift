@@ -12,7 +12,7 @@ import Combine
 
 class RemoteConfigRepository {
         
-    private let remoteDatabase: RemoteConfigRemoteDatabaseInterface
+    let remoteDatabase: RemoteConfigRemoteDatabaseInterface
     
     init(remoteDatabase: RemoteConfigRemoteDatabaseInterface) {
         

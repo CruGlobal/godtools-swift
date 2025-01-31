@@ -18,14 +18,16 @@ class TranslationsRepository {
     private let cache: RealmTranslationsCache
     private let resourcesFileCache: ResourcesSHA256FileCache
     private let trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository
+    private let remoteConfigRepository: RemoteConfigRepository
     
-    init(infoPlist: InfoPlist, api: MobileContentTranslationsApi, cache: RealmTranslationsCache, resourcesFileCache: ResourcesSHA256FileCache, trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository) {
+    init(infoPlist: InfoPlist, api: MobileContentTranslationsApi, cache: RealmTranslationsCache, resourcesFileCache: ResourcesSHA256FileCache, trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository, remoteConfigRepository: RemoteConfigRepository) {
         
         self.infoPlist = infoPlist
         self.api = api
         self.cache = cache
         self.resourcesFileCache = resourcesFileCache
         self.trackDownloadedTranslationsRepository = trackDownloadedTranslationsRepository
+        self.remoteConfigRepository = remoteConfigRepository
     }
 }
 
@@ -67,7 +69,12 @@ extension TranslationsRepository {
     
     func getTranslationManifestFromCache(translation: TranslationModel, manifestParserType: TranslationManifestParserType, includeRelatedFiles: Bool) -> AnyPublisher<TranslationManifestFileDataModel, Error> {
         
-        let manifestParser: TranslationManifestParser = TranslationManifestParser.getManifestParser(type: manifestParserType, infoPlist: infoPlist, resourcesFileCache: resourcesFileCache)
+        let manifestParser: TranslationManifestParser = TranslationManifestParser.getManifestParser(
+            type: manifestParserType,
+            infoPlist: infoPlist,
+            resourcesFileCache: resourcesFileCache,
+            remoteConfigRepository: remoteConfigRepository
+        )
         
         return manifestParser.parsePublisher(manifestName: translation.manifestName)
             .flatMap({ manifest -> AnyPublisher<TranslationManifestFileDataModel, Error> in
@@ -197,7 +204,12 @@ extension TranslationsRepository {
         return getTranslationFileFromCacheElseRemote(translation: translation, fileName: translation.manifestName)
             .flatMap({ fileCacheLocation -> AnyPublisher<Manifest, Error> in
                 
-                let manifestParser: TranslationManifestParser = TranslationManifestParser.getManifestParser(type: manifestParserType, infoPlist: self.infoPlist, resourcesFileCache: self.resourcesFileCache)
+                let manifestParser: TranslationManifestParser = TranslationManifestParser.getManifestParser(
+                    type: manifestParserType,
+                    infoPlist: self.infoPlist,
+                    resourcesFileCache: self.resourcesFileCache,
+                    remoteConfigRepository: self.remoteConfigRepository
+                )
                 
                 return manifestParser.parsePublisher(manifestName: translation.manifestName)
                     .eraseToAnyPublisher()
@@ -322,7 +334,12 @@ extension TranslationsRepository {
         return getTranslationFileFromCacheElseRemote(translation: translation, fileName: translation.manifestName)
             .flatMap({ (fileCacheLocation: FileCacheLocation) -> AnyPublisher<Manifest, Error> in
                 
-                let manifestParser: TranslationManifestParser = TranslationManifestParser.getManifestParser(type: .manifestOnly, infoPlist: self.infoPlist, resourcesFileCache: self.resourcesFileCache)
+                let manifestParser: TranslationManifestParser = TranslationManifestParser.getManifestParser(
+                    type: .manifestOnly,
+                    infoPlist: self.infoPlist,
+                    resourcesFileCache: self.resourcesFileCache,
+                    remoteConfigRepository: self.remoteConfigRepository
+                )
                 
                 return manifestParser.parsePublisher(manifestName: translation.manifestName)
                     .eraseToAnyPublisher()
