@@ -43,7 +43,7 @@ class ParseTranslationManifestForRenderer: TranslationManifestParser {
         
         var features: [String] = Self.defaultEnabledFeatures
         
-        let remoteConfigData: RemoteConfigDataModel? = remoteConfigRepository.remoteDatabase.getRemoteConfig()
+        let remoteConfigData: RemoteConfigDataModel? = remoteConfigRepository.getRemoteConfig()
         
         if let pageCollectionIsEnabled = remoteConfigData?.toolContentFeaturePageCollectionPageEnabled, pageCollectionIsEnabled {
             features.append(ParserConfig.companion.FEATURE_PAGE_COLLECTION)

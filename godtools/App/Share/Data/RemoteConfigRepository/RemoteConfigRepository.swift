@@ -12,7 +12,7 @@ import Combine
 
 class RemoteConfigRepository {
         
-    let remoteDatabase: RemoteConfigRemoteDatabaseInterface
+    private let remoteDatabase: RemoteConfigRemoteDatabaseInterface
     
     init(remoteDatabase: RemoteConfigRemoteDatabaseInterface) {
         
@@ -29,5 +29,10 @@ class RemoteConfigRepository {
         
         return remoteDatabase.getRemoteConfigPublisher()
             .eraseToAnyPublisher()
+    }
+    
+    func getRemoteConfig() -> RemoteConfigDataModel? {
+        
+        return remoteDatabase.getRemoteConfig()
     }
 }
