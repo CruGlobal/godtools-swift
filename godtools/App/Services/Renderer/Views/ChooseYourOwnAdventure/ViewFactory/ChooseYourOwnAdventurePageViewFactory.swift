@@ -11,6 +11,9 @@ import GodToolsToolParser
 
 class ChooseYourOwnAdventurePageViewFactory: MobileContentPageViewFactoryType {
     
+    private static let introPageId: String = "intro"
+    private static let categoriesPageId: String = "categories"
+    
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let mobileContentAnalytics: MobileContentRendererAnalytics
         
@@ -25,15 +28,12 @@ class ChooseYourOwnAdventurePageViewFactory: MobileContentPageViewFactoryType {
         if let contentPage = renderableModel as? ContentPage {
             
             let contentInsets: UIEdgeInsets
-            
-            let isIntroPage: Bool = contentPage.id == "intro"
-            let isCategoriesPage: Bool = contentPage.id == "categories"
-            
-            if isIntroPage {
+                        
+            if contentPage.id == Self.introPageId {
                 
                 contentInsets = UIEdgeInsets(top: 0, left: 60, bottom: 0, right: 60)
             }
-            else if isCategoriesPage {
+            else if contentPage.id == Self.categoriesPageId {
                 
                 contentInsets = UIEdgeInsets(top: 30, left: 20, bottom: 0, right: 20)
             }
@@ -42,29 +42,17 @@ class ChooseYourOwnAdventurePageViewFactory: MobileContentPageViewFactoryType {
                 contentInsets = .zero
             }
             
-            let viewModel = CYOAPageViewModel(
+            let viewModel = MobileContentContentPageViewModel(
                 contentPage: contentPage,
                 renderedPageContext: renderedPageContext,
                 mobileContentAnalytics: mobileContentAnalytics,
                 trackScreenViewAnalyticsUseCase: trackScreenViewAnalyticsUseCase
             )
             
-            let view = CYOAPageView(
+            let view = MobileContentContentPageView(
                 viewModel: viewModel,
                 contentInsets: contentInsets
             )
-            
-            return view
-        }
-        else if let contentFlow = renderableModel as? GodToolsToolParser.Flow {
-            
-            let viewModel = MobileContentFlowViewModel(
-                contentFlow: contentFlow,
-                renderedPageContext: renderedPageContext,
-                mobileContentAnalytics: mobileContentAnalytics
-            )
-            
-            let view = MobileContentFlowView(viewModel: viewModel)
             
             return view
         }

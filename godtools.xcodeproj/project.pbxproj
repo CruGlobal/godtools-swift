@@ -625,8 +625,6 @@
 		457FEEFC2CBEA3C90092E84B /* CYOAToolSettingsObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457FEEF82CBEA3C90092E84B /* CYOAToolSettingsObserver.swift */; };
 		457FEEFD2CBEA3C90092E84B /* RemoteShareable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457FEEF62CBEA3C90092E84B /* RemoteShareable.swift */; };
 		457FEEFE2CBEA3C90092E84B /* LinkShareable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457FEEF52CBEA3C90092E84B /* LinkShareable.swift */; };
-		457FEF032CBEA43B0092E84B /* CYOAPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457FEF002CBEA43B0092E84B /* CYOAPageViewModel.swift */; };
-		457FEF042CBEA43B0092E84B /* CYOAPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457FEEFF2CBEA43B0092E84B /* CYOAPageView.swift */; };
 		4581657626F4DD4D000D660F /* MobileContentRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4581657526F4DD4D000D660F /* MobileContentRowView.swift */; };
 		4581696F2CDD011600039D03 /* PersistUserToolLanguageSettingsDataLayerDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4581696C2CDD011600039D03 /* PersistUserToolLanguageSettingsDataLayerDependencies.swift */; };
 		458169702CDD011600039D03 /* PersistUserToolLanguageSettingsDiContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4581696D2CDD011600039D03 /* PersistUserToolLanguageSettingsDiContainer.swift */; };
@@ -2320,8 +2318,6 @@
 		457FEEF62CBEA3C90092E84B /* RemoteShareable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteShareable.swift; sourceTree = "<group>"; };
 		457FEEF82CBEA3C90092E84B /* CYOAToolSettingsObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CYOAToolSettingsObserver.swift; sourceTree = "<group>"; };
 		457FEEF92CBEA3C90092E84B /* TractToolSettingsObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractToolSettingsObserver.swift; sourceTree = "<group>"; };
-		457FEEFF2CBEA43B0092E84B /* CYOAPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CYOAPageView.swift; sourceTree = "<group>"; };
-		457FEF002CBEA43B0092E84B /* CYOAPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CYOAPageViewModel.swift; sourceTree = "<group>"; };
 		4581657526F4DD4D000D660F /* MobileContentRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentRowView.swift; sourceTree = "<group>"; };
 		4581696C2CDD011600039D03 /* PersistUserToolLanguageSettingsDataLayerDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistUserToolLanguageSettingsDataLayerDependencies.swift; sourceTree = "<group>"; };
 		4581696D2CDD011600039D03 /* PersistUserToolLanguageSettingsDiContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistUserToolLanguageSettingsDiContainer.swift; sourceTree = "<group>"; };
@@ -6653,7 +6649,6 @@
 			isa = PBXGroup;
 			children = (
 				4578176D279C7CC800ED50F2 /* ViewFactory */,
-				457FEF022CBEA43B0092E84B /* Views */,
 			);
 			path = ChooseYourOwnAdventure;
 			sourceTree = "<group>";
@@ -6742,23 +6737,6 @@
 				457FEEF92CBEA3C90092E84B /* TractToolSettingsObserver.swift */,
 			);
 			path = Subclasses;
-			sourceTree = "<group>";
-		};
-		457FEF012CBEA43B0092E84B /* Page */ = {
-			isa = PBXGroup;
-			children = (
-				457FEEFF2CBEA43B0092E84B /* CYOAPageView.swift */,
-				457FEF002CBEA43B0092E84B /* CYOAPageViewModel.swift */,
-			);
-			path = Page;
-			sourceTree = "<group>";
-		};
-		457FEF022CBEA43B0092E84B /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				457FEF012CBEA43B0092E84B /* Page */,
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 		4581657426F4DD42000D660F /* ContentRow */ = {
@@ -13730,8 +13708,6 @@
 				45AE974127C97A9400C2CB33 /* Video+MobileContentRenderableModel.swift in Sources */,
 				45F267A128907F5D006679F2 /* RealmResourcesCacheSync.swift in Sources */,
 				45558352269F2D1000C3FF14 /* LessonPageView.swift in Sources */,
-				457FEF032CBEA43B0092E84B /* CYOAPageViewModel.swift in Sources */,
-				457FEF042CBEA43B0092E84B /* CYOAPageView.swift in Sources */,
 				45FB1CC2295F4184002BACD9 /* LayoutDirection+LanguageDirectionDomainModel.swift in Sources */,
 				45B338372AF4381600D18C63 /* TutorialPageMediaDomainModel.swift in Sources */,
 				450D63AB2AC8A84600B90319 /* TrackExitLinkAnalyticsPropertiesDomainModel.swift in Sources */,
