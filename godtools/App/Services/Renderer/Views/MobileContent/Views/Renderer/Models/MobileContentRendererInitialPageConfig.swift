@@ -1,5 +1,5 @@
 //
-//  MobileContentPagesInitialPageConfig.swift
+//  MobileContentRendererInitialPageConfig.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 10/25/24.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct MobileContentPagesInitialPageConfig {
+struct MobileContentRendererInitialPageConfig {
     
     let shouldNavigateToStartPageIfLastPage: Bool
     let shouldNavigateToPreviousVisiblePageIfHiddenPage: Bool

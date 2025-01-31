@@ -26,4 +26,8 @@ class DisabledRemoteConfigDatabase: RemoteConfigRemoteDatabaseInterface {
         return Just(nil)
             .eraseToAnyPublisher()
     }
+    
+    func getRemoteConfig() -> RemoteConfigDataModel? {
+        return nil
+    }
 }
