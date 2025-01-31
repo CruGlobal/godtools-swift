@@ -27,7 +27,7 @@ class MobileContentStackView: MobileContentView {
     private var isObservingBoundsChanges: Bool = false
     private var lastRenderedParentBounds: CGRect?
             
-    init(viewModel: MobileContentViewModel, contentInsets: UIEdgeInsets, scrollIsEnabled: Bool, itemSpacing: CGFloat? = nil) {
+    init(viewModel: MobileContentViewModel, contentInsets: UIEdgeInsets?, scrollIsEnabled: Bool, itemSpacing: CGFloat? = nil) {
                 
         super.init(viewModel: viewModel, frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 0))
         
