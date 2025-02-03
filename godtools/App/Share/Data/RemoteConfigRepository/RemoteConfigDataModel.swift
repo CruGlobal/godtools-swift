@@ -11,4 +11,5 @@ import Foundation
 struct RemoteConfigDataModel {
     
     let globalActivityIsEnabled: Bool?
+    let toolContentFeaturePageCollectionPageEnabled: Bool?
 }

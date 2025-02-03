@@ -1,5 +1,5 @@
 //
-//  ToolDeepLinkPage+MobileContentPagesPage.swift
+//  ToolDeepLinkPage+MobileContentRendererInitialPage.swift
 //  godtools
 //
 //  Created by Levi Eggert on 3/2/23.
@@ -10,7 +10,7 @@ import Foundation
 
 extension ToolDeepLink {
     
-    var mobileContentPage: MobileContentPagesPage? {
+    var mobileContentPage: MobileContentRendererInitialPage? {
         
         if let page = self.page {
             return .pageNumber(value: page)

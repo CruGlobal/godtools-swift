@@ -1,5 +1,5 @@
 //
-//  MobileContentPagesPage.swift
+//  MobileContentRendererInitialPage.swift
 //  godtools
 //
 //  Created by Levi Eggert on 3/2/23.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum MobileContentPagesPage {
+enum MobileContentRendererInitialPage {
     
     case pageId(value: String)
     case pageNumber(value: Int)

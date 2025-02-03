@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TractView: MobileContentPagesView {
+class TractView: MobileContentRendererView {
     
     private let viewModel: TractViewModel
                     

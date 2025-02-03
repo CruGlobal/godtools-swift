@@ -13,4 +13,5 @@ protocol RemoteConfigRemoteDatabaseInterface {
     
     func syncFromRemoteDatabasePublisher() -> AnyPublisher<Void, Never>
     func getRemoteConfigPublisher() -> AnyPublisher<RemoteConfigDataModel?, Never>
+    func getRemoteConfig() -> RemoteConfigDataModel?
 }

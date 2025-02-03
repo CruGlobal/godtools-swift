@@ -113,7 +113,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 trackScreenViewAnalyticsUseCase: trackScreenViewAnalyticsUseCase
             )
             
-            let view = MobileContentContentPageView(viewModel: viewModel, contentInsets: .zero)
+            let view = MobileContentContentPageView(viewModel: viewModel)
             
             return view
         }
@@ -321,6 +321,19 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             )
             
             let view = MobileContentAccordionView(viewModel: viewModel)
+            
+            return view
+        }
+        else if let pageCollection = renderableModel as? PageCollectionPage {
+            
+            let viewModel = MobileContentPageCollectionViewModel(
+                pageCollectionPage: pageCollection,
+                renderedPageContext: renderedPageContext,
+                mobileContentAnalytics: mobileContentAnalytics,
+                trackScreenViewAnalyticsUseCase: trackScreenViewAnalyticsUseCase
+            )
+            
+            let view = MobileContentPageCollectionView(viewModel: viewModel)
             
             return view
         }

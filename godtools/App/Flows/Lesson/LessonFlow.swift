@@ -30,7 +30,7 @@ class LessonFlow: ToolNavigationFlow, Flow {
     var tractFlow: TractFlow?
     var downloadToolTranslationFlow: DownloadToolTranslationsFlow?
     
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel, trainingTipsEnabled: Bool, initialPage: MobileContentRendererInitialPage?) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
@@ -76,7 +76,7 @@ class LessonFlow: ToolNavigationFlow, Flow {
         return appDiContainer.dataLayer.getUserLessonProgressRepository().getLessonProgress(lessonId: lesson.id)
     }
     
-    private var userLessonProgressPage: MobileContentPagesPage? {
+    private var userLessonProgressPage: MobileContentRendererInitialPage? {
         
         guard let pageId = userLessonProgress?.lastViewedPageId else {
             return nil
@@ -145,7 +145,7 @@ class LessonFlow: ToolNavigationFlow, Flow {
         }
     }
     
-    private func navigateToLesson(initialPage: MobileContentPagesPage?, animated: Bool) {
+    private func navigateToLesson(initialPage: MobileContentRendererInitialPage?, animated: Bool) {
         
         let lessonView = getLessonView(initialPage: initialPage)
                 
@@ -164,7 +164,7 @@ class LessonFlow: ToolNavigationFlow, Flow {
 
 extension LessonFlow {
     
-    private func getLessonView(initialPage: MobileContentPagesPage?) -> UIViewController {
+    private func getLessonView(initialPage: MobileContentRendererInitialPage?) -> UIViewController {
         
         let navigation: MobileContentRendererNavigation = appDiContainer.getMobileContentRendererNavigation(
             parentFlow: self,
