@@ -39,12 +39,15 @@ class FirebaseRemoteConfigWrapper: RemoteConfigRemoteDatabaseInterface {
             .eraseToAnyPublisher()
     }
     
+    func getRemoteConfig() -> RemoteConfigDataModel? {
+        return getRemoteConfigDataModel()
+    }
+    
     private func getRemoteConfigDataModel() -> RemoteConfigDataModel? {
         
-        let globalActivityIsEnabledValue: RemoteConfigValue? = remoteConfig.configValue(forKey: "ui_account_globalactivity_enabled")
-        
         return RemoteConfigDataModel(
-            globalActivityIsEnabled: globalActivityIsEnabledValue?.boolValue
+            globalActivityIsEnabled: remoteConfig.configValue(forKey: "ui_account_globalactivity_enabled").boolValue,
+            toolContentFeaturePageCollectionPageEnabled: remoteConfig.configValue(forKey: "tool_content_feature_page_collection_page_enabled").boolValue
         )
     }
 }

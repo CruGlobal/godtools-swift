@@ -30,4 +30,9 @@ class RemoteConfigRepository {
         return remoteDatabase.getRemoteConfigPublisher()
             .eraseToAnyPublisher()
     }
+    
+    func getRemoteConfig() -> RemoteConfigDataModel? {
+        
+        return remoteDatabase.getRemoteConfig()
+    }
 }

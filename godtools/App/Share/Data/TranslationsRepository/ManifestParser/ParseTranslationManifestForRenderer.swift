@@ -11,15 +11,8 @@ import GodToolsToolParser
 import Combine
 
 class ParseTranslationManifestForRenderer: TranslationManifestParser {
-    
-    private static let enabledFeatures: [String] = [
-        ParserConfig.companion.FEATURE_ANIMATION,
-        ParserConfig.companion.FEATURE_CONTENT_CARD,
-        ParserConfig.companion.FEATURE_FLOW,
-        ParserConfig.companion.FEATURE_MULTISELECT
-    ]
-        
-    init(infoPlist: InfoPlist, resourcesFileCache: ResourcesSHA256FileCache) {
+         
+    init(infoPlist: InfoPlist, resourcesFileCache: ResourcesSHA256FileCache, remoteConfigRepository: RemoteConfigRepository) {
             
         let appVersion: String? = infoPlist.appVersion
         
@@ -30,12 +23,32 @@ class ParseTranslationManifestForRenderer: TranslationManifestParser {
         let parserConfig = ParserConfig()
             .withParsePages(enabled: true)
             .withParseTips(enabled: true)
-            .withSupportedFeatures(features: Set(ParseTranslationManifestForRenderer.enabledFeatures))
+            .withSupportedFeatures(features: Set(Self.getSupportedFeatures(remoteConfigRepository: remoteConfigRepository)))
             .withAppVersion(deviceType: .ios, version: appVersion)
         
         super.init(
             parserConfig: parserConfig,
             resourcesFileCache: resourcesFileCache
         )
+    }
+    
+    private static func getSupportedFeatures(remoteConfigRepository: RemoteConfigRepository) -> [String] {
+        
+        let defaultFeatures: [String] = [
+            ParserConfig.companion.FEATURE_ANIMATION,
+            ParserConfig.companion.FEATURE_CONTENT_CARD,
+            ParserConfig.companion.FEATURE_FLOW,
+            ParserConfig.companion.FEATURE_MULTISELECT
+        ]
+        
+        var optionalFeatures: [String] = Array()
+        
+        let remoteConfigData: RemoteConfigDataModel? = remoteConfigRepository.getRemoteConfig()
+        
+        if let pageCollectionIsEnabled = remoteConfigData?.toolContentFeaturePageCollectionPageEnabled, pageCollectionIsEnabled {
+            optionalFeatures.append(ParserConfig.companion.FEATURE_PAGE_COLLECTION)
+        }
+        
+        return defaultFeatures + optionalFeatures
     }
 }
