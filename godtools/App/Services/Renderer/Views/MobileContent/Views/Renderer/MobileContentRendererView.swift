@@ -16,10 +16,10 @@ class MobileContentRendererView: MobileContentPagesView {
         
         self.viewModel = viewModel
         
-        super.init(viewModel: viewModel, navigationBar: navigationBar)
+        super.init(viewModel: viewModel, navigationBar: navigationBar, pageViewDelegate: nil)
     }
     
-    override init(viewModel: MobileContentPagesViewModel, navigationBar: AppNavigationBar?) {
+    override init(viewModel: MobileContentPagesViewModel, navigationBar: AppNavigationBar?, pageViewDelegate: MobileContentPageViewDelegate?) {
         fatalError("not implemented")
     }
     
