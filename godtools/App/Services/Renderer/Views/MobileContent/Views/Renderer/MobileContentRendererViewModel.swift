@@ -449,6 +449,8 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
     
     override func pageWillAppear(page: Int) -> MobileContentView? {
                 
+        _ = super.pageWillAppear(page: page)
+        
         guard let window = self.window, let safeArea = self.safeArea else {
             return nil
         }
