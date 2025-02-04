@@ -62,12 +62,72 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
         return pageModels.count
     }
     
-    // MARK: - Navigation
+    // MARK: - Events
     
     func pageDidReceiveEvent(eventId: EventId) -> ProcessedEventResult? {
                  
         return nil
     }
+    
+    // MARK: - Event Navigation
+
+    func checkEventForPageListenerAndNavigate(listeningPages: [Page], eventId: EventId) -> Bool {
+
+        let pageToNavigateTo: Page?
+
+        if let listenerPage = getPageToNavigateToForPageListener(listeningPages: listeningPages, eventId: eventId) {
+
+            pageToNavigateTo = listenerPage
+        }
+        else if let dismissListenerPage = getPageToNavigateToForPageDismissListener(listeningPages: listeningPages, eventId: eventId) {
+
+            pageToNavigateTo = dismissListenerPage
+        }
+        else {
+
+            pageToNavigateTo = nil
+        }
+
+        if let pageToNavigateTo = pageToNavigateTo {
+
+            navigateToPage(page: pageToNavigateTo, animated: true)
+
+            return true
+        }
+        else {
+
+            return false
+        }
+    }
+
+    func getPageToNavigateToForPageListener(listeningPages: [Page], eventId: EventId) -> Page? {
+
+        if let pageListeningForEvent = listeningPages.first(where: {$0.listeners.contains(eventId)}) {
+            return pageListeningForEvent
+        }
+
+        return nil
+    }
+
+    func getPageToNavigateToForPageDismissListener(listeningPages: [Page], eventId: EventId) -> Page? {
+
+        if let pageDismissEvent = listeningPages.first(where: {$0.dismissListeners.contains(eventId)}) {
+            return pageDismissEvent.parentPage
+        }
+
+        return nil
+    }
+
+    func sendPageNavigationEvent(navigationEvent: MobileContentPagesNavigationEvent) {
+
+        if let pages = navigationEvent.setPages, pages.count > 0 {
+            setPages(pages: pages)
+        }
+
+        pageNavigationEventSignal.accept(value: navigationEvent)
+    }
+    
+    // MARK: - Navigation
     
     func navigateToFirstPage(animated: Bool) {
         
@@ -103,15 +163,6 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
         sendPageNavigationEvent(navigationEvent: navigationEvent)
     }
     
-    func sendPageNavigationEvent(navigationEvent: MobileContentPagesNavigationEvent) {
-            
-        if let pages = navigationEvent.setPages, pages.count > 0 {
-            setPages(pages: pages)
-        }
-        
-        pageNavigationEventSignal.accept(value: navigationEvent)
-    }
-        
     func getPageNavigationEvent(page: Page, animated: Bool, reloadCollectionViewDataNeeded: Bool = false) -> MobileContentPagesNavigationEvent {
                 
         let currentPages: [Page] = pageModels
