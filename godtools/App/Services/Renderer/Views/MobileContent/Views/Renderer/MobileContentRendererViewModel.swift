@@ -125,7 +125,12 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
             handleDismissToolEvent()
         }
         
-        _ = checkIfEventIsPageListenerAndNavigate(eventId: eventId)
+        if let listenerPage = super.getPageToNavigateToForPageListener(listeningPages: currentPageRenderer.getAllPageModels(), eventId: eventId) {
+            super.navigateToPage(page: listenerPage, animated: true)
+        }
+        else if let dismissListenerPage = super.getPageToNavigateToForPageDismissListener(listeningPages: currentPageRenderer.getAllPageModels(), eventId: eventId) {
+            super.navigateToPage(page: dismissListenerPage, animated: true)
+        }
                 
         return nil
     }
@@ -428,19 +433,6 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
         return getPageNavigationEvent(page: initialPage, animated: false, reloadCollectionViewDataNeeded: true)
     }
     
-    private func checkIfEventIsPageListenerAndNavigate(eventId: EventId) -> Bool {
-            
-        let allPages: [Page] = currentPageRenderer.value.getAllPageModels()
-        
-        guard let pageListeningForEvent = allPages.first(where: {$0.listeners.contains(eventId)}) else {
-            return false
-        }
-                
-        navigateToPage(page: pageListeningForEvent, animated: true)
-        
-        return true
-    }
-    
     func configureRendererPageContextUserInfo(userInfo: inout [String: Any], page: Int) {
         // Subclasses can override to attach additional info.
     }
@@ -449,6 +441,8 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
     
     override func pageWillAppear(page: Int) -> MobileContentView? {
                 
+        _ = super.pageWillAppear(page: page)
+        
         guard let window = self.window, let safeArea = self.safeArea else {
             return nil
         }

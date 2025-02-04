@@ -111,6 +111,24 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
         
         pageNavigationEventSignal.accept(value: navigationEvent)
     }
+    
+    func getPageToNavigateToForPageListener(listeningPages: [Page], eventId: EventId) -> Page? {
+                            
+        if let pageListeningForEvent = listeningPages.first(where: {$0.listeners.contains(eventId)}) {
+            return pageListeningForEvent
+        }
+        
+        return nil
+    }
+    
+    func getPageToNavigateToForPageDismissListener(listeningPages: [Page], eventId: EventId) -> Page? {
+                    
+        if let pageDismissEvent = listeningPages.first(where: {$0.dismissListeners.contains(eventId)}) {
+            return pageDismissEvent.parentPage
+        }
+        
+        return nil
+    }
         
     func getPageNavigationEvent(page: Page, animated: Bool, reloadCollectionViewDataNeeded: Bool = false) -> MobileContentPagesNavigationEvent {
                 
