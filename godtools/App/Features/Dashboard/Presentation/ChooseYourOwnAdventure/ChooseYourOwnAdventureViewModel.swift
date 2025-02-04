@@ -151,7 +151,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentRendererViewModel {
         let cyoaToolSettingsObserver = CYOAToolSettingsObserver(
             toolId: renderer.value.resource.id,
             languages: toolSettingsLanguages,
-            pageNumber: currentRenderedPageNumber,
+            pageNumber: currentPageNumber,
             trainingTipsEnabled: trainingTipsEnabled
         )
         
@@ -169,7 +169,7 @@ extension ChooseYourOwnAdventureViewModel {
     
     @objc func backTapped() {
         
-        guard currentRenderedPageNumber > 0 else {
+        guard currentPageNumber > 0 else {
             return
         }
         
@@ -177,7 +177,7 @@ extension ChooseYourOwnAdventureViewModel {
             
             super.navigateToPage(page: parentPage, animated: true)
         }
-        else if let previousPage = super.getPage(index: currentRenderedPageNumber - 1) {
+        else if let previousPage = super.getPage(index: currentPageNumber - 1) {
             
             super.navigateToPage(page: previousPage, animated: true)
         }

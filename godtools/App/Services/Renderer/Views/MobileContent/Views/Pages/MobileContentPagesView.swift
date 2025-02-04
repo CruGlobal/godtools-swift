@@ -199,7 +199,7 @@ extension MobileContentPagesView: PageNavigationCollectionViewDelegate {
         
     func pageNavigationNumberOfPages(pageNavigation: PageNavigationCollectionView) -> Int {
         
-        return viewModel.getNumberOfRenderedPages()
+        return viewModel.getNumberOfPages()
     }
     
     func pageNavigation(pageNavigation: PageNavigationCollectionView, cellForPageAt indexPath: IndexPath) -> UICollectionViewCell {

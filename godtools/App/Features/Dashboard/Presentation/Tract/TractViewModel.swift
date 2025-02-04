@@ -177,7 +177,7 @@ class TractViewModel: MobileContentRendererViewModel {
         let tractToolSettingsObserver = TractToolSettingsObserver(
             toolId: renderer.value.resource.id,
             languages: toolSettingsLanguages,
-            pageNumber: currentRenderedPageNumber,
+            pageNumber: currentPageNumber,
             trainingTipsEnabled: trainingTipsEnabled,
             tractRemoteSharePublisher: tractRemoteSharePublisher
         )
@@ -380,7 +380,7 @@ extension TractViewModel {
         let navigationEvent = MobileContentPagesNavigationEvent(
             pageNavigation: PageNavigationCollectionViewNavigationModel(
                 navigationDirection: nil,
-                page: page ?? super.currentRenderedPageNumber,
+                page: page ?? super.currentPageNumber,
                 animated: animated,
                 reloadCollectionViewDataNeeded: navBarLanguageChanged,
                 insertPages: nil,
