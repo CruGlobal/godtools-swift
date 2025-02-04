@@ -116,16 +116,20 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
     }
     
     override func pageDidReceiveEvent(eventId: EventId) -> ProcessedEventResult? {
-            
+                
         trackContentEvent(eventId: eventId)
         
         let currentPageRenderer: MobileContentPageRenderer = currentPageRenderer.value
         
+        _ = super.checkEventForPageListenerAndNavigate(
+            listeningPages: currentPageRenderer.getAllPageModels(),
+            eventId: eventId
+        )
+        
         if currentPageRenderer.manifest.dismissListeners.contains(eventId) {
+           
             handleDismissToolEvent()
         }
-        
-        _ = checkIfEventIsPageListenerAndNavigate(eventId: eventId)
                 
         return nil
     }
@@ -426,19 +430,6 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
         }
         
         return getPageNavigationEvent(page: initialPage, animated: false, reloadCollectionViewDataNeeded: true)
-    }
-    
-    private func checkIfEventIsPageListenerAndNavigate(eventId: EventId) -> Bool {
-            
-        let allPages: [Page] = currentPageRenderer.value.getAllPageModels()
-        
-        guard let pageListeningForEvent = allPages.first(where: {$0.listeners.contains(eventId)}) else {
-            return false
-        }
-                
-        navigateToPage(page: pageListeningForEvent, animated: true)
-        
-        return true
     }
     
     func configureRendererPageContextUserInfo(userInfo: inout [String: Any], page: Int) {
