@@ -20,13 +20,27 @@ class MobileContentPageCollectionPagesViewModel: MobileContentPagesViewModel {
         self.pageCollectionPage = pageCollectionPage
         self.renderedPageContext = renderedPageContext
         
-        super.init()
+        super.init(pagesNavigation: renderedPageContext.pagesNavigation)
         
         super.setPages(pages: pageCollectionPage.pages)
     }
     
     override var layoutDirection: UISemanticContentAttribute {
         return renderedPageContext.primaryLanguageLayoutDirection.semanticContentAttribute
+    }
+    
+    override func pageDidReceiveEvent(eventId: EventId) -> ProcessedEventResult? {
+            
+        if let listeningPage = super.getPageToNavigateToForPageListener(listeningPages: pageModels, eventId: eventId) {
+            
+            super.navigateToPage(page: listeningPage, animated: true)
+        }
+        else if let dismissPage = super.getPageToNavigateToForPageDismissListener(listeningPages: pageModels, eventId: eventId) {
+            
+            super.navigateToPage(page: dismissPage, animated: true)
+        }
+                
+        return nil
     }
     
     override func pageWillAppear(page: Int) -> MobileContentView? {
