@@ -13,7 +13,7 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
         
     private(set) var safeArea: UIEdgeInsets?
     private(set) var pageModels: [Page] = Array()
-    private(set) var currentRenderedPageNumber: Int = 0
+    private(set) var currentPageNumber: Int = 0
     private(set) var highestPageNumberViewed: Int = 0
     
     private(set) weak var window: UIViewController?
@@ -46,7 +46,7 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
     }
 
     func getCurrentPage() -> Page? {
-        return getPage(index: currentRenderedPageNumber)
+        return getPage(index: currentPageNumber)
     }
     
     func getPage(index: Int) -> Page? {
@@ -58,7 +58,7 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
         return pageModels[index]
     }
     
-    func getNumberOfRenderedPages() -> Int {
+    func getNumberOfPages() -> Int {
         return pageModels.count
     }
     
@@ -80,7 +80,7 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
     
     func navigateToPreviousPage(animated: Bool) {
         
-        guard let page = getPage(index: currentRenderedPageNumber - 1) else {
+        guard let page = getPage(index: currentPageNumber - 1) else {
             return
         }
         
@@ -89,7 +89,7 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
     
     func navigateToNextPage(animated: Bool) {
         
-        guard let page = getPage(index: currentRenderedPageNumber + 1) else {
+        guard let page = getPage(index: currentPageNumber + 1) else {
             return
         }
         
@@ -114,17 +114,17 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
         
     func getPageNavigationEvent(page: Page, animated: Bool, reloadCollectionViewDataNeeded: Bool = false) -> MobileContentPagesNavigationEvent {
                 
-        let currentRenderedPages: [Page] = pageModels
+        let currentPages: [Page] = pageModels
                 
         let pageIndexToNavigateTo: Int
         let insertPages: [Int]?
         let setPages: [Page]?
         
-        if let indexForExistingPageInStack = currentRenderedPages.firstIndex(where: {$0.id == page.id}) {
+        if let indexForExistingPageInStack = currentPages.firstIndex(where: {$0.id == page.id}) {
             
             pageIndexToNavigateTo = indexForExistingPageInStack
             insertPages = nil
-            setPages = currentRenderedPages
+            setPages = currentPages
         }
         else {
             
@@ -133,9 +133,9 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
             
             var insertAtIndex: Int = lastPageIndex
             
-            for index in 0 ..< currentRenderedPages.count {
+            for index in 0 ..< currentPages.count {
                 
-                let currentPagePosition: Int32 = currentRenderedPages[index].position
+                let currentPagePosition: Int32 = currentPages[index].position
                 
                 if currentPagePosition > pagePosition {
                     insertAtIndex = index
@@ -146,7 +146,7 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
                 }
             }
             
-            var pagesWithNewPage: [Page] = currentRenderedPages
+            var pagesWithNewPage: [Page] = currentPages
             pagesWithNewPage.insert(page, at: insertAtIndex)
 
             pageIndexToNavigateTo = insertAtIndex
@@ -177,7 +177,7 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
     
     func pageDidAppear(page: Int) {
         
-        currentRenderedPageNumber = page
+        currentPageNumber = page
         
         if page > highestPageNumberViewed {
             highestPageNumberViewed = page
@@ -190,7 +190,7 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
     
     func didChangeMostVisiblePage(page: Int) {
         
-        currentRenderedPageNumber = page
+        currentPageNumber = page
     }
     
     func didScrollToPage(page: Int) {

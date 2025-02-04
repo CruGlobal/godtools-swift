@@ -153,7 +153,7 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
         let toolSettingsObserver = ToolSettingsObserver(
             toolId: renderer.value.resource.id,
             languages: toolSettingsLanguages,
-            pageNumber: currentRenderedPageNumber,
+            pageNumber: currentPageNumber,
             trainingTipsEnabled: trainingTipsEnabled
         )
         
@@ -309,7 +309,7 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
             navigationEventToSend = MobileContentPagesNavigationEvent(
                 pageNavigation: PageNavigationCollectionViewNavigationModel(
                     navigationDirection: layoutDirection,
-                    page: currentRenderedPageNumber,
+                    page: currentPageNumber,
                     animated: false,
                     reloadCollectionViewDataNeeded: true,
                     insertPages: nil,
@@ -513,7 +513,7 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
     private func removeHiddenPages() {
         
         let currentRenderedPages: [Page] = pageModels
-        let currentPageIndex: Int = currentRenderedPageNumber
+        let currentPageIndex: Int = currentPageNumber
         
         let currentRenderedHiddenPages: [Page] = currentRenderedPages.filter({$0.isHidden})
         let onlyHiddenPageIsCurrentPage: Bool = currentRenderedHiddenPages.count == 1 && currentRenderedPages[currentPageIndex].isHidden
