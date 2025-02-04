@@ -37,7 +37,7 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
     let rendererWillChangeSignal: Signal = Signal()
     let incrementUserCounterUseCase: IncrementUserCounterUseCase
     
-    init(renderer: MobileContentRenderer, initialPage: MobileContentRendererInitialPage?, initialPageConfig: MobileContentRendererInitialPageConfig?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTranslatedLanguageName: GetTranslatedLanguageName, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?) {
+    init(renderer: MobileContentRenderer, initialPage: MobileContentRendererInitialPage?, initialPageConfig: MobileContentRendererInitialPageConfig?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTranslatedLanguageName: GetTranslatedLanguageName, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, pagesNavigation: MobileContentPagesNavigation, selectedLanguageIndex: Int?) {
         
         self.renderer = CurrentValueSubject(renderer)
         self.currentPageRenderer = CurrentValueSubject(renderer.pageRenderers[0])
@@ -53,7 +53,7 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
         self.initialSelectedLanguageIndex = selectedLanguageIndex ?? 0
         self.selectedLanguageIndex = initialSelectedLanguageIndex
                 
-        super.init()
+        super.init(pagesNavigation: pagesNavigation)
         
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
@@ -121,15 +121,14 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
         
         let currentPageRenderer: MobileContentPageRenderer = currentPageRenderer.value
         
-        if currentPageRenderer.manifest.dismissListeners.contains(eventId) {
-            handleDismissToolEvent()
-        }
+        _ = super.checkEventForPageListenerAndNavigate(
+            listeningPages: currentPageRenderer.getAllPageModels(),
+            eventId: eventId
+        )
         
-        if let listenerPage = super.getPageToNavigateToForPageListener(listeningPages: currentPageRenderer.getAllPageModels(), eventId: eventId) {
-            super.navigateToPage(page: listenerPage, animated: true)
-        }
-        else if let dismissListenerPage = super.getPageToNavigateToForPageDismissListener(listeningPages: currentPageRenderer.getAllPageModels(), eventId: eventId) {
-            super.navigateToPage(page: dismissListenerPage, animated: true)
+        if currentPageRenderer.manifest.dismissListeners.contains(eventId) {
+           
+            handleDismissToolEvent()
         }
                 
         return nil
@@ -430,7 +429,14 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
             return nil
         }
         
-        return getPageNavigationEvent(page: initialPage, animated: false, reloadCollectionViewDataNeeded: true)
+        let pageNavigationEvent: MobileContentPagesNavigationEvent = pagesNavigation.getPageNavigationEvent(
+            pages: pageModels,
+            page: initialPage,
+            animated: false,
+            reloadCollectionViewDataNeeded: true
+        )
+        
+        return pageNavigationEvent
     }
     
     func configureRendererPageContextUserInfo(userInfo: inout [String: Any], page: Int) {
@@ -462,6 +468,7 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
             window: window,
             safeArea: safeArea,
             trainingTipsEnabled: trainingTipsEnabled,
+            pagesNavigation: pagesNavigation,
             userInfo: userInfo
         )
         

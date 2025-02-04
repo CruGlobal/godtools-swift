@@ -28,11 +28,12 @@ class MobileContentRenderedPageContext {
     let rendererState: State
     let trainingTipsEnabled: Bool
     let pageViewDataCache: MobileContentPageViewDataCache
+    let pagesNavigation: MobileContentPagesNavigation
     let userInfo: [String: Any]?
     
     private weak var weakWindow: UIViewController?
     
-    init(pageModel: Page, page: Int, isLastPage: Bool, window: UIViewController, safeArea: UIEdgeInsets, manifest: Manifest, resourcesCache: MobileContentRendererManifestResourcesCache, resource: ResourceModel, appLanguage: AppLanguageDomainModel, language: LanguageModel, translation: TranslationModel, viewRenderer: MobileContentViewRenderer, navigation: MobileContentRendererNavigation, rendererLanguages: MobileContentRendererLanguages, rendererState: State, trainingTipsEnabled: Bool, pageViewDataCache: MobileContentPageViewDataCache, userInfo: [String: Any]?) {
+    init(pageModel: Page, page: Int, isLastPage: Bool, window: UIViewController, safeArea: UIEdgeInsets, manifest: Manifest, resourcesCache: MobileContentRendererManifestResourcesCache, resource: ResourceModel, appLanguage: AppLanguageDomainModel, language: LanguageModel, translation: TranslationModel, viewRenderer: MobileContentViewRenderer, navigation: MobileContentRendererNavigation, rendererLanguages: MobileContentRendererLanguages, rendererState: State, trainingTipsEnabled: Bool, pageViewDataCache: MobileContentPageViewDataCache, pagesNavigation: MobileContentPagesNavigation, userInfo: [String: Any]?) {
         
         self.pageModel = pageModel
         self.page = page
@@ -52,6 +53,7 @@ class MobileContentRenderedPageContext {
         self.rendererState = rendererState
         self.trainingTipsEnabled = trainingTipsEnabled
         self.pageViewDataCache = pageViewDataCache
+        self.pagesNavigation = pagesNavigation
         self.userInfo = userInfo
     }
     
