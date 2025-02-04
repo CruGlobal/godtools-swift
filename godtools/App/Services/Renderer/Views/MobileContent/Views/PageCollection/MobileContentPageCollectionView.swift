@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class MobileContentPageCollectionView: MobileContentPageView {
     
@@ -16,9 +17,11 @@ class MobileContentPageCollectionView: MobileContentPageView {
     init(viewModel: MobileContentPageCollectionViewModel) {
         
         self.viewModel = viewModel
-        self.pagesView = MobileContentPagesView(viewModel: viewModel.pagesViewModel, navigationBar: nil)
+        self.pagesView = MobileContentPagesView(viewModel: viewModel.pagesViewModel, navigationBar: nil, pageViewDelegate: nil)
         
         super.init(viewModel: viewModel, nibName: nil)
+        
+        pagesView.setPageViewDelegate(pageViewDelegate: self)
     }
     
     @MainActor required init?(coder aDecoder: NSCoder) {
@@ -32,5 +35,15 @@ class MobileContentPageCollectionView: MobileContentPageView {
         addSubview(pagesView.view)
         pagesView.view.translatesAutoresizingMaskIntoConstraints = false
         pagesView.view.constrainEdgesToView(view: self)
+    }
+}
+
+// MARK: - MobileContentPageViewDelegate
+
+extension MobileContentPageCollectionView: MobileContentPageViewDelegate {
+    
+    func pageViewDidReceiveEvent(pageView: MobileContentPageView, eventId: EventId) -> ProcessedEventResult? {
+        
+        return getPageViewDelegate()?.pageViewDidReceiveEvent(pageView: pageView, eventId: eventId)
     }
 }

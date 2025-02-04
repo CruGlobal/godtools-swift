@@ -20,7 +20,7 @@ class MobileContentPageView: MobileContentView, NibBased {
     
     private var backgroundImageView: MobileContentBackgroundImageView?
     
-    private weak var delegate: MobileContentPageViewDelegate?
+    private weak var pageViewDelegate: MobileContentPageViewDelegate?
     
     init(viewModel: MobileContentPageViewModel, nibName: String?) {
         
@@ -96,20 +96,24 @@ class MobileContentPageView: MobileContentView, NibBased {
         }
     }
     
-    func setDelegate(delegate: MobileContentPageViewDelegate?) {
-        self.delegate = delegate
+    func setPageViewDelegate(pageViewDelegate: MobileContentPageViewDelegate?) {
+        self.pageViewDelegate = pageViewDelegate
     }
     
     func setSemanticContentAttribute(semanticContentAttribute: UISemanticContentAttribute) {
         
         // Intended for subclasses to override. ~Levi
     }
+    
+    func getPageViewDelegate() -> MobileContentPageViewDelegate? {
+        return pageViewDelegate
+    }
         
     // MARK: - MobileContentView
     
     override func didReceiveEvent(eventId: EventId, eventIdsGroup: [EventId]) -> ProcessedEventResult? {
         
-        return delegate?.pageViewDidReceiveEvent(pageView: self, eventId: eventId)
+        return pageViewDelegate?.pageViewDidReceiveEvent(pageView: self, eventId: eventId)
     }
     
     override func didReceiveButtonWithUrlEvent(url: URL) {
