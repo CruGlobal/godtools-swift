@@ -17,7 +17,6 @@ class MobileContentPageViewModel: MobileContentViewModel {
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let hidesBackgroundImage: Bool
     
-        
     init(pageModel: Page, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, hidesBackgroundImage: Bool) {
         
         self.pageModel = pageModel
