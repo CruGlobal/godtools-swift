@@ -132,6 +132,15 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
     
     // MARK: - Navigation
     
+    func navigateToPage(pageIndex: Int, animated: Bool) {
+        
+        guard let page = getPage(index: pageIndex) else {
+            return
+        }
+        
+        navigateToPage(page: page, animated: animated)
+    }
+    
     func navigateToFirstPage(animated: Bool) {
         
         guard let page = getPage(index: 0) else {

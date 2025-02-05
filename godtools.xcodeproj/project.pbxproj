@@ -153,8 +153,9 @@
 		45192F4C2C470AD4005740E5 /* UserCountersAPIType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45192F4B2C470AD4005740E5 /* UserCountersAPIType.swift */; };
 		45192F522C470AEC005740E5 /* UserCountersAPIMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45192F4E2C470AEC005740E5 /* UserCountersAPIMock.swift */; };
 		45192F532C470AEC005740E5 /* UserCountersRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45192F4F2C470AEC005740E5 /* UserCountersRepositoryTests.swift */; };
-		451A0D412D53A18600762C44 /* MobileContentPagesNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451A0D402D53A18600762C44 /* MobileContentPagesNavigation.swift */; };
-		451A0D432D53A1A000762C44 /* CYOAPagesNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451A0D422D53A1A000762C44 /* CYOAPagesNavigation.swift */; };
+		451A0D462D53EB1900762C44 /* MobileContentPageCollectionPositionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451A0D452D53EB1100762C44 /* MobileContentPageCollectionPositionState.swift */; };
+		451A0D482D53F4AF00762C44 /* CYOAPagesNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451A0D472D53F4AF00762C44 /* CYOAPagesNavigation.swift */; };
+		451A0D4A2D53F4C500762C44 /* MobileContentPagesNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451A0D492D53F4C500762C44 /* MobileContentPagesNavigation.swift */; };
 		451A17522756C10400D35D78 /* tutorial_screenshare.json in Resources */ = {isa = PBXBuildFile; fileRef = 451A174F2756C10400D35D78 /* tutorial_screenshare.json */; };
 		451A17532756C10400D35D78 /* tutorial_lessons.json in Resources */ = {isa = PBXBuildFile; fileRef = 451A17502756C10400D35D78 /* tutorial_lessons.json */; };
 		451A17542756C10400D35D78 /* tutorial_tooltip.json in Resources */ = {isa = PBXBuildFile; fileRef = 451A17512756C10400D35D78 /* tutorial_tooltip.json */; };
@@ -1840,8 +1841,9 @@
 		45192F4B2C470AD4005740E5 /* UserCountersAPIType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCountersAPIType.swift; sourceTree = "<group>"; };
 		45192F4E2C470AEC005740E5 /* UserCountersAPIMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCountersAPIMock.swift; sourceTree = "<group>"; };
 		45192F4F2C470AEC005740E5 /* UserCountersRepositoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCountersRepositoryTests.swift; sourceTree = "<group>"; };
-		451A0D402D53A18600762C44 /* MobileContentPagesNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentPagesNavigation.swift; sourceTree = "<group>"; };
-		451A0D422D53A1A000762C44 /* CYOAPagesNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CYOAPagesNavigation.swift; sourceTree = "<group>"; };
+		451A0D452D53EB1100762C44 /* MobileContentPageCollectionPositionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentPageCollectionPositionState.swift; sourceTree = "<group>"; };
+		451A0D472D53F4AF00762C44 /* CYOAPagesNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CYOAPagesNavigation.swift; sourceTree = "<group>"; };
+		451A0D492D53F4C500762C44 /* MobileContentPagesNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentPagesNavigation.swift; sourceTree = "<group>"; };
 		451A174F2756C10400D35D78 /* tutorial_screenshare.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tutorial_screenshare.json; sourceTree = "<group>"; };
 		451A17502756C10400D35D78 /* tutorial_lessons.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tutorial_lessons.json; sourceTree = "<group>"; };
 		451A17512756C10400D35D78 /* tutorial_tooltip.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tutorial_tooltip.json; sourceTree = "<group>"; };
@@ -4288,6 +4290,14 @@
 			path = UserCountersRepository;
 			sourceTree = "<group>";
 		};
+		451A0D442D53EB0900762C44 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				451A0D452D53EB1100762C44 /* MobileContentPageCollectionPositionState.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		451CCF0B27A9A98800E8D2D3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -5859,7 +5869,7 @@
 				455583B2269F2DA500C3FF14 /* MobileContentPagesView.swift */,
 				455583B6269F2DA500C3FF14 /* MobileContentPagesView.xib */,
 				455583B5269F2DA500C3FF14 /* MobileContentPagesViewModel.swift */,
-				451A0D402D53A18600762C44 /* MobileContentPagesNavigation.swift */,
+				451A0D492D53F4C500762C44 /* MobileContentPagesNavigation.swift */,
 				455583B3269F2DA500C3FF14 /* Models */,
 				455583B7269F2DA500C3FF14 /* Views */,
 			);
@@ -6690,6 +6700,7 @@
 				4578ED3C2D4D0FE90032EFD5 /* MobileContentPageCollectionView.swift */,
 				4578ED3D2D4D0FE90032EFD5 /* MobileContentPageCollectionViewModel.swift */,
 				4541A7F12D52D43A003E76CA /* MobileContentPageCollectionPagesViewModel.swift */,
+				451A0D442D53EB0900762C44 /* Models */,
 			);
 			path = PageCollection;
 			sourceTree = "<group>";
@@ -9399,7 +9410,7 @@
 			children = (
 				45C1529A2A44896C00F2A1E8 /* ChooseYourOwnAdventureView.swift */,
 				45C1529E2A44896C00F2A1E8 /* ChooseYourOwnAdventureViewModel.swift */,
-				451A0D422D53A1A000762C44 /* CYOAPagesNavigation.swift */,
+				451A0D472D53F4AF00762C44 /* CYOAPagesNavigation.swift */,
 			);
 			path = ChooseYourOwnAdventure;
 			sourceTree = "<group>";
@@ -12716,6 +12727,7 @@
 				450F94DF27A1F38E009DEA43 /* MobileContentCardCollectionPageItemView.swift in Sources */,
 				45AD1F5E25938A9800A096A0 /* StarscreamWebSocket.swift in Sources */,
 				D4C2A5602C30906C0035AB4D /* ViewLessonFilterLanguagesUseCase.swift in Sources */,
+				451A0D4A2D53F4C500762C44 /* MobileContentPagesNavigation.swift in Sources */,
 				45F71665290A12D70019B715 /* GetUserIsAuthenticatedUseCase.swift in Sources */,
 				45677765287DB1530044AEB2 /* TutorialFlow.swift in Sources */,
 				457739EB27A0984200999270 /* MobileContentFlowRow.swift in Sources */,
@@ -12969,7 +12981,6 @@
 				45EB9B8329F16CF200CA74A8 /* Color+RGB.swift in Sources */,
 				45558407269F2DA500C3FF14 /* MobileContentPagesViewModel.swift in Sources */,
 				45ACCA582CD2BFBB00567AE6 /* AppMessagingInterface.swift in Sources */,
-				451A0D412D53A18600762C44 /* MobileContentPagesNavigation.swift in Sources */,
 				458E93412B62A06F0087D45D /* AppShareBarItem.swift in Sources */,
 				455582E1269F2C1000C3FF14 /* TrainingViewFactory.swift in Sources */,
 				459C527128941A5B00DA9E95 /* TranslationFilesDataModel.swift in Sources */,
@@ -13367,6 +13378,7 @@
 				452486DA2B07C991007AD932 /* ToolFilterCategoryDomainModel.swift in Sources */,
 				452486DB2B07C991007AD932 /* ToolFilterLanguageDomainModel.swift in Sources */,
 				458E410B2A9CCE55009769DF /* AppBuildConfiguration.swift in Sources */,
+				451A0D462D53EB1900762C44 /* MobileContentPageCollectionPositionState.swift in Sources */,
 				45677780287DB21F0044AEB2 /* ToolTrainingTipView.swift in Sources */,
 				4512D4CE2B29127200DFAFB3 /* ToolSettingsToolLanguageDomainModel.swift in Sources */,
 				458B91B32B7D5D6800785C6F /* AllYourFavoriteToolsViewModel.swift in Sources */,
@@ -13409,7 +13421,7 @@
 				457032A526D0055A00F5BADC /* MobileContentBackgroundImageRenderer.swift in Sources */,
 				D4BE3F702C0907FC00887BFD /* RealmUserToolSettings.swift in Sources */,
 				450EE2AB29A6719500524F64 /* GodToolsAppLessonsPathDeepLinkParser.swift in Sources */,
-				451A0D432D53A1A000762C44 /* CYOAPagesNavigation.swift in Sources */,
+				451A0D482D53F4AF00762C44 /* CYOAPagesNavigation.swift in Sources */,
 				454BFDA72AFD8CD200104BC8 /* TractRemoteShareNavigationEvent.swift in Sources */,
 				45C94E612C4EDF1C004D80FE /* AccessibilityTapAreaView.swift in Sources */,
 				45EA98FA2AFD67FC00E7EA9A /* ViewCreatingToolScreenShareSessionTimedOutUseCase.swift in Sources */,
