@@ -36,6 +36,22 @@ class MobileContentPageCollectionView: MobileContentPageView {
         pagesView.view.translatesAutoresizingMaskIntoConstraints = false
         pagesView.view.constrainEdgesToView(view: self)
     }
+    
+    override func getPositionState() -> MobileContentViewPositionState {
+        
+        return MobileContentPageCollectionPositionState(
+            currentPageNumber: viewModel.pagesViewModel.currentPageNumber
+        )
+    }
+    
+    override func setPositionState(positionState: MobileContentViewPositionState, animated: Bool) {
+        
+        guard let positionState = positionState as? MobileContentPageCollectionPositionState else {
+            return
+        }
+        
+        pagesView.navigateToPage(pageIndex: positionState.currentPageNumber, animated: animated)
+    }
 }
 
 // MARK: - MobileContentPageViewDelegate
