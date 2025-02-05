@@ -199,6 +199,11 @@ class MobileContentPagesView: AppViewController {
     func resetInitialPagePositionsToAllVisiblePagePositions() {
         initialPagePositions = getAllVisiblePagesPositions()
     }
+    
+    func navigateToPage(pageIndex: Int, animated: Bool) {
+        
+        viewModel.navigateToPage(pageIndex: pageIndex, animated: animated)
+    }
 }
 
 // MARK: - PageNavigationCollectionViewDelegate
