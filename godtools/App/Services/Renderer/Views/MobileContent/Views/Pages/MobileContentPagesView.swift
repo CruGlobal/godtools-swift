@@ -19,14 +19,17 @@ class MobileContentPagesView: AppViewController {
     private var pageInsets: UIEdgeInsets = .zero
     private var didLayoutSubviews: Bool = false
           
+    private weak var pageViewDelegate: MobileContentPageViewDelegate?
+    
     @IBOutlet weak private(set) var safeAreaView: UIView!
     
     let pageNavigationView: PageNavigationCollectionView
         
-    init(viewModel: MobileContentPagesViewModel, navigationBar: AppNavigationBar?) {
+    init(viewModel: MobileContentPagesViewModel, navigationBar: AppNavigationBar?, pageViewDelegate: MobileContentPageViewDelegate?) {
         
         self.viewModel = viewModel
         self.pageNavigationView = PageNavigationCollectionView(layoutType: .fullScreen)
+        self.pageViewDelegate = pageViewDelegate
         
         super.init(nibName: String(describing: MobileContentPagesView.self), bundle: nil, navigationBar: navigationBar)
     }
@@ -109,6 +112,11 @@ class MobileContentPagesView: AppViewController {
                 }
             })
         }
+    }
+    
+    func setPageViewDelegate(pageViewDelegate: MobileContentPageViewDelegate?) {
+
+        self.pageViewDelegate = pageViewDelegate
     }
     
     func didConfigurePageView(pageView: MobileContentPageView) {
@@ -199,7 +207,7 @@ extension MobileContentPagesView: PageNavigationCollectionViewDelegate {
         
     func pageNavigationNumberOfPages(pageNavigation: PageNavigationCollectionView) -> Int {
         
-        return viewModel.getNumberOfRenderedPages()
+        return viewModel.getNumberOfPages()
     }
     
     func pageNavigation(pageNavigation: PageNavigationCollectionView, cellForPageAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -222,7 +230,7 @@ extension MobileContentPagesView: PageNavigationCollectionViewDelegate {
         
         cell.configure(mobileContentView: pageView)
         
-        pageView.setDelegate(delegate: self)
+        pageView.setPageViewDelegate(pageViewDelegate: self)
         
         pageView.setSemanticContentAttribute(semanticContentAttribute: viewModel.layoutDirection)
         
@@ -274,6 +282,9 @@ extension MobileContentPagesView: PageNavigationCollectionViewDelegate {
 extension MobileContentPagesView: MobileContentPageViewDelegate {
     
     func pageViewDidReceiveEvent(pageView: MobileContentPageView, eventId: EventId) -> ProcessedEventResult? {
+        
+        _ = pageViewDelegate?.pageViewDidReceiveEvent(pageView: pageView, eventId: eventId)
+        
         return viewModel.pageDidReceiveEvent(eventId: eventId)
     }
 }

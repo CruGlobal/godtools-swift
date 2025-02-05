@@ -40,7 +40,7 @@ class LessonViewModel: MobileContentRendererViewModel {
     private func updateProgress(page: Int) {
         
         let currentPage: CGFloat = CGFloat(page + 1)
-        let pagesCount: CGFloat = CGFloat(super.getNumberOfRenderedPages())
+        let pagesCount: CGFloat = CGFloat(super.getNumberOfPages())
         let newProgress: CGFloat
         
         if pagesCount > 0 {
