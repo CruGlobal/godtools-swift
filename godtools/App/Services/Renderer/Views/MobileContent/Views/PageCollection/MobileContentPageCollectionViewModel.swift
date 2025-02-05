@@ -26,9 +26,3 @@ class MobileContentPageCollectionViewModel: MobileContentPageViewModel {
         super.init(pageModel: pageCollectionPage, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics, trackScreenViewAnalyticsUseCase: trackScreenViewAnalyticsUseCase, hidesBackgroundImage: false)
     }
 }
-
-// MARK: - Inputs
-
-extension MobileContentPageCollectionViewModel {
-    
-}

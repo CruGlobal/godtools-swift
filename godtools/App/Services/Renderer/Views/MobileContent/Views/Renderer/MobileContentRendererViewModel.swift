@@ -116,7 +116,7 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
     }
     
     override func pageDidReceiveEvent(eventId: EventId) -> ProcessedEventResult? {
-            
+                
         trackContentEvent(eventId: eventId)
         
         let currentPageRenderer: MobileContentPageRenderer = currentPageRenderer.value
@@ -429,14 +429,7 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
             return nil
         }
         
-        let pageNavigationEvent: MobileContentPagesNavigationEvent = pagesNavigation.getPageNavigationEvent(
-            pages: pageModels,
-            page: initialPage,
-            animated: false,
-            reloadCollectionViewDataNeeded: true
-        )
-        
-        return pageNavigationEvent
+        return getPageNavigationEvent(page: initialPage, animated: false, reloadCollectionViewDataNeeded: true)
     }
     
     func configureRendererPageContextUserInfo(userInfo: inout [String: Any], page: Int) {

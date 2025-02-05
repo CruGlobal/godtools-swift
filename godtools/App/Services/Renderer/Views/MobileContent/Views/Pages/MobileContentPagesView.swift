@@ -18,9 +18,9 @@ class MobileContentPagesView: AppViewController {
     private var initialPagePositions: [PageNumber: MobileContentViewPositionState] = Dictionary()
     private var pageInsets: UIEdgeInsets = .zero
     private var didLayoutSubviews: Bool = false
-    
-    private weak var pageViewDelegate: MobileContentPageViewDelegate?
           
+    private weak var pageViewDelegate: MobileContentPageViewDelegate?
+    
     @IBOutlet weak private(set) var safeAreaView: UIView!
     
     let pageNavigationView: PageNavigationCollectionView
@@ -115,7 +115,7 @@ class MobileContentPagesView: AppViewController {
     }
     
     func setPageViewDelegate(pageViewDelegate: MobileContentPageViewDelegate?) {
-        
+
         self.pageViewDelegate = pageViewDelegate
     }
     
@@ -283,7 +283,7 @@ extension MobileContentPagesView: MobileContentPageViewDelegate {
     
     func pageViewDidReceiveEvent(pageView: MobileContentPageView, eventId: EventId) -> ProcessedEventResult? {
         
-        pageViewDelegate?.pageViewDidReceiveEvent(pageView: pageView, eventId: eventId)
+        _ = pageViewDelegate?.pageViewDidReceiveEvent(pageView: pageView, eventId: eventId)
         
         return viewModel.pageDidReceiveEvent(eventId: eventId)
     }

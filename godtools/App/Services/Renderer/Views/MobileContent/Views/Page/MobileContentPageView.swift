@@ -100,13 +100,13 @@ class MobileContentPageView: MobileContentView, NibBased {
         self.pageViewDelegate = pageViewDelegate
     }
     
+    func getPageViewDelegate() -> MobileContentPageViewDelegate? {
+        return pageViewDelegate
+    }
+    
     func setSemanticContentAttribute(semanticContentAttribute: UISemanticContentAttribute) {
         
         // Intended for subclasses to override. ~Levi
-    }
-    
-    func getPageViewDelegate() -> MobileContentPageViewDelegate? {
-        return pageViewDelegate
     }
         
     // MARK: - MobileContentView
