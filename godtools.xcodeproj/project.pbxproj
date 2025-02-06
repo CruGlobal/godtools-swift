@@ -52,6 +52,7 @@
 		45060D1E2B38815600A2A44C /* ResourcesFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45060D1D2B38815600A2A44C /* ResourcesFilter.swift */; };
 		45060D202B38816100A2A44C /* ResourcesFilterVariant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45060D1F2B38816100A2A44C /* ResourcesFilterVariant.swift */; };
 		4506C02F2D54FAD1009C9AD5 /* MobileContentParentPageParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4506C02E2D54FAC5009C9AD5 /* MobileContentParentPageParams.swift */; };
+		4506C0332D5502AA009C9AD5 /* MobileContentPageWillAppearParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4506C0322D5502A9009C9AD5 /* MobileContentPageWillAppearParams.swift */; };
 		45070A7E2ACF42AD00229EDD /* AppCloseBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45070A772ACF42AD00229EDD /* AppCloseBarItem.swift */; };
 		45070A7F2ACF42AD00229EDD /* AppLayoutDirectionBasedBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45070A782ACF42AD00229EDD /* AppLayoutDirectionBasedBarItem.swift */; };
 		45070A802ACF42AD00229EDD /* AppMenuBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45070A792ACF42AD00229EDD /* AppMenuBarItem.swift */; };
@@ -1751,6 +1752,7 @@
 		45060D1D2B38815600A2A44C /* ResourcesFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourcesFilter.swift; sourceTree = "<group>"; };
 		45060D1F2B38816100A2A44C /* ResourcesFilterVariant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourcesFilterVariant.swift; sourceTree = "<group>"; };
 		4506C02E2D54FAC5009C9AD5 /* MobileContentParentPageParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentParentPageParams.swift; sourceTree = "<group>"; };
+		4506C0322D5502A9009C9AD5 /* MobileContentPageWillAppearParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentPageWillAppearParams.swift; sourceTree = "<group>"; };
 		45070A772ACF42AD00229EDD /* AppCloseBarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppCloseBarItem.swift; sourceTree = "<group>"; };
 		45070A782ACF42AD00229EDD /* AppLayoutDirectionBasedBarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppLayoutDirectionBasedBarItem.swift; sourceTree = "<group>"; };
 		45070A792ACF42AD00229EDD /* AppMenuBarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppMenuBarItem.swift; sourceTree = "<group>"; };
@@ -5878,6 +5880,7 @@
 			isa = PBXGroup;
 			children = (
 				458D5B9F2A3A07560078B015 /* MobileContentPagesNavigationEvent.swift */,
+				4506C0322D5502A9009C9AD5 /* MobileContentPageWillAppearParams.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -13001,6 +13004,7 @@
 				4504BA2C2AF3EEE5001151E5 /* TutorialFeatureDiContainer.swift in Sources */,
 				4504BA2D2AF3EEE5001151E5 /* TutorialFeatureDomainLayerDependencies.swift in Sources */,
 				4578ED3F2D4D0FE90032EFD5 /* MobileContentPageCollectionView.swift in Sources */,
+				4506C0332D5502AA009C9AD5 /* MobileContentPageWillAppearParams.swift in Sources */,
 				4578ED402D4D0FE90032EFD5 /* MobileContentPageCollectionViewModel.swift in Sources */,
 				45308EB72BDC243700A49D96 /* SpiritualConversationReadinessScaleDomainModel.swift in Sources */,
 				45D3AAE1298AA69F0017E6DF /* VideoViewPlayerState.swift in Sources */,
