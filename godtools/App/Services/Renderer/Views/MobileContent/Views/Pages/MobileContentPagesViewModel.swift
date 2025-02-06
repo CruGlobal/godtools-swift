@@ -224,7 +224,8 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
                 deletePages: nil
             ),
             setPages: setPages,
-            pagePositions: nil
+            pagePositions: nil,
+            parentPageParams: nil
         )
     }
     

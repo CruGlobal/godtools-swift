@@ -320,7 +320,8 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
                     deletePages: nil
                 ),
                 setPages: nil,
-                pagePositions: pagePositions
+                pagePositions: pagePositions,
+                parentPageParams: nil
             )
         }
                 
@@ -334,7 +335,8 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
                 deletePages: nil
             ),
             setPages: nil,
-            pagePositions: navigationEventToSend.pagePositions
+            pagePositions: navigationEventToSend.pagePositions,
+            parentPageParams: nil
         )
         
         sendPageNavigationEvent(navigationEvent: eventWithCorrectLanguageDirection)
@@ -553,7 +555,8 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
                 deletePages: deletePagesAtIndexes
             ),
             setPages: visiblePages,
-            pagePositions: nil
+            pagePositions: nil,
+            parentPageParams: nil
         )
         
         sendPageNavigationEvent(navigationEvent: event)
