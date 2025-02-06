@@ -14,7 +14,7 @@ class MobileContentPageCollectionPagesViewModel: MobileContentPagesViewModel {
 
     private let pageCollectionPage: PageCollectionPage
     private let renderedPageContext: MobileContentRenderedPageContext
-
+    
     init(pageCollectionPage: PageCollectionPage, renderedPageContext: MobileContentRenderedPageContext) {
 
         self.pageCollectionPage = pageCollectionPage
@@ -24,7 +24,20 @@ class MobileContentPageCollectionPagesViewModel: MobileContentPagesViewModel {
 
         super.setPages(pages: pageCollectionPage.pages)
     }
-
+    
+    var initialPageIndex: Int? {
+        
+        guard let activePageId = renderedPageContext.parentPageParams?.activePageId else {
+            return nil
+        }
+        
+        guard let page = super.getPage(pageId: activePageId) else {
+            return nil
+        }
+        
+        return pageModels.firstIndex(of: page)
+    }
+    
     override var layoutDirection: UISemanticContentAttribute {
         return renderedPageContext.primaryLanguageLayoutDirection.semanticContentAttribute
     }
