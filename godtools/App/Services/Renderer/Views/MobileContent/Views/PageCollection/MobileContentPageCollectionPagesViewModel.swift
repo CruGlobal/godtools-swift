@@ -44,6 +44,22 @@ class MobileContentPageCollectionPagesViewModel: MobileContentPagesViewModel {
 
     override func pageDidReceiveEvent(eventId: EventId) -> ProcessedEventResult? {
 
+        let listeningPages: [Page] = pageModels
+        let pageToNavigateTo: Page?
+
+        if let listenerPage = getPageToNavigateToForPageListener(listeningPages: listeningPages, eventId: eventId) {
+
+            pageToNavigateTo = listenerPage
+        }
+        else {
+
+            pageToNavigateTo = nil
+        }
+
+        if let pageToNavigateTo = pageToNavigateTo {
+            navigateToPage(page: pageToNavigateTo, animated: true)
+        }
+        
         return nil
     }
 
