@@ -32,21 +32,26 @@ class PageNavigationCollectionView: UIView, NibBased {
     }
     
     private let layoutType: PageNavigationCollectionViewLayoutType
-    private let loggingEnabled: Bool = false
+    private let initialPageIndex: Int?
+    private let loggingEnabled: Bool
     
     private var layout: UICollectionViewFlowLayout = PageNavigationCollectionView.getDefaultFlowLayout()
     private var currentPageNavigation: PageNavigationCollectionView.CurrentNavigation?
     private var pageNavigationCompletedClosure: ((_ completed: PageNavigationCollectionViewNavigationCompleted) -> Void)?
     private var internalCurrentChangedPage: Int = -1
     private var internalCurrentStoppedOnPage: Int = -1
+    private var didLayoutSubviews: Bool = false
+    private var didLoadPages: Bool = false
     
     @IBOutlet weak private var collectionView: UICollectionView!
     
     private weak var delegate: PageNavigationCollectionViewDelegate?
     
-    init(layoutType: PageNavigationCollectionViewLayoutType = .fullScreen) {
+    init(layoutType: PageNavigationCollectionViewLayoutType = .fullScreen, initialPageIndex: Int?, loggingEnabled: Bool = false) {
         
         self.layoutType = layoutType
+        self.initialPageIndex = initialPageIndex
+        self.loggingEnabled = loggingEnabled
         
         super.init(frame: UIScreen.main.bounds)
         
@@ -67,6 +72,8 @@ class PageNavigationCollectionView: UIView, NibBased {
         
         self.layout = PageNavigationCollectionView.getDefaultFlowLayout()
         self.layoutType = .fullScreen
+        self.initialPageIndex = nil
+        self.loggingEnabled = false
         
         super.init(frame: frame)
     }
@@ -75,6 +82,8 @@ class PageNavigationCollectionView: UIView, NibBased {
         
         self.layout = PageNavigationCollectionView.getDefaultFlowLayout()
         self.layoutType = .fullScreen
+        self.initialPageIndex = nil
+        self.loggingEnabled = false
         
         super.init(coder: coder)
         
@@ -113,6 +122,25 @@ class PageNavigationCollectionView: UIView, NibBased {
         
         if #available(iOS 16, *) {
             collectionView.selfSizingInvalidation = .disabled
+        }
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        didLayoutSubviews = true
+        
+        if getNumberOfPages() > 0 && !didLoadPages {
+            didLoadPages = true
+            handleLoadPagesCompleted()
+        }
+    }
+    
+    private func handleLoadPagesCompleted() {
+        
+        if let initialPageIndex = initialPageIndex {
+            DispatchQueue.main.async { [weak self] in
+                self?.scrollToPage(page: initialPageIndex, animated: false)
+            }
         }
     }
     

@@ -26,10 +26,10 @@ class MobileContentPagesView: AppViewController {
     
     let pageNavigationView: PageNavigationCollectionView
         
-    init(viewModel: MobileContentPagesViewModel, navigationBar: AppNavigationBar?, pageViewDelegate: MobileContentPageViewDelegate?) {
+    init(viewModel: MobileContentPagesViewModel, navigationBar: AppNavigationBar?, pageViewDelegate: MobileContentPageViewDelegate?, initialPageIndex: Int?, loggingEnabled: Bool = false) {
         
         self.viewModel = viewModel
-        self.pageNavigationView = PageNavigationCollectionView(layoutType: .fullScreen)
+        self.pageNavigationView = PageNavigationCollectionView(layoutType: .fullScreen, initialPageIndex: initialPageIndex, loggingEnabled: loggingEnabled)
         self.pageViewDelegate = pageViewDelegate
         
         super.init(nibName: String(describing: MobileContentPagesView.self), bundle: nil, navigationBar: navigationBar)

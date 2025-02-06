@@ -28,7 +28,8 @@ class MobileContentCardCollectionPageView: MobileContentPageView {
                     pageWidthAmountToRevealForPreviousAndNextPage: 20,
                     cardAspectRatio: CGSize(width: 182, height: 268)
                 )
-            )
+            ),
+            initialPageIndex: nil
         )
         
         super.init(viewModel: viewModel, nibName: nil)
