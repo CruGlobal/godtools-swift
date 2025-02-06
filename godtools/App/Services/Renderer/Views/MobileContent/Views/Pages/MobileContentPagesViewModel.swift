@@ -58,6 +58,10 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
         return pageModels[index]
     }
     
+    func getPage(pageId: String) -> Page? {
+        return pageModels.first(where: { $0.id == pageId })
+    }
+    
     func getNumberOfPages() -> Int {
         return pageModels.count
     }
@@ -164,6 +168,15 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
         
         navigateToPage(page: page, animated: animated)
     }
+    
+    func navigateToPage(pageId: String, animated: Bool) {
+        
+        guard let page = getPage(pageId: pageId) else {
+            return
+        }
+        
+        navigateToPage(page: page, animated: animated)
+    }
         
     func navigateToPage(page: Page, animated: Bool) {
         
@@ -224,13 +237,14 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
                 deletePages: nil
             ),
             setPages: setPages,
-            pagePositions: nil
+            pagePositions: nil,
+            parentPageParams: nil
         )
     }
     
     // MARK: - Page Life Cycle
     
-    func pageWillAppear(page: Int) -> MobileContentView? {
+    func pageWillAppear(page: Int, pageParams: MobileContentPageWillAppearParams) -> MobileContentView? {
         
         return nil
     }

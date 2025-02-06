@@ -80,12 +80,13 @@ class MobileContentPageRenderer {
     
     // MARK: - Page Renderering
     
-    private func getRenderedPageContext(pageModel: Page, page: Int, numberOfPages: Int, window: UIViewController, safeArea: UIEdgeInsets, manifest: Manifest, manifestResourcesCache: MobileContentRendererManifestResourcesCache, resource: ResourceModel, language: LanguageModel, translation: TranslationModel, viewRenderer: MobileContentViewRenderer, rendererLanguages: MobileContentRendererLanguages, sharedState: State, trainingTipsEnabled: Bool, userInfo: [String: Any]?) -> MobileContentRenderedPageContext {
+    private func getRenderedPageContext(pageModel: Page, page: Int, numberOfPages: Int, parentPageParams: MobileContentParentPageParams?, window: UIViewController, safeArea: UIEdgeInsets, manifest: Manifest, manifestResourcesCache: MobileContentRendererManifestResourcesCache, resource: ResourceModel, language: LanguageModel, translation: TranslationModel, viewRenderer: MobileContentViewRenderer, rendererLanguages: MobileContentRendererLanguages, sharedState: State, trainingTipsEnabled: Bool, userInfo: [String: Any]?) -> MobileContentRenderedPageContext {
         
         let renderedPageContext = MobileContentRenderedPageContext(
             pageModel: pageModel,
             page: page,
             isLastPage: page == numberOfPages - 1,
+            parentPageParams: parentPageParams,
             window: window,
             safeArea: safeArea,
             manifest: manifest,
@@ -106,12 +107,13 @@ class MobileContentPageRenderer {
         return renderedPageContext
     }
     
-    func renderPageModel(pageModel: Page, page: Int, numberOfPages: Int, window: UIViewController, safeArea: UIEdgeInsets, trainingTipsEnabled: Bool, userInfo: [String: Any]?) -> Result<MobileContentView, Error> {
+    func renderPageModel(pageModel: Page, page: Int, numberOfPages: Int, parentPageParams: MobileContentParentPageParams?, window: UIViewController, safeArea: UIEdgeInsets, trainingTipsEnabled: Bool, userInfo: [String: Any]?) -> Result<MobileContentView, Error> {
         
         let renderedPageContext: MobileContentRenderedPageContext = getRenderedPageContext(
             pageModel: pageModel,
             page: page,
             numberOfPages: numberOfPages,
+            parentPageParams: parentPageParams,
             window: window,
             safeArea: safeArea,
             manifest: manifest,

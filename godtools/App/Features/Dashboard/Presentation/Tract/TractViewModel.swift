@@ -387,7 +387,8 @@ extension TractViewModel {
                 deletePages: nil
             ),
             setPages: nil,
-            pagePositions: pagePositions
+            pagePositions: pagePositions,
+            parentPageParams: nil
         )
                         
         if let remoteShareLanguageIndex = remoteShareLanguageIndex, navBarLanguageChanged {
