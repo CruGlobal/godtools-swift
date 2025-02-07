@@ -17,6 +17,7 @@ class MobileContentPagesView: AppViewController {
     
     private var initialPagePositions: [PageNumber: MobileContentViewPositionState] = Dictionary()
     private var pageInsets: UIEdgeInsets = .zero
+    private var currentNavigationEvent: MobileContentPagesNavigationEvent?
     private var didLayoutSubviews: Bool = false
           
     private weak var pageViewDelegate: MobileContentPageViewDelegate?
@@ -25,10 +26,10 @@ class MobileContentPagesView: AppViewController {
     
     let pageNavigationView: PageNavigationCollectionView
         
-    init(viewModel: MobileContentPagesViewModel, navigationBar: AppNavigationBar?, pageViewDelegate: MobileContentPageViewDelegate?) {
+    init(viewModel: MobileContentPagesViewModel, navigationBar: AppNavigationBar?, pageViewDelegate: MobileContentPageViewDelegate?, initialPageIndex: Int?, loggingEnabled: Bool = false) {
         
         self.viewModel = viewModel
-        self.pageNavigationView = PageNavigationCollectionView(layoutType: .fullScreen)
+        self.pageNavigationView = PageNavigationCollectionView(layoutType: .fullScreen, initialPageIndex: initialPageIndex, loggingEnabled: loggingEnabled)
         self.pageViewDelegate = pageViewDelegate
         
         super.init(nibName: String(describing: MobileContentPagesView.self), bundle: nil, navigationBar: navigationBar)
@@ -100,6 +101,8 @@ class MobileContentPagesView: AppViewController {
             guard let weakSelf = self else {
                 return
             }
+            
+            weakSelf.currentNavigationEvent = navigationEvent
                         
             weakSelf.pageNavigationView.scrollToPage(pageNavigation: navigationEvent.pageNavigation, completion: { (completedNavigation: PageNavigationCollectionViewNavigationCompleted) in
                                     
@@ -110,6 +113,8 @@ class MobileContentPagesView: AppViewController {
                         animated: completedNavigation.pageNavigation.animated
                     )
                 }
+                
+                weakSelf.currentNavigationEvent = nil
             })
         }
     }
@@ -199,6 +204,11 @@ class MobileContentPagesView: AppViewController {
     func resetInitialPagePositionsToAllVisiblePagePositions() {
         initialPagePositions = getAllVisiblePagesPositions()
     }
+    
+    func navigateToPage(pageIndex: Int, animated: Bool) {
+        
+        viewModel.navigateToPage(pageIndex: pageIndex, animated: animated)
+    }
 }
 
 // MARK: - PageNavigationCollectionViewDelegate
@@ -223,7 +233,11 @@ extension MobileContentPagesView: PageNavigationCollectionViewDelegate {
         
         let pageNumber: Int = indexPath.row
         
-        guard let pageView = viewModel.pageWillAppear(page: pageNumber) as? MobileContentPageView else {
+        let pageParams = MobileContentPageWillAppearParams(
+            parentPageParams: currentNavigationEvent?.parentPageParams
+        )
+        
+        guard let pageView = viewModel.pageWillAppear(page: pageNumber, pageParams: pageParams) as? MobileContentPageView else {
             assertionFailure("Provided MobileContentView should inherit from MobileContentPageView")
             return UICollectionViewCell()
         }

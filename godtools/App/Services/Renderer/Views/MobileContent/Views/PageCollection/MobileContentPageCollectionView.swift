@@ -17,7 +17,14 @@ class MobileContentPageCollectionView: MobileContentPageView {
     init(viewModel: MobileContentPageCollectionViewModel) {
         
         self.viewModel = viewModel
-        self.pagesView = MobileContentPagesView(viewModel: viewModel.pagesViewModel, navigationBar: nil, pageViewDelegate: nil)
+        
+        self.pagesView = MobileContentPagesView(
+            viewModel: viewModel.pagesViewModel,
+            navigationBar: nil,
+            pageViewDelegate: nil,
+            initialPageIndex: viewModel.pagesViewModel.initialPageIndex,
+            loggingEnabled: false
+        )
         
         super.init(viewModel: viewModel, nibName: nil)
         
@@ -35,6 +42,26 @@ class MobileContentPageCollectionView: MobileContentPageView {
         addSubview(pagesView.view)
         pagesView.view.translatesAutoresizingMaskIntoConstraints = false
         pagesView.view.constrainEdgesToView(view: self)
+    }
+    
+    override func setupBinding() {
+        super.setupBinding()
+    }
+    
+    override func getPositionState() -> MobileContentViewPositionState {
+        
+        return MobileContentPageCollectionPositionState(
+            currentPageNumber: viewModel.pagesViewModel.currentPageNumber
+        )
+    }
+    
+    override func setPositionState(positionState: MobileContentViewPositionState, animated: Bool) {
+        
+        guard let positionState = positionState as? MobileContentPageCollectionPositionState else {
+            return
+        }
+        
+        pagesView.navigateToPage(pageIndex: positionState.currentPageNumber, animated: animated)
     }
 }
 
