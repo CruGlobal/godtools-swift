@@ -27,7 +27,7 @@ class MobileContentStackView: MobileContentView {
     private var isObservingBoundsChanges: Bool = false
     private var lastRenderedParentBounds: CGRect?
             
-    init(viewModel: MobileContentViewModel, contentInsets: UIEdgeInsets, scrollIsEnabled: Bool, itemSpacing: CGFloat? = nil) {
+    init(viewModel: MobileContentViewModel, contentInsets: UIEdgeInsets?, scrollIsEnabled: Bool, itemSpacing: CGFloat? = nil) {
                 
         super.init(viewModel: viewModel, frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 0))
         
@@ -139,6 +139,10 @@ class MobileContentStackView: MobileContentView {
     
     var contentSize: CGSize {
         return scrollView?.contentSize ?? childrenParentView.frame.size
+    }
+    
+    func getContentInsets() -> UIEdgeInsets {
+        return contentInsets
     }
     
     func setScrollViewContentSize(size: CGSize) {
@@ -363,7 +367,7 @@ extension MobileContentStackView {
 
 extension MobileContentStackView {
     
-    func configureLayout(contentInsets: UIEdgeInsets?, scrollIsEnabled: Bool?, itemSpacing: CGFloat? = nil) {
+    private func configureLayout(contentInsets: UIEdgeInsets?, scrollIsEnabled: Bool?, itemSpacing: CGFloat? = nil) {
         
         removeBoundsChangeObserverOnChildrenParentView()
 
@@ -525,7 +529,7 @@ extension MobileContentStackView {
 extension MobileContentStackView {
     
     private func addChildView(childView: MobileContentView) {
-                     
+                             
         let childContentView: UIView = childView
                       
         childrenParentView.addSubview(childContentView)

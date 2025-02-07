@@ -26,7 +26,7 @@ class TrainingPageView: MobileContentView, NibBased {
     init(viewModel: TrainingPageViewModel) {
         
         self.viewModel = viewModel
-        self.contentStackView = MobileContentStackView(viewModel: viewModel, contentInsets: .zero, scrollIsEnabled: true)
+        self.contentStackView = MobileContentStackView(viewModel: viewModel, contentInsets: nil, scrollIsEnabled: true)
         
         super.init(viewModel: viewModel, frame: UIScreen.main.bounds)
         

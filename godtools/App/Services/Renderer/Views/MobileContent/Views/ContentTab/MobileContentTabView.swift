@@ -16,7 +16,7 @@ class MobileContentTabView: MobileContentStackView {
         
         self.viewModel = viewModel
         
-        super.init(viewModel: viewModel, contentInsets: .zero, scrollIsEnabled: false)
+        super.init(viewModel: viewModel, contentInsets: nil, scrollIsEnabled: false)
         
         setupLayout()
         setupBinding()

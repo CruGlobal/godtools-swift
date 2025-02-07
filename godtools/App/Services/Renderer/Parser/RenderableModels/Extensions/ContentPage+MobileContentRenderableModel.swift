@@ -14,10 +14,12 @@ extension ContentPage: MobileContentRenderableModel {
     func getRenderableChildModels() -> [AnyObject] {
         
         var childModels: [AnyObject] = Array()
-                
+        
+        let contentPageHorizontalInsets: CGFloat = 16
+        
         let multiplatformContent: MultiplatformContent = MultiplatformContent(
             content: content,
-            contentInsets: .zero,
+            contentInsets: UIEdgeInsets(top: 0, left: contentPageHorizontalInsets, bottom: 0, right: contentPageHorizontalInsets),
             scrollIsEnabled: true
         )
 
