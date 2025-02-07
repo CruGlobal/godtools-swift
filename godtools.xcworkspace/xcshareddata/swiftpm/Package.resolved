@@ -1,5 +1,5 @@
 {
-  "originHash" : "a0be7c04d04795109cee91897335f98e419cba46dc747a64041fe1b9e6ea1b3b",
+  "originHash" : "46c3e5d6b619464f81f8c9a21f423fede21a2c1aee05c005c799696c1132e668",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -24,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/openid/AppAuth-iOS.git",
       "state" : {
-        "revision" : "c89ed571ae140f8eb1142735e6e23d7bb8c34cb2",
-        "version" : "1.7.5"
+        "revision" : "2781038865a80e2c425a1da12cc1327bcd56501f",
+        "version" : "1.7.6"
       }
     },
     {
@@ -168,8 +168,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/airbnb/lottie-spm.git",
       "state" : {
-        "revision" : "b842598f1295f3ffa1475b1580672d1fe5b83580",
-        "version" : "4.5.0"
+        "revision" : "8c6edf4f0fa84fe9c058600a4295eb0c01661c69",
+        "version" : "4.5.1"
       }
     },
     {
@@ -213,8 +213,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/realm/realm-core.git",
       "state" : {
-        "revision" : "f98720a07e6150c41c953e1937108225550ba155",
-        "version" : "20.0.0"
+        "revision" : "15493076ad9fef22c16cc64cbfbf9e5b65c385f9",
+        "version" : "20.1.0"
       }
     },
     {
@@ -222,8 +222,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/realm/realm-swift.git",
       "state" : {
-        "revision" : "7ea8be1f74034bae860120d58d3491c4fcedff5b",
-        "version" : "20.0.0"
+        "revision" : "bae6c4be7df169fdb047d0ad63f902c1e2665e83",
+        "version" : "20.0.1"
       }
     },
     {
