@@ -23,6 +23,7 @@ class MobileContentButtonViewModel: MobileContentViewModel {
     let backgroundColor: UIColor
     let buttonWidth: MobileContentViewWidth
     let titleColor: UIColor
+    let titleAlignment: NSTextAlignment
     let borderColor: UIColor?
     let visibilityState: ObservableValue<MobileContentViewVisibilityState> = ObservableValue(value: .visible)
     let icon: MobileContentButtonIcon?
@@ -37,6 +38,17 @@ class MobileContentButtonViewModel: MobileContentViewModel {
         let defaultBackgroundColor: UIColor = buttonModel.buttonColor
         let defaultTitleColor: UIColor = buttonModel.text.textColor
         let defaultBorderColor: UIColor = .clear
+        
+        switch buttonModel.text.textAlign {
+        case .center:
+            titleAlignment = .center
+        case .end:
+            titleAlignment = .right
+        case .start:
+            titleAlignment = .left
+        default:
+            titleAlignment = .center
+        }
                                 
         switch buttonModel.style {
         
