@@ -1,5 +1,5 @@
 //
-//  LanguageDownloadHandler.swift
+//  DownloadableLanguagesDownloadHandler.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 2/5/25.
@@ -9,23 +9,17 @@
 import Foundation
 import Combine
 
-protocol LanguageDownloadHandlerDelegate: AnyObject {
-    func downloadComplete(languageId: String)
-    func downloadFailure(languageId: String, error: Error)
-    func downloadProgressUpdate(languageId: String, progress: Double)
-}
-
-class LanguageDownloadHandler {
+class DownloadableLanguagesDownloadHandler {
     
     private let activeDownloadsObserver = CurrentValueSubject<[BCP47LanguageIdentifier: LanguageDownloadStatusDomainModel], Never>([:])
     
-    private weak var delegate: LanguageDownloadHandlerDelegate?
+    private weak var delegate: DownloadableLanguagesDownloadHandlerDelegate?
     private var downloadPublishers: [String: AnyPublisher<Double, Error>] = [:]
     private var backgroundDownloadCancellables = Set<AnyCancellable>()
 
     // MARK: - Inputs
     
-    func setDelegate(_ delegate: LanguageDownloadHandlerDelegate) {
+    func setDelegate(_ delegate: DownloadableLanguagesDownloadHandlerDelegate) {
         self.delegate = delegate
     }
     

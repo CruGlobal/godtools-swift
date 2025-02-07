@@ -25,7 +25,7 @@ class DownloadableLanguagesViewModel: ObservableObject {
     private weak var flowDelegate: FlowDelegate?
     private lazy var searchBarViewModel = SearchBarViewModel(getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, viewSearchBarUseCase: viewSearchBarUseCase)
     
-    static let languageDownloadHandler: LanguageDownloadHandler = LanguageDownloadHandler()
+    static let languageDownloadHandler: DownloadableLanguagesDownloadHandler = DownloadableLanguagesDownloadHandler()
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     @Published private var downloadableLanguages: [DownloadableLanguageListItemDomainModel] = Array()
@@ -158,16 +158,18 @@ extension DownloadableLanguagesViewModel {
     }
 }
 
-extension DownloadableLanguagesViewModel: LanguageDownloadHandlerDelegate {
-    func downloadComplete(languageId: String) {
+// MARK: - DownloadableLanguagesDownloadHandlerDelegate
+
+extension DownloadableLanguagesViewModel: DownloadableLanguagesDownloadHandlerDelegate {
+    func downloadComplete(languageId: BCP47LanguageIdentifier) {
         
     }
     
-    func downloadFailure(languageId: String, error: Error) {
+    func downloadFailure(languageId: BCP47LanguageIdentifier, error: Error) {
         flowDelegate?.navigate(step: .showLanguageDownloadErrorAlert(error: error))
     }
     
-    func downloadProgressUpdate(languageId: String, progress: Double) {
+    func downloadProgressUpdate(languageId: BCP47LanguageIdentifier, progress: Double) {
 
     }
 }
