@@ -19,13 +19,11 @@ class DownloadableLanguagesViewModel: ObservableObject {
     private let removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase
     
     private var cancellables = Set<AnyCancellable>()
-    private var backgroundDownloadCancellables = Set<AnyCancellable>()
-    private static var downloadPublishers: [String: AnyPublisher<Double, Error>] = [:]
-
+    private static var backgroundDownloadCancellables = Set<AnyCancellable>()
+    private static let languageDownloadHandler: DownloadableLanguagesDownloadHandler = DownloadableLanguagesDownloadHandler()
+    
     private weak var flowDelegate: FlowDelegate?
     private lazy var searchBarViewModel = SearchBarViewModel(getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, viewSearchBarUseCase: viewSearchBarUseCase)
-    
-    static let languageDownloadHandler: DownloadableLanguagesDownloadHandler = DownloadableLanguagesDownloadHandler()
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     @Published private var downloadableLanguages: [DownloadableLanguageListItemDomainModel] = Array()
@@ -77,7 +75,7 @@ class DownloadableLanguagesViewModel: ObservableObject {
         
         Publishers.CombineLatest3(
             $searchText,
-            $downloadableLanguages,
+            $downloadableLanguages.dropFirst(),
             $activeDownloads
         )
         .flatMap({ searchText, downloadableLanguages, activeDownloads in
@@ -154,7 +152,7 @@ extension DownloadableLanguagesViewModel {
             .sink { _ in
                 
             }
-            .store(in: &backgroundDownloadCancellables)
+            .store(in: &DownloadableLanguagesViewModel.backgroundDownloadCancellables)
     }
 }
 
