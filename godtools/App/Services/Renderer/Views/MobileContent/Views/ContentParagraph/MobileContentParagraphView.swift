@@ -15,14 +15,14 @@ class MobileContentParagraphView: MobileContentStackView {
     
     private let viewModel: MobileContentParagraphViewModel
     
-    init(viewModel: MobileContentParagraphViewModel, scrollIsEnabled: Bool) {
+    init(viewModel: MobileContentParagraphViewModel) {
         
         self.viewModel = viewModel
         
         super.init(
             viewModel: viewModel,
             contentInsets: UIEdgeInsets(top: Self.topPadding, left: 0, bottom: Self.bottomPadding, right: 0),
-            scrollIsEnabled: scrollIsEnabled
+            scrollIsEnabled: false
         )
         
         setupBinding()
