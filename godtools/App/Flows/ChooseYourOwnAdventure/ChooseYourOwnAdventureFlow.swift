@@ -55,7 +55,7 @@ class ChooseYourOwnAdventureFlow: ToolNavigationFlow, ToolSettingsNavigationFlow
         switch step {
         case .toolSettingsTappedFromChooseYourOwnAdventure(let toolSettingsObserver):
             
-            openToolSettings(with: toolSettingsObserver)
+            openToolSettings(toolSettingsObserver: toolSettingsObserver, toolSettingsDidCloseClosure: nil)
             
         case .toolSettingsFlowCompleted( _):
             

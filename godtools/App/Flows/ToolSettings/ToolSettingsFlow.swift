@@ -13,6 +13,7 @@ import Combine
 class ToolSettingsFlow: Flow {
     
     private let toolSettingsObserver: ToolSettingsObserver
+    private let toolSettingsDidCloseClosure: (() -> Void)?
     
     private var toolScreenShareFlow: ToolScreenShareFlow?
     private var languagesListModal: UIViewController?
@@ -29,12 +30,13 @@ class ToolSettingsFlow: Flow {
     let appDiContainer: AppDiContainer
     let navigationController: AppNavigationController
     
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, toolSettingsObserver: ToolSettingsObserver) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, toolSettingsObserver: ToolSettingsObserver, toolSettingsDidCloseClosure: (() -> Void)? = nil) {
             
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController
         self.toolSettingsObserver = toolSettingsObserver
+        self.toolSettingsDidCloseClosure = toolSettingsDidCloseClosure
         
         let getToolScreenShareTutorialHasBeenViewedUseCase: GetToolScreenShareTutorialHasBeenViewedUseCase = appDiContainer.feature.toolScreenShare.domainLayer.getToolScreenShareTutorialHasBeenViewedUseCase()
                 
@@ -83,6 +85,10 @@ class ToolSettingsFlow: Flow {
         )
         
         return transparentModal
+    }
+    
+    func didClose() {
+        toolSettingsDidCloseClosure?()
     }
     
     func navigate(step: FlowStep) {
