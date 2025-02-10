@@ -86,7 +86,7 @@ enum FlowStep {
     // tool
     case homeTappedFromTool(isScreenSharing: Bool)
     case backTappedFromTool
-    case toolSettingsTappedFromTool(toolSettingsObserver: ToolSettingsObserver)
+    case toolSettingsTappedFromTool(toolSettingsObserver: ToolSettingsObserver, toolSettingsDidCloseClosure: (() -> Void)?)
     case tractFlowCompleted(state: TractFlowCompletedState)
     case acceptTappedFromExitToolRemoteShare
         
