@@ -16,6 +16,7 @@ class TractViewModel: MobileContentRendererViewModel {
     
     private let tractRemoteSharePublisher: TractRemoteSharePublisher
     private let tractRemoteShareSubscriber: TractRemoteShareSubscriber
+    private let languagesRepository: LanguagesRepository
     private let resourceViewsService: ResourceViewsService
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let persistUserToolLanguageSettingsUseCase: PersistUserToolLanguageSettingsUseCase
@@ -31,13 +32,15 @@ class TractViewModel: MobileContentRendererViewModel {
     let languageFont: UIFont?
     let didSubscribeForRemoteSharePublishing: ObservableValue<Bool> = ObservableValue(value: false)
     
-    @Published var hidesRemoteShareIsActive: Bool = true
+    @Published private(set) var toolSettingsDidClose: Void?
+    @Published private(set) var hidesRemoteShareIsActive: Bool = true
         
-    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, resourceViewsService: ResourceViewsService, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTranslatedLanguageName: GetTranslatedLanguageName, liveShareStream: String?, initialPage: MobileContentRendererInitialPage?, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?, persistUserToolLanguageSettingsUseCase: PersistUserToolLanguageSettingsUseCase, shouldPersistToolSettings: Bool) {
+    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, languagesRepository: LanguagesRepository, resourceViewsService: ResourceViewsService, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTranslatedLanguageName: GetTranslatedLanguageName, liveShareStream: String?, initialPage: MobileContentRendererInitialPage?, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?, persistUserToolLanguageSettingsUseCase: PersistUserToolLanguageSettingsUseCase, shouldPersistToolSettings: Bool) {
         
         self.flowDelegate = flowDelegate
         self.tractRemoteSharePublisher = tractRemoteSharePublisher
         self.tractRemoteShareSubscriber = tractRemoteShareSubscriber
+        self.languagesRepository = languagesRepository
         self.resourceViewsService = resourceViewsService
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.liveShareStream = liveShareStream
@@ -243,6 +246,10 @@ extension TractViewModel {
     
     @objc func toolSettingsTapped() {
         
+        let toolSettingsDidCloseClosure = { [weak self] () -> Void in
+            self?.toolSettingsDidClose = ()
+        }
+        
         let toolSettingsObserver = setUpToolSettingsObserver()
         
         trackActionAnalyticsUseCase
@@ -258,7 +265,7 @@ extension TractViewModel {
                 data: [ToolAnalyticsActionNames.shared.ACTION_SETTINGS: 1]
             )
         
-        flowDelegate?.navigate(step: .toolSettingsTappedFromTool(toolSettingsObserver: toolSettingsObserver))
+        flowDelegate?.navigate(step: .toolSettingsTappedFromTool(toolSettingsObserver: toolSettingsObserver, toolSettingsDidCloseClosure: toolSettingsDidCloseClosure))
     }
     
     func languageTapped(index: Int, page: Int, pagePositions: TractPagePositions) {
@@ -355,53 +362,79 @@ extension TractViewModel {
         let page: Int? = attributes?.page
         let cardPosition: Int? = attributes?.card
         
-        let navBarLanguages: [LanguageModel] = languages
-        let currentNavBarLanguage: LanguageModel = languages[selectedLanguageIndex]
-        var remoteShareLanguage: LanguageModel = currentNavBarLanguage
-        var remoteShareLanguageIndex: Int?
-        
-        if let locale = attributes?.locale, !locale.isEmpty {
-            
-            for index in 0 ..< navBarLanguages.count {
-                
-                let language: LanguageModel = navBarLanguages[index]
-
-                if locale.lowercased() == language.localeId.lowercased() {
-                    remoteShareLanguage = language
-                    remoteShareLanguageIndex = index
-                    break
-                }
-            }
-        }
-        
-        let navBarLanguageChanged: Bool = remoteShareLanguage.id != currentNavBarLanguage.id
         let pagePositions: MobileContentViewPositionState? = TractPagePositions(cardPosition: cardPosition)
         
-        let navigationEvent = MobileContentPagesNavigationEvent(
-            pageNavigation: PageNavigationCollectionViewNavigationModel(
-                navigationDirection: nil,
-                page: page ?? super.currentPageNumber,
-                animated: animated,
-                reloadCollectionViewDataNeeded: navBarLanguageChanged,
-                insertPages: nil,
-                deletePages: nil
-            ),
-            setPages: nil,
-            pagePositions: pagePositions,
-            parentPageParams: nil
-        )
-                        
-        if let remoteShareLanguageIndex = remoteShareLanguageIndex, navBarLanguageChanged {
+        let navBarLanguages: [LanguageModel] = languages
+        let currentNavBarLanguage: LanguageModel = languages[selectedLanguageIndex]
+        
+        let remoteLocale: String?
+        let remoteLocaleNavBarLanguage: LanguageModel?
+        let remoteLocaleNavBarLanguageIndex: Int?
+        let remoteLocaleExists: Bool
+        let remoteLocaleExistsInNavBarLanguages: Bool?
+        
+        if let remoteLocaleValue = attributes?.locale, !remoteLocaleValue.isEmpty {
             
-            super.setPageRenderer(pageRenderer: renderer.value.pageRenderers[remoteShareLanguageIndex], navigationEvent: nil, pagePositions: pagePositions)
+            remoteLocale = remoteLocaleValue
+            remoteLocaleNavBarLanguage = navBarLanguages.first(where: { $0.localeId.lowercased() == remoteLocaleValue.lowercased() })
+            remoteLocaleExists = true
+            remoteLocaleExistsInNavBarLanguages = remoteLocaleNavBarLanguage != nil
         }
         else {
+            
+            remoteLocale = nil
+            remoteLocaleNavBarLanguage = nil
+            remoteLocaleExists = false
+            remoteLocaleExistsInNavBarLanguages = nil
+        }
+        
+        if let remoteLocaleNavBarLanguage = remoteLocaleNavBarLanguage {
+            remoteLocaleNavBarLanguageIndex = navBarLanguages.firstIndex(of: remoteLocaleNavBarLanguage)
+        }
+        else {
+            remoteLocaleNavBarLanguageIndex = nil
+        }
+                
+        if remoteLocaleExists &&
+            (remoteLocaleExistsInNavBarLanguages == true) &&
+            remoteLocaleNavBarLanguage?.id != currentNavBarLanguage.id,
+           let remoteLocaleNavBarLanguageIndex = remoteLocaleNavBarLanguageIndex {
+            
+            super.setPageRenderer(
+                pageRenderer: renderer.value.pageRenderers[remoteLocaleNavBarLanguageIndex],
+                navigationEvent: nil,
+                pagePositions: pagePositions
+            )
+        }
+        else if remoteLocaleExists && (remoteLocaleExistsInNavBarLanguages == false), let remoteLocale = remoteLocale, let remoteLanguage = languagesRepository.getLanguage(code: remoteLocale) {
+            
+            super.setRendererPrimaryLanguage(
+                primaryLanguageId: remoteLanguage.id,
+                parallelLanguageId: nil,
+                selectedLanguageId: remoteLanguage.id
+            )
+        }
+        else {
+            
+            let navigationEvent = MobileContentPagesNavigationEvent(
+                pageNavigation: PageNavigationCollectionViewNavigationModel(
+                    navigationDirection: nil,
+                    page: page ?? super.currentPageNumber,
+                    animated: animated,
+                    reloadCollectionViewDataNeeded: false,
+                    insertPages: nil,
+                    deletePages: nil
+                ),
+                setPages: nil,
+                pagePositions: pagePositions,
+                parentPageParams: nil
+            )
             
             super.sendPageNavigationEvent(navigationEvent: navigationEvent)
         }
     }
     
-    private func sendRemoteShareNavigationEvent(page: Int, pagePositions: TractPagePositions) {
+    func sendRemoteShareNavigationEvent(page: Int, pagePositions: TractPagePositions) {
         
         guard tractRemoteSharePublisher.isSubscriberChannelIdCreatedForPublish else {
             return
