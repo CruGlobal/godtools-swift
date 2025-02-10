@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GodToolsToolParser
 
 class MobileContentAnimationView: MobileContentView {
     
@@ -41,6 +42,13 @@ class MobileContentAnimationView: MobileContentView {
             animatedView.configure(viewModel: animatedViewModel)
             animatedView.setAnimationContentMode(contentMode: .scaleAspectFill)
         }
+    }
+    
+    override func didReceiveEvent(eventId: EventId, eventIdsGroup: [EventId]) -> ProcessedEventResult? {
+                
+        _ = super.didReceiveEvent(eventId: eventId, eventIdsGroup: eventIdsGroup)
+        
+        return nil
     }
     
     override var heightConstraintType: MobileContentViewHeightConstraintType {

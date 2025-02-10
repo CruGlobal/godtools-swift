@@ -45,3 +45,18 @@ class MobileContentAnimationViewModel: MobileContentViewModel {
         super.init(baseModel: animationModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }
 }
+
+extension MobileContentAnimationViewModel {
+    
+    func didReceiveEvent(eventId: EventId, eventIdsGroup: [EventId]) -> ProcessedEventResult? {
+        
+        if animationModel.playListeners.contains(eventId) {
+            
+        }
+        else if animationModel.stopListeners.contains(eventId) {
+            
+        }
+        
+        return nil
+    }
+}
