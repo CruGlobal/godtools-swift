@@ -12,6 +12,11 @@ import SwiftUI
 
 class MobileContentPageViewModel: MobileContentViewModel {
     
+    enum BackgroundImageType {
+        case background
+        case foreground
+    }
+    
     private let pageModel: Page
     private let visibleAnalyticsEventsObjects: [MobileContentRendererAnalyticsEvent]
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
@@ -56,6 +61,55 @@ class MobileContentPageViewModel: MobileContentViewModel {
         return pageModel.backgroundColor
     }
     
+    func getBackgroundImage(type: BackgroundImageType) -> MobileContentBackgroundImageViewModel? {
+        
+        guard !hidesBackgroundImage else {
+            return nil
+        }
+        
+        let backgroundImageModel: BackgroundImageModel?
+        
+        switch type {
+       
+        case .background:
+            
+            let manifest: Manifest = renderedPageContext.manifest
+            if let manifestBackgroundImageResource = manifest.backgroundImage {
+                backgroundImageModel = BackgroundImageModel(
+                    backgroundImageResource: manifestBackgroundImageResource,
+                    backgroundImageAlignment: manifest.backgroundImageGravity,
+                    backgroundImageScale: manifest.backgroundImageScaleType
+                )
+            }
+            else {
+                backgroundImageModel = nil
+            }
+            
+        case .foreground:
+            
+            if let pageBackgroundImageResource = pageModel.backgroundImage {
+                backgroundImageModel = BackgroundImageModel(
+                    backgroundImageResource: pageBackgroundImageResource,
+                    backgroundImageAlignment: pageModel.backgroundImageGravity,
+                    backgroundImageScale: pageModel.backgroundImageScaleType
+                )
+            }
+            else {
+                backgroundImageModel = nil
+            }
+        }
+
+        guard let backgroundImageModel = backgroundImageModel else {
+            return nil
+        }
+        
+        return MobileContentBackgroundImageViewModel(
+            backgroundImageModel: backgroundImageModel,
+            manifestResourcesCache: renderedPageContext.resourcesCache,
+            languageDirection: LanguageDirectionDomainModel(languageModel: renderedPageContext.language)
+        )
+    }
+    
     func pageDidAppear() {
      
         super.viewDidAppear(visibleAnalyticsEvents: visibleAnalyticsEventsObjects)
@@ -79,48 +133,6 @@ class MobileContentPageViewModel: MobileContentViewModel {
 // MARK: - Inputs
 
 extension MobileContentPageViewModel {
-    
-    func backgroundImageWillAppear() -> MobileContentBackgroundImageViewModel? {
-               
-        guard !hidesBackgroundImage else {
-            return nil
-        }
-        
-        let manifest: Manifest = renderedPageContext.manifest
-        
-        let backgroundImageModel: BackgroundImageModel?
-        
-        if let pageBackgroundImageResource = pageModel.backgroundImage {
-            
-            backgroundImageModel = BackgroundImageModel(
-                backgroundImageResource: pageBackgroundImageResource,
-                backgroundImageAlignment: pageModel.backgroundImageGravity,
-                backgroundImageScale: pageModel.backgroundImageScaleType
-            )
-        }
-        else if let manifestBackgroundImageResource = manifest.backgroundImage {
-            
-            backgroundImageModel = BackgroundImageModel(
-                backgroundImageResource: manifestBackgroundImageResource,
-                backgroundImageAlignment: manifest.backgroundImageGravity,
-                backgroundImageScale: manifest.backgroundImageScaleType
-            )
-        }
-        else {
-            
-            backgroundImageModel = nil
-        }
-        
-        guard let model = backgroundImageModel else {
-            return nil
-        }
-        
-        return MobileContentBackgroundImageViewModel(
-            backgroundImageModel: model,
-            manifestResourcesCache: renderedPageContext.resourcesCache,
-            languageDirection: LanguageDirectionDomainModel(languageModel: renderedPageContext.language)
-        )
-    }
     
     func buttonWithUrlTapped(url: URL) {
                              
