@@ -43,8 +43,8 @@ class DownloadableLanguagesViewModel: ObservableObject {
         self.downloadToolLanguageUseCase = downloadToolLanguageUseCase
         self.removeDownloadedToolLanguageUseCase = removeDownloadedToolLanguageUseCase
         
-        DownloadableLanguagesViewModel.languageDownloadHandler.setDelegate(self)
-        DownloadableLanguagesViewModel.languageDownloadHandler
+        Self.languageDownloadHandler.setDelegate(self)
+        Self.languageDownloadHandler
             .getActiveDownloadsObserver()
             .receive(on: DispatchQueue.main)
             .assign(to: &$activeDownloads)
