@@ -17,6 +17,8 @@ class MobileContentAnimationViewModel: MobileContentViewModel {
         case stop
     }
     
+    private static let eventToggleAnimation: String = "toggleAnimation"
+    
     private let animationModel: Animation
     
     let mobileContentAnalytics: MobileContentRendererAnalytics
@@ -60,12 +62,21 @@ class MobileContentAnimationViewModel: MobileContentViewModel {
 extension MobileContentAnimationViewModel {
     
     func didReceiveEvent(eventId: EventId, eventIdsGroup: [EventId]) -> ProcessedEventResult? {
+                
+        let stopAnimationState: PlaybackState = .pause
+        let isToggleAnimation: Bool = eventId.name == Self.eventToggleAnimation
         
-        if animationModel.playListeners.contains(eventId) {
+        if isToggleAnimation {
+            
+            playbackState = playbackState == .play ? stopAnimationState : .play
+        }
+        else if animationModel.playListeners.contains(eventId) {
+            
             playbackState = .play
         }
         else if animationModel.stopListeners.contains(eventId) {
-            playbackState = .pause
+           
+            playbackState = stopAnimationState
         }
         
         return nil
