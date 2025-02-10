@@ -11,10 +11,18 @@ import GodToolsToolParser
 
 class MobileContentAnimationViewModel: MobileContentViewModel {
     
+    enum PlaybackState {
+        case pause
+        case play
+        case stop
+    }
+    
     private let animationModel: Animation
     
     let mobileContentAnalytics: MobileContentRendererAnalytics
     let animatedViewModel: AnimatedViewModel?
+    
+    @Published private(set) var playbackState: PlaybackState
     
     init(animationModel: Animation, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
         
@@ -37,9 +45,12 @@ class MobileContentAnimationViewModel: MobileContentViewModel {
             case .failure( _):
                 animatedViewModel = nil
             }
+            
+            playbackState = animationModel.autoPlay ? .play : .stop
         }
         else {
             animatedViewModel = nil
+            playbackState = .stop
         }
         
         super.init(baseModel: animationModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
@@ -51,10 +62,10 @@ extension MobileContentAnimationViewModel {
     func didReceiveEvent(eventId: EventId, eventIdsGroup: [EventId]) -> ProcessedEventResult? {
         
         if animationModel.playListeners.contains(eventId) {
-            
+            playbackState = .play
         }
         else if animationModel.stopListeners.contains(eventId) {
-            
+            playbackState = .pause
         }
         
         return nil

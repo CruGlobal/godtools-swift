@@ -8,11 +8,14 @@
 
 import UIKit
 import GodToolsToolParser
+import Combine
 
 class MobileContentAnimationView: MobileContentView {
     
     private let viewModel: MobileContentAnimationViewModel
     private let animatedView: AnimatedView = AnimatedView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+    
+    private var cancellables: Set<AnyCancellable> = Set()
     
     init(viewModel: MobileContentAnimationViewModel) {
         
@@ -42,13 +45,30 @@ class MobileContentAnimationView: MobileContentView {
             animatedView.configure(viewModel: animatedViewModel)
             animatedView.setAnimationContentMode(contentMode: .scaleAspectFill)
         }
+        
+        viewModel.$playbackState
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (state: MobileContentAnimationViewModel.PlaybackState) in
+                
+                switch state {
+                case .pause:
+                    self?.animatedView.pause()
+                    
+                case .play:
+                    self?.animatedView.play()
+                    
+                case .stop:
+                    self?.animatedView.stop()
+                }
+            }
+            .store(in: &cancellables)
     }
     
     override func didReceiveEvent(eventId: EventId, eventIdsGroup: [EventId]) -> ProcessedEventResult? {
                 
         _ = super.didReceiveEvent(eventId: eventId, eventIdsGroup: eventIdsGroup)
         
-        return nil
+        return viewModel.didReceiveEvent(eventId: eventId, eventIdsGroup: eventIdsGroup)
     }
     
     override var heightConstraintType: MobileContentViewHeightConstraintType {
