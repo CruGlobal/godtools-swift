@@ -62,7 +62,7 @@ class TractView: MobileContentRendererView {
                     return
                 }
                 
-                self?.viewModel.sendRemoteShareNavigationEvent(
+                weakSelf.viewModel.sendRemoteShareNavigationEvent(
                     page:  weakSelf.pageNavigationView.getCurrentPage(),
                     pagePositions: tractPagePositions
                 )
