@@ -7,10 +7,13 @@
 //
 
 import UIKit
+import Combine
 
 class TractView: MobileContentRendererView {
     
     private let viewModel: TractViewModel
+    
+    private var cancellables: Set<AnyCancellable> = Set()
                     
     init(viewModel: TractViewModel, navigationBar: AppNavigationBar?) {
         self.viewModel = viewModel
@@ -46,6 +49,25 @@ class TractView: MobileContentRendererView {
                 toolView.viewModel.subscribedForRemoteSharePublishing(page: page, pagePositions: tractPagePositions)
             }
         }
+        
+        viewModel.$toolSettingsDidClose
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (didClose: Void?) in
+                
+                guard let weakSelf = self, didClose != nil else {
+                    return
+                }
+                
+                guard let tractPagePositions = weakSelf.getCurrentPagePositions() as? TractPagePositions else {
+                    return
+                }
+                
+                weakSelf.viewModel.sendRemoteShareNavigationEvent(
+                    page:  weakSelf.pageNavigationView.getCurrentPage(),
+                    pagePositions: tractPagePositions
+                )
+            }
+            .store(in: &cancellables)
     }
     
     override func didConfigurePageView(pageView: MobileContentPageView) {

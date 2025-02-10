@@ -96,9 +96,9 @@ class TractFlow: ToolNavigationFlow, ToolSettingsNavigationFlow {
         case .backTappedFromTool:
             closeTool()
             
-        case .toolSettingsTappedFromTool(let toolSettingsObserver):
+        case .toolSettingsTappedFromTool(let toolSettingsObserver, let toolSettingsDidCloseClosure):
                     
-            openToolSettings(with: toolSettingsObserver)
+            openToolSettings(toolSettingsObserver: toolSettingsObserver, toolSettingsDidCloseClosure: toolSettingsDidCloseClosure)
             
         case .toolSettingsFlowCompleted( _):
             
@@ -163,6 +163,7 @@ extension TractFlow {
             renderer: renderer,
             tractRemoteSharePublisher: appDiContainer.feature.toolScreenShare.dataLayer.getTractRemoteSharePublisher(),
             tractRemoteShareSubscriber: appDiContainer.feature.toolScreenShare.dataLayer.getTractRemoteShareSubscriber(),
+            languagesRepository: appDiContainer.dataLayer.getLanguagesRepository(),
             resourceViewsService: appDiContainer.dataLayer.getResourceViewsService(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
             resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
