@@ -24,7 +24,7 @@ class MobileContentBackgroundImageView: UIImageView {
         super.init(frame: .zero)
     }
     
-    func configure(viewModel: MobileContentBackgroundImageViewModel, parentView: UIView) {
+    func configure(viewModel: MobileContentBackgroundImageViewModel, parentView: UIView, insertBackgroundAtIndex: Int?) {
         
         guard self.viewModel == nil else {
             return
@@ -32,7 +32,13 @@ class MobileContentBackgroundImageView: UIImageView {
         
         self.viewModel = viewModel
         
-        parentView.insertSubview(self, at: 0)
+        if let insertBackgroundAtIndex = insertBackgroundAtIndex {
+            parentView.insertSubview(self, at: insertBackgroundAtIndex)
+        }
+        else {
+            parentView.addSubview(self)
+        }
+        
         backgroundColor = .clear
         contentMode = .scaleToFill
         image = viewModel.backgroundImage

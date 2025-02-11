@@ -18,7 +18,7 @@ class MobileContentPageView: MobileContentView, NibBased {
     
     private let viewModel: MobileContentPageViewModel
     
-    private var backgroundImageView: MobileContentBackgroundImageView?
+    private var layeredBackgroundImages: [MobileContentBackgroundImageView] = Array()
     
     private weak var pageViewDelegate: MobileContentPageViewDelegate?
     
@@ -66,34 +66,55 @@ class MobileContentPageView: MobileContentView, NibBased {
     
     private func addBackgroundImageBoundsChangeObserving() {
         
-        backgroundImageView?.addParentBoundsChangeObserver(parentView: backgroundImageParent)
+        for backgroundImageView in layeredBackgroundImages {
+            backgroundImageView.addParentBoundsChangeObserver(parentView: backgroundImageParent)
+        }
     }
     
     private func removeBackgroubdImageBoundsChangeObserving() {
         
-        backgroundImageView?.removeParentBoundsChangeObserver(parentView: backgroundImageParent)
+        for backgroundImageView in layeredBackgroundImages {
+            backgroundImageView.removeParentBoundsChangeObserver(parentView: backgroundImageParent)
+        }
+    }
+    
+    private func addLayeredBackgroundImages() {
+        
+        if let backgroundImageViewModel = viewModel.getBackgroundImage(type: .background) {
+            
+            let backgroundImageView = addBackgroundImageView(viewModel: backgroundImageViewModel, insertAtIndex: layeredBackgroundImages.count)
+            
+            layeredBackgroundImages.append(backgroundImageView)
+        }
+        
+        if let foregroundBackgroundImageViewModel = viewModel.getBackgroundImage(type: .foreground) {
+            
+            let foregroundBackgroundImageView = addBackgroundImageView(viewModel: foregroundBackgroundImageViewModel, insertAtIndex: layeredBackgroundImages.count)
+            
+            layeredBackgroundImages.append(foregroundBackgroundImageView)
+        }
+        
+        addBackgroundImageBoundsChangeObserving()
+    }
+    
+    private func addBackgroundImageView(viewModel: MobileContentBackgroundImageViewModel, insertAtIndex: Int) -> MobileContentBackgroundImageView {
+        
+        let backgroundImageView: MobileContentBackgroundImageView = MobileContentBackgroundImageView()
+                        
+        backgroundImageView.configure(viewModel: viewModel, parentView: backgroundImageParent, insertBackgroundAtIndex: insertAtIndex)
+        
+        return backgroundImageView
     }
     
     func setupLayout() {
         
-        // Intended for subclasses to override. ~Levi
+        backgroundColor = viewModel.backgroundColor
+        
+        addLayeredBackgroundImages()
     }
     
     func setupBinding() {
-        
-        // backgroundColor
-        backgroundColor = viewModel.backgroundColor
-        
-        // backgroundImageView
-        if let backgroundImageViewModel = viewModel.backgroundImageWillAppear() {
-            
-            let backgroundImageView: MobileContentBackgroundImageView = MobileContentBackgroundImageView()
-            
-            self.backgroundImageView = backgroundImageView
-            
-            backgroundImageView.configure(viewModel: backgroundImageViewModel, parentView: backgroundImageParent)
-            addBackgroundImageBoundsChangeObserving()
-        }
+
     }
     
     func setPageViewDelegate(pageViewDelegate: MobileContentPageViewDelegate?) {
