@@ -53,16 +53,18 @@ class MobileContentAnimationViewModel: MobileContentViewModel {
 
 extension MobileContentAnimationViewModel {
     
-    func playbackStateDidChange(state: MobileContentAnimationPlaybackState) {
-        playbackState = state
+    func animationPlaybackDidComplete(animationIsPlaying: Bool) {
+        if !animationIsPlaying {
+            playbackState = .pause
+        }
     }
     
-    func didReceiveEvent(eventId: EventId, eventIdsGroup: [EventId], animationIsPlaying: Bool) -> ProcessedEventResult? {
+    func didReceiveEvent(eventId: EventId, eventIdsGroup: [EventId]) -> ProcessedEventResult? {
                 
-        if animationModel.playListeners.contains(eventId) && !animationIsPlaying {
+        if animationModel.playListeners.contains(eventId) && playbackState != .play {
             playbackState = .play
         }
-        else if animationModel.stopListeners.contains(eventId) && animationIsPlaying {
+        else if animationModel.stopListeners.contains(eventId) && playbackState == .play {
             playbackState = .pause
         }
         

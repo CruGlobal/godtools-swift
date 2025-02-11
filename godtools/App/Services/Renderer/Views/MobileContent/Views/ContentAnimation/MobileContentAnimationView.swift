@@ -68,7 +68,9 @@ class MobileContentAnimationView: MobileContentView {
                     animatedView.pause()
                     
                 case .play:
-                    animatedView.play()
+                    animatedView.play { [weak self] (completed: Bool) in
+                        self?.viewModel.animationPlaybackDidComplete(animationIsPlaying: animatedView.isPlaying)
+                    }
                     
                 case .stop:
                     animatedView.stop()
@@ -83,8 +85,7 @@ class MobileContentAnimationView: MobileContentView {
         
         return viewModel.didReceiveEvent(
             eventId: eventId,
-            eventIdsGroup: eventIdsGroup,
-            animationIsPlaying: animatedView?.isPlaying ?? false
+            eventIdsGroup: eventIdsGroup
         )
     }
     
