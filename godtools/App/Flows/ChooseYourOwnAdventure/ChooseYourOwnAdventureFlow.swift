@@ -28,7 +28,7 @@ class ChooseYourOwnAdventureFlow: ToolNavigationFlow, ToolSettingsNavigationFlow
     var tractFlow: TractFlow?
     var downloadToolTranslationFlow: DownloadToolTranslationsFlow?
     
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel, initialPage: MobileContentPagesPage?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel, initialPage: MobileContentRendererInitialPage?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
@@ -55,7 +55,7 @@ class ChooseYourOwnAdventureFlow: ToolNavigationFlow, ToolSettingsNavigationFlow
         switch step {
         case .toolSettingsTappedFromChooseYourOwnAdventure(let toolSettingsObserver):
             
-            openToolSettings(with: toolSettingsObserver)
+            openToolSettings(toolSettingsObserver: toolSettingsObserver, toolSettingsDidCloseClosure: nil)
             
         case .toolSettingsFlowCompleted( _):
             
@@ -76,7 +76,7 @@ class ChooseYourOwnAdventureFlow: ToolNavigationFlow, ToolSettingsNavigationFlow
 
 extension ChooseYourOwnAdventureFlow {
     
-    private func getChooseYourOwnAdventureView(toolTranslations: ToolTranslationsDomainModel, initialPage: MobileContentPagesPage?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool) -> UIViewController {
+    private func getChooseYourOwnAdventureView(toolTranslations: ToolTranslationsDomainModel, initialPage: MobileContentRendererInitialPage?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool) -> UIViewController {
         
         let navigation: MobileContentRendererNavigation = appDiContainer.getMobileContentRendererNavigation(
             parentFlow: self,

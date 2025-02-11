@@ -10,7 +10,7 @@ import UIKit
 import GodToolsToolParser
 import Combine
 
-class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
+class ChooseYourOwnAdventureViewModel: MobileContentRendererViewModel {
                 
     private var cancellables: Set<AnyCancellable> = Set()
     
@@ -22,7 +22,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
     @Published var hidesHomeButton: Bool = false
     @Published var hidesBackButton: Bool = true
         
-    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, initialPage: MobileContentPagesPage?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTranslatedLanguageName: GetTranslatedLanguageName, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?) {
+    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, initialPage: MobileContentRendererInitialPage?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTranslatedLanguageName: GetTranslatedLanguageName, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?) {
         
         self.flowDelegate = flowDelegate
                         
@@ -38,7 +38,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
         
         languageFont = FontLibrary.systemUIFont(size: 14, weight: .regular)
         
-        super.init(renderer: renderer, initialPage: initialPage, initialPageConfig: nil, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, getTranslatedLanguageName: getTranslatedLanguageName, initialPageRenderingType: .chooseYourOwnAdventure, trainingTipsEnabled: trainingTipsEnabled, incrementUserCounterUseCase: incrementUserCounterUseCase, selectedLanguageIndex: selectedLanguageIndex)
+        super.init(renderer: renderer, initialPage: initialPage, initialPageConfig: nil, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, getTranslatedLanguageName: getTranslatedLanguageName, trainingTipsEnabled: trainingTipsEnabled, incrementUserCounterUseCase: incrementUserCounterUseCase, selectedLanguageIndex: selectedLanguageIndex)
     }
     
     deinit {
@@ -75,25 +75,23 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
         
         let pages: [Page] = super.getPages()
         
+        let pageNavigation: PageNavigationCollectionViewNavigationModel
+        let setPages: [Page]?
+        
         if pages.count == 1 && page.id == pages[0].id {
             
-            return MobileContentPagesNavigationEvent(
-                pageNavigation: PageNavigationCollectionViewNavigationModel(
-                    navigationDirection: nil,
-                    page: 0,
-                    animated: false,
-                    reloadCollectionViewDataNeeded: true,
-                    insertPages: nil,
-                    deletePages: nil
-                ),
-                setPages: nil,
-                pagePositions: nil
+            pageNavigation = PageNavigationCollectionViewNavigationModel(
+                navigationDirection: nil,
+                page: 0,
+                animated: false,
+                reloadCollectionViewDataNeeded: true,
+                insertPages: nil,
+                deletePages: nil
             )
+            
+            setPages = nil
         }
-        
-        let navigationEvent: MobileContentPagesNavigationEvent
-        
-        if let backToPageIndex = pages.firstIndex(of: page) {
+        else if let backToPageIndex = pages.firstIndex(of: page) {
             
             // Backward Navigation
             
@@ -111,38 +109,41 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
             
             let pagesUpToBackToPage: [Page] = Array(pages[0...backToPageIndex])
             
-            navigationEvent = MobileContentPagesNavigationEvent(
-                pageNavigation: PageNavigationCollectionViewNavigationModel(
-                    navigationDirection: nil,
-                    page: backToPageIndex,
-                    animated: true,
-                    reloadCollectionViewDataNeeded: false,
-                    insertPages: nil,
-                    deletePages: pageIndexesToRemove
-                ),
-                setPages: pagesUpToBackToPage,
-                pagePositions: nil
+            pageNavigation = PageNavigationCollectionViewNavigationModel(
+                navigationDirection: nil,
+                page: backToPageIndex,
+                animated: true,
+                reloadCollectionViewDataNeeded: false,
+                insertPages: nil,
+                deletePages: pageIndexesToRemove
             )
+            
+            setPages = pagesUpToBackToPage
         }
         else {
             
             // Forward Navigation
             
             let insertAtEndIndex: Int = pages.count
-                        
-            navigationEvent = MobileContentPagesNavigationEvent(
-                pageNavigation: PageNavigationCollectionViewNavigationModel(
-                    navigationDirection: nil,
-                    page: insertAtEndIndex,
-                    animated: true,
-                    reloadCollectionViewDataNeeded: false,
-                    insertPages: [insertAtEndIndex],
-                    deletePages: nil
-                ),
-                setPages: pages + [page],
-                pagePositions: nil
+                   
+            pageNavigation = PageNavigationCollectionViewNavigationModel(
+                navigationDirection: nil,
+                page: insertAtEndIndex,
+                animated: true,
+                reloadCollectionViewDataNeeded: false,
+                insertPages: [insertAtEndIndex],
+                deletePages: nil
             )
+            
+            setPages = pages + [page]
         }
+        
+        let navigationEvent = MobileContentPagesNavigationEvent(
+            pageNavigation: pageNavigation,
+            setPages: setPages,
+            pagePositions: nil,
+            parentPageParams: MobileContentParentPageParams(page: page)
+        )
         
         return navigationEvent
     }
@@ -151,7 +152,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentPagesViewModel {
         let cyoaToolSettingsObserver = CYOAToolSettingsObserver(
             toolId: renderer.value.resource.id,
             languages: toolSettingsLanguages,
-            pageNumber: currentRenderedPageNumber,
+            pageNumber: currentPageNumber,
             trainingTipsEnabled: trainingTipsEnabled
         )
         
@@ -169,7 +170,7 @@ extension ChooseYourOwnAdventureViewModel {
     
     @objc func backTapped() {
         
-        guard currentRenderedPageNumber > 0 else {
+        guard currentPageNumber > 0 else {
             return
         }
         
@@ -177,7 +178,7 @@ extension ChooseYourOwnAdventureViewModel {
             
             super.navigateToPage(page: parentPage, animated: true)
         }
-        else if let previousPage = super.getPage(index: currentRenderedPageNumber - 1) {
+        else if let previousPage = super.getPage(index: currentPageNumber - 1) {
             
             super.navigateToPage(page: previousPage, animated: true)
         }

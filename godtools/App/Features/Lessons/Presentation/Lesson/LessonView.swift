@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LessonView: MobileContentPagesView {
+class LessonView: MobileContentRendererView {
     
     private let viewModel: LessonViewModel
     private let progressView: LessonProgressView

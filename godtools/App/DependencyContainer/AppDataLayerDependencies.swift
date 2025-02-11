@@ -228,6 +228,13 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getRemoteConfigRepository() -> RemoteConfigRepository {
+        
+        return RemoteConfigRepository(
+            remoteDatabase: firebaseEnabled ? FirebaseRemoteConfigWrapper() : DisabledRemoteConfigDatabase()
+        )
+    }
+    
     func getResourcesFileCache() -> ResourcesSHA256FileCache {
         return ResourcesSHA256FileCache(realmDatabase: sharedRealmDatabase)
     }
@@ -360,7 +367,8 @@ class AppDataLayerDependencies {
             api: MobileContentTranslationsApi(config: getAppConfig(), ignoreCacheSession: sharedIgnoreCacheSession),
             cache: RealmTranslationsCache(realmDatabase: sharedRealmDatabase),
             resourcesFileCache: getResourcesFileCache(),
-            trackDownloadedTranslationsRepository: getTrackDownloadedTranslationsRepository()
+            trackDownloadedTranslationsRepository: getTrackDownloadedTranslationsRepository(),
+            remoteConfigRepository: getRemoteConfigRepository()
         )
     }
     

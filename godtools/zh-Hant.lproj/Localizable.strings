@@ -68,9 +68,6 @@
 
 "toolDetails.bibleReferences.title" = "聖經參考文獻";
 
-/* This About refers to the whole app. */
-"aboutApp.navTitle" = "關於";
-
 /* This About refers to a specific tool in the app. */
 "toolDetails.about.title" = "關於";
 

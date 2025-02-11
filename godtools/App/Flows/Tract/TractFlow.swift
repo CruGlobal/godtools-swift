@@ -29,7 +29,7 @@ class TractFlow: ToolNavigationFlow, ToolSettingsNavigationFlow {
     var downloadToolTranslationFlow: DownloadToolTranslationsFlow?
     var toolSettingsFlow: ToolSettingsFlow?
     
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController?, appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?, shouldPersistToolSettings: Bool) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController?, appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentRendererInitialPage?, shouldPersistToolSettings: Bool) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
@@ -96,9 +96,9 @@ class TractFlow: ToolNavigationFlow, ToolSettingsNavigationFlow {
         case .backTappedFromTool:
             closeTool()
             
-        case .toolSettingsTappedFromTool(let toolSettingsObserver):
+        case .toolSettingsTappedFromTool(let toolSettingsObserver, let toolSettingsDidCloseClosure):
                     
-            openToolSettings(with: toolSettingsObserver)
+            openToolSettings(toolSettingsObserver: toolSettingsObserver, toolSettingsDidCloseClosure: toolSettingsDidCloseClosure)
             
         case .toolSettingsFlowCompleted( _):
             
@@ -139,7 +139,7 @@ class TractFlow: ToolNavigationFlow, ToolSettingsNavigationFlow {
 
 extension TractFlow {
     
-    private func getToolView(toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentPagesPage?, shouldPersistToolSettings: Bool) -> UIViewController {
+    private func getToolView(toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentRendererInitialPage?, shouldPersistToolSettings: Bool) -> UIViewController {
         
         let navigation: MobileContentRendererNavigation = appDiContainer.getMobileContentRendererNavigation(
             parentFlow: self,
@@ -163,6 +163,7 @@ extension TractFlow {
             renderer: renderer,
             tractRemoteSharePublisher: appDiContainer.feature.toolScreenShare.dataLayer.getTractRemoteSharePublisher(),
             tractRemoteShareSubscriber: appDiContainer.feature.toolScreenShare.dataLayer.getTractRemoteShareSubscriber(),
+            languagesRepository: appDiContainer.dataLayer.getLanguagesRepository(),
             resourceViewsService: appDiContainer.dataLayer.getResourceViewsService(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
             resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),

@@ -10,6 +10,8 @@ import UIKit
 
 class MobileContentMultiSelectView: MobileContentStackView {
         
+    private static let multiSelectOptionSpacing: CGFloat = 15
+    
     private let viewModel: MobileContentMultiSelectViewModel
     private let itemSpacing: CGFloat
     private let isSingleColumn: Bool
@@ -26,7 +28,7 @@ class MobileContentMultiSelectView: MobileContentStackView {
         self.itemSpacing = itemSpacing
         self.isSingleColumn = isSingleColumn
         
-        super.init(viewModel: viewModel, contentInsets: .zero, itemSpacing: itemSpacing, scrollIsEnabled: false)
+        super.init(viewModel: viewModel, contentInsets: nil, scrollIsEnabled: false, itemSpacing: Self.multiSelectOptionSpacing)
         
         setupLayout()
     }

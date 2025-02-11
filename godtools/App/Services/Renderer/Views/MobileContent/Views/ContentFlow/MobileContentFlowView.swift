@@ -20,7 +20,7 @@ class MobileContentFlowView: MobileContentStackView {
         
         self.viewModel = viewModel
         
-        super.init(viewModel: viewModel, contentInsets: .zero, itemSpacing: 0, scrollIsEnabled: false)
+        super.init(viewModel: viewModel, contentInsets: nil, scrollIsEnabled: false)
     }
     
     required init?(coder: NSCoder) {

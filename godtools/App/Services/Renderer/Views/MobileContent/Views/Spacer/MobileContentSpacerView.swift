@@ -44,6 +44,10 @@ class MobileContentSpacerView: MobileContentView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    var isAuto: Bool {
+        return viewModel.isAuto
+    }
+    
     var height: MobileContentSpacerHeight {
         return viewModel.height
     }

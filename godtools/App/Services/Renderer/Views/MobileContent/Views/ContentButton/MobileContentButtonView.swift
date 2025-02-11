@@ -11,12 +11,17 @@ import UIKit
 
 class MobileContentButtonView: MobileContentView {
         
+    private static let topPadding: CGFloat = 4
+    private static let bottomPadding: CGFloat = 4
+    
     private let viewModel: MobileContentButtonViewModel
     private let buttonView: UIView = UIView()
     private let buttonTitle: UILabel = UILabel()
     private let buttonImagePaddingToButtonTitle: CGFloat = 12
+    private let buttonTitleImagePaddingToEdge: CGFloat = 10
     private let minimumButtonHeight: CGFloat = 21
     private let buttonTopAndBottomPaddingToTitle: CGFloat = 8
+    private let contentInsets: UIEdgeInsets
     
     private var buttonTitleSizeToFitSize: CGSize?
     private var buttonImageView: UIImageView?
@@ -26,6 +31,7 @@ class MobileContentButtonView: MobileContentView {
     init(viewModel: MobileContentButtonViewModel) {
         
         self.viewModel = viewModel
+        self.contentInsets = UIEdgeInsets(top: Self.topPadding, left: 0, bottom: Self.bottomPadding, right: 0)
         
         super.init(viewModel: viewModel, frame: UIScreen.main.bounds)
         
@@ -62,7 +68,6 @@ class MobileContentButtonView: MobileContentView {
         buttonTitle.backgroundColor = .clear
         buttonTitle.numberOfLines = 0
         buttonTitle.lineBreakMode = .byWordWrapping
-        buttonTitle.textAlignment = .center
         buttonTitle.font = viewModel.font
         buttonTitle.text = viewModel.title
         buttonTitle.textColor = viewModel.titleColor
@@ -81,6 +86,13 @@ class MobileContentButtonView: MobileContentView {
         }
     }
     
+    private func setupBinding() {
+        
+        viewModel.visibilityState.addObserver(self) { [weak self] (visibilityState: MobileContentViewVisibilityState) in
+            self?.setVisibilityState(visibilityState: visibilityState)
+        }
+    }
+    
     private func addSubviewsAndConstraints(buttonView: UIView, buttonTitle: UILabel, buttonImageView: UIImageView?) {
         
         translatesAutoresizingMaskIntoConstraints = false
@@ -88,8 +100,8 @@ class MobileContentButtonView: MobileContentView {
         // buttonView
         addSubview(buttonView)
         buttonView.translatesAutoresizingMaskIntoConstraints = false
-        _ = buttonView.constrainTopToView(view: self)
-        _ = buttonView.constrainBottomToView(view: self)
+        _ = buttonView.constrainTopToView(view: self, constant: contentInsets.top)
+        _ = buttonView.constrainBottomToView(view: self, constant: contentInsets.bottom)
         
         _ = buttonView.addHeightConstraint(
             constant: minimumButtonHeight,
@@ -109,48 +121,36 @@ class MobileContentButtonView: MobileContentView {
         _ = buttonTitle.constrainTopToView(view: buttonView, constant: buttonTopAndBottomPaddingToTitle)
         _ = buttonTitle.constrainBottomToView(view: buttonView, constant: buttonTopAndBottomPaddingToTitle)
                 
+        let buttonHorizontalPadding: CGFloat = viewModel.titleAlignment == .center ? 0 : buttonTitleImagePaddingToEdge
+        let buttonTitleTextAlignment: NSTextAlignment
+        
         if let buttonImageView = buttonImageView, let buttonIcon = viewModel.icon, let buttonIconSize = getButtonIconSize(), let buttonTitleWidth = getButtonTitleWidth() {
             
-            buttonTitle.constrainCenterHorizontallyInView(view: buttonView)
+            buttonTitleTextAlignment = .center
+            
             buttonTitleWidthForIconConstraint = buttonTitle.addWidthConstraint(constant: buttonTitleWidth)
-                        
+            
             buttonView.addSubview(buttonImageView)
             buttonImageView.translatesAutoresizingMaskIntoConstraints = false
             buttonImageView.constrainCenterVerticallyInView(view: self)
             _ = buttonImageView.addWidthConstraint(constant: buttonIconSize.width)
             _ = buttonImageView.addHeightConstraint(constant: buttonIconSize.height)
             
+            let renderButtonIconLeftOfTitle: Bool
+            
             switch buttonIcon.gravity {
             
             case .start:
-                
-                let trailing: NSLayoutConstraint = NSLayoutConstraint(
-                    item: buttonImageView,
-                    attribute: .trailing,
-                    relatedBy: .equal,
-                    toItem: buttonTitle,
-                    attribute: .leading,
-                    multiplier: 1,
-                    constant: 0
-                )
-                
-                buttonView.addConstraint(trailing)
-                
+                renderButtonIconLeftOfTitle = true
+
             case .end:
-                
-                let leading: NSLayoutConstraint = NSLayoutConstraint(
-                    item: buttonImageView,
-                    attribute: .leading,
-                    relatedBy: .equal,
-                    toItem: buttonTitle,
-                    attribute: .trailing,
-                    multiplier: 1,
-                    constant: 0
-                )
-                
-                buttonView.addConstraint(leading)
+                renderButtonIconLeftOfTitle = false
             
             default:
+                renderButtonIconLeftOfTitle = true
+            }
+            
+            if renderButtonIconLeftOfTitle {
                 
                 let trailing: NSLayoutConstraint = NSLayoutConstraint(
                     item: buttonImageView,
@@ -164,12 +164,49 @@ class MobileContentButtonView: MobileContentView {
                 
                 buttonView.addConstraint(trailing)
             }
+            else {
+                
+                let leading: NSLayoutConstraint = NSLayoutConstraint(
+                    item: buttonImageView,
+                    attribute: .leading,
+                    relatedBy: .equal,
+                    toItem: buttonTitle,
+                    attribute: .trailing,
+                    multiplier: 1,
+                    constant: 0
+                )
+                
+                buttonView.addConstraint(leading)
+            }
+            
+            if viewModel.titleAlignment == .center {
+                
+                buttonTitle.constrainCenterHorizontallyInView(view: buttonView)
+            }
+            else if viewModel.titleAlignment == .left {
+                
+                let leadingView: UIView = renderButtonIconLeftOfTitle ? buttonImageView : buttonTitle
+                _ = leadingView.constrainLeadingToView(view: buttonView, constant: buttonHorizontalPadding)
+            }
+            else if viewModel.titleAlignment == .right {
+                
+                let trailingView: UIView = renderButtonIconLeftOfTitle ? buttonTitle : buttonImageView
+                _ = trailingView.constrainTrailingToView(view: buttonView, constant: buttonHorizontalPadding)
+            }
+            else {
+                
+                buttonTitle.constrainCenterHorizontallyInView(view: buttonView)
+            }
         }
         else {
             
-            _ = buttonTitle.constrainLeadingToView(view: buttonView)
-            _ = buttonTitle.constrainTrailingToView(view: buttonView)
+            buttonTitleTextAlignment = viewModel.titleAlignment
+            
+            _ = buttonTitle.constrainLeadingToView(view: buttonView, constant: buttonHorizontalPadding)
+            _ = buttonTitle.constrainTrailingToView(view: buttonView, constant: buttonHorizontalPadding)
         }
+        
+        buttonTitle.textAlignment = buttonTitleTextAlignment
     }
     
     private func getButtonViewWidth() -> CGFloat {
@@ -220,13 +257,6 @@ class MobileContentButtonView: MobileContentView {
         let buttonIconHeight: CGFloat = CGFloat(buttonIcon.size)
         
         return CGSize(width: buttonIconWidth, height: buttonIconHeight)
-    }
-    
-    private func setupBinding() {
-        
-        viewModel.visibilityState.addObserver(self) { [weak self] (visibilityState: MobileContentViewVisibilityState) in
-            self?.setVisibilityState(visibilityState: visibilityState)
-        }
     }
     
     private var containerWidth: CGFloat {

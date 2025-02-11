@@ -15,8 +15,9 @@ class MobileContentTextView: MobileContentView, NibBased {
         case loadFromNib
     }
     
-    private static let defaultLineSpacing: CGFloat = 2
     private static let defaultNumberOfLines: Int = 0
+    private static let textTopPadding: CGFloat = 1
+    private static let textBottomPadding: CGFloat = 1
     
     private let viewType: ViewType
     private let additionalLabelAttributes: MobileContentTextLabelAttributes?
@@ -30,6 +31,8 @@ class MobileContentTextView: MobileContentView, NibBased {
     @IBOutlet weak private var startImageViewLeading: NSLayoutConstraint!
     @IBOutlet weak private var startImageViewWidth: NSLayoutConstraint!
     @IBOutlet weak private var startImageViewHeight: NSLayoutConstraint!
+    @IBOutlet weak private var textLabelTop: NSLayoutConstraint!
+    @IBOutlet weak private var textLabelBottom: NSLayoutConstraint!
     @IBOutlet weak private var textLabelLeading: NSLayoutConstraint!
     @IBOutlet weak private var textLabelTrailing: NSLayoutConstraint!
     @IBOutlet weak private var endImageViewTrailing: NSLayoutConstraint!
@@ -62,7 +65,10 @@ class MobileContentTextView: MobileContentView, NibBased {
             if shouldAddLabelAsSubview {
                 addSubview(label)
                 label.translatesAutoresizingMaskIntoConstraints = false
-                label.constrainEdgesToView(view: self, edgeInsets: .zero)
+                label.constrainEdgesToView(
+                    view: self,
+                    edgeInsets: UIEdgeInsets(top: Self.textTopPadding, left: 0, bottom: Self.textBottomPadding, right: 0)
+                )
             }
             self.textLabel = label
         case .loadFromNib:
@@ -81,7 +87,6 @@ class MobileContentTextView: MobileContentView, NibBased {
     private func setupBinding() {
         
         let font: UIFont
-        let lineSpacing: CGFloat = additionalLabelAttributes?.lineSpacing ?? MobileContentTextView.defaultLineSpacing
         let numberOfLines: Int = additionalLabelAttributes?.numberOfLines ?? MobileContentTextView.defaultNumberOfLines
         
         if let additionalLabelAttributes = self.additionalLabelAttributes {
@@ -101,7 +106,6 @@ class MobileContentTextView: MobileContentView, NibBased {
         textLabel.text = viewModel.text
         textLabel.textColor = viewModel.textColor
         textLabel.textAlignment = viewModel.textAlignment
-        textLabel.setLineSpacing(lineSpacing: lineSpacing)
         
         if viewModel.shouldUnderlineText, let labelText = viewModel.text {
             textLabel.underline(labelText: labelText)
@@ -113,7 +117,7 @@ class MobileContentTextView: MobileContentView, NibBased {
             
             let lineHeight = viewModel.font.lineHeight
             
-            let minimumHeight = (lineHeight * minimumLines) + (lineSpacing * (minimumLines - 1))
+            let minimumHeight = lineHeight * minimumLines
             
             _ = textLabel.addHeightConstraint(constant: minimumHeight, relatedBy: NSLayoutConstraint.Relation.greaterThanOrEqual, priority: 1000)
         }
@@ -149,6 +153,9 @@ class MobileContentTextView: MobileContentView, NibBased {
         
         startImageView.isHidden = hidesStartImage
         endImageView.isHidden = hidesEndImage
+        
+        textLabelTop.constant = Self.textTopPadding
+        textLabelBottom.constant = Self.textBottomPadding
         
         if hidesStartImage {
             

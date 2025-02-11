@@ -39,7 +39,7 @@ extension FirebaseInAppMessaging: InAppMessagingDisplayDelegate {
         }
     }
         
-    func messageDismissed(_ inAppMessage: InAppMessagingDisplayMessage, dismissType: FIRInAppMessagingDismissType) {
+    func messageDismissed(_ inAppMessage: InAppMessagingDisplayMessage, dismissType: InAppMessagingDismissType) {
         
     }
         

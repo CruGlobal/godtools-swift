@@ -41,7 +41,6 @@ class TractPageHeaderViewModel: MobileContentViewModel {
         let numberLabelAttributes = MobileContentTextLabelAttributes(
             fontSize: 54,
             fontWeight: .regular,
-            lineSpacing: nil,
             numberOfLines: 1
         )
         
@@ -62,7 +61,6 @@ class TractPageHeaderViewModel: MobileContentViewModel {
         let titleLabelAttributes = MobileContentTextLabelAttributes(
             fontSize: 19,
             fontWeight: .regular,
-            lineSpacing: 2,
             numberOfLines: 0
         )
                 

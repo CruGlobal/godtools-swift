@@ -10,13 +10,20 @@ import UIKit
 
 class MobileContentParagraphView: MobileContentStackView {
     
+    private static let topPadding: CGFloat = 8
+    private static let bottomPadding: CGFloat = 8
+    
     private let viewModel: MobileContentParagraphViewModel
     
-    init(viewModel: MobileContentParagraphViewModel, contentInsets: UIEdgeInsets, itemSpacing: CGFloat, scrollIsEnabled: Bool) {
+    init(viewModel: MobileContentParagraphViewModel) {
         
         self.viewModel = viewModel
         
-        super.init(viewModel: viewModel, contentInsets: contentInsets, itemSpacing: itemSpacing, scrollIsEnabled: scrollIsEnabled)
+        super.init(
+            viewModel: viewModel,
+            contentInsets: UIEdgeInsets(top: Self.topPadding, left: 0, bottom: Self.bottomPadding, right: 0),
+            scrollIsEnabled: false
+        )
         
         setupBinding()
     }

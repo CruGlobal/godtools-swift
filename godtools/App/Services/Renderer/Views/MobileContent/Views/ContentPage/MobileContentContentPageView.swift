@@ -9,18 +9,13 @@
 import UIKit
 
 class MobileContentContentPageView: MobileContentPageView {
-    
+        
     private let viewModel: MobileContentContentPageViewModel
-    private let contentInsets: UIEdgeInsets
-    private let itemSpacing: CGFloat
-    
     private var contentStackView: MobileContentStackView?
     
-    init(viewModel: MobileContentContentPageViewModel, contentInsets: UIEdgeInsets, itemSpacing: CGFloat) {
+    init(viewModel: MobileContentContentPageViewModel) {
         
         self.viewModel = viewModel
-        self.contentInsets = contentInsets
-        self.itemSpacing = itemSpacing
         
         super.init(viewModel: viewModel, nibName: nil)
     }
@@ -68,8 +63,7 @@ extension MobileContentContentPageView {
         
         contentStackView.translatesAutoresizingMaskIntoConstraints = false
         contentStackView.constrainEdgesToView(view: self)
-        contentStackView.configureLayout(contentInsets: contentInsets, itemSpacing: itemSpacing, scrollIsEnabled: true)
-        
+                
         self.contentStackView = contentStackView
     }
 }

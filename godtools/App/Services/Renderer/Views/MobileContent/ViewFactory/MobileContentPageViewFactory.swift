@@ -31,7 +31,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 mobileContentAnalytics: mobileContentAnalytics
             )
             
-            let view = MobileContentParagraphView(viewModel: viewModel, contentInsets: .zero, itemSpacing: 5, scrollIsEnabled: false)
+            let view = MobileContentParagraphView(viewModel: viewModel)
             
             return view
         }
@@ -113,7 +113,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 trackScreenViewAnalyticsUseCase: trackScreenViewAnalyticsUseCase
             )
             
-            let view = MobileContentContentPageView(viewModel: viewModel, contentInsets: .zero, itemSpacing: 20)
+            let view = MobileContentContentPageView(viewModel: viewModel)
             
             return view
         }
@@ -153,7 +153,6 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             return MobileContentStackView(
                 viewModel: viewModel,
                 contentInsets: contentModel.contentInsets,
-                itemSpacing: contentModel.itemSpacing,
                 scrollIsEnabled: contentModel.scrollIsEnabled
             )
         }
@@ -322,6 +321,19 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             )
             
             let view = MobileContentAccordionView(viewModel: viewModel)
+            
+            return view
+        }
+        else if let pageCollection = renderableModel as? PageCollectionPage {
+            
+            let viewModel = MobileContentPageCollectionViewModel(
+                pageCollectionPage: pageCollection,
+                renderedPageContext: renderedPageContext,
+                mobileContentAnalytics: mobileContentAnalytics,
+                trackScreenViewAnalyticsUseCase: trackScreenViewAnalyticsUseCase
+            )
+            
+            let view = MobileContentPageCollectionView(viewModel: viewModel)
             
             return view
         }

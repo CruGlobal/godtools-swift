@@ -28,7 +28,7 @@ class MobileContentFlowItemView: MobileContentStackView, MobileContentFlowRowIte
         
         self.viewModel = viewModel
         
-        super.init(viewModel: viewModel, contentInsets: .zero, itemSpacing: 0, scrollIsEnabled: false)
+        super.init(viewModel: viewModel, contentInsets: nil, scrollIsEnabled: false)
         
         setupBinding()
     }

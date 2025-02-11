@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,7 +19,9 @@
                 <outlet property="startImageViewLeading" destination="sV6-lM-MJH" id="Dsy-hp-jc2"/>
                 <outlet property="startImageViewWidth" destination="81v-ld-Fnn" id="Qmz-Xv-IN3"/>
                 <outlet property="textLabel" destination="7ab-u2-cmn" id="17d-9b-dfk"/>
+                <outlet property="textLabelBottom" destination="JVP-bn-Ifp" id="w0l-cj-OCl"/>
                 <outlet property="textLabelLeading" destination="t9M-QZ-1Z2" id="e4K-5s-sJ5"/>
+                <outlet property="textLabelTop" destination="VCo-F6-DhX" id="qMO-1w-LfK"/>
                 <outlet property="textLabelTrailing" destination="C27-7d-JX0" id="LWr-38-ulp"/>
             </connections>
         </placeholder>

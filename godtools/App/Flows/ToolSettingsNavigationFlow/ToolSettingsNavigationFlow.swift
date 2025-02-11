@@ -15,12 +15,13 @@ protocol ToolSettingsNavigationFlow: Flow {
 
 extension ToolSettingsNavigationFlow {
     
-    func openToolSettings(with toolSettingsObserver: ToolSettingsObserver) {
+    func openToolSettings(toolSettingsObserver: ToolSettingsObserver, toolSettingsDidCloseClosure: (() -> Void)?) {
         let toolSettingsFlow = ToolSettingsFlow(
             flowDelegate: self,
             appDiContainer: appDiContainer,
             sharedNavigationController: navigationController,
-            toolSettingsObserver: toolSettingsObserver
+            toolSettingsObserver: toolSettingsObserver,
+            toolSettingsDidCloseClosure: toolSettingsDidCloseClosure
         )
         
         navigationController.present(toolSettingsFlow.getInitialView(), animated: true)
@@ -33,9 +34,11 @@ extension ToolSettingsNavigationFlow {
         guard toolSettingsFlow != nil else {
             return
         }
-    
-        navigationController.dismiss(animated: true)
         
-        toolSettingsFlow = nil
+        navigationController.dismissPresented(animated: true) { [weak self] in
+            
+            self?.toolSettingsFlow?.didClose()
+            self?.toolSettingsFlow = nil
+        }
     }
 }
