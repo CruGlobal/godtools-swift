@@ -663,6 +663,7 @@
 		45860A8C29242DC30089C836 /* AccountGlobalActivityAnalyticsItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45860A8B29242DC30089C836 /* AccountGlobalActivityAnalyticsItemViewModel.swift */; };
 		45860A95292437420089C836 /* DownloadProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45860A93292437420089C836 /* DownloadProgressView.xib */; };
 		45860A96292437420089C836 /* DownloadProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45860A94292437420089C836 /* DownloadProgressView.swift */; };
+		458721212D5B80A800C03191 /* MobileContentAnimationPlaybackState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458721202D5B80A200C03191 /* MobileContentAnimationPlaybackState.swift */; };
 		458721252BFB7756005DA242 /* DeleteAccountProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4587211F2BFB7756005DA242 /* DeleteAccountProgressView.swift */; };
 		458721262BFB7756005DA242 /* DeleteAccountProgressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458721202BFB7756005DA242 /* DeleteAccountProgressViewModel.swift */; };
 		458721272BFB7756005DA242 /* DeleteAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458721222BFB7756005DA242 /* DeleteAccountView.swift */; };
@@ -2357,6 +2358,7 @@
 		45860A94292437420089C836 /* DownloadProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadProgressView.swift; sourceTree = "<group>"; };
 		4587211F2BFB7756005DA242 /* DeleteAccountProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteAccountProgressView.swift; sourceTree = "<group>"; };
 		458721202BFB7756005DA242 /* DeleteAccountProgressViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteAccountProgressViewModel.swift; sourceTree = "<group>"; };
+		458721202D5B80A200C03191 /* MobileContentAnimationPlaybackState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentAnimationPlaybackState.swift; sourceTree = "<group>"; };
 		458721222BFB7756005DA242 /* DeleteAccountView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteAccountView.swift; sourceTree = "<group>"; };
 		458721232BFB7756005DA242 /* DeleteAccountViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteAccountViewModel.swift; sourceTree = "<group>"; };
 		458721292BFB7762005DA242 /* DeleteAccountUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteAccountUseCase.swift; sourceTree = "<group>"; };
@@ -10242,6 +10244,7 @@
 			children = (
 				45E39ED027457CB5006A59E4 /* MobileContentAnimationView.swift */,
 				45E39ED127457CB5006A59E4 /* MobileContentAnimationViewModel.swift */,
+				458721202D5B80A200C03191 /* MobileContentAnimationPlaybackState.swift */,
 			);
 			path = ContentAnimation;
 			sourceTree = "<group>";
@@ -13345,6 +13348,7 @@
 				456DA4F12CC96ADE004BFB1E /* UrlOpenerInterface.swift in Sources */,
 				456DA4F22CC96ADE004BFB1E /* OpenUrlWithUIKit.swift in Sources */,
 				454CC4132C5D268B00046437 /* LanguageDirectionDomainModel.swift in Sources */,
+				458721212D5B80A800C03191 /* MobileContentAnimationPlaybackState.swift in Sources */,
 				45CCF6942B2269010017EDFE /* ToolSettingsOptionViewTitleColorStyle.swift in Sources */,
 				453A2F042B3636EC00C8F865 /* RemoveDownloadedToolLanguageRepository.swift in Sources */,
 				45AC9DE02B28A98800DEEBFE /* DownloadableLanguagesInterfaceStringsDomainModel.swift in Sources */,

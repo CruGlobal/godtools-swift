@@ -10,11 +10,13 @@ import Foundation
 import GodToolsToolParser
 
 class MobileContentAnimationViewModel: MobileContentViewModel {
-    
+            
     private let animationModel: Animation
     
     let mobileContentAnalytics: MobileContentRendererAnalytics
     let animatedViewModel: AnimatedViewModel?
+    
+    @Published private(set) var playbackState: MobileContentAnimationPlaybackState
     
     init(animationModel: Animation, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
         
@@ -37,11 +39,35 @@ class MobileContentAnimationViewModel: MobileContentViewModel {
             case .failure( _):
                 animatedViewModel = nil
             }
+            
+            playbackState = animationModel.autoPlay ? .play : .stop
         }
         else {
             animatedViewModel = nil
+            playbackState = .stop
         }
         
         super.init(baseModel: animationModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
+    }
+}
+
+extension MobileContentAnimationViewModel {
+    
+    func animationPlaybackDidComplete(animationIsPlaying: Bool) {
+        if !animationIsPlaying {
+            playbackState = .pause
+        }
+    }
+    
+    func didReceiveEvent(eventId: EventId, eventIdsGroup: [EventId]) -> ProcessedEventResult? {
+                
+        if animationModel.playListeners.contains(eventId) && playbackState != .play {
+            playbackState = .play
+        }
+        else if animationModel.stopListeners.contains(eventId) && playbackState == .play {
+            playbackState = .pause
+        }
+        
+        return nil
     }
 }

@@ -11,32 +11,21 @@ import Lottie
 
 class AnimatedView: UIView {
     
+    private let viewModel: AnimatedViewModel
     private let animationView: LottieAnimationView = LottieAnimationView()
-    
-    private var viewModel: AnimatedViewModel?
-        
-    override init(frame: CGRect) {
-        
-        super.init(frame: frame)
-        
-        setupLayout()
-    }
-    
-    required init(frame: CGRect, viewModel: AnimatedViewModel) {
+                
+    init(viewModel: AnimatedViewModel, frame: CGRect) {
                 
         self.viewModel = viewModel
         
         super.init(frame: frame)
         
         setupLayout()
-        configure(viewModel: viewModel)
+        setupBinding()
     }
     
     required init?(coder: NSCoder) {
-        
-        super.init(coder: coder)
-        
-        setupLayout()
+        fatalError("init(coder:) has not been implemented")
     }
     
     deinit {
@@ -50,11 +39,7 @@ class AnimatedView: UIView {
         animationView.constrainEdgesToView(view: self)
     }
     
-    func configure(viewModel: AnimatedViewModel) {
-        
-        self.viewModel = viewModel
-        
-        destroyAnimation()
+    private func setupBinding() {
         
         animationView.animation = viewModel.animationData
         animationView.loopMode = viewModel.loop ? .loop : .playOnce
@@ -77,15 +62,29 @@ class AnimatedView: UIView {
         animationView.animation = nil
     }
     
-    func play() {
-        animationView.play()
+    var isPlaying: Bool {
+        return animationView.isAnimationPlaying
+    }
+    
+    func play(completion: ((_ completed: Bool) -> Void)? = nil) {
+      
+        if let completion = completion {
+            animationView.play { (completed: Bool) in
+                completion(completed)
+            }
+        }
+        else {
+            animationView.play()
+        }
     }
     
     func pause() {
+        
         animationView.pause()
     }
     
     func stop() {
+        
         animationView.stop()
     }
 }
