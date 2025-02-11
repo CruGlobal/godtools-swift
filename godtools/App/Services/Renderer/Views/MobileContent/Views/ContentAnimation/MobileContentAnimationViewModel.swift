@@ -10,9 +10,7 @@ import Foundation
 import GodToolsToolParser
 
 class MobileContentAnimationViewModel: MobileContentViewModel {
-        
-    private static let eventToggleAnimation: String = "toggleAnimation"
-    
+            
     private let animationModel: Animation
     
     let mobileContentAnalytics: MobileContentRendererAnalytics
