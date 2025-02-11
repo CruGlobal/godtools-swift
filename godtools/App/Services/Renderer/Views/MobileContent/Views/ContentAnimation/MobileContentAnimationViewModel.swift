@@ -10,13 +10,7 @@ import Foundation
 import GodToolsToolParser
 
 class MobileContentAnimationViewModel: MobileContentViewModel {
-    
-    enum PlaybackState {
-        case pause
-        case play
-        case stop
-    }
-    
+        
     private static let eventToggleAnimation: String = "toggleAnimation"
     
     private let animationModel: Animation
@@ -24,7 +18,7 @@ class MobileContentAnimationViewModel: MobileContentViewModel {
     let mobileContentAnalytics: MobileContentRendererAnalytics
     let animatedViewModel: AnimatedViewModel?
     
-    @Published private(set) var playbackState: PlaybackState
+    @Published private(set) var playbackState: MobileContentAnimationPlaybackState
     
     init(animationModel: Animation, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
         
@@ -61,22 +55,17 @@ class MobileContentAnimationViewModel: MobileContentViewModel {
 
 extension MobileContentAnimationViewModel {
     
-    func didReceiveEvent(eventId: EventId, eventIdsGroup: [EventId]) -> ProcessedEventResult? {
+    func playbackStateDidChange(state: MobileContentAnimationPlaybackState) {
+        playbackState = state
+    }
+    
+    func didReceiveEvent(eventId: EventId, eventIdsGroup: [EventId], animationIsPlaying: Bool) -> ProcessedEventResult? {
                 
-        let stopAnimationState: PlaybackState = .pause
-        let isToggleAnimation: Bool = eventId.name == Self.eventToggleAnimation
-        
-        if isToggleAnimation {
-            
-            playbackState = playbackState == .play ? stopAnimationState : .play
-        }
-        else if animationModel.playListeners.contains(eventId) {
-            
+        if animationModel.playListeners.contains(eventId) && !animationIsPlaying {
             playbackState = .play
         }
-        else if animationModel.stopListeners.contains(eventId) {
-           
-            playbackState = stopAnimationState
+        else if animationModel.stopListeners.contains(eventId) && animationIsPlaying {
+            playbackState = .pause
         }
         
         return nil

@@ -13,7 +13,7 @@ import Combine
 class MobileContentAnimationView: MobileContentView {
     
     private let viewModel: MobileContentAnimationViewModel
-    private let animatedView: AnimatedView = AnimatedView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+    private let animatedView: AnimatedView?
     
     private var cancellables: Set<AnyCancellable> = Set()
     
@@ -21,44 +21,57 @@ class MobileContentAnimationView: MobileContentView {
         
         self.viewModel = viewModel
         
+        let animatedView: AnimatedView?
+        
+        if let animatedViewModel = viewModel.animatedViewModel {
+            
+            animatedView = AnimatedView(
+                viewModel: animatedViewModel,
+                frame: CGRect(x: 0, y: 0, width: 50, height: 50)
+            )
+        }
+        else {
+            animatedView = nil
+        }
+        
+        self.animatedView = animatedView
+        
         super.init(viewModel: viewModel, frame: UIScreen.main.bounds)
         
-        setupLayout()
-        setupBinding()
+        if let animatedView = animatedView {
+            setupLayout(animatedView: animatedView)
+            setupBinding(animatedView: animatedView)
+        }
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupLayout() {
+    private func setupLayout(animatedView: AnimatedView) {
         
         // animatedView
         addSubview(animatedView)
         animatedView.translatesAutoresizingMaskIntoConstraints = false
         animatedView.constrainEdgesToView(view: self)
+        animatedView.setAnimationContentMode(contentMode: .scaleAspectFill)
     }
     
-    private func setupBinding() {
-        
-        if let animatedViewModel = viewModel.animatedViewModel {
-            animatedView.configure(viewModel: animatedViewModel)
-            animatedView.setAnimationContentMode(contentMode: .scaleAspectFill)
-        }
+    private func setupBinding(animatedView: AnimatedView) {
         
         viewModel.$playbackState
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (state: MobileContentAnimationViewModel.PlaybackState) in
+            .sink { (state: MobileContentAnimationPlaybackState) in
                 
                 switch state {
                 case .pause:
-                    self?.animatedView.pause()
+                    animatedView.pause()
                     
                 case .play:
-                    self?.animatedView.play()
+                    animatedView.play()
                     
                 case .stop:
-                    self?.animatedView.stop()
+                    animatedView.stop()
                 }
             }
             .store(in: &cancellables)
@@ -68,7 +81,11 @@ class MobileContentAnimationView: MobileContentView {
                 
         _ = super.didReceiveEvent(eventId: eventId, eventIdsGroup: eventIdsGroup)
         
-        return viewModel.didReceiveEvent(eventId: eventId, eventIdsGroup: eventIdsGroup)
+        return viewModel.didReceiveEvent(
+            eventId: eventId,
+            eventIdsGroup: eventIdsGroup,
+            animationIsPlaying: animatedView?.isPlaying ?? false
+        )
     }
     
     override var heightConstraintType: MobileContentViewHeightConstraintType {
