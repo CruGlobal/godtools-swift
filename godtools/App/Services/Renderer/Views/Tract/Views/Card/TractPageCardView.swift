@@ -152,7 +152,7 @@ class TractPageCardView: MobileContentView, NibBased {
             
             let backgroundImageParent: UIView = cardBackgroundImageContainer
             self.backgroundImageParent = backgroundImageParent
-            backgroundImageView.configure(viewModel: backgroundImageViewModel, parentView: backgroundImageParent)
+            backgroundImageView.configure(viewModel: backgroundImageViewModel, parentView: backgroundImageParent, insertBackgroundAtIndex: 0)
             backgroundImageView.addParentBoundsChangeObserver(parentView: backgroundImageParent)
         }
         
