@@ -20,9 +20,10 @@ class MobileContentButtonView: MobileContentView {
     private let buttonImagePaddingToButtonTitle: CGFloat = 12
     private let buttonTitleImagePaddingToEdge: CGFloat = 10
     private let minimumButtonHeight: CGFloat = 21
-    private let buttonTopAndBottomPaddingToTitle: CGFloat = 8
+    private let buttonTopAndBottomPaddingToTitle: CGFloat = 10
     private let contentInsets: UIEdgeInsets
     
+    private var currentFrameWidth: CGFloat = 0
     private var buttonImageView: UIImageView?
     private var buttonViewWidthConstraint: NSLayoutConstraint?
     private var buttonTitleWidthForIconConstraint: NSLayoutConstraint?
@@ -34,6 +35,7 @@ class MobileContentButtonView: MobileContentView {
         
         super.init(viewModel: viewModel, frame: UIScreen.main.bounds)
         
+        currentFrameWidth = frame.size.width
         setupLayout()
         addSubviewsAndConstraints(buttonView: buttonView, buttonTitle: buttonTitle, buttonImageView: buttonImageView)
         setupBinding()
@@ -43,10 +45,16 @@ class MobileContentButtonView: MobileContentView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        layoutButtonViewWidthIfNeeded()
+    }
+    
     private func setupLayout() {
                 
         backgroundColor = .clear
-                
+                        
         // buttonView
         buttonView.backgroundColor = viewModel.backgroundColor
         buttonView.layer.cornerRadius = 5
@@ -100,11 +108,9 @@ class MobileContentButtonView: MobileContentView {
         )
         
         buttonView.constrainCenterHorizontallyInView(view: self)
-        
-        let buttonViewWidth: CGFloat = getButtonViewWidth()
-        
-        buttonViewWidthConstraint = buttonView.addWidthConstraint(constant: buttonViewWidth)
-        
+
+        buttonViewWidthConstraint = buttonView.addWidthConstraint(constant: getButtonViewWidth())
+                
         // buttonTitle
         buttonView.addSubview(buttonTitle)
         buttonTitle.translatesAutoresizingMaskIntoConstraints = false
@@ -220,13 +226,13 @@ class MobileContentButtonView: MobileContentView {
     }
     
     private func getButtonViewWidth() -> CGFloat {
-        
+            
         let buttonViewWidth: CGFloat
         
         switch viewModel.buttonWidth {
         
         case .percentageOfContainer(let widthPercentageOfContainer):
-            buttonViewWidth = containerWidth * widthPercentageOfContainer
+            buttonViewWidth = currentFrameWidth * widthPercentageOfContainer
         
         case .points(let widthPoints):
             buttonViewWidth = widthPoints
@@ -247,8 +253,23 @@ class MobileContentButtonView: MobileContentView {
         return CGSize(width: buttonIconWidth, height: buttonIconHeight)
     }
     
-    private var containerWidth: CGFloat {
-        return frame.size.width
+    private func layoutButtonViewWidthIfNeeded() {
+        
+        let frameWidth: CGFloat = frame.size.width
+        
+        guard currentFrameWidth != frameWidth else {
+            return
+        }
+        
+        currentFrameWidth = frameWidth
+        
+        guard buttonViewWidthConstraint != nil else {
+            return
+        }
+        
+        buttonViewWidthConstraint?.constant = getButtonViewWidth()
+
+        layoutIfNeeded()
     }
     
     // MARK: - MobileContentView
