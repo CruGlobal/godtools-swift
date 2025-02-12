@@ -20,7 +20,7 @@ class MobileContentButtonView: MobileContentView {
     private let buttonImagePaddingToButtonTitle: CGFloat = 12
     private let buttonTitleImagePaddingToEdge: CGFloat = 10
     private let minimumButtonHeight: CGFloat = 21
-    private let buttonTopAndBottomPaddingToTitle: CGFloat = 10
+    private let buttonTopAndBottomPaddingToTitle: CGFloat = 8
     private let contentInsets: UIEdgeInsets
     
     private var currentFrameWidth: CGFloat = 0
