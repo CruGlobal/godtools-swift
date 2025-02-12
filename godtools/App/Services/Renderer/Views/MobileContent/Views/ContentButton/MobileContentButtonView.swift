@@ -23,7 +23,6 @@ class MobileContentButtonView: MobileContentView {
     private let buttonTopAndBottomPaddingToTitle: CGFloat = 8
     private let contentInsets: UIEdgeInsets
     
-    private var buttonTitleSizeToFitSize: CGSize?
     private var buttonImageView: UIImageView?
     private var buttonViewWidthConstraint: NSLayoutConstraint?
     private var buttonTitleWidthForIconConstraint: NSLayoutConstraint?
@@ -42,12 +41,6 @@ class MobileContentButtonView: MobileContentView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        layoutButtonViewWidthIfNeeded()
     }
     
     private func setupLayout() {
@@ -69,11 +62,8 @@ class MobileContentButtonView: MobileContentView {
         buttonTitle.numberOfLines = 0
         buttonTitle.lineBreakMode = .byWordWrapping
         buttonTitle.font = viewModel.font
-        buttonTitle.text = viewModel.title
+        setTitle(title: viewModel.title)
         buttonTitle.textColor = viewModel.titleColor
-              
-        buttonTitle.sizeToFit()
-        buttonTitleSizeToFitSize = buttonTitle.frame.size
         
         // buttonImageView
         if let buttonIcon = viewModel.icon {
@@ -124,11 +114,11 @@ class MobileContentButtonView: MobileContentView {
         let buttonHorizontalPadding: CGFloat = viewModel.titleAlignment == .center ? 0 : buttonTitleImagePaddingToEdge
         let buttonTitleTextAlignment: NSTextAlignment
         
-        if let buttonImageView = buttonImageView, let buttonIcon = viewModel.icon, let buttonIconSize = getButtonIconSize(), let buttonTitleWidth = getButtonTitleWidth() {
+        if let buttonImageView = buttonImageView, let buttonIcon = viewModel.icon, let buttonIconSize = getButtonIconSize() {
             
             buttonTitleTextAlignment = .center
             
-            buttonTitleWidthForIconConstraint = buttonTitle.addWidthConstraint(constant: buttonTitleWidth)
+            buttonTitleWidthForIconConstraint = buttonTitle.addWidthConstraint(constant: titleWidth)
             
             buttonView.addSubview(buttonImageView)
             buttonImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -159,7 +149,7 @@ class MobileContentButtonView: MobileContentView {
                     toItem: buttonTitle,
                     attribute: .leading,
                     multiplier: 1,
-                    constant: 0
+                    constant: buttonImagePaddingToButtonTitle * -1
                 )
                 
                 buttonView.addConstraint(trailing)
@@ -173,7 +163,7 @@ class MobileContentButtonView: MobileContentView {
                     toItem: buttonTitle,
                     attribute: .trailing,
                     multiplier: 1,
-                    constant: 0
+                    constant: buttonImagePaddingToButtonTitle
                 )
                 
                 buttonView.addConstraint(leading)
@@ -181,7 +171,11 @@ class MobileContentButtonView: MobileContentView {
             
             if viewModel.titleAlignment == .center {
                 
-                buttonTitle.constrainCenterHorizontallyInView(view: buttonView)
+                let offsetWidth: CGFloat = (buttonIconSize.width + buttonImagePaddingToButtonTitle) / 2
+                let offsetMultiplier: CGFloat = renderButtonIconLeftOfTitle ? 1 : -1
+                let offset: CGFloat = offsetWidth * offsetMultiplier
+                
+                buttonTitle.constrainCenterHorizontallyInView(view: buttonView, constant: offset)
             }
             else if viewModel.titleAlignment == .left {
                 
@@ -209,6 +203,22 @@ class MobileContentButtonView: MobileContentView {
         buttonTitle.textAlignment = buttonTitleTextAlignment
     }
     
+    private var titleWidth: CGFloat {
+        return buttonTitle.frame.size.width
+    }
+    
+    private func setTitle(title: String?) {
+        
+        buttonTitle.text = viewModel.title
+        buttonTitle.sizeToFit()
+        
+        if buttonTitleWidthForIconConstraint != nil {
+            
+            buttonTitleWidthForIconConstraint?.constant = titleWidth
+            layoutIfNeeded()
+        }
+    }
+    
     private func getButtonViewWidth() -> CGFloat {
         
         let buttonViewWidth: CGFloat
@@ -225,28 +235,6 @@ class MobileContentButtonView: MobileContentView {
         return buttonViewWidth
     }
     
-    private func getButtonTitleWidth() -> CGFloat? {
-        
-        guard let buttonTitleSizeToFitSize = self.buttonTitleSizeToFitSize, let buttonIconSize = getButtonIconSize() else {
-            return nil
-        }
-        
-        let buttonViewWidth: CGFloat = getButtonViewWidth()
-        
-        let minSuggestedButtonTitleWidth: CGFloat = buttonViewWidth / 4
-        var suggestedButtonTitleWidth: CGFloat = buttonViewWidth - (buttonIconSize.width * 2) - (buttonImagePaddingToButtonTitle * 4)
-        
-        if suggestedButtonTitleWidth < minSuggestedButtonTitleWidth {
-            suggestedButtonTitleWidth = minSuggestedButtonTitleWidth
-        }
-        
-        if buttonTitleSizeToFitSize.width > suggestedButtonTitleWidth {
-            return suggestedButtonTitleWidth
-        }
-        
-        return buttonTitleSizeToFitSize.width + (buttonImagePaddingToButtonTitle * 2)
-    }
-    
     private func getButtonIconSize() -> CGSize? {
         
         guard let buttonIcon = viewModel.icon else {
@@ -261,18 +249,6 @@ class MobileContentButtonView: MobileContentView {
     
     private var containerWidth: CGFloat {
         return frame.size.width
-    }
-    
-    private func layoutButtonViewWidthIfNeeded() {
-                
-        buttonViewWidthConstraint?.constant = getButtonViewWidth()
-            
-        if let buttonTitleWidth = getButtonTitleWidth() {
-            
-            buttonTitleWidthForIconConstraint?.constant = buttonTitleWidth
-        }
-
-        layoutIfNeeded()
     }
     
     // MARK: - MobileContentView
