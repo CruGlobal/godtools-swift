@@ -19,7 +19,8 @@ class DownloadableLanguagesViewModel: ObservableObject {
     private let removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase
     
     private var cancellables = Set<AnyCancellable>()
-    private static var backgrounDownloadCancellables = Set<AnyCancellable>()
+    private static var backgroundDownloadCancellables = Set<AnyCancellable>()
+    private static let languageDownloadHandler: DownloadableLanguagesDownloadHandler = DownloadableLanguagesDownloadHandler()
     
     private weak var flowDelegate: FlowDelegate?
     private lazy var searchBarViewModel = SearchBarViewModel(getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, viewSearchBarUseCase: viewSearchBarUseCase)
@@ -41,6 +42,12 @@ class DownloadableLanguagesViewModel: ObservableObject {
         self.searchLanguageInDownloadableLanguagesUseCase = searchLanguageInDownloadableLanguagesUseCase
         self.downloadToolLanguageUseCase = downloadToolLanguageUseCase
         self.removeDownloadedToolLanguageUseCase = removeDownloadedToolLanguageUseCase
+        
+        Self.languageDownloadHandler.setDelegate(self)
+        Self.languageDownloadHandler
+            .getActiveDownloadsObserver()
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$activeDownloads)
         
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
@@ -88,6 +95,7 @@ class DownloadableLanguagesViewModel: ObservableObject {
     }
     
     deinit {
+        DownloadableLanguagesViewModel.languageDownloadHandler.removeDelegate()
         print("x deinit: \(type(of: self))")
     }
 }
@@ -132,32 +140,8 @@ extension DownloadableLanguagesViewModel {
     }
     
     func downloadLanguage(_ downloadableLanguage: DownloadableLanguageListItemDomainModel) {
-        
-        let languageId = downloadableLanguage.languageId
-
-        activeDownloads[languageId] = .downloading(progress: 0)
-        
-        downloadToolLanguageUseCase.downloadToolLanguage(languageId: downloadableLanguage.languageId, languageCode: downloadableLanguage.languageCode)
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { [weak self] completed in
                 
-                switch completed {
-                case .finished:
-                    
-                    self?.activeDownloads.removeValue(forKey: languageId)
-                    
-                case .failure(let error):
-                    
-                    // TODO: - what happens during a failure?
-                    
-                    self?.activeDownloads[languageId] = .notDownloaded
-                    self?.flowDelegate?.navigate(step: .showLanguageDownloadErrorAlert(error: error))
-                }
-            }, receiveValue: { [weak self] progress in
-                
-                self?.activeDownloads[languageId] = .downloading(progress: progress)
-            })
-            .store(in: &DownloadableLanguagesViewModel.backgrounDownloadCancellables)
+        DownloadableLanguagesViewModel.languageDownloadHandler.downloadLanguage(downloadableLanguage, downloadToolLanguageUseCase: downloadToolLanguageUseCase)
     }
     
     func removeDownloadedLanguage(_ downloadableLanguage: DownloadableLanguageListItemDomainModel) {
@@ -168,6 +152,22 @@ extension DownloadableLanguagesViewModel {
             .sink { _ in
                 
             }
-            .store(in: &DownloadableLanguagesViewModel.backgrounDownloadCancellables)
+            .store(in: &DownloadableLanguagesViewModel.backgroundDownloadCancellables)
+    }
+}
+
+// MARK: - DownloadableLanguagesDownloadHandlerDelegate
+
+extension DownloadableLanguagesViewModel: DownloadableLanguagesDownloadHandlerDelegate {
+    func downloadComplete(languageId: BCP47LanguageIdentifier) {
+        
+    }
+    
+    func downloadFailure(languageId: BCP47LanguageIdentifier, error: Error) {
+        flowDelegate?.navigate(step: .showLanguageDownloadErrorAlert(error: error))
+    }
+    
+    func downloadProgressUpdate(languageId: BCP47LanguageIdentifier, progress: Double) {
+
     }
 }

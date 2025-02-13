@@ -209,7 +209,7 @@ struct DownloadableLanguageItemView: View {
             
             if downloadProgress < progressTarget {
                 
-                self.animationDownloadProgress? += 0.1
+                self.animationDownloadProgress? += 0.05
                 
             } else if progressTarget >= 1 && downloadProgress >= 1 {
                 
