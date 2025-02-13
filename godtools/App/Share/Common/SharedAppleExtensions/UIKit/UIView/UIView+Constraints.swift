@@ -123,7 +123,7 @@ extension UIView {
         return trailing
     }
     
-    func constrainCenterHorizontallyInView(view: UIView) {
+    func constrainCenterHorizontallyInView(view: UIView, constant: CGFloat = 0) {
         
         let centerHorizontally: NSLayoutConstraint = NSLayoutConstraint(
             item: self,
@@ -132,7 +132,7 @@ extension UIView {
             toItem: view,
             attribute: .centerX,
             multiplier: 1,
-            constant: 0
+            constant: constant
         )
         
         view.addConstraint(centerHorizontally)
