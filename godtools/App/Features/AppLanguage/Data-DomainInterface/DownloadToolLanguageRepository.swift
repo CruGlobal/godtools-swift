@@ -23,9 +23,7 @@ class DownloadToolLanguageRepository: DownloadToolLanguageRepositoryInterface {
     }
     
     func downloadToolTranslations(for languageId: String) -> AnyPublisher<Double, Error> {
-            
-        downloadedLanguagesRepository.storeDownloadedLanguage(languageId: languageId, downloadComplete: false)
-        
+                    
         return toolLanguageDownloader
             .downloadToolLanguagePublisher(languageId: languageId)
             .catch { (downloadError: Error) -> AnyPublisher<ToolDownloaderDataModel, Error> in
