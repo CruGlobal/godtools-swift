@@ -41,7 +41,9 @@ class DownloadableLanguageItemViewModel: ObservableObject {
         
         let languageId: String = downloadableLanguage.languageId
         
-        if let downloadHandler = Self.downloadHandlers[languageId], let downloadProgress = downloadHandler.downloadProgress {
+        if let downloadHandler = Self.downloadHandlers[languageId],
+           let downloadProgress = downloadHandler.downloadProgress,
+           downloadHandler.downloadFinished == false {
             
             downloadState = .downloading(progress: downloadProgress)
             
@@ -224,6 +226,8 @@ extension DownloadableLanguageItemViewModel: DownloadableLanguagesDownloadHandle
     func handlerDownloadComplete(handler: DownloadableLanguagesDownloadHandler, error: (any Error)?) {
         
         downloadState = .downloaded
+        
+        Self.downloadHandlers[languageId] = nil
         
         // TODO: Handle error? ~Levi
         
