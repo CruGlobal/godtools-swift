@@ -223,7 +223,7 @@ extension DownloadableLanguageItemViewModel {
 
 extension DownloadableLanguageItemViewModel: DownloadableLanguagesDownloadHandlerDelegate {
     
-    func handlerDownloadComplete(handler: DownloadableLanguagesDownloadHandler, error: (any Error)?) {
+    func downloadableLanguagesDownloadHandlerCompleted(handler: DownloadableLanguagesDownloadHandler, error: (any Error)?) {
         
         downloadState = .downloaded
         
@@ -239,7 +239,7 @@ extension DownloadableLanguageItemViewModel: DownloadableLanguagesDownloadHandle
         }
     }
     
-    func handlerDownloadProgressUpdate(handler: DownloadableLanguagesDownloadHandler, progress: Double) {
+    func downloadableLanguagesDownloadHandlerProgressChanged(handler: DownloadableLanguagesDownloadHandler, progress: Double) {
         
         downloadState = .downloading(progress: progress)
     }

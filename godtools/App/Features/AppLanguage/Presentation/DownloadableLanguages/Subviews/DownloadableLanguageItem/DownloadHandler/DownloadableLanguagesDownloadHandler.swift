@@ -11,8 +11,8 @@ import Combine
 
 protocol DownloadableLanguagesDownloadHandlerDelegate: AnyObject {
     
-    func handlerDownloadComplete(handler: DownloadableLanguagesDownloadHandler, error: Error?)
-    func handlerDownloadProgressUpdate(handler: DownloadableLanguagesDownloadHandler, progress: Double)
+    func downloadableLanguagesDownloadHandlerCompleted(handler: DownloadableLanguagesDownloadHandler, error: Error?)
+    func downloadableLanguagesDownloadHandlerProgressChanged(handler: DownloadableLanguagesDownloadHandler, progress: Double)
 }
 
 class DownloadableLanguagesDownloadHandler {
@@ -67,7 +67,7 @@ class DownloadableLanguagesDownloadHandler {
                 
                 if let handler = self {
                     
-                    delegate.handlerDownloadComplete(
+                    delegate.downloadableLanguagesDownloadHandlerCompleted(
                         handler: handler,
                         error: downloadError
                     )
@@ -79,7 +79,7 @@ class DownloadableLanguagesDownloadHandler {
                 
                 if let handler = self {
                     
-                    delegate.handlerDownloadProgressUpdate(
+                    delegate.downloadableLanguagesDownloadHandlerProgressChanged(
                         handler: handler,
                         progress: progress
                     )
