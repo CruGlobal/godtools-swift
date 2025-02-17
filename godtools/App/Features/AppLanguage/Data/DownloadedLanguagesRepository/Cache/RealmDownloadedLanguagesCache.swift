@@ -71,18 +71,40 @@ class RealmDownloadedLanguagesCache {
         .eraseToAnyPublisher()
     }
     
-    func storeDownloadedLanguage(languageId: String, downloadComplete: Bool) {
+    func markAllDownloadsCompleted() {
         
         let realm: Realm = realmDatabase.openRealm()
         
-        let realmDownloadedLanguage = RealmDownloadedLanguage()
-        realmDownloadedLanguage.languageId = languageId
-        realmDownloadedLanguage.downloadComplete = downloadComplete
+        let nonCompletedDownloads = realm
+            .objects(RealmDownloadedLanguage.self)
+            .where { $0.downloadComplete == false }
+        
+        _ = realmDatabase.writeObjects(realm: realm, updatePolicy: .modified) { realm in
+            
+            for language in nonCompletedDownloads {
+                language.downloadComplete = true
+            }
+            
+            return Array(nonCompletedDownloads)
+        }
+    }
+    
+    func storeDownloadedLanguages(languageIds: [String], downloadComplete: Bool) {
+        
+        let realm: Realm = realmDatabase.openRealm()
+        
+        let realmDownloadedLanguages: [RealmDownloadedLanguage] = languageIds.map {
+            
+            let realmDownloadedLanguage = RealmDownloadedLanguage()
+            realmDownloadedLanguage.languageId = $0
+            realmDownloadedLanguage.downloadComplete = downloadComplete
+            
+            return realmDownloadedLanguage
+        }
         
         do {
-            
             try realm.write {
-                realm.add(realmDownloadedLanguage, update: .modified)
+                realm.add(realmDownloadedLanguages, update: .modified)
             }
         }
         catch let error {
