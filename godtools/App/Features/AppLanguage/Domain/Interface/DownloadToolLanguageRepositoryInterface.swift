@@ -11,5 +11,5 @@ import Combine
 
 protocol DownloadToolLanguageRepositoryInterface {
     
-    func downloadToolTranslations(for languageId: String) -> AnyPublisher<Double, Error>
+    func downloadToolTranslations(for languageId: String) -> AnyPublisher<Double, Never>
 }
