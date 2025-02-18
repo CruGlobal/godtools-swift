@@ -19,12 +19,11 @@ class DownloadableLanguagesDownloadHandler {
          
     private let downloadToolLanguageUseCase: DownloadToolLanguageUseCase
     
-    private var cancellables: Set<AnyCancellable> = Set()
+    private var downloadCancellable: AnyCancellable?
     
-    private(set) var downloadFinished: Bool?
+    private(set) var downloadFinished: Bool = false
     private(set) var downloadError: Error?
     private(set) var downloadProgress: Double?
-    private(set) var isDownloading: Bool = false
     
     private weak var delegate: DownloadableLanguagesDownloadHandlerDelegate?
     
@@ -36,21 +35,22 @@ class DownloadableLanguagesDownloadHandler {
         self.downloadableLanguage = downloadableLanguage
     }
     
+    var isDownloading: Bool {
+        return downloadCancellable != nil
+    }
+    
     func setDelegate(_ delegate: DownloadableLanguagesDownloadHandlerDelegate?) {
         self.delegate = delegate
     }
     
-    func downloadLanguage(delegate: DownloadableLanguagesDownloadHandlerDelegate) {
-                
-        isDownloading = true
-        
+    func startDownload(delegate: DownloadableLanguagesDownloadHandlerDelegate) {
+                        
         self.delegate = delegate
         
-        downloadToolLanguageUseCase.downloadToolLanguage(languageId: downloadableLanguage.languageId)
+        downloadCancellable = downloadToolLanguageUseCase.downloadToolLanguage(languageId: downloadableLanguage.languageId)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { [weak self] completed in
 
-                self?.isDownloading = false
                 self?.downloadFinished = true
                 self?.downloadProgress = nil
                 
@@ -67,7 +67,7 @@ class DownloadableLanguagesDownloadHandler {
                 
                 if let handler = self {
                     
-                    delegate.downloadableLanguagesDownloadHandlerCompleted(
+                    self?.delegate?.downloadableLanguagesDownloadHandlerCompleted(
                         handler: handler,
                         error: downloadError
                     )
@@ -79,12 +79,20 @@ class DownloadableLanguagesDownloadHandler {
                 
                 if let handler = self {
                     
-                    delegate.downloadableLanguagesDownloadHandlerProgressChanged(
+                    self?.delegate?.downloadableLanguagesDownloadHandlerProgressChanged(
                         handler: handler,
                         progress: progress
                     )
                 }
             })
-            .store(in: &cancellables)
+    }
+    
+    func cancelDownload() {
+        
+        downloadCancellable?.cancel()
+        downloadCancellable = nil
+        downloadFinished = false
+        downloadError = nil
+        downloadProgress = nil
     }
 }
