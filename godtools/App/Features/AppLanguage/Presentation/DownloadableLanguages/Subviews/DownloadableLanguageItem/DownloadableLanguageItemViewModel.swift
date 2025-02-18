@@ -179,6 +179,14 @@ extension DownloadableLanguageItemViewModel {
         Self.markForRemovalTimers[languageId] = timer
     }
     
+    private func stopResetMarkedForRemovalTimer() {
+
+        isMarkedForRemoval = false
+        
+        Self.markForRemovalTimers[languageId]?.stop()
+        Self.markForRemovalTimers[languageId] = nil
+    }
+    
     static func removeAllResetMarkedForRemovalTimers() {
         Self.markForRemovalTimers.removeAll()
     }
@@ -196,7 +204,7 @@ extension DownloadableLanguageItemViewModel {
             
             if isMarkedForRemoval {
                 
-                isMarkedForRemoval = false
+                stopResetMarkedForRemovalTimer()
                 removeDownloadedLanguage()
             }
             else {
