@@ -17,8 +17,8 @@ class DownloadableLanguageItemViewModel: ObservableObject {
     
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
     private static var downloadHandlers: [LanguageId: DownloadableLanguagesDownloadHandler] = Dictionary()
-    private static var markForRemovalTimers: [LanguageId: SwiftUITimer] = Dictionary()
-    
+    private static var markForRemovalTimers: [LanguageId: AnyPublisher<Date, Never>] = Dictionary()
+        
     private let downloadableLanguage: DownloadableLanguageListItemDomainModel
     private let downloadToolLanguageUseCase: DownloadToolLanguageUseCase
     private let removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase
@@ -27,7 +27,7 @@ class DownloadableLanguageItemViewModel: ObservableObject {
     @Published private(set) var languageNameInAppLanguage: String
     @Published private(set) var toolsAvailableText: String
     @Published private(set) var downloadState: DownloadableLanguageDownloadState
-    @Published private(set) var isMarkedForRemoval: Bool = false
+    @Published private(set) var isMarkedForRemoval: Bool
     @Published private(set) var iconState: LanguageDownloadIconState = .notDownloaded
     
     init(downloadableLanguage: DownloadableLanguageListItemDomainModel, downloadToolLanguageUseCase: DownloadToolLanguageUseCase, removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase) {
@@ -40,6 +40,8 @@ class DownloadableLanguageItemViewModel: ObservableObject {
         self.removeDownloadedToolLanguageUseCase = removeDownloadedToolLanguageUseCase
         
         let languageId: String = downloadableLanguage.languageId
+        
+        isMarkedForRemoval = Self.markForRemovalTimers[languageId] != nil
         
         if let downloadHandler = Self.downloadHandlers[languageId] {
             
@@ -62,12 +64,12 @@ class DownloadableLanguageItemViewModel: ObservableObject {
                 downloadState = .downloaded
             }
         }
-                
-        if Self.markForRemovalTimers[languageId] != nil {
-            startResetMarkedForRemovalTimer()
-        }
         
         syncIconState()
+        
+        if let markForRemovalTimerPublisher = Self.markForRemovalTimers[languageId] {
+            syncResetMarkedForRemovalTimerPublisher(timerPublisher: markForRemovalTimerPublisher)
+        }
     }
     
     deinit {
@@ -144,46 +146,39 @@ class DownloadableLanguageItemViewModel: ObservableObject {
 
 extension DownloadableLanguageItemViewModel {
     
-    private func getResetMarkedForRemovalTimer() -> SwiftUITimer {
-        
-        if let existingTimer = Self.markForRemovalTimers[languageId] {
-            return existingTimer
-        }
-        
-        let timer = SwiftUITimer(intervalSeconds: Self.endMarkedForRemovalAfterSeconds)
-        
-        Self.markForRemovalTimers[languageId] = timer
-        
-        return timer
-    }
-    
     private func startResetMarkedForRemovalTimer() {
-                    
+                        
         isMarkedForRemoval = true
         
         let languageId: String = self.languageId
-        let timer = getResetMarkedForRemovalTimer()
         
-        timer.startPublisher()
+        let timer = Timer.publish(
+            every: Self.endMarkedForRemovalAfterSeconds,
+            on: .main,
+            in: .common
+        ).autoconnect()
+                
+        let timerPublisher = timer.eraseToAnyPublisher()
+        
+        Self.markForRemovalTimers[languageId] = timerPublisher
+        
+        syncResetMarkedForRemovalTimerPublisher(timerPublisher: timerPublisher)
+    }
+    
+    private func syncResetMarkedForRemovalTimerPublisher(timerPublisher: AnyPublisher<Date, Never>) {
+
+        timerPublisher
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
-                
-                print("Mark for removal timer completed...")
-                
-                self?.isMarkedForRemoval = false
-                
-                Self.markForRemovalTimers[languageId]?.invalidate()
-                Self.markForRemovalTimers[languageId] = nil
+                self?.stopResetMarkedForRemovalTimer()
             }
             .store(in: &Self.backgroundCancellables)
-                
-        Self.markForRemovalTimers[languageId] = timer
     }
     
     private func stopResetMarkedForRemovalTimer() {
-
+        
         isMarkedForRemoval = false
         
-        Self.markForRemovalTimers[languageId]?.stop()
         Self.markForRemovalTimers[languageId] = nil
     }
     
