@@ -41,12 +41,15 @@ class DownloadableLanguageItemViewModel: ObservableObject {
         
         let languageId: String = downloadableLanguage.languageId
         
-        if let downloadHandler = Self.downloadHandlers[languageId],
-           let downloadProgress = downloadHandler.downloadProgress,
-           downloadHandler.downloadFinished == false {
+        if let downloadHandler = Self.downloadHandlers[languageId] {
             
-            downloadState = .downloading(progress: downloadProgress)
-            
+            if let progress = downloadHandler.downloadProgress {
+                downloadState = .downloading(progress: progress)
+            }
+            else {
+                downloadState = downloadHandler.downloadFinished ? .downloaded : .notDownloaded
+            }
+
             downloadHandler.setDelegate(self)
         }
         else {
@@ -72,22 +75,6 @@ class DownloadableLanguageItemViewModel: ObservableObject {
         if downloadableLanguage.languageNameInOwnLanguage.lowercased() == "english" {
             print("x deinit \(downloadableLanguage.languageNameInOwnLanguage) : \(type(of: self))")
         }
-    }
-    
-    private func getLanguageDownloadHandler() -> DownloadableLanguagesDownloadHandler {
-        
-        if let existingHandler = Self.downloadHandlers[languageId] {
-            return existingHandler
-        }
-        
-        let newHandler = DownloadableLanguagesDownloadHandler(
-            downloadToolLanguageUseCase: downloadToolLanguageUseCase,
-            downloadableLanguage: downloadableLanguage
-        )
-        
-        Self.downloadHandlers[languageId] = newHandler
-        
-        return newHandler
     }
     
     private var languageId: String {
@@ -126,6 +113,18 @@ class DownloadableLanguageItemViewModel: ObservableObject {
         }
         .receive(on: DispatchQueue.main)
         .assign(to: &$iconState)
+    }
+    
+    private func downloadLanguage() {
+        
+        let downloadHandler = DownloadableLanguagesDownloadHandler(
+            downloadToolLanguageUseCase: downloadToolLanguageUseCase,
+            downloadableLanguage: downloadableLanguage
+        )
+        
+        Self.downloadHandlers[languageId] = downloadHandler
+        
+        downloadHandler.startDownload(delegate: self)
     }
     
     private func removeDownloadedLanguage() {
@@ -212,9 +211,7 @@ extension DownloadableLanguageItemViewModel {
             break
             
         case .notDownloaded:
-            let downloadHandler: DownloadableLanguagesDownloadHandler = getLanguageDownloadHandler()
-            
-            downloadHandler.downloadLanguage(delegate: self)
+            downloadLanguage()
         }
     }
 }
@@ -232,7 +229,7 @@ extension DownloadableLanguageItemViewModel: DownloadableLanguagesDownloadHandle
         // TODO: Handle error? ~Levi
         
         if let error = error {
-            
+            print(error)
         }
         else {
             
