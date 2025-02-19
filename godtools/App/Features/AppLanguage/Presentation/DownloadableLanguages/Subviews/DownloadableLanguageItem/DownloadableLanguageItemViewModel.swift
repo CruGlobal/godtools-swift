@@ -16,8 +16,8 @@ class DownloadableLanguageItemViewModel: ObservableObject {
     private static let endMarkedForRemovalAfterSeconds: TimeInterval = 3
     
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
-    private static var downloadHandlers: [LanguageId: DownloadableLanguagesDownloadHandler] = Dictionary()
-    private static var markForRemovalTimers: [LanguageId: AnyPublisher<Date, Never>] = Dictionary()
+    private static var languageDownloaderObservers: [LanguageId: PublisherObserver<Double, Never>] = Dictionary()
+    private static var markForRemovalObservers: [LanguageId: PublisherObserver<Date, Never>] = Dictionary()
         
     private let downloadableLanguage: DownloadableLanguageListItemDomainModel
     private let downloadToolLanguageUseCase: DownloadToolLanguageUseCase
@@ -41,18 +41,20 @@ class DownloadableLanguageItemViewModel: ObservableObject {
         
         let languageId: String = downloadableLanguage.languageId
         
-        isMarkedForRemoval = Self.markForRemovalTimers[languageId] != nil
+        isMarkedForRemoval = Self.markForRemovalObservers[languageId] != nil
         
-        if let downloadHandler = Self.downloadHandlers[languageId] {
+        if let downloadLanguageObserver = Self.languageDownloaderObservers[languageId] {
             
-            if let progress = downloadHandler.downloadProgress {
+            if let progress = downloadLanguageObserver.currentValue {
                 downloadState = .downloading(progress: progress)
             }
             else {
-                downloadState = downloadHandler.downloadFinished ? .downloaded : .notDownloaded
+                downloadState = !downloadLanguageObserver.isRunning ? .downloaded : .notDownloaded
             }
-
-            downloadHandler.setDelegate(self)
+            
+            observeDownloadLanguage(
+                publisherObserver: downloadLanguageObserver
+            )
         }
         else {
             
@@ -67,15 +69,8 @@ class DownloadableLanguageItemViewModel: ObservableObject {
         
         syncIconState()
         
-        if let markForRemovalTimerPublisher = Self.markForRemovalTimers[languageId] {
-            syncResetMarkedForRemovalTimerPublisher(timerPublisher: markForRemovalTimerPublisher)
-        }
-    }
-    
-    deinit {
-        
-        if downloadableLanguage.languageNameInOwnLanguage.lowercased() == "english" {
-            print("x deinit \(downloadableLanguage.languageNameInOwnLanguage) : \(type(of: self))")
+        if let markForRemovalPublisherObserver = Self.markForRemovalObservers[languageId] {
+            observeResetMarkedForRemoval(publisherObserver: markForRemovalPublisherObserver)
         }
     }
     
@@ -116,17 +111,39 @@ class DownloadableLanguageItemViewModel: ObservableObject {
         .receive(on: DispatchQueue.main)
         .assign(to: &$iconState)
     }
+}
+
+// MARK: - Download Language
+
+extension DownloadableLanguageItemViewModel {
     
     private func downloadLanguage() {
         
-        let downloadHandler = DownloadableLanguagesDownloadHandler(
-            downloadToolLanguageUseCase: downloadToolLanguageUseCase,
-            downloadableLanguage: downloadableLanguage
+        let publisherObserver: PublisherObserver<Double, Never> = PublisherObserver()
+        
+        observeDownloadLanguage(publisherObserver: publisherObserver)
+        
+        publisherObserver.start(
+            publisher: downloadToolLanguageUseCase.downloadToolLanguage(languageId: languageId)
         )
         
-        Self.downloadHandlers[languageId] = downloadHandler
+        Self.languageDownloaderObservers[languageId] = publisherObserver
+    }
+    
+    private func observeDownloadLanguage(publisherObserver: PublisherObserver<Double, Never>) {
         
-        downloadHandler.startDownload(delegate: self)
+        let languageId: String = self.languageId
+        
+        publisherObserver
+            .observe { [weak self] (progress: Double) in
+                
+                self?.downloadState = .downloading(progress: progress)
+                
+            } onCompletion: { [weak self] _ in
+                
+                self?.downloadState = .downloaded
+                Self.languageDownloaderObservers[languageId] = nil
+            }
     }
     
     private func removeDownloadedLanguage() {
@@ -147,43 +164,46 @@ class DownloadableLanguageItemViewModel: ObservableObject {
 extension DownloadableLanguageItemViewModel {
     
     private func startResetMarkedForRemovalTimer() {
-                        
+                
         isMarkedForRemoval = true
         
-        let languageId: String = self.languageId
+        let publisherObserver: PublisherObserver<Date, Never> = PublisherObserver()
+        
+        Self.markForRemovalObservers[languageId] = publisherObserver
+        
+        observeResetMarkedForRemoval(publisherObserver: publisherObserver)
         
         let timer = Timer.publish(
             every: Self.endMarkedForRemovalAfterSeconds,
             on: .main,
             in: .common
         ).autoconnect()
-                
+        
         let timerPublisher = timer.eraseToAnyPublisher()
-        
-        Self.markForRemovalTimers[languageId] = timerPublisher
-        
-        syncResetMarkedForRemovalTimerPublisher(timerPublisher: timerPublisher)
+
+        publisherObserver.start(publisher: timerPublisher)
     }
     
-    private func syncResetMarkedForRemovalTimerPublisher(timerPublisher: AnyPublisher<Date, Never>) {
+    private func observeResetMarkedForRemoval(publisherObserver: PublisherObserver<Date, Never>) {
 
-        timerPublisher
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
+        publisherObserver
+            .observe { [weak self] value in
                 self?.stopResetMarkedForRemovalTimer()
+            } onCompletion: { _ in
+                
             }
-            .store(in: &Self.backgroundCancellables)
     }
     
     private func stopResetMarkedForRemovalTimer() {
-        
+                        
         isMarkedForRemoval = false
         
-        Self.markForRemovalTimers[languageId] = nil
+        Self.markForRemovalObservers[languageId]?.cancel()
+        Self.markForRemovalObservers[languageId] = nil
     }
     
     static func removeAllResetMarkedForRemovalTimers() {
-        Self.markForRemovalTimers.removeAll()
+        Self.markForRemovalObservers.removeAll()
     }
 }
 
@@ -216,31 +236,5 @@ extension DownloadableLanguageItemViewModel {
         case .notDownloaded:
             downloadLanguage()
         }
-    }
-}
-
-// MARK: - DownloadableLanguagesDownloadHandlerDelegate
-
-extension DownloadableLanguageItemViewModel: DownloadableLanguagesDownloadHandlerDelegate {
-    
-    func downloadableLanguagesDownloadHandlerCompleted(handler: DownloadableLanguagesDownloadHandler, error: (any Error)?) {
-        
-        downloadState = .downloaded
-        
-        Self.downloadHandlers[languageId] = nil
-        
-        // TODO: Handle error? ~Levi
-        
-        if let error = error {
-            print(error)
-        }
-        else {
-            
-        }
-    }
-    
-    func downloadableLanguagesDownloadHandlerProgressChanged(handler: DownloadableLanguagesDownloadHandler, progress: Double) {
-        
-        downloadState = .downloading(progress: progress)
     }
 }
