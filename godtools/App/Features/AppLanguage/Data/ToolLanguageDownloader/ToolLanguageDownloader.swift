@@ -50,7 +50,9 @@ class ToolLanguageDownloader {
     
     func syncDownloadedLanguagesPublisher() -> AnyPublisher<Void, Error> {
         
-        return downloadedLanguagesRepository.getDownloadedLanguagesPublisher(completedDownloadsOnly: false)
+        downloadedLanguagesRepository.markAllDownloadsAsCompleted()
+        
+        return downloadedLanguagesRepository.getDownloadedLanguagesPublisher(completedDownloadsOnly: true)
             .flatMap({ (downloadedLanguages: [DownloadedLanguageDataModel]) -> AnyPublisher<Void, Error> in
                                 
                 let downloadToolLanguageRequests: [AnyPublisher<ToolDownloaderDataModel, Error>] = downloadedLanguages.map({
