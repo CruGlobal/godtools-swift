@@ -52,4 +52,8 @@ class DownloadedLanguagesRepository {
         
         return cache.deleteDownloadedLanguagePublisher(languageId: languageId)
     }
+    
+    func markAllDownloadsAsCompleted() {
+        cache.markAllDownloadsAsCompleted()
+    }
 }
