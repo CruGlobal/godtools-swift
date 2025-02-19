@@ -144,4 +144,27 @@ class RealmDownloadedLanguagesCache {
         )
         .eraseToAnyPublisher()
     }
+    
+    func markAllDownloadsAsCompleted() {
+            
+        let realm: Realm = realmDatabase.openRealm()
+        
+        let nonCompletedDownloads = realm
+            .objects(RealmDownloadedLanguage.self)
+            .where { $0.downloadComplete == false }
+        
+        let languagesIds: [String] = nonCompletedDownloads.map {
+            $0.languageId
+        }
+        print(languagesIds)
+        
+        _ = realmDatabase.writeObjects(realm: realm, updatePolicy: .modified) { realm in
+            
+            for language in nonCompletedDownloads {
+                language.downloadComplete = true
+            }
+            
+            return Array(nonCompletedDownloads)
+        }
+    }
 }
