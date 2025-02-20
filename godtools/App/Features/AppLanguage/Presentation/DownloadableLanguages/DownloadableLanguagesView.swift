@@ -28,10 +28,11 @@ struct DownloadableLanguagesView: View {
             List {
                 ForEach(viewModel.displayedDownloadableLanguages) { downloadableLanguage in
                     
-                    DownloadableLanguageItemView(downloadableLanguage: downloadableLanguage) {
-                        
-                        downloadableLanguageTapped(downloadableLanguage: downloadableLanguage)
-                    }
+                    DownloadableLanguageItemView(downloadableLanguage: downloadableLanguage, tappedClosure: {
+                        self.downloadableLanguageTapped(downloadableLanguage: downloadableLanguage)
+                    }, removeTapped: {
+                        self.viewModel.removeDownloadedLanguage(downloadableLanguage)
+                    })
                     .listRowBackground(Color.clear)
                 }
             }
@@ -54,7 +55,7 @@ struct DownloadableLanguagesView: View {
             break
             
         case .downloaded:
-            viewModel.removeDownloadedLanguage(downloadableLanguage)
+            break
         }
     }
 }

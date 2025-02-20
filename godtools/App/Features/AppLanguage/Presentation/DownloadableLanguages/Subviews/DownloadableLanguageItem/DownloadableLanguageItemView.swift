@@ -10,18 +10,17 @@ import SwiftUI
 
 struct DownloadableLanguageItemView: View {
     
-    private static let runSwiftUITimer: Bool = false
     private static let lightGrey = Color.getColorWithRGB(red: 151, green: 151, blue: 151, opacity: 1)
     private static let removeMarkedForRemovalAfterSeconds: TimeInterval = 3
     
     private let removeMarkedForRemovalTimer: SwiftUITimer = SwiftUITimer(intervalSeconds: Self.removeMarkedForRemovalAfterSeconds, repeats: false)
     private let downloadableLanguage: DownloadableLanguageListItemDomainModel
     private let tappedClosure: (() -> Void)?
+    private let removeTapped: (() -> Void)?
     
     @State private var animationDownloadProgress: Double?
     @State private var downloadProgressTarget: Double?
     @State private var progressAnimationTimer: Timer?
-    @State private var removeDownloadTimer: Timer?
     @State private var isVisible: Bool = false
     @State private var isMarkedForRemoval: Bool = false
     
@@ -33,10 +32,11 @@ struct DownloadableLanguageItemView: View {
         return animationDownloadProgress < 1
     }
     
-    init(downloadableLanguage: DownloadableLanguageListItemDomainModel, tappedClosure: (() -> Void)?) {
+    init(downloadableLanguage: DownloadableLanguageListItemDomainModel, tappedClosure: (() -> Void)?, removeTapped: (() -> Void)?) {
         
         self.downloadableLanguage = downloadableLanguage
         self.tappedClosure = tappedClosure
+        self.removeTapped = removeTapped
     }
     
     var body: some View {
@@ -78,7 +78,7 @@ struct DownloadableLanguageItemView: View {
             case .notDownloaded:
                 self.downloadProgressTarget = nil
                 self.animationDownloadProgress = nil
-                stopRemoveDownloadTimer()
+                setIsMarkedForRemoval(isMarkedForRemoval: false)
                 
             case .downloading(let progress):
                 self.downloadProgressTarget = progress
@@ -95,7 +95,7 @@ struct DownloadableLanguageItemView: View {
             }
         })
         .onReceive(removeMarkedForRemovalTimer.publisher) { _ in
-            self.stopRemoveDownloadTimer()
+            self.setIsMarkedForRemoval(isMarkedForRemoval: false)
         }
         .animation(.default, value: downloadableLanguage.downloadStatus)
         .animation(.default, value: animationDownloadProgress)
@@ -104,7 +104,6 @@ struct DownloadableLanguageItemView: View {
             
             isVisible = false
             stopProgressAnimationTimer()
-            stopRemoveDownloadTimer()
         }
         .onAppear {
             
@@ -162,52 +161,42 @@ struct DownloadableLanguageItemView: View {
     private func didTapItem() {
         
         switch downloadableLanguage.downloadStatus {
-        case .downloaded:
+        
+        case .downloaded ( _):
             
             if isAnimatingDownload {
                 return
-                
-            } else if isMarkedForRemoval == false {
-                
-                startRemoveDownloadTimer()
-                
-                return
-                
-            } else {
-                stopRemoveDownloadTimer()
-                tappedClosure?()
             }
             
-        default:
+            if isMarkedForRemoval {
+                setIsMarkedForRemoval(isMarkedForRemoval: false)
+                removeTapped?()
+            }
+            else {
+                setIsMarkedForRemoval(isMarkedForRemoval: true)
+            }
+    
+        case .downloading( _):
+            break
             
-            tappedClosure?()
+        case .notDownloaded:
+            break
         }
+        
+        tappedClosure?()
     }
     
-    private func startRemoveDownloadTimer() {
-        
-        isMarkedForRemoval = true
-        
-        if Self.runSwiftUITimer {
+    private func setIsMarkedForRemoval(isMarkedForRemoval: Bool) {
+                
+        if isMarkedForRemoval {
+            
+            self.isMarkedForRemoval = true
             removeMarkedForRemovalTimer.start()
         }
         else {
-            removeDownloadTimer = Timer.scheduledTimer(withTimeInterval: Self.removeMarkedForRemovalAfterSeconds, repeats: false, block: { timer in
-                self.stopRemoveDownloadTimer()
-            })
-        }
-    }
-    
-    private func stopRemoveDownloadTimer() {
-        
-        isMarkedForRemoval = false
-        
-        if Self.runSwiftUITimer {
+            
+            self.isMarkedForRemoval = false
             removeMarkedForRemovalTimer.stop()
-        }
-        else {
-            removeDownloadTimer?.invalidate()
-            removeDownloadTimer = nil
         }
     }
     
