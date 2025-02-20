@@ -180,7 +180,6 @@ extension DownloadableLanguageItemViewModel {
         
         downloadToolLanguageUseCase
             .downloadToolLanguage(languageId: languageId)
-            .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { _ in
                 
                 Self.removeLanguageDownloadObserver(languageId: languageId)
