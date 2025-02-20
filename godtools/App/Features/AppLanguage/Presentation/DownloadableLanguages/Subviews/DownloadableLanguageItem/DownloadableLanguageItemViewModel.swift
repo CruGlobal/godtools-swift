@@ -38,19 +38,11 @@ class DownloadableLanguageItemViewModel: ObservableObject {
         
         let languageId: String = downloadableLanguage.languageId
         
-        if downloadableLanguage.languageId.lowercased() == "1" {
-            print("\n INIT view model")
-            print("  language id: \(languageId)")
-            print("  downloadableLanguage language id: \(downloadableLanguage.languageId)")
-        }
-        
         isMarkedForRemoval = Self.markedForRemovalTimerObservers[languageId] != nil
         
         if let currentDownloadProgress = Self.languageDownloaderObservers[languageId]?.value {
             
             downloadState = .downloading(progress: currentDownloadProgress)
-            
-            log("  current download progress: \(currentDownloadProgress)")
         }
         else {
             
@@ -61,34 +53,15 @@ class DownloadableLanguageItemViewModel: ObservableObject {
             case .downloaded( _):
                 downloadState = .downloaded
             }
-            
-            log(" found nil language downloader observer")
-            log("  language id: \(languageId)")
-            log("  downloadableLanguage language id: \(downloadableLanguage.languageId)")
         }
         
         bindIconState()
         observeLanguageDownload()
         observeResetMarkedForRemovalTimer()
-        
-        log("  * downloadState: \(downloadState)")
-    }
-    
-    deinit {
-        log("deinit english language")
-        
-        //print("number of background cancellables: \(Self.backgroundCancellables.count)")
     }
     
     private var languageId: String {
         return downloadableLanguage.languageId
-    }
-    
-    private func log(_ statement: String) {
-        guard downloadableLanguage.languageId.lowercased() == "1" else {
-            return
-        }
-        print(statement)
     }
     
     private func bindIconState() {
