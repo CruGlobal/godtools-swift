@@ -463,7 +463,6 @@ extension AppFlow {
         
         resourcesRepository
             .syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsIgnoringErrorPublisher()
-            .setFailureType(to: Error.self)
             .flatMap({ (result: RealmResourcesCacheSyncResult) -> AnyPublisher<Void, Never> in
                 
                 return self.toolLanguageDownloader
