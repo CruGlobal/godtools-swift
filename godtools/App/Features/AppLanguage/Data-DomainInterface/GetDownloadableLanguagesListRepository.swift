@@ -59,7 +59,6 @@ class GetDownloadableLanguagesListRepository: GetDownloadableLanguagesListReposi
                     
                     return DownloadableLanguageListItemDomainModel(
                         languageId: language.id,
-                        languageCode: language.languageCode,
                         languageNameInOwnLanguage: languageNameInOwnLanguage,
                         languageNameInAppLanguage: languageNameInAppLanguage,
                         toolsAvailableText: toolsAvailableText,
