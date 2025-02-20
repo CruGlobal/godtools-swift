@@ -30,16 +30,16 @@ struct DownloadableLanguageItemView: View {
                 
                 HStack(spacing: 10) {
                     
-                    Text(viewModel.languageNameInOwnLanguage)
+                    Text(viewModel.downloadableLanguage.languageNameInOwnLanguage)
                         .font(FontLibrary.sfProTextRegular.font(size: 15))
                         .foregroundColor(ColorPalette.gtGrey.color)
                     
-                    Text(viewModel.languageNameInAppLanguage)
+                    Text(viewModel.downloadableLanguage.languageNameInAppLanguage)
                         .font(FontLibrary.sfProTextRegular.font(size: 15))
                         .foregroundColor(Self.lightGrey)
                 }
                 
-                Text(viewModel.toolsAvailableText)
+                Text(viewModel.downloadableLanguage.toolsAvailableText)
                     .font(FontLibrary.sfProTextRegular.font(size: 12))
                     .foregroundColor(Self.lightGrey)
             }

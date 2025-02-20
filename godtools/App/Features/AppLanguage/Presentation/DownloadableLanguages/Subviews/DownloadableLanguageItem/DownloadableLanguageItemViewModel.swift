@@ -19,22 +19,17 @@ class DownloadableLanguageItemViewModel: ObservableObject {
     private static var languageDownloaderObservers: [LanguageId: PublisherObserver<Double, Never>] = Dictionary()
     private static var markForRemovalObservers: [LanguageId: PublisherObserver<Date, Never>] = Dictionary()
         
-    private let downloadableLanguage: DownloadableLanguageListItemDomainModel
     private let downloadToolLanguageUseCase: DownloadToolLanguageUseCase
     private let removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase
-        
-    @Published private(set) var languageNameInOwnLanguage: String
-    @Published private(set) var languageNameInAppLanguage: String
-    @Published private(set) var toolsAvailableText: String
+    
+    let downloadableLanguage: DownloadableLanguageListItemDomainModel
+    
     @Published private(set) var downloadState: DownloadableLanguageDownloadState
     @Published private(set) var isMarkedForRemoval: Bool
     @Published private(set) var iconState: LanguageDownloadIconState = .notDownloaded
     
     init(downloadableLanguage: DownloadableLanguageListItemDomainModel, downloadToolLanguageUseCase: DownloadToolLanguageUseCase, removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase) {
         
-        self.languageNameInOwnLanguage = downloadableLanguage.languageNameInAppLanguage
-        self.languageNameInAppLanguage = downloadableLanguage.languageNameInAppLanguage
-        self.toolsAvailableText = downloadableLanguage.toolsAvailableText
         self.downloadableLanguage = downloadableLanguage
         self.downloadToolLanguageUseCase = downloadToolLanguageUseCase
         self.removeDownloadedToolLanguageUseCase = removeDownloadedToolLanguageUseCase
