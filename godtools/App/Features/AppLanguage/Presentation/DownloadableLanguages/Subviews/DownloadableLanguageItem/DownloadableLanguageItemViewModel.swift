@@ -243,6 +243,7 @@ extension DownloadableLanguageItemViewModel {
                 
                 isMarkedForRemoval = true
                 Self.startResetMarkedForRemovalTimer(languageId: languageId)
+                observeResetMarkedForRemovalTimer()
             }
             
         case .downloading( _):
