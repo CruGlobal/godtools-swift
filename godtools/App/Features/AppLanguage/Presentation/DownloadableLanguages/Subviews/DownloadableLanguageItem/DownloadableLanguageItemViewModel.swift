@@ -15,7 +15,7 @@ class DownloadableLanguageItemViewModel: ObservableObject {
     
     private static let endMarkedForRemovalAfterSeconds: TimeInterval = 3
     
-    private static var languageDownloaderObservers: [LanguageId: CurrentValueSubject<Double, Never>] = Dictionary()
+    private static var languageDownloaderObservers: [LanguageId: CurrentValueSubject<Double, Error>] = Dictionary()
     private static var markedForRemovalTimerObservers: [LanguageId: PassthroughSubject<Void, Never>] = Dictionary()
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
     
@@ -134,16 +134,20 @@ extension DownloadableLanguageItemViewModel {
         
         currentValueSubject
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (progress: Double) in
+            .sink(receiveCompletion: { [weak self] completion in
                 
-                if progress < 1 {
-                    self?.downloadState = .downloading(progress: progress)
-                }
-                else {
+                switch completion {
+                case .finished:
                     self?.downloadState = .downloaded
-                    Self.removeLanguageDownloadObserver(languageId: languageId)
+                case .failure(let error):
+                    print(error)
+                    self?.downloadState = .notDownloaded
                 }
-            }
+                
+            }, receiveValue: { [weak self] (progress: Double) in
+                
+                self?.downloadState = .downloading(progress: progress)
+            })
             .store(in: &cancellables)
     }
     
@@ -153,17 +157,14 @@ extension DownloadableLanguageItemViewModel {
         
         downloadToolLanguageUseCase
             .downloadToolLanguage(languageId: languageId)
-            .sink(receiveCompletion: { _ in
+            .sink(receiveCompletion: { completion in
                 
+                Self.languageDownloaderObservers[languageId]?.send(completion: completion)
                 Self.removeLanguageDownloadObserver(languageId: languageId)
                 
             }, receiveValue: { (progress: Double) in
                 
                 Self.languageDownloaderObservers[languageId]?.send(progress)
-                
-                if progress >= 1 {
-                    Self.removeLanguageDownloadObserver(languageId: languageId)
-                }
             })
             .store(in: &backgroundCancellables)
     }

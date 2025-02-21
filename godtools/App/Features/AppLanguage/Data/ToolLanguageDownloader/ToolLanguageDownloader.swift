@@ -24,20 +24,13 @@ class ToolLanguageDownloader {
         self.downloadedLanguagesRepository = downloadedLanguagesRepository
     }
     
-    func downloadToolLanguagePublisher(languageId: String) -> AnyPublisher<ToolDownloaderDataModel, Never> {
+    func downloadToolLanguagePublisher(languageId: String) -> AnyPublisher<ToolDownloaderDataModel, Error> {
         
         guard let languageModel = languagesRepository.getLanguage(id: languageId) else {
             
             let error: Error = NSError.errorWithDomain(domain: "ToolLanguageDownloader", code: -1, description: "Internal Error in ToolLanguageDownloader.  Failed to fetch language with language id: \(languageId)")
             
-            let dataModel = ToolDownloaderDataModel(
-                attachments: [],
-                progress: 0,
-                translations: [],
-                errors: [error]
-            )
-
-            return Just(dataModel)
+            return Fail(error: error)
                 .eraseToAnyPublisher()
         }
                 
@@ -55,14 +48,14 @@ class ToolLanguageDownloader {
             .eraseToAnyPublisher()
     }
     
-    func syncDownloadedLanguagesPublisher() -> AnyPublisher<Void, Never> {
+    func syncDownloadedLanguagesPublisher() -> AnyPublisher<Void, Error> {
         
         downloadedLanguagesRepository.markAllDownloadsAsCompleted()
         
         return downloadedLanguagesRepository.getDownloadedLanguagesPublisher(completedDownloadsOnly: true)
-            .flatMap({ (downloadedLanguages: [DownloadedLanguageDataModel]) -> AnyPublisher<Void, Never> in
+            .flatMap({ (downloadedLanguages: [DownloadedLanguageDataModel]) -> AnyPublisher<Void, Error> in
                                          
-                let downloadToolLanguageRequests: [AnyPublisher<ToolDownloaderDataModel, Never>] = downloadedLanguages.map({
+                let downloadToolLanguageRequests: [AnyPublisher<ToolDownloaderDataModel, Error>] = downloadedLanguages.map({
                     self.downloadToolLanguagePublisher(languageId: $0.languageId)
                 })
                                 

@@ -13,5 +13,4 @@ struct ToolDownloaderDataModel {
     let attachments: [AttachmentModel]
     let progress: Double
     let translations: [TranslationModel]
-    let errors: [Error]
 }

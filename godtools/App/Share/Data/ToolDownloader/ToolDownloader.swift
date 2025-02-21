@@ -27,7 +27,7 @@ class ToolDownloader {
         self.articleManifestAemRepository = articleManifestAemRepository
     }
     
-    func downloadToolsPublisher(tools: [DownloadToolDataModel]) -> AnyPublisher<ToolDownloaderDataModel, Never> {
+    func downloadToolsPublisher(tools: [DownloadToolDataModel]) -> AnyPublisher<ToolDownloaderDataModel, Error> {
         
         var nonArticleTranslations: [TranslationModel] = Array()
         var articleTranslations: [TranslationModel] = Array()
@@ -83,16 +83,8 @@ class ToolDownloader {
         let allRequests: [AnyPublisher<Void, Error>] = nonArticleTranslationDownloads + attachmentsDownloads + articleTranslationDownloads
         
         var downloadCount: Int = 0
-        var errors: [Error] = Array()
         
         return Publishers.MergeMany(allRequests)
-            .catch { (error: Error) in
-                
-                errors.append(error)
-                
-                return Just(Void())
-                    .eraseToAnyPublisher()
-            }
             .map { (void: Void) in
                 
                 downloadCount += 1
@@ -110,8 +102,7 @@ class ToolDownloader {
                 return ToolDownloaderDataModel(
                     attachments: attachments,
                     progress: progress,
-                    translations: allTranslations,
-                    errors: errors
+                    translations: allTranslations
                 )
             }
             .eraseToAnyPublisher()
