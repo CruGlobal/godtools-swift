@@ -16,7 +16,8 @@ class DownloadableLanguageItemViewModel: ObservableObject {
     private static let endMarkedForRemovalAfterSeconds: TimeInterval = 3
     
     private static var languageDownloaderObservers: [LanguageId: CurrentValueSubject<Double, Error>] = Dictionary()
-    private static var markedForRemovalTimerObservers: [LanguageId: PassthroughSubject<Void, Never>] = Dictionary()
+    private static var markedForRemovalTimers: [LanguageId: SwiftUITimer] = Dictionary()
+    private static var markedForRemovalTimerObservers: [LanguageId: CurrentValueSubject<Bool, Never>] = Dictionary()
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
     
     private let downloadToolLanguageUseCase: DownloadToolLanguageUseCase
@@ -129,9 +130,7 @@ extension DownloadableLanguageItemViewModel {
         guard let currentValueSubject = Self.languageDownloaderObservers[languageId] else {
             return
         }
-        
-        let languageId: String = self.languageId
-        
+                
         currentValueSubject
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { [weak self] completion in
@@ -176,46 +175,48 @@ extension DownloadableLanguageItemViewModel {
     
     private func observeResetMarkedForRemovalTimer() {
         
-        guard let passthroughValueSubject = Self.markedForRemovalTimerObservers[languageId] else {
+        guard let currentValueSubject = Self.markedForRemovalTimerObservers[languageId] else {
             return
         }
-        
-        let languageId: String = self.languageId
-        
-        passthroughValueSubject
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (void: Void) in
                 
-                self?.isMarkedForRemoval = false
-                Self.removeMarkedForRemovalTimerObserver(languageId: languageId)
+        currentValueSubject
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (markedForRemval: Bool) in
+                
+                self?.isMarkedForRemoval = markedForRemval
             }
             .store(in: &cancellables)
     }
     
     private static func startResetMarkedForRemovalTimer(languageId: String) {
         
-        Self.markedForRemovalTimerObservers[languageId] = PassthroughSubject()
-                
-        Timer.publish(
-            every: Self.endMarkedForRemovalAfterSeconds,
-            on: .main,
-            in: .common
+        let timer = SwiftUITimer(
+            intervalSeconds: Self.endMarkedForRemovalAfterSeconds,
+            repeats: false
         )
-        .autoconnect()
-        .sink { _ in
-            
-            Self.markedForRemovalTimerObservers[languageId]?.send(Void())
-            
-            Self.removeMarkedForRemovalTimerObserver(languageId: languageId)
-        }
-        .store(in: &Self.backgroundCancellables)
+        
+        Self.markedForRemovalTimerObservers[languageId] = CurrentValueSubject(true)
+        Self.markedForRemovalTimers[languageId] = timer
+        
+        timer.startPublisher()
+            .sink { _ in
+                
+                Self.markedForRemovalTimerObservers[languageId]?.send(false)
+                Self.markedForRemovalTimerObservers[languageId] = nil
+                Self.markedForRemovalTimers[languageId]?.stop()
+                Self.markedForRemovalTimers[languageId] = nil
+            }
+            .store(in: &Self.backgroundCancellables)
     }
     
-    private static func removeMarkedForRemovalTimerObserver(languageId: String) {
+    private static func stopAndRemoveResetMarkedForRemovalTimer(languageId: String) {
         Self.markedForRemovalTimerObservers[languageId] = nil
+        Self.markedForRemovalTimers[languageId]?.stop()
+        Self.markedForRemovalTimers[languageId] = nil
     }
     
     static func removeAllResetMarkedForRemovalTimers() {
+        Self.markedForRemovalTimers.removeAll()
         Self.markedForRemovalTimerObservers.removeAll()
     }
 }
@@ -232,8 +233,8 @@ extension DownloadableLanguageItemViewModel {
             
             if isMarkedForRemoval {
                 
-                Self.removeMarkedForRemovalTimerObserver(languageId: languageId)
                 isMarkedForRemoval = false
+                Self.stopAndRemoveResetMarkedForRemovalTimer(languageId: languageId)
                 removeDownloadedLanguage()
             }
             else {
