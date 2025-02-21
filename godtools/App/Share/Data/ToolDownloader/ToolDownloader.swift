@@ -28,7 +28,7 @@ class ToolDownloader {
     }
     
     func downloadToolsPublisher(tools: [DownloadToolDataModel]) -> AnyPublisher<ToolDownloaderDataModel, Error> {
-        
+            
         var nonArticleTranslations: [TranslationModel] = Array()
         var articleTranslations: [TranslationModel] = Array()
         var allTranslations: [TranslationModel] = Array()
@@ -109,7 +109,7 @@ class ToolDownloader {
     }
     
     private func getDownloadToolTranslationsPublishers(translations: [TranslationModel]) -> [AnyPublisher<Void, Error>] {
-        
+            
         let downloadTranslationsRequests: [AnyPublisher<Void, Error>] = translations.map { (translation: TranslationModel) in
             self.translationsRepository.downloadAndCacheTranslationFiles(translation: translation)
                 .map { _ in
