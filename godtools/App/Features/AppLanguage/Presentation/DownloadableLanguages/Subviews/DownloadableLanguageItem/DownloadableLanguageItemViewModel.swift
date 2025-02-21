@@ -160,17 +160,13 @@ extension DownloadableLanguageItemViewModel {
             .sink(receiveCompletion: { completion in
                 
                 Self.languageDownloaderObservers[languageId]?.send(completion: completion)
-                Self.removeLanguageDownloadObserver(languageId: languageId)
+                Self.languageDownloaderObservers[languageId] = nil
                 
             }, receiveValue: { (progress: Double) in
                 
                 Self.languageDownloaderObservers[languageId]?.send(progress)
             })
             .store(in: &backgroundCancellables)
-    }
-    
-    private static func removeLanguageDownloadObserver(languageId: String) {
-        Self.languageDownloaderObservers[languageId] = nil
     }
 }
 
