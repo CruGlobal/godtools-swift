@@ -25,14 +25,17 @@ class DownloadableLanguageItemViewModel: ObservableObject {
     
     private var cancellables: Set<AnyCancellable> = Set()
     
+    private weak var flowDelegate: FlowDelegate?
+    
     let downloadableLanguage: DownloadableLanguageListItemDomainModel
     
     @Published private(set) var downloadState: DownloadableLanguageDownloadState
     @Published private(set) var isMarkedForRemoval: Bool
     @Published private(set) var iconState: LanguageDownloadIconState = .notDownloaded
     
-    init(downloadableLanguage: DownloadableLanguageListItemDomainModel, downloadToolLanguageUseCase: DownloadToolLanguageUseCase, removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase) {
+    init(flowDelegate: FlowDelegate, downloadableLanguage: DownloadableLanguageListItemDomainModel, downloadToolLanguageUseCase: DownloadToolLanguageUseCase, removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase) {
         
+        self.flowDelegate = flowDelegate
         self.downloadableLanguage = downloadableLanguage
         self.downloadToolLanguageUseCase = downloadToolLanguageUseCase
         self.removeDownloadedToolLanguageUseCase = removeDownloadedToolLanguageUseCase
@@ -109,8 +112,8 @@ class DownloadableLanguageItemViewModel: ObservableObject {
                 case .finished:
                     self?.downloadState = .downloaded
                 case .failure(let error):
-                    print(error)
                     self?.downloadState = .notDownloaded
+                    self?.flowDelegate?.navigate(step: .languageDownloadFailedFromDownloadedLanguages(error: error))
                 }
                 
             }, receiveValue: { [weak self] (progress: Double?) in
@@ -176,7 +179,8 @@ extension DownloadableLanguageItemViewModel {
         
         Self.downloadLanguageInBackground(
             downloadToolLanguageUseCase: downloadToolLanguageUseCase,
-            languageId: languageId
+            languageId: languageId,
+            flowDelegate: flowDelegate
         )
     }
     
@@ -188,7 +192,7 @@ extension DownloadableLanguageItemViewModel {
         return Self.languageDownloadProgress[languageId]?.value
     }
     
-    private static func downloadLanguageInBackground(downloadToolLanguageUseCase: DownloadToolLanguageUseCase, languageId: String) {
+    private static func downloadLanguageInBackground(downloadToolLanguageUseCase: DownloadToolLanguageUseCase, languageId: String, flowDelegate: FlowDelegate?) {
                    
         Self.languageDownloadProgress[languageId]?.send(0)
         

@@ -91,6 +91,7 @@ class DownloadableLanguagesViewModel: ObservableObject {
     func getDownloadableLanguageItemViewModel(downloadableLanguage: DownloadableLanguageListItemDomainModel) -> DownloadableLanguageItemViewModel {
         
         return DownloadableLanguageItemViewModel(
+            flowDelegate: flowDelegate!,
             downloadableLanguage: downloadableLanguage,
             downloadToolLanguageUseCase: downloadToolLanguageUseCase,
             removeDownloadedToolLanguageUseCase: removeDownloadedToolLanguageUseCase
