@@ -22,7 +22,7 @@ class DownloadToolLanguageRepository: DownloadToolLanguageRepositoryInterface {
         self.toolLanguageDownloader = toolLanguageDownloader
     }
     
-    func downloadToolTranslations(for languageId: String, languageCode: BCP47LanguageIdentifier) -> AnyPublisher<Double, Error> {
+    func downloadToolTranslations(for languageId: String) -> AnyPublisher<Double, Error> {
             
         downloadedLanguagesRepository.storeDownloadedLanguage(languageId: languageId, downloadComplete: false)
         
