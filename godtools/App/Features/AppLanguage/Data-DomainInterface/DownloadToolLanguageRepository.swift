@@ -29,12 +29,12 @@ class DownloadToolLanguageRepository: DownloadToolLanguageRepositoryInterface {
         return toolLanguageDownloader
             .downloadToolLanguagePublisher(languageId: languageId)
             .catch { (downloadError: Error) -> AnyPublisher<ToolDownloaderDataModel, Error> in
-
+                
                 return self.downloadedLanguagesRepository.deleteDownloadedLanguagePublisher(languageId: languageId)
                     .catch { (deleteError: Error) -> AnyPublisher<Void, Error> in
-
+                       
                         assertionFailure("Failed to delete object in RealmDatabase. \(deleteError.localizedDescription)")
-
+                        
                         return Fail(error: downloadError)
                             .eraseToAnyPublisher()
                     }
