@@ -71,7 +71,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentRendererViewModel {
         return []
     }
     
-    override func getPageNavigationEvent(page: Page, animated: Bool, reloadCollectionViewDataNeeded: Bool) -> MobileContentPagesNavigationEvent {
+    override func getPageNavigationEvent(page: Page, animated: Bool, reloadCollectionViewDataNeeded: Bool, isBackNavigation: Bool) -> MobileContentPagesNavigationEvent {
         
         let pages: [Page] = super.getPages()
         
@@ -91,9 +91,9 @@ class ChooseYourOwnAdventureViewModel: MobileContentRendererViewModel {
             
             setPages = nil
         }
-        else if let backToPageIndex = pages.firstIndex(of: page) {
+        else if isBackNavigation, let backToPageIndex = pages.firstIndex(of: page) {
             
-            // Backward Navigation
+            // Backward Navigation - Page is in navigation stack
             
             let removeStartIndex: Int = backToPageIndex + 1
             let removedEndIndex: Int = pages.count - 1
@@ -119,6 +119,35 @@ class ChooseYourOwnAdventureViewModel: MobileContentRendererViewModel {
             )
             
             setPages = pagesUpToBackToPage
+        }
+        else if isBackNavigation, let nearestAncestorPageIndex = super.getNearestAncestorPageIndex(page: page) {
+            
+            // Backward Navigation - Page is NOT in navigation stack, but an ancestor page is...
+            
+            let insertPageAtIndex: Int = nearestAncestorPageIndex + 1
+            
+            let removeStartIndex: Int = insertPageAtIndex + 1
+            let removedEndIndex: Int = pages.count - 1
+            
+            let pageIndexesToRemove: [Int]
+            
+            if removeStartIndex <= removedEndIndex {
+                pageIndexesToRemove = Array(removeStartIndex...removedEndIndex)
+            }
+            else {
+                pageIndexesToRemove = Array()
+            }
+                        
+            pageNavigation = PageNavigationCollectionViewNavigationModel(
+                navigationDirection: nil,
+                page: insertPageAtIndex,
+                animated: true,
+                reloadCollectionViewDataNeeded: false,
+                insertPages: nil,
+                deletePages: pageIndexesToRemove
+            )
+            
+            setPages = Array(pages[0...nearestAncestorPageIndex]) + [page]
         }
         else {
             
@@ -174,14 +203,13 @@ extension ChooseYourOwnAdventureViewModel {
             return
         }
         
-        if let parentPage = getCurrentPage()?.parentPage {
-            
-            super.navigateToPage(page: parentPage, animated: true)
+        let parentPage: Page? = getCurrentPage()?.parentPage ?? super.getPage(index: currentPageNumber - 1)
+        
+        guard let parentPage = parentPage else {
+            return
         }
-        else if let previousPage = super.getPage(index: currentPageNumber - 1) {
-            
-            super.navigateToPage(page: previousPage, animated: true)
-        }
+        
+        super.navigateToPage(page: parentPage, animated: true, isBackNavigation: true)
     }
     
     @objc func toolSettingsTapped() {
