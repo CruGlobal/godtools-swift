@@ -122,7 +122,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentRendererViewModel {
         }
         else if isBackNavigation, let nearestAncestorPageIndex = super.getNearestAncestorPageIndex(page: page) {
             
-            // Backward Navigation - Page is NOT in navigation stack, but an ancestor page is...
+            // Backward Navigation - Page is NOT in navigation stack, but an ancestor page is in stack.  Add to top of ancestor page.
             
             let insertPageAtIndex: Int = nearestAncestorPageIndex + 1
             
