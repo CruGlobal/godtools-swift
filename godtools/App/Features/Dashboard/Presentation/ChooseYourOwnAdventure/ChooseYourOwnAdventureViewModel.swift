@@ -91,7 +91,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentRendererViewModel {
             
             setPages = nil
         }
-        else if isBackNavigation, let backToPageIndex = pages.firstIndex(of: page) {
+        else if let backToPageIndex = pages.firstIndex(of: page) {
             
             // Backward Navigation - Page is in navigation stack
             
