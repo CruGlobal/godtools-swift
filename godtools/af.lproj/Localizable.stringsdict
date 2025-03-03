@@ -13,9 +13,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>%d Lesson available</string>
+<string>%1d Les beskikbaar</string>
 <key>other</key>
-<string>%d Lessons available</string>
+<string>%d Lesse beskikbaar</string>
 </dict>
 </dict>
 <key>account.activity.toolOpens</key>
@@ -29,9 +29,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Tool open</string>
+<string>Hulpmiddel oop</string>
 <key>other</key>
-<string>Tool opens</string>
+<string>Hulpmiddel open</string>
 </dict>
 </dict>
 <key>account.activity.lessonCompletions</key>
@@ -45,9 +45,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Lesson completion</string>
+<string>Les voltooi</string>
 <key>other</key>
-<string>Lesson completions</string>
+<string>Lesse voltooi</string>
 </dict>
 </dict>
 <key>account.activity.screenShares</key>
@@ -61,9 +61,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Screen share</string>
+<string>Deel skerm</string>
 <key>other</key>
-<string>Screen shares</string>
+<string>Deel skerms</string>
 </dict>
 </dict>
 <key>account.activity.linksShared</key>
@@ -77,9 +77,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Link share</string>
+<string>Deel skakel</string>
 <key>other</key>
-<string>Link shares</string>
+<string>Deel skakels</string>
 </dict>
 </dict>
 <key>account.activity.languagesUsed</key>
@@ -93,9 +93,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Language used</string>
+<string>Taal gebruik</string>
 <key>other</key>
-<string>Languages used</string>
+<string>Tale gebruik</string>
 </dict>
 </dict>
 <key>account.activity.sessions</key>
@@ -109,9 +109,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Session</string>
+<string>Sessie</string>
 <key>other</key>
-<string>Sessions</string>
+<string>Sessies</string>
 </dict>
 </dict>
 <key>tools.filter.toolsAvailable</key>
@@ -125,9 +125,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>%d Tool available</string>
+<string>%d Hulpmiddel beskikbaar</string>
 <key>other</key>
-<string>%d Tools available</string>
+<string>%d Hulpmiddels beskikbaar</string>
 </dict>
 </dict>
 <key>languageSettings.appLanguage.numberAvailable</key>
@@ -141,9 +141,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>1 Language available</string>
+<string>%d Taal beskikbaar</string>
 <key>other</key>
-<string>%d Languages available</string>
+<string>%d Tale beskikbaar</string>
 </dict>
 </dict>
 <key>badges.imagesShared</key>
@@ -157,9 +157,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Shared 1 image</string>
+<string>1 Beeld gedeel</string>
 <key>other</key>
-<string>Shared %d images</string>
+<string>%d Beelde gedeel</string>
 </dict>
 </dict>
 <key>badges.articlesOpened</key>
@@ -173,9 +173,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Read 1 article</string>
+<string>Lees 1 artikel</string>
 <key>other</key>
-<string>Read %d articles</string>
+<string>%d Geleesde artikels</string>
 </dict>
 </dict>
 <key>badges.lessonsCompleted</key>
@@ -189,9 +189,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Completed 1 lesson</string>
+<string>1 Les voltooi</string>
 <key>other</key>
-<string>Completed %d lessons</string>
+<string>%d Voltooide lesse</string>
 </dict>
 </dict>
 <key>badges.toolsOpened</key>
@@ -205,9 +205,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Opened 1 tool</string>
+<string>1 Hulpmiddel geopen</string>
 <key>other</key>
-<string>Opened %d tools</string>
+<string>%d Hulpmddels geopen</string>
 </dict>
 </dict>
 <key>badges.tipsCompleted</key>
@@ -221,9 +221,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Completed 1 training tip</string>
+<string>1 Opleidingswenk voltooi</string>
 <key>other</key>
-<string>Completed %d training tips</string>
+<string>%d Opleidingswenke voltooi</string>
 </dict>
 </dict>
 </dict>
