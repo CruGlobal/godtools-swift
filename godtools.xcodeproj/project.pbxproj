@@ -492,6 +492,9 @@
 		4556CEB029F2E09500643BBC /* ArticleDebugViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556CEAF29F2E09500643BBC /* ArticleDebugViewModel.swift */; };
 		4556CEB329F2E4A800643BBC /* ArticleDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556CEB229F2E4A800643BBC /* ArticleDomainModel.swift */; };
 		4556CEB529F2E6CC00643BBC /* ArticleUrlType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556CEB429F2E6CC00643BBC /* ArticleUrlType.swift */; };
+		4558B4812D5E79E100B0E9E2 /* DownloadableLanguageItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4558B47E2D5E79E100B0E9E2 /* DownloadableLanguageItemView.swift */; };
+		4558B4822D5E79E100B0E9E2 /* LanguageDownloadIconState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4558B47C2D5E79E100B0E9E2 /* LanguageDownloadIconState.swift */; };
+		4558B4832D5E79E100B0E9E2 /* LanguageDownloadIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4558B47B2D5E79E100B0E9E2 /* LanguageDownloadIcon.swift */; };
 		455A6C6E27C16FFB00968277 /* MobileContentButtonIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455A6C6D27C16FFB00968277 /* MobileContentButtonIcon.swift */; };
 		455CB5792A439B6700E95834 /* LearnToShareToolViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455CB5702A439B6600E95834 /* LearnToShareToolViewModel.swift */; };
 		455CB57B2A439B6700E95834 /* LearnToShareToolItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455CB5742A439B6600E95834 /* LearnToShareToolItemView.swift */; };
@@ -910,8 +913,6 @@
 		45AC9DE22B28A9A400DEEBFE /* GetDownloadableLanguagesInterfaceStringsRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AC9DE12B28A9A400DEEBFE /* GetDownloadableLanguagesInterfaceStringsRepositoryInterface.swift */; };
 		45AC9DE42B28A9B100DEEBFE /* ViewDownloadableLanguagesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AC9DE32B28A9B100DEEBFE /* ViewDownloadableLanguagesUseCase.swift */; };
 		45AC9DEB2B28A9CD00DEEBFE /* DownloadableLanguagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AC9DE62B28A9CD00DEEBFE /* DownloadableLanguagesView.swift */; };
-		45AC9DEC2B28A9CD00DEEBFE /* DownloadableLanguageItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AC9DE82B28A9CD00DEEBFE /* DownloadableLanguageItemView.swift */; };
-		45AC9DED2B28A9CD00DEEBFE /* LanguageDownloadIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AC9DE92B28A9CD00DEEBFE /* LanguageDownloadIcon.swift */; };
 		45AC9DEE2B28A9CD00DEEBFE /* DownloadableLanguagesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AC9DEA2B28A9CD00DEEBFE /* DownloadableLanguagesViewModel.swift */; };
 		45AC9DF02B28A9FB00DEEBFE /* GetSearchBarInterfaceStringsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AC9DEF2B28A9FB00DEEBFE /* GetSearchBarInterfaceStringsRepository.swift */; };
 		45AC9DF32B28AA3000DEEBFE /* ViewSearchBarDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AC9DF12B28AA3000DEEBFE /* ViewSearchBarDomainModel.swift */; };
@@ -1553,7 +1554,6 @@
 		D4960CD82CE6934E0090B114 /* ResumeLessonProgressModalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4960CD72CE6934E0090B114 /* ResumeLessonProgressModalViewModel.swift */; };
 		D4960CDA2CE694280090B114 /* GetResumeLessonProgressModalInterfaceStringsRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4960CD92CE694280090B114 /* GetResumeLessonProgressModalInterfaceStringsRepositoryInterface.swift */; };
 		D4960CDC2CE694F00090B114 /* GetResumeLessonProgressModalInterfaceStringsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4960CDB2CE694F00090B114 /* GetResumeLessonProgressModalInterfaceStringsUseCase.swift */; };
-		D4960CDE2D2E0BCD0090B114 /* LanguageDownloadIconState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4960CDD2D2E0BCD0090B114 /* LanguageDownloadIconState.swift */; };
 		D496B9062A9E702200CBEA19 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D496B9052A9E702200CBEA19 /* SearchBar.swift */; };
 		D4997E0E28D4CED800205B4C /* YouTubeiOSPlayerHelper in Frameworks */ = {isa = PBXBuildFile; productRef = D4997E0D28D4CED800205B4C /* YouTubeiOSPlayerHelper */; };
 		D4AFA4452BAC93B400318023 /* ToolFilterLanguagesInterfaceStringsDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4AFA4442BAC93B400318023 /* ToolFilterLanguagesInterfaceStringsDomainModel.swift */; };
@@ -2185,6 +2185,9 @@
 		4556CEAF29F2E09500643BBC /* ArticleDebugViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleDebugViewModel.swift; sourceTree = "<group>"; };
 		4556CEB229F2E4A800643BBC /* ArticleDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleDomainModel.swift; sourceTree = "<group>"; };
 		4556CEB429F2E6CC00643BBC /* ArticleUrlType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleUrlType.swift; sourceTree = "<group>"; };
+		4558B47B2D5E79E100B0E9E2 /* LanguageDownloadIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageDownloadIcon.swift; sourceTree = "<group>"; };
+		4558B47C2D5E79E100B0E9E2 /* LanguageDownloadIconState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageDownloadIconState.swift; sourceTree = "<group>"; };
+		4558B47E2D5E79E100B0E9E2 /* DownloadableLanguageItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadableLanguageItemView.swift; sourceTree = "<group>"; };
 		455A6C6D27C16FFB00968277 /* MobileContentButtonIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentButtonIcon.swift; sourceTree = "<group>"; };
 		455CB5702A439B6600E95834 /* LearnToShareToolViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LearnToShareToolViewModel.swift; sourceTree = "<group>"; };
 		455CB5742A439B6600E95834 /* LearnToShareToolItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LearnToShareToolItemView.swift; sourceTree = "<group>"; };
@@ -2594,8 +2597,6 @@
 		45AC9DE12B28A9A400DEEBFE /* GetDownloadableLanguagesInterfaceStringsRepositoryInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetDownloadableLanguagesInterfaceStringsRepositoryInterface.swift; sourceTree = "<group>"; };
 		45AC9DE32B28A9B100DEEBFE /* ViewDownloadableLanguagesUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewDownloadableLanguagesUseCase.swift; sourceTree = "<group>"; };
 		45AC9DE62B28A9CD00DEEBFE /* DownloadableLanguagesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadableLanguagesView.swift; sourceTree = "<group>"; };
-		45AC9DE82B28A9CD00DEEBFE /* DownloadableLanguageItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadableLanguageItemView.swift; sourceTree = "<group>"; };
-		45AC9DE92B28A9CD00DEEBFE /* LanguageDownloadIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageDownloadIcon.swift; sourceTree = "<group>"; };
 		45AC9DEA2B28A9CD00DEEBFE /* DownloadableLanguagesViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadableLanguagesViewModel.swift; sourceTree = "<group>"; };
 		45AC9DEF2B28A9FB00DEEBFE /* GetSearchBarInterfaceStringsRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetSearchBarInterfaceStringsRepository.swift; sourceTree = "<group>"; };
 		45AC9DF12B28AA3000DEEBFE /* ViewSearchBarDomainModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewSearchBarDomainModel.swift; sourceTree = "<group>"; };
@@ -3272,7 +3273,6 @@
 		D4960CD72CE6934E0090B114 /* ResumeLessonProgressModalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeLessonProgressModalViewModel.swift; sourceTree = "<group>"; };
 		D4960CD92CE694280090B114 /* GetResumeLessonProgressModalInterfaceStringsRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetResumeLessonProgressModalInterfaceStringsRepositoryInterface.swift; sourceTree = "<group>"; };
 		D4960CDB2CE694F00090B114 /* GetResumeLessonProgressModalInterfaceStringsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetResumeLessonProgressModalInterfaceStringsUseCase.swift; sourceTree = "<group>"; };
-		D4960CDD2D2E0BCD0090B114 /* LanguageDownloadIconState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageDownloadIconState.swift; sourceTree = "<group>"; };
 		D496B9052A9E702200CBEA19 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		D4AFA4442BAC93B400318023 /* ToolFilterLanguagesInterfaceStringsDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolFilterLanguagesInterfaceStringsDomainModel.swift; sourceTree = "<group>"; };
 		D4AFA4462BAC950800318023 /* GetToolFilterLanguagesInterfaceStringsRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetToolFilterLanguagesInterfaceStringsRepositoryInterface.swift; sourceTree = "<group>"; };
@@ -6021,6 +6021,32 @@
 			path = Domain;
 			sourceTree = "<group>";
 		};
+		4558B47D2D5E79E100B0E9E2 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				4558B47B2D5E79E100B0E9E2 /* LanguageDownloadIcon.swift */,
+				4558B47C2D5E79E100B0E9E2 /* LanguageDownloadIconState.swift */,
+			);
+			path = Subviews;
+			sourceTree = "<group>";
+		};
+		4558B47F2D5E79E100B0E9E2 /* DownloadableLanguageItem */ = {
+			isa = PBXGroup;
+			children = (
+				4558B47E2D5E79E100B0E9E2 /* DownloadableLanguageItemView.swift */,
+				4558B47D2D5E79E100B0E9E2 /* Subviews */,
+			);
+			path = DownloadableLanguageItem;
+			sourceTree = "<group>";
+		};
+		4558B4802D5E79E100B0E9E2 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				4558B47F2D5E79E100B0E9E2 /* DownloadableLanguageItem */,
+			);
+			path = Subviews;
+			sourceTree = "<group>";
+		};
 		45592A762ACB9D8D0097267D /* Domain */ = {
 			isa = PBXGroup;
 			children = (
@@ -8128,19 +8154,9 @@
 			children = (
 				45AC9DE62B28A9CD00DEEBFE /* DownloadableLanguagesView.swift */,
 				45AC9DEA2B28A9CD00DEEBFE /* DownloadableLanguagesViewModel.swift */,
-				45AC9DE72B28A9CD00DEEBFE /* Subviews */,
+				4558B4802D5E79E100B0E9E2 /* Subviews */,
 			);
 			path = DownloadableLanguages;
-			sourceTree = "<group>";
-		};
-		45AC9DE72B28A9CD00DEEBFE /* Subviews */ = {
-			isa = PBXGroup;
-			children = (
-				45AC9DE82B28A9CD00DEEBFE /* DownloadableLanguageItemView.swift */,
-				45AC9DE92B28A9CD00DEEBFE /* LanguageDownloadIcon.swift */,
-				D4960CDD2D2E0BCD0090B114 /* LanguageDownloadIconState.swift */,
-			);
-			path = Subviews;
 			sourceTree = "<group>";
 		};
 		45ACBDFF2B1F64230017D17E /* Lesson */ = {
@@ -12637,7 +12653,6 @@
 				452DFB3F2B7FB464003A4A59 /* GetAllYourFavoritedToolsInterfaceStringsRepository.swift in Sources */,
 				45369ACF2AFA7FA500BD10F0 /* DidViewToolScreenShareTutorialUseCase.swift in Sources */,
 				453F84CE2A029FC00005101E /* ArticleAemData.swift in Sources */,
-				45AC9DED2B28A9CD00DEEBFE /* LanguageDownloadIcon.swift in Sources */,
 				459E86EE28EDA86C00E197A5 /* DeepLinkingParserManifestUrl.swift in Sources */,
 				45D00A1A2B1FD0E3007D2B65 /* String+ParseUrls.swift in Sources */,
 				45B6481625E58ECC0098BAF1 /* (null) in Sources */,
@@ -13593,7 +13608,6 @@
 				45430CF12B1FB43E002B94A3 /* TextWithLinksView.swift in Sources */,
 				450EE2A029A66CDF00524F64 /* KnowGodTractDeepLinkQueryParameters.swift in Sources */,
 				455E98AE29A42A3200D1EF35 /* OnboardingTutorialMediaView.swift in Sources */,
-				45AC9DEC2B28A9CD00DEEBFE /* DownloadableLanguageItemView.swift in Sources */,
 				45AE974C27C97A9500C2CB33 /* Tabs+MobileContentRenderableModel.swift in Sources */,
 				45AE974427C97A9400C2CB33 /* Modal+MobileContentRenderableModel.swift in Sources */,
 				D4AFA44F2BAD0A9200318023 /* GetToolFilterCategoriesInterfaceStringsRepository.swift in Sources */,
@@ -13671,12 +13685,14 @@
 				45BDA64C2954FF08007E259B /* WebArchiveOperationError.swift in Sources */,
 				4535BE162B348BF100A8B62F /* ReviewShareShareableView.swift in Sources */,
 				45F88B102860BA8800C8027F /* Array+ResourceModel.swift in Sources */,
-				D4960CDE2D2E0BCD0090B114 /* LanguageDownloadIconState.swift in Sources */,
 				45C0FAE12A8A7CFB009A7E71 /* PullToRefreshScrollView.swift in Sources */,
 				45325F26285CF8B40078D932 /* VideoViewRepresentable.swift in Sources */,
 				45FA155E2B48BAC4005F986D /* AppLottieBarItem.swift in Sources */,
 				4534F9242AE99EF700A7A071 /* LessonEvaluationFeatureDataLayerDependencies.swift in Sources */,
 				45A8BE092ACC9FD5007A1EBB /* LessonsFeatureDiContainer.swift in Sources */,
+				4558B4812D5E79E100B0E9E2 /* DownloadableLanguageItemView.swift in Sources */,
+				4558B4822D5E79E100B0E9E2 /* LanguageDownloadIconState.swift in Sources */,
+				4558B4832D5E79E100B0E9E2 /* LanguageDownloadIcon.swift in Sources */,
 				45AF07142B0663FD000EACF2 /* LocaleLanguageScriptName.swift in Sources */,
 				D4960CC22CBDE40B0090B114 /* GetLessonListItemProgressRepository.swift in Sources */,
 				4534F9402AE9B65900A7A071 /* CancelLessonEvaluationUseCase.swift in Sources */,
@@ -14374,7 +14390,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 6.3.7;
+				MARKETING_VERSION = 6.3.8;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -14576,7 +14592,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 6.3.7;
+				MARKETING_VERSION = 6.3.8;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools.beta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -14777,7 +14793,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 6.3.7;
+				MARKETING_VERSION = 6.3.8;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools.beta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -14978,7 +14994,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 6.3.7;
+				MARKETING_VERSION = 6.3.8;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -15215,7 +15231,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 6.3.7;
+				MARKETING_VERSION = 6.3.8;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DRELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
