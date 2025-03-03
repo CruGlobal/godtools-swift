@@ -7,11 +7,14 @@
 //
 
 import Foundation
+import Combine
 
 class ProgressTimer {
     
     private static let intervalRatePerSecond: TimeInterval = 60
     private static let interval: TimeInterval = 1 / ProgressTimer.intervalRatePerSecond
+    
+    private let currentProgressSubject: CurrentValueSubject<Double, Never> = CurrentValueSubject(0)
     
     private var progressTimer: Timer?
     private var maxIntervalCount: Double = 0
@@ -103,6 +106,18 @@ class ProgressTimer {
         )
     }
     
+    func startPublisher(lengthSeconds: TimeInterval) -> AnyPublisher<Double, Never> {
+        
+        start(lengthSeconds: lengthSeconds) { [weak self] (progress: Double) in
+            self?.currentProgressSubject.send(progress)
+        } completed: { [weak self] in
+            self?.currentProgressSubject.send(completion: .finished)
+        }
+        
+        return currentProgressSubject
+            .eraseToAnyPublisher()
+    }
+    
     func pause(progress: Double?) {
         
         isPaused = true
@@ -153,7 +168,7 @@ class ProgressTimer {
             progress = 1
             
             progressCompletedClosure?()
-                
+                        
             stop()
             
             return
