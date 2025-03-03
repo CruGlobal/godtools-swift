@@ -38,18 +38,9 @@ class DownloadedLanguagesRepository {
         return cache.getDownloadedLanguagePublisher(languageId: languageId)
     }
     
-    func markAllDownloadsCompletedPublisher() {
-        cache.markAllDownloadsCompleted()
-    }
-    
     func storeDownloadedLanguage(languageId: String, downloadComplete: Bool) {
         
-        storeDownloadedLanguages(languageIds: [languageId], downloadComplete: downloadComplete)
-    }
-    
-    func storeDownloadedLanguages(languageIds: [String], downloadComplete: Bool) {
-        
-        cache.storeDownloadedLanguages(languageIds: languageIds, downloadComplete: downloadComplete)
+        cache.storeDownloadedLanguage(languageId: languageId, downloadComplete: downloadComplete)
     }
     
     func storeDownloadedLanguagePublisher(languageId: String, downloadComplete: Bool) -> AnyPublisher<DownloadedLanguageDataModel, Error> {
