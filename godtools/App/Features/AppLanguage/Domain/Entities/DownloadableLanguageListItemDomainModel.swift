@@ -11,7 +11,6 @@ import Foundation
 struct DownloadableLanguageListItemDomainModel: Equatable {
     
     let languageId: String
-    let languageCode: BCP47LanguageIdentifier
     let languageNameInOwnLanguage: String
     let languageNameInAppLanguage: String
     let toolsAvailableText: String
@@ -24,7 +23,6 @@ extension DownloadableLanguageListItemDomainModel {
         
         return DownloadableLanguageListItemDomainModel(
             languageId: languageId,
-            languageCode: languageCode,
             languageNameInOwnLanguage: languageNameInOwnLanguage,
             languageNameInAppLanguage: languageNameInAppLanguage,
             toolsAvailableText: toolsAvailableText,
