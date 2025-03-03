@@ -11,7 +11,6 @@ import Foundation
 enum DownloadableLanguageDownloadState {
     case downloaded
     case downloading(progress: Double)
-    case failed
     case notDownloaded
 }
 

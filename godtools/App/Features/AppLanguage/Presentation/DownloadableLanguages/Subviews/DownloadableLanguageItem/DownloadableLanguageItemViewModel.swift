@@ -88,8 +88,6 @@ class DownloadableLanguageItemViewModel: ObservableObject {
                     iconState = .downloaded
                 case .downloading(let progress):
                     iconState = .downloading(progress: progress)
-                case .failed:
-                    iconState = .notDownloaded
                 case .notDownloaded:
                     iconState = .notDownloaded
                 }
@@ -287,9 +285,6 @@ extension DownloadableLanguageItemViewModel {
             }
             
         case .downloading( _):
-            break
-            
-        case .failed:
             break
             
         case .notDownloaded:
