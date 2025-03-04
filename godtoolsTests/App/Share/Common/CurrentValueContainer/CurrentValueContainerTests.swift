@@ -44,9 +44,22 @@ class CurrentValueContainerTests: XCTestCase {
         
         myBoolValueContainer.sendValue(id: id, value: true)
         
-        XCTAssertTrue(myBoolValueContainer.getValue(id: id) == true, "Value should be true.")
+        XCTAssertTrue(myBoolValueContainer.getValue(id: MyBool.firstValue.id) == true, "Value should be true.")
         
         myBoolValueContainer.remove(id: id)
+        
+        XCTAssertNil(myBoolValueContainer.getValue(id: id), "Value should be nil.")
+    }
+    
+    func testCurrentValueIsNilWhenRemovingValue() {
+        
+        let id: String = MyBool.firstValue.id
+        
+        myBoolValueContainer.sendValue(id: id, value: true)
+        
+        XCTAssertTrue(myBoolValueContainer.getValue(id: id) == true, "Value should be true.")
+        
+        myBoolValueContainer.removeValue(id: id)
         
         XCTAssertNil(myBoolValueContainer.getValue(id: id), "Value should be nil.")
     }

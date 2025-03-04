@@ -189,8 +189,15 @@ extension DownloadableLanguageItemViewModel {
             .sink { completion in
                 
                 Self.languageDownloadProgress.sendCompletion(id: languageId, completion: completion)
-                Self.languageDownloadProgress.remove(id: languageId)
+                Self.languageDownloadProgress.removeValue(id: languageId)
                 Self.languageDownloads[languageId] = nil
+                
+                switch completion {
+                case .finished:
+                    Self.languageDownloadProgress.remove(id: languageId)
+                case .failure(_):
+                    break
+                }
                 
             } receiveValue: { (progress: Double) in
                 

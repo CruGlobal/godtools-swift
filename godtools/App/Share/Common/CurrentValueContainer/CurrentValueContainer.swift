@@ -33,6 +33,14 @@ class CurrentValueContainer<Output, Failure> where Failure : Error {
         return getCurrentValueSubject(id: id).value
     }
     
+    func setValue(id: String, value: Output?) {
+        getCurrentValueSubject(id: id).value = value
+    }
+    
+    func removeValue(id: String) {
+        getCurrentValueSubject(id: id).value = nil
+    }
+    
     func sendValue(id: String, value: Output?) {
         getCurrentValueSubject(id: id).send(value)
     }
