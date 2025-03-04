@@ -16,6 +16,7 @@ class DownloadableLanguageItemViewModel: ObservableObject {
     private static let endMarkedForRemovalAfterSeconds: TimeInterval = 3
     
     private static var languageDownloadProgress: [LanguageId: CurrentValueSubject<Double?, Error>] = Dictionary()
+    private static var languageDownloadAnimatedProgress: [LanguageId: AnimateDownloadProgress] = Dictionary()
     private static var isMarkedForRemoval: [LanguageId: CurrentValueSubject<Bool, Never>] = Dictionary()
     private static var resetIsMarkedForRemovalTimers: [LanguageId: SwiftUITimer] = Dictionary()
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
@@ -192,19 +193,23 @@ extension DownloadableLanguageItemViewModel {
     
     private static func downloadLanguageInBackground(downloadToolLanguageUseCase: DownloadToolLanguageUseCase, languageId: String, flowDelegate: FlowDelegate?) {
                    
-        Self.languageDownloadProgress[languageId]?.send(0)
+        let animateDownloadProgress = AnimateDownloadProgress()
         
-        downloadToolLanguageUseCase
-            .downloadToolLanguage(languageId: languageId)
-            .sink(receiveCompletion: { completion in
+        Self.languageDownloadProgress[languageId]?.send(0)
+        Self.languageDownloadAnimatedProgress[languageId] = animateDownloadProgress
+        
+        animateDownloadProgress
+            .start(downloadProgressPublisher: downloadToolLanguageUseCase.downloadToolLanguage(languageId: languageId))
+            .sink { completion in
                 
                 Self.languageDownloadProgress[languageId]?.send(completion: completion)
                 Self.languageDownloadProgress[languageId] = nil
+                Self.languageDownloadAnimatedProgress[languageId] = nil
                 
-            }, receiveValue: { (progress: Double) in
+            } receiveValue: { (progress: Double) in
                 
                 Self.languageDownloadProgress[languageId]?.send(progress)
-            })
+            }
             .store(in: &backgroundCancellables)
     }
 }

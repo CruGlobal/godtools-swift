@@ -570,6 +570,7 @@
 		456AC1912B8CCA6100169C11 /* TrackShareShareableTap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456AC1902B8CCA6100169C11 /* TrackShareShareableTap.swift */; };
 		456AC1982B8CE89E00169C11 /* ToolSettingsObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456AC1972B8CE89E00169C11 /* ToolSettingsObserver.swift */; };
 		456AC19E2B8CEE6200169C11 /* ToolSettingsLanguages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456AC19D2B8CEE6200169C11 /* ToolSettingsLanguages.swift */; };
+		456B95E22D774B2C008BC455 /* AnimateDownloadProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456B95E12D774B27008BC455 /* AnimateDownloadProgress.swift */; };
 		456BB02427C583650087CCA4 /* MobileContentTextLabelAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456BB02327C583650087CCA4 /* MobileContentTextLabelAttributes.swift */; };
 		456BB02927C588E80087CCA4 /* MobileContentHeadingViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456BB02627C588E80087CCA4 /* MobileContentHeadingViewModelType.swift */; };
 		456BB02A27C588E80087CCA4 /* MobileContentHeadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456BB02727C588E80087CCA4 /* MobileContentHeadingView.swift */; };
@@ -2266,6 +2267,7 @@
 		456AC1902B8CCA6100169C11 /* TrackShareShareableTap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackShareShareableTap.swift; sourceTree = "<group>"; };
 		456AC1972B8CE89E00169C11 /* ToolSettingsObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolSettingsObserver.swift; sourceTree = "<group>"; };
 		456AC19D2B8CEE6200169C11 /* ToolSettingsLanguages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolSettingsLanguages.swift; sourceTree = "<group>"; };
+		456B95E12D774B27008BC455 /* AnimateDownloadProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimateDownloadProgress.swift; sourceTree = "<group>"; };
 		456BB02327C583650087CCA4 /* MobileContentTextLabelAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentTextLabelAttributes.swift; sourceTree = "<group>"; };
 		456BB02627C588E80087CCA4 /* MobileContentHeadingViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentHeadingViewModelType.swift; sourceTree = "<group>"; };
 		456BB02727C588E80087CCA4 /* MobileContentHeadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentHeadingView.swift; sourceTree = "<group>"; };
@@ -6516,6 +6518,14 @@
 			path = Observer;
 			sourceTree = "<group>";
 		};
+		456B95E02D774B21008BC455 /* AnimateDownloadProgress */ = {
+			isa = PBXGroup;
+			children = (
+				456B95E12D774B27008BC455 /* AnimateDownloadProgress.swift */,
+			);
+			path = AnimateDownloadProgress;
+			sourceTree = "<group>";
+		};
 		456BB02227C583550087CCA4 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -8612,6 +8622,7 @@
 			isa = PBXGroup;
 			children = (
 				45E347972A49C0EC0014CCD1 /* AnimatableValue */,
+				456B95E02D774B21008BC455 /* AnimateDownloadProgress */,
 				4585E4B32B05738600223A9B /* BCP47LanguageIdentifier */,
 				45AD20AC25938EE500A096A0 /* FileCache */,
 				45AD20E8259391B000A096A0 /* Json */,
@@ -13238,6 +13249,7 @@
 				4552584A2D36F66E00FAC98D /* RemoteConfigDataModel.swift in Sources */,
 				45F71623290A12D70019B715 /* WebContentViewModel.swift in Sources */,
 				458B91AB2B7D5D6800785C6F /* FavoritesView.swift in Sources */,
+				456B95E22D774B2C008BC455 /* AnimateDownloadProgress.swift in Sources */,
 				452486E82B07C9AA007AD932 /* UserToolFiltersRepository.swift in Sources */,
 				453E00002B29F15100029402 /* GetToolSettingsParallelLanguageRepositoryInterface.swift in Sources */,
 				45558498269F2F9E00C3FF14 /* MobileContentRenderedPageContext.swift in Sources */,
