@@ -66,6 +66,35 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
         return pageModels.count
     }
     
+    func getNearestAncestorPage(page: Page) -> Page? {
+        
+        guard let index = getNearestAncestorPageIndex(page: page) else {
+            return nil
+        }
+        
+        return getPage(index: index)
+    }
+    
+    func getNearestAncestorPageIndex(page: Page) -> Int? {
+        
+        let pages: [Page] = getPages()
+        
+        var ancestor: Page? = page.parentPage
+        
+        while ancestor != nil {
+            
+            if let ancestorPageId = ancestor?.id,
+               let ancestorPageIndex = pages.firstIndex(where: { $0.id == ancestorPageId }) {
+                
+                return ancestorPageIndex
+            }
+            
+            ancestor = ancestor?.parentPage
+        }
+        
+        return nil
+    }
+    
     // MARK: - Events
     
     func pageDidReceiveEvent(eventId: EventId) -> ProcessedEventResult? {
@@ -178,14 +207,18 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
         navigateToPage(page: page, animated: animated)
     }
         
-    func navigateToPage(page: Page, animated: Bool) {
+    func navigateToPage(page: Page, animated: Bool, isBackNavigation: Bool = false) {
         
-        let navigationEvent: MobileContentPagesNavigationEvent = getPageNavigationEvent(page: page, animated: animated)
+        let navigationEvent: MobileContentPagesNavigationEvent = getPageNavigationEvent(
+            page: page,
+            animated: animated,
+            isBackNavigation: isBackNavigation
+        )
         
         sendPageNavigationEvent(navigationEvent: navigationEvent)
     }
     
-    func getPageNavigationEvent(page: Page, animated: Bool, reloadCollectionViewDataNeeded: Bool = false) -> MobileContentPagesNavigationEvent {
+    func getPageNavigationEvent(page: Page, animated: Bool, reloadCollectionViewDataNeeded: Bool = false, isBackNavigation: Bool = false) -> MobileContentPagesNavigationEvent {
                 
         let currentPages: [Page] = pageModels
                 
