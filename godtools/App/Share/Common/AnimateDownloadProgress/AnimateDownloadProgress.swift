@@ -12,7 +12,8 @@ import Combine
 class AnimateDownloadProgress {
     
     static let defaultAnimationInterval: TimeInterval = 0.2
-    static let initialProgressTarget: Double = 0.5
+    static let defaultAnimateProgressIncrement: TimeInterval = 0.1
+    static let initialProgressTarget: Double = 0.1
         
     private let timer: SwiftUITimer
     
@@ -51,7 +52,7 @@ class AnimateDownloadProgress {
             }
             
             if timerInvoked {
-                animatedProgress += 0.1
+                animatedProgress += AnimateDownloadProgress.defaultAnimateProgressIncrement
             }
             
             if animatedProgress > progressTarget {
