@@ -16,7 +16,7 @@ class DownloadableLanguageItemViewModel: ObservableObject {
     private static let endMarkedForRemovalAfterSeconds: TimeInterval = 3
     
     private static var languageDownloadProgress: [LanguageId: CurrentValueSubject<Double?, Error>] = Dictionary()
-    private static var languageDownloadAnimatedProgress: [LanguageId: AnimateDownloadProgress] = Dictionary()
+    private static var languageDownloads: [LanguageId: AnimateDownloadProgress] = Dictionary()
     private static var isMarkedForRemoval: [LanguageId: CurrentValueSubject<Bool, Never>] = Dictionary()
     private static var resetIsMarkedForRemovalTimers: [LanguageId: SwiftUITimer] = Dictionary()
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
@@ -193,18 +193,18 @@ extension DownloadableLanguageItemViewModel {
     
     private static func downloadLanguageInBackground(downloadToolLanguageUseCase: DownloadToolLanguageUseCase, languageId: String, flowDelegate: FlowDelegate?) {
                    
-        let animateDownloadProgress = AnimateDownloadProgress()
+        let languageDownloadWithAnimateDownloadProgress = AnimateDownloadProgress()
         
         Self.languageDownloadProgress[languageId]?.send(0)
-        Self.languageDownloadAnimatedProgress[languageId] = animateDownloadProgress
+        Self.languageDownloads[languageId] = languageDownloadWithAnimateDownloadProgress
         
-        animateDownloadProgress
+        languageDownloadWithAnimateDownloadProgress
             .start(downloadProgressPublisher: downloadToolLanguageUseCase.downloadToolLanguage(languageId: languageId))
             .sink { completion in
                 
                 Self.languageDownloadProgress[languageId]?.send(completion: completion)
                 Self.languageDownloadProgress[languageId] = nil
-                Self.languageDownloadAnimatedProgress[languageId] = nil
+                Self.languageDownloads[languageId] = nil
                 
             } receiveValue: { (progress: Double) in
                 
