@@ -70,7 +70,7 @@ class LanguageSettingsFlow: Flow, ChooseAppLanguageNavigationFlow {
         case .backTappedFromDownloadedLanguages:
             navigationController.popViewController(animated: true)
             
-        case .showLanguageDownloadErrorAlert(let error):
+        case .languageDownloadFailedFromDownloadedLanguages(let error):
             presentError(appLanguage: appLanguage, error: error)
             
         default:
