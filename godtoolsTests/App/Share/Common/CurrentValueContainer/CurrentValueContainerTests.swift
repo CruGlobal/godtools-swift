@@ -15,88 +15,231 @@ class CurrentValueContainerTests: XCTestCase {
     
     enum MyBool: String {
         case firstValue = "0"
+        case secondValue = "1"
         
         var id: String {
             return rawValue
         }
     }
     
-    private var myBoolValueContainer: CurrentValueContainer<Bool, Never> = CurrentValueContainer()
+    private var myBoolValueContainer: CurrentValueContainer<Bool, Error> = CurrentValueContainer()
     private var cancellables: Set<AnyCancellable> = Set()
     
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        myBoolValueContainer.removeAll()
+        myBoolValueContainer.unregisterAllObjects()
     }
 
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
     
-    func testCurrentValueIsNilOnFirstAccess() {
-        
-        XCTAssertNil(myBoolValueContainer.getValue(id: MyBool.firstValue.id), "Value should be nil on first access.")
-    }
-    
-    func testCurrentValueIsNilAfterRemoval() {
+    func testRegisteringObjectExists() {
         
         let id: String = MyBool.firstValue.id
         
-        myBoolValueContainer.sendValue(id: id, value: true)
+        XCTAssertNil(myBoolValueContainer.object(id: id), "Should be nil since object isn't registered.")
         
-        XCTAssertTrue(myBoolValueContainer.getValue(id: MyBool.firstValue.id) == true, "Value should be true.")
+        _ = myBoolValueContainer.registerObject(id: id)
         
-        myBoolValueContainer.remove(id: id)
-        
-        XCTAssertNil(myBoolValueContainer.getValue(id: id), "Value should be nil.")
+        XCTAssertNotNil(myBoolValueContainer.object(id: id), "Should not be nil since object is now registered.")
     }
     
-    func testCurrentValueIsNilWhenRemovingValue() {
+    func testUnregisteringObjectIsRemoved() {
         
         let id: String = MyBool.firstValue.id
         
-        myBoolValueContainer.sendValue(id: id, value: true)
+        _ = myBoolValueContainer.registerObject(id: id)
         
-        XCTAssertTrue(myBoolValueContainer.getValue(id: id) == true, "Value should be true.")
+        XCTAssertNotNil(myBoolValueContainer.object(id: id), "Should not be nil since object is now registered.")
         
-        myBoolValueContainer.removeValue(id: id)
+        myBoolValueContainer.unregisterObject(id: id)
         
-        XCTAssertNil(myBoolValueContainer.getValue(id: id), "Value should be nil.")
+        XCTAssertNil(myBoolValueContainer.object(id: id), "Should be nil since object was unregistered.")
     }
     
-    func testCurrentValueIsTrueWhenSendingAValueOfTrue() {
+    func testUnregisteringAllObjectsThatAllObjectsAreRemoved() {
         
-        myBoolValueContainer.sendValue(id: MyBool.firstValue.id, value: true)
+        _ = myBoolValueContainer.registerObject(id: MyBool.firstValue.id)
+        _ = myBoolValueContainer.registerObject(id: MyBool.secondValue.id)
         
-        XCTAssertTrue(myBoolValueContainer.getValue(id: MyBool.firstValue.id) == true, "Value should be true.")
+        XCTAssertNotNil(myBoolValueContainer.object(id: MyBool.firstValue.id), "Should not be nil since object is now registered.")
+        XCTAssertNotNil(myBoolValueContainer.object(id: MyBool.secondValue.id), "Should not be nil since object is now registered.")
+        
+        myBoolValueContainer.unregisterAllObjects()
+        
+        XCTAssertNil(myBoolValueContainer.object(id: MyBool.firstValue.id), "Should be nil since all objects were unregistered.")
+        XCTAssertNil(myBoolValueContainer.object(id: MyBool.secondValue.id), "Should be nil since all objects were unregistered.")
     }
     
-    func testCurrentValueIsFalseOnSubsequentFetches() {
+    func testThatInitialValueIsNilWhenFirstRegisteringAnObject() {
+        
+        let object: CurrentValueObject<Bool, Error> = myBoolValueContainer.registerObject(id: MyBool.firstValue.id)
+        
+        XCTAssertNil(object.value, "Value should be nil since object was just registered.")
+    }
+    
+    func testThatValueOfObjectIsSet() {
+        
+        let object: CurrentValueObject<Bool, Error> = myBoolValueContainer.registerObject(id: MyBool.firstValue.id)
+        
+        object.setValue(value: true)
+        
+        XCTAssertTrue(object.value == true, "Value should be true.")
+    }
+    
+    func testThatValueOfObjectIsRemoved() {
+        
+        let object: CurrentValueObject<Bool, Error> = myBoolValueContainer.registerObject(id: MyBool.firstValue.id)
+        
+        object.setValue(value: false)
+        
+        XCTAssertTrue(object.value == false, "Value should be false.")
+        
+        object.removeValue()
+        
+        XCTAssertTrue(object.value == nil, "Value should be nil.")
+    }
+    
+    func testSendingAValueIsReceivedByThePublisher() {
         
         let id: String = MyBool.firstValue.id
         
-        myBoolValueContainer.sendValue(id: id, value: false)
+        let object: CurrentValueObject<Bool, Error> = myBoolValueContainer.registerObject(id: id)
         
+        XCTAssertTrue(object.value == nil, "Value should be nil.")
+        
+        object.setValue(value: false)
+        
+        XCTAssertTrue(object.value == false, "Value should be false.")
+
         let publisherExpectation = expectation(description: "")
         
-        var publisherValueRef: Bool?
+        var publisherValueRef_1: Bool?
+        var publisherValueRef_2: Bool?
+        var receiveCount: Int = 0
         
-        myBoolValueContainer
-            .getPublisher(id: id)
-            .sink { _ in
+        object
+            .publisher.dropFirst()
+            .sink(receiveCompletion: { completion in
                 
-            } receiveValue: { (value: Bool?) in
                 
-                publisherValueRef = value
+            }, receiveValue: { (value: Bool?) in
                 
-                publisherExpectation.fulfill()
-            }
+                receiveCount += 1
+                
+                if receiveCount == 1 {
+                    publisherValueRef_1 = value
+                }
+                else if receiveCount == 2 {
+                    publisherValueRef_2 = value
+                    publisherExpectation.fulfill()
+                }
+            })
             .store(in: &cancellables)
+
+        object.sendValue(value: true)
+        object.sendValue(value: false)
         
         wait(for: [publisherExpectation], timeout: 1)
         
-        XCTAssertTrue(myBoolValueContainer.getValue(id: MyBool.firstValue.id) == false, "Value should be false.")
-        XCTAssertTrue(myBoolValueContainer.getCurrentValueSubject(id: MyBool.firstValue.id).value == false, "Value should be false.")
-        XCTAssertTrue(publisherValueRef == false, "Value should be false on publisher sink.")
+        XCTAssertTrue(publisherValueRef_1 == true, "Value should be true on publisher sink.")
+        XCTAssertTrue(publisherValueRef_2 == false, "Value should be false on publisher sink.")
+    }
+    
+    func testSendingCompletionFinishedIsReceivedByThePublisher() {
+        
+        let id: String = MyBool.firstValue.id
+        
+        let object: CurrentValueObject<Bool, Error> = myBoolValueContainer.registerObject(id: id)
+        
+        XCTAssertTrue(object.value == nil, "Value should be nil.")
+        
+        object.setValue(value: false)
+        
+        XCTAssertTrue(object.value == false, "Value should be false.")
+
+        let publisherExpectation = expectation(description: "")
+        
+        var completionRef: Subscribers.Completion<Error>?
+        
+        object
+            .publisher
+            .sink(receiveCompletion: { completion in
+                
+                completionRef = completion
+                
+                publisherExpectation.fulfill()
+                
+            }, receiveValue: { (value: Bool?) in
+                
+            })
+            .store(in: &cancellables)
+        
+        object.sendCompletion(completion: .finished)
+        
+        wait(for: [publisherExpectation], timeout: 1)
+        
+        let isFinished: Bool
+        
+        switch completionRef {
+        case .finished:
+            isFinished = true
+        case .failure( _):
+            isFinished = false
+        case .none:
+            isFinished = false
+        }
+        
+        XCTAssertTrue(isFinished == true, "Completion to be finished.")
+    }
+    
+    func testSendingCompletionErrorIsReceivedByThePublisher() {
+        
+        let id: String = MyBool.firstValue.id
+        
+        let object: CurrentValueObject<Bool, Error> = myBoolValueContainer.registerObject(id: id)
+        
+        XCTAssertTrue(object.value == nil, "Value should be nil.")
+        
+        object.setValue(value: false)
+        
+        XCTAssertTrue(object.value == false, "Value should be false.")
+
+        let publisherExpectation = expectation(description: "")
+        
+        var completionRef: Subscribers.Completion<Error>?
+        
+        object
+            .publisher
+            .sink(receiveCompletion: { completion in
+                
+                completionRef = completion
+                
+                publisherExpectation.fulfill()
+                
+            }, receiveValue: { (value: Bool?) in
+                
+            })
+            .store(in: &cancellables)
+        
+        let objectError: Error = NSError.errorWithDescription(description: "Test sending error to object.")
+        
+        object.sendCompletion(completion: .failure(objectError))
+        
+        wait(for: [publisherExpectation], timeout: 1)
+        
+        let errorRef: Error?
+        
+        switch completionRef {
+        case .finished:
+            errorRef = nil
+        case .failure(let value):
+            errorRef = value
+        case .none:
+            errorRef = nil
+        }
+        
+        XCTAssertNotNil(errorRef, "Error should not be nil.")
     }
 }

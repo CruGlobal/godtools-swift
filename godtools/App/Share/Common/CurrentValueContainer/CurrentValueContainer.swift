@@ -11,49 +11,36 @@ import Combine
 
 class CurrentValueContainer<Output, Failure> where Failure : Error {
     
-    private var currentValueSubjects: [String: CurrentValueSubject<Output?, Failure>] = Dictionary()
+    typealias Id = String
     
-    func getCurrentValueSubject(id: String) -> CurrentValueSubject<Output?, Failure> {
+    private var registeredObjects: [Id: CurrentValueObject<Output, Failure>] = Dictionary()
+    
+    func registerObject(id: Id) -> CurrentValueObject<Output, Failure> {
                 
-        if let existing = currentValueSubjects[id] {
+        if let existing = registeredObjects[id] {
             return existing
         }
         
-        let new = CurrentValueSubject<Output?, Failure>(nil)
-        currentValueSubjects[id] = new
+        let new = CurrentValueObject<Output, Failure>(id: id, currentValueSubject: CurrentValueSubject(nil))
+        registeredObjects[id] = new
         
         return new
     }
     
-    func getPublisher(id: String) -> AnyPublisher<Output?, Failure> {
-        return getCurrentValueSubject(id: id).eraseToAnyPublisher()
+    func object(id: Id) -> CurrentValueObject<Output, Failure>? {
+        
+        guard let object = registeredObjects[id] else {
+            return nil
+        }
+        
+        return object
     }
     
-    func getValue(id: String) -> Output? {
-        return getCurrentValueSubject(id: id).value
+    func unregisterObject(id: Id) {
+        registeredObjects[id] = nil
     }
     
-    func setValue(id: String, value: Output?) {
-        getCurrentValueSubject(id: id).value = value
-    }
-    
-    func removeValue(id: String) {
-        getCurrentValueSubject(id: id).value = nil
-    }
-    
-    func sendValue(id: String, value: Output?) {
-        getCurrentValueSubject(id: id).send(value)
-    }
-    
-    func sendCompletion(id: String, completion: Subscribers.Completion<Failure>) {
-        getCurrentValueSubject(id: id).send(completion: completion)
-    }
-    
-    func remove(id: String) {
-        currentValueSubjects[id] = nil
-    }
-    
-    func removeAll() {
-        currentValueSubjects.removeAll()
+    func unregisterAllObjects() {
+        registeredObjects.removeAll()
     }
 }

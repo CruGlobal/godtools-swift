@@ -15,14 +15,16 @@ class DownloadableLanguageItemViewModel: ObservableObject {
     
     private static let endMarkedForRemovalAfterSeconds: TimeInterval = 3
     
-    private static var languageDownloadProgress: CurrentValueContainer<Double, Error> = CurrentValueContainer()
+    private static var languageDownloadProgressValues: CurrentValueContainer<Double, Error> = CurrentValueContainer()
     private static var languageDownloads: [LanguageId: AnimateDownloadProgress] = Dictionary()
-    private static var isMarkedForRemoval: CurrentValueContainer<Bool, Never> = CurrentValueContainer()
+    private static var isMarkedForRemovalValues: CurrentValueContainer<Bool, Never> = CurrentValueContainer()
     private static var resetIsMarkedForRemovalTimers: [LanguageId: SwiftUITimer] = Dictionary()
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
     
     private let downloadToolLanguageUseCase: DownloadToolLanguageUseCase
     private let removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase
+    private let languageDownloadProgressObject: CurrentValueObject<Double, Error>
+    private let isMarkedForRemovalObject: CurrentValueObject<Bool, Never>
     
     private var cancellables: Set<AnyCancellable> = Set()
     
@@ -42,8 +44,11 @@ class DownloadableLanguageItemViewModel: ObservableObject {
         self.removeDownloadedToolLanguageUseCase = removeDownloadedToolLanguageUseCase
         
         let languageId: String = downloadableLanguage.languageId
+        
+        languageDownloadProgressObject = Self.languageDownloadProgressValues.registerObject(id: languageId)
+        isMarkedForRemovalObject = Self.isMarkedForRemovalValues.registerObject(id: languageId)
                 
-        if let currentDownloadProgress = Self.languageDownloadProgress.getValue(id: languageId) {
+        if let currentDownloadProgress = languageDownloadProgressObject.value {
             
             downloadState = .downloading(progress: currentDownloadProgress)
         }
@@ -58,7 +63,7 @@ class DownloadableLanguageItemViewModel: ObservableObject {
             }
         }
         
-        isMarkedForRemoval = Self.isMarkedForRemoval.getValue(id: languageId) ?? false
+        isMarkedForRemoval = isMarkedForRemovalObject.value ?? false
         
         sinkIconState()
         sinkLanguageDownloadProgress()
@@ -103,8 +108,8 @@ class DownloadableLanguageItemViewModel: ObservableObject {
     
     private func sinkLanguageDownloadProgress() {
         
-        Self.languageDownloadProgress
-            .getPublisher(id: languageId)
+        languageDownloadProgressObject
+            .publisher
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { [weak self] completion in
                 
@@ -129,8 +134,8 @@ class DownloadableLanguageItemViewModel: ObservableObject {
     
     private func sinkIsMarkedForRemoval() {
         
-        Self.isMarkedForRemoval
-            .getPublisher(id: languageId)
+        isMarkedForRemovalObject
+            .publisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (isMarkedForRemoval: Bool?) in
                 self?.isMarkedForRemoval = isMarkedForRemoval ?? false
@@ -174,34 +179,34 @@ extension DownloadableLanguageItemViewModel {
     }
     
     private static func isDownloadingLanguage(languageId: String) -> Bool {
-        return Self.languageDownloadProgress.getValue(id: languageId) != nil
+        return Self.languageDownloadProgressValues.object(id: languageId)?.value != nil
     }
     
     private static func downloadLanguageInBackground(downloadToolLanguageUseCase: DownloadToolLanguageUseCase, languageId: String, flowDelegate: FlowDelegate?) {
                    
         let languageDownloadWithAnimateDownloadProgress = AnimateDownloadProgress()
         
-        Self.languageDownloadProgress.sendValue(id: languageId, value: 0)
+        Self.languageDownloadProgressValues.object(id: languageId)?.sendValue(value: 0)
         Self.languageDownloads[languageId] = languageDownloadWithAnimateDownloadProgress
         
         languageDownloadWithAnimateDownloadProgress
             .start(downloadProgressPublisher: downloadToolLanguageUseCase.downloadToolLanguage(languageId: languageId))
             .sink { completion in
                 
-                Self.languageDownloadProgress.sendCompletion(id: languageId, completion: completion)
-                Self.languageDownloadProgress.removeValue(id: languageId)
+                Self.languageDownloadProgressValues.object(id: languageId)?.sendCompletion(completion: completion)
+                Self.languageDownloadProgressValues.object(id: languageId)?.setValue(value: nil)
                 Self.languageDownloads[languageId] = nil
                 
                 switch completion {
                 case .finished:
-                    Self.languageDownloadProgress.remove(id: languageId)
+                    Self.languageDownloadProgressValues.unregisterObject(id: languageId)
                 case .failure(_):
                     break
                 }
                 
             } receiveValue: { (progress: Double) in
                 
-                Self.languageDownloadProgress.sendValue(id: languageId, value: progress)
+                Self.languageDownloadProgressValues.object(id: languageId)?.sendValue(value: progress)
             }
             .store(in: &backgroundCancellables)
     }
@@ -227,13 +232,13 @@ extension DownloadableLanguageItemViewModel {
         )
         
         Self.resetIsMarkedForRemovalTimers[languageId] = timer
-        Self.isMarkedForRemoval.sendValue(id: languageId, value: true)
+        Self.isMarkedForRemovalValues.object(id: languageId)?.sendValue(value: true)
         
         timer.startPublisher()
             .sink { _ in
                 
                 Self.stopResetIsMarkedForRemovalTimer(languageId: languageId)
-                Self.isMarkedForRemoval.sendValue(id: languageId, value: false)
+                Self.isMarkedForRemovalValues.object(id: languageId)?.sendValue(value: false)
             }
             .store(in: &Self.backgroundCancellables)
     }
@@ -244,7 +249,7 @@ extension DownloadableLanguageItemViewModel {
     }
     
     static func removeAllResetMarkedForRemovalTimers() {
-        Self.isMarkedForRemoval.removeAll()
+        Self.isMarkedForRemovalValues.unregisterAllObjects()
         Self.resetIsMarkedForRemovalTimers.removeAll()
     }
 }
