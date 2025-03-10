@@ -13,18 +13,16 @@ class DownloadableLanguageItemViewModel: ObservableObject {
     
     typealias LanguageId = String
     
+    private static let languageDownloadProgressValues: CurrentValueContainer<Double, Error> = CurrentValueContainer()
+    private static let isMarkedForRemovalValues: CurrentValueContainer<Bool, Never> = CurrentValueContainer()
     private static let endMarkedForRemovalAfterSeconds: TimeInterval = 3
     
-    private static var languageDownloadProgressValues: CurrentValueContainer<Double, Error> = CurrentValueContainer()
     private static var languageDownloads: [LanguageId: AnimateDownloadProgress] = Dictionary()
-    private static var isMarkedForRemovalValues: CurrentValueContainer<Bool, Never> = CurrentValueContainer()
     private static var resetIsMarkedForRemovalTimers: [LanguageId: SwiftUITimer] = Dictionary()
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
     
     private let downloadToolLanguageUseCase: DownloadToolLanguageUseCase
     private let removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase
-    private let languageDownloadProgressObject: CurrentValueObject<Double, Error>
-    private let isMarkedForRemovalObject: CurrentValueObject<Bool, Never>
     
     private var cancellables: Set<AnyCancellable> = Set()
     
@@ -32,8 +30,8 @@ class DownloadableLanguageItemViewModel: ObservableObject {
     
     let downloadableLanguage: DownloadableLanguageListItemDomainModel
     
-    @Published private(set) var downloadState: DownloadableLanguageDownloadState
-    @Published private(set) var isMarkedForRemoval: Bool
+    @Published private(set) var downloadState: DownloadableLanguageDownloadState = .notDownloaded
+    @Published private(set) var isMarkedForRemoval: Bool = false
     @Published private(set) var iconState: LanguageDownloadIconState = .notDownloaded
     
     init(flowDelegate: FlowDelegate, downloadableLanguage: DownloadableLanguageListItemDomainModel, downloadToolLanguageUseCase: DownloadToolLanguageUseCase, removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase) {
@@ -44,11 +42,8 @@ class DownloadableLanguageItemViewModel: ObservableObject {
         self.removeDownloadedToolLanguageUseCase = removeDownloadedToolLanguageUseCase
         
         let languageId: String = downloadableLanguage.languageId
-        
-        languageDownloadProgressObject = Self.languageDownloadProgressValues.registerObject(id: languageId)
-        isMarkedForRemovalObject = Self.isMarkedForRemovalValues.registerObject(id: languageId)
-                
-        if let currentDownloadProgress = languageDownloadProgressObject.value {
+                        
+        if let currentDownloadProgress = Self.languageDownloadProgressValues.object(id: languageId)?.value {
             
             downloadState = .downloading(progress: currentDownloadProgress)
         }
@@ -62,9 +57,7 @@ class DownloadableLanguageItemViewModel: ObservableObject {
                 downloadState = .downloaded
             }
         }
-        
-        isMarkedForRemoval = isMarkedForRemovalObject.value ?? false
-        
+                
         sinkIconState()
         sinkLanguageDownloadProgress()
         sinkIsMarkedForRemoval()
@@ -108,7 +101,7 @@ class DownloadableLanguageItemViewModel: ObservableObject {
     
     private func sinkLanguageDownloadProgress() {
         
-        languageDownloadProgressObject
+        Self.languageDownloadProgressValues.registerObject(id: languageId)
             .publisher
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { [weak self] completion in
@@ -134,7 +127,7 @@ class DownloadableLanguageItemViewModel: ObservableObject {
     
     private func sinkIsMarkedForRemoval() {
         
-        isMarkedForRemovalObject
+        Self.isMarkedForRemovalValues.registerObject(id: languageId)
             .publisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (isMarkedForRemoval: Bool?) in
