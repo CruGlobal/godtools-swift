@@ -215,6 +215,7 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
         
         let currentPage: Page? = getCurrentPage()
         let parentPage: Page? = currentPage?.parentPage ?? getPage(index: currentPageNumber - 1)
+        let parentPageParams: [String: String]? = currentPage?.parentPageParams
         
         guard let parentPage = parentPage else {
             return
@@ -223,7 +224,7 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
         navigateToPage(
             page: parentPage,
             animated: true,
-            parentPageParams: currentPage?.parentPageParams,
+            parentPageParams: parentPageParams,
             isBackNavigation: true
         )
     }
@@ -289,7 +290,8 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
                 animated: animated,
                 reloadCollectionViewDataNeeded: reloadCollectionViewDataNeeded,
                 insertPages: insertPages,
-                deletePages: nil
+                deletePages: nil,
+                reloadPages: nil
             ),
             setPages: setPages,
             pagePositions: nil,
@@ -299,7 +301,7 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
     
     // MARK: - Page Life Cycle
     
-    func pageWillAppear(page: Int) -> MobileContentView? {
+    func pageWillAppear(page: Int, pageParams: MobileContentPageWillAppearParams) -> MobileContentView? {
         
         return nil
     }
