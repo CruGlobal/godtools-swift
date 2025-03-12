@@ -71,7 +71,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentRendererViewModel {
         return []
     }
     
-    override func getPageNavigationEvent(page: Page, animated: Bool, reloadCollectionViewDataNeeded: Bool, isBackNavigation: Bool) -> MobileContentPagesNavigationEvent {
+    override func getPageNavigationEvent(page: Page, animated: Bool, reloadCollectionViewDataNeeded: Bool, parentPageParams: MobileContentParentPageParams?, isBackNavigation: Bool) -> MobileContentPagesNavigationEvent {
         
         let pages: [Page] = super.getPages()
         
@@ -171,7 +171,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentRendererViewModel {
             pageNavigation: pageNavigation,
             setPages: setPages,
             pagePositions: nil,
-            parentPageParams: MobileContentParentPageParams(page: page)
+            parentPageParams: parentPageParams
         )
         
         return navigationEvent
@@ -199,17 +199,7 @@ extension ChooseYourOwnAdventureViewModel {
     
     @objc func backTapped() {
         
-        guard currentPageNumber > 0 else {
-            return
-        }
-        
-        let parentPage: Page? = getCurrentPage()?.parentPage ?? super.getPage(index: currentPageNumber - 1)
-        
-        guard let parentPage = parentPage else {
-            return
-        }
-        
-        super.navigateToPage(page: parentPage, animated: true, isBackNavigation: true)
+        super.navigateToParentPage()
     }
     
     @objc func toolSettingsTapped() {
