@@ -562,7 +562,7 @@ extension PageNavigationCollectionView {
                         
             let didScroll: Bool = internalScrollToItemOnCollectionView(item: pageNavigation.page, animated: pageNavigation.animated)
             
-            if !didScroll {
+            if !didScroll && pageNavigation.animated == true {
                 assertionFailure("\n PageNavigationCollectionView: Failed to navigate.  Should the data be reloaded?  Try setting provided pageNavigation reloadCollectionViewDataNeeded to true.  \(pageNavigation)")
                 currentPageNavigation = nil
                 pageNavigationCompletedClosure = nil
