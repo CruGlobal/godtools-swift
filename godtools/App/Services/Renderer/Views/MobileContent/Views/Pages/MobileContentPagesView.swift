@@ -233,11 +233,7 @@ extension MobileContentPagesView: PageNavigationCollectionViewDelegate {
         
         let pageNumber: Int = indexPath.row
         
-        let pageParams = MobileContentPageWillAppearParams(
-            parentPageParams: currentNavigationEvent?.parentPageParams
-        )
-        
-        guard let pageView = viewModel.pageWillAppear(page: pageNumber, pageParams: pageParams) as? MobileContentPageView else {
+        guard let pageView = viewModel.pageWillAppear(page: pageNumber) as? MobileContentPageView else {
             assertionFailure("Provided MobileContentView should inherit from MobileContentPageView")
             return UICollectionViewCell()
         }

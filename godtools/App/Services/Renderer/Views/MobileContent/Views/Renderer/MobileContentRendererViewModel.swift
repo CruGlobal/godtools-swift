@@ -440,9 +440,9 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
     
     // MARK: - Page Life Cycle
     
-    override func pageWillAppear(page: Int, pageParams: MobileContentPageWillAppearParams) -> MobileContentView? {
+    override func pageWillAppear(page: Int) -> MobileContentView? {
                 
-        _ = super.pageWillAppear(page: page, pageParams: pageParams)
+        _ = super.pageWillAppear(page: page)
         
         guard let window = self.window, let safeArea = self.safeArea else {
             return nil
@@ -460,7 +460,6 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
             pageModel: pageModels[page],
             page: page,
             numberOfPages: pageModels.count,
-            parentPageParams: pageParams.parentPageParams,
             window: window,
             safeArea: safeArea,
             trainingTipsEnabled: trainingTipsEnabled,
