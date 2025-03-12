@@ -22,8 +22,7 @@ class MobileContentPageCollectionView: MobileContentPageView {
             viewModel: viewModel.pagesViewModel,
             navigationBar: nil,
             pageViewDelegate: nil,
-            initialPageIndex: viewModel.pagesViewModel.initialPageIndex,
-            loggingEnabled: false
+            initialPageIndex: nil
         )
         
         super.init(viewModel: viewModel, nibName: nil)
