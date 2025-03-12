@@ -17,6 +17,7 @@ struct PageNavigationCollectionViewNavigationModel {
     let reloadCollectionViewDataNeeded: Bool
     let insertPages: [Int]?
     let deletePages: [Int]?
+    let reloadPages: [Int]?
     
     var hasPagesToInsert: Bool {
         

@@ -86,13 +86,14 @@ class ChooseYourOwnAdventureViewModel: MobileContentRendererViewModel {
                 animated: false,
                 reloadCollectionViewDataNeeded: true,
                 insertPages: nil,
-                deletePages: nil
+                deletePages: nil,
+                reloadPages: nil
             )
             
             setPages = nil
         }
         else if let backToPageIndex = pages.firstIndex(of: page) {
-            
+                        
             // Backward Navigation - Page is in navigation stack
             
             let removeStartIndex: Int = backToPageIndex + 1
@@ -115,13 +116,14 @@ class ChooseYourOwnAdventureViewModel: MobileContentRendererViewModel {
                 animated: true,
                 reloadCollectionViewDataNeeded: false,
                 insertPages: nil,
-                deletePages: pageIndexesToRemove
+                deletePages: pageIndexesToRemove,
+                reloadPages: nil
             )
             
             setPages = pagesUpToBackToPage
         }
         else if isBackNavigation, let nearestAncestorPageIndex = super.getNearestAncestorPageIndex(page: page) {
-            
+                        
             // Backward Navigation - Page is NOT in navigation stack, but an ancestor page is in stack.  Add to top of ancestor page.
             
             let insertPageAtIndex: Int = nearestAncestorPageIndex + 1
@@ -144,7 +146,8 @@ class ChooseYourOwnAdventureViewModel: MobileContentRendererViewModel {
                 animated: true,
                 reloadCollectionViewDataNeeded: false,
                 insertPages: nil,
-                deletePages: pageIndexesToRemove
+                deletePages: pageIndexesToRemove,
+                reloadPages: [insertPageAtIndex]
             )
             
             setPages = Array(pages[0...nearestAncestorPageIndex]) + [page]
@@ -161,7 +164,8 @@ class ChooseYourOwnAdventureViewModel: MobileContentRendererViewModel {
                 animated: true,
                 reloadCollectionViewDataNeeded: false,
                 insertPages: [insertAtEndIndex],
-                deletePages: nil
+                deletePages: nil,
+                reloadPages: nil
             )
             
             setPages = pages + [page]
