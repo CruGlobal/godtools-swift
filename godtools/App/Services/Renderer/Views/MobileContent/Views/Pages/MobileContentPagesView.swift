@@ -106,7 +106,10 @@ class MobileContentPagesView: AppViewController {
                         
             weakSelf.pageNavigationView.scrollToPage(pageNavigation: navigationEvent.pageNavigation, completion: { (completedNavigation: PageNavigationCollectionViewNavigationCompleted) in
                                     
-                if let pagePositions = navigationEvent.pagePositions, let pageCell = completedNavigation.pageCell as? MobileContentPageCell, let pageView = pageCell.mobileContentView as? MobileContentPageView {
+                let pageCell: MobileContentPageCell? = completedNavigation.pageCell as? MobileContentPageCell
+                let pageView: MobileContentPageView? = pageCell?.mobileContentView as? MobileContentPageView
+                
+                if let pagePositions = navigationEvent.pagePositions, let pageView = pageView {
                     
                     pageView.setPositionStateForViewHierarchy(
                         positionState: pagePositions,
@@ -209,6 +212,11 @@ class MobileContentPagesView: AppViewController {
         
         viewModel.navigateToPage(pageIndex: pageIndex, animated: animated)
     }
+    
+    func navigateToPage(pageId: String, animated: Bool) {
+        
+        viewModel.navigateToPage(pageId: pageId, animated: animated)
+    }
 }
 
 // MARK: - PageNavigationCollectionViewDelegate
@@ -233,7 +241,11 @@ extension MobileContentPagesView: PageNavigationCollectionViewDelegate {
         
         let pageNumber: Int = indexPath.row
         
-        guard let pageView = viewModel.pageWillAppear(page: pageNumber) as? MobileContentPageView else {
+        let pageParams = MobileContentPageWillAppearParams(
+            parentPageParams: currentNavigationEvent?.parentPageParams
+        )
+        
+        guard let pageView = viewModel.pageWillAppear(page: pageNumber, pageParams: pageParams) as? MobileContentPageView else {
             assertionFailure("Provided MobileContentView should inherit from MobileContentPageView")
             return UICollectionViewCell()
         }
@@ -261,6 +273,7 @@ extension MobileContentPagesView: PageNavigationCollectionViewDelegate {
         if let contentPageCell = pageCell as? MobileContentPageCell {
             
             if let pageView = contentPageCell.mobileContentView as? MobileContentPageView, let pagePositions = initialPagePositions[page] {
+               
                 pageView.layoutIfNeeded()
                 pageView.setPositionStateForViewHierarchy(positionState: pagePositions, animated: false)
                 initialPagePositions[page] = nil

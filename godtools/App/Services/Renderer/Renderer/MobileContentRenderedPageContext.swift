@@ -14,6 +14,7 @@ class MobileContentRenderedPageContext {
     let pageModel: Page
     let page: Int
     let isLastPage: Bool
+    let parentPageParams: MobileContentParentPageParams?
     let safeArea: UIEdgeInsets
     let manifest: Manifest
     let resourcesCache: MobileContentRendererManifestResourcesCache
@@ -32,11 +33,12 @@ class MobileContentRenderedPageContext {
     
     private weak var weakWindow: UIViewController?
     
-    init(pageModel: Page, page: Int, isLastPage: Bool, window: UIViewController, safeArea: UIEdgeInsets, manifest: Manifest, resourcesCache: MobileContentRendererManifestResourcesCache, resource: ResourceModel, appLanguage: AppLanguageDomainModel, language: LanguageModel, translation: TranslationModel, viewRenderer: MobileContentViewRenderer, navigation: MobileContentRendererNavigation, rendererLanguages: MobileContentRendererLanguages, rendererState: State, trainingTipsEnabled: Bool, pageViewDataCache: MobileContentPageViewDataCache, userInfo: [String: Any]?) {
+    init(pageModel: Page, page: Int, isLastPage: Bool, parentPageParams: MobileContentParentPageParams?, window: UIViewController, safeArea: UIEdgeInsets, manifest: Manifest, resourcesCache: MobileContentRendererManifestResourcesCache, resource: ResourceModel, appLanguage: AppLanguageDomainModel, language: LanguageModel, translation: TranslationModel, viewRenderer: MobileContentViewRenderer, navigation: MobileContentRendererNavigation, rendererLanguages: MobileContentRendererLanguages, rendererState: State, trainingTipsEnabled: Bool, pageViewDataCache: MobileContentPageViewDataCache, userInfo: [String: Any]?) {
         
         self.pageModel = pageModel
         self.page = page
         self.isLastPage = isLastPage
+        self.parentPageParams = parentPageParams
         self.weakWindow = window
         self.safeArea = safeArea
         self.manifest = manifest
