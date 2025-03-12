@@ -279,7 +279,9 @@ extension MobileContentPagesView: PageNavigationCollectionViewDelegate {
                 initialPagePositions[page] = nil
             }
             
-            contentPageCell.mobileContentView?.notifyViewAndAllChildrenViewDidAppear()
+            contentPageCell.mobileContentView?.notifyViewAndAllChildrenViewDidAppear(
+                navigationEvent: currentNavigationEvent
+            )
         }
                 
         viewModel.pageDidAppear(page: page)

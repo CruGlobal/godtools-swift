@@ -22,7 +22,8 @@ class MobileContentPageCollectionView: MobileContentPageView {
             viewModel: viewModel.pagesViewModel,
             navigationBar: nil,
             pageViewDelegate: nil,
-            initialPageIndex: viewModel.pagesViewModel.initialPageIndex
+            initialPageIndex: viewModel.pagesViewModel.initialPageIndex,
+            loggingEnabled: true
         )
         
         super.init(viewModel: viewModel, nibName: nil)
@@ -61,6 +62,14 @@ class MobileContentPageCollectionView: MobileContentPageView {
         }
         
         pagesView.navigateToPage(pageIndex: positionState.currentPageNumber, animated: animated)
+    }
+    
+    override func viewDidAppear(navigationEvent: MobileContentPagesNavigationEvent?) {
+        super.viewDidAppear(navigationEvent: navigationEvent)
+        
+        if let activePageId = navigationEvent?.parentPageParams?.activePageId {
+            // TODO: GT-2503 Need to navigate to active page. ~Levi
+        }
     }
 }
 
