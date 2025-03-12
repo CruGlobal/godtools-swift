@@ -26,15 +26,15 @@ class MobileContentPageCollectionPagesViewModel: MobileContentPagesViewModel {
     }
     
     var initialPageIndex: Int? {
-
+        
         guard let activePageId = renderedPageContext.parentPageParams?.activePageId else {
             return nil
         }
-
+        
         guard let page = super.getPage(pageId: activePageId) else {
             return nil
         }
-
+        
         return pageModels.firstIndex(of: page)
     }
     
