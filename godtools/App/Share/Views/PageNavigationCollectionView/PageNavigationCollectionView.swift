@@ -519,27 +519,36 @@ extension PageNavigationCollectionView {
             pageNavigationDirectionChanged = false
         }
         
-        if let insertPages = pageNavigation.insertPages, !insertPages.isEmpty {
-            
-            let indexPaths: [IndexPath] = insertPages.map({IndexPath(item: $0, section: 0)})
-            collectionView.insertItems(at: indexPaths)
-        }
-        
-        if let deletePages = pageNavigation.deletePages, !deletePages.isEmpty {
-            
-            let indexPaths: [IndexPath] = deletePages.map({IndexPath(item: $0, section: 0)})
-            collectionView.deleteItems(at: indexPaths)
-        }
-        
-        if let reloadPages = pageNavigation.reloadPages {
-            
-            let indexPaths: [IndexPath] = reloadPages.map({IndexPath(item: $0, section: 0)})
-            collectionView.reloadItems(at: indexPaths)
-        }
-        
         let reloadDataNeeded: Bool = pageNavigation.reloadCollectionViewDataNeeded || pageNavigationDirectionChanged
         
-        currentPageNavigation = PageNavigationCollectionView.CurrentNavigation(pageNavigation: pageNavigation, isNavigationFromDataReload: reloadDataNeeded)
+        if !reloadDataNeeded {
+         
+            collectionView.performBatchUpdates {
+                
+                if let deletePages = pageNavigation.deletePages, !deletePages.isEmpty {
+                    
+                    let indexPaths: [IndexPath] = deletePages.map({IndexPath(item: $0, section: 0)})
+                    collectionView.deleteItems(at: indexPaths)
+                }
+                
+                if let insertPages = pageNavigation.insertPages, !insertPages.isEmpty {
+                    
+                    let indexPaths: [IndexPath] = insertPages.map({IndexPath(item: $0, section: 0)})
+                    collectionView.insertItems(at: indexPaths)
+                }
+            }
+            
+            if let reloadPages = pageNavigation.reloadPages {
+                
+                let indexPaths: [IndexPath] = reloadPages.map({IndexPath(item: $0, section: 0)})
+                collectionView.reloadItems(at: indexPaths)
+            }
+        }
+        
+        currentPageNavigation = PageNavigationCollectionView.CurrentNavigation(
+            pageNavigation: pageNavigation,
+            isNavigationFromDataReload: reloadDataNeeded
+        )
                 
         if reloadDataNeeded {
                                     
