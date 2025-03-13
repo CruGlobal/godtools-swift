@@ -125,10 +125,10 @@ class ChooseYourOwnAdventureViewModel: MobileContentRendererViewModel {
         else if isBackNavigation, let nearestAncestorPageIndex = super.getNearestAncestorPageIndex(page: page) {
                         
             // Backward Navigation - Page is NOT in navigation stack, but an ancestor page is in stack.  Add to top of ancestor page.
-            
+                        
             let insertPageAtIndex: Int = nearestAncestorPageIndex + 1
             
-            let removeStartIndex: Int = insertPageAtIndex + 1
+            let removeStartIndex: Int = nearestAncestorPageIndex + 1
             let removedEndIndex: Int = pages.count - 1
             
             let pageIndexesToRemove: [Int]
@@ -145,12 +145,14 @@ class ChooseYourOwnAdventureViewModel: MobileContentRendererViewModel {
                 page: insertPageAtIndex,
                 animated: true,
                 reloadCollectionViewDataNeeded: false,
-                insertPages: nil,
+                insertPages: [insertPageAtIndex],
                 deletePages: pageIndexesToRemove,
-                reloadPages: [insertPageAtIndex]
+                reloadPages: nil
             )
             
-            setPages = Array(pages[0...nearestAncestorPageIndex]) + [page]
+            let newPages: [Page] = Array(pages[0...nearestAncestorPageIndex]) + [page]
+            
+            setPages = newPages
         }
         else {
             
