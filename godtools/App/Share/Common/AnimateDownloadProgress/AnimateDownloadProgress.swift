@@ -10,9 +10,7 @@ import Foundation
 import Combine
 
 class AnimateDownloadProgress {
-    
-    private static let roundToNearestHundredth: RoundAmountToNearestHundredth = RoundAmountToNearestHundredth()
-    
+        
     static let defaultAnimationInterval: TimeInterval = 0.2
     static let defaultAnimateProgressIncrement: TimeInterval = 0.1
     static let initialProgressTarget: Double = 0.1
@@ -24,10 +22,6 @@ class AnimateDownloadProgress {
     init(animationInterval: TimeInterval = AnimateDownloadProgress.defaultAnimationInterval) {
         
         timer = SwiftUITimer(intervalSeconds: animationInterval)
-    }
-    
-    private static func round(amount: Double) -> Double {
-        return roundToNearestHundredth.round(amount: amount).doubleValue
     }
     
     func start(downloadProgressPublisher: AnyPublisher<Double, Error>) -> AnyPublisher<Double, Error> {
@@ -59,7 +53,6 @@ class AnimateDownloadProgress {
             
             if timerInvoked {
                 animatedProgress += AnimateDownloadProgress.defaultAnimateProgressIncrement
-                animatedProgress = Self.round(amount: animatedProgress)
             }
                         
             if animatedProgress > progressTarget {
