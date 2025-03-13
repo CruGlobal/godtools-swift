@@ -1,5 +1,5 @@
 {
-  "originHash" : "a0be7c04d04795109cee91897335f98e419cba46dc747a64041fe1b9e6ea1b3b",
+  "originHash" : "fbb1333f3e82b20d1534774f3061e5984121e182649db6529d9191b2a8e284a9",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -26,6 +26,15 @@
       "state" : {
         "revision" : "c89ed571ae140f8eb1142735e6e23d7bb8c34cb2",
         "version" : "1.7.5"
+      }
+    },
+    {
+      "identity" : "bottomsheet",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/lucaszischka/BottomSheet",
+      "state" : {
+        "revision" : "720ddbd1371fef2a09cc1ab65fc503df37767f9c",
+        "version" : "3.1.1"
       }
     },
     {

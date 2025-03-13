@@ -769,8 +769,8 @@
 		4594E15A2D7F7A1D005881B5 /* OptInNotificationDiContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4594E1502D7F7A1D005881B5 /* OptInNotificationDiContainer.swift */; };
 		4594E15B2D7F7A1D005881B5 /* OptInNotificationDomainLayerDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4594E1512D7F7A1D005881B5 /* OptInNotificationDomainLayerDependencies.swift */; };
 		4594E15D2D7F7A9D005881B5 /* ViewOptInForNotificationsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4594E15C2D7F7A9B005881B5 /* ViewOptInForNotificationsUseCase.swift */; };
-		4594E1612D7F7ABE005881B5 /* ViewOptInForNotificationsDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4594E1602D7F7AB6005881B5 /* ViewOptInForNotificationsDomainModel.swift */; };
-		4594E1632D7F7B43005881B5 /* OptInForNotificationsStringsDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4594E1622D7F7B37005881B5 /* OptInForNotificationsStringsDomainModel.swift */; };
+		4594E1612D7F7ABE005881B5 /* ViewOptInNotificationsDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4594E1602D7F7AB6005881B5 /* ViewOptInNotificationsDomainModel.swift */; };
+		4594E1632D7F7B43005881B5 /* OptInNotificationsStringsDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4594E1622D7F7B37005881B5 /* OptInNotificationsStringsDomainModel.swift */; };
 		4595E0DB2A8523DC00D88DAE /* MobileContentApiUsersMeCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595E0DA2A8523DC00D88DAE /* MobileContentApiUsersMeCodable.swift */; };
 		4595E0DD2A8527F300D88DAE /* UserDetailsDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595E0DC2A8527F300D88DAE /* UserDetailsDataModel.swift */; };
 		4595E0DF2A8529C800D88DAE /* UserDetailsDataModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595E0DE2A8529C800D88DAE /* UserDetailsDataModelType.swift */; };
@@ -1499,6 +1499,9 @@
 		4F5732971EA69CF00082035C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F5732961EA69CF00082035C /* Assets.xcassets */; };
 		4FAF20781F02933900C43AFC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4FAF207A1F02933900C43AFC /* Localizable.strings */; };
 		76683DEFD080378646A03B33 /* libPods-godtoolsTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 407763C996134F95C162DFB6 /* libPods-godtoolsTests.a */; };
+		B59EC6F22D80DA7E004DBC6D /* NotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59EC6F12D80DA7E004DBC6D /* NotificationsView.swift */; };
+		B59EC6F42D80E3A7004DBC6D /* NotificationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59EC6F32D80E3A7004DBC6D /* NotificationsViewModel.swift */; };
+		B5D1C0F72D805B0000C32211 /* BottomSheet in Frameworks */ = {isa = PBXBuildFile; productRef = B5D1C0F62D805B0000C32211 /* BottomSheet */; };
 		BF79B5EB9B3B461ECFD42719 /* libPods-godtools.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1CC351AF1B5B73C3CF6B771 /* libPods-godtools.a */; };
 		D105922E252FA2E700F120CA /* share_tool_tutorial_mirrored.json in Resources */ = {isa = PBXBuildFile; fileRef = D115A65D25265813007F11AD /* share_tool_tutorial_mirrored.json */; };
 		D163EA96254A00BE00BA4EA9 /* share_tool_tutorial_link.json in Resources */ = {isa = PBXBuildFile; fileRef = D163EA95254A00BE00BA4EA9 /* share_tool_tutorial_link.json */; };
@@ -2468,8 +2471,8 @@
 		4594E1502D7F7A1D005881B5 /* OptInNotificationDiContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptInNotificationDiContainer.swift; sourceTree = "<group>"; };
 		4594E1512D7F7A1D005881B5 /* OptInNotificationDomainLayerDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptInNotificationDomainLayerDependencies.swift; sourceTree = "<group>"; };
 		4594E15C2D7F7A9B005881B5 /* ViewOptInForNotificationsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewOptInForNotificationsUseCase.swift; sourceTree = "<group>"; };
-		4594E1602D7F7AB6005881B5 /* ViewOptInForNotificationsDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewOptInForNotificationsDomainModel.swift; sourceTree = "<group>"; };
-		4594E1622D7F7B37005881B5 /* OptInForNotificationsStringsDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptInForNotificationsStringsDomainModel.swift; sourceTree = "<group>"; };
+		4594E1602D7F7AB6005881B5 /* ViewOptInNotificationsDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewOptInNotificationsDomainModel.swift; sourceTree = "<group>"; };
+		4594E1622D7F7B37005881B5 /* OptInNotificationsStringsDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptInNotificationsStringsDomainModel.swift; sourceTree = "<group>"; };
 		4595E0DA2A8523DC00D88DAE /* MobileContentApiUsersMeCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentApiUsersMeCodable.swift; sourceTree = "<group>"; };
 		4595E0DC2A8527F300D88DAE /* UserDetailsDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDetailsDataModel.swift; sourceTree = "<group>"; };
 		4595E0DE2A8529C800D88DAE /* UserDetailsDataModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsDataModelType.swift; sourceTree = "<group>"; };
@@ -3223,6 +3226,8 @@
 		A1CC351AF1B5B73C3CF6B771 /* libPods-godtools.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-godtools.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9BDC99CD6AA5FF3CCAC0E93 /* Pods-godtools.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.staging.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.staging.xcconfig"; sourceTree = "<group>"; };
 		B03BA6AC6918BE450406F1E6 /* Pods-godtools.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.debug.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.debug.xcconfig"; sourceTree = "<group>"; };
+		B59EC6F12D80DA7E004DBC6D /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsView.swift; sourceTree = "<group>"; };
+		B59EC6F32D80E3A7004DBC6D /* NotificationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewModel.swift; sourceTree = "<group>"; };
 		CD35532F620E5D79E5C5E9B9 /* Pods-godtoolsUITests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtoolsUITests.staging.xcconfig"; path = "Pods/Target Support Files/Pods-godtoolsUITests/Pods-godtoolsUITests.staging.xcconfig"; sourceTree = "<group>"; };
 		CEE243B8717B8C5542537AA7 /* Pods-godtoolsUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtoolsUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-godtoolsUITests/Pods-godtoolsUITests.release.xcconfig"; sourceTree = "<group>"; };
 		D115A65D25265813007F11AD /* share_tool_tutorial_mirrored.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = share_tool_tutorial_mirrored.json; sourceTree = "<group>"; };
@@ -3498,6 +3503,7 @@
 				D4997E0E28D4CED800205B4C /* YouTubeiOSPlayerHelper in Frameworks */,
 				45E39EDC27457E0C006A59E4 /* Lottie in Frameworks */,
 				45DF964B2D386C1C00C6AE68 /* FirebaseCrashlytics in Frameworks */,
+				B5D1C0F72D805B0000C32211 /* BottomSheet in Frameworks */,
 				45D48C8629F81324004E92B1 /* SocialAuthentication in Frameworks */,
 				45D40C682A5315B400E8E4AE /* Starscream in Frameworks */,
 				BF79B5EB9B3B461ECFD42719 /* libPods-godtools.a in Frameworks */,
@@ -7464,8 +7470,8 @@
 		4594E1532D7F7A1D005881B5 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				4594E1622D7F7B37005881B5 /* OptInForNotificationsStringsDomainModel.swift */,
-				4594E1602D7F7AB6005881B5 /* ViewOptInForNotificationsDomainModel.swift */,
+				4594E1622D7F7B37005881B5 /* OptInNotificationsStringsDomainModel.swift */,
+				4594E1602D7F7AB6005881B5 /* ViewOptInNotificationsDomainModel.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -7498,7 +7504,7 @@
 		4594E1572D7F7A1D005881B5 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				4594E1642D7F7CA2005881B5 /* OptInNotification */,
+				4594E1642D7F7CA2005881B5 /* NotificationsSheetView */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -7515,11 +7521,13 @@
 			path = OptInNotification;
 			sourceTree = "<group>";
 		};
-		4594E1642D7F7CA2005881B5 /* OptInNotification */ = {
+		4594E1642D7F7CA2005881B5 /* NotificationsSheetView */ = {
 			isa = PBXGroup;
 			children = (
+				B59EC6F12D80DA7E004DBC6D /* NotificationsView.swift */,
+				B59EC6F32D80E3A7004DBC6D /* NotificationsViewModel.swift */,
 			);
-			path = OptInNotification;
+			path = NotificationsSheetView;
 			sourceTree = "<group>";
 		};
 		459602DF28400DBB00C66387 /* DownloadToolTranslations */ = {
@@ -12196,6 +12204,7 @@
 				45DF964C2D386C1C00C6AE68 /* FirebaseDynamicLinks */,
 				45DF964E2D386C1C00C6AE68 /* FirebaseInAppMessaging-Beta */,
 				45DF96502D386C1C00C6AE68 /* FirebaseRemoteConfig */,
+				B5D1C0F62D805B0000C32211 /* BottomSheet */,
 			);
 			productName = godtools;
 			productReference = 4F5732891EA69CF00082035C /* godtools.app */;
@@ -12360,6 +12369,7 @@
 				4581EAA12BFBE194008115FF /* XCRemoteSwiftPackageReference "realm-swift" */,
 				45F6718F2C3343ED0017C8C2 /* XCRemoteSwiftPackageReference "localization-services-ios" */,
 				45DF96472D386C1C00C6AE68 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				B5D1C0F52D805B0000C32211 /* XCRemoteSwiftPackageReference "BottomSheet" */,
 			);
 			productRefGroup = 4F57328A1EA69CF00082035C /* Products */;
 			projectDirPath = "";
@@ -13274,7 +13284,7 @@
 				45BB42A22CBEA16700290F64 /* ToolSettingsNavigationFlow.swift in Sources */,
 				45FE82472ACE5D5800930C39 /* AppNavigationBar.swift in Sources */,
 				458585DF2924596C005042C2 /* AccountCreationIsSupportedDomainModel.swift in Sources */,
-				4594E1612D7F7ABE005881B5 /* ViewOptInForNotificationsDomainModel.swift in Sources */,
+				4594E1612D7F7ABE005881B5 /* ViewOptInNotificationsDomainModel.swift in Sources */,
 				45AD1BDD25938A4F00A096A0 /* GTSegmentType.swift in Sources */,
 				45E39ECA27457A14006A59E4 /* AnimatedViewModel.swift in Sources */,
 				459E86ED28EDA86C00E197A5 /* DeepLinkingManifestType.swift in Sources */,
@@ -13289,7 +13299,7 @@
 				45070A812ACF42AD00229EDD /* AppBackBarItem.swift in Sources */,
 				D4C2A5982C3CAC420035AB4D /* StoreUserLessonFiltersRepositoryInterface.swift in Sources */,
 				455A6C6E27C16FFB00968277 /* MobileContentButtonIcon.swift in Sources */,
-				4594E1632D7F7B43005881B5 /* OptInForNotificationsStringsDomainModel.swift in Sources */,
+				4594E1632D7F7B43005881B5 /* OptInNotificationsStringsDomainModel.swift in Sources */,
 				4552F54B2AD4745A0075415E /* TrackActionAnalyticsUseCase.swift in Sources */,
 				45AD1BDC25938A4F00A096A0 /* AlertMessageViewModel.swift in Sources */,
 				45A8BDE52ACC9F47007A1EBB /* LessonCardViewModel.swift in Sources */,
@@ -13312,6 +13322,7 @@
 				453C1BD52899A50C007332E2 /* RealmFavoritedResource.swift in Sources */,
 				455EE83A2AEC582900C3205C /* DownloadToolProgressInterfaceStringsDomainModel.swift in Sources */,
 				454BFDA62AFD8CD200104BC8 /* TractRemoteShareSubscriber.swift in Sources */,
+				B59EC6F42D80E3A7004DBC6D /* NotificationsViewModel.swift in Sources */,
 				455CB5792A439B6700E95834 /* LearnToShareToolViewModel.swift in Sources */,
 				45BE4A812AF287D2004021DA /* ConfirmAppLanguageViewModel.swift in Sources */,
 				45AE975527C97A9500C2CB33 /* Input+MobileContentRenderableModel.swift in Sources */,
@@ -13628,6 +13639,7 @@
 				45F378FD2B23642600EEF039 /* LearnToShareToolDomainLayerDependencies.swift in Sources */,
 				450D7B0A28E34ACA006C3FDF /* RealmLanguagesCacheSyncResult.swift in Sources */,
 				453F84DC2A02A0390005101E /* ArticleCategory.swift in Sources */,
+				B59EC6F22D80DA7E004DBC6D /* NotificationsView.swift in Sources */,
 				459BD08E289AD4310075901B /* DetermineToolTranslationsToDownloadResult.swift in Sources */,
 				4512C8252B3236C000D162F3 /* ShareablesDataLayerDependencies.swift in Sources */,
 				450D7B0828E34AA9006C3FDF /* RealmLanguagesCacheSync.swift in Sources */,
@@ -15533,6 +15545,14 @@
 				minimumVersion = 0.2.1;
 			};
 		};
+		B5D1C0F52D805B0000C32211 /* XCRemoteSwiftPackageReference "BottomSheet" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/lucaszischka/BottomSheet";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.1.1;
+			};
+		};
 		D4997E0C28D4CED800205B4C /* XCRemoteSwiftPackageReference "youtube-ios-player-helper" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/youtube/youtube-ios-player-helper.git";
@@ -15693,6 +15713,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 45F6718F2C3343ED0017C8C2 /* XCRemoteSwiftPackageReference "localization-services-ios" */;
 			productName = LocalizationServices;
+		};
+		B5D1C0F62D805B0000C32211 /* BottomSheet */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B5D1C0F52D805B0000C32211 /* XCRemoteSwiftPackageReference "BottomSheet" */;
+			productName = BottomSheet;
 		};
 		D4997E0D28D4CED800205B4C /* YouTubeiOSPlayerHelper */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -8,7 +8,8 @@
 
 import Foundation
 
-struct ViewOptInForNotificationsDomainModel {
+struct ViewOptInNotificationsDomainModel {
     
-    let interfaceStrings: OptInForNotificationsStringsDomainModel
+    let interfaceStrings: OptInNotificationsStringsDomainModel
+    let lastPrompted: String
 }

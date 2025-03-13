@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct OptInForNotificationsStringsDomainModel {
+struct OptInNotificationsStringsDomainModel {
     
     let title: String
     let body: String

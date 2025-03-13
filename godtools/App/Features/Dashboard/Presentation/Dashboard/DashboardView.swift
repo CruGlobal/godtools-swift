@@ -6,6 +6,7 @@
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
+import BottomSheet
 import Combine
 import SwiftUI
 
@@ -17,8 +18,9 @@ struct DashboardView: View {
 
     @ObservedObject private var viewModel: DashboardViewModel
 
-    init(viewModel: DashboardViewModel) {
-
+    init(
+        viewModel: DashboardViewModel
+    ) {
         self.viewModel = viewModel
     }
 
@@ -27,7 +29,7 @@ struct DashboardView: View {
         let settings = await center.notificationSettings()
 
         switch settings.authorizationStatus {
-        case .authorized:
+        case .authorized, .provisional, .ephemeral:
             print("NotificationStatus: Enabled")
             return "Enabled"
         case .denied:
@@ -37,14 +39,75 @@ struct DashboardView: View {
         case .notDetermined:
             print("NotificationStatus: Undetermined")
             return "Undetermined"
-        case .provisional:
-            return
-                "Provisional"
-        case .ephemeral:
-            return
-                "Ephemeral"
         @unknown default:
             return "Unknown"
+        }
+    }
+
+    func recordLastPrompt() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd/yyyy"
+
+        guard let testDate = dateFormatter.date(from: "01/01/2025") else {
+            print("Failed to create date from string.")
+            return
+        }
+
+        let dateString = dateFormatter.string(from: testDate)
+        UserDefaults.standard.set(dateString, forKey: "lastPrompted")
+        print("set lastPrompted to: \(dateString)")
+    }
+
+    func shouldPromptNotificationsSheet() {
+        Task {
+            let notificationStatus = await checkNotificationStatus()
+
+            // Retrieve lastPrompted date
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MM/dd/yyyy"
+            let lastPrompted = UserDefaults.standard.string(
+                forKey: "lastPrompted")
+            let lastPromptedDate =
+                lastPrompted.flatMap {
+                    dateFormatter.date(from: $0)
+                } ?? Date.distantPast
+
+            // Get current date
+            let currentDate = Date()
+            let calendar = Calendar.current
+            let twoMonthsAgo = calendar.date(
+                byAdding: .month, value: -2, to: currentDate)!
+
+            if notificationStatus != "Approved" {
+                if notificationStatus == "Undetermined" {
+                    print("Detected undetermined status")
+                    viewModel.getNotificationsViewModel().bottomSheetPosition =
+                        .dynamicTop
+                    recordLastPrompt()
+                } else if notificationStatus == "Denied"
+                    && lastPromptedDate < twoMonthsAgo
+                {
+                    print(
+                        "Previously denied but last prompt was more than two months ago."
+                    )
+                    print(
+                        "Bottom sheet position before: \(viewModel.getNotificationsViewModel().bottomSheetPosition)"
+                    )
+                    viewModel.getNotificationsViewModel().bottomSheetPosition =
+                        .dynamicTop
+                    print(
+                        "Bottom sheet position after : \(viewModel.getNotificationsViewModel().bottomSheetPosition)"
+                    )
+                    recordLastPrompt()
+                } else if notificationStatus == "Denied"
+                    && lastPromptedDate > twoMonthsAgo
+                {
+                    print(
+                        "Previously denied and prompted recently.")
+                    recordLastPrompt()
+
+                }
+            }  // already approved
         }
     }
 
@@ -55,49 +118,10 @@ struct DashboardView: View {
             VStack(alignment: .center, spacing: 0) {
 
                 Button(action: {
-
-                    Task {
-                        let notificationStatus = await checkNotificationStatus()
-
-                        let dateFormatter = DateFormatter()
-                        dateFormatter.dateFormat = "yyyy-MM-dd"
-                        guard
-                            let lastPrompted = dateFormatter.date(
-                                from: "2025-3-1")
-                        else { return }
-
-                        // Get the current date
-                        let currentDate = Date()
-
-                        // Calculate two months ago
-                        let calendar = Calendar.current
-                        let twoMonthsAgo = calendar.date(
-                            byAdding: .month, value: -2, to: currentDate)!
-
-                        if notificationStatus != "Approved" {
-                            if notificationStatus == "Undetermined" {
-                                print("Detected undetermined status")
-                                bottomSheetPosition = .dynamicTop
-
-                            } else if notificationStatus == "Denied"
-                                && lastPrompted < twoMonthsAgo
-                            {
-                                print(
-                                    "Previously denied but last prompt was more than two months ago."
-                                )
-                                bottomSheetPosition = .dynamicTop
-                            } else if notificationStatus == "Denied"
-                                && lastPrompted > twoMonthsAgo
-                            {
-                                print(
-                                    "Previously denied and prompted recently.")
-                            }
-                        }
-                    }
-
+                    shouldPromptNotificationsSheet()
                 }) {
 
-                    Text("Show Dialog")
+                    Text("shouldPromptNotificationsSheet()")
                 }
 
                 if viewModel.tabs.count > 0 {
@@ -147,7 +171,15 @@ struct DashboardView: View {
                         viewModel: viewModel
                     )
                 }
-            }
+            }.overlay(
+                //need align?
+                alignment: Alignment.center,
+                content: {
+                    NotificationsView(
+                        viewModel: viewModel.getNotificationsViewModel()
+                    )
+                }
+            )
         }
         .environment(
             \.layoutDirection, ApplicationLayout.shared.layoutDirection)
@@ -188,6 +220,7 @@ struct DashboardView_Previews: PreviewProvider {
     private static let diContainer: AppDiContainer = SwiftUIPreviewDiContainer()
         .getAppDiContainer()
     private static let flowDelegate: FlowDelegate = MockFlowDelegate()
+
     private static let dashboardDependencies:
         DashboardPresentationLayerDependencies =
             DashboardPresentationLayerDependencies(
@@ -201,6 +234,7 @@ struct DashboardView_Previews: PreviewProvider {
         let viewModel = DashboardViewModel(
             startingTab: .favorites,
             flowDelegate: Self.flowDelegate,
+
             dashboardPresentationLayerDependencies: Self.dashboardDependencies,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage
                 .domainLayer.getCurrentAppLanguageUseCase(),
@@ -214,144 +248,7 @@ struct DashboardView_Previews: PreviewProvider {
 
     static var previews: some View {
 
-        DashboardView(viewModel: Self.getDashboardViewModel())
-    }
-}
-
-// DSR
-// TODO:
-// - Adaptive sizing
-// - Import assets (1x, 2x, 3x)
-struct NotificationsSheetView: View {
-    @Binding var bottomSheetPosition: BottomSheetPosition
-
-    func requestNotificationPermission() {
-
-        let center = UNUserNotificationCenter.current()
-        center.requestAuthorization(options: [.alert, .sound, .badge]) {
-            granted, error in
-            DispatchQueue.main.async {
-                if granted {
-                    print("Notifications allowed")
-                } else {
-                    print("Notifications denied")
-                    showSettingsAlert()
-                }
-            }
-        }
-
-    }
-
-    func showSettingsAlert() {
-        guard let settingsURL = URL(string: UIApplication.openSettingsURLString)
-        else { return }
-
-        if let windowScene = UIApplication.shared.connectedScenes.first
-            as? UIWindowScene,
-            let rootViewController = windowScene.windows.first?
-                .rootViewController
-        {
-            let alert = UIAlertController(
-                title: "Enable Notifications",
-                message:
-                    "Notifications are disabled. Please enable them in Settings.",
-                preferredStyle: .alert
-            )
-            alert.addAction(
-                UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-            alert.addAction(
-                UIAlertAction(title: "Settings", style: .default) { _ in
-                    UIApplication.shared.open(
-                        settingsURL, options: [:], completionHandler: nil)
-                })
-
-            rootViewController.present(alert, animated: true, completion: nil)
-        }
-    }
-
-    var body: some View {
-        ZStack {
-            if bottomSheetPosition == .dynamicTop {
-                Color.black.opacity(0.2).edgesIgnoringSafeArea(.all)
-            }
-
-            Color.clear.bottomSheet(
-                bottomSheetPosition: $bottomSheetPosition,
-                switchablePositions: [.hidden, .dynamicTop],
-                headerContent: {},
-                mainContent: {
-                    VStack {
-                        Image("notifications_graphic").resizable()
-                            .scaledToFit()
-                            .padding(
-                                EdgeInsets(
-                                    top: 5, leading: 5, bottom: 0,
-                                    trailing: 5)
-                            ).overlay(
-                                Rectangle()
-                                    .frame(height: 2)
-                                    .foregroundColor(
-                                        Color(
-                                            uiColor: ColorPalette.gtBlue
-                                                .uiColor
-                                        )),
-                                alignment: .bottom
-                            )
-                        Text("Get Tips and Encouragement")
-                            .foregroundColor(
-                                Color(uiColor: ColorPalette.gtBlue.uiColor)
-                            ).font(
-                                FontLibrary.sfProTextRegular.font(size: 30)
-                            )
-                            .fontWeight(.bold)
-                            .padding(
-                                .vertical, 10
-                            ).minimumScaleFactor(0.5).lineLimit(1)
-
-                        Text(
-                            "Stay equipped for conversations.\nAllow notifications today."
-                        ).font(FontLibrary.sfProTextRegular.font(size: 18))
-                            .foregroundStyle(ColorPalette.gtGrey.color)
-                            .multilineTextAlignment(.center).padding(
-                                .bottom, 12)
-
-                        Button(action: {
-                            // settings prompt
-                            // dismiss bottom sheet
-                            requestNotificationPermission()
-                        }) {
-                            RoundedRectangle(cornerRadius: 5).fill(
-                                Color(uiColor: ColorPalette.gtBlue.uiColor))
-                        }.frame(height: 45).overlay(
-                            Text("Allow Notifications").foregroundColor(
-                                .white)
-                        )
-
-                        Button(action: {
-                            bottomSheetPosition = .hidden
-                        }) {
-                            Text("Maybe Later").foregroundColor(
-                                Color(uiColor: ColorPalette.gtBlue.uiColor))
-                        }
-                        .frame(height: 40).padding(
-                            .bottom, 50
-                        )
-                    }.padding(.horizontal, 20)
-                }
-            ).showDragIndicator(false)
-                .customBackground(
-                    RoundedRectangle(
-                        cornerRadius: 10
-                    ).stroke(
-                        Color(uiColor: ColorPalette.gtBlue.uiColor),
-                        lineWidth: 8
-                    )
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 10).foregroundStyle(
-                            .white))
-                )
-                .padding(.horizontal, UIScreen.main.bounds.width * 0.05)
-
-        }
+        DashboardView(
+            viewModel: Self.getDashboardViewModel())
     }
 }

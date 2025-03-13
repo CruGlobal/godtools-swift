@@ -17,7 +17,7 @@ class OptInNotificationDomainLayerDependencies {
         self.dataLayer = dataLayer
     }
     
-    func getViewOptInForNotificationsUseCase() -> ViewOptInForNotificationsUseCase {
-        return ViewOptInForNotificationsUseCase()
+    func getViewOptInNotificationsUseCase() -> ViewOptInNotificationsUseCase {
+        return ViewOptInNotificationsUseCase()
     }
 }
