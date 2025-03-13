@@ -20,4 +20,10 @@ class OptInNotificationDataLayerDependencies {
     // MARK: - Data Layer Classes
     
     // MARK: - Domain Interface
+    
+    func getInterfaceStringsRepositoryInterface() -> GetOptInNotificationsInterfaceStringsRepositoryInterface {
+        return GetOptInNotificationsInterfaceStringsRepository(
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
 }

@@ -13,59 +13,16 @@ import SwiftUI
 // DSR
 // TODO:
 // - Adaptive sizing
-// - Disable appbar
+// - Disable appbar while active
 // - Import assets (1x, 2x, 3x)
 // - First app use strategy
+// - /n in Localizable Base
+
 struct NotificationsView: View {
     @ObservedObject private var viewModel: NotificationsViewModel
 
     init(viewModel: NotificationsViewModel) {
         self.viewModel = viewModel
-    }
-
-    func requestNotificationPermission() async -> Bool {
-        return await withCheckedContinuation { continuation in
-            UNUserNotificationCenter.current().requestAuthorization(options: [
-                .alert, .badge, .sound,
-            ]) { granted, error in
-
-                continuation.resume(returning: granted)
-            }
-        }
-    }
-
-    func showSettingsAlert(completion: @escaping () -> Void) {
-        guard let settingsURL = URL(string: UIApplication.openSettingsURLString)
-        else { return }
-
-        if let windowScene = UIApplication.shared.connectedScenes.first
-            as? UIWindowScene,
-            let rootViewController = windowScene.windows.first?
-                .rootViewController
-        {
-
-            let alert = UIAlertController(
-                title: "Enable Notifications",
-                message:
-                    "Notifications are disabled. Please enable them in Settings.",
-                preferredStyle: .alert
-            )
-
-            alert.addAction(
-                UIAlertAction(title: "Cancel", style: .cancel) { _ in
-                    completion()
-                })
-
-            alert.addAction(
-                UIAlertAction(title: "Settings", style: .default) { _ in
-                    UIApplication.shared.open(
-                        settingsURL, options: [:], completionHandler: nil)
-                    // Invoke the completion handler after the alert action
-                    completion()
-                })
-
-            rootViewController.present(alert, animated: true, completion: nil)
-        }
     }
 
     var body: some View {
@@ -96,7 +53,7 @@ struct NotificationsView: View {
                                         )),
                                 alignment: .bottom
                             )
-                        Text("Get Tips and Encouragement")
+                        Text(viewModel.title)
                             .foregroundColor(
                                 Color(uiColor: ColorPalette.gtBlue.uiColor)
                             ).font(
@@ -108,49 +65,31 @@ struct NotificationsView: View {
                             ).minimumScaleFactor(0.5).lineLimit(1)
 
                         Text(
-                            "Stay equipped for conversations.\nAllow notifications today."
+                            viewModel.body
                         ).font(FontLibrary.sfProTextRegular.font(size: 18))
                             .foregroundStyle(ColorPalette.gtGrey.color)
                             .multilineTextAlignment(.center).padding(
                                 .bottom, 12)
 
                         Button(action: {
-                            Task {
-                                let granted =
-                                    await requestNotificationPermission()
-
-                                if granted {
-                                    print("granted")
-                                    viewModel.bottomSheetPosition = .hidden
-                                } else {
-                                    print("not granted")
-                                    await withCheckedContinuation {
-                                        continuation in
-                                        showSettingsAlert {
-                                            // Once the user has interacted with the alert, continue and hide the bottom sheet
-                                            continuation.resume()
-                                            viewModel.bottomSheetPosition =
-                                                .hidden
-                                        }
-                                    }
-                                }
-
-                            }
+                            viewModel.allowNotificationsTapped()
 
                         }) {
                             RoundedRectangle(cornerRadius: 5).fill(
                                 Color(uiColor: ColorPalette.gtBlue.uiColor))
                         }.frame(height: 45).overlay(
-                            Text("Allow Notifications").foregroundColor(
-                                .white)
+                            Text(viewModel.allowNotificationsActionTitle)
+                                .foregroundColor(
+                                    .white)
                         )
 
                         Button(action: {
                             viewModel.bottomSheetPosition = .hidden
 
                         }) {
-                            Text("Maybe Later").foregroundColor(
-                                Color(uiColor: ColorPalette.gtBlue.uiColor))
+                            Text(viewModel.maybeLaterActionTitle)
+                                .foregroundColor(
+                                    Color(uiColor: ColorPalette.gtBlue.uiColor))
                         }
                         .frame(height: 40).padding(
                             .bottom, 50
@@ -186,7 +125,9 @@ struct NotificationsView_Preview: PreviewProvider {
 
         let viewModel = NotificationsViewModel(
 
-            viewOptInNotificationsUseCase: ViewOptInNotificationsUseCase(),
+            viewOptInNotificationsUseCase: appDiContainer.feature
+                .optInNotification.domainLayer
+                .getViewOptInNotificationsUseCase(),
 
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage
                 .domainLayer.getCurrentAppLanguageUseCase()
@@ -203,4 +144,3 @@ struct NotificationsView_Preview: PreviewProvider {
         )
     }
 }
-

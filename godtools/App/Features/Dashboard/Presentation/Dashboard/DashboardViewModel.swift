@@ -11,7 +11,6 @@ import Foundation
 
 class DashboardViewModel: ObservableObject {
 
-    // "Which deps do i need based on which view is showing?"
     private let dashboardPresentationLayerDependencies:
         DashboardPresentationLayerDependencies
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase

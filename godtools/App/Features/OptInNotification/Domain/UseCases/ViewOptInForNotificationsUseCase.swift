@@ -14,29 +14,53 @@ import Foundation
 // Specifically, we need to translate the interface strings
 class ViewOptInNotificationsUseCase {
 
-    // get repository
+    private let getInterfaceStringsRepository:
+        GetOptInNotificationsInterfaceStringsRepositoryInterface
 
-    // init repo
-    init() {
-
+    init(
+        getInterfaceStringsRepository:
+            GetOptInNotificationsInterfaceStringsRepositoryInterface
+    ) {
+        self.getInterfaceStringsRepository = getInterfaceStringsRepository
     }
     // provide publisher data stream for view layer to react to
-    func viewPublisher() -> AnyPublisher<
+    func viewPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<
         ViewOptInNotificationsDomainModel, Never
     > {
 
-        let domainModel = ViewOptInNotificationsDomainModel(
-            interfaceStrings: OptInNotificationsStringsDomainModel(
-                title: "Get Tips and Encouragement",
-                body:
-                    "Stay equipped for conversations. Allow notifications today.",
-                enableNotificationsActionTitle: "Allow Notifications",
-                enableLaterActionTitle: "Maybe Later"
-            ),
-            lastPrompted: "SAMPLE_STRING"
-        )
+        return getInterfaceStringsRepository.getStringsPublisher(
+            translateInLanguage: appLanguage
+        ).map {
+            ViewOptInNotificationsDomainModel(
+                interfaceStrings: $0
+            )
+        }.eraseToAnyPublisher()
 
-        return Just(domainModel)
-            .eraseToAnyPublisher()
     }
 }
+
+//private let getInterfaceStringsRepository: GetFavoritesInterfaceStringsRepositoryInterface
+//private let getFavoritedToolsRepository: GetYourFavoritedToolsRepositoryInterface
+//
+//init(getInterfaceStringsRepository: GetFavoritesInterfaceStringsRepositoryInterface, getFavoritedToolsRepository: GetYourFavoritedToolsRepositoryInterface) {
+//
+//    self.getInterfaceStringsRepository = getInterfaceStringsRepository
+//    self.getFavoritedToolsRepository = getFavoritedToolsRepository
+//}
+//
+//func viewPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewFavoritesDomainModel, Never> {
+//
+//    return Publishers.CombineLatest(
+//        getInterfaceStringsRepository.getStringsPublisher(translateInLanguage: appLanguage),
+//        getFavoritedToolsRepository.getToolsPublisher(translateInLanguage: appLanguage, maxCount: 5)
+//    )
+//    .map {
+//
+//        ViewFavoritesDomainModel(
+//            interfaceStrings: $0,
+//            yourFavoritedTools: $1
+//        )
+//    }
+//    .eraseToAnyPublisher()
+//}
+//}

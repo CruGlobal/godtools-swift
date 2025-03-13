@@ -770,7 +770,7 @@
 		4594E15B2D7F7A1D005881B5 /* OptInNotificationDomainLayerDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4594E1512D7F7A1D005881B5 /* OptInNotificationDomainLayerDependencies.swift */; };
 		4594E15D2D7F7A9D005881B5 /* ViewOptInForNotificationsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4594E15C2D7F7A9B005881B5 /* ViewOptInForNotificationsUseCase.swift */; };
 		4594E1612D7F7ABE005881B5 /* ViewOptInNotificationsDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4594E1602D7F7AB6005881B5 /* ViewOptInNotificationsDomainModel.swift */; };
-		4594E1632D7F7B43005881B5 /* OptInNotificationsStringsDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4594E1622D7F7B37005881B5 /* OptInNotificationsStringsDomainModel.swift */; };
+		4594E1632D7F7B43005881B5 /* OptInNotificationsInterfaceStringsDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4594E1622D7F7B37005881B5 /* OptInNotificationsInterfaceStringsDomainModel.swift */; };
 		4595E0DB2A8523DC00D88DAE /* MobileContentApiUsersMeCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595E0DA2A8523DC00D88DAE /* MobileContentApiUsersMeCodable.swift */; };
 		4595E0DD2A8527F300D88DAE /* UserDetailsDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595E0DC2A8527F300D88DAE /* UserDetailsDataModel.swift */; };
 		4595E0DF2A8529C800D88DAE /* UserDetailsDataModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595E0DE2A8529C800D88DAE /* UserDetailsDataModelType.swift */; };
@@ -1501,6 +1501,8 @@
 		76683DEFD080378646A03B33 /* libPods-godtoolsTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 407763C996134F95C162DFB6 /* libPods-godtoolsTests.a */; };
 		B59EC6F22D80DA7E004DBC6D /* NotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59EC6F12D80DA7E004DBC6D /* NotificationsView.swift */; };
 		B59EC6F42D80E3A7004DBC6D /* NotificationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59EC6F32D80E3A7004DBC6D /* NotificationsViewModel.swift */; };
+		B59EC6FA2D82C34A004DBC6D /* GetOptInNotificationsInterfaceStringsRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59EC6F92D82C34A004DBC6D /* GetOptInNotificationsInterfaceStringsRepositoryInterface.swift */; };
+		B59EC6FC2D82CCD9004DBC6D /* GetOptInNotificationsInterfaceStringsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59EC6FB2D82CCD9004DBC6D /* GetOptInNotificationsInterfaceStringsRepository.swift */; };
 		B5D1C0F72D805B0000C32211 /* BottomSheet in Frameworks */ = {isa = PBXBuildFile; productRef = B5D1C0F62D805B0000C32211 /* BottomSheet */; };
 		BF79B5EB9B3B461ECFD42719 /* libPods-godtools.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1CC351AF1B5B73C3CF6B771 /* libPods-godtools.a */; };
 		D105922E252FA2E700F120CA /* share_tool_tutorial_mirrored.json in Resources */ = {isa = PBXBuildFile; fileRef = D115A65D25265813007F11AD /* share_tool_tutorial_mirrored.json */; };
@@ -2472,7 +2474,7 @@
 		4594E1512D7F7A1D005881B5 /* OptInNotificationDomainLayerDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptInNotificationDomainLayerDependencies.swift; sourceTree = "<group>"; };
 		4594E15C2D7F7A9B005881B5 /* ViewOptInForNotificationsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewOptInForNotificationsUseCase.swift; sourceTree = "<group>"; };
 		4594E1602D7F7AB6005881B5 /* ViewOptInNotificationsDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewOptInNotificationsDomainModel.swift; sourceTree = "<group>"; };
-		4594E1622D7F7B37005881B5 /* OptInNotificationsStringsDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptInNotificationsStringsDomainModel.swift; sourceTree = "<group>"; };
+		4594E1622D7F7B37005881B5 /* OptInNotificationsInterfaceStringsDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptInNotificationsInterfaceStringsDomainModel.swift; sourceTree = "<group>"; };
 		4595E0DA2A8523DC00D88DAE /* MobileContentApiUsersMeCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentApiUsersMeCodable.swift; sourceTree = "<group>"; };
 		4595E0DC2A8527F300D88DAE /* UserDetailsDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDetailsDataModel.swift; sourceTree = "<group>"; };
 		4595E0DE2A8529C800D88DAE /* UserDetailsDataModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsDataModelType.swift; sourceTree = "<group>"; };
@@ -3228,6 +3230,8 @@
 		B03BA6AC6918BE450406F1E6 /* Pods-godtools.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.debug.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.debug.xcconfig"; sourceTree = "<group>"; };
 		B59EC6F12D80DA7E004DBC6D /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsView.swift; sourceTree = "<group>"; };
 		B59EC6F32D80E3A7004DBC6D /* NotificationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewModel.swift; sourceTree = "<group>"; };
+		B59EC6F92D82C34A004DBC6D /* GetOptInNotificationsInterfaceStringsRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOptInNotificationsInterfaceStringsRepositoryInterface.swift; sourceTree = "<group>"; };
+		B59EC6FB2D82CCD9004DBC6D /* GetOptInNotificationsInterfaceStringsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOptInNotificationsInterfaceStringsRepository.swift; sourceTree = "<group>"; };
 		CD35532F620E5D79E5C5E9B9 /* Pods-godtoolsUITests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtoolsUITests.staging.xcconfig"; path = "Pods/Target Support Files/Pods-godtoolsUITests/Pods-godtoolsUITests.staging.xcconfig"; sourceTree = "<group>"; };
 		CEE243B8717B8C5542537AA7 /* Pods-godtoolsUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtoolsUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-godtoolsUITests/Pods-godtoolsUITests.release.xcconfig"; sourceTree = "<group>"; };
 		D115A65D25265813007F11AD /* share_tool_tutorial_mirrored.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = share_tool_tutorial_mirrored.json; sourceTree = "<group>"; };
@@ -7453,6 +7457,7 @@
 		4594E14E2D7F7A1D005881B5 /* Data-DomainInterface */ = {
 			isa = PBXGroup;
 			children = (
+				B59EC6FB2D82CCD9004DBC6D /* GetOptInNotificationsInterfaceStringsRepository.swift */,
 			);
 			path = "Data-DomainInterface";
 			sourceTree = "<group>";
@@ -7470,7 +7475,7 @@
 		4594E1532D7F7A1D005881B5 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				4594E1622D7F7B37005881B5 /* OptInNotificationsStringsDomainModel.swift */,
+				4594E1622D7F7B37005881B5 /* OptInNotificationsInterfaceStringsDomainModel.swift */,
 				4594E1602D7F7AB6005881B5 /* ViewOptInNotificationsDomainModel.swift */,
 			);
 			path = Entities;
@@ -7479,6 +7484,7 @@
 		4594E1542D7F7A1D005881B5 /* Interface */ = {
 			isa = PBXGroup;
 			children = (
+				B59EC6F92D82C34A004DBC6D /* GetOptInNotificationsInterfaceStringsRepositoryInterface.swift */,
 			);
 			path = Interface;
 			sourceTree = "<group>";
@@ -7504,7 +7510,7 @@
 		4594E1572D7F7A1D005881B5 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				4594E1642D7F7CA2005881B5 /* NotificationsSheetView */,
+				4594E1642D7F7CA2005881B5 /* NotificationsView */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -7521,13 +7527,13 @@
 			path = OptInNotification;
 			sourceTree = "<group>";
 		};
-		4594E1642D7F7CA2005881B5 /* NotificationsSheetView */ = {
+		4594E1642D7F7CA2005881B5 /* NotificationsView */ = {
 			isa = PBXGroup;
 			children = (
 				B59EC6F12D80DA7E004DBC6D /* NotificationsView.swift */,
 				B59EC6F32D80E3A7004DBC6D /* NotificationsViewModel.swift */,
 			);
-			path = NotificationsSheetView;
+			path = NotificationsView;
 			sourceTree = "<group>";
 		};
 		459602DF28400DBB00C66387 /* DownloadToolTranslations */ = {
@@ -13284,6 +13290,7 @@
 				45BB42A22CBEA16700290F64 /* ToolSettingsNavigationFlow.swift in Sources */,
 				45FE82472ACE5D5800930C39 /* AppNavigationBar.swift in Sources */,
 				458585DF2924596C005042C2 /* AccountCreationIsSupportedDomainModel.swift in Sources */,
+				B59EC6FC2D82CCD9004DBC6D /* GetOptInNotificationsInterfaceStringsRepository.swift in Sources */,
 				4594E1612D7F7ABE005881B5 /* ViewOptInNotificationsDomainModel.swift in Sources */,
 				45AD1BDD25938A4F00A096A0 /* GTSegmentType.swift in Sources */,
 				45E39ECA27457A14006A59E4 /* AnimatedViewModel.swift in Sources */,
@@ -13299,7 +13306,7 @@
 				45070A812ACF42AD00229EDD /* AppBackBarItem.swift in Sources */,
 				D4C2A5982C3CAC420035AB4D /* StoreUserLessonFiltersRepositoryInterface.swift in Sources */,
 				455A6C6E27C16FFB00968277 /* MobileContentButtonIcon.swift in Sources */,
-				4594E1632D7F7B43005881B5 /* OptInNotificationsStringsDomainModel.swift in Sources */,
+				4594E1632D7F7B43005881B5 /* OptInNotificationsInterfaceStringsDomainModel.swift in Sources */,
 				4552F54B2AD4745A0075415E /* TrackActionAnalyticsUseCase.swift in Sources */,
 				45AD1BDC25938A4F00A096A0 /* AlertMessageViewModel.swift in Sources */,
 				45A8BDE52ACC9F47007A1EBB /* LessonCardViewModel.swift in Sources */,
@@ -13680,6 +13687,7 @@
 				45AD20BB25938F1A00A096A0 /* ObservableValue.swift in Sources */,
 				453EF5CF2942168D00D17E24 /* MobileContentViewModel.swift in Sources */,
 				458B91BF2B7D670800785C6F /* GetFavoritesInterfaceStringsRepositoryInterface.swift in Sources */,
+				B59EC6FA2D82C34A004DBC6D /* GetOptInNotificationsInterfaceStringsRepositoryInterface.swift in Sources */,
 				45F71664290A12D70019B715 /* AccountView.swift in Sources */,
 				451F1EDB2CD3AF14006CCF4E /* DisabledInAppMessaging.swift in Sources */,
 				45BB42832CBE9E0D00290F64 /* TractPageHeaderViewModel.swift in Sources */,

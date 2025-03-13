@@ -11,5 +11,4 @@ import Foundation
 struct ViewOptInNotificationsDomainModel {
     
     let interfaceStrings: OptInNotificationsStringsDomainModel
-    let lastPrompted: String
 }

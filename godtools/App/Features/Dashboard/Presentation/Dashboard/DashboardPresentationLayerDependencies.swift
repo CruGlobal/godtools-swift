@@ -10,13 +10,10 @@ import Foundation
 
 class DashboardPresentationLayerDependencies {
 
-    // Store a reference to dependency injection container
     private let appDiContainer: AppDiContainer
 
-    // Weak reference to prevent 'retain cycles'
     private weak var flowDelegate: FlowDelegate?
 
-    // Lazily instantiated properties for ViewModels (only created when accessed)
     lazy var lessonsViewModel: LessonsViewModel = {
         return getLessonsViewModel()
     }()
@@ -33,14 +30,12 @@ class DashboardPresentationLayerDependencies {
         return getNotificationsViewModel()
     }()
 
-    // Initializes dependencies
     init(appDiContainer: AppDiContainer, flowDelegate: FlowDelegate) {
 
         self.appDiContainer = appDiContainer
         self.flowDelegate = flowDelegate
     }
 
-    // Ensures flow delegate is non nil
     private var unwrappedFlowDelegate: FlowDelegate {
         guard let flowDelegate = self.flowDelegate else {
             assertionFailure("FlowDelegate should not be nil.")
@@ -49,7 +44,6 @@ class DashboardPresentationLayerDependencies {
         return flowDelegate
     }
 
-    // Getters create and return view models with required fields
     private func getLessonsViewModel() -> LessonsViewModel {
 
         return LessonsViewModel(
@@ -130,7 +124,7 @@ class DashboardPresentationLayerDependencies {
     private func getNotificationsViewModel() -> NotificationsViewModel {
 
         return NotificationsViewModel(
-            viewOptInNotificationsUseCase: ViewOptInNotificationsUseCase(),
+            viewOptInNotificationsUseCase: appDiContainer.feature.optInNotification.domainLayer.getViewOptInNotificationsUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage
                 .domainLayer.getCurrentAppLanguageUseCase()
         )
