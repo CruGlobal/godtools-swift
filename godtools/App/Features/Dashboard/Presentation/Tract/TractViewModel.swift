@@ -423,8 +423,7 @@ extension TractViewModel {
                     animated: animated,
                     reloadCollectionViewDataNeeded: false,
                     insertPages: nil,
-                    deletePages: nil,
-                    reloadPages: nil
+                    deletePages: nil
                 ),
                 setPages: nil,
                 pagePositions: pagePositions,

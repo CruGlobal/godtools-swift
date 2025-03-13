@@ -317,8 +317,7 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
                     animated: false,
                     reloadCollectionViewDataNeeded: true,
                     insertPages: nil,
-                    deletePages: nil,
-                    reloadPages: nil
+                    deletePages: nil
                 ),
                 setPages: nil,
                 pagePositions: pagePositions,
@@ -333,8 +332,7 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
                 animated: navigationEventToSend.pageNavigation.animated,
                 reloadCollectionViewDataNeeded: navigationEventToSend.pageNavigation.reloadCollectionViewDataNeeded,
                 insertPages: nil,
-                deletePages: nil,
-                reloadPages: nil
+                deletePages: nil
             ),
             setPages: nil,
             pagePositions: navigationEventToSend.pagePositions,
@@ -555,8 +553,7 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
                 animated: false,
                 reloadCollectionViewDataNeeded: false,
                 insertPages: nil,
-                deletePages: deletePagesAtIndexes,
-                reloadPages: nil
+                deletePages: deletePagesAtIndexes
             ),
             setPages: visiblePages,
             pagePositions: nil,

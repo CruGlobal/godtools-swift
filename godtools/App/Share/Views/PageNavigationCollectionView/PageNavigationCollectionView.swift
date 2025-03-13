@@ -495,8 +495,7 @@ extension PageNavigationCollectionView {
                 animated: animated,
                 reloadCollectionViewDataNeeded: false,
                 insertPages: nil,
-                deletePages: nil,
-                reloadPages: nil
+                deletePages: nil
             )
         )
     }
@@ -536,12 +535,6 @@ extension PageNavigationCollectionView {
                     let indexPaths: [IndexPath] = insertPages.map({IndexPath(item: $0, section: 0)})
                     collectionView.insertItems(at: indexPaths)
                 }
-            }
-            
-            if let reloadPages = pageNavigation.reloadPages {
-                
-                let indexPaths: [IndexPath] = reloadPages.map({IndexPath(item: $0, section: 0)})
-                collectionView.reloadItems(at: indexPaths)
             }
         }
         

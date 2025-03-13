@@ -86,8 +86,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentRendererViewModel {
                 animated: false,
                 reloadCollectionViewDataNeeded: true,
                 insertPages: nil,
-                deletePages: nil,
-                reloadPages: nil
+                deletePages: nil
             )
             
             setPages = nil
@@ -116,8 +115,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentRendererViewModel {
                 animated: true,
                 reloadCollectionViewDataNeeded: false,
                 insertPages: nil,
-                deletePages: pageIndexesToRemove,
-                reloadPages: nil
+                deletePages: pageIndexesToRemove
             )
             
             setPages = pagesUpToBackToPage
@@ -146,8 +144,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentRendererViewModel {
                 animated: true,
                 reloadCollectionViewDataNeeded: false,
                 insertPages: [insertPageAtIndex],
-                deletePages: pageIndexesToRemove,
-                reloadPages: nil
+                deletePages: pageIndexesToRemove
             )
             
             let newPages: [Page] = Array(pages[0...nearestAncestorPageIndex]) + [page]
@@ -166,8 +163,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentRendererViewModel {
                 animated: true,
                 reloadCollectionViewDataNeeded: false,
                 insertPages: [insertAtEndIndex],
-                deletePages: nil,
-                reloadPages: nil
+                deletePages: nil
             )
             
             setPages = pages + [page]

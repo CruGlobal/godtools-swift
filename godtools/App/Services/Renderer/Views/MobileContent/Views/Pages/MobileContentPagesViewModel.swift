@@ -290,8 +290,7 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
                 animated: animated,
                 reloadCollectionViewDataNeeded: reloadCollectionViewDataNeeded,
                 insertPages: insertPages,
-                deletePages: nil,
-                reloadPages: nil
+                deletePages: nil
             ),
             setPages: setPages,
             pagePositions: nil,
