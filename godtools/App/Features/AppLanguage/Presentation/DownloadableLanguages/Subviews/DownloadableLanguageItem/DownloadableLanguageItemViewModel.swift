@@ -44,28 +44,28 @@ class DownloadableLanguageItemViewModel: ObservableObject {
         let languageId: String = downloadableLanguage.languageId
         
         isMarkedForRemoval = Self.isMarkedForRemoval.observer(id: languageId)
+        downloadState = getDownloadState(languageId: languageId)
         
-        if let currentDownloadProgress = Self.downloadProgress.observer(id: languageId).value {
-            
-            downloadState = .downloading(progress: currentDownloadProgress)
-        }
-        else {
-            
-            switch downloadableLanguage.downloadStatus {
-                
-            case .notDownloaded:
-                downloadState = .notDownloaded
-            case .downloaded( _):
-                downloadState = .downloaded
-            }
-        }
-                
         sinkIconState()
         sinkLanguageDownloadProgress()
     }
     
     private var languageId: String {
         return downloadableLanguage.languageId
+    }
+    
+    private func getDownloadState(languageId: String) -> DownloadableLanguageDownloadState {
+        
+        if let currentDownloadProgress = Self.downloadProgress.observer(id: languageId).value {
+            return .downloading(progress: currentDownloadProgress)
+        }
+        
+        switch downloadableLanguage.downloadStatus {
+        case .notDownloaded:
+            return .notDownloaded
+        case .downloaded( _):
+            return .downloaded
+        }
     }
     
     private func sinkIconState() {
