@@ -22,7 +22,7 @@ class MobileContentPageCollectionView: MobileContentPageView {
             viewModel: viewModel.pagesViewModel,
             navigationBar: nil,
             pageViewDelegate: nil,
-            initialPageIndex: viewModel.pagesViewModel.initialPageIndex,
+            initialPageIndex: nil,
             loggingEnabled: false
         )
         
@@ -62,6 +62,21 @@ class MobileContentPageCollectionView: MobileContentPageView {
         }
         
         pagesView.navigateToPage(pageIndex: positionState.currentPageNumber, animated: animated)
+    }
+    
+    override func viewDidAppear(navigationEvent: MobileContentPagesNavigationEvent?) {
+        super.viewDidAppear(navigationEvent: navigationEvent)
+        
+        if let activePageId = navigationEvent?.parentPageParams?.activePageId {
+            
+            // NOTE: Method viewDidAppear is triggered from UICollectionView willDisplayCell in PageNavigationCollectionView.swift.
+            // For some reason attempting to scroll a collection view will not correctly scroll and using this Dispatch resolves that.
+            // Would like to resolve this so DispatchQueue.main.async is not needed. ~Levi
+           
+            DispatchQueue.main.async { [weak self] in
+                self?.pagesView.navigateToPage(pageId: activePageId, animated: false)
+            }
+        }
     }
 }
 

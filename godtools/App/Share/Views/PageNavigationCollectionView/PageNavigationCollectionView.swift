@@ -518,21 +518,30 @@ extension PageNavigationCollectionView {
             pageNavigationDirectionChanged = false
         }
         
-        if let insertPages = pageNavigation.insertPages, !insertPages.isEmpty {
-            
-            let indexPaths: [IndexPath] = insertPages.map({IndexPath(item: $0, section: 0)})
-            collectionView.insertItems(at: indexPaths)
-        }
-        
-        if let deletePages = pageNavigation.deletePages, !deletePages.isEmpty {
-            
-            let indexPaths: [IndexPath] = deletePages.map({IndexPath(item: $0, section: 0)})
-            collectionView.deleteItems(at: indexPaths)
-        }
-        
         let reloadDataNeeded: Bool = pageNavigation.reloadCollectionViewDataNeeded || pageNavigationDirectionChanged
         
-        currentPageNavigation = PageNavigationCollectionView.CurrentNavigation(pageNavigation: pageNavigation, isNavigationFromDataReload: reloadDataNeeded)
+        if !reloadDataNeeded {
+         
+            collectionView.performBatchUpdates {
+                
+                if let deletePages = pageNavigation.deletePages, !deletePages.isEmpty {
+                    
+                    let indexPaths: [IndexPath] = deletePages.map({IndexPath(item: $0, section: 0)})
+                    collectionView.deleteItems(at: indexPaths)
+                }
+                
+                if let insertPages = pageNavigation.insertPages, !insertPages.isEmpty {
+                    
+                    let indexPaths: [IndexPath] = insertPages.map({IndexPath(item: $0, section: 0)})
+                    collectionView.insertItems(at: indexPaths)
+                }
+            }
+        }
+        
+        currentPageNavigation = PageNavigationCollectionView.CurrentNavigation(
+            pageNavigation: pageNavigation,
+            isNavigationFromDataReload: reloadDataNeeded
+        )
                 
         if reloadDataNeeded {
                                     
@@ -562,7 +571,7 @@ extension PageNavigationCollectionView {
                         
             let didScroll: Bool = internalScrollToItemOnCollectionView(item: pageNavigation.page, animated: pageNavigation.animated)
             
-            if !didScroll {
+            if !didScroll && pageNavigation.animated == true {
                 assertionFailure("\n PageNavigationCollectionView: Failed to navigate.  Should the data be reloaded?  Try setting provided pageNavigation reloadCollectionViewDataNeeded to true.  \(pageNavigation)")
                 currentPageNavigation = nil
                 pageNavigationCompletedClosure = nil

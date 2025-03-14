@@ -58,8 +58,8 @@ class MobileContentPageView: MobileContentView, NibBased {
         }
     }
     
-    override func viewDidAppear() {
-        super.viewDidAppear()
+    override func viewDidAppear(navigationEvent: MobileContentPagesNavigationEvent?) {
+        super.viewDidAppear(navigationEvent: navigationEvent)
         
         viewModel.pageDidAppear()
     }
