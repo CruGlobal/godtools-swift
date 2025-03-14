@@ -13,6 +13,15 @@ struct MobileContentParentPageParams {
     
     private let params: [String: String]
     
+    init?(params: [String: String]?) {
+        
+        guard let params = params, !params.isEmpty else {
+            return nil
+        }
+        
+        self.params = params
+    }
+    
     init(page: Page) {
         
         params = page.parentPageParams

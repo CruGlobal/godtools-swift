@@ -1,5 +1,5 @@
 /* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
-"lessons.resumeLessonModal.title" = "Resume Progress";
+"lessons.resumeLessonModal.title" = "Resume Progress?";
 
 "lessons.resumeLessonModal.subtitle" = "Would you like to pick up where you left off?";
 "lessons.resumeLessonModal.startOverButton" = "Start over";

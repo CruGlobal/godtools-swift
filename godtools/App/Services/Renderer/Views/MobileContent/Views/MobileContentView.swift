@@ -149,18 +149,18 @@ class MobileContentView: UIView {
     
     // MARK: - View Did Appear
     
-    func notifyViewAndAllChildrenViewDidAppear() {
-        recurseViewDidAppear(view: self)
+    func notifyViewAndAllChildrenViewDidAppear(navigationEvent: MobileContentPagesNavigationEvent?) {
+        recurseViewDidAppear(view: self, navigationEvent: navigationEvent)
     }
     
-    private func recurseViewDidAppear(view: MobileContentView) {
+    private func recurseViewDidAppear(view: MobileContentView, navigationEvent: MobileContentPagesNavigationEvent?) {
         for childView in view.children {
-            recurseViewDidAppear(view: childView)
+            recurseViewDidAppear(view: childView, navigationEvent: navigationEvent)
         }
-        view.viewDidAppear()
+        view.viewDidAppear(navigationEvent: navigationEvent)
     }
     
-    func viewDidAppear() {
+    func viewDidAppear(navigationEvent: MobileContentPagesNavigationEvent?) {
         // NOTE: Subclasses should override and do anything here on view did appear.
     }
     
