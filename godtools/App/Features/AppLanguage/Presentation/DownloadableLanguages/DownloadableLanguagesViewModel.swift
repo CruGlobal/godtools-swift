@@ -84,8 +84,6 @@ class DownloadableLanguagesViewModel: ObservableObject {
     
     deinit {
         print("x deinit: \(type(of: self))")
-        
-        DownloadableLanguageItemViewModel.removeAllResetMarkedForRemovalTimers()
     }
     
     func getDownloadableLanguageItemViewModel(downloadableLanguage: DownloadableLanguageListItemDomainModel) -> DownloadableLanguageItemViewModel {

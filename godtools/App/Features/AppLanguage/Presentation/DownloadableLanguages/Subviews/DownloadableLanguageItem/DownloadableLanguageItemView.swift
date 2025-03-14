@@ -58,6 +58,6 @@ struct DownloadableLanguageItemView: View {
             }
         }
         .animation(.default, value: viewModel.downloadState)
-        .animation(.default, value: viewModel.isMarkedForRemoval.value)
+        .animation(.default, value: viewModel.recycleState.isMarkedForRemoval)
     }
 }
