@@ -62,7 +62,6 @@ class LessonViewModel: MobileContentRendererViewModel {
         let resourceId: String = currentPageRenderer.value.resource.id
         
         Self.storeLessonProgressCancellable?.cancel()
-        Self.storeLessonProgressCancellable = nil
         
         Self.storeLessonProgressCancellable = storeLessonProgressUseCase.storeLessonProgress(
             lessonId: resourceId,
