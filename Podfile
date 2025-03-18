@@ -11,7 +11,7 @@ platform :ios, '15.0'
 def shared_pods
   
   # CruGlobal pods
-  pod 'GodToolsShared', '1.1.0'
+  pod 'GodToolsShared', '1.1.1'
 end
 
 target 'godtools' do
