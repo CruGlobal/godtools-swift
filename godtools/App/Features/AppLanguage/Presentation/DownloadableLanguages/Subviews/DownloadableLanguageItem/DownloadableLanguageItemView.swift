@@ -24,41 +24,35 @@ struct DownloadableLanguageItemView: View {
     
     var body: some View {
         
-        HStack {
+        ZStack {
             
-            VStack(alignment: .leading, spacing: 10) {
+            Button(action: viewModel.languageTapped) {
+                Rectangle()
+                    .fill(Color.white)
+            }
+            .buttonStyle(.plain)
+            
+            HStack {
                 
-                HStack(spacing: 10) {
+                VStack(alignment: .leading, spacing: 10) {
                     
-                    Text(viewModel.downloadableLanguage.languageNameInOwnLanguage)
-                        .font(FontLibrary.sfProTextRegular.font(size: 15))
-                        .foregroundColor(ColorPalette.gtGrey.color)
+                    HStack(spacing: 10) {
+                        
+                        Text(viewModel.downloadableLanguage.languageNameInOwnLanguage)
+                            .font(FontLibrary.sfProTextRegular.font(size: 15))
+                            .foregroundColor(ColorPalette.gtGrey.color)
+                        
+                        Text(viewModel.downloadableLanguage.languageNameInAppLanguage)
+                            .font(FontLibrary.sfProTextRegular.font(size: 15))
+                            .foregroundColor(Self.lightGrey)
+                    }
                     
-                    Text(viewModel.downloadableLanguage.languageNameInAppLanguage)
-                        .font(FontLibrary.sfProTextRegular.font(size: 15))
+                    Text(viewModel.downloadableLanguage.toolsAvailableText)
+                        .font(FontLibrary.sfProTextRegular.font(size: 12))
                         .foregroundColor(Self.lightGrey)
                 }
                 
-                Text(viewModel.downloadableLanguage.toolsAvailableText)
-                    .font(FontLibrary.sfProTextRegular.font(size: 12))
-                    .foregroundColor(Self.lightGrey)
-            }
-            
-            Spacer()
-            
-            Button(action: secondaryButtonTapped) {
-                Rectangle()
-                    .fill(Color.red)
-                    .frame(width: 40, height: 40)
-            }
-            
-            Button {
-                
-                print("\n language tapped - \(viewModel.downloadableLanguage.languageNameInAppLanguage)")
-                
-                //viewModel.languageTapped()
-                
-            } label: {
+                Spacer()
                 
                 LanguageDownloadIcon(
                     state: viewModel.iconState
@@ -67,10 +61,5 @@ struct DownloadableLanguageItemView: View {
         }
         .animation(.default, value: viewModel.downloadState)
         .animation(.default, value: viewModel.recycleState.isMarkedForRemoval)
-    }
-            
-    private func secondaryButtonTapped() {
-        
-        print("\n secondary button tapped: \(viewModel.downloadableLanguage.languageNameInAppLanguage)")
     }
 }
