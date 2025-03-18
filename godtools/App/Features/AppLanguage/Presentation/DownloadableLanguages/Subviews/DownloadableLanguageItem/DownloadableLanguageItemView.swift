@@ -46,9 +46,17 @@ struct DownloadableLanguageItemView: View {
             
             Spacer()
             
+            Button(action: secondaryButtonTapped) {
+                Rectangle()
+                    .fill(Color.red)
+                    .frame(width: 40, height: 40)
+            }
+            
             Button {
                 
-                viewModel.languageTapped()
+                print("\n language tapped - \(viewModel.downloadableLanguage.languageNameInAppLanguage)")
+                
+                //viewModel.languageTapped()
                 
             } label: {
                 
@@ -59,5 +67,10 @@ struct DownloadableLanguageItemView: View {
         }
         .animation(.default, value: viewModel.downloadState)
         .animation(.default, value: viewModel.recycleState.isMarkedForRemoval)
+    }
+            
+    private func secondaryButtonTapped() {
+        
+        print("\n secondary button tapped: \(viewModel.downloadableLanguage.languageNameInAppLanguage)")
     }
 }
