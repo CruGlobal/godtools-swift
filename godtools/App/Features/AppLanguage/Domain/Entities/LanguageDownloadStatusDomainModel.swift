@@ -11,7 +11,6 @@ import Foundation
 enum LanguageDownloadStatusDomainModel: Equatable {
     
     case notDownloaded
-    case downloading(progress: Double?)
     case downloaded(date: Date)
 }
 
