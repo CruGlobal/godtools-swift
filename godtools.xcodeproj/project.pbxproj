@@ -835,8 +835,8 @@
 		459E3A062A30BC2600070934 /* MenuItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E3A032A30BC2600070934 /* MenuItemView.swift */; };
 		459E3A072A30BC2600070934 /* MenuSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E3A042A30BC2600070934 /* MenuSectionView.swift */; };
 		459E86DB28EDA86C00E197A5 /* GodToolsDeepLinkingManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86B928EDA86C00E197A5 /* GodToolsDeepLinkingManifest.swift */; };
-		459E86DC28EDA86C00E197A5 /* DeepLinkParserType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86BB28EDA86C00E197A5 /* DeepLinkParserType.swift */; };
-		459E86DD28EDA86C00E197A5 /* DeepLinkUrlParserType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86BC28EDA86C00E197A5 /* DeepLinkUrlParserType.swift */; };
+		459E86DC28EDA86C00E197A5 /* DeepLinkParserInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86BB28EDA86C00E197A5 /* DeepLinkParserInterface.swift */; };
+		459E86DD28EDA86C00E197A5 /* DeepLinkUrlParserInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86BC28EDA86C00E197A5 /* DeepLinkUrlParserInterface.swift */; };
 		459E86EA28EDA86C00E197A5 /* IncomingDeepLinkType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86D028EDA86C00E197A5 /* IncomingDeepLinkType.swift */; };
 		459E86EB28EDA86C00E197A5 /* DeepLinkingParserManifestInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86D228EDA86C00E197A5 /* DeepLinkingParserManifestInterface.swift */; };
 		459E86ED28EDA86C00E197A5 /* DeepLinkingManifestInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86D428EDA86C00E197A5 /* DeepLinkingManifestInterface.swift */; };
@@ -2530,8 +2530,8 @@
 		459E3A032A30BC2600070934 /* MenuItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuItemView.swift; sourceTree = "<group>"; };
 		459E3A042A30BC2600070934 /* MenuSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuSectionView.swift; sourceTree = "<group>"; };
 		459E86B928EDA86C00E197A5 /* GodToolsDeepLinkingManifest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GodToolsDeepLinkingManifest.swift; sourceTree = "<group>"; };
-		459E86BB28EDA86C00E197A5 /* DeepLinkParserType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeepLinkParserType.swift; sourceTree = "<group>"; };
-		459E86BC28EDA86C00E197A5 /* DeepLinkUrlParserType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeepLinkUrlParserType.swift; sourceTree = "<group>"; };
+		459E86BB28EDA86C00E197A5 /* DeepLinkParserInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeepLinkParserInterface.swift; sourceTree = "<group>"; };
+		459E86BC28EDA86C00E197A5 /* DeepLinkUrlParserInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeepLinkUrlParserInterface.swift; sourceTree = "<group>"; };
 		459E86D028EDA86C00E197A5 /* IncomingDeepLinkType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomingDeepLinkType.swift; sourceTree = "<group>"; };
 		459E86D228EDA86C00E197A5 /* DeepLinkingParserManifestInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeepLinkingParserManifestInterface.swift; sourceTree = "<group>"; };
 		459E86D428EDA86C00E197A5 /* DeepLinkingManifestInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeepLinkingManifestInterface.swift; sourceTree = "<group>"; };
@@ -7753,8 +7753,8 @@
 		459E86BA28EDA86C00E197A5 /* Parsers */ = {
 			isa = PBXGroup;
 			children = (
-				459E86BB28EDA86C00E197A5 /* DeepLinkParserType.swift */,
-				459E86BC28EDA86C00E197A5 /* DeepLinkUrlParserType.swift */,
+				459E86BB28EDA86C00E197A5 /* DeepLinkParserInterface.swift */,
+				459E86BC28EDA86C00E197A5 /* DeepLinkUrlParserInterface.swift */,
 				450EE28329A6648900524F64 /* ArticleAemPath */,
 				450EE28029A6648900524F64 /* DashboardPath */,
 				450EE2A829A6719500524F64 /* GodToolsApp */,
@@ -12651,7 +12651,7 @@
 				45BDA6492954FF08007E259B /* WebArchiveUrl.swift in Sources */,
 				45D63E56288F67F8009B4610 /* IgnoreCacheSession.swift in Sources */,
 				458B91C32B7D676900785C6F /* ViewFavoritesDomainModel.swift in Sources */,
-				459E86DD28EDA86C00E197A5 /* DeepLinkUrlParserType.swift in Sources */,
+				459E86DD28EDA86C00E197A5 /* DeepLinkUrlParserInterface.swift in Sources */,
 				459C56D225FF954F00F15967 /* (null) in Sources */,
 				45D63E86288F75B0009B4610 /* RealmAttachment.swift in Sources */,
 				45C649C22B31E212000249E0 /* GetShareToolInterfaceStringsRepositoryInterface.swift in Sources */,
@@ -12839,7 +12839,7 @@
 				45B8C1A72AEA9FC80099F8C2 /* GetLessonEvaluatedRepository.swift in Sources */,
 				45828BCA279CCB6900F6B5F3 /* MobileContentCardViewModel.swift in Sources */,
 				454ADADB2ABDDA3100037C27 /* AppLanguagesView.swift in Sources */,
-				459E86DC28EDA86C00E197A5 /* DeepLinkParserType.swift in Sources */,
+				459E86DC28EDA86C00E197A5 /* DeepLinkParserInterface.swift in Sources */,
 				45AD205625938AC300A096A0 /* AnalyticsConstants.swift in Sources */,
 				45B54C582A2641FE0042CD0E /* RealmDatabase+Write.swift in Sources */,
 				455583FE269F2DA500C3FF14 /* MobileContentEmbeddedVideoView.swift in Sources */,

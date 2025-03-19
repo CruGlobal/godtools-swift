@@ -8,7 +8,7 @@
 
 import Foundation
 
-class GodToolsAppLessonsPathDeepLinkParser: DeepLinkUrlParserType {
+class GodToolsAppLessonsPathDeepLinkParser: DeepLinkUrlParserInterface {
     
     required init() {
         

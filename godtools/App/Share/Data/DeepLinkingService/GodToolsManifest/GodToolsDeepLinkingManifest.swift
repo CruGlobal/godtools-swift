@@ -8,9 +8,9 @@
 
 import Foundation
 
-class GodToolsDeepLinkingManifest: DeepLinkingManifestType {
+class GodToolsDeepLinkingManifest: DeepLinkingManifestInterface {
     
-    let parserManifests: [DeepLinkingParserManifestType]
+    let parserManifests: [DeepLinkingParserManifestInterface]
     
     init() {
         

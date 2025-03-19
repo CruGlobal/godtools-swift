@@ -1,5 +1,5 @@
 //
-//  DeepLinkParserType.swift
+//  DeepLinkParserInterface.swift
 //  godtools
 //
 //  Created by Levi Eggert on 2/6/21.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol DeepLinkParserType {
+protocol DeepLinkParserInterface {
       
     init()
 }

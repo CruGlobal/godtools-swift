@@ -10,11 +10,11 @@ import Foundation
 
 class DeepLinkingService: NSObject {
     
-    private let manifest: DeepLinkingManifestType
+    private let manifest: DeepLinkingManifestInterface
     
     let deepLinkObserver: PassthroughValue<ParsedDeepLinkType?> = PassthroughValue()
         
-    required init(manifest: DeepLinkingManifestType) {
+    required init(manifest: DeepLinkingManifestInterface) {
         
         self.manifest = manifest
         
@@ -35,7 +35,7 @@ class DeepLinkingService: NSObject {
             
             case .url(let incomingUrl):
                 
-                guard let urlParser = parser as? DeepLinkUrlParserType else {
+                guard let urlParser = parser as? DeepLinkUrlParserInterface else {
                     continue
                 }
                 
