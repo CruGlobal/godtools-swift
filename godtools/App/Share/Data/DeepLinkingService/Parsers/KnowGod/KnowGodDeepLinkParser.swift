@@ -63,14 +63,23 @@ class KnowGodDeepLinkParser: DeepLinkUrlParserInterface {
         
         let abbreviationFromUrlPath: String? = pathComponents[safe: 1]
         let primaryLanguageCodeFromUrlPath: String? = pathComponents[safe: 2]
-        let pageFromUrlPath: Int?
+        let pageNumber: Int?
+        let pageId: String?
         let pageSubIndex: Int?
         
         if let pageStringFromUrlPath = pathComponents[safe: 3] {
-            pageFromUrlPath = Int(pageStringFromUrlPath)
+            if let pageIntegerFromUrlPath = Int(pageStringFromUrlPath) {
+                pageNumber = pageIntegerFromUrlPath
+                pageId = nil
+            }
+            else {
+                pageNumber = nil
+                pageId = pageStringFromUrlPath
+            }
         }
         else {
-            pageFromUrlPath = nil
+            pageNumber = nil
+            pageId = nil
         }
         
         if let pageSubIndexStringFromUrlPath = pathComponents[safe: 4] {
@@ -113,8 +122,8 @@ class KnowGodDeepLinkParser: DeepLinkUrlParserInterface {
             primaryLanguageCodes: primaryLanguageCodes,
             parallelLanguageCodes: parallelLanguageCodes,
             liveShareStream: knowGodQueryParameters?.liveShareStream,
-            page: pageFromUrlPath,
-            pageId: nil,
+            page: pageNumber,
+            pageId: pageId,
             pageSubIndex: pageSubIndex,
             selectedLanguageIndex: selectedLanguageIndex
         )
