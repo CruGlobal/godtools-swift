@@ -4,7 +4,10 @@
 "toolSettings.languagesAvailable.title" = "Gjuhët";
 "share_link" = "Tregoju të tjerëve";
 
-/* This is an invitation for a user to open a tool */
+/*
+ * This is an invitation for a user to open a tool
+ * Please keep to a 9 character limit, longer phrases may get cut off
+*/
 "open" = "Hape";
 "language_onboard" = "90+ Gjuhë";
 
