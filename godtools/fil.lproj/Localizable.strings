@@ -17,6 +17,8 @@
 "favorites.favoriteLessons.title" = "Naka-feature na lesson";
 "favorites.favoriteTools.title" = "Ang iyong mga paboritong tool";
 "favorites.favoriteTools.viewAll" = "Tingnan lahat";
+
+/* Please keep to a 9 character limit, longer phrases may get cut off */
 "favorites.favoriteLessons.details" = "Mga Detalye";
 
 /* The meaning is "I don't want to set a second language".  Language is no language or None */
@@ -73,7 +75,10 @@ Kung hindi mo matatanggap ang mensaheng ito hanggang sa mamaya, maaaring hindi p
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Pagsasanay";
 
-/* This is an invitation for a user to open a tool */
+/*
+ * This is an invitation for a user to open a tool
+ * Please keep to a 9 character limit, longer phrases may get cut off
+*/
 "open" = "Buksan";
 
 /* A user will be selecting a heart to indicated that it is one of their favorite tools. */
