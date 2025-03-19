@@ -24,7 +24,7 @@ class KnowGodDeepLinkParser: DeepLinkUrlParserInterface {
         case "lessons":
             return parseLesson(url: url, pathComponents: pathComponents, queryParameters: queryParameters)
         default:
-            return parseTract(url: url, pathComponents: pathComponents, queryParameters: queryParameters)
+            return parseTool(url: url, pathComponents: pathComponents, queryParameters: queryParameters)
         }
     }
     
@@ -57,7 +57,7 @@ class KnowGodDeepLinkParser: DeepLinkUrlParserInterface {
         return .tool(toolDeepLink: toolDeepLink)
     }
     
-    private func parseTract(url: URL, pathComponents: [String], queryParameters: [String: Any]) -> ParsedDeepLinkType? {
+    private func parseTool(url: URL, pathComponents: [String], queryParameters: [String: Any]) -> ParsedDeepLinkType? {
         
         let knowGodQueryParameters: KnowGodTractDeepLinkQueryParameters? = JsonServices().decodeJsonObject(jsonObject: queryParameters)
         
