@@ -91,7 +91,12 @@ class DownloadableLanguageItemViewModel: ObservableObject {
                     return
                 }
                 
-                self?.downloadState = .downloading(progress: progress)
+                if progress < 1 {
+                    self?.downloadState = .downloading(progress: progress)
+                }
+                else {
+                    self?.downloadState = .downloaded
+                }
             })
             .store(in: &cancellables)
         
@@ -112,7 +117,10 @@ class DownloadableLanguageItemViewModel: ObservableObject {
     private static func getInitialDownloadState(downloadableLanguage: DownloadableLanguageListItemDomainModel, recycleState: DownloadableLanguageItemRecycleState) -> DownloadableLanguageDownloadState {
         
         if let currentDownloadProgress = recycleState.downloadProgress {
-            return .downloading(progress: currentDownloadProgress)
+            if currentDownloadProgress < 1 {
+                return .downloading(progress: currentDownloadProgress)
+            }
+            return .downloaded
         }
         
         switch downloadableLanguage.downloadStatus {
@@ -175,10 +183,10 @@ extension DownloadableLanguageItemViewModel {
                 
                 switch completion {
                 case .finished:
-                    break
+                    recycleState.downloadProgress = 1
                 case .failure(let error):
-                    recycleState.downloadProgress = nil
                     recycleState.downloadError = error
+                    recycleState.downloadProgress = nil
                 }
                 
             } receiveValue: { (progress: Double) in
