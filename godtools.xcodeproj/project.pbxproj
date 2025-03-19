@@ -838,8 +838,8 @@
 		459E86DC28EDA86C00E197A5 /* DeepLinkParserType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86BB28EDA86C00E197A5 /* DeepLinkParserType.swift */; };
 		459E86DD28EDA86C00E197A5 /* DeepLinkUrlParserType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86BC28EDA86C00E197A5 /* DeepLinkUrlParserType.swift */; };
 		459E86EA28EDA86C00E197A5 /* IncomingDeepLinkType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86D028EDA86C00E197A5 /* IncomingDeepLinkType.swift */; };
-		459E86EB28EDA86C00E197A5 /* DeepLinkingParserManifestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86D228EDA86C00E197A5 /* DeepLinkingParserManifestType.swift */; };
-		459E86ED28EDA86C00E197A5 /* DeepLinkingManifestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86D428EDA86C00E197A5 /* DeepLinkingManifestType.swift */; };
+		459E86EB28EDA86C00E197A5 /* DeepLinkingParserManifestInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86D228EDA86C00E197A5 /* DeepLinkingParserManifestInterface.swift */; };
+		459E86ED28EDA86C00E197A5 /* DeepLinkingManifestInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86D428EDA86C00E197A5 /* DeepLinkingManifestInterface.swift */; };
 		459E86EE28EDA86C00E197A5 /* DeepLinkingParserManifestUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86D528EDA86C00E197A5 /* DeepLinkingParserManifestUrl.swift */; };
 		459E86EF28EDA86C00E197A5 /* ParsedDeepLinkType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86D728EDA86C00E197A5 /* ParsedDeepLinkType.swift */; };
 		459E86F028EDA86C00E197A5 /* ToolDeepLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86D828EDA86C00E197A5 /* ToolDeepLink.swift */; };
@@ -2533,8 +2533,8 @@
 		459E86BB28EDA86C00E197A5 /* DeepLinkParserType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeepLinkParserType.swift; sourceTree = "<group>"; };
 		459E86BC28EDA86C00E197A5 /* DeepLinkUrlParserType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeepLinkUrlParserType.swift; sourceTree = "<group>"; };
 		459E86D028EDA86C00E197A5 /* IncomingDeepLinkType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomingDeepLinkType.swift; sourceTree = "<group>"; };
-		459E86D228EDA86C00E197A5 /* DeepLinkingParserManifestType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeepLinkingParserManifestType.swift; sourceTree = "<group>"; };
-		459E86D428EDA86C00E197A5 /* DeepLinkingManifestType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeepLinkingManifestType.swift; sourceTree = "<group>"; };
+		459E86D228EDA86C00E197A5 /* DeepLinkingParserManifestInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeepLinkingParserManifestInterface.swift; sourceTree = "<group>"; };
+		459E86D428EDA86C00E197A5 /* DeepLinkingManifestInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeepLinkingManifestInterface.swift; sourceTree = "<group>"; };
 		459E86D528EDA86C00E197A5 /* DeepLinkingParserManifestUrl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeepLinkingParserManifestUrl.swift; sourceTree = "<group>"; };
 		459E86D728EDA86C00E197A5 /* ParsedDeepLinkType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParsedDeepLinkType.swift; sourceTree = "<group>"; };
 		459E86D828EDA86C00E197A5 /* ToolDeepLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolDeepLink.swift; sourceTree = "<group>"; };
@@ -7769,8 +7769,8 @@
 		459E86D128EDA86C00E197A5 /* Manifest */ = {
 			isa = PBXGroup;
 			children = (
-				459E86D428EDA86C00E197A5 /* DeepLinkingManifestType.swift */,
-				459E86D228EDA86C00E197A5 /* DeepLinkingParserManifestType.swift */,
+				459E86D428EDA86C00E197A5 /* DeepLinkingManifestInterface.swift */,
+				459E86D228EDA86C00E197A5 /* DeepLinkingParserManifestInterface.swift */,
 				459E86D528EDA86C00E197A5 /* DeepLinkingParserManifestUrl.swift */,
 			);
 			path = Manifest;
@@ -13128,7 +13128,7 @@
 				D4C2A5742C344CB90035AB4D /* LessonFilterDataLayerDependencies.swift in Sources */,
 				455583F1269F2DA500C3FF14 /* MobileContentTabView.swift in Sources */,
 				450D63B22AC8A87200B90319 /* TrackScreenViewAnalyticsInterface.swift in Sources */,
-				459E86EB28EDA86C00E197A5 /* DeepLinkingParserManifestType.swift in Sources */,
+				459E86EB28EDA86C00E197A5 /* DeepLinkingParserManifestInterface.swift in Sources */,
 				453F84BC2A029FC00005101E /* ArticleAemWebArchiveFileCacheLocation.swift in Sources */,
 				45CC43072C3898B300B0D82B /* LocalizationLanguageNameRepositoryInterface.swift in Sources */,
 				D4E243D029EDD2E800EA4BB7 /* AskAQuestionWebContent.swift in Sources */,
@@ -13207,7 +13207,7 @@
 				458585DF2924596C005042C2 /* AccountCreationIsSupportedDomainModel.swift in Sources */,
 				45AD1BDD25938A4F00A096A0 /* GTSegmentType.swift in Sources */,
 				45E39ECA27457A14006A59E4 /* AnimatedViewModel.swift in Sources */,
-				459E86ED28EDA86C00E197A5 /* DeepLinkingManifestType.swift in Sources */,
+				459E86ED28EDA86C00E197A5 /* DeepLinkingManifestInterface.swift in Sources */,
 				D4E7EE202CA48F2300F75DA6 /* RealmUserLessonProgress.swift in Sources */,
 				455583C3269F2DA500C3FF14 /* MobileContentPageViewFactory.swift in Sources */,
 				45920D472A8D1C9700E336A8 /* ToolCardCategoryView.swift in Sources */,
