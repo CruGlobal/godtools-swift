@@ -44,6 +44,7 @@ class GodToolsAppLessonsPathDeepLinkParser: DeepLinkUrlParserInterface {
             liveShareStream: nil,
             page: nil,
             pageId: nil,
+            pageSubIndex: nil,
             selectedLanguageIndex: nil
         )
                        

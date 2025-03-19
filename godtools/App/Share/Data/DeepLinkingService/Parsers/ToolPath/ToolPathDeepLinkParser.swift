@@ -76,6 +76,7 @@ class ToolPathDeepLinkParser: DeepLinkUrlParserInterface {
                 liveShareStream: nil,
                 page: pageNumber,
                 pageId: pageId,
+                pageSubIndex: nil,
                 selectedLanguageIndex: nil
             )
         )

@@ -49,6 +49,18 @@ class GodToolsDeepLinkingManifest: DeepLinkingManifestInterface {
                 scheme: "https",
                 host: "knowgod.com",
                 path: nil,
+                parserClass: KnowGodDeepLinkParser.self
+            ),
+            DeepLinkingParserManifestUrl(
+                scheme: "godtools",
+                host: "knowgod.com",
+                path: nil,
+                parserClass: KnowGodDeepLinkParser.self
+            ),
+            DeepLinkingParserManifestUrl(
+                scheme: "https",
+                host: "knowgod.com",
+                path: nil,
                 parserClass: LegacyKnowGodDeepLinkParser.self
             ),
             DeepLinkingParserManifestUrl(
