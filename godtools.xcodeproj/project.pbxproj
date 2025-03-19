@@ -2862,6 +2862,8 @@
 		45C883512A93DD5E00F33E6D /* DashboardPresentationLayerDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardPresentationLayerDependencies.swift; sourceTree = "<group>"; };
 		45C8835C2A93EDDF00F33E6D /* DashboardTabBarItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardTabBarItemView.swift; sourceTree = "<group>"; };
 		45C8835E2A93EE9C00F33E6D /* DashboardTabBarItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardTabBarItemViewModel.swift; sourceTree = "<group>"; };
+		45C8DF062D8B4D0500F231C1 /* om */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = om; path = om.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		45C8DF072D8B4D0500F231C1 /* om */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = om; path = om.lproj/Localizable.strings; sourceTree = "<group>"; };
 		45C925012B45E7AA005947DB /* AppHomeBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppHomeBarItem.swift; sourceTree = "<group>"; };
 		45C94E602C4EDF1C004D80FE /* AccessibilityTapAreaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityTapAreaView.swift; sourceTree = "<group>"; };
 		45CAB4E928A2CE7F00224B5F /* KeyboardNotificationObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardNotificationObserver.swift; sourceTree = "<group>"; };
@@ -12289,6 +12291,7 @@
 				ckb,
 				en,
 				Base,
+				om,
 			);
 			mainGroup = 4F5732801EA69CF00082035C;
 			packageReferences = (
@@ -14242,6 +14245,7 @@
 				4576FCD427EA0B6100CB9CC6 /* ps */,
 				4576FCD527EA0BC200CB9CC6 /* ckb */,
 				45C493F92C334A8E001D81F0 /* Base */,
+				45C8DF072D8B4D0500F231C1 /* om */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -14316,6 +14320,7 @@
 				D4B5231D29D761FD00D85213 /* ur */,
 				D4B5231E29D761FD00D85213 /* vi */,
 				45C493FA2C334A99001D81F0 /* Base */,
+				45C8DF062D8B4D0500F231C1 /* om */,
 			);
 			name = Localizable.stringsdict;
 			sourceTree = "<group>";

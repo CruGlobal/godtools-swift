@@ -17,6 +17,8 @@
 "favorites.favoriteLessons.title" = "Soovitatud koolitus";
 "favorites.favoriteTools.title" = "Su lemmiktööriistad";
 "favorites.favoriteTools.viewAll" = "Kuva kõik";
+
+/* Please keep to a 9 character limit, longer phrases may get cut off */
 "favorites.favoriteLessons.details" = "Teave";
 
 /* The meaning is "I don't want to set a second language".  Language is no language or None */
@@ -63,7 +65,10 @@ Kui saad selle sõnumi hiljem, et pruugi link töötada. Sel juhul võime mõni 
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Ettevalmistus";
 
-/* This is an invitation for a user to open a tool */
+/*
+ * This is an invitation for a user to open a tool
+ * Please keep to a 9 character limit, longer phrases may get cut off
+*/
 "open" = "Ava";
 
 /* A user will be selecting a heart to indicated that it is one of their favorite tools. */
