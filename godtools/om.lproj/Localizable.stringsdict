@@ -13,9 +13,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>%d Lesson available</string>
+<string>Barannoo %d 'tu jira</string>
 <key>other</key>
-<string>%d Lessons available</string>
+<string>Barannoowwan %d 'tu jira</string>
 </dict>
 </dict>
 <key>account.activity.toolOpens</key>
@@ -29,9 +29,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Tool open</string>
+<string>Yeroo barruu kana bante</string>
 <key>other</key>
-<string>Tool opens</string>
+<string>Yeroo barruu kana bante</string>
 </dict>
 </dict>
 <key>account.activity.lessonCompletions</key>
@@ -45,9 +45,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Lesson completion</string>
+<string>Barannoo barattee xumurtee</string>
 <key>other</key>
-<string>Lesson completions</string>
+<string>Barannoowwan barattee xumurtee</string>
 </dict>
 </dict>
 <key>account.activity.screenShares</key>
@@ -61,9 +61,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Screen share</string>
+<string>Yeroo skiriiniikee qoodde</string>
 <key>other</key>
-<string>Screen shares</string>
+<string>Yeroo skiriiniikee qoodde</string>
 </dict>
 </dict>
 <key>account.activity.linksShared</key>
@@ -77,9 +77,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Link share</string>
+<string>Yeroo liinkii namaaf qoodde</string>
 <key>other</key>
-<string>Link shares</string>
+<string>Yeroo liinkii namaaf qoodde</string>
 </dict>
 </dict>
 <key>account.activity.languagesUsed</key>
@@ -93,9 +93,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Language used</string>
+<string>Afaan fayyadamte</string>
 <key>other</key>
-<string>Languages used</string>
+<string>Afaanota fayyadamte</string>
 </dict>
 </dict>
 <key>account.activity.sessions</key>
@@ -109,9 +109,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Session</string>
+<string>Yeroo fayyadamaa</string>
 <key>other</key>
-<string>Sessions</string>
+<string>Yeroo fayyadamaa</string>
 </dict>
 </dict>
 <key>tools.filter.toolsAvailable</key>
@@ -125,9 +125,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>%d Tool available</string>
+<string>Barruu %d 'tu jira</string>
 <key>other</key>
-<string>%d Tools available</string>
+<string>Barruuwwan %d 'tu jira</string>
 </dict>
 </dict>
 <key>languageSettings.appLanguage.numberAvailable</key>
@@ -141,9 +141,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>1 Language available</string>
+<string>Afaan %d 'tu jira</string>
 <key>other</key>
-<string>%d Languages available</string>
+<string>Afaanota %d 'tu jira</string>
 </dict>
 </dict>
 <key>badges.imagesShared</key>
@@ -157,9 +157,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Shared 1 image</string>
+<string>Suura tokko qooddeetta</string>
 <key>other</key>
-<string>Shared %d images</string>
+<string>Suurota %d qooddeetta</string>
 </dict>
 </dict>
 <key>badges.articlesOpened</key>
@@ -173,9 +173,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Read 1 article</string>
+<string>Barruu 1 dubbisteetta</string>
 <key>other</key>
-<string>Read %d articles</string>
+<string>Barruuwwan %d dubbisteetta</string>
 </dict>
 </dict>
 <key>badges.lessonsCompleted</key>
@@ -189,9 +189,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Completed 1 lesson</string>
+<string>Barannoo 1 xumurteetta</string>
 <key>other</key>
-<string>Completed %d lessons</string>
+<string>Barannoowwan %d xumurteetta</string>
 </dict>
 </dict>
 <key>badges.toolsOpened</key>
@@ -205,9 +205,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Opened 1 tool</string>
+<string>Barruu tokko banteetta</string>
 <key>other</key>
-<string>Opened %d tools</string>
+<string>Barruuwwan %d banteetta</string>
 </dict>
 </dict>
 <key>badges.tipsCompleted</key>
@@ -221,9 +221,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Completed 1 training tip</string>
+<string>Yaada gorsaa leenjii 1 xumurteetta</string>
 <key>other</key>
-<string>Completed %d training tips</string>
+<string>Yaadota gorsaa leenjii %d xumurteetta</string>
 </dict>
 </dict>
 </dict>

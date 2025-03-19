@@ -1,404 +1,345 @@
 /* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
-"lessons.resumeLessonModal.title" = "Resume Progress?";
+"lessons.resumeLessonModal.title" = "Bakka dhaabdee itti fufi?";
 
-"lessons.resumeLessonModal.subtitle" = "Would you like to pick up where you left off?";
-"lessons.resumeLessonModal.startOverButton" = "Start over";
-"lessons.resumeLessonModal.continueButton" = "Continue";
-"lessons.lessonCompleted" = "Completed";
-"lessons.completionProgress" = "%@ Complete";
-"network_connection_lost" = "The network connection was lost.";
+"lessons.resumeLessonModal.subtitle" = "Bakka itti dhaabdee itti fufuu barbaaddaa?";
+"lessons.resumeLessonModal.startOverButton" = "Jalqabaa eegali";
+"lessons.resumeLessonModal.continueButton" = "Itti fufi";
+"lessons.lessonCompleted" = "Xumurteetta";
+"lessons.completionProgress" = "%@ Xumurameera";
+"network_connection_lost" = "Tajaajilli interneetii kee addaan citeera.";
 "language_name_fil" = "Filipino (Tagalog)";
-"lessons.filter.navBar.language" = "Lesson language";
-"lessons.languageFilter.title" = "Lessons in:";
+"lessons.filter.navBar.language" = "Afaan Barannoo kanaa";
+"lessons.languageFilter.title" = "Barannoowwaan afaan:";
 "language_name_fil-x-taglish" = "Taglish";
 "language_name_sid" = "Sidama";
-"onboardingTutorial.chooseLanguageButton.title" = "Choose language";
-"languageSettings.confirmAppLanguage.message" = "You have selected %@ as your app language. This will change the language of the whole GodTools app. Are you sure?";
-"languageSettings.confirmAppLanguage.changeLanguageButton.title" = "Change language";
-"languageSettings.confirmAppLanguage.nevermindButton.title" = "Nevermind";
-"languageSettings.downloadableLanguages.title" = "Downloadable languages";
-"languageSettings.appInterface.title" = "App interface language";
-"languageSettings.appInterface.message" = "Set the language you'd like the whole app to be displayed in.";
-"languageSettings.appInterface.languagesAvailable" = "Languages available";
-"languageSettings.toolLanguagesAvailableOffline.title" = "Tool languages available offline";
-"languageSettings.toolLanguagesAvailableOffline.message" = "Download all the tools in a language to make them available even if you're out of WiFi or cell service. Set the tool language via the options button within a tool.";
-"languageSettings.toolLanguagesAvailableOffline.editDownloadedLanguagesButton.title" = "Edit downloaded languages";
-"allTools.filter.title" = "Filter";
-"allTools.filter.anyCategory" = "Any category";
-"allTools.filter.anyLanguage" = "Any language";
-"allTools.filter.navBar.language" = "Filter by language";
-"allTools.filter.navBar.category" = "Filter by category";
-"languageSettings.appLanguage.title" = "App Language";
-"authError.userAccountAlreadyExists.message" = "User account already exists.";
-"authError.userAccountNotFound.message" = "User account not found.";
-"createAccount.title" = "Create account";
-"createAccount.subtitle" = "Create an account to have real stories, encouragement, and practical tips at your fingertips.";
-"deleteAccountProgress.title" = "Deleting account...";
-"confirmDeleteAccount.title" = "Are you sure?";
-"confirmDeleteAccount.confirmButton.title" = "Delete account";
-"accountDeletedAlert.title" = "Account Deleted";
-"accountDeletedAlert.message" = "Your account has been deleted.";
-"deleteAccount.title" = "Don't go so soon";
-"deleteAccount.subtitle" = "If you delete your account you won't be able to access your favorited tools or account activity.";
-"deleteAccount.confirmButton.title" = "Delete my account";
-"deleteAccount.cancelButton.title" = "Keep my account";
-"signIn.title" = "Sign in";
-"signIn.subtitle" = "Log in to your account to have real stories, encouragement, and practical tips at your fingertips.";
-"signIn.google" = "Sign in with Google";
-"signIn.facebook" = "Login with Facebook";
-"signIn.apple" = "Continue with Apple";
-"menu_getStarted" = "Get started";
-"menu_support" = "Support";
-"menu_about" = "About";
-"menu.sendFeedback" = "Send feedback";
-"menu.reportABug" = "Report a bug";
-"menu.askAQuestion" = "Ask a question";
-"menu.leaveAReview" = "Leave a review";
-"account.badges.sectionTitle" = "Your badges";
-"account.activity.sectionTitle" = "Your activity";
+"onboardingTutorial.chooseLanguageButton.title" = "Qooqa filadhu";
+"languageSettings.confirmAppLanguage.message" = "Afaan %@ akka afaan app kanaa ta'uuf filatteetta. Kunis afaan guutummaa app GodTools jijjira. Akkas akka ta'u ni barbaaddaa?";
+"languageSettings.confirmAppLanguage.changeLanguageButton.title" = "Qooqa jijjiiri";
+"languageSettings.confirmAppLanguage.nevermindButton.title" = "Dhiisi";
+"languageSettings.downloadableLanguages.title" = "Afaanota buufachuu dandeessu";
+"languageSettings.appInterface.title" = "Qooqa app kanaa";
+"languageSettings.appInterface.message" = "Qooqa appn kun guutummaan isaa akka ittiin mul'atu barbaaddu filadhu.";
+"languageSettings.appInterface.languagesAvailable" = "Afaanota jiran";
+"languageSettings.toolLanguagesAvailableOffline.title" = "Afaanota barruu buufamanii jiran";
+"languageSettings.toolLanguagesAvailableOffline.message" = "Barruuwwan afaan kanaan jiran yeroo networkii ykn WiFi hin qabnettis argachuuf buufadhu. Afaan barruu sanaa filannoowwan baruu sanaa keessa galii sirreessi.";
+"languageSettings.toolLanguagesAvailableOffline.editDownloadedLanguagesButton.title" = "Afaanota buufamanii jiran sirreessi";
+"allTools.filter.title" = "Qoodi";
+"allTools.filter.anyCategory" = "Garee hundumaa";
+"allTools.filter.anyLanguage" = "Afaan hundumaa";
+"allTools.filter.navBar.language" = "Afaaniin qoodi";
+"allTools.filter.navBar.category" = "Gareedhaan qoodi";
+"languageSettings.appLanguage.title" = "Qooqa app";
+"authError.userAccountAlreadyExists.message" = "Akkaawontiin duraan baname jira.";
+"authError.userAccountNotFound.message" = "Akkaawontiin baname hin jiru.";
+"createAccount.title" = "Akkaawontii uumi";
+"createAccount.subtitle" = "Seenaa dhugaa qabaachuuf, ergaawwan jajjabinaa fi yaadota gorsaa haala salphaa ta'een argachuuf, akkaawontii uummadhu.";
+"deleteAccountProgress.title" = "Akkaawontii balleessaa jira....";
+"confirmDeleteAccount.title" = "Mirkaneeffatteettaa?";
+"confirmDeleteAccount.confirmButton.title" = "Akkaawontii balleessi";
+"accountDeletedAlert.title" = "Akkaawontiin badeera";
+"accountDeletedAlert.message" = "Akkawontiinkee balleeffameera.";
+"deleteAccount.title" = "Akkas daftee hin deemiin";
+"deleteAccount.subtitle" = "Yoo akkaawontii kee balleessite, barruuwwan jaallattuufi wantoota akkawontii kee irraa qabdu hunda ni dhabda.";
+"deleteAccount.confirmButton.title" = "Akkaawontii koo balleessi";
+"deleteAccount.cancelButton.title" = "Akkaawontii koo tursi";
+"signIn.title" = "Seeni";
+"signIn.subtitle" = "Seenaa dhugaa, ergaawwan jajjabinaa fi yaadota gorsaa haala salphaa ta'een argachuuf seeni.";
+"signIn.google" = "Karaa Google seeni";
+"signIn.facebook" = "Karaa Facebook seeni";
+"signIn.apple" = "Akkaawontii Apple keetiin seeni";
+"menu_getStarted" = "Eegali";
+"menu_support" = "Gargaarsa";
+"menu_about" = "Waa'ee";
+"menu.sendFeedback" = "Duubdeebii ergi";
+"menu.reportABug" = "Rakkoo app gabaasi";
+"menu.askAQuestion" = "Gaaffii gaafadhu";
+"menu.leaveAReview" = "Gamaggama kaa'i";
+"account.badges.sectionTitle" = "Baajiiwwan kee";
+"account.activity.sectionTitle" = "Sochiiwwan kee";
 
 /* Just translate "Joined" - leave the %@ - this is the date they started using GodTools */
-"account.joinedOn" = "Joined %@";
+"account.joinedOn" = "Gaafa %@ Fayyadamuu eegalte";
 
-"account.globalActivity.title" = "Global Activity";
-"toolDetails.conversationStarters.title" = "Conversation starters";
+"account.globalActivity.title" = "Sochii addunyaalessaa";
+"toolDetails.conversationStarters.title" = "Haasaa jalqabduuwwan";
 
 /* A list of the main points of the tool will live behind a section called "Outline" */
-"toolDetails.outline.title" = "Outline";
+"toolDetails.outline.title" = "Qabxiilee murteessoo";
 
-"toolDetails.bibleReferences.title" = "Bible references";
+"toolDetails.bibleReferences.title" = "Wabiiwwan macaafa qulqulluu";
 
 /* This About refers to a specific tool in the app. */
-"toolDetails.about.title" = "About";
+"toolDetails.about.title" = "Waa'ee";
 
 /* This means that the tool/resource is not available in the currently selected language. */
-"lessonCard.languageNotAvailable" = "Not available in %@";
+"lessonCard.languageNotAvailable" = "Barruun kun Afaan %@ 'dhaan hin jiru";
 
-"menu.deleteAccount" = "Delete account";
-"alert.mailAppUnavailable.title" = "Mail App Unavailable";
-"alert.mailAppUnavailable.message" = "The native Mail app is either not configured or is unavailable on this device. ";
-"tool_menu_item.tools" = "Tools";
-"lessons.pageTitle" = "Lessons made for you";
-"lessons.pageSubtitle" = "Practical ideas to build relationships and start meaningful conversations.";
-"toolSettings.languagesAvailable.title" = "Languages available";
-"toolDetails.versions.message" = "Choose a different version of this tool below. Each version features unique style and content so you can find the one that is best for your conversation. You can favorite multiple versions of the same tool.";
-"favorites.noTools.title" = "No favorite tools to display";
-"favorites.noTools.description" = "Tap on the heart icon to favorite a tool and make it available offline.";
-"favorites.noTools.button" = "Go to Tools";
-"toolSettings.shareImagePreview.shareImageButton.title" = "Share image";
-"favorites.pageTitle" = "Welcome to GodTools";
-"favorites.favoriteLessons.title" = "Featured lesson";
-"favorites.favoriteTools.title" = "Your favorite tools";
-"favorites.favoriteTools.viewAll" = "View all";
-"favorites.favoriteLessons.details" = "Details";
+"menu.deleteAccount" = "Akkaawontii balleessi";
+"alert.mailAppUnavailable.title" = "App'n ergaa iimeelii hin argamne";
+"alert.mailAppUnavailable.message" = "App'n ergaa iimeelii hin jiru yookiin sirnaan hin sirreeffamne.";
+"tool_menu_item.tools" = "Barruuwwan";
+"lessons.pageTitle" = "Barannoowwan siif qopha'an";
+"lessons.pageSubtitle" = "Yaadota qabatamaa hariiroo ijaaruu fi haasawa hiika qabu jalqabuuf gargaaraan.";
+"toolSettings.languagesAvailable.title" = "Afaanota jiran";
+"toolDetails.versions.message" = "Gosa kan biraa, barruu kanaa filadhu. Gosni addaa addaa hunduu akkaataa dhiyeenyaa fi qabiyyee adda addaa qaba, atis haasaakeef kan si fayyadu filachuu ni dandeessa. Barruu tokko gosa adda addaatiin barruu jaallatamoo kee jalatti galmeessuu dandeessa.";
+"favorites.noTools.title" = "Barruun jaallatamoon hin jiran.";
+"favorites.noTools.description" = "Barruu tokko jaallatamootti dabaluuf mallattoo onnee tuqi.";
+"favorites.noTools.button" = "Gara barruuwwanii deemi";
+"toolSettings.shareImagePreview.shareImageButton.title" = "Suura qoodi";
+"favorites.pageTitle" = "Baga nagaan gara GodTools'tti dhufte";
+"favorites.favoriteLessons.title" = "Barannoo addatti dhiyaate";
+"favorites.favoriteTools.title" = "Barruuwwan ati jaallatte";
+"favorites.favoriteTools.viewAll" = "Hundumaa ilaali";
+
+/* Please keep to a 9 character limit, longer phrases may get cut off */
+"favorites.favoriteLessons.details" = "Gadi fageenya";
 
 /* The meaning is "I don't want to set a second language".  Language is no language or None */
-"toolSettings.languagesList.deleteLanguage.title" = "None";
+"toolSettings.languagesList.deleteLanguage.title" = "Afaan lammaffaa hin barbaaduu";
 
-"toolSettings.chooseLanguage.toggleMessage" = "Toggle between the two different languages in this tool.";
-"toolDetails.versions.title" = "Versions";
-"toolDetails.learnToShareToolButton.title" = "Learn to share this tool";
-"toolSettings.title" = "Tool Options";
-"toolSettings.option.shareLink.title" = "Share link";
-"toolSettings.option.screenShare.title" = "Share screen";
-"toolSettings.option.trainingTips.show.title" = "Training tips";
-"toolSettings.option.trainingTips.hide.title" = "Hide tips";
-"toolSettings.chooseLanguage.title" = "Parallel Language";
-"toolSettings.chooseLanguage.noParallelLanguageTitle" = "Parallel";
-"toolSettings.shareables.title" = "Related graphics";
-"allTools.spotlight.title" = "Tool Spotlight";
-"allTools.spotlight.description" = "Here are some tools we thought you might like";
-"allTools.categories.title" = "Categories";
-"training_tip_ask" = "Ask";
-"training_tip_consider" = "Consider";
-"training_tip_prepare" = "Prepare";
-"training_tip_quote" = "Quote";
-"training_tip_tip" = "Tip";
-"articles.downloadingArticles.errorMessage.title" = "Error Downloading Articles";
-"start_training" = "Start Training";
-"close" = "Close";
-"tool_menu_item.lessons" = "Lessons";
+"toolSettings.chooseLanguage.toggleMessage" = "Barruu kana keessatti afaan lamaan gidduu jijjiiri.";
+"toolDetails.versions.title" = "Gosoota";
+"toolDetails.learnToShareToolButton.title" = "Barruu kana qooduu baradhu";
+"toolSettings.title" = "Filannoowwan barruu";
+"toolSettings.option.shareLink.title" = "Liinkii qoodi";
+"toolSettings.option.screenShare.title" = "Skriinii qoodi";
+"toolSettings.option.trainingTips.show.title" = "Yaadota gorsaa leenjiidhaaf";
+"toolSettings.option.trainingTips.hide.title" = "Yaadota gorsaa dhoksi";
+"toolSettings.chooseLanguage.title" = "Afaan walcina qabuuf";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "Walcinaa";
+"toolSettings.shareables.title" = "Suurawwan wal fakkaatan";
+"allTools.spotlight.title" = "Barruuwwan filatamoo";
+"allTools.spotlight.description" = "Barruuwwan nuti ni jaallatta jennee yaadne";
+"training_tip_ask" = "Gaafadhu";
+"training_tip_consider" = "Ilaalcha keessa galchi";
+"training_tip_prepare" = "Qopheessi";
+"training_tip_quote" = "Caqasa";
+"training_tip_tip" = "Yaada gorsaa";
+"start_training" = "Leenjii eegali";
+"close" = "Cufi";
+"tool_menu_item.lessons" = "Barannoowwan";
 
 /* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
-"tutorial.continueButton.title.closeTutorial" = "Close tutorial";
+"tutorial.continueButton.title.closeTutorial" = "Agarsiistuu fayyadamaa cufi";
 
 /* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
-"tutorial.tool.title" = "Tools";
+"tutorial.tool.title" = "Barruuwwan";
 
 /* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
-"tutorial.tool.message" = "Each tool is made for a different stage of conversation- before, during or after.";
+"tutorial.tool.message" = "Barruun tokko tokkoon isaa sadarkaa haasaa adda addaatiif qophaa'e - haasaa dura, yeroo haasaa fi haasaa booda.";
 
 /* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
-"tutorial.toolTip.title" = "Tool tips";
+"tutorial.toolTip.title" = "Yaadota gorsaa barruu kanaa";
 
 /* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
-"tutorial.toolTip.message" = "GodTools tips guide you as you help someone understand the gospel and encounter Jesus.";
+"tutorial.toolTip.message" = "Yaadonni gorsaa GodTools deemsa ati akka namni wangeela hubatuu fi gara Yesusitti dhufu gochuuf deemtu keessatti si gargaaru.";
 
 /* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
-"tutorial.screenShare.title" = "Screen sharing";
+"tutorial.screenShare.title" = "Skriinii qooduu";
 
 /* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
-"tutorial.screenShare.message" = "You can now share your screen remotely so the other person can follow as you use a tool to discuss the gospel.";
+"tutorial.screenShare.message" = "Amma fageenyarratti namni ati itti haasoftu akka si hordofu gochuudhaaf skiriinii kee fageenyarratti qooduu ni dandeessa.";
 
 /* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
-"tutorial.lesson.title" = "Lessons";
+"tutorial.lesson.title" = "Barannoowwan";
 
 /* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
-"tutorial.lesson.message" = "In each GodTools lesson you learn something to help you have real conversations about God.";
+"tutorial.lesson.message" = "Barannoowwan GodTools tokko tokkoo isaanii keessatti haasaa dhugaa waa'ee Waaqayyoo namoota waliin gochuuf wantoota si gargaaran ni baratta.";
 
 /* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
-"tutorial.findTutorial.title" = "Find this tutorial in the menu whenever you need it.";
+"tutorial.findTutorial.title" = "Agarsiistuu fayyadamaa kana yeroo barbaaddetti meenuu keessatti ni argatta.";
 
-"onboardingTutorial.beginButton.title" = "Begin";
-"onboardingTutorial.nextButton.title" = "Next";
-"tool_offline_favorite_message" = "Make a tool available offline by tapping the heart icon, which adds it to your favorites.";
+"onboardingTutorial.beginButton.title" = "Eegali";
+"onboardingTutorial.nextButton.title" = "Itti Fufi";
+"tool_offline_favorite_message" = "Barruu tokko ooflaayinii argachuuf mallattoo onneetti bu'i, sana booda barruuwwan jaallatamookeetti dabalama.";
 
 /* This is a category description of a tool that helps you start a conversation */
-"tool_category_conversation_starter" = "Conversation Starter";
+"tool_category_conversation_starter" = "Haasaa jalqabduuwwan";
 
 /* This phrase describes a category of tool that helps someone grow in their Christian faith */
-"tool_category_growth" = "Christian Growth";
+"tool_category_growth" = "Guddina Kiristiyaanaa";
 
-"share_link" = "Share link";
-"share_tool_menu.remote_share_tool" = "Share your screen";
-"share_tool_menu.send_tool" = "Send this tool";
-"share_tool_screen_tutorial.share_your_screen.title" = "Share your screen";
-"share_tool_screen_tutorial.share_your_screen.message" = "This option will send a link to this tool to a friend. When the link is opened it will start a screen sharing session.";
-"share_tool_screen_tutorial.mirrored_experience.title" = "Mirrored experience";
-"share_tool_screen_tutorial.mirrored_experience.message" = "As you scroll the tool on your phone, your friend's screen will respond in the same way. This allows you to walk through a tool together on 2 devices at the same time.";
-"share_tool_screen_tutorial.get_started.title" = "Get started";
-"share_tool_screen_tutorial.get_started.message" = "Send the link to one or more people to start a screen sharing session now.";
-"share_tool_remote_link_message" = "Hi, Follow along with me in GodTools via screen sharing. Here's the link: %@
+"share_link" = "Liinkii qoodi";
+"share_tool_menu.remote_share_tool" = "Fuula skriinii kee qoodi";
+"share_tool_menu.send_tool" = "Barruu kana ergi";
+"share_tool_screen_tutorial.share_your_screen.title" = "Fuula skriinii kee qoodi";
+"share_tool_screen_tutorial.share_your_screen.message" = "Filannoon kun liinkii barruu kanaa hiriyaa keef erga. Yeroo liinkiin sun banamu skriiniikee hiriyaakeef qooda.";
+"share_tool_screen_tutorial.mirrored_experience.title" = "Skriiniikee qoodi";
+"share_tool_screen_tutorial.mirrored_experience.message" = "Yeroo ati bilbilakee irraa tuqxu skriiniin bilbila hiriyaakees ni socho'a. Kunis akka isin waliin barruu sana keessa deemtanii waliin ilaaltaniif sin gargaara.";
+"share_tool_screen_tutorial.get_started.title" = "Eegali";
+"share_tool_screen_tutorial.get_started.message" = "Skriiniikee qooduudhaaf link kana nama tokkoof ykn sanaa oliif ergi.";
+"share_tool_remote_link_message" = "Hi, app GodTools link kana: %@ fayyadamuudhaan na waliin ilaali.
 
-If you don't receive this message until later, the link may not still work. We can try again at another time.";
-"exit_tract_remote_share_session.message" = "Exit the remote share session now?";
-"load_tool_remote_session.message" = "Starting Screen Sharing...";
-"learn_to_share_tool.learn_to_share.title" = "Learn to share this tool with anyone";
-"learn_to_share_tool.learn_to_share.message" = "Practice using as many tips as you need to feel confident sharing this tool with others.";
-"learn_to_share_tool.tips_light_the_way.title" = "Tips to light the way";
-"learn_to_share_tool.tips_light_the_way.message" = "On select screens of this training, you’ll see a variety of icons. Press each icon to reveal a tip that will help you talk about the content of the screen. If a screen has no icon, then just read through the content and discuss as needed.";
-"learn_to_share_tool.light_up_the_tips.title" = "Light up the tips";
-"learn_to_share_tool.light_up_the_tips.message" = "When a tip lights up, you’ve completed that piece of training. Practice using as many tips as you need to feel confident explaining the tool";
-"lesson_evaluation.title" = "Review";
-"lesson_evaluation.wasThisHelpful" = "Was this lesson helpful for you?";
-"lesson_evaluation.shareFaith" = "How ready do you feel to start a spiritual conversation?";
-"lesson_evaluation.sendButtonTitle" = "Send feedback";
-"onboardingTutorial.0.title" = "Ready for every conversation";
-"onboardingTutorial.0.videoLink.title" = "Watch video";
-"onboardingTutorial.1.title" = "Talk about God with anyone";
-"onboardingTutorial.1.message" = "GodTools helps you have meaningful conversations about God.";
-"onboardingTutorial.2.title" = "Prepare for the moments that matter";
-"onboardingTutorial.2.message" = "Learn how to make conversations about faith a natural part of your life.";
-"onboardingTutorial.3.title" = "Help someone discover Jesus";
-"onboardingTutorial.3.message" = "GodTools is your guide to communicating the gospel in clear and relevant ways.";
+Ergaan kun turee yoo si qaqqabe link'n kun hojjechuu dhiisuu mala. Garuu yeroo kan biraa yaaluu dandeenya.";
+"exit_tract_remote_share_session.message" = "Fageenyarratti skriiniikee qooduu addaan kutuu barbaaddaa?";
+"load_tool_remote_session.message" = "Skriiniikee qooduun eegalaa jira...";
+"learn_to_share_tool.learn_to_share.title" = "Barruu kana namaaf qooduu baradhu";
+"learn_to_share_tool.learn_to_share.message" = "Yaadotaa gorsaa jiran fayyadamiitii, hamma namaaf qooduudhaaf ofitti amanamummaan sitti dhaga'amutti barruu kana dubbisi.";
+"learn_to_share_tool.tips_light_the_way.title" = "Yaadota gorsaa si gargaaruu danda'an";
+"learn_to_share_tool.tips_light_the_way.message" = "Fuulaawwan baruu kanaa irratti mallattoowwan gosa adda adaa argita. Yaada gorsaa wanta fuula sana irra jiru haasa'uuf si gargaaru argachuuf mallattoolee fuula sana irra jiran tuqi. Yoo fuula sana irra mallattoon hin jiru ta'e, barreeffama fuula sana irra jiru dubbisuudhaan akka siif mijatetti irratti dubbadhu.";
+"learn_to_share_tool.light_up_the_tips.title" = "Yaadota gorsaa ibsi";
+"learn_to_share_tool.light_up_the_tips.message" = "Yeroo yaadni gorsaa ifu, leenjii sana xumurteetta jechuudha. Yaadota gorsaa hamma barbaadde fayyadamuudhaan, hamma barruu sana ibsuuf ofitti amanamummaa horattutti shaakali.";
+"lesson_evaluation.title" = "Gamaggami";
+"lesson_evaluation.wasThisHelpful" = "Barannoon kun si fayyadeeraa?";
+"lesson_evaluation.shareFaith" = "Haasaa hafuuraa nama waliin eegaluuf hammam qophaa'aadha jettee of yaadda?";
+"lesson_evaluation.sendButtonTitle" = "Duubdeebii ergi";
+"onboardingTutorial.0.title" = "Haasaa hundumaaf qophaa'aadha";
+"onboardingTutorial.0.videoLink.title" = "Viidiyoo ilaali";
+"onboardingTutorial.1.title" = "Waa'ee Waaqayyoo nama kam waliinuu haasa'i";
+"onboardingTutorial.1.message" = "GodTools'n waa'ee Waaqayyoo haasaa hiika qabu namoota waliin akka ati gootuuf si gargaara.";
+"onboardingTutorial.2.title" = "Yeroowwan barbaachisoo ta'aniif qophaa'i";
+"onboardingTutorial.2.message" = "Akkamitti waa'ee amantii namoota waliin haasa'uu qaama jireenya kee guyyaa guyyaa godhachuu akka dandeessu baradhu";
+"onboardingTutorial.3.title" = "Namni tokko akkanni Yesusiin baruuf gargaari";
+"onboardingTutorial.3.message" = "GodTools'n wangeela karaa ifaa ta'eefi namaaf galuun akka ati haasa'uu dandeessuuf app si gargaarudha.";
 
 /* This is a category. The content will include training of how to share your faith. */
-"tool_category_training" = "Training";
+"tool_category_training" = "Leenjii";
 
-/* This is an invitation for a user to open a tool */
-"open" = "Open";
+/*
+ * This is an invitation for a user to open a tool
+ * Please keep to a 9 character limit, longer phrases may get cut off
+*/
+"open" = "Bani";
 
 /* A user will be selecting a heart to indicated that it is one of their favorite tools. */
-"add_to_favorites" = "Add to Favorites";
+"add_to_favorites" = "Jaallatamootti dabali";
 
 /* A user will be selecting this option to remove the tool from their Favorites screen */
-"remove_from_favorites" = "Remove from Favorites";
+"remove_from_favorites" = "Jaallatamoo keessaa balleessi";
 
 /* This is a loading screen */
-"loading_unfavorited_tool" = "The tool is downloading. To avoid waiting in the future, favorite this tool so it will be available offline.";
+"loading_unfavorited_tool" = "Barruun kun bu'aa jira. Yeroo itti aanu akka irra deebitee buusuu si hin barbaachifneef, barruu kana barruuwwan jaallatamootti dabaluu ni dandeessa, yeros ooflaayinii barruu kana argachuu dandeessa.";
 
 /* This is a loading screen */
-"loading_favorited_tool" = "Downloading the most recent translation for this tool.";
+"loading_favorited_tool" = "Hiika haaraa barruu kanaa buusaa jira.";
 
 /* Adds a question mark */
-"remove_from_favorites_title" = "Remove from Favorites? ";
+"remove_from_favorites_title" = "Jallatamoo keessa balleessuu?";
 
 /* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
-"remove_from_favorites_message" = "Are you sure you want to remove %@ from your Favorites? ";
+"remove_from_favorites_message" = "Barruu %@ jallatamoo keessaa balleessuuf murteessiteettaa?";
 
 /* Gospel indicates the gospel of Jesus Christ */
-"tool_category_gospel" = "Gospel Invitation";
+"tool_category_gospel" = "Afeerraa wangeelaa";
 
 /* Describes a format of content - like a newspaper article. */
-"tool_category_articles" = "Articles";
+"tool_category_articles" = "barreeffama gabaabaa";
 
-"articles.downloadArticlesButton.title.retryDownload" = "Retry Download";
+"articles.downloadArticlesButton.title.retryDownload" = "Buusuuf irra deebi'ii yaali";
 
 /* This is to let users know which version of the app is installed on their phone */
-"menu_version" = "Version";
-
-/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
-"articles.loadingView.downloadingArticles" = "Downloading Articles ...";
-"language_onboard" = "90+ Languages";
-
-/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
-"no_more_tools" = "You have downloaded all available tools.";
-
+"menu_version" = "Vershinii";
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
-"my_tools" = "Favorites";
+"my_tools" = "Kan jaallataman";
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
-"find_tools" = "All Tools";
-
-"unavailable" = "Unavailable";
+"find_tools" = "Barruuwwan hunda";
 
 // Navigation Bar
-"navigationBar.navigationItem.skip" = "Skip";
-
-// Onboarding
-"add_new_tools" = "Add New Tools";
-"set_your_languages" = "Set Your Languages";
-"okay" = "Okay";
-"want_more_godtools?" = "Want more GodTools?";
-"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
-"click_here" = "Click Here";
+"navigationBar.navigationItem.skip" = "Irra darbi";
 
 // Menu
-"menu_general" = "General";
-"menu_account" = "Account";
-"menu_share" = "Share";
-"menu_legal" = "Legal";
-"language_settings" = "Language settings";
-"menu.tutorial" = "Tutorial";
-"menu.my_account" = "My Account";
+"menu_general" = "Waliigala";
+"menu_account" = "Akkaawontii";
+"menu_share" = "Qoodi";
+"menu_legal" = "Dhimma seeraa";
+"language_settings" = "Sirreeffamoota Afaanii";
+"menu.tutorial" = "Agarsiistuu fayyadamaa";
+"menu.my_account" = "Akkaawontii koo";
 
 // Login
-"login" = "Login";
-"logout" = "Logout";
-"create_account" = "Create Account";
-"account_login" = "Account Login";
-
+"login" = "Seeni";
+"logout" = "Bahi";
+"create_account" = "Akkaawontii uumi";
 // Tool Detail
-"about" = "About";
-"help" = "Frequently Asked Questions";
-"contact_us" = "Contact Us";
-"preview_mode_translators_only" = "Preview Mode (Translators Only)";
-"share_god_tools" = "Share GodTools";
-"share_a_story_with_us" = "Share a story with us";
-"terms_of_use" = "Terms of use";
+"about" = "Waa'ee";
+"help" = "Gaaffiiwwan yeroo hedduu gaafataman";
+"contact_us" = "Nu qunnami";
+"share_god_tools" = "GodTools qoodi";
+"share_a_story_with_us" = "Seenaakee nuuf qoodi";
+"terms_of_use" = "Haala fayyadamaa";
 "privacy_policy" = "Privacy policy";
-"copyright_info" = "Copyright info";
-"share_god_tools_share_sheet_text" = "Download the GodTools app: https://godtoolsapp.com
+"copyright_info" = "Odeeffannoo mirga waraabbii";
+"share_god_tools_share_sheet_text" = "App GodTools buufadhu: https://godtoolsapp.com
 
-An online version can be found at https://knowgod.com/";
+Marsariitii https://knowgod.com/ irrattis argachuu ni dandeessa.";
 
-// Add Tools
-"add_tools" = "Add Tools";
-
-"total_views" = "%d views";
-"total_languages" = "%d languages";
+"total_views" = "Namoonni %d ilaalaniiru";
+"total_languages" = "Afaanota %d";
 
 // Language Settings
-"primary_language" = "Primary Language";
-"select_primary_language" = "Select a Primary Language";
-"parallel_language" = "Parallel Language";
-"select_parallel_language" = "Select a Parallel Language";
-"share_god_tools_native_language" = "Share GodTools with someone in their native language";
-"not_every_tool_is_available" = "Not every tool is available in every language";
+"primary_language" = "Afaan jalqabaa";
+"select_primary_language" = "Afaan jalqabaa filadhu";
+"parallel_language" = "Afaan walcinaa";
+"select_parallel_language" = "Afaan walcinaa filadhu";
+"share_god_tools_native_language" = "App GodTools afaan dhalootaa isaaniitiin namootaaf qoodi";
+"not_every_tool_is_available" = "Barruun hundumtuu afaan hundumaatiin hin jiru";
 
 // Settings
-"settings" = "Settings";
+"settings" = "Sirreeffamoota";
 
 // Alert & Info Controllers
-"download_error" = "Download Error";
-"no_internet_title" = "No internet connection";
-"no_internet" = "Please check your internet connection and try again.";
-
-"the_tool_you_requested_is_loading" = "The tool you requested is loading...";
-"loading" = "Loading...";
+"download_error" = "Buusuudhaaf rakkoon uumameera";
+"no_internet_title" = "Qunnamtiin interneetii hin jiru";
+"no_internet" = "Maaloo tajaajila interneetii qabaachuu kee mirkaneeffadhuutii, irra deebi'i yaali.";
 
 // Actions
-"yes" = "Yes";
-"no" = "No";
+"yes" = "Eeyyee";
+"no" = "Lakki";
 
 // Tract - Sharing
-"tract_share_message" ="This link will take you to a web version of what we were talking about today: %@. 
+"tract_share_message" ="Liinkiin kun: %@ gara marsariitii wanta nuti sila haasa'aa turreetti si geessa.
 
-Let's talk more!
+Kana caalaa irratti haa dubbannu!
 
-The app can be downloaded from https://godtoolsapp.com";
+App isaa https://godtoolsapp.com irraa buufachuu ni dandeessa.";
 
-// Buttons
-"download" = "Download";
-"dismiss" = "Dismiss";
-"done" = "Done";
-"remove" = "Remove";
-"clear" = "Clear";
+"dismiss" = "Cufii dhisii";
+"done" = "Xumureera";
+"clear" = "Haqi";
 /* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "Open Tool";
+"toolinfo_opentool" = "Barruu kana bani";
 
 // Alerts
-"error" = "Error";
-"OK" = "OK";
-"cancel" = "Cancel";
-"required_field_missing" = "\"%@\" is a required field.";
+"error" = "Rakkoon uumameera";
+"OK" = "TOLE";
+"cancel" = "Dhiisi";
+"required_field_missing" = "\"%@\" galchuun dirqama.";
 
-"onboardingTutorial.getStartedButton.title" = "Get started";
+"onboardingTutorial.getStartedButton.title" = "Eegali";
 
-// About
-"general_about_1" = "GodTools helps you share your faith in an easy and clear way.";
 // Tutorial
-"tutorial.tutorialItem.0.title" = "Watch";
-"general_about_2" = "These tools help you confidently explain to someone how they can begin a relationship with God through Jesus Christ, even if you've never shared your faith before or they speak a different language.";
-"tutorial.tutorialItem.0.message" = "See what GodTools offers in our demo video
-(Tap on the video to bring up settings for subtitles)";
-"general_about_3" = "Choose from a variety of tools based on your preference and your audience. Not all tools are available in every language.";
-"tutorial.tutorialItem.1.title" = "Prepare";
-"general_about_4" = "Links to other resources are included at the end of each tool.";
-"tutorial.tutorialItem.1.message" = "Get familiar with some of your tools. The \"Teach Me to Share\" tool is a good place to start.
-
-Press the About button on any tool for more info.";
-"general_about_5" = "Online connection is needed to download each new tool and/or language. Once downloaded, they can be used offline.";
-"tutorial.tutorialItem.2.title" = "Try";
-"general_about_6" = "Questions? Suggestions? Requests? Contact us at support@godtoolsapp.com";
-"tutorial.tutorialItem.2.message" = "Everyone starts as a beginner. Try using a tool in a conversation and see what you learn.";
-"general_about_7" = "An online version of these tools can be found at knowgod.com. Embed it on your own site!";
-"tutorial.tutorialItem.3.title" = "This tutorial is available to see again in the menu";
-"general_about_8" = "Visit godtoolsapp.com for more information.";
-"tutorial.continueButton.title.continue" = "Continue";
-"general_about_9" = "As you take the initiative to share your faith, remember that God is the one who changes the heart. Love each person well by listening for understanding.";
-"tutorial.continueButton.title.startUsingGodTools" = "Start Using GodTools";
-
-"general_about_10" = "\"Let your conversation always be full of grace, seasoned with salt, so that you may know how to answer everyone.\" Colossians 4:6";
+"tutorial.tutorialItem.0.title" = "Ilaali";
+"tutorial.tutorialItem.3.title" = "Agarsiiftuu fayyadamaa kana irra deebitee ilaaluu yoo barbaadde meenuu keessatti ni argatta";
+"tutorial.continueButton.title.continue" = "Itti fufi";
+"tutorial.continueButton.title.startUsingGodTools" = "GodTools fayyadamuu eegali";
 
 // OpenTutorial
-"openTutorial.showTutorialLabel.text" = "Show Me A Tutorial";
+"openTutorial.showTutorialLabel.text" = "Akkaataa fayyadamaa natti agarsiisi";
 // Downloads
-"Download in progress" = "Download in progress";
+"Download in progress" = "Buufamaa jira";
 
-"openTutorial.openTutorialButton.title" = "Open Tutorial";
+"openTutorial.openTutorialButton.title" = "Agarsiistuu fayyadamaa bani";
 
 // Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
-"card_status1" = "Prev";
+"card_status1" = "Kan darbe";
 // Account
-"account.navTitle" = "My Profile";
-"card_status2" = "Next";
+"account.navTitle" = "Proofaayilii koo";
+"card_status2" = "Kan itti aanu";
 
-"account.activity.title" = "Activity";
+"account.activity.title" = "Sochiiwwan";
 
 // Language Name Strings
 "language_name_fa" = "Persian (Farsi)";
 
 // Account Activity
-"accountActivity.globalAnalytics.header.title" = "Global Activity";
-// OnboardingWelcome
-"onboardingWelcome.titleLabel.welcome" = "Welcome";
-"accountActivity.globalAnalytics.users.title" = "Unique\nUsers";
-"onboardingWelcome.titleLabel.tagline" = "Helping You Share Your Faith";
-"accountActivity.globalAnalytics.gospelPresentation.title" = "Gospel\nPresentations";
-"accountActivity.globalAnalytics.launches.title" = "Sessions";
+"accountActivity.globalAnalytics.header.title" = "Sochii addunyaalessaa";
+"accountActivity.globalAnalytics.users.title" = "Fayyadamtoota, namoota adda addaa";
+"onboardingWelcome.titleLabel.tagline" = "Amantiikee dhugaa ba'uudhaaf gargaaraa sirrii";
+"accountActivity.globalAnalytics.gospelPresentation.title" = "Ibsaawwan Wangeelaa";
+"accountActivity.globalAnalytics.launches.title" = "Yeroo fayyadamaa";
 // OnboardingTutorial
-"onboardingTutorial.aboutAppItem.0.title" = "Share With Others";
-"accountActivity.globalAnalytics.countries.title" = "Countries";
+"onboardingTutorial.aboutAppItem.0.title" = "Namoota biroof qoodi";
+"accountActivity.globalAnalytics.countries.title" = "Biyyoota";
 
-"onboardingTutorial.aboutAppItem.0.message" = "GodTools is built to guide your faith conversations";
-"onboardingTutorial.aboutAppItem.1.title" = "Choose Your Tools";
-"onboardingTutorial.aboutAppItem.1.message" = "GodTools helps you before, during, and after a spiritual conversation";
-"onboardingTutorial.aboutAppItem.2.title" = "Always Ready";
-"onboardingTutorial.aboutAppItem.2.message" = "GodTools is here to help and is ready when you are";
-"onboardingTutorial.appUsageItem.0.message" = "Prepare for any conversation";
-"onboardingTutorial.appUsageItem.1.message" = "Walk someone through the gospel";
-"onboardingTutorial.appUsageItem.2.message" = "View two languages side by side";
-"onboardingTutorial.appUsageItem.3.message" = "Choose from over 90 languages";
-"onboardingTutorial.appUsageItem.4.message" = "Help someone get started as a Christian";
-"onboardingTutorial.showMoreButton.title" = "Show Me More";
+"onboardingTutorial.showMoreButton.title" = "Kana caalaa natti agarsiisi";
