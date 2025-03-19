@@ -1,5 +1,5 @@
 //
-//  KnowGodDeepLinkParser.swift
+//  LegacyKnowGodDeepLinkParser.swift
 //  godtools
 //
 //  Created by Levi Eggert on 2/22/23.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class KnowGodDeepLinkParser: DeepLinkUrlParserInterface {
+class LegacyKnowGodDeepLinkParser: DeepLinkUrlParserInterface {
     
     required init() {
         

@@ -98,7 +98,7 @@
 		450EE28729A6648900524F64 /* DashboardDeepLinkDashboardPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EE28129A6648900524F64 /* DashboardDeepLinkDashboardPath.swift */; };
 		450EE28829A6648900524F64 /* DashboardPathDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EE28229A6648900524F64 /* DashboardPathDeepLinkParser.swift */; };
 		450EE28929A6648900524F64 /* ArticleAemPathDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EE28429A6648900524F64 /* ArticleAemPathDeepLinkParser.swift */; };
-		450EE29E29A66CA500524F64 /* KnowGodDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EE29D29A66CA500524F64 /* KnowGodDeepLinkParser.swift */; };
+		450EE29E29A66CA500524F64 /* LegacyKnowGodDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EE29D29A66CA500524F64 /* LegacyKnowGodDeepLinkParser.swift */; };
 		450EE2A029A66CDF00524F64 /* KnowGodTractDeepLinkQueryParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EE29F29A66CDF00524F64 /* KnowGodTractDeepLinkQueryParameters.swift */; };
 		450EE2AB29A6719500524F64 /* GodToolsAppLessonsPathDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EE2AA29A6719500524F64 /* GodToolsAppLessonsPathDeepLinkParser.swift */; };
 		450EF834247EB3D300978926 /* SF-Pro-Text-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 450EF833247EB3D300978926 /* SF-Pro-Text-Bold.otf */; };
@@ -1804,7 +1804,7 @@
 		450EE28129A6648900524F64 /* DashboardDeepLinkDashboardPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardDeepLinkDashboardPath.swift; sourceTree = "<group>"; };
 		450EE28229A6648900524F64 /* DashboardPathDeepLinkParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardPathDeepLinkParser.swift; sourceTree = "<group>"; };
 		450EE28429A6648900524F64 /* ArticleAemPathDeepLinkParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleAemPathDeepLinkParser.swift; sourceTree = "<group>"; };
-		450EE29D29A66CA500524F64 /* KnowGodDeepLinkParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnowGodDeepLinkParser.swift; sourceTree = "<group>"; };
+		450EE29D29A66CA500524F64 /* LegacyKnowGodDeepLinkParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyKnowGodDeepLinkParser.swift; sourceTree = "<group>"; };
 		450EE29F29A66CDF00524F64 /* KnowGodTractDeepLinkQueryParameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KnowGodTractDeepLinkQueryParameters.swift; sourceTree = "<group>"; };
 		450EE2AA29A6719500524F64 /* GodToolsAppLessonsPathDeepLinkParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GodToolsAppLessonsPathDeepLinkParser.swift; sourceTree = "<group>"; };
 		450EF833247EB3D300978926 /* SF-Pro-Text-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Bold.otf"; sourceTree = "<group>"; };
@@ -3989,7 +3989,7 @@
 		450EE28A29A6680800524F64 /* KnowGod */ = {
 			isa = PBXGroup;
 			children = (
-				450EE29D29A66CA500524F64 /* KnowGodDeepLinkParser.swift */,
+				450EE29D29A66CA500524F64 /* LegacyKnowGodDeepLinkParser.swift */,
 				450EE29F29A66CDF00524F64 /* KnowGodTractDeepLinkQueryParameters.swift */,
 			);
 			path = KnowGod;
@@ -13147,7 +13147,7 @@
 				458CFE8129D4E0B9007B423C /* DownloadArticlesErrorViewModel.swift in Sources */,
 				45AD21622593A62800A096A0 /* AppDelegate.swift in Sources */,
 				458E93432B62A0B50087D45D /* AppDebugBarItem.swift in Sources */,
-				450EE29E29A66CA500524F64 /* KnowGodDeepLinkParser.swift in Sources */,
+				450EE29E29A66CA500524F64 /* LegacyKnowGodDeepLinkParser.swift in Sources */,
 				45ACEE182AD04926004B62E4 /* AppLanguageStringKeys.swift in Sources */,
 				45AE974A27C97A9500C2CB33 /* AccordionSection+MobileContentRenderableModel.swift in Sources */,
 				45430CF62B1FB638002B94A3 /* String+ToUrlMarkdown.swift in Sources */,
