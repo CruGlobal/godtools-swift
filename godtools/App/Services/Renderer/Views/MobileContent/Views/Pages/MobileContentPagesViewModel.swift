@@ -153,6 +153,10 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
 
     func sendPageNavigationEvent(navigationEvent: MobileContentPagesNavigationEvent) {
 
+        print("\n MobileContentPagesViewModel: sendPageNavigationEvent() ...")
+        print("  navigationEvent: \(navigationEvent)")
+        print("  navigationEvent.pageNavigation: \(navigationEvent.pageNavigation)")
+        
         if let pages = navigationEvent.setPages, pages.count > 0 {
             setPages(pages: pages)
         }

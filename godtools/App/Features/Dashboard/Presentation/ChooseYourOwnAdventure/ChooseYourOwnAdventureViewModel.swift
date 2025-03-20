@@ -73,6 +73,9 @@ class ChooseYourOwnAdventureViewModel: MobileContentRendererViewModel {
     
     override func getPageNavigationEvent(page: Page, animated: Bool, reloadCollectionViewDataNeeded: Bool, parentPageParams: MobileContentParentPageParams?, isBackNavigation: Bool) -> MobileContentPagesNavigationEvent {
         
+        print("\n ChooseYourOwnAdventureViewModel getPageNavigationEvent() ...")
+        print("  page.id: \(page.id)")
+        
         let pages: [Page] = super.getPages()
         
         let pageNavigation: PageNavigationCollectionViewNavigationModel
@@ -175,6 +178,11 @@ class ChooseYourOwnAdventureViewModel: MobileContentRendererViewModel {
             pagePositions: nil,
             parentPageParams: parentPageParams
         )
+        
+        print("  set pages: \(String(describing: setPages?.compactMap {  $0.id }))")
+        print("  navigate to page: \(pageNavigation.page)")
+        print("  insert pages: \(pageNavigation.insertPages ?? [])")
+        print("  delete pages: \(pageNavigation.deletePages ?? [])")
         
         return navigationEvent
     }

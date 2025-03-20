@@ -324,22 +324,21 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
                 parentPageParams: nil
             )
         }
-                
+        
+        let pageNavigationForLanguageDirection = navigationEventToSend.pageNavigation.copy(navigationDirection: layoutDirection)
+        
         let eventWithCorrectLanguageDirection: MobileContentPagesNavigationEvent = MobileContentPagesNavigationEvent(
-            pageNavigation: PageNavigationCollectionViewNavigationModel(
-                navigationDirection: layoutDirection,
-                page: navigationEventToSend.pageNavigation.page,
-                animated: navigationEventToSend.pageNavigation.animated,
-                reloadCollectionViewDataNeeded: navigationEventToSend.pageNavigation.reloadCollectionViewDataNeeded,
-                insertPages: nil,
-                deletePages: nil
-            ),
-            setPages: nil,
+            pageNavigation: pageNavigationForLanguageDirection,
+            setPages: navigationEventToSend.setPages,
             pagePositions: navigationEventToSend.pagePositions,
-            parentPageParams: nil
+            parentPageParams: navigationEventToSend.parentPageParams
         )
         
-        sendPageNavigationEvent(navigationEvent: eventWithCorrectLanguageDirection)
+        print("\n MobileContentRendererViewModel: setPageRenderer() ...")
+        print("  will send page navigation event")
+        print("  eventWithCorrectLanguageDirection.pageNavigation: \(eventWithCorrectLanguageDirection.pageNavigation)")
+        
+        super.sendPageNavigationEvent(navigationEvent: eventWithCorrectLanguageDirection)
         
         let pageRenderers: [MobileContentPageRenderer] = renderer.value.pageRenderers
         let pageRendererIndex: Int = pageRenderers.firstIndex(where: { $0.language.id == pageRenderer.language.id }) ?? 0
@@ -366,7 +365,9 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
             }
         }
         
-        guard page != nil else { return page }
+        guard page != nil else {
+            return page
+        }
         
         if initialPageConfig.shouldNavigateToPreviousVisiblePageIfHiddenPage {
             page = getPreviousVisiblePageIfHidden(page: page)
