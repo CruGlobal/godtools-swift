@@ -61,13 +61,13 @@ class KnowGodDeepLinkParser: DeepLinkUrlParserInterface {
         
         let knowGodQueryParameters: KnowGodTractDeepLinkQueryParameters? = JsonServices().decodeJsonObject(jsonObject: queryParameters)
         
-        let abbreviationFromUrlPath: String? = pathComponents[safe: 1]
-        let primaryLanguageCodeFromUrlPath: String? = pathComponents[safe: 2]
+        let primaryLanguageCodeFromUrlPath: String? = pathComponents[safe: 0]
+        let abbreviationFromUrlPath: String? = pathComponents[safe: 3]
         let pageNumber: Int?
         let pageId: String?
         let pageSubIndex: Int?
         
-        if let pageStringFromUrlPath = pathComponents[safe: 3] {
+        if let pageStringFromUrlPath = pathComponents[safe: 4] {
             if let pageIntegerFromUrlPath = Int(pageStringFromUrlPath) {
                 pageNumber = pageIntegerFromUrlPath
                 pageId = nil
@@ -82,7 +82,7 @@ class KnowGodDeepLinkParser: DeepLinkUrlParserInterface {
             pageId = nil
         }
         
-        if let pageSubIndexStringFromUrlPath = pathComponents[safe: 4] {
+        if let pageSubIndexStringFromUrlPath = pathComponents[safe: 5] {
             pageSubIndex = Int(pageSubIndexStringFromUrlPath)
         }
         else {
