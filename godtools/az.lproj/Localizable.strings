@@ -11,6 +11,8 @@
 "favorites.favoriteLessons.title" = "Seçilmiş dərs";
 "favorites.favoriteTools.title" = "Sevimli alətləriniz";
 "favorites.favoriteTools.viewAll" = "Hamısına bax";
+
+/* Please keep to a 9 character limit, longer phrases may get cut off */
 "favorites.favoriteLessons.details" = "Təfsilatlar";
 
 /* The meaning is "I don't want to set a second language".  Language is no language or None */
@@ -65,7 +67,10 @@ Son anadək bu mesajı almasanız, daha sonra keçid işləməyə bilər. Başqa
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Təlim";
 
-/* This is an invitation for a user to open a tool */
+/*
+ * This is an invitation for a user to open a tool
+ * Please keep to a 9 character limit, longer phrases may get cut off
+*/
 "open" = "Aç";
 
 /* A user will be selecting a heart to indicated that it is one of their favorite tools. */

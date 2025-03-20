@@ -17,6 +17,8 @@
 "favorites.favoriteLessons.title" = "Cours mis en avant";
 "favorites.favoriteTools.title" = "Vos outils préférés";
 "favorites.favoriteTools.viewAll" = "Tout afficher";
+
+/* Please keep to a 9 character limit, longer phrases may get cut off */
 "favorites.favoriteLessons.details" = "Détails";
 
 /* The meaning is "I don't want to set a second language".  Language is no language or None */
@@ -73,7 +75,10 @@ Si vous recevez ce message plus tard, le lien pourrait ne pas fonctionner. Nous 
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Formation";
 
-/* This is an invitation for a user to open a tool */
+/*
+ * This is an invitation for a user to open a tool
+ * Please keep to a 9 character limit, longer phrases may get cut off
+*/
 "open" = "Ouvrir";
 
 /* A user will be selecting a heart to indicated that it is one of their favorite tools. */

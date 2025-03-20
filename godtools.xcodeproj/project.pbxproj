@@ -93,13 +93,13 @@
 		450DB5642AC3553E00B2FE3A /* GetAppLanguagesListRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450DB5632AC3553E00B2FE3A /* GetAppLanguagesListRepositoryInterface.swift */; };
 		450DB5662AC355AA00B2FE3A /* AppLanguageListItemDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450DB5652AC355AA00B2FE3A /* AppLanguageListItemDomainModel.swift */; };
 		450E64D62B570DBD00A74F6D /* BCP47LanguageIdentifier+TranslatableLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E64D52B570DBD00A74F6D /* BCP47LanguageIdentifier+TranslatableLanguage.swift */; };
-		450E6A752D8B1F64007C4C0F /* KnowGodDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E6A742D8B1F63007C4C0F /* KnowGodDeepLinkParser.swift */; };
+		450E6A772D89DF5500EB7EDE /* GetTranslatedPercentageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E6A762D89DF4F00EB7EDE /* GetTranslatedPercentageTests.swift */; };
 		450EE28529A6648900524F64 /* ToolDeepLinkToolPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EE27E29A6648900524F64 /* ToolDeepLinkToolPath.swift */; };
 		450EE28629A6648900524F64 /* ToolPathDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EE27F29A6648900524F64 /* ToolPathDeepLinkParser.swift */; };
 		450EE28729A6648900524F64 /* DashboardDeepLinkDashboardPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EE28129A6648900524F64 /* DashboardDeepLinkDashboardPath.swift */; };
 		450EE28829A6648900524F64 /* DashboardPathDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EE28229A6648900524F64 /* DashboardPathDeepLinkParser.swift */; };
 		450EE28929A6648900524F64 /* ArticleAemPathDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EE28429A6648900524F64 /* ArticleAemPathDeepLinkParser.swift */; };
-		450EE29E29A66CA500524F64 /* LegacyKnowGodDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EE29D29A66CA500524F64 /* LegacyKnowGodDeepLinkParser.swift */; };
+		450EE29E29A66CA500524F64 /* KnowGodDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EE29D29A66CA500524F64 /* KnowGodDeepLinkParser.swift */; };
 		450EE2A029A66CDF00524F64 /* KnowGodTractDeepLinkQueryParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EE29F29A66CDF00524F64 /* KnowGodTractDeepLinkQueryParameters.swift */; };
 		450EE2AB29A6719500524F64 /* GodToolsAppLessonsPathDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EE2AA29A6719500524F64 /* GodToolsAppLessonsPathDeepLinkParser.swift */; };
 		450EF834247EB3D300978926 /* SF-Pro-Text-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 450EF833247EB3D300978926 /* SF-Pro-Text-Bold.otf */; };
@@ -836,11 +836,7 @@
 		459E3A062A30BC2600070934 /* MenuItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E3A032A30BC2600070934 /* MenuItemView.swift */; };
 		459E3A072A30BC2600070934 /* MenuSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E3A042A30BC2600070934 /* MenuSectionView.swift */; };
 		459E86DB28EDA86C00E197A5 /* GodToolsDeepLinkingManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86B928EDA86C00E197A5 /* GodToolsDeepLinkingManifest.swift */; };
-		459E86DC28EDA86C00E197A5 /* DeepLinkParserInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86BB28EDA86C00E197A5 /* DeepLinkParserInterface.swift */; };
-		459E86DD28EDA86C00E197A5 /* DeepLinkUrlParserInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86BC28EDA86C00E197A5 /* DeepLinkUrlParserInterface.swift */; };
 		459E86EA28EDA86C00E197A5 /* IncomingDeepLinkType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86D028EDA86C00E197A5 /* IncomingDeepLinkType.swift */; };
-		459E86EB28EDA86C00E197A5 /* DeepLinkingParserManifestInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86D228EDA86C00E197A5 /* DeepLinkingParserManifestInterface.swift */; };
-		459E86ED28EDA86C00E197A5 /* DeepLinkingManifestInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86D428EDA86C00E197A5 /* DeepLinkingManifestInterface.swift */; };
 		459E86EE28EDA86C00E197A5 /* DeepLinkingParserManifestUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86D528EDA86C00E197A5 /* DeepLinkingParserManifestUrl.swift */; };
 		459E86EF28EDA86C00E197A5 /* ParsedDeepLinkType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86D728EDA86C00E197A5 /* ParsedDeepLinkType.swift */; };
 		459E86F028EDA86C00E197A5 /* ToolDeepLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459E86D828EDA86C00E197A5 /* ToolDeepLink.swift */; };
@@ -1356,6 +1352,11 @@
 		45E62FBC2AFA9A6800FFEC61 /* ToolScreenShareFlowCompletedState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E62FBB2AFA9A6800FFEC61 /* ToolScreenShareFlowCompletedState.swift */; };
 		45E6BBEC2C41642800A49960 /* GetTranslatedLanguageNameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E6BBE72C41642800A49960 /* GetTranslatedLanguageNameTests.swift */; };
 		45E6BBED2C41642800A49960 /* MockTranslatableLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E6BBE82C41642800A49960 /* MockTranslatableLanguage.swift */; };
+		45E70A242D8C5E4800C29140 /* DeepLinkingManifestInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E70A222D8C5E4800C29140 /* DeepLinkingManifestInterface.swift */; };
+		45E70A252D8C5E4800C29140 /* DeepLinkingParserManifestInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E70A232D8C5E4800C29140 /* DeepLinkingParserManifestInterface.swift */; };
+		45E70A282D8C5E5500C29140 /* DeepLinkParserInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E70A262D8C5E5500C29140 /* DeepLinkParserInterface.swift */; };
+		45E70A292D8C5E5500C29140 /* DeepLinkUrlParserInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E70A272D8C5E5500C29140 /* DeepLinkUrlParserInterface.swift */; };
+		45E70A2B2D8C5E5F00C29140 /* LegacyKnowGodDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E70A2A2D8C5E5F00C29140 /* LegacyKnowGodDeepLinkParser.swift */; };
 		45E7D4C42977430A008C7503 /* ZipArchive in Frameworks */ = {isa = PBXBuildFile; productRef = 45E7D4C32977430A008C7503 /* ZipArchive */; };
 		45E8FAA42882FD4B00D7D569 /* SHA256FileModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E8FA9E2882FD4B00D7D569 /* SHA256FileModelType.swift */; };
 		45E8FAA62882FD4B00D7D569 /* ResourcesSHA256FileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E8FAA02882FD4B00D7D569 /* ResourcesSHA256FileCache.swift */; };
@@ -1800,13 +1801,13 @@
 		450DB5632AC3553E00B2FE3A /* GetAppLanguagesListRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAppLanguagesListRepositoryInterface.swift; sourceTree = "<group>"; };
 		450DB5652AC355AA00B2FE3A /* AppLanguageListItemDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLanguageListItemDomainModel.swift; sourceTree = "<group>"; };
 		450E64D52B570DBD00A74F6D /* BCP47LanguageIdentifier+TranslatableLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BCP47LanguageIdentifier+TranslatableLanguage.swift"; sourceTree = "<group>"; };
-		450E6A742D8B1F63007C4C0F /* KnowGodDeepLinkParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnowGodDeepLinkParser.swift; sourceTree = "<group>"; };
+		450E6A762D89DF4F00EB7EDE /* GetTranslatedPercentageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTranslatedPercentageTests.swift; sourceTree = "<group>"; };
 		450EE27E29A6648900524F64 /* ToolDeepLinkToolPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolDeepLinkToolPath.swift; sourceTree = "<group>"; };
 		450EE27F29A6648900524F64 /* ToolPathDeepLinkParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolPathDeepLinkParser.swift; sourceTree = "<group>"; };
 		450EE28129A6648900524F64 /* DashboardDeepLinkDashboardPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardDeepLinkDashboardPath.swift; sourceTree = "<group>"; };
 		450EE28229A6648900524F64 /* DashboardPathDeepLinkParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardPathDeepLinkParser.swift; sourceTree = "<group>"; };
 		450EE28429A6648900524F64 /* ArticleAemPathDeepLinkParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleAemPathDeepLinkParser.swift; sourceTree = "<group>"; };
-		450EE29D29A66CA500524F64 /* LegacyKnowGodDeepLinkParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyKnowGodDeepLinkParser.swift; sourceTree = "<group>"; };
+		450EE29D29A66CA500524F64 /* KnowGodDeepLinkParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnowGodDeepLinkParser.swift; sourceTree = "<group>"; };
 		450EE29F29A66CDF00524F64 /* KnowGodTractDeepLinkQueryParameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KnowGodTractDeepLinkQueryParameters.swift; sourceTree = "<group>"; };
 		450EE2AA29A6719500524F64 /* GodToolsAppLessonsPathDeepLinkParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GodToolsAppLessonsPathDeepLinkParser.swift; sourceTree = "<group>"; };
 		450EF833247EB3D300978926 /* SF-Pro-Text-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Bold.otf"; sourceTree = "<group>"; };
@@ -2532,11 +2533,7 @@
 		459E3A032A30BC2600070934 /* MenuItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuItemView.swift; sourceTree = "<group>"; };
 		459E3A042A30BC2600070934 /* MenuSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuSectionView.swift; sourceTree = "<group>"; };
 		459E86B928EDA86C00E197A5 /* GodToolsDeepLinkingManifest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GodToolsDeepLinkingManifest.swift; sourceTree = "<group>"; };
-		459E86BB28EDA86C00E197A5 /* DeepLinkParserInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeepLinkParserInterface.swift; sourceTree = "<group>"; };
-		459E86BC28EDA86C00E197A5 /* DeepLinkUrlParserInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeepLinkUrlParserInterface.swift; sourceTree = "<group>"; };
 		459E86D028EDA86C00E197A5 /* IncomingDeepLinkType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomingDeepLinkType.swift; sourceTree = "<group>"; };
-		459E86D228EDA86C00E197A5 /* DeepLinkingParserManifestInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeepLinkingParserManifestInterface.swift; sourceTree = "<group>"; };
-		459E86D428EDA86C00E197A5 /* DeepLinkingManifestInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeepLinkingManifestInterface.swift; sourceTree = "<group>"; };
 		459E86D528EDA86C00E197A5 /* DeepLinkingParserManifestUrl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeepLinkingParserManifestUrl.swift; sourceTree = "<group>"; };
 		459E86D728EDA86C00E197A5 /* ParsedDeepLinkType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParsedDeepLinkType.swift; sourceTree = "<group>"; };
 		459E86D828EDA86C00E197A5 /* ToolDeepLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolDeepLink.swift; sourceTree = "<group>"; };
@@ -2862,6 +2859,8 @@
 		45C883512A93DD5E00F33E6D /* DashboardPresentationLayerDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardPresentationLayerDependencies.swift; sourceTree = "<group>"; };
 		45C8835C2A93EDDF00F33E6D /* DashboardTabBarItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardTabBarItemView.swift; sourceTree = "<group>"; };
 		45C8835E2A93EE9C00F33E6D /* DashboardTabBarItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardTabBarItemViewModel.swift; sourceTree = "<group>"; };
+		45C8DF062D8B4D0500F231C1 /* om */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = om; path = om.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		45C8DF072D8B4D0500F231C1 /* om */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = om; path = om.lproj/Localizable.strings; sourceTree = "<group>"; };
 		45C925012B45E7AA005947DB /* AppHomeBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppHomeBarItem.swift; sourceTree = "<group>"; };
 		45C94E602C4EDF1C004D80FE /* AccessibilityTapAreaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityTapAreaView.swift; sourceTree = "<group>"; };
 		45CAB4E928A2CE7F00224B5F /* KeyboardNotificationObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardNotificationObserver.swift; sourceTree = "<group>"; };
@@ -3031,6 +3030,11 @@
 		45E62FBB2AFA9A6800FFEC61 /* ToolScreenShareFlowCompletedState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolScreenShareFlowCompletedState.swift; sourceTree = "<group>"; };
 		45E6BBE72C41642800A49960 /* GetTranslatedLanguageNameTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetTranslatedLanguageNameTests.swift; sourceTree = "<group>"; };
 		45E6BBE82C41642800A49960 /* MockTranslatableLanguage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockTranslatableLanguage.swift; sourceTree = "<group>"; };
+		45E70A222D8C5E4800C29140 /* DeepLinkingManifestInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkingManifestInterface.swift; sourceTree = "<group>"; };
+		45E70A232D8C5E4800C29140 /* DeepLinkingParserManifestInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkingParserManifestInterface.swift; sourceTree = "<group>"; };
+		45E70A262D8C5E5500C29140 /* DeepLinkParserInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkParserInterface.swift; sourceTree = "<group>"; };
+		45E70A272D8C5E5500C29140 /* DeepLinkUrlParserInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkUrlParserInterface.swift; sourceTree = "<group>"; };
+		45E70A2A2D8C5E5F00C29140 /* LegacyKnowGodDeepLinkParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyKnowGodDeepLinkParser.swift; sourceTree = "<group>"; };
 		45E8FA9E2882FD4B00D7D569 /* SHA256FileModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHA256FileModelType.swift; sourceTree = "<group>"; };
 		45E8FAA02882FD4B00D7D569 /* ResourcesSHA256FileCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourcesSHA256FileCache.swift; sourceTree = "<group>"; };
 		45E8FAA12882FD4B00D7D569 /* RealmSHA256File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmSHA256File.swift; sourceTree = "<group>"; };
@@ -3962,6 +3966,14 @@
 			path = Domain;
 			sourceTree = "<group>";
 		};
+		450E6A752D89DF4300EB7EDE /* GetTranslatedPercentage */ = {
+			isa = PBXGroup;
+			children = (
+				450E6A762D89DF4F00EB7EDE /* GetTranslatedPercentageTests.swift */,
+			);
+			path = GetTranslatedPercentage;
+			sourceTree = "<group>";
+		};
 		450EE27D29A6648900524F64 /* ToolPath */ = {
 			isa = PBXGroup;
 			children = (
@@ -3991,9 +4003,9 @@
 		450EE28A29A6680800524F64 /* KnowGod */ = {
 			isa = PBXGroup;
 			children = (
-				450E6A742D8B1F63007C4C0F /* KnowGodDeepLinkParser.swift */,
+				45E70A2A2D8C5E5F00C29140 /* LegacyKnowGodDeepLinkParser.swift */,
+				450EE29D29A66CA500524F64 /* KnowGodDeepLinkParser.swift */,
 				450EE29F29A66CDF00524F64 /* KnowGodTractDeepLinkQueryParameters.swift */,
-				450EE29D29A66CA500524F64 /* LegacyKnowGodDeepLinkParser.swift */,
 			);
 			path = KnowGod;
 			sourceTree = "<group>";
@@ -7756,8 +7768,8 @@
 		459E86BA28EDA86C00E197A5 /* Parsers */ = {
 			isa = PBXGroup;
 			children = (
-				459E86BB28EDA86C00E197A5 /* DeepLinkParserInterface.swift */,
-				459E86BC28EDA86C00E197A5 /* DeepLinkUrlParserInterface.swift */,
+				45E70A262D8C5E5500C29140 /* DeepLinkParserInterface.swift */,
+				45E70A272D8C5E5500C29140 /* DeepLinkUrlParserInterface.swift */,
 				450EE28329A6648900524F64 /* ArticleAemPath */,
 				450EE28029A6648900524F64 /* DashboardPath */,
 				450EE2A829A6719500524F64 /* GodToolsApp */,
@@ -7772,8 +7784,8 @@
 		459E86D128EDA86C00E197A5 /* Manifest */ = {
 			isa = PBXGroup;
 			children = (
-				459E86D428EDA86C00E197A5 /* DeepLinkingManifestInterface.swift */,
-				459E86D228EDA86C00E197A5 /* DeepLinkingParserManifestInterface.swift */,
+				45E70A222D8C5E4800C29140 /* DeepLinkingManifestInterface.swift */,
+				45E70A232D8C5E4800C29140 /* DeepLinkingParserManifestInterface.swift */,
 				459E86D528EDA86C00E197A5 /* DeepLinkingParserManifestUrl.swift */,
 			);
 			path = Manifest;
@@ -10393,6 +10405,7 @@
 			isa = PBXGroup;
 			children = (
 				45E6BBE92C41642800A49960 /* GetTranslatedLanguageName */,
+				450E6A752D89DF4300EB7EDE /* GetTranslatedPercentage */,
 			);
 			path = Supporting;
 			sourceTree = "<group>";
@@ -12281,6 +12294,7 @@
 				ckb,
 				en,
 				Base,
+				om,
 			);
 			mainGroup = 4F5732801EA69CF00082035C;
 			packageReferences = (
@@ -12654,7 +12668,6 @@
 				45BDA6492954FF08007E259B /* WebArchiveUrl.swift in Sources */,
 				45D63E56288F67F8009B4610 /* IgnoreCacheSession.swift in Sources */,
 				458B91C32B7D676900785C6F /* ViewFavoritesDomainModel.swift in Sources */,
-				459E86DD28EDA86C00E197A5 /* DeepLinkUrlParserInterface.swift in Sources */,
 				459C56D225FF954F00F15967 /* (null) in Sources */,
 				45D63E86288F75B0009B4610 /* RealmAttachment.swift in Sources */,
 				45C649C22B31E212000249E0 /* GetShareToolInterfaceStringsRepositoryInterface.swift in Sources */,
@@ -12703,6 +12716,7 @@
 				453F84C32A029FC00005101E /* ArticleAemCache.swift in Sources */,
 				D4F0457F2BBB479D00B115C9 /* RealmUserToolLanguageFilter.swift in Sources */,
 				450B7FC22B2B53A2000B9035 /* ToolSettingsToolLanguagesListTypeDomainModel.swift in Sources */,
+				45E70A2B2D8C5E5F00C29140 /* LegacyKnowGodDeepLinkParser.swift in Sources */,
 				D4F0457B2BBB464D00B115C9 /* RealmUserToolFiltersCache.swift in Sources */,
 				45CF8FEF2A0EC76400802A88 /* ArticleWebViewState.swift in Sources */,
 				45860A572923E7B30089C836 /* FixedVerticalSpacer.swift in Sources */,
@@ -12842,7 +12856,6 @@
 				45B8C1A72AEA9FC80099F8C2 /* GetLessonEvaluatedRepository.swift in Sources */,
 				45828BCA279CCB6900F6B5F3 /* MobileContentCardViewModel.swift in Sources */,
 				454ADADB2ABDDA3100037C27 /* AppLanguagesView.swift in Sources */,
-				459E86DC28EDA86C00E197A5 /* DeepLinkParserInterface.swift in Sources */,
 				45AD205625938AC300A096A0 /* AnalyticsConstants.swift in Sources */,
 				45B54C582A2641FE0042CD0E /* RealmDatabase+Write.swift in Sources */,
 				455583FE269F2DA500C3FF14 /* MobileContentEmbeddedVideoView.swift in Sources */,
@@ -13131,7 +13144,6 @@
 				D4C2A5742C344CB90035AB4D /* LessonFilterDataLayerDependencies.swift in Sources */,
 				455583F1269F2DA500C3FF14 /* MobileContentTabView.swift in Sources */,
 				450D63B22AC8A87200B90319 /* TrackScreenViewAnalyticsInterface.swift in Sources */,
-				459E86EB28EDA86C00E197A5 /* DeepLinkingParserManifestInterface.swift in Sources */,
 				453F84BC2A029FC00005101E /* ArticleAemWebArchiveFileCacheLocation.swift in Sources */,
 				45CC43072C3898B300B0D82B /* LocalizationLanguageNameRepositoryInterface.swift in Sources */,
 				D4E243D029EDD2E800EA4BB7 /* AskAQuestionWebContent.swift in Sources */,
@@ -13150,7 +13162,7 @@
 				458CFE8129D4E0B9007B423C /* DownloadArticlesErrorViewModel.swift in Sources */,
 				45AD21622593A62800A096A0 /* AppDelegate.swift in Sources */,
 				458E93432B62A0B50087D45D /* AppDebugBarItem.swift in Sources */,
-				450EE29E29A66CA500524F64 /* LegacyKnowGodDeepLinkParser.swift in Sources */,
+				450EE29E29A66CA500524F64 /* KnowGodDeepLinkParser.swift in Sources */,
 				45ACEE182AD04926004B62E4 /* AppLanguageStringKeys.swift in Sources */,
 				45AE974A27C97A9500C2CB33 /* AccordionSection+MobileContentRenderableModel.swift in Sources */,
 				45430CF62B1FB638002B94A3 /* String+ToUrlMarkdown.swift in Sources */,
@@ -13210,7 +13222,6 @@
 				458585DF2924596C005042C2 /* AccountCreationIsSupportedDomainModel.swift in Sources */,
 				45AD1BDD25938A4F00A096A0 /* GTSegmentType.swift in Sources */,
 				45E39ECA27457A14006A59E4 /* AnimatedViewModel.swift in Sources */,
-				459E86ED28EDA86C00E197A5 /* DeepLinkingManifestInterface.swift in Sources */,
 				D4E7EE202CA48F2300F75DA6 /* RealmUserLessonProgress.swift in Sources */,
 				455583C3269F2DA500C3FF14 /* MobileContentPageViewFactory.swift in Sources */,
 				45920D472A8D1C9700E336A8 /* ToolCardCategoryView.swift in Sources */,
@@ -13317,7 +13328,6 @@
 				45325F27285CF8B40078D932 /* VideoViewCoordinator.swift in Sources */,
 				45051207275AA71F0081BF56 /* MobileContentParagraphViewModel.swift in Sources */,
 				458CFE9929D4E0B9007B423C /* ArticleCategoryCell.swift in Sources */,
-				450E6A752D8B1F64007C4C0F /* KnowGodDeepLinkParser.swift in Sources */,
 				45CBD9FB2BA343590007DEC8 /* GetOnboardingTutorialIsAvailableInterface.swift in Sources */,
 				D4960CC62CC6D77B0090B114 /* GetTranslatedPercentage.swift in Sources */,
 				45AE973C27C97A9400C2CB33 /* MultiplatformCards.swift in Sources */,
@@ -13524,6 +13534,8 @@
 				45043F9F2BFB871400324573 /* ViewDeleteAccountProgressDomainModel.swift in Sources */,
 				45AD20B225938EE500A096A0 /* FileCache.swift in Sources */,
 				4556CEA829F2D57800643BBC /* RealmDatabaseProductionConfiguration.swift in Sources */,
+				45E70A282D8C5E5500C29140 /* DeepLinkParserInterface.swift in Sources */,
+				45E70A292D8C5E5500C29140 /* DeepLinkUrlParserInterface.swift in Sources */,
 				458B91AA2B7D5D6800785C6F /* FavoritesViewModel.swift in Sources */,
 				45325F2D285CF8DA0078D932 /* ViewGeometry.swift in Sources */,
 				45558401269F2DA500C3FF14 /* MobileContentBackgroundImageViewModel.swift in Sources */,
@@ -13833,6 +13845,8 @@
 				45AF070F2B066266000EACF2 /* LocaleLanguageName.swift in Sources */,
 				45131A0F2AB498AD0085AF0D /* FontLibrary.swift in Sources */,
 				D4B05FF929106462005852D0 /* MobileContentAuthTokenAPI.swift in Sources */,
+				45E70A242D8C5E4800C29140 /* DeepLinkingManifestInterface.swift in Sources */,
+				45E70A252D8C5E4800C29140 /* DeepLinkingParserManifestInterface.swift in Sources */,
 				4504BA1E2AF3ED4C001151E5 /* TutorialItemView.swift in Sources */,
 				45B3382B2AF42A3900D18C63 /* GetTutorialInterfaceStringsRepositoryInterface.swift in Sources */,
 				45AAC2992BB307FE000AE690 /* GlobalActivityDataLayerDependencies.swift in Sources */,
@@ -14099,6 +14113,7 @@
 				450FB88A2BFBA0F80015D945 /* StoreInitialAppLanguageTests.swift in Sources */,
 				450FB88B2BFBA0F80015D945 /* GetLanguageSettingsInterfaceStringsRepositoryTests.swift in Sources */,
 				45CC42F92C38981F00B0D82B /* MockLocalizationLanguageNameRepository.swift in Sources */,
+				450E6A772D89DF5500EB7EDE /* GetTranslatedPercentageTests.swift in Sources */,
 				458539322C57C08000748BAF /* MockRealmResource.swift in Sources */,
 				450FB88C2BFBA0F80015D945 /* SearchAppLanguageInAppLanguagesListRepositoryTests.swift in Sources */,
 				D4C26CB22C5D1EAB0082B479 /* SetUserPreferredAppLanguageRepositoryTests.swift in Sources */,
@@ -14234,6 +14249,7 @@
 				4576FCD427EA0B6100CB9CC6 /* ps */,
 				4576FCD527EA0BC200CB9CC6 /* ckb */,
 				45C493F92C334A8E001D81F0 /* Base */,
+				45C8DF072D8B4D0500F231C1 /* om */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -14308,6 +14324,7 @@
 				D4B5231D29D761FD00D85213 /* ur */,
 				D4B5231E29D761FD00D85213 /* vi */,
 				45C493FA2C334A99001D81F0 /* Base */,
+				45C8DF062D8B4D0500F231C1 /* om */,
 			);
 			name = Localizable.stringsdict;
 			sourceTree = "<group>";
