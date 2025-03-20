@@ -42,7 +42,8 @@ class AppLanguageFeatureDataLayerDependencies {
             resourcesRepository: coreDataLayer.getResourcesRepository(),
             languagesRepository: coreDataLayer.getLanguagesRepository(),
             toolDownloader: coreDataLayer.getToolDownloader(),
-            downloadedLanguagesRepository: getDownloadedLanguagesRepository()
+            downloadedLanguagesRepository: getDownloadedLanguagesRepository(),
+            cache: RealmToolLanguageDownloaderCache(realmDatabase: coreDataLayer.getSharedRealmDatabase())
         )
     }
     

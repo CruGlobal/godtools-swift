@@ -1356,6 +1356,9 @@
 		45E62FBC2AFA9A6800FFEC61 /* ToolScreenShareFlowCompletedState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E62FBB2AFA9A6800FFEC61 /* ToolScreenShareFlowCompletedState.swift */; };
 		45E6BBEC2C41642800A49960 /* GetTranslatedLanguageNameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E6BBE72C41642800A49960 /* GetTranslatedLanguageNameTests.swift */; };
 		45E6BBED2C41642800A49960 /* MockTranslatableLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E6BBE82C41642800A49960 /* MockTranslatableLanguage.swift */; };
+		45E70BB32D8C4A3A00CA61C2 /* RealmToolLanguageDownloaderCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E70BB22D8C4A3500CA61C2 /* RealmToolLanguageDownloaderCache.swift */; };
+		45E70BB52D8C4A4500CA61C2 /* RealmToolLanguageDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E70BB42D8C4A3E00CA61C2 /* RealmToolLanguageDownload.swift */; };
+		45E70BB72D8C4CC500CA61C2 /* ToolLanguageDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E70BB62D8C4CC100CA61C2 /* ToolLanguageDownload.swift */; };
 		45E7D4C42977430A008C7503 /* ZipArchive in Frameworks */ = {isa = PBXBuildFile; productRef = 45E7D4C32977430A008C7503 /* ZipArchive */; };
 		45E8FAA42882FD4B00D7D569 /* SHA256FileModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E8FA9E2882FD4B00D7D569 /* SHA256FileModelType.swift */; };
 		45E8FAA62882FD4B00D7D569 /* ResourcesSHA256FileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E8FAA02882FD4B00D7D569 /* ResourcesSHA256FileCache.swift */; };
@@ -3031,6 +3034,9 @@
 		45E62FBB2AFA9A6800FFEC61 /* ToolScreenShareFlowCompletedState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolScreenShareFlowCompletedState.swift; sourceTree = "<group>"; };
 		45E6BBE72C41642800A49960 /* GetTranslatedLanguageNameTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetTranslatedLanguageNameTests.swift; sourceTree = "<group>"; };
 		45E6BBE82C41642800A49960 /* MockTranslatableLanguage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockTranslatableLanguage.swift; sourceTree = "<group>"; };
+		45E70BB22D8C4A3500CA61C2 /* RealmToolLanguageDownloaderCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmToolLanguageDownloaderCache.swift; sourceTree = "<group>"; };
+		45E70BB42D8C4A3E00CA61C2 /* RealmToolLanguageDownload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmToolLanguageDownload.swift; sourceTree = "<group>"; };
+		45E70BB62D8C4CC100CA61C2 /* ToolLanguageDownload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolLanguageDownload.swift; sourceTree = "<group>"; };
 		45E8FA9E2882FD4B00D7D569 /* SHA256FileModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHA256FileModelType.swift; sourceTree = "<group>"; };
 		45E8FAA02882FD4B00D7D569 /* ResourcesSHA256FileCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourcesSHA256FileCache.swift; sourceTree = "<group>"; };
 		45E8FAA12882FD4B00D7D569 /* RealmSHA256File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmSHA256File.swift; sourceTree = "<group>"; };
@@ -10413,6 +10419,15 @@
 			path = "Data-DomainInterface";
 			sourceTree = "<group>";
 		};
+		45E70BB12D8C4A3200CA61C2 /* Cache */ = {
+			isa = PBXGroup;
+			children = (
+				45E70BB42D8C4A3E00CA61C2 /* RealmToolLanguageDownload.swift */,
+				45E70BB22D8C4A3500CA61C2 /* RealmToolLanguageDownloaderCache.swift */,
+			);
+			path = Cache;
+			sourceTree = "<group>";
+		};
 		45E8FA9D2882FD1B00D7D569 /* ResourcesSHA256FileCache */ = {
 			isa = PBXGroup;
 			children = (
@@ -10705,7 +10720,9 @@
 		45F1CE1F2B7D1F170008A3BC /* ToolLanguageDownloader */ = {
 			isa = PBXGroup;
 			children = (
+				45E70BB12D8C4A3200CA61C2 /* Cache */,
 				45F1CE202B7D1F210008A3BC /* ToolLanguageDownloader.swift */,
+				45E70BB62D8C4CC100CA61C2 /* ToolLanguageDownload.swift */,
 			);
 			path = ToolLanguageDownloader;
 			sourceTree = "<group>";
@@ -12819,6 +12836,7 @@
 				45BD7A7226A235F60007426B /* MobileContentRendererPageViewFactoriesType.swift in Sources */,
 				D4F045812BBB4CCC00B115C9 /* UserToolCategoryFilterDataModel.swift in Sources */,
 				453AC11628F4A10400291791 /* FollowUpModel.swift in Sources */,
+				45E70BB32D8C4A3A00CA61C2 /* RealmToolLanguageDownloaderCache.swift in Sources */,
 				455583E7269F2DA500C3FF14 /* MobileContentButtonView.swift in Sources */,
 				45860A562923E7B30089C836 /* FixedHorizontalSpacer.swift in Sources */,
 				4564E2062B1E181000DA4040 /* GetToolShortcutLinksRepositoryInterface.swift in Sources */,
@@ -12930,6 +12948,7 @@
 				452259B82ABCC6FB0070F7F3 /* AnalyticsContainer+TrackActionAnalyticsInterface.swift in Sources */,
 				45DAC8CD2B2BBA2B00A138C0 /* LanguageModel+TranslatableLanguage.swift in Sources */,
 				4592A0EA29D74AE00002E70A /* OnboardingTutorialPrimaryButton.swift in Sources */,
+				45E70BB52D8C4A4500CA61C2 /* RealmToolLanguageDownload.swift in Sources */,
 				45D814D52B81057600AD00C5 /* SpotlightToolsDataLayerDependencies.swift in Sources */,
 				45D63E85288F75B0009B4610 /* RealmAttachmentsCache.swift in Sources */,
 				452DFB3B2B7FB40F003A4A59 /* ViewAllYourFavoritedToolsDomainModel.swift in Sources */,
@@ -13716,6 +13735,7 @@
 				45B338312AF42A9400D18C63 /* GetTutorialInterfaceStringsRepository.swift in Sources */,
 				453D2F822AD88C2B001C44E3 /* GetLanguageSettingsInterfaceStringsRepository.swift in Sources */,
 				45BDA5CE2954F67D007E259B /* RealmResourceView.swift in Sources */,
+				45E70BB72D8C4CC500CA61C2 /* ToolLanguageDownload.swift in Sources */,
 				45C1523C2A43D1BD00F2A1E8 /* ToolSettingsViewModel.swift in Sources */,
 				450EE28629A6648900524F64 /* ToolPathDeepLinkParser.swift in Sources */,
 				458CFE8C29D4E0B9007B423C /* LoadingArticleViewModel.swift in Sources */,
