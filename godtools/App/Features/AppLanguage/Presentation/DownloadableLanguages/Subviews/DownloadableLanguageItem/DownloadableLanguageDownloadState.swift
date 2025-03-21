@@ -12,6 +12,15 @@ enum DownloadableLanguageDownloadState {
     case downloaded
     case downloading(progress: Double)
     case notDownloaded
+    
+    var isDownloading: Bool {
+        switch self {
+        case .downloading( _):
+            return true
+        default:
+            return false
+        }
+    }
 }
 
 extension DownloadableLanguageDownloadState: Equatable {
