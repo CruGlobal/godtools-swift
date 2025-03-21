@@ -142,33 +142,39 @@ class RealmFavoritedResourcesCache {
     
     func reorderFavoritedResourcePublisher(id: String, originalPosition: Int, newPosition: Int) -> AnyPublisher<[FavoritedResourceDataModel], Error> {
         
+        
         return realmDatabase.writeObjectsPublisher { realm in
+            let resourceTest = realm.object(ofType: RealmFavoritedResource.self, forPrimaryKey: id)
+            print("position: \(resourceTest?.position)")
             
+            let resourceTestB = realm.object(ofType: RealmFavoritedResource.self, forPrimaryKey: "B")
+            print("position: \(resourceTestB?.position)")
+            print("original position: \(originalPosition), new position: \(newPosition)")
             var resourcesToUpdate: [RealmFavoritedResource] = []
+            
+            if newPosition - originalPosition > 0 {
+                print("move stuff up")
+                let resourcesToMoveUp = realm.objects(RealmFavoritedResource.self).where({ $0.position > originalPosition && $0.position <= newPosition })
+                for resource in resourcesToMoveUp {
+                    resource.position -= 1
+                }
+                print(resourcesToMoveUp)
+                
+                resourcesToUpdate += resourcesToMoveUp
+            } else {
+                print("move stuff down")
+                let resourcesToMoveDown = realm.objects(RealmFavoritedResource.self).where( { $0.position <= originalPosition && $0.position >= newPosition})
+                for resource in resourcesToMoveDown {
+                    resource.position += 1
+                }
+                print(resourcesToMoveDown)
+                
+                resourcesToUpdate += resourcesToMoveDown
+            }
             
             if let resourceToMove = realm.object(ofType: RealmFavoritedResource.self, forPrimaryKey: id) {
                 resourceToMove.position = newPosition
                 resourcesToUpdate.append(resourceToMove)
-            }
-            
-            let positionChange = newPosition - originalPosition
-
-            if newPosition - originalPosition > 0 {
-                
-                let resourcesToMoveForward = realm.objects(RealmFavoritedResource.self).where({ $0.position > originalPosition && $0.position <= newPosition })
-                for resource in resourcesToMoveForward {
-                    resource.position -= 1
-                }
-                
-                resourcesToUpdate += resourcesToMoveForward
-            } else {
-                
-                let resourcesToMoveBackward = realm.objects(RealmFavoritedResource.self).where( { $0.position < originalPosition && $0.position >= newPosition})
-                for resource in resourcesToMoveBackward {
-                    resource.position += 1
-                }
-                
-                resourcesToUpdate += resourcesToMoveBackward
             }
             
             return resourcesToUpdate

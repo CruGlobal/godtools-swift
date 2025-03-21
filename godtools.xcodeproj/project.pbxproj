@@ -1571,6 +1571,7 @@
 		D4B26F502D8B440F0019FA86 /* ReorderFavoritedToolUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B26F4F2D8B440F0019FA86 /* ReorderFavoritedToolUseCase.swift */; };
 		D4B26F522D8B44AF0019FA86 /* ReorderFavoritedToolRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B26F512D8B44AF0019FA86 /* ReorderFavoritedToolRepositoryInterface.swift */; };
 		D4B26F542D8B45330019FA86 /* ReorderFavoritedToolRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B26F532D8B45330019FA86 /* ReorderFavoritedToolRepository.swift */; };
+		D4B26F592D8DF0A80019FA86 /* ReorderFavoritedToolRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B26F582D8DF0A80019FA86 /* ReorderFavoritedToolRepositoryTests.swift */; };
 		D4B522D929D761B700D85213 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = D4B522DB29D761B700D85213 /* Localizable.stringsdict */; };
 		D4BC79D5299D6BFB0040651B /* CompletedTrainingTipRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BC79D4299D6BFB0040651B /* CompletedTrainingTipRepository.swift */; };
 		D4BC79DA299D6C7D0040651B /* RealmCompletedTrainingTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4BC79D9299D6C7D0040651B /* RealmCompletedTrainingTip.swift */; };
@@ -3292,6 +3293,7 @@
 		D4B26F4F2D8B440F0019FA86 /* ReorderFavoritedToolUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReorderFavoritedToolUseCase.swift; sourceTree = "<group>"; };
 		D4B26F512D8B44AF0019FA86 /* ReorderFavoritedToolRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReorderFavoritedToolRepositoryInterface.swift; sourceTree = "<group>"; };
 		D4B26F532D8B45330019FA86 /* ReorderFavoritedToolRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReorderFavoritedToolRepository.swift; sourceTree = "<group>"; };
+		D4B26F582D8DF0A80019FA86 /* ReorderFavoritedToolRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReorderFavoritedToolRepositoryTests.swift; sourceTree = "<group>"; };
 		D4B522DC29D761BA00D85213 /* af */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = af; path = af.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		D4B522DD29D761BA00D85213 /* sq */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = sq; path = sq.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		D4B522DE29D761BB00D85213 /* am */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = am; path = am.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
@@ -4867,6 +4869,7 @@
 				45B2E7182BC044F70077A3C3 /* AppLanguage */,
 				453E2A0F2BC8C86A0047D4C6 /* Dashboard */,
 				45BA7B832AF2E0AC001BAB31 /* DownloadToolProgress */,
+				D4B26F552D8DF0320019FA86 /* Favorites */,
 				45308EC22BDC313B00A49D96 /* LessonEvaluation */,
 				4505F5A02C41549900F60F94 /* LessonFilter */,
 				45243C552C58221A00BD6F49 /* Lessons */,
@@ -11641,6 +11644,22 @@
 			path = Cache;
 			sourceTree = "<group>";
 		};
+		D4B26F552D8DF0320019FA86 /* Favorites */ = {
+			isa = PBXGroup;
+			children = (
+				D4B26F5A2D8DF45F0019FA86 /* Data-DomainInterface */,
+			);
+			path = Favorites;
+			sourceTree = "<group>";
+		};
+		D4B26F5A2D8DF45F0019FA86 /* Data-DomainInterface */ = {
+			isa = PBXGroup;
+			children = (
+				D4B26F582D8DF0A80019FA86 /* ReorderFavoritedToolRepositoryTests.swift */,
+			);
+			path = "Data-DomainInterface";
+			sourceTree = "<group>";
+		};
 		D4BC79D6299D6C050040651B /* CompletedTrainingTipRepository */ = {
 			isa = PBXGroup;
 			children = (
@@ -14078,6 +14097,7 @@
 				45368A182ABB2D850028A570 /* TestRealmObject.swift in Sources */,
 				453E2A122BC8C8810047D4C6 /* GetToolsRepositoryTests.swift in Sources */,
 				45F357B62C52E49200F31EB2 /* GetLessonFilterLanguagesRepositoryTests.swift in Sources */,
+				D4B26F592D8DF0A80019FA86 /* ReorderFavoritedToolRepositoryTests.swift in Sources */,
 				45368A192ABB2D850028A570 /* DeepLinkingServiceTests.swift in Sources */,
 				45192F522C470AEC005740E5 /* UserCountersAPIMock.swift in Sources */,
 				45CC43012C38982800B0D82B /* MockLocaleLanguageRegionName.swift in Sources */,
