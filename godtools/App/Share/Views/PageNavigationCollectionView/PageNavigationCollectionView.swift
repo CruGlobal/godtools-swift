@@ -37,6 +37,8 @@ class PageNavigationCollectionView: UIView, NibBased {
     
     private var layout: UICollectionViewFlowLayout = PageNavigationCollectionView.getDefaultFlowLayout()
     private var currentPageNavigation: PageNavigationCollectionView.CurrentNavigation?
+    private var pendingPageNavigationForPagesDidLoad: PageNavigationCollectionViewNavigationModel?
+    private var pendingPageNavigationCompletionForPagesDidLoad: ((_ completed: PageNavigationCollectionViewNavigationCompleted) -> Void)?
     private var pageNavigationCompletedClosure: ((_ completed: PageNavigationCollectionViewNavigationCompleted) -> Void)?
     private var internalCurrentChangedPage: Int = -1
     private var internalCurrentStoppedOnPage: Int = -1
@@ -137,7 +139,14 @@ class PageNavigationCollectionView: UIView, NibBased {
     
     private func handleLoadPagesCompleted() {
         
-        if let initialPageIndex = initialPageIndex {
+        logMessage(message: "handleLoadPagesCompleted()")
+        
+        if let pageNavigation = pendingPageNavigationForPagesDidLoad {
+            DispatchQueue.main.async { [weak self] in
+                self?.scrollToPage(pageNavigation: pageNavigation, shouldIgnoreBatchUpdates: true, completion: self?.pendingPageNavigationCompletionForPagesDidLoad)
+            }
+        }
+        else if let initialPageIndex = initialPageIndex {
             DispatchQueue.main.async { [weak self] in
                 self?.scrollToPage(page: initialPageIndex, animated: false)
             }
@@ -505,9 +514,19 @@ extension PageNavigationCollectionView {
         )
     }
     
-    func scrollToPage(pageNavigation: PageNavigationCollectionViewNavigationModel, completion: ((_ completed: PageNavigationCollectionViewNavigationCompleted) -> Void)? = nil) {
+    func scrollToPage(pageNavigation: PageNavigationCollectionViewNavigationModel, shouldIgnoreBatchUpdates: Bool = false, completion: ((_ completed: PageNavigationCollectionViewNavigationCompleted) -> Void)? = nil) {
              
+        guard didLoadPages else {
+            pendingPageNavigationForPagesDidLoad = pageNavigation
+            pendingPageNavigationCompletionForPagesDidLoad = completion
+            return
+        }
+        
+        pendingPageNavigationForPagesDidLoad = nil
+        pendingPageNavigationCompletionForPagesDidLoad = nil
+        
         logMessage(message: "scrollToPage for pageNavigation \(pageNavigation)")
+        logMessage(message: "  did load pages: \(didLoadPages)", includeClassNameHeader: false)
         logMessage(message: "  scroll to page for pageNavigation number of pages: \(getNumberOfPages())", includeClassNameHeader: false)
         
         pageNavigationCompletedClosure = completion
@@ -526,7 +545,7 @@ extension PageNavigationCollectionView {
         
         let reloadDataNeeded: Bool = pageNavigation.reloadCollectionViewDataNeeded || pageNavigationDirectionChanged
         
-        if !reloadDataNeeded {
+        if !reloadDataNeeded && !shouldIgnoreBatchUpdates {
          
             collectionView.performBatchUpdates {
                 
