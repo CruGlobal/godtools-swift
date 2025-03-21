@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ArticleAemPathDeepLinkParser: DeepLinkUrlParserType {
+class ArticleAemPathDeepLinkParser: DeepLinkUrlParserInterface {
     
     required init() {
         

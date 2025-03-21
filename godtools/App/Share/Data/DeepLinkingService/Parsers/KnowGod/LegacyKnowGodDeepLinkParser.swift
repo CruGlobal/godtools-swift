@@ -1,14 +1,14 @@
 //
-//  KnowGodDeepLinkParser.swift
+//  LegacyKnowGodDeepLinkParser.swift
 //  godtools
 //
-//  Created by Levi Eggert on 3/19/25.
-//  Copyright © 2025 Cru. All rights reserved.
+//  Created by Levi Eggert on 2/22/23.
+//  Copyright © 2023 Cru. All rights reserved.
 //
 
 import Foundation
 
-class KnowGodDeepLinkParser: DeepLinkUrlParserInterface {
+class LegacyKnowGodDeepLinkParser: DeepLinkUrlParserInterface {
     
     required init() {
         
@@ -16,14 +16,14 @@ class KnowGodDeepLinkParser: DeepLinkUrlParserInterface {
     
     func parse(url: URL, pathComponents: [String], queryParameters: [String: Any]) -> ParsedDeepLinkType? {
         
-        if pathComponents[safe: 0] == "lessons" {
+        if pathComponents.first == "lessons" {
+            
             return parseLesson(url: url, pathComponents: pathComponents, queryParameters: queryParameters)
         }
-        else if pathComponents[safe: 1] == "tool" {
-            return parseTool(url: url, pathComponents: pathComponents, queryParameters: queryParameters)
+        else {
+         
+            return parseTract(url: url, pathComponents: pathComponents, queryParameters: queryParameters)
         }
-        
-        return nil
     }
     
     private func parseLesson(url: URL, pathComponents: [String], queryParameters: [String: Any]) -> ParsedDeepLinkType? {
@@ -55,36 +55,19 @@ class KnowGodDeepLinkParser: DeepLinkUrlParserInterface {
         return .tool(toolDeepLink: toolDeepLink)
     }
     
-    private func parseTool(url: URL, pathComponents: [String], queryParameters: [String: Any]) -> ParsedDeepLinkType? {
+    private func parseTract(url: URL, pathComponents: [String], queryParameters: [String: Any]) -> ParsedDeepLinkType? {
         
         let knowGodQueryParameters: KnowGodTractDeepLinkQueryParameters? = JsonServices().decodeJsonObject(jsonObject: queryParameters)
         
         let primaryLanguageCodeFromUrlPath: String? = pathComponents[safe: 0]
-        let abbreviationFromUrlPath: String? = pathComponents[safe: 3]
-        let pageNumber: Int?
-        let pageId: String?
-        let pageSubIndex: Int?
+        let abbreviationFromUrlPath: String? = pathComponents[safe: 1]
+        let pageFromUrlPath: Int?
         
-        if let pageStringFromUrlPath = pathComponents[safe: 4] {
-            if let pageIntegerFromUrlPath = Int(pageStringFromUrlPath) {
-                pageNumber = pageIntegerFromUrlPath
-                pageId = nil
-            }
-            else {
-                pageNumber = nil
-                pageId = pageStringFromUrlPath
-            }
+        if let pageStringFromUrlPath = pathComponents[safe: 2] {
+            pageFromUrlPath = Int(pageStringFromUrlPath)
         }
         else {
-            pageNumber = nil
-            pageId = nil
-        }
-        
-        if let pageSubIndexStringFromUrlPath = pathComponents[safe: 5] {
-            pageSubIndex = Int(pageSubIndexStringFromUrlPath)
-        }
-        else {
-            pageSubIndex = nil
+            pageFromUrlPath = nil
         }
         
         var primaryLanguageCodes: [String] = knowGodQueryParameters?.getPrimaryLanguageCodes() ?? Array()
@@ -120,12 +103,13 @@ class KnowGodDeepLinkParser: DeepLinkUrlParserInterface {
             primaryLanguageCodes: primaryLanguageCodes,
             parallelLanguageCodes: parallelLanguageCodes,
             liveShareStream: knowGodQueryParameters?.liveShareStream,
-            page: pageNumber,
-            pageId: pageId,
-            pageSubIndex: pageSubIndex,
+            page: pageFromUrlPath,
+            pageId: nil,
+            pageSubIndex: nil,
             selectedLanguageIndex: selectedLanguageIndex
         )
         
         return .tool(toolDeepLink: toolDeepLink)
     }
 }
+ 

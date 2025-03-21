@@ -8,9 +8,9 @@
 
 import Foundation
 
-class GodToolsDeepLinkingManifest: DeepLinkingManifestType {
+class GodToolsDeepLinkingManifest: DeepLinkingManifestInterface {
     
-    let parserManifests: [DeepLinkingParserManifestType]
+    let parserManifests: [DeepLinkingParserManifestInterface]
     
     init() {
         
@@ -56,6 +56,18 @@ class GodToolsDeepLinkingManifest: DeepLinkingManifestType {
                 host: "knowgod.com",
                 path: nil,
                 parserClass: KnowGodDeepLinkParser.self
+            ),
+            DeepLinkingParserManifestUrl(
+                scheme: "https",
+                host: "knowgod.com",
+                path: nil,
+                parserClass: LegacyKnowGodDeepLinkParser.self
+            ),
+            DeepLinkingParserManifestUrl(
+                scheme: "godtools",
+                host: "knowgod.com",
+                path: nil,
+                parserClass: LegacyKnowGodDeepLinkParser.self
             ),
             DeepLinkingParserManifestUrl(
                 scheme: "https",
