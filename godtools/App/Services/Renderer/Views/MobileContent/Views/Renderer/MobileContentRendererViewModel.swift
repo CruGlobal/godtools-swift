@@ -334,19 +334,6 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
             parentPageParams: navigationEventToSend.parentPageParams
         )
         
-        print("\n MobileContentRendererViewModel: setPageRenderer() ...")
-        print("  will send page navigation event")
-        print("  eventWithCorrectLanguageDirection.pageNavigation: \(eventWithCorrectLanguageDirection.pageNavigation)")
-        print("  layouDirection ---")
-        switch layoutDirection {
-        case .forceLeftToRight:
-            print("   left to right")
-        case .forceRightToLeft:
-            print("   right to left")
-        default:
-            print("   not known")
-        }
-        
         super.sendPageNavigationEvent(navigationEvent: eventWithCorrectLanguageDirection)
         
         let pageRenderers: [MobileContentPageRenderer] = renderer.value.pageRenderers

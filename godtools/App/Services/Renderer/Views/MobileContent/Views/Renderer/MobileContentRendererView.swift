@@ -16,7 +16,7 @@ class MobileContentRendererView: MobileContentPagesView {
         
         self.viewModel = viewModel
         
-        super.init(viewModel: viewModel, navigationBar: navigationBar, pageViewDelegate: nil, initialPageIndex: nil, loggingEnabled: true)
+        super.init(viewModel: viewModel, navigationBar: navigationBar, pageViewDelegate: nil, initialPageIndex: nil)
     }
     
     override init(viewModel: MobileContentPagesViewModel, navigationBar: AppNavigationBar?, pageViewDelegate: MobileContentPageViewDelegate?, initialPageIndex: Int?, loggingEnabled: Bool) {

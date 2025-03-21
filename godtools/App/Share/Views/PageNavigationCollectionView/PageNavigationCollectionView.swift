@@ -353,13 +353,10 @@ class PageNavigationCollectionView: UIView, NibBased {
             page = Int(maxPage)
         }
         
-        if loggingEnabled {
-            
-            logMessage(message: "getPageBasedOnContentOffset()")
-            print("  contentOffset: \(contentOffset.x)")
-            print("  numberOfPages: \(numberOfPages)")
-            print("  page: \(page)")
-        }
+        logMessage(message: "getPageBasedOnContentOffset()")
+        logMessage(message: "  contentOffset: \(contentOffset.x)", includeClassNameHeader: false)
+        logMessage(message: "  numberOfPages: \(numberOfPages)", includeClassNameHeader: false)
+        logMessage(message: "  page: \(page)", includeClassNameHeader: false)
         
         return page
     }
