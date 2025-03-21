@@ -16,16 +16,14 @@ class KnowGodDeepLinkParser: DeepLinkUrlParserInterface {
     
     func parse(url: URL, pathComponents: [String], queryParameters: [String: Any]) -> ParsedDeepLinkType? {
         
-        guard let toolType = pathComponents[safe: 0] else {
-            return nil
-        }
-        
-        switch toolType {
-        case "lessons":
+        if pathComponents[safe: 0] == "lessons" {
             return parseLesson(url: url, pathComponents: pathComponents, queryParameters: queryParameters)
-        default:
+        }
+        else if pathComponents[safe: 1] == "tool" {
             return parseTool(url: url, pathComponents: pathComponents, queryParameters: queryParameters)
         }
+        
+        return nil
     }
     
     private func parseLesson(url: URL, pathComponents: [String], queryParameters: [String: Any]) -> ParsedDeepLinkType? {
