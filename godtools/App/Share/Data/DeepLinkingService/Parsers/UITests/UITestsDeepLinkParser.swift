@@ -8,7 +8,7 @@
 
 import Foundation
 
-class UITestsDeepLinkParser: DeepLinkUrlParserType {
+class UITestsDeepLinkParser: DeepLinkUrlParserInterface {
     
     required init() {
         

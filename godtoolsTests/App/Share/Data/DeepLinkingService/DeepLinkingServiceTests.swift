@@ -141,6 +141,7 @@ class DeepLinkingServiceTests: XCTestCase {
                 liveShareStream: nil,
                 page: nil,
                 pageId: nil,
+                pageSubIndex: nil,
                 selectedLanguageIndex: nil
             )
         )
@@ -160,6 +161,7 @@ class DeepLinkingServiceTests: XCTestCase {
                 liveShareStream: nil,
                 page: nil,
                 pageId: nil,
+                pageSubIndex: nil,
                 selectedLanguageIndex: nil
             )
         )
@@ -179,6 +181,7 @@ class DeepLinkingServiceTests: XCTestCase {
                 liveShareStream: nil,
                 page: nil,
                 pageId: nil,
+                pageSubIndex: nil,
                 selectedLanguageIndex: nil
             )
         )
@@ -198,6 +201,7 @@ class DeepLinkingServiceTests: XCTestCase {
                 liveShareStream: nil,
                 page: nil,
                 pageId: nil,
+                pageSubIndex: nil,
                 selectedLanguageIndex: nil
             )
         )
@@ -217,6 +221,7 @@ class DeepLinkingServiceTests: XCTestCase {
                 liveShareStream: nil,
                 page: nil,
                 pageId: nil,
+                pageSubIndex: nil,
                 selectedLanguageIndex: nil
             )
         )
@@ -236,6 +241,7 @@ class DeepLinkingServiceTests: XCTestCase {
                 liveShareStream: nil,
                 page: nil,
                 pageId: nil,
+                pageSubIndex: nil,
                 selectedLanguageIndex: nil
             )
         )
@@ -255,6 +261,7 @@ class DeepLinkingServiceTests: XCTestCase {
                 liveShareStream: nil,
                 page: 5,
                 pageId: nil,
+                pageSubIndex: nil,
                 selectedLanguageIndex: nil
             )
         )
@@ -283,6 +290,7 @@ class DeepLinkingServiceTests: XCTestCase {
                 liveShareStream: nil,
                 page: nil,
                 pageId: nil,
+                pageSubIndex: nil,
                 selectedLanguageIndex: nil
             )
         )
@@ -304,6 +312,7 @@ class DeepLinkingServiceTests: XCTestCase {
                 liveShareStream: nil,
                 page: 4,
                 pageId: nil,
+                pageSubIndex: nil,
                 selectedLanguageIndex: primaryLanguageIndex
             )
         )
@@ -325,6 +334,7 @@ class DeepLinkingServiceTests: XCTestCase {
                 liveShareStream: "acd9bee66b6057476cee-1612666248",
                 page: nil,
                 pageId: nil,
+                pageSubIndex: nil,
                 selectedLanguageIndex: primaryLanguageIndex
             )
         )
@@ -346,6 +356,7 @@ class DeepLinkingServiceTests: XCTestCase {
                 liveShareStream: nil,
                 page: nil,
                 pageId: nil,
+                pageSubIndex: nil,
                 selectedLanguageIndex: primaryLanguageIndex
             )
         )
@@ -365,6 +376,7 @@ class DeepLinkingServiceTests: XCTestCase {
                 liveShareStream: nil,
                 page: nil,
                 pageId: nil,
+                pageSubIndex: nil,
                 selectedLanguageIndex: nil
             )
         )

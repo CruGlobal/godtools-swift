@@ -8,7 +8,7 @@
 
 import Foundation
 
-class LanguageSettingsDeepLinkParser: DeepLinkUrlParserType {
+class LanguageSettingsDeepLinkParser: DeepLinkUrlParserInterface {
     
     required init() {
         
