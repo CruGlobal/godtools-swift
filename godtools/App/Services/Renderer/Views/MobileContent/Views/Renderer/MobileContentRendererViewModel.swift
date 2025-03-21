@@ -291,7 +291,7 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
         
         if isInitialPageRender {
             
-            pageModels = getInitialPages(pageRenderer: pageRenderer)
+            pageModels = getInitialPages(pageRenderer: pageRenderer, initialPage: initialPage)
         }
         else {
             
@@ -337,6 +337,15 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
         print("\n MobileContentRendererViewModel: setPageRenderer() ...")
         print("  will send page navigation event")
         print("  eventWithCorrectLanguageDirection.pageNavigation: \(eventWithCorrectLanguageDirection.pageNavigation)")
+        print("  layouDirection ---")
+        switch layoutDirection {
+        case .forceLeftToRight:
+            print("   left to right")
+        case .forceRightToLeft:
+            print("   right to left")
+        default:
+            print("   not known")
+        }
         
         super.sendPageNavigationEvent(navigationEvent: eventWithCorrectLanguageDirection)
         
@@ -401,7 +410,7 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
         return page
     }
     
-    func getInitialPages(pageRenderer: MobileContentPageRenderer) -> [Page] {
+    func getInitialPages(pageRenderer: MobileContentPageRenderer, initialPage: MobileContentRendererInitialPage) -> [Page] {
             
         return pageRenderer.getVisiblePageModels()
     }

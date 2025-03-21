@@ -62,8 +62,10 @@ class ChooseYourOwnAdventureViewModel: MobileContentRendererViewModel {
     
     // MARK: - Page Navigation
     
-    override func getInitialPages(pageRenderer: MobileContentPageRenderer) -> [Page] {
+    override func getInitialPages(pageRenderer: MobileContentPageRenderer, initialPage: MobileContentRendererInitialPage) -> [Page] {
             
+        // TODO: Need to build path of pages when there is an initial page for CYOA. ~Levi
+        
         if let firstVisiblePage = pageRenderer.getVisiblePageModels().first {
             return [firstVisiblePage]
         }
