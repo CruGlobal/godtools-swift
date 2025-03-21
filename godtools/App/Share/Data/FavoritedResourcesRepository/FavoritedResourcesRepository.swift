@@ -52,6 +52,11 @@ class FavoritedResourcesRepository {
         return cache.getFavoritedResourcesSortedByCreatedAt(ascendingOrder: ascendingOrder)
     }
     
+    func getFavoritedResourcesSortedByPosition(ascendingOrder: Bool = true) -> [FavoritedResourceDataModel] {
+        
+        return cache.getFavoritedResourcesSortedByPosition(ascendingOrder: ascendingOrder)
+    }
+    
     func getFavoritedResourcesSortedByCreatedAtPublisher(ascendingOrder: Bool) -> AnyPublisher<[FavoritedResourceDataModel], Never> {
         
         return cache.getFavoritedResourcesSortedByCreatedAtPublisher(ascendingOrder: ascendingOrder)

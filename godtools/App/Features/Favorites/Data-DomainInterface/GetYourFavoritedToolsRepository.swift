@@ -38,7 +38,7 @@ class GetYourFavoritedToolsRepository: GetYourFavoritedToolsRepositoryInterface 
             let numberOfFavoritedTools: Int = self.favoritedResourcesRepository.getNumberOfFavoritedResources()
             
             let favoritedResources: [ResourceModel] = self.favoritedResourcesRepository
-                .getFavoritedResourcesSortedByCreatedAt(ascendingOrder: false)
+                .getFavoritedResourcesSortedByPosition()
                 .prefix(maxCount ?? numberOfFavoritedTools)
                 .compactMap({
                     self.resourcesRepository.getResource(id: $0.id)
