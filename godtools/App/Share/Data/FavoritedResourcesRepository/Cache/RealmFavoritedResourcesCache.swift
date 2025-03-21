@@ -144,17 +144,10 @@ class RealmFavoritedResourcesCache {
         
         
         return realmDatabase.writeObjectsPublisher { realm in
-            let resourceTest = realm.object(ofType: RealmFavoritedResource.self, forPrimaryKey: id)
-            print("position: \(resourceTest?.position)")
-            
-            let resourceTestB = realm.object(ofType: RealmFavoritedResource.self, forPrimaryKey: "B")
-            print("position: \(resourceTestB?.position)")
-            print("original position: \(originalPosition), new position: \(newPosition)")
             var resourcesToUpdate: [RealmFavoritedResource] = []
             
             if newPosition - originalPosition > 0 {
-                print("move stuff up")
-                let resourcesToMoveUp = realm.objects(RealmFavoritedResource.self).where({ $0.position > originalPosition && $0.position <= newPosition })
+                let resourcesToMoveUp = realm.objects(RealmFavoritedResource.self).where({ $0.position >= originalPosition && $0.position <= newPosition })
                 for resource in resourcesToMoveUp {
                     resource.position -= 1
                 }
@@ -162,7 +155,6 @@ class RealmFavoritedResourcesCache {
                 
                 resourcesToUpdate += resourcesToMoveUp
             } else {
-                print("move stuff down")
                 let resourcesToMoveDown = realm.objects(RealmFavoritedResource.self).where( { $0.position <= originalPosition && $0.position >= newPosition})
                 for resource in resourcesToMoveDown {
                     resource.position += 1
