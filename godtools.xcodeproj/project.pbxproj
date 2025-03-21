@@ -93,6 +93,7 @@
 		450DB5642AC3553E00B2FE3A /* GetAppLanguagesListRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450DB5632AC3553E00B2FE3A /* GetAppLanguagesListRepositoryInterface.swift */; };
 		450DB5662AC355AA00B2FE3A /* AppLanguageListItemDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450DB5652AC355AA00B2FE3A /* AppLanguageListItemDomainModel.swift */; };
 		450E64D62B570DBD00A74F6D /* BCP47LanguageIdentifier+TranslatableLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E64D52B570DBD00A74F6D /* BCP47LanguageIdentifier+TranslatableLanguage.swift */; };
+		450E6A772D89DF5500EB7EDE /* GetTranslatedPercentageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E6A762D89DF4F00EB7EDE /* GetTranslatedPercentageTests.swift */; };
 		450EE28529A6648900524F64 /* ToolDeepLinkToolPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EE27E29A6648900524F64 /* ToolDeepLinkToolPath.swift */; };
 		450EE28629A6648900524F64 /* ToolPathDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EE27F29A6648900524F64 /* ToolPathDeepLinkParser.swift */; };
 		450EE28729A6648900524F64 /* DashboardDeepLinkDashboardPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EE28129A6648900524F64 /* DashboardDeepLinkDashboardPath.swift */; };
@@ -1805,6 +1806,7 @@
 		450DB5632AC3553E00B2FE3A /* GetAppLanguagesListRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAppLanguagesListRepositoryInterface.swift; sourceTree = "<group>"; };
 		450DB5652AC355AA00B2FE3A /* AppLanguageListItemDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLanguageListItemDomainModel.swift; sourceTree = "<group>"; };
 		450E64D52B570DBD00A74F6D /* BCP47LanguageIdentifier+TranslatableLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BCP47LanguageIdentifier+TranslatableLanguage.swift"; sourceTree = "<group>"; };
+		450E6A762D89DF4F00EB7EDE /* GetTranslatedPercentageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTranslatedPercentageTests.swift; sourceTree = "<group>"; };
 		450EE27E29A6648900524F64 /* ToolDeepLinkToolPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolDeepLinkToolPath.swift; sourceTree = "<group>"; };
 		450EE27F29A6648900524F64 /* ToolPathDeepLinkParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolPathDeepLinkParser.swift; sourceTree = "<group>"; };
 		450EE28129A6648900524F64 /* DashboardDeepLinkDashboardPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardDeepLinkDashboardPath.swift; sourceTree = "<group>"; };
@@ -2872,6 +2874,8 @@
 		45C883512A93DD5E00F33E6D /* DashboardPresentationLayerDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardPresentationLayerDependencies.swift; sourceTree = "<group>"; };
 		45C8835C2A93EDDF00F33E6D /* DashboardTabBarItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardTabBarItemView.swift; sourceTree = "<group>"; };
 		45C8835E2A93EE9C00F33E6D /* DashboardTabBarItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardTabBarItemViewModel.swift; sourceTree = "<group>"; };
+		45C8DF062D8B4D0500F231C1 /* om */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = om; path = om.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		45C8DF072D8B4D0500F231C1 /* om */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = om; path = om.lproj/Localizable.strings; sourceTree = "<group>"; };
 		45C925012B45E7AA005947DB /* AppHomeBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppHomeBarItem.swift; sourceTree = "<group>"; };
 		45C94E602C4EDF1C004D80FE /* AccessibilityTapAreaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityTapAreaView.swift; sourceTree = "<group>"; };
 		45CAB4E928A2CE7F00224B5F /* KeyboardNotificationObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardNotificationObserver.swift; sourceTree = "<group>"; };
@@ -3970,6 +3974,14 @@
 				45F88AFA2860BA8700C8027F /* UseCases */,
 			);
 			path = Domain;
+			sourceTree = "<group>";
+		};
+		450E6A752D89DF4300EB7EDE /* GetTranslatedPercentage */ = {
+			isa = PBXGroup;
+			children = (
+				450E6A762D89DF4F00EB7EDE /* GetTranslatedPercentageTests.swift */,
+			);
+			path = GetTranslatedPercentage;
 			sourceTree = "<group>";
 		};
 		450EE27D29A6648900524F64 /* ToolPath */ = {
@@ -10488,6 +10500,7 @@
 			isa = PBXGroup;
 			children = (
 				45E6BBE92C41642800A49960 /* GetTranslatedLanguageName */,
+				450E6A752D89DF4300EB7EDE /* GetTranslatedPercentage */,
 			);
 			path = Supporting;
 			sourceTree = "<group>";
@@ -12376,6 +12389,7 @@
 				ckb,
 				en,
 				Base,
+				om,
 			);
 			mainGroup = 4F5732801EA69CF00082035C;
 			packageReferences = (
@@ -14199,6 +14213,7 @@
 				450FB88A2BFBA0F80015D945 /* StoreInitialAppLanguageTests.swift in Sources */,
 				450FB88B2BFBA0F80015D945 /* GetLanguageSettingsInterfaceStringsRepositoryTests.swift in Sources */,
 				45CC42F92C38981F00B0D82B /* MockLocalizationLanguageNameRepository.swift in Sources */,
+				450E6A772D89DF5500EB7EDE /* GetTranslatedPercentageTests.swift in Sources */,
 				458539322C57C08000748BAF /* MockRealmResource.swift in Sources */,
 				450FB88C2BFBA0F80015D945 /* SearchAppLanguageInAppLanguagesListRepositoryTests.swift in Sources */,
 				D4C26CB22C5D1EAB0082B479 /* SetUserPreferredAppLanguageRepositoryTests.swift in Sources */,
@@ -14334,6 +14349,7 @@
 				4576FCD427EA0B6100CB9CC6 /* ps */,
 				4576FCD527EA0BC200CB9CC6 /* ckb */,
 				45C493F92C334A8E001D81F0 /* Base */,
+				45C8DF072D8B4D0500F231C1 /* om */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -14408,6 +14424,7 @@
 				D4B5231D29D761FD00D85213 /* ur */,
 				D4B5231E29D761FD00D85213 /* vi */,
 				45C493FA2C334A99001D81F0 /* Base */,
+				45C8DF062D8B4D0500F231C1 /* om */,
 			);
 			name = Localizable.stringsdict;
 			sourceTree = "<group>";

@@ -17,6 +17,8 @@
 "favorites.favoriteLessons.title" = "ਫੀਚਰਡ ਸਬਕ";
 "favorites.favoriteTools.title" = "ਤੁਹਾਡੇ ਮਨਪਸੰਦ ਟੂਲ";
 "favorites.favoriteTools.viewAll" = "ਸਭ ਦੇਖੋ";
+
+/* Please keep to a 9 character limit, longer phrases may get cut off */
 "favorites.favoriteLessons.details" = "ਵੇਰਵੇ";
 
 /* The meaning is "I don't want to set a second language".  Language is no language or None */
@@ -73,7 +75,10 @@
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "ਸਿਖਲਾਈ";
 
-/* This is an invitation for a user to open a tool */
+/*
+ * This is an invitation for a user to open a tool
+ * Please keep to a 9 character limit, longer phrases may get cut off
+*/
 "open" = "ਖੋਲੋ";
 
 /* A user will be selecting a heart to indicated that it is one of their favorite tools. */

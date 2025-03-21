@@ -51,27 +51,29 @@ class LessonViewModel: MobileContentRendererViewModel {
         }
         
         progress.accept(value: AnimatableValue(value: newProgress, animated: true))
+    }
+    
+    private func updateUserLessonCompletionProgress(page: Int) {
         
-        if let currentPage = getPage(index: page) {
-            let resourceId = currentPageRenderer.value.resource.id
-
-            if let storeLessonProgressCancellable = LessonViewModel.storeLessonProgressCancellable {
-                storeLessonProgressCancellable.cancel()
-                LessonViewModel.storeLessonProgressCancellable = nil
-            }
-            
-            LessonViewModel.storeLessonProgressCancellable = storeLessonProgressUseCase.storeLessonProgress(
-                lessonId: resourceId,
-                lastViewedPageId: currentPage.id,
-                lastViewedPageNumber: page,
-                totalPageCount: getPages().count
-            )
-            .sink(receiveCompletion: { _ in
-                
-            }, receiveValue: { _ in
-                
-            })
+        guard let currentPage = getPage(index: page) else {
+            return
         }
+        
+        let resourceId: String = currentPageRenderer.value.resource.id
+        
+        Self.storeLessonProgressCancellable?.cancel()
+        
+        Self.storeLessonProgressCancellable = storeLessonProgressUseCase.storeLessonProgress(
+            lessonId: resourceId,
+            lastViewedPageId: currentPage.id,
+            lastViewedPageNumber: page,
+            totalPageCount: getPages().count
+        )
+        .sink(receiveCompletion: { _ in
+            
+        }, receiveValue: { _ in
+            
+        })
     }
 }
 
@@ -81,6 +83,7 @@ extension LessonViewModel {
     
     func lessonMostVisiblePageDidChange(page: Int) {
         updateProgress(page: page)
+        updateUserLessonCompletionProgress(page: page)
     }
     
     func closeTapped() {
