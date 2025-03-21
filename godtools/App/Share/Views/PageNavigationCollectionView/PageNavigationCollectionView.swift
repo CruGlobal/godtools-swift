@@ -143,7 +143,7 @@ class PageNavigationCollectionView: UIView, NibBased {
         
         if let pageNavigation = pendingPageNavigationForPagesDidLoad {
             DispatchQueue.main.async { [weak self] in
-                self?.scrollToPage(pageNavigation: pageNavigation, shouldIgnoreBatchUpdates: true, completion: self?.pendingPageNavigationCompletionForPagesDidLoad)
+                self?.scrollToPage(pageNavigation: pageNavigation, completion: self?.pendingPageNavigationCompletionForPagesDidLoad)
             }
         }
         else if let initialPageIndex = initialPageIndex {
@@ -514,13 +514,17 @@ extension PageNavigationCollectionView {
         )
     }
     
-    func scrollToPage(pageNavigation: PageNavigationCollectionViewNavigationModel, shouldIgnoreBatchUpdates: Bool = false, completion: ((_ completed: PageNavigationCollectionViewNavigationCompleted) -> Void)? = nil) {
+    func scrollToPage(pageNavigation: PageNavigationCollectionViewNavigationModel, completion: ((_ completed: PageNavigationCollectionViewNavigationCompleted) -> Void)? = nil) {
              
         guard didLoadPages else {
             pendingPageNavigationForPagesDidLoad = pageNavigation
             pendingPageNavigationCompletionForPagesDidLoad = completion
             return
         }
+        
+        let isPendingNavigation: Bool = pendingPageNavigationForPagesDidLoad != nil
+        let shouldIgnoreBatchUpdates: Bool = isPendingNavigation
+        let shouldNotAnimate: Bool = isPendingNavigation
         
         pendingPageNavigationForPagesDidLoad = nil
         pendingPageNavigationCompletionForPagesDidLoad = nil
@@ -584,11 +588,11 @@ extension PageNavigationCollectionView {
             logMessage(message: "  pageNavigation.page: \(pageNavigation.page)", includeClassNameHeader: false)
             logMessage(message: "  number of pages: \(getNumberOfPages())", includeClassNameHeader: false)
             
-            completeScrollToPageForCurrentPageNavigation(pageNavigation: pageNavigation)
+            completeScrollToPageForCurrentPageNavigation(pageNavigation: pageNavigation, shouldNotAnimate: shouldNotAnimate)
         }
     }
     
-    private func completeScrollToPageForCurrentPageNavigation(pageNavigation: PageNavigationCollectionViewNavigationModel) {
+    private func completeScrollToPageForCurrentPageNavigation(pageNavigation: PageNavigationCollectionViewNavigationModel, shouldNotAnimate: Bool = false) {
                 
         let currentPage: Int = getCurrentPage()
         
@@ -609,12 +613,15 @@ extension PageNavigationCollectionView {
             navigationCompleted(completed: completed)
         }
         else {
-                     
+            
+            let animated: Bool = !shouldNotAnimate ? pageNavigation.animated : false
+            let didScroll: Bool = internalScrollToItemOnCollectionView(item: pageNavigation.page, animated: animated)
+            
             logMessage(message: "  internal scroll to item: \(pageNavigation.page)", includeClassNameHeader: false)
+            logMessage(message: "    animated: \(animated)", includeClassNameHeader: false)
+            logMessage(message: "    didScroll: \(didScroll)", includeClassNameHeader: false)
             
-            let didScroll: Bool = internalScrollToItemOnCollectionView(item: pageNavigation.page, animated: pageNavigation.animated)
-            
-            if !didScroll && pageNavigation.animated == true {
+            if !didScroll && animated == true {
                 assertionFailure("\n PageNavigationCollectionView: Failed to navigate.  Should the data be reloaded?  Try setting provided pageNavigation reloadCollectionViewDataNeeded to true.  \(pageNavigation)")
                 currentPageNavigation = nil
                 pageNavigationCompletedClosure = nil

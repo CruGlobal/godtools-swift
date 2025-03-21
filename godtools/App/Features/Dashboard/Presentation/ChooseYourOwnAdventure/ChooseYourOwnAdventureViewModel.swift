@@ -64,9 +64,21 @@ class ChooseYourOwnAdventureViewModel: MobileContentRendererViewModel {
     
     override func getInitialPages(pageRenderer: MobileContentPageRenderer, initialPage: MobileContentRendererInitialPage) -> [Page] {
             
-        // TODO: Need to build path of pages when there is an initial page for CYOA. ~Levi
+        let initialPageId: String?
         
-        if let firstVisiblePage = pageRenderer.getVisiblePageModels().first {
+        switch initialPage {
+        case .pageId(let value):
+            initialPageId = value
+        default:
+            initialPageId = nil
+        }
+        
+        if let initialPageId = initialPageId, let initialPage = pageRenderer.getAllPageModels().first(where: { $0.id == initialPageId }) {
+            
+            let pages: [Page] = super.getPagesWalkingUpParent(fromPage: initialPage, pagesFromPageRenderer: pageRenderer, includeFromPage: true)
+            return pages
+        }
+        else if let firstVisiblePage = pageRenderer.getVisiblePageModels().first {
             return [firstVisiblePage]
         }
         

@@ -433,6 +433,26 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
         return matchingPagesFromPageRenderer
     }
     
+    func getPagesWalkingUpParent(fromPage: Page, pagesFromPageRenderer: MobileContentPageRenderer, includeFromPage: Bool = true) -> [Page] {
+        
+        let allPages: [Page] = pagesFromPageRenderer.getAllPageModels()
+        
+        var pages: [Page] = Array()
+        
+        if includeFromPage {
+            pages.append(fromPage)
+        }
+        
+        var nextParentPage: Page? = fromPage.parentPage
+        
+        while let parentPage = nextParentPage {
+            pages.insert(parentPage, at: 0)
+            nextParentPage = parentPage.parentPage
+        }
+        
+        return pages
+    }
+    
     // MARK: - Page Navigation
     
     private func getInitialPageNavigation(pageRenderer: MobileContentPageRenderer) -> MobileContentPagesNavigationEvent? {
