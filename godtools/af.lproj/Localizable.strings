@@ -92,7 +92,7 @@
 "favorites.favoriteTools.viewAll" = "Sien almal";
 
 /* Please keep to a 9 character limit, longer phrases may get cut off */
-"favorites.favoriteLessons.details" = "Besonderhede";
+"favorites.favoriteLessons.details" = "Details";
 
 /* The meaning is "I don't want to set a second language".  Language is no language or None */
 "toolSettings.languagesList.deleteLanguage.title" = "Geen";

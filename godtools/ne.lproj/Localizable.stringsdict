@@ -13,9 +13,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>%d Lesson available</string>
+<string>%d पाठहरु  छन्</string>
 <key>other</key>
-<string>%d Lessons available</string>
+<string>%d पाठहरु  छन्</string>
 </dict>
 </dict>
 <key>account.activity.toolOpens</key>
@@ -29,9 +29,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Tool open</string>
+<string>उपकरण खोल्नुहोस्</string>
 <key>other</key>
-<string>Tool opens</string>
+<string>उपकरण खोल्नुहोस्</string>
 </dict>
 </dict>
 <key>account.activity.lessonCompletions</key>
@@ -45,9 +45,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Lesson completion</string>
+<string>पाठ पुरा भएको</string>
 <key>other</key>
-<string>Lesson completions</string>
+<string>पाठ पुरा भएको</string>
 </dict>
 </dict>
 <key>account.activity.screenShares</key>
@@ -61,9 +61,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Screen share</string>
+<string>स्क्रिन साझा गर्नुहोस्</string>
 <key>other</key>
-<string>Screen shares</string>
+<string>स्क्रिन साझा गर्नुहोस्</string>
 </dict>
 </dict>
 <key>account.activity.linksShared</key>
@@ -77,9 +77,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Link share</string>
+<string>लिङ्क साझा गर्नुहोस्</string>
 <key>other</key>
-<string>Link shares</string>
+<string>लिङ्क साझा गर्नुहोस्</string>
 </dict>
 </dict>
 <key>account.activity.languagesUsed</key>
@@ -93,9 +93,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Language used</string>
+<string>भाषा प्रयोग भएको</string>
 <key>other</key>
-<string>Languages used</string>
+<string>भाषा प्रयोग भएको</string>
 </dict>
 </dict>
 <key>account.activity.sessions</key>
@@ -109,9 +109,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Session</string>
+<string>पाठहरू </string>
 <key>other</key>
-<string>Sessions</string>
+<string>पाठहरू </string>
 </dict>
 </dict>
 <key>tools.filter.toolsAvailable</key>
@@ -125,9 +125,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>%d Tool available</string>
+<string>%d टूलहरू उपलब्ध छन्</string>
 <key>other</key>
-<string>%d Tools available</string>
+<string>%d टूलहरू उपलब्ध छन्</string>
 </dict>
 </dict>
 <key>languageSettings.appLanguage.numberAvailable</key>
@@ -141,9 +141,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>1 Language available</string>
+<string>%d  भाषाहरू उपलब्ध छन्</string>
 <key>other</key>
-<string>%d Languages available</string>
+<string>%d भाषाहरू उपलब्ध छन्</string>
 </dict>
 </dict>
 <key>badges.imagesShared</key>
@@ -157,9 +157,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Shared 1 image</string>
+<string>1 तस्बिरहरू साझा गरियो</string>
 <key>other</key>
-<string>Shared %d images</string>
+<string>%d तस्बिरहरू साझा गरियो</string>
 </dict>
 </dict>
 <key>badges.articlesOpened</key>
@@ -173,9 +173,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Read 1 article</string>
+<string>एक लेख पढ्नुहोस्</string>
 <key>other</key>
-<string>Read %d articles</string>
+<string>%d लेखहरू पढ्नुहोस्</string>
 </dict>
 </dict>
 <key>badges.lessonsCompleted</key>
@@ -189,9 +189,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Completed 1 lesson</string>
+<string>1 पुरा भएको पाठहरु </string>
 <key>other</key>
-<string>Completed %d lessons</string>
+<string>%d पुरा भएको पाठहरु</string>
 </dict>
 </dict>
 <key>badges.toolsOpened</key>
@@ -205,9 +205,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Opened 1 tool</string>
+<string>1 उपकरणहरू खोलियो</string>
 <key>other</key>
-<string>Opened %d tools</string>
+<string>%d उपकरणहरू खोलियो</string>
 </dict>
 </dict>
 <key>badges.tipsCompleted</key>
@@ -221,9 +221,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Completed 1 training tip</string>
+<string>1 तालिम सुझावहरू पूरा गरियो</string>
 <key>other</key>
-<string>Completed %d training tips</string>
+<string>%d तालिम सुझावहरू पूरा गरियो</string>
 </dict>
 </dict>
 </dict>
