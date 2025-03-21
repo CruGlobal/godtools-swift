@@ -16,16 +16,14 @@ class KnowGodDeepLinkParser: DeepLinkUrlParserInterface {
     
     func parse(url: URL, pathComponents: [String], queryParameters: [String: Any]) -> ParsedDeepLinkType? {
         
-        guard let toolType = pathComponents[safe: 0] else {
-            return nil
-        }
-        
-        switch toolType {
-        case "lessons":
+        if pathComponents[safe: 0] == "lessons" {
             return parseLesson(url: url, pathComponents: pathComponents, queryParameters: queryParameters)
-        default:
+        }
+        else if pathComponents[safe: 1] == "tool" {
             return parseTool(url: url, pathComponents: pathComponents, queryParameters: queryParameters)
         }
+        
+        return nil
     }
     
     private func parseLesson(url: URL, pathComponents: [String], queryParameters: [String: Any]) -> ParsedDeepLinkType? {
@@ -61,13 +59,13 @@ class KnowGodDeepLinkParser: DeepLinkUrlParserInterface {
         
         let knowGodQueryParameters: KnowGodTractDeepLinkQueryParameters? = JsonServices().decodeJsonObject(jsonObject: queryParameters)
         
-        let abbreviationFromUrlPath: String? = pathComponents[safe: 1]
-        let primaryLanguageCodeFromUrlPath: String? = pathComponents[safe: 2]
+        let primaryLanguageCodeFromUrlPath: String? = pathComponents[safe: 0]
+        let abbreviationFromUrlPath: String? = pathComponents[safe: 3]
         let pageNumber: Int?
         let pageId: String?
         let pageSubIndex: Int?
         
-        if let pageStringFromUrlPath = pathComponents[safe: 3] {
+        if let pageStringFromUrlPath = pathComponents[safe: 4] {
             if let pageIntegerFromUrlPath = Int(pageStringFromUrlPath) {
                 pageNumber = pageIntegerFromUrlPath
                 pageId = nil
@@ -82,7 +80,7 @@ class KnowGodDeepLinkParser: DeepLinkUrlParserInterface {
             pageId = nil
         }
         
-        if let pageSubIndexStringFromUrlPath = pathComponents[safe: 4] {
+        if let pageSubIndexStringFromUrlPath = pathComponents[safe: 5] {
             pageSubIndex = Int(pageSubIndexStringFromUrlPath)
         }
         else {
