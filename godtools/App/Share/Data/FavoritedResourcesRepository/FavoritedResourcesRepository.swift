@@ -69,4 +69,9 @@ class FavoritedResourcesRepository {
         return cache.deleteFavoritedResourcePublisher(id: id)
             .eraseToAnyPublisher()
     }
+    
+    func reorderFavoritedResourcePublisher(id: String, originalPosition: Int, newPosition: Int) -> AnyPublisher<[FavoritedResourceDataModel], Error> {
+        
+        return cache.reorderFavoritedResourcePublisher(id: id, originalPosition: originalPosition, newPosition: newPosition)
+    }
 }

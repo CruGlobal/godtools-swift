@@ -76,7 +76,7 @@ class RealmFavoritedResourcesCache {
         return Just(favoritedResources)
             .eraseToAnyPublisher()
     }
-    
+        
     func storeFavoritedResourcesPublisher(ids: [String]) -> AnyPublisher<[FavoritedResourceDataModel], Error> {
         
         let currentDate: Date = Date()
@@ -90,22 +90,29 @@ class RealmFavoritedResourcesCache {
                 continue
             }
             
-            let favoritedResource = FavoritedResourceDataModel(id: ids[index], createdAt: createdAtDate)
+            let favoritedResource = FavoritedResourceDataModel(id: ids[index], createdAt: createdAtDate, position: 0)
             
             newFavoritedResources.append(favoritedResource)
         }
 
         return realmDatabase.writeObjectsPublisher { (realm: Realm) -> [RealmFavoritedResource] in
             
+            let existingFavorites = realm.objects(RealmFavoritedResource.self)
+            for favorite in existingFavorites {
+                favorite.position += 1
+            }
+            
             let realmFavoritedResources: [RealmFavoritedResource] = newFavoritedResources.map {
                 
                 let realmFavoritedResource = RealmFavoritedResource()
-                realmFavoritedResource.mapFrom(dataModel: $0)
+                realmFavoritedResource.resourceId = $0.id
+                realmFavoritedResource.createdAt = $0.createdAt
+                realmFavoritedResource.position = $0.position
                 
                 return realmFavoritedResource
             }
             
-            return realmFavoritedResources
+            return realmFavoritedResources + Array(existingFavorites)
             
         } mapInBackgroundClosure: { (objects: [RealmFavoritedResource]) -> [FavoritedResourceDataModel] in
             return objects.map({
@@ -122,6 +129,47 @@ class RealmFavoritedResourcesCache {
             primaryKeyPath: #keyPath(RealmFavoritedResource.resourceId),
             primaryKeys: [id]
         )
+        .eraseToAnyPublisher()
+    }
+    
+    func reorderFavoritedResourcePublisher(id: String, originalPosition: Int, newPosition: Int) -> AnyPublisher<[FavoritedResourceDataModel], Error> {
+        
+        return realmDatabase.writeObjectsPublisher { realm in
+            
+            var resourcesToUpdate: [RealmFavoritedResource] = []
+            
+            if let resourceToMove = realm.object(ofType: RealmFavoritedResource.self, forPrimaryKey: id) {
+                resourceToMove.position = newPosition
+                resourcesToUpdate.append(resourceToMove)
+            }
+            
+            let positionChange = newPosition - originalPosition
+
+            if newPosition - originalPosition > 0 {
+                
+                let resourcesToMoveForward = realm.objects(RealmFavoritedResource.self).where({ $0.position > originalPosition && $0.position <= newPosition })
+                for resource in resourcesToMoveForward {
+                    resource.position -= 1
+                }
+                
+                resourcesToUpdate += resourcesToMoveForward
+            } else {
+                
+                let resourcesToMoveBackward = realm.objects(RealmFavoritedResource.self).where( { $0.position < originalPosition && $0.position >= newPosition})
+                for resource in resourcesToMoveBackward {
+                    resource.position += 1
+                }
+                
+                resourcesToUpdate += resourcesToMoveBackward
+            }
+            
+            return resourcesToUpdate
+            
+        } mapInBackgroundClosure: { (objects: [RealmFavoritedResource]) in
+            return objects.map({
+                FavoritedResourceDataModel(realmFavoritedResource: $0)
+            })
+        }
         .eraseToAnyPublisher()
     }
 }
