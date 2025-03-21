@@ -2120,6 +2120,8 @@
 		4552F5482AD4745A0075415E /* TrackActionAnalyticsUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackActionAnalyticsUseCase.swift; sourceTree = "<group>"; };
 		4552F5492AD4745A0075415E /* TrackExitLinkAnalyticsUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackExitLinkAnalyticsUseCase.swift; sourceTree = "<group>"; };
 		4554205A28B17AEA00368CFE /* AttachmentDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentDataModel.swift; sourceTree = "<group>"; };
+		4554A62A2D8DE7C800046941 /* ne */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ne; path = ne.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		4554A62B2D8DE7C800046941 /* ne */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ne; path = ne.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4555599A27B3193D00A32A61 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4555599B27B3194800A32A61 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		455582D3269F2C1000C3FF14 /* TrainingViewFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrainingViewFactory.swift; sourceTree = "<group>"; };
@@ -12295,6 +12297,7 @@
 				en,
 				Base,
 				om,
+				ne,
 			);
 			mainGroup = 4F5732801EA69CF00082035C;
 			packageReferences = (
@@ -14250,6 +14253,7 @@
 				4576FCD527EA0BC200CB9CC6 /* ckb */,
 				45C493F92C334A8E001D81F0 /* Base */,
 				45C8DF072D8B4D0500F231C1 /* om */,
+				4554A62B2D8DE7C800046941 /* ne */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -14325,6 +14329,7 @@
 				D4B5231E29D761FD00D85213 /* vi */,
 				45C493FA2C334A99001D81F0 /* Base */,
 				45C8DF062D8B4D0500F231C1 /* om */,
+				4554A62A2D8DE7C800046941 /* ne */,
 			);
 			name = Localizable.stringsdict;
 			sourceTree = "<group>";
