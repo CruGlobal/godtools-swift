@@ -8,7 +8,7 @@
 
 import Foundation
 
-class GodToolsAppLessonsPathDeepLinkParser: DeepLinkUrlParserType {
+class GodToolsAppLessonsPathDeepLinkParser: DeepLinkUrlParserInterface {
     
     required init() {
         
@@ -44,6 +44,7 @@ class GodToolsAppLessonsPathDeepLinkParser: DeepLinkUrlParserType {
             liveShareStream: nil,
             page: nil,
             pageId: nil,
+            pageSubIndex: nil,
             selectedLanguageIndex: nil
         )
                        
