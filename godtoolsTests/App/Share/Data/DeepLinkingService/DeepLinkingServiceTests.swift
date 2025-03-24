@@ -34,10 +34,17 @@ class DeepLinkingServiceTests: XCTestCase {
         case godtoolsAppLessons = "https://godtoolsapp.com/lessons"
         case godtoolsAppLessonsLessonConvoSpanish = "https://godtoolsapp.com/lessons/lessonconvo/es"
         
-        case knowgodTractTeachMeToShareEnglishPage4 = "https://knowgod.com/en/teachmetoshare/4"
-        case knowgodTractTeachMeToShareEnglishWithLiveShareStream = "https://knowgod.com/en/teachmetoshare?icid=gtshare&primaryLanguage=en&liveShareStream=acd9bee66b6057476cee-1612666248"
-        case knowgodTractTeachMeToShareSpanishAndRussian = "https://knowgod.com/es/teachmetoshare?primaryLanguage=es&parallelLanguage=ru"
+        case legacyKnowgodTractTeachMeToShareEnglishPage4 = "https://knowgod.com/en/teachmetoshare/4"
+        case legacyKnowgodTractTeachMeToShareEnglishWithLiveShareStream = "https://knowgod.com/en/teachmetoshare?icid=gtshare&primaryLanguage=en&liveShareStream=acd9bee66b6057476cee-1612666248"
+        case legacyKnowgodTractTeachMeToShareSpanishAndRussian = "https://knowgod.com/es/teachmetoshare?primaryLanguage=es&parallelLanguage=ru"
+        case knowgodTractKpgEnglish = "https://knowgod.com/en/tool/v1/kgp"
+        case knowgodTractKpgEnglishPage1 = "https://knowgod.com/en/tool/v1/kgp/1"
         case knowgodLessonLessonConvoEnglish = "https://knowgod.com/lessons/lessonconvo/en"
+        
+        case knowgodCyoaOpenersEnglish = "https://knowgod.com/en/tool/v2/openers"
+        case knowgodCyoaOpenersEnglishPageCulture = "https://knowgod.com/en/tool/v2/openers/culture"
+        case knowgodCyoaOpenersEnglishPageCultureSubIndex2 = "https://knowgod.com/en/tool/v2/openers/culture/2"
+        case knowgodCyoaSNLEnglishPageIntoPageCollectionSubIndex1 = "https://knowgod.com/en/tool/v2/seenknownloved/intro_page_collection/1"
         
         var url: URL {
             return DeepLinkUrl.getUrl(string: rawValue)
@@ -300,7 +307,7 @@ class DeepLinkingServiceTests: XCTestCase {
         XCTAssertTrue(parsedDeepLink == lessonConvoEnglish)
     }
     
-    func testTractTeachMeToShareEnglishPage4FromKnowGod() {
+    func testLegacyTractTeachMeToShareEnglishPage4FromKnowGod() {
         
         let primaryLanguageIndex: Int = 0
         
@@ -317,12 +324,12 @@ class DeepLinkingServiceTests: XCTestCase {
             )
         )
         
-        let parsedDeepLink: ParsedDeepLinkType? = deepLinkingService.parseDeepLink(incomingDeepLink: DeepLinkUrl.knowgodTractTeachMeToShareEnglishPage4.incomingDeepLinkUrl)
+        let parsedDeepLink: ParsedDeepLinkType? = deepLinkingService.parseDeepLink(incomingDeepLink: DeepLinkUrl.legacyKnowgodTractTeachMeToShareEnglishPage4.incomingDeepLinkUrl)
         
         XCTAssertTrue(parsedDeepLink == tract)
     }
     
-    func testTractTeachMeToShareEnglishWithLiveStreamFromKnowGod() {
+    func testLegacyTractTeachMeToShareEnglishWithLiveStreamFromKnowGod() {
         
         let primaryLanguageIndex: Int = 0
         
@@ -339,12 +346,12 @@ class DeepLinkingServiceTests: XCTestCase {
             )
         )
         
-        let parsedDeepLink: ParsedDeepLinkType? = deepLinkingService.parseDeepLink(incomingDeepLink: DeepLinkUrl.knowgodTractTeachMeToShareEnglishWithLiveShareStream.incomingDeepLinkUrl)
+        let parsedDeepLink: ParsedDeepLinkType? = deepLinkingService.parseDeepLink(incomingDeepLink: DeepLinkUrl.legacyKnowgodTractTeachMeToShareEnglishWithLiveShareStream.incomingDeepLinkUrl)
         
         XCTAssertTrue(parsedDeepLink == tract)
     }
     
-    func testTractTeachMeToShareSpanishAndRussianFromKnowGod() {
+    func testLegacyTractTeachMeToShareSpanishAndRussianFromKnowGod() {
         
         let primaryLanguageIndex: Int = 0
         
@@ -361,9 +368,49 @@ class DeepLinkingServiceTests: XCTestCase {
             )
         )
         
-        let parsedDeepLink: ParsedDeepLinkType? = deepLinkingService.parseDeepLink(incomingDeepLink: DeepLinkUrl.knowgodTractTeachMeToShareSpanishAndRussian.incomingDeepLinkUrl)
+        let parsedDeepLink: ParsedDeepLinkType? = deepLinkingService.parseDeepLink(incomingDeepLink: DeepLinkUrl.legacyKnowgodTractTeachMeToShareSpanishAndRussian.incomingDeepLinkUrl)
         
         XCTAssertTrue(parsedDeepLink == tract)
+    }
+    
+    func testTractKgpEnglishFromKnowGod() {
+                
+        let expectedTract: ParsedDeepLinkType = .tool(
+            toolDeepLink: ToolDeepLink(
+                resourceAbbreviation: "kgp",
+                primaryLanguageCodes: ["en"],
+                parallelLanguageCodes: [],
+                liveShareStream: nil,
+                page: nil,
+                pageId: nil,
+                pageSubIndex: nil,
+                selectedLanguageIndex: 0
+            )
+        )
+        
+        let parsedDeepLink: ParsedDeepLinkType? = deepLinkingService.parseDeepLink(incomingDeepLink: DeepLinkUrl.knowgodTractKpgEnglish.incomingDeepLinkUrl)
+        
+        XCTAssertTrue(parsedDeepLink == expectedTract)
+    }
+    
+    func testTractKgpEnglishPage1FromKnowGod() {
+        
+        let expectedTract: ParsedDeepLinkType = .tool(
+            toolDeepLink: ToolDeepLink(
+                resourceAbbreviation: "kgp",
+                primaryLanguageCodes: ["en"],
+                parallelLanguageCodes: [],
+                liveShareStream: nil,
+                page: 1,
+                pageId: nil,
+                pageSubIndex: nil,
+                selectedLanguageIndex: 0
+            )
+        )
+        
+        let parsedDeepLink: ParsedDeepLinkType? = deepLinkingService.parseDeepLink(incomingDeepLink: DeepLinkUrl.knowgodTractKpgEnglishPage1.incomingDeepLinkUrl)
+        
+        XCTAssertTrue(parsedDeepLink == expectedTract)
     }
     
     func testLessonLessonConvoEnglishFromKnowGod() {
@@ -384,6 +431,86 @@ class DeepLinkingServiceTests: XCTestCase {
         let parsedDeepLink: ParsedDeepLinkType? = deepLinkingService.parseDeepLink(incomingDeepLink: DeepLinkUrl.knowgodLessonLessonConvoEnglish.incomingDeepLinkUrl)
         
         XCTAssertTrue(parsedDeepLink == tract)
+    }
+    
+    func testCyoaOpenersEnglishFromKnowGod() {
+        
+        let expectedTool: ParsedDeepLinkType = .tool(
+            toolDeepLink: ToolDeepLink(
+                resourceAbbreviation: "openers",
+                primaryLanguageCodes: ["en"],
+                parallelLanguageCodes: [],
+                liveShareStream: nil,
+                page: nil,
+                pageId: nil,
+                pageSubIndex: nil,
+                selectedLanguageIndex: 0
+            )
+        )
+        
+        let parsedDeepLink: ParsedDeepLinkType? = deepLinkingService.parseDeepLink(incomingDeepLink: DeepLinkUrl.knowgodCyoaOpenersEnglish.incomingDeepLinkUrl)
+        
+        XCTAssertTrue(parsedDeepLink == expectedTool)
+    }
+    
+    func testCyoaOpenersEnglishPageCultureKnowGod() {
+        
+        let expectedTool: ParsedDeepLinkType = .tool(
+            toolDeepLink: ToolDeepLink(
+                resourceAbbreviation: "openers",
+                primaryLanguageCodes: ["en"],
+                parallelLanguageCodes: [],
+                liveShareStream: nil,
+                page: nil,
+                pageId: "culture",
+                pageSubIndex: nil,
+                selectedLanguageIndex: 0
+            )
+        )
+        
+        let parsedDeepLink: ParsedDeepLinkType? = deepLinkingService.parseDeepLink(incomingDeepLink: DeepLinkUrl.knowgodCyoaOpenersEnglishPageCulture.incomingDeepLinkUrl)
+        
+        XCTAssertTrue(parsedDeepLink == expectedTool)
+    }
+    
+    func testCyoaOpenersEnglishPageCultureSubIndex2FromKnowGod() {
+        
+        let expectedTool: ParsedDeepLinkType = .tool(
+            toolDeepLink: ToolDeepLink(
+                resourceAbbreviation: "openers",
+                primaryLanguageCodes: ["en"],
+                parallelLanguageCodes: [],
+                liveShareStream: nil,
+                page: nil,
+                pageId: "culture",
+                pageSubIndex: 2,
+                selectedLanguageIndex: 0
+            )
+        )
+        
+        let parsedDeepLink: ParsedDeepLinkType? = deepLinkingService.parseDeepLink(incomingDeepLink: DeepLinkUrl.knowgodCyoaOpenersEnglishPageCultureSubIndex2.incomingDeepLinkUrl)
+        
+        XCTAssertTrue(parsedDeepLink == expectedTool)
+    }
+    
+    func testCyoaSNLEnglishPageIntoPageCollectionSubIndex1FromKnowGod() {
+     
+        let expectedTool: ParsedDeepLinkType = .tool(
+            toolDeepLink: ToolDeepLink(
+                resourceAbbreviation: "seenknownloved",
+                primaryLanguageCodes: ["en"],
+                parallelLanguageCodes: [],
+                liveShareStream: nil,
+                page: nil,
+                pageId: "intro_page_collection",
+                pageSubIndex: 1,
+                selectedLanguageIndex: 0
+            )
+        )
+        
+        let parsedDeepLink: ParsedDeepLinkType? = deepLinkingService.parseDeepLink(incomingDeepLink: DeepLinkUrl.knowgodCyoaSNLEnglishPageIntoPageCollectionSubIndex1.incomingDeepLinkUrl)
+        
+        XCTAssertTrue(parsedDeepLink == expectedTool)
     }
     
     // MARK: -
