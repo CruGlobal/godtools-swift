@@ -22,7 +22,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentRendererViewModel {
     @Published var hidesHomeButton: Bool = false
     @Published var hidesBackButton: Bool = true
         
-    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, initialPage: MobileContentRendererInitialPage?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTranslatedLanguageName: GetTranslatedLanguageName, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?) {
+    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTranslatedLanguageName: GetTranslatedLanguageName, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?) {
         
         self.flowDelegate = flowDelegate
                         
@@ -38,7 +38,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentRendererViewModel {
         
         languageFont = FontLibrary.systemUIFont(size: 14, weight: .regular)
         
-        super.init(renderer: renderer, initialPage: initialPage, initialPageConfig: nil, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, getTranslatedLanguageName: getTranslatedLanguageName, trainingTipsEnabled: trainingTipsEnabled, incrementUserCounterUseCase: incrementUserCounterUseCase, selectedLanguageIndex: selectedLanguageIndex)
+        super.init(renderer: renderer, initialPage: initialPage, initialPageConfig: nil, initialPageSubIndex: initialPageSubIndex, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, getTranslatedLanguageName: getTranslatedLanguageName, trainingTipsEnabled: trainingTipsEnabled, incrementUserCounterUseCase: incrementUserCounterUseCase, selectedLanguageIndex: selectedLanguageIndex)
     }
     
     deinit {
@@ -62,9 +62,23 @@ class ChooseYourOwnAdventureViewModel: MobileContentRendererViewModel {
     
     // MARK: - Page Navigation
     
-    override func getInitialPages(pageRenderer: MobileContentPageRenderer) -> [Page] {
+    override func getInitialPages(pageRenderer: MobileContentPageRenderer, initialPage: MobileContentRendererInitialPage) -> [Page] {
             
-        if let firstVisiblePage = pageRenderer.getVisiblePageModels().first {
+        let initialPageId: String?
+        
+        switch initialPage {
+        case .pageId(let value):
+            initialPageId = value
+        default:
+            initialPageId = nil
+        }
+        
+        if let initialPageId = initialPageId, let initialPage = pageRenderer.getAllPageModels().first(where: { $0.id == initialPageId }) {
+            
+            let pages: [Page] = super.getPagesWalkingUpParent(fromPage: initialPage, pagesFromPageRenderer: pageRenderer, includeFromPage: true)
+            return pages
+        }
+        else if let firstVisiblePage = pageRenderer.getVisiblePageModels().first {
             return [firstVisiblePage]
         }
         
@@ -173,7 +187,8 @@ class ChooseYourOwnAdventureViewModel: MobileContentRendererViewModel {
             pageNavigation: pageNavigation,
             setPages: setPages,
             pagePositions: nil,
-            parentPageParams: parentPageParams
+            parentPageParams: parentPageParams,
+            pageSubIndex: nil
         )
         
         return navigationEvent
