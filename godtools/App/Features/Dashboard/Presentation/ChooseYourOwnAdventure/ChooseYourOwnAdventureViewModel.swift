@@ -22,7 +22,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentRendererViewModel {
     @Published var hidesHomeButton: Bool = false
     @Published var hidesBackButton: Bool = true
         
-    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, initialPage: MobileContentRendererInitialPage?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTranslatedLanguageName: GetTranslatedLanguageName, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?) {
+    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTranslatedLanguageName: GetTranslatedLanguageName, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?) {
         
         self.flowDelegate = flowDelegate
                         
@@ -38,7 +38,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentRendererViewModel {
         
         languageFont = FontLibrary.systemUIFont(size: 14, weight: .regular)
         
-        super.init(renderer: renderer, initialPage: initialPage, initialPageConfig: nil, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, getTranslatedLanguageName: getTranslatedLanguageName, trainingTipsEnabled: trainingTipsEnabled, incrementUserCounterUseCase: incrementUserCounterUseCase, selectedLanguageIndex: selectedLanguageIndex)
+        super.init(renderer: renderer, initialPage: initialPage, initialPageConfig: nil, initialPageSubIndex: initialPageSubIndex, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, getTranslatedLanguageName: getTranslatedLanguageName, trainingTipsEnabled: trainingTipsEnabled, incrementUserCounterUseCase: incrementUserCounterUseCase, selectedLanguageIndex: selectedLanguageIndex)
     }
     
     deinit {
@@ -187,7 +187,8 @@ class ChooseYourOwnAdventureViewModel: MobileContentRendererViewModel {
             pageNavigation: pageNavigation,
             setPages: setPages,
             pagePositions: nil,
-            parentPageParams: parentPageParams
+            parentPageParams: parentPageParams,
+            pageSubIndex: nil
         )
         
         return navigationEvent
