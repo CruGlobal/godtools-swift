@@ -187,7 +187,8 @@ class ChooseYourOwnAdventureViewModel: MobileContentRendererViewModel {
             pageNavigation: pageNavigation,
             setPages: setPages,
             pagePositions: nil,
-            parentPageParams: parentPageParams
+            parentPageParams: parentPageParams,
+            pageSubIndex: nil
         )
         
         return navigationEvent

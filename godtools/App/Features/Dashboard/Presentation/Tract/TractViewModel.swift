@@ -427,7 +427,8 @@ extension TractViewModel {
                 ),
                 setPages: nil,
                 pagePositions: pagePositions,
-                parentPageParams: nil
+                parentPageParams: nil,
+                pageSubIndex: nil
             )
             
             super.sendPageNavigationEvent(navigationEvent: navigationEvent)

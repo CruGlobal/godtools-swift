@@ -323,17 +323,21 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
                 ),
                 setPages: nil,
                 pagePositions: pagePositions,
-                parentPageParams: nil
+                parentPageParams: nil,
+                pageSubIndex: nil
             )
         }
         
+        let pageSubIndex: Int? = isInitialPageRender ? initialPageSubIndex : navigationEventToSend.pageSubIndex
+        
         let pageNavigationForLanguageDirection = navigationEventToSend.pageNavigation.copy(navigationDirection: layoutDirection)
         
-        let eventWithCorrectLanguageDirection: MobileContentPagesNavigationEvent = MobileContentPagesNavigationEvent(
+        let eventWithCorrectLanguageDirection = MobileContentPagesNavigationEvent(
             pageNavigation: pageNavigationForLanguageDirection,
             setPages: navigationEventToSend.setPages,
             pagePositions: navigationEventToSend.pagePositions,
-            parentPageParams: navigationEventToSend.parentPageParams
+            parentPageParams: navigationEventToSend.parentPageParams,
+            pageSubIndex: pageSubIndex
         )
         
         super.sendPageNavigationEvent(navigationEvent: eventWithCorrectLanguageDirection)
@@ -576,7 +580,8 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
             ),
             setPages: visiblePages,
             pagePositions: nil,
-            parentPageParams: nil
+            parentPageParams: nil,
+            pageSubIndex: nil
         )
         
         sendPageNavigationEvent(navigationEvent: event)
