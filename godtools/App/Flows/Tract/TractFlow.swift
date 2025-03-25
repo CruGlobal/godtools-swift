@@ -29,7 +29,7 @@ class TractFlow: ToolNavigationFlow, ToolSettingsNavigationFlow {
     var downloadToolTranslationFlow: DownloadToolTranslationsFlow?
     var toolSettingsFlow: ToolSettingsFlow?
     
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController?, appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentRendererInitialPage?, shouldPersistToolSettings: Bool) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController?, appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, shouldPersistToolSettings: Bool) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
@@ -41,7 +41,8 @@ class TractFlow: ToolNavigationFlow, ToolSettingsNavigationFlow {
             liveShareStream: liveShareStream,
             selectedLanguageIndex: selectedLanguageIndex,
             trainingTipsEnabled: trainingTipsEnabled,
-            initialPage: initialPage, 
+            initialPage: initialPage,
+            initialPageSubIndex: initialPageSubIndex,
             shouldPersistToolSettings: shouldPersistToolSettings
         )
                         
@@ -139,7 +140,7 @@ class TractFlow: ToolNavigationFlow, ToolSettingsNavigationFlow {
 
 extension TractFlow {
     
-    private func getToolView(toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentRendererInitialPage?, shouldPersistToolSettings: Bool) -> UIViewController {
+    private func getToolView(toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, shouldPersistToolSettings: Bool) -> UIViewController {
         
         let navigation: MobileContentRendererNavigation = appDiContainer.getMobileContentRendererNavigation(
             parentFlow: self,
@@ -173,6 +174,7 @@ extension TractFlow {
             getTranslatedLanguageName: appDiContainer.dataLayer.getTranslatedLanguageName(),
             liveShareStream: liveShareStream,
             initialPage: initialPage,
+            initialPageSubIndex: initialPageSubIndex,
             trainingTipsEnabled: trainingTipsEnabled,
             incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase(), 
             selectedLanguageIndex: selectedLanguageIndex, 
