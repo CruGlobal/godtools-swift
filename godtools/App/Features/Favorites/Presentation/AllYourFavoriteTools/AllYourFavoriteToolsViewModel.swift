@@ -195,10 +195,18 @@ extension AllYourFavoriteToolsViewModel {
     
     func toolMoved(fromOffsets source: IndexSet, toOffset destination: Int) {
         for index in source {
+            guard index < favoritedTools.count else { continue }
             let toolToMove = favoritedTools[index]
             
+            var newIndex: Int
+            if index < destination {
+                newIndex = destination - 1
+            } else {
+                newIndex = destination
+            }
+            
             reorderFavoritedToolUseCase
-                .reorderFavoritedToolPublisher(toolId: toolToMove.id, originalPosition: index, newPosition: destination)
+                .reorderFavoritedToolPublisher(toolId: toolToMove.id, originalPosition: index, newPosition: newIndex)
                 .sink { _ in
                     
                 } receiveValue: { _ in

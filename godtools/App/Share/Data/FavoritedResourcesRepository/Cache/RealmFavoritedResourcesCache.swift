@@ -107,7 +107,7 @@ class RealmFavoritedResourcesCache {
             
             let existingFavorites = realm.objects(RealmFavoritedResource.self)
             for favorite in existingFavorites {
-                favorite.position += 1
+                favorite.position += newFavoritedResources.count
             }
             
             let realmFavoritedResources: [RealmFavoritedResource] = newFavoritedResources.map {
@@ -141,7 +141,6 @@ class RealmFavoritedResourcesCache {
     }
     
     func reorderFavoritedResourcePublisher(id: String, originalPosition: Int, newPosition: Int) -> AnyPublisher<[FavoritedResourceDataModel], Error> {
-        
         
         return realmDatabase.writeObjectsPublisher { realm in
             var resourcesToUpdate: [RealmFavoritedResource] = []
