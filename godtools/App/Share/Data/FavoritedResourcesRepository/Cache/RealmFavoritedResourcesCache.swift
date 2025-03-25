@@ -132,11 +132,27 @@ class RealmFavoritedResourcesCache {
     
     func deleteFavoritedResourcePublisher(id: String) -> AnyPublisher<Void, Error> {
         
-        return realmDatabase.deleteObjectsInBackgroundPublisher(
-            type: RealmFavoritedResource.self,
-            primaryKeyPath: #keyPath(RealmFavoritedResource.resourceId),
-            primaryKeys: [id]
-        )
+        return realmDatabase.writeObjectsPublisher { realm in
+            
+            guard let positionToDelete = realm.object(ofType: RealmFavoritedResource.self, forPrimaryKey: id)?.position else { return [] }
+            
+            let resourcesToMoveUp = realm.objects(RealmFavoritedResource.self).where({ $0.position >= positionToDelete })
+            for resource in resourcesToMoveUp {
+                resource.position -= 1
+            }
+            
+            return Array(resourcesToMoveUp)
+            
+        } mapInBackgroundClosure: { objects in
+            return []
+        }
+        .flatMap { _ in
+            return self.realmDatabase.deleteObjectsInBackgroundPublisher(
+                type: RealmFavoritedResource.self,
+                primaryKeyPath: #keyPath(RealmFavoritedResource.resourceId),
+                primaryKeys: [id]
+            )
+        }
         .eraseToAnyPublisher()
     }
     
@@ -150,7 +166,6 @@ class RealmFavoritedResourcesCache {
                 for resource in resourcesToMoveUp {
                     resource.position -= 1
                 }
-                print(resourcesToMoveUp)
                 
                 resourcesToUpdate += resourcesToMoveUp
             } else {
@@ -158,7 +173,6 @@ class RealmFavoritedResourcesCache {
                 for resource in resourcesToMoveDown {
                     resource.position += 1
                 }
-                print(resourcesToMoveDown)
                 
                 resourcesToUpdate += resourcesToMoveDown
             }
