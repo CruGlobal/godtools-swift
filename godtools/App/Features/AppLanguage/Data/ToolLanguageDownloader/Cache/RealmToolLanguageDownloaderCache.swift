@@ -28,7 +28,7 @@ class RealmToolLanguageDownloaderCache {
         
         _ = realmDatabase.writeObjects(realm: realm, updatePolicy: .modified, writeClosure: { realm in
             
-            object.downloadProgress = NSNumber(value: downloadProgress)
+            object.downloadProgress = downloadProgress
             
             return [object]
         })

@@ -12,7 +12,7 @@ import RealmSwift
 class RealmToolLanguageDownload: Object {
     
     @objc dynamic var languageId: String = ""
-    @objc dynamic var downloadProgress: NSNumber = NSNumber(value: 0)
+    @objc dynamic var downloadProgress: Double = 0
     @objc dynamic var downloadStartedAt: Date = Date()
     
     override static func primaryKey() -> String? {
@@ -22,7 +22,7 @@ class RealmToolLanguageDownload: Object {
     func mapFrom(dataModel: ToolLanguageDownload) {
         
         languageId = dataModel.languageId
-        downloadProgress = NSNumber(value: dataModel.downloadProgress)
+        downloadProgress = dataModel.downloadProgress
         downloadStartedAt = dataModel.downloadStartedAt
     }
 }

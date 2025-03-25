@@ -24,7 +24,7 @@ struct ToolLanguageDownload {
     init(realmToolLanguageDownload: RealmToolLanguageDownload) {
         
         languageId = realmToolLanguageDownload.languageId
-        downloadProgress = realmToolLanguageDownload.downloadProgress.doubleValue
+        downloadProgress = realmToolLanguageDownload.downloadProgress
         downloadStartedAt = realmToolLanguageDownload.downloadStartedAt
     }
     
