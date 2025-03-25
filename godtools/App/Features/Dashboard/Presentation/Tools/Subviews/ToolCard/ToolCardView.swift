@@ -153,11 +153,13 @@ struct ToolCardView: View {
                                 
                                 toolDetailsTappedClosure?()
                             }
+                            .buttonStyle(.plain)
                             
                             GTBlueButton(title: viewModel.openButtonTitle, font: navButtonFont, width: navButtonWidth, height: navButtonHeight, titleHorizontalPadding: navButtonTitleHorizontalPadding, accessibility: .openTool) {
                                 
                                 openToolTappedClosure?()
                             }
+                            .buttonStyle(.plain)
                         }
                         .padding([.top], 10)
                     }
@@ -174,6 +176,7 @@ struct ToolCardView: View {
                     
                     favoriteTappedClosure?()
                 })
+                .buttonStyle(.plain)
             }
             
         }// end ZStack
