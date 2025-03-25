@@ -37,6 +37,8 @@ class PageNavigationCollectionView: UIView, NibBased {
     
     private var layout: UICollectionViewFlowLayout = PageNavigationCollectionView.getDefaultFlowLayout()
     private var currentPageNavigation: PageNavigationCollectionView.CurrentNavigation?
+    private var pendingPageNavigationForPagesDidLoad: PageNavigationCollectionViewNavigationModel?
+    private var pendingPageNavigationCompletionForPagesDidLoad: ((_ completed: PageNavigationCollectionViewNavigationCompleted) -> Void)?
     private var pageNavigationCompletedClosure: ((_ completed: PageNavigationCollectionViewNavigationCompleted) -> Void)?
     private var internalCurrentChangedPage: Int = -1
     private var internalCurrentStoppedOnPage: Int = -1
@@ -137,7 +139,14 @@ class PageNavigationCollectionView: UIView, NibBased {
     
     private func handleLoadPagesCompleted() {
         
-        if let initialPageIndex = initialPageIndex {
+        logMessage(message: "handleLoadPagesCompleted()")
+        
+        if let pageNavigation = pendingPageNavigationForPagesDidLoad {
+            DispatchQueue.main.async { [weak self] in
+                self?.scrollToPage(pageNavigation: pageNavigation, completion: self?.pendingPageNavigationCompletionForPagesDidLoad)
+            }
+        }
+        else if let initialPageIndex = initialPageIndex {
             DispatchQueue.main.async { [weak self] in
                 self?.scrollToPage(page: initialPageIndex, animated: false)
             }
@@ -344,13 +353,10 @@ class PageNavigationCollectionView: UIView, NibBased {
             page = Int(maxPage)
         }
         
-        if loggingEnabled {
-            
-            logMessage(message: "getPageBasedOnContentOffset()")
-            print("  contentOffset: \(contentOffset.x)")
-            print("  numberOfPages: \(numberOfPages)")
-            print("  page: \(page)")
-        }
+        logMessage(message: "getPageBasedOnContentOffset()")
+        logMessage(message: "  contentOffset: \(contentOffset.x)", includeClassNameHeader: false)
+        logMessage(message: "  numberOfPages: \(numberOfPages)", includeClassNameHeader: false)
+        logMessage(message: "  page: \(page)", includeClassNameHeader: false)
         
         return page
     }
@@ -392,13 +398,18 @@ class PageNavigationCollectionView: UIView, NibBased {
         return horizontalInset
     }
     
-    private func logMessage(message: String) {
+    private func logMessage(message: String, includeClassNameHeader: Bool = true) {
         
         guard loggingEnabled else {
             return
         }
         
-        print("\n PageNavigationCollectionView: \(message)")
+        if includeClassNameHeader {
+            print("\n PageNavigationCollectionView: \(message)")
+        }
+        else {
+            print(message)
+        }
     }
 }
 
@@ -502,7 +513,22 @@ extension PageNavigationCollectionView {
     
     func scrollToPage(pageNavigation: PageNavigationCollectionViewNavigationModel, completion: ((_ completed: PageNavigationCollectionViewNavigationCompleted) -> Void)? = nil) {
              
+        guard didLoadPages else {
+            pendingPageNavigationForPagesDidLoad = pageNavigation
+            pendingPageNavigationCompletionForPagesDidLoad = completion
+            return
+        }
+        
+        let isPendingNavigation: Bool = pendingPageNavigationForPagesDidLoad != nil
+        let shouldIgnoreBatchUpdates: Bool = isPendingNavigation
+        let shouldNotAnimate: Bool = isPendingNavigation
+        
+        pendingPageNavigationForPagesDidLoad = nil
+        pendingPageNavigationCompletionForPagesDidLoad = nil
+        
         logMessage(message: "scrollToPage for pageNavigation \(pageNavigation)")
+        logMessage(message: "  did load pages: \(didLoadPages)", includeClassNameHeader: false)
+        logMessage(message: "  scroll to page for pageNavigation number of pages: \(getNumberOfPages())", includeClassNameHeader: false)
         
         pageNavigationCompletedClosure = completion
                             
@@ -520,7 +546,7 @@ extension PageNavigationCollectionView {
         
         let reloadDataNeeded: Bool = pageNavigation.reloadCollectionViewDataNeeded || pageNavigationDirectionChanged
         
-        if !reloadDataNeeded {
+        if !reloadDataNeeded && !shouldIgnoreBatchUpdates {
          
             collectionView.performBatchUpdates {
                 
@@ -528,12 +554,16 @@ extension PageNavigationCollectionView {
                     
                     let indexPaths: [IndexPath] = deletePages.map({IndexPath(item: $0, section: 0)})
                     collectionView.deleteItems(at: indexPaths)
+                    
+                    logMessage(message: "  delete pages: \(deletePages)", includeClassNameHeader: false)
                 }
                 
                 if let insertPages = pageNavigation.insertPages, !insertPages.isEmpty {
                     
                     let indexPaths: [IndexPath] = insertPages.map({IndexPath(item: $0, section: 0)})
                     collectionView.insertItems(at: indexPaths)
+                    
+                    logMessage(message: "  insert pages: \(insertPages)", includeClassNameHeader: false)
                 }
             }
         }
@@ -544,21 +574,33 @@ extension PageNavigationCollectionView {
         )
                 
         if reloadDataNeeded {
-                                    
+            
+            logMessage(message: "  will reload data", includeClassNameHeader: false)
+            
             collectionView.reloadData()
         }
         else {
             
-            completeScrollToPageForCurrentPageNavigation(pageNavigation: pageNavigation)
+            logMessage(message: "  will complete scroll to page", includeClassNameHeader: false)
+            logMessage(message: "  pageNavigation.page: \(pageNavigation.page)", includeClassNameHeader: false)
+            logMessage(message: "  number of pages: \(getNumberOfPages())", includeClassNameHeader: false)
+            
+            completeScrollToPageForCurrentPageNavigation(pageNavigation: pageNavigation, shouldNotAnimate: shouldNotAnimate)
         }
     }
     
-    private func completeScrollToPageForCurrentPageNavigation(pageNavigation: PageNavigationCollectionViewNavigationModel) {
+    private func completeScrollToPageForCurrentPageNavigation(pageNavigation: PageNavigationCollectionViewNavigationModel, shouldNotAnimate: Bool = false) {
                 
         let currentPage: Int = getCurrentPage()
         
+        logMessage(message: "completeScrollToPageForCurrentPageNavigation()")
+        logMessage(message: "  currentPage: \(currentPage)", includeClassNameHeader: false)
+        logMessage(message: "  pageNavigation.page: \(pageNavigation.page)", includeClassNameHeader: false)
+        
         if currentPage == pageNavigation.page, let pageCell = getCellAtIndex(index: pageNavigation.page) {
-                        
+                     
+            logMessage(message: "  pageCell exists: true", includeClassNameHeader: false)
+            
             let completed = PageNavigationCollectionViewNavigationCompleted(
                 cancelled: false,
                 pageCell: pageCell,
@@ -568,10 +610,15 @@ extension PageNavigationCollectionView {
             navigationCompleted(completed: completed)
         }
         else {
-                        
-            let didScroll: Bool = internalScrollToItemOnCollectionView(item: pageNavigation.page, animated: pageNavigation.animated)
             
-            if !didScroll && pageNavigation.animated == true {
+            let animated: Bool = !shouldNotAnimate ? pageNavigation.animated : false
+            let didScroll: Bool = internalScrollToItemOnCollectionView(item: pageNavigation.page, animated: animated)
+            
+            logMessage(message: "  internal scroll to item: \(pageNavigation.page)", includeClassNameHeader: false)
+            logMessage(message: "    animated: \(animated)", includeClassNameHeader: false)
+            logMessage(message: "    didScroll: \(didScroll)", includeClassNameHeader: false)
+            
+            if !didScroll && animated == true {
                 assertionFailure("\n PageNavigationCollectionView: Failed to navigate.  Should the data be reloaded?  Try setting provided pageNavigation reloadCollectionViewDataNeeded to true.  \(pageNavigation)")
                 currentPageNavigation = nil
                 pageNavigationCompletedClosure = nil
@@ -723,7 +770,7 @@ extension PageNavigationCollectionView: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
                         
         // logMessage(message: "did scroll")
-        // logMessage(message: "  contentOffset.x: \(scrollView.contentOffset.x)")
+        // logMessage(message: "  contentOffset.x: \(scrollView.contentOffset.x)", includeClassNameHeader: false)
         
         let currentPage: Int = getPageBasedOnContentOffset(contentOffset: scrollView.contentOffset)
                 
@@ -741,7 +788,7 @@ extension PageNavigationCollectionView: UIScrollViewDelegate {
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         
         logMessage(message: "did end dragging: decelerate: \(decelerate)")
-        logMessage(message: "  contentOffset.x: \(scrollView.contentOffset.x)")
+        logMessage(message: "  contentOffset.x: \(scrollView.contentOffset.x)", includeClassNameHeader: false)
         
         if !decelerate {
             didEndPageScrolling()
@@ -751,7 +798,7 @@ extension PageNavigationCollectionView: UIScrollViewDelegate {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         
         logMessage(message: "did end decelerating")
-        logMessage(message: "  contentOffset.x: \(scrollView.contentOffset.x)")
+        logMessage(message: "  contentOffset.x: \(scrollView.contentOffset.x)", includeClassNameHeader: false)
         
         didEndPageScrolling()
     }
@@ -768,11 +815,9 @@ extension PageNavigationCollectionView: UIScrollViewDelegate {
         let currentPage: Int = getCurrentPage()
         
         logMessage(message: "did end page scrolling for page: \(currentPage)")
-        if loggingEnabled {
-            print("   contentOffset.x: \(collectionView.contentOffset.x)")
-            print("   internalCurrentStoppedOnPage: \(internalCurrentStoppedOnPage)")
-            print("   currentPage: \(currentPage)")
-        }
+        logMessage(message: "   contentOffset.x: \(collectionView.contentOffset.x)", includeClassNameHeader: false)
+        logMessage(message: "   internalCurrentStoppedOnPage: \(internalCurrentStoppedOnPage)", includeClassNameHeader: false)
+        logMessage(message: "   currentPage: \(currentPage)", includeClassNameHeader: false)
                 
         if internalCurrentStoppedOnPage != currentPage {
             

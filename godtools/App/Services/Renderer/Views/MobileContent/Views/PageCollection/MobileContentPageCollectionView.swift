@@ -77,6 +77,16 @@ class MobileContentPageCollectionView: MobileContentPageView {
                 self?.pagesView.navigateToPage(pageId: activePageId, animated: false)
             }
         }
+        else if let pageSubIndex = navigationEvent?.pageSubIndex {
+            
+            // NOTE: Method viewDidAppear is triggered from UICollectionView willDisplayCell in PageNavigationCollectionView.swift.
+            // For some reason attempting to scroll a collection view will not correctly scroll and using this Dispatch resolves that.
+            // Would like to resolve this so DispatchQueue.main.async is not needed. ~Levi
+           
+            DispatchQueue.main.async { [weak self] in
+                self?.pagesView.navigateToPage(pageIndex: pageSubIndex, animated: false)
+            }
+        }
     }
 }
 
