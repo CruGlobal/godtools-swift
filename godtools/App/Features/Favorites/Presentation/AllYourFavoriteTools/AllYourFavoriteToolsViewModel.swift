@@ -21,6 +21,7 @@ class AllYourFavoriteToolsViewModel: ObservableObject {
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let didConfirmToolRemovalSubject: PassthroughSubject<Void, Never> = PassthroughSubject()
     
+    private static var backgroundCancellables: Set<AnyCancellable> = Set()
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
@@ -212,7 +213,7 @@ extension AllYourFavoriteToolsViewModel {
                 } receiveValue: { _ in
                     
                 }
-                .store(in: &cancellables)
+                .store(in: &AllYourFavoriteToolsViewModel.backgroundCancellables)
 
         }
     }
