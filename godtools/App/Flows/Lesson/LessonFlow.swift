@@ -40,10 +40,10 @@ class LessonFlow: ToolNavigationFlow, Flow {
         self.appLanguage = appLanguage
         self.trainingTipsEnabled = trainingTipsEnabled
         self.initialPageSubIndex = initialPageSubIndex
-        
+                
         if let initialPage = initialPage {
             
-            navigateToLesson(initialPage: initialPage, initialPageSubIndex: initialPageSubIndex, animated: true)
+            navigateToLesson(isNavigatingFromResumeLessonModal: false, initialPage: initialPage, initialPageSubIndex: initialPageSubIndex, animated: true)
         }
         else if shouldNavigateToResumeLesson {
             
@@ -53,7 +53,7 @@ class LessonFlow: ToolNavigationFlow, Flow {
         }
         else {
             
-            navigateToLesson(initialPage: initialPage, initialPageSubIndex: initialPageSubIndex, animated: true)
+            navigateToLesson(isNavigatingFromResumeLessonModal: false, initialPage: initialPage, initialPageSubIndex: initialPageSubIndex, animated: true)
         }
     }
     
@@ -99,11 +99,11 @@ class LessonFlow: ToolNavigationFlow, Flow {
             break
             
         case .startOverTappedFromResumeLessonModal:
-            navigateToLesson(initialPage: nil, initialPageSubIndex: initialPageSubIndex, animated: false)
+            navigateToLesson(isNavigatingFromResumeLessonModal: true, initialPage: nil, initialPageSubIndex: initialPageSubIndex, animated: false)
             navigationController.dismissPresented(animated: true, completion: nil)
             
         case .continueTappedFromResumeLessonModal:
-            navigateToLesson(initialPage: userLessonProgressPage, initialPageSubIndex: initialPageSubIndex, animated: false)
+            navigateToLesson(isNavigatingFromResumeLessonModal: true, initialPage: userLessonProgressPage, initialPageSubIndex: initialPageSubIndex, animated: false)
             navigationController.dismissPresented(animated: true, completion: nil)
             
         case .closeTappedFromLesson(let lessonId, let highestPageNumberViewed):
@@ -147,9 +147,13 @@ class LessonFlow: ToolNavigationFlow, Flow {
         }
     }
     
-    private func navigateToLesson(initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, animated: Bool) {
+    private func navigateToLesson(isNavigatingFromResumeLessonModal: Bool, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, animated: Bool) {
         
-        let lessonView = getLessonView(initialPage: initialPage, initialPageSubIndex: initialPageSubIndex)
+        let lessonView = getLessonView(
+            initialPage: initialPage,
+            initialPageSubIndex: initialPageSubIndex,
+            isNavigatingFromResumeLessonModal: isNavigatingFromResumeLessonModal
+        )
                 
         navigationController.pushViewController(lessonView, animated: animated)
         
@@ -166,7 +170,16 @@ class LessonFlow: ToolNavigationFlow, Flow {
 
 extension LessonFlow {
     
-    private func getLessonView(initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?) -> UIViewController {
+    private func getLessonView(initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, isNavigatingFromResumeLessonModal: Bool) -> UIViewController {
+        
+        let initialPageConfig: MobileContentRendererInitialPageConfig?
+        
+        if isNavigatingFromResumeLessonModal {
+            initialPageConfig = MobileContentRendererInitialPageConfig(shouldNavigateToStartPageIfLastPage: true, shouldNavigateToPreviousVisiblePageIfHiddenPage: true)
+        }
+        else {
+            initialPageConfig = nil
+        }
         
         let navigation: MobileContentRendererNavigation = appDiContainer.getMobileContentRendererNavigation(
             parentFlow: self,
@@ -187,6 +200,7 @@ extension LessonFlow {
             resource: renderer.resource,
             primaryLanguage: renderer.languages.primaryLanguage,
             initialPage: initialPage,
+            initialPageConfig: initialPageConfig,
             initialPageSubIndex: initialPageSubIndex,
             resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
             translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
