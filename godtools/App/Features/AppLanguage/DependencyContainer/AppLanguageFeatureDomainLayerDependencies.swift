@@ -37,6 +37,12 @@ class AppLanguageFeatureDomainLayerDependencies {
         )
     }
     
+    func getDownloadToolLanguageProgressUseCase() -> GetDownloadToolLanguageProgressUseCase {
+        return GetDownloadToolLanguageProgressUseCase(
+            getProgress: dataLayer.getDownloadToolLanguageProgress()
+        )
+    }
+    
     func getInterfaceLayoutDirectionUseCase() -> GetInterfaceLayoutDirectionUseCase {
         return GetInterfaceLayoutDirectionUseCase(
             getLayoutDirectionInterface: dataLayer.getAppInterfaceLayoutDirectionInterface()

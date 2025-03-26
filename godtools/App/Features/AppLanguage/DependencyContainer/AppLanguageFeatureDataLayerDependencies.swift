@@ -115,6 +115,13 @@ class AppLanguageFeatureDataLayerDependencies {
         )
     }
     
+    func getDownloadToolLanguageProgress() -> GetDownloadToolLanguageProgressInterface {
+        return GetDownloadToolLanguageProgress(
+            toolLanguageDownloader: getToolLanguageDownloader(),
+            downloadedLanguagesRepository: getDownloadedLanguagesRepository()
+        )
+    }
+    
     func getDownloadToolLanguageRepositoryInterface() -> DownloadToolLanguageRepositoryInterface {
         return DownloadToolLanguageRepository(
             downloadedLanguagesRepository: getDownloadedLanguagesRepository(),
