@@ -8,6 +8,7 @@
 
 import Foundation
 import RealmSwift
+import Combine
 
 class RealmToolLanguageDownloaderCache {
     
@@ -18,20 +19,55 @@ class RealmToolLanguageDownloaderCache {
         self.realmDatabase = realmDatabase
     }
     
-    func updateDownloadProgress(languageId: String, downloadProgress: Double) {
+    func getToolLanguageDownloadElseNew(languageId: String) -> RealmToolLanguageDownload {
+               
+        let existingObject: RealmToolLanguageDownload? = realmDatabase.readObject(primaryKey: languageId)
         
-        let realm: Realm = realmDatabase.openRealm()
-        
-        guard let object = realmDatabase.readObject(realm: realm, primaryKey: languageId) as? RealmToolLanguageDownload else {
-            return
+        if let existingObject = existingObject {
+            
+            return existingObject
         }
+        else {
+            
+            let dataModel = ToolLanguageDownload(
+                languageId: languageId,
+                downloadErrorDescription: nil,
+                downloadErrorHttpStatusCode: nil,
+                downloadProgress: 0,
+                downloadStartedAt: Date()
+            )
+            
+            let newObject: RealmToolLanguageDownload = RealmToolLanguageDownload()
+            newObject.mapFrom(dataModel: dataModel)
+            
+            storeToolLanguageDownload(realmObject: newObject)
+            
+            return newObject
+        }
+    }
+    
+    func updateDownloadProgressPublisher(languageId: String, downloadProgress: Double) -> AnyPublisher<[ToolLanguageDownload], Error> {
         
-        _ = realmDatabase.writeObjects(realm: realm, updatePolicy: .modified, writeClosure: { realm in
+        return realmDatabase.writeObjectsPublisher(updatePolicy: .modified, writeClosure: { (realm: Realm) in
             
-            object.downloadProgress = downloadProgress
+            var realmObjects: [RealmToolLanguageDownload] = Array()
             
-            return [object]
+            if let object = realm.object(ofType: RealmToolLanguageDownload.self, forPrimaryKey: languageId) {
+                object.downloadProgress = downloadProgress
+                realmObjects = [object]
+            }
+            
+            return realmObjects
+        },
+        mapInBackgroundClosure: { (realmObjects: [RealmToolLanguageDownload]) in
+            
+            let downloads: [ToolLanguageDownload] = realmObjects.map {
+                ToolLanguageDownload(realmToolLanguageDownload: $0)
+            }
+            
+            return downloads
         })
+        .eraseToAnyPublisher()
     }
     
     func storeToolLanguageDownload(dataModel: ToolLanguageDownload) {
@@ -39,6 +75,11 @@ class RealmToolLanguageDownloaderCache {
         let realmObject = RealmToolLanguageDownload()
         
         realmObject.mapFrom(dataModel: dataModel)
+        
+        storeToolLanguageDownload(realmObject: realmObject)
+    }
+    
+    private func storeToolLanguageDownload(realmObject: RealmToolLanguageDownload) {
         
         _ = realmDatabase.writeObjects(realm: realmDatabase.openRealm(), updatePolicy: .modified) { (realm: Realm) in
             let objects: [RealmToolLanguageDownload] = [realmObject]
