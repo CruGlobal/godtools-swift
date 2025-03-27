@@ -395,7 +395,9 @@ extension TractViewModel {
             remoteLocaleNavBarLanguageIndex = nil
         }
         
-        let reloadCollectionViewDataNeeded: Bool = remoteLocaleExists && remoteLocaleExistsInNavBarLanguages == true && remoteLocaleNavBarLanguage?.id != currentNavBarLanguage.id
+        let localeChangedAndExistsInNavBar: Bool = remoteLocaleExists && remoteLocaleExistsInNavBarLanguages == true && remoteLocaleNavBarLanguage?.id != currentNavBarLanguage.id
+        
+        let reloadCollectionViewDataNeeded: Bool = localeChangedAndExistsInNavBar
         
         let pageNavigation = PageNavigationCollectionViewNavigationModel(
             navigationDirection: nil,
@@ -414,10 +416,7 @@ extension TractViewModel {
             pageSubIndex: nil
         )
                 
-        if remoteLocaleExists &&
-            (remoteLocaleExistsInNavBarLanguages == true) &&
-            remoteLocaleNavBarLanguage?.id != currentNavBarLanguage.id,
-           let remoteLocaleNavBarLanguageIndex = remoteLocaleNavBarLanguageIndex {
+        if localeChangedAndExistsInNavBar, let remoteLocaleNavBarLanguageIndex = remoteLocaleNavBarLanguageIndex {
             
             super.setPageRenderer(
                 pageRenderer: renderer.value.pageRenderers[remoteLocaleNavBarLanguageIndex],
