@@ -394,6 +394,25 @@ extension TractViewModel {
         else {
             remoteLocaleNavBarLanguageIndex = nil
         }
+        
+        let reloadCollectionViewDataNeeded: Bool = remoteLocaleExists && remoteLocaleExistsInNavBarLanguages == true && remoteLocaleNavBarLanguage?.id != currentNavBarLanguage.id
+        
+        let pageNavigation = PageNavigationCollectionViewNavigationModel(
+            navigationDirection: nil,
+            page: page ?? super.currentPageNumber,
+            animated: animated,
+            reloadCollectionViewDataNeeded: reloadCollectionViewDataNeeded,
+            insertPages: nil,
+            deletePages: nil
+        )
+        
+        let navigationEvent = MobileContentPagesNavigationEvent(
+            pageNavigation: pageNavigation,
+            setPages: nil,
+            pagePositions: pagePositions,
+            parentPageParams: nil,
+            pageSubIndex: nil
+        )
                 
         if remoteLocaleExists &&
             (remoteLocaleExistsInNavBarLanguages == true) &&
@@ -402,7 +421,7 @@ extension TractViewModel {
             
             super.setPageRenderer(
                 pageRenderer: renderer.value.pageRenderers[remoteLocaleNavBarLanguageIndex],
-                navigationEvent: nil,
+                navigationEvent: navigationEvent,
                 pagePositions: pagePositions
             )
         }
@@ -415,21 +434,6 @@ extension TractViewModel {
             )
         }
         else {
-            
-            let navigationEvent = MobileContentPagesNavigationEvent(
-                pageNavigation: PageNavigationCollectionViewNavigationModel(
-                    navigationDirection: nil,
-                    page: page ?? super.currentPageNumber,
-                    animated: animated,
-                    reloadCollectionViewDataNeeded: false,
-                    insertPages: nil,
-                    deletePages: nil
-                ),
-                setPages: nil,
-                pagePositions: pagePositions,
-                parentPageParams: nil,
-                pageSubIndex: nil
-            )
             
             super.sendPageNavigationEvent(navigationEvent: navigationEvent)
         }
