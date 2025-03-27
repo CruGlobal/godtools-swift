@@ -212,6 +212,7 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
     
     func setRendererPrimaryLanguage(primaryLanguageId: String, parallelLanguageId: String?, selectedLanguageId: String?) {
         
+        let appLanguage: AppLanguageDomainModel = self.appLanguage
         let currentRenderer: MobileContentRenderer = renderer.value
         
         var newLanguageIds: [String] = [primaryLanguageId]
@@ -232,8 +233,9 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
                 
                 self?.setRenderer(renderer: newRenderer, pageRendererIndex: newSelectedLanguageIndex, navigationEvent: nil)
                 
-            case .failure( _):
-                break
+            case .failure(let error):
+                
+                currentRenderer.navigation.presentError(error: error, appLanguage: appLanguage)
             }
         }
         
