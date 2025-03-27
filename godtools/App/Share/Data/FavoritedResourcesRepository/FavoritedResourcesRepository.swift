@@ -63,6 +63,12 @@ class FavoritedResourcesRepository {
             .eraseToAnyPublisher()
     }
     
+    func getFavoritedResourcesSortedByPositionPublisher(ascendingOrder: Bool = true) -> AnyPublisher<[FavoritedResourceDataModel], Never> {
+        
+        return cache.getFavoritedResourcesSortedByPositionPublisher(ascendingOrder: ascendingOrder)
+            .eraseToAnyPublisher()
+    }
+    
     func storeFavoritedResourcesPublisher(ids: [String]) -> AnyPublisher<[FavoritedResourceDataModel], Error> {
      
         return cache.storeFavoritedResourcesPublisher(ids: ids)
