@@ -10,7 +10,7 @@ import UIKit
 import Combine
 
 class DownloadToolTranslationsFlow: Flow {
-    
+        
     private let determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType
     private let getToolTranslationsFilesUseCase: GetToolTranslationsFilesUseCase
     private let didDownloadToolTranslations: ((_ result: Result<ToolTranslationsDomainModel, Error>) -> Void)
@@ -47,7 +47,7 @@ class DownloadToolTranslationsFlow: Flow {
             case .failure(let error):
                 self?.dismissDownloadTool(completion: {
                     self?.didDownloadToolTranslations(.failure(error))
-                })
+                }, delaySeconds: 2)
             }
             
         }, receiveValue: { [weak self] (toolTranslations: ToolTranslationsDomainModel) in
@@ -121,15 +121,32 @@ class DownloadToolTranslationsFlow: Flow {
         downloadToolProgressModal = modal
     }
     
-    private func dismissDownloadTool(completion: (() -> Void)?) {
+    private func dismissDownloadTool(completion: (() -> Void)?, delaySeconds: TimeInterval? = nil) {
         
         guard let modal = downloadToolProgressModal else {
             return
         }
         
-        modal.dismiss(animated: true, completion: completion)
+        delayCallbackSeconds(delaySeconds: delaySeconds) { [weak self] in
+           
+            modal.dismiss(animated: true, completion: completion)
+            
+            self?.downloadToolProgressView = nil
+            self?.downloadToolProgressModal = nil
+        }
+    }
+    
+    private func delayCallbackSeconds(delaySeconds: TimeInterval?, closure: (() -> Void)?) {
+        
+        if let delaySeconds = delaySeconds {
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + delaySeconds) {
                 
-        downloadToolProgressView = nil
-        downloadToolProgressModal = nil
+                closure?()
+            }
+        }
+        else {
+            closure?()
+        }
     }
 }
