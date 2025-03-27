@@ -219,16 +219,16 @@ class RealmFavoritedResourcesCache {
             
             return self.realmDatabase.writeObjectsPublisher { (realm: Realm) -> [RealmFavoritedResource] in
                 
-                let favoritesSortedByPosition = realm
+                let favoritesSortedByCreatedAt = realm
                     .objects(RealmFavoritedResource.self)
-                    .sorted(byKeyPath: #keyPath(RealmFavoritedResource.position), ascending: ascendingOrder)
+                    .sorted(byKeyPath: #keyPath(RealmFavoritedResource.createdAt), ascending: !ascendingOrder)
                 
                 var correctedPosition = 0
-                for favorite in favoritesSortedByPosition {
+                for favorite in favoritesSortedByCreatedAt {
                     favorite.position = correctedPosition
                     correctedPosition += 1
                 }
-                return Array(favoritesSortedByPosition)
+                return Array(favoritesSortedByCreatedAt)
                 
             } mapInBackgroundClosure: { (objects: [RealmFavoritedResource]) -> [FavoritedResourceDataModel] in
                 return objects.map({
