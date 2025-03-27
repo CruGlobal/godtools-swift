@@ -78,6 +78,11 @@ class MobileContentRendererNavigation {
         delegate?.mobileContentRendererNavigationDismissRenderer(navigation: self, event: event)
     }
     
+    func presentError(error: Error, appLanguage: AppLanguageDomainModel) {
+        
+        parentFlow?.presentError(appLanguage: appLanguage, error: error)
+    }
+    
     func errorOccurred(error: MobileContentErrorViewModel) {
         
         let view = MobileContentErrorView(viewModel: error)
