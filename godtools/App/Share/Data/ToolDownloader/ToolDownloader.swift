@@ -146,7 +146,7 @@ class ToolDownloader {
             return self.translationsRepository.getTranslationManifestFromCacheElseRemote(
                 translation: translation,
                 manifestParserType: .manifestOnly,
-                includeRelatedFiles: false,
+                includeRelatedFiles: true,
                 shouldFallbackToLatestDownloadedTranslationIfRemoteFails: false
             )
             .map { (translationManifestDataModel: TranslationManifestFileDataModel) in
