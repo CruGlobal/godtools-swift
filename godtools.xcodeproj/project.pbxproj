@@ -1566,6 +1566,7 @@
 		D496B9062A9E702200CBEA19 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D496B9052A9E702200CBEA19 /* SearchBar.swift */; };
 		D4997E0E28D4CED800205B4C /* YouTubeiOSPlayerHelper in Frameworks */ = {isa = PBXBuildFile; productRef = D4997E0D28D4CED800205B4C /* YouTubeiOSPlayerHelper */; };
 		D4AAEC152D972CF8008CDF8E /* ReorderFavoritedToolDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4AAEC142D972CF8008CDF8E /* ReorderFavoritedToolDomainModel.swift */; };
+		D4AAEC192D97307F008CDF8E /* RemoveFavoritedToolRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4AAEC182D973074008CDF8E /* RemoveFavoritedToolRepositoryTests.swift */; };
 		D4AFA4452BAC93B400318023 /* ToolFilterLanguagesInterfaceStringsDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4AFA4442BAC93B400318023 /* ToolFilterLanguagesInterfaceStringsDomainModel.swift */; };
 		D4AFA4472BAC950800318023 /* GetToolFilterLanguagesInterfaceStringsRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4AFA4462BAC950800318023 /* GetToolFilterLanguagesInterfaceStringsRepositoryInterface.swift */; };
 		D4AFA4492BAC955E00318023 /* GetToolFilterLanguagesInterfaceStringsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4AFA4482BAC955E00318023 /* GetToolFilterLanguagesInterfaceStringsRepository.swift */; };
@@ -3302,6 +3303,7 @@
 		D4960CDB2CE694F00090B114 /* GetResumeLessonProgressModalInterfaceStringsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetResumeLessonProgressModalInterfaceStringsUseCase.swift; sourceTree = "<group>"; };
 		D496B9052A9E702200CBEA19 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		D4AAEC142D972CF8008CDF8E /* ReorderFavoritedToolDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReorderFavoritedToolDomainModel.swift; sourceTree = "<group>"; };
+		D4AAEC182D973074008CDF8E /* RemoveFavoritedToolRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveFavoritedToolRepositoryTests.swift; sourceTree = "<group>"; };
 		D4AFA4442BAC93B400318023 /* ToolFilterLanguagesInterfaceStringsDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolFilterLanguagesInterfaceStringsDomainModel.swift; sourceTree = "<group>"; };
 		D4AFA4462BAC950800318023 /* GetToolFilterLanguagesInterfaceStringsRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetToolFilterLanguagesInterfaceStringsRepositoryInterface.swift; sourceTree = "<group>"; };
 		D4AFA4482BAC955E00318023 /* GetToolFilterLanguagesInterfaceStringsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetToolFilterLanguagesInterfaceStringsRepository.swift; sourceTree = "<group>"; };
@@ -11737,6 +11739,7 @@
 		D4B26F5A2D8DF45F0019FA86 /* Data-DomainInterface */ = {
 			isa = PBXGroup;
 			children = (
+				D4AAEC182D973074008CDF8E /* RemoveFavoritedToolRepositoryTests.swift */,
 				D4B26F582D8DF0A80019FA86 /* ReorderFavoritedToolRepositoryTests.swift */,
 			);
 			path = "Data-DomainInterface";
@@ -14187,6 +14190,7 @@
 				45243C5B2C5828C600BD6F49 /* MockRealmTranslation.swift in Sources */,
 				45CBDA092BA3930B0007DEC8 /* MockLaunchCountRepository.swift in Sources */,
 				45EB68E12C334D84008A5FF2 /* MockLocalizationServices.swift in Sources */,
+				D4AAEC192D97307F008CDF8E /* RemoveFavoritedToolRepositoryTests.swift in Sources */,
 				45B9B07B2CDEB2D6001DF554 /* MobileContentBackgroundImageRendererTests.swift in Sources */,
 				45368A182ABB2D850028A570 /* TestRealmObject.swift in Sources */,
 				453E2A122BC8C8810047D4C6 /* GetToolsRepositoryTests.swift in Sources */,
