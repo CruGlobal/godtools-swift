@@ -59,7 +59,6 @@ class GetDownloadableLanguagesListRepository: GetDownloadableLanguagesListReposi
                     
                     return DownloadableLanguageListItemDomainModel(
                         languageId: language.id,
-                        languageCode: language.languageCode,
                         languageNameInOwnLanguage: languageNameInOwnLanguage,
                         languageNameInAppLanguage: languageNameInAppLanguage,
                         toolsAvailableText: toolsAvailableText,
@@ -115,7 +114,7 @@ extension GetDownloadableLanguagesListRepository {
             
         } else {
             
-            return .downloading(progress: nil)
+            return .notDownloaded
         }
     }
     

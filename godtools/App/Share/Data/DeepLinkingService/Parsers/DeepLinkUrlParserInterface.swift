@@ -1,5 +1,5 @@
 //
-//  DeepLinkUrlParserType.swift
+//  DeepLinkUrlParserInterface.swift
 //  godtools
 //
 //  Created by Levi Eggert on 4/20/22.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol DeepLinkUrlParserType: DeepLinkParserType {
+protocol DeepLinkUrlParserInterface: DeepLinkParserInterface {
     
     func parse(url: URL, pathComponents: [String], queryParameters: [String: Any]) -> ParsedDeepLinkType?
 }

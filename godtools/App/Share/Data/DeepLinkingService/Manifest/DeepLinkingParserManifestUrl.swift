@@ -8,14 +8,14 @@
 
 import Foundation
 
-class DeepLinkingParserManifestUrl: DeepLinkingParserManifestType {
+class DeepLinkingParserManifestUrl: DeepLinkingParserManifestInterface {
     
     let scheme: String
     let host: String
     let path: String?
-    let parserClass: DeepLinkParserType.Type
+    let parserClass: DeepLinkParserInterface.Type
     
-    init(scheme: String, host: String, path: String?, parserClass: DeepLinkParserType.Type) {
+    init(scheme: String, host: String, path: String?, parserClass: DeepLinkParserInterface.Type) {
         
         self.scheme = scheme
         self.host = host
@@ -23,7 +23,7 @@ class DeepLinkingParserManifestUrl: DeepLinkingParserManifestType {
         self.parserClass = parserClass
     }
     
-    func getParserIfValidIncomingDeepLink(incomingDeepLink: IncomingDeepLinkType) -> DeepLinkParserType? {
+    func getParserIfValidIncomingDeepLink(incomingDeepLink: IncomingDeepLinkType) -> DeepLinkParserInterface? {
         
         switch incomingDeepLink {
         

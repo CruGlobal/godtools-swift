@@ -25,7 +25,7 @@ class TractPageHeroView: MobileContentStackView {
     
     // MARK: - MobileContentView
 
-    override func viewDidAppear() {
+    override func viewDidAppear(navigationEvent: MobileContentPagesNavigationEvent?) {
         viewModel.heroDidAppear()
     }
 

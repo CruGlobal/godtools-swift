@@ -11,20 +11,20 @@ import Combine
 
 class LessonViewModel: MobileContentRendererViewModel {
     
-    private weak var flowDelegate: FlowDelegate?
-    private let storeLessonProgressUseCase: StoreUserLessonProgressUseCase
     private static var storeLessonProgressCancellable: AnyCancellable?
+    
+    private let storeLessonProgressUseCase: StoreUserLessonProgressUseCase
     
     let progress: ObservableValue<AnimatableValue<CGFloat>> = ObservableValue(value: AnimatableValue(value: 0, animated: false))
     
-    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, resource: ResourceModel, primaryLanguage: LanguageModel, initialPage: MobileContentRendererInitialPage?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTranslatedLanguageName: GetTranslatedLanguageName, storeLessonProgressUseCase: StoreUserLessonProgressUseCase, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
+    private weak var flowDelegate: FlowDelegate?
+    
+    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, resource: ResourceModel, primaryLanguage: LanguageModel, initialPage: MobileContentRendererInitialPage?, initialPageConfig: MobileContentRendererInitialPageConfig?, initialPageSubIndex: Int?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTranslatedLanguageName: GetTranslatedLanguageName, storeLessonProgressUseCase: StoreUserLessonProgressUseCase, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
                 
         self.flowDelegate = flowDelegate
         self.storeLessonProgressUseCase = storeLessonProgressUseCase
-        
-        let initialPageConfig = MobileContentRendererInitialPageConfig(shouldNavigateToStartPageIfLastPage: true, shouldNavigateToPreviousVisiblePageIfHiddenPage: true)
-        
-        super.init(renderer: renderer, initialPage: initialPage, initialPageConfig: initialPageConfig, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, getTranslatedLanguageName: getTranslatedLanguageName, trainingTipsEnabled: trainingTipsEnabled, incrementUserCounterUseCase: incrementUserCounterUseCase, selectedLanguageIndex: nil)
+                
+        super.init(renderer: renderer, initialPage: initialPage, initialPageConfig: initialPageConfig, initialPageSubIndex: initialPageSubIndex, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, getTranslatedLanguageName: getTranslatedLanguageName, trainingTipsEnabled: trainingTipsEnabled, incrementUserCounterUseCase: incrementUserCounterUseCase, selectedLanguageIndex: nil)
     }
     
     deinit {
@@ -51,27 +51,29 @@ class LessonViewModel: MobileContentRendererViewModel {
         }
         
         progress.accept(value: AnimatableValue(value: newProgress, animated: true))
+    }
+    
+    private func updateUserLessonCompletionProgress(page: Int) {
         
-        if let currentPage = getPage(index: page) {
-            let resourceId = currentPageRenderer.value.resource.id
-
-            if let storeLessonProgressCancellable = LessonViewModel.storeLessonProgressCancellable {
-                storeLessonProgressCancellable.cancel()
-                LessonViewModel.storeLessonProgressCancellable = nil
-            }
-            
-            LessonViewModel.storeLessonProgressCancellable = storeLessonProgressUseCase.storeLessonProgress(
-                lessonId: resourceId,
-                lastViewedPageId: currentPage.id,
-                lastViewedPageNumber: page,
-                totalPageCount: getPages().count
-            )
-            .sink(receiveCompletion: { _ in
-                
-            }, receiveValue: { _ in
-                
-            })
+        guard let currentPage = getPage(index: page) else {
+            return
         }
+        
+        let resourceId: String = currentPageRenderer.value.resource.id
+        
+        Self.storeLessonProgressCancellable?.cancel()
+        
+        Self.storeLessonProgressCancellable = storeLessonProgressUseCase.storeLessonProgress(
+            lessonId: resourceId,
+            lastViewedPageId: currentPage.id,
+            lastViewedPageNumber: page,
+            totalPageCount: getPages().count
+        )
+        .sink(receiveCompletion: { _ in
+            
+        }, receiveValue: { _ in
+            
+        })
     }
 }
 
@@ -81,6 +83,7 @@ extension LessonViewModel {
     
     func lessonMostVisiblePageDidChange(page: Int) {
         updateProgress(page: page)
+        updateUserLessonCompletionProgress(page: page)
     }
     
     func closeTapped() {

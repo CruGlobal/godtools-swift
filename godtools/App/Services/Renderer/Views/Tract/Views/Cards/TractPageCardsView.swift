@@ -633,7 +633,7 @@ extension TractPageCardsView {
             
             if let cardPosition = cardPosition, let cardView = getRenderedCardView(cardPosition: cardPosition) {
                 cardView.onCardVisible()
-                cardView.notifyViewAndAllChildrenViewDidAppear()
+                cardView.notifyViewAndAllChildrenViewDidAppear(navigationEvent: nil)
             }
             
             delegate?.tractPageCardsDidChangeCardPosition(cardsView: self, cardPosition: cardPosition, animated: animated)

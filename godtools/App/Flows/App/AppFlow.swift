@@ -845,7 +845,8 @@ extension AppFlow {
             liveShareStream: nil,
             selectedLanguageIndex: selectedLanguageIndex,
             trainingTipsEnabled: trainingTipsEnabled,
-            initialPage: nil, 
+            initialPage: nil,
+            initialPageSubIndex: nil,
             shouldPersistToolSettings: shouldPersistToolSettings
         )
     }

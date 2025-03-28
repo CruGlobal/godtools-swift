@@ -21,7 +21,6 @@ class SearchLanguageInDownloadableLanguagesRepositoryTests: QuickSpec {
         let downloadableLanguagesList = [
             DownloadableLanguageListItemDomainModel(
                 languageId: "0",
-                languageCode: "",
                 languageNameInOwnLanguage: "Apple",
                 languageNameInAppLanguage: "Orange",
                 toolsAvailableText: "",
@@ -29,7 +28,6 @@ class SearchLanguageInDownloadableLanguagesRepositoryTests: QuickSpec {
             ),
             DownloadableLanguageListItemDomainModel(
                 languageId: "1",
-                languageCode: "",
                 languageNameInOwnLanguage: "Cherry",
                 languageNameInAppLanguage: "Blue",
                 toolsAvailableText: "",
@@ -37,7 +35,6 @@ class SearchLanguageInDownloadableLanguagesRepositoryTests: QuickSpec {
             ),
             DownloadableLanguageListItemDomainModel(
                 languageId: "2",
-                languageCode: "",
                 languageNameInOwnLanguage: "Strawberry",
                 languageNameInAppLanguage: "Black",
                 toolsAvailableText: "",
@@ -45,7 +42,6 @@ class SearchLanguageInDownloadableLanguagesRepositoryTests: QuickSpec {
             ),
             DownloadableLanguageListItemDomainModel(
                 languageId: "3",
-                languageCode: "",
                 languageNameInOwnLanguage: "Kiwi",
                 languageNameInAppLanguage: "Yellow",
                 toolsAvailableText: "",
@@ -53,7 +49,6 @@ class SearchLanguageInDownloadableLanguagesRepositoryTests: QuickSpec {
             ),
             DownloadableLanguageListItemDomainModel(
                 languageId: "4",
-                languageCode: "",
                 languageNameInOwnLanguage: "Pink",
                 languageNameInAppLanguage: "Spinach",
                 toolsAvailableText: "",
@@ -61,7 +56,6 @@ class SearchLanguageInDownloadableLanguagesRepositoryTests: QuickSpec {
             ),
             DownloadableLanguageListItemDomainModel(
                 languageId: "5",
-                languageCode: "",
                 languageNameInOwnLanguage: "Green",
                 languageNameInAppLanguage: "Grape",
                 toolsAvailableText: "",
@@ -69,7 +63,6 @@ class SearchLanguageInDownloadableLanguagesRepositoryTests: QuickSpec {
             ),
             DownloadableLanguageListItemDomainModel(
                 languageId: "6",
-                languageCode: "",
                 languageNameInOwnLanguage: "Berry",
                 languageNameInAppLanguage: "Brown",
                 toolsAvailableText: "",
@@ -77,7 +70,6 @@ class SearchLanguageInDownloadableLanguagesRepositoryTests: QuickSpec {
             ),
             DownloadableLanguageListItemDomainModel(
                 languageId: "7",
-                languageCode: "",
                 languageNameInOwnLanguage: "Cucumber",
                 languageNameInAppLanguage: "Purple",
                 toolsAvailableText: "",

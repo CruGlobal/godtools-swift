@@ -66,6 +66,35 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
         return pageModels.count
     }
     
+    func getNearestAncestorPage(page: Page) -> Page? {
+        
+        guard let index = getNearestAncestorPageIndex(page: page) else {
+            return nil
+        }
+        
+        return getPage(index: index)
+    }
+    
+    func getNearestAncestorPageIndex(page: Page) -> Int? {
+        
+        let pages: [Page] = getPages()
+        
+        var ancestor: Page? = page.parentPage
+        
+        while ancestor != nil {
+            
+            if let ancestorPageId = ancestor?.id,
+               let ancestorPageIndex = pages.firstIndex(where: { $0.id == ancestorPageId }) {
+                
+                return ancestorPageIndex
+            }
+            
+            ancestor = ancestor?.parentPage
+        }
+        
+        return nil
+    }
+    
     // MARK: - Events
     
     func pageDidReceiveEvent(eventId: EventId) -> ProcessedEventResult? {
@@ -177,15 +206,42 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
         
         navigateToPage(page: page, animated: animated)
     }
+    
+    func navigateToParentPage() {
         
-    func navigateToPage(page: Page, animated: Bool) {
+        guard currentPageNumber > 0 else {
+            return
+        }
         
-        let navigationEvent: MobileContentPagesNavigationEvent = getPageNavigationEvent(page: page, animated: animated)
+        let currentPage: Page? = getCurrentPage()
+        let parentPage: Page? = currentPage?.parentPage ?? getPage(index: currentPageNumber - 1)
+        let parentPageParams: [String: String]? = currentPage?.parentPageParams
+        
+        guard let parentPage = parentPage else {
+            return
+        }
+        
+        navigateToPage(
+            page: parentPage,
+            animated: true,
+            parentPageParams: parentPageParams,
+            isBackNavigation: true
+        )
+    }
+        
+    func navigateToPage(page: Page, animated: Bool, parentPageParams: [String: String]? = nil, isBackNavigation: Bool = false) {
+        
+        let navigationEvent: MobileContentPagesNavigationEvent = getPageNavigationEvent(
+            page: page,
+            animated: animated,
+            parentPageParams: MobileContentParentPageParams(params: parentPageParams),
+            isBackNavigation: isBackNavigation
+        )
         
         sendPageNavigationEvent(navigationEvent: navigationEvent)
     }
     
-    func getPageNavigationEvent(page: Page, animated: Bool, reloadCollectionViewDataNeeded: Bool = false) -> MobileContentPagesNavigationEvent {
+    func getPageNavigationEvent(page: Page, animated: Bool, reloadCollectionViewDataNeeded: Bool = false, parentPageParams: MobileContentParentPageParams? = nil, isBackNavigation: Bool = false) -> MobileContentPagesNavigationEvent {
                 
         let currentPages: [Page] = pageModels
                 
@@ -238,7 +294,8 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
             ),
             setPages: setPages,
             pagePositions: nil,
-            parentPageParams: nil
+            parentPageParams: parentPageParams,
+            pageSubIndex: nil
         )
     }
     
