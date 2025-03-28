@@ -17,7 +17,7 @@ class ReorderFavoritedToolUseCase {
         self.reorderFavoritedToolRepository = reorderFavoritedToolRepository
     }
     
-    func reorderFavoritedToolPublisher(toolId: String, originalPosition: Int, newPosition: Int) -> AnyPublisher<[FavoritedResourceDataModel], Error> {
+    func reorderFavoritedToolPublisher(toolId: String, originalPosition: Int, newPosition: Int) -> AnyPublisher<[ReorderFavoritedToolDomainModel], Error> {
         
         return reorderFavoritedToolRepository.reorderFavoritedToolPubilsher(toolId: toolId, originalPosition: originalPosition, newPosition: newPosition)
     }

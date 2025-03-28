@@ -26,7 +26,7 @@ class ReorderFavoritedToolRepositoryTests: QuickSpec {
                     let reorderFavoriteToolsRepository = ReorderFavoritedToolRepository(
                         favoritedResourcesRepository: FavoritedResourcesRepository(cache: RealmFavoritedResourcesCache(realmDatabase: getConfiguredRealmDatabase())))
                     
-                    var favoritedResources: [FavoritedResourceDataModel] = Array()
+                    var favoritedResources: [ReorderFavoritedToolDomainModel] = Array()
                     
                     waitUntil { done in
                         
@@ -55,7 +55,7 @@ class ReorderFavoritedToolRepositoryTests: QuickSpec {
                     let reorderFavoriteToolsRepository = ReorderFavoritedToolRepository(
                         favoritedResourcesRepository: FavoritedResourcesRepository(cache: RealmFavoritedResourcesCache(realmDatabase: getConfiguredRealmDatabase())))
                     
-                    var favoritedResources: [FavoritedResourceDataModel] = Array()
+                    var favoritedResources: [ReorderFavoritedToolDomainModel] = Array()
                     
                     waitUntil { done in
                         
@@ -86,7 +86,7 @@ class ReorderFavoritedToolRepositoryTests: QuickSpec {
                     let reorderFavoriteToolsRepository = ReorderFavoritedToolRepository(
                         favoritedResourcesRepository: FavoritedResourcesRepository(cache: RealmFavoritedResourcesCache(realmDatabase: getConfiguredRealmDatabase())))
                     
-                    var favoritedResources: [FavoritedResourceDataModel] = Array()
+                    var favoritedResources: [ReorderFavoritedToolDomainModel] = Array()
                     
                     waitUntil { done in
                         

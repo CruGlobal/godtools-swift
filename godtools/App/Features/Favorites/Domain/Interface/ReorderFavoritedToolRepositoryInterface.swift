@@ -11,5 +11,5 @@ import Combine
 
 protocol ReorderFavoritedToolRepositoryInterface {
     
-    func reorderFavoritedToolPubilsher(toolId: String, originalPosition: Int, newPosition: Int) -> AnyPublisher<[FavoritedResourceDataModel], Error>
+    func reorderFavoritedToolPubilsher(toolId: String, originalPosition: Int, newPosition: Int) -> AnyPublisher<[ReorderFavoritedToolDomainModel], Error>
 }

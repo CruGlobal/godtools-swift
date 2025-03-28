@@ -17,8 +17,14 @@ class ReorderFavoritedToolRepository: ReorderFavoritedToolRepositoryInterface {
         self.favoritedResourcesRepository = favoritedResourcesRepository
     }
     
-    func reorderFavoritedToolPubilsher(toolId: String, originalPosition: Int, newPosition: Int) -> AnyPublisher<[FavoritedResourceDataModel], Error> {
+    func reorderFavoritedToolPubilsher(toolId: String, originalPosition: Int, newPosition: Int) -> AnyPublisher<[ReorderFavoritedToolDomainModel], Error> {
         
         return favoritedResourcesRepository.reorderFavoritedResourcePublisher(id: toolId, originalPosition: originalPosition, newPosition: newPosition)
+            .map { favoritesReordered in
+                return favoritesReordered.map {
+                    ReorderFavoritedToolDomainModel(dataModelId: $0.id, position: $0.position)
+                }
+            }
+            .eraseToAnyPublisher()
     }
 }
