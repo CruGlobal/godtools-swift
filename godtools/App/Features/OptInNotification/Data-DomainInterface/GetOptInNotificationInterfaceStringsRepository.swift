@@ -1,5 +1,5 @@
 //
-//  GetOptInNotificationsInterfaceStringsRepository.swift
+//  GetOptInNotificationInterfaceStringsRepository.swift
 //  godtools
 //
 //  Created by Jason Bennett on 3/13/25.
@@ -10,8 +10,8 @@ import Combine
 import Foundation
 import LocalizationServices
 
-class GetOptInNotificationsInterfaceStringsRepository:
-    GetOptInNotificationsInterfaceStringsRepositoryInterface
+class GetOptInNotificationInterfaceStringsRepository:
+    GetOptInNotificationInterfaceStringsRepositoryInterface
 {
     private let localizationServices: LocalizationServices
 
@@ -21,19 +21,19 @@ class GetOptInNotificationsInterfaceStringsRepository:
     }
 
     func getStringsPublisher(translateInLanguage: AppLanguageDomainModel)
-        -> AnyPublisher<OptInNotificationsStringsDomainModel, Never>
+        -> AnyPublisher<OptInNotificationInterfaceStringsDomainModel, Never>
     {
-        let interfaceStrings = OptInNotificationsStringsDomainModel(
+        let interfaceStrings = OptInNotificationInterfaceStringsDomainModel(
             title: localizationServices.stringForLocaleElseEnglish(
-                localeIdentifier: translateInLanguage, key: "optInNotifications.title"),
+                localeIdentifier: translateInLanguage, key: "optInNotification.title"),
             body: localizationServices.stringForLocaleElseEnglish(
-                localeIdentifier: translateInLanguage, key: "optInNotifications.body"),
+                localeIdentifier: translateInLanguage, key: "optInNotification.body"),
             allowNotificationsActionTitle:
                 localizationServices.stringForLocaleElseEnglish(
-                    localeIdentifier: translateInLanguage, key: "optInNotifications.allowNotifications"),
+                    localeIdentifier: translateInLanguage, key: "optInNotification.allowNotifications"),
             maybeLaterActionTitle:
                 localizationServices.stringForLocaleElseEnglish(
-                    localeIdentifier: translateInLanguage, key: "optInNotifications.maybeLater")
+                    localeIdentifier: translateInLanguage, key: "optInNotification.maybeLater")
         )
         return Just(interfaceStrings)
             .eraseToAnyPublisher()

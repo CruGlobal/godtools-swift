@@ -26,8 +26,8 @@ class DashboardPresentationLayerDependencies {
         return getToolsViewModel()
     }()
 
-    lazy var notificationsViewModel: NotificationsViewModel = {
-        return getNotificationsViewModel()
+    lazy var optInNotificationViewModel: OptInNotificationViewModel = {
+        return getOptInNotificationViewModel()
     }()
 
     init(appDiContainer: AppDiContainer, flowDelegate: FlowDelegate) {
@@ -121,10 +121,12 @@ class DashboardPresentationLayerDependencies {
         )
     }
 
-    private func getNotificationsViewModel() -> NotificationsViewModel {
+    private func getOptInNotificationViewModel() -> OptInNotificationViewModel {
 
-        return NotificationsViewModel(
-            viewOptInNotificationsUseCase: appDiContainer.feature.optInNotification.domainLayer.getViewOptInNotificationsUseCase(),
+        return OptInNotificationViewModel(
+            lastPromptedOptInNotificationRepository: appDiContainer.feature.optInNotification.dataLayer.getLastPromptedOptInNotificationRepository(),
+            viewOptInNotificationUseCase: appDiContainer.feature.optInNotification.domainLayer.getViewOptInNotificationUseCase(),
+            viewOptInDialogUseCase: appDiContainer.feature.optInNotification.domainLayer.getViewOptInDialogUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage
                 .domainLayer.getCurrentAppLanguageUseCase()
         )

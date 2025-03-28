@@ -32,8 +32,8 @@ struct DashboardView: View {
 
                 Button(action: {
                     Task {
-                        await viewModel.getNotificationsViewModel()
-                            .shouldPromptNotificationsSheet()
+                        await viewModel.getOptInNotificationViewModel()
+                            .shouldPromptNotificationSheet()
                     }
 
                 }) {
@@ -89,11 +89,12 @@ struct DashboardView: View {
                     )
                 }
             }.overlay(
+                //here
                 //need align?
                 alignment: Alignment.center,
                 content: {
-                    NotificationsView(
-                        viewModel: viewModel.getNotificationsViewModel()
+                    OptInNotificationView(
+                        viewModel: viewModel.getOptInNotificationViewModel()
                     )
                 }
             )

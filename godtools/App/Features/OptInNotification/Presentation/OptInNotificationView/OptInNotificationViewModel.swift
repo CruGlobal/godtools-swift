@@ -1,5 +1,5 @@
 //
-//  NotificationsViewModel.swift
+//  OptInNotificationViewModel.swift
 //  godtools
 //
 //  Created by Jason Bennett on 3/11/25.
@@ -12,32 +12,40 @@ import Foundation
 import UIKit
 import UserNotifications
 
-class NotificationsViewModel: ObservableObject {
+class OptInNotificationViewModel: ObservableObject {
 
-    private let viewOptInNotificationsUseCase: ViewOptInNotificationsUseCase
+    private let lastPromptedOptInNotificationRepository:
+        LastPromptedOptInNotificationRepository
+    private let viewOptInNotificationUseCase: ViewOptInNotificationUseCase
+    private let viewOptInDialogUseCase: ViewOptInDialogUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
 
     private var notificationStatus: String = ""
-    
+
     private var cancellables: Set<AnyCancellable> = Set()
-    
-    @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+
+    @Published private var appLanguage: AppLanguageDomainModel =
+        LanguageCodeDomainModel.english.rawValue
 
     @Published var bottomSheetPosition: BottomSheetPosition = .hidden
-    
+
     @Published var title: String = ""
     @Published var body: String = ""
     @Published var allowNotificationsActionTitle: String = ""
     @Published var maybeLaterActionTitle: String = ""
 
     init(
-        viewOptInNotificationsUseCase: ViewOptInNotificationsUseCase,
+        lastPromptedOptInNotificationRepository:
+            LastPromptedOptInNotificationRepository,
+        viewOptInNotificationUseCase: ViewOptInNotificationUseCase,
+        viewOptInDialogUseCase: ViewOptInDialogUseCase,
         getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     ) {
-        self.viewOptInNotificationsUseCase = viewOptInNotificationsUseCase
+        self.lastPromptedOptInNotificationRepository =
+            lastPromptedOptInNotificationRepository
+        self.viewOptInNotificationUseCase = viewOptInNotificationUseCase
+        self.viewOptInDialogUseCase = viewOptInDialogUseCase
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
-
-        // do language translation stuff
 
         Task {
             self.notificationStatus = await checkNotificationStatus()
@@ -46,18 +54,23 @@ class NotificationsViewModel: ObservableObject {
             .getLanguagePublisher()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
-        
+
         $appLanguage
             .dropFirst()
-            .flatMap { appLanguage in viewOptInNotificationsUseCase.viewPublisher(appLanguage: appLanguage)
+            .flatMap { appLanguage in
+                viewOptInNotificationUseCase.viewPublisher(
+                    appLanguage: appLanguage)
             }
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (domainModel: ViewOptInNotificationsDomainModel) in
+            .sink {
+                [weak self] (domainModel: ViewOptInNotificationDomainModel) in
                 self?.title = domainModel.interfaceStrings.title
                 self?.body = domainModel.interfaceStrings.body
-                self?.allowNotificationsActionTitle = domainModel.interfaceStrings.allowNotificationsActionTitle
-                self?.maybeLaterActionTitle = domainModel.interfaceStrings.maybeLaterActionTitle
-               
+                self?.allowNotificationsActionTitle =
+                    domainModel.interfaceStrings.allowNotificationsActionTitle
+                self?.maybeLaterActionTitle =
+                    domainModel.interfaceStrings.maybeLaterActionTitle
+
             }
             .store(in: &cancellables)
     }
@@ -65,7 +78,7 @@ class NotificationsViewModel: ObservableObject {
     deinit {
         print("x deinit: \(type(of: self))")
     }
-//DOMAIN LAYER
+    //DOMAIN LAYER
     func requestNotificationPermission() async -> Bool {
         return await withCheckedContinuation { continuation in
             UNUserNotificationCenter.current().requestAuthorization(options: [
@@ -135,118 +148,55 @@ class NotificationsViewModel: ObservableObject {
         }
     }
 
-    func recordLastPrompt() {
+    func shouldPromptNotificationSheet() async {
+
+        let notificationStatus = await checkNotificationStatus()
+        let lastPrompted =
+            lastPromptedOptInNotificationRepository.getLastPrompted()
+
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/yyyy"
-
-        guard let testDate = dateFormatter.date(from: "01/01/2025") else {
-            print("Failed to create date from string.")
-            return
-        }
-
-        let dateString = dateFormatter.string(from: testDate)
-        //DATA LAYER
-        UserDefaults.standard.set(dateString, forKey: "lastPrompted")
-        print("set lastPrompted to: \(dateString)")
-    }
-
-    func shouldPromptNotificationsSheet() async {
-
-        notificationStatus = await checkNotificationStatus()
-
-        // Retrieve lastPrompted date
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM/dd/yyyy"
-        //DATA LAYER
-        let lastPrompted = UserDefaults.standard.string(
-            forKey: "lastPrompted")
         let lastPromptedDate =
-            lastPrompted.flatMap {
-                dateFormatter.date(from: $0)
-            } ?? Date.distantPast
+            dateFormatter.date(from: lastPrompted ?? "01/01/2000")
+            ?? Date.distantPast
 
-        // Get current date
         let currentDate = Date()
         let calendar = Calendar.current
         let twoMonthsAgo = calendar.date(
             byAdding: .month, value: -2, to: currentDate)!
 
         if notificationStatus != "Approved" {
-            if notificationStatus == "Undetermined" {
-                print("Detected undetermined status")
-                bottomSheetPosition =
-                    .dynamicTop
-                recordLastPrompt()
-            } else if notificationStatus == "Denied"
-                && lastPromptedDate < twoMonthsAgo
+            if notificationStatus == "Undetermined"
+                || notificationStatus == "Denied"
+                    && lastPromptedDate < twoMonthsAgo
             {
-                print(
-                    "Previously denied but last prompt was more than two months ago."
-                )
-                print(
-                    "Bottom sheet position before: \(bottomSheetPosition)"
-                )
+                await MainActor.run {
+                    bottomSheetPosition = .dynamicTop
+                }
 
-                bottomSheetPosition = .dynamicTop
+                
+                guard let testDate = dateFormatter.date(from: "01/01/2025") else {
+                    print("Failed to create date from string.")
+                    return
+                }
+                
+                
+                // First time prompt, or previously denied but due for another prompt
+                lastPromptedOptInNotificationRepository.recordLastPrompted(
+                    dateString: dateFormatter.string(from: testDate))
 
-                print(
-                    "Bottom sheet position after : \(bottomSheetPosition)"
-                )
-                recordLastPrompt()
-            } else if notificationStatus == "Denied"
-                && lastPromptedDate > twoMonthsAgo
-            {
-                print(
-                    "Previously denied and prompted recently.")
-                recordLastPrompt()
+                      
 
             }
-        }  // notifications already approved
+            // Permission already granted, or previously denied and prompted recently
+        }
 
     }
-
-    //    do analytics stuff\
-
-    //    private var analyticsScreenName: String {
-    //        return "Favorites"
-    //    }
-    //
-    //    private var analyticsSiteSection: String {
-    //        return "home"
-    //    }
-    //
-    //    private var analyticsSiteSubSection: String {
-    //        return ""
-    //    }
-
-    //    func requestNotificationPermission() async {
-    //        let granted = await withCheckedContinuation { continuation in
-    //            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
-    //                continuation.resume(returning: granted)
-    //            }
-    //        }
-    //        // Update published properties based on the result.
-    //        if granted {
-    //            DispatchQueue.main.async {
-    //                self.isNotificationPermissionGranted = true
-    //            }
-    //        } else {
-    //            // Trigger UI to show alert using SwiftUI's .alert modifier.
-    //            DispatchQueue.main.async {
-    //                self.showSettingsAlert = true
-    //            }
-    //        }
-    //    }
-    //
-    //    func openSettings() {
-    //        guard let settingsURL = URL(string: UIApplication.openSettingsURLString) else { return }
-    //        UIApplication.shared.open(settingsURL)
-    //    }
 }
 
 // MARK: - Inputs
 
-extension NotificationsViewModel {
+extension OptInNotificationViewModel {
 
     //user gestures
 

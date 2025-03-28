@@ -92,6 +92,12 @@
 "favorites.favoriteTools.viewAll" = "Ver todo";
 "favorites.favoriteLessons.details" = "Detalles";
 
+//here
+"optInNotification.title" = "Obtenga consejos y aliento";
+"optInNotification.body" = "Manténgase preparado para las conversaciones.\nPermitir notificaciones hoy.";
+"optInNotification.allowNotifications" = "Permitir notificaciones";
+"optInNotification.maybeLater" = "Más tarde";
+
 /* The meaning is "I don't want to set a second language".  Language is no language or None */
 "toolSettings.languagesList.deleteLanguage.title" = "Ninguno";
 

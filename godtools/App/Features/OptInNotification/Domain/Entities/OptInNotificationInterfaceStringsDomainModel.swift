@@ -1,5 +1,5 @@
 //
-//  OptInForNotificationsInterfaceStringsDomainModel.swift
+//  OptInNotificationInterfaceStringsDomainModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 3/10/25.
@@ -8,8 +8,7 @@
 
 import Foundation
 
-struct OptInNotificationsStringsDomainModel {
-    
+struct OptInNotificationInterfaceStringsDomainModel {
     let title: String
     let body: String
     let allowNotificationsActionTitle: String

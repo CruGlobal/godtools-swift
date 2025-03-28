@@ -15,13 +15,13 @@ import SwiftUI
 // - Adaptive sizing
 // - Disable appbar while active
 // - Import assets (1x, 2x, 3x)
-// - First app use strategy
-// - /n in Localizable Base
+// - Add to onboarding flow
+// - /n in Localizable base
 
-struct NotificationsView: View {
-    @ObservedObject private var viewModel: NotificationsViewModel
+struct OptInNotificationView: View {
+    @ObservedObject private var viewModel: OptInNotificationViewModel
 
-    init(viewModel: NotificationsViewModel) {
+    init(viewModel: OptInNotificationViewModel) {
         self.viewModel = viewModel
     }
 
@@ -37,7 +37,7 @@ struct NotificationsView: View {
                 headerContent: {},
                 mainContent: {
                     VStack {
-                        Image("notifications_graphic").resizable()
+                        Image("notification_graphic").resizable()
                             .scaledToFit()
                             .padding(
                                 EdgeInsets(
@@ -116,18 +116,22 @@ struct NotificationsView: View {
 
 // MARK: - Preview
 
-struct NotificationsView_Preview: PreviewProvider {
+struct OptInNotificationView_Preview: PreviewProvider {
 
-    static func getNotificationsViewModel() -> NotificationsViewModel {
+    static func getOptInNotificationViewModel() -> OptInNotificationViewModel {
 
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer()
             .getAppDiContainer()
 
-        let viewModel = NotificationsViewModel(
-
-            viewOptInNotificationsUseCase: appDiContainer.feature
+        let viewModel = OptInNotificationViewModel(
+            lastPromptedOptInNotificationRepository: appDiContainer.feature
+                .optInNotification.dataLayer
+                .getLastPromptedOptInNotificationRepository(),
+            viewOptInNotificationUseCase: appDiContainer.feature
                 .optInNotification.domainLayer
-                .getViewOptInNotificationsUseCase(),
+                .getViewOptInNotificationUseCase(),
+            viewOptInDialogUseCase: appDiContainer.feature.optInNotification
+                .domainLayer.getViewOptInDialogUseCase(),
 
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage
                 .domainLayer.getCurrentAppLanguageUseCase()
@@ -139,8 +143,9 @@ struct NotificationsView_Preview: PreviewProvider {
 
     static var previews: some View {
 
-        NotificationsView(
-            viewModel: NotificationsView_Preview.getNotificationsViewModel()
+        OptInNotificationView(
+            viewModel:
+                OptInNotificationView_Preview.getOptInNotificationViewModel()
         )
     }
 }

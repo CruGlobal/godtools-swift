@@ -89,6 +89,15 @@ class DashboardViewModel: ObservableObject {
                 dashboardTabObserver.send(self.tabs[currentTab])
             }
             .store(in: &cancellables)
+
+        
+        DispatchQueue.main.async {
+            Task {
+                await self.dashboardPresentationLayerDependencies
+                    .optInNotificationViewModel
+                    .shouldPromptNotificationSheet()
+            }
+        }
     }
 
     deinit {
@@ -148,8 +157,8 @@ extension DashboardViewModel {
     }
 
     //here
-    func getNotificationsViewModel() -> NotificationsViewModel {
-        return dashboardPresentationLayerDependencies.notificationsViewModel
+    func getOptInNotificationViewModel() -> OptInNotificationViewModel {
+        return dashboardPresentationLayerDependencies.optInNotificationViewModel
     }
 
     func tabTapped(tabIndex: Int) {

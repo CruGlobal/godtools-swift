@@ -6,37 +6,38 @@
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
-import UIKit
-import SocialAuthentication
 import FacebookCore
 import FirebaseDynamicLinks
+import SocialAuthentication
+import UIKit
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
-               
+
     private lazy var appBuild: AppBuild = {
         AppBuild(buildConfiguration: infoPlist.getAppBuildConfiguration())
     }()
-    
+
     private lazy var appConfig: AppConfig = {
         AppConfig(appBuild: appBuild)
     }()
-    
+
     private lazy var infoPlist: InfoPlist = {
         InfoPlist()
     }()
-    
+
     private lazy var launchEnvironmentReader: LaunchEnvironmentReader = {
         return LaunchEnvironmentReader.createFromProcessInfo()
     }()
-    
+
     private lazy var realmDatabase: RealmDatabase = {
-        RealmDatabase(databaseConfiguration: RealmDatabaseProductionConfiguration())
+        RealmDatabase(
+            databaseConfiguration: RealmDatabaseProductionConfiguration())
     }()
-    
+
     private lazy var appDeepLinkingService: DeepLinkingService = {
         return appDiContainer.dataLayer.getDeepLinkingService()
     }()
-    
+
     private lazy var appDiContainer: AppDiContainer = {
         AppDiContainer(
             appBuild: appBuild,
@@ -46,73 +47,83 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             firebaseEnabled: firebaseEnabled
         )
     }()
-    
+
     private lazy var appFlow: AppFlow = {
         AppFlow(
             appDiContainer: appDiContainer,
             appDeepLinkingService: appDeepLinkingService
         )
     }()
-    
+
     private var toolShortcutLinks: ToolShortcutLinksView?
     private var firebaseEnabled: Bool {
         return launchEnvironmentReader.getFirebaseEnabled() ?? true
     }
-    
+
     var window: UIWindow?
-    
+
     static func getWindow() -> UIWindow? {
         return (UIApplication.shared.delegate as? AppDelegate)?.window
     }
-    
+
     static func setWindowBackgroundColorForStatusBarColor(color: UIColor) {
         AppDelegate.getWindow()?.backgroundColor = color
     }
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-                            
+    func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication
+            .LaunchOptionsKey: Any]?
+    ) -> Bool {
+
         let appConfig: AppConfig = appDiContainer.dataLayer.getAppConfig()
-        
+
         if appBuild.configuration == .analyticsLogging {
             appDiContainer.getFirebaseDebugArguments().enable()
         }
-            
+
         if firebaseEnabled {
             appDiContainer.getFirebaseConfiguration().configure()
         }
-        
+
         if appBuild.configuration == .release {
             GodToolsParserLogger.shared.start()
         }
-                        
+
         appDiContainer.dataLayer.getAnalytics().firebaseAnalytics.configure()
-                
+
         ConfigureFacebookOnAppLaunch.configure(
             application: application,
             launchOptions: launchOptions,
             configuration: appConfig.getFacebookConfiguration()
         )
-               
+
         // window
         let window: UIWindow = UIWindow(frame: UIScreen.main.bounds)
         window.backgroundColor = UIColor.white
         window.rootViewController = appFlow.getInitialView()
         window.makeKeyAndVisible()
         self.window = window
-        
+
         application.registerForRemoteNotifications()
-        
-        let uiTestsDeepLinkString: String? = launchEnvironmentReader.getUrlDeepLink()
-                
-        if let uiTestsDeepLinkString = uiTestsDeepLinkString, !uiTestsDeepLinkString.isEmpty, let url = URL(string: uiTestsDeepLinkString) {
-            _ = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
+
+        let uiTestsDeepLinkString: String? =
+            launchEnvironmentReader.getUrlDeepLink()
+
+        if let uiTestsDeepLinkString = uiTestsDeepLinkString,
+            !uiTestsDeepLinkString.isEmpty,
+            let url = URL(string: uiTestsDeepLinkString)
+        {
+            _ = appDeepLinkingService.parseDeepLinkAndNotify(
+                incomingDeepLink: .url(
+                    incomingUrl: IncomingDeepLinkUrl(url: url)))
         }
-        
+
         return true
     }
-    
+
     func applicationWillResignActive(_ application: UIApplication) {
-        
+
         reloadShortcutItems(application: application)
     }
 
@@ -126,31 +137,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
-        
+
         reloadShortcutItems(application: application)
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
-    
+
     }
 }
 
 // MARK: - Shortcut Items
 
 extension AppDelegate {
-    
+
     private func reloadShortcutItems(application: UIApplication) {
-        
+
         let viewModel = ToolShortcutLinksViewModel(
-            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            viewToolShortcutLinksUseCase: appDiContainer.feature.toolShortcutLinks.domainLayer.getViewToolShortcutLinksUseCase()
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage
+                .domainLayer.getCurrentAppLanguageUseCase(),
+            viewToolShortcutLinksUseCase: appDiContainer.feature
+                .toolShortcutLinks.domainLayer.getViewToolShortcutLinksUseCase()
         )
-            
+
         let view = ToolShortcutLinksView(
             application: application,
             viewModel: viewModel
-        )   
-        
+        )
+
         toolShortcutLinks = view
     }
 }
@@ -158,17 +171,29 @@ extension AppDelegate {
 // MARK: - Remote Notifications
 
 extension AppDelegate {
-    
-    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-       
+
+    func application(
+        _ application: UIApplication,
+        didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data
+    ) {
+
     }
-    
-    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
-       
+
+    func application(
+        _ application: UIApplication,
+        didReceiveRemoteNotification userInfo: [AnyHashable: Any]
+    ) {
+
     }
-    
-    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        
+
+    func application(
+        _ application: UIApplication,
+        didReceiveRemoteNotification userInfo: [AnyHashable: Any],
+        fetchCompletionHandler completionHandler: @escaping (
+            UIBackgroundFetchResult
+        ) -> Void
+    ) {
+
     }
 }
 
@@ -177,15 +202,23 @@ extension AppDelegate {
 // Completion: The block you call after your quick action implementation completes, returning true or false depending on the success or failure of your implementation code.
 
 extension AppDelegate {
-    
-    func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
-               
+
+    func application(
+        _ application: UIApplication,
+        performActionFor shortcutItem: UIApplicationShortcutItem,
+        completionHandler: @escaping (Bool) -> Void
+    ) {
+
         let successfullyHandledQuickAction: Bool
-        
-        if let toolDeepLinkUrlString = ToolShortcutLinksView.getToolDeepLinkUrl(shortcutItem: shortcutItem), let toolDeepLinkUrl = URL(string: toolDeepLinkUrlString) {
-            
-            let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase = appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
-            
+
+        if let toolDeepLinkUrlString = ToolShortcutLinksView.getToolDeepLinkUrl(
+            shortcutItem: shortcutItem),
+            let toolDeepLinkUrl = URL(string: toolDeepLinkUrlString)
+        {
+
+            let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase =
+                appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
+
             trackActionAnalyticsUseCase.trackAction(
                 screenName: "",
                 actionName: AnalyticsConstants.ActionNames.toolOpenedShortcut,
@@ -199,11 +232,13 @@ extension AppDelegate {
                     AnalyticsConstants.Keys.toolOpenedShortcutCountKey: 1
                 ]
             )
-            
-            successfullyHandledQuickAction = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: toolDeepLinkUrl)))
-        }
-        else {
-            
+
+            successfullyHandledQuickAction =
+                appDeepLinkingService.parseDeepLinkAndNotify(
+                    incomingDeepLink: .url(
+                        incomingUrl: IncomingDeepLinkUrl(url: toolDeepLinkUrl)))
+        } else {
+
             successfullyHandledQuickAction = false
         }
 
@@ -216,22 +251,34 @@ extension AppDelegate {
 // Return Value: true if the delegate successfully handled the request or false if the attempt to open the URL resource failed.
 
 extension AppDelegate {
-    
-    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
-                
-        if let firebaseDynamicLinkUrl = DynamicLinks.dynamicLinks().dynamicLink(fromCustomSchemeURL: url)?.url {
-            _ = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: firebaseDynamicLinkUrl)))
+
+    func application(
+        _ app: UIApplication, open url: URL,
+        options: [UIApplication.OpenURLOptionsKey: Any] = [:]
+    ) -> Bool {
+
+        if let firebaseDynamicLinkUrl = DynamicLinks.dynamicLinks().dynamicLink(
+            fromCustomSchemeURL: url)?.url
+        {
+            _ = appDeepLinkingService.parseDeepLinkAndNotify(
+                incomingDeepLink: .url(
+                    incomingUrl: IncomingDeepLinkUrl(
+                        url: firebaseDynamicLinkUrl)))
             return true
         }
-        
-        let facebookHandled: Bool = ApplicationDelegate.shared.application(app, open: url, options: options)
-        
-        let deepLinkedHandled: Bool = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
-        
+
+        let facebookHandled: Bool = ApplicationDelegate.shared.application(
+            app, open: url, options: options)
+
+        let deepLinkedHandled: Bool =
+            appDeepLinkingService.parseDeepLinkAndNotify(
+                incomingDeepLink: .url(
+                    incomingUrl: IncomingDeepLinkUrl(url: url)))
+
         if facebookHandled || deepLinkedHandled {
             return true
         }
-        
+
         return false
     }
 }
@@ -241,38 +288,49 @@ extension AppDelegate {
 // Return Value: true to indicate that your app handled the activity or false to let iOS know that your app didn't handle the activity.
 
 extension AppDelegate {
-    
-    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
-                
+
+    func application(
+        _ application: UIApplication, continue userActivity: NSUserActivity,
+        restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void
+    ) -> Bool {
+
         if userActivity.activityType != NSUserActivityTypeBrowsingWeb {
             return false
         }
-        
+
         guard let url = userActivity.webpageURL else {
             return false
         }
-        
-        let firebaseDynamicLinkHandled: Bool = DynamicLinks.dynamicLinks().handleUniversalLink(url) { [weak self] (dynamicLink: DynamicLink?, error: Error?) in
-            
-            guard let firebaseDynamicLinkUrl = dynamicLink?.url else {
-                return
+
+        let firebaseDynamicLinkHandled: Bool = DynamicLinks.dynamicLinks()
+            .handleUniversalLink(url) {
+                [weak self] (dynamicLink: DynamicLink?, error: Error?) in
+
+                guard let firebaseDynamicLinkUrl = dynamicLink?.url else {
+                    return
+                }
+
+                DispatchQueue.main.async {
+                    _ = self?.appDeepLinkingService.parseDeepLinkAndNotify(
+                        incomingDeepLink: .url(
+                            incomingUrl: IncomingDeepLinkUrl(
+                                url: firebaseDynamicLinkUrl)))
+                }
             }
-            
-            DispatchQueue.main.async {
-                _ = self?.appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: firebaseDynamicLinkUrl)))
-            }
-        }
-        
+
         if firebaseDynamicLinkHandled {
             return true
         }
-        
-        let deepLinkHandled: Bool = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
-        
+
+        let deepLinkHandled: Bool =
+            appDeepLinkingService.parseDeepLinkAndNotify(
+                incomingDeepLink: .url(
+                    incomingUrl: IncomingDeepLinkUrl(url: url)))
+
         if deepLinkHandled {
             return true
         }
-        
+
         return false
     }
 }
