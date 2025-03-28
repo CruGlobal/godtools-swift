@@ -23,6 +23,12 @@ class FavoritesDomainLayerDependencies {
         )
     }
     
+    func getReorderFavoritedToolUseCase() -> ReorderFavoritedToolUseCase {
+        return ReorderFavoritedToolUseCase(
+            reorderFavoritedToolRepository: dataLayer.getReorderFavoritedToolRepository()
+        )
+    }
+    
     func getToggleFavoritedToolUseCase() -> ToggleToolFavoritedUseCase {
         return ToggleToolFavoritedUseCase(
             toggleToolFavoritedRepository: dataLayer.getToggleToolFavoritedRepository()
