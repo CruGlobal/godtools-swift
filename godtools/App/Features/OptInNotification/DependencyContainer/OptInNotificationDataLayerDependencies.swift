@@ -46,4 +46,14 @@ class OptInNotificationDataLayerDependencies {
             localizationServices: coreDataLayer.getLocalizationServices()
         )
     }
+
+    func getRequestNotificationPermission()
+        -> GetRequestNotificationPermissionInterface
+    {
+        return GetRequestNotificationPermission()
+    }
+
+    func getCheckNotificationStatus() -> GetCheckNotificationStatusInterface {
+        return GetCheckNotificationStatus()
+    }
 }

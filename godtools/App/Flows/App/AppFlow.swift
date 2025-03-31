@@ -325,6 +325,11 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             configureNavBarForDashboard()
             navigationController.popViewController(animated: true)
 
+        case .allowNotificationsTappedFromBottomSheet(let userDialogReponse):
+
+            presentOptInNotificationDialogView(
+                userDialogReponse: userDialogReponse, animated: true)
+
         case .articleFlowCompleted(_):
 
             guard articleFlow != nil else {
@@ -628,11 +633,11 @@ extension AppFlow {
     private func getNewDashboardView(startingTab: DashboardTabTypeDomainModel?)
         -> UIViewController
     {
-        
+
         let viewModel = DashboardViewModel(
             startingTab: startingTab ?? AppFlow.defaultStartingDashboardTab,
             flowDelegate: self,
-          
+
             dashboardPresentationLayerDependencies:
                 DashboardPresentationLayerDependencies(
                     appDiContainer: appDiContainer,
@@ -720,6 +725,100 @@ extension AppFlow {
             animated: animateDismissingPresentedView,
             completion: didCompleteDismissingPresentedView
         )
+    }
+}
+// MARK: - OptInNotification
+//extension AppFlow {
+//
+//    private func getConfirmRemoveToolFromFavoritesAlertView(
+//        toolId: String,
+//        domainModel: ViewConfirmRemoveToolFromFavoritesDomainModel,
+//        didConfirmToolRemovalSubject: PassthroughSubject<Void, Never>?
+//    ) -> UIViewController {
+//
+//        let viewModel = ConfirmRemoveToolFromFavoritesAlertViewModel(
+//            toolId: toolId,
+//            viewConfirmRemoveToolFromFavoritesDomainModel: domainModel,
+//            removeFavoritedToolUseCase: appDiContainer.feature.favorites
+//                .domainLayer.getRemoveFavoritedToolUseCase(),
+//            didConfirmToolRemovalSubject: didConfirmToolRemovalSubject
+//        )
+//
+//        let view = ConfirmRemoveToolFromFavoritesAlertView(viewModel: viewModel)
+//
+//        return view.controller
+//    }
+//
+//    private func presentConfirmRemoveToolFromFavoritesAlertView(
+//        toolId: String,
+//        didConfirmToolRemovalSubject: PassthroughSubject<Void, Never>?,
+//        animated: Bool
+//    ) {
+//
+//        appDiContainer.feature.favorites.domainLayer
+//            .getViewConfirmRemoveToolFromFavoritesUseCase()
+//            .viewPublisher(toolId: toolId, appLanguage: appLanguage)
+//            .receive(on: DispatchQueue.main)
+//            .sink {
+//                [weak self]
+//                (domainModel: ViewConfirmRemoveToolFromFavoritesDomainModel) in
+//
+//                guard let weakSelf = self else {
+//                    return
+//                }
+//
+//                let view = weakSelf.getConfirmRemoveToolFromFavoritesAlertView(
+//                    toolId: toolId,
+//                    domainModel: domainModel,
+//                    didConfirmToolRemovalSubject: didConfirmToolRemovalSubject
+//                )
+//
+//                weakSelf.navigationController.present(view, animated: animated)
+//            }
+//            .store(in: &cancellables)
+//    }
+//}
+
+extension AppFlow {
+
+    private func getOptInNotificationDialogView(
+        domainModel: ViewOptInDialogDomainModel,
+        userDialogReponse: PassthroughSubject<Void, Never>?
+
+    ) -> UIViewController {
+        let viewModel = OptInNotificationDialogViewModel(
+            viewOptInDialogDomainModel: domainModel,
+            viewOptInDialogUseCase: appDiContainer.feature.optInNotification
+                .domainLayer.getViewOptInDialogUseCase(),
+            userDialogReponse: userDialogReponse
+        )
+
+        let view = OptInNotificationDialogView(viewModel: viewModel)
+
+        return view.controller
+    }
+
+    private func presentOptInNotificationDialogView(
+        userDialogReponse: PassthroughSubject<Void, Never>?, animated: Bool
+    ) {
+        appDiContainer.feature.optInNotification.domainLayer
+            .getViewOptInDialogUseCase().viewPublisher(appLanguage: appLanguage)
+            .receive(on: DispatchQueue.main).sink {
+                [weak self]
+                (domainModel: ViewOptInDialogDomainModel) in
+
+                guard let weakSelf = self else {
+                    return
+                }
+
+                let view = weakSelf.getOptInNotificationDialogView(
+                    domainModel: domainModel,
+                    userDialogReponse: userDialogReponse
+
+                )
+
+                weakSelf.navigationController.present(view, animated: animated)
+            }.store(in: &cancellables)
     }
 }
 

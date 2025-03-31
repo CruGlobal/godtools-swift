@@ -97,6 +97,11 @@
 "optInNotification.allowNotifications" = "Allow Notifications";
 "optInNotification.maybeLater" = "Maybe Later";
 
+"optInDialog.title" = "Enable Notifications";
+"optInDialog.body" = "Notifications are disabled. Please enable them in Settings.";
+"optInDialog.cancel" = "Cancel";
+"optInDialog.settings" = "Settings";
+
 /* The meaning is "I don't want to set a second language".  Language is no language or None */
 "toolSettings.languagesList.deleteLanguage.title" = "None";
 

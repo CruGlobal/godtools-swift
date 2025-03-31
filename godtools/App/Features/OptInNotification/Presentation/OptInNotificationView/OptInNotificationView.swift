@@ -13,6 +13,7 @@ import SwiftUI
 // DSR
 // TODO:
 // - Adaptive sizing
+// - Landscape view
 // - Disable appbar while active
 // - Import assets (1x, 2x, 3x)
 // - Add to onboarding flow
@@ -84,7 +85,7 @@ struct OptInNotificationView: View {
                         )
 
                         Button(action: {
-                            viewModel.bottomSheetPosition = .hidden
+                            viewModel.maybeLaterTapped()
 
                         }) {
                             Text(viewModel.maybeLaterActionTitle)
@@ -124,6 +125,7 @@ struct OptInNotificationView_Preview: PreviewProvider {
             .getAppDiContainer()
 
         let viewModel = OptInNotificationViewModel(
+
             lastPromptedOptInNotificationRepository: appDiContainer.feature
                 .optInNotification.dataLayer
                 .getLastPromptedOptInNotificationRepository(),
@@ -132,9 +134,15 @@ struct OptInNotificationView_Preview: PreviewProvider {
                 .getViewOptInNotificationUseCase(),
             viewOptInDialogUseCase: appDiContainer.feature.optInNotification
                 .domainLayer.getViewOptInDialogUseCase(),
-
+            requestNotificationPermissionUseCase: appDiContainer.feature
+                .optInNotification.domainLayer
+                .getRequestNotificationPermissionUseCase(),
+            checkNotificationStatusUseCase: appDiContainer.feature
+                .optInNotification.domainLayer
+                .getCheckNotificationStatusUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage
-                .domainLayer.getCurrentAppLanguageUseCase()
+                .domainLayer.getCurrentAppLanguageUseCase(),
+            flowDelegate: MockFlowDelegate()
 
         )
 

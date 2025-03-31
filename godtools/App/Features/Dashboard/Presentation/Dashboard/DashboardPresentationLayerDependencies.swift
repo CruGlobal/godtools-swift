@@ -124,11 +124,24 @@ class DashboardPresentationLayerDependencies {
     private func getOptInNotificationViewModel() -> OptInNotificationViewModel {
 
         return OptInNotificationViewModel(
-            lastPromptedOptInNotificationRepository: appDiContainer.feature.optInNotification.dataLayer.getLastPromptedOptInNotificationRepository(),
-            viewOptInNotificationUseCase: appDiContainer.feature.optInNotification.domainLayer.getViewOptInNotificationUseCase(),
-            viewOptInDialogUseCase: appDiContainer.feature.optInNotification.domainLayer.getViewOptInDialogUseCase(),
+
+            lastPromptedOptInNotificationRepository: appDiContainer.feature
+                .optInNotification.dataLayer
+                .getLastPromptedOptInNotificationRepository(),
+            viewOptInNotificationUseCase: appDiContainer.feature
+                .optInNotification.domainLayer
+                .getViewOptInNotificationUseCase(),
+            viewOptInDialogUseCase: appDiContainer.feature.optInNotification
+                .domainLayer.getViewOptInDialogUseCase(),
+            requestNotificationPermissionUseCase: appDiContainer.feature
+                .optInNotification.domainLayer
+                .getRequestNotificationPermissionUseCase(),
+            checkNotificationStatusUseCase: appDiContainer.feature
+                .optInNotification.domainLayer
+                .getCheckNotificationStatusUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage
-                .domainLayer.getCurrentAppLanguageUseCase()
+                .domainLayer.getCurrentAppLanguageUseCase(),
+            flowDelegate: unwrappedFlowDelegate
         )
     }
 }

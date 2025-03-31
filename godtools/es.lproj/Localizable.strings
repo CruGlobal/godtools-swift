@@ -98,6 +98,11 @@
 "optInNotification.allowNotifications" = "Permitir notificaciones";
 "optInNotification.maybeLater" = "Más tarde";
 
+"optInDialog.title" = "Permitir notificaciones";
+"optInDialog.body" = "Las notificaciones están desactivadas. Actívalas en Ajustes.";
+"optInDialog.cancel" = "Cancelar";
+"optInDialog.settings" = "Ajustes";
+
 /* The meaning is "I don't want to set a second language".  Language is no language or None */
 "toolSettings.languagesList.deleteLanguage.title" = "Ninguno";
 
