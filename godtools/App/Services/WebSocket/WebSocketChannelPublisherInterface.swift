@@ -1,5 +1,5 @@
 //
-//  WebSocketChannelPublisherType.swift
+//  WebSocketChannelPublisherInterface.swift
 //  godtools
 //
 //  Created by Levi Eggert on 8/13/20.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol WebSocketChannelPublisherType {
+protocol WebSocketChannelPublisherInterface {
     
     var channelId: String? { get }
     var publishChannelIdentifier: String? { get }

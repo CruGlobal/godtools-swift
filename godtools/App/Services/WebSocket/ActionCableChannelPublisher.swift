@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherType {
+class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherInterface {
     
     private let webSocket: WebSocketInterface
     private let loggingEnabled: Bool

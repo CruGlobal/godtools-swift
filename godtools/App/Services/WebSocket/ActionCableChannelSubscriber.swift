@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ActionCableChannelSubscriber: NSObject, WebSocketChannelSubscriberType {
+class ActionCableChannelSubscriber: NSObject, WebSocketChannelSubscriberInterface {
     
     private let webSocket: WebSocketInterface
     private let loggingEnabled: Bool
