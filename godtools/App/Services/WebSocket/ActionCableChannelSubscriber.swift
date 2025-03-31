@@ -10,7 +10,7 @@ import Foundation
 
 class ActionCableChannelSubscriber: NSObject, WebSocketChannelSubscriberType {
     
-    private let webSocket: WebSocketType
+    private let webSocket: WebSocketInterface
     private let loggingEnabled: Bool
     
     private var channelToSubscribeTo: String?
@@ -20,7 +20,7 @@ class ActionCableChannelSubscriber: NSObject, WebSocketChannelSubscriberType {
     
     let didSubscribeToChannelSignal: SignalValue<String> = SignalValue()
     
-    required init(webSocket: WebSocketType, loggingEnabled: Bool) {
+    required init(webSocket: WebSocketInterface, loggingEnabled: Bool) {
         
         self.webSocket = webSocket
         self.loggingEnabled = loggingEnabled

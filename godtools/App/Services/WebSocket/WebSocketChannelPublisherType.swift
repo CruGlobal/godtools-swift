@@ -16,7 +16,7 @@ protocol WebSocketChannelPublisherType {
     var isSubscriberChannelIdCreatedForPublish: Bool { get }
     var didCreateChannelForPublish: SignalValue<String> { get }
     
-    init(webSocket: WebSocketType, loggingEnabled: Bool)
+    init(webSocket: WebSocketInterface, loggingEnabled: Bool)
     
     func createChannelForPublish(url: URL, channelId: String)
     func sendMessage(data: String)

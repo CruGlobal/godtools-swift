@@ -947,7 +947,7 @@
 		45AD1F6025938A9800A096A0 /* ActionCableChannelPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DDB25938A9700A096A0 /* ActionCableChannelPublisher.swift */; };
 		45AD1F6125938A9800A096A0 /* ActionCableIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DDD25938A9700A096A0 /* ActionCableIdentifier.swift */; };
 		45AD1F6225938A9800A096A0 /* ActionCableEventType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DDE25938A9700A096A0 /* ActionCableEventType.swift */; };
-		45AD1F6325938A9800A096A0 /* WebSocketType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DDF25938A9700A096A0 /* WebSocketType.swift */; };
+		45AD1F6325938A9800A096A0 /* WebSocketInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DDF25938A9700A096A0 /* WebSocketInterface.swift */; };
 		45AD1F6425938A9800A096A0 /* WebSocketChannelPublisherType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DE025938A9700A096A0 /* WebSocketChannelPublisherType.swift */; };
 		45AD1F6525938A9800A096A0 /* ToolTrainingTipsOnboardingViewsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DE225938A9700A096A0 /* ToolTrainingTipsOnboardingViewsService.swift */; };
 		45AD1F6725938A9800A096A0 /* ToolTrainingTipsOnboardingViewsUserDefaultsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DE425938A9700A096A0 /* ToolTrainingTipsOnboardingViewsUserDefaultsCache.swift */; };
@@ -2642,7 +2642,7 @@
 		45AD1DDB25938A9700A096A0 /* ActionCableChannelPublisher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionCableChannelPublisher.swift; sourceTree = "<group>"; };
 		45AD1DDD25938A9700A096A0 /* ActionCableIdentifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionCableIdentifier.swift; sourceTree = "<group>"; };
 		45AD1DDE25938A9700A096A0 /* ActionCableEventType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionCableEventType.swift; sourceTree = "<group>"; };
-		45AD1DDF25938A9700A096A0 /* WebSocketType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocketType.swift; sourceTree = "<group>"; };
+		45AD1DDF25938A9700A096A0 /* WebSocketInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocketInterface.swift; sourceTree = "<group>"; };
 		45AD1DE025938A9700A096A0 /* WebSocketChannelPublisherType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocketChannelPublisherType.swift; sourceTree = "<group>"; };
 		45AD1DE225938A9700A096A0 /* ToolTrainingTipsOnboardingViewsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolTrainingTipsOnboardingViewsService.swift; sourceTree = "<group>"; };
 		45AD1DE425938A9700A096A0 /* ToolTrainingTipsOnboardingViewsUserDefaultsCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolTrainingTipsOnboardingViewsUserDefaultsCache.swift; sourceTree = "<group>"; };
@@ -8553,7 +8553,7 @@
 				45AD1DD925938A9700A096A0 /* StarscreamWebSocket.swift */,
 				45AD1DE025938A9700A096A0 /* WebSocketChannelPublisherType.swift */,
 				45AD1DDA25938A9700A096A0 /* WebSocketChannelSubscriberType.swift */,
-				45AD1DDF25938A9700A096A0 /* WebSocketType.swift */,
+				45AD1DDF25938A9700A096A0 /* WebSocketInterface.swift */,
 				45AD1DDC25938A9700A096A0 /* Models */,
 			);
 			path = WebSocket;
@@ -13467,7 +13467,7 @@
 				4512D4CE2B29127200DFAFB3 /* ToolSettingsToolLanguageDomainModel.swift in Sources */,
 				458B91B32B7D5D6800785C6F /* AllYourFavoriteToolsViewModel.swift in Sources */,
 				4595E0E32A852DAA00D88DAE /* MobileContentApiUsersMeCodable+UserDetailsDataModelType.swift in Sources */,
-				45AD1F6325938A9800A096A0 /* WebSocketType.swift in Sources */,
+				45AD1F6325938A9800A096A0 /* WebSocketInterface.swift in Sources */,
 				452DFB442B7FBB4E003A4A59 /* GetTranslatedToolLanguageAvailability.swift in Sources */,
 				4512C80F2B322E4900D162F3 /* ToolSettingsLanguageDropDownView.swift in Sources */,
 				45060D1E2B38815600A2A44C /* ResourcesFilter.swift in Sources */,

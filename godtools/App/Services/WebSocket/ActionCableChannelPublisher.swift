@@ -10,7 +10,7 @@ import UIKit
 
 class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherType {
     
-    private let webSocket: WebSocketType
+    private let webSocket: WebSocketInterface
     private let loggingEnabled: Bool
     
     private var channelIdToCreate: String?
@@ -24,7 +24,7 @@ class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherType {
     
     let didCreateChannelForPublish: SignalValue<String> = SignalValue()
     
-    required init(webSocket: WebSocketType, loggingEnabled: Bool) {
+    required init(webSocket: WebSocketInterface, loggingEnabled: Bool) {
         
         self.webSocket = webSocket
         self.loggingEnabled = loggingEnabled
