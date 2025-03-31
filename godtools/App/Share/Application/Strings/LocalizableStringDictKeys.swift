@@ -11,6 +11,7 @@ import Foundation
 enum LocalizableStringDictKeys: String {
     
     case languageSettingsAppLanguageNumberAvailable = "languageSettings.appLanguage.numberAvailable"
+    case toolSettingsVersionNumberOfLanguages = "toolSettings.version.numberOfLanguages"
 }
 
 extension LocalizableStringDictKeys {
