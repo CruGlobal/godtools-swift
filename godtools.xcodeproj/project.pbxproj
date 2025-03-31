@@ -1058,6 +1058,7 @@
 		45B6482825E593110098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		45B6482925E593110098BAF1 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		45B6482A25E593110098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		45B6C8242D9AEC50004AC485 /* URLSessionWebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B6C8232D9AEC31004AC485 /* URLSessionWebSocket.swift */; };
 		45B6FF2A2BAA39660037B240 /* ViewToolFilterLanguagesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B6FF282BAA39660037B240 /* ViewToolFilterLanguagesUseCase.swift */; };
 		45B6FF2B2BAA39660037B240 /* ViewToolFilterCategoriesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B6FF292BAA39660037B240 /* ViewToolFilterCategoriesUseCase.swift */; };
 		45B6FF302BAA39720037B240 /* SearchToolFilterLanguagesRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B6FF2C2BAA39710037B240 /* SearchToolFilterLanguagesRepositoryInterface.swift */; };
@@ -2746,6 +2747,7 @@
 		45B54C542A2641FE0042CD0E /* RealmDatabase+Read.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RealmDatabase+Read.swift"; sourceTree = "<group>"; };
 		45B54C552A2641FE0042CD0E /* RealmDatabase+Write.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RealmDatabase+Write.swift"; sourceTree = "<group>"; };
 		45B54C562A2641FE0042CD0E /* RealmDatabase+Delete.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RealmDatabase+Delete.swift"; sourceTree = "<group>"; };
+		45B6C8232D9AEC31004AC485 /* URLSessionWebSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionWebSocket.swift; sourceTree = "<group>"; };
 		45B6FF282BAA39660037B240 /* ViewToolFilterLanguagesUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewToolFilterLanguagesUseCase.swift; sourceTree = "<group>"; };
 		45B6FF292BAA39660037B240 /* ViewToolFilterCategoriesUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewToolFilterCategoriesUseCase.swift; sourceTree = "<group>"; };
 		45B6FF2C2BAA39710037B240 /* SearchToolFilterLanguagesRepositoryInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchToolFilterLanguagesRepositoryInterface.swift; sourceTree = "<group>"; };
@@ -8551,6 +8553,7 @@
 				45AD1DDB25938A9700A096A0 /* ActionCableChannelPublisher.swift */,
 				45AD1DD825938A9700A096A0 /* ActionCableChannelSubscriber.swift */,
 				45AD1DD925938A9700A096A0 /* StarscreamWebSocket.swift */,
+				45B6C8232D9AEC31004AC485 /* URLSessionWebSocket.swift */,
 				45AD1DE025938A9700A096A0 /* WebSocketChannelPublisherInterface.swift */,
 				45AD1DDA25938A9700A096A0 /* WebSocketChannelSubscriberInterface.swift */,
 				45AD1DDF25938A9700A096A0 /* WebSocketInterface.swift */,
@@ -13543,6 +13546,7 @@
 				45AE976027C97A9500C2CB33 /* MobileContentRenderableModel.swift in Sources */,
 				45369AC62AFA7FA500BD10F0 /* GetToolScreenShareTutorialViewedRepository.swift in Sources */,
 				458CFE9229D4E0B9007B423C /* ArticlesErrorMessageView.swift in Sources */,
+				45B6C8242D9AEC50004AC485 /* URLSessionWebSocket.swift in Sources */,
 				45AE975327C97A9500C2CB33 /* Tab+MobileContentRenderableModel.swift in Sources */,
 				455583CD269F2DA500C3FF14 /* MobileContentPageView.swift in Sources */,
 				45AC9DF82B28AA4D00DEEBFE /* ViewSearchBarUseCase.swift in Sources */,
