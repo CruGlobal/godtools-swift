@@ -19,6 +19,7 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
     private let getTranslatedLanguageName: GetTranslatedLanguageName
     private let initialPage: MobileContentRendererInitialPage
     private let initialPageConfig: MobileContentRendererInitialPageConfig
+    private let initialPageSubIndex: Int?
     private let initialSelectedLanguageIndex: Int
     
     private var languagelocaleIdUsed: Set<String> = Set()
@@ -37,12 +38,13 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
     let rendererWillChangeSignal: Signal = Signal()
     let incrementUserCounterUseCase: IncrementUserCounterUseCase
     
-    init(renderer: MobileContentRenderer, initialPage: MobileContentRendererInitialPage?, initialPageConfig: MobileContentRendererInitialPageConfig?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTranslatedLanguageName: GetTranslatedLanguageName, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?) {
+    init(renderer: MobileContentRenderer, initialPage: MobileContentRendererInitialPage?, initialPageConfig: MobileContentRendererInitialPageConfig?, initialPageSubIndex: Int?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTranslatedLanguageName: GetTranslatedLanguageName, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?) {
         
         self.renderer = CurrentValueSubject(renderer)
         self.currentPageRenderer = CurrentValueSubject(renderer.pageRenderers[0])
         self.initialPage = initialPage ?? .pageNumber(value: 0)
         self.initialPageConfig = initialPageConfig ?? MobileContentRendererInitialPageConfig(shouldNavigateToStartPageIfLastPage: false, shouldNavigateToPreviousVisiblePageIfHiddenPage: false)
+        self.initialPageSubIndex = initialPageSubIndex
         self.resourcesRepository = resourcesRepository
         self.translationsRepository = translationsRepository
         self.mobileContentEventAnalytics = mobileContentEventAnalytics
@@ -210,6 +212,7 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
     
     func setRendererPrimaryLanguage(primaryLanguageId: String, parallelLanguageId: String?, selectedLanguageId: String?) {
         
+        let appLanguage: AppLanguageDomainModel = self.appLanguage
         let currentRenderer: MobileContentRenderer = renderer.value
         
         var newLanguageIds: [String] = [primaryLanguageId]
@@ -230,8 +233,9 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
                 
                 self?.setRenderer(renderer: newRenderer, pageRendererIndex: newSelectedLanguageIndex, navigationEvent: nil)
                 
-            case .failure( _):
-                break
+            case .failure(let error):
+                
+                currentRenderer.navigation.presentError(error: error, appLanguage: appLanguage)
             }
         }
         
@@ -321,17 +325,21 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
                 ),
                 setPages: nil,
                 pagePositions: pagePositions,
-                parentPageParams: nil
+                parentPageParams: nil,
+                pageSubIndex: nil
             )
         }
         
+        let pageSubIndex: Int? = isInitialPageRender ? initialPageSubIndex : navigationEventToSend.pageSubIndex
+        
         let pageNavigationForLanguageDirection = navigationEventToSend.pageNavigation.copy(navigationDirection: layoutDirection)
         
-        let eventWithCorrectLanguageDirection: MobileContentPagesNavigationEvent = MobileContentPagesNavigationEvent(
+        let eventWithCorrectLanguageDirection = MobileContentPagesNavigationEvent(
             pageNavigation: pageNavigationForLanguageDirection,
             setPages: navigationEventToSend.setPages,
             pagePositions: navigationEventToSend.pagePositions,
-            parentPageParams: navigationEventToSend.parentPageParams
+            parentPageParams: navigationEventToSend.parentPageParams,
+            pageSubIndex: pageSubIndex
         )
         
         super.sendPageNavigationEvent(navigationEvent: eventWithCorrectLanguageDirection)
@@ -574,7 +582,8 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
             ),
             setPages: visiblePages,
             pagePositions: nil,
-            parentPageParams: nil
+            parentPageParams: nil,
+            pageSubIndex: nil
         )
         
         sendPageNavigationEvent(navigationEvent: event)

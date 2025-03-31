@@ -260,6 +260,8 @@
 		4533C4CE28AC2C4C00F9628B /* LaunchCountRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4533C4CD28AC2C4C00F9628B /* LaunchCountRepository.swift */; };
 		4534208D289C45ED003442E3 /* DeleteResourcesFilesResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4534208C289C45ED003442E3 /* DeleteResourcesFilesResult.swift */; };
 		4534208F289C475E003442E3 /* StoreResourcesFilesResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4534208E289C475E003442E3 /* StoreResourcesFilesResult.swift */; };
+		45345D762D948BBE006912E0 /* RealmObjectSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45345D742D948BBE006912E0 /* RealmObjectSubscription.swift */; };
+		45345D772D948BBE006912E0 /* RealmObjectPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45345D732D948BBE006912E0 /* RealmObjectPublisher.swift */; };
 		4534F91C2AE99E8D00A7A071 /* GetLessonEvaluationInterfaceStringsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4534F91B2AE99E8D00A7A071 /* GetLessonEvaluationInterfaceStringsUseCase.swift */; };
 		4534F91E2AE99EAA00A7A071 /* GetLessonEvaluationInterfaceStringsRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4534F91D2AE99EAA00A7A071 /* GetLessonEvaluationInterfaceStringsRepositoryInterface.swift */; };
 		4534F9202AE99EBC00A7A071 /* GetLessonEvaluationInterfaceStringsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4534F91F2AE99EBC00A7A071 /* GetLessonEvaluationInterfaceStringsRepository.swift */; };
@@ -1959,6 +1961,8 @@
 		4533C4CD28AC2C4C00F9628B /* LaunchCountRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchCountRepository.swift; sourceTree = "<group>"; };
 		4534208C289C45ED003442E3 /* DeleteResourcesFilesResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteResourcesFilesResult.swift; sourceTree = "<group>"; };
 		4534208E289C475E003442E3 /* StoreResourcesFilesResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreResourcesFilesResult.swift; sourceTree = "<group>"; };
+		45345D732D948BBE006912E0 /* RealmObjectPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmObjectPublisher.swift; sourceTree = "<group>"; };
+		45345D742D948BBE006912E0 /* RealmObjectSubscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmObjectSubscription.swift; sourceTree = "<group>"; };
 		4534F91B2AE99E8D00A7A071 /* GetLessonEvaluationInterfaceStringsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLessonEvaluationInterfaceStringsUseCase.swift; sourceTree = "<group>"; };
 		4534F91D2AE99EAA00A7A071 /* GetLessonEvaluationInterfaceStringsRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLessonEvaluationInterfaceStringsRepositoryInterface.swift; sourceTree = "<group>"; };
 		4534F91F2AE99EBC00A7A071 /* GetLessonEvaluationInterfaceStringsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLessonEvaluationInterfaceStringsRepository.swift; sourceTree = "<group>"; };
@@ -4751,6 +4755,15 @@
 				45CBDA022BA38F200007DEC8 /* Cache */,
 			);
 			path = LaunchCountRepository;
+			sourceTree = "<group>";
+		};
+		45345D752D948BBE006912E0 /* RealmObjectPublisher */ = {
+			isa = PBXGroup;
+			children = (
+				45345D732D948BBE006912E0 /* RealmObjectPublisher.swift */,
+				45345D742D948BBE006912E0 /* RealmObjectSubscription.swift */,
+			);
+			path = RealmObjectPublisher;
 			sourceTree = "<group>";
 		};
 		4534F9142AE99E6800A7A071 /* Data-DomainInterface */ = {
@@ -8750,6 +8763,7 @@
 				45AF07122B0663FD000EACF2 /* LocaleLanguageScriptName */,
 				45AD20B725938F1A00A096A0 /* Oberservables */,
 				455EE8472AEC5F4A00C3205C /* ProgressTimer */,
+				45345D752D948BBE006912E0 /* RealmObjectPublisher */,
 				45EB9B4429F16CF200CA74A8 /* SharedAppleExtensions */,
 				D4670B0A2AFAA17C00FAD896 /* StringSearcher */,
 				458539372C57DEF200748BAF /* StringWithLocaleCount */,
@@ -12889,6 +12903,8 @@
 				4534F91C2AE99E8D00A7A071 /* GetLessonEvaluationInterfaceStringsUseCase.swift in Sources */,
 				4573133E28C1821100481640 /* ToolDetailsVersionsCardViewModel.swift in Sources */,
 				45369AC52AFA7FA500BD10F0 /* GetToolScreenShareTutorialInterfaceStringsRepository.swift in Sources */,
+				45345D762D948BBE006912E0 /* RealmObjectSubscription.swift in Sources */,
+				45345D772D948BBE006912E0 /* RealmObjectPublisher.swift in Sources */,
 				45D5EA9C2B7E5B9300745F0D /* ConfirmRemoveToolFromFavoritesInterfaceStringsDomainModel.swift in Sources */,
 				45C2AF482A817621004958AB /* PageControllAttributesType.swift in Sources */,
 				4512C8292B32388B00D162F3 /* ShareableImageDomainModel.swift in Sources */,

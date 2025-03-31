@@ -186,10 +186,35 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                         
         case .toolTappedFromTools(let tool, let toolFilterLanguage):
             
+            let primaryLanguage: AppLanguageDomainModel?
+            let parallelLanguage: AppLanguageDomainModel?
+            
+            if let toolResource = resourcesRepository.getResource(id: tool.dataModelId),
+               toolResource.resourceTypeEnum == .article {
+                
+                parallelLanguage = nil
+                
+                if let toolsFilterLanguageId = toolFilterLanguage?.languageDataModelId,
+                   let toolFilterLanguageLocale = toolFilterLanguage?.languageLocale,
+                   toolResource.supportsLanguage(languageId: toolsFilterLanguageId) {
+                    
+                    primaryLanguage = toolFilterLanguageLocale
+                }
+                else {
+                    
+                    primaryLanguage = appLanguage
+                }
+            }
+            else {
+                primaryLanguage = nil
+                parallelLanguage = toolFilterLanguage?.languageLocale
+            }
+            
             let toolDetails = getToolDetails(
                 toolId: tool.dataModelId,
-                parallelLanguage: toolFilterLanguage?.languageLocale,
-                selectedLanguageIndex: 1
+                parallelLanguage: parallelLanguage,
+                selectedLanguageIndex: 1,
+                primaryLanguage: primaryLanguage
             )
             
             navigationController.pushViewController(toolDetails, animated: true)
@@ -845,7 +870,8 @@ extension AppFlow {
             liveShareStream: nil,
             selectedLanguageIndex: selectedLanguageIndex,
             trainingTipsEnabled: trainingTipsEnabled,
-            initialPage: nil, 
+            initialPage: nil,
+            initialPageSubIndex: nil,
             shouldPersistToolSettings: shouldPersistToolSettings
         )
     }
@@ -1065,12 +1091,12 @@ extension AppFlow {
 
 extension AppFlow {
     
-    private func getToolDetails(toolId: String, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?, shouldPersistToolSettings: Bool = false) -> UIViewController {
+    private func getToolDetails(toolId: String, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?, shouldPersistToolSettings: Bool = false, primaryLanguage: AppLanguageDomainModel? = nil) -> UIViewController {
         
         let viewModel = ToolDetailsViewModel(
             flowDelegate: self,
             toolId: toolId,
-            primaryLanguage: appLanguage,
+            primaryLanguage: primaryLanguage ?? appLanguage,
             parallelLanguage: parallelLanguage,
             selectedLanguageIndex: selectedLanguageIndex,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),

@@ -14,6 +14,7 @@ class LessonFlow: ToolNavigationFlow, Flow {
     private let toolTranslations: ToolTranslationsDomainModel
     private let appLanguage: AppLanguageDomainModel
     private let trainingTipsEnabled: Bool
+    private let initialPageSubIndex: Int?
     
     private var lesson: ResourceModel {
         return toolTranslations.tool
@@ -30,7 +31,7 @@ class LessonFlow: ToolNavigationFlow, Flow {
     var tractFlow: TractFlow?
     var downloadToolTranslationFlow: DownloadToolTranslationsFlow?
     
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel, trainingTipsEnabled: Bool, initialPage: MobileContentRendererInitialPage?) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel, trainingTipsEnabled: Bool, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
@@ -38,10 +39,11 @@ class LessonFlow: ToolNavigationFlow, Flow {
         self.toolTranslations = toolTranslations
         self.appLanguage = appLanguage
         self.trainingTipsEnabled = trainingTipsEnabled
-        
+        self.initialPageSubIndex = initialPageSubIndex
+                
         if let initialPage = initialPage {
             
-            navigateToLesson(initialPage: initialPage, animated: true)
+            navigateToLesson(isNavigatingFromResumeLessonModal: false, initialPage: initialPage, initialPageSubIndex: initialPageSubIndex, animated: true)
         }
         else if shouldNavigateToResumeLesson {
             
@@ -51,7 +53,7 @@ class LessonFlow: ToolNavigationFlow, Flow {
         }
         else {
             
-            navigateToLesson(initialPage: initialPage, animated: true)
+            navigateToLesson(isNavigatingFromResumeLessonModal: false, initialPage: initialPage, initialPageSubIndex: initialPageSubIndex, animated: true)
         }
     }
     
@@ -97,11 +99,11 @@ class LessonFlow: ToolNavigationFlow, Flow {
             break
             
         case .startOverTappedFromResumeLessonModal:
-            navigateToLesson(initialPage: nil, animated: false)
+            navigateToLesson(isNavigatingFromResumeLessonModal: true, initialPage: nil, initialPageSubIndex: initialPageSubIndex, animated: false)
             navigationController.dismissPresented(animated: true, completion: nil)
             
         case .continueTappedFromResumeLessonModal:
-            navigateToLesson(initialPage: userLessonProgressPage, animated: false)
+            navigateToLesson(isNavigatingFromResumeLessonModal: true, initialPage: userLessonProgressPage, initialPageSubIndex: initialPageSubIndex, animated: false)
             navigationController.dismissPresented(animated: true, completion: nil)
             
         case .closeTappedFromLesson(let lessonId, let highestPageNumberViewed):
@@ -145,9 +147,13 @@ class LessonFlow: ToolNavigationFlow, Flow {
         }
     }
     
-    private func navigateToLesson(initialPage: MobileContentRendererInitialPage?, animated: Bool) {
+    private func navigateToLesson(isNavigatingFromResumeLessonModal: Bool, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, animated: Bool) {
         
-        let lessonView = getLessonView(initialPage: initialPage)
+        let lessonView = getLessonView(
+            initialPage: initialPage,
+            initialPageSubIndex: initialPageSubIndex,
+            isNavigatingFromResumeLessonModal: isNavigatingFromResumeLessonModal
+        )
                 
         navigationController.pushViewController(lessonView, animated: animated)
         
@@ -164,7 +170,16 @@ class LessonFlow: ToolNavigationFlow, Flow {
 
 extension LessonFlow {
     
-    private func getLessonView(initialPage: MobileContentRendererInitialPage?) -> UIViewController {
+    private func getLessonView(initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, isNavigatingFromResumeLessonModal: Bool) -> UIViewController {
+        
+        let initialPageConfig: MobileContentRendererInitialPageConfig?
+        
+        if isNavigatingFromResumeLessonModal {
+            initialPageConfig = MobileContentRendererInitialPageConfig(shouldNavigateToStartPageIfLastPage: true, shouldNavigateToPreviousVisiblePageIfHiddenPage: true)
+        }
+        else {
+            initialPageConfig = nil
+        }
         
         let navigation: MobileContentRendererNavigation = appDiContainer.getMobileContentRendererNavigation(
             parentFlow: self,
@@ -185,6 +200,8 @@ extension LessonFlow {
             resource: renderer.resource,
             primaryLanguage: renderer.languages.primaryLanguage,
             initialPage: initialPage,
+            initialPageConfig: initialPageConfig,
+            initialPageSubIndex: initialPageSubIndex,
             resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
             translationsRepository: appDiContainer.dataLayer.getTranslationsRepository(),
             mobileContentEventAnalytics: appDiContainer.getMobileContentRendererEventAnalyticsTracking(),
