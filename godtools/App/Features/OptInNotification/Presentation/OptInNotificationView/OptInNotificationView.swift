@@ -12,12 +12,8 @@ import SwiftUI
 
 // DSR
 // TODO:
-// - Adaptive sizing
-// - Landscape view
-// - Disable appbar while active
-// - Import assets (1x, 2x, 3x)
-// - Add to onboarding flow
-// - /n in Localizable base
+// - Adaptive sizing testing
+// - General testing
 
 struct OptInNotificationView: View {
     @ObservedObject private var viewModel: OptInNotificationViewModel
@@ -27,6 +23,7 @@ struct OptInNotificationView: View {
     }
 
     var body: some View {
+
         ZStack {
             if viewModel.bottomSheetPosition == .dynamicTop {
                 Color.black.opacity(0.2).edgesIgnoringSafeArea(.all)
@@ -90,7 +87,9 @@ struct OptInNotificationView: View {
                         }) {
                             Text(viewModel.maybeLaterActionTitle)
                                 .foregroundColor(
-                                    Color(uiColor: ColorPalette.gtBlue.uiColor))
+                                    Color(
+                                        uiColor: ColorPalette.gtBlue.uiColor
+                                    ))
                         }
                         .frame(height: 40).padding(
                             .bottom, 50
@@ -98,6 +97,7 @@ struct OptInNotificationView: View {
                     }.padding(.horizontal, 20)
                 }
             ).showDragIndicator(false).enableFloatingIPadSheet(true)
+                .sheetWidth(BottomSheetWidth.relative(100))
                 .customBackground(
                     RoundedRectangle(
                         cornerRadius: 10
@@ -112,7 +112,9 @@ struct OptInNotificationView: View {
                 .padding(.horizontal, UIScreen.main.bounds.width * 0.05)
 
         }
+
     }
+
 }
 
 // MARK: - Preview

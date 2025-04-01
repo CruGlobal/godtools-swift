@@ -89,13 +89,14 @@ struct DashboardView: View {
                     )
                 }
             }.overlay(
-                //here
-                //need align?
-                alignment: Alignment.center,
+
                 content: {
                     OptInNotificationView(
                         viewModel: viewModel.getOptInNotificationViewModel()
-                    )
+                    ).environment(
+                        \.layoutDirection,
+                        ApplicationLayout.shared
+                            .layoutDirection)
                 }
             )
         }
@@ -116,6 +117,10 @@ struct DashboardView: View {
         case .tools:
             ToolsView(viewModel: viewModel.getToolsViewModel())
         }
+    }
+
+    @ViewBuilder private func getOptInNotificationView() -> some View {
+
     }
 }
 

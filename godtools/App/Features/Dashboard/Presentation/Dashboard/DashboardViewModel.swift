@@ -44,7 +44,6 @@ class DashboardViewModel: ObservableObject {
     ) {
 
         self.flowDelegate = flowDelegate
-
         self.dashboardPresentationLayerDependencies =
             dashboardPresentationLayerDependencies
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
@@ -90,7 +89,6 @@ class DashboardViewModel: ObservableObject {
             }
             .store(in: &cancellables)
 
-        
         DispatchQueue.main.async {
             Task {
                 await self.dashboardPresentationLayerDependencies
@@ -141,7 +139,12 @@ class DashboardViewModel: ObservableObject {
 extension DashboardViewModel {
 
     @objc func menuTapped() {
-        flowDelegate?.navigate(step: .menuTappedFromTools)
+        if dashboardPresentationLayerDependencies.optInNotificationViewModel
+            .bottomSheetPosition != .dynamicTop
+        {
+            flowDelegate?.navigate(step: .menuTappedFromTools)
+        }
+
     }
 
     func getLessonsViewModel() -> LessonsViewModel {

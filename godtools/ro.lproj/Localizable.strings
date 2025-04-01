@@ -1,3 +1,5 @@
+// Is an interface language
+
 /* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
 "lessons.resumeLessonModal.title" = "Reia progresul";
 
@@ -91,6 +93,16 @@
 "favorites.favoriteTools.title" = "Instrumentele tale favorite";
 "favorites.favoriteTools.viewAll" = "Vezi tot";
 "favorites.favoriteLessons.details" = "Detalii";
+
+"optInNotification.title" = "Primește sfaturi și încurajare";
+"optInNotification.body" = "Fii pregătit pentru conversații.\nPermite notificările astăzi.";
+"optInNotification.allowNotifications" = "Permite notificările";
+"optInNotification.maybeLater" = "Poate mai târziu";
+
+"optInDialog.title" = "Activează notificările";
+"optInDialog.body" = "Notificările sunt dezactivate. Te rog să le activezi în Setări.";
+"optInDialog.cancel" = "Anulează";
+"optInDialog.settings" = "Setări";
 
 /* The meaning is "I don't want to set a second language".  Language is no language or None */
 "toolSettings.languagesList.deleteLanguage.title" = "Niciuna";

@@ -1,15 +1,17 @@
 {
   "images" : [
     {
+      "filename" : "notification_graphic_1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "godtools_notification_graphic.png",
+      "filename" : "notification_graphic_2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "notification_graphic_3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

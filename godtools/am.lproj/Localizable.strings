@@ -1,3 +1,5 @@
+// Is an interface language
+
 /* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
 "lessons.resumeLessonModal.title" = "ካቆሙበት ለመቀጠል";
 
@@ -91,6 +93,16 @@
 "favorites.favoriteTools.title" = "የእርስዎ ተመራጭ ቡክሌቶች";
 "favorites.favoriteTools.viewAll" = "ሁሉንም ይመልከቱ ";
 "favorites.favoriteLessons.details" = "ዝርዝሮች";
+
+"optInNotification.title" = "ምክር እና ደጋፊነት ይውሰዱ";
+"optInNotification.body" = "ለውይይት ዝግጁ ይሁኑ።\nዛሬ ማሳወቂያዎችን ይፍቀዱ።";
+"optInNotification.allowNotifications" = "ማሳወቂያዎችን ፍቀድ";
+"optInNotification.maybeLater" = "ምናልባት አላውቅም";
+
+"optInDialog.title" = "ማሳወቂያዎችን አብራ";
+"optInDialog.body" = "ማሳወቂያዎች ተሰናክለዋል። እባኮትን በቅኝት ውስጥ አብሩ።";
+"optInDialog.cancel" = "ሰርዝ";
+"optInDialog.settings" = "ቅኝት";
 
 /* The meaning is "I don't want to set a second language".  Language is no language or None */
 "toolSettings.languagesList.deleteLanguage.title" = "ምንም";

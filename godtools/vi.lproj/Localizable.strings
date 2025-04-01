@@ -1,3 +1,5 @@
+// Is an interface language
+
 /* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
 "lessons.resumeLessonModal.title" = "Tiếp tục Tiến trình";
 
@@ -91,6 +93,16 @@
 "favorites.favoriteTools.title" = "Công cụ yêu thích của bạn";
 "favorites.favoriteTools.viewAll" = "Xem tất cả";
 "favorites.favoriteLessons.details" = "Chi tiết";
+
+"optInNotification.title" = "Nhận mẹo và động viên";
+"optInNotification.body" = "Sẵn sàng cho cuộc trò chuyện.\nHãy cho phép thông báo ngay hôm nay.";
+"optInNotification.allowNotifications" = "Cho phép thông báo";
+"optInNotification.maybeLater" = "Có thể sau";
+
+"optInDialog.title" = "Bật thông báo";
+"optInDialog.body" = "Thông báo đã bị tắt. Vui lòng bật chúng trong Cài đặt.";
+"optInDialog.cancel" = "Hủy";
+"optInDialog.settings" = "Cài đặt";
 
 /* The meaning is "I don't want to set a second language".  Language is no language or None */
 "toolSettings.languagesList.deleteLanguage.title" = "Không";

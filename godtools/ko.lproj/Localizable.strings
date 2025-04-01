@@ -1,3 +1,5 @@
+// Is an interface language
+
 /* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
 "lessons.resumeLessonModal.title" = "진행 재개";
 
@@ -91,6 +93,16 @@
 "favorites.favoriteTools.title" = "즐겨찾는 도구";
 "favorites.favoriteTools.viewAll" = "모두 보기";
 "favorites.favoriteLessons.details" = "설명";
+
+"optInNotification.title" = "팁과 격려를 받아보세요";
+"optInNotification.body" = "대화를 준비하세요.\n지금 알림을 허용하세요.";
+"optInNotification.allowNotifications" = "알림 허용";
+"optInNotification.maybeLater" = "나중에 하기";
+
+"optInDialog.title" = "알림 활성화";
+"optInDialog.body" = "알림이 비활성화되었습니다. 설정에서 활성화해 주세요.";
+"optInDialog.cancel" = "취소";
+"optInDialog.settings" = "설정";
 
 /* The meaning is "I don't want to set a second language".  Language is no language or None */
 "toolSettings.languagesList.deleteLanguage.title" = "없음";

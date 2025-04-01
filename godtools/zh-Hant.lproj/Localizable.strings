@@ -1,3 +1,5 @@
+// Is an interface language
+
 /* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
 "lessons.resumeLessonModal.title" = "恢復進度";
 
@@ -91,6 +93,16 @@
 "favorites.favoriteTools.title" = "您最愛的工具";
 "favorites.favoriteTools.viewAll" = "檢視全部 >";
 "favorites.favoriteLessons.details" = "詳細資料";
+
+"optInNotification.title" = "獲取提示和鼓勵";
+"optInNotification.body" = "為對話做好準備。\n立即允許通知。";
+"optInNotification.allowNotifications" = "允許通知";
+"optInNotification.maybeLater" = "稍後再說";
+
+"optInDialog.title" = "啟用通知";
+"optInDialog.body" = "通知已被禁用。請在設置中啟用它們。";
+"optInDialog.cancel" = "取消";
+"optInDialog.settings" = "設置";
 
 /* The meaning is "I don't want to set a second language".  Language is no language or None */
 "toolSettings.languagesList.deleteLanguage.title" = "沒有";

@@ -15,7 +15,7 @@ class GetRequestNotificationPermission:
 {
 
     func permissionGrantedPublisher() -> AnyPublisher<Bool, Never> {
-        print("entering block")
+    
         return Future<Bool, Never> { promise in
             UNUserNotificationCenter.current().requestAuthorization(options: [
                 .alert, .badge, .sound,

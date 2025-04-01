@@ -25,6 +25,7 @@ class OptInNotificationViewModel: ObservableObject {
     private let userDialogReponse: PassthroughSubject<Void, Never> =
         PassthroughSubject()
 
+    private var isFirstDialogPrompt: Bool = false
     private var notificationStatus: String?
     private var notificationStatusCancellable: AnyCancellable?
     private var cancellables: Set<AnyCancellable> = Set()
@@ -120,7 +121,9 @@ class OptInNotificationViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] status in
                 self?.notificationStatus = status
-                print("Refreshed permission status: \(status)")
+                if status == "Undetermined" {
+                    self?.isFirstDialogPrompt = true
+                }
             }
     }
 
@@ -153,7 +156,6 @@ class OptInNotificationViewModel: ObservableObject {
 
                 guard let testDate = dateFormatter.date(from: "01/01/2025")
                 else {
-                    print("Failed to create date from string.")
                     return
                 }
 
@@ -183,15 +185,16 @@ extension OptInNotificationViewModel {
                 guard let self = self else { return }
 
                 if permissionGranted {
-                    print("granted")
                     // Theoretically should never happen because a user who has granted permissions should not end up in this view
                     self.bottomSheetPosition = .hidden
                 } else {
-                    print("not granted")
-
-                    self.flowDelegate?.navigate(
-                        step: .allowNotificationsTappedFromBottomSheet(
-                            userDialogReponse: userDialogReponse))
+                    if !isFirstDialogPrompt {
+                        self.flowDelegate?.navigate(
+                            step: .allowNotificationsTappedFromBottomSheet(
+                                userDialogReponse: userDialogReponse))
+                    } else {
+                        self.bottomSheetPosition = .hidden
+                    }
 
                 }
 
