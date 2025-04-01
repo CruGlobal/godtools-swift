@@ -163,9 +163,6 @@ extension ChooseYourOwnAdventureFlow {
                         titleView: self?.getNewLanguageSelectorView(view: chooseYourOwnAdventureView, viewModel: viewModel, navBarLayoutDirection: navBarLayoutDirection)
                     )
                 }
-                else {
-                    navigationBar.setTitle(title: "GodTools")
-                }
             }
             .store(in: &cancellables)
         
