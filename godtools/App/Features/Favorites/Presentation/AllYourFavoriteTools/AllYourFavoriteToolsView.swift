@@ -31,6 +31,7 @@ struct AllYourFavoriteToolsView: View {
                     Text(viewModel.sectionTitle)
                         .font(FontLibrary.sfProTextRegular.font(size: 22))
                         .foregroundColor(ColorPalette.gtGrey.color)
+                        .listRowSeparator(.hidden)
                     
                     ForEach(viewModel.favoritedTools) { (tool: YourFavoritedToolDomainModel) in
                         ToolCardView(
@@ -57,9 +58,8 @@ struct AllYourFavoriteToolsView: View {
                                 viewModel.toolTapped(tool: tool)
                             }
                         )
-                        .listRowBackground(Color.clear)
+                        .buttonStyle(.plain)
                         .listRowSeparator(.hidden)
-                                                        
                     }
                     .onMove { from, to in
                         viewModel.toolMoved(fromOffsets: from, toOffset: to)
