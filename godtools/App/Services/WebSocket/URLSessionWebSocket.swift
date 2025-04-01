@@ -23,6 +23,7 @@ class URLSessionWebSocket: NSObject, WebSocketInterface {
     }
     
     private var currentWebSocketTask: URLSessionWebSocketTask?
+    private var keepAliveTimer: Timer?
     private var connectionState: ConnectionState = .disconnected
     
     let didConnectSignal: Signal = Signal()
@@ -33,14 +34,30 @@ class URLSessionWebSocket: NSObject, WebSocketInterface {
         super.init()
     }
     
+    deinit {
+        keepAliveTimer?.invalidate()
+        keepAliveTimer = nil
+    }
+    
+    private func keepSocketAlive() {
+        
+        guard isConnected, let webSocketTask = currentWebSocketTask else {
+            return
+        }
+        
+        webSocketTask.sendPing { [weak self] (error: Error?) in
+            self?.keepAliveTimer = Timer.scheduledTimer(withTimeInterval: 10, repeats: false) { [weak self] (timer: Timer) in
+                self?.keepSocketAlive()
+            }
+        }
+    }
+    
     var isConnected: Bool {
         return connectionState == .connected
     }
     
     func connect(url: URL) {
-        
-        print("\n Connect to url: \(url.absoluteString)")
-        
+                
         guard let wssUrl = URL(string: "wss://mobile-content-api.cru.org/cable") else {
             return
         }
@@ -51,25 +68,9 @@ class URLSessionWebSocket: NSObject, WebSocketInterface {
         
         currentWebSocketTask = webSocketTask
         
-        webSocketTask.delegate = self
+        receiveNextResult()
         
-        webSocketTask.receive { [weak self] (result: Result<URLSessionWebSocketTask.Message, any Error>) in
-            
-            switch result {
-            case .success(let message):
-                switch message {
-                case .data(let data):
-                    print("Data received \(data)")
-                case .string(let text):
-                    print("Text received \(text)")
-                    self?.didReceiveTextSignal.accept(value: text)
-                @unknown default:
-                    break
-                }
-            case .failure(let error):
-                print("Error when receiving \(error)")
-            }
-        }
+        webSocketTask.delegate = self
         
         webSocketTask.resume()
     }
@@ -80,16 +81,51 @@ class URLSessionWebSocket: NSObject, WebSocketInterface {
             return
         }
         
+        keepAliveTimer?.invalidate()
+        keepAliveTimer = nil
+        
         webSocketTask.cancel(with: .goingAway, reason: nil)
     }
     
     func write(string: String) {
         
-        currentWebSocketTask?.send(.string(string), completionHandler: { (error: Error?) in
+        guard let webSocketTask = currentWebSocketTask else {
+            return
+        }
+        
+        webSocketTask.send(.string(string), completionHandler: { (error: Error?) in
             
-            print("\n Did send string: \(string)")
-            print("  error: \(String(describing: error))")
         })
+    }
+    
+    private func receiveNextResult() {
+        
+        guard let webSocketTask = currentWebSocketTask else {
+            return
+        }
+        
+        webSocketTask.receive { [weak self] (result: Result<URLSessionWebSocketTask.Message, any Error>) in
+            self?.handleResultReceived(result: result)
+            self?.receiveNextResult()
+        }
+    }
+    
+    private func handleResultReceived(result: Result<URLSessionWebSocketTask.Message, any Error>) {
+                
+        switch result {
+        case .success(let message):
+                        
+            switch message {
+            case .data(let data):
+                break
+            case .string(let text):
+                didReceiveTextSignal.accept(value: text)
+            @unknown default:
+                break
+            }
+        case .failure(let error):
+            break
+        }
     }
 }
 
@@ -98,26 +134,22 @@ class URLSessionWebSocket: NSObject, WebSocketInterface {
 extension URLSessionWebSocket: URLSessionWebSocketDelegate {
     
     func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didOpenWithProtocol protocol: String?) {
-        
-        print("\n WebSocketTask did open with protocol")
-        
+                
         connectionState = .connected
         
         didConnectSignal.accept()
+        
+        keepSocketAlive()
     }
     
     func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didCloseWith closeCode: URLSessionWebSocketTask.CloseCode, reason: Data?) {
-        
-        print("\n WebSocketTask did close")
+                
+        keepAliveTimer?.invalidate()
+        keepAliveTimer = nil
         
         connectionState = .disconnected
         currentWebSocketTask = nil
         
         didDisconnectSignal.accept()
-        
-        if let data = reason {
-            let stringData: String? = String(data: data, encoding: .utf8)
-            print("  reason: \(String(describing: stringData))")
-        }
     }
 }
