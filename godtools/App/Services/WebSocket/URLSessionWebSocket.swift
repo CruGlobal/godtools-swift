@@ -58,13 +58,9 @@ class URLSessionWebSocket: NSObject, WebSocketInterface {
     
     func connect(url: URL) {
                 
-        guard let wssUrl = URL(string: "wss://mobile-content-api.cru.org/cable") else {
-            return
-        }
-        
         connectionState = .connecting
         
-        let webSocketTask: URLSessionWebSocketTask = session.webSocketTask(with: wssUrl)
+        let webSocketTask: URLSessionWebSocketTask = session.webSocketTask(with: url)
         
         currentWebSocketTask = webSocketTask
         
@@ -116,14 +112,14 @@ class URLSessionWebSocket: NSObject, WebSocketInterface {
         case .success(let message):
                         
             switch message {
-            case .data(let data):
+            case .data( _):
                 break
             case .string(let text):
                 didReceiveTextSignal.accept(value: text)
             @unknown default:
                 break
             }
-        case .failure(let error):
+        case .failure( _):
             break
         }
     }
