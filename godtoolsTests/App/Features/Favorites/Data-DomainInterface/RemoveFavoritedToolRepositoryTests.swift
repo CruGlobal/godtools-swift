@@ -23,29 +23,29 @@ class RemoveFavoritedToolRepositoryTests: QuickSpec {
             context("When a user unfavorites tool B") {
                 it("Tools C, D, and E should update to positions 1, 2, and 3. Tool A should remain unchanged.") {
                     
-                    let removeFavoritedToolRepository = RemoveFavoritedToolRepository(favoritedResourcesRepository: FavoritedResourcesRepository(cache: RealmFavoritedResourcesCache(realmDatabase: getConfiguredRealmDatabase())))
+                    let realmDatabase = getConfiguredRealmDatabase()
+                    let removeFavoritedToolRepository = RemoveFavoritedToolRepository(favoritedResourcesRepository: FavoritedResourcesRepository(cache: RealmFavoritedResourcesCache(realmDatabase: realmDatabase)))
                     
-                    var favoritedResources: [FavoritedResourceDataModel] = Array()
+                    var remainingResources: [FavoritedResourceDataModel] = Array()
                     
                     waitUntil{ done in
-                            
                         removeFavoritedToolRepository.removeToolPublisher(toolId: "B")
-                            .sink { _ in
+                            .sink(receiveValue: { _ in
                                 
-                                let realmDatabase = getConfiguredRealmDatabase()
-                                favoritedResources = realmDatabase.openRealm().objects(RealmFavoritedResource.self)
-                                    .map { FavoritedResourceDataModel(id: $0.resourceId, createdAt: $0.createdAt, position: $0.position)}
+                                remainingResources = realmDatabase.openRealm().objects(RealmFavoritedResource.self).map {
+                                    FavoritedResourceDataModel(id: $0.resourceId, createdAt: $0.createdAt, position: $0.position)
+                                }
                                 
                                 done()
-                            }
+                            })
                             .store(in: &cancellables)
                     }
                     
-                    expect(favoritedResources.first(where: { $0.id == "A" })?.position).to(equal(0))
-                    expect(favoritedResources.first(where: { $0.id == "B" })).to(beNil())
-                    expect(favoritedResources.first(where: { $0.id == "C" })?.position).to(equal(1))
-                    expect(favoritedResources.first(where: { $0.id == "D" })?.position).to(equal(2))
-                    expect(favoritedResources.first(where: { $0.id == "E" })?.position).to(equal(3))
+                    expect(remainingResources.first(where: { $0.id == "A" })?.position).to(equal(0))
+                    expect(remainingResources.first(where: { $0.id == "B" })).to(beNil())
+                    expect(remainingResources.first(where: { $0.id == "C" })?.position).to(equal(1))
+                    expect(remainingResources.first(where: { $0.id == "D" })?.position).to(equal(2))
+                    expect(remainingResources.first(where: { $0.id == "E" })?.position).to(equal(3))
                 }
             }
             
