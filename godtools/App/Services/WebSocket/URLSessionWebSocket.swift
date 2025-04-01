@@ -13,6 +13,7 @@ class URLSessionWebSocket: NSObject, WebSocketInterface {
     enum ConnectionState {
         case connecting
         case connected
+        case disconnecting
         case disconnected
     }
     
@@ -24,7 +25,8 @@ class URLSessionWebSocket: NSObject, WebSocketInterface {
     
     private var currentWebSocketTask: URLSessionWebSocketTask?
     private var keepAliveTimer: Timer?
-    private var connectionState: ConnectionState = .disconnected
+    
+    private(set) var connectionState: ConnectionState = .disconnected
     
     let didConnectSignal: Signal = Signal()
     let didDisconnectSignal: Signal = Signal()
@@ -76,6 +78,8 @@ class URLSessionWebSocket: NSObject, WebSocketInterface {
         guard let webSocketTask = currentWebSocketTask else {
             return
         }
+        
+        connectionState = .disconnecting
         
         keepAliveTimer?.invalidate()
         keepAliveTimer = nil
