@@ -80,9 +80,6 @@ class URLSessionWebSocket: NSObject, WebSocketInterface {
             return
         }
         
-        //connectionState = .disconnected
-        //currentWebSocketTask = nil
-        
         webSocketTask.cancel(with: .goingAway, reason: nil)
     }
     
