@@ -155,7 +155,7 @@ struct ToolCardView: View {
                             }
                             
                             GTBlueButton(title: viewModel.openButtonTitle, font: navButtonFont, width: navButtonWidth, height: navButtonHeight, titleHorizontalPadding: navButtonTitleHorizontalPadding, accessibility: .openTool) {
-                                
+
                                 openToolTappedClosure?()
                             }
                         }
@@ -186,7 +186,6 @@ struct ToolCardView: View {
             
             toolTappedClosure?()
         }
-
     }
 }
 
