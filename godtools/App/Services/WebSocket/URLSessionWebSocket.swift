@@ -13,7 +13,6 @@ class URLSessionWebSocket: NSObject, WebSocketInterface {
     enum ConnectionState {
         case connecting
         case connected
-        case disconnecting
         case disconnected
     }
     
@@ -37,8 +36,7 @@ class URLSessionWebSocket: NSObject, WebSocketInterface {
     }
     
     deinit {
-        keepAliveTimer?.invalidate()
-        keepAliveTimer = nil
+        stopKeepAliveTimer()
     }
     
     private func keepSocketAlive() {
@@ -52,6 +50,11 @@ class URLSessionWebSocket: NSObject, WebSocketInterface {
                 self?.keepSocketAlive()
             }
         }
+    }
+    
+    private func stopKeepAliveTimer() {
+        keepAliveTimer?.invalidate()
+        keepAliveTimer = nil
     }
     
     var isConnected: Bool {
@@ -79,12 +82,15 @@ class URLSessionWebSocket: NSObject, WebSocketInterface {
             return
         }
         
-        connectionState = .disconnecting
+        connectionState = .disconnected
         
-        keepAliveTimer?.invalidate()
-        keepAliveTimer = nil
+        stopKeepAliveTimer()
         
         webSocketTask.cancel(with: .goingAway, reason: nil)
+        
+        currentWebSocketTask = nil
+        
+        didDisconnectSignal.accept()
     }
     
     func write(string: String) {
@@ -143,13 +149,6 @@ extension URLSessionWebSocket: URLSessionWebSocketDelegate {
     }
     
     func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didCloseWith closeCode: URLSessionWebSocketTask.CloseCode, reason: Data?) {
-                
-        keepAliveTimer?.invalidate()
-        keepAliveTimer = nil
-        
-        connectionState = .disconnected
-        currentWebSocketTask = nil
-        
-        didDisconnectSignal.accept()
+        // NOTE: For now won't handle anything here.  However, it might be good to monitor changes here and update the user. ~Levi
     }
 }
