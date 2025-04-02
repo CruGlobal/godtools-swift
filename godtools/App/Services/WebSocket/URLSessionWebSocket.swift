@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 class URLSessionWebSocket: NSObject, WebSocketInterface {
     
@@ -23,12 +24,11 @@ class URLSessionWebSocket: NSObject, WebSocketInterface {
     }
     
     private var currentWebSocketTask: URLSessionWebSocketTask?
+    private var didConnectSubject: PassthroughSubject<Void, Error>?
     private var keepAliveTimer: Timer?
     
     private(set) var connectionState: ConnectionState = .disconnected
     
-    let didConnectSignal: Signal = Signal()
-    let didDisconnectSignal: Signal = Signal()
     let didReceiveTextSignal: SignalValue<String> = SignalValue()
     
     override init() {
@@ -57,13 +57,32 @@ class URLSessionWebSocket: NSObject, WebSocketInterface {
         keepAliveTimer = nil
     }
     
+    var isConnecting: Bool {
+        return connectionState == .connecting
+    }
+    
     var isConnected: Bool {
         return connectionState == .connected
     }
     
     func connect(url: URL) {
                 
+        
+    }
+    
+    func connectPublisher(url: URL) -> AnyPublisher<Void, Error> {
+        
+        guard !isConnected && !isConnecting else {
+            let error: Error = NSError.errorWithDescription(description: "Is connected or attempting connection.")
+            return Fail(error: error)
+                .eraseToAnyPublisher()
+        }
+        
         connectionState = .connecting
+        
+        let didConnectSubject: PassthroughSubject<Void, Error> = PassthroughSubject()
+        
+        self.didConnectSubject = didConnectSubject
         
         let webSocketTask: URLSessionWebSocketTask = session.webSocketTask(with: url)
         
@@ -74,6 +93,9 @@ class URLSessionWebSocket: NSObject, WebSocketInterface {
         webSocketTask.delegate = self
         
         webSocketTask.resume()
+        
+        return didConnectSubject
+            .eraseToAnyPublisher()
     }
     
     func disconnect() {
@@ -89,8 +111,6 @@ class URLSessionWebSocket: NSObject, WebSocketInterface {
         webSocketTask.cancel(with: .goingAway, reason: nil)
         
         currentWebSocketTask = nil
-        
-        didDisconnectSignal.accept()
     }
     
     func write(string: String) {
@@ -142,8 +162,9 @@ extension URLSessionWebSocket: URLSessionWebSocketDelegate {
     func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didOpenWithProtocol protocol: String?) {
                 
         connectionState = .connected
-        
-        didConnectSignal.accept()
+                
+        didConnectSubject?.send(completion: .finished)
+        didConnectSubject = nil
         
         keepSocketAlive()
     }

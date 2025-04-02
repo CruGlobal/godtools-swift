@@ -7,12 +7,14 @@
 //
 
 import Foundation
+import Combine
 
 class ActionCableChannelSubscriber: NSObject, WebSocketChannelSubscriberInterface {
     
     private let webSocket: WebSocketInterface
     private let loggingEnabled: Bool
     
+    private var cancellables: Set<AnyCancellable> = Set()
     private var channelToSubscribeTo: String?
     private var isSubscribingToChannel: String?
     private var subscribedToChannel: String?
@@ -29,7 +31,6 @@ class ActionCableChannelSubscriber: NSObject, WebSocketChannelSubscriberInterfac
     }
     
     deinit {
-        webSocket.didConnectSignal.removeObserver(self)
         removeTextSignalObserver()
         unsubscribe()
         webSocket.disconnect()
@@ -47,16 +48,21 @@ class ActionCableChannelSubscriber: NSObject, WebSocketChannelSubscriberInterfac
         
         if !webSocket.isConnected {
             
-            webSocket.didConnectSignal.addObserver(self) { [weak self] in
-                
-                guard let channelSubscriber = self else {
-                    return
+            webSocket.connectPublisher(url: url)
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] completion in
+                    
+                    switch completion {
+                    case .finished:
+                        self?.handleDidConnectToWebsocket()
+                    case .failure(let error):
+                        break
+                    }
+                    
+                } receiveValue: { _ in
+                    
                 }
-                channelSubscriber.webSocket.didConnectSignal.removeObserver(channelSubscriber)
-                channelSubscriber.handleDidConnectToWebsocket()
-            }
-            
-            webSocket.connect(url: url)
+                .store(in: &cancellables)
         }
         else {
             

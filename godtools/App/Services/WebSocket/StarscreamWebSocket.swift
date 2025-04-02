@@ -8,15 +8,15 @@
 
 import Foundation
 import Starscream
+import Combine
 
 class StarscreamWebSocket: NSObject, WebSocketInterface {
         
     private var socket: WebSocket?
+    private var didConnectSubject: PassthroughSubject<Void, Error>?
     
     private(set) var isConnected: Bool = false
     
-    let didConnectSignal: Signal = Signal()
-    let didDisconnectSignal: Signal = Signal()
     let didReceiveTextSignal: SignalValue<String> = SignalValue()
     let didReceiveEventSignal: SignalValue<WebSocketEvent> = SignalValue()
     
@@ -28,17 +28,26 @@ class StarscreamWebSocket: NSObject, WebSocketInterface {
         socket?.disconnect()
     }
     
-    func connect(url: URL) {
+    func connectPublisher(url: URL) -> AnyPublisher<Void, Error> {
         
         guard !isConnected else {
-            return
+            let error: Error = NSError.errorWithDescription(description: "Is connected or attempting connection.")
+            return Fail(error: error)
+                .eraseToAnyPublisher()
         }
+        
+        let didConnectSubject: PassthroughSubject<Void, Error> = PassthroughSubject()
+        
+        self.didConnectSubject = didConnectSubject
         
         socket = WebSocket(request: URLRequest(url: url))
         socket?.onEvent = { [weak self] event in
             self?.handleWebSocketEvent(event: event)
         }
         socket?.connect()
+        
+        return didConnectSubject
+            .eraseToAnyPublisher()
     }
     
     func disconnect() {
@@ -63,11 +72,12 @@ extension StarscreamWebSocket {
         
         case .connected( _):
             isConnected = true
-            didConnectSignal.accept()
+            
+            didConnectSubject?.send(completion: .finished)
+            didConnectSubject = nil
         
         case .disconnected( _, _):
             isConnected = false
-            didDisconnectSignal.accept()
         
         case .text(let string):
             didReceiveTextSignal.accept(value: string)

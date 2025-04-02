@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import Combine
 
 class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherInterface {
     
     private let webSocket: WebSocketInterface
     private let loggingEnabled: Bool
     
+    private var cancellables: Set<AnyCancellable> = Set()
     private var channelIdToCreate: String?
     private var publishingToSubscriberChannelId: String?
     private var isObservingTextSignal: Bool = false
@@ -40,7 +42,6 @@ class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherInterface 
         NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
         
-        webSocket.didConnectSignal.removeObserver(self)
         removeTextSignalObserver()
         webSocket.disconnect()
     }
@@ -64,16 +65,21 @@ class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherInterface 
         
         if !webSocket.isConnected {
             
-            webSocket.didConnectSignal.addObserver(self) { [weak self] in
-                
-                guard let channelPublisher = self else {
-                    return
+            webSocket.connectPublisher(url: url)
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] completion in
+                    
+                    switch completion {
+                    case .finished:
+                        self?.handleDidConnectToWebsocket()
+                    case .failure(let error):
+                        break
+                    }
+                    
+                } receiveValue: { _ in
+                    
                 }
-                channelPublisher.webSocket.didConnectSignal.removeObserver(channelPublisher)
-                channelPublisher.handleDidConnectToWebsocket()
-            }
-            
-            webSocket.connect(url: url)
+                .store(in: &cancellables)
         }
         else {
             
