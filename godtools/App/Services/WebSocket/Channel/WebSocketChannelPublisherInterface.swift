@@ -10,9 +10,9 @@ import Foundation
 
 protocol WebSocketChannelPublisherInterface {
     
-    var channelId: String? { get }
-    var publishChannelIdentifier: String? { get }
-    var subscriberChannelId: String? { get }
+    var channel: WebSocketChannel? { get }
+    var publishChannel: WebSocketChannel? { get }
+    var subscriberChannel: WebSocketChannel? { get }
     var isSubscriberChannelIdCreatedForPublish: Bool { get }
     var didCreateChannelForPublish: SignalValue<String> { get }
     
