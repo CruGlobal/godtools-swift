@@ -69,7 +69,7 @@ class FavoritedResourcesRepository {
             .eraseToAnyPublisher()
     }
     
-    func storeFavoritedResourcesPublisher(ids: [String]) -> AnyPublisher<[FavoritedResourceDataModel], Error> {
+    func storeFavoritedResourcesPublisher(ids: [String]) -> AnyPublisher<[FavoritedResourceDataModel], Never> {
      
         return cache.storeFavoritedResourcesPublisher(ids: ids)
             .eraseToAnyPublisher()

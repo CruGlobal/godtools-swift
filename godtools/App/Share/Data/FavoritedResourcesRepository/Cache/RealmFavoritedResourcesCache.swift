@@ -90,13 +90,16 @@ class RealmFavoritedResourcesCache {
         return getFavoritedResourcesChangedPublisher()
             .flatMap { _ in
                 
-                return self.validatePositionsForFavoritedResources(ascendingOrder: ascendingOrder)
+                let validatedResources = self.validatePositionsForFavoritedResources(ascendingOrder: ascendingOrder)
+                    .map { FavoritedResourceDataModel(realmFavoritedResource: $0) }
+                
+                return Just(validatedResources)
             }
             .eraseToAnyPublisher()
         
     }
         
-    func storeFavoritedResourcesPublisher(ids: [String]) -> AnyPublisher<[FavoritedResourceDataModel], Error> {
+    func storeFavoritedResourcesPublisher(ids: [String]) -> AnyPublisher<[FavoritedResourceDataModel], Never> {
         
         let currentDate: Date = Date()
         let calendar: Calendar = Calendar.current
@@ -113,32 +116,12 @@ class RealmFavoritedResourcesCache {
             
             newFavoritedResources.append(favoritedResource)
         }
-
-        return realmDatabase.writeObjectsPublisher { (realm: Realm) -> [RealmFavoritedResource] in
-            
-            let existingFavorites = realm.objects(RealmFavoritedResource.self)
-            for favorite in existingFavorites {
-                favorite.position += newFavoritedResources.count
-            }
-            
-            let realmFavoritedResources: [RealmFavoritedResource] = newFavoritedResources.map {
-                
-                let realmFavoritedResource = RealmFavoritedResource()
-                realmFavoritedResource.resourceId = $0.id
-                realmFavoritedResource.createdAt = $0.createdAt
-                realmFavoritedResource.position = $0.position
-                
-                return realmFavoritedResource
-            }
-            
-            return realmFavoritedResources + Array(existingFavorites)
-            
-        } mapInBackgroundClosure: { (objects: [RealmFavoritedResource]) -> [FavoritedResourceDataModel] in
-            return objects.map({
-                FavoritedResourceDataModel(realmFavoritedResource: $0)
-            })
-        }
-        .eraseToAnyPublisher()
+        
+        let validatedFavorites = validatePositionsForFavoritedResources(ascendingOrder: true)
+            .map { FavoritedResourceDataModel(realmFavoritedResource: $0) }
+        
+        return Just(validatedFavorites)
+            .eraseToAnyPublisher()
     }
     
     func deleteFavoritedResourcePublisher(id: String) -> AnyPublisher<Void, Error> {
@@ -205,47 +188,38 @@ class RealmFavoritedResourcesCache {
     
     // MARK: - Private
     
-    private func validatePositionsForFavoritedResources(ascendingOrder: Bool) -> AnyPublisher<[FavoritedResourceDataModel], Never> {
-        let favoritesSortedByPosition = self.realmDatabase.openRealm()
+    private func validatePositionsForFavoritedResources(ascendingOrder: Bool) -> [RealmFavoritedResource] {
+        let realm = realmDatabase.openRealm()
+        let favoritesSortedByPosition = realm
             .objects(RealmFavoritedResource.self)
             .sorted(byKeyPath: #keyPath(RealmFavoritedResource.position), ascending: ascendingOrder)
-        
-        lazy var favoritesDataModels: [FavoritedResourceDataModel] = favoritesSortedByPosition.map({
-            return FavoritedResourceDataModel(realmFavoritedResource: $0)
-        })
         
         if let lastFavorite = favoritesSortedByPosition.last,
            lastFavorite.position != favoritesSortedByPosition.count - 1 {
             
-            return self.realmDatabase.writeObjectsPublisher { (realm: Realm) -> [RealmFavoritedResource] in
-                
-                let favoritesSortedByCreatedAt = realm
-                    .objects(RealmFavoritedResource.self)
-                    .sorted(byKeyPath: #keyPath(RealmFavoritedResource.createdAt), ascending: !ascendingOrder)
-                
-                var correctedPosition = 0
-                for favorite in favoritesSortedByCreatedAt {
-                    favorite.position = correctedPosition
-                    correctedPosition += 1
+            let favoritesSortedByCreatedAt = realm
+                .objects(RealmFavoritedResource.self)
+                .sorted(byKeyPath: #keyPath(RealmFavoritedResource.createdAt), ascending: !ascendingOrder)
+                        
+            do {
+                try realm.write {
+                    var correctedPosition = 0
+                    for favorite in favoritesSortedByCreatedAt {
+                        favorite.position = correctedPosition
+                        correctedPosition += 1
+                    }
+                    realm.add(favoritesSortedByCreatedAt)
                 }
-                return Array(favoritesSortedByCreatedAt)
-                
-            } mapInBackgroundClosure: { (objects: [RealmFavoritedResource]) -> [FavoritedResourceDataModel] in
-                return objects.map({
-                    FavoritedResourceDataModel(realmFavoritedResource: $0)
-                })
             }
-            .catch { error in
-                print("error getting sorted favorites: \(error)")
-                
-                return Just(favoritesDataModels)
+            catch let error {
+                print(error)
             }
-            .eraseToAnyPublisher()
+            
+            return Array(favoritesSortedByCreatedAt)
             
         } else {
             
-            return Just(favoritesDataModels)
-                .eraseToAnyPublisher()
+            return Array(favoritesSortedByPosition)
         }
     }
 }
