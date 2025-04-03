@@ -66,9 +66,7 @@ class RealmFavoritedResourcesCache {
     
     func getFavoritedResourcesSortedByPosition(ascendingOrder: Bool = true) -> [FavoritedResourceDataModel] {
         
-        return realmDatabase.openRealm()
-            .objects(RealmFavoritedResource.self)
-            .sorted(byKeyPath: #keyPath(RealmFavoritedResource.position), ascending: ascendingOrder)
+        return validatePositionsForFavoritedResources(ascendingOrder: ascendingOrder)
             .map({FavoritedResourceDataModel(realmFavoritedResource: $0)})
     }
     
