@@ -62,6 +62,19 @@ class TractViewModel: MobileContentRendererViewModel {
         super.init(renderer: renderer, initialPage: initialPage, initialPageConfig: nil, initialPageSubIndex: initialPageSubIndex, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, getTranslatedLanguageName: getTranslatedLanguageName, trainingTipsEnabled: trainingTipsEnabled, incrementUserCounterUseCase: incrementUserCounterUseCase, selectedLanguageIndex: selectedLanguageIndex)
         
         setupBinding()
+        
+        var isFirstRemoteShareNavigationEvent: Bool = true
+        
+        tractRemoteShareSubscriber
+            .navigationEventPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (event: TractRemoteShareNavigationEvent) in
+                
+                let animated: Bool = !isFirstRemoteShareNavigationEvent
+                self?.handleDidReceiveRemoteShareNavigationEvent(navigationEvent: event, animated: animated)
+                isFirstRemoteShareNavigationEvent = false
+            }
+            .store(in: &cancellables)
     }
     
     deinit {
@@ -71,8 +84,6 @@ class TractViewModel: MobileContentRendererViewModel {
         tractRemoteSharePublisher.didCreateNewSubscriberChannelIdForPublish.removeObserver(self)
         tractRemoteSharePublisher.endPublishingSession(disconnectSocket: true)
         
-        tractRemoteShareSubscriber.navigationEventSignal.removeObserver(self)
-        tractRemoteShareSubscriber.subscribedToChannelObserver.removeObserver(self)
         tractRemoteShareSubscriber.unsubscribe(disconnectSocket: true)
     }
     
@@ -89,22 +100,6 @@ class TractViewModel: MobileContentRendererViewModel {
             DispatchQueue.main.async { [weak self] in
                 self?.didSubscribeForRemoteSharePublishing.accept(value: true)
                 self?.reloadRemoteShareIsActive()
-            }
-        }
-        
-        tractRemoteShareSubscriber.subscribedToChannelObserver.addObserver(self) { [weak self] (isSubscribed: Bool) in
-            DispatchQueue.main.async { [weak self] in
-                self?.reloadRemoteShareIsActive()
-            }
-        }
-        
-        var isFirstRemoteShareNavigationEvent: Bool = true
-        
-        tractRemoteShareSubscriber.navigationEventSignal.addObserver(self) { [weak self] (navigationEvent: TractRemoteShareNavigationEvent) in
-            DispatchQueue.main.async { [weak self] in
-                let animated: Bool = !isFirstRemoteShareNavigationEvent
-                self?.handleDidReceiveRemoteShareNavigationEvent(navigationEvent: navigationEvent, animated: animated)
-                isFirstRemoteShareNavigationEvent = false
             }
         }
     }
@@ -344,15 +339,27 @@ extension TractViewModel {
     
     private func subscribeToLiveShareStreamIfNeeded() {
         
-        guard let channelId = liveShareStream, !channelId.isEmpty else {
+        guard let channelId = liveShareStream, let channel = WebSocketChannel(id: channelId) else {
             return
         }
+        
+        tractRemoteShareSubscriber
+            .subscribePublisher(channel: channel)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] completion in
                 
-        tractRemoteShareSubscriber.subscribe(channelId: channelId) { [weak self] (error: TractRemoteShareSubscriberError?) in
-            DispatchQueue.main.async { [weak self] in
-                self?.trackShareScreenOpened()
+                switch completion {
+                case .finished:
+                    self?.trackShareScreenOpened()
+                    self?.reloadRemoteShareIsActive()
+                case .failure( _):
+                    break
+                }
+                
+            } receiveValue: { _ in
+                
             }
-        }
+            .store(in: &cancellables)
     }
     
     private func handleDidReceiveRemoteShareNavigationEvent(navigationEvent: TractRemoteShareNavigationEvent, animated: Bool) {

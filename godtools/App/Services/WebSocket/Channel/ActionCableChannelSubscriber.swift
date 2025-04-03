@@ -12,16 +12,14 @@ import Combine
 class ActionCableChannelSubscriber: NSObject, WebSocketChannelSubscriberInterface {
     
     private let webSocket: WebSocketInterface
+    private let didSubscribeSubject: PassthroughSubject<WebSocketChannel, Never> = PassthroughSubject()
     private let loggingEnabled: Bool
     
     private var cancellables: Set<AnyCancellable> = Set()
-    private var channelToSubscribeTo: String?
-    private var isSubscribingToChannel: String?
-    private var subscribedToChannel: String?
-    private var isObservingTextSignal: Bool = false
-    
-    let didSubscribeToChannelSignal: SignalValue<String> = SignalValue()
-    
+    private var channelToSubscribeTo: WebSocketChannel?
+    private var isSubscribingToChannel: WebSocketChannel?
+    private var subscribedToChannel: WebSocketChannel?
+        
     required init(webSocket: WebSocketInterface, loggingEnabled: Bool) {
         
         self.webSocket = webSocket
@@ -46,15 +44,14 @@ class ActionCableChannelSubscriber: NSObject, WebSocketChannelSubscriberInterfac
     var isSubscribedToChannel: Bool {
         return subscribedToChannel != nil
     }
-    
-    func subscribe(url: URL, channelId: String) {
-                
-        channelToSubscribeTo = channelId
+
+    func subscribePublisher(url: URL, channel: WebSocketChannel) -> AnyPublisher<WebSocketChannel, Never> {
+        
+        channelToSubscribeTo = channel
         
         if webSocket.connectionState != .connected && webSocket.connectionState != .connecting {
             
             webSocket.connectPublisher(url: url)
-                .receive(on: DispatchQueue.main)
                 .sink { [weak self] completion in
                     
                     switch completion {
@@ -73,6 +70,9 @@ class ActionCableChannelSubscriber: NSObject, WebSocketChannelSubscriberInterfac
             
             handleDidConnectToWebsocket()
         }
+        
+        return didSubscribeSubject
+            .eraseToAnyPublisher()
     }
     
     func unsubscribe() {
@@ -82,12 +82,12 @@ class ActionCableChannelSubscriber: NSObject, WebSocketChannelSubscriberInterfac
         subscribedToChannel = nil
     }
     
-    private func handleDidSubscribeToChannel(channelId: String) {
+    private func handleDidSubscribeToChannel(channel: WebSocketChannel) {
         
         channelToSubscribeTo = nil
         isSubscribingToChannel = nil
-        subscribedToChannel = channelId
-        didSubscribeToChannelSignal.accept(value: channelId)
+        subscribedToChannel = channel
+        didSubscribeSubject.send(channel)
     }
     
     private func handleDidConnectToWebsocket() {
@@ -140,10 +140,12 @@ class ActionCableChannelSubscriber: NSObject, WebSocketChannelSubscriberInterfac
 
         }
         else if event?.type == "confirm_subscription" {
-            if let channelToSubscribeTo = channelToSubscribeTo, let isSubscribingToChannel = isSubscribingToChannel {
-                if channelToSubscribeTo == isSubscribingToChannel {
-                    handleDidSubscribeToChannel(channelId: channelToSubscribeTo)
-                }
+            
+            if let channelToSubscribeTo = channelToSubscribeTo,
+               let isSubscribingToChannel = isSubscribingToChannel,
+               channelToSubscribeTo == isSubscribingToChannel {
+                
+                handleDidSubscribeToChannel(channel: channelToSubscribeTo)
             }
         }
     }
