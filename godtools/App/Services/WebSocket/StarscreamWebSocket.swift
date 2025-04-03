@@ -34,11 +34,7 @@ class StarscreamWebSocket: NSObject, WebSocketInterface {
     
     func connectPublisher(url: URL) -> AnyPublisher<Void, Error> {
         
-        guard connectionState != .connected && connectionState != .connecting else {
-            let error: Error = NSError.errorWithDescription(description: "Is connected or attempting connection.")
-            return Fail(error: error)
-                .eraseToAnyPublisher()
-        }
+        disconnect()
         
         connectionState = .connecting
         
@@ -57,7 +53,7 @@ class StarscreamWebSocket: NSObject, WebSocketInterface {
     }
     
     func disconnect() {
-        connectionState = .disconnecting
+        connectionState = .disconnected
         socket?.disconnect()
     }
     

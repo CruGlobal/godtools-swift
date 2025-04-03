@@ -12,6 +12,7 @@ import Combine
 class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherInterface {
     
     private let webSocket: WebSocketInterface
+    private let didCreateChannelSubject: PassthroughSubject<WebSocketChannel, Never> = PassthroughSubject()
     private let loggingEnabled: Bool
     
     private var cancellables: Set<AnyCancellable> = Set()
@@ -19,12 +20,10 @@ class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherInterface 
     private var publishingToSubscriberChannel: WebSocketChannel?
     private var appResignedActive: Bool = false
     
-    private(set) var websocketUrl: URL?
+    private(set) var webSocketUrl: URL?
     private(set) var channel: WebSocketChannel?
     private(set) var publishChannel: WebSocketChannel?
-    
-    let didCreateChannelForPublish: SignalValue<String> = SignalValue()
-    
+        
     required init(webSocket: WebSocketInterface, loggingEnabled: Bool) {
         
         self.webSocket = webSocket
@@ -51,7 +50,7 @@ class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherInterface 
         webSocket.disconnect()
     }
     
-    var isSubscriberChannelIdCreatedForPublish: Bool {
+    var isSubscriberChannelCreatedForPublish: Bool {
         return publishingToSubscriberChannel != nil
     }
     
@@ -59,9 +58,9 @@ class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherInterface 
         return publishingToSubscriberChannel
     }
     
-    func createChannelForPublish(url: URL, channel: WebSocketChannel?) {
-                        
-        self.websocketUrl = url
+    func createChannelPublisher(url: URL, channel: WebSocketChannel) -> AnyPublisher<WebSocketChannel, Never> {
+        
+        self.webSocketUrl = url
         self.channel = channel
         
         channelToCreate = channel
@@ -87,6 +86,9 @@ class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherInterface 
             
             handleDidConnectToWebsocket()
         }
+        
+        return didCreateChannelSubject
+            .eraseToAnyPublisher()
     }
     
     func sendMessage(data: String) {
@@ -181,7 +183,8 @@ class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherInterface 
         
         channelToCreate = nil
         publishingToSubscriberChannel = subscriberChannel
-        didCreateChannelForPublish.accept(value: subscriberChannel.id)
+        didCreateChannelSubject.send(subscriberChannel)
+        didCreateChannelSubject.send(completion: .finished)
     }
 }
 
@@ -200,10 +203,10 @@ extension ActionCableChannelPublisher {
         
         appResignedActive = false
         
-        guard let websocketUrl = self.websocketUrl, let channel = self.channel else {
+        guard let websocketUrl = self.webSocketUrl, let channel = self.channel else {
             return
         }
         
-        createChannelForPublish(url: websocketUrl, channel: channel)
+        _ = createChannelPublisher(url: websocketUrl, channel: channel)
     }
 }

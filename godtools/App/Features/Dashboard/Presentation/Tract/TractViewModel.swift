@@ -60,11 +60,21 @@ class TractViewModel: MobileContentRendererViewModel {
         languageFont = FontLibrary.systemUIFont(size: 14, weight: .regular)
         
         super.init(renderer: renderer, initialPage: initialPage, initialPageConfig: nil, initialPageSubIndex: initialPageSubIndex, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, getTranslatedLanguageName: getTranslatedLanguageName, trainingTipsEnabled: trainingTipsEnabled, incrementUserCounterUseCase: incrementUserCounterUseCase, selectedLanguageIndex: selectedLanguageIndex)
-        
-        setupBinding()
+                
+        tractRemoteSharePublisher
+            .didCreateChannelPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { completion in
+                
+            } receiveValue: { [weak self] (channel: WebSocketChannel) in
+                
+                self?.didSubscribeForRemoteSharePublishing.accept(value: true)
+                self?.reloadRemoteShareIsActive()
+            }
+            .store(in: &cancellables)
+
         
         var isFirstRemoteShareNavigationEvent: Bool = true
-        
         tractRemoteShareSubscriber
             .navigationEventPublisher
             .receive(on: DispatchQueue.main)
@@ -81,7 +91,6 @@ class TractViewModel: MobileContentRendererViewModel {
                 
         print("x deinit: \(type(of: self))")
         
-        tractRemoteSharePublisher.didCreateNewSubscriberChannelIdForPublish.removeObserver(self)
         tractRemoteSharePublisher.endPublishingSession(disconnectSocket: true)
         
         tractRemoteShareSubscriber.unsubscribe(disconnectSocket: true)
@@ -94,19 +103,9 @@ class TractViewModel: MobileContentRendererViewModel {
         return tractRemoteSharePublisher.webSocketIsConnected || tractRemoteShareSubscriber.webSocketIsConnected || !liveShareStreamChannelIdIsEmpty
     }
     
-    private func setupBinding() {
-        
-        tractRemoteSharePublisher.didCreateNewSubscriberChannelIdForPublish.addObserver(self) { [weak self] (channel: TractRemoteShareChannel) in
-            DispatchQueue.main.async { [weak self] in
-                self?.didSubscribeForRemoteSharePublishing.accept(value: true)
-                self?.reloadRemoteShareIsActive()
-            }
-        }
-    }
-    
     private func reloadRemoteShareIsActive() {
         
-        let remoteShareIsActive: Bool = tractRemoteSharePublisher.isSubscriberChannelIdCreatedForPublish || tractRemoteShareSubscriber.isSubscribedToChannel
+        let remoteShareIsActive: Bool = tractRemoteSharePublisher.isSubscriberChannelCreatedForPublish || tractRemoteShareSubscriber.isSubscribedToChannel
         
         self.remoteShareIsActive = remoteShareIsActive
         
@@ -447,7 +446,7 @@ extension TractViewModel {
     
     func sendRemoteShareNavigationEvent(page: Int, pagePositions: TractPagePositions) {
         
-        guard tractRemoteSharePublisher.isSubscriberChannelIdCreatedForPublish else {
+        guard tractRemoteSharePublisher.isSubscriberChannelCreatedForPublish else {
             return
         }
         

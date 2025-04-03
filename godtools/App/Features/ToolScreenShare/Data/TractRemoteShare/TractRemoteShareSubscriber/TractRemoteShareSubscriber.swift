@@ -95,7 +95,10 @@ class TractRemoteShareSubscriber: NSObject {
         
         self.didSubscribeToChannelSubject = didSubscribeToChannelSubject
         
-        timeoutTimer = Timer.scheduledTimer(withTimeInterval: Self.timeoutIntervalSeconds, repeats: false) { _ in
+        timeoutTimer = Timer.scheduledTimer(withTimeInterval: Self.timeoutIntervalSeconds, repeats: false) { [weak self] _ in
+            
+            self?.stopTimeoutTimer()
+            
             didSubscribeToChannelSubject.send(completion: .failure(.timedOut))
         }
         

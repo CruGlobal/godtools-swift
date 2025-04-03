@@ -12,5 +12,4 @@ enum WebSocketConnectionState {
     case connected
     case connecting
     case disconnected
-    case disconnecting
 }

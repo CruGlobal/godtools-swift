@@ -58,17 +58,26 @@ class CreatingToolScreenShareSessionViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        tractRemoteSharePublisher.createNewSubscriberChannelIdForPublish { [weak self] (result: Result<TractRemoteShareChannel, TractRemoteSharePublisherError>) in
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
-
-                self?.flowDelegate?.navigate(step: .didCreateSessionFromCreatingToolScreenShareSession(result: result))
+        tractRemoteSharePublisher
+            .createNewSubscriberChannelIdForPublish()
+            .receive(on: DispatchQueue.main)
+            .sink { completion in
+                
+            } receiveValue: { [weak self] (channel: WebSocketChannel) in
+                
             }
-        }
+            .store(in: &cancellables)
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
+    }
+    
+    private func didCreateNewSubscriberChannelForPublish(result: Result<WebSocketChannel, TractRemoteSharePublisherError>) {
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            self?.flowDelegate?.navigate(step: .didCreateSessionFromCreatingToolScreenShareSession(result: result))
+        }
     }
 }
 

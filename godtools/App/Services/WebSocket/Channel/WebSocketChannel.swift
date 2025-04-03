@@ -20,6 +20,14 @@ struct WebSocketChannel {
         
         self.id = id
     }
+    
+    private init() {
+        id = UUID().uuidString
+    }
+    
+    static func getUniqueChannel() -> WebSocketChannel {
+        return WebSocketChannel()
+    }
 }
 
 extension WebSocketChannel: Equatable {
