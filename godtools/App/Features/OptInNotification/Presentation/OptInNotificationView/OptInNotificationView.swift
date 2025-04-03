@@ -10,11 +10,6 @@ import BottomSheet
 import Foundation
 import SwiftUI
 
-// DSR
-// TODO:
-// - Adaptive sizing testing
-// - General testing
-
 struct OptInNotificationView: View {
     @ObservedObject private var viewModel: OptInNotificationViewModel
 

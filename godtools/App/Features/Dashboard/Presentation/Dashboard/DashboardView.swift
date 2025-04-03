@@ -119,9 +119,6 @@ struct DashboardView: View {
         }
     }
 
-    @ViewBuilder private func getOptInNotificationView() -> some View {
-
-    }
 }
 
 extension DashboardView {

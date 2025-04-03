@@ -159,7 +159,6 @@ extension DashboardViewModel {
         return dashboardPresentationLayerDependencies.toolsViewModel
     }
 
-    //here
     func getOptInNotificationViewModel() -> OptInNotificationViewModel {
         return dashboardPresentationLayerDependencies.optInNotificationViewModel
     }

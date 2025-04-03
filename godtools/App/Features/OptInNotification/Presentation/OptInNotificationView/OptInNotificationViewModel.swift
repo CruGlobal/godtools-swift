@@ -136,9 +136,8 @@ class OptInNotificationViewModel: ObservableObject {
 
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/yyyy"
-        let lastPromptedDate =
-            dateFormatter.date(from: lastPrompted ?? "01/01/2000")
-            ?? Date.distantPast
+        let lastPromptedDate = lastPrompted.flatMap { dateFormatter.date(from: $0) } ?? Date()
+
 
         let currentDate = Date()
         let calendar = Calendar.current
@@ -154,14 +153,9 @@ class OptInNotificationViewModel: ObservableObject {
                     bottomSheetPosition = .dynamicTop
                 }
 
-                guard let testDate = dateFormatter.date(from: "01/01/2025")
-                else {
-                    return
-                }
-
                 // First time prompt, or previously denied but due for another prompt
                 lastPromptedOptInNotificationRepository.recordLastPrompted(
-                    dateString: dateFormatter.string(from: testDate))
+                    dateString: dateFormatter.string(from: Date.now))
 
             }
             // Permission already granted, or previously denied and prompted recently (No-Op)
