@@ -14,8 +14,7 @@ import UserNotifications
 
 class OptInNotificationViewModel: ObservableObject {
 
-    private let lastPromptedOptInNotificationRepository:
-        LastPromptedOptInNotificationRepository
+    private let optInNotificationRepository: OptInNotificationRepository
     private let viewOptInNotificationUseCase: ViewOptInNotificationUseCase
     private let viewOptInDialogUseCase: ViewOptInDialogUseCase
     private let requestNotificationPermissionUseCase:
@@ -35,7 +34,7 @@ class OptInNotificationViewModel: ObservableObject {
     @Published private var appLanguage: AppLanguageDomainModel =
         LanguageCodeDomainModel.english.rawValue
 
-    @Published var bottomSheetPosition: BottomSheetPosition = .hidden
+    @Published var isActive: Bool = false
 
     @Published var title: String = ""
     @Published var body: String = ""
@@ -43,8 +42,8 @@ class OptInNotificationViewModel: ObservableObject {
     @Published var maybeLaterActionTitle: String = ""
 
     init(
-        lastPromptedOptInNotificationRepository:
-            LastPromptedOptInNotificationRepository,
+        optInNotificationRepository:
+            OptInNotificationRepository,
         viewOptInNotificationUseCase: ViewOptInNotificationUseCase,
         viewOptInDialogUseCase: ViewOptInDialogUseCase,
         requestNotificationPermissionUseCase:
@@ -55,8 +54,8 @@ class OptInNotificationViewModel: ObservableObject {
 
     ) {
 
-        self.lastPromptedOptInNotificationRepository =
-            lastPromptedOptInNotificationRepository
+        self.optInNotificationRepository =
+            optInNotificationRepository
         self.viewOptInNotificationUseCase = viewOptInNotificationUseCase
         self.viewOptInDialogUseCase = viewOptInDialogUseCase
         self.requestNotificationPermissionUseCase =
@@ -74,7 +73,8 @@ class OptInNotificationViewModel: ObservableObject {
             .dropFirst()
             .flatMap { appLanguage in
                 viewOptInNotificationUseCase.viewPublisher(
-                    appLanguage: appLanguage)
+                    appLanguage: appLanguage
+                )
             }
             .receive(on: DispatchQueue.main)
             .sink {
@@ -103,7 +103,7 @@ class OptInNotificationViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (void: Void) in
 
-                self?.bottomSheetPosition = .hidden
+                self?.isActive = false
             }
             .store(in: &cancellables)
 
@@ -130,35 +130,36 @@ class OptInNotificationViewModel: ObservableObject {
     func shouldPromptNotificationSheet() async {
 
         refreshNotificationStatus()
+        print("Notification Status: \(notificationStatus ?? "nil")")
 
         let lastPrompted =
-            lastPromptedOptInNotificationRepository.getLastPrompted()
+            optInNotificationRepository.getLastPrompted()
+            ?? Date.distantPast
 
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM/dd/yyyy"
-        let lastPromptedDate = lastPrompted.flatMap { dateFormatter.date(from: $0) } ?? Date()
-
+        let promptCount =
+            optInNotificationRepository.getPromptCount()
 
         let currentDate = Date()
         let calendar = Calendar.current
         let twoMonthsAgo = calendar.date(
-            byAdding: .month, value: -2, to: currentDate)!
+            byAdding: .month,
+            value: -2,
+            to: currentDate
+        )!
 
-        if notificationStatus != "Approved" {
-            if notificationStatus == "Undetermined"
-                || notificationStatus == "Denied"
-                    && lastPromptedDate < twoMonthsAgo
-            {
-                await MainActor.run {
-                    bottomSheetPosition = .dynamicTop
-                }
+        guard notificationStatus != "Approved" else { return }
+        //        guard promptCount <= 5 else { return }
 
-                // First time prompt, or previously denied but due for another prompt
-                lastPromptedOptInNotificationRepository.recordLastPrompted(
-                    dateString: dateFormatter.string(from: Date.now))
+        if (notificationStatus == "Denied"
+            || notificationStatus == "Undetermined")
+            && lastPrompted > twoMonthsAgo
+        {
 
+            await MainActor.run {
+                isActive = true
             }
-            // Permission already granted, or previously denied and prompted recently (No-Op)
+
+            optInNotificationRepository.recordPrompt()
         }
 
     }
@@ -180,14 +181,16 @@ extension OptInNotificationViewModel {
 
                 if permissionGranted {
                     // Theoretically should never happen because a user who has granted permissions should not end up in this view
-                    self.bottomSheetPosition = .hidden
+                    self.isActive = false
                 } else {
                     if !isFirstDialogPrompt {
                         self.flowDelegate?.navigate(
                             step: .allowNotificationsTappedFromBottomSheet(
-                                userDialogReponse: userDialogReponse))
+                                userDialogReponse: userDialogReponse
+                            )
+                        )
                     } else {
-                        self.bottomSheetPosition = .hidden
+                        self.isActive = false
                     }
 
                 }
@@ -197,6 +200,6 @@ extension OptInNotificationViewModel {
     }
 
     func maybeLaterTapped() {
-        bottomSheetPosition = .hidden
+        isActive = false
     }
 }

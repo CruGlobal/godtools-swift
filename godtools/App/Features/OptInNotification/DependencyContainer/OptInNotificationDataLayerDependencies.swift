@@ -19,11 +19,11 @@ class OptInNotificationDataLayerDependencies {
 
     // MARK: - Data Layer Classes
 
-    func getLastPromptedOptInNotificationRepository()
-        -> LastPromptedOptInNotificationRepository
+    func getOptInNotificationRepository()
+        -> OptInNotificationRepository
     {
-        return LastPromptedOptInNotificationRepository(
-            cache: LastPromptedOptInNotificationUserDefaultsCache(
+        return OptInNotificationRepository(
+            cache: OptInNotificationsUserDefaultsCache(
                 sharedUserDefaultsCache:
                     coreDataLayer.getSharedUserDefaultsCache())
         )

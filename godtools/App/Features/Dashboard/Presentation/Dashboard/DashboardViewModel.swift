@@ -33,7 +33,8 @@ class DashboardViewModel: ObservableObject {
     @Published var currentTab: Int = 0
 
     init(
-        startingTab: DashboardTabTypeDomainModel, flowDelegate: FlowDelegate,
+        startingTab: DashboardTabTypeDomainModel,
+        flowDelegate: FlowDelegate,
         dashboardPresentationLayerDependencies:
             DashboardPresentationLayerDependencies,
         getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
@@ -74,7 +75,9 @@ class DashboardViewModel: ObservableObject {
 
                 self?.reloadTabs()  // NOTE: Needed since button title interface strings aren't connected to the View. ~Levi
                 self?.setStartingTabIfNeeded(
-                    startingTab: startingTab, tabs: self?.tabs ?? Array())
+                    startingTab: startingTab,
+                    tabs: self?.tabs ?? Array()
+                )
             }
             .store(in: &cancellables)
 
@@ -140,7 +143,7 @@ extension DashboardViewModel {
 
     @objc func menuTapped() {
         if dashboardPresentationLayerDependencies.optInNotificationViewModel
-            .bottomSheetPosition != .dynamicTop
+            .isActive == false
         {
             flowDelegate?.navigate(step: .menuTappedFromTools)
         }

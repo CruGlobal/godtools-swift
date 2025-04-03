@@ -125,9 +125,9 @@ class DashboardPresentationLayerDependencies {
 
         return OptInNotificationViewModel(
 
-            lastPromptedOptInNotificationRepository: appDiContainer.feature
+            optInNotificationRepository: appDiContainer.feature
                 .optInNotification.dataLayer
-                .getLastPromptedOptInNotificationRepository(),
+                .getOptInNotificationRepository(),
             viewOptInNotificationUseCase: appDiContainer.feature
                 .optInNotification.domainLayer
                 .getViewOptInNotificationUseCase(),

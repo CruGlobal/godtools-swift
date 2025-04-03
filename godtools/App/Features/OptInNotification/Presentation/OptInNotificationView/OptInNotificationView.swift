@@ -19,94 +19,91 @@ struct OptInNotificationView: View {
 
     var body: some View {
 
-        ZStack {
-            if viewModel.bottomSheetPosition == .dynamicTop {
-                Color.black.opacity(0.2).edgesIgnoringSafeArea(.all)
-            }
-
-            Color.clear.bottomSheet(
-                bottomSheetPosition: $viewModel.bottomSheetPosition,
-                switchablePositions: [.hidden, .dynamicTop],
-                headerContent: {},
-                mainContent: {
-                    VStack {
-                        Image("notification_graphic").resizable()
-                            .scaledToFit()
-                            .padding(
-                                EdgeInsets(
-                                    top: 5, leading: 5, bottom: 0,
-                                    trailing: 5)
-                            ).overlay(
-                                Rectangle()
-                                    .frame(height: 2)
-                                    .foregroundColor(
-                                        Color(
-                                            uiColor: ColorPalette.gtBlue
-                                                .uiColor
-                                        )),
-                                alignment: .bottom
-                            )
-                        Text(viewModel.title)
-                            .foregroundColor(
-                                Color(uiColor: ColorPalette.gtBlue.uiColor)
-                            ).font(
-                                FontLibrary.sfProTextRegular.font(size: 30)
-                            )
-                            .fontWeight(.bold)
-                            .padding(
-                                .vertical, 10
-                            ).minimumScaleFactor(0.5).lineLimit(1)
-
-                        Text(
-                            viewModel.body
-                        ).font(FontLibrary.sfProTextRegular.font(size: 18))
-                            .foregroundStyle(ColorPalette.gtGrey.color)
-                            .multilineTextAlignment(.center).padding(
-                                .bottom, 12)
-
-                        Button(action: {
-                            viewModel.allowNotificationsTapped()
-
-                        }) {
-                            RoundedRectangle(cornerRadius: 5).fill(
-                                Color(uiColor: ColorPalette.gtBlue.uiColor))
-                        }.frame(height: 45).overlay(
-                            Text(viewModel.allowNotificationsActionTitle)
-                                .foregroundColor(
-                                    .white)
-                        )
-
-                        Button(action: {
-                            viewModel.maybeLaterTapped()
-
-                        }) {
-                            Text(viewModel.maybeLaterActionTitle)
-                                .foregroundColor(
-                                    Color(
-                                        uiColor: ColorPalette.gtBlue.uiColor
-                                    ))
-                        }
-                        .frame(height: 40).padding(
-                            .bottom, 50
-                        )
-                    }.padding(.horizontal, 20)
-                }
-            ).showDragIndicator(false).enableFloatingIPadSheet(true)
-                .sheetWidth(BottomSheetWidth.relative(100))
-                .customBackground(
-                    RoundedRectangle(
-                        cornerRadius: 10
-                    ).stroke(
-                        Color(uiColor: ColorPalette.gtBlue.uiColor),
-                        lineWidth: 8
+        VStack {
+            Image("notification_graphic").resizable()
+                .scaledToFit()
+                .padding(
+                    EdgeInsets(
+                        top: 5,
+                        leading: 5,
+                        bottom: 0,
+                        trailing: 5
                     )
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 10).foregroundStyle(
-                            .white))
+                ).overlay(
+                    Rectangle()
+                        .frame(height: 2)
+                        .foregroundColor(
+                            Color(
+                                uiColor: ColorPalette.gtBlue
+                                    .uiColor
+                            )
+                        ),
+                    alignment: .bottom
                 )
-                .padding(.horizontal, UIScreen.main.bounds.width * 0.05)
+            Text(viewModel.title)
+                .foregroundColor(
+                    Color(uiColor: ColorPalette.gtBlue.uiColor)
+                ).font(
+                    FontLibrary.sfProTextRegular.font(size: 30)
+                )
+                .fontWeight(.bold)
+                .padding(
+                    .vertical,
+                    10
+                ).minimumScaleFactor(0.5).lineLimit(1)
 
-        }
+            Text(
+                viewModel.body
+            ).font(FontLibrary.sfProTextRegular.font(size: 18))
+                .foregroundStyle(ColorPalette.gtGrey.color)
+                .multilineTextAlignment(.center).padding(
+                    .bottom,
+                    12
+                )
+
+            Button(action: {
+                viewModel.allowNotificationsTapped()
+
+            }) {
+                RoundedRectangle(cornerRadius: 5).fill(
+                    Color(uiColor: ColorPalette.gtBlue.uiColor)
+                )
+            }.frame(height: 45).overlay(
+                Text(viewModel.allowNotificationsActionTitle)
+                    .foregroundColor(
+                        .white
+                    )
+            )
+
+            Button(action: {
+                viewModel.maybeLaterTapped()
+
+            }) {
+                Text(viewModel.maybeLaterActionTitle)
+                    .foregroundColor(
+                        Color(
+                            uiColor: ColorPalette.gtBlue.uiColor
+                        )
+                    )
+            }
+            .frame(height: 40).padding(
+                .bottom,
+                50
+            )
+        }.padding(.horizontal, 20).background(
+            RoundedRectangle(
+                cornerRadius: 10
+            ).stroke(
+                Color(uiColor: ColorPalette.gtBlue.uiColor),
+                lineWidth: 8
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 10).foregroundStyle(
+                    .white
+                )
+            )
+        )
+        .padding(.horizontal, UIScreen.main.bounds.width * 0.05)
 
     }
 
@@ -123,9 +120,9 @@ struct OptInNotificationView_Preview: PreviewProvider {
 
         let viewModel = OptInNotificationViewModel(
 
-            lastPromptedOptInNotificationRepository: appDiContainer.feature
+            optInNotificationRepository: appDiContainer.feature
                 .optInNotification.dataLayer
-                .getLastPromptedOptInNotificationRepository(),
+                .getOptInNotificationRepository(),
             viewOptInNotificationUseCase: appDiContainer.feature
                 .optInNotification.domainLayer
                 .getViewOptInNotificationUseCase(),

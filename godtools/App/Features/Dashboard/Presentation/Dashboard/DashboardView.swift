@@ -17,11 +17,15 @@ struct DashboardView: View {
     static let scrollViewBottomSpacingToTabBar: CGFloat = 30
 
     @ObservedObject private var viewModel: DashboardViewModel
+    @ObservedObject private var optInNotificationModel:
+        OptInNotificationViewModel
 
     init(
-        viewModel: DashboardViewModel
+        viewModel: DashboardViewModel,
+        optInNotificationViewModel: OptInNotificationViewModel
     ) {
         self.viewModel = viewModel
+        self.optInNotificationModel = optInNotificationViewModel
     }
 
     var body: some View {
@@ -89,19 +93,29 @@ struct DashboardView: View {
                     )
                 }
             }.overlay(
-
                 content: {
-                    OptInNotificationView(
-                        viewModel: viewModel.getOptInNotificationViewModel()
-                    ).environment(
-                        \.layoutDirection,
-                        ApplicationLayout.shared
-                            .layoutDirection)
+                    if optInNotificationModel.isActive == true {
+                        Group {
+                            ZStack(alignment: Alignment.bottom) {
+
+                                Color.black.opacity(0.2)
+                                    .edgesIgnoringSafeArea(.all)
+
+                                OptInNotificationView(
+                                    viewModel:
+                                        viewModel.getOptInNotificationViewModel()
+                                )
+                            }
+
+                        }
+                    }
                 }
             )
         }
         .environment(
-            \.layoutDirection, ApplicationLayout.shared.layoutDirection)
+            \.layoutDirection,
+            ApplicationLayout.shared.layoutDirection
+        )
     }
 
     @ViewBuilder private func getDashboardPageView(index: Int) -> some View {
@@ -145,7 +159,8 @@ struct DashboardView_Previews: PreviewProvider {
         DashboardPresentationLayerDependencies =
             DashboardPresentationLayerDependencies(
                 appDiContainer: Self.diContainer,
-                flowDelegate: Self.flowDelegate)
+                flowDelegate: Self.flowDelegate
+            )
 
     static func getDashboardViewModel() -> DashboardViewModel {
 
@@ -169,6 +184,9 @@ struct DashboardView_Previews: PreviewProvider {
     static var previews: some View {
 
         DashboardView(
-            viewModel: Self.getDashboardViewModel())
+            viewModel: Self.getDashboardViewModel(),
+            optInNotificationViewModel: dashboardDependencies
+                .optInNotificationViewModel
+        )
     }
 }

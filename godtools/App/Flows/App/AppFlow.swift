@@ -650,7 +650,7 @@ extension AppFlow {
             dashboardTabObserver: dashboardTabObserver
         )
 
-        let view = DashboardView(viewModel: viewModel)
+        let view = DashboardView(viewModel: viewModel, optInNotificationViewModel: viewModel.getOptInNotificationViewModel())
 
         let menuButton = AppMenuBarItem(
             color: .white,
