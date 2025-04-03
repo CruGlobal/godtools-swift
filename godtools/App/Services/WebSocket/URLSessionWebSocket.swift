@@ -11,12 +11,6 @@ import Combine
 
 class URLSessionWebSocket: NSObject, WebSocketInterface {
     
-    enum ConnectionState {
-        case connecting
-        case connected
-        case disconnected
-    }
-    
     private let ignoreCacheSession: IgnoreCacheSession = IgnoreCacheSession()
     private let didReceiveTextSubject: PassthroughSubject<String, Never> = PassthroughSubject()
     
@@ -28,7 +22,7 @@ class URLSessionWebSocket: NSObject, WebSocketInterface {
     private var didConnectSubject: PassthroughSubject<Void, Error>?
     private var keepAliveTimer: Timer?
     
-    private(set) var connectionState: ConnectionState = .disconnected
+    private(set) var connectionState: WebSocketConnectionState = .disconnected
         
     override init() {
         super.init()
@@ -40,7 +34,7 @@ class URLSessionWebSocket: NSObject, WebSocketInterface {
     
     private func keepSocketAlive() {
         
-        guard isConnected, let webSocketTask = currentWebSocketTask else {
+        guard connectionState == .connected, let webSocketTask = currentWebSocketTask else {
             return
         }
         
@@ -61,17 +55,9 @@ class URLSessionWebSocket: NSObject, WebSocketInterface {
             .eraseToAnyPublisher()
     }
     
-    var isConnecting: Bool {
-        return connectionState == .connecting
-    }
-    
-    var isConnected: Bool {
-        return connectionState == .connected
-    }
-    
     func connectPublisher(url: URL) -> AnyPublisher<Void, Error> {
         
-        guard !isConnected && !isConnecting else {
+        guard connectionState != .connected && connectionState != .connecting else {
             let error: Error = NSError.errorWithDescription(description: "Is connected or attempting connection.")
             return Fail(error: error)
                 .eraseToAnyPublisher()
@@ -160,12 +146,15 @@ extension URLSessionWebSocket: URLSessionWebSocketDelegate {
     
     func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didOpenWithProtocol protocol: String?) {
                 
-        connectionState = .connected
-                
-        didConnectSubject?.send(completion: .finished)
-        didConnectSubject = nil
-        
-        keepSocketAlive()
+        if connectionState == .connecting {
+         
+            connectionState = .connected
+                    
+            didConnectSubject?.send(completion: .finished)
+            didConnectSubject = nil
+            
+            keepSocketAlive()
+        }
     }
     
     func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didCloseWith closeCode: URLSessionWebSocketTask.CloseCode, reason: Data?) {

@@ -17,7 +17,7 @@ class StarscreamWebSocket: NSObject, WebSocketInterface {
     private var socket: WebSocket?
     private var didConnectSubject: PassthroughSubject<Void, Error>?
     
-    private(set) var isConnected: Bool = false
+    private(set) var connectionState: WebSocketConnectionState = .disconnected
         
     override init() {
         super.init()
@@ -34,11 +34,13 @@ class StarscreamWebSocket: NSObject, WebSocketInterface {
     
     func connectPublisher(url: URL) -> AnyPublisher<Void, Error> {
         
-        guard !isConnected else {
+        guard connectionState != .connected && connectionState != .connecting else {
             let error: Error = NSError.errorWithDescription(description: "Is connected or attempting connection.")
             return Fail(error: error)
                 .eraseToAnyPublisher()
         }
+        
+        connectionState = .connecting
         
         let didConnectSubject: PassthroughSubject<Void, Error> = PassthroughSubject()
         
@@ -55,7 +57,7 @@ class StarscreamWebSocket: NSObject, WebSocketInterface {
     }
     
     func disconnect() {
-        isConnected = false
+        connectionState = .disconnecting
         socket?.disconnect()
     }
     
@@ -73,13 +75,13 @@ extension StarscreamWebSocket {
         switch event {
         
         case .connected( _):
-            isConnected = true
+            connectionState = .connected
             
             didConnectSubject?.send(completion: .finished)
             didConnectSubject = nil
         
         case .disconnected( _, _):
-            isConnected = false
+            connectionState = .disconnected
         
         case .text(let string):
             didReceiveTextSubject.send(string)
@@ -103,10 +105,9 @@ extension StarscreamWebSocket {
             break
         
         case .cancelled:
-            isConnected = false
+            break
         
         case .error( _):
-            isConnected = false
             break
         }
     }

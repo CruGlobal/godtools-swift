@@ -756,6 +756,7 @@
 		458E410B2A9CCE55009769DF /* AppBuildConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458E410A2A9CCE55009769DF /* AppBuildConfiguration.swift */; };
 		458E93412B62A06F0087D45D /* AppShareBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458E93402B62A06F0087D45D /* AppShareBarItem.swift */; };
 		458E93432B62A0B50087D45D /* AppDebugBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458E93422B62A0B50087D45D /* AppDebugBarItem.swift */; };
+		458F9D932D9EBF6A0079BDF3 /* WebSocketConnectionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458F9D922D9EBF5F0079BDF3 /* WebSocketConnectionState.swift */; };
 		4590E0412CE6268A00096D76 /* ScriptJsonApiResponseDataArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4590E03C2CE6268A00096D76 /* ScriptJsonApiResponseDataArray.swift */; };
 		4590E0422CE6268A00096D76 /* ScriptJsonApiResponseBaseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4590E03B2CE6268A00096D76 /* ScriptJsonApiResponseBaseData.swift */; };
 		4590E0432CE6268A00096D76 /* ScriptJsonApiResponseDataObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4590E03D2CE6268A00096D76 /* ScriptJsonApiResponseDataObject.swift */; };
@@ -2461,6 +2462,7 @@
 		458E410A2A9CCE55009769DF /* AppBuildConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBuildConfiguration.swift; sourceTree = "<group>"; };
 		458E93402B62A06F0087D45D /* AppShareBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppShareBarItem.swift; sourceTree = "<group>"; };
 		458E93422B62A0B50087D45D /* AppDebugBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDebugBarItem.swift; sourceTree = "<group>"; };
+		458F9D922D9EBF5F0079BDF3 /* WebSocketConnectionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketConnectionState.swift; sourceTree = "<group>"; };
 		4590E03B2CE6268A00096D76 /* ScriptJsonApiResponseBaseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptJsonApiResponseBaseData.swift; sourceTree = "<group>"; };
 		4590E03C2CE6268A00096D76 /* ScriptJsonApiResponseDataArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptJsonApiResponseDataArray.swift; sourceTree = "<group>"; };
 		4590E03D2CE6268A00096D76 /* ScriptJsonApiResponseDataObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptJsonApiResponseDataObject.swift; sourceTree = "<group>"; };
@@ -8573,6 +8575,7 @@
 			children = (
 				45AD1DD925938A9700A096A0 /* StarscreamWebSocket.swift */,
 				45DE67F12D9C49E1000DB213 /* URLSessionWebSocket.swift */,
+				458F9D922D9EBF5F0079BDF3 /* WebSocketConnectionState.swift */,
 				45AD1DDF25938A9700A096A0 /* WebSocketInterface.swift */,
 				455B6BA82D9C48D000815829 /* Channel */,
 			);
@@ -13314,6 +13317,7 @@
 				45F379092B23642C00EEF039 /* ViewLearnToShareToolDomainModel.swift in Sources */,
 				453F84D12A029FC00005101E /* ArticleAemDownloadGetCacheTimeInterval.swift in Sources */,
 				458B91B62B7D5D6800785C6F /* FavoritesDataLayerDependencies.swift in Sources */,
+				458F9D932D9EBF6A0079BDF3 /* WebSocketConnectionState.swift in Sources */,
 				45CAB4EA28A2CE8000224B5F /* KeyboardNotificationObserver.swift in Sources */,
 				45AAC2A62BB30F0A000AE690 /* RealmGlobalAnalyticsCache.swift in Sources */,
 				45A835292AD1AE12004F5593 /* ToolDetailsFeatureDomainLayerDependencies.swift in Sources */,

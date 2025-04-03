@@ -12,7 +12,7 @@ import Combine
 protocol WebSocketInterface {
         
     var didReceiveTextPublisher: AnyPublisher<String, Never> { get }
-    var isConnected: Bool { get }
+    var connectionState: WebSocketConnectionState { get }
         
     func connectPublisher(url: URL) -> AnyPublisher<Void, Error>
     func disconnect()

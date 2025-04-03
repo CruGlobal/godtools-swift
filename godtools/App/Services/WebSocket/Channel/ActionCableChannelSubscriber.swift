@@ -51,7 +51,7 @@ class ActionCableChannelSubscriber: NSObject, WebSocketChannelSubscriberInterfac
                 
         channelToSubscribeTo = channelId
         
-        if !webSocket.isConnected {
+        if webSocket.connectionState != .connected && webSocket.connectionState != .connecting {
             
             webSocket.connectPublisher(url: url)
                 .receive(on: DispatchQueue.main)
@@ -69,7 +69,7 @@ class ActionCableChannelSubscriber: NSObject, WebSocketChannelSubscriberInterfac
                 }
                 .store(in: &cancellables)
         }
-        else {
+        else if webSocket.connectionState == .connected {
             
             handleDidConnectToWebsocket()
         }
