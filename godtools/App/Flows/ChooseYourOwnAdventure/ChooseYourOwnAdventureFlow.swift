@@ -162,6 +162,8 @@ extension ChooseYourOwnAdventureFlow {
                     navigationBar.setTitleView(
                         titleView: self?.getNewLanguageSelectorView(view: chooseYourOwnAdventureView, viewModel: viewModel, navBarLayoutDirection: navBarLayoutDirection)
                     )
+                } else {
+                    navigationBar.setTitle(title: "")
                 }
             }
             .store(in: &cancellables)
