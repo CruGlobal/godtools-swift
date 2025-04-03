@@ -43,7 +43,7 @@ class TractRemoteSharePublisher: NSObject {
     }
     
     var webSocketIsConnected: Bool {
-        return webSocket.isConnected
+        return webSocket.connectionState == .connected
     }
     
     var isSubscriberChannelIdCreatedForPublish: Bool {
