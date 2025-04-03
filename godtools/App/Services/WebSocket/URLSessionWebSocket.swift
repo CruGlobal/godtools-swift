@@ -18,6 +18,7 @@ class URLSessionWebSocket: NSObject, WebSocketInterface {
     }
     
     private let ignoreCacheSession: IgnoreCacheSession = IgnoreCacheSession()
+    private let didReceiveTextSubject: PassthroughSubject<String, Never> = PassthroughSubject()
     
     private var session: URLSession {
         return ignoreCacheSession.session
@@ -28,9 +29,7 @@ class URLSessionWebSocket: NSObject, WebSocketInterface {
     private var keepAliveTimer: Timer?
     
     private(set) var connectionState: ConnectionState = .disconnected
-    
-    let didReceiveTextSignal: SignalValue<String> = SignalValue()
-    
+        
     override init() {
         super.init()
     }
@@ -57,17 +56,17 @@ class URLSessionWebSocket: NSObject, WebSocketInterface {
         keepAliveTimer = nil
     }
     
+    var didReceiveTextPublisher: AnyPublisher<String, Never> {
+        return didReceiveTextSubject
+            .eraseToAnyPublisher()
+    }
+    
     var isConnecting: Bool {
         return connectionState == .connecting
     }
     
     var isConnected: Bool {
         return connectionState == .connected
-    }
-    
-    func connect(url: URL) {
-                
-        
     }
     
     func connectPublisher(url: URL) -> AnyPublisher<Void, Error> {
@@ -145,7 +144,7 @@ class URLSessionWebSocket: NSObject, WebSocketInterface {
             case .data( _):
                 break
             case .string(let text):
-                didReceiveTextSignal.accept(value: text)
+                didReceiveTextSubject.send(text)
             @unknown default:
                 break
             }

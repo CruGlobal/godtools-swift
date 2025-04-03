@@ -28,10 +28,17 @@ class ActionCableChannelSubscriber: NSObject, WebSocketChannelSubscriberInterfac
         self.loggingEnabled = loggingEnabled
         
         super.init()
+        
+        webSocket
+            .didReceiveTextPublisher
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] (text: String) in
+                self?.handleDidReceiveText(text: text)
+            })
+            .store(in: &cancellables)
     }
     
     deinit {
-        removeTextSignalObserver()
         unsubscribe()
         webSocket.disconnect()
     }
@@ -41,9 +48,7 @@ class ActionCableChannelSubscriber: NSObject, WebSocketChannelSubscriberInterfac
     }
     
     func subscribe(url: URL, channelId: String) {
-        
-        removeTextSignalObserver()
-        
+                
         channelToSubscribeTo = channelId
         
         if !webSocket.isConnected {
@@ -72,31 +77,13 @@ class ActionCableChannelSubscriber: NSObject, WebSocketChannelSubscriberInterfac
     
     func unsubscribe() {
         
-        removeTextSignalObserver()
         channelToSubscribeTo = nil
         isSubscribingToChannel = nil
         subscribedToChannel = nil
     }
     
-    private func addTextSignalObserver() {
-        if !isObservingTextSignal {
-            isObservingTextSignal = true
-            webSocket.didReceiveTextSignal.addObserver(self) { [weak self] (text: String) in
-                self?.handleDidReceiveText(text: text)
-            }
-        }
-    }
-    
-    private func removeTextSignalObserver() {
-        if isObservingTextSignal {
-            isObservingTextSignal = false
-            webSocket.didReceiveTextSignal.removeObserver(self)
-        }
-    }
-    
     private func handleDidSubscribeToChannel(channelId: String) {
         
-        removeTextSignalObserver()
         channelToSubscribeTo = nil
         isSubscribingToChannel = nil
         subscribedToChannel = channelId
@@ -112,9 +99,7 @@ class ActionCableChannelSubscriber: NSObject, WebSocketChannelSubscriberInterfac
         guard let channelId = channelToSubscribeTo else {
             return
         }
-        
-        addTextSignalObserver()
-        
+                
         isSubscribingToChannel = channelId
         
         let strChannel = "{ \"channel\": \"SubscribeChannel\",\"channelId\": \"\(channelId)\" }"

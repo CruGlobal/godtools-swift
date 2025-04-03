@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 class TractRemoteShareSubscriber: NSObject {
             
@@ -18,6 +19,7 @@ class TractRemoteShareSubscriber: NSObject {
     private let jsonServices: JsonServices = JsonServices()
     private let loggingEnabled: Bool
     
+    private var cancellables: Set<AnyCancellable> = Set()
     private var timeoutTimer: Timer?
     private var didSubscribeToChannelClosure: ((_ error: TractRemoteShareSubscriberError?) -> Void)?
     private var isObservingSignals: Bool = false
@@ -34,6 +36,14 @@ class TractRemoteShareSubscriber: NSObject {
         self.loggingEnabled = loggingEnabled
         
         super.init()
+        
+        webSocket
+            .didReceiveTextPublisher
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] (text: String) in
+                self?.handleDidReceiveText(text: text)
+            })
+            .store(in: &cancellables)
     }
     
     deinit {
@@ -94,10 +104,6 @@ class TractRemoteShareSubscriber: NSObject {
             webSocketChannelSubscriber.didSubscribeToChannelSignal.addObserver(self) { [weak self] (channelId: String) in
                 self?.handleDidSubscribeToChannel(channelId: channelId, error: nil)
             }
-            
-            webSocket.didReceiveTextSignal.addObserver(self) { [weak self] (text: String) in
-                self?.handleDidReceiveText(text: text)
-            }
         }
     }
     
@@ -108,7 +114,6 @@ class TractRemoteShareSubscriber: NSObject {
             isObservingSignals = false
             
             webSocketChannelSubscriber.didSubscribeToChannelSignal.removeObserver(self)
-            webSocket.didReceiveTextSignal.removeObserver(self)
         }
     }
     

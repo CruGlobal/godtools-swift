@@ -11,7 +11,7 @@ import Combine
 
 protocol WebSocketInterface {
         
-    var didReceiveTextSignal: SignalValue<String> { get }
+    var didReceiveTextPublisher: AnyPublisher<String, Never> { get }
     var isConnected: Bool { get }
         
     func connectPublisher(url: URL) -> AnyPublisher<Void, Error>

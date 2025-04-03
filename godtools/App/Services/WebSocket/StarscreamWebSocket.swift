@@ -12,20 +12,24 @@ import Combine
 
 class StarscreamWebSocket: NSObject, WebSocketInterface {
         
+    private let didReceiveTextSubject: PassthroughSubject<String, Never> = PassthroughSubject()
+    
     private var socket: WebSocket?
     private var didConnectSubject: PassthroughSubject<Void, Error>?
     
     private(set) var isConnected: Bool = false
-    
-    let didReceiveTextSignal: SignalValue<String> = SignalValue()
-    let didReceiveEventSignal: SignalValue<WebSocketEvent> = SignalValue()
-    
+        
     override init() {
         super.init()
     }
     
     deinit {
         socket?.disconnect()
+    }
+    
+    var didReceiveTextPublisher: AnyPublisher<String, Never> {
+        return didReceiveTextSubject
+            .eraseToAnyPublisher()
     }
     
     func connectPublisher(url: URL) -> AnyPublisher<Void, Error> {
@@ -65,9 +69,7 @@ class StarscreamWebSocket: NSObject, WebSocketInterface {
 extension StarscreamWebSocket {
     
     private func handleWebSocketEvent(event: WebSocketEvent) {
-        
-        didReceiveEventSignal.accept(value: event)
-        
+                
         switch event {
         
         case .connected( _):
@@ -80,7 +82,7 @@ extension StarscreamWebSocket {
             isConnected = false
         
         case .text(let string):
-            didReceiveTextSignal.accept(value: string)
+            didReceiveTextSubject.send(string)
         
         case .binary( _):
             break
