@@ -37,7 +37,6 @@ class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherInterface 
         
         webSocket
             .didReceiveTextPublisher
-            .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] (text: String) in
                 self?.handleDidReceiveText(text: text)
             })
@@ -70,7 +69,6 @@ class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherInterface 
         if webSocket.connectionState != .connected && webSocket.connectionState != .connecting {
             
             webSocket.connectPublisher(url: url)
-                .receive(on: DispatchQueue.main)
                 .sink { [weak self] completion in
                     
                     switch completion {
