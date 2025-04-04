@@ -58,17 +58,38 @@ class CreatingToolScreenShareSessionViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        tractRemoteSharePublisher.createNewSubscriberChannelIdForPublish { [weak self] (result: Result<TractRemoteShareChannel, TractRemoteSharePublisherError>) in
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
-
-                self?.flowDelegate?.navigate(step: .didCreateSessionFromCreatingToolScreenShareSession(result: result))
+        tractRemoteSharePublisher
+            .didCreateChannelPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (channel: WebSocketChannel) in
+                
+                self?.didCreateNewSubscriberChannelForPublish(result: .success(channel))
             }
-        }
+            .store(in: &cancellables)
+        
+        tractRemoteSharePublisher
+            .didFailToCreateChannelPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (error: TractRemoteSharePublisherError) in
+                
+                self?.didCreateNewSubscriberChannelForPublish(result: .failure(error))
+            }
+            .store(in: &cancellables)
+        
+        
+        tractRemoteSharePublisher
+            .createChannelForPublish()
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
+    }
+    
+    private func didCreateNewSubscriberChannelForPublish(result: Result<WebSocketChannel, TractRemoteSharePublisherError>) {
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            self?.flowDelegate?.navigate(step: .didCreateSessionFromCreatingToolScreenShareSession(result: result))
+        }
     }
 }
 

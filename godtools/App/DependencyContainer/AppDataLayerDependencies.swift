@@ -12,6 +12,13 @@ import LocalizationServices
 
 class AppDataLayerDependencies {
     
+    enum WebSocketType {
+        case starscream
+        case urlSession
+    }
+    
+    private static let defaultWebSocketType: WebSocketType = .urlSession
+    
     private let sharedAppBuild: AppBuild
     private let sharedAppConfig: AppConfig
     private let sharedInfoPlist: InfoPlist
@@ -449,5 +456,15 @@ class AppDataLayerDependencies {
     
     func getWebArchiveQueue() -> WebArchiveQueue {
         return WebArchiveQueue(ignoreCacheSession: sharedIgnoreCacheSession)
+    }
+    
+    func getNewWebSocket(url: URL) -> WebSocketInterface {
+        
+        switch Self.defaultWebSocketType {
+        case .starscream:
+            return StarscreamWebSocket(url: url)
+        case .urlSession:
+            return URLSessionWebSocket(url: url)
+        }
     }
 }

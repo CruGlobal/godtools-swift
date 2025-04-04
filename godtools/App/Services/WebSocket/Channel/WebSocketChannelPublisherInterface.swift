@@ -7,17 +7,18 @@
 //
 
 import Foundation
+import Combine
 
 protocol WebSocketChannelPublisherInterface {
     
-    var channelId: String? { get }
-    var publishChannelIdentifier: String? { get }
-    var subscriberChannelId: String? { get }
-    var isSubscriberChannelIdCreatedForPublish: Bool { get }
-    var didCreateChannelForPublish: SignalValue<String> { get }
+    var didCreateChannelPublisher: AnyPublisher<WebSocketChannel, Never> { get }
+    var channel: WebSocketChannel? { get }
+    var publishChannel: WebSocketChannel? { get }
+    var subscriberChannel: WebSocketChannel? { get }
+    var isSubscriberChannelCreatedForPublish: Bool { get }
     
     init(webSocket: WebSocketInterface, loggingEnabled: Bool)
     
-    func createChannelForPublish(url: URL, channelId: String)
+    func createChannel(channel: WebSocketChannel)
     func sendMessage(data: String)
 }

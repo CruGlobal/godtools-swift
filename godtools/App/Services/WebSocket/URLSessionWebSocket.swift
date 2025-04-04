@@ -7,16 +7,13 @@
 //
 
 import Foundation
+import Combine
 
 class URLSessionWebSocket: NSObject, WebSocketInterface {
     
-    enum ConnectionState {
-        case connecting
-        case connected
-        case disconnected
-    }
-    
     private let ignoreCacheSession: IgnoreCacheSession = IgnoreCacheSession()
+    private let didConnectSubject: PassthroughSubject<Void, Never> = PassthroughSubject()
+    private let didReceiveTextSubject: PassthroughSubject<String, Never> = PassthroughSubject()
     
     private var session: URLSession {
         return ignoreCacheSession.session
@@ -25,13 +22,14 @@ class URLSessionWebSocket: NSObject, WebSocketInterface {
     private var currentWebSocketTask: URLSessionWebSocketTask?
     private var keepAliveTimer: Timer?
     
-    private(set) var connectionState: ConnectionState = .disconnected
+    private(set) var connectionState: WebSocketConnectionState = .disconnected
+       
+    let url: URL
     
-    let didConnectSignal: Signal = Signal()
-    let didDisconnectSignal: Signal = Signal()
-    let didReceiveTextSignal: SignalValue<String> = SignalValue()
-    
-    override init() {
+    required init(url: URL) {
+        
+        self.url = url
+        
         super.init()
     }
     
@@ -41,7 +39,7 @@ class URLSessionWebSocket: NSObject, WebSocketInterface {
     
     private func keepSocketAlive() {
         
-        guard isConnected, let webSocketTask = currentWebSocketTask else {
+        guard connectionState == .connected, let webSocketTask = currentWebSocketTask else {
             return
         }
         
@@ -57,14 +55,24 @@ class URLSessionWebSocket: NSObject, WebSocketInterface {
         keepAliveTimer = nil
     }
     
-    var isConnected: Bool {
-        return connectionState == .connected
+    var didConnectPublisher: AnyPublisher<Void, Never> {
+        return didConnectSubject
+            .eraseToAnyPublisher()
     }
     
-    func connect(url: URL) {
-                
-        connectionState = .connecting
+    var didReceiveTextPublisher: AnyPublisher<String, Never> {
+        return didReceiveTextSubject
+            .eraseToAnyPublisher()
+    }
+    
+    func connect() {
+
+        guard connectionState != .connected && connectionState != .connected else {
+            return
+        }
         
+        connectionState = .connecting
+                        
         let webSocketTask: URLSessionWebSocketTask = session.webSocketTask(with: url)
         
         currentWebSocketTask = webSocketTask
@@ -89,8 +97,6 @@ class URLSessionWebSocket: NSObject, WebSocketInterface {
         webSocketTask.cancel(with: .goingAway, reason: nil)
         
         currentWebSocketTask = nil
-        
-        didDisconnectSignal.accept()
     }
     
     func write(string: String) {
@@ -125,7 +131,7 @@ class URLSessionWebSocket: NSObject, WebSocketInterface {
             case .data( _):
                 break
             case .string(let text):
-                didReceiveTextSignal.accept(value: text)
+                didReceiveTextSubject.send(text)
             @unknown default:
                 break
             }
@@ -141,11 +147,14 @@ extension URLSessionWebSocket: URLSessionWebSocketDelegate {
     
     func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didOpenWithProtocol protocol: String?) {
                 
-        connectionState = .connected
-        
-        didConnectSignal.accept()
-        
-        keepSocketAlive()
+        if connectionState == .connecting {
+         
+            connectionState = .connected
+                    
+            didConnectSubject.send(Void())
+            
+            keepSocketAlive()
+        }
     }
     
     func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didCloseWith closeCode: URLSessionWebSocketTask.CloseCode, reason: Data?) {

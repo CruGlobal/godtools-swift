@@ -8,19 +8,23 @@
 
 import Foundation
 import Starscream
+import Combine
 
 class StarscreamWebSocket: NSObject, WebSocketInterface {
         
+    private let didConnectSubject: PassthroughSubject<Void, Never> = PassthroughSubject()
+    private let didReceiveTextSubject: PassthroughSubject<String, Never> = PassthroughSubject()
+    
     private var socket: WebSocket?
     
-    private(set) var isConnected: Bool = false
+    private(set) var connectionState: WebSocketConnectionState = .disconnected
+        
+    let url: URL
     
-    let didConnectSignal: Signal = Signal()
-    let didDisconnectSignal: Signal = Signal()
-    let didReceiveTextSignal: SignalValue<String> = SignalValue()
-    let didReceiveEventSignal: SignalValue<WebSocketEvent> = SignalValue()
-    
-    override init() {
+    required init(url: URL) {
+        
+        self.url = url
+        
         super.init()
     }
     
@@ -28,12 +32,24 @@ class StarscreamWebSocket: NSObject, WebSocketInterface {
         socket?.disconnect()
     }
     
-    func connect(url: URL) {
+    var didConnectPublisher: AnyPublisher<Void, Never> {
+        return didConnectSubject
+            .eraseToAnyPublisher()
+    }
+    
+    var didReceiveTextPublisher: AnyPublisher<String, Never> {
+        return didReceiveTextSubject
+            .eraseToAnyPublisher()
+    }
+    
+    func connect() {
         
-        guard !isConnected else {
+        guard connectionState != .connected && connectionState != .connected else {
             return
         }
         
+        connectionState = .connecting
+                
         socket = WebSocket(request: URLRequest(url: url))
         socket?.onEvent = { [weak self] event in
             self?.handleWebSocketEvent(event: event)
@@ -42,7 +58,7 @@ class StarscreamWebSocket: NSObject, WebSocketInterface {
     }
     
     func disconnect() {
-        isConnected = false
+        connectionState = .disconnected
         socket?.disconnect()
     }
     
@@ -56,21 +72,18 @@ class StarscreamWebSocket: NSObject, WebSocketInterface {
 extension StarscreamWebSocket {
     
     private func handleWebSocketEvent(event: WebSocketEvent) {
-        
-        didReceiveEventSignal.accept(value: event)
-        
+                
         switch event {
         
         case .connected( _):
-            isConnected = true
-            didConnectSignal.accept()
+            connectionState = .connected
+            didConnectSubject.send(Void())
         
         case .disconnected( _, _):
-            isConnected = false
-            didDisconnectSignal.accept()
+            connectionState = .disconnected
         
         case .text(let string):
-            didReceiveTextSignal.accept(value: string)
+            didReceiveTextSubject.send(string)
         
         case .binary( _):
             break
@@ -91,10 +104,9 @@ extension StarscreamWebSocket {
             break
         
         case .cancelled:
-            isConnected = false
+            break
         
         case .error( _):
-            isConnected = false
             break
         }
     }
