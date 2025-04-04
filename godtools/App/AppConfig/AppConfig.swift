@@ -69,19 +69,19 @@ class AppConfig: AppConfigInterface {
         return GoogleAuthenticationConfiguration(clientId: clientId, serverClientId: serverClientId, hostedDomain: nil, openIDRealm: nil)
     }
     
-    func getMobileContentApiBaseUrl() -> String {
+    func getMobileContentApiBaseUrl(scheme: String = "https") -> String {
         
         switch appBuild.environment {
         
         case .staging:
-            return "https://mobile-content-api-stage.cru.org"
+            return "\(scheme)://mobile-content-api-stage.cru.org"
         case .production:
-            return "https://mobile-content-api.cru.org"
+            return "\(scheme)://mobile-content-api.cru.org"
         }
     }
     
     func getTractRemoteShareConnectionUrl() -> String {
         
-        return getMobileContentApiBaseUrl() + "/" + "cable"
+        return getMobileContentApiBaseUrl(scheme: "wss") + "/" + "cable"
     }
 }

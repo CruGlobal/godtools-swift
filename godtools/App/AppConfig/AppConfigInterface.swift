@@ -15,6 +15,6 @@ protocol AppConfigInterface {
     func getFacebookConfiguration() -> FacebookConfiguration
     func getFirebaseGoogleServiceFileName() -> String
     func getGoogleAuthenticationConfiguration() -> GoogleAuthenticationConfiguration
-    func getMobileContentApiBaseUrl() -> String
+    func getMobileContentApiBaseUrl(scheme: String) -> String
     func getTractRemoteShareConnectionUrl() -> String
 }
