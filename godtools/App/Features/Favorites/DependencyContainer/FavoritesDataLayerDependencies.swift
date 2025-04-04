@@ -46,6 +46,12 @@ class FavoritesDataLayerDependencies {
         )
     }
     
+    func getReorderFavoritedToolRepository() -> ReorderFavoritedToolRepositoryInterface {
+        return ReorderFavoritedToolRepository(
+            favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository()
+        )
+    }
+    
     func getToggleToolFavoritedRepository() -> ToggleToolFavoritedRepositoryInterface {
         return ToggleToolFavoritedRepository(
             favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository()
