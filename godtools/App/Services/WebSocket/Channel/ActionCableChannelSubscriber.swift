@@ -28,8 +28,14 @@ class ActionCableChannelSubscriber: NSObject, WebSocketChannelSubscriberInterfac
         super.init()
         
         webSocket
+            .didConnectPublisher
+            .sink { [weak self] _ in
+                self?.handleDidConnectToWebsocket()
+            }
+            .store(in: &cancellables)
+        
+        webSocket
             .didReceiveTextPublisher
-            .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] (text: String) in
                 self?.handleDidReceiveText(text: text)
             })
@@ -41,38 +47,27 @@ class ActionCableChannelSubscriber: NSObject, WebSocketChannelSubscriberInterfac
         webSocket.disconnect()
     }
     
+    var didSubscribePublisher: AnyPublisher<WebSocketChannel, Never> {
+        return didSubscribeSubject
+            .eraseToAnyPublisher()
+    }
+    
     var isSubscribedToChannel: Bool {
         return subscribedToChannel != nil
     }
 
-    func subscribePublisher(url: URL, channel: WebSocketChannel) -> AnyPublisher<WebSocketChannel, Never> {
+    func subscribe(channel: WebSocketChannel) {
         
         channelToSubscribeTo = channel
         
         if webSocket.connectionState != .connected && webSocket.connectionState != .connecting {
             
-            webSocket.connectPublisher(url: url)
-                .sink { [weak self] completion in
-                    
-                    switch completion {
-                    case .finished:
-                        self?.handleDidConnectToWebsocket()
-                    case .failure(let error):
-                        break
-                    }
-                    
-                } receiveValue: { _ in
-                    
-                }
-                .store(in: &cancellables)
+            webSocket.connect()
         }
         else if webSocket.connectionState == .connected {
             
             handleDidConnectToWebsocket()
         }
-        
-        return didSubscribeSubject
-            .eraseToAnyPublisher()
     }
     
     func unsubscribe() {

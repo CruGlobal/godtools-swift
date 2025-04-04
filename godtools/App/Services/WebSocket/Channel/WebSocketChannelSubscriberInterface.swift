@@ -11,10 +11,11 @@ import Combine
 
 protocol WebSocketChannelSubscriberInterface {
     
-    init(webSocket: WebSocketInterface, loggingEnabled: Bool)
-    
+    var didSubscribePublisher: AnyPublisher<WebSocketChannel, Never> { get }
     var isSubscribedToChannel: Bool { get }
     
-    func subscribePublisher(url: URL, channel: WebSocketChannel) -> AnyPublisher<WebSocketChannel, Never>
+    init(webSocket: WebSocketInterface, loggingEnabled: Bool)
+    
+    func subscribe(channel: WebSocketChannel)
     func unsubscribe()
 }

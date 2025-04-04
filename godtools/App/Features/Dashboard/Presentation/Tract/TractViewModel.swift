@@ -60,20 +60,25 @@ class TractViewModel: MobileContentRendererViewModel {
         languageFont = FontLibrary.systemUIFont(size: 14, weight: .regular)
         
         super.init(renderer: renderer, initialPage: initialPage, initialPageConfig: nil, initialPageSubIndex: initialPageSubIndex, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, getTranslatedLanguageName: getTranslatedLanguageName, trainingTipsEnabled: trainingTipsEnabled, incrementUserCounterUseCase: incrementUserCounterUseCase, selectedLanguageIndex: selectedLanguageIndex)
-                
-        tractRemoteSharePublisher
-            .didCreateChannelPublisher
-            .receive(on: DispatchQueue.main)
-            .sink { completion in
-                
-            } receiveValue: { [weak self] (channel: WebSocketChannel) in
-                
-                self?.didSubscribeForRemoteSharePublishing.accept(value: true)
-                self?.reloadRemoteShareIsActive()
-            }
-            .store(in: &cancellables)
+               
+        if let remoteSharePublisherChannel = tractRemoteSharePublisher.tractRemoteShareChannel {
+            
+            handleRemoteSharePublisherChannelCreated(channel: remoteSharePublisherChannel)
+        }
+        else {
+            
+            tractRemoteSharePublisher
+                .didCreateChannelPublisher
+                .receive(on: DispatchQueue.main)
+                .sink { completion in
+                    
+                } receiveValue: { [weak self] (channel: WebSocketChannel) in
+                    
+                    self?.handleRemoteSharePublisherChannelCreated(channel: channel)
+                }
+                .store(in: &cancellables)
+        }
 
-        
         var isFirstRemoteShareNavigationEvent: Bool = true
         tractRemoteShareSubscriber
             .navigationEventPublisher
@@ -101,6 +106,11 @@ class TractViewModel: MobileContentRendererViewModel {
         let liveShareStreamChannelIdIsEmpty: Bool = (liveShareStream?.isEmpty) ?? true
         
         return tractRemoteSharePublisher.webSocketIsConnected || tractRemoteShareSubscriber.webSocketIsConnected || !liveShareStreamChannelIdIsEmpty
+    }
+    
+    private func handleRemoteSharePublisherChannelCreated(channel: WebSocketChannel) {
+        didSubscribeForRemoteSharePublishing.accept(value: true)
+        reloadRemoteShareIsActive()
     }
     
     private func reloadRemoteShareIsActive() {
@@ -343,22 +353,17 @@ extension TractViewModel {
         }
         
         tractRemoteShareSubscriber
-            .subscribePublisher(channel: channel)
+            .didSubscribePublisher
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] completion in
+            .sink { [weak self] (channel: WebSocketChannel) in
                 
-                switch completion {
-                case .finished:
-                    self?.trackShareScreenOpened()
-                    self?.reloadRemoteShareIsActive()
-                case .failure( _):
-                    break
-                }
-                
-            } receiveValue: { _ in
-                
+                self?.trackShareScreenOpened()
+                self?.reloadRemoteShareIsActive()
             }
             .store(in: &cancellables)
+        
+        tractRemoteShareSubscriber
+            .subscribe(channel: channel)
     }
     
     private func handleDidReceiveRemoteShareNavigationEvent(navigationEvent: TractRemoteShareNavigationEvent, animated: Bool) {

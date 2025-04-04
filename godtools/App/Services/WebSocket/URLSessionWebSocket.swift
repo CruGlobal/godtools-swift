@@ -12,6 +12,7 @@ import Combine
 class URLSessionWebSocket: NSObject, WebSocketInterface {
     
     private let ignoreCacheSession: IgnoreCacheSession = IgnoreCacheSession()
+    private let didConnectSubject: PassthroughSubject<Void, Never> = PassthroughSubject()
     private let didReceiveTextSubject: PassthroughSubject<String, Never> = PassthroughSubject()
     
     private var session: URLSession {
@@ -19,12 +20,16 @@ class URLSessionWebSocket: NSObject, WebSocketInterface {
     }
     
     private var currentWebSocketTask: URLSessionWebSocketTask?
-    private var didConnectSubject: PassthroughSubject<Void, Error>?
     private var keepAliveTimer: Timer?
     
     private(set) var connectionState: WebSocketConnectionState = .disconnected
+       
+    let url: URL
+    
+    required init(url: URL) {
         
-    override init() {
+        self.url = url
+        
         super.init()
     }
     
@@ -50,21 +55,24 @@ class URLSessionWebSocket: NSObject, WebSocketInterface {
         keepAliveTimer = nil
     }
     
+    var didConnectPublisher: AnyPublisher<Void, Never> {
+        return didConnectSubject
+            .eraseToAnyPublisher()
+    }
+    
     var didReceiveTextPublisher: AnyPublisher<String, Never> {
         return didReceiveTextSubject
             .eraseToAnyPublisher()
     }
     
-    func connectPublisher(url: URL) -> AnyPublisher<Void, Error> {
+    func connect() {
         
         disconnect()
         
         connectionState = .connecting
         
         let didConnectSubject: PassthroughSubject<Void, Error> = PassthroughSubject()
-        
-        self.didConnectSubject = didConnectSubject
-        
+                
         let webSocketTask: URLSessionWebSocketTask = session.webSocketTask(with: url)
         
         currentWebSocketTask = webSocketTask
@@ -74,9 +82,6 @@ class URLSessionWebSocket: NSObject, WebSocketInterface {
         webSocketTask.delegate = self
         
         webSocketTask.resume()
-        
-        return didConnectSubject
-            .eraseToAnyPublisher()
     }
     
     func disconnect() {
@@ -146,8 +151,7 @@ extension URLSessionWebSocket: URLSessionWebSocketDelegate {
          
             connectionState = .connected
                     
-            didConnectSubject?.send(completion: .finished)
-            didConnectSubject = nil
+            didConnectSubject.send(Void())
             
             keepSocketAlive()
         }

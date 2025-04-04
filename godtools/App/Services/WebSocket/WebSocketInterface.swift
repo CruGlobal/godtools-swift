@@ -11,10 +11,14 @@ import Combine
 
 protocol WebSocketInterface {
         
+    var didConnectPublisher: AnyPublisher<Void, Never> { get }
     var didReceiveTextPublisher: AnyPublisher<String, Never> { get }
+    var url: URL { get }
     var connectionState: WebSocketConnectionState { get }
         
-    func connectPublisher(url: URL) -> AnyPublisher<Void, Error>
+    init(url: URL)
+    
+    func connect()
     func disconnect()
     func write(string: String)
 }

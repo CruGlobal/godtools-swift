@@ -20,7 +20,6 @@ class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherInterface 
     private var publishingToSubscriberChannel: WebSocketChannel?
     private var appResignedActive: Bool = false
     
-    private(set) var webSocketUrl: URL?
     private(set) var channel: WebSocketChannel?
     private(set) var publishChannel: WebSocketChannel?
         
@@ -33,6 +32,13 @@ class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherInterface 
         
         NotificationCenter.default.addObserver(self, selector: #selector(appWillResignActive), name: UIApplication.willResignActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(appDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
+        
+        webSocket
+            .didConnectPublisher
+            .sink { [weak self] _ in
+                self?.handleDidConnectToWebsocket()
+            }
+            .store(in: &cancellables)
         
         webSocket
             .didReceiveTextPublisher
@@ -50,6 +56,11 @@ class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherInterface 
         webSocket.disconnect()
     }
     
+    var didCreateChannelPublisher: AnyPublisher<WebSocketChannel, Never> {
+        return didCreateChannelSubject
+            .eraseToAnyPublisher()
+    }
+    
     var isSubscriberChannelCreatedForPublish: Bool {
         return publishingToSubscriberChannel != nil
     }
@@ -58,37 +69,20 @@ class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherInterface 
         return publishingToSubscriberChannel
     }
     
-    func createChannelPublisher(url: URL, channel: WebSocketChannel) -> AnyPublisher<WebSocketChannel, Never> {
+    func createChannel(channel: WebSocketChannel) {
         
-        self.webSocketUrl = url
         self.channel = channel
         
         channelToCreate = channel
         
         if webSocket.connectionState != .connected && webSocket.connectionState != .connecting {
             
-            webSocket.connectPublisher(url: url)
-                .sink { [weak self] completion in
-                    
-                    switch completion {
-                    case .finished:
-                        self?.handleDidConnectToWebsocket()
-                    case .failure(let error):
-                        break
-                    }
-                    
-                } receiveValue: { _ in
-                    
-                }
-                .store(in: &cancellables)
+            webSocket.connect()
         }
         else if webSocket.connectionState == .connected {
             
             handleDidConnectToWebsocket()
         }
-        
-        return didCreateChannelSubject
-            .eraseToAnyPublisher()
     }
     
     func sendMessage(data: String) {
@@ -184,7 +178,6 @@ class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherInterface 
         channelToCreate = nil
         publishingToSubscriberChannel = subscriberChannel
         didCreateChannelSubject.send(subscriberChannel)
-        didCreateChannelSubject.send(completion: .finished)
     }
 }
 
@@ -203,10 +196,10 @@ extension ActionCableChannelPublisher {
         
         appResignedActive = false
         
-        guard let websocketUrl = self.webSocketUrl, let channel = self.channel else {
+        guard let channel = self.channel else {
             return
         }
         
-        _ = createChannelPublisher(url: websocketUrl, channel: channel)
+        createChannel(channel: channel)
     }
 }

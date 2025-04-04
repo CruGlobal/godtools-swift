@@ -11,6 +11,7 @@ import Combine
 
 protocol WebSocketChannelPublisherInterface {
     
+    var didCreateChannelPublisher: AnyPublisher<WebSocketChannel, Never> { get }
     var channel: WebSocketChannel? { get }
     var publishChannel: WebSocketChannel? { get }
     var subscriberChannel: WebSocketChannel? { get }
@@ -18,6 +19,6 @@ protocol WebSocketChannelPublisherInterface {
     
     init(webSocket: WebSocketInterface, loggingEnabled: Bool)
     
-    func createChannelPublisher(url: URL, channel: WebSocketChannel) -> AnyPublisher<WebSocketChannel, Never>
+    func createChannel(channel: WebSocketChannel)
     func sendMessage(data: String)
 }

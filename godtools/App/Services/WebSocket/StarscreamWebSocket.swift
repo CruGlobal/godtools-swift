@@ -12,14 +12,19 @@ import Combine
 
 class StarscreamWebSocket: NSObject, WebSocketInterface {
         
+    private let didConnectSubject: PassthroughSubject<Void, Never> = PassthroughSubject()
     private let didReceiveTextSubject: PassthroughSubject<String, Never> = PassthroughSubject()
     
     private var socket: WebSocket?
-    private var didConnectSubject: PassthroughSubject<Void, Error>?
     
     private(set) var connectionState: WebSocketConnectionState = .disconnected
         
-    override init() {
+    let url: URL
+    
+    required init(url: URL) {
+        
+        self.url = url
+        
         super.init()
     }
     
@@ -27,29 +32,27 @@ class StarscreamWebSocket: NSObject, WebSocketInterface {
         socket?.disconnect()
     }
     
+    var didConnectPublisher: AnyPublisher<Void, Never> {
+        return didConnectSubject
+            .eraseToAnyPublisher()
+    }
+    
     var didReceiveTextPublisher: AnyPublisher<String, Never> {
         return didReceiveTextSubject
             .eraseToAnyPublisher()
     }
     
-    func connectPublisher(url: URL) -> AnyPublisher<Void, Error> {
+    func connect() {
         
         disconnect()
         
         connectionState = .connecting
-        
-        let didConnectSubject: PassthroughSubject<Void, Error> = PassthroughSubject()
-        
-        self.didConnectSubject = didConnectSubject
-        
+                
         socket = WebSocket(request: URLRequest(url: url))
         socket?.onEvent = { [weak self] event in
             self?.handleWebSocketEvent(event: event)
         }
         socket?.connect()
-        
-        return didConnectSubject
-            .eraseToAnyPublisher()
     }
     
     func disconnect() {
@@ -72,9 +75,7 @@ extension StarscreamWebSocket {
         
         case .connected( _):
             connectionState = .connected
-            
-            didConnectSubject?.send(completion: .finished)
-            didConnectSubject = nil
+            didConnectSubject.send(Void())
         
         case .disconnected( _, _):
             connectionState = .disconnected

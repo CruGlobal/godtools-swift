@@ -13,10 +13,10 @@ class TractRemoteSharePublisher: NSObject {
         
     private static let timeoutIntervalSeconds: TimeInterval = 10
     
-    private let remoteUrl: URL
     private let webSocket: WebSocketInterface
     private let webSocketChannelPublisher: WebSocketChannelPublisherInterface
-    private let didCreateChannelSubject: PassthroughSubject<WebSocketChannel, TractRemoteSharePublisherError> = PassthroughSubject()
+    private let didCreateChannelSubject: PassthroughSubject<WebSocketChannel, Never> = PassthroughSubject()
+    private let didFailToCreateChannelSubject: PassthroughSubject<TractRemoteSharePublisherError, Never> = PassthroughSubject()
     private let loggingEnabled: Bool
     
     private var cancellables: Set<AnyCancellable> = Set()
@@ -26,13 +26,23 @@ class TractRemoteSharePublisher: NSObject {
         
     init(config: AppConfig, webSocket: WebSocketInterface, webSocketChannelPublisher: WebSocketChannelPublisherInterface, loggingEnabled: Bool) {
         
-        // TODO: Shouldn't force unwrap url here. ~Levi
-        self.remoteUrl = URL(string: config.getTractRemoteShareConnectionUrl())!
         self.webSocket = webSocket
         self.webSocketChannelPublisher = webSocketChannelPublisher
         self.loggingEnabled = loggingEnabled
         
         super.init()
+        
+        webSocketChannelPublisher
+            .didCreateChannelPublisher
+            .sink { [weak self] (channel: WebSocketChannel) in
+                
+                self?.stopTimeoutTimer()
+                                
+                self?.tractRemoteShareChannel = channel
+                
+                self?.didCreateChannelSubject.send(channel)
+            }
+            .store(in: &cancellables)
     }
     
     deinit {
@@ -54,6 +64,16 @@ class TractRemoteSharePublisher: NSObject {
         }
     }
     
+    var didCreateChannelPublisher: AnyPublisher<WebSocketChannel, Never> {
+        return didCreateChannelSubject
+            .eraseToAnyPublisher()
+    }
+    
+    var didFailToCreateChannelPublisher: AnyPublisher<TractRemoteSharePublisherError, Never> {
+        return didFailToCreateChannelSubject
+            .eraseToAnyPublisher()
+    }
+    
     var webSocketIsConnected: Bool {
         return webSocket.connectionState == .connected
     }
@@ -66,12 +86,7 @@ class TractRemoteSharePublisher: NSObject {
         return webSocketChannelPublisher.subscriberChannel?.id
     }
     
-    var didCreateChannelPublisher: AnyPublisher<WebSocketChannel, TractRemoteSharePublisherError> {
-        return didCreateChannelSubject
-            .eraseToAnyPublisher()
-    }
-    
-    func createNewSubscriberChannelIdForPublish() -> AnyPublisher<WebSocketChannel, TractRemoteSharePublisherError> {
+    func createNewSubscriberChannelIdForPublish() {
         
         endPublishingSession(disconnectSocket: false)
                 
@@ -81,26 +96,10 @@ class TractRemoteSharePublisher: NSObject {
             
             self?.stopTimeoutTimer()
             
-            self?.didCreateChannelSubject.send(completion: .failure(.timedOut))
+            self?.didFailToCreateChannelSubject.send(.timedOut)
         }
         
-        webSocketChannelPublisher
-            .createChannelPublisher(url: remoteUrl, channel: channel)
-            .sink { completion in
-                
-            } receiveValue: { [weak self] (channel: WebSocketChannel) in
-                
-                self?.stopTimeoutTimer()
-                                
-                self?.tractRemoteShareChannel = channel
-                
-                self?.didCreateChannelSubject.send(channel)
-                self?.didCreateChannelSubject.send(completion: .finished)
-            }
-            .store(in: &cancellables)
-        
-        return didCreateChannelSubject
-            .eraseToAnyPublisher()
+        webSocketChannelPublisher.createChannel(channel: channel)
     }
     
     func endPublishingSession(disconnectSocket: Bool) {

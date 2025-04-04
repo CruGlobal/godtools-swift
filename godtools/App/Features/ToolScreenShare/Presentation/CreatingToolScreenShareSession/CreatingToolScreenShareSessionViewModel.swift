@@ -59,14 +59,26 @@ class CreatingToolScreenShareSessionViewModel: ObservableObject {
             .store(in: &cancellables)
         
         tractRemoteSharePublisher
-            .createNewSubscriberChannelIdForPublish()
+            .didCreateChannelPublisher
             .receive(on: DispatchQueue.main)
-            .sink { completion in
+            .sink { [weak self] (channel: WebSocketChannel) in
                 
-            } receiveValue: { [weak self] (channel: WebSocketChannel) in
-                
+                self?.didCreateNewSubscriberChannelForPublish(result: .success(channel))
             }
             .store(in: &cancellables)
+        
+        tractRemoteSharePublisher
+            .didFailToCreateChannelPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (error: TractRemoteSharePublisherError) in
+                
+                self?.didCreateNewSubscriberChannelForPublish(result: .failure(error))
+            }
+            .store(in: &cancellables)
+        
+        
+        tractRemoteSharePublisher
+            .createNewSubscriberChannelIdForPublish()
     }
     
     deinit {
