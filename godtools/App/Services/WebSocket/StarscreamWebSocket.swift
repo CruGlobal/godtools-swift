@@ -44,7 +44,9 @@ class StarscreamWebSocket: NSObject, WebSocketInterface {
     
     func connect() {
         
-        disconnect()
+        guard connectionState != .connected && connectionState != .connected else {
+            return
+        }
         
         connectionState = .connecting
                 

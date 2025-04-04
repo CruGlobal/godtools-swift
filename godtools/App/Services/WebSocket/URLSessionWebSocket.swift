@@ -66,13 +66,13 @@ class URLSessionWebSocket: NSObject, WebSocketInterface {
     }
     
     func connect() {
-        
-        disconnect()
+
+        guard connectionState != .connected && connectionState != .connected else {
+            return
+        }
         
         connectionState = .connecting
-        
-        let didConnectSubject: PassthroughSubject<Void, Error> = PassthroughSubject()
-                
+                        
         let webSocketTask: URLSessionWebSocketTask = session.webSocketTask(with: url)
         
         currentWebSocketTask = webSocketTask
