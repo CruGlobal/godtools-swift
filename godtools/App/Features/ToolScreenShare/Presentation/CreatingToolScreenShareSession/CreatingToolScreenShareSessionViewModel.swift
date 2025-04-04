@@ -78,7 +78,7 @@ class CreatingToolScreenShareSessionViewModel: ObservableObject {
         
         
         tractRemoteSharePublisher
-            .createNewSubscriberChannelIdForPublish()
+            .createChannelForPublish()
     }
     
     deinit {

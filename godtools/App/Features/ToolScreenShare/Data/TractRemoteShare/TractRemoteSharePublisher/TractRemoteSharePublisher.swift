@@ -86,7 +86,7 @@ class TractRemoteSharePublisher: NSObject {
         return webSocketChannelPublisher.subscriberChannel?.id
     }
     
-    func createNewSubscriberChannelIdForPublish() {
+    func createChannelForPublish() {
         
         endPublishingSession(disconnectSocket: false)
                 

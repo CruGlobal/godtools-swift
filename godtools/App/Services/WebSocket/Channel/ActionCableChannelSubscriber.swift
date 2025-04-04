@@ -91,13 +91,13 @@ class ActionCableChannelSubscriber: NSObject, WebSocketChannelSubscriberInterfac
             print("\n ActionCableChannelSubscriber: handleDidConnectToWebsocket()")
         }
         
-        guard let channelId = channelToSubscribeTo else {
+        guard let channel = channelToSubscribeTo else {
             return
         }
                 
-        isSubscribingToChannel = channelId
+        isSubscribingToChannel = channel
         
-        let strChannel = "{ \"channel\": \"SubscribeChannel\",\"channelId\": \"\(channelId)\" }"
+        let strChannel = "{ \"channel\": \"SubscribeChannel\",\"channelId\": \"\(channel.id)\" }"
         let message = ["command": "subscribe", "identifier": strChannel]
 
         do {
