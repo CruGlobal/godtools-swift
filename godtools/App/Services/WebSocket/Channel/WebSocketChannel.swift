@@ -25,7 +25,7 @@ struct WebSocketChannel {
         id = UUID().uuidString
     }
     
-    static func getUniqueChannel() -> WebSocketChannel {
+    static func createUniqueChannel() -> WebSocketChannel {
         return WebSocketChannel()
     }
 }

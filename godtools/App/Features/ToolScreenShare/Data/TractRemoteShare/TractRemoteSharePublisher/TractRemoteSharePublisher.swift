@@ -90,7 +90,7 @@ class TractRemoteSharePublisher: NSObject {
         
         endPublishingSession(disconnectSocket: false)
                 
-        let channel = WebSocketChannel.getUniqueChannel()
+        let channel = WebSocketChannel.createUniqueChannel()
                 
         timeoutTimer = Timer.scheduledTimer(withTimeInterval: Self.timeoutIntervalSeconds, repeats: false) { [weak self] _ in
             
