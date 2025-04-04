@@ -147,7 +147,7 @@ class RealmFavoritedResourcesCache {
         
         do {
             try realm.write {
-                realm.add(newFavoritedResources, update: .all)
+                realm.add(newFavoritedResources, update: .modified)
             }
         }
         catch let error {
