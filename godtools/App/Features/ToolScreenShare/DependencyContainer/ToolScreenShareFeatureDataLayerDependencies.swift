@@ -37,7 +37,6 @@ class ToolScreenShareFeatureDataLayerDependencies {
         let loggingEnabled: Bool = coreDataLayer.getAppBuild().isDebug
         
         return TractRemoteSharePublisher(
-            config: coreDataLayer.getAppConfig(),
             webSocket: webSocket,
             webSocketChannelPublisher: ActionCableChannelPublisher(webSocket: webSocket, loggingEnabled: loggingEnabled),
             loggingEnabled: loggingEnabled
@@ -54,7 +53,6 @@ class ToolScreenShareFeatureDataLayerDependencies {
         let loggingEnabled: Bool = coreDataLayer.getAppBuild().isDebug
         
         return TractRemoteShareSubscriber(
-            config: coreDataLayer.getAppConfig(),
             webSocket: webSocket,
             webSocketChannelSubscriber: ActionCableChannelSubscriber(webSocket: webSocket, loggingEnabled: loggingEnabled),
             loggingEnabled: loggingEnabled
