@@ -122,6 +122,49 @@ class RealmFavoritedResourcesCache {
             .eraseToAnyPublisher()
     }
     
+    func storeFavoritedResourcesPublisher_withWrite(ids: [String]) -> AnyPublisher<[FavoritedResourceDataModel], Error> {
+            
+        let currentDate: Date = Date()
+        let calendar: Calendar = Calendar.current
+        
+        let realm: Realm = realmDatabase.openRealm()
+        
+        var newFavoritedResources: [RealmFavoritedResource] = Array()
+        
+        for index in 0 ..< ids.count {
+            
+            guard let createdAtDate = calendar.date(byAdding: .second, value: index, to: currentDate) else {
+                continue
+            }
+            
+            let id: String = ids[index]
+            let realmObject = RealmFavoritedResource()
+            realmObject.createdAt = createdAtDate
+            realmObject.resourceId = id
+                        
+            newFavoritedResources.append(realmObject)
+        }
+        
+        do {
+            try realm.write {
+                realm.add(newFavoritedResources, update: .all)
+            }
+        }
+        catch let error {
+
+        }
+        
+        let sortedFavoritedResources: [RealmFavoritedResource] = validatePositionsForFavoritedResources(ascendingOrder: true, realm: realm)
+        
+        let dataModels: [FavoritedResourceDataModel] = sortedFavoritedResources
+            .map {
+                FavoritedResourceDataModel(realmFavoritedResource: $0)
+            }
+        
+        return Just(dataModels).setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
+    }
+    
     func deleteFavoritedResourcePublisher(id: String) -> AnyPublisher<Void, Error> {
         
         return realmDatabase.writeObjectsPublisher { realm in
@@ -186,8 +229,10 @@ class RealmFavoritedResourcesCache {
     
     // MARK: - Private
     
-    private func validatePositionsForFavoritedResources(ascendingOrder: Bool) -> [RealmFavoritedResource] {
-        let realm = realmDatabase.openRealm()
+    private func validatePositionsForFavoritedResources(ascendingOrder: Bool, realm: Realm? = nil) -> [RealmFavoritedResource] {
+        
+        let realm = realm ?? realmDatabase.openRealm()
+        
         let favoritesSortedByPosition = realm
             .objects(RealmFavoritedResource.self)
             .sorted(byKeyPath: #keyPath(RealmFavoritedResource.position), ascending: ascendingOrder)
