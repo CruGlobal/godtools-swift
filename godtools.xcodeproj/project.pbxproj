@@ -1536,6 +1536,7 @@
 		D43FC1D22B814B8B00F8310E /* AccountInterfaceStringsDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43FC1D12B814B8B00F8310E /* AccountInterfaceStringsDomainModel.swift */; };
 		D43FC1D42B814BDE00F8310E /* GetAccountInterfaceStringsRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43FC1D32B814BDE00F8310E /* GetAccountInterfaceStringsRepositoryInterface.swift */; };
 		D43FC1D62B814F2000F8310E /* GetAccountInterfaceStringsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43FC1D52B814F2000F8310E /* GetAccountInterfaceStringsRepository.swift */; };
+		D44CE4F82DA1AF6C0009F4D1 /* FavoritedResourcesRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44CE4F72DA1AF610009F4D1 /* FavoritedResourcesRepositoryTests.swift */; };
 		D455F3ED2977302D009D5F93 /* GetUserActivityUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D455F3EC2977302D009D5F93 /* GetUserActivityUseCase.swift */; };
 		D455F3F0297739F6009D5F93 /* AccountActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D455F3EF297739F6009D5F93 /* AccountActivityView.swift */; };
 		D455F3F229773C1B009D5F93 /* UserActivityDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D455F3F129773C1B009D5F93 /* UserActivityDomainModel.swift */; };
@@ -3275,6 +3276,7 @@
 		D43FC1D12B814B8B00F8310E /* AccountInterfaceStringsDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountInterfaceStringsDomainModel.swift; sourceTree = "<group>"; };
 		D43FC1D32B814BDE00F8310E /* GetAccountInterfaceStringsRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAccountInterfaceStringsRepositoryInterface.swift; sourceTree = "<group>"; };
 		D43FC1D52B814F2000F8310E /* GetAccountInterfaceStringsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAccountInterfaceStringsRepository.swift; sourceTree = "<group>"; };
+		D44CE4F72DA1AF610009F4D1 /* FavoritedResourcesRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritedResourcesRepositoryTests.swift; sourceTree = "<group>"; };
 		D455F3EC2977302D009D5F93 /* GetUserActivityUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserActivityUseCase.swift; sourceTree = "<group>"; };
 		D455F3EF297739F6009D5F93 /* AccountActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountActivityView.swift; sourceTree = "<group>"; };
 		D455F3F129773C1B009D5F93 /* UserActivityDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserActivityDomainModel.swift; sourceTree = "<group>"; };
@@ -11741,6 +11743,7 @@
 		D4B26F5A2D8DF45F0019FA86 /* Data-DomainInterface */ = {
 			isa = PBXGroup;
 			children = (
+				D44CE4F72DA1AF610009F4D1 /* FavoritedResourcesRepositoryTests.swift */,
 				D4AAEC182D973074008CDF8E /* RemoveFavoritedToolRepositoryTests.swift */,
 				D4B26F582D8DF0A80019FA86 /* ReorderFavoritedToolRepositoryTests.swift */,
 				D4AAEC1A2D9C68BF008CDF8E /* ToggleToolFavoritedRepositoryTests.swift */,
@@ -14194,6 +14197,7 @@
 				45243C5B2C5828C600BD6F49 /* MockRealmTranslation.swift in Sources */,
 				45CBDA092BA3930B0007DEC8 /* MockLaunchCountRepository.swift in Sources */,
 				45EB68E12C334D84008A5FF2 /* MockLocalizationServices.swift in Sources */,
+				D44CE4F82DA1AF6C0009F4D1 /* FavoritedResourcesRepositoryTests.swift in Sources */,
 				D4AAEC192D97307F008CDF8E /* RemoveFavoritedToolRepositoryTests.swift in Sources */,
 				45B9B07B2CDEB2D6001DF554 /* MobileContentBackgroundImageRendererTests.swift in Sources */,
 				45368A182ABB2D850028A570 /* TestRealmObject.swift in Sources */,
