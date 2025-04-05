@@ -115,18 +115,10 @@ class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
         else {
             toolParallelLanguageName = nil
         }
-        
-        let localizedTotalLanguages: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "total_languages")
-        
+                
         var toolVersions: [ToolVersionDomainModel] = Array()
         
         for resourceVariant in resourceVariants {
-            
-            let numberOfLanguagesString: String = String(
-                format: localizedTotalLanguages,
-                locale: Locale(identifier: translateInLanguage),
-                resourceVariant.languageIds.count
-            )
             
             let name: String
             let description: String
@@ -153,7 +145,7 @@ class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
                 dataModelId: resourceVariant.id,
                 description: description,
                 name: name,
-                numberOfLanguages: numberOfLanguagesString,
+                numberOfLanguages: getNumberOfLanguages(translateInLanguage: translateInLanguage, numberOfLanguages: resourceVariant.languageIds.count),
                 toolLanguageName: toolPrimaryLanguageName,
                 toolLanguageNameIsSupported: getToolSupportsLanguage(resource: resourceVariant, language: toolPrimaryLanguage),
                 toolParallelLanguageName: toolParallelLanguageName,
@@ -164,6 +156,22 @@ class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
         }
         
         return toolVersions
+    }
+    
+    private func getNumberOfLanguages(translateInLanguage: BCP47LanguageIdentifier, numberOfLanguages: Int) -> String {
+        
+        let localizedNumberOfLanguages = self.localizationServices.stringForLocaleElseSystemElseEnglish(
+            localeIdentifier: translateInLanguage,
+            key: LocalizableStringDictKeys.toolDetailsToolVersionNumberOfLanguages.key
+        )
+        
+        let stringLocaleFormat = String(
+            format: localizedNumberOfLanguages,
+            locale: Locale(identifier: translateInLanguage),
+            numberOfLanguages
+        )
+                            
+        return stringLocaleFormat
     }
     
     private func getToolSupportsLanguage(resource: ResourceModel, language: AppLanguageDomainModel?) -> Bool {

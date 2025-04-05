@@ -9,7 +9,7 @@
 import Foundation
 import Starscream
 
-class StarscreamWebSocket: NSObject, WebSocketType {
+class StarscreamWebSocket: NSObject, WebSocketInterface {
         
     private var socket: WebSocket?
     
