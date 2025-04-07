@@ -6,7 +6,6 @@
 //  Copyright © 2025 Cru. All rights reserved.
 //
 
-
 import Foundation
 import SwiftUI
 
@@ -123,6 +122,8 @@ struct OptInNotificationView_Preview: PreviewProvider {
             optInNotificationRepository: appDiContainer.feature
                 .optInNotification.dataLayer
                 .getOptInNotificationRepository(),
+            launchCountRepository: appDiContainer.feature.optInNotification
+                .dataLayer.getLaunchCountRepository(),
             viewOptInNotificationUseCase: appDiContainer.feature
                 .optInNotification.domainLayer
                 .getViewOptInNotificationUseCase(),
@@ -134,6 +135,7 @@ struct OptInNotificationView_Preview: PreviewProvider {
             checkNotificationStatusUseCase: appDiContainer.feature
                 .optInNotification.domainLayer
                 .getCheckNotificationStatusUseCase(),
+
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage
                 .domainLayer.getCurrentAppLanguageUseCase(),
             flowDelegate: MockFlowDelegate()

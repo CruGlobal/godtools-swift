@@ -15,15 +15,18 @@ import UserNotifications
 class OptInNotificationViewModel: ObservableObject {
 
     private let optInNotificationRepository: OptInNotificationRepository
+    private let launchCountRepository: LaunchCountRepository
     private let viewOptInNotificationUseCase: ViewOptInNotificationUseCase
     private let viewOptInDialogUseCase: ViewOptInDialogUseCase
     private let requestNotificationPermissionUseCase:
         RequestNotificationPermissionUseCase
     private let checkNotificationStatusUseCase: CheckNotificationStatusUseCase
+
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let userDialogReponse: PassthroughSubject<Void, Never> =
         PassthroughSubject()
 
+    private var isOnboardingLaunch: Bool = false
     private var isFirstDialogPrompt: Bool = false
     private var notificationStatus: String?
     private var notificationStatusCancellable: AnyCancellable?
@@ -44,11 +47,13 @@ class OptInNotificationViewModel: ObservableObject {
     init(
         optInNotificationRepository:
             OptInNotificationRepository,
+        launchCountRepository: LaunchCountRepository,
         viewOptInNotificationUseCase: ViewOptInNotificationUseCase,
         viewOptInDialogUseCase: ViewOptInDialogUseCase,
         requestNotificationPermissionUseCase:
             RequestNotificationPermissionUseCase,
         checkNotificationStatusUseCase: CheckNotificationStatusUseCase,
+
         getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
         flowDelegate: FlowDelegate
 
@@ -56,11 +61,13 @@ class OptInNotificationViewModel: ObservableObject {
 
         self.optInNotificationRepository =
             optInNotificationRepository
+        self.launchCountRepository = launchCountRepository
         self.viewOptInNotificationUseCase = viewOptInNotificationUseCase
         self.viewOptInDialogUseCase = viewOptInDialogUseCase
         self.requestNotificationPermissionUseCase =
             requestNotificationPermissionUseCase
         self.checkNotificationStatusUseCase = checkNotificationStatusUseCase
+
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.flowDelegate = flowDelegate
 
@@ -88,6 +95,13 @@ class OptInNotificationViewModel: ObservableObject {
 
             }
             .store(in: &cancellables)
+
+        launchCountRepository.getLaunchCountPublisher().sink {
+            [weak self]
+            count in
+            self?.isOnboardingLaunch = count == 1
+
+        }.store(in: &cancellables)
 
         refreshNotificationStatus()
 
@@ -147,12 +161,13 @@ class OptInNotificationViewModel: ObservableObject {
             to: currentDate
         )!
 
+        guard isOnboardingLaunch == false else { return }
         guard notificationStatus != "Approved" else { return }
         guard promptCount <= 5 else { return }
 
         if (notificationStatus == "Denied"
             || notificationStatus == "Undetermined")
-            && lastPrompted < twoMonthsAgo
+            && lastPrompted > twoMonthsAgo
         {
 
             await MainActor.run {
@@ -180,7 +195,7 @@ extension OptInNotificationViewModel {
                 guard let self = self else { return }
 
                 if permissionGranted {
-                    // Theoretically should never happen because a user who has granted permissions should never end up in this view
+                    // Theoretically should never happen because a user who has granted permissions shouldn't end up in this view
 
                     self.isActive = false
 

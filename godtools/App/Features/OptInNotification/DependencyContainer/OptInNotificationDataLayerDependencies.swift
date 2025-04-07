@@ -28,6 +28,10 @@ class OptInNotificationDataLayerDependencies {
                     coreDataLayer.getSharedUserDefaultsCache())
         )
     }
+    
+    func getLaunchCountRepository() -> LaunchCountRepository {
+        return coreDataLayer.getSharedLaunchCountRepository()
+    }
 
     // MARK: - Domain Interface
 

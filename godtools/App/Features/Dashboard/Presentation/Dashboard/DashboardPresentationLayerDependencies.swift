@@ -128,6 +128,8 @@ class DashboardPresentationLayerDependencies {
             optInNotificationRepository: appDiContainer.feature
                 .optInNotification.dataLayer
                 .getOptInNotificationRepository(),
+            launchCountRepository: appDiContainer.feature.optInNotification
+                .dataLayer.getLaunchCountRepository(),
             viewOptInNotificationUseCase: appDiContainer.feature
                 .optInNotification.domainLayer
                 .getViewOptInNotificationUseCase(),
@@ -139,6 +141,7 @@ class DashboardPresentationLayerDependencies {
             checkNotificationStatusUseCase: appDiContainer.feature
                 .optInNotification.domainLayer
                 .getCheckNotificationStatusUseCase(),
+
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage
                 .domainLayer.getCurrentAppLanguageUseCase(),
             flowDelegate: unwrappedFlowDelegate
