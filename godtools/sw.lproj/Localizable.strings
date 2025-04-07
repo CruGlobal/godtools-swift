@@ -92,6 +92,8 @@
 "favorites.favoriteLessons.title" = "Somo lililoangaziwa";
 "favorites.favoriteTools.title" = "Zana zako uzipendazo";
 "favorites.favoriteTools.viewAll" = "Tazama zote";
+
+/* Please keep to a 9 character limit, longer phrases may get cut off */
 "favorites.favoriteLessons.details" = "Maelezo";
 
 "optInNotification.title" = "Pata Vidokezo na Hamasa";
@@ -206,7 +208,10 @@ Kama hutapokea ujumbe huu hadi baadaye, kiungo kinaweza kukosa kufanya kazi. Tun
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Mafunzo";
 
-/* This is an invitation for a user to open a tool */
+/*
+ * This is an invitation for a user to open a tool
+ * Please keep to a 9 character limit, longer phrases may get cut off
+*/
 "open" = "Fungua";
 
 /* A user will be selecting a heart to indicated that it is one of their favorite tools. */

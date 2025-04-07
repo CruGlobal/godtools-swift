@@ -15,8 +15,8 @@ class TractRemoteSharePublisher: NSObject {
     private static let timeoutIntervalSeconds: TimeInterval = 10
     
     private let remoteUrl: URL
-    private let webSocket: WebSocketType
-    private let webSocketChannelPublisher: WebSocketChannelPublisherType
+    private let webSocket: WebSocketInterface
+    private let webSocketChannelPublisher: WebSocketChannelPublisherInterface
     private let loggingEnabled: Bool
     
     private var timeoutTimer: Timer?
@@ -27,7 +27,7 @@ class TractRemoteSharePublisher: NSObject {
     
     let didCreateNewSubscriberChannelIdForPublish: SignalValue<TractRemoteShareChannel> = SignalValue()
     
-    init(config: AppConfig, webSocket: WebSocketType, webSocketChannelPublisher: WebSocketChannelPublisherType, loggingEnabled: Bool) {
+    init(config: AppConfig, webSocket: WebSocketInterface, webSocketChannelPublisher: WebSocketChannelPublisherInterface, loggingEnabled: Bool) {
         
         // TODO: Shouldn't force unwrap url here. ~Levi
         self.remoteUrl = URL(string: config.getTractRemoteShareConnectionUrl())!

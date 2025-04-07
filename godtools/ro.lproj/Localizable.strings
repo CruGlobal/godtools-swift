@@ -92,6 +92,8 @@
 "favorites.favoriteLessons.title" = "Lecție recomandată";
 "favorites.favoriteTools.title" = "Instrumentele tale favorite";
 "favorites.favoriteTools.viewAll" = "Vezi tot";
+
+/* Please keep to a 9 character limit, longer phrases may get cut off */
 "favorites.favoriteLessons.details" = "Detalii";
 
 "optInNotification.title" = "Primește sfaturi și încurajare";
@@ -206,7 +208,10 @@ Dacă ai primit acest mesaj prea târziu, este posibil ca linkul să nu funcțio
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Antrenare";
 
-/* This is an invitation for a user to open a tool */
+/*
+ * This is an invitation for a user to open a tool
+ * Please keep to a 9 character limit, longer phrases may get cut off
+*/
 "open" = "Începe";
 
 /* A user will be selecting a heart to indicated that it is one of their favorite tools. */

@@ -92,6 +92,8 @@
 "favorites.favoriteLessons.title" = "Bài học đặc sắc";
 "favorites.favoriteTools.title" = "Công cụ yêu thích của bạn";
 "favorites.favoriteTools.viewAll" = "Xem tất cả";
+
+/* Please keep to a 9 character limit, longer phrases may get cut off */
 "favorites.favoriteLessons.details" = "Chi tiết";
 
 "optInNotification.title" = "Nhận mẹo và động viên";
@@ -204,7 +206,10 @@
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Đào tạo";
 
-/* This is an invitation for a user to open a tool */
+/*
+ * This is an invitation for a user to open a tool
+ * Please keep to a 9 character limit, longer phrases may get cut off
+*/
 "open" = "Mở";
 
 /* A user will be selecting a heart to indicated that it is one of their favorite tools. */

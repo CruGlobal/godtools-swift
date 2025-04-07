@@ -158,7 +158,7 @@ enum FlowStep {
     
     // downloaded languages
     case backTappedFromDownloadedLanguages
-    case showLanguageDownloadErrorAlert(error: Error)
+    case languageDownloadFailedFromDownloadedLanguages(error: Error)
     
     // article
     case backTappedFromArticleCategories

@@ -206,19 +206,42 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
         
         navigateToPage(page: page, animated: animated)
     }
+    
+    func navigateToParentPage() {
         
-    func navigateToPage(page: Page, animated: Bool, isBackNavigation: Bool = false) {
+        guard currentPageNumber > 0 else {
+            return
+        }
+        
+        let currentPage: Page? = getCurrentPage()
+        let parentPage: Page? = currentPage?.parentPage ?? getPage(index: currentPageNumber - 1)
+        let parentPageParams: [String: String]? = currentPage?.parentPageParams
+        
+        guard let parentPage = parentPage else {
+            return
+        }
+        
+        navigateToPage(
+            page: parentPage,
+            animated: true,
+            parentPageParams: parentPageParams,
+            isBackNavigation: true
+        )
+    }
+        
+    func navigateToPage(page: Page, animated: Bool, parentPageParams: [String: String]? = nil, isBackNavigation: Bool = false) {
         
         let navigationEvent: MobileContentPagesNavigationEvent = getPageNavigationEvent(
             page: page,
             animated: animated,
+            parentPageParams: MobileContentParentPageParams(params: parentPageParams),
             isBackNavigation: isBackNavigation
         )
         
         sendPageNavigationEvent(navigationEvent: navigationEvent)
     }
     
-    func getPageNavigationEvent(page: Page, animated: Bool, reloadCollectionViewDataNeeded: Bool = false, isBackNavigation: Bool = false) -> MobileContentPagesNavigationEvent {
+    func getPageNavigationEvent(page: Page, animated: Bool, reloadCollectionViewDataNeeded: Bool = false, parentPageParams: MobileContentParentPageParams? = nil, isBackNavigation: Bool = false) -> MobileContentPagesNavigationEvent {
                 
         let currentPages: [Page] = pageModels
                 
@@ -271,7 +294,8 @@ class MobileContentPagesViewModel: NSObject, ObservableObject {
             ),
             setPages: setPages,
             pagePositions: nil,
-            parentPageParams: nil
+            parentPageParams: parentPageParams,
+            pageSubIndex: nil
         )
     }
     

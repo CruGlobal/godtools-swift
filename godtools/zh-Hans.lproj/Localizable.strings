@@ -92,6 +92,8 @@
 "favorites.favoriteLessons.title" = "特色课程";
 "favorites.favoriteTools.title" = "你最喜欢的工具";
 "favorites.favoriteTools.viewAll" = "查看全部";
+
+/* Please keep to a 9 character limit, longer phrases may get cut off */
 "favorites.favoriteLessons.details" = "细节";
 
 "optInNotification.title" = "获取提示和鼓励";
@@ -204,7 +206,10 @@
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "培训";
 
-/* This is an invitation for a user to open a tool */
+/*
+ * This is an invitation for a user to open a tool
+ * Please keep to a 9 character limit, longer phrases may get cut off
+*/
 "open" = "打开";
 
 /* A user will be selecting a heart to indicated that it is one of their favorite tools. */

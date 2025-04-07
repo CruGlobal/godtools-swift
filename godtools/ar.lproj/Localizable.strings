@@ -92,6 +92,8 @@
 "favorites.favoriteLessons.title" = "الدرس المميّز";
 "favorites.favoriteTools.title" = "أدواتك المفضلة";
 "favorites.favoriteTools.viewAll" = "مشاهدة الكل";
+
+/* Please keep to a 9 character limit, longer phrases may get cut off */
 "favorites.favoriteLessons.details" = "التفاصيل";
 
 "optInNotification.title" = "احصل على نصائح وتشجيع";
@@ -206,7 +208,10 @@
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "التدريب";
 
-/* This is an invitation for a user to open a tool */
+/*
+ * This is an invitation for a user to open a tool
+ * Please keep to a 9 character limit, longer phrases may get cut off
+*/
 "open" = "فتح";
 
 /* A user will be selecting a heart to indicated that it is one of their favorite tools. */

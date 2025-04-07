@@ -1,5 +1,5 @@
 //
-//  WebSocketChannelSubscriberType.swift
+//  WebSocketChannelSubscriberInterface.swift
 //  godtools
 //
 //  Created by Levi Eggert on 7/23/20.
@@ -8,9 +8,9 @@
 
 import Foundation
 
-protocol WebSocketChannelSubscriberType {
+protocol WebSocketChannelSubscriberInterface {
     
-    init(webSocket: WebSocketType, loggingEnabled: Bool)
+    init(webSocket: WebSocketInterface, loggingEnabled: Bool)
     
     var didSubscribeToChannelSignal: SignalValue<String> { get }
     var isSubscribedToChannel: Bool { get }

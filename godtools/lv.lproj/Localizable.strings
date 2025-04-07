@@ -1,7 +1,7 @@
 // Is an interface language
 
 /* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
-"lessons.resumeLessonModal.title" = "Atsākt progresu";
+"lessons.resumeLessonModal.title" = "Atsākt progresu?";
 
 "lessons.resumeLessonModal.subtitle" = "Vai vēlies turpināt iesākto?";
 "lessons.resumeLessonModal.startOverButton" = "Sākt no sākuma";
@@ -92,6 +92,8 @@
 "favorites.favoriteLessons.title" = "Iesakām tev šo nodarbību";
 "favorites.favoriteTools.title" = "Tava rīku izlase";
 "favorites.favoriteTools.viewAll" = "Skatīt visus";
+
+/* Please keep to a 9 character limit, longer phrases may get cut off */
 "favorites.favoriteLessons.details" = "Apraksts";
 
 "optInNotification.title" = "Saņemiet padomus un iedrošinājumu";
@@ -206,7 +208,10 @@ Ja saņēmi šo ziņojumu novēloti, iespējams, ka saite vairs nedarbojas. Mēs
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Apmācība";
 
-/* This is an invitation for a user to open a tool */
+/*
+ * This is an invitation for a user to open a tool
+ * Please keep to a 9 character limit, longer phrases may get cut off
+*/
 "open" = "Atvērt";
 
 /* A user will be selecting a heart to indicated that it is one of their favorite tools. */

@@ -22,7 +22,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentRendererViewModel {
     @Published var hidesHomeButton: Bool = false
     @Published var hidesBackButton: Bool = true
         
-    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, initialPage: MobileContentRendererInitialPage?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTranslatedLanguageName: GetTranslatedLanguageName, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?) {
+    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTranslatedLanguageName: GetTranslatedLanguageName, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?) {
         
         self.flowDelegate = flowDelegate
                         
@@ -38,7 +38,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentRendererViewModel {
         
         languageFont = FontLibrary.systemUIFont(size: 14, weight: .regular)
         
-        super.init(renderer: renderer, initialPage: initialPage, initialPageConfig: nil, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, getTranslatedLanguageName: getTranslatedLanguageName, trainingTipsEnabled: trainingTipsEnabled, incrementUserCounterUseCase: incrementUserCounterUseCase, selectedLanguageIndex: selectedLanguageIndex)
+        super.init(renderer: renderer, initialPage: initialPage, initialPageConfig: nil, initialPageSubIndex: initialPageSubIndex, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, getTranslatedLanguageName: getTranslatedLanguageName, trainingTipsEnabled: trainingTipsEnabled, incrementUserCounterUseCase: incrementUserCounterUseCase, selectedLanguageIndex: selectedLanguageIndex)
     }
     
     deinit {
@@ -62,16 +62,30 @@ class ChooseYourOwnAdventureViewModel: MobileContentRendererViewModel {
     
     // MARK: - Page Navigation
     
-    override func getInitialPages(pageRenderer: MobileContentPageRenderer) -> [Page] {
+    override func getInitialPages(pageRenderer: MobileContentPageRenderer, initialPage: MobileContentRendererInitialPage) -> [Page] {
             
-        if let firstVisiblePage = pageRenderer.getVisiblePageModels().first {
+        let initialPageId: String?
+        
+        switch initialPage {
+        case .pageId(let value):
+            initialPageId = value
+        default:
+            initialPageId = nil
+        }
+        
+        if let initialPageId = initialPageId, let initialPage = pageRenderer.getAllPageModels().first(where: { $0.id == initialPageId }) {
+            
+            let pages: [Page] = super.getPagesWalkingUpParent(fromPage: initialPage, pagesFromPageRenderer: pageRenderer, includeFromPage: true)
+            return pages
+        }
+        else if let firstVisiblePage = pageRenderer.getVisiblePageModels().first {
             return [firstVisiblePage]
         }
         
         return []
     }
     
-    override func getPageNavigationEvent(page: Page, animated: Bool, reloadCollectionViewDataNeeded: Bool, isBackNavigation: Bool) -> MobileContentPagesNavigationEvent {
+    override func getPageNavigationEvent(page: Page, animated: Bool, reloadCollectionViewDataNeeded: Bool, parentPageParams: MobileContentParentPageParams?, isBackNavigation: Bool) -> MobileContentPagesNavigationEvent {
         
         let pages: [Page] = super.getPages()
         
@@ -92,7 +106,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentRendererViewModel {
             setPages = nil
         }
         else if let backToPageIndex = pages.firstIndex(of: page) {
-            
+                        
             // Backward Navigation - Page is in navigation stack
             
             let removeStartIndex: Int = backToPageIndex + 1
@@ -121,12 +135,12 @@ class ChooseYourOwnAdventureViewModel: MobileContentRendererViewModel {
             setPages = pagesUpToBackToPage
         }
         else if isBackNavigation, let nearestAncestorPageIndex = super.getNearestAncestorPageIndex(page: page) {
-            
+                        
             // Backward Navigation - Page is NOT in navigation stack, but an ancestor page is in stack.  Add to top of ancestor page.
-            
+                        
             let insertPageAtIndex: Int = nearestAncestorPageIndex + 1
             
-            let removeStartIndex: Int = insertPageAtIndex + 1
+            let removeStartIndex: Int = nearestAncestorPageIndex + 1
             let removedEndIndex: Int = pages.count - 1
             
             let pageIndexesToRemove: [Int]
@@ -143,11 +157,13 @@ class ChooseYourOwnAdventureViewModel: MobileContentRendererViewModel {
                 page: insertPageAtIndex,
                 animated: true,
                 reloadCollectionViewDataNeeded: false,
-                insertPages: nil,
+                insertPages: [insertPageAtIndex],
                 deletePages: pageIndexesToRemove
             )
             
-            setPages = Array(pages[0...nearestAncestorPageIndex]) + [page]
+            let newPages: [Page] = Array(pages[0...nearestAncestorPageIndex]) + [page]
+            
+            setPages = newPages
         }
         else {
             
@@ -171,7 +187,8 @@ class ChooseYourOwnAdventureViewModel: MobileContentRendererViewModel {
             pageNavigation: pageNavigation,
             setPages: setPages,
             pagePositions: nil,
-            parentPageParams: MobileContentParentPageParams(page: page)
+            parentPageParams: parentPageParams,
+            pageSubIndex: nil
         )
         
         return navigationEvent
@@ -199,17 +216,7 @@ extension ChooseYourOwnAdventureViewModel {
     
     @objc func backTapped() {
         
-        guard currentPageNumber > 0 else {
-            return
-        }
-        
-        let parentPage: Page? = getCurrentPage()?.parentPage ?? super.getPage(index: currentPageNumber - 1)
-        
-        guard let parentPage = parentPage else {
-            return
-        }
-        
-        super.navigateToPage(page: parentPage, animated: true, isBackNavigation: true)
+        super.navigateToParentPage()
     }
     
     @objc func toolSettingsTapped() {

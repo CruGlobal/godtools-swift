@@ -35,7 +35,7 @@ class TractViewModel: MobileContentRendererViewModel {
     @Published private(set) var toolSettingsDidClose: Void?
     @Published private(set) var hidesRemoteShareIsActive: Bool = true
         
-    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, languagesRepository: LanguagesRepository, resourceViewsService: ResourceViewsService, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTranslatedLanguageName: GetTranslatedLanguageName, liveShareStream: String?, initialPage: MobileContentRendererInitialPage?, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?, persistUserToolLanguageSettingsUseCase: PersistUserToolLanguageSettingsUseCase, shouldPersistToolSettings: Bool) {
+    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, languagesRepository: LanguagesRepository, resourceViewsService: ResourceViewsService, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTranslatedLanguageName: GetTranslatedLanguageName, liveShareStream: String?, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?, persistUserToolLanguageSettingsUseCase: PersistUserToolLanguageSettingsUseCase, shouldPersistToolSettings: Bool) {
         
         self.flowDelegate = flowDelegate
         self.tractRemoteSharePublisher = tractRemoteSharePublisher
@@ -59,7 +59,7 @@ class TractViewModel: MobileContentRendererViewModel {
         
         languageFont = FontLibrary.systemUIFont(size: 14, weight: .regular)
         
-        super.init(renderer: renderer, initialPage: initialPage, initialPageConfig: nil, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, getTranslatedLanguageName: getTranslatedLanguageName, trainingTipsEnabled: trainingTipsEnabled, incrementUserCounterUseCase: incrementUserCounterUseCase, selectedLanguageIndex: selectedLanguageIndex)
+        super.init(renderer: renderer, initialPage: initialPage, initialPageConfig: nil, initialPageSubIndex: initialPageSubIndex, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, getTranslatedLanguageName: getTranslatedLanguageName, trainingTipsEnabled: trainingTipsEnabled, incrementUserCounterUseCase: incrementUserCounterUseCase, selectedLanguageIndex: selectedLanguageIndex)
         
         setupBinding()
     }
@@ -394,15 +394,33 @@ extension TractViewModel {
         else {
             remoteLocaleNavBarLanguageIndex = nil
         }
+        
+        let localeChangedAndExistsInNavBar: Bool = remoteLocaleExists && remoteLocaleExistsInNavBarLanguages == true && remoteLocaleNavBarLanguage?.id != currentNavBarLanguage.id
+        
+        let reloadCollectionViewDataNeeded: Bool = localeChangedAndExistsInNavBar
+        
+        let pageNavigation = PageNavigationCollectionViewNavigationModel(
+            navigationDirection: nil,
+            page: page ?? super.currentPageNumber,
+            animated: animated,
+            reloadCollectionViewDataNeeded: reloadCollectionViewDataNeeded,
+            insertPages: nil,
+            deletePages: nil
+        )
+        
+        let navigationEvent = MobileContentPagesNavigationEvent(
+            pageNavigation: pageNavigation,
+            setPages: nil,
+            pagePositions: pagePositions,
+            parentPageParams: nil,
+            pageSubIndex: nil
+        )
                 
-        if remoteLocaleExists &&
-            (remoteLocaleExistsInNavBarLanguages == true) &&
-            remoteLocaleNavBarLanguage?.id != currentNavBarLanguage.id,
-           let remoteLocaleNavBarLanguageIndex = remoteLocaleNavBarLanguageIndex {
+        if localeChangedAndExistsInNavBar, let remoteLocaleNavBarLanguageIndex = remoteLocaleNavBarLanguageIndex {
             
             super.setPageRenderer(
                 pageRenderer: renderer.value.pageRenderers[remoteLocaleNavBarLanguageIndex],
-                navigationEvent: nil,
+                navigationEvent: navigationEvent,
                 pagePositions: pagePositions
             )
         }
@@ -415,20 +433,6 @@ extension TractViewModel {
             )
         }
         else {
-            
-            let navigationEvent = MobileContentPagesNavigationEvent(
-                pageNavigation: PageNavigationCollectionViewNavigationModel(
-                    navigationDirection: nil,
-                    page: page ?? super.currentPageNumber,
-                    animated: animated,
-                    reloadCollectionViewDataNeeded: false,
-                    insertPages: nil,
-                    deletePages: nil
-                ),
-                setPages: nil,
-                pagePositions: pagePositions,
-                parentPageParams: nil
-            )
             
             super.sendPageNavigationEvent(navigationEvent: navigationEvent)
         }

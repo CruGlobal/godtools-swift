@@ -1,7 +1,7 @@
 // Is an interface language
 
 /* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
-"lessons.resumeLessonModal.title" = "Resume Progress";
+"lessons.resumeLessonModal.title" = "Resume Progress?";
 
 "lessons.resumeLessonModal.subtitle" = "Would you like to pick up where you left off?";
 "lessons.resumeLessonModal.startOverButton" = "Start over";
@@ -92,6 +92,8 @@
 "favorites.favoriteLessons.title" = "Featured lesson";
 "favorites.favoriteTools.title" = "Your favorite tools";
 "favorites.favoriteTools.viewAll" = "View all";
+
+/* Please keep to a 9 character limit, longer phrases may get cut off */
 "favorites.favoriteLessons.details" = "Details";
 
 "optInNotification.title" = "Get Tips and Encouragement";
@@ -207,7 +209,10 @@ If you don't receive this message until later, the link may not still work. We c
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Training";
 
-/* This is an invitation for a user to open a tool */
+/*
+ * This is an invitation for a user to open a tool
+ * Please keep to a 9 character limit, longer phrases may get cut off
+*/
 "open" = "Open";
 
 /* A user will be selecting a heart to indicated that it is one of their favorite tools. */

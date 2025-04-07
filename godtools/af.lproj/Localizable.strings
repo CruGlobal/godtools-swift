@@ -90,7 +90,9 @@
 "favorites.favoriteLessons.title" = "Les in gebruik";
 "favorites.favoriteTools.title" = "Jou gunsteling hulpmiddel";
 "favorites.favoriteTools.viewAll" = "Sien almal";
-"favorites.favoriteLessons.details" = "Besonderhede";
+
+/* Please keep to a 9 character limit, longer phrases may get cut off */
+"favorites.favoriteLessons.details" = "Details";
 
 /* The meaning is "I don't want to set a second language".  Language is no language or None */
 "toolSettings.languagesList.deleteLanguage.title" = "Geen";
@@ -194,7 +196,10 @@ As jy nie hierdie boodskap gou kry nie, mag dit wees omdat die skakel nog nie we
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Opleiding";
 
-/* This is an invitation for a user to open a tool */
+/*
+ * This is an invitation for a user to open a tool
+ * Please keep to a 9 character limit, longer phrases may get cut off
+*/
 "open" = "Maak oop";
 
 /* A user will be selecting a heart to indicated that it is one of their favorite tools. */

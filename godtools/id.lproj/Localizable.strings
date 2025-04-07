@@ -92,6 +92,8 @@
 "favorites.favoriteLessons.title" = "Pelajaran-pelajaran";
 "favorites.favoriteTools.title" = "Sarana favorit Anda";
 "favorites.favoriteTools.viewAll" = "Lihat semua";
+
+/* Please keep to a 9 character limit, longer phrases may get cut off */
 "favorites.favoriteLessons.details" = "Detail";
 
 "optInNotification.title" = "Dapatkan Tips dan Dukungan";
@@ -206,7 +208,10 @@ Jika Anda tidak menerima pesan ini hingga nanti, tautannya mungkin masih belum b
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Latihan";
 
-/* This is an invitation for a user to open a tool */
+/*
+ * This is an invitation for a user to open a tool
+ * Please keep to a 9 character limit, longer phrases may get cut off
+*/
 "open" = "Buka";
 
 /* A user will be selecting a heart to indicated that it is one of their favorite tools. */

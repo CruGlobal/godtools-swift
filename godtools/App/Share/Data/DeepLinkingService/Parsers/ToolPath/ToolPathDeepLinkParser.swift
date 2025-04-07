@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ToolPathDeepLinkParser: DeepLinkUrlParserType {
+class ToolPathDeepLinkParser: DeepLinkUrlParserInterface {
     
     required init() {
         
@@ -76,6 +76,7 @@ class ToolPathDeepLinkParser: DeepLinkUrlParserType {
                 liveShareStream: nil,
                 page: pageNumber,
                 pageId: pageId,
+                pageSubIndex: nil,
                 selectedLanguageIndex: nil
             )
         )

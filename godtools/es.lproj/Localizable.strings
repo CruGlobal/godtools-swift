@@ -92,6 +92,8 @@
 "favorites.favoriteLessons.title" = "Lección destacada";
 "favorites.favoriteTools.title" = "Tus herramientas favoritas";
 "favorites.favoriteTools.viewAll" = "Ver todo";
+
+/* Please keep to a 9 character limit, longer phrases may get cut off */
 "favorites.favoriteLessons.details" = "Detalles";
 
 "optInNotification.title" = "Obtenga consejos y aliento";
@@ -206,7 +208,10 @@ Si no recibes este mensaje en un tiempo, puede que el enlace ya no funcione. Pod
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Entrenamiento";
 
-/* This is an invitation for a user to open a tool */
+/*
+ * This is an invitation for a user to open a tool
+ * Please keep to a 9 character limit, longer phrases may get cut off
+*/
 "open" = "Abrir";
 
 /* A user will be selecting a heart to indicated that it is one of their favorite tools. */

@@ -46,7 +46,9 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
 
     let appDiContainer: AppDiContainer
     let rootController: AppRootController = AppRootController(
-        nibName: nil, bundle: nil)
+        nibName: nil,
+        bundle: nil
+    )
     let navigationController: AppNavigationController
 
     var articleFlow: ArticleFlow?
@@ -70,7 +72,8 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
 
         self.appDiContainer = appDiContainer
         self.navigationController = AppNavigationController(
-            navigationBarAppearance: navigationBarAppearance)
+            navigationBarAppearance: navigationBarAppearance
+        )
         self.remoteConfigRepository = appDiContainer.dataLayer
             .getRemoteConfigRepository()
         self.resourcesRepository = appDiContainer.dataLayer
@@ -131,7 +134,8 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
 
                     self?.launchAppFromTerminatedState(
                         onboardingTutorialIsAvailable:
-                            onboardingTutorialIsAvailable)
+                            onboardingTutorialIsAvailable
+                    )
                 })
                 .store(in: &cancellables)
 
@@ -150,7 +154,8 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
 
                 let loadingView: UIView = UIView(frame: UIScreen.main.bounds)
                 let loadingImage: UIImageView = UIImageView(
-                    frame: UIScreen.main.bounds)
+                    frame: UIScreen.main.bounds
+                )
                 loadingImage.contentMode = .scaleAspectFit
                 loadingView.addSubview(loadingImage)
                 loadingImage.image = ImageCatalog.launchImage.uiImage
@@ -162,13 +167,16 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                 loadInitialData()
 
                 UIView.animate(
-                    withDuration: 0.4, delay: 1.5, options: .curveEaseOut,
+                    withDuration: 0.4,
+                    delay: 1.5,
+                    options: .curveEaseOut,
                     animations: {
                         loadingView.alpha = 0
                     },
                     completion: { (finished: Bool) in
                         loadingView.removeFromSuperview()
-                    })
+                    }
+                )
 
                 countAppSessionLaunch()
             }
@@ -180,11 +188,15 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
 
         case .toolCategoryFilterTappedFromTools:
             navigationController.pushViewController(
-                getToolCategoryFilterSelection(), animated: true)
+                getToolCategoryFilterSelection(),
+                animated: true
+            )
 
         case .toolLanguageFilterTappedFromTools:
             navigationController.pushViewController(
-                getToolLanguageFilterSelection(), animated: true)
+                getToolLanguageFilterSelection(),
+                animated: true
+            )
 
         case .categoryTappedFromToolCategoryFilter:
             navigationController.popViewController(animated: true)
@@ -199,7 +211,9 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             navigationController.popViewController(animated: true)
 
         case .spotlightToolTappedFromTools(
-            let spotlightTool, let toolFilterLanguage):
+            let spotlightTool,
+            let toolFilterLanguage
+        ):
 
             let toolDetails = getToolDetails(
                 toolId: spotlightTool.dataModelId,
@@ -211,39 +225,83 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
 
         case .toolTappedFromTools(let tool, let toolFilterLanguage):
 
+            let primaryLanguage: AppLanguageDomainModel?
+            let parallelLanguage: AppLanguageDomainModel?
+
+            if let toolResource = resourcesRepository.getResource(
+                id: tool.dataModelId
+            ),
+                toolResource.resourceTypeEnum == .article
+            {
+
+                parallelLanguage = nil
+
+                if let toolsFilterLanguageId = toolFilterLanguage?
+                    .languageDataModelId,
+                    let toolFilterLanguageLocale = toolFilterLanguage?
+                        .languageLocale,
+                    toolResource.supportsLanguage(
+                        languageId: toolsFilterLanguageId
+                    )
+                {
+
+                    primaryLanguage = toolFilterLanguageLocale
+                } else {
+
+                    primaryLanguage = appLanguage
+                }
+            } else {
+                primaryLanguage = nil
+                parallelLanguage = toolFilterLanguage?.languageLocale
+            }
+
             let toolDetails = getToolDetails(
                 toolId: tool.dataModelId,
-                parallelLanguage: toolFilterLanguage?.languageLocale,
-                selectedLanguageIndex: 1
+                parallelLanguage: parallelLanguage,
+                selectedLanguageIndex: 1,
+                primaryLanguage: primaryLanguage
             )
 
             navigationController.pushViewController(toolDetails, animated: true)
 
         case .openToolTappedFromToolDetails(
-            let toolId, let primaryLanguage, let parallelLanguage,
-            let selectedLanguageIndex):
+            let toolId,
+            let primaryLanguage,
+            let parallelLanguage,
+            let selectedLanguageIndex
+        ):
 
             if dashboardTabObserver.value == .favorites {
 
                 navigateToToolWithUserToolLanguageSettingsApplied(
-                    toolDataModelId: toolId, trainingTipsEnabled: false)
+                    toolDataModelId: toolId,
+                    trainingTipsEnabled: false
+                )
             } else {
 
                 navigateToTool(
-                    toolDataModelId: toolId, primaryLanguage: primaryLanguage,
+                    toolDataModelId: toolId,
+                    primaryLanguage: primaryLanguage,
                     parallelLanguage: parallelLanguage,
                     selectedLanguageIndex: selectedLanguageIndex,
-                    trainingTipsEnabled: false)
+                    trainingTipsEnabled: false
+                )
             }
 
         case .lessonTappedFromLessonsList(
-            let lessonListItem, let languageFilter):
+            let lessonListItem,
+            let languageFilter
+        ):
             navigateToLesson(
-                lessonListItem: lessonListItem, languageFilter: languageFilter)
+                lessonListItem: lessonListItem,
+                languageFilter: languageFilter
+            )
 
         case .lessonLanguageFilterTappedFromLessons:
             navigationController.pushViewController(
-                getLessonLanguageFilterSelection(), animated: true)
+                getLessonLanguageFilterSelection(),
+                animated: true
+            )
 
         case .backTappedFromLessonLanguageFilter:
             navigationController.popViewController(animated: true)
@@ -254,11 +312,14 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         case .featuredLessonTappedFromFavorites(let featuredLesson):
             navigateToToolInAppLanguage(
                 toolDataModelId: featuredLesson.dataModelId,
-                trainingTipsEnabled: false)
+                trainingTipsEnabled: false
+            )
 
         case .viewAllFavoriteToolsTappedFromFavorites:
             navigationController.pushViewController(
-                getAllFavoriteTools(), animated: true)
+                getAllFavoriteTools(),
+                animated: true
+            )
 
         case .toolDetailsTappedFromFavorites(let tool):
 
@@ -273,11 +334,15 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
 
         case .openToolTappedFromFavorites(let tool):
             navigateToToolWithUserToolLanguageSettingsApplied(
-                toolDataModelId: tool.dataModelId, trainingTipsEnabled: false)
+                toolDataModelId: tool.dataModelId,
+                trainingTipsEnabled: false
+            )
 
         case .toolTappedFromFavorites(let tool):
             navigateToToolWithUserToolLanguageSettingsApplied(
-                toolDataModelId: tool.dataModelId, trainingTipsEnabled: false)
+                toolDataModelId: tool.dataModelId,
+                trainingTipsEnabled: false
+            )
 
         case .unfavoriteToolTappedFromFavorites(let tool):
 
@@ -306,14 +371,20 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
 
         case .openToolTappedFromAllYourFavoriteTools(let tool):
             navigateToToolWithUserToolLanguageSettingsApplied(
-                toolDataModelId: tool.dataModelId, trainingTipsEnabled: false)
+                toolDataModelId: tool.dataModelId,
+                trainingTipsEnabled: false
+            )
 
         case .toolTappedFromAllYourFavoritedTools(let tool):
             navigateToToolWithUserToolLanguageSettingsApplied(
-                toolDataModelId: tool.dataModelId, trainingTipsEnabled: false)
+                toolDataModelId: tool.dataModelId,
+                trainingTipsEnabled: false
+            )
 
         case .unfavoriteToolTappedFromAllYourFavoritedTools(
-            let tool, let didConfirmToolRemovalSubject):
+            let tool,
+            let didConfirmToolRemovalSubject
+        ):
 
             presentConfirmRemoveToolFromFavoritesAlertView(
                 toolId: tool.dataModelId,
@@ -328,7 +399,9 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         case .allowNotificationsTappedFromBottomSheet(let userDialogReponse):
 
             presentOptInNotificationDialogView(
-                userDialogReponse: userDialogReponse, animated: true)
+                userDialogReponse: userDialogReponse,
+                animated: true
+            )
 
         case .articleFlowCompleted(_):
 
@@ -347,9 +420,11 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             }
 
             navigateToDashboard(
-                startingTab: .lessons, animatePopToToolsMenu: true,
+                startingTab: .lessons,
+                animatePopToToolsMenu: true,
                 animateDismissingPresentedView: true,
-                didCompleteDismissingPresentedView: nil)
+                didCompleteDismissingPresentedView: nil
+            )
 
             lessonFlow = nil
 
@@ -370,7 +445,8 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                     if highestPageNumberViewed > 2 && !lessonEvaluated {
                         self?.presentLessonEvaluation(
                             lessonId: lessonId,
-                            pageIndexReached: highestPageNumberViewed)
+                            pageIndexReached: highestPageNumberViewed
+                        )
                     }
                 }
                 .store(in: &cancellables)
@@ -385,14 +461,18 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             if state == .userClosedTractToLessonsList {
 
                 navigateToDashboard(
-                    startingTab: .lessons, animatePopToToolsMenu: true)
+                    startingTab: .lessons,
+                    animatePopToToolsMenu: true
+                )
             } else if let dashboardInNavigationStack =
                 getDashboardInNavigationStack()
             {
 
                 configureNavBarForDashboard()
                 navigationController.popToViewController(
-                    dashboardInNavigationStack, animated: true)
+                    dashboardInNavigationStack,
+                    animated: true
+                )
             } else {
 
                 configureNavBarForDashboard()
@@ -413,7 +493,9 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
 
                     configureNavBarForDashboard()
                     navigationController.popToViewController(
-                        dashboardInNavigationStack, animated: true)
+                        dashboardInNavigationStack,
+                        animated: true
+                    )
                 } else {
 
                     configureNavBarForDashboard()
@@ -424,13 +506,22 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             }
 
         case .urlLinkTappedFromToolDetail(
-            let url, let screenName, let siteSection, let siteSubSection,
-            let contentLanguage, let contentLanguageSecondary):
+            let url,
+            let screenName,
+            let siteSection,
+            let siteSubSection,
+            let contentLanguage,
+            let contentLanguageSecondary
+        ):
             navigateToURL(
-                url: url, screenName: screenName, siteSection: siteSection,
-                siteSubSection: siteSubSection, appLanguage: appLanguage,
+                url: url,
+                screenName: screenName,
+                siteSection: siteSection,
+                siteSubSection: siteSubSection,
+                appLanguage: appLanguage,
                 contentLanguage: contentLanguage,
-                contentLanguageSecondary: contentLanguageSecondary)
+                contentLanguageSecondary: contentLanguageSecondary
+            )
 
         case .showOnboardingTutorial(let animated):
             navigateToOnboarding(animated: animated)
@@ -471,40 +562,57 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             let didParseDeepLinkFromUrl: Bool =
                 deepLinkingService.parseDeepLinkAndNotify(
                     incomingDeepLink: .url(
-                        incomingUrl: IncomingDeepLinkUrl(url: url)))
+                        incomingUrl: IncomingDeepLinkUrl(url: url)
+                    )
+                )
 
             if !didParseDeepLinkFromUrl {
                 appDiContainer.getUrlOpener().open(url: url)
             }
 
         case .learnToShareToolTappedFromToolDetails(
-            let toolId, let primaryLanguage, let parallelLanguage,
-            let selectedLanguageIndex):
+            let toolId,
+            let primaryLanguage,
+            let parallelLanguage,
+            let selectedLanguageIndex
+        ):
             navigateToLearnToShareTool(
-                toolId: toolId, primaryLanguage: primaryLanguage,
+                toolId: toolId,
+                primaryLanguage: primaryLanguage,
                 parallelLanguage: parallelLanguage,
-                selectedLanguageIndex: selectedLanguageIndex)
+                selectedLanguageIndex: selectedLanguageIndex
+            )
 
         case .continueTappedFromLearnToShareTool(
-            let toolId, let primaryLanguage, let parallelLanguage,
-            let selectedLanguageIndex):
+            let toolId,
+            let primaryLanguage,
+            let parallelLanguage,
+            let selectedLanguageIndex
+        ):
             dismissLearnToShareToolFlow {
                 self.navigateToTool(
-                    toolDataModelId: toolId, primaryLanguage: primaryLanguage,
+                    toolDataModelId: toolId,
+                    primaryLanguage: primaryLanguage,
                     parallelLanguage: parallelLanguage,
                     selectedLanguageIndex: selectedLanguageIndex,
-                    trainingTipsEnabled: true)
+                    trainingTipsEnabled: true
+                )
             }
 
         case .closeTappedFromLearnToShareTool(
-            let toolId, let primaryLanguage, let parallelLanguage,
-            let selectedLanguageIndex):
+            let toolId,
+            let primaryLanguage,
+            let parallelLanguage,
+            let selectedLanguageIndex
+        ):
             dismissLearnToShareToolFlow {
                 self.navigateToTool(
-                    toolDataModelId: toolId, primaryLanguage: primaryLanguage,
+                    toolDataModelId: toolId,
+                    primaryLanguage: primaryLanguage,
                     parallelLanguage: parallelLanguage,
                     selectedLanguageIndex: selectedLanguageIndex,
-                    trainingTipsEnabled: true)
+                    trainingTipsEnabled: true
+                )
             }
 
         case .closeTappedFromLessonEvaluation:
@@ -650,7 +758,11 @@ extension AppFlow {
             dashboardTabObserver: dashboardTabObserver
         )
 
-        let view = DashboardView(viewModel: viewModel, optInNotificationViewModel: viewModel.getOptInNotificationViewModel())
+        let view = DashboardView(
+            viewModel: viewModel,
+            optInNotificationViewModel:
+                viewModel.getOptInNotificationViewModel()
+        )
 
         let menuButton = AppMenuBarItem(
             color: .white,
@@ -676,20 +788,23 @@ extension AppFlow {
     private func configureNavBarForDashboard() {
 
         AppDelegate.setWindowBackgroundColorForStatusBarColor(
-            color: ColorPalette.gtBlue.uiColor)
+            color: ColorPalette.gtBlue.uiColor
+        )
 
         navigationController.resetNavigationBarAppearance()
 
         navigationController.setSemanticContentAttribute(
             semanticContentAttribute: ApplicationLayout.shared.currentDirection
-                .semanticContentAttribute)
+                .semanticContentAttribute
+        )
 
         navigationController.setLayoutDirectionPublisherToApplicationLayout()
     }
 
     private func navigateToDashboard(
         startingTab: DashboardTabTypeDomainModel = AppFlow
-            .defaultStartingDashboardTab, animatePopToToolsMenu: Bool = false,
+            .defaultStartingDashboardTab,
+        animatePopToToolsMenu: Bool = false,
         animateDismissingPresentedView: Bool = false,
         didCompleteDismissingPresentedView: (() -> Void)? = nil
     ) {
@@ -702,7 +817,9 @@ extension AppFlow {
             let dashboard = getNewDashboardView(startingTab: startingTab)
 
             navigationController.setViewControllers(
-                [dashboard], animated: false)
+                [dashboard],
+                animated: false
+            )
         }
 
         configureNavBarForDashboard()
@@ -719,7 +836,8 @@ extension AppFlow {
         articleFlow = nil
 
         navigationController.popToRootViewController(
-            animated: animatePopToToolsMenu)
+            animated: animatePopToToolsMenu
+        )
 
         navigationController.dismissPresented(
             animated: animateDismissingPresentedView,
@@ -799,7 +917,8 @@ extension AppFlow {
     }
 
     private func presentOptInNotificationDialogView(
-        userDialogReponse: PassthroughSubject<Void, Never>?, animated: Bool
+        userDialogReponse: PassthroughSubject<Void, Never>?,
+        animated: Bool
     ) {
         appDiContainer.feature.optInNotification.domainLayer
             .getViewOptInDialogUseCase().viewPublisher(appLanguage: appLanguage)
@@ -838,14 +957,17 @@ extension AppFlow {
         )
 
         navigationController.present(
-            onboardingFlow.navigationController, animated: animated,
-            completion: nil)
+            onboardingFlow.navigationController,
+            animated: animated,
+            completion: nil
+        )
 
         self.onboardingFlow = onboardingFlow
     }
 
     private func dismissOnboarding(
-        animated: Bool, completion: (() -> Void)? = nil
+        animated: Bool,
+        completion: (() -> Void)? = nil
     ) {
 
         guard onboardingFlow != nil else {
@@ -853,7 +975,9 @@ extension AppFlow {
         }
 
         navigationController.dismissPresented(
-            animated: animated, completion: completion)
+            animated: animated,
+            completion: completion
+        )
 
         onboardingFlow = nil
     }
@@ -903,18 +1027,23 @@ extension AppFlow {
         case .tool(let toolDeepLink):
 
             navigateToDashboard(
-                startingTab: .favorites, animatePopToToolsMenu: false,
+                startingTab: .favorites,
+                animatePopToToolsMenu: false,
                 animateDismissingPresentedView: false,
-                didCompleteDismissingPresentedView: nil)
+                didCompleteDismissingPresentedView: nil
+            )
 
             navigateToToolFromToolDeepLink(
-                appLanguage: appLanguage, toolDeepLink: toolDeepLink,
-                didCompleteToolNavigation: nil)
+                appLanguage: appLanguage,
+                toolDeepLink: toolDeepLink,
+                didCompleteToolNavigation: nil
+            )
 
         case .articleAemUri(let aemUri):
 
             navigateToDashboard(
-                startingTab: .favorites, animateDismissingPresentedView: false,
+                startingTab: .favorites,
+                animateDismissingPresentedView: false,
                 didCompleteDismissingPresentedView: { [weak self] in
 
                     guard let weakSelf = self else {
@@ -930,7 +1059,8 @@ extension AppFlow {
                     )
 
                     weakSelf.articleDeepLinkFlow = articleDeepLinkFlow
-                })
+                }
+            )
 
         case .languageSettings:
             navigateToDashboard(startingTab: .favorites)
@@ -948,8 +1078,10 @@ extension AppFlow {
 
         case .allToolsList:
             navigateToDashboard(
-                startingTab: .tools, animateDismissingPresentedView: false,
-                didCompleteDismissingPresentedView: nil)
+                startingTab: .tools,
+                animateDismissingPresentedView: false,
+                didCompleteDismissingPresentedView: nil
+            )
 
         case .dashboard:
             navigateToDashboard(startingTab: .favorites)
@@ -978,7 +1110,8 @@ extension AppFlow {
 extension AppFlow {
 
     private func navigateToToolInAppLanguage(
-        toolDataModelId: String, trainingTipsEnabled: Bool,
+        toolDataModelId: String,
+        trainingTipsEnabled: Bool,
         shouldPersistToolSettings: Bool = false
     ) {
 
@@ -988,22 +1121,25 @@ extension AppFlow {
         let languageIds: [String]
 
         if let appLanguageModel = languagesRepository.getLanguage(
-            code: appLanguage)
-        {
+            code: appLanguage
+        ) {
             languageIds = [appLanguageModel.id]
         } else {
             languageIds = Array()
         }
 
         navigateToTool(
-            toolDataModelId: toolDataModelId, languageIds: languageIds,
+            toolDataModelId: toolDataModelId,
+            languageIds: languageIds,
             selectedLanguageIndex: nil,
             trainingTipsEnabled: trainingTipsEnabled,
-            shouldPersistToolSettings: shouldPersistToolSettings)
+            shouldPersistToolSettings: shouldPersistToolSettings
+        )
     }
 
     private func navigateToToolWithUserToolLanguageSettingsApplied(
-        toolDataModelId: String, trainingTipsEnabled: Bool
+        toolDataModelId: String,
+        trainingTipsEnabled: Bool
     ) {
 
         let userToolSettingsRepository: UserToolSettingsRepository =
@@ -1012,7 +1148,8 @@ extension AppFlow {
 
         if let userToolSettings =
             userToolSettingsRepository.getUserToolSettings(
-                toolId: toolDataModelId)
+                toolId: toolDataModelId
+            )
         {
 
             navigateToTool(
@@ -1029,14 +1166,18 @@ extension AppFlow {
             navigateToToolInAppLanguage(
                 toolDataModelId: toolDataModelId,
                 trainingTipsEnabled: trainingTipsEnabled,
-                shouldPersistToolSettings: true)
+                shouldPersistToolSettings: true
+            )
         }
     }
 
     private func navigateToTool(
-        toolDataModelId: String, primaryLanguageId: String,
-        parallelLanguageId: String?, selectedLanguageIndex: Int?,
-        trainingTipsEnabled: Bool, shouldPersistToolSettings: Bool = false
+        toolDataModelId: String,
+        primaryLanguageId: String,
+        parallelLanguageId: String?,
+        selectedLanguageIndex: Int?,
+        trainingTipsEnabled: Bool,
+        shouldPersistToolSettings: Bool = false
     ) {
 
         var languageIds: [String] = [primaryLanguageId]
@@ -1046,16 +1187,21 @@ extension AppFlow {
         }
 
         navigateToTool(
-            toolDataModelId: toolDataModelId, languageIds: languageIds,
+            toolDataModelId: toolDataModelId,
+            languageIds: languageIds,
             selectedLanguageIndex: selectedLanguageIndex,
             trainingTipsEnabled: trainingTipsEnabled,
-            shouldPersistToolSettings: shouldPersistToolSettings)
+            shouldPersistToolSettings: shouldPersistToolSettings
+        )
     }
 
     private func navigateToTool(
-        toolDataModelId: String, primaryLanguage: AppLanguageDomainModel,
-        parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?,
-        trainingTipsEnabled: Bool, shouldPersistToolSettings: Bool = false
+        toolDataModelId: String,
+        primaryLanguage: AppLanguageDomainModel,
+        parallelLanguage: AppLanguageDomainModel?,
+        selectedLanguageIndex: Int?,
+        trainingTipsEnabled: Bool,
+        shouldPersistToolSettings: Bool = false
     ) {
 
         let languagesRepository: LanguagesRepository = appDiContainer.dataLayer
@@ -1064,23 +1210,26 @@ extension AppFlow {
         var languageIds: [String] = Array()
 
         if let languageModel = languagesRepository.getLanguage(
-            code: primaryLanguage)
-        {
+            code: primaryLanguage
+        ) {
             languageIds.append(languageModel.id)
         }
 
         if let parallelLanguage = parallelLanguage,
             let languageModel = languagesRepository.getLanguage(
-                code: parallelLanguage)
+                code: parallelLanguage
+            )
         {
             languageIds.append(languageModel.id)
         }
 
         navigateToTool(
-            toolDataModelId: toolDataModelId, languageIds: languageIds,
+            toolDataModelId: toolDataModelId,
+            languageIds: languageIds,
             selectedLanguageIndex: selectedLanguageIndex,
             trainingTipsEnabled: trainingTipsEnabled,
-            shouldPersistToolSettings: shouldPersistToolSettings)
+            shouldPersistToolSettings: shouldPersistToolSettings
+        )
     }
 
     private func navigateToLesson(
@@ -1092,17 +1241,22 @@ extension AppFlow {
             navigateToTool(
                 toolDataModelId: lessonListItem.dataModelId,
                 languageIds: [languageFilter.languageId],
-                selectedLanguageIndex: 0, trainingTipsEnabled: false)
+                selectedLanguageIndex: 0,
+                trainingTipsEnabled: false
+            )
         } else {
             navigateToToolInAppLanguage(
                 toolDataModelId: lessonListItem.dataModelId,
-                trainingTipsEnabled: false)
+                trainingTipsEnabled: false
+            )
         }
     }
 
     private func navigateToTool(
-        toolDataModelId: String, languageIds: [String],
-        selectedLanguageIndex: Int?, trainingTipsEnabled: Bool,
+        toolDataModelId: String,
+        languageIds: [String],
+        selectedLanguageIndex: Int?,
+        trainingTipsEnabled: Bool,
         shouldPersistToolSettings: Bool = false
     ) {
 
@@ -1113,7 +1267,8 @@ extension AppFlow {
 
         if languageIds.isEmpty,
             let englishLanguage = languagesRepository.getLanguage(
-                code: LanguageCodeDomainModel.english.rawValue)
+                code: LanguageCodeDomainModel.english.rawValue
+            )
         {
 
             openToolInLanguages = [englishLanguage.id]
@@ -1130,6 +1285,8 @@ extension AppFlow {
             selectedLanguageIndex: selectedLanguageIndex,
             trainingTipsEnabled: trainingTipsEnabled,
             initialPage: nil,
+            initialPageSubIndex: nil,
+
             shouldPersistToolSettings: shouldPersistToolSettings
         )
     }
@@ -1176,7 +1333,10 @@ extension AppFlow {
         )
 
         navigationController.present(
-            tutorialFlow.navigationController, animated: true, completion: nil)
+            tutorialFlow.navigationController,
+            animated: true,
+            completion: nil
+        )
 
         self.tutorialFlow = tutorialFlow
     }
@@ -1380,14 +1540,17 @@ extension AppFlow {
 extension AppFlow {
 
     private func getToolDetails(
-        toolId: String, parallelLanguage: AppLanguageDomainModel?,
-        selectedLanguageIndex: Int?, shouldPersistToolSettings: Bool = false
+        toolId: String,
+        parallelLanguage: AppLanguageDomainModel?,
+        selectedLanguageIndex: Int?,
+        shouldPersistToolSettings: Bool = false,
+        primaryLanguage: AppLanguageDomainModel? = nil
     ) -> UIViewController {
 
         let viewModel = ToolDetailsViewModel(
             flowDelegate: self,
             toolId: toolId,
-            primaryLanguage: appLanguage,
+            primaryLanguage: primaryLanguage ?? appLanguage,
             parallelLanguage: parallelLanguage,
             selectedLanguageIndex: selectedLanguageIndex,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage
@@ -1437,8 +1600,10 @@ extension AppFlow {
 extension AppFlow {
 
     private func navigateToLearnToShareTool(
-        toolId: String, primaryLanguage: AppLanguageDomainModel,
-        parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?
+        toolId: String,
+        primaryLanguage: AppLanguageDomainModel,
+        parallelLanguage: AppLanguageDomainModel?,
+        selectedLanguageIndex: Int?
     ) {
 
         let toolTrainingTipsOnboardingViews:
@@ -1448,12 +1613,16 @@ extension AppFlow {
         let toolTrainingTipReachedMaximumViews: Bool =
             toolTrainingTipsOnboardingViews
             .getToolTrainingTipReachedMaximumViews(
-                toolId: toolId, primaryLanguage: primaryLanguage)
+                toolId: toolId,
+                primaryLanguage: primaryLanguage
+            )
 
         if !toolTrainingTipReachedMaximumViews {
 
             toolTrainingTipsOnboardingViews.storeToolTrainingTipViewed(
-                toolId: toolId, primaryLanguage: primaryLanguage)
+                toolId: toolId,
+                primaryLanguage: primaryLanguage
+            )
 
             let learnToShareToolFlow = LearnToShareToolFlow(
                 flowDelegate: self,
@@ -1465,8 +1634,10 @@ extension AppFlow {
             )
 
             navigationController.present(
-                learnToShareToolFlow.navigationController, animated: true,
-                completion: nil)
+                learnToShareToolFlow.navigationController,
+                animated: true,
+                completion: nil
+            )
 
             self.learnToShareToolFlow = learnToShareToolFlow
         } else {
@@ -1489,7 +1660,9 @@ extension AppFlow {
         }
 
         navigationController.dismissPresented(
-            animated: true, completion: completion)
+            animated: true,
+            completion: completion
+        )
         learnToShareToolFlow = nil
     }
 }
@@ -1546,7 +1719,8 @@ extension AppFlow {
 extension AppFlow {
 
     private func presentLessonEvaluation(
-        lessonId: String, pageIndexReached: Int
+        lessonId: String,
+        pageIndexReached: Int
     ) {
 
         let viewModel = LessonEvaluationViewModel(
@@ -1572,7 +1746,9 @@ extension AppFlow {
         )
 
         let hostingView = AppHostingController<LessonEvaluationView>(
-            rootView: view, navigationBar: nil)
+            rootView: view,
+            navigationBar: nil
+        )
 
         let overlayNavigationController = OverlayNavigationController(
             rootView: hostingView,
@@ -1581,7 +1757,9 @@ extension AppFlow {
         )
 
         navigationController.present(
-            overlayNavigationController, animated: true)
+            overlayNavigationController,
+            animated: true
+        )
     }
 
     private func dismissLessonEvaluation() {
@@ -1623,33 +1801,50 @@ extension AppFlow {
         }
 
         menuView.frame = CGRect(
-            x: menuViewStartingX, y: 0, width: menuView.frame.size.width,
-            height: menuView.frame.size.height)
+            x: menuViewStartingX,
+            y: 0,
+            width: menuView.frame.size.width,
+            height: menuView.frame.size.height
+        )
 
         if animated {
 
             UIView.animate(
-                withDuration: 0.35, delay: 0, options: .curveEaseOut,
+                withDuration: 0.35,
+                delay: 0,
+                options: .curveEaseOut,
                 animations: {
 
                     menuView.frame = CGRect(
-                        x: menuViewEndingX, y: 0,
+                        x: menuViewEndingX,
+                        y: 0,
                         width: menuView.frame.size.width,
-                        height: menuView.frame.size.height)
+                        height: menuView.frame.size.height
+                    )
                     appView.frame = CGRect(
-                        x: appViewEndingX, y: 0,
+                        x: appViewEndingX,
+                        y: 0,
                         width: appView.frame.size.width,
-                        height: appView.frame.size.height)
+                        height: appView.frame.size.height
+                    )
 
-                }, completion: nil)
+                },
+                completion: nil
+            )
         } else {
 
             menuView.frame = CGRect(
-                x: menuViewEndingX, y: 0, width: menuView.frame.size.width,
-                height: menuView.frame.size.height)
+                x: menuViewEndingX,
+                y: 0,
+                width: menuView.frame.size.width,
+                height: menuView.frame.size.height
+            )
             appView.frame = CGRect(
-                x: appViewEndingX, y: 0, width: appView.frame.size.width,
-                height: appView.frame.size.height)
+                x: appViewEndingX,
+                y: 0,
+                width: appView.frame.size.width,
+                height: appView.frame.size.height
+            )
         }
     }
 
@@ -1660,7 +1855,9 @@ extension AppFlow {
         }
 
         menuFlow.navigationController.dismiss(
-            animated: animated, completion: nil)
+            animated: animated,
+            completion: nil
+        )
 
         let screenWidth: CGFloat = UIScreen.main.bounds.size.width
         let menuView: UIView = menuFlow.navigationController.view
@@ -1683,38 +1880,54 @@ extension AppFlow {
         }
 
         menuView.frame = CGRect(
-            x: menuViewStartingX, y: 0, width: menuView.frame.size.width,
-            height: menuView.frame.size.height)
+            x: menuViewStartingX,
+            y: 0,
+            width: menuView.frame.size.width,
+            height: menuView.frame.size.height
+        )
         appView.frame = CGRect(
-            x: appViewStartingX, y: 0, width: appView.frame.size.width,
-            height: appView.frame.size.height)
+            x: appViewStartingX,
+            y: 0,
+            width: appView.frame.size.width,
+            height: appView.frame.size.height
+        )
 
         if animated {
 
             UIView.animate(
-                withDuration: 0.35, delay: 0, options: .curveEaseOut,
+                withDuration: 0.35,
+                delay: 0,
+                options: .curveEaseOut,
                 animations: {
 
                     menuView.frame = CGRect(
-                        x: menuViewEndingX, y: 0,
+                        x: menuViewEndingX,
+                        y: 0,
                         width: menuView.frame.size.width,
-                        height: menuView.frame.size.height)
+                        height: menuView.frame.size.height
+                    )
                     appView.frame = CGRect(
-                        x: appViewEndingX, y: 0,
+                        x: appViewEndingX,
+                        y: 0,
                         width: appView.frame.size.width,
-                        height: appView.frame.size.height)
+                        height: appView.frame.size.height
+                    )
 
                 },
                 completion: { [weak self] (finished: Bool) in
 
                     menuFlow.navigationController.removeAsChildController()
                     self?.menuFlow = nil
-                })
+                }
+            )
         } else {
 
             appView.frame = CGRect(
-                x: appViewEndingX, y: 0, width: appView.frame.size.width,
-                height: appView.frame.size.height)
+                x: appViewEndingX,
+                y: 0,
+                width: appView.frame.size.width,
+                height: appView.frame.size.height
+            )
 
             menuFlow.navigationController.removeAsChildController()
             self.menuFlow = nil
@@ -1737,18 +1950,27 @@ extension AppFlow {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(
-                handleUIApplicationLifeCycleNotification(notification:)),
-            name: UIApplication.willResignActiveNotification, object: nil)
+                handleUIApplicationLifeCycleNotification(notification:)
+            ),
+            name: UIApplication.willResignActiveNotification,
+            object: nil
+        )
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(
-                handleUIApplicationLifeCycleNotification(notification:)),
-            name: UIApplication.didBecomeActiveNotification, object: nil)
+                handleUIApplicationLifeCycleNotification(notification:)
+            ),
+            name: UIApplication.didBecomeActiveNotification,
+            object: nil
+        )
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(
-                handleUIApplicationLifeCycleNotification(notification:)),
-            name: UIApplication.didEnterBackgroundNotification, object: nil)
+                handleUIApplicationLifeCycleNotification(notification:)
+            ),
+            name: UIApplication.didEnterBackgroundNotification,
+            object: nil
+        )
     }
 
     private func removeUIApplicationLifeCycleObservers() {
@@ -1760,12 +1982,20 @@ extension AppFlow {
         uiApplicationLifeCycleObserversAdded = false
 
         NotificationCenter.default.removeObserver(
-            self, name: UIApplication.willResignActiveNotification, object: nil)
+            self,
+            name: UIApplication.willResignActiveNotification,
+            object: nil
+        )
         NotificationCenter.default.removeObserver(
-            self, name: UIApplication.didBecomeActiveNotification, object: nil)
+            self,
+            name: UIApplication.didBecomeActiveNotification,
+            object: nil
+        )
         NotificationCenter.default.removeObserver(
-            self, name: UIApplication.didEnterBackgroundNotification,
-            object: nil)
+            self,
+            name: UIApplication.didEnterBackgroundNotification,
+            object: nil
+        )
     }
 
     @objc private func handleUIApplicationLifeCycleNotification(
@@ -1782,7 +2012,8 @@ extension AppFlow {
 
             ApplicationLayout.shared.configure(
                 appLanguageFeatureDiContainer: appDiContainer.feature
-                    .appLanguage)
+                    .appLanguage
+            )
 
             let appLaunchedFromTerminatedState: Bool = !navigationStarted
             let appLaunchedFromBackgroundState: Bool =
