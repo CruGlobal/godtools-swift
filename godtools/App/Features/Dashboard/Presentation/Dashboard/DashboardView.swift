@@ -6,7 +6,6 @@
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
-
 import Combine
 import SwiftUI
 
@@ -17,15 +16,13 @@ struct DashboardView: View {
     static let scrollViewBottomSpacingToTabBar: CGFloat = 30
 
     @ObservedObject private var viewModel: DashboardViewModel
-    @ObservedObject private var optInNotificationModel:
-    OptInNotificationViewModel
 
     init(
         viewModel: DashboardViewModel,
-        optInNotificationViewModel: OptInNotificationViewModel
+
     ) {
         self.viewModel = viewModel
-        self.optInNotificationModel = optInNotificationViewModel
+
     }
 
     var body: some View {
@@ -93,7 +90,7 @@ struct DashboardView: View {
                     )
                 }
             }.overlay(content: {
-                if optInNotificationModel.isActive {
+                if viewModel.isOptInNotificationActive {
                     Color.black.opacity(0.2)
                         .edgesIgnoringSafeArea(.all)
                 }
@@ -101,7 +98,7 @@ struct DashboardView: View {
             }).overlay(
                 alignment: Alignment.bottom,
                 content: {
-                    if optInNotificationModel.isActive {
+                    if viewModel.isOptInNotificationActive {
 
                         OptInNotificationView(
                             viewModel:
@@ -185,8 +182,7 @@ struct DashboardView_Previews: PreviewProvider {
 
         DashboardView(
             viewModel: Self.getDashboardViewModel(),
-            optInNotificationViewModel: dashboardDependencies
-                .optInNotificationViewModel
+
         )
     }
 }

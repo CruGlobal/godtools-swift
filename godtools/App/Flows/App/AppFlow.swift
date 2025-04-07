@@ -760,8 +760,7 @@ extension AppFlow {
 
         let view = DashboardView(
             viewModel: viewModel,
-            optInNotificationViewModel:
-                viewModel.getOptInNotificationViewModel()
+            
         )
 
         let menuButton = AppMenuBarItem(

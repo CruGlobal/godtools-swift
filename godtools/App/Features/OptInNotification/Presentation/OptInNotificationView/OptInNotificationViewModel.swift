@@ -102,9 +102,8 @@ class OptInNotificationViewModel: ObservableObject {
         userDialogReponse
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (void: Void) in
-                withAnimation {
-                    self?.isActive = false
-                }
+
+                self?.isActive = false
 
             }
             .store(in: &cancellables)
@@ -132,7 +131,6 @@ class OptInNotificationViewModel: ObservableObject {
     func shouldPromptNotificationSheet() async {
 
         refreshNotificationStatus()
-      
 
         let lastPrompted =
             optInNotificationRepository.getLastPrompted()
@@ -158,9 +156,7 @@ class OptInNotificationViewModel: ObservableObject {
         {
 
             await MainActor.run {
-                withAnimation {
-                    isActive = true
-                }
+                isActive = true
             }
 
             optInNotificationRepository.recordPrompt()
@@ -184,10 +180,9 @@ extension OptInNotificationViewModel {
                 guard let self = self else { return }
 
                 if permissionGranted {
-                    // Theoretically should never happen because a user who has granted permissions should not end up in this view
-                    withAnimation {
-                        self.isActive = false
-                    }
+                    // Theoretically should never happen because a user who has granted permissions should never end up in this view
+
+                    self.isActive = false
 
                 } else {
                     if !isFirstDialogPrompt {
@@ -197,9 +192,8 @@ extension OptInNotificationViewModel {
                             )
                         )
                     } else {
-                        withAnimation {
-                            self.isActive = false
-                        }
+
+                        self.isActive = false
 
                     }
 
@@ -210,7 +204,7 @@ extension OptInNotificationViewModel {
     }
 
     func maybeLaterTapped() {
-        withAnimation { isActive = false }
+        isActive = false
 
     }
 }

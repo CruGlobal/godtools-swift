@@ -8,6 +8,7 @@
 
 import Combine
 import Foundation
+import SwiftUI
 
 class DashboardViewModel: ObservableObject {
 
@@ -27,10 +28,13 @@ class DashboardViewModel: ObservableObject {
     @Published var tabs: [DashboardTabTypeDomainModel] = [
         .lessons, .favorites, .tools,
     ]
+
     @Published var lessonsButtonTitle: String = ""
     @Published var favoritesButtonTitle: String = ""
     @Published var toolsButtonTitle: String = ""
     @Published var currentTab: Int = 0
+
+    @Published var isOptInNotificationActive: Bool = false
 
     init(
         startingTab: DashboardTabTypeDomainModel,
@@ -91,6 +95,18 @@ class DashboardViewModel: ObservableObject {
                 dashboardTabObserver.send(self.tabs[currentTab])
             }
             .store(in: &cancellables)
+
+        dashboardPresentationLayerDependencies.optInNotificationViewModel
+            .$isActive
+            .receive(on: DispatchQueue.main).sink { [weak self] isActive in
+                guard let self = self else { return }
+
+                withAnimation {
+
+                    self.isOptInNotificationActive = isActive
+
+                }
+            }.store(in: &cancellables)
 
         DispatchQueue.main.async {
             Task {
