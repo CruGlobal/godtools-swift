@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Lottie
 
 struct LessonSwipeTutorialView: View {
     
@@ -15,18 +16,52 @@ struct LessonSwipeTutorialView: View {
     
     var body: some View {
         
-        ZStack {
-            LinearGradient(
-                gradient: Gradient(
-                    colors: [topGradientColor, bottomGradientColor]
-                ),
-                startPoint: .top,
-                endPoint: .bottom
-            )
-
-            Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        GeometryReader { geometry in
+            ZStack {
+                
+                LinearGradient(
+                    gradient: Gradient(
+                        colors: [topGradientColor, bottomGradientColor]
+                    ),
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+                
+                VStack {
+                    
+                    Spacer()
+                    
+                    Text("Swipe to change pages")
+                        .font(FontLibrary.sfProDisplayRegular.font(size: 30))
+                        .foregroundStyle(.white)
+                    
+                    let buttonWidth = geometry.size.width * 194/375
+                    let lottieWidth = buttonWidth * 1.5
+                    let lottieHeightRatio: CGFloat = 243/191
+                    
+                    LottieView(animation: .named(getLottieAnimationFileName()))
+                        .looping()
+                        .frame(width: lottieWidth, height: lottieHeightRatio * lottieWidth)
+                    
+                    GTBlueButton(title: "Got it", fontSize: 16, width: buttonWidth, height: 47, cornerRadius: 30) {
+                        
+                        
+                    }
+                    
+                    Spacer()
+                }
+            }
         }
         .ignoresSafeArea()
+        .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
+    }
+    
+    private func getLottieAnimationFileName() -> String {
+        if ApplicationLayout.shared.layoutDirection == .rightToLeft {
+            return "lesson_tutorial_page_swipe-RTL"
+        } else {
+            return "lesson_tutorial_page_swipe-LTR"
+        }
     }
 }
 

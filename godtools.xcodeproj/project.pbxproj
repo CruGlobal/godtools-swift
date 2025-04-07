@@ -1539,6 +1539,8 @@
 		D43FC1D62B814F2000F8310E /* GetAccountInterfaceStringsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43FC1D52B814F2000F8310E /* GetAccountInterfaceStringsRepository.swift */; };
 		D44CE4FC2DA4461B0009F4D1 /* LessonSwipeTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44CE4FB2DA4461B0009F4D1 /* LessonSwipeTutorialView.swift */; };
 		D44CE4FE2DA446310009F4D1 /* LessonSwipeTutorialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44CE4FD2DA446310009F4D1 /* LessonSwipeTutorialViewModel.swift */; };
+		D44CE5002DA459650009F4D1 /* lesson_tutorial_page_swipe-LTR.json in Resources */ = {isa = PBXBuildFile; fileRef = D44CE4FF2DA459650009F4D1 /* lesson_tutorial_page_swipe-LTR.json */; };
+		D44CE5022DA459700009F4D1 /* lesson_tutorial_page_swipe-RTL.json in Resources */ = {isa = PBXBuildFile; fileRef = D44CE5012DA459700009F4D1 /* lesson_tutorial_page_swipe-RTL.json */; };
 		D455F3ED2977302D009D5F93 /* GetUserActivityUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D455F3EC2977302D009D5F93 /* GetUserActivityUseCase.swift */; };
 		D455F3F0297739F6009D5F93 /* AccountActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D455F3EF297739F6009D5F93 /* AccountActivityView.swift */; };
 		D455F3F229773C1B009D5F93 /* UserActivityDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D455F3F129773C1B009D5F93 /* UserActivityDomainModel.swift */; };
@@ -3274,6 +3276,8 @@
 		D43FC1D52B814F2000F8310E /* GetAccountInterfaceStringsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAccountInterfaceStringsRepository.swift; sourceTree = "<group>"; };
 		D44CE4FB2DA4461B0009F4D1 /* LessonSwipeTutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonSwipeTutorialView.swift; sourceTree = "<group>"; };
 		D44CE4FD2DA446310009F4D1 /* LessonSwipeTutorialViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonSwipeTutorialViewModel.swift; sourceTree = "<group>"; };
+		D44CE4FF2DA459650009F4D1 /* lesson_tutorial_page_swipe-LTR.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "lesson_tutorial_page_swipe-LTR.json"; sourceTree = "<group>"; };
+		D44CE5012DA459700009F4D1 /* lesson_tutorial_page_swipe-RTL.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "lesson_tutorial_page_swipe-RTL.json"; sourceTree = "<group>"; };
 		D455F3EC2977302D009D5F93 /* GetUserActivityUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserActivityUseCase.swift; sourceTree = "<group>"; };
 		D455F3EF297739F6009D5F93 /* AccountActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountActivityView.swift; sourceTree = "<group>"; };
 		D455F3F129773C1B009D5F93 /* UserActivityDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserActivityDomainModel.swift; sourceTree = "<group>"; };
@@ -11294,6 +11298,8 @@
 			isa = PBXGroup;
 			children = (
 				45DEF22D2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json */,
+				D44CE4FF2DA459650009F4D1 /* lesson_tutorial_page_swipe-LTR.json */,
+				D44CE5012DA459700009F4D1 /* lesson_tutorial_page_swipe-RTL.json */,
 				45F3D39729A50B1300446F69 /* onboarding_help_someone_discover_jesus.json */,
 				45F3D39529A50B1300446F69 /* onboarding_prepare_for_moments.json */,
 				45F3D39629A50B1300446F69 /* onboarding_talk_about_god.json */,
@@ -12399,6 +12405,7 @@
 				45F3AF0A2B5ED28E00CE8D41 /* PageNavigationCollectionView.xib in Resources */,
 				45F3D39A29A50B1300446F69 /* onboarding_help_someone_discover_jesus.json in Resources */,
 				458CFE8929D4E0B9007B423C /* ArticleCell.xib in Resources */,
+				D44CE5022DA459700009F4D1 /* lesson_tutorial_page_swipe-RTL.json in Resources */,
 				458CFE9729D4E0B9007B423C /* ArticleCategoriesView.xib in Resources */,
 				4556AECF23E22185002C15E8 /* SF-Pro-Text-Regular.otf in Resources */,
 				45D48C8329F81082004E92B1 /* Colors.xcassets in Resources */,
@@ -12418,6 +12425,7 @@
 				458CFE9329D4E0B9007B423C /* ArticlesErrorMessageView.xib in Resources */,
 				455583FC269F2DA500C3FF14 /* MobileContentInputView.xib in Resources */,
 				451A17542756C10400D35D78 /* tutorial_tooltip.json in Resources */,
+				D44CE5002DA459650009F4D1 /* lesson_tutorial_page_swipe-LTR.json in Resources */,
 				455582E7269F2C1000C3FF14 /* TrainingPageView.xib in Resources */,
 				455583D9269F2DA500C3FF14 /* MobileContentTabsView.xib in Resources */,
 				45558408269F2DA500C3FF14 /* MobileContentPagesView.xib in Resources */,
