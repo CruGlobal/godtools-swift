@@ -1514,7 +1514,6 @@
 		B5B89A672D9A790900C2FE1B /* CheckNotificationStatusUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B89A662D9A790900C2FE1B /* CheckNotificationStatusUseCase.swift */; };
 		B5B89A692D9A794000C2FE1B /* GetCheckNotificationStatusInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B89A682D9A794000C2FE1B /* GetCheckNotificationStatusInterface.swift */; };
 		B5B89A6B2D9A946C00C2FE1B /* GetCheckNotificationStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B89A6A2D9A946C00C2FE1B /* GetCheckNotificationStatus.swift */; };
-		B5D1C0F72D805B0000C32211 /* BottomSheet in Frameworks */ = {isa = PBXBuildFile; productRef = B5D1C0F62D805B0000C32211 /* BottomSheet */; };
 		BF79B5EB9B3B461ECFD42719 /* libPods-godtools.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1CC351AF1B5B73C3CF6B771 /* libPods-godtools.a */; };
 		D105922E252FA2E700F120CA /* share_tool_tutorial_mirrored.json in Resources */ = {isa = PBXBuildFile; fileRef = D115A65D25265813007F11AD /* share_tool_tutorial_mirrored.json */; };
 		D163EA96254A00BE00BA4EA9 /* share_tool_tutorial_link.json in Resources */ = {isa = PBXBuildFile; fileRef = D163EA95254A00BE00BA4EA9 /* share_tool_tutorial_link.json */; };
@@ -3534,7 +3533,6 @@
 				D4997E0E28D4CED800205B4C /* YouTubeiOSPlayerHelper in Frameworks */,
 				45E39EDC27457E0C006A59E4 /* Lottie in Frameworks */,
 				45DF964B2D386C1C00C6AE68 /* FirebaseCrashlytics in Frameworks */,
-				B5D1C0F72D805B0000C32211 /* BottomSheet in Frameworks */,
 				45D48C8629F81324004E92B1 /* SocialAuthentication in Frameworks */,
 				45D40C682A5315B400E8E4AE /* Starscream in Frameworks */,
 				BF79B5EB9B3B461ECFD42719 /* libPods-godtools.a in Frameworks */,
@@ -12246,7 +12244,6 @@
 				45DF964C2D386C1C00C6AE68 /* FirebaseDynamicLinks */,
 				45DF964E2D386C1C00C6AE68 /* FirebaseInAppMessaging-Beta */,
 				45DF96502D386C1C00C6AE68 /* FirebaseRemoteConfig */,
-				B5D1C0F62D805B0000C32211 /* BottomSheet */,
 			);
 			productName = godtools;
 			productReference = 4F5732891EA69CF00082035C /* godtools.app */;
@@ -12411,7 +12408,6 @@
 				4581EAA12BFBE194008115FF /* XCRemoteSwiftPackageReference "realm-swift" */,
 				45F6718F2C3343ED0017C8C2 /* XCRemoteSwiftPackageReference "localization-services-ios" */,
 				45DF96472D386C1C00C6AE68 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				B5D1C0F52D805B0000C32211 /* XCRemoteSwiftPackageReference "BottomSheet" */,
 			);
 			productRefGroup = 4F57328A1EA69CF00082035C /* Products */;
 			projectDirPath = "";
@@ -15600,14 +15596,6 @@
 				minimumVersion = 0.2.1;
 			};
 		};
-		B5D1C0F52D805B0000C32211 /* XCRemoteSwiftPackageReference "BottomSheet" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/lucaszischka/BottomSheet";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.1.1;
-			};
-		};
 		D4997E0C28D4CED800205B4C /* XCRemoteSwiftPackageReference "youtube-ios-player-helper" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/youtube/youtube-ios-player-helper.git";
@@ -15768,11 +15756,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 45F6718F2C3343ED0017C8C2 /* XCRemoteSwiftPackageReference "localization-services-ios" */;
 			productName = LocalizationServices;
-		};
-		B5D1C0F62D805B0000C32211 /* BottomSheet */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B5D1C0F52D805B0000C32211 /* XCRemoteSwiftPackageReference "BottomSheet" */;
-			productName = BottomSheet;
 		};
 		D4997E0D28D4CED800205B4C /* YouTubeiOSPlayerHelper */ = {
 			isa = XCSwiftPackageProductDependency;

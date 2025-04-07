@@ -6,7 +6,7 @@
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
-import BottomSheet
+
 import Combine
 import SwiftUI
 
@@ -18,7 +18,7 @@ struct DashboardView: View {
 
     @ObservedObject private var viewModel: DashboardViewModel
     @ObservedObject private var optInNotificationModel:
-        OptInNotificationViewModel
+    OptInNotificationViewModel
 
     init(
         viewModel: DashboardViewModel,
@@ -92,22 +92,22 @@ struct DashboardView: View {
                         viewModel: viewModel
                     )
                 }
-            }.overlay(
+            }.overlay(content: {
+                if optInNotificationModel.isActive {
+                    Color.black.opacity(0.2)
+                        .edgesIgnoringSafeArea(.all)
+                }
+
+            }).overlay(
+                alignment: Alignment.bottom,
                 content: {
-                    if optInNotificationModel.isActive == true {
-                        Group {
-                            ZStack(alignment: Alignment.bottom) {
+                    if optInNotificationModel.isActive {
 
-                                Color.black.opacity(0.2)
-                                    .edgesIgnoringSafeArea(.all)
+                        OptInNotificationView(
+                            viewModel:
+                                viewModel.getOptInNotificationViewModel()
+                        ).transition(.move(edge: .bottom))
 
-                                OptInNotificationView(
-                                    viewModel:
-                                        viewModel.getOptInNotificationViewModel()
-                                )
-                            }
-
-                        }
                     }
                 }
             )

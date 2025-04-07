@@ -6,10 +6,10 @@
 //  Copyright © 2025 Cru. All rights reserved.
 //
 
-import BottomSheet
 import Combine
 import Foundation
 import UIKit
+import SwiftUI
 import UserNotifications
 
 class OptInNotificationViewModel: ObservableObject {
@@ -156,7 +156,9 @@ class OptInNotificationViewModel: ObservableObject {
         {
 
             await MainActor.run {
-                isActive = true
+                withAnimation {
+                    isActive = true
+                }
             }
 
             optInNotificationRepository.recordPrompt()
@@ -200,6 +202,7 @@ extension OptInNotificationViewModel {
     }
 
     func maybeLaterTapped() {
-        isActive = false
+        withAnimation { isActive = false }
+
     }
 }
