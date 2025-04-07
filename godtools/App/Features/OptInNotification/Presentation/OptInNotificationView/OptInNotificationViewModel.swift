@@ -167,7 +167,7 @@ class OptInNotificationViewModel: ObservableObject {
 
         if (notificationStatus == "Denied"
             || notificationStatus == "Undetermined")
-            && lastPrompted > twoMonthsAgo
+            && lastPrompted < twoMonthsAgo
         {
 
             await MainActor.run {
