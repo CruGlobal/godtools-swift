@@ -40,7 +40,6 @@ class OptInNotificationsUserDefaultsCache {
                 from: lastPrompted
             ) ?? Date()
 
-        print("Last prompted: \(lastPrompted)")
         return lastPromptedDate
     }
 
@@ -51,7 +50,7 @@ class OptInNotificationsUserDefaultsCache {
             ) as? Int
 
         else { return 0 }
-        print("Prompt count: \(promptCount)")
+
         return promptCount
     }
 

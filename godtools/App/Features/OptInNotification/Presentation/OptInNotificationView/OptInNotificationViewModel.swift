@@ -8,8 +8,8 @@
 
 import Combine
 import Foundation
-import UIKit
 import SwiftUI
+import UIKit
 import UserNotifications
 
 class OptInNotificationViewModel: ObservableObject {
@@ -102,8 +102,10 @@ class OptInNotificationViewModel: ObservableObject {
         userDialogReponse
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (void: Void) in
+                withAnimation {
+                    self?.isActive = false
+                }
 
-                self?.isActive = false
             }
             .store(in: &cancellables)
 
@@ -130,7 +132,7 @@ class OptInNotificationViewModel: ObservableObject {
     func shouldPromptNotificationSheet() async {
 
         refreshNotificationStatus()
-        print("Notification Status: \(notificationStatus ?? "nil")")
+      
 
         let lastPrompted =
             optInNotificationRepository.getLastPrompted()
@@ -148,11 +150,11 @@ class OptInNotificationViewModel: ObservableObject {
         )!
 
         guard notificationStatus != "Approved" else { return }
-        //        guard promptCount <= 5 else { return }
+        guard promptCount <= 5 else { return }
 
         if (notificationStatus == "Denied"
             || notificationStatus == "Undetermined")
-            && lastPrompted > twoMonthsAgo
+            && lastPrompted < twoMonthsAgo
         {
 
             await MainActor.run {
@@ -183,7 +185,10 @@ extension OptInNotificationViewModel {
 
                 if permissionGranted {
                     // Theoretically should never happen because a user who has granted permissions should not end up in this view
-                    self.isActive = false
+                    withAnimation {
+                        self.isActive = false
+                    }
+
                 } else {
                     if !isFirstDialogPrompt {
                         self.flowDelegate?.navigate(
@@ -192,7 +197,10 @@ extension OptInNotificationViewModel {
                             )
                         )
                     } else {
-                        self.isActive = false
+                        withAnimation {
+                            self.isActive = false
+                        }
+
                     }
 
                 }
