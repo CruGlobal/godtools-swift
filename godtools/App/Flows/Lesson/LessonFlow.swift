@@ -158,6 +158,9 @@ class LessonFlow: ToolNavigationFlow, Flow {
         navigationController.pushViewController(lessonView, animated: animated)
         
         configureNavigationBar(shouldAnimateNavigationBarHiddenState: true)
+        
+        let swipeTutorial = getLessonSwipeTutorial()
+        navigationController.present(swipeTutorial, animated: true)
     }
     
     private func closeTool(lessonId: String, highestPageNumberViewed: Int) {
@@ -215,6 +218,22 @@ extension LessonFlow {
         let view = LessonView(viewModel: viewModel, navigationBar: nil)
         
         return view
+    }
+    
+    private func getLessonSwipeTutorial() -> UIViewController {
+        
+        let swipeTutorialView = LessonSwipeTutorialView()
+        
+        let hostingView = AppHostingController<LessonSwipeTutorialView>(
+            rootView: swipeTutorialView,
+            navigationBar: nil
+        )
+        
+        hostingView.view.backgroundColor = .clear
+        hostingView.modalPresentationStyle = .overFullScreen
+        hostingView.modalTransitionStyle = .crossDissolve
+        
+        return hostingView
     }
     
     private func getResumeLessonModal() -> UIViewController {
