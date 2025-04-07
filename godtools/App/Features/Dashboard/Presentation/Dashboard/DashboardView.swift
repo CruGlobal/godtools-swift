@@ -31,17 +31,6 @@ struct DashboardView: View {
 
             VStack(alignment: .center, spacing: 0) {
 
-                Button(action: {
-                    Task {
-                        await viewModel.getOptInNotificationViewModel()
-                            .shouldPromptNotificationSheet()
-                    }
-
-                }) {
-
-                    Text("shouldPromptNotificationsSheet()")
-                }
-
                 if viewModel.tabs.count > 0 {
 
                     TabView(selection: $viewModel.currentTab) {
@@ -99,7 +88,6 @@ struct DashboardView: View {
                 alignment: Alignment.bottom,
                 content: {
                     if viewModel.isOptInNotificationActive {
-
                         OptInNotificationView(
                             viewModel:
                                 viewModel.getOptInNotificationViewModel()

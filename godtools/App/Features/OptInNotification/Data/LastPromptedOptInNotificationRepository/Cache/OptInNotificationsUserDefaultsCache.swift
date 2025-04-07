@@ -12,7 +12,7 @@ class OptInNotificationsUserDefaultsCache {
 
     private let sharedUserDefaultsCache: SharedUserDefaultsCache
     private let lastPromptedCacheKey: String = "lastPromptedOptInNotification"
-    private let promptCountCacheKey: String = "OptInNotificationPromptCount"
+    private let promptCountCacheKey: String = "optInNotificationPromptCount"
 
     private static let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()

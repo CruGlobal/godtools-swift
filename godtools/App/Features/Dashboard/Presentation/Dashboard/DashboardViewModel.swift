@@ -102,9 +102,7 @@ class DashboardViewModel: ObservableObject {
                 guard let self = self else { return }
 
                 withAnimation {
-
                     self.isOptInNotificationActive = isActive
-
                 }
             }.store(in: &cancellables)
 
