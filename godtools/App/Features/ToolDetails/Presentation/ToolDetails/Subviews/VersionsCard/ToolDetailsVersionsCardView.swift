@@ -69,6 +69,8 @@ struct ToolDetailsVersionsCardView: View {
                             VStack(alignment: .trailing, spacing: 5) {
                                 
                                 Text(viewModel.languages)
+                                    .foregroundColor(ColorPalette.gtLightGrey.color)
+
                                 
                                 if let toolLanguageName = viewModel.toolLanguageName, !toolLanguageName.isEmpty {
                                     LanguageSupportedText(languageName: toolLanguageName, isSupported: viewModel.toolLanguageNameIsSupported)
@@ -78,7 +80,6 @@ struct ToolDetailsVersionsCardView: View {
                                     LanguageSupportedText(languageName: toolParallelLanguageName, isSupported: toolParallelLanguageNameIsSupported)
                                 }
                             }
-                            .foregroundColor(ColorPalette.gtLightGrey.color)
                             .font(FontLibrary.sfProTextRegular.font(size: 13))
                         }
                     }

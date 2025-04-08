@@ -1,5 +1,5 @@
 //
-//  WebSocketType.swift
+//  WebSocketInterface.swift
 //  godtools
 //
 //  Created by Levi Eggert on 7/23/20.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol WebSocketType {
+protocol WebSocketInterface {
         
     var didConnectSignal: Signal { get }
     var didDisconnectSignal: Signal { get }
