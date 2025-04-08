@@ -29,7 +29,7 @@ class ToolScreenShareFeatureDataLayerDependencies {
     
     func getTractRemoteSharePublisher() -> TractRemoteSharePublisher {
         
-        let webSocket: WebSocketInterface = StarscreamWebSocket()
+        let webSocket: WebSocketInterface = URLSessionWebSocket()
         
         let loggingEnabled: Bool = coreDataLayer.getAppBuild().isDebug
         
@@ -43,7 +43,7 @@ class ToolScreenShareFeatureDataLayerDependencies {
     
     func  getTractRemoteShareSubscriber() -> TractRemoteShareSubscriber {
         
-        let webSocket: WebSocketInterface = StarscreamWebSocket()
+        let webSocket: WebSocketInterface = URLSessionWebSocket()
         
         let loggingEnabled: Bool = coreDataLayer.getAppBuild().isDebug
         
