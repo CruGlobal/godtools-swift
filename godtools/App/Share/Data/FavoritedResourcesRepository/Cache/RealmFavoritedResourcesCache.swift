@@ -85,17 +85,11 @@ class RealmFavoritedResourcesCache {
     
     func getFavoritedResourcesSortedByPositionPublisher(ascendingOrder: Bool) -> AnyPublisher<[FavoritedResourceDataModel], Never> {
         
-        return getFavoritedResourcesChangedPublisher()
-            .flatMap { _ in
-                
-                let validatedResources = self.validatePositionsForFavoritedResources(ascendingOrder: ascendingOrder)
-                    .map { FavoritedResourceDataModel(realmFavoritedResource: $0) }
-                
-                return Just(validatedResources)
-
-            }
-            .eraseToAnyPublisher()
+        let validatedResources = self.validatePositionsForFavoritedResources(ascendingOrder: ascendingOrder)
+            .map { FavoritedResourceDataModel(realmFavoritedResource: $0) }
         
+        return Just(validatedResources)
+            .eraseToAnyPublisher()
     }
         
     func storeFavoritedResourcesPublisher(ids: [String]) -> AnyPublisher<[FavoritedResourceDataModel], Error> {

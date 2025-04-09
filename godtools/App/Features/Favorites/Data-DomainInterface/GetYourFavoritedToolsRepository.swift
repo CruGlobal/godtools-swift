@@ -28,12 +28,13 @@ class GetYourFavoritedToolsRepository: GetYourFavoritedToolsRepositoryInterface 
     
     func getToolsPublisher(translateInLanguage: AppLanguageDomainModel, maxCount: Int?) -> AnyPublisher<[YourFavoritedToolDomainModel], Never> {
         
-        return Publishers.CombineLatest3(
+        return Publishers.CombineLatest4(
+            favoritedResourcesRepository.getFavoritedResourcesChangedPublisher(),
             resourcesRepository.getResourcesChangedPublisher(),
             getToolListItemInterfaceStringsRepository.getStringsPublisher(translateInLanguage: translateInLanguage),
             favoritedResourcesRepository.getFavoritedResourcesSortedByPositionPublisher()
         )
-        .flatMap({ (resourcesChanged: Void, interfaceStrings: ToolListItemInterfaceStringsDomainModel, favoritedResourceModels: [FavoritedResourceDataModel]) -> AnyPublisher<[YourFavoritedToolDomainModel], Never> in
+        .flatMap({ (favoritesChanged: Void, resourcesChanged: Void, interfaceStrings: ToolListItemInterfaceStringsDomainModel, favoritedResourceModels: [FavoritedResourceDataModel]) -> AnyPublisher<[YourFavoritedToolDomainModel], Never> in
           
             let numberOfFavoritedTools: Int = self.favoritedResourcesRepository.getNumberOfFavoritedResources()
             
