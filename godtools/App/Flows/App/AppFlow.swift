@@ -1473,10 +1473,3 @@ extension AppFlow: AppMessagingDelegate {
         navigate(step: .buttonWithUrlTappedFromAppMessage(url: url))
     }
 }
-
-//Before backtapped from tool details
-
-
-
-
-
