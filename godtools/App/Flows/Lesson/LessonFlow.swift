@@ -98,6 +98,9 @@ class LessonFlow: ToolNavigationFlow, Flow {
         case .deepLink( _):
             break
             
+        case .closeLessonSwipeTutorial:
+            navigationController.dismissPresented(animated: true, completion: nil)
+            
         case .startOverTappedFromResumeLessonModal:
             navigateToLesson(isNavigatingFromResumeLessonModal: true, initialPage: nil, initialPageSubIndex: initialPageSubIndex, animated: false)
             navigationController.dismissPresented(animated: true, completion: nil)
@@ -222,7 +225,11 @@ extension LessonFlow {
     
     private func getLessonSwipeTutorial() -> UIViewController {
         
-        let swipeTutorialView = LessonSwipeTutorialView()
+        let viewModel = LessonSwipeTutorialViewModel(
+            flowDelegate: self
+        )
+        
+        let swipeTutorialView = LessonSwipeTutorialView(viewModel: viewModel)
         
         let hostingView = AppHostingController<LessonSwipeTutorialView>(
             rootView: swipeTutorialView,

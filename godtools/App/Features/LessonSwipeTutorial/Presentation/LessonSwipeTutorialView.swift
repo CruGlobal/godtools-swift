@@ -14,6 +14,12 @@ struct LessonSwipeTutorialView: View {
     private let topGradientColor = Color.getColorWithRGB(red: 12, green: 37, blue: 50, opacity: 1)
     private let bottomGradientColor = Color.getColorWithRGB(red: 17, green: 49, blue: 66, opacity: 0.75)
     
+    @ObservedObject private var viewModel: LessonSwipeTutorialViewModel
+    
+    init(viewModel: LessonSwipeTutorialViewModel) {
+        self.viewModel = viewModel
+    }
+    
     var body: some View {
         
         GeometryReader { geometry in
@@ -45,7 +51,7 @@ struct LessonSwipeTutorialView: View {
                     
                     GTBlueButton(title: "Got it", fontSize: 16, width: buttonWidth, height: 47, cornerRadius: 30) {
                         
-                        
+                        viewModel.dismissTutorial()
                     }
                     
                     Spacer()
@@ -63,8 +69,4 @@ struct LessonSwipeTutorialView: View {
             return "lesson_tutorial_page_swipe-LTR"
         }
     }
-}
-
-#Preview {
-    LessonSwipeTutorialView()
 }

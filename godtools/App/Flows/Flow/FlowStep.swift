@@ -37,6 +37,7 @@ enum FlowStep {
     case backTappedFromLessonLanguageFilter
 
     // lesson
+    case closeLessonSwipeTutorial
     case startOverTappedFromResumeLessonModal
     case continueTappedFromResumeLessonModal
     case closeTappedFromLesson(lessonId: String, highestPageNumberViewed: Int)
