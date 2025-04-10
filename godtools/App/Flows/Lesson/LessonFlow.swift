@@ -162,8 +162,10 @@ class LessonFlow: ToolNavigationFlow, Flow {
         
         configureNavigationBar(shouldAnimateNavigationBarHiddenState: true)
         
-        let swipeTutorial = getLessonSwipeTutorial()
-        navigationController.present(swipeTutorial, animated: true)
+        let _ = Timer.scheduledTimer(withTimeInterval: 0.8, repeats: false) { timer in
+            let swipeTutorial = self.getLessonSwipeTutorial()
+            self.navigationController.present(swipeTutorial, animated: true)
+        }
     }
     
     private func closeTool(lessonId: String, highestPageNumberViewed: Int) {
