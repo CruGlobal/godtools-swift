@@ -98,7 +98,7 @@ class RealmFavoritedResourcesCache {
         
     }
         
-    func storeFavoritedResourcesPublisher(ids: [String]) -> AnyPublisher<[FavoritedResourceDataModel], Error> {
+    func storeFavoritedResourcesPublisher(ids: [String]) -> AnyPublisher<Void, Never> {
         
         let currentDate: Date = Date()
         let calendar: Calendar = Calendar.current
@@ -135,10 +135,15 @@ class RealmFavoritedResourcesCache {
             
             return realmNewResources + Array(existingFavorites)
             
-        } mapInBackgroundClosure: { (objects: [RealmFavoritedResource]) -> [FavoritedResourceDataModel] in
-            return objects.map({
-                FavoritedResourceDataModel(realmFavoritedResource: $0)
-            })
+        } mapInBackgroundClosure: { (objects: [RealmFavoritedResource]) -> [Any] in
+            return []
+        }
+        .catch({ error in
+            print(error)
+            return Just([])
+        })
+        .map { _ in
+            return ()
         }
         .eraseToAnyPublisher()
     }

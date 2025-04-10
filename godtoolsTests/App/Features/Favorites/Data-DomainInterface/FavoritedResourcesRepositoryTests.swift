@@ -30,11 +30,11 @@ class FavoritedResourcesRepositoryTests: QuickSpec {
                     
                     waitUntil{ done in
                         favoritedResourcesRepository.storeFavoritedResourcesPublisher(ids: ["C", "D", "E"])
-                            .sink(receiveCompletion: { _ in
+                            .sink(receiveValue: { _ in
                                 
-                            }, receiveValue: { resources in
-                                
-                                favoritedResources = resources
+                                favoritedResources = realmDatabase.openRealm().objects(RealmFavoritedResource.self).map {
+                                    FavoritedResourceDataModel(id: $0.resourceId, createdAt: $0.createdAt, position: $0.position)
+                                }
                                 
                                 done()
                             })
