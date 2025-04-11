@@ -49,5 +49,5 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: xcode-logs
+          name: fastlane-scan-output
           path: "/Users/runner/work/godtools-swift/godtools-swift/fastlane_scan_output_directory/*"
