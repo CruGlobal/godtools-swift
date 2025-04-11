@@ -30,11 +30,10 @@ jobs:
         run: bundle exec fastlane cru_shared_lane_run_tests output_directory:fastlane_scan_output_directory result_bundle:true reset_simulator:true should_clear_derived_data:true
 
       - name: Install xcresultparser
-        run: |
-          brew install a7ex/homebrew-formulae/xcresultparser
+        run: brew install a7ex/homebrew-formulae/xcresultparser
 
       - name: Parse XCResult For CodeCov
-          xcresultparser \ --output-format cobertura \ "/Users/runner/work/godtools-swift/godtools-swift/fastlane_scan_output_directory/GodTools-Production.xcresult" >"/Users/runner/work/godtools-swift/godtools-swift/fastlane_scan_output_directory/coverage.xml"
+        run: xcresultparser \ --output-format cobertura \ "/Users/runner/work/godtools-swift/godtools-swift/fastlane_scan_output_directory/GodTools-Production.xcresult" >"/Users/runner/work/godtools-swift/godtools-swift/fastlane_scan_output_directory/coverage.xml"
 
       - name: Upload Coverage XML to CodeCov
         uses: codecov/codecov-action@v5
@@ -60,9 +59,9 @@ jobs:
       #     name: xcode-logs
       #     path: "/Users/runner/Library/Developer/Xcode/DerivedData/Logs/godtools-*/**"
 
-      # - name: Archive XCode Archive Path
-      #   if: always()
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: fastlane-scan-output
-      #     path: "/Users/runner/work/godtools-swift/godtools-swift/fastlane_scan_output_directory/*"
+      - name: Archive XCode Archive Path
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fastlane-scan-output
+          path: "/Users/runner/work/godtools-swift/godtools-swift/fastlane_scan_output_directory/*"
