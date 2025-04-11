@@ -29,25 +29,40 @@ jobs:
       - name: Run Tests and Generate Code Coverage Report (.xcresult)
         run: bundle exec fastlane cru_shared_lane_run_tests output_directory:fastlane_scan_output_directory result_bundle:true reset_simulator:true should_clear_derived_data:true
 
-      - name: Upload Xcode Code Coverage Report to CodeCov
+      - name: Install xcresultparser
+        run: |
+          brew install a7ex/homebrew-formulae/xcresultparser
+
+      - name: Parse XCResult For CodeCov
+          xcresultparser \ --output-format cobertura \ "/Users/runner/work/godtools-swift/godtools-swift/fastlane_scan_output_directory/GodTools-Production.xcresult" >"/Users/runner/work/godtools-swift/godtools-swift/fastlane_scan_output_directory/coverage.xml"
+
+      - name: Upload Coverage XML to CodeCov
         uses: codecov/codecov-action@v5
         with:
-          fail_ci_if_error: true
+          files: /Users/runner/work/godtools-swift/godtools-swift/fastlane_scan_output_directory/coverage.xml
+          plugin: xcode
           token: ${{ secrets.CODECOV_TOKEN }}
-          verbose: true
-          xcode: true
-          xcode_archive_path: /Users/runner/work/godtools-swift/godtools-swift/fastlane_scan_output_directory/GodTools-Production.xcresult
 
-      - name: Archive XCode Logs
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: xcode-logs
-          path: "/Users/runner/Library/Developer/Xcode/DerivedData/Logs/godtools-*/**"
 
-      - name: Archive XCode Archive Path
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: fastlane-scan-output
-          path: "/Users/runner/work/godtools-swift/godtools-swift/fastlane_scan_output_directory/*"
+      # - name: Upload Xcode Code Coverage Report to CodeCov
+      #   uses: codecov/codecov-action@v5
+      #   with:
+      #     fail_ci_if_error: true
+      #     token: ${{ secrets.CODECOV_TOKEN }}
+      #     verbose: true
+      #     xcode: true
+      #     xcode_archive_path: /Users/runner/work/godtools-swift/godtools-swift/fastlane_scan_output_directory/GodTools-Production.xcresult
+
+      # - name: Archive XCode Logs
+      #   if: always()
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: xcode-logs
+      #     path: "/Users/runner/Library/Developer/Xcode/DerivedData/Logs/godtools-*/**"
+
+      # - name: Archive XCode Archive Path
+      #   if: always()
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: fastlane-scan-output
+      #     path: "/Users/runner/work/godtools-swift/godtools-swift/fastlane_scan_output_directory/*"
