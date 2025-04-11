@@ -28,7 +28,7 @@ class OptInNotificationViewModel: ObservableObject {
 
     private var isOnboardingLaunch: Bool = false
     private var isFirstDialogPrompt: Bool = false
-    private var notificationStatus: String?
+    private var notificationStatus: PermissionStatusDomainModel?
     private var notificationStatusCancellable: AnyCancellable?
     private var cancellables: Set<AnyCancellable> = Set()
 
@@ -136,7 +136,7 @@ class OptInNotificationViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] status in
                 self?.notificationStatus = status
-                if status == "Undetermined" {
+                if status == .undetermined {
                     self?.isFirstDialogPrompt = true
                 }
             }
@@ -162,11 +162,11 @@ class OptInNotificationViewModel: ObservableObject {
         )!
 
         guard isOnboardingLaunch == false else { return }
-        guard notificationStatus != "Approved" else { return }
+        guard notificationStatus != .approved else { return }
         guard promptCount <= 5 else { return }
 
-        if (notificationStatus == "Denied"
-            || notificationStatus == "Undetermined")
+        if (notificationStatus == .denied
+            || notificationStatus == .undetermined)
             && lastPrompted < twoMonthsAgo
         {
 
@@ -199,18 +199,16 @@ extension OptInNotificationViewModel {
 
                     self.isActive = false
 
-                } else {
-                    if !isFirstDialogPrompt {
-                        self.flowDelegate?.navigate(
-                            step: .allowNotificationsTappedFromBottomSheet(
-                                userDialogReponse: userDialogReponse
-                            )
+                } else if !isFirstDialogPrompt {
+
+                    self.flowDelegate?.navigate(
+                        step: .allowNotificationsTappedFromBottomSheet(
+                            userDialogReponse: userDialogReponse
                         )
-                    } else {
+                    )
+                } else {
 
-                        self.isActive = false
-
-                    }
+                    self.isActive = false
 
                 }
 

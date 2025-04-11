@@ -11,5 +11,7 @@ import Foundation
 
 protocol GetCheckNotificationStatusInterface {
 
-    func permissionStatusPublisher() -> AnyPublisher<String, Never>
+    func permissionStatusPublisher() -> AnyPublisher<
+        PermissionStatusDomainModel, Never
+    >
 }

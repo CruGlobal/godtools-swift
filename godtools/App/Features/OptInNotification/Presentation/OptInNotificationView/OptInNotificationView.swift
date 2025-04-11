@@ -102,7 +102,10 @@ struct OptInNotificationView: View {
                 )
             )
         )
-        .padding(.horizontal, UIScreen.main.bounds.width * 0.05)
+        .padding(.horizontal, UIScreen.main.bounds.width * 0.05).environment(
+            \.layoutDirection,
+            ApplicationLayout.shared.layoutDirection
+        )
 
     }
 

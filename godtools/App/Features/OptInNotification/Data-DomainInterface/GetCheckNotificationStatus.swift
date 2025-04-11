@@ -14,22 +14,24 @@ class GetCheckNotificationStatus:
     GetCheckNotificationStatusInterface
 {
 
-    func permissionStatusPublisher() -> AnyPublisher<String, Never> {
-        return Future<String, Never> { promise in
+    func permissionStatusPublisher() -> AnyPublisher<
+        PermissionStatusDomainModel, Never
+    > {
+        return Future<PermissionStatusDomainModel, Never> { promise in
             Task {
                 let settings = await UNUserNotificationCenter.current()
                     .notificationSettings()
 
-                let status: String
+                let status: PermissionStatusDomainModel
                 switch settings.authorizationStatus {
                 case .authorized, .provisional, .ephemeral:
-                    status = "Approved"
+                    status = .approved
                 case .denied:
-                    status = "Denied"
+                    status = .denied
                 case .notDetermined:
-                    status = "Undetermined"
+                    status = .undetermined
                 @unknown default:
-                    status = "Unknown"
+                    status = .unknown
                 }
                 promise(.success(status))
             }

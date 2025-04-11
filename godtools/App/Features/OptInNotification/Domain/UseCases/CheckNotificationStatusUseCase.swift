@@ -17,7 +17,9 @@ class CheckNotificationStatusUseCase {
         self.checkNotificationStatus = checkNotificationStatus
     }
 
-    func getPermissionStatusPublisher() -> AnyPublisher<String, Never> {
+    func getPermissionStatusPublisher() -> AnyPublisher<
+        PermissionStatusDomainModel, Never
+    > {
         return checkNotificationStatus.permissionStatusPublisher()
             .eraseToAnyPublisher()
     }

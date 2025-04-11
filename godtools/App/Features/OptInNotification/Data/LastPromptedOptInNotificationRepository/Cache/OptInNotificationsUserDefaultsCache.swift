@@ -30,15 +30,21 @@ class OptInNotificationsUserDefaultsCache {
             let lastPrompted = sharedUserDefaultsCache.getValue(
                 key: lastPromptedCacheKey
             ) as? String
-
         else {
             return nil
         }
 
-        let lastPromptedDate: Date =
-            OptInNotificationsUserDefaultsCache.dateFormatter.date(
-                from: lastPrompted
-            ) ?? Date()
+        guard
+            let lastPromptedDate: Date =
+                OptInNotificationsUserDefaultsCache.dateFormatter.date(
+                    from: lastPrompted
+                )
+        else {
+            assertionFailure(
+                "An error occurred while parsing \(lastPromptedCacheKey) from cache"
+            )
+            return nil
+        }
 
         return lastPromptedDate
     }

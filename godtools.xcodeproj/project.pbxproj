@@ -1513,6 +1513,7 @@
 		B516C40F2D9616C200EBD845 /* ViewOptInDialogDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B516C40E2D9616C200EBD845 /* ViewOptInDialogDomainModel.swift */; };
 		B516C4112D96175900EBD845 /* OptInDialogInterfaceStringsDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B516C4102D96175900EBD845 /* OptInDialogInterfaceStringsDomainModel.swift */; };
 		B516C4132D961A2900EBD845 /* GetOptInDialogInterfaceStringsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B516C4122D961A2900EBD845 /* GetOptInDialogInterfaceStringsRepository.swift */; };
+		B53E4B532DA9762200D637B0 /* PermissionStatusDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53E4B522DA9762200D637B0 /* PermissionStatusDomainModel.swift */; };
 		B59EC6F22D80DA7E004DBC6D /* OptInNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59EC6F12D80DA7E004DBC6D /* OptInNotificationView.swift */; };
 		B59EC6F42D80E3A7004DBC6D /* OptInNotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59EC6F32D80E3A7004DBC6D /* OptInNotificationViewModel.swift */; };
 		B59EC6FA2D82C34A004DBC6D /* GetOptInNotificationInterfaceStringsRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59EC6F92D82C34A004DBC6D /* GetOptInNotificationInterfaceStringsRepositoryInterface.swift */; };
@@ -3265,6 +3266,7 @@
 		B516C40E2D9616C200EBD845 /* ViewOptInDialogDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewOptInDialogDomainModel.swift; sourceTree = "<group>"; };
 		B516C4102D96175900EBD845 /* OptInDialogInterfaceStringsDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptInDialogInterfaceStringsDomainModel.swift; sourceTree = "<group>"; };
 		B516C4122D961A2900EBD845 /* GetOptInDialogInterfaceStringsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOptInDialogInterfaceStringsRepository.swift; sourceTree = "<group>"; };
+		B53E4B522DA9762200D637B0 /* PermissionStatusDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionStatusDomainModel.swift; sourceTree = "<group>"; };
 		B59EC6F12D80DA7E004DBC6D /* OptInNotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptInNotificationView.swift; sourceTree = "<group>"; };
 		B59EC6F32D80E3A7004DBC6D /* OptInNotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptInNotificationViewModel.swift; sourceTree = "<group>"; };
 		B59EC6F92D82C34A004DBC6D /* GetOptInNotificationInterfaceStringsRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOptInNotificationInterfaceStringsRepositoryInterface.swift; sourceTree = "<group>"; };
@@ -7588,6 +7590,7 @@
 				4594E1602D7F7AB6005881B5 /* ViewOptInNotificationDomainModel.swift */,
 				B516C40E2D9616C200EBD845 /* ViewOptInDialogDomainModel.swift */,
 				B516C4102D96175900EBD845 /* OptInDialogInterfaceStringsDomainModel.swift */,
+				B53E4B522DA9762200D637B0 /* PermissionStatusDomainModel.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -12853,6 +12856,7 @@
 				45645C142AFE770600BD233D /* GetShareToolScreenShareSessionInterfaceStringsRepositoryInterface.swift in Sources */,
 				45645C1A2AFE78A200BD233D /* ShareToolScreenShareSessionView.swift in Sources */,
 				45BDA6492954FF08007E259B /* WebArchiveUrl.swift in Sources */,
+				B53E4B532DA9762200D637B0 /* PermissionStatusDomainModel.swift in Sources */,
 				45D63E56288F67F8009B4610 /* IgnoreCacheSession.swift in Sources */,
 				458B91C32B7D676900785C6F /* ViewFavoritesDomainModel.swift in Sources */,
 				459C56D225FF954F00F15967 /* (null) in Sources */,
