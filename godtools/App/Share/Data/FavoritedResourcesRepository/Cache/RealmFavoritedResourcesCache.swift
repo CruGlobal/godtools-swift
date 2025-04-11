@@ -56,21 +56,21 @@ class RealmFavoritedResourcesCache {
             .object(ofType: RealmFavoritedResource.self, forPrimaryKey: id) != nil
     }
     
-    func getFavoritedResourcesSortedByPosition(ascendingOrder: Bool = true) -> [FavoritedResourceDataModel] {
+    func getFavoritedResourcesSortedByPosition() -> [FavoritedResourceDataModel] {
         
-        return migrateExistingFavoritesToPositions(ascendingOrder: ascendingOrder)
+        return getFavoritesSortedByPosition()
             .map({FavoritedResourceDataModel(realmFavoritedResource: $0)})
     }
     
-    func getFavoritedResourcesSortedByPositionPublisher(ascendingOrder: Bool) -> AnyPublisher<[FavoritedResourceDataModel], Never> {
+    func getFavoritedResourcesSortedByPositionPublisher() -> AnyPublisher<[FavoritedResourceDataModel], Never> {
         
         return getFavoritedResourcesChangedPublisher()
             .flatMap { _ in
                 
-                let migratedResources = self.migrateExistingFavoritesToPositions(ascendingOrder: ascendingOrder)
+                let favoritedResources = self.getFavoritesSortedByPosition()
                     .map { FavoritedResourceDataModel(realmFavoritedResource: $0) }
                 
-                return Just(migratedResources)
+                return Just(favoritedResources)
 
             }
             .eraseToAnyPublisher()
@@ -191,40 +191,43 @@ class RealmFavoritedResourcesCache {
     
     // MARK: - Private
     
-    @available(*, deprecated)
-    private func migrateExistingFavoritesToPositions(ascendingOrder: Bool) -> [RealmFavoritedResource] {
-        
+    private func getFavoritesSortedByPosition() -> [RealmFavoritedResource] {
         let realm = realmDatabase.openRealm()
         let favoritesSortedByPosition = Array(
             realm.objects(RealmFavoritedResource.self)
-            .sorted(byKeyPath: #keyPath(RealmFavoritedResource.position), ascending: ascendingOrder)
+            .sorted(byKeyPath: #keyPath(RealmFavoritedResource.position), ascending: true)
             )
         
         if favoritesSortedByPosition.allSatisfy({ $0.position == 0 }) {
             
-            let favoritesSortedByCreatedAt = realm
-                .objects(RealmFavoritedResource.self)
-                .sorted(byKeyPath: #keyPath(RealmFavoritedResource.createdAt), ascending: !ascendingOrder)
-                        
-            do {
-                try realm.write {
-                    var correctedPosition = 0
-                    for favorite in favoritesSortedByCreatedAt {
-                        favorite.position = correctedPosition
-                        correctedPosition += 1
-                    }
-                    realm.add(favoritesSortedByCreatedAt)
-                }
-            }
-            catch let error {
-                print(error)
-            }
-            
-            return Array(favoritesSortedByCreatedAt)
+            return migrateExistingFavoritesToPositions()
             
         } else {
-            
             return favoritesSortedByPosition
         }
+    }
+    
+    @available(*, deprecated)
+    private func migrateExistingFavoritesToPositions() -> [RealmFavoritedResource] {
+        let realm = realmDatabase.openRealm()
+        let favoritesSortedByCreatedAt = realm
+            .objects(RealmFavoritedResource.self)
+            .sorted(byKeyPath: #keyPath(RealmFavoritedResource.createdAt), ascending: false)
+                    
+        do {
+            try realm.write {
+                var correctedPosition = 0
+                for favorite in favoritesSortedByCreatedAt {
+                    favorite.position = correctedPosition
+                    correctedPosition += 1
+                }
+                realm.add(favoritesSortedByCreatedAt)
+            }
+        }
+        catch let error {
+            print(error)
+        }
+        
+        return Array(favoritesSortedByCreatedAt)
     }
 }

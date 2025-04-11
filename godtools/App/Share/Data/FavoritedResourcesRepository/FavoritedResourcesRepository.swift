@@ -47,14 +47,14 @@ class FavoritedResourcesRepository {
         return cache.getResourceIsFavorited(id: id)
     }
     
-    func getFavoritedResourcesSortedByPosition(ascendingOrder: Bool = true) -> [FavoritedResourceDataModel] {
+    func getFavoritedResourcesSortedByPosition() -> [FavoritedResourceDataModel] {
         
-        return cache.getFavoritedResourcesSortedByPosition(ascendingOrder: ascendingOrder)
+        return cache.getFavoritedResourcesSortedByPosition()
     }
     
-    func getFavoritedResourcesSortedByPositionPublisher(ascendingOrder: Bool = true) -> AnyPublisher<[FavoritedResourceDataModel], Never> {
+    func getFavoritedResourcesSortedByPositionPublisher() -> AnyPublisher<[FavoritedResourceDataModel], Never> {
         
-        return cache.getFavoritedResourcesSortedByPositionPublisher(ascendingOrder: ascendingOrder)
+        return cache.getFavoritedResourcesSortedByPositionPublisher()
             .eraseToAnyPublisher()
     }
     
