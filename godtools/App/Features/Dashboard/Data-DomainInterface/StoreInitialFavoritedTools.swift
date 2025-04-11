@@ -25,7 +25,7 @@ class StoreInitialFavoritedTools: StoreInitialFavoritedToolsInterface {
                 .eraseToAnyPublisher()
         }
         
-        let favoritedResourceIdsToStore: [String] = ["2", "1", "4", "8"]
+        let favoritedResourceIdsToStore: [String] = ["2", "1", "4", "8"].reversed()
         
         return favoritedResourcesRepository
             .storeFavoritedResourcesPublisher(ids: favoritedResourceIdsToStore)
