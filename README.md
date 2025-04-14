@@ -6,6 +6,7 @@ GodTools
 - [Requirements](#requirements)
 - [Architecture](#architecture)
 - [Architecture Responsibilities](#architecture-responsibilities)
+- [Localization](#localization)
 - [Fastlane](#fastlane)
 
 ### Requirements
@@ -118,6 +119,10 @@ The coordinator is a pattern used for navigation decisions, navigation logic, an
     - https://khanlou.com/2015/01/the-coordinator/
     - https://twittemb.github.io/posts/2017-11-08-RxFlow-Part1/
     - https://twittemb.github.io/posts/2017-12-09-RxFlow-Part2/
+
+#### Localization
+
+The GodTools app is localized for many languages which are translated in OneSky.  When adding new strings for localization, all one needs to do is update the Base Localizable.strings.  Newly added strings will be placed into OneSky and translations will be ordered.  The GitHub Action workflow Download And Commit OneSky Translations will run daily to create a pull request for any Localizable.strings files that have been updated in OneSky.
 
 #### Fastlane
 
