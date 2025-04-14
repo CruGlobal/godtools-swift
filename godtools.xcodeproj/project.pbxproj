@@ -1405,6 +1405,7 @@
 		45EB9B8429F16CF200CA74A8 /* Image+OptionalUIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EB9B6E29F16CF200CA74A8 /* Image+OptionalUIImage.swift */; };
 		45EC429B272C87430052F2AA /* PassthroughValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EC429A272C87430052F2AA /* PassthroughValue.swift */; };
 		45EC5CF228CA2A4A0000AA2E /* ResourceModel+LanguageSupportable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EC5CF128CA2A4A0000AA2E /* ResourceModel+LanguageSupportable.swift */; };
+		45ED11422DAD52500028EF44 /* UIFont+Traits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ED11412DAD52470028EF44 /* UIFont+Traits.swift */; };
 		45F1CE212B7D1F210008A3BC /* ToolLanguageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F1CE202B7D1F210008A3BC /* ToolLanguageDownloader.swift */; };
 		45F267A128907F5D006679F2 /* RealmResourcesCacheSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F267A028907F5D006679F2 /* RealmResourcesCacheSync.swift */; };
 		45F267A328907F67006679F2 /* RealmResourcesCacheSyncResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F267A228907F67006679F2 /* RealmResourcesCacheSyncResult.swift */; };
@@ -3087,6 +3088,7 @@
 		45EB9B6E29F16CF200CA74A8 /* Image+OptionalUIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Image+OptionalUIImage.swift"; sourceTree = "<group>"; };
 		45EC429A272C87430052F2AA /* PassthroughValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassthroughValue.swift; sourceTree = "<group>"; };
 		45EC5CF128CA2A4A0000AA2E /* ResourceModel+LanguageSupportable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ResourceModel+LanguageSupportable.swift"; sourceTree = "<group>"; };
+		45ED11412DAD52470028EF44 /* UIFont+Traits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Traits.swift"; sourceTree = "<group>"; };
 		45F1CE202B7D1F210008A3BC /* ToolLanguageDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolLanguageDownloader.swift; sourceTree = "<group>"; };
 		45F267A028907F5D006679F2 /* RealmResourcesCacheSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmResourcesCacheSync.swift; sourceTree = "<group>"; };
 		45F267A228907F67006679F2 /* RealmResourcesCacheSyncResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmResourcesCacheSyncResult.swift; sourceTree = "<group>"; };
@@ -10552,6 +10554,7 @@
 			children = (
 				45EB9B4E29F16CF200CA74A8 /* UIButton */,
 				45EB9B5029F16CF200CA74A8 /* UIColor */,
+				45ED11402DAD523F0028EF44 /* UIFont */,
 				45EB9B4929F16CF200CA74A8 /* UIImage */,
 				45EB9B5829F16CF200CA74A8 /* UIImageView */,
 				45EB9B4C29F16CF200CA74A8 /* UILabel */,
@@ -10690,6 +10693,14 @@
 				45EB9B6E29F16CF200CA74A8 /* Image+OptionalUIImage.swift */,
 			);
 			path = Image;
+			sourceTree = "<group>";
+		};
+		45ED11402DAD523F0028EF44 /* UIFont */ = {
+			isa = PBXGroup;
+			children = (
+				45ED11412DAD52470028EF44 /* UIFont+Traits.swift */,
+			);
+			path = UIFont;
 			sourceTree = "<group>";
 		};
 		45EE103D2AB887AF00D0AC33 /* AppLanguage */ = {
@@ -13918,6 +13929,7 @@
 				459BD08C289AD4310075901B /* DetermineToolTranslationsToDownloadType.swift in Sources */,
 				45558350269F2D1000C3FF14 /* LessonPageViewFactory.swift in Sources */,
 				458D01872B1E4F590029523C /* GetLessonsInterfaceStringsRepository.swift in Sources */,
+				45ED11422DAD52500028EF44 /* UIFont+Traits.swift in Sources */,
 				458CFEA929D4E1CC007B423C /* AccountActivityStatView.swift in Sources */,
 				45FE82452ACE5BFE00930C39 /* AppNavigationController.swift in Sources */,
 				4567CE3F27CD0C6B00C3B543 /* MobileContentPageRenderer.swift in Sources */,

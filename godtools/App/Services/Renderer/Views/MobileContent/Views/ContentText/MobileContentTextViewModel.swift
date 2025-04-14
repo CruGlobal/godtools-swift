@@ -27,6 +27,14 @@ class MobileContentTextViewModel: MobileContentViewModel {
         super.init(baseModel: textModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }
     
+    private var isBold: Bool {
+        return textModel.textStyles.contains(.bold)
+    }
+    
+    private var isItalic: Bool {
+        return textModel.textStyles.contains(.italic)
+    }
+    
     var startImage: UIImage? {
         
         guard let resource = textModel.startImage else {
@@ -126,14 +134,8 @@ class MobileContentTextViewModel: MobileContentViewModel {
     }
     
     private func getFontWeight() -> UIFont.Weight {
-             
-        let textStyles: Set<Text.Style> = textModel.textStyles
         
-        if textStyles.contains(.bold) {
-            return .bold
-        }
-        
-        return .regular
+        return isBold ? .bold : .regular
     }
     
     private func getFontScale() -> CGFloat {
@@ -145,6 +147,15 @@ class MobileContentTextViewModel: MobileContentViewModel {
     
     func getScaledFont(fontSizeToScale: CGFloat, fontWeightElseUseTextDefault: UIFont.Weight?) -> UIFont {
                 
-        return FontLibrary.systemUIFont(size: fontSizeToScale * getFontScale(), weight: fontWeightElseUseTextDefault ?? getFontWeight())
+        let size: CGFloat = fontSizeToScale * getFontScale()
+        let weight: UIFont.Weight = fontWeightElseUseTextDefault ?? getFontWeight()
+
+        let font: UIFont = FontLibrary.systemUIFont(size: size, weight: weight)
+
+        if isItalic {
+            return font.italic
+        }
+        
+        return font
     }
 }
