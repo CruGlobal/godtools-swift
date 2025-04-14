@@ -22,6 +22,7 @@ class AppFeatureDiContainer {
     let lessonFilter: LessonFilterDiContainer
     let lessons: LessonsFeatureDiContainer
     let lessonProgress: UserLessonProgressDiContainer
+    let lessonSwipeTutorial: LessonSwipeTutorialDiContainer
     let onboarding: OnboardingDiContainer
     let persistFavoritedToolLanguageSettings: PersistUserToolLanguageSettingsDiContainer
     let shareables: ShareablesDiContainer
@@ -34,7 +35,7 @@ class AppFeatureDiContainer {
     let toolShortcutLinks: ToolShortcutLinksDiContainer
     let tutorial: TutorialFeatureDiContainer
     
-    init(account: AccountDiContainer, appLanguage: AppLanguageFeatureDiContainer, dashboard: DashboardDiContainer, downloadToolProgress: DownloadToolProgressFeatureDiContainer, favorites: FavoritesDiContainer, featuredLessons: FeaturedLessonsDiContainer, globalActivity: GlobalActivityDiContainer, learnToShareTool: LearnToShareToolDiContainer, lessonEvaluation: LessonEvaluationFeatureDiContainer, lessonFilter: LessonFilterDiContainer, lessons: LessonsFeatureDiContainer, lessonProgress: UserLessonProgressDiContainer, onboarding: OnboardingDiContainer, persistFavoritedToolLanguageSettings: PersistUserToolLanguageSettingsDiContainer, shareables: ShareablesDiContainer, shareGodTools: ShareGodToolsDiContainer, spotlightTools: SpotlightToolsDiContainer, toolDetails: ToolDetailsFeatureDiContainer, toolScreenShare: ToolScreenShareFeatureDiContainer, toolSettings: ToolSettingsDiContainer, toolsFilter: ToolsFilterFeatureDiContainer, toolShortcutLinks: ToolShortcutLinksDiContainer, tutorial: TutorialFeatureDiContainer) {
+    init(account: AccountDiContainer, appLanguage: AppLanguageFeatureDiContainer, dashboard: DashboardDiContainer, downloadToolProgress: DownloadToolProgressFeatureDiContainer, favorites: FavoritesDiContainer, featuredLessons: FeaturedLessonsDiContainer, globalActivity: GlobalActivityDiContainer, learnToShareTool: LearnToShareToolDiContainer, lessonEvaluation: LessonEvaluationFeatureDiContainer, lessonFilter: LessonFilterDiContainer, lessons: LessonsFeatureDiContainer, lessonProgress: UserLessonProgressDiContainer, lessonSwipeTutorial: LessonSwipeTutorialDiContainer, onboarding: OnboardingDiContainer, persistFavoritedToolLanguageSettings: PersistUserToolLanguageSettingsDiContainer, shareables: ShareablesDiContainer, shareGodTools: ShareGodToolsDiContainer, spotlightTools: SpotlightToolsDiContainer, toolDetails: ToolDetailsFeatureDiContainer, toolScreenShare: ToolScreenShareFeatureDiContainer, toolSettings: ToolSettingsDiContainer, toolsFilter: ToolsFilterFeatureDiContainer, toolShortcutLinks: ToolShortcutLinksDiContainer, tutorial: TutorialFeatureDiContainer) {
         
         self.account = account
         self.appLanguage = appLanguage
@@ -48,6 +49,7 @@ class AppFeatureDiContainer {
         self.lessonFilter = lessonFilter
         self.lessons = lessons
         self.lessonProgress = lessonProgress
+        self.lessonSwipeTutorial = lessonSwipeTutorial
         self.onboarding = onboarding
         self.persistFavoritedToolLanguageSettings = persistFavoritedToolLanguageSettings
         self.shareables = shareables

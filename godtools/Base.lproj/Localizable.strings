@@ -1,3 +1,6 @@
+"lessons.swipeTutorial.title" = "Swipe to change pages";
+"lessons.swipeTutorial.buttonText" = "Got it";
+
 /* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
 "lessons.resumeLessonModal.title" = "Resume Progress?";
 

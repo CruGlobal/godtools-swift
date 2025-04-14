@@ -228,7 +228,9 @@ extension LessonFlow {
     private func getLessonSwipeTutorial() -> UIViewController {
         
         let viewModel = LessonSwipeTutorialViewModel(
-            flowDelegate: self
+            flowDelegate: self,
+            getInterfaceStringsUseCase: appDiContainer.feature.lessonSwipeTutorial.domainlayer.getLessonSwipeTutorialInterfaceStringsUseCase(),
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase()
         )
         
         let swipeTutorialView = LessonSwipeTutorialView(viewModel: viewModel)

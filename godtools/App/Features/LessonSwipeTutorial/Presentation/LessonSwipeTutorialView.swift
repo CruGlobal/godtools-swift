@@ -37,7 +37,7 @@ struct LessonSwipeTutorialView: View {
                     
                     Spacer()
                     
-                    Text("Swipe to change pages")
+                    Text(viewModel.interfaceStrings.title)
                         .font(FontLibrary.sfProDisplayRegular.font(size: 30))
                         .foregroundStyle(.white)
                     
@@ -49,7 +49,7 @@ struct LessonSwipeTutorialView: View {
                         .looping()
                         .frame(width: lottieWidth, height: lottieHeightRatio * lottieWidth)
                     
-                    GTBlueButton(title: "Got it", fontSize: 16, width: buttonWidth, height: 47, cornerRadius: 30) {
+                    GTBlueButton(title: viewModel.interfaceStrings.buttonText, fontSize: 16, width: buttonWidth, height: 47, cornerRadius: 30) {
                         
                         viewModel.dismissTutorial()
                     }
