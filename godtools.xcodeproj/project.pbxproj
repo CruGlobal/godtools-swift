@@ -507,6 +507,12 @@
 		4558B4822D5E79E100B0E9E2 /* LanguageDownloadIconState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4558B47C2D5E79E100B0E9E2 /* LanguageDownloadIconState.swift */; };
 		4558B4832D5E79E100B0E9E2 /* LanguageDownloadIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4558B47B2D5E79E100B0E9E2 /* LanguageDownloadIcon.swift */; };
 		455A6C6E27C16FFB00968277 /* MobileContentButtonIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455A6C6D27C16FFB00968277 /* MobileContentButtonIcon.swift */; };
+		455B6BA92D9C48D000815829 /* ActionCableChannelSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455B6BA52D9C48D000815829 /* ActionCableChannelSubscriber.swift */; };
+		455B6BAA2D9C48D000815829 /* ActionCableEventType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455B6BA12D9C48D000815829 /* ActionCableEventType.swift */; };
+		455B6BAB2D9C48D000815829 /* WebSocketChannelPublisherInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455B6BA62D9C48D000815829 /* WebSocketChannelPublisherInterface.swift */; };
+		455B6BAC2D9C48D000815829 /* ActionCableChannelPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455B6BA42D9C48D000815829 /* ActionCableChannelPublisher.swift */; };
+		455B6BAD2D9C48D000815829 /* ActionCableIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455B6BA22D9C48D000815829 /* ActionCableIdentifier.swift */; };
+		455B6BAE2D9C48D000815829 /* WebSocketChannelSubscriberInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455B6BA72D9C48D000815829 /* WebSocketChannelSubscriberInterface.swift */; };
 		455CB5792A439B6700E95834 /* LearnToShareToolViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455CB5702A439B6600E95834 /* LearnToShareToolViewModel.swift */; };
 		455CB57B2A439B6700E95834 /* LearnToShareToolItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455CB5742A439B6600E95834 /* LearnToShareToolItemView.swift */; };
 		455CB57C2A439B6700E95834 /* LearnToShareToolItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455CB5752A439B6600E95834 /* LearnToShareToolItemViewModel.swift */; };
@@ -948,14 +954,8 @@
 		45AD1BDF25938A4F00A096A0 /* GTSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD18D225938A4E00A096A0 /* GTSegmentedControl.swift */; };
 		45AD1BE025938A4F00A096A0 /* GTSegmentedControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45AD18D325938A4E00A096A0 /* GTSegmentedControl.xib */; };
 		45AD1BE325938A4F00A096A0 /* NibBased.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD18D825938A4E00A096A0 /* NibBased.swift */; };
-		45AD1F5D25938A9800A096A0 /* ActionCableChannelSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DD825938A9700A096A0 /* ActionCableChannelSubscriber.swift */; };
 		45AD1F5E25938A9800A096A0 /* StarscreamWebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DD925938A9700A096A0 /* StarscreamWebSocket.swift */; };
-		45AD1F5F25938A9800A096A0 /* WebSocketChannelSubscriberType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DDA25938A9700A096A0 /* WebSocketChannelSubscriberType.swift */; };
-		45AD1F6025938A9800A096A0 /* ActionCableChannelPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DDB25938A9700A096A0 /* ActionCableChannelPublisher.swift */; };
-		45AD1F6125938A9800A096A0 /* ActionCableIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DDD25938A9700A096A0 /* ActionCableIdentifier.swift */; };
-		45AD1F6225938A9800A096A0 /* ActionCableEventType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DDE25938A9700A096A0 /* ActionCableEventType.swift */; };
-		45AD1F6325938A9800A096A0 /* WebSocketType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DDF25938A9700A096A0 /* WebSocketType.swift */; };
-		45AD1F6425938A9800A096A0 /* WebSocketChannelPublisherType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DE025938A9700A096A0 /* WebSocketChannelPublisherType.swift */; };
+		45AD1F6325938A9800A096A0 /* WebSocketInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DDF25938A9700A096A0 /* WebSocketInterface.swift */; };
 		45AD1F6525938A9800A096A0 /* ToolTrainingTipsOnboardingViewsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DE225938A9700A096A0 /* ToolTrainingTipsOnboardingViewsService.swift */; };
 		45AD1F6725938A9800A096A0 /* ToolTrainingTipsOnboardingViewsUserDefaultsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1DE425938A9700A096A0 /* ToolTrainingTipsOnboardingViewsUserDefaultsCache.swift */; };
 		45AD1FBF25938A9800A096A0 /* FirebaseDebugArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD1E5825938A9800A096A0 /* FirebaseDebugArguments.swift */; };
@@ -1292,6 +1292,7 @@
 		45DC60CF2A603A440072380A /* PageNavigationCollectionViewNavigationCompleted.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DC60CE2A603A440072380A /* PageNavigationCollectionViewNavigationCompleted.swift */; };
 		45DD84962A8BB5E00066A020 /* DashboardTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DD84942A8BB5E00066A020 /* DashboardTabBarView.swift */; };
 		45DD84CE2A8BD65F0066A020 /* FavoritingToolBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DD84CC2A8BD65F0066A020 /* FavoritingToolBannerView.swift */; };
+		45DE67F22D9C49E1000DB213 /* URLSessionWebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DE67F12D9C49E1000DB213 /* URLSessionWebSocket.swift */; };
 		45DE9ACE287865DB004E3AE0 /* OptInOnboardingBannerEnabledCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DE9ACD287865DB004E3AE0 /* OptInOnboardingBannerEnabledCache.swift */; };
 		45DEF22E2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json in Resources */ = {isa = PBXBuildFile; fileRef = 45DEF22D2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json */; };
 		45DEF4DC2AE95237000C8F4B /* UIViewController+AccessibilityScreenId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DEF4DB2AE95237000C8F4B /* UIViewController+AccessibilityScreenId.swift */; };
@@ -2218,6 +2219,12 @@
 		4558B47C2D5E79E100B0E9E2 /* LanguageDownloadIconState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageDownloadIconState.swift; sourceTree = "<group>"; };
 		4558B47E2D5E79E100B0E9E2 /* DownloadableLanguageItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadableLanguageItemView.swift; sourceTree = "<group>"; };
 		455A6C6D27C16FFB00968277 /* MobileContentButtonIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentButtonIcon.swift; sourceTree = "<group>"; };
+		455B6BA12D9C48D000815829 /* ActionCableEventType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionCableEventType.swift; sourceTree = "<group>"; };
+		455B6BA22D9C48D000815829 /* ActionCableIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionCableIdentifier.swift; sourceTree = "<group>"; };
+		455B6BA42D9C48D000815829 /* ActionCableChannelPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionCableChannelPublisher.swift; sourceTree = "<group>"; };
+		455B6BA52D9C48D000815829 /* ActionCableChannelSubscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionCableChannelSubscriber.swift; sourceTree = "<group>"; };
+		455B6BA62D9C48D000815829 /* WebSocketChannelPublisherInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketChannelPublisherInterface.swift; sourceTree = "<group>"; };
+		455B6BA72D9C48D000815829 /* WebSocketChannelSubscriberInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketChannelSubscriberInterface.swift; sourceTree = "<group>"; };
 		455CB5702A439B6600E95834 /* LearnToShareToolViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LearnToShareToolViewModel.swift; sourceTree = "<group>"; };
 		455CB5742A439B6600E95834 /* LearnToShareToolItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LearnToShareToolItemView.swift; sourceTree = "<group>"; };
 		455CB5752A439B6600E95834 /* LearnToShareToolItemViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LearnToShareToolItemViewModel.swift; sourceTree = "<group>"; };
@@ -2650,14 +2657,8 @@
 		45AD18D225938A4E00A096A0 /* GTSegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTSegmentedControl.swift; sourceTree = "<group>"; };
 		45AD18D325938A4E00A096A0 /* GTSegmentedControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GTSegmentedControl.xib; sourceTree = "<group>"; };
 		45AD18D825938A4E00A096A0 /* NibBased.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibBased.swift; sourceTree = "<group>"; };
-		45AD1DD825938A9700A096A0 /* ActionCableChannelSubscriber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionCableChannelSubscriber.swift; sourceTree = "<group>"; };
 		45AD1DD925938A9700A096A0 /* StarscreamWebSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarscreamWebSocket.swift; sourceTree = "<group>"; };
-		45AD1DDA25938A9700A096A0 /* WebSocketChannelSubscriberType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocketChannelSubscriberType.swift; sourceTree = "<group>"; };
-		45AD1DDB25938A9700A096A0 /* ActionCableChannelPublisher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionCableChannelPublisher.swift; sourceTree = "<group>"; };
-		45AD1DDD25938A9700A096A0 /* ActionCableIdentifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionCableIdentifier.swift; sourceTree = "<group>"; };
-		45AD1DDE25938A9700A096A0 /* ActionCableEventType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionCableEventType.swift; sourceTree = "<group>"; };
-		45AD1DDF25938A9700A096A0 /* WebSocketType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocketType.swift; sourceTree = "<group>"; };
-		45AD1DE025938A9700A096A0 /* WebSocketChannelPublisherType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocketChannelPublisherType.swift; sourceTree = "<group>"; };
+		45AD1DDF25938A9700A096A0 /* WebSocketInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocketInterface.swift; sourceTree = "<group>"; };
 		45AD1DE225938A9700A096A0 /* ToolTrainingTipsOnboardingViewsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolTrainingTipsOnboardingViewsService.swift; sourceTree = "<group>"; };
 		45AD1DE425938A9700A096A0 /* ToolTrainingTipsOnboardingViewsUserDefaultsCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolTrainingTipsOnboardingViewsUserDefaultsCache.swift; sourceTree = "<group>"; };
 		45AD1E5825938A9800A096A0 /* FirebaseDebugArguments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseDebugArguments.swift; sourceTree = "<group>"; };
@@ -2988,6 +2989,7 @@
 		45DC60CE2A603A440072380A /* PageNavigationCollectionViewNavigationCompleted.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageNavigationCollectionViewNavigationCompleted.swift; sourceTree = "<group>"; };
 		45DD84942A8BB5E00066A020 /* DashboardTabBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardTabBarView.swift; sourceTree = "<group>"; };
 		45DD84CC2A8BD65F0066A020 /* FavoritingToolBannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritingToolBannerView.swift; sourceTree = "<group>"; };
+		45DE67F12D9C49E1000DB213 /* URLSessionWebSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionWebSocket.swift; sourceTree = "<group>"; };
 		45DE9ACD287865DB004E3AE0 /* OptInOnboardingBannerEnabledCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptInOnboardingBannerEnabledCache.swift; sourceTree = "<group>"; };
 		45DEF22D2576A6A20007AC64 /* learn_to_share_tool_with_anyone.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = learn_to_share_tool_with_anyone.json; sourceTree = "<group>"; };
 		45DEF4B724DEF35E00996695 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -6141,6 +6143,27 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		455B6BA32D9C48D000815829 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				455B6BA12D9C48D000815829 /* ActionCableEventType.swift */,
+				455B6BA22D9C48D000815829 /* ActionCableIdentifier.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		455B6BA82D9C48D000815829 /* Channel */ = {
+			isa = PBXGroup;
+			children = (
+				455B6BA42D9C48D000815829 /* ActionCableChannelPublisher.swift */,
+				455B6BA52D9C48D000815829 /* ActionCableChannelSubscriber.swift */,
+				455B6BA62D9C48D000815829 /* WebSocketChannelPublisherInterface.swift */,
+				455B6BA72D9C48D000815829 /* WebSocketChannelSubscriberInterface.swift */,
+				455B6BA32D9C48D000815829 /* Models */,
+			);
+			path = Channel;
+			sourceTree = "<group>";
+		};
 		455CB56B2A439B6600E95834 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
@@ -8573,24 +8596,12 @@
 		45AD1DD725938A9700A096A0 /* WebSocket */ = {
 			isa = PBXGroup;
 			children = (
-				45AD1DDB25938A9700A096A0 /* ActionCableChannelPublisher.swift */,
-				45AD1DD825938A9700A096A0 /* ActionCableChannelSubscriber.swift */,
 				45AD1DD925938A9700A096A0 /* StarscreamWebSocket.swift */,
-				45AD1DE025938A9700A096A0 /* WebSocketChannelPublisherType.swift */,
-				45AD1DDA25938A9700A096A0 /* WebSocketChannelSubscriberType.swift */,
-				45AD1DDF25938A9700A096A0 /* WebSocketType.swift */,
-				45AD1DDC25938A9700A096A0 /* Models */,
+				45DE67F12D9C49E1000DB213 /* URLSessionWebSocket.swift */,
+				45AD1DDF25938A9700A096A0 /* WebSocketInterface.swift */,
+				455B6BA82D9C48D000815829 /* Channel */,
 			);
 			path = WebSocket;
-			sourceTree = "<group>";
-		};
-		45AD1DDC25938A9700A096A0 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				45AD1DDE25938A9700A096A0 /* ActionCableEventType.swift */,
-				45AD1DDD25938A9700A096A0 /* ActionCableIdentifier.swift */,
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		45AD1DE125938A9700A096A0 /* ToolTrainingTipsOnboardingViews */ = {
@@ -12673,7 +12684,6 @@
 			files = (
 				45E066C52AE16796004393CD /* OnboardingTutorialViewedUserDefaultsCache.swift in Sources */,
 				45052148295F3B9D0018ABD0 /* UserCountersRepository.swift in Sources */,
-				45AD1F6425938A9800A096A0 /* WebSocketChannelPublisherType.swift in Sources */,
 				4512C8222B3236C000D162F3 /* ShareableDomainModel.swift in Sources */,
 				4526EDD42AEB274800D1A3D4 /* EvaluationOptionButton.swift in Sources */,
 				456BB02B27C588E80087CCA4 /* MobileContentHeadingViewModel.swift in Sources */,
@@ -13229,7 +13239,6 @@
 				45ACEE1A2AD0492D004B62E4 /* SearchAppLanguageInAppLanguagesListUseCase.swift in Sources */,
 				453F84D42A029FC00005101E /* ArticleAemDownloadOperationCachePolicy.swift in Sources */,
 				452259AE2ABCBCA90070F7F3 /* AnalyticsContainer+TrackScreenViewAnalyticsInterface.swift in Sources */,
-				45AD1F6225938A9800A096A0 /* ActionCableEventType.swift in Sources */,
 				45AD20EB259391B000A096A0 /* JsonServices.swift in Sources */,
 				D496B9062A9E702200CBEA19 /* SearchBar.swift in Sources */,
 				4502BD42279F3B72000C544A /* MobileContentFlowItemViewModel.swift in Sources */,
@@ -13499,7 +13508,7 @@
 				4512D4CE2B29127200DFAFB3 /* ToolSettingsToolLanguageDomainModel.swift in Sources */,
 				458B91B32B7D5D6800785C6F /* AllYourFavoriteToolsViewModel.swift in Sources */,
 				4595E0E32A852DAA00D88DAE /* MobileContentApiUsersMeCodable+UserDetailsDataModelType.swift in Sources */,
-				45AD1F6325938A9800A096A0 /* WebSocketType.swift in Sources */,
+				45AD1F6325938A9800A096A0 /* WebSocketInterface.swift in Sources */,
 				452DFB442B7FBB4E003A4A59 /* GetTranslatedToolLanguageAvailability.swift in Sources */,
 				4512C80F2B322E4900D162F3 /* ToolSettingsLanguageDropDownView.swift in Sources */,
 				45060D1E2B38815600A2A44C /* ResourcesFilter.swift in Sources */,
@@ -13577,6 +13586,7 @@
 				458CFE9229D4E0B9007B423C /* ArticlesErrorMessageView.swift in Sources */,
 				45AE975327C97A9500C2CB33 /* Tab+MobileContentRenderableModel.swift in Sources */,
 				455583CD269F2DA500C3FF14 /* MobileContentPageView.swift in Sources */,
+				45DE67F22D9C49E1000DB213 /* URLSessionWebSocket.swift in Sources */,
 				45AC9DF82B28AA4D00DEEBFE /* ViewSearchBarUseCase.swift in Sources */,
 				45369ACE2AFA7FA500BD10F0 /* GetToolScreenShareTutorialViewedRepositoryInterface.swift in Sources */,
 				45BDA6482954FF08007E259B /* HTMLDocumentData.swift in Sources */,
@@ -13640,7 +13650,6 @@
 				45051205275AA7050081BF56 /* MobileContentParagraphView.swift in Sources */,
 				45B3F44B2AC3A86100D61BFD /* UserAppLanguageDataModel.swift in Sources */,
 				4515E9BF284FD2A600D3D197 /* MobileContentRendererNavigationDeepLinkType.swift in Sources */,
-				45AD1F5F25938A9800A096A0 /* WebSocketChannelSubscriberType.swift in Sources */,
 				45DE9ACE287865DB004E3AE0 /* OptInOnboardingBannerEnabledCache.swift in Sources */,
 				455583FF269F2DA500C3FF14 /* MobileContentEmbeddedVideoViewModel.swift in Sources */,
 				455583F3269F2DA500C3FF14 /* MobileContentTabViewModel.swift in Sources */,
@@ -14001,7 +14010,6 @@
 				45BDA6462954FF08007E259B /* WebArchiveQueueResult.swift in Sources */,
 				458CFE8429D4E0B9007B423C /* ShareArticleView.swift in Sources */,
 				4581657626F4DD4D000D660F /* MobileContentRowView.swift in Sources */,
-				45AD1F6125938A9800A096A0 /* ActionCableIdentifier.swift in Sources */,
 				45BDA61F2954FE3E007E259B /* CategoryArticleModelType.swift in Sources */,
 				459E86EF28EDA86C00E197A5 /* ParsedDeepLinkType.swift in Sources */,
 				45965D492B4486CE001C9AA5 /* ViewDashboardDomainModel.swift in Sources */,
@@ -14048,6 +14056,12 @@
 				45AE973D27C97A9400C2CB33 /* MultiplatformCard.swift in Sources */,
 				4578ED2C2D4C2A2A0032EFD5 /* MobileContentRendererViewModel.swift in Sources */,
 				4512D4C82B29125700DFAFB3 /* ViewToolSettingsToolLanguagesListUseCase.swift in Sources */,
+				455B6BA92D9C48D000815829 /* ActionCableChannelSubscriber.swift in Sources */,
+				455B6BAA2D9C48D000815829 /* ActionCableEventType.swift in Sources */,
+				455B6BAB2D9C48D000815829 /* WebSocketChannelPublisherInterface.swift in Sources */,
+				455B6BAC2D9C48D000815829 /* ActionCableChannelPublisher.swift in Sources */,
+				455B6BAD2D9C48D000815829 /* ActionCableIdentifier.swift in Sources */,
+				455B6BAE2D9C48D000815829 /* WebSocketChannelSubscriberInterface.swift in Sources */,
 				D4C2A5762C344CFA0035AB4D /* LessonFilterDomainLayerDependencies.swift in Sources */,
 				457579E226E96ABE00C898D2 /* MobileContentMultiSelectViewModel.swift in Sources */,
 				453F84C02A029FC00005101E /* ArticleAemCacheArchivedObject.swift in Sources */,
@@ -14059,7 +14073,6 @@
 				4512C8242B3236C000D162F3 /* ShareablesDomainLayerDependencies.swift in Sources */,
 				D4C2A5552C2E32030035AB4D /* LessonFilterLanguageSelectionViewModel.swift in Sources */,
 				45965D472B4486A1001C9AA5 /* ViewDashboardUseCase.swift in Sources */,
-				45AD1F6025938A9800A096A0 /* ActionCableChannelPublisher.swift in Sources */,
 				D43FC1C02B64531F00F8310E /* ViewConfirmAppLanguageDomainModel.swift in Sources */,
 				45AE975E27C97A9500C2CB33 /* Card+MobileContentRenderableModel.swift in Sources */,
 				4529B96628933A610011F16B /* ParseTranslationManifestForRenderer.swift in Sources */,
@@ -14153,7 +14166,6 @@
 				4598BD1E2BF7DF6800196463 /* AuthenticateUserAuthTypeDomainModel.swift in Sources */,
 				45AC9DEB2B28A9CD00DEEBFE /* DownloadableLanguagesView.swift in Sources */,
 				45AD205825938AC300A096A0 /* FirebaseAnalytics.swift in Sources */,
-				45AD1F5D25938A9800A096A0 /* ActionCableChannelSubscriber.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14504,7 +14516,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 6.3.8;
+				MARKETING_VERSION = 6.3.9;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -14706,7 +14718,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 6.3.8;
+				MARKETING_VERSION = 6.3.9;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools.beta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -14907,7 +14919,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 6.3.8;
+				MARKETING_VERSION = 6.3.9;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools.beta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -15108,7 +15120,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 6.3.8;
+				MARKETING_VERSION = 6.3.9;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -15345,7 +15357,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 6.3.8;
+				MARKETING_VERSION = 6.3.9;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DRELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -13,8 +13,8 @@ class TractRemoteShareSubscriber: NSObject {
     private static let timeoutIntervalSeconds: TimeInterval = 10
     
     private let remoteUrl: URL
-    private let webSocket: WebSocketType
-    private let webSocketChannelSubscriber: WebSocketChannelSubscriberType
+    private let webSocket: WebSocketInterface
+    private let webSocketChannelSubscriber: WebSocketChannelSubscriberInterface
     private let jsonServices: JsonServices = JsonServices()
     private let loggingEnabled: Bool
     
@@ -25,7 +25,7 @@ class TractRemoteShareSubscriber: NSObject {
     let navigationEventSignal: SignalValue<TractRemoteShareNavigationEvent> = SignalValue()
     let subscribedToChannelObserver: ObservableValue<Bool> = ObservableValue(value: false)
     
-    required init(config: AppConfig, webSocket: WebSocketType, webSocketChannelSubscriber: WebSocketChannelSubscriberType, loggingEnabled: Bool) {
+    required init(config: AppConfig, webSocket: WebSocketInterface, webSocketChannelSubscriber: WebSocketChannelSubscriberInterface, loggingEnabled: Bool) {
         
         // TODO: Shouldn't force unwrap here. ~Levi
         self.remoteUrl = URL(string: config.getTractRemoteShareConnectionUrl())!
