@@ -19,4 +19,8 @@ class LessonSwipeTutorialDomainLayerDependencies {
     func getLessonSwipeTutorialInterfaceStringsUseCase() -> GetLessonSwipeTutorialInterfaceStringsUseCase {
         return GetLessonSwipeTutorialInterfaceStringsUseCase(getLessonSwipeTutorialInterfaceStringsRepo: dataLayer.getLessonSwipeTutorialInterfaceStringsRepositoryInterface())
     }
+    
+    func getShouldShowLessonSwipeTutorialUseCase() -> ShouldShowLessonSwipeTutorialUseCase {
+        ShouldShowLessonSwipeTutorialUseCase(shouldShowLessonSwipeTutorialRepo: dataLayer.getShouldShowLessonSwipeTutorialRepositoryInterface())
+    }
 }

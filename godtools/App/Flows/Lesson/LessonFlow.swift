@@ -8,6 +8,7 @@
 
 import UIKit
 import GodToolsToolParser
+import Combine
 
 class LessonFlow: ToolNavigationFlow, Flow {
 
@@ -16,6 +17,7 @@ class LessonFlow: ToolNavigationFlow, Flow {
     private let trainingTipsEnabled: Bool
     private let initialPageSubIndex: Int?
     
+    private var cancellables: Set<AnyCancellable> = Set()
     private var lesson: ResourceModel {
         return toolTranslations.tool
     }
@@ -161,6 +163,25 @@ class LessonFlow: ToolNavigationFlow, Flow {
         navigationController.pushViewController(lessonView, animated: animated)
         
         configureNavigationBar(shouldAnimateNavigationBarHiddenState: true)
+        
+        showSwipeTutorialIfNeeded()
+    }
+    
+    private func showSwipeTutorialIfNeeded() {
+        
+        appDiContainer.feature.lessonSwipeTutorial.domainlayer.getShouldShowLessonSwipeTutorialUseCase().shouldShowLessonSwipeTutorialPublisher()
+            .receive(on: DispatchQueue.main)
+            .first()
+            .sink { [weak self] shouldShowSwipeTutorial in
+                
+                if shouldShowSwipeTutorial {
+                    self?.showSwipeTutorial()
+                }
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func showSwipeTutorial() {
         
         let _ = Timer.scheduledTimer(withTimeInterval: 0.8, repeats: false) { timer in
             let swipeTutorial = self.getLessonSwipeTutorial()

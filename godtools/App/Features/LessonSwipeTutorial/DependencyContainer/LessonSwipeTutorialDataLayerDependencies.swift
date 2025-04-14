@@ -18,9 +18,21 @@ class LessonSwipeTutorialDataLayerDependencies {
     
     // MARK: - Data Layer Classes
     
+    func getLessonSwipeTutorialViewedRepository() -> LessonSwipeTutorialViewedRepository {
+        return LessonSwipeTutorialViewedRepository(
+            cache: LessonSwipeTutorialViewedUserDefaultsCache(
+                sharedUserDefaultsCache: coreDataLayer.getSharedUserDefaultsCache()
+            )
+        )
+    }
+    
     // MARK: - Domain Interface
     
     func getLessonSwipeTutorialInterfaceStringsRepositoryInterface() -> GetLessonSwipeTutorialInterfaceStringsRepositoryInterface {
         return GetLessonSwipeTutorialInterfaceStringsRepository(localizationServices: coreDataLayer.getLocalizationServices())
+    }
+    
+    func getShouldShowLessonSwipeTutorialRepositoryInterface() -> ShouldShowLessonSwipeTutorialRepositoryInterface {
+        return ShouldShowLessonSwipeTutorialRepository(lessonSwipeTutorialViewedRepo: getLessonSwipeTutorialViewedRepository())
     }
 }
