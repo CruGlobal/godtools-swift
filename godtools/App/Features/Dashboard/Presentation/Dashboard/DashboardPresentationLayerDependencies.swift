@@ -26,6 +26,10 @@ class DashboardPresentationLayerDependencies {
         return getToolsViewModel()
     }()
     
+    lazy var optInNotificationViewModel: OptInNotificationViewModel = {
+        return getOptInNotificationViewModel()
+    }()
+    
     init(appDiContainer: AppDiContainer, flowDelegate: FlowDelegate) {
         
         self.appDiContainer = appDiContainer
@@ -45,7 +49,7 @@ class DashboardPresentationLayerDependencies {
         return LessonsViewModel(
             flowDelegate: unwrappedFlowDelegate,
             resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
-            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(), 
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getUserLessonFiltersUseCase: appDiContainer.feature.lessonFilter.domainLayer.getUserLessonFiltersUseCase(),
             viewLessonsUseCase: appDiContainer.feature.lessons.domainLayer.getViewLessonsUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
@@ -88,4 +92,23 @@ class DashboardPresentationLayerDependencies {
             attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository()
         )
     }
+    
+    private func getOptInNotificationViewModel() -> OptInNotificationViewModel {
+
+        return OptInNotificationViewModel(
+
+            optInNotificationRepository: appDiContainer.feature.optInNotification.dataLayer.getOptInNotificationRepository(),
+            launchCountRepository: appDiContainer.feature.optInNotification.dataLayer.getLaunchCountRepository(),
+            viewOptInNotificationUseCase: appDiContainer.feature.optInNotification.domainLayer.getViewOptInNotificationUseCase(),
+            viewOptInDialogUseCase: appDiContainer.feature.optInNotification.domainLayer.getViewOptInDialogUseCase(),
+            requestNotificationPermissionUseCase: appDiContainer.feature.optInNotification.domainLayer.getRequestNotificationPermissionUseCase(),
+            checkNotificationStatusUseCase: appDiContainer.feature.optInNotification.domainLayer.getCheckNotificationStatusUseCase(),
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            flowDelegate: unwrappedFlowDelegate
+        )
+    }
+
 }
+
+
+

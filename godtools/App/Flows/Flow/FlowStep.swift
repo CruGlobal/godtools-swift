@@ -89,7 +89,11 @@ enum FlowStep {
     case toolSettingsTappedFromTool(toolSettingsObserver: ToolSettingsObserver, toolSettingsDidCloseClosure: (() -> Void)?)
     case tractFlowCompleted(state: TractFlowCompletedState)
     case acceptTappedFromExitToolRemoteShare
-        
+       
+    // optInNotification
+    case allowNotificationsTappedFromBottomSheet(userDialogReponse: PassthroughSubject<Void, Never>)
+    
+    
     // tutorial
     case closeTappedFromTutorial
     case startUsingGodToolsTappedFromTutorial
