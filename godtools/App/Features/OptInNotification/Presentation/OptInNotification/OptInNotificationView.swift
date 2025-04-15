@@ -21,7 +21,9 @@ struct OptInNotificationView: View {
 
         VStack {
             
-            Image("notification_graphic").resizable()
+            ImageCatalog.notificationGraphic
+                .image
+                .resizable()
                 .scaledToFit()
                 .padding(EdgeInsets(top: 5, leading: 5, bottom: 0, trailing: 5))
                 .overlay(
