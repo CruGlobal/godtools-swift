@@ -17,10 +17,20 @@ class LessonSwipeTutorialDomainLayerDependencies {
     }
     
     func getLessonSwipeTutorialInterfaceStringsUseCase() -> GetLessonSwipeTutorialInterfaceStringsUseCase {
-        return GetLessonSwipeTutorialInterfaceStringsUseCase(getLessonSwipeTutorialInterfaceStringsRepo: dataLayer.getLessonSwipeTutorialInterfaceStringsRepositoryInterface())
+        return GetLessonSwipeTutorialInterfaceStringsUseCase(
+            getLessonSwipeTutorialInterfaceStringsRepo: dataLayer.getLessonSwipeTutorialInterfaceStringsRepositoryInterface()
+        )
     }
     
     func getShouldShowLessonSwipeTutorialUseCase() -> ShouldShowLessonSwipeTutorialUseCase {
-        ShouldShowLessonSwipeTutorialUseCase(shouldShowLessonSwipeTutorialRepo: dataLayer.getShouldShowLessonSwipeTutorialRepositoryInterface())
+        return ShouldShowLessonSwipeTutorialUseCase(
+            shouldShowLessonSwipeTutorialRepo: dataLayer.getShouldShowLessonSwipeTutorialRepositoryInterface()
+        )
+    }
+    
+    func getTrackViewedLessonSwipeTutorialUseCase() -> TrackViewedLessonSwipeTutorialUseCase {
+        return TrackViewedLessonSwipeTutorialUseCase(
+            trackViewedLessonSwipeTutorialRepo: dataLayer.getTrackViewedLessonSwipeTutorialRepositoryInterface()
+        )
     }
 }

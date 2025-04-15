@@ -29,10 +29,20 @@ class LessonSwipeTutorialDataLayerDependencies {
     // MARK: - Domain Interface
     
     func getLessonSwipeTutorialInterfaceStringsRepositoryInterface() -> GetLessonSwipeTutorialInterfaceStringsRepositoryInterface {
-        return GetLessonSwipeTutorialInterfaceStringsRepository(localizationServices: coreDataLayer.getLocalizationServices())
+        return GetLessonSwipeTutorialInterfaceStringsRepository(
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
     }
     
     func getShouldShowLessonSwipeTutorialRepositoryInterface() -> ShouldShowLessonSwipeTutorialRepositoryInterface {
-        return ShouldShowLessonSwipeTutorialRepository(lessonSwipeTutorialViewedRepo: getLessonSwipeTutorialViewedRepository())
+        return ShouldShowLessonSwipeTutorialRepository(
+            lessonSwipeTutorialViewedRepo: getLessonSwipeTutorialViewedRepository()
+        )
+    }
+    
+    func getTrackViewedLessonSwipeTutorialRepositoryInterface() -> TrackViewedLessonSwipeTutorialRepositoryInterface {
+        return TrackViewedLessonSwipeTutorialRepository(
+            lessonSwipeTutorialViewedRepository: getLessonSwipeTutorialViewedRepository()
+        )
     }
 }

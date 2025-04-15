@@ -102,6 +102,7 @@ class LessonFlow: ToolNavigationFlow, Flow {
             
         case .closeLessonSwipeTutorial:
             navigationController.dismissPresented(animated: true, completion: nil)
+            trackSwipeTutorialViewed()
             
         case .startOverTappedFromResumeLessonModal:
             navigateToLesson(isNavigatingFromResumeLessonModal: true, initialPage: nil, initialPageSubIndex: initialPageSubIndex, animated: false)
@@ -192,6 +193,16 @@ class LessonFlow: ToolNavigationFlow, Flow {
     private func closeTool(lessonId: String, highestPageNumberViewed: Int) {
                 
         flowDelegate?.navigate(step: .lessonFlowCompleted(state: .userClosedLesson(lessonId: lessonId, highestPageNumberViewed: highestPageNumberViewed)))
+    }
+    
+    private func trackSwipeTutorialViewed() {
+        
+        appDiContainer.feature.lessonSwipeTutorial.domainlayer.getTrackViewedLessonSwipeTutorialUseCase()
+            .trackLessonSwipeTutorialViewed()
+            .sink { _ in
+                
+            }
+            .store(in: &cancellables)
     }
 }
 
