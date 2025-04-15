@@ -252,7 +252,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             let toolDetails = getToolDetails(
                 toolId: tool.dataModelId,
                 parallelLanguage: nil,
-                selectedLanguageIndex: nil, 
+                selectedLanguageIndex: nil,
                 shouldPersistToolSettings: true
             )
             
@@ -268,7 +268,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
             presentConfirmRemoveToolFromFavoritesAlertView(
                 toolId: tool.dataModelId,
-                didConfirmToolRemovalSubject: nil, 
+                didConfirmToolRemovalSubject: nil,
                 animated: true
             )
             
@@ -283,7 +283,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             let toolDetails = getToolDetails(
                 toolId: tool.dataModelId,
                 parallelLanguage: nil,
-                selectedLanguageIndex: nil, 
+                selectedLanguageIndex: nil,
                 shouldPersistToolSettings: true
             )
             
@@ -306,6 +306,13 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         case .backTappedFromToolDetails:
             configureNavBarForDashboard()
             navigationController.popViewController(animated: true)
+            
+        case .allowNotificationsTappedFromBottomSheet(let userDialogReponse):
+
+            presentOptInNotificationDialogView(
+                userDialogReponse: userDialogReponse,
+                animated: true
+            )
             
         case .articleFlowCompleted( _):
             
@@ -566,7 +573,7 @@ extension AppFlow {
                 flowDelegate: self
             ),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            viewDashboardUseCase: appDiContainer.feature.dashboard.domainLayer.getViewDashboardUseCase(), 
+            viewDashboardUseCase: appDiContainer.feature.dashboard.domainLayer.getViewDashboardUseCase(),
             dashboardTabObserver: dashboardTabObserver
         )
                 
@@ -1024,7 +1031,7 @@ extension AppFlow {
         
         let viewModel = ToolFilterCategorySelectionViewModel(
             viewToolFilterCategoriesUseCase: appDiContainer.feature.toolsFilter.domainLayer.getViewToolFilterCategoriesUseCase(),
-            searchToolFilterCategoriesUseCase: appDiContainer.feature.toolsFilter.domainLayer.getSearchToolFilterCategoriesUseCase(), 
+            searchToolFilterCategoriesUseCase: appDiContainer.feature.toolsFilter.domainLayer.getSearchToolFilterCategoriesUseCase(),
             getUserToolFiltersUseCase: appDiContainer.feature.toolsFilter.domainLayer.getUserToolFiltersUseCase(),
             storeUserToolFiltersUseCase: appDiContainer.feature.toolsFilter.domainLayer.getStoreUserToolFiltersUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
@@ -1057,7 +1064,7 @@ extension AppFlow {
         
         let viewModel = ToolFilterLanguageSelectionViewModel(
             viewToolFilterLanguagesUseCase: appDiContainer.feature.toolsFilter.domainLayer.getViewToolFilterLanguagesUseCase(),
-            searchToolFilterLanguagesUseCase: appDiContainer.feature.toolsFilter.domainLayer.getSearchToolFilterLanguagesUseCase(), 
+            searchToolFilterLanguagesUseCase: appDiContainer.feature.toolsFilter.domainLayer.getSearchToolFilterLanguagesUseCase(),
             getUserToolFiltersUseCase: appDiContainer.feature.toolsFilter.domainLayer.getUserToolFiltersUseCase(),
             storeUserToolFilterUseCase: appDiContainer.feature.toolsFilter.domainLayer.getStoreUserToolFiltersUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
@@ -1106,7 +1113,7 @@ extension AppFlow {
             toggleToolFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToggleFavoritedToolUseCase(),
             attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
-            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase() 
+            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
         )
         
         let view = ToolDetailsView(viewModel: viewModel)
@@ -1128,6 +1135,42 @@ extension AppFlow {
         )
         
         return hostingView
+    }
+}
+
+// MARK: - OptInNotification
+extension AppFlow {
+
+    private func getOptInNotificationDialogView(
+        domainModel: ViewOptInDialogDomainModel,
+        userDialogReponse: PassthroughSubject<Void, Never>?) -> UIViewController {
+            
+        let viewModel = OptInNotificationDialogViewModel(
+            viewOptInDialogDomainModel: domainModel,
+            viewOptInDialogUseCase: appDiContainer.feature.optInNotification.domainLayer.getViewOptInDialogUseCase(),
+            userDialogReponse: userDialogReponse
+        )
+
+        let view = OptInNotificationDialogView(viewModel: viewModel)
+
+        return view.controller
+    }
+
+    private func presentOptInNotificationDialogView( userDialogReponse: PassthroughSubject<Void, Never>?, animated: Bool) {
+        appDiContainer.feature.optInNotification.domainLayer.getViewOptInDialogUseCase().viewPublisher(appLanguage: appLanguage)
+            .receive(on: DispatchQueue.main).sink {
+                [weak self]
+                (domainModel: ViewOptInDialogDomainModel) in
+
+                guard let weakSelf = self else {
+                    return
+                }
+
+                let view = weakSelf.getOptInNotificationDialogView( domainModel: domainModel, userDialogReponse: userDialogReponse)
+
+                weakSelf.navigationController.present(view, animated: animated)
+                
+            }.store(in: &cancellables)
     }
 }
 
