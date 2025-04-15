@@ -29,12 +29,12 @@ struct OptInNotificationView: View {
                 .overlay(
                     Rectangle()
                         .frame(height: 2)
-                        .foregroundColor(Color(uiColor: ColorPalette.gtBlue.uiColor)),
+                        .foregroundColor(ColorPalette.gtBlue.color),
                     alignment: .bottom
                 )
             
             Text(viewModel.title)
-                .foregroundColor(Color(uiColor: ColorPalette.gtBlue.uiColor))
+                .foregroundColor(ColorPalette.gtBlue.color)
                 .font(FontLibrary.sfProTextRegular.font(size: 30))
                 .fontWeight(.bold)
                 .padding(.vertical, 10)
@@ -52,9 +52,9 @@ struct OptInNotificationView: View {
                 viewModel.allowNotificationsTapped()
 
             }) {
-                RoundedRectangle(cornerRadius: 5).fill(
-                    Color(uiColor: ColorPalette.gtBlue.uiColor)
-                )
+                
+                RoundedRectangle(cornerRadius: 5)
+                    .fill(ColorPalette.gtBlue.color)
             }
             .frame(height: 45)
             .overlay(
@@ -67,11 +67,7 @@ struct OptInNotificationView: View {
 
             }) {
                 Text(viewModel.maybeLaterActionTitle)
-                    .foregroundColor(
-                        Color(
-                            uiColor: ColorPalette.gtBlue.uiColor
-                        )
-                    )
+                    .foregroundColor(ColorPalette.gtBlue.color)
             }
             .frame(height: 40)
             .padding(.bottom, 50)
@@ -79,10 +75,12 @@ struct OptInNotificationView: View {
         }
         .padding(.horizontal, 20)
         .background(
-            RoundedRectangle(cornerRadius: 10).stroke(Color(uiColor: ColorPalette.gtBlue.uiColor), lineWidth: 8)
-            .overlay(
-                RoundedRectangle(cornerRadius: 10).foregroundStyle(.white)
-            )
+            RoundedRectangle(cornerRadius: 10)
+                .stroke(ColorPalette.gtBlue.color, lineWidth: 8)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10)
+                        .foregroundStyle(.white)
+                )
         )
         .padding(.horizontal, UIScreen.main.bounds.width * 0.05)
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
