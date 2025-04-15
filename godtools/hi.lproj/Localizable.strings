@@ -1,5 +1,3 @@
-// Is an interface language
-
 /* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
 "lessons.resumeLessonModal.title" = "प्रगति जारी रखें";
 
@@ -95,16 +93,6 @@
 
 /* Please keep to a 9 character limit, longer phrases may get cut off */
 "favorites.favoriteLessons.details" = "विवरण";
-
-"optInNotification.title" = "सुझाव और प्रोत्साहन प्राप्त करें";
-"optInNotification.body" = "बातचीत के लिए तैयार रहें।\nआज ही सूचनाएँ सक्षम करें।";
-"optInNotification.allowNotifications" = "सूचनाएँ अनुमति दें";
-"optInNotification.maybeLater" = "शायद बाद में";
-
-"optInDialog.title" = "सूचनाएँ सक्षम करें";
-"optInDialog.body" = "सूचनाएँ अक्षम हैं। कृपया उन्हें सेटिंग्स में सक्षम करें।";
-"optInDialog.cancel" = "रद्द करें";
-"optInDialog.settings" = "सेटिंग्स";
 
 /* The meaning is "I don't want to set a second language".  Language is no language or None */
 "toolSettings.languagesList.deleteLanguage.title" = "कोई नहीं";
