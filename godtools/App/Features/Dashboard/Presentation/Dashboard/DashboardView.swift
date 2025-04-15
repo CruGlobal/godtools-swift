@@ -61,7 +61,24 @@ struct DashboardView: View {
                         viewModel: viewModel
                     )
                 }
-            }
+            }.overlay(content: {
+                if viewModel.isOptInNotificationActive {
+                    Color.black.opacity(0.2)
+                        .edgesIgnoringSafeArea(.all)
+                }
+
+            }).overlay(
+                alignment: Alignment.bottom,
+                content: {
+                    if viewModel.isOptInNotificationActive {
+                        OptInNotificationView(
+                            viewModel:
+                                viewModel.getOptInNotificationViewModel()
+                        ).transition(.move(edge: .bottom))
+
+                    }
+                }
+            )
         }
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
     }
@@ -113,7 +130,7 @@ struct DashboardView_Previews: PreviewProvider {
             flowDelegate: Self.flowDelegate,
             dashboardPresentationLayerDependencies: Self.dashboardDependencies,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            viewDashboardUseCase: appDiContainer.feature.dashboard.domainLayer.getViewDashboardUseCase(), 
+            viewDashboardUseCase: appDiContainer.feature.dashboard.domainLayer.getViewDashboardUseCase(),
             dashboardTabObserver: CurrentValueSubject(.favorites)
         )
         
@@ -125,3 +142,5 @@ struct DashboardView_Previews: PreviewProvider {
         DashboardView(viewModel: Self.getDashboardViewModel())
     }
 }
+
+

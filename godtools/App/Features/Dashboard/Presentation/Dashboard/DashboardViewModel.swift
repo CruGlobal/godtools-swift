@@ -8,6 +8,7 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 class DashboardViewModel: ObservableObject {
     
@@ -27,6 +28,8 @@ class DashboardViewModel: ObservableObject {
     @Published var favoritesButtonTitle: String = ""
     @Published var toolsButtonTitle: String = ""
     @Published var currentTab: Int = 0
+    
+    @Published var isOptInNotificationActive: Bool = false
     
     init(startingTab: DashboardTabTypeDomainModel, flowDelegate: FlowDelegate, dashboardPresentationLayerDependencies: DashboardPresentationLayerDependencies, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewDashboardUseCase: ViewDashboardUseCase, dashboardTabObserver: CurrentValueSubject<DashboardTabTypeDomainModel, Never>) {
         
@@ -58,7 +61,7 @@ class DashboardViewModel: ObservableObject {
                 self?.reloadTabs() // NOTE: Needed since button title interface strings aren't connected to the View. ~Levi
                 self?.setStartingTabIfNeeded(startingTab: startingTab, tabs: self?.tabs ?? Array())
             }
-            .store(in: &cancellables)        
+            .store(in: &cancellables)
         
         $currentTab.eraseToAnyPublisher()
             .sink { [weak self] currentTab in
@@ -70,6 +73,24 @@ class DashboardViewModel: ObservableObject {
                 dashboardTabObserver.send(self.tabs[currentTab])
             }
             .store(in: &cancellables)
+        
+        dashboardPresentationLayerDependencies.optInNotificationViewModel
+            .$isActive
+            .receive(on: DispatchQueue.main).sink { [weak self] isActive in
+                guard let self = self else { return }
+
+                withAnimation {
+                    self.isOptInNotificationActive = isActive
+                }
+            }.store(in: &cancellables)
+
+        DispatchQueue.main.async {
+            Task {
+                await self.dashboardPresentationLayerDependencies
+                    .optInNotificationViewModel
+                    .shouldPromptNotificationSheet()
+            }
+        }
     }
     
     deinit {
@@ -110,7 +131,9 @@ class DashboardViewModel: ObservableObject {
 extension DashboardViewModel {
     
     @objc func menuTapped() {
-        flowDelegate?.navigate(step: .menuTappedFromTools)
+        if dashboardPresentationLayerDependencies.optInNotificationViewModel.isActive == false {
+              flowDelegate?.navigate(step: .menuTappedFromTools)
+          }
     }
             
     func getLessonsViewModel() -> LessonsViewModel {
@@ -123,6 +146,10 @@ extension DashboardViewModel {
     
     func getToolsViewModel() -> ToolsViewModel {
         return dashboardPresentationLayerDependencies.toolsViewModel
+    }
+    
+    func getOptInNotificationViewModel() -> OptInNotificationViewModel {
+        return dashboardPresentationLayerDependencies.optInNotificationViewModel
     }
     
     func tabTapped(tabIndex: Int) {
