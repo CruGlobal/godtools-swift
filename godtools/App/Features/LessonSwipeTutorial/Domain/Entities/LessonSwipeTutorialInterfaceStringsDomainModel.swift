@@ -10,9 +10,9 @@ import Foundation
 
 struct LessonSwipeTutorialInterfaceStringsDomainModel {
     let title: String
-    let buttonText: String
+    let closeButtonText: String
     
     static func emptyStrings() -> LessonSwipeTutorialInterfaceStringsDomainModel {
-        return LessonSwipeTutorialInterfaceStringsDomainModel(title: "", buttonText: "")
+        return LessonSwipeTutorialInterfaceStringsDomainModel(title: "", closeButtonText: "")
     }
 }

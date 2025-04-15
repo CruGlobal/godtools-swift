@@ -24,7 +24,7 @@ class GetLessonSwipeTutorialInterfaceStringsRepository: GetLessonSwipeTutorialIn
         
         let interfaceStrings = LessonSwipeTutorialInterfaceStringsDomainModel(
             title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "lessons.swipeTutorial.title"),
-            buttonText: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "lessons.swipeTutorial.buttonText")
+            closeButtonText: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "lessons.swipeTutorial.buttonText")
         )
         
         return Just(interfaceStrings)
