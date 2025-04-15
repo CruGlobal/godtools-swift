@@ -13,7 +13,6 @@ import UIKit
 class OptInNotificationDialogViewModel: AlertMessageViewModelType {
 
     private let viewOptInDialogDomainModel: ViewOptInDialogDomainModel
-    private let viewOptInDialogUseCase: ViewOptInDialogUseCase
     private let userDialogReponse: PassthroughSubject<Void, Never>?
 
     let title: String?
@@ -23,12 +22,10 @@ class OptInNotificationDialogViewModel: AlertMessageViewModelType {
 
     init(
         viewOptInDialogDomainModel: ViewOptInDialogDomainModel,
-        viewOptInDialogUseCase: ViewOptInDialogUseCase,
         userDialogReponse: PassthroughSubject<Void, Never>?
 
     ) {
         self.viewOptInDialogDomainModel = viewOptInDialogDomainModel
-        self.viewOptInDialogUseCase = viewOptInDialogUseCase
         self.userDialogReponse = userDialogReponse
 
         title = viewOptInDialogDomainModel.interfaceStrings.title
@@ -54,6 +51,5 @@ class OptInNotificationDialogViewModel: AlertMessageViewModelType {
         UIApplication.shared.open(
             settingsURL, options: [:], completionHandler: nil
         )
-
     }
 }

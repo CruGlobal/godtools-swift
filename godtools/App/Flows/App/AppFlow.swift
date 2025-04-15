@@ -1148,7 +1148,6 @@ extension AppFlow {
             
         let viewModel = OptInNotificationDialogViewModel(
             viewOptInDialogDomainModel: domainModel,
-            viewOptInDialogUseCase: appDiContainer.feature.optInNotification.domainLayer.getViewOptInDialogUseCase(),
             userDialogReponse: userDialogReponse
         )
 
