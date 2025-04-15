@@ -25,53 +25,47 @@ struct AllYourFavoriteToolsView: View {
     var body: some View {
         
         GeometryReader { geometry in
-                        
-            PullToRefreshScrollView(showsIndicators: true) {
-                
-                VStack(alignment: .leading, spacing: 0) {
                     
+            VStack(alignment: .leading, spacing: 0) {
+                List {
                     Text(viewModel.sectionTitle)
                         .font(FontLibrary.sfProTextRegular.font(size: 22))
                         .foregroundColor(ColorPalette.gtGrey.color)
-                        .padding(.top, 30)
-                        .padding(.leading, contentHorizontalInsets)
-                                        
-                    LazyVStack(alignment: .center, spacing: toolCardSpacing) {
-                        
-                        ForEach(viewModel.favoritedTools) { (tool: YourFavoritedToolDomainModel) in
-                            
-                            ToolCardView(
-                                viewModel: viewModel.getToolViewModel(tool: tool),
-                                geometry: geometry,
-                                layout: .landscape,
-                                showsCategory: true,
-                                navButtonTitleHorizontalPadding: YourFavoriteToolsView.toolCardNavButtonTitleHorizontalPadding,
-                                accessibility: .favoriteTool,
-                                favoriteTappedClosure: {
-                                    
-                                    viewModel.unfavoriteToolTapped(tool: tool)
-                                },
-                                toolDetailsTappedClosure: {
-                                    
-                                    viewModel.toolDetailsTapped(tool: tool)
-                                },
-                                openToolTappedClosure: {
-                                    
-                                    viewModel.openToolTapped(tool: tool)
-                                },
-                                toolTappedClosure: {
-                                    
-                                    viewModel.toolTapped(tool: tool)
-                                }
-                            )
-                        }
+                        .listRowSeparator(.hidden)
+                    
+                    ForEach(viewModel.favoritedTools) { (tool: YourFavoritedToolDomainModel) in
+                        ToolCardView(
+                            viewModel: viewModel.getToolViewModel(tool: tool),
+                            geometry: geometry,
+                            layout: .landscape,
+                            showsCategory: true,
+                            navButtonTitleHorizontalPadding: YourFavoriteToolsView.toolCardNavButtonTitleHorizontalPadding,
+                            accessibility: .favoriteTool,
+                            favoriteTappedClosure: {
+                                
+                                viewModel.unfavoriteToolTapped(tool: tool)
+                            },
+                            toolDetailsTappedClosure: {
+                                
+                                viewModel.toolDetailsTapped(tool: tool)
+                            },
+                            openToolTappedClosure: {
+                                
+                                viewModel.openToolTapped(tool: tool)
+                            },
+                            toolTappedClosure: {
+                                
+                                viewModel.toolTapped(tool: tool)
+                            }
+                        )
+                        .buttonStyle(.plain)
+                        .listRowSeparator(.hidden)
                     }
-                    .padding([.top], toolCardSpacing)
-                    .padding([.bottom], DashboardView.scrollViewBottomSpacingToTabBar)
+                    .onMove { from, to in
+                        viewModel.toolMoved(fromOffsets: from, toOffset: to)
+                    }
                 }
-                
-            } refreshHandler: {
-                
+                .listStyle(.plain)
             }
         }
         .navigationBarBackButtonHidden(true)
@@ -95,6 +89,7 @@ struct AllYourFavoriteToolsView_Preview: PreviewProvider {
             viewAllYourFavoritedToolsUseCase: appDiContainer.feature.favorites.domainLayer.getViewAllYourFavoritedToolsUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToolIsFavoritedUseCase(),
+            reorderFavoritedToolUseCase: appDiContainer.feature.favorites.domainLayer.getReorderFavoritedToolUseCase(),
             attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
