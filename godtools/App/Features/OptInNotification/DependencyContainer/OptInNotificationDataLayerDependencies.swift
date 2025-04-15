@@ -19,13 +19,9 @@ class OptInNotificationDataLayerDependencies {
 
     // MARK: - Data Layer Classes
 
-    func getOptInNotificationRepository()
-        -> OptInNotificationRepository
-    {
+    func getOptInNotificationRepository() -> OptInNotificationRepository {
         return OptInNotificationRepository(
-            cache: OptInNotificationsUserDefaultsCache(
-                sharedUserDefaultsCache:
-                    coreDataLayer.getSharedUserDefaultsCache())
+            cache: OptInNotificationsUserDefaultsCache(sharedUserDefaultsCache:coreDataLayer.getSharedUserDefaultsCache())
         )
     }
     
@@ -35,25 +31,19 @@ class OptInNotificationDataLayerDependencies {
 
     // MARK: - Domain Interface
 
-    func getOptInNotificationInterfaceStringsRepositoryInterface()
-        -> GetOptInNotificationInterfaceStringsRepositoryInterface
-    {
+    func getOptInNotificationInterfaceStringsRepositoryInterface() -> GetOptInNotificationInterfaceStringsRepositoryInterface {
         return GetOptInNotificationInterfaceStringsRepository(
             localizationServices: coreDataLayer.getLocalizationServices()
         )
     }
 
-    func getOptInDialogInterfaceStringsRepositoryInterface()
-        -> GetOptInDialogInterfaceStringsRepositoryInterface
-    {
+    func getOptInDialogInterfaceStringsRepositoryInterface() -> GetOptInDialogInterfaceStringsRepositoryInterface {
         return GetOptInDialogInterfaceStringsRepository(
             localizationServices: coreDataLayer.getLocalizationServices()
         )
     }
 
-    func getRequestNotificationPermission()
-        -> GetRequestNotificationPermissionInterface
-    {
+    func getRequestNotificationPermission() -> GetRequestNotificationPermissionInterface {
         return GetRequestNotificationPermission()
     }
 

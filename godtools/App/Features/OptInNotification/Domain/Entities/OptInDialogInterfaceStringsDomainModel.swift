@@ -9,6 +9,7 @@
 import Foundation
 
 struct OptInDialogInterfaceStringsDomainModel {
+    
     let title: String
     let body: String
     let cancelActionTitle: String

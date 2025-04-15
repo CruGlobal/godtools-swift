@@ -20,33 +20,28 @@ class OptInNotificationDialogViewModel: AlertMessageViewModelType {
     let cancelTitle: String?
     let acceptTitle: String
 
-    init(
-        viewOptInDialogDomainModel: ViewOptInDialogDomainModel,
-        userDialogReponse: PassthroughSubject<Void, Never>?
-
-    ) {
+    init(viewOptInDialogDomainModel: ViewOptInDialogDomainModel, userDialogReponse: PassthroughSubject<Void, Never>?) {
+       
         self.viewOptInDialogDomainModel = viewOptInDialogDomainModel
         self.userDialogReponse = userDialogReponse
 
         title = viewOptInDialogDomainModel.interfaceStrings.title
         message = viewOptInDialogDomainModel.interfaceStrings.body
-        cancelTitle =
-            viewOptInDialogDomainModel.interfaceStrings.cancelActionTitle
-        acceptTitle =
-            viewOptInDialogDomainModel.interfaceStrings.settingsActionTitle
-
+        cancelTitle = viewOptInDialogDomainModel.interfaceStrings.cancelActionTitle
+        acceptTitle = viewOptInDialogDomainModel.interfaceStrings.settingsActionTitle
     }
 
     deinit {
         print("x deinit: \(type(of: self))")
 
         userDialogReponse?.send(Void())
-
     }
 
     func acceptTapped() {
-        guard let settingsURL = URL(string: UIApplication.openSettingsURLString)
-        else { return }
+        
+        guard let settingsURL = URL(string: UIApplication.openSettingsURLString) else {
+            return
+        }
 
         UIApplication.shared.open(
             settingsURL, options: [:], completionHandler: nil

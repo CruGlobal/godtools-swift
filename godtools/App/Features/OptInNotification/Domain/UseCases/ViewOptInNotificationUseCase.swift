@@ -12,27 +12,21 @@ import Foundation
 
 class ViewOptInNotificationUseCase {
 
-    private let getInterfaceStringsRepository:
-        GetOptInNotificationInterfaceStringsRepositoryInterface
+    private let getInterfaceStringsRepository:GetOptInNotificationInterfaceStringsRepositoryInterface
 
-    init(
-        getInterfaceStringsRepository:
-            GetOptInNotificationInterfaceStringsRepositoryInterface
-    ) {
+    init(getInterfaceStringsRepository: GetOptInNotificationInterfaceStringsRepositoryInterface) {
+        
         self.getInterfaceStringsRepository = getInterfaceStringsRepository
     }
 
-    func viewPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<
-        ViewOptInNotificationDomainModel, Never
-    > {
+    func viewPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewOptInNotificationDomainModel, Never> {
 
-        return getInterfaceStringsRepository.getStringsPublisher(
-            translateInLanguage: appLanguage
-        ).map {
-            ViewOptInNotificationDomainModel(
-                interfaceStrings: $0
-            )
-        }.eraseToAnyPublisher()
+        return getInterfaceStringsRepository
+            .getStringsPublisher(translateInLanguage: appLanguage)
+            .map {
+                ViewOptInNotificationDomainModel(interfaceStrings: $0)
+            }
+            .eraseToAnyPublisher()
 
     }
 }

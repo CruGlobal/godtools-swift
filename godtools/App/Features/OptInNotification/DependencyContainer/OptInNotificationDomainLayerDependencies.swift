@@ -19,29 +19,25 @@ class OptInNotificationDomainLayerDependencies {
 
     func getViewOptInNotificationUseCase() -> ViewOptInNotificationUseCase {
         return ViewOptInNotificationUseCase(
-            getInterfaceStringsRepository:
-                dataLayer
-                .getOptInNotificationInterfaceStringsRepositoryInterface()
+            getInterfaceStringsRepository:dataLayer.getOptInNotificationInterfaceStringsRepositoryInterface()
         )
     }
 
     func getViewOptInDialogUseCase() -> ViewOptInDialogUseCase {
-        ViewOptInDialogUseCase(
-            getInterfaceStringsRepository:
-                dataLayer.getOptInDialogInterfaceStringsRepositoryInterface())
+        return ViewOptInDialogUseCase(
+            getInterfaceStringsRepository:dataLayer.getOptInDialogInterfaceStringsRepositoryInterface()
+        )
     }
 
-    func getRequestNotificationPermissionUseCase()
-        -> RequestNotificationPermissionUseCase
-    {
-        RequestNotificationPermissionUseCase(
-            requestNotificationPermission:
-                dataLayer.getRequestNotificationPermission()
+    func getRequestNotificationPermissionUseCase() -> RequestNotificationPermissionUseCase {
+        return RequestNotificationPermissionUseCase(
+            requestNotificationPermission:dataLayer.getRequestNotificationPermission()
         )
     }
 
     func getCheckNotificationStatusUseCase() -> CheckNotificationStatusUseCase {
-        CheckNotificationStatusUseCase(
-            checkNotificationStatus: dataLayer.getCheckNotificationStatus())
+        return CheckNotificationStatusUseCase(
+            checkNotificationStatus: dataLayer.getCheckNotificationStatus()
+        )
     }
 }

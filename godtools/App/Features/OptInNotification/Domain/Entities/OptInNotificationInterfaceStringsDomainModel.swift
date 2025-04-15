@@ -9,6 +9,7 @@
 import Foundation
 
 struct OptInNotificationInterfaceStringsDomainModel {
+    
     let title: String
     let body: String
     let allowNotificationsActionTitle: String

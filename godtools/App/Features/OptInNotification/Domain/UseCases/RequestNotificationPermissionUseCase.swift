@@ -12,18 +12,15 @@ import UserNotifications
 
 class RequestNotificationPermissionUseCase {
 
-    private let requestNotificationPermission:
-        GetRequestNotificationPermissionInterface
+    private let requestNotificationPermission: GetRequestNotificationPermissionInterface
 
-    init(
-        requestNotificationPermission:
-            GetRequestNotificationPermissionInterface
-    ) {
-        self.requestNotificationPermission =
-            requestNotificationPermission
+    init(requestNotificationPermission: GetRequestNotificationPermissionInterface) {
+       
+        self.requestNotificationPermission = requestNotificationPermission
     }
 
     func getPermissionGrantedPublisher() -> AnyPublisher<Bool, Never> {
+        
         return requestNotificationPermission.permissionGrantedPublisher()
             .eraseToAnyPublisher()
     }
