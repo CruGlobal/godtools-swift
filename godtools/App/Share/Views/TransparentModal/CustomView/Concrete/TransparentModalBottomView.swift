@@ -1,24 +1,21 @@
 //
-//  ToolSettingsHostingView.swift
+//  TransparentModalBottomView.swift
 //  godtools
 //
-//  Created by Levi Eggert on 5/12/22.
-//  Copyright © 2022 Cru. All rights reserved.
+//  Created by Levi Eggert on 4/16/25.
+//  Copyright © 2025 Cru. All rights reserved.
 //
 
-import SwiftUI
 import UIKit
+import SwiftUI
 
-class ToolSettingsHostingView: AppHostingController<ToolSettingsView> {
-    
-    private let modalHeightPercentageOfScreen: CGFloat = 0.6
-    private let modalHorizontalPadding: CGFloat = 12
-    private let modalCornerRadius: CGFloat = 12
-    
+class TransparentModalBottomView<Content: View>: AppHostingController<Content> {
+            
     private var modalBottomToParent: NSLayoutConstraint?
+    private var modalHeightConstraint: NSLayoutConstraint?
     
-    init(view: ToolSettingsView, navigationBar: AppNavigationBar?) {
-        
+    init(view: Content, navigationBar: AppNavigationBar?) {
+                
         super.init(rootView: view, navigationBar: navigationBar)
                 
         setupLayout()
@@ -33,15 +30,15 @@ class ToolSettingsHostingView: AppHostingController<ToolSettingsView> {
     }
 }
 
-extension ToolSettingsHostingView: TransparentModalCustomViewInterface {
+extension TransparentModalBottomView: TransparentModalCustomViewInterface {
     
     private func setModalHidden(hidden: Bool, animated: Bool, layoutIfNeeded: Bool = true) {
         
-        guard let bottomConstraint = modalBottomToParent else {
+        guard let bottomConstraint = modalBottomToParent, let heightConstraint = modalHeightConstraint else {
             return
         }
                 
-        bottomConstraint.constant = hidden ? getModalHeight() - 50 : 0
+        bottomConstraint.constant = hidden ? heightConstraint.constant - 50 : 0
         
         if animated {
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
@@ -57,8 +54,8 @@ extension ToolSettingsHostingView: TransparentModalCustomViewInterface {
         }
     }
     
-    private func getModalHeight() -> CGFloat {
-        return UIScreen.main.bounds.size.height * modalHeightPercentageOfScreen
+    private func getModalHeight() -> CGFloat? {
+        return modalHeightConstraint?.constant
     }
     
     var modal: UIView {
@@ -77,13 +74,15 @@ extension ToolSettingsHostingView: TransparentModalCustomViewInterface {
                 
         parent.addSubview(view)
         
+        let modalHeight: CGFloat = getModalHeight() ?? floor(UIScreen.main.bounds.size.height * 0.5)
+        
         view.translatesAutoresizingMaskIntoConstraints = false
         
-        _ = view.constrainLeadingToView(view: parent, constant: modalHorizontalPadding)
-        _ = view.constrainTrailingToView(view: parent, constant: modalHorizontalPadding)
+        _ = view.constrainLeadingToView(view: parent)
+        _ = view.constrainTrailingToView(view: parent)
         modalBottomToParent = view.constrainBottomToView(view: parent, constant: 0)
-        _ = view.addHeightConstraint(constant: getModalHeight())
-        
+        modalHeightConstraint = view.addHeightConstraint(constant: modalHeight, priority: 500)
+                
         setModalHidden(hidden: true, animated: false, layoutIfNeeded: false)
     }
     

@@ -385,7 +385,7 @@
 		45430CF62B1FB638002B94A3 /* String+ToUrlMarkdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45430CF52B1FB638002B94A3 /* String+ToUrlMarkdown.swift */; };
 		45466F642DB02D21005E7FCC /* TransparentModalBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45466F602DB02D21005E7FCC /* TransparentModalBottomView.swift */; };
 		45466F652DB02D21005E7FCC /* TransparentModalCustomViewLayoutType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45466F632DB02D21005E7FCC /* TransparentModalCustomViewLayoutType.swift */; };
-		45466F662DB02D21005E7FCC /* TransparentModalCustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45466F622DB02D21005E7FCC /* TransparentModalCustomView.swift */; };
+		45466F662DB02D21005E7FCC /* TransparentModalCustomViewInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45466F622DB02D21005E7FCC /* TransparentModalCustomViewInterface.swift */; };
 		454ADAD52ABDD9D400037C27 /* LanguageSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454ADACE2ABDD9D400037C27 /* LanguageSettingsViewModel.swift */; };
 		454ADAD62ABDD9D400037C27 /* AppInterfaceLanguageButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454ADAD22ABDD9D400037C27 /* AppInterfaceLanguageButtonView.swift */; };
 		454ADAD72ABDD9D400037C27 /* LanguageSettingsAppInterfaceLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454ADAD32ABDD9D400037C27 /* LanguageSettingsAppInterfaceLanguageView.swift */; };
@@ -2124,7 +2124,7 @@
 		45430CF02B1FB43E002B94A3 /* TextWithLinksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWithLinksView.swift; sourceTree = "<group>"; };
 		45430CF52B1FB638002B94A3 /* String+ToUrlMarkdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ToUrlMarkdown.swift"; sourceTree = "<group>"; };
 		45466F602DB02D21005E7FCC /* TransparentModalBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentModalBottomView.swift; sourceTree = "<group>"; };
-		45466F622DB02D21005E7FCC /* TransparentModalCustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentModalCustomView.swift; sourceTree = "<group>"; };
+		45466F622DB02D21005E7FCC /* TransparentModalCustomViewInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentModalCustomViewInterface.swift; sourceTree = "<group>"; };
 		45466F632DB02D21005E7FCC /* TransparentModalCustomViewLayoutType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentModalCustomViewLayoutType.swift; sourceTree = "<group>"; };
 		454ADACE2ABDD9D400037C27 /* LanguageSettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageSettingsViewModel.swift; sourceTree = "<group>"; };
 		454ADAD22ABDD9D400037C27 /* AppInterfaceLanguageButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppInterfaceLanguageButtonView.swift; sourceTree = "<group>"; };
@@ -10935,7 +10935,7 @@
 			isa = PBXGroup;
 			children = (
 				45466F612DB02D21005E7FCC /* Concrete */,
-				45466F622DB02D21005E7FCC /* TransparentModalCustomView.swift */,
+				45466F622DB02D21005E7FCC /* TransparentModalCustomViewInterface.swift */,
 				45466F632DB02D21005E7FCC /* TransparentModalCustomViewLayoutType.swift */,
 			);
 			path = CustomView;
@@ -13778,7 +13778,7 @@
 				45E8FAA72882FD4B00D7D569 /* RealmSHA256File.swift in Sources */,
 				45466F642DB02D21005E7FCC /* TransparentModalBottomView.swift in Sources */,
 				45466F652DB02D21005E7FCC /* TransparentModalCustomViewLayoutType.swift in Sources */,
-				45466F662DB02D21005E7FCC /* TransparentModalCustomView.swift in Sources */,
+				45466F662DB02D21005E7FCC /* TransparentModalCustomViewInterface.swift in Sources */,
 				455583DB269F2DA500C3FF14 /* MobileContentAccordionViewModel.swift in Sources */,
 				4587212A2BFB7762005DA242 /* DeleteAccountUseCase.swift in Sources */,
 				B5B89A6B2D9A946C00C2FE1B /* GetCheckNotificationStatus.swift in Sources */,
