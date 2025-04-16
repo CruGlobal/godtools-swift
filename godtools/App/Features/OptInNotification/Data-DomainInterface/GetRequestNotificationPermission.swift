@@ -12,7 +12,7 @@ import UserNotifications
 
 class GetRequestNotificationPermission: GetRequestNotificationPermissionInterface {
 
-    func permissionGrantedPublisher() -> AnyPublisher<Bool, Never> {
+    func requestPermissionPublisher() -> AnyPublisher<Bool, Never> {
     
         return Future<Bool, Never> { promise in
             UNUserNotificationCenter.current().requestAuthorization(options: [
