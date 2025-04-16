@@ -10,6 +10,7 @@ import Foundation
 import SwiftUI
 
 struct OptInNotificationView: View {
+    
     @ObservedObject private var viewModel: OptInNotificationViewModel
 
     init(viewModel: OptInNotificationViewModel) {
@@ -19,59 +20,46 @@ struct OptInNotificationView: View {
     var body: some View {
 
         VStack {
-            Image("notification_graphic").resizable()
+            
+            ImageCatalog.notificationGraphic
+                .image
+                .resizable()
                 .scaledToFit()
-                .padding(
-                    EdgeInsets(
-                        top: 5,
-                        leading: 5,
-                        bottom: 0,
-                        trailing: 5
-                    )
-                ).overlay(
+                .padding(EdgeInsets(top: 5, leading: 5, bottom: 0, trailing: 5))
+                .overlay(
                     Rectangle()
                         .frame(height: 2)
-                        .foregroundColor(
-                            Color(
-                                uiColor: ColorPalette.gtBlue
-                                    .uiColor
-                            )
-                        ),
+                        .foregroundColor(ColorPalette.gtBlue.color),
                     alignment: .bottom
                 )
+            
             Text(viewModel.title)
-                .foregroundColor(
-                    Color(uiColor: ColorPalette.gtBlue.uiColor)
-                ).font(
-                    FontLibrary.sfProTextRegular.font(size: 30)
-                )
+                .foregroundColor(ColorPalette.gtBlue.color)
+                .font(FontLibrary.sfProTextRegular.font(size: 30))
                 .fontWeight(.bold)
-                .padding(
-                    .vertical,
-                    10
-                ).minimumScaleFactor(0.5).lineLimit(1)
+                .padding(.vertical, 10)
+                .minimumScaleFactor(0.5)
+                .lineLimit(1)
 
-            Text(
-                viewModel.body
-            ).font(FontLibrary.sfProTextRegular.font(size: 18))
+            Text(viewModel.body)
+                .font(FontLibrary.sfProTextRegular.font(size: 18))
                 .foregroundStyle(ColorPalette.gtGrey.color)
-                .multilineTextAlignment(.center).padding(
-                    .bottom,
-                    12
-                )
+                .multilineTextAlignment(.center)
+                .padding(.bottom, 12)
 
             Button(action: {
+                
                 viewModel.allowNotificationsTapped()
 
             }) {
-                RoundedRectangle(cornerRadius: 5).fill(
-                    Color(uiColor: ColorPalette.gtBlue.uiColor)
-                )
-            }.frame(height: 45).overlay(
+                
+                RoundedRectangle(cornerRadius: 5)
+                    .fill(ColorPalette.gtBlue.color)
+            }
+            .frame(height: 45)
+            .overlay(
                 Text(viewModel.allowNotificationsActionTitle)
-                    .foregroundColor(
-                        .white
-                    )
+                    .foregroundColor(.white)
             )
 
             Button(action: {
@@ -79,36 +67,24 @@ struct OptInNotificationView: View {
 
             }) {
                 Text(viewModel.maybeLaterActionTitle)
-                    .foregroundColor(
-                        Color(
-                            uiColor: ColorPalette.gtBlue.uiColor
-                        )
-                    )
+                    .foregroundColor(ColorPalette.gtBlue.color)
             }
-            .frame(height: 40).padding(
-                .bottom,
-                50
-            )
-        }.padding(.horizontal, 20).background(
-            RoundedRectangle(
-                cornerRadius: 10
-            ).stroke(
-                Color(uiColor: ColorPalette.gtBlue.uiColor),
-                lineWidth: 8
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: 10).foregroundStyle(
-                    .white
+            .frame(height: 40)
+            .padding(.bottom, 50)
+            
+        }
+        .padding(.horizontal, 20)
+        .background(
+            RoundedRectangle(cornerRadius: 10)
+                .stroke(ColorPalette.gtBlue.color, lineWidth: 8)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10)
+                        .foregroundStyle(.white)
                 )
-            )
         )
-        .padding(.horizontal, UIScreen.main.bounds.width * 0.05).environment(
-            \.layoutDirection,
-            ApplicationLayout.shared.layoutDirection
-        )
-
+        .padding(.horizontal, UIScreen.main.bounds.width * 0.05)
+        .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
     }
-
 }
 
 // MARK: - Preview
@@ -117,8 +93,7 @@ struct OptInNotificationView_Preview: PreviewProvider {
 
     static func getOptInNotificationViewModel() -> OptInNotificationViewModel {
 
-        let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer()
-            .getAppDiContainer()
+        let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
 
         let viewModel = OptInNotificationViewModel(
 
@@ -138,11 +113,9 @@ struct OptInNotificationView_Preview: PreviewProvider {
             checkNotificationStatusUseCase: appDiContainer.feature
                 .optInNotification.domainLayer
                 .getCheckNotificationStatusUseCase(),
-
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage
                 .domainLayer.getCurrentAppLanguageUseCase(),
             flowDelegate: MockFlowDelegate()
-
         )
 
         return viewModel
@@ -151,8 +124,7 @@ struct OptInNotificationView_Preview: PreviewProvider {
     static var previews: some View {
 
         OptInNotificationView(
-            viewModel:
-                OptInNotificationView_Preview.getOptInNotificationViewModel()
+            viewModel: OptInNotificationView_Preview.getOptInNotificationViewModel()
         )
     }
 }

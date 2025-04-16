@@ -10,18 +10,16 @@ import Combine
 import Foundation
 import LocalizationServices
 
-class GetOptInDialogInterfaceStringsRepository:
-    GetOptInDialogInterfaceStringsRepositoryInterface
-{
+class GetOptInDialogInterfaceStringsRepository: GetOptInDialogInterfaceStringsRepositoryInterface {
+    
     private let localizationServices: LocalizationServices
 
     init(localizationServices: LocalizationServices) {
         self.localizationServices = localizationServices
     }
 
-    func getStringsPublisher(translateInLanguage: AppLanguageDomainModel)
-    -> AnyPublisher<OptInDialogInterfaceStringsDomainModel, Never>
-    {
+    func getStringsPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<OptInDialogInterfaceStringsDomainModel, Never> {
+        
         let interfaceStrings = OptInDialogInterfaceStringsDomainModel(
             title: localizationServices.stringForLocaleElseEnglish(
                 localeIdentifier: translateInLanguage, key: "optInDialog.title"),
@@ -34,6 +32,7 @@ class GetOptInDialogInterfaceStringsRepository:
                 localizationServices.stringForLocaleElseEnglish(
                     localeIdentifier: translateInLanguage, key: "optInDialog.settings")
         )
+        
         return Just(interfaceStrings)
             .eraseToAnyPublisher()
     }

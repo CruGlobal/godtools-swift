@@ -10,13 +10,10 @@ import Combine
 import Foundation
 import UserNotifications
 
-class GetCheckNotificationStatus:
-    GetCheckNotificationStatusInterface
-{
+class GetCheckNotificationStatus: GetCheckNotificationStatusInterface {
 
-    func permissionStatusPublisher() -> AnyPublisher<
-        PermissionStatusDomainModel, Never
-    > {
+    func permissionStatusPublisher() -> AnyPublisher<PermissionStatusDomainModel, Never> {
+       
         return Future<PermissionStatusDomainModel, Never> { promise in
             Task {
                 let settings = await UNUserNotificationCenter.current()

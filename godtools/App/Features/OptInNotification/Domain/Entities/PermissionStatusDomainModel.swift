@@ -9,9 +9,9 @@
 import Foundation
 
 enum PermissionStatusDomainModel {
+    
     case undetermined
     case approved
     case denied
-
     case unknown
 }

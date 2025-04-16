@@ -11,6 +11,5 @@ import Combine
 
 protocol GetOptInDialogInterfaceStringsRepositoryInterface {
     
-    func getStringsPublisher(translateInLanguage: AppLanguageDomainModel) ->
-    AnyPublisher<OptInDialogInterfaceStringsDomainModel, Never>
+    func getStringsPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<OptInDialogInterfaceStringsDomainModel, Never>
 }

@@ -11,15 +11,15 @@ import Foundation
 import UserNotifications
 
 class CheckNotificationStatusUseCase {
+   
     private let checkNotificationStatus: GetCheckNotificationStatusInterface
 
     init(checkNotificationStatus: GetCheckNotificationStatusInterface) {
         self.checkNotificationStatus = checkNotificationStatus
     }
 
-    func getPermissionStatusPublisher() -> AnyPublisher<
-        PermissionStatusDomainModel, Never
-    > {
+    func getPermissionStatusPublisher() -> AnyPublisher<PermissionStatusDomainModel, Never> {
+        
         return checkNotificationStatus.permissionStatusPublisher()
             .eraseToAnyPublisher()
     }

@@ -10,9 +10,7 @@ import Combine
 import Foundation
 import UserNotifications
 
-class GetRequestNotificationPermission:
-    GetRequestNotificationPermissionInterface
-{
+class GetRequestNotificationPermission: GetRequestNotificationPermissionInterface {
 
     func permissionGrantedPublisher() -> AnyPublisher<Bool, Never> {
     
@@ -31,5 +29,4 @@ class GetRequestNotificationPermission:
         }
         .eraseToAnyPublisher()
     }
-
 }

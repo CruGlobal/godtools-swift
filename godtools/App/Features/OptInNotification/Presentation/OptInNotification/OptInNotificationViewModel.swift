@@ -59,21 +59,17 @@ class OptInNotificationViewModel: ObservableObject {
 
     ) {
 
-        self.optInNotificationRepository =
-            optInNotificationRepository
+        self.optInNotificationRepository = optInNotificationRepository
         self.launchCountRepository = launchCountRepository
         self.viewOptInNotificationUseCase = viewOptInNotificationUseCase
         self.viewOptInDialogUseCase = viewOptInDialogUseCase
-        self.requestNotificationPermissionUseCase =
-            requestNotificationPermissionUseCase
+        self.requestNotificationPermissionUseCase = requestNotificationPermissionUseCase
         self.checkNotificationStatusUseCase = checkNotificationStatusUseCase
-
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.flowDelegate = flowDelegate
 
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
-            .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
 
         $appLanguage
@@ -84,8 +80,8 @@ class OptInNotificationViewModel: ObservableObject {
                 )
             }
             .receive(on: DispatchQueue.main)
-            .sink {
-                [weak self] (domainModel: ViewOptInNotificationDomainModel) in
+            .sink { [weak self] (domainModel: ViewOptInNotificationDomainModel) in
+               
                 self?.title = domainModel.interfaceStrings.title
                 self?.body = domainModel.interfaceStrings.body
                 self?.allowNotificationsActionTitle =
@@ -96,19 +92,17 @@ class OptInNotificationViewModel: ObservableObject {
             }
             .store(in: &cancellables)
 
-        launchCountRepository.getLaunchCountPublisher().sink {
-            [weak self]
-            count in
+        launchCountRepository.getLaunchCountPublisher().sink { [weak self] count in
+            
             self?.isOnboardingLaunch = count == 1
 
         }.store(in: &cancellables)
 
         refreshNotificationStatus()
 
-        NotificationCenter.default.publisher(
-            for: UIApplication.didBecomeActiveNotification
-        )
+        NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)
         .sink { [weak self] _ in
+            
             self?.refreshNotificationStatus()
         }
         .store(in: &cancellables)
@@ -129,13 +123,16 @@ class OptInNotificationViewModel: ObservableObject {
     }
 
     func refreshNotificationStatus() {
+        
         notificationStatusCancellable?.cancel()
 
         notificationStatusCancellable =
             checkNotificationStatusUseCase.getPermissionStatusPublisher()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] status in
+            .sink { [weak self] (status: PermissionStatusDomainModel) in
+                
                 self?.notificationStatus = status
+                
                 if status == .undetermined {
                     self?.isFirstDialogPrompt = true
                 }
@@ -165,10 +162,8 @@ class OptInNotificationViewModel: ObservableObject {
         guard notificationStatus != .approved else { return }
         guard promptCount <= 5 else { return }
 
-        if (notificationStatus == .denied
-            || notificationStatus == .undetermined)
-            && lastPrompted < twoMonthsAgo
-        {
+        if (notificationStatus == .denied || notificationStatus == .undetermined)
+            && lastPrompted < twoMonthsAgo {
 
             await MainActor.run {
                 isActive = true
@@ -176,7 +171,6 @@ class OptInNotificationViewModel: ObservableObject {
 
             optInNotificationRepository.recordPrompt()
         }
-
     }
 }
 
@@ -187,12 +181,12 @@ extension OptInNotificationViewModel {
     func allowNotificationsTapped() {
 
         requestNotificationPermissionUseCase.getPermissionGrantedPublisher()
-            .receive(
-                on: DispatchQueue.main
-            ).sink {
-                [weak self]
-                permissionGranted in
-                guard let self = self else { return }
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (permissionGranted: Bool) in
+                
+                guard let self = self else {
+                    return
+                }
 
                 if permissionGranted {
                     // Theoretically should never happen because a user who has granted permissions shouldn't end up in this view
@@ -206,18 +200,16 @@ extension OptInNotificationViewModel {
                             userDialogReponse: userDialogReponse
                         )
                     )
-                } else {
+                }
+                else {
 
                     self.isActive = false
-
                 }
 
             }.store(in: &cancellables)
-
     }
 
     func maybeLaterTapped() {
         isActive = false
-
     }
 }

@@ -10,9 +10,8 @@ import Combine
 import Foundation
 import LocalizationServices
 
-class GetOptInNotificationInterfaceStringsRepository:
-    GetOptInNotificationInterfaceStringsRepositoryInterface
-{
+class GetOptInNotificationInterfaceStringsRepository: GetOptInNotificationInterfaceStringsRepositoryInterface {
+    
     private let localizationServices: LocalizationServices
 
     init(localizationServices: LocalizationServices) {
@@ -20,9 +19,8 @@ class GetOptInNotificationInterfaceStringsRepository:
         self.localizationServices = localizationServices
     }
 
-    func getStringsPublisher(translateInLanguage: AppLanguageDomainModel)
-        -> AnyPublisher<OptInNotificationInterfaceStringsDomainModel, Never>
-    {
+    func getStringsPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<OptInNotificationInterfaceStringsDomainModel, Never> {
+        
         let interfaceStrings = OptInNotificationInterfaceStringsDomainModel(
             title: localizationServices.stringForLocaleElseEnglish(
                 localeIdentifier: translateInLanguage, key: "optInNotification.title"),
@@ -35,6 +33,7 @@ class GetOptInNotificationInterfaceStringsRepository:
                 localizationServices.stringForLocaleElseEnglish(
                     localeIdentifier: translateInLanguage, key: "optInNotification.maybeLater")
         )
+        
         return Just(interfaceStrings)
             .eraseToAnyPublisher()
     }
