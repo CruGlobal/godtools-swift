@@ -1,4 +1,11 @@
-// Is an interface language
+"optInNotification.title" = "Saņem padomus un iedrošinājumu";
+"optInNotification.body" = "Esi sagatavots sarunām.\nAtļauj paziņojumus jau šodien!";
+"optInNotification.allowNotifications" = "Atļaut paziņojumus";
+"optInNotification.maybeLater" = "Varbūt vēlāk";
+"optInDialog.title" = "Iespējot paziņojumus";
+"optInDialog.body" = "Paziņojumi ir atspējoti. Lūdzu, iespējo tos sadaļā Iestatījumi.";
+"optInDialog.cancel" = "Atcelt";
+"optInDialog.settings" = "Iestatījumi";
 
 /* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
 "lessons.resumeLessonModal.title" = "Atsākt progresu?";
@@ -95,16 +102,6 @@
 
 /* Please keep to a 9 character limit, longer phrases may get cut off */
 "favorites.favoriteLessons.details" = "Apraksts";
-
-"optInNotification.title" = "Saņemiet padomus un iedrošinājumu";
-"optInNotification.body" = "Esi gatavs sarunām.\nAtļaujiet paziņojumus jau šodien.";
-"optInNotification.allowNotifications" = "Atļaut paziņojumus";
-"optInNotification.maybeLater" = "Varbūt vēlāk";
-
-"optInDialog.title" = "Ieslēgt paziņojumus";
-"optInDialog.body" = "Paziņojumi ir atspējoti. Lūdzu, iespējojiet tos iestatījumos.";
-"optInDialog.cancel" = "Atcelt";
-"optInDialog.settings" = "Iestatījumi";
 
 /* The meaning is "I don't want to set a second language".  Language is no language or None */
 "toolSettings.languagesList.deleteLanguage.title" = "Noņemt";

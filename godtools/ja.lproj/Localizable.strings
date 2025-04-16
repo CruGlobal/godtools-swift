@@ -1,5 +1,3 @@
-// Is an interface language
-
 /* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
 "lessons.resumeLessonModal.title" = "進捗を再開";
 
@@ -95,16 +93,6 @@
 
 /* Please keep to a 9 character limit, longer phrases may get cut off */
 "favorites.favoriteLessons.details" = "詳細";
-
-"optInNotification.title" = "ヒントと励ましを受け取る";
-"optInNotification.body" = "会話に備えましょう。\n今すぐ通知を許可してください。";
-"optInNotification.allowNotifications" = "通知を許可";
-"optInNotification.maybeLater" = "あとで";
-
-"optInDialog.title" = "通知を有効にする";
-"optInDialog.body" = "通知が無効になっています。設定で有効にしてください。";
-"optInDialog.cancel" = "キャンセル";
-"optInDialog.settings" = "設定";
 
 /* The meaning is "I don't want to set a second language".  Language is no language or None */
 "toolSettings.languagesList.deleteLanguage.title" = "なし";
