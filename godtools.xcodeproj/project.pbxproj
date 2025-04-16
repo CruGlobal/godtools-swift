@@ -386,6 +386,8 @@
 		45466F642DB02D21005E7FCC /* TransparentModalBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45466F602DB02D21005E7FCC /* TransparentModalBottomView.swift */; };
 		45466F652DB02D21005E7FCC /* TransparentModalCustomViewLayoutType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45466F632DB02D21005E7FCC /* TransparentModalCustomViewLayoutType.swift */; };
 		45466F662DB02D21005E7FCC /* TransparentModalCustomViewInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45466F622DB02D21005E7FCC /* TransparentModalCustomViewInterface.swift */; };
+		45466F682DB07A24005E7FCC /* ShouldPromptForOptInNotificationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45466F672DB07A1C005E7FCC /* ShouldPromptForOptInNotificationUseCase.swift */; };
+		45466F6A2DB07A5B005E7FCC /* ShouldPromptForOptInNotificationInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45466F692DB07A54005E7FCC /* ShouldPromptForOptInNotificationInterface.swift */; };
 		454ADAD52ABDD9D400037C27 /* LanguageSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454ADACE2ABDD9D400037C27 /* LanguageSettingsViewModel.swift */; };
 		454ADAD62ABDD9D400037C27 /* AppInterfaceLanguageButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454ADAD22ABDD9D400037C27 /* AppInterfaceLanguageButtonView.swift */; };
 		454ADAD72ABDD9D400037C27 /* LanguageSettingsAppInterfaceLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454ADAD32ABDD9D400037C27 /* LanguageSettingsAppInterfaceLanguageView.swift */; };
@@ -1415,7 +1417,7 @@
 		45ED11422DAD52500028EF44 /* UIFont+Traits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ED11412DAD52470028EF44 /* UIFont+Traits.swift */; };
 		45EE6C382DAFF21100DBD25D /* OptInNotificationFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EE6C372DAFF20B00DBD25D /* OptInNotificationFlow.swift */; };
 		45EE6C3A2DAFF6E000DBD25D /* OptInNotificationFlowCompletedState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EE6C392DAFF6D800DBD25D /* OptInNotificationFlowCompletedState.swift */; };
-		45EE6C3C2DAFFA6A00DBD25D /* GetShouldPromptForOptInNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EE6C3B2DAFFA5500DBD25D /* GetShouldPromptForOptInNotification.swift */; };
+		45EE6C3C2DAFFA6A00DBD25D /* ShouldPromptForOptInNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EE6C3B2DAFFA5500DBD25D /* ShouldPromptForOptInNotification.swift */; };
 		45F1CE212B7D1F210008A3BC /* ToolLanguageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F1CE202B7D1F210008A3BC /* ToolLanguageDownloader.swift */; };
 		45F267A128907F5D006679F2 /* RealmResourcesCacheSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F267A028907F5D006679F2 /* RealmResourcesCacheSync.swift */; };
 		45F267A328907F67006679F2 /* RealmResourcesCacheSyncResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F267A228907F67006679F2 /* RealmResourcesCacheSyncResult.swift */; };
@@ -2126,6 +2128,8 @@
 		45466F602DB02D21005E7FCC /* TransparentModalBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentModalBottomView.swift; sourceTree = "<group>"; };
 		45466F622DB02D21005E7FCC /* TransparentModalCustomViewInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentModalCustomViewInterface.swift; sourceTree = "<group>"; };
 		45466F632DB02D21005E7FCC /* TransparentModalCustomViewLayoutType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentModalCustomViewLayoutType.swift; sourceTree = "<group>"; };
+		45466F672DB07A1C005E7FCC /* ShouldPromptForOptInNotificationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShouldPromptForOptInNotificationUseCase.swift; sourceTree = "<group>"; };
+		45466F692DB07A54005E7FCC /* ShouldPromptForOptInNotificationInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShouldPromptForOptInNotificationInterface.swift; sourceTree = "<group>"; };
 		454ADACE2ABDD9D400037C27 /* LanguageSettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageSettingsViewModel.swift; sourceTree = "<group>"; };
 		454ADAD22ABDD9D400037C27 /* AppInterfaceLanguageButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppInterfaceLanguageButtonView.swift; sourceTree = "<group>"; };
 		454ADAD32ABDD9D400037C27 /* LanguageSettingsAppInterfaceLanguageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageSettingsAppInterfaceLanguageView.swift; sourceTree = "<group>"; };
@@ -3136,7 +3140,7 @@
 		45ED11412DAD52470028EF44 /* UIFont+Traits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Traits.swift"; sourceTree = "<group>"; };
 		45EE6C372DAFF20B00DBD25D /* OptInNotificationFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptInNotificationFlow.swift; sourceTree = "<group>"; };
 		45EE6C392DAFF6D800DBD25D /* OptInNotificationFlowCompletedState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptInNotificationFlowCompletedState.swift; sourceTree = "<group>"; };
-		45EE6C3B2DAFFA5500DBD25D /* GetShouldPromptForOptInNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetShouldPromptForOptInNotification.swift; sourceTree = "<group>"; };
+		45EE6C3B2DAFFA5500DBD25D /* ShouldPromptForOptInNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShouldPromptForOptInNotification.swift; sourceTree = "<group>"; };
 		45F1CE202B7D1F210008A3BC /* ToolLanguageDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolLanguageDownloader.swift; sourceTree = "<group>"; };
 		45F267A028907F5D006679F2 /* RealmResourcesCacheSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmResourcesCacheSync.swift; sourceTree = "<group>"; };
 		45F267A228907F67006679F2 /* RealmResourcesCacheSyncResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmResourcesCacheSyncResult.swift; sourceTree = "<group>"; };
@@ -7605,7 +7609,7 @@
 				B516C4122D961A2900EBD845 /* GetOptInDialogInterfaceStringsRepository.swift */,
 				B59EC6FB2D82CCD9004DBC6D /* GetOptInNotificationInterfaceStringsRepository.swift */,
 				B5B89A642D9A6B5700C2FE1B /* GetRequestNotificationPermission.swift */,
-				45EE6C3B2DAFFA5500DBD25D /* GetShouldPromptForOptInNotification.swift */,
+				45EE6C3B2DAFFA5500DBD25D /* ShouldPromptForOptInNotification.swift */,
 			);
 			path = "Data-DomainInterface";
 			sourceTree = "<group>";
@@ -7623,11 +7627,11 @@
 		4594E1532D7F7A1D005881B5 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				4594E1622D7F7B37005881B5 /* OptInNotificationInterfaceStringsDomainModel.swift */,
-				4594E1602D7F7AB6005881B5 /* ViewOptInNotificationDomainModel.swift */,
-				B516C40E2D9616C200EBD845 /* ViewOptInDialogDomainModel.swift */,
 				B516C4102D96175900EBD845 /* OptInDialogInterfaceStringsDomainModel.swift */,
+				4594E1622D7F7B37005881B5 /* OptInNotificationInterfaceStringsDomainModel.swift */,
 				B53E4B522DA9762200D637B0 /* PermissionStatusDomainModel.swift */,
+				B516C40E2D9616C200EBD845 /* ViewOptInDialogDomainModel.swift */,
+				4594E1602D7F7AB6005881B5 /* ViewOptInNotificationDomainModel.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -7635,10 +7639,11 @@
 		4594E1542D7F7A1D005881B5 /* Interface */ = {
 			isa = PBXGroup;
 			children = (
-				B59EC6F92D82C34A004DBC6D /* GetOptInNotificationInterfaceStringsRepositoryInterface.swift */,
-				B516C40C2D9615CD00EBD845 /* GetOptInDialogInterfaceStringsRepositoryInterface.swift */,
-				B5B89A622D9A6A4A00C2FE1B /* GetRequestNotificationPermissionInterface.swift */,
 				B5B89A682D9A794000C2FE1B /* GetCheckNotificationStatusInterface.swift */,
+				B516C40C2D9615CD00EBD845 /* GetOptInDialogInterfaceStringsRepositoryInterface.swift */,
+				B59EC6F92D82C34A004DBC6D /* GetOptInNotificationInterfaceStringsRepositoryInterface.swift */,
+				B5B89A622D9A6A4A00C2FE1B /* GetRequestNotificationPermissionInterface.swift */,
+				45466F692DB07A54005E7FCC /* ShouldPromptForOptInNotificationInterface.swift */,
 			);
 			path = Interface;
 			sourceTree = "<group>";
@@ -7646,10 +7651,11 @@
 		4594E1552D7F7A1D005881B5 /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
-				4594E15C2D7F7A9B005881B5 /* ViewOptInNotificationUseCase.swift */,
-				B516C4082D93660600EBD845 /* ViewOptInDialogUseCase.swift */,
-				B5B89A5E2D9A670700C2FE1B /* RequestNotificationPermissionUseCase.swift */,
 				B5B89A662D9A790900C2FE1B /* CheckNotificationStatusUseCase.swift */,
+				B5B89A5E2D9A670700C2FE1B /* RequestNotificationPermissionUseCase.swift */,
+				45466F672DB07A1C005E7FCC /* ShouldPromptForOptInNotificationUseCase.swift */,
+				B516C4082D93660600EBD845 /* ViewOptInDialogUseCase.swift */,
+				4594E15C2D7F7A9B005881B5 /* ViewOptInNotificationUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -13487,7 +13493,7 @@
 				45369AD32AFA7FA500BD10F0 /* ToolScreenShareInterfaceStringsDomainModel.swift in Sources */,
 				45CCF6922B2269010017EDFE /* ToolSettingsOptionView.swift in Sources */,
 				45FE82382ACE5BFE00930C39 /* AppViewController.swift in Sources */,
-				45EE6C3C2DAFFA6A00DBD25D /* GetShouldPromptForOptInNotification.swift in Sources */,
+				45EE6C3C2DAFFA6A00DBD25D /* ShouldPromptForOptInNotification.swift in Sources */,
 				45FC123927A833BF00F4EC4F /* NavBarSelectorView.swift in Sources */,
 				45FE82442ACE5BFE00930C39 /* ModalNavigationController.swift in Sources */,
 				B516C4112D96175900EBD845 /* OptInDialogInterfaceStringsDomainModel.swift in Sources */,
@@ -14065,6 +14071,7 @@
 				4558B4832D5E79E100B0E9E2 /* LanguageDownloadIcon.swift in Sources */,
 				45AF07142B0663FD000EACF2 /* LocaleLanguageScriptName.swift in Sources */,
 				D4960CC22CBDE40B0090B114 /* GetLessonListItemProgressRepository.swift in Sources */,
+				45466F6A2DB07A5B005E7FCC /* ShouldPromptForOptInNotificationInterface.swift in Sources */,
 				4534F9402AE9B65900A7A071 /* CancelLessonEvaluationUseCase.swift in Sources */,
 				45AE974527C97A9400C2CB33 /* CallToAction+MobileContentRenderableModel.swift in Sources */,
 				458CFE9529D4E0B9007B423C /* ArticleCategoriesView.swift in Sources */,
@@ -14215,6 +14222,7 @@
 				45558350269F2D1000C3FF14 /* LessonPageViewFactory.swift in Sources */,
 				458D01872B1E4F590029523C /* GetLessonsInterfaceStringsRepository.swift in Sources */,
 				45ED11422DAD52500028EF44 /* UIFont+Traits.swift in Sources */,
+				45466F682DB07A24005E7FCC /* ShouldPromptForOptInNotificationUseCase.swift in Sources */,
 				458CFEA929D4E1CC007B423C /* AccountActivityStatView.swift in Sources */,
 				45FE82452ACE5BFE00930C39 /* AppNavigationController.swift in Sources */,
 				4567CE3F27CD0C6B00C3B543 /* MobileContentPageRenderer.swift in Sources */,

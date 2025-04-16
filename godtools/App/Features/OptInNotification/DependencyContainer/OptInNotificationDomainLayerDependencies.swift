@@ -40,4 +40,10 @@ class OptInNotificationDomainLayerDependencies {
             checkNotificationStatus: dataLayer.getCheckNotificationStatus()
         )
     }
+    
+    func getShouldPromptForOptInNotificationUseCase() -> ShouldPromptForOptInNotificationUseCase {
+        return ShouldPromptForOptInNotificationUseCase(
+            shouldPromptForOptInNotification: dataLayer.getShouldPromptForOptInNotification()
+        )
+    }
 }

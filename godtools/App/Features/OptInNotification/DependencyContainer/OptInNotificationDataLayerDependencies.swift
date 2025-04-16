@@ -50,4 +50,12 @@ class OptInNotificationDataLayerDependencies {
     func getCheckNotificationStatus() -> GetCheckNotificationStatusInterface {
         return GetCheckNotificationStatus()
     }
+    
+    func getShouldPromptForOptInNotification() -> ShouldPromptForOptInNotificationInterface {
+        return ShouldPromptForOptInNotification(
+            launchCountRepository: coreDataLayer.getSharedLaunchCountRepository(),
+            optInNotificationRepository: getOptInNotificationRepository(),
+            checkNotificationStatus: getCheckNotificationStatus()
+        )
+    }
 }
