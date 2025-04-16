@@ -31,6 +31,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
     private var learnToShareToolFlow: LearnToShareToolFlow?
     private var articleDeepLinkFlow: ArticleDeepLinkFlow?
     private var appLaunchedFromDeepLink: ParsedDeepLinkType?
+    private var optInNotificationFlow: OptInNotificationFlow?
     private var resignedActiveDate: Date?
     private var navigationStarted: Bool = false
     private var uiApplicationLifeCycleObserversAdded: Bool = false
@@ -307,13 +308,6 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             configureNavBarForDashboard()
             navigationController.popViewController(animated: true)
             
-        case .allowNotificationsTappedFromBottomSheet(let userDialogReponse):
-
-            presentOptInNotificationDialogView(
-                userDialogReponse: userDialogReponse,
-                animated: true
-            )
-            
         case .articleFlowCompleted( _):
             
             guard articleFlow != nil else {
@@ -460,6 +454,9 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         
         case .backgroundTappedFromLessonEvaluation:
             dismissLessonEvaluation()
+            
+        case .optInNotificationFlowCompleted( _):
+            dismissOptInNotificationFlow()
                         
         default:
             break
@@ -489,6 +486,8 @@ extension AppFlow {
         
         loadInitialData()
         countAppSessionLaunch()
+        
+        presentOptInNotificationFlow()
     }
     
     private func loadInitialData() {
@@ -1139,38 +1138,33 @@ extension AppFlow {
     }
 }
 
-// MARK: - OptInNotification
+// MARK: - Opt-In Notification
+
 extension AppFlow {
 
-    private func getOptInNotificationDialogView(
-        domainModel: ViewOptInDialogDomainModel,
-        userDialogReponse: PassthroughSubject<Void, Never>?) -> UIViewController {
-            
-        let viewModel = OptInNotificationDialogViewModel(
-            viewOptInDialogDomainModel: domainModel,
-            userDialogReponse: userDialogReponse
+    private func presentOptInNotificationFlow() {
+        
+        guard optInNotificationFlow == nil else {
+            return
+        }
+        
+        let optInNotificationFlow = OptInNotificationFlow(
+            flowDelegate: self,
+            appDiContainer: appDiContainer,
+            presentOnNavigationController: navigationController
         )
-
-        let view = OptInNotificationDialogView(viewModel: viewModel)
-
-        return view.controller
+        
+        self.optInNotificationFlow = optInNotificationFlow
     }
-
-    private func presentOptInNotificationDialogView( userDialogReponse: PassthroughSubject<Void, Never>?, animated: Bool) {
-        appDiContainer.feature.optInNotification.domainLayer.getViewOptInDialogUseCase().viewPublisher(appLanguage: appLanguage)
-            .receive(on: DispatchQueue.main).sink {
-                [weak self]
-                (domainModel: ViewOptInDialogDomainModel) in
-
-                guard let weakSelf = self else {
-                    return
-                }
-
-                let view = weakSelf.getOptInNotificationDialogView( domainModel: domainModel, userDialogReponse: userDialogReponse)
-
-                weakSelf.navigationController.present(view, animated: animated)
-                
-            }.store(in: &cancellables)
+    
+    private func dismissOptInNotificationFlow() {
+        
+        guard optInNotificationFlow != nil else {
+            return
+        }
+        
+        navigationController.dismissPresented(animated: true, completion: nil)
+        optInNotificationFlow = nil
     }
 }
 

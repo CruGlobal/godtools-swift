@@ -96,26 +96,9 @@ struct OptInNotificationView_Preview: PreviewProvider {
         let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
 
         let viewModel = OptInNotificationViewModel(
-
-            optInNotificationRepository: appDiContainer.feature
-                .optInNotification.dataLayer
-                .getOptInNotificationRepository(),
-            launchCountRepository: appDiContainer.feature.optInNotification
-                .dataLayer.getLaunchCountRepository(),
-            viewOptInNotificationUseCase: appDiContainer.feature
-                .optInNotification.domainLayer
-                .getViewOptInNotificationUseCase(),
-            viewOptInDialogUseCase: appDiContainer.feature.optInNotification
-                .domainLayer.getViewOptInDialogUseCase(),
-            requestNotificationPermissionUseCase: appDiContainer.feature
-                .optInNotification.domainLayer
-                .getRequestNotificationPermissionUseCase(),
-            checkNotificationStatusUseCase: appDiContainer.feature
-                .optInNotification.domainLayer
-                .getCheckNotificationStatusUseCase(),
-            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage
-                .domainLayer.getCurrentAppLanguageUseCase(),
-            flowDelegate: MockFlowDelegate()
+            flowDelegate: MockFlowDelegate(),
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            viewOptInNotificationUseCase: appDiContainer.feature.optInNotification.domainLayer.getViewOptInNotificationUseCase()
         )
 
         return viewModel

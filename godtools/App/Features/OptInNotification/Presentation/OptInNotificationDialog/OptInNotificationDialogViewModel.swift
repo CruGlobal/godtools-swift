@@ -13,17 +13,18 @@ import UIKit
 class OptInNotificationDialogViewModel: AlertMessageViewModelType {
 
     private let viewOptInDialogDomainModel: ViewOptInDialogDomainModel
-    private let userDialogReponse: PassthroughSubject<Void, Never>?
 
+    private weak var flowDelegate: FlowDelegate?
+    
     let title: String?
     let message: String?
     let cancelTitle: String?
     let acceptTitle: String
 
-    init(viewOptInDialogDomainModel: ViewOptInDialogDomainModel, userDialogReponse: PassthroughSubject<Void, Never>?) {
+    init(flowDelegate: FlowDelegate, viewOptInDialogDomainModel: ViewOptInDialogDomainModel) {
        
+        self.flowDelegate = flowDelegate
         self.viewOptInDialogDomainModel = viewOptInDialogDomainModel
-        self.userDialogReponse = userDialogReponse
 
         title = viewOptInDialogDomainModel.interfaceStrings.title
         message = viewOptInDialogDomainModel.interfaceStrings.body
@@ -33,18 +34,15 @@ class OptInNotificationDialogViewModel: AlertMessageViewModelType {
 
     deinit {
         print("x deinit: \(type(of: self))")
-
-        userDialogReponse?.send(Void())
+    }
+    
+    func cancelTapped() {
+        
+        flowDelegate?.navigate(step: .cancelTappedFromOptInNotificationDialog)
     }
 
     func acceptTapped() {
         
-        guard let settingsURL = URL(string: UIApplication.openSettingsURLString) else {
-            return
-        }
-
-        UIApplication.shared.open(
-            settingsURL, options: [:], completionHandler: nil
-        )
+        flowDelegate?.navigate(step: .settingsTappedFromOptInNotificationDialog)
     }
 }

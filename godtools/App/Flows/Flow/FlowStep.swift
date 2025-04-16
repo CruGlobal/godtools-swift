@@ -91,8 +91,12 @@ enum FlowStep {
     case acceptTappedFromExitToolRemoteShare
        
     // optInNotification
-    case allowNotificationsTappedFromBottomSheet(userDialogReponse: PassthroughSubject<Void, Never>)
-    
+    case closeTappedFromOptInNotification
+    case allowNotificationsTappedFromOptInNotification
+    case maybeLaterTappedFromOptInNotification
+    case cancelTappedFromOptInNotificationDialog
+    case settingsTappedFromOptInNotificationDialog
+    case optInNotificationFlowCompleted(state: OptInNotificationFlowCompletedState)
     
     // tutorial
     case closeTappedFromTutorial
