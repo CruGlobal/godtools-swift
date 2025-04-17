@@ -159,6 +159,8 @@
 		451A17522756C10400D35D78 /* tutorial_screenshare.json in Resources */ = {isa = PBXBuildFile; fileRef = 451A174F2756C10400D35D78 /* tutorial_screenshare.json */; };
 		451A17532756C10400D35D78 /* tutorial_lessons.json in Resources */ = {isa = PBXBuildFile; fileRef = 451A17502756C10400D35D78 /* tutorial_lessons.json */; };
 		451A17542756C10400D35D78 /* tutorial_tooltip.json in Resources */ = {isa = PBXBuildFile; fileRef = 451A17512756C10400D35D78 /* tutorial_tooltip.json */; };
+		451A77432DB1347400B130C0 /* ShouldPromptForOptInNotificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451A77422DB1347200B130C0 /* ShouldPromptForOptInNotificationTests.swift */; };
+		451A77452DB1376600B130C0 /* OptInNotificationRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451A77442DB1375A00B130C0 /* OptInNotificationRepositoryInterface.swift */; };
 		451C8B7B28AEDAC100E98AFA /* AppBackgroundState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451C8B7A28AEDAC100E98AFA /* AppBackgroundState.swift */; };
 		451CCF1427A9AA4700E8D2D3 /* MobileContentViewPositionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CCF1327A9AA4600E8D2D3 /* MobileContentViewPositionState.swift */; };
 		451CCF1A27A9D42200E8D2D3 /* MobileContentPagePositionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CCF1927A9D42200E8D2D3 /* MobileContentPagePositionState.swift */; };
@@ -388,6 +390,7 @@
 		45466F662DB02D21005E7FCC /* TransparentModalCustomViewInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45466F622DB02D21005E7FCC /* TransparentModalCustomViewInterface.swift */; };
 		45466F682DB07A24005E7FCC /* ShouldPromptForOptInNotificationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45466F672DB07A1C005E7FCC /* ShouldPromptForOptInNotificationUseCase.swift */; };
 		45466F6A2DB07A5B005E7FCC /* ShouldPromptForOptInNotificationInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45466F692DB07A54005E7FCC /* ShouldPromptForOptInNotificationInterface.swift */; };
+		45466F6F2DB09417005E7FCC /* OptInNotificationsUserDefaultsCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45466F6E2DB09415005E7FCC /* OptInNotificationsUserDefaultsCacheTests.swift */; };
 		454ADAD52ABDD9D400037C27 /* LanguageSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454ADACE2ABDD9D400037C27 /* LanguageSettingsViewModel.swift */; };
 		454ADAD62ABDD9D400037C27 /* AppInterfaceLanguageButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454ADAD22ABDD9D400037C27 /* AppInterfaceLanguageButtonView.swift */; };
 		454ADAD72ABDD9D400037C27 /* LanguageSettingsAppInterfaceLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454ADAD32ABDD9D400037C27 /* LanguageSettingsAppInterfaceLanguageView.swift */; };
@@ -1899,6 +1902,8 @@
 		451A174F2756C10400D35D78 /* tutorial_screenshare.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tutorial_screenshare.json; sourceTree = "<group>"; };
 		451A17502756C10400D35D78 /* tutorial_lessons.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tutorial_lessons.json; sourceTree = "<group>"; };
 		451A17512756C10400D35D78 /* tutorial_tooltip.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tutorial_tooltip.json; sourceTree = "<group>"; };
+		451A77422DB1347200B130C0 /* ShouldPromptForOptInNotificationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShouldPromptForOptInNotificationTests.swift; sourceTree = "<group>"; };
+		451A77442DB1375A00B130C0 /* OptInNotificationRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptInNotificationRepositoryInterface.swift; sourceTree = "<group>"; };
 		451C8B7A28AEDAC100E98AFA /* AppBackgroundState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBackgroundState.swift; sourceTree = "<group>"; };
 		451CCF1327A9AA4600E8D2D3 /* MobileContentViewPositionState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentViewPositionState.swift; sourceTree = "<group>"; };
 		451CCF1927A9D42200E8D2D3 /* MobileContentPagePositionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentPagePositionState.swift; sourceTree = "<group>"; };
@@ -2130,6 +2135,7 @@
 		45466F632DB02D21005E7FCC /* TransparentModalCustomViewLayoutType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentModalCustomViewLayoutType.swift; sourceTree = "<group>"; };
 		45466F672DB07A1C005E7FCC /* ShouldPromptForOptInNotificationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShouldPromptForOptInNotificationUseCase.swift; sourceTree = "<group>"; };
 		45466F692DB07A54005E7FCC /* ShouldPromptForOptInNotificationInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShouldPromptForOptInNotificationInterface.swift; sourceTree = "<group>"; };
+		45466F6E2DB09415005E7FCC /* OptInNotificationsUserDefaultsCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptInNotificationsUserDefaultsCacheTests.swift; sourceTree = "<group>"; };
 		454ADACE2ABDD9D400037C27 /* LanguageSettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageSettingsViewModel.swift; sourceTree = "<group>"; };
 		454ADAD22ABDD9D400037C27 /* AppInterfaceLanguageButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppInterfaceLanguageButtonView.swift; sourceTree = "<group>"; };
 		454ADAD32ABDD9D400037C27 /* LanguageSettingsAppInterfaceLanguageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageSettingsAppInterfaceLanguageView.swift; sourceTree = "<group>"; };
@@ -4415,6 +4421,14 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		451A77412DB1346700B130C0 /* Data-DomainInterface */ = {
+			isa = PBXGroup;
+			children = (
+				451A77422DB1347200B130C0 /* ShouldPromptForOptInNotificationTests.swift */,
+			);
+			path = "Data-DomainInterface";
+			sourceTree = "<group>";
+		};
 		451CCF0B27A9A98800E8D2D3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -4998,6 +5012,7 @@
 				4505F5A02C41549900F60F94 /* LessonFilter */,
 				45243C552C58221A00BD6F49 /* Lessons */,
 				459DF8E42AE17A350035D97B /* Onboarding */,
+				45466F6D2DB0940D005E7FCC /* OptInNotification */,
 				453FE09C2BBEDBF00090DED1 /* ToolsFilter */,
 			);
 			path = Features;
@@ -5529,6 +5544,31 @@
 				45466F602DB02D21005E7FCC /* TransparentModalBottomView.swift */,
 			);
 			path = Concrete;
+			sourceTree = "<group>";
+		};
+		45466F6B2DB0940D005E7FCC /* Cache */ = {
+			isa = PBXGroup;
+			children = (
+				45466F6E2DB09415005E7FCC /* OptInNotificationsUserDefaultsCacheTests.swift */,
+			);
+			path = Cache;
+			sourceTree = "<group>";
+		};
+		45466F6C2DB0940D005E7FCC /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				45466F6B2DB0940D005E7FCC /* Cache */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		45466F6D2DB0940D005E7FCC /* OptInNotification */ = {
+			isa = PBXGroup;
+			children = (
+				45466F6C2DB0940D005E7FCC /* Data */,
+				451A77412DB1346700B130C0 /* Data-DomainInterface */,
+			);
+			path = OptInNotification;
 			sourceTree = "<group>";
 		};
 		454ADACC2ABDD9D400037C27 /* Presentation */ = {
@@ -11216,6 +11256,7 @@
 			isa = PBXGroup;
 			children = (
 				45F80E352DAECB8D000A2F33 /* OptInNotificationRepository.swift */,
+				451A77442DB1375A00B130C0 /* OptInNotificationRepositoryInterface.swift */,
 				45F80E342DAECB8D000A2F33 /* Cache */,
 			);
 			path = LastPromptedOptInNotificationRepository;
@@ -13063,6 +13104,7 @@
 				453F84CC2A029FC00005101E /* ArticleJcrContentType.swift in Sources */,
 				455583ED269F2DA500C3FF14 /* MobileContentSpacerViewModel.swift in Sources */,
 				450EE28529A6648900524F64 /* ToolDeepLinkToolPath.swift in Sources */,
+				451A77452DB1376600B130C0 /* OptInNotificationRepositoryInterface.swift in Sources */,
 				455D275E27B6A3F700FB85B3 /* MobileContentSpacerHeight.swift in Sources */,
 				4556CEA729F2D57800643BBC /* RealmDatabaseConfiguration.swift in Sources */,
 				D4BC79E829B130970040651B /* SetCompletedTrainingTipUseCase.swift in Sources */,
@@ -14457,6 +14499,7 @@
 				450E6A772D89DF5500EB7EDE /* GetTranslatedPercentageTests.swift in Sources */,
 				458539322C57C08000748BAF /* MockRealmResource.swift in Sources */,
 				450FB88C2BFBA0F80015D945 /* SearchAppLanguageInAppLanguagesListRepositoryTests.swift in Sources */,
+				45466F6F2DB09417005E7FCC /* OptInNotificationsUserDefaultsCacheTests.swift in Sources */,
 				D4C26CB22C5D1EAB0082B479 /* SetUserPreferredAppLanguageRepositoryTests.swift in Sources */,
 				450FB88D2BFBA0F80015D945 /* GetAppLanguagesInterfaceStringsRepositoryTests.swift in Sources */,
 				450FB88E2BFBA0F80015D945 /* SearchLanguageInDownloadableLanguagesRepositoryTests.swift in Sources */,
@@ -14490,6 +14533,7 @@
 				45608B522CCAC30A008C6D84 /* TestsAppDelegate.swift in Sources */,
 				45CBDA0E2BA394FD0007DEC8 /* MockOnboardingTutorialViewedRepository.swift in Sources */,
 				45308EC52BDC317300A49D96 /* GetSpiritualConversationReadinessScaleTests.swift in Sources */,
+				451A77432DB1347400B130C0 /* ShouldPromptForOptInNotificationTests.swift in Sources */,
 				45368A162ABB2D850028A570 /* LocaleTests.swift in Sources */,
 				45E198662BA47F4400BF14F3 /* GetDownloadToolProgressInterfaceStringsRepositoryTests.swift in Sources */,
 				4505F5A22C4154AF00F60F94 /* GetUserLessonFiltersRepositoryTests.swift in Sources */,

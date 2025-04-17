@@ -10,39 +10,48 @@ import Foundation
 
 class OptInNotificationsUserDefaultsCache {
 
-    private let sharedUserDefaultsCache: SharedUserDefaultsCache
-    private let lastPromptedCacheKey: String = "lastPromptedOptInNotification"
-    private let promptCountCacheKey: String = "optInNotificationPromptCount"
+    enum Key: String, CaseIterable {
+        case lastPrompted = "lastPromptedOptInNotification"
+        case promptedCount = "optInNotificationPromptCount"
+    }
+    
+    static let dateFormat: String = "MM/dd/yyyy"
 
-    private static let dateFormatter: DateFormatter = {
+    static let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "MM/dd/yyyy"
+        formatter.dateFormat = OptInNotificationsUserDefaultsCache.dateFormat
         return formatter
     }()
+    
+    private let sharedUserDefaultsCache: SharedUserDefaultsCache
 
     init(sharedUserDefaultsCache: SharedUserDefaultsCache) {
 
         self.sharedUserDefaultsCache = sharedUserDefaultsCache
     }
+    
+    func deleteAllData() {
+        
+        let allKeys: [Key] = Key.allCases
+        
+        for key in allKeys {
+            
+            sharedUserDefaultsCache.deleteValue(
+                key: key.rawValue
+            )
+        }
+        
+        sharedUserDefaultsCache.commitChanges()
+    }
 
     func getLastPrompted() -> Date? {
-        guard
-            let lastPrompted = sharedUserDefaultsCache.getValue(
-                key: lastPromptedCacheKey
-            ) as? String
-        else {
+       
+        guard let lastPrompted = sharedUserDefaultsCache.getValue(key: Key.lastPrompted.rawValue) as? String else {
             return nil
         }
 
-        guard
-            let lastPromptedDate: Date =
-                OptInNotificationsUserDefaultsCache.dateFormatter.date(
-                    from: lastPrompted
-                )
-        else {
-            assertionFailure(
-                "An error occurred while parsing \(lastPromptedCacheKey) from cache"
-            )
+        guard let lastPromptedDate: Date = Self.dateFormatter.date(from: lastPrompted) else {
+            assertionFailure("An error occurred while parsing \(Key.lastPrompted.rawValue) from cache")
             return nil
         }
 
@@ -50,12 +59,10 @@ class OptInNotificationsUserDefaultsCache {
     }
 
     func getPromptCount() -> Int {
-        guard
-            let promptCount = sharedUserDefaultsCache.getValue(
-                key: promptCountCacheKey
-            ) as? Int
-
-        else { return 0 }
+        
+        guard let promptCount = sharedUserDefaultsCache.getValue(key: Key.promptedCount.rawValue) as? Int else {
+            return 0
+        }
 
         return promptCount
     }
@@ -65,19 +72,19 @@ class OptInNotificationsUserDefaultsCache {
         let currentPromptCount = getPromptCount()
         let updatedPromptCount = currentPromptCount + 1
 
+        let todaysDate: Date = Date()
+        let stringDate: String = Self.dateFormatter.string(from: todaysDate)
+        
         sharedUserDefaultsCache.cache(
-            value: OptInNotificationsUserDefaultsCache.dateFormatter.string(
-                from: Date()
-            ),
-            forKey: lastPromptedCacheKey
+            value: stringDate,
+            forKey: Key.lastPrompted.rawValue
         )
 
         sharedUserDefaultsCache.cache(
             value: updatedPromptCount,
-            forKey: promptCountCacheKey
+            forKey: Key.promptedCount.rawValue
         )
 
         sharedUserDefaultsCache.commitChanges()
     }
-
 }
