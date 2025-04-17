@@ -11,5 +11,5 @@ import Foundation
 
 protocol GetRequestNotificationPermissionInterface {
 
-    func permissionGrantedPublisher() -> AnyPublisher<Bool, Never>
+    func requestPermissionPublisher() -> AnyPublisher<Bool, Never>
 }

@@ -61,26 +61,7 @@ struct DashboardView: View {
                         viewModel: viewModel
                     )
                 }
-            }.overlay(content: {
-               
-                if viewModel.isOptInNotificationActive {
-                    
-                    Color.black.opacity(0.2).edgesIgnoringSafeArea(.all)
-                }
-
-            }).overlay(
-                alignment: Alignment.bottom,
-                content: {
-                    
-                    if viewModel.isOptInNotificationActive {
-                        
-                        OptInNotificationView(
-                            viewModel: viewModel.getOptInNotificationViewModel()
-                        )
-                        .transition(.move(edge: .bottom))
-                    }
-                }
-            )
+            }
         }
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
     }

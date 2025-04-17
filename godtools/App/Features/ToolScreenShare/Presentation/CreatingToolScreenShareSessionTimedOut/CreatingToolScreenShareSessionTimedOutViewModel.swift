@@ -36,6 +36,10 @@ class CreatingToolScreenShareSessionTimedOutViewModel: AlertMessageViewModelType
 
 extension CreatingToolScreenShareSessionTimedOutViewModel {
     
+    func cancelTapped() {
+        
+    }
+    
     func acceptTapped() {
         
         // Nothing to here, but implementing for protocol AlertMessageViewModelType. ~Levi

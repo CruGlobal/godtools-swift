@@ -8,7 +8,8 @@
 
 import Foundation
 
-class OptInNotificationRepository {
+class OptInNotificationRepository: OptInNotificationRepositoryInterface {
+    
     private let cache: OptInNotificationsUserDefaultsCache
 
     init(cache: OptInNotificationsUserDefaultsCache) {

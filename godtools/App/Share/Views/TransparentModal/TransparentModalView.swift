@@ -13,7 +13,7 @@ class TransparentModalView: UIViewController {
     
     private weak var flowDelegate: FlowDelegate?
     
-    private let modalView: TransparentModalCustomView
+    private let modalView: TransparentModalCustomViewInterface
     private let modalCornerRadius: CGFloat = 12
     private let closeModalFlowStep: FlowStep
     
@@ -22,7 +22,7 @@ class TransparentModalView: UIViewController {
     
     @IBOutlet weak private var overlayButton: UIButton!
     
-    required init(flowDelegate: FlowDelegate, modalView: TransparentModalCustomView, closeModalFlowStep: FlowStep) {
+    required init(flowDelegate: FlowDelegate, modalView: TransparentModalCustomViewInterface, closeModalFlowStep: FlowStep) {
         
         self.flowDelegate = flowDelegate
         
@@ -95,7 +95,7 @@ class TransparentModalView: UIViewController {
 
 extension TransparentModalView {
     
-    private func addModalView(modalView: TransparentModalCustomView) {
+    private func addModalView(modalView: TransparentModalCustomViewInterface) {
         
         guard !view.subviews.contains(modalView.modal) else {
             return
@@ -113,7 +113,7 @@ extension TransparentModalView {
         modalView.transparentModalDidLayout()
     }
     
-    private func centerModalViewVertically(modalView: TransparentModalCustomView) {
+    private func centerModalViewVertically(modalView: TransparentModalCustomViewInterface) {
         
         view.addSubview(modalView.modal)
                 

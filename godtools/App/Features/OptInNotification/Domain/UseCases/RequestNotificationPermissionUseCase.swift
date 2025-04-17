@@ -19,9 +19,9 @@ class RequestNotificationPermissionUseCase {
         self.requestNotificationPermission = requestNotificationPermission
     }
 
-    func getPermissionGrantedPublisher() -> AnyPublisher<Bool, Never> {
+    func requestNotificationPermissionPublisher() -> AnyPublisher<Bool, Never> {
         
-        return requestNotificationPermission.permissionGrantedPublisher()
+        return requestNotificationPermission.requestPermissionPublisher()
             .eraseToAnyPublisher()
     }
 
