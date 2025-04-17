@@ -16,6 +16,10 @@ class SharedUserDefaultsCache {
         
     }
     
+    func deleteValue(key: String) {
+        userDefaults.removeObject(forKey: key)
+    }
+    
     func getValue(key: String) -> Any? {
         return userDefaults.object(forKey: key)
     }
