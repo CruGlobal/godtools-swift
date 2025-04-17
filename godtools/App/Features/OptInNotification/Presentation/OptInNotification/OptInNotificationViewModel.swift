@@ -17,8 +17,6 @@ class OptInNotificationViewModel: ObservableObject {
     private let viewOptInNotificationUseCase: ViewOptInNotificationUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
 
-    private var notificationStatus: PermissionStatusDomainModel?
-    private var notificationStatusCancellable: AnyCancellable?
     private var cancellables: Set<AnyCancellable> = Set()
 
     private weak var flowDelegate: FlowDelegate?
