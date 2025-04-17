@@ -16,7 +16,7 @@ runs:
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
-        bundler-cache: true
+        bundler-cache: false
     - name: Setup Gradle
       uses: gradle/gradle-build-action@v3
     - name: Cache Cocoapods
