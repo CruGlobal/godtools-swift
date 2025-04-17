@@ -46,13 +46,10 @@ class OptInNotificationFlow: Flow {
         
         switch step {
         case .closeTappedFromOptInNotification:
-            print("close overlay tapped...")
             completeFlow(state: .completed)
             
         case .allowNotificationsTappedFromOptInNotification:
-            
-            print("allow notifications...")
-                
+                            
             checkNotificationStatusCancellable = appDiContainer.feature.optInNotification.domainLayer
                 .getCheckNotificationStatusUseCase()
                 .getPermissionStatusPublisher()
@@ -81,7 +78,6 @@ class OptInNotificationFlow: Flow {
                 })
             
         case .maybeLaterTappedFromOptInNotification:
-            print("maybe later tapped...")
             completeFlow(state: .completed)
             
         case .cancelTappedFromOptInNotificationDialog:
@@ -96,6 +92,12 @@ class OptInNotificationFlow: Flow {
             }
 
             UIApplication.shared.open(settingsURL, options: [:], completionHandler: nil)
+            
+        case .dontAllowTappedFromRequestNotificationPermission:
+            completeFlow(state: .completed)
+            
+        case .allowTappedFromRequestNotificationPermission:
+            completeFlow(state: .completed)
             
         default:
             break
@@ -138,7 +140,12 @@ extension OptInNotificationFlow {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (granted: Bool) in
                 
-                self?.completeFlow(state: .completed)
+                if granted {
+                    self?.navigate(step: .allowTappedFromRequestNotificationPermission)
+                }
+                else {
+                    self?.navigate(step: .dontAllowTappedFromRequestNotificationPermission)
+                }
             }
             .store(in: &cancellables)
     }
