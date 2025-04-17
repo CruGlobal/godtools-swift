@@ -8,6 +8,7 @@
 
 import UIKit
 import GodToolsToolParser
+import Combine
 
 class LessonFlow: ToolNavigationFlow, Flow {
 
@@ -16,6 +17,7 @@ class LessonFlow: ToolNavigationFlow, Flow {
     private let trainingTipsEnabled: Bool
     private let initialPageSubIndex: Int?
     
+    private var cancellables: Set<AnyCancellable> = Set()
     private var lesson: ResourceModel {
         return toolTranslations.tool
     }
@@ -98,6 +100,10 @@ class LessonFlow: ToolNavigationFlow, Flow {
         case .deepLink( _):
             break
             
+        case .closeLessonSwipeTutorial:
+            navigationController.dismissPresented(animated: true, completion: nil)
+            trackSwipeTutorialViewed()
+            
         case .startOverTappedFromResumeLessonModal:
             navigateToLesson(isNavigatingFromResumeLessonModal: true, initialPage: nil, initialPageSubIndex: initialPageSubIndex, animated: false)
             navigationController.dismissPresented(animated: true, completion: nil)
@@ -158,11 +164,45 @@ class LessonFlow: ToolNavigationFlow, Flow {
         navigationController.pushViewController(lessonView, animated: animated)
         
         configureNavigationBar(shouldAnimateNavigationBarHiddenState: true)
+        
+        showSwipeTutorialIfNeeded()
+    }
+    
+    private func showSwipeTutorialIfNeeded() {
+        
+        appDiContainer.feature.lessonSwipeTutorial.domainlayer.getShouldShowLessonSwipeTutorialUseCase().shouldShowLessonSwipeTutorialPublisher()
+            .receive(on: DispatchQueue.main)
+            .first()
+            .sink { [weak self] shouldShowSwipeTutorial in
+                
+                if shouldShowSwipeTutorial {
+                    self?.showSwipeTutorial()
+                }
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func showSwipeTutorial() {
+        
+        let _ = Timer.scheduledTimer(withTimeInterval: 0.8, repeats: false) { timer in
+            let swipeTutorial = self.getLessonSwipeTutorial()
+            self.navigationController.present(swipeTutorial, animated: true)
+        }
     }
     
     private func closeTool(lessonId: String, highestPageNumberViewed: Int) {
                 
         flowDelegate?.navigate(step: .lessonFlowCompleted(state: .userClosedLesson(lessonId: lessonId, highestPageNumberViewed: highestPageNumberViewed)))
+    }
+    
+    private func trackSwipeTutorialViewed() {
+        
+        appDiContainer.feature.lessonSwipeTutorial.domainlayer.getTrackViewedLessonSwipeTutorialUseCase()
+            .trackLessonSwipeTutorialViewed()
+            .sink { _ in
+                
+            }
+            .store(in: &cancellables)
     }
 }
 
@@ -215,6 +255,28 @@ extension LessonFlow {
         let view = LessonView(viewModel: viewModel, navigationBar: nil)
         
         return view
+    }
+    
+    private func getLessonSwipeTutorial() -> UIViewController {
+        
+        let viewModel = LessonSwipeTutorialViewModel(
+            flowDelegate: self,
+            getInterfaceStringsUseCase: appDiContainer.feature.lessonSwipeTutorial.domainlayer.getLessonSwipeTutorialInterfaceStringsUseCase(),
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase()
+        )
+        
+        let swipeTutorialView = LessonSwipeTutorialView(viewModel: viewModel)
+        
+        let hostingView = AppHostingController<LessonSwipeTutorialView>(
+            rootView: swipeTutorialView,
+            navigationBar: nil
+        )
+        
+        hostingView.view.backgroundColor = .clear
+        hostingView.modalPresentationStyle = .overFullScreen
+        hostingView.modalTransitionStyle = .crossDissolve
+        
+        return hostingView
     }
     
     private func getResumeLessonModal() -> UIViewController {

@@ -46,6 +46,7 @@ class AppDiContainer {
         let lessonFilterDiContainer = LessonFilterDiContainer(coreDataLayer: dataLayer)
         let lessonsDiContainer = LessonsFeatureDiContainer(coreDataLayer: dataLayer)
         let lessonProgressDiContainer = UserLessonProgressDiContainer(coreDataLayer: dataLayer)
+        let lessonSwipeTutorialDiContainer = LessonSwipeTutorialDiContainer(coreDataLayer: dataLayer)
         let onboardingDiContainer = OnboardingDiContainer(coreDataLayer: dataLayer)
         let optInNotification = OptInNotificationDiContainer(coreDataLayer: dataLayer, getOnboardingTutorialIsAvailable: onboardingDiContainer.dataLayer.getOnboardingTutorialIsAvailable())
         let persistFavoritedToolLanguageSettingsDiContainer = PersistUserToolLanguageSettingsDiContainer(coreDataLayer: dataLayer)
@@ -72,6 +73,7 @@ class AppDiContainer {
             lessonFilter: lessonFilterDiContainer,
             lessons: lessonsDiContainer, 
             lessonProgress: lessonProgressDiContainer,
+            lessonSwipeTutorial: lessonSwipeTutorialDiContainer,
             onboarding: onboardingDiContainer,
             optInNotification: optInNotification,
             persistFavoritedToolLanguageSettings: persistFavoritedToolLanguageSettingsDiContainer,
