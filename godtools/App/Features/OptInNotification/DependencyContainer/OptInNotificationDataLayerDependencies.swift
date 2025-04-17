@@ -11,10 +11,12 @@ import Foundation
 class OptInNotificationDataLayerDependencies {
 
     private let coreDataLayer: AppDataLayerDependencies
+    private let getOnboardingTutorialIsAvailable: GetOnboardingTutorialIsAvailableInterface
 
-    init(coreDataLayer: AppDataLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, getOnboardingTutorialIsAvailable: GetOnboardingTutorialIsAvailableInterface) {
 
         self.coreDataLayer = coreDataLayer
+        self.getOnboardingTutorialIsAvailable = getOnboardingTutorialIsAvailable
     }
 
     // MARK: - Data Layer Classes
@@ -53,7 +55,7 @@ class OptInNotificationDataLayerDependencies {
     
     func getShouldPromptForOptInNotification() -> ShouldPromptForOptInNotificationInterface {
         return ShouldPromptForOptInNotification(
-            launchCountRepository: coreDataLayer.getSharedLaunchCountRepository(),
+            getOnboardingTutorialIsAvailable: getOnboardingTutorialIsAvailable,
             optInNotificationRepository: getOptInNotificationRepository(),
             checkNotificationStatus: getCheckNotificationStatus()
         )

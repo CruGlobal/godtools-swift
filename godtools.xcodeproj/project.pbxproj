@@ -159,7 +159,6 @@
 		451A17522756C10400D35D78 /* tutorial_screenshare.json in Resources */ = {isa = PBXBuildFile; fileRef = 451A174F2756C10400D35D78 /* tutorial_screenshare.json */; };
 		451A17532756C10400D35D78 /* tutorial_lessons.json in Resources */ = {isa = PBXBuildFile; fileRef = 451A17502756C10400D35D78 /* tutorial_lessons.json */; };
 		451A17542756C10400D35D78 /* tutorial_tooltip.json in Resources */ = {isa = PBXBuildFile; fileRef = 451A17512756C10400D35D78 /* tutorial_tooltip.json */; };
-		451A77432DB1347400B130C0 /* ShouldPromptForOptInNotificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451A77422DB1347200B130C0 /* ShouldPromptForOptInNotificationTests.swift */; };
 		451A77452DB1376600B130C0 /* OptInNotificationRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451A77442DB1375A00B130C0 /* OptInNotificationRepositoryInterface.swift */; };
 		451C8B7B28AEDAC100E98AFA /* AppBackgroundState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451C8B7A28AEDAC100E98AFA /* AppBackgroundState.swift */; };
 		451CCF1427A9AA4700E8D2D3 /* MobileContentViewPositionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CCF1327A9AA4600E8D2D3 /* MobileContentViewPositionState.swift */; };
@@ -495,6 +494,7 @@
 		4556AECD23E22185002C15E8 /* SF-Pro-Display-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AECA23E22185002C15E8 /* SF-Pro-Display-Light.otf */; };
 		4556AECE23E22185002C15E8 /* SF-Pro-Text-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AECB23E22185002C15E8 /* SF-Pro-Text-Light.otf */; };
 		4556AECF23E22185002C15E8 /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AECC23E22185002C15E8 /* SF-Pro-Text-Regular.otf */; };
+		4556B07A2DB1430D00CB491D /* MockOptInNotificationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556B0792DB1430800CB491D /* MockOptInNotificationRepository.swift */; };
 		4556CEA729F2D57800643BBC /* RealmDatabaseConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556CEA329F2D57800643BBC /* RealmDatabaseConfiguration.swift */; };
 		4556CEA829F2D57800643BBC /* RealmDatabaseProductionConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556CEA429F2D57800643BBC /* RealmDatabaseProductionConfiguration.swift */; };
 		4556CEA929F2D57800643BBC /* RealmDatabaseConfiguration+RealmConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556CEA529F2D57800643BBC /* RealmDatabaseConfiguration+RealmConfig.swift */; };
@@ -1902,7 +1902,6 @@
 		451A174F2756C10400D35D78 /* tutorial_screenshare.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tutorial_screenshare.json; sourceTree = "<group>"; };
 		451A17502756C10400D35D78 /* tutorial_lessons.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tutorial_lessons.json; sourceTree = "<group>"; };
 		451A17512756C10400D35D78 /* tutorial_tooltip.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tutorial_tooltip.json; sourceTree = "<group>"; };
-		451A77422DB1347200B130C0 /* ShouldPromptForOptInNotificationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShouldPromptForOptInNotificationTests.swift; sourceTree = "<group>"; };
 		451A77442DB1375A00B130C0 /* OptInNotificationRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptInNotificationRepositoryInterface.swift; sourceTree = "<group>"; };
 		451C8B7A28AEDAC100E98AFA /* AppBackgroundState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBackgroundState.swift; sourceTree = "<group>"; };
 		451CCF1327A9AA4600E8D2D3 /* MobileContentViewPositionState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentViewPositionState.swift; sourceTree = "<group>"; };
@@ -2244,6 +2243,7 @@
 		4556AECA23E22185002C15E8 /* SF-Pro-Display-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Light.otf"; sourceTree = "<group>"; };
 		4556AECB23E22185002C15E8 /* SF-Pro-Text-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Light.otf"; sourceTree = "<group>"; };
 		4556AECC23E22185002C15E8 /* SF-Pro-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Regular.otf"; sourceTree = "<group>"; };
+		4556B0792DB1430800CB491D /* MockOptInNotificationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockOptInNotificationRepository.swift; sourceTree = "<group>"; };
 		4556CEA329F2D57800643BBC /* RealmDatabaseConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmDatabaseConfiguration.swift; sourceTree = "<group>"; };
 		4556CEA429F2D57800643BBC /* RealmDatabaseProductionConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmDatabaseProductionConfiguration.swift; sourceTree = "<group>"; };
 		4556CEA529F2D57800643BBC /* RealmDatabaseConfiguration+RealmConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RealmDatabaseConfiguration+RealmConfig.swift"; sourceTree = "<group>"; };
@@ -4421,14 +4421,6 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		451A77412DB1346700B130C0 /* Data-DomainInterface */ = {
-			isa = PBXGroup;
-			children = (
-				451A77422DB1347200B130C0 /* ShouldPromptForOptInNotificationTests.swift */,
-			);
-			path = "Data-DomainInterface";
-			sourceTree = "<group>";
-		};
 		451CCF0B27A9A98800E8D2D3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -5557,6 +5549,7 @@
 		45466F6C2DB0940D005E7FCC /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				4556B0792DB1430800CB491D /* MockOptInNotificationRepository.swift */,
 				45466F6B2DB0940D005E7FCC /* Cache */,
 			);
 			path = Data;
@@ -5566,7 +5559,6 @@
 			isa = PBXGroup;
 			children = (
 				45466F6C2DB0940D005E7FCC /* Data */,
-				451A77412DB1346700B130C0 /* Data-DomainInterface */,
 			);
 			path = OptInNotification;
 			sourceTree = "<group>";
@@ -14515,6 +14507,7 @@
 				450FB8912BFBA1060015D945 /* RealmDatabaseReadTests.swift in Sources */,
 				450FB8922BFBA1060015D945 /* RealmDatabaseWriteTests.swift in Sources */,
 				45243C5B2C5828C600BD6F49 /* MockRealmTranslation.swift in Sources */,
+				4556B07A2DB1430D00CB491D /* MockOptInNotificationRepository.swift in Sources */,
 				45CBDA092BA3930B0007DEC8 /* MockLaunchCountRepository.swift in Sources */,
 				45EB68E12C334D84008A5FF2 /* MockLocalizationServices.swift in Sources */,
 				D44CE4F82DA1AF6C0009F4D1 /* FavoritedResourcesRepositoryTests.swift in Sources */,
@@ -14533,7 +14526,6 @@
 				45608B522CCAC30A008C6D84 /* TestsAppDelegate.swift in Sources */,
 				45CBDA0E2BA394FD0007DEC8 /* MockOnboardingTutorialViewedRepository.swift in Sources */,
 				45308EC52BDC317300A49D96 /* GetSpiritualConversationReadinessScaleTests.swift in Sources */,
-				451A77432DB1347400B130C0 /* ShouldPromptForOptInNotificationTests.swift in Sources */,
 				45368A162ABB2D850028A570 /* LocaleTests.swift in Sources */,
 				45E198662BA47F4400BF14F3 /* GetDownloadToolProgressInterfaceStringsRepositoryTests.swift in Sources */,
 				4505F5A22C4154AF00F60F94 /* GetUserLessonFiltersRepositoryTests.swift in Sources */,

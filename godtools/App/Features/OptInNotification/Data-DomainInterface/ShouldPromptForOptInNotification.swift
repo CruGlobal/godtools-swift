@@ -11,42 +11,71 @@ import Combine
 
 class ShouldPromptForOptInNotification: ShouldPromptForOptInNotificationInterface {
     
-    private let launchCountRepository: LaunchCountRepositoryInterface
-    private let optInNotificationRepository: OptInNotificationRepository
+    private static let maxPrompts: Int = 5
+    
+    private let getOnboardingTutorialIsAvailable: GetOnboardingTutorialIsAvailableInterface
+    private let optInNotificationRepository: OptInNotificationRepositoryInterface
     private let checkNotificationStatus: GetCheckNotificationStatusInterface
     
-    init(launchCountRepository: LaunchCountRepositoryInterface, optInNotificationRepository: OptInNotificationRepository, checkNotificationStatus: GetCheckNotificationStatusInterface) {
+    init(getOnboardingTutorialIsAvailable: GetOnboardingTutorialIsAvailableInterface, optInNotificationRepository: OptInNotificationRepositoryInterface, checkNotificationStatus: GetCheckNotificationStatusInterface) {
         
-        self.launchCountRepository = launchCountRepository
+        self.getOnboardingTutorialIsAvailable = getOnboardingTutorialIsAvailable
         self.optInNotificationRepository = optInNotificationRepository
         self.checkNotificationStatus = checkNotificationStatus
     }
     
     func shouldPromptPublisher() -> AnyPublisher<Bool, Never> {
         
-        let lastPrompted = optInNotificationRepository.getLastPrompted() ?? Date.distantPast
-
-        let promptCount = optInNotificationRepository.getPromptCount()
-
+        let promptCount: Int = optInNotificationRepository.getPromptCount()
+        let isFirstPromptAttempt: Bool = promptCount == 0
+        
+        let lastPrompted: Date = optInNotificationRepository.getLastPrompted() ?? Date.distantPast
+                
+        let lastPromptedTwoMonthsAgoOrMore: Bool
+                
+        if let twoMonthsAgo = getDateTwoMonthsAgo() {
+            lastPromptedTwoMonthsAgoOrMore = lastPrompted < twoMonthsAgo
+        }
+        else {
+            lastPromptedTwoMonthsAgoOrMore = true
+        }
+        
+        return Publishers.CombineLatest(
+            getOnboardingTutorialIsAvailable.isAvailablePublisher(),
+            checkNotificationStatus.permissionStatusPublisher()
+        )
+        .map { (onboardingTutorialIsAvailable: Bool, notificationStatus: PermissionStatusDomainModel) in
+                        
+            guard onboardingTutorialIsAvailable == false else {
+                return false
+            }
+            
+            guard promptCount < Self.maxPrompts else {
+                return false
+            }
+            
+            guard notificationStatus == .denied || notificationStatus == .undetermined  else {
+                return false
+            }
+            
+            let shouldPrompt: Bool = lastPromptedTwoMonthsAgoOrMore || isFirstPromptAttempt
+            
+            return shouldPrompt
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    private func getDateTwoMonthsAgo() -> Date? {
+        
         let currentDate = Date()
         let calendar = Calendar.current
+        
         let twoMonthsAgo: Date? = calendar.date(
             byAdding: .month,
             value: -2,
             to: currentDate
         )
         
-        print(lastPrompted)
-        print(twoMonthsAgo ?? "")
-        
-        return Publishers.CombineLatest(
-            launchCountRepository.getLaunchCountPublisher(),
-            checkNotificationStatus.permissionStatusPublisher()
-        )
-        .map { (launchCount: Int, status: PermissionStatusDomainModel) in
-            
-            return false
-        }
-        .eraseToAnyPublisher()
+        return twoMonthsAgo
     }
 }

@@ -13,9 +13,9 @@ class OptInNotificationDiContainer {
     let dataLayer: OptInNotificationDataLayerDependencies
     let domainLayer: OptInNotificationDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, getOnboardingTutorialIsAvailable: GetOnboardingTutorialIsAvailableInterface) {
         
-        dataLayer = OptInNotificationDataLayerDependencies(coreDataLayer: coreDataLayer)
+        dataLayer = OptInNotificationDataLayerDependencies(coreDataLayer: coreDataLayer, getOnboardingTutorialIsAvailable: getOnboardingTutorialIsAvailable)
         
         domainLayer = OptInNotificationDomainLayerDependencies(dataLayer: dataLayer)
     }

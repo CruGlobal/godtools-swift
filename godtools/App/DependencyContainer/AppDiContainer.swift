@@ -47,7 +47,7 @@ class AppDiContainer {
         let lessonsDiContainer = LessonsFeatureDiContainer(coreDataLayer: dataLayer)
         let lessonProgressDiContainer = UserLessonProgressDiContainer(coreDataLayer: dataLayer)
         let onboardingDiContainer = OnboardingDiContainer(coreDataLayer: dataLayer)
-        let optInNotification = OptInNotificationDiContainer(coreDataLayer: dataLayer)
+        let optInNotification = OptInNotificationDiContainer(coreDataLayer: dataLayer, getOnboardingTutorialIsAvailable: onboardingDiContainer.dataLayer.getOnboardingTutorialIsAvailable())
         let persistFavoritedToolLanguageSettingsDiContainer = PersistUserToolLanguageSettingsDiContainer(coreDataLayer: dataLayer)
         let shareablesDiContainer: ShareablesDiContainer = ShareablesDiContainer(coreDataLayer: dataLayer)
         let shareGodToolsDiContainer = ShareGodToolsDiContainer(coreDataLayer: dataLayer)
