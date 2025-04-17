@@ -40,6 +40,10 @@ class ConfirmRemoveToolFromFavoritesAlertViewModel: AlertMessageViewModelType {
         print("x deinit: \(type(of: self))")
     }
     
+    func cancelTapped() {
+        
+    }
+    
     func acceptTapped() {
         
         didConfirmToolRemovalSubject?.send(Void())

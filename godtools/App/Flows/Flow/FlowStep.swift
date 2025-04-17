@@ -37,6 +37,7 @@ enum FlowStep {
     case backTappedFromLessonLanguageFilter
 
     // lesson
+    case closeLessonSwipeTutorial
     case startOverTappedFromResumeLessonModal
     case continueTappedFromResumeLessonModal
     case closeTappedFromLesson(lessonId: String, highestPageNumberViewed: Int)
@@ -89,7 +90,17 @@ enum FlowStep {
     case toolSettingsTappedFromTool(toolSettingsObserver: ToolSettingsObserver, toolSettingsDidCloseClosure: (() -> Void)?)
     case tractFlowCompleted(state: TractFlowCompletedState)
     case acceptTappedFromExitToolRemoteShare
-        
+       
+    // optInNotification
+    case closeTappedFromOptInNotification
+    case allowNotificationsTappedFromOptInNotification
+    case maybeLaterTappedFromOptInNotification
+    case cancelTappedFromOptInNotificationDialog
+    case settingsTappedFromOptInNotificationDialog
+    case dontAllowTappedFromRequestNotificationPermission
+    case allowTappedFromRequestNotificationPermission
+    case optInNotificationFlowCompleted(state: OptInNotificationFlowCompletedState)
+    
     // tutorial
     case closeTappedFromTutorial
     case startUsingGodToolsTappedFromTutorial

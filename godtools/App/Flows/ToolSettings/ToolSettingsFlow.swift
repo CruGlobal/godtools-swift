@@ -164,7 +164,7 @@ class ToolSettingsFlow: Flow {
 
 extension ToolSettingsFlow {
     
-    private func getToolSettingsView() -> TransparentModalCustomView {
+    private func getToolSettingsView() -> TransparentModalCustomViewInterface {
         
         let viewModel = ToolSettingsViewModel(
             flowDelegate: self,

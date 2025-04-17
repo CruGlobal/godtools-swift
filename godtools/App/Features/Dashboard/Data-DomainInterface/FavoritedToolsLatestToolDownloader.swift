@@ -30,7 +30,7 @@ class FavoritedToolsLatestToolDownloader: FavoritedToolsLatestToolDownloaderInte
         )
         .flatMap({ (resourcesChanged: Void, favoritedResourcesChanged: Void) -> AnyPublisher<[FavoritedResourceDataModel], Never> in
             
-            let favoritedTools: [FavoritedResourceDataModel] = self.favoritedResourcesRepository.getFavoritedResourcesSortedByCreatedAt(ascendingOrder: false)
+            let favoritedTools: [FavoritedResourceDataModel] = self.favoritedResourcesRepository.getFavoritedResourcesSortedByPosition()
             
             return Just(favoritedTools)
                 .eraseToAnyPublisher()

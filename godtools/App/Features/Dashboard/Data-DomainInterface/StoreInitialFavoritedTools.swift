@@ -29,13 +29,5 @@ class StoreInitialFavoritedTools: StoreInitialFavoritedToolsInterface {
         
         return favoritedResourcesRepository
             .storeFavoritedResourcesPublisher(ids: favoritedResourceIdsToStore)
-            .catch { _ in
-                return Just([])
-                    .eraseToAnyPublisher()
-            }
-            .map { _ in
-                Void()
-            }
-            .eraseToAnyPublisher()
     }
 }
