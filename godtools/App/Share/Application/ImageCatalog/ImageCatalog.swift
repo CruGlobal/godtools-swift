@@ -49,6 +49,7 @@ enum ImageCatalog: String {
     case onboardingWelcomeLogo = "onboarding_welcome_logo"
     case openTutorialArrow = "open_tutorial_arrow"
     case notFavorited = "not_favorited"
+    case notificationGraphic = "notification_graphic"
     case person = "person"
     case personAdd = "person_add"
     case personRemove = "person_remove"

@@ -30,6 +30,10 @@ class AlertMessageViewModel: AlertMessageViewModelType {
         self.acceptTitle = acceptTitle
     }
     
+    func cancelTapped() {
+        
+    }
+    
     func acceptTapped() {
         
         if let step = acceptTappedFlowStep {

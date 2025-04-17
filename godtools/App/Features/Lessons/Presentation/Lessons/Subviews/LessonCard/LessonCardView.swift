@@ -56,18 +56,21 @@ struct LessonCardView: View {
                     
                     FixedVerticalSpacer(height: 9)
                     
+                    if viewModel.shouldShowLessonProgress {
+                        LessonCompletionProgressBar(lessonProgress: viewModel.lessonProgress)
+                            .padding(.bottom, 15)
+                        
+                    } else {
+                        Spacer()
+                    }
+                    
                     HStack(alignment: .center, spacing: 10) {
                        
                         Text(viewModel.completionString)
                             .font(FontLibrary.sfProDisplayRegular.font(size: 12))
                             .foregroundColor(ColorPalette.gtBlue.color)
                         
-                        if viewModel.shouldShowLessonProgress {
-                            LessonCompletionProgressBar(lessonProgress: viewModel.lessonProgress)
-                                .padding(.bottom, 5)
-                        } else {
-                            Spacer()
-                        }
+                        Spacer()
                         
                         ToolCardLanguageAvailabilityView(
                             languageAvailability: viewModel.appLanguageAvailability

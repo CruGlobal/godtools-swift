@@ -113,7 +113,7 @@ struct DashboardView_Previews: PreviewProvider {
             flowDelegate: Self.flowDelegate,
             dashboardPresentationLayerDependencies: Self.dashboardDependencies,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            viewDashboardUseCase: appDiContainer.feature.dashboard.domainLayer.getViewDashboardUseCase(), 
+            viewDashboardUseCase: appDiContainer.feature.dashboard.domainLayer.getViewDashboardUseCase(),
             dashboardTabObserver: CurrentValueSubject(.favorites)
         )
         
@@ -125,3 +125,5 @@ struct DashboardView_Previews: PreviewProvider {
         DashboardView(viewModel: Self.getDashboardViewModel())
     }
 }
+
+

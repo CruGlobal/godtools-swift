@@ -13,14 +13,9 @@ class RealmFavoritedResource: Object {
     
     @objc dynamic var createdAt: Date = Date()
     @objc dynamic var resourceId: String = ""
+    @objc dynamic var position: Int = 0
     
     override static func primaryKey() -> String? {
         return "resourceId"
-    }
-    
-    func mapFrom(dataModel: FavoritedResourceDataModel) {
-            
-        createdAt = dataModel.createdAt
-        resourceId = dataModel.id
     }
 }

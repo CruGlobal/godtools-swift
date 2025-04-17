@@ -1,5 +1,5 @@
 //
-//  TransparentModalCustomView.swift
+//  TransparentModalCustomViewInterface.swift
 //  godtools
 //
 //  Created by Levi Eggert on 9/30/21.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol TransparentModalCustomView {
+protocol TransparentModalCustomViewInterface {
     
     var modal: UIView { get }
     var modalInsets: UIEdgeInsets { get }

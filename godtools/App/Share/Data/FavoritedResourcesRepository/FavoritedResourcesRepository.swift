@@ -46,19 +46,19 @@ class FavoritedResourcesRepository {
     func getResourceIsFavorited(id: String) -> Bool {
         return cache.getResourceIsFavorited(id: id)
     }
-
-    func getFavoritedResourcesSortedByCreatedAt(ascendingOrder: Bool) -> [FavoritedResourceDataModel] {
+    
+    func getFavoritedResourcesSortedByPosition() -> [FavoritedResourceDataModel] {
         
-        return cache.getFavoritedResourcesSortedByCreatedAt(ascendingOrder: ascendingOrder)
+        return cache.getFavoritedResourcesSortedByPosition()
     }
     
-    func getFavoritedResourcesSortedByCreatedAtPublisher(ascendingOrder: Bool) -> AnyPublisher<[FavoritedResourceDataModel], Never> {
+    func getFavoritedResourcesSortedByPositionPublisher() -> AnyPublisher<[FavoritedResourceDataModel], Never> {
         
-        return cache.getFavoritedResourcesSortedByCreatedAtPublisher(ascendingOrder: ascendingOrder)
+        return cache.getFavoritedResourcesSortedByPositionPublisher()
             .eraseToAnyPublisher()
     }
     
-    func storeFavoritedResourcesPublisher(ids: [String]) -> AnyPublisher<[FavoritedResourceDataModel], Error> {
+    func storeFavoritedResourcesPublisher(ids: [String]) -> AnyPublisher<Void, Never> {
      
         return cache.storeFavoritedResourcesPublisher(ids: ids)
             .eraseToAnyPublisher()
@@ -68,5 +68,10 @@ class FavoritedResourcesRepository {
         
         return cache.deleteFavoritedResourcePublisher(id: id)
             .eraseToAnyPublisher()
+    }
+    
+    func reorderFavoritedResourcePublisher(id: String, originalPosition: Int, newPosition: Int) -> AnyPublisher<[FavoritedResourceDataModel], Error> {
+        
+        return cache.reorderFavoritedResourcePublisher(id: id, originalPosition: originalPosition, newPosition: newPosition)
     }
 }

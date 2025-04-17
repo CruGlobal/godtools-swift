@@ -31,11 +31,14 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
     private var learnToShareToolFlow: LearnToShareToolFlow?
     private var articleDeepLinkFlow: ArticleDeepLinkFlow?
     private var appLaunchedFromDeepLink: ParsedDeepLinkType?
+    private var optInNotificationFlow: OptInNotificationFlow?
     private var resignedActiveDate: Date?
     private var navigationStarted: Bool = false
     private var uiApplicationLifeCycleObserversAdded: Bool = false
     private var appIsInBackground: Bool = false
     private var isObservingDeepLinking: Bool = false
+    private var cancellableForAppLaunchedFromTerminatedStateOptions: AnyCancellable?
+    private var cancellableForShouldPromptForOptInNotification: AnyCancellable?
     private var cancellables: Set<AnyCancellable> = Set()
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
@@ -108,15 +111,23 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         
         case .appLaunchedFromTerminatedState:
                   
-            appDiContainer.feature.onboarding.domainLayer.getOnboardingTutorialIsAvailableUseCase()
-                .getAvailablePublisher()
-                .receive(on: DispatchQueue.main)
-                .first()
-                .sink(receiveValue: { [weak self] (onboardingTutorialIsAvailable: Bool) in
-                   
-                    self?.launchAppFromTerminatedState(onboardingTutorialIsAvailable: onboardingTutorialIsAvailable)
-                })
-                .store(in: &cancellables)
+            let getOnboardingTutorialIsAvailableUseCase: GetOnboardingTutorialIsAvailableUseCase = appDiContainer.feature.onboarding.domainLayer.getOnboardingTutorialIsAvailableUseCase()
+            let shouldPromptForOptInNotificationUseCase: ShouldPromptForOptInNotificationUseCase = appDiContainer.feature.optInNotification.domainLayer.getShouldPromptForOptInNotificationUseCase()
+            
+            cancellableForAppLaunchedFromTerminatedStateOptions = Publishers.CombineLatest(
+                getOnboardingTutorialIsAvailableUseCase.getAvailablePublisher(),
+                shouldPromptForOptInNotificationUseCase.shouldPromptPublisher()
+            )
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] (onboardingTutorialIsAvailable: Bool, shouldPromptForOptInNotification: Bool) in
+               
+                self?.cancellableForAppLaunchedFromTerminatedStateOptions = nil
+                
+                self?.launchAppFromTerminatedState(
+                    onboardingTutorialIsAvailable: onboardingTutorialIsAvailable,
+                    shouldPromptForOptInNotification: shouldPromptForOptInNotification
+                )
+            })
                         
         case .appLaunchedFromBackgroundState:
             
@@ -139,6 +150,8 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                 AppDelegate.getWindow()?.addSubview(loadingView)
                 
                 navigateToDashboard()
+                
+                promptForOptInNotificationIfNeeded()
                                 
                 loadInitialData()
                                 
@@ -252,7 +265,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             let toolDetails = getToolDetails(
                 toolId: tool.dataModelId,
                 parallelLanguage: nil,
-                selectedLanguageIndex: nil, 
+                selectedLanguageIndex: nil,
                 shouldPersistToolSettings: true
             )
             
@@ -268,7 +281,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
             presentConfirmRemoveToolFromFavoritesAlertView(
                 toolId: tool.dataModelId,
-                didConfirmToolRemovalSubject: nil, 
+                didConfirmToolRemovalSubject: nil,
                 animated: true
             )
             
@@ -283,7 +296,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             let toolDetails = getToolDetails(
                 toolId: tool.dataModelId,
                 parallelLanguage: nil,
-                selectedLanguageIndex: nil, 
+                selectedLanguageIndex: nil,
                 shouldPersistToolSettings: true
             )
             
@@ -453,6 +466,9 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         
         case .backgroundTappedFromLessonEvaluation:
             dismissLessonEvaluation()
+            
+        case .optInNotificationFlowCompleted( _):
+            dismissOptInNotificationFlow()
                         
         default:
             break
@@ -464,7 +480,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
 
 extension AppFlow {
     
-    private func launchAppFromTerminatedState(onboardingTutorialIsAvailable: Bool) {
+    private func launchAppFromTerminatedState(onboardingTutorialIsAvailable: Bool, shouldPromptForOptInNotification: Bool) {
         
         if let deepLink = appLaunchedFromDeepLink {
             
@@ -478,6 +494,10 @@ extension AppFlow {
         else {
             
             navigateToDashboard()
+
+            if shouldPromptForOptInNotification {
+                presentOptInNotificationFlow()
+            }
         }
         
         loadInitialData()
@@ -566,7 +586,7 @@ extension AppFlow {
                 flowDelegate: self
             ),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            viewDashboardUseCase: appDiContainer.feature.dashboard.domainLayer.getViewDashboardUseCase(), 
+            viewDashboardUseCase: appDiContainer.feature.dashboard.domainLayer.getViewDashboardUseCase(),
             dashboardTabObserver: dashboardTabObserver
         )
                 
@@ -947,6 +967,7 @@ extension AppFlow {
             viewAllYourFavoritedToolsUseCase: appDiContainer.feature.favorites.domainLayer.getViewAllYourFavoritedToolsUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getToolIsFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToolIsFavoritedUseCase(),
+            reorderFavoritedToolUseCase: appDiContainer.feature.favorites.domainLayer.getReorderFavoritedToolUseCase(),
             attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
@@ -1024,7 +1045,7 @@ extension AppFlow {
         
         let viewModel = ToolFilterCategorySelectionViewModel(
             viewToolFilterCategoriesUseCase: appDiContainer.feature.toolsFilter.domainLayer.getViewToolFilterCategoriesUseCase(),
-            searchToolFilterCategoriesUseCase: appDiContainer.feature.toolsFilter.domainLayer.getSearchToolFilterCategoriesUseCase(), 
+            searchToolFilterCategoriesUseCase: appDiContainer.feature.toolsFilter.domainLayer.getSearchToolFilterCategoriesUseCase(),
             getUserToolFiltersUseCase: appDiContainer.feature.toolsFilter.domainLayer.getUserToolFiltersUseCase(),
             storeUserToolFiltersUseCase: appDiContainer.feature.toolsFilter.domainLayer.getStoreUserToolFiltersUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
@@ -1057,7 +1078,7 @@ extension AppFlow {
         
         let viewModel = ToolFilterLanguageSelectionViewModel(
             viewToolFilterLanguagesUseCase: appDiContainer.feature.toolsFilter.domainLayer.getViewToolFilterLanguagesUseCase(),
-            searchToolFilterLanguagesUseCase: appDiContainer.feature.toolsFilter.domainLayer.getSearchToolFilterLanguagesUseCase(), 
+            searchToolFilterLanguagesUseCase: appDiContainer.feature.toolsFilter.domainLayer.getSearchToolFilterLanguagesUseCase(),
             getUserToolFiltersUseCase: appDiContainer.feature.toolsFilter.domainLayer.getUserToolFiltersUseCase(),
             storeUserToolFilterUseCase: appDiContainer.feature.toolsFilter.domainLayer.getStoreUserToolFiltersUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
@@ -1106,7 +1127,7 @@ extension AppFlow {
             toggleToolFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToggleFavoritedToolUseCase(),
             attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
-            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase() 
+            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
         )
         
         let view = ToolDetailsView(viewModel: viewModel)
@@ -1128,6 +1149,52 @@ extension AppFlow {
         )
         
         return hostingView
+    }
+}
+
+// MARK: - Opt-In Notification
+
+extension AppFlow {
+
+    private func promptForOptInNotificationIfNeeded() {
+        
+        cancellableForShouldPromptForOptInNotification = appDiContainer.feature.optInNotification.domainLayer
+            .getShouldPromptForOptInNotificationUseCase()
+            .shouldPromptPublisher()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (shouldPrompt: Bool) in
+                
+                self?.cancellableForShouldPromptForOptInNotification = nil
+                
+                if shouldPrompt {
+                    self?.presentOptInNotificationFlow()
+                }
+            }
+    }
+    
+    private func presentOptInNotificationFlow() {
+        
+        guard optInNotificationFlow == nil else {
+            return
+        }
+        
+        let optInNotificationFlow = OptInNotificationFlow(
+            flowDelegate: self,
+            appDiContainer: appDiContainer,
+            presentOnNavigationController: navigationController
+        )
+        
+        self.optInNotificationFlow = optInNotificationFlow
+    }
+    
+    private func dismissOptInNotificationFlow() {
+        
+        guard optInNotificationFlow != nil else {
+            return
+        }
+        
+        navigationController.dismissPresented(animated: true, completion: nil)
+        optInNotificationFlow = nil
     }
 }
 

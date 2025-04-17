@@ -37,10 +37,6 @@ class ToggleToolFavoritedRepository: ToggleToolFavoritedRepositoryInterface {
         else {
             
             return favoritedResourcesRepository.storeFavoritedResourcesPublisher(ids: [toolId])
-                .catch { _ in
-                    return Just([])
-                        .eraseToAnyPublisher()
-                }
                 .map { _ in
                     ToolIsFavoritedDomainModel(dataModelId: toolId, isFavorited: true)
                 }

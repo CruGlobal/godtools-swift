@@ -8,6 +8,7 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 class DashboardViewModel: ObservableObject {
     
@@ -27,7 +28,7 @@ class DashboardViewModel: ObservableObject {
     @Published var favoritesButtonTitle: String = ""
     @Published var toolsButtonTitle: String = ""
     @Published var currentTab: Int = 0
-    
+        
     init(startingTab: DashboardTabTypeDomainModel, flowDelegate: FlowDelegate, dashboardPresentationLayerDependencies: DashboardPresentationLayerDependencies, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewDashboardUseCase: ViewDashboardUseCase, dashboardTabObserver: CurrentValueSubject<DashboardTabTypeDomainModel, Never>) {
         
         self.flowDelegate = flowDelegate
@@ -58,7 +59,7 @@ class DashboardViewModel: ObservableObject {
                 self?.reloadTabs() // NOTE: Needed since button title interface strings aren't connected to the View. ~Levi
                 self?.setStartingTabIfNeeded(startingTab: startingTab, tabs: self?.tabs ?? Array())
             }
-            .store(in: &cancellables)        
+            .store(in: &cancellables)
         
         $currentTab.eraseToAnyPublisher()
             .sink { [weak self] currentTab in
