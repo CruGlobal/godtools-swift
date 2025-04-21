@@ -7,72 +7,105 @@
 //
 
 import Foundation
+import Combine
 
 class TractRemoteSharePublisher: NSObject {
-    
-    typealias CreateNewPublisherCompletion = ((_ result: Result<TractRemoteShareChannel, TractRemoteSharePublisherError>) -> Void)
-    
+        
     private static let timeoutIntervalSeconds: TimeInterval = 10
     
-    private let remoteUrl: URL
     private let webSocket: WebSocketInterface
     private let webSocketChannelPublisher: WebSocketChannelPublisherInterface
+    private let didCreateChannelSubject: PassthroughSubject<WebSocketChannel, Never> = PassthroughSubject()
+    private let didFailToCreateChannelSubject: PassthroughSubject<TractRemoteSharePublisherError, Never> = PassthroughSubject()
     private let loggingEnabled: Bool
     
+    private var cancellables: Set<AnyCancellable> = Set()
     private var timeoutTimer: Timer?
-    private var createNewPublisherBlock: CreateNewPublisherCompletion?
-    private var isObservingSignals: Bool = false
     
-    private(set) var tractRemoteShareChannel: TractRemoteShareChannel?
-    
-    let didCreateNewSubscriberChannelIdForPublish: SignalValue<TractRemoteShareChannel> = SignalValue()
-    
-    init(config: AppConfig, webSocket: WebSocketInterface, webSocketChannelPublisher: WebSocketChannelPublisherInterface, loggingEnabled: Bool) {
+    private(set) var tractRemoteShareChannel: WebSocketChannel?
         
-        // TODO: Shouldn't force unwrap url here. ~Levi
-        self.remoteUrl = URL(string: config.getTractRemoteShareConnectionUrl())!
+    init(webSocket: WebSocketInterface, webSocketChannelPublisher: WebSocketChannelPublisherInterface, loggingEnabled: Bool) {
+        
         self.webSocket = webSocket
         self.webSocketChannelPublisher = webSocketChannelPublisher
         self.loggingEnabled = loggingEnabled
         
         super.init()
+        
+        webSocketChannelPublisher
+            .didCreateChannelPublisher
+            .sink { [weak self] (channel: WebSocketChannel) in
+                
+                self?.stopTimeoutTimer()
+                                
+                self?.tractRemoteShareChannel = channel
+                
+                self?.didCreateChannelSubject.send(channel)
+            }
+            .store(in: &cancellables)
     }
     
     deinit {
         endPublishingSession(disconnectSocket: true)
     }
     
-    var webSocketIsConnected: Bool {
-        return webSocket.isConnected
+    private func stopTimeoutTimer() {
+        timeoutTimer?.invalidate()
+        timeoutTimer = nil
     }
     
-    var isSubscriberChannelIdCreatedForPublish: Bool {
-        return webSocketChannelPublisher.isSubscriberChannelIdCreatedForPublish
+    private func log(method: String, label: String?, labelValue: String?) {
+        
+        if loggingEnabled {
+            print("\n TractRemoteSharePublisher \(method)")
+            if let label = label, let labelValue = labelValue {
+                print("  \(label): \(labelValue)")
+            }
+        }
+    }
+    
+    var didCreateChannelPublisher: AnyPublisher<WebSocketChannel, Never> {
+        return didCreateChannelSubject
+            .eraseToAnyPublisher()
+    }
+    
+    var didFailToCreateChannelPublisher: AnyPublisher<TractRemoteSharePublisherError, Never> {
+        return didFailToCreateChannelSubject
+            .eraseToAnyPublisher()
+    }
+    
+    var webSocketIsConnected: Bool {
+        return webSocket.connectionState == .connected
+    }
+    
+    var isSubscriberChannelCreatedForPublish: Bool {
+        return webSocketChannelPublisher.isSubscriberChannelCreatedForPublish
     }
     
     var subscriberChannelId: String? {
-        return webSocketChannelPublisher.subscriberChannelId
+        return webSocketChannelPublisher.subscriberChannel?.id
     }
     
-    func createNewSubscriberChannelIdForPublish(complete: @escaping CreateNewPublisherCompletion) {
+    func createChannelForPublish() {
         
         endPublishingSession(disconnectSocket: false)
+                
+        let channel = WebSocketChannel.createUniqueChannel()
+                
+        timeoutTimer = Timer.scheduledTimer(withTimeInterval: Self.timeoutIntervalSeconds, repeats: false) { [weak self] _ in
+            
+            self?.stopTimeoutTimer()
+            
+            self?.didFailToCreateChannelSubject.send(.timedOut)
+        }
         
-        createNewPublisherBlock = complete
-        startTimeoutTimer()
-        addObservers()
-        
-        let channelId: String = UUID().uuidString
-        
-        webSocketChannelPublisher.createChannelForPublish(url: remoteUrl, channelId: channelId)
+        webSocketChannelPublisher.createChannel(channel: channel)
     }
     
     func endPublishingSession(disconnectSocket: Bool) {
         
         stopTimeoutTimer()
         tractRemoteShareChannel = nil
-        createNewPublisherBlock = nil
-        removeObsevers()
         
         if disconnectSocket {
             webSocket.disconnect()
@@ -103,78 +136,6 @@ class TractRemoteSharePublisher: NSObject {
             print("  locale: \(String(describing: event.locale))")
             print("  page: \(String(describing: event.page))")
             print("  tool: \(String(describing: event.tool))")
-        }
-    }
-    
-    // MARK: - Observers
-    
-    private func addObservers() {
-        
-        if !isObservingSignals {
-            
-            isObservingSignals = true
-            
-            webSocketChannelPublisher.didCreateChannelForPublish.addObserver(self) { [weak self] (subscriberChannelId: String) in
-                
-                self?.stopTimeoutTimer()
-                
-                let channel = TractRemoteShareChannel(
-                    subscriberChannelId: subscriberChannelId
-                )
-                
-                self?.tractRemoteShareChannel = channel
-                
-                self?.createNewPublisherBlock?(.success(channel))
-                
-                self?.didCreateNewSubscriberChannelIdForPublish.accept(value: channel)
-            }
-        }
-    }
-    
-    private func removeObsevers() {
-        
-        if isObservingSignals {
-            
-            isObservingSignals = false
-            
-            webSocketChannelPublisher.didCreateChannelForPublish.removeObserver(self)
-        }
-    }
-    
-    // MARK: Timeout Timer
-    
-    private func startTimeoutTimer() {
-        
-        stopTimeoutTimer()
-        
-        timeoutTimer = Timer.scheduledTimer(
-            timeInterval: TractRemoteSharePublisher.timeoutIntervalSeconds,
-            target: self,
-            selector: #selector(handleTimeoutTimer),
-            userInfo: nil,
-            repeats: false
-        )
-    }
-    
-    @objc func handleTimeoutTimer() {
-        stopTimeoutTimer()
-        createNewPublisherBlock?(.failure(.timedOut))
-    }
-    
-    private func stopTimeoutTimer() {
-        timeoutTimer?.invalidate()
-        timeoutTimer = nil
-    }
-    
-    // MARK: - Log
-    
-    private func log(method: String, label: String?, labelValue: String?) {
-        
-        if loggingEnabled {
-            print("\n TractRemoteSharePublisher \(method)")
-            if let label = label, let labelValue = labelValue {
-                print("  \(label): \(labelValue)")
-            }
         }
     }
 }

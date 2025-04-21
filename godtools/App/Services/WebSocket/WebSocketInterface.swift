@@ -7,15 +7,18 @@
 //
 
 import Foundation
+import Combine
 
 protocol WebSocketInterface {
         
-    var didConnectSignal: Signal { get }
-    var didDisconnectSignal: Signal { get }
-    var didReceiveTextSignal: SignalValue<String> { get }
-    var isConnected: Bool { get }
+    var didConnectPublisher: AnyPublisher<Void, Never> { get }
+    var didReceiveTextPublisher: AnyPublisher<String, Never> { get }
+    var url: URL { get }
+    var connectionState: WebSocketConnectionState { get }
         
-    func connect(url: URL)
+    init(url: URL)
+    
+    func connect()
     func disconnect()
     func write(string: String)
 }

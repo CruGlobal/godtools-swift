@@ -7,14 +7,15 @@
 //
 
 import Foundation
+import Combine
 
 protocol WebSocketChannelSubscriberInterface {
     
-    init(webSocket: WebSocketInterface, loggingEnabled: Bool)
-    
-    var didSubscribeToChannelSignal: SignalValue<String> { get }
+    var didSubscribePublisher: AnyPublisher<WebSocketChannel, Never> { get }
     var isSubscribedToChannel: Bool { get }
     
-    func subscribe(url: URL, channelId: String)
+    init(webSocket: WebSocketInterface, loggingEnabled: Bool)
+    
+    func subscribe(channel: WebSocketChannel)
     func unsubscribe()
 }
