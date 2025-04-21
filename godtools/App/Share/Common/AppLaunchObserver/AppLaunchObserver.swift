@@ -75,12 +75,12 @@ class AppLaunchObserver {
                 }
                 else {
                     
-                    launchState = .unknown
+                    launchState = .notDetermined
                 }
             }
             else {
                 
-                launchState = .unknown
+                launchState = .notDetermined
             }
             
             return launchState
