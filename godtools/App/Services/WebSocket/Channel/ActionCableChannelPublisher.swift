@@ -7,23 +7,22 @@
 //
 
 import UIKit
+import Combine
 
 class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherInterface {
     
     private let webSocket: WebSocketInterface
+    private let didCreateChannelSubject: PassthroughSubject<WebSocketChannel, Never> = PassthroughSubject()
     private let loggingEnabled: Bool
     
-    private var channelIdToCreate: String?
-    private var publishingToSubscriberChannelId: String?
-    private var isObservingTextSignal: Bool = false
+    private var cancellables: Set<AnyCancellable> = Set()
+    private var channelToCreate: WebSocketChannel?
+    private var publishingToSubscriberChannel: WebSocketChannel?
     private var appResignedActive: Bool = false
     
-    private(set) var websocketUrl: URL?
-    private(set) var channelId: String?
-    private(set) var publishChannelIdentifier: String?
-    
-    let didCreateChannelForPublish: SignalValue<String> = SignalValue()
-    
+    private(set) var channel: WebSocketChannel?
+    private(set) var publishChannel: WebSocketChannel?
+        
     required init(webSocket: WebSocketInterface, loggingEnabled: Bool) {
         
         self.webSocket = webSocket
@@ -33,6 +32,20 @@ class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherInterface 
         
         NotificationCenter.default.addObserver(self, selector: #selector(appWillResignActive), name: UIApplication.willResignActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(appDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
+        
+        webSocket
+            .didConnectPublisher
+            .sink { [weak self] _ in
+                self?.handleDidConnectToWebsocket()
+            }
+            .store(in: &cancellables)
+        
+        webSocket
+            .didReceiveTextPublisher
+            .sink(receiveValue: { [weak self] (text: String) in
+                self?.handleDidReceiveText(text: text)
+            })
+            .store(in: &cancellables)
     }
     
     deinit {
@@ -40,42 +53,33 @@ class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherInterface 
         NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
         
-        webSocket.didConnectSignal.removeObserver(self)
-        removeTextSignalObserver()
         webSocket.disconnect()
     }
     
-    var isSubscriberChannelIdCreatedForPublish: Bool {
-        return publishingToSubscriberChannelId != nil
+    var didCreateChannelPublisher: AnyPublisher<WebSocketChannel, Never> {
+        return didCreateChannelSubject
+            .eraseToAnyPublisher()
     }
     
-    var subscriberChannelId: String? {
-        return publishingToSubscriberChannelId
+    var isSubscriberChannelCreatedForPublish: Bool {
+        return publishingToSubscriberChannel != nil
     }
     
-    func createChannelForPublish(url: URL, channelId: String) {
-                
-        removeTextSignalObserver()
+    var subscriberChannel: WebSocketChannel? {
+        return publishingToSubscriberChannel
+    }
+    
+    func createChannel(channel: WebSocketChannel) {
         
-        self.websocketUrl = url
-        self.channelId = channelId
+        self.channel = channel
         
-        channelIdToCreate = channelId
+        channelToCreate = channel
         
-        if !webSocket.isConnected {
+        if webSocket.connectionState != .connected && webSocket.connectionState != .connecting {
             
-            webSocket.didConnectSignal.addObserver(self) { [weak self] in
-                
-                guard let channelPublisher = self else {
-                    return
-                }
-                channelPublisher.webSocket.didConnectSignal.removeObserver(channelPublisher)
-                channelPublisher.handleDidConnectToWebsocket()
-            }
-            
-            webSocket.connect(url: url)
+            webSocket.connect()
         }
-        else {
+        else if webSocket.connectionState == .connected {
             
             handleDidConnectToWebsocket()
         }
@@ -88,7 +92,7 @@ class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherInterface 
         do {
             
             let message: [String: Any] = [
-                "identifier": publishChannelIdentifier ?? "",
+                "identifier": publishChannel?.id ?? "",
                 "data": data,
                 "command": "message"
             ]
@@ -103,38 +107,20 @@ class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherInterface 
         webSocket.write(string: stringMessage)
     }
     
-    private func addTextSignalObserver() {
-        if !isObservingTextSignal {
-            isObservingTextSignal = true
-            webSocket.didReceiveTextSignal.addObserver(self) { [weak self] (text: String) in
-                self?.handleDidReceiveText(text: text)
-            }
-        }
-    }
-    
-    private func removeTextSignalObserver() {
-        if isObservingTextSignal {
-            isObservingTextSignal = false
-            webSocket.didReceiveTextSignal.removeObserver(self)
-        }
-    }
-    
     private func handleDidConnectToWebsocket() {
                
         if loggingEnabled {
             print("\n ActionCableChannelPublisher: handleDidConnectToWebsocket()")
         }
         
-        guard let channelId = channelIdToCreate else {
+        guard let channel = channelToCreate else {
             return
         }
+                        
+        let stringChannel: String = "{ \"channel\": \"PublishChannel\",\"channelId\": \"\(channel.id)\" }"
+        let message: [String: Any] = ["command": "subscribe", "identifier": stringChannel]
         
-        addTextSignalObserver()
-                
-        let stringChannel = "{ \"channel\": \"PublishChannel\",\"channelId\": \"\(channelId)\" }"
-        let message = ["command": "subscribe", "identifier": stringChannel]
-        
-        publishChannelIdentifier = stringChannel
+        publishChannel = WebSocketChannel(id: stringChannel)
 
         do {
             
@@ -152,7 +138,7 @@ class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherInterface 
         
         if loggingEnabled {
             print("\n ActionCableChannelPublisher: handleDidReceiveText() \(text)")
-            print("  channelIdToCreate: \(String(describing: channelIdToCreate))")
+            print("  channelIdToCreate: \(String(describing: channelToCreate?.id))")
         }
         
         guard let data = text.data(using: .utf8) else {
@@ -172,25 +158,26 @@ class ActionCableChannelPublisher: NSObject, WebSocketChannelPublisherInterface 
                
         let jsonData: [String: Any]? = (jsonObject["message"] as? [String: Any])?["data"] as? [String: Any]
                 
-        if let jsonData = jsonData, let type = jsonData["type"] as? String {
-                
-            if type == "publisher-info", let subscriberChannelId = (jsonData["attributes"] as? [String: Any])?["subscriberChannelId"] as? String {
-                                
-                if loggingEnabled {
-                    print("  channelIdToCreate: \(String(describing: channelIdToCreate))")
-                    print("  subscriberChannelId: \(subscriberChannelId)")
-                }
-                
-                handleDidCreateSubscriberChannelId(subscriberChannelId: subscriberChannelId)
+        if let jsonData = jsonData,
+           let type = jsonData["type"] as? String,
+           type == "publisher-info",
+           let subscriberChannelId = (jsonData["attributes"] as? [String: Any])?["subscriberChannelId"] as? String,
+           let subscriberChannel = WebSocketChannel(id: subscriberChannelId) {
+            
+            if loggingEnabled {
+                print("  channelIdToCreate: \(String(describing: channelToCreate?.id))")
+                print("  subscriberChannelId: \(subscriberChannelId)")
             }
+            
+            handleDidCreateSubscriberChannel(subscriberChannel: subscriberChannel)
         }
     }
     
-    private func handleDidCreateSubscriberChannelId(subscriberChannelId: String) {
+    private func handleDidCreateSubscriberChannel(subscriberChannel: WebSocketChannel) {
         
-        channelIdToCreate = nil
-        publishingToSubscriberChannelId = subscriberChannelId
-        didCreateChannelForPublish.accept(value: subscriberChannelId)
+        channelToCreate = nil
+        publishingToSubscriberChannel = subscriberChannel
+        didCreateChannelSubject.send(subscriberChannel)
     }
 }
 
@@ -209,10 +196,10 @@ extension ActionCableChannelPublisher {
         
         appResignedActive = false
         
-        guard let websocketUrl = self.websocketUrl, let channelId = self.channelId else {
+        guard let channel = self.channel else {
             return
         }
         
-        createChannelForPublish(url: websocketUrl, channelId: channelId)
+        createChannel(channel: channel)
     }
 }

@@ -7,140 +7,58 @@
 //
 
 import Foundation
+import Combine
 
 class TractRemoteShareSubscriber: NSObject {
             
     private static let timeoutIntervalSeconds: TimeInterval = 10
     
-    private let remoteUrl: URL
     private let webSocket: WebSocketInterface
     private let webSocketChannelSubscriber: WebSocketChannelSubscriberInterface
-    private let jsonServices: JsonServices = JsonServices()
+    private let didSubscribeSubject: PassthroughSubject<WebSocketChannel, Never> = PassthroughSubject()
+    private let didFailToSubscribeSubject: PassthroughSubject<TractRemoteShareSubscriberError, Never> = PassthroughSubject()
+    private let navigationEventSubject: PassthroughSubject<TractRemoteShareNavigationEvent, Never> = PassthroughSubject()
     private let loggingEnabled: Bool
     
+    private var cancellables: Set<AnyCancellable> = Set()
     private var timeoutTimer: Timer?
-    private var didSubscribeToChannelClosure: ((_ error: TractRemoteShareSubscriberError?) -> Void)?
-    private var isObservingSignals: Bool = false
-        
-    let navigationEventSignal: SignalValue<TractRemoteShareNavigationEvent> = SignalValue()
-    let subscribedToChannelObserver: ObservableValue<Bool> = ObservableValue(value: false)
+    private var isSubscribingToChannel: WebSocketChannel?
     
-    required init(config: AppConfig, webSocket: WebSocketInterface, webSocketChannelSubscriber: WebSocketChannelSubscriberInterface, loggingEnabled: Bool) {
+    required init(webSocket: WebSocketInterface, webSocketChannelSubscriber: WebSocketChannelSubscriberInterface, loggingEnabled: Bool) {
         
-        // TODO: Shouldn't force unwrap here. ~Levi
-        self.remoteUrl = URL(string: config.getTractRemoteShareConnectionUrl())!
         self.webSocket = webSocket
         self.webSocketChannelSubscriber = webSocketChannelSubscriber
         self.loggingEnabled = loggingEnabled
         
         super.init()
+        
+        webSocket
+            .didReceiveTextPublisher
+            .sink(receiveValue: { [weak self] (text: String) in
+                self?.handleDidReceiveText(text: text)
+            })
+            .store(in: &cancellables)
+        
+        webSocketChannelSubscriber
+            .didSubscribePublisher
+            .sink { [weak self] (channel: WebSocketChannel) in
+                
+                self?.stopTimeoutTimer()
+                
+                self?.didSubscribeSubject.send(channel)
+            }
+            .store(in: &cancellables)
     }
     
     deinit {
         unsubscribe(disconnectSocket: true)
     }
     
-    var webSocketIsConnected: Bool {
-        return webSocket.isConnected
-    }
-    
-    var isSubscribedToChannel: Bool {
-        return webSocketChannelSubscriber.isSubscribedToChannel
-    }
-    
-    func subscribe(channelId: String, complete: @escaping ((_ error: TractRemoteShareSubscriberError?) -> Void)) {
-            
-        log(method: "subscribe()", label: "channelId", labelValue: channelId)
-        
-        unsubscribe(disconnectSocket: false)
-            
-        didSubscribeToChannelClosure = complete
-        addObservers()
-        startTimeoutTimer()
-        webSocketChannelSubscriber.subscribe(url: remoteUrl, channelId: channelId)
-    }
-    
-    func unsubscribe(disconnectSocket: Bool) {
-        
-        webSocketChannelSubscriber.unsubscribe()
-        removeObsevers()
-        stopTimeoutTimer()
-        didSubscribeToChannelClosure = nil
-        subscribedToChannelObserver.accept(value: false)
-        
-        if disconnectSocket {
-            webSocket.disconnect()
-        }
-    }
-    
-    private func handleDidSubscribeToChannel(channelId: String?, error: TractRemoteShareSubscriberError?) {
-        
-        log(method: "handleDidSubscribeToChannel()", label: "channelId", labelValue: channelId)
-        
-        stopTimeoutTimer()
-        didSubscribeToChannelClosure?(error)
-        didSubscribeToChannelClosure = nil
-        subscribedToChannelObserver.accept(value: isSubscribedToChannel)
-    }
-    
-    // MARK: - Observers
-    
-    private func addObservers() {
-        
-        if !isObservingSignals {
-            
-            isObservingSignals = true
-            
-            webSocketChannelSubscriber.didSubscribeToChannelSignal.addObserver(self) { [weak self] (channelId: String) in
-                self?.handleDidSubscribeToChannel(channelId: channelId, error: nil)
-            }
-            
-            webSocket.didReceiveTextSignal.addObserver(self) { [weak self] (text: String) in
-                self?.handleDidReceiveText(text: text)
-            }
-        }
-    }
-    
-    private func removeObsevers() {
-        
-        if isObservingSignals {
-            
-            isObservingSignals = false
-            
-            webSocketChannelSubscriber.didSubscribeToChannelSignal.removeObserver(self)
-            webSocket.didReceiveTextSignal.removeObserver(self)
-        }
-    }
-    
-    // MARK: Timeout Timer
-    
-    private func startTimeoutTimer() {
-        
-        stopTimeoutTimer()
-        
-        timeoutTimer = Timer.scheduledTimer(
-            timeInterval: TractRemoteShareSubscriber.timeoutIntervalSeconds,
-            target: self,
-            selector: #selector(handleTimeoutTimer),
-            userInfo: nil,
-            repeats: false
-        )
-    }
-    
-    @objc func handleTimeoutTimer() {
-        stopTimeoutTimer()
-        if !isSubscribedToChannel {
-            handleDidSubscribeToChannel(channelId: nil, error: .timedOut)
-        }
-    }
-    
     private func stopTimeoutTimer() {
         timeoutTimer?.invalidate()
         timeoutTimer = nil
     }
-    
-    // MARK: - Log
-    
+        
     private func log(method: String, label: String?, labelValue: String?) {
         
         if loggingEnabled {
@@ -148,6 +66,60 @@ class TractRemoteShareSubscriber: NSObject {
             if let label = label, let labelValue = labelValue {
                 print("  \(label): \(labelValue)")
             }
+        }
+    }
+    
+    var didSubscribePublisher: AnyPublisher<WebSocketChannel, Never> {
+        return didSubscribeSubject
+            .eraseToAnyPublisher()
+    }
+    
+    var didFailToSubscribePublisher: AnyPublisher<TractRemoteShareSubscriberError, Never> {
+        return didFailToSubscribeSubject
+            .eraseToAnyPublisher()
+    }
+    
+    var navigationEventPublisher: AnyPublisher<TractRemoteShareNavigationEvent, Never> {
+        return navigationEventSubject
+            .eraseToAnyPublisher()
+    }
+    
+    var webSocketIsConnected: Bool {
+        return webSocket.connectionState == .connected
+    }
+    
+    var isSubscribedToChannel: Bool {
+        return webSocketChannelSubscriber.isSubscribedToChannel
+    }
+    
+    func subscribe(channel: WebSocketChannel) {
+            
+        log(method: "subscribe()", label: "channelId", labelValue: channel.id)
+                
+        unsubscribe(disconnectSocket: false)
+        
+        isSubscribingToChannel = channel
+                        
+        timeoutTimer = Timer.scheduledTimer(withTimeInterval: Self.timeoutIntervalSeconds, repeats: false) { [weak self] _ in
+            
+            self?.stopTimeoutTimer()
+            
+            self?.didFailToSubscribeSubject.send(.timedOut)
+        }
+        
+        webSocketChannelSubscriber.subscribe(channel: channel)
+    }
+    
+    func unsubscribe(disconnectSocket: Bool) {
+        
+        stopTimeoutTimer()
+        
+        isSubscribingToChannel = nil
+                
+        webSocketChannelSubscriber.unsubscribe()
+        
+        if disconnectSocket {
+            webSocket.disconnect()
         }
     }
 }
@@ -162,11 +134,11 @@ extension TractRemoteShareSubscriber {
         
         let data: Data? = text.data(using: .utf8)
         
-        let object: TractRemoteShareNavigationEvent? = jsonServices.decodeObject(data: data)
+        let object: TractRemoteShareNavigationEvent? = JsonServices().decodeObject(data: data)
                 
         if let object = object, object.message?.data?.type == "navigation-event" {
             
-            navigationEventSignal.accept(value: object)
+            navigationEventSubject.send(object)
         }
     }
 }

@@ -60,19 +60,44 @@ class TractViewModel: MobileContentRendererViewModel {
         languageFont = FontLibrary.systemUIFont(size: 14, weight: .regular)
         
         super.init(renderer: renderer, initialPage: initialPage, initialPageConfig: nil, initialPageSubIndex: initialPageSubIndex, resourcesRepository: resourcesRepository, translationsRepository: translationsRepository, mobileContentEventAnalytics: mobileContentEventAnalytics, getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, getTranslatedLanguageName: getTranslatedLanguageName, trainingTipsEnabled: trainingTipsEnabled, incrementUserCounterUseCase: incrementUserCounterUseCase, selectedLanguageIndex: selectedLanguageIndex)
-        
-        setupBinding()
+               
+        if let remoteSharePublisherChannel = tractRemoteSharePublisher.tractRemoteShareChannel {
+            
+            handleRemoteSharePublisherChannelCreated(channel: remoteSharePublisherChannel)
+        }
+        else {
+            
+            tractRemoteSharePublisher
+                .didCreateChannelPublisher
+                .receive(on: DispatchQueue.main)
+                .sink { completion in
+                    
+                } receiveValue: { [weak self] (channel: WebSocketChannel) in
+                    
+                    self?.handleRemoteSharePublisherChannelCreated(channel: channel)
+                }
+                .store(in: &cancellables)
+        }
+
+        var isFirstRemoteShareNavigationEvent: Bool = true
+        tractRemoteShareSubscriber
+            .navigationEventPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (event: TractRemoteShareNavigationEvent) in
+                
+                let animated: Bool = !isFirstRemoteShareNavigationEvent
+                self?.handleDidReceiveRemoteShareNavigationEvent(navigationEvent: event, animated: animated)
+                isFirstRemoteShareNavigationEvent = false
+            }
+            .store(in: &cancellables)
     }
     
     deinit {
                 
         print("x deinit: \(type(of: self))")
         
-        tractRemoteSharePublisher.didCreateNewSubscriberChannelIdForPublish.removeObserver(self)
         tractRemoteSharePublisher.endPublishingSession(disconnectSocket: true)
         
-        tractRemoteShareSubscriber.navigationEventSignal.removeObserver(self)
-        tractRemoteShareSubscriber.subscribedToChannelObserver.removeObserver(self)
         tractRemoteShareSubscriber.unsubscribe(disconnectSocket: true)
     }
     
@@ -83,35 +108,14 @@ class TractViewModel: MobileContentRendererViewModel {
         return tractRemoteSharePublisher.webSocketIsConnected || tractRemoteShareSubscriber.webSocketIsConnected || !liveShareStreamChannelIdIsEmpty
     }
     
-    private func setupBinding() {
-        
-        tractRemoteSharePublisher.didCreateNewSubscriberChannelIdForPublish.addObserver(self) { [weak self] (channel: TractRemoteShareChannel) in
-            DispatchQueue.main.async { [weak self] in
-                self?.didSubscribeForRemoteSharePublishing.accept(value: true)
-                self?.reloadRemoteShareIsActive()
-            }
-        }
-        
-        tractRemoteShareSubscriber.subscribedToChannelObserver.addObserver(self) { [weak self] (isSubscribed: Bool) in
-            DispatchQueue.main.async { [weak self] in
-                self?.reloadRemoteShareIsActive()
-            }
-        }
-        
-        var isFirstRemoteShareNavigationEvent: Bool = true
-        
-        tractRemoteShareSubscriber.navigationEventSignal.addObserver(self) { [weak self] (navigationEvent: TractRemoteShareNavigationEvent) in
-            DispatchQueue.main.async { [weak self] in
-                let animated: Bool = !isFirstRemoteShareNavigationEvent
-                self?.handleDidReceiveRemoteShareNavigationEvent(navigationEvent: navigationEvent, animated: animated)
-                isFirstRemoteShareNavigationEvent = false
-            }
-        }
+    private func handleRemoteSharePublisherChannelCreated(channel: WebSocketChannel) {
+        didSubscribeForRemoteSharePublishing.accept(value: true)
+        reloadRemoteShareIsActive()
     }
     
     private func reloadRemoteShareIsActive() {
         
-        let remoteShareIsActive: Bool = tractRemoteSharePublisher.isSubscriberChannelIdCreatedForPublish || tractRemoteShareSubscriber.isSubscribedToChannel
+        let remoteShareIsActive: Bool = tractRemoteSharePublisher.isSubscriberChannelCreatedForPublish || tractRemoteShareSubscriber.isSubscribedToChannel
         
         self.remoteShareIsActive = remoteShareIsActive
         
@@ -344,15 +348,22 @@ extension TractViewModel {
     
     private func subscribeToLiveShareStreamIfNeeded() {
         
-        guard let channelId = liveShareStream, !channelId.isEmpty else {
+        guard let channelId = liveShareStream, let channel = WebSocketChannel(id: channelId) else {
             return
         }
+        
+        tractRemoteShareSubscriber
+            .didSubscribePublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (channel: WebSocketChannel) in
                 
-        tractRemoteShareSubscriber.subscribe(channelId: channelId) { [weak self] (error: TractRemoteShareSubscriberError?) in
-            DispatchQueue.main.async { [weak self] in
                 self?.trackShareScreenOpened()
+                self?.reloadRemoteShareIsActive()
             }
-        }
+            .store(in: &cancellables)
+        
+        tractRemoteShareSubscriber
+            .subscribe(channel: channel)
     }
     
     private func handleDidReceiveRemoteShareNavigationEvent(navigationEvent: TractRemoteShareNavigationEvent, animated: Bool) {
@@ -440,7 +451,7 @@ extension TractViewModel {
     
     func sendRemoteShareNavigationEvent(page: Int, pagePositions: TractPagePositions) {
         
-        guard tractRemoteSharePublisher.isSubscriberChannelIdCreatedForPublish else {
+        guard tractRemoteSharePublisher.isSubscriberChannelCreatedForPublish else {
             return
         }
         
