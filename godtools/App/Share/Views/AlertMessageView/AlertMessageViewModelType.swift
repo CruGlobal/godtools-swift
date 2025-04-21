@@ -15,5 +15,6 @@ protocol AlertMessageViewModelType: AnyObject {
     var cancelTitle: String? { get }
     var acceptTitle: String { get }
     
+    func cancelTapped()
     func acceptTapped()
 }

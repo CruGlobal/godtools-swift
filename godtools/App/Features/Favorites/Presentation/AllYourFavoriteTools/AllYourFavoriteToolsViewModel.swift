@@ -15,11 +15,13 @@ class AllYourFavoriteToolsViewModel: ObservableObject {
     private let viewAllYourFavoritedToolsUseCase: ViewAllYourFavoritedToolsUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
+    private let reorderFavoritedToolUseCase: ReorderFavoritedToolUseCase
     private let attachmentsRepository: AttachmentsRepository
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let didConfirmToolRemovalSubject: PassthroughSubject<Void, Never> = PassthroughSubject()
     
+    private static var backgroundCancellables: Set<AnyCancellable> = Set()
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
@@ -29,12 +31,13 @@ class AllYourFavoriteToolsViewModel: ObservableObject {
     @Published var sectionTitle: String = ""
     @Published var favoritedTools: [YourFavoritedToolDomainModel] = Array()
         
-    init(flowDelegate: FlowDelegate?, viewAllYourFavoritedToolsUseCase: ViewAllYourFavoritedToolsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, attachmentsRepository: AttachmentsRepository, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(flowDelegate: FlowDelegate?, viewAllYourFavoritedToolsUseCase: ViewAllYourFavoritedToolsUseCase, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, reorderFavoritedToolUseCase: ReorderFavoritedToolUseCase, attachmentsRepository: AttachmentsRepository, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
         self.viewAllYourFavoritedToolsUseCase = viewAllYourFavoritedToolsUseCase
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
+        self.reorderFavoritedToolUseCase = reorderFavoritedToolUseCase
         self.attachmentsRepository = attachmentsRepository
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
@@ -189,5 +192,29 @@ extension AllYourFavoriteToolsViewModel {
         trackOpenFavoritedToolButtonAnalytics(tool: tool)
         
         flowDelegate?.navigate(step: .toolTappedFromAllYourFavoritedTools(tool: tool))
+    }
+    
+    func toolMoved(fromOffsets source: IndexSet, toOffset destination: Int) {
+        for index in source {
+            guard index < favoritedTools.count else { continue }
+            let toolToMove = favoritedTools[index]
+            
+            var newIndex: Int
+            if index < destination {
+                newIndex = destination - 1
+            } else {
+                newIndex = destination
+            }
+            
+            reorderFavoritedToolUseCase
+                .reorderFavoritedToolPublisher(toolId: toolToMove.id, originalPosition: index, newPosition: newIndex)
+                .sink { _ in
+                    
+                } receiveValue: { _ in
+                    
+                }
+                .store(in: &AllYourFavoriteToolsViewModel.backgroundCancellables)
+
+        }
     }
 }

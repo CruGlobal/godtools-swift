@@ -149,7 +149,7 @@ extension AppDelegate {
         let view = ToolShortcutLinksView(
             application: application,
             viewModel: viewModel
-        )   
+        )
         
         toolShortcutLinks = view
     }

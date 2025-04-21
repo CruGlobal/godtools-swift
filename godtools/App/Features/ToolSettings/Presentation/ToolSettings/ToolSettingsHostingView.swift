@@ -33,7 +33,7 @@ class ToolSettingsHostingView: AppHostingController<ToolSettingsView> {
     }
 }
 
-extension ToolSettingsHostingView: TransparentModalCustomView {
+extension ToolSettingsHostingView: TransparentModalCustomViewInterface {
     
     private func setModalHidden(hidden: Bool, animated: Bool, layoutIfNeeded: Bool = true) {
         
