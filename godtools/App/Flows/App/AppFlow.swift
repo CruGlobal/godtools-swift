@@ -22,6 +22,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
     private let resourceViewsService: ResourceViewsService
     private let deepLinkingService: DeepLinkingService
     private let appMessaging: AppMessagingInterface
+    private let appLaunchObserver: AppLaunchObserver = AppLaunchObserver()
     private let dashboardTabObserver = CurrentValueSubject<DashboardTabTypeDomainModel, Never>(AppFlow.defaultStartingDashboardTab)
     
     private var onboardingFlow: OnboardingFlow?
@@ -32,10 +33,6 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
     private var articleDeepLinkFlow: ArticleDeepLinkFlow?
     private var appLaunchedFromDeepLink: ParsedDeepLinkType?
     private var optInNotificationFlow: OptInNotificationFlow?
-    private var resignedActiveDate: Date?
-    private var navigationStarted: Bool = false
-    private var uiApplicationLifeCycleObserversAdded: Bool = false
-    private var appIsInBackground: Bool = false
     private var isObservingDeepLinking: Bool = false
     private var cancellableForAppLaunchedFromTerminatedStateOptions: AnyCancellable?
     private var cancellableForShouldPromptForOptInNotification: AnyCancellable?
@@ -83,7 +80,6 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
         
         rootController.addChildController(child: navigationController)
         
-        addUIApplicationLifeCycleObservers()
         addDeepLinkingObservers()
         
         appMessaging.setMessagingDelegate(messagingDelegate: self)
@@ -93,11 +89,18 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             .getLanguagePublisher()
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
+        
+        appLaunchObserver
+            .onAppLaunchPublisher()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (launchState: AppLaunchState) in
+                self?.navigate(step: .appLaunched(state: launchState))
+            }
+            .store(in: &cancellables)
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
-        removeUIApplicationLifeCycleObservers()
         removeDeepLinkingObservers()
     }
     
@@ -108,63 +111,73 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
     func navigate(step: FlowStep) {
 
         switch step {
-        
-        case .appLaunchedFromTerminatedState:
-                  
-            let getOnboardingTutorialIsAvailableUseCase: GetOnboardingTutorialIsAvailableUseCase = appDiContainer.feature.onboarding.domainLayer.getOnboardingTutorialIsAvailableUseCase()
-            let shouldPromptForOptInNotificationUseCase: ShouldPromptForOptInNotificationUseCase = appDiContainer.feature.optInNotification.domainLayer.getShouldPromptForOptInNotificationUseCase()
             
-            cancellableForAppLaunchedFromTerminatedStateOptions = Publishers.CombineLatest(
-                getOnboardingTutorialIsAvailableUseCase.getAvailablePublisher(),
-                shouldPromptForOptInNotificationUseCase.shouldPromptPublisher()
-            )
-            .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] (onboardingTutorialIsAvailable: Bool, shouldPromptForOptInNotification: Bool) in
-               
-                self?.cancellableForAppLaunchedFromTerminatedStateOptions = nil
+        case .appLaunched(let launchState):
+            
+            switch launchState {
+           
+            case .fromTerminatedState:
                 
-                self?.launchAppFromTerminatedState(
-                    onboardingTutorialIsAvailable: onboardingTutorialIsAvailable,
-                    shouldPromptForOptInNotification: shouldPromptForOptInNotification
+                loadInitialData()
+                countAppSessionLaunch()
+                
+                let getOnboardingTutorialIsAvailableUseCase: GetOnboardingTutorialIsAvailableUseCase = appDiContainer.feature.onboarding.domainLayer.getOnboardingTutorialIsAvailableUseCase()
+                let shouldPromptForOptInNotificationUseCase: ShouldPromptForOptInNotificationUseCase = appDiContainer.feature.optInNotification.domainLayer.getShouldPromptForOptInNotificationUseCase()
+                
+                cancellableForAppLaunchedFromTerminatedStateOptions = Publishers.CombineLatest(
+                    getOnboardingTutorialIsAvailableUseCase.getAvailablePublisher(),
+                    shouldPromptForOptInNotificationUseCase.shouldPromptPublisher()
                 )
-            })
+                .receive(on: DispatchQueue.main)
+                .sink(receiveValue: { [weak self] (onboardingTutorialIsAvailable: Bool, shouldPromptForOptInNotification: Bool) in
+                   
+                    guard let appFlow = self else {
+                        return
+                    }
+                    
+                    appFlow.cancellableForAppLaunchedFromTerminatedStateOptions = nil
+                    
+                    if let deepLink = appFlow.appLaunchedFromDeepLink {
                         
-        case .appLaunchedFromBackgroundState:
-            
-            guard let resignedActiveDate = self.resignedActiveDate else {
-                return
-            }
-            
-            let currentDate: Date = Date()
-            let elapsedTimeInSeconds: TimeInterval = currentDate.timeIntervalSince(resignedActiveDate)
-            let elapsedTimeInMinutes: TimeInterval = elapsedTimeInSeconds / 60
-            
-            if elapsedTimeInMinutes >= 120 {
+                        appFlow.appLaunchedFromDeepLink = nil
+                        appFlow.navigate(step: .deepLink(deepLinkType: deepLink))
+                    }
+                    else if onboardingTutorialIsAvailable {
+                        
+                        appFlow.navigate(step: .showOnboardingTutorial(animated: true))
+                    }
+                    else {
+                        
+                        appFlow.navigateToDashboard()
 
-                let loadingView: UIView = UIView(frame: UIScreen.main.bounds)
-                let loadingImage: UIImageView = UIImageView(frame: UIScreen.main.bounds)
-                loadingImage.contentMode = .scaleAspectFit
-                loadingView.addSubview(loadingImage)
-                loadingImage.image = ImageCatalog.launchImage.uiImage
-                loadingView.backgroundColor = .white
-                AppDelegate.getWindow()?.addSubview(loadingView)
+                        if shouldPromptForOptInNotification {
+                            appFlow.presentOptInNotificationFlow()
+                        }
+                    }
+                })
+                
+            case .fromBackgroundState(let secondsInBackground):
+                
+                let elapsedTimeInMinutes: TimeInterval = secondsInBackground / 60
+                
+                guard elapsedTimeInMinutes >= 120 else {
+                    return
+                }
+                
+                let loadingView: UIView = attachLaunchedFromBackgroundLoadingView()
                 
                 navigateToDashboard()
                 
                 promptForOptInNotificationIfNeeded()
-                                
-                loadInitialData()
-                                
-                UIView.animate(withDuration: 0.4, delay: 1.5, options: .curveEaseOut, animations: {
-                    loadingView.alpha = 0
-                }, completion: {(finished: Bool) in
-                    loadingView.removeFromSuperview()
-                })
                 
-                countAppSessionLaunch()
+                removeLaunchedFromBackgroundLoadingView(view: loadingView)
+                
+            case .inBackground:
+                break
+                
+            case .notDetermined:
+                break
             }
-            
-            self.resignedActiveDate = nil
             
         case .deepLink(let deepLink):
             navigateToDeepLink(deepLink: deepLink)
@@ -480,30 +493,6 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
 
 extension AppFlow {
     
-    private func launchAppFromTerminatedState(onboardingTutorialIsAvailable: Bool, shouldPromptForOptInNotification: Bool) {
-        
-        if let deepLink = appLaunchedFromDeepLink {
-            
-            appLaunchedFromDeepLink = nil
-            navigate(step: .deepLink(deepLinkType: deepLink))
-        }
-        else if onboardingTutorialIsAvailable {
-            
-            navigate(step: .showOnboardingTutorial(animated: true))
-        }
-        else {
-            
-            navigateToDashboard()
-
-            if shouldPromptForOptInNotification {
-                presentOptInNotificationFlow()
-            }
-        }
-        
-        loadInitialData()
-        countAppSessionLaunch()
-    }
-    
     private func loadInitialData() {
         
         resourcesRepository
@@ -558,6 +547,28 @@ extension AppFlow {
 
             }
             .store(in: &cancellables)
+    }
+    
+    private func attachLaunchedFromBackgroundLoadingView() -> UIView {
+        
+        let loadingView: UIView = UIView(frame: UIScreen.main.bounds)
+        let loadingImage: UIImageView = UIImageView(frame: UIScreen.main.bounds)
+        loadingImage.contentMode = .scaleAspectFit
+        loadingView.addSubview(loadingImage)
+        loadingImage.image = ImageCatalog.launchImage.uiImage
+        loadingView.backgroundColor = .white
+        AppDelegate.getWindow()?.addSubview(loadingView)
+        
+        return loadingView
+    }
+    
+    private func removeLaunchedFromBackgroundLoadingView(view: UIView) {
+        
+        UIView.animate(withDuration: 0.4, delay: 1.5, options: .curveEaseOut, animations: {
+            view.alpha = 0
+        }, completion: {(finished: Bool) in
+            view.removeFromSuperview()
+        })
     }
 }
 
@@ -712,7 +723,7 @@ extension AppFlow {
                 return
             }
             
-            if !weakSelf.navigationStarted {
+            if !weakSelf.appLaunchObserver.appLaunched {
                 weakSelf.appLaunchedFromDeepLink = deepLink
             }
             else {
@@ -1425,66 +1436,6 @@ extension AppFlow {
             
             menuFlow.navigationController.removeAsChildController()
             self.menuFlow = nil
-        }
-    }
-}
-
-// MARK: - UIApplication Life Cycle Notifications
-
-extension AppFlow {
-    
-    private func addUIApplicationLifeCycleObservers() {
-              
-        guard !uiApplicationLifeCycleObserversAdded else {
-            return
-        }
-        
-        uiApplicationLifeCycleObserversAdded = true
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(handleUIApplicationLifeCycleNotification(notification:)), name: UIApplication.willResignActiveNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleUIApplicationLifeCycleNotification(notification:)), name: UIApplication.didBecomeActiveNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleUIApplicationLifeCycleNotification(notification:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
-    }
-    
-    private func removeUIApplicationLifeCycleObservers() {
-        
-        guard uiApplicationLifeCycleObserversAdded else {
-            return
-        }
-        
-        uiApplicationLifeCycleObserversAdded = false
-        
-        NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
-    }
-    
-    @objc private func handleUIApplicationLifeCycleNotification(notification: Notification) {
-        
-        if notification.name == UIApplication.willResignActiveNotification {
-            
-            resignedActiveDate = Date()
-        }
-        else if notification.name == UIApplication.didBecomeActiveNotification {
-                        
-            AppBackgroundState.shared.start(appDiContainer: appDiContainer)
-            
-            ApplicationLayout.shared.configure(appLanguageFeatureDiContainer: appDiContainer.feature.appLanguage)
-            
-            let appLaunchedFromTerminatedState: Bool = !navigationStarted
-            let appLaunchedFromBackgroundState: Bool = navigationStarted && appIsInBackground
-            
-            if appLaunchedFromTerminatedState {
-                navigationStarted = true
-                navigate(step: .appLaunchedFromTerminatedState)
-            }
-            else if appLaunchedFromBackgroundState {
-                appIsInBackground = false
-                navigate(step: .appLaunchedFromBackgroundState)
-            }
-        }
-        else if notification.name == UIApplication.didEnterBackgroundNotification {
-            appIsInBackground = true
         }
     }
 }
