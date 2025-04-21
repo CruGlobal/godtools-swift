@@ -265,8 +265,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             let toolDetails = getToolDetails(
                 toolId: tool.dataModelId,
                 parallelLanguage: nil,
-                selectedLanguageIndex: nil,
-                shouldPersistToolSettings: true
+                selectedLanguageIndex: nil
             )
             
             navigationController.pushViewController(toolDetails, animated: true)
@@ -296,8 +295,7 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             let toolDetails = getToolDetails(
                 toolId: tool.dataModelId,
                 parallelLanguage: nil,
-                selectedLanguageIndex: nil,
-                shouldPersistToolSettings: true
+                selectedLanguageIndex: nil
             )
             
             navigationController.pushViewController(toolDetails, animated: true)
@@ -1112,7 +1110,7 @@ extension AppFlow {
 
 extension AppFlow {
     
-    private func getToolDetails(toolId: String, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?, shouldPersistToolSettings: Bool = false, primaryLanguage: AppLanguageDomainModel? = nil) -> UIViewController {
+    private func getToolDetails(toolId: String, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?, primaryLanguage: AppLanguageDomainModel? = nil) -> UIViewController {
         
         let viewModel = ToolDetailsViewModel(
             flowDelegate: self,
