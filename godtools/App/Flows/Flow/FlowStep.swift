@@ -13,8 +13,7 @@ import Combine
 enum FlowStep {
     
     // app
-    case appLaunchedFromTerminatedState
-    case appLaunchedFromBackgroundState
+    case appLaunched(state: AppLaunchState)
     case deepLink(deepLinkType: ParsedDeepLinkType)
     case showOnboardingTutorial(animated: Bool)
     case onboardingFlowCompleted(onboardingFlowCompletedState: OnboardingFlowCompletedState?)
