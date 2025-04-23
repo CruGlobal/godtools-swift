@@ -114,6 +114,13 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
         case .appLaunched(let launchState):
             
+            if launchState.isLaunching {
+                
+                AppBackgroundState.shared.start(appDiContainer: appDiContainer)
+                            
+                ApplicationLayout.shared.configure(appLanguageFeatureDiContainer: appDiContainer.feature.appLanguage)
+            }
+            
             switch launchState {
            
             case .fromTerminatedState:
@@ -163,6 +170,9 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                 guard elapsedTimeInMinutes >= 120 else {
                     return
                 }
+                
+                loadInitialData()
+                countAppSessionLaunch()
                 
                 let loadingView: UIView = attachLaunchedFromBackgroundLoadingView()
                 
