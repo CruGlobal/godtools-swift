@@ -56,25 +56,18 @@ class RealmFavoritedResourcesCache {
             .object(ofType: RealmFavoritedResource.self, forPrimaryKey: id) != nil
     }
     
-    func getFavoritedResourcesSortedByPosition() -> [FavoritedResourceDataModel] {
-        
-        return getFavoritesSortedByPosition()
-            .map({FavoritedResourceDataModel(realmFavoritedResource: $0)})
-    }
-    
     func getFavoritedResourcesSortedByPositionPublisher() -> AnyPublisher<[FavoritedResourceDataModel], Never> {
         
         return getFavoritedResourcesChangedPublisher()
             .flatMap { _ in
-                
-                let favoritedResources = self.getFavoritesSortedByPosition()
-                    .map { FavoritedResourceDataModel(realmFavoritedResource: $0) }
-                
-                return Just(favoritedResources)
 
+                return self.getFavoritesSortedByPositionPublisher()
+                    .map { (favoritedResources: [RealmFavoritedResource]) in
+                        return favoritedResources.map{ FavoritedResourceDataModel(realmFavoritedResource: $0) }
+                    }
+                    .eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
-        
     }
         
     func storeFavoritedResourcesPublisher(ids: [String]) -> AnyPublisher<Void, Never> {
@@ -191,43 +184,48 @@ class RealmFavoritedResourcesCache {
     
     // MARK: - Private
     
-    private func getFavoritesSortedByPosition() -> [RealmFavoritedResource] {
+    private func getFavoritesSortedByPositionPublisher() -> AnyPublisher<[RealmFavoritedResource], Never> {
+        
         let realm = realmDatabase.openRealm()
+        
         let favoritesSortedByPosition = Array(
             realm.objects(RealmFavoritedResource.self)
             .sorted(byKeyPath: #keyPath(RealmFavoritedResource.position), ascending: true)
-            )
+        )
         
         if favoritesSortedByPosition.allSatisfy({ $0.position == 0 }) {
             
-            return migrateExistingFavoritesToPositions()
+            return migrateExistingFavoritesToPositionsPublisher()
+                .replaceError(with: [])
+                .eraseToAnyPublisher()
             
         } else {
-            return favoritesSortedByPosition
+            return Just(favoritesSortedByPosition)
+                .eraseToAnyPublisher()
         }
     }
     
     @available(*, deprecated)
-    private func migrateExistingFavoritesToPositions() -> [RealmFavoritedResource] {
-        let realm = realmDatabase.openRealm()
-        let favoritesSortedByCreatedAt = realm
-            .objects(RealmFavoritedResource.self)
-            .sorted(byKeyPath: #keyPath(RealmFavoritedResource.createdAt), ascending: false)
-                    
-        do {
-            try realm.write {
-                var correctedPosition = 0
-                for favorite in favoritesSortedByCreatedAt {
-                    favorite.position = correctedPosition
-                    correctedPosition += 1
-                }
-                realm.add(favoritesSortedByCreatedAt)
-            }
-        }
-        catch let error {
-            print(error)
-        }
+    private func migrateExistingFavoritesToPositionsPublisher() -> AnyPublisher<[RealmFavoritedResource], Error> {
         
-        return Array(favoritesSortedByCreatedAt)
+        return realmDatabase.writeObjectsPublisher { (realm: Realm) in
+            
+            let favoritesSortedByCreatedAt = realm
+                .objects(RealmFavoritedResource.self)
+                .sorted(byKeyPath: #keyPath(RealmFavoritedResource.createdAt), ascending: false)
+                        
+            var correctedPosition = 0
+            for favorite in favoritesSortedByCreatedAt {
+                favorite.position = correctedPosition
+                correctedPosition += 1
+            }
+            
+            return Array<RealmFavoritedResource>()
+            
+        } mapInBackgroundClosure: { (realmFavoritedResources: [RealmFavoritedResource]) in
+           
+            return realmFavoritedResources
+        }
+        .eraseToAnyPublisher()
     }
 }
