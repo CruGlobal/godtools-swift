@@ -114,12 +114,19 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
             
         case .appLaunched(let launchState):
             
-            switch launchState {
-           
-            case .fromTerminatedState:
+            if launchState.isLaunching {
+                
+                AppBackgroundState.shared.start(appDiContainer: appDiContainer)
+                            
+                ApplicationLayout.shared.configure(appLanguageFeatureDiContainer: appDiContainer.feature.appLanguage)
                 
                 loadInitialData()
                 countAppSessionLaunch()
+            }
+            
+            switch launchState {
+           
+            case .fromTerminatedState:
                 
                 let getOnboardingTutorialIsAvailableUseCase: GetOnboardingTutorialIsAvailableUseCase = appDiContainer.feature.onboarding.domainLayer.getOnboardingTutorialIsAvailableUseCase()
                 let shouldPromptForOptInNotificationUseCase: ShouldPromptForOptInNotificationUseCase = appDiContainer.feature.optInNotification.domainLayer.getShouldPromptForOptInNotificationUseCase()

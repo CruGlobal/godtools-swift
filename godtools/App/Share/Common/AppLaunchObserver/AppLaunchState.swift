@@ -15,3 +15,17 @@ enum AppLaunchState {
     case fromTerminatedState
     case notDetermined
 }
+
+extension AppLaunchState {
+    
+    var isLaunching: Bool {
+        switch self {
+        case .fromBackgroundState( _):
+            return true
+        case .fromTerminatedState:
+            return true
+        default:
+            return false
+        }
+    }
+}
