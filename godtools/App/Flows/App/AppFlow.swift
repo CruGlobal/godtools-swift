@@ -119,14 +119,14 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                 AppBackgroundState.shared.start(appDiContainer: appDiContainer)
                             
                 ApplicationLayout.shared.configure(appLanguageFeatureDiContainer: appDiContainer.feature.appLanguage)
-                
-                loadInitialData()
-                countAppSessionLaunch()
             }
             
             switch launchState {
            
             case .fromTerminatedState:
+                
+                loadInitialData()
+                countAppSessionLaunch()
                 
                 let getOnboardingTutorialIsAvailableUseCase: GetOnboardingTutorialIsAvailableUseCase = appDiContainer.feature.onboarding.domainLayer.getOnboardingTutorialIsAvailableUseCase()
                 let shouldPromptForOptInNotificationUseCase: ShouldPromptForOptInNotificationUseCase = appDiContainer.feature.optInNotification.domainLayer.getShouldPromptForOptInNotificationUseCase()
@@ -170,6 +170,9 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                 guard elapsedTimeInMinutes >= 120 else {
                     return
                 }
+                
+                loadInitialData()
+                countAppSessionLaunch()
                 
                 let loadingView: UIView = attachLaunchedFromBackgroundLoadingView()
                 
