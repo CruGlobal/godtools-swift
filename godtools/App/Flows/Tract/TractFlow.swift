@@ -29,7 +29,7 @@ class TractFlow: ToolNavigationFlow, ToolSettingsNavigationFlow {
     var downloadToolTranslationFlow: DownloadToolTranslationsFlow?
     var toolSettingsFlow: ToolSettingsFlow?
     
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController?, appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, shouldPersistToolSettingsDomainModel: ShouldPersistToolSettingsDomainModel?) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController?, appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, persistToolLanguageSettings: PersistToolLanguageSettingsInterface?) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
@@ -43,7 +43,7 @@ class TractFlow: ToolNavigationFlow, ToolSettingsNavigationFlow {
             trainingTipsEnabled: trainingTipsEnabled,
             initialPage: initialPage,
             initialPageSubIndex: initialPageSubIndex,
-            shouldPersistToolSettingsDomainModel: shouldPersistToolSettingsDomainModel
+            persistToolLanguageSettings: persistToolLanguageSettings
         )
                         
         if let sharedNavController = sharedNavigationController {
@@ -140,7 +140,7 @@ class TractFlow: ToolNavigationFlow, ToolSettingsNavigationFlow {
 
 extension TractFlow {
     
-    private func getToolView(toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, shouldPersistToolSettingsDomainModel: ShouldPersistToolSettingsDomainModel?) -> UIViewController {
+    private func getToolView(toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, persistToolLanguageSettings: PersistToolLanguageSettingsInterface?) -> UIViewController {
         
         let navigation: MobileContentRendererNavigation = appDiContainer.getMobileContentRendererNavigation(
             parentFlow: self,
@@ -177,8 +177,8 @@ extension TractFlow {
             initialPageSubIndex: initialPageSubIndex,
             trainingTipsEnabled: trainingTipsEnabled,
             incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase(), 
-            selectedLanguageIndex: selectedLanguageIndex, 
-            shouldPersistToolSettingsDomainModel: shouldPersistToolSettingsDomainModel
+            selectedLanguageIndex: selectedLanguageIndex,
+            persistToolLanguageSettings: persistToolLanguageSettings
         )
         
         navigationController.setSemanticContentAttribute(semanticContentAttribute: navBarLayoutDirection)
