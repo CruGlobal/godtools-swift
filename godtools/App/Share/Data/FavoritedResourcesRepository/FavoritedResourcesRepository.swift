@@ -47,11 +47,6 @@ class FavoritedResourcesRepository {
         return cache.getResourceIsFavorited(id: id)
     }
     
-    func getFavoritedResourcesSortedByPosition() -> [FavoritedResourceDataModel] {
-        
-        return cache.getFavoritedResourcesSortedByPosition()
-    }
-    
     func getFavoritedResourcesSortedByPositionPublisher() -> AnyPublisher<[FavoritedResourceDataModel], Never> {
         
         return cache.getFavoritedResourcesSortedByPositionPublisher()
