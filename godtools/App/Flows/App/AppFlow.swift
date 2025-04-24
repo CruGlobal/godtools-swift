@@ -792,7 +792,7 @@ extension AppFlow {
 
 extension AppFlow {
     
-    private func navigateToToolInAppLanguage(toolDataModelId: String, trainingTipsEnabled: Bool, shouldPersistToolSettingsDomainModel: ShouldPersistToolSettingsDomainModel? = nil) {
+    private func navigateToToolInAppLanguage(toolDataModelId: String, trainingTipsEnabled: Bool, persistToolLanguageSettings: PersistToolLanguageSettingsInterface? = nil) {
         
         let languagesRepository: LanguagesRepository = appDiContainer.dataLayer.getLanguagesRepository()
         
@@ -805,7 +805,7 @@ extension AppFlow {
             languageIds = Array()
         }
         
-        navigateToTool(toolDataModelId: toolDataModelId, languageIds: languageIds, selectedLanguageIndex: nil, trainingTipsEnabled: trainingTipsEnabled, shouldPersistToolSettingsDomainModel: shouldPersistToolSettingsDomainModel)
+        navigateToTool(toolDataModelId: toolDataModelId, languageIds: languageIds, selectedLanguageIndex: nil, trainingTipsEnabled: trainingTipsEnabled, persistToolLanguageSettings: persistToolLanguageSettings)
     }
     
     private func navigateToToolWithUserToolLanguageSettingsApplied(toolDataModelId: String, trainingTipsEnabled: Bool) {
@@ -820,10 +820,7 @@ extension AppFlow {
                 parallelLanguageId: userToolSettings.parallelLanguageId,
                 selectedLanguageIndex: 0,
                 trainingTipsEnabled: trainingTipsEnabled,
-                shouldPersistToolSettingsDomainModel:
-                    ShouldPersistToolSettingsDomainModel(
-                        persistUserToolLanguageSettingsUseCase: appDiContainer.feature.persistFavoritedToolLanguageSettings.domainLayer.getPersistUserToolLanguageSettingsUseCase()
-                    )
+                persistToolLanguageSettings: appDiContainer.feature.persistFavoritedToolLanguageSettings.domainLayer.getPersistUserToolLanguageSettingsUseCase()
             )
             
         } else {
@@ -831,15 +828,12 @@ extension AppFlow {
             navigateToToolInAppLanguage(
                 toolDataModelId: toolDataModelId,
                 trainingTipsEnabled: trainingTipsEnabled,
-                shouldPersistToolSettingsDomainModel:
-                    ShouldPersistToolSettingsDomainModel(
-                        persistUserToolLanguageSettingsUseCase: appDiContainer.feature.persistFavoritedToolLanguageSettings.domainLayer.getPersistUserToolLanguageSettingsUseCase()
-                    )
+                persistToolLanguageSettings: appDiContainer.feature.persistFavoritedToolLanguageSettings.domainLayer.getPersistUserToolLanguageSettingsUseCase()
             )
         }
     }
     
-    private func navigateToTool(toolDataModelId: String, primaryLanguageId: String, parallelLanguageId: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, shouldPersistToolSettingsDomainModel: ShouldPersistToolSettingsDomainModel? = nil) {
+    private func navigateToTool(toolDataModelId: String, primaryLanguageId: String, parallelLanguageId: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, persistToolLanguageSettings: PersistToolLanguageSettingsInterface? = nil) {
                 
         var languageIds: [String] = [primaryLanguageId]
         
@@ -847,10 +841,10 @@ extension AppFlow {
             languageIds.append(parallelLanguageId)
         }
         
-        navigateToTool(toolDataModelId: toolDataModelId, languageIds: languageIds, selectedLanguageIndex: selectedLanguageIndex, trainingTipsEnabled: trainingTipsEnabled, shouldPersistToolSettingsDomainModel: shouldPersistToolSettingsDomainModel)
+        navigateToTool(toolDataModelId: toolDataModelId, languageIds: languageIds, selectedLanguageIndex: selectedLanguageIndex, trainingTipsEnabled: trainingTipsEnabled, persistToolLanguageSettings: persistToolLanguageSettings)
     }
     
-    private func navigateToTool(toolDataModelId: String, primaryLanguage: AppLanguageDomainModel, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, shouldPersistToolSettingsDomainModel: ShouldPersistToolSettingsDomainModel? = nil) {
+    private func navigateToTool(toolDataModelId: String, primaryLanguage: AppLanguageDomainModel, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, persistToolLanguageSettings: PersistToolLanguageSettingsInterface? = nil) {
         
         let languagesRepository: LanguagesRepository = appDiContainer.dataLayer.getLanguagesRepository()
         
@@ -864,7 +858,7 @@ extension AppFlow {
             languageIds.append(languageModel.id)
         }
         
-        navigateToTool(toolDataModelId: toolDataModelId, languageIds: languageIds, selectedLanguageIndex: selectedLanguageIndex, trainingTipsEnabled: trainingTipsEnabled, shouldPersistToolSettingsDomainModel: shouldPersistToolSettingsDomainModel)
+        navigateToTool(toolDataModelId: toolDataModelId, languageIds: languageIds, selectedLanguageIndex: selectedLanguageIndex, trainingTipsEnabled: trainingTipsEnabled, persistToolLanguageSettings: persistToolLanguageSettings)
     }
     
     private func navigateToLesson(lessonListItem: LessonListItemDomainModel, languageFilter: LessonFilterLanguageDomainModel?) {
@@ -876,7 +870,7 @@ extension AppFlow {
         }
     }
         
-    private func navigateToTool(toolDataModelId: String, languageIds: [String], selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, shouldPersistToolSettingsDomainModel: ShouldPersistToolSettingsDomainModel? = nil) {
+    private func navigateToTool(toolDataModelId: String, languageIds: [String], selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, persistToolLanguageSettings: PersistToolLanguageSettingsInterface? = nil) {
         
         let languagesRepository: LanguagesRepository = appDiContainer.dataLayer.getLanguagesRepository()
         
@@ -900,7 +894,7 @@ extension AppFlow {
             trainingTipsEnabled: trainingTipsEnabled,
             initialPage: nil,
             initialPageSubIndex: nil,
-            shouldPersistToolSettingsDomainModel: shouldPersistToolSettingsDomainModel
+            persistToolLanguageSettings: persistToolLanguageSettings
         )
     }
 }

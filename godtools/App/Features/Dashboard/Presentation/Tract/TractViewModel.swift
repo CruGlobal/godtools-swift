@@ -20,10 +20,10 @@ class TractViewModel: MobileContentRendererViewModel {
     private let resourceViewsService: ResourceViewsService
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let liveShareStream: String?
+    private let persistToolLanguageSettings: PersistToolLanguageSettingsInterface?
     
     private var cancellables: Set<AnyCancellable> = Set()
     private var remoteShareIsActive: Bool = false
-    private var shouldPersistToolSettingsDomainModel: ShouldPersistToolSettingsDomainModel?
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -34,7 +34,7 @@ class TractViewModel: MobileContentRendererViewModel {
     @Published private(set) var toolSettingsDidClose: Void?
     @Published private(set) var hidesRemoteShareIsActive: Bool = true
         
-    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, languagesRepository: LanguagesRepository, resourceViewsService: ResourceViewsService, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTranslatedLanguageName: GetTranslatedLanguageName, liveShareStream: String?, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?, shouldPersistToolSettingsDomainModel: ShouldPersistToolSettingsDomainModel?) {
+    init(flowDelegate: FlowDelegate, renderer: MobileContentRenderer, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, languagesRepository: LanguagesRepository, resourceViewsService: ResourceViewsService, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, resourcesRepository: ResourcesRepository, translationsRepository: TranslationsRepository, mobileContentEventAnalytics: MobileContentRendererEventAnalyticsTracking, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getTranslatedLanguageName: GetTranslatedLanguageName, liveShareStream: String?, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, trainingTipsEnabled: Bool, incrementUserCounterUseCase: IncrementUserCounterUseCase, selectedLanguageIndex: Int?, persistToolLanguageSettings: PersistToolLanguageSettingsInterface?) {
         
         self.flowDelegate = flowDelegate
         self.tractRemoteSharePublisher = tractRemoteSharePublisher
@@ -43,7 +43,7 @@ class TractViewModel: MobileContentRendererViewModel {
         self.resourceViewsService = resourceViewsService
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.liveShareStream = liveShareStream
-        self.shouldPersistToolSettingsDomainModel = shouldPersistToolSettingsDomainModel
+        self.persistToolLanguageSettings = persistToolLanguageSettings
                 
         let primaryManifest: Manifest = renderer.pageRenderers[0].manifest
         
@@ -194,7 +194,7 @@ class TractViewModel: MobileContentRendererViewModel {
         
         let attachedToolSettingsObserver = super.attachObserversForToolSettings(toolSettingsObserver)
         
-        if let shouldPersistToolSettingsDomainModel = shouldPersistToolSettingsDomainModel {
+        if let persistToolLanguageSettings = persistToolLanguageSettings {
             
             attachedToolSettingsObserver.$languages
                 .map { [weak self] (languages: ToolSettingsLanguages) in
@@ -204,8 +204,8 @@ class TractViewModel: MobileContentRendererViewModel {
                             .eraseToAnyPublisher()
                     }
                     
-                    return shouldPersistToolSettingsDomainModel.persistUserToolLanguageSettingsUseCase
-                        .persistUserToolSettingsPublisher(
+                    return persistToolLanguageSettings
+                        .persistToolLanguageSettingsPublisher(
                             with: renderer.value.resource.id,
                             primaryLanguageId: languages.primaryLanguageId,
                             parallelLanguageId: languages.parallelLanguageId
