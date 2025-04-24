@@ -26,12 +26,10 @@ class FavoritedToolsLatestToolDownloader: FavoritedToolsLatestToolDownloaderInte
         
         return Publishers.CombineLatest(
             resourcesRepository.getResourcesChangedPublisher(),
-            favoritedResourcesRepository.getFavoritedResourcesChangedPublisher()
+            favoritedResourcesRepository.getFavoritedResourcesSortedByPositionPublisher()
         )
-        .flatMap({ (resourcesChanged: Void, favoritedResourcesChanged: Void) -> AnyPublisher<[FavoritedResourceDataModel], Never> in
-            
-            let favoritedTools: [FavoritedResourceDataModel] = self.favoritedResourcesRepository.getFavoritedResourcesSortedByPosition()
-            
+        .flatMap({ (resourcesChanged: Void, favoritedTools: [FavoritedResourceDataModel]) -> AnyPublisher<[FavoritedResourceDataModel], Never> in
+                        
             return Just(favoritedTools)
                 .eraseToAnyPublisher()
         })
