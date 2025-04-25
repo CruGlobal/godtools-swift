@@ -1628,7 +1628,8 @@
 		D4AAEC152D972CF8008CDF8E /* ReorderFavoritedToolDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4AAEC142D972CF8008CDF8E /* ReorderFavoritedToolDomainModel.swift */; };
 		D4AAEC192D97307F008CDF8E /* RemoveFavoritedToolRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4AAEC182D973074008CDF8E /* RemoveFavoritedToolRepositoryTests.swift */; };
 		D4AAEC1B2D9C68D2008CDF8E /* ToggleToolFavoritedRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4AAEC1A2D9C68BF008CDF8E /* ToggleToolFavoritedRepositoryTests.swift */; };
-		D4AD90922DBAB9BD00A48861 /* PersistToolLanguageSettingsInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4AD90912DBAB9BD00A48861 /* PersistToolLanguageSettingsInterface.swift */; };
+		D4AD90942DBAC51A00A48861 /* ToolOpenedFrom.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4AD90932DBAC51A00A48861 /* ToolOpenedFrom.swift */; };
+		D4AD90952DBAC8DB00A48861 /* PersistToolLanguageSettingsInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4AD90912DBAB9BD00A48861 /* PersistToolLanguageSettingsInterface.swift */; };
 		D4AFA4452BAC93B400318023 /* ToolFilterLanguagesInterfaceStringsDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4AFA4442BAC93B400318023 /* ToolFilterLanguagesInterfaceStringsDomainModel.swift */; };
 		D4AFA4472BAC950800318023 /* GetToolFilterLanguagesInterfaceStringsRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4AFA4462BAC950800318023 /* GetToolFilterLanguagesInterfaceStringsRepositoryInterface.swift */; };
 		D4AFA4492BAC955E00318023 /* GetToolFilterLanguagesInterfaceStringsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4AFA4482BAC955E00318023 /* GetToolFilterLanguagesInterfaceStringsRepository.swift */; };
@@ -3428,6 +3429,7 @@
 		D4AAEC182D973074008CDF8E /* RemoveFavoritedToolRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveFavoritedToolRepositoryTests.swift; sourceTree = "<group>"; };
 		D4AAEC1A2D9C68BF008CDF8E /* ToggleToolFavoritedRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleToolFavoritedRepositoryTests.swift; sourceTree = "<group>"; };
 		D4AD90912DBAB9BD00A48861 /* PersistToolLanguageSettingsInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistToolLanguageSettingsInterface.swift; sourceTree = "<group>"; };
+		D4AD90932DBAC51A00A48861 /* ToolOpenedFrom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolOpenedFrom.swift; sourceTree = "<group>"; };
 		D4AFA4442BAC93B400318023 /* ToolFilterLanguagesInterfaceStringsDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolFilterLanguagesInterfaceStringsDomainModel.swift; sourceTree = "<group>"; };
 		D4AFA4462BAC950800318023 /* GetToolFilterLanguagesInterfaceStringsRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetToolFilterLanguagesInterfaceStringsRepositoryInterface.swift; sourceTree = "<group>"; };
 		D4AFA4482BAC955E00318023 /* GetToolFilterLanguagesInterfaceStringsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetToolFilterLanguagesInterfaceStringsRepository.swift; sourceTree = "<group>"; };
@@ -11417,6 +11419,7 @@
 			isa = PBXGroup;
 			children = (
 				45FB15FA27DBDDB50009DF8E /* ToolNavigationFlow.swift */,
+				D4AD90932DBAC51A00A48861 /* ToolOpenedFrom.swift */,
 			);
 			path = ToolNavigation;
 			sourceTree = "<group>";
@@ -13558,6 +13561,7 @@
 				D4B26F522D8B44AF0019FA86 /* ReorderFavoritedToolRepositoryInterface.swift in Sources */,
 				45AD20BC25938F1A00A096A0 /* SignalValue.swift in Sources */,
 				455E98B029A42ABB00D1EF35 /* OnboardingTutorialMediaViewModel.swift in Sources */,
+				D4AD90952DBAC8DB00A48861 /* PersistToolLanguageSettingsInterface.swift in Sources */,
 				45F7B0B82AF18E9000A0E7B4 /* GetMenuInterfaceStringsRepositoryInterface.swift in Sources */,
 				D44CE5292DADA04E0009F4D1 /* TrackViewedLessonSwipeTutorialUseCase.swift in Sources */,
 				451CCF2027A9DB2D00E8D2D3 /* PageNavigationCollectionViewNavigationModel.swift in Sources */,
@@ -14629,7 +14633,6 @@
 				45D63E5E288F689F009B4610 /* RealmTranslation.swift in Sources */,
 				45B6FF2A2BAA39660037B240 /* ViewToolFilterLanguagesUseCase.swift in Sources */,
 				454CA2022B7BD31F009A3976 /* AppLanguagesInterfaceStringsDomainModel.swift in Sources */,
-				D4AD90922DBAB9BD00A48861 /* PersistToolLanguageSettingsInterface.swift in Sources */,
 				453F84C82A029FC00005101E /* ArticleAemDataParser.swift in Sources */,
 				45AE975027C97A9500C2CB33 /* Paragraph+MobileContentRenderableModel.swift in Sources */,
 				45E347812A49BFEB0014CCD1 /* GTBlueButton.swift in Sources */,
@@ -14670,6 +14673,7 @@
 				457609122D2D6C55005F218D /* HTMLDocumentWrapper.swift in Sources */,
 				45558416269F2F6100C3FF14 /* MobileContentRendererAnalyticsSystem.swift in Sources */,
 				D4C26CA62C518EF70082B479 /* ToolFilterAnyCategoryDomainModel.swift in Sources */,
+				D4AD90942DBAC51A00A48861 /* ToolOpenedFrom.swift in Sources */,
 				4598BD1E2BF7DF6800196463 /* AuthenticateUserAuthTypeDomainModel.swift in Sources */,
 				45AC9DEB2B28A9CD00DEEBFE /* DownloadableLanguagesView.swift in Sources */,
 				45AD205825938AC300A096A0 /* FirebaseAnalytics.swift in Sources */,
