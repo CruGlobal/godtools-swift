@@ -275,7 +275,12 @@ class MenuFlow: Flow {
             navigationController.dismissPresented(animated: true) {
                 self.presentError(appLanguage: appLanguage, error: error)
             }
-                        
+            
+        case .copyFirebaseDeviceTokenTappedFromMenu:
+            if appDiContainer.dataLayer.getAppBuild().isDebug {
+                copyFirebaseDeviceTokenToClipboard()
+            }
+            
         default:
             break
         }
@@ -376,7 +381,8 @@ extension MenuFlow {
             getUserIsAuthenticatedUseCase: appDiContainer.domainLayer.getUserIsAuthenticatedUseCase(),
             logOutUserUseCase: appDiContainer.domainLayer.getLogOutUserUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
-            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
+            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
+            appBuild: appDiContainer.dataLayer.getAppBuild()
         )
         
         let view = MenuView(viewModel: viewModel)
@@ -700,5 +706,52 @@ extension MenuFlow {
         )
         
         navigationController.pushViewController(view, animated: true)
+    }
+}
+
+// MARK: - Copy Firebase Device Token
+
+extension MenuFlow {
+    
+    private func copyFirebaseDeviceTokenToClipboard() {
+        
+        appDiContainer.dataLayer.getFirebaseMessaging()
+            .getDeviceTokenPublisher()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] completion in
+                
+                switch completion {
+                case .finished:
+                    break
+                case .failure(let error):
+                    self?.presentFirebaseDeviceTokenCopyError(error: error)
+                }
+                
+            } receiveValue: { [weak self] (token: String) in
+                
+                let pasteBoard = UIPasteboard.general
+                pasteBoard.string = token
+                
+                self?.presentFirebaseDeviceTokenCopied(token: token)
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func presentFirebaseDeviceTokenCopied(token: String) {
+        
+        let viewModel: AlertMessageViewModelType = AlertMessageViewModel(
+            title: "Device Token Copied To Clipboard",
+            message: "Token String: \(token)",
+            cancelTitle: nil,
+            acceptTitle: "OK"
+        )
+        
+        let view = AlertMessageView(viewModel: viewModel)
+        
+        navigationController.present(view.controller, animated: true)
+    }
+    
+    private func presentFirebaseDeviceTokenCopyError(error: Error) {
+        presentError(appLanguage: LanguageCodeDomainModel.english.rawValue, error: error)
     }
 }

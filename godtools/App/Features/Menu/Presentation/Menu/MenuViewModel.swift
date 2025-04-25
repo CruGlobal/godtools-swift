@@ -27,6 +27,8 @@ class MenuViewModel: ObservableObject {
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     
+    @Published private(set) var hidesDebugSection: Bool = true
+    
     @Published var navTitle: String = ""
     @Published var getStartedSectionTitle: String = ""
     @Published var accountSectionTitle: String = ""
@@ -54,7 +56,7 @@ class MenuViewModel: ObservableObject {
     @Published var accountSectionVisibility: MenuAccountSectionVisibility = .hidden
     @Published var showsTutorialOption: Bool = false
     
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getMenuInterfaceStringsUseCase: GetMenuInterfaceStringsUseCase, getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getAccountCreationIsSupportedUseCase: GetAccountCreationIsSupportedUseCase, getUserIsAuthenticatedUseCase: GetUserIsAuthenticatedUseCase, logOutUserUseCase: LogOutUserUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getMenuInterfaceStringsUseCase: GetMenuInterfaceStringsUseCase, getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getAccountCreationIsSupportedUseCase: GetAccountCreationIsSupportedUseCase, getUserIsAuthenticatedUseCase: GetUserIsAuthenticatedUseCase, logOutUserUseCase: LogOutUserUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, appBuild: AppBuild) {
         
         self.flowDelegate = flowDelegate
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
@@ -66,6 +68,7 @@ class MenuViewModel: ObservableObject {
         self.logOutUserUseCase = logOutUserUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
+        self.hidesDebugSection = !appBuild.isDebug
         
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
@@ -301,5 +304,14 @@ extension MenuViewModel {
     
     func copyrightInfoTapped() {
         flowDelegate?.navigate(step: .copyrightInfoTappedFromMenu)
+    }
+}
+
+// MARK: - Debug Inputs
+
+extension MenuViewModel {
+    
+    func copyFirebaseDeviceTokenTapped() {
+        flowDelegate?.navigate(step: .copyFirebaseDeviceTokenTappedFromMenu)
     }
 }

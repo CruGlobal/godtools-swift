@@ -128,6 +128,7 @@ enum FlowStep {
     case copyrightInfoTappedFromMenu
     case backTappedFromCopyrightInfo
     case deleteAccountTappedFromMenu
+    case copyFirebaseDeviceTokenTappedFromMenu
         
     // user activity
     case backTappedFromActivity
