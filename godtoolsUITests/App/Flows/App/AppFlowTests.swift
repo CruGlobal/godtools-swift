@@ -12,24 +12,22 @@ import XCTest
 
 class AppFlowTests: BaseFlowTests {
     
-    override func launchApp(flowDeepLinkUrl: String? = nil, checkInitialScreenExists: AccessibilityStrings.Screen? = nil) {
+    private func launchAppToFavorites() {
         
         super.launchApp(
-            flowDeepLinkUrl: flowDeepLinkUrl ?? "godtools://org.cru.godtools/dashboard/favorites",
-            checkInitialScreenExists: checkInitialScreenExists ?? .dashboardFavorites
+            flowDeepLinkUrl: "godtools://org.cru.godtools/dashboard/favorites",
+            checkInitialScreenExists: .dashboardFavorites
         )
     }
     
     func testInitialScreenIsDashboardFavorites() {
         
-        launchApp()
-        
-        super.assertIfInitialScreenDoesntExist(app: app)
+        launchAppToFavorites()
     }
     
     func testNavigationToMenu() {
         
-        launchApp()
+        launchAppToFavorites()
         
         let menuButton = app.queryButton(buttonAccessibility: .dashboardMenu)
         
@@ -108,7 +106,7 @@ extension AppFlowTests {
     
     func testToolDetailsTappedFromAFavoritedToolOpensToolDetails() {
         
-        launchApp()
+        launchAppToFavorites()
         
         tabToFavorites()
                 
@@ -123,7 +121,7 @@ extension AppFlowTests {
     
     func testToolDetailsNavigatesBackToFavoritesWhenOpenedFromFavorites() {
         
-        launchApp()
+        launchAppToFavorites()
         
         tabToFavorites()
         
@@ -151,7 +149,7 @@ extension AppFlowTests {
     
     func testTappingToolsCategoryFilterOpensToolsCategoryFiltersList() {
         
-        launchApp()
+        launchAppToFavorites()
         
         tabToTools()
         
@@ -166,7 +164,7 @@ extension AppFlowTests {
     
     func testTappingToolsLanguageFilterOpensToolsLanguageFiltersList() {
         
-        launchApp()
+        launchAppToFavorites()
         
         tabToTools()
         
@@ -181,7 +179,7 @@ extension AppFlowTests {
     
     func testTappingSpotlightToolFromToolsOpensToolDetails() {
         
-        launchApp()
+        launchAppToFavorites()
         
         tabToTools()
         
@@ -201,7 +199,7 @@ extension AppFlowTests {
     
     func testTappingToolFromToolsOpensToolDetails() {
         
-        launchApp()
+        launchAppToFavorites()
         
         tabToTools()
         
