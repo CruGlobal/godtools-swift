@@ -37,12 +37,11 @@ extension ToolNavigationFlow {
             selectedLanguageIndex: toolDeepLink.selectedLanguageIndex,
             trainingTipsEnabled: false,
             initialPage: toolDeepLink.mobileContentPage,
-            initialPageSubIndex: toolDeepLink.pageSubIndex,
-            shouldPersistToolSettings: false
+            initialPageSubIndex: toolDeepLink.pageSubIndex
         )
     }
     
-    func navigateToTool(appLanguage: AppLanguageDomainModel, resourceId: String, languageIds: [String], liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, shouldPersistToolSettings: Bool) {
+    func navigateToTool(appLanguage: AppLanguageDomainModel, resourceId: String, languageIds: [String], liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, persistToolLanguageSettings: PersistToolLanguageSettingsInterface? = nil) {
         
         let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(
             resourceId: resourceId,
@@ -59,11 +58,11 @@ extension ToolNavigationFlow {
             trainingTipsEnabled: trainingTipsEnabled,
             initialPage: initialPage,
             initialPageSubIndex: initialPageSubIndex,
-            shouldPersistToolSettings: shouldPersistToolSettings
+            persistToolLanguageSettings: persistToolLanguageSettings
         )
     }
     
-    private func navigateToToolAndDetermineToolTranslationsToDownload(appLanguage: AppLanguageDomainModel, determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, shouldPersistToolSettings: Bool) {
+    private func navigateToToolAndDetermineToolTranslationsToDownload(appLanguage: AppLanguageDomainModel, determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, persistToolLanguageSettings: PersistToolLanguageSettingsInterface? = nil) {
         
         let didDownloadToolTranslationsClosure = { [weak self] (result: Result<ToolTranslationsDomainModel, Error>) in
                         
@@ -79,7 +78,7 @@ extension ToolNavigationFlow {
                     trainingTipsEnabled: trainingTipsEnabled,
                     initialPage: initialPage,
                     initialPageSubIndex: initialPageSubIndex,
-                    shouldPersistToolSettings: shouldPersistToolSettings
+                    persistToolLanguageSettings: persistToolLanguageSettings
                 )
                 
             case .failure(let responseError):
@@ -99,7 +98,7 @@ extension ToolNavigationFlow {
         self.downloadToolTranslationFlow = downloadToolTranslationFlow
     }
     
-    private func navigateToTool(appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, shouldPersistToolSettings: Bool) {
+    private func navigateToTool(appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, persistToolLanguageSettings: PersistToolLanguageSettingsInterface?) {
         
         let resourceType: ResourceType = toolTranslations.tool.resourceTypeEnum
         
@@ -140,7 +139,7 @@ extension ToolNavigationFlow {
                 trainingTipsEnabled: trainingTipsEnabled,
                 initialPage: initialPage,
                 initialPageSubIndex: initialPageSubIndex,
-                shouldPersistToolSettings: shouldPersistToolSettings
+                persistToolLanguageSettings: persistToolLanguageSettings
             )
             
         case .chooseYourOwnAdventure:
