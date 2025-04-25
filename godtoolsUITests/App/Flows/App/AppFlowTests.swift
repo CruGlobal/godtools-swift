@@ -12,7 +12,7 @@ import XCTest
 
 class AppFlowTests: BaseFlowTests {
     
-    private func launchAppToFavorites() {
+    private func launchAppToDashboardFavorites() {
         
         super.launchApp(
             flowDeepLinkUrl: "godtools://org.cru.godtools/dashboard/favorites",
@@ -22,12 +22,12 @@ class AppFlowTests: BaseFlowTests {
     
     func testInitialScreenIsDashboardFavorites() {
         
-        launchAppToFavorites()
+        launchAppToDashboardFavorites()
     }
     
     func testNavigationToMenu() {
         
-        launchAppToFavorites()
+        launchAppToDashboardFavorites()
         
         let menuButton = app.queryButton(buttonAccessibility: .dashboardMenu)
         
@@ -106,7 +106,7 @@ extension AppFlowTests {
     
     func testToolDetailsTappedFromAFavoritedToolOpensToolDetails() {
         
-        launchAppToFavorites()
+        launchAppToDashboardFavorites()
         
         tabToFavorites()
                 
@@ -121,7 +121,7 @@ extension AppFlowTests {
     
     func testToolDetailsNavigatesBackToFavoritesWhenOpenedFromFavorites() {
         
-        launchAppToFavorites()
+        launchAppToDashboardFavorites()
         
         tabToFavorites()
         
@@ -149,7 +149,7 @@ extension AppFlowTests {
     
     func testTappingToolsCategoryFilterOpensToolsCategoryFiltersList() {
         
-        launchAppToFavorites()
+        launchAppToDashboardFavorites()
         
         tabToTools()
         
@@ -164,7 +164,7 @@ extension AppFlowTests {
     
     func testTappingToolsLanguageFilterOpensToolsLanguageFiltersList() {
         
-        launchAppToFavorites()
+        launchAppToDashboardFavorites()
         
         tabToTools()
         
@@ -179,7 +179,7 @@ extension AppFlowTests {
     
     func testTappingSpotlightToolFromToolsOpensToolDetails() {
         
-        launchAppToFavorites()
+        launchAppToDashboardFavorites()
         
         tabToTools()
         
@@ -199,7 +199,7 @@ extension AppFlowTests {
     
     func testTappingToolFromToolsOpensToolDetails() {
         
-        launchAppToFavorites()
+        launchAppToDashboardFavorites()
         
         tabToTools()
         
