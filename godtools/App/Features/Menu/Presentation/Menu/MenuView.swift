@@ -160,6 +160,20 @@ struct MenuView: View {
                             MenuItemView(imageAssetName: nil, title: viewModel.appVersion, accessibility: nil, tappedClosure: nil)
                         }
                     )
+                    
+                    if !viewModel.hidesDebugSection {
+                        
+                        MenuSectionView(
+                            sectionTitle: "Debug",
+                            menuItemsViewBuilder: {
+                                
+                                MenuItemView(imageAssetName: ImageCatalog.bugReport.name, title: "Copy Firebase Device Token", accessibility: nil, tappedClosure: {
+                                    
+                                    viewModel.copyFirebaseDeviceTokenTapped()
+                                })
+                            }
+                        )
+                    }
                 }
                 .padding(EdgeInsets(top: 0, leading: MenuView.contentHorizontalPadding, bottom: 0, trailing: MenuView.contentHorizontalPadding))
             }
