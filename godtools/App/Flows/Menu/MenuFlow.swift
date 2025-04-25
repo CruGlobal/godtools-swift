@@ -277,8 +277,10 @@ class MenuFlow: Flow {
             }
             
         case .copyFirebaseDeviceTokenTappedFromMenu:
-            copyFirebaseDeviceTokenToClipboard()
-                        
+            if appDiContainer.dataLayer.getAppBuild().isDebug {
+                copyFirebaseDeviceTokenToClipboard()
+            }
+            
         default:
             break
         }
