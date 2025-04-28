@@ -12,6 +12,8 @@ import XCTest
 
 class AppFlowTests: BaseFlowTests {
     
+    static let defaultWaitForScreenExistence: TimeInterval = 1
+    
     private func launchAppToDashboardFavorites() {
         
         super.launchApp(
@@ -51,7 +53,7 @@ extension AppFlowTests {
         
         tab.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: dashboardScreenAccessibility, waitForExistence: 1)
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: dashboardScreenAccessibility, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
     }
     
     private func tabToLessons() {
@@ -116,7 +118,7 @@ extension AppFlowTests {
         
         toolDetails.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .toolDetails, waitForExistence: 1)
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .toolDetails, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
     }
     
     func testToolDetailsNavigatesBackToFavoritesWhenOpenedFromFavorites() {
@@ -139,7 +141,7 @@ extension AppFlowTests {
         
         toolDetailsNavBack.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .dashboardFavorites, waitForExistence: 1)
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .dashboardFavorites, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
     }
 }
 

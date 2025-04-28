@@ -192,7 +192,7 @@ class MenuFlowTests: BaseFlowTests {
 //        
 //        shareGodToolsButton.tap()
 //        
-//        assertIfScreenDoesNotExist(app: app, screenAccessibility: .shareGodTools, waitForExistence: 0.5)
+//        assertIfScreenDoesNotExist(app: app, screenAccessibility: .shareGodTools, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
 //    }
     
     func testNavigationToTermsOfUse() {
