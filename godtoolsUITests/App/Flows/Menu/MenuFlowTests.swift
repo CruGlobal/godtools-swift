@@ -117,7 +117,7 @@ class MenuFlowTests: BaseFlowTests {
         
         sendFeedbackButton.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .sendFeedback)
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .sendFeedback, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
     }
     
     func testNavigationToReportABug() {
