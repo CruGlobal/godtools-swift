@@ -37,11 +37,12 @@ extension ToolNavigationFlow {
             selectedLanguageIndex: toolDeepLink.selectedLanguageIndex,
             trainingTipsEnabled: false,
             initialPage: toolDeepLink.mobileContentPage,
-            initialPageSubIndex: toolDeepLink.pageSubIndex
+            initialPageSubIndex: toolDeepLink.pageSubIndex,
+            toolOpenedFrom: .deepLink
         )
     }
     
-    func navigateToTool(appLanguage: AppLanguageDomainModel, resourceId: String, languageIds: [String], liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, persistToolLanguageSettings: PersistToolLanguageSettingsInterface? = nil) {
+    func navigateToTool(appLanguage: AppLanguageDomainModel, resourceId: String, languageIds: [String], liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, persistToolLanguageSettings: PersistToolLanguageSettingsInterface? = nil, toolOpenedFrom: ToolOpenedFrom) {
         
         let determineToolTranslationsToDownload = DetermineToolTranslationsToDownload(
             resourceId: resourceId,
@@ -58,11 +59,12 @@ extension ToolNavigationFlow {
             trainingTipsEnabled: trainingTipsEnabled,
             initialPage: initialPage,
             initialPageSubIndex: initialPageSubIndex,
-            persistToolLanguageSettings: persistToolLanguageSettings
+            persistToolLanguageSettings: persistToolLanguageSettings,
+            toolOpenedFrom: toolOpenedFrom
         )
     }
     
-    private func navigateToToolAndDetermineToolTranslationsToDownload(appLanguage: AppLanguageDomainModel, determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, persistToolLanguageSettings: PersistToolLanguageSettingsInterface? = nil) {
+    private func navigateToToolAndDetermineToolTranslationsToDownload(appLanguage: AppLanguageDomainModel, determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, persistToolLanguageSettings: PersistToolLanguageSettingsInterface? = nil, toolOpenedFrom: ToolOpenedFrom) {
         
         let didDownloadToolTranslationsClosure = { [weak self] (result: Result<ToolTranslationsDomainModel, Error>) in
                         
@@ -78,7 +80,8 @@ extension ToolNavigationFlow {
                     trainingTipsEnabled: trainingTipsEnabled,
                     initialPage: initialPage,
                     initialPageSubIndex: initialPageSubIndex,
-                    persistToolLanguageSettings: persistToolLanguageSettings
+                    persistToolLanguageSettings: persistToolLanguageSettings,
+                    toolOpenedFrom: toolOpenedFrom
                 )
                 
             case .failure(let responseError):
@@ -98,7 +101,7 @@ extension ToolNavigationFlow {
         self.downloadToolTranslationFlow = downloadToolTranslationFlow
     }
     
-    private func navigateToTool(appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, persistToolLanguageSettings: PersistToolLanguageSettingsInterface?) {
+    private func navigateToTool(appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, persistToolLanguageSettings: PersistToolLanguageSettingsInterface?, toolOpenedFrom: ToolOpenedFrom) {
         
         let resourceType: ResourceType = toolTranslations.tool.resourceTypeEnum
         
@@ -123,7 +126,8 @@ extension ToolNavigationFlow {
                 toolTranslations: toolTranslations,
                 trainingTipsEnabled: trainingTipsEnabled,
                 initialPage: initialPage,
-                initialPageSubIndex: initialPageSubIndex
+                initialPageSubIndex: initialPageSubIndex,
+                toolOpenedFrom: toolOpenedFrom
             )
             
         case .tract:

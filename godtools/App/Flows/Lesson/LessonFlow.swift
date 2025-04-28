@@ -33,7 +33,7 @@ class LessonFlow: ToolNavigationFlow, Flow {
     var tractFlow: TractFlow?
     var downloadToolTranslationFlow: DownloadToolTranslationsFlow?
     
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel, trainingTipsEnabled: Bool, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel, trainingTipsEnabled: Bool, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, toolOpenedFrom: ToolOpenedFrom) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
@@ -47,7 +47,7 @@ class LessonFlow: ToolNavigationFlow, Flow {
             
             navigateToLesson(isNavigatingFromResumeLessonModal: false, initialPage: initialPage, initialPageSubIndex: initialPageSubIndex, animated: true)
         }
-        else if shouldNavigateToResumeLesson {
+        else if shouldNavigateToResumeLesson(toolOpenedFrom: toolOpenedFrom) {
             
             let resumeLessonModal = getResumeLessonModal()
             
@@ -63,19 +63,6 @@ class LessonFlow: ToolNavigationFlow, Flow {
         print("x deinit: \(type(of: self))")
     }
     
-    private var shouldNavigateToResumeLesson:  Bool {
-        
-        let lessonProgressLastViewedPageId: String? = userLessonProgress?.lastViewedPageId
-        
-        let primaryLanguageManifest: Manifest? = toolTranslations.languageTranslationManifests.first?.manifest
-        let visiblePages: [Page] = (primaryLanguageManifest?.pages ?? Array()).filter({!$0.isHidden})
-        let hasLessonProgress: Bool = lessonProgressLastViewedPageId != nil
-        let lessonProgressIsFirstPage: Bool = lessonProgressLastViewedPageId == visiblePages.first?.id
-        let lessonProgressIsLastPage: Bool = lessonProgressLastViewedPageId == visiblePages.last?.id
-        
-        return hasLessonProgress && !lessonProgressIsFirstPage && !lessonProgressIsLastPage
-    }
-    
     private var userLessonProgress: UserLessonProgressDataModel? {
         return appDiContainer.dataLayer.getUserLessonProgressRepository().getLessonProgress(lessonId: lesson.id)
     }
@@ -87,6 +74,27 @@ class LessonFlow: ToolNavigationFlow, Flow {
         }
         
         return .pageId(value: pageId)
+    }
+    
+    private func shouldNavigateToResumeLesson(toolOpenedFrom: ToolOpenedFrom) -> Bool {
+        
+        switch toolOpenedFrom {
+        case .dashboardLessons, .dashboardFavoritesFeaturedLesson:
+            break
+            
+        default:
+            return false
+        }
+        
+        let lessonProgressLastViewedPageId: String? = userLessonProgress?.lastViewedPageId
+        
+        let primaryLanguageManifest: Manifest? = toolTranslations.languageTranslationManifests.first?.manifest
+        let visiblePages: [Page] = (primaryLanguageManifest?.pages ?? Array()).filter({!$0.isHidden})
+        let hasLessonProgress: Bool = lessonProgressLastViewedPageId != nil
+        let lessonProgressIsFirstPage: Bool = lessonProgressLastViewedPageId == visiblePages.first?.id
+        let lessonProgressIsLastPage: Bool = lessonProgressLastViewedPageId == visiblePages.last?.id
+        
+        return hasLessonProgress && !lessonProgressIsFirstPage && !lessonProgressIsLastPage
     }
     
     private func configureNavigationBar(shouldAnimateNavigationBarHiddenState: Bool) {
