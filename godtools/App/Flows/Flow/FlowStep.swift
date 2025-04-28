@@ -13,8 +13,7 @@ import Combine
 enum FlowStep {
     
     // app
-    case appLaunchedFromTerminatedState
-    case appLaunchedFromBackgroundState
+    case appLaunched(state: AppLaunchState)
     case deepLink(deepLinkType: ParsedDeepLinkType)
     case showOnboardingTutorial(animated: Bool)
     case onboardingFlowCompleted(onboardingFlowCompletedState: OnboardingFlowCompletedState?)
@@ -129,6 +128,7 @@ enum FlowStep {
     case copyrightInfoTappedFromMenu
     case backTappedFromCopyrightInfo
     case deleteAccountTappedFromMenu
+    case copyFirebaseDeviceTokenTappedFromMenu
         
     // user activity
     case backTappedFromActivity
