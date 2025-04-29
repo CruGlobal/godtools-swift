@@ -52,7 +52,7 @@ class BaseFlowTests: XCTestCase {
         
         if let initialScreen = initialScreen {
             
-            assertIfScreenDoesNotExist(app: app, screenAccessibility: initialScreen)
+            assertIfScreenDoesNotExist(app: app, screenAccessibility: initialScreen, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
         }
         else {
             
