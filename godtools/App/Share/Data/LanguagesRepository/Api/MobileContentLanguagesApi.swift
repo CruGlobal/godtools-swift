@@ -32,7 +32,7 @@ class MobileContentLanguagesApi {
         return ignoreCacheSession.session
     }
     
-    private func getRequestSender(requestPriority: SendRequestPriority) -> RequestSender {
+    private func getRequestSender(requestPriority: SendRequestPriority = .medium) -> RequestSender {
         return priorityRequestSender.createPriorityRequestSender(
             urlSession: urlSession,
             sendRequestPriority: requestPriority
