@@ -16,21 +16,34 @@ class MobileContentLanguagesApi {
         static let languages = "/languages"
     }
     
+    private let ignoreCacheSession: IgnoreCacheSession
     private let requestBuilder: RequestBuilder = RequestBuilder()
-    private let requestSender: RequestSender
+    private let priorityRequestSender: PriorityRequestSenderInterface
     private let baseUrl: String
     
-    init(config: AppConfig, ignoreCacheSession: IgnoreCacheSession) {
+    init(config: AppConfig, ignoreCacheSession: IgnoreCacheSession, priorityRequestSender: PriorityRequestSenderInterface) {
             
-        requestSender = RequestSender(session: ignoreCacheSession.session)
+        self.ignoreCacheSession = ignoreCacheSession
+        self.priorityRequestSender = priorityRequestSender
         baseUrl = config.getMobileContentApiBaseUrl()
+    }
+    
+    private var urlSession: URLSession {
+        return ignoreCacheSession.session
+    }
+    
+    private func getRequestSender(requestPriority: SendRequestPriority) -> RequestSender {
+        return priorityRequestSender.createPriorityRequestSender(
+            urlSession: urlSession,
+            sendRequestPriority: requestPriority
+        )
     }
     
     private func getLanguagesRequest() -> URLRequest {
         
         return requestBuilder.build(
             parameters: RequestBuilderParameters(
-                urlSession: requestSender.session,
+                urlSession: urlSession,
                 urlString: baseUrl + Path.languages,
                 method: .get,
                 headers: nil,
@@ -44,7 +57,7 @@ class MobileContentLanguagesApi {
         
         let urlRequest: URLRequest = getLanguagesRequest()
         
-        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest)
+        return getRequestSender(requestPriority: .medium).sendDataTaskPublisher(urlRequest: urlRequest)
             .decodeRequestDataResponseForSuccessCodable()
             .map { (response: RequestCodableResponse<JsonApiResponseDataArray<LanguageModel>, NoResponseCodable>) in
                 

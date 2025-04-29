@@ -168,7 +168,8 @@ class AppDataLayerDependencies {
         
         let api = MobileContentLanguagesApi(
             config: getAppConfig(),
-            ignoreCacheSession: sharedIgnoreCacheSession
+            ignoreCacheSession: sharedIgnoreCacheSession,
+            priorityRequestSender: getSharedPriorityRequestSender()
         )
         
         let cache = RealmLanguagesCache(
@@ -296,6 +297,10 @@ class AppDataLayerDependencies {
     
     func getSharedLaunchCountRepository() -> LaunchCountRepository {
         return LaunchCountRepository.shared
+    }
+    
+    func getSharedPriorityRequestSender() -> PriorityRequestSenderInterface {
+        return TempPriorityRequestSender.shared
     }
     
     func getSharedRealmDatabase() -> RealmDatabase {
