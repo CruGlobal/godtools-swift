@@ -12,24 +12,24 @@ import XCTest
 
 class AppFlowTests: BaseFlowTests {
     
-    override func launchApp(flowDeepLinkUrl: String? = nil, checkInitialScreenExists: AccessibilityStrings.Screen? = nil) {
+    static let defaultWaitForScreenExistence: TimeInterval = 1
+    
+    private func launchAppToDashboardFavorites() {
         
         super.launchApp(
-            flowDeepLinkUrl: flowDeepLinkUrl ?? "godtools://org.cru.godtools/dashboard/favorites",
-            checkInitialScreenExists: checkInitialScreenExists ?? .dashboardFavorites
+            flowDeepLinkUrl: "godtools://org.cru.godtools/dashboard/favorites",
+            checkInitialScreenExists: .dashboardFavorites
         )
     }
     
     func testInitialScreenIsDashboardFavorites() {
         
-        launchApp()
-        
-        super.assertIfInitialScreenDoesntExist(app: app)
+        launchAppToDashboardFavorites()
     }
     
     func testNavigationToMenu() {
         
-        launchApp()
+        launchAppToDashboardFavorites()
         
         let menuButton = app.queryButton(buttonAccessibility: .dashboardMenu)
         
@@ -53,7 +53,7 @@ extension AppFlowTests {
         
         tab.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: dashboardScreenAccessibility, waitForExistence: 1)
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: dashboardScreenAccessibility, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
     }
     
     private func tabToLessons() {
@@ -108,7 +108,7 @@ extension AppFlowTests {
     
     func testToolDetailsTappedFromAFavoritedToolOpensToolDetails() {
         
-        launchApp()
+        launchAppToDashboardFavorites()
         
         tabToFavorites()
                 
@@ -118,12 +118,12 @@ extension AppFlowTests {
         
         toolDetails.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .toolDetails, waitForExistence: 1)
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .toolDetails, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
     }
     
     func testToolDetailsNavigatesBackToFavoritesWhenOpenedFromFavorites() {
         
-        launchApp()
+        launchAppToDashboardFavorites()
         
         tabToFavorites()
         
@@ -141,7 +141,7 @@ extension AppFlowTests {
         
         toolDetailsNavBack.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .dashboardFavorites, waitForExistence: 1)
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .dashboardFavorites, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
     }
 }
 
@@ -151,7 +151,7 @@ extension AppFlowTests {
     
     func testTappingToolsCategoryFilterOpensToolsCategoryFiltersList() {
         
-        launchApp()
+        launchAppToDashboardFavorites()
         
         tabToTools()
         
@@ -166,7 +166,7 @@ extension AppFlowTests {
     
     func testTappingToolsLanguageFilterOpensToolsLanguageFiltersList() {
         
-        launchApp()
+        launchAppToDashboardFavorites()
         
         tabToTools()
         
@@ -181,7 +181,7 @@ extension AppFlowTests {
     
     func testTappingSpotlightToolFromToolsOpensToolDetails() {
         
-        launchApp()
+        launchAppToDashboardFavorites()
         
         tabToTools()
         
@@ -201,7 +201,7 @@ extension AppFlowTests {
     
     func testTappingToolFromToolsOpensToolDetails() {
         
-        launchApp()
+        launchAppToDashboardFavorites()
         
         tabToTools()
         
