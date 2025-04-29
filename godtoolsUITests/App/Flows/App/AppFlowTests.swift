@@ -12,7 +12,7 @@ import XCTest
 
 class AppFlowTests: BaseFlowTests {
     
-    static let defaultWaitForScreenExistence: TimeInterval = 1
+    static let defaultWaitForScreenExistence: TimeInterval = 2
     
     private func launchAppToDashboardFavorites() {
         

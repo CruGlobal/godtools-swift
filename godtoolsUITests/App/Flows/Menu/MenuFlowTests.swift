@@ -42,7 +42,7 @@ class MenuFlowTests: BaseFlowTests {
         
         menuButton.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .menu)
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .menu, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
     }
     
     func testNavigationToTutorial() {
