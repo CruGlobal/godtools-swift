@@ -59,6 +59,7 @@ struct AllYourFavoriteToolsView: View {
                             }
                         )
                         .buttonStyle(.plain)
+                        .listRowBackground(Color.clear)
                         .listRowSeparator(.hidden)
                     }
                     .onMove { from, to in
