@@ -87,6 +87,18 @@ class TractPageCardViewModel: MobileContentViewModel {
         return ""
     }
     
+    private func getTranslatedStringFromToolLanguageElseAppLanguage(localizedKey: String) -> String {
+        
+        if let languageTranslation = localizationServices.stringsRepository.stringForLocale(localeIdentifier: renderedPageContext.language.localeId, key: localizedKey) {
+            return languageTranslation
+        }
+        else if let appLanguageTranslation = localizationServices.stringsRepository.stringForLocale(localeIdentifier: renderedPageContext.appLanguage, key: localizedKey) {
+            return appLanguageTranslation
+        }
+        
+        return localizationServices.stringForEnglish(key: localizedKey)
+    }
+    
     var title: String? {
         return cardModel.label?.text
     }
@@ -124,14 +136,7 @@ class TractPageCardViewModel: MobileContentViewModel {
         
         let prevLocalizedKey: String = LocalizableStringKeys.cardPrevButtonTitle.key
         
-        if let languageTranslation = localizationServices.stringsRepository.stringForLocale(localeIdentifier: renderedPageContext.language.localeId, key: prevLocalizedKey) {
-            return languageTranslation
-        }
-        else if let appLanguageTranslation = localizationServices.stringsRepository.stringForLocale(localeIdentifier: renderedPageContext.appLanguage, key: prevLocalizedKey) {
-            return appLanguageTranslation
-        }
-        
-        return localizationServices.stringForEnglish(key: prevLocalizedKey)
+        return getTranslatedStringFromToolLanguageElseAppLanguage(localizedKey: prevLocalizedKey)
     }
     
     var previousButtonTitleColor: UIColor {
@@ -146,14 +151,7 @@ class TractPageCardViewModel: MobileContentViewModel {
         
         let nextLocalizedKey: String = LocalizableStringKeys.cardNextButtonTitle.key
         
-        if let languageTranslation = localizationServices.stringsRepository.stringForLocale(localeIdentifier: renderedPageContext.language.localeId, key: nextLocalizedKey) {
-            return languageTranslation
-        }
-        else if let appLanguageTranslation = localizationServices.stringsRepository.stringForLocale(localeIdentifier: renderedPageContext.appLanguage, key: nextLocalizedKey) {
-            return appLanguageTranslation
-        }
-        
-        return localizationServices.stringForEnglish(key: nextLocalizedKey)
+        return getTranslatedStringFromToolLanguageElseAppLanguage(localizedKey: nextLocalizedKey)
     }
     
     var nextButtonTitleColor: UIColor {
