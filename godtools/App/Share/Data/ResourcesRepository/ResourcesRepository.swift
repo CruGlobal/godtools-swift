@@ -73,7 +73,7 @@ class ResourcesRepository {
             .flatMap { (resource: ResourceModel?) -> AnyPublisher<ResourceModel?, Error> in
                 
                 if let resource = resource {
-                    return self.cache.storeResourcePublisher(resource: resource)
+                    return self.cache.storeResourcesPublisher(resources: [resource])
                         .map {
                             return $0.first
                         }
