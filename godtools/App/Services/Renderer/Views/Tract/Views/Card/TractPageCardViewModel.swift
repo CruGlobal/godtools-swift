@@ -121,7 +121,10 @@ class TractPageCardViewModel: MobileContentViewModel {
     }
     
     var previousButtonTitle: String? {
-        return localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: renderedPageContext.language.localeId, key: "card_status1")
+        
+        let prevLocalizedKey: String = LocalizableStringKeys.cardPrevButtonTitle.key
+        
+        return localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: renderedPageContext.language.localeId, key: prevLocalizedKey)
     }
     
     var previousButtonTitleColor: UIColor {
@@ -133,7 +136,10 @@ class TractPageCardViewModel: MobileContentViewModel {
     }
     
     var nextButtonTitle: String? {
-        return localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: renderedPageContext.language.localeId, key: "card_status2")
+        
+        let nextLocalizedKey: String = LocalizableStringKeys.cardNextButtonTitle.key
+        
+        return localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: renderedPageContext.language.localeId, key: nextLocalizedKey)
     }
     
     var nextButtonTitleColor: UIColor {
