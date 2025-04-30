@@ -67,6 +67,26 @@ class ResourcesRepository {
             .eraseToAnyPublisher()
     }
     
+    func getResourcePublisher(id: String) -> AnyPublisher<ResourceModel?, Error> {
+        
+        return api.getResourcePublisher(id: id)
+            .flatMap { (resource: ResourceModel?) -> AnyPublisher<ResourceModel?, Error> in
+                
+                if let resource = resource {
+                    return self.cache.storeResourcePublisher(resource: resource)
+                        .map {
+                            return $0.first
+                        }
+                        .eraseToAnyPublisher()
+                }
+                else {
+                    return Just(nil).setFailureType(to: Error.self)
+                        .eraseToAnyPublisher()
+                }
+            }
+            .eraseToAnyPublisher()
+    }
+    
     func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments() -> AnyPublisher<RealmResourcesCacheSyncResult, Error> {
         
         return syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFileIfNeeded()

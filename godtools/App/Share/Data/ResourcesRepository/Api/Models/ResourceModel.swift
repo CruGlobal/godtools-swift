@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ResourceModel: ResourceModelType, Decodable, Identifiable {
+struct ResourceModel: ResourceModelType, Codable, Identifiable {
     
     let abbreviation: String
     let attrAboutBannerAnimation: String

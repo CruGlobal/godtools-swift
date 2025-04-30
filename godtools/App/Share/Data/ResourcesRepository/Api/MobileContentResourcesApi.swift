@@ -36,6 +36,33 @@ class MobileContentResourcesApi {
         )
     }
     
+    private func getResourceRequest(id: String) -> URLRequest {
+        
+        return requestBuilder.build(
+            parameters: RequestBuilderParameters(
+                urlSession: requestSender.session,
+                urlString: baseUrl + "/resources/\(id)",
+                method: .get,
+                headers: nil,
+                httpBody: nil,
+                queryItems: nil
+            )
+        )
+    }
+    
+    func getResourcePublisher(id: String) -> AnyPublisher<ResourceModel?, Error> {
+        
+        let urlRequest: URLRequest = getResourceRequest(id: id)
+        
+        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest)
+            .decodeRequestDataResponseForSuccessOrFailureCodable()
+            .map { (response: RequestCodableResponse<JsonApiResponseDataObject<ResourceModel>, NoResponseCodable>) in
+                
+                return response.successCodable?.dataObject
+            }
+            .eraseToAnyPublisher()
+    }
+    
     func getResourcesPlusLatestTranslationsAndAttachments() -> AnyPublisher<ResourcesPlusLatestTranslationsAndAttachmentsModel, Error> {
         
         let urlRequest: URLRequest = getResourcesPlusLatestTranslationsAndAttachmentsRequest()
