@@ -271,7 +271,6 @@ class AppDataLayerDependencies {
             api: api,
             cache: cache,
             attachmentsRepository: getAttachmentsRepository(),
-            translationsRepository: getTranslationsRepository(),
             languagesRepository: getLanguagesRepository()
         )
     }
