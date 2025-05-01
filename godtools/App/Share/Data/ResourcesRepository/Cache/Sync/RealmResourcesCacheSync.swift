@@ -19,13 +19,13 @@ class RealmResourcesCacheSync {
     private let realmDatabase: RealmDatabase
     private let trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository
     
-    required init(realmDatabase: RealmDatabase, trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository) {
+    init(realmDatabase: RealmDatabase, trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository) {
         
         self.realmDatabase = realmDatabase
         self.trackDownloadedTranslationsRepository = trackDownloadedTranslationsRepository
     }
     
-    func syncResources(languagesSyncResult: RealmLanguagesCacheSyncResult, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> {
+    func syncResources(languagesSyncResult: RealmLanguagesCacheSyncResult, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel, shouldRemoveDataThatNoLongerExists: Bool) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> {
              
         return Future() { promise in
 
@@ -38,7 +38,14 @@ class RealmResourcesCacheSync {
                                 
                 // sync new resourecs
                 
-                var existingResourcesMinusNewlyAddedResources: [RealmResource] = Array(realm.objects(RealmResource.self))
+                var existingResourcesMinusNewlyAddedResources: [RealmResource]
+                
+                if shouldRemoveDataThatNoLongerExists {
+                    existingResourcesMinusNewlyAddedResources = Array(realm.objects(RealmResource.self))
+                }
+                else {
+                    existingResourcesMinusNewlyAddedResources = Array()
+                }
                 
                 if !resourcesPlusLatestTranslationsAndAttachments.resources.isEmpty {
                     
@@ -64,6 +71,13 @@ class RealmResourcesCacheSync {
                 // sync new translations
                 
                 var existingTranslationsMinusNewlyAddedTranslations: [RealmTranslation] = Array(realm.objects(RealmTranslation.self))
+                
+                if shouldRemoveDataThatNoLongerExists {
+                    existingTranslationsMinusNewlyAddedTranslations = Array(realm.objects(RealmTranslation.self))
+                }
+                else {
+                    existingTranslationsMinusNewlyAddedTranslations = Array()
+                }
                 
                 if !resourcesPlusLatestTranslationsAndAttachments.translations.isEmpty {
                     
@@ -98,6 +112,13 @@ class RealmResourcesCacheSync {
                 // sync new attachments
                 
                 var existingAttachmentsMinusNewlyAddedAttachments: [RealmAttachment] = Array(realm.objects(RealmAttachment.self))
+                
+                if shouldRemoveDataThatNoLongerExists {
+                    existingAttachmentsMinusNewlyAddedAttachments = Array(realm.objects(RealmAttachment.self))
+                }
+                else {
+                    existingAttachmentsMinusNewlyAddedAttachments = Array()
+                }
                 
                 if !resourcesPlusLatestTranslationsAndAttachments.attachments.isEmpty {
                     

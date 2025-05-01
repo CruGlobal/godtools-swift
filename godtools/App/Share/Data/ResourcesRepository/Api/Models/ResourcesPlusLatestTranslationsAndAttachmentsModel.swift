@@ -36,7 +36,8 @@ struct ResourcesPlusLatestTranslationsAndAttachmentsModel: Codable {
     init(from decoder: Decoder) throws {
                 
         let container = try decoder.container(keyedBy: RootKeys.self)
-        resources = try container.decode([ResourceModel].self, forKey: .data)
+        
+        resources = Self.decodeResources(container: container)
         
         var includedUnkeyedContainer: UnkeyedDecodingContainer = try container.nestedUnkeyedContainer(forKey: .included)
         var includedDecoder: UnkeyedDecodingContainer = try container.nestedUnkeyedContainer(forKey: .included)
@@ -65,6 +66,30 @@ struct ResourcesPlusLatestTranslationsAndAttachmentsModel: Codable {
         
         self.attachments = attachments
         self.translations = translations
+    }
+    
+    private static func decodeResources(container: KeyedDecodingContainer<ResourcesPlusLatestTranslationsAndAttachmentsModel.RootKeys>) -> [ResourceModel] {
+                
+        do {
+            let resources: [ResourceModel] = try container.decode([ResourceModel].self, forKey: .data)
+            return resources
+        }
+        catch _ {
+
+        }
+        
+        do {
+            
+            let resourceObject: ScriptJsonApiResponseDataObject<ResourceModel> = try container.decode(ScriptJsonApiResponseDataObject<ResourceModel>.self, forKey: .data)
+            let resource: ResourceModel = resourceObject.dataObject
+            
+            return [resource]
+        }
+        catch _ {
+            
+        }
+        
+        return []
     }
     
     func encode(to encoder: Encoder) throws {
