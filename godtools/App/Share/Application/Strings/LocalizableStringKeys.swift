@@ -17,6 +17,7 @@ enum LocalizableStringKeys: String {
     case articlesRetryDownloadButtonTitle = "articles.downloadArticlesButton.title.retryDownload"
     case cancel = "cancel"
     case cardNextButtonTitle = "card_status2"
+    case cardPrevButtonTitle = "card_status1"
     case close = "close"
     case confirmDeleteAccountTitle = "confirmDeleteAccount.title"
     case confirmDeleteAccountConfirmButtonTitle = "confirmDeleteAccount.confirmButton.title"
