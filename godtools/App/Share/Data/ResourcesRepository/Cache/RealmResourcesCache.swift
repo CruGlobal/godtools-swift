@@ -96,31 +96,6 @@ class RealmResourcesCache {
         
         return resourcesSync.syncResources(languagesSyncResult: languagesSyncResult, resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments)
     }
-    
-    func storeResourcesPublisher(resources: [ResourceModel]) -> AnyPublisher<[ResourceModel], Error> {
-        
-        return realmDatabase.writeObjectsPublisher(updatePolicy: .modified) { (realm: Realm) in
-
-            let objectsToAdd: [RealmResource] = resources.map {
-                
-                let realmResource: RealmResource = RealmResource()
-                realmResource.mapFrom(model: $0)
-               
-                return realmResource
-            }
-            
-            return objectsToAdd
-            
-        } mapInBackgroundClosure: { (realmObjects: [RealmResource]) in
-            
-            let mappedObjects: [ResourceModel] = realmObjects.map {
-                ResourceModel(model: $0)
-            }
-            
-            return mappedObjects
-        }
-        .eraseToAnyPublisher()
-    }
 }
 
 // MARK: - Resources By Filter

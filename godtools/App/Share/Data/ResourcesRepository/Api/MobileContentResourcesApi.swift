@@ -22,19 +22,7 @@ class MobileContentResourcesApi {
         baseUrl = config.getMobileContentApiBaseUrl()
     }
     
-    private func getResourcesPlusLatestTranslationsAndAttachmentsRequest() -> URLRequest {
-        
-        return requestBuilder.build(
-            parameters: RequestBuilderParameters(
-                urlSession: requestSender.session,
-                urlString: baseUrl + "/resources?filter[system]=GodTools&include=latest-translations,attachments",
-                method: .get,
-                headers: nil,
-                httpBody: nil,
-                queryItems: nil
-            )
-        )
-    }
+    // MARK: - Resource
     
     private func getResourceRequest(id: String) -> URLRequest {
         
@@ -61,6 +49,49 @@ class MobileContentResourcesApi {
                 return response.successCodable?.dataObject
             }
             .eraseToAnyPublisher()
+    }
+    
+    private func getResourceRequest(abbreviation: String) -> URLRequest {
+                
+        return requestBuilder.build(
+            parameters: RequestBuilderParameters(
+                urlSession: requestSender.session,
+                urlString: baseUrl + "/resources?filter[abbreviation]=\(abbreviation)",
+                method: .get,
+                headers: nil,
+                httpBody: nil,
+                queryItems: nil
+            )
+        )
+    }
+    
+    func getResourcePublisher(abbreviation: String) -> AnyPublisher<ResourceModel?, Error> {
+        
+        let urlRequest: URLRequest = getResourceRequest(abbreviation: abbreviation)
+        
+        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest)
+            .decodeRequestDataResponseForSuccessOrFailureCodable()
+            .map { (response: RequestCodableResponse<JsonApiResponseDataObject<ResourceModel>, NoResponseCodable>) in
+                
+                return response.successCodable?.dataObject
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    // MARK: - Resources Plus Latest Translations And Attachments
+    
+    private func getResourcesPlusLatestTranslationsAndAttachmentsRequest() -> URLRequest {
+        
+        return requestBuilder.build(
+            parameters: RequestBuilderParameters(
+                urlSession: requestSender.session,
+                urlString: baseUrl + "/resources?filter[system]=GodTools&include=latest-translations,attachments",
+                method: .get,
+                headers: nil,
+                httpBody: nil,
+                queryItems: nil
+            )
+        )
     }
     
     func getResourcesPlusLatestTranslationsAndAttachments() -> AnyPublisher<ResourcesPlusLatestTranslationsAndAttachmentsModel, Error> {
