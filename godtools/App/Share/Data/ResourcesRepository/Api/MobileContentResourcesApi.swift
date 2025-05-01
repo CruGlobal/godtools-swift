@@ -22,6 +22,64 @@ class MobileContentResourcesApi {
         baseUrl = config.getMobileContentApiBaseUrl()
     }
     
+    // MARK: - Resource
+    
+    private func getResourceRequest(id: String) -> URLRequest {
+        
+        return requestBuilder.build(
+            parameters: RequestBuilderParameters(
+                urlSession: requestSender.session,
+                urlString: baseUrl + "/resources/\(id)",
+                method: .get,
+                headers: nil,
+                httpBody: nil,
+                queryItems: nil
+            )
+        )
+    }
+    
+    func getResourcePublisher(id: String) -> AnyPublisher<ResourceModel?, Error> {
+        
+        let urlRequest: URLRequest = getResourceRequest(id: id)
+        
+        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest)
+            .decodeRequestDataResponseForSuccessOrFailureCodable()
+            .map { (response: RequestCodableResponse<JsonApiResponseDataObject<ResourceModel>, NoResponseCodable>) in
+                
+                return response.successCodable?.dataObject
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    private func getResourceRequest(abbreviation: String) -> URLRequest {
+                
+        return requestBuilder.build(
+            parameters: RequestBuilderParameters(
+                urlSession: requestSender.session,
+                urlString: baseUrl + "/resources?filter[abbreviation]=\(abbreviation)",
+                method: .get,
+                headers: nil,
+                httpBody: nil,
+                queryItems: nil
+            )
+        )
+    }
+    
+    func getResourcePublisher(abbreviation: String) -> AnyPublisher<ResourceModel?, Error> {
+        
+        let urlRequest: URLRequest = getResourceRequest(abbreviation: abbreviation)
+        
+        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest)
+            .decodeRequestDataResponseForSuccessOrFailureCodable()
+            .map { (response: RequestCodableResponse<JsonApiResponseDataObject<ResourceModel>, NoResponseCodable>) in
+                
+                return response.successCodable?.dataObject
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    // MARK: - Resources Plus Latest Translations And Attachments
+    
     private func getResourcesPlusLatestTranslationsAndAttachmentsRequest() -> URLRequest {
         
         return requestBuilder.build(

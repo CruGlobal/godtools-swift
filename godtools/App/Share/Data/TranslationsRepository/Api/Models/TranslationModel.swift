@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct TranslationModel: TranslationModelType, Decodable {
+struct TranslationModel: TranslationModelType, Codable {
     
     let id: String
     let isPublished: Bool
