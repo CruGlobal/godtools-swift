@@ -26,6 +26,37 @@ class MobileContentLanguagesApi {
         baseUrl = config.getMobileContentApiBaseUrl()
     }
     
+    // MARK: - Language
+    
+    private func getLanguageRequest(id: String) -> URLRequest {
+        
+        return requestBuilder.build(
+            parameters: RequestBuilderParameters(
+                urlSession: requestSender.session,
+                urlString: baseUrl + "\(Path.languages)/\(id)",
+                method: .get,
+                headers: nil,
+                httpBody: nil,
+                queryItems: nil
+            )
+        )
+    }
+    
+    func getLanguagePublisher(id: String) -> AnyPublisher<LanguageModel?, Error> {
+        
+        let urlRequest: URLRequest = getLanguageRequest(id: id)
+        
+        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest)
+            .decodeRequestDataResponseForSuccessOrFailureCodable()
+            .map { (response: RequestCodableResponse<JsonApiResponseDataObject<LanguageModel>, NoResponseCodable>) in
+                
+                return response.successCodable?.dataObject
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    // MARK: - Languages
+    
     private func getLanguagesRequest() -> URLRequest {
         
         return requestBuilder.build(
