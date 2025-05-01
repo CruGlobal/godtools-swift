@@ -1,5 +1,5 @@
 //
-//  DetermineToolTranslationsToDownloadType.swift
+//  DetermineToolTranslationsToDownloadInterface.swift
 //  godtools
 //
 //  Created by Levi Eggert on 1/14/22.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol DetermineToolTranslationsToDownloadType {
+protocol DetermineToolTranslationsToDownloadInterface {
     
     func getResource() -> ResourceModel?
     func determineToolTranslationsToDownload() -> Result<DetermineToolTranslationsToDownloadResult, DetermineToolTranslationsToDownloadError>
