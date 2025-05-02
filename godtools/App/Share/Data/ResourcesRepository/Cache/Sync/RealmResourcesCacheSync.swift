@@ -70,7 +70,7 @@ class RealmResourcesCacheSync {
                 
                 // sync new translations
                 
-                var existingTranslationsMinusNewlyAddedTranslations: [RealmTranslation] = Array(realm.objects(RealmTranslation.self))
+                var existingTranslationsMinusNewlyAddedTranslations: [RealmTranslation]
                 
                 if shouldRemoveDataThatNoLongerExists {
                     existingTranslationsMinusNewlyAddedTranslations = Array(realm.objects(RealmTranslation.self))
@@ -111,7 +111,7 @@ class RealmResourcesCacheSync {
                 
                 // sync new attachments
                 
-                var existingAttachmentsMinusNewlyAddedAttachments: [RealmAttachment] = Array(realm.objects(RealmAttachment.self))
+                var existingAttachmentsMinusNewlyAddedAttachments: [RealmAttachment]
                 
                 if shouldRemoveDataThatNoLongerExists {
                     existingAttachmentsMinusNewlyAddedAttachments = Array(realm.objects(RealmAttachment.self))
