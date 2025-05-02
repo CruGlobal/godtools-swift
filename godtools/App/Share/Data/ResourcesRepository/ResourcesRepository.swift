@@ -10,9 +10,7 @@ import Foundation
 import Combine
 
 class ResourcesRepository {
-        
-    private static var didSyncResourcesFromJsonFileCache: Bool = false
-    
+            
     private let api: MobileContentResourcesApi
     private let cache: RealmResourcesCache
     private let attachmentsRepository: AttachmentsRepository
@@ -107,7 +105,7 @@ class ResourcesRepository {
     
     func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments() -> AnyPublisher<RealmResourcesCacheSyncResult, Error> {
         
-        return syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFileIfNeeded()
+        return syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFile()
             .map({ result in
                     
                 return RealmResourcesCacheSyncResult(
@@ -149,26 +147,15 @@ class ResourcesRepository {
             .eraseToAnyPublisher()
     }
     
-    private func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFileIfNeeded() -> AnyPublisher<RealmResourcesCacheSyncResult?, Error> {
-        
-        guard !ResourcesRepository.didSyncResourcesFromJsonFileCache else {
-            return Just(nil).setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
-        }
-        
-        ResourcesRepository.didSyncResourcesFromJsonFileCache = true
-        
-        guard languagesRepository.numberOfLanguages == 0 && cache.numberOfResources == 0 else {
-            return Just(nil).setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
-        }
-        
-        return syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFile()
-            .eraseToAnyPublisher()
-    }
-    
     func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFile() -> AnyPublisher<RealmResourcesCacheSyncResult?, Error> {
         
+        let resourcesHaveBeenSynced: Bool = languagesRepository.numberOfLanguages > 0 && cache.numberOfResources > 0
+        
+        guard !resourcesHaveBeenSynced else {
+            return Just(nil).setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
+        }
+                
         return Publishers
             .CombineLatest(
                 languagesRepository.syncLanguagesFromJsonFileCache(),
