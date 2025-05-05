@@ -22,14 +22,14 @@ class MobileContentResourcesApi {
         baseUrl = config.getMobileContentApiBaseUrl()
     }
     
-    // MARK: - Resource
+    // MARK: - Resource Plus Latest Translations And Attachments
     
-    private func getResourceRequest(id: String) -> URLRequest {
+    private func getResourcePlusLatestTranslationsAndAttachmentsRequest(id: String) -> URLRequest {
         
         return requestBuilder.build(
             parameters: RequestBuilderParameters(
                 urlSession: requestSender.session,
-                urlString: baseUrl + "/resources/\(id)",
+                urlString: baseUrl + "/resources/\(id)?include=latest-translations,attachments",
                 method: .get,
                 headers: nil,
                 httpBody: nil,
@@ -38,25 +38,26 @@ class MobileContentResourcesApi {
         )
     }
     
-    func getResourcePublisher(id: String) -> AnyPublisher<ResourceModel?, Error> {
+    func getResourcePlusLatestTranslationsAndAttachmentsPublisher(id: String) -> AnyPublisher<ResourcesPlusLatestTranslationsAndAttachmentsModel, Error> {
         
-        let urlRequest: URLRequest = getResourceRequest(id: id)
+        let urlRequest: URLRequest = getResourcePlusLatestTranslationsAndAttachmentsRequest(id: id)
         
         return requestSender.sendDataTaskPublisher(urlRequest: urlRequest)
             .decodeRequestDataResponseForSuccessOrFailureCodable()
-            .map { (response: RequestCodableResponse<JsonApiResponseDataObject<ResourceModel>, NoResponseCodable>) in
+            .map { (response: RequestCodableResponse<ResourcesPlusLatestTranslationsAndAttachmentsModel, NoResponseCodable>) in
                 
-                return response.successCodable?.dataObject
+                let resources: ResourcesPlusLatestTranslationsAndAttachmentsModel = response.successCodable ?? ResourcesPlusLatestTranslationsAndAttachmentsModel.emptyModel
+                return resources
             }
             .eraseToAnyPublisher()
     }
     
-    private func getResourceRequest(abbreviation: String) -> URLRequest {
+    private func getResourcePlusLatestTranslationsAndAttachmentsRequest(abbreviation: String) -> URLRequest {
                 
         return requestBuilder.build(
             parameters: RequestBuilderParameters(
                 urlSession: requestSender.session,
-                urlString: baseUrl + "/resources?filter[abbreviation]=\(abbreviation)",
+                urlString: baseUrl + "/resources?filter[abbreviation]=\(abbreviation)&include=latest-translations,attachments",
                 method: .get,
                 headers: nil,
                 httpBody: nil,
@@ -65,15 +66,16 @@ class MobileContentResourcesApi {
         )
     }
     
-    func getResourcePublisher(abbreviation: String) -> AnyPublisher<ResourceModel?, Error> {
+    func getResourcePlusLatestTranslationsAndAttachmentsPublisher(abbreviation: String) -> AnyPublisher<ResourcesPlusLatestTranslationsAndAttachmentsModel, Error> {
         
-        let urlRequest: URLRequest = getResourceRequest(abbreviation: abbreviation)
+        let urlRequest: URLRequest = getResourcePlusLatestTranslationsAndAttachmentsRequest(abbreviation: abbreviation)
         
         return requestSender.sendDataTaskPublisher(urlRequest: urlRequest)
             .decodeRequestDataResponseForSuccessOrFailureCodable()
-            .map { (response: RequestCodableResponse<JsonApiResponseDataObject<ResourceModel>, NoResponseCodable>) in
+            .map { (response: RequestCodableResponse<ResourcesPlusLatestTranslationsAndAttachmentsModel, NoResponseCodable>) in
                 
-                return response.successCodable?.dataObject
+                let resources: ResourcesPlusLatestTranslationsAndAttachmentsModel = response.successCodable ?? ResourcesPlusLatestTranslationsAndAttachmentsModel.emptyModel
+                return resources
             }
             .eraseToAnyPublisher()
     }

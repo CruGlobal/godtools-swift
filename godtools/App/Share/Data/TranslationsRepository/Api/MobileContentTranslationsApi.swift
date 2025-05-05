@@ -22,35 +22,6 @@ class MobileContentTranslationsApi {
         baseUrl = config.getMobileContentApiBaseUrl()
     }
     
-    // MARK: - Translation
-    
-    private func getTranslationRequest(id: String) -> URLRequest {
-        
-        return requestBuilder.build(
-            parameters: RequestBuilderParameters(
-                urlSession: requestSender.session,
-                urlString: baseUrl + "/translations/\(id)",
-                method: .get,
-                headers: nil,
-                httpBody: nil,
-                queryItems: nil
-            )
-        )
-    }
-    
-    func getTranslationPublisher(id: String) -> AnyPublisher<TranslationModel?, Error> {
-        
-        let urlRequest: URLRequest = getTranslationRequest(id: id)
-        
-        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest)
-            .decodeRequestDataResponseForSuccessOrFailureCodable()
-            .map { (response: RequestCodableResponse<JsonApiResponseDataObject<TranslationModel>, NoResponseCodable>) in
-                
-                return response.successCodable?.dataObject
-            }
-            .eraseToAnyPublisher()
-    }
-    
     // MARK: - Files
     
     private func getTranslationFileRequest(fileName: String) -> URLRequest {
