@@ -1,3 +1,6 @@
+"lessons.swipeTutorial.title" = "Wische, um die Seite zu wechseln.";
+"lessons.swipeTutorial.buttonText" = "Alles klar";
+
 /* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
 "lessons.resumeLessonModal.title" = "Fortschritt fortsetzen";
 

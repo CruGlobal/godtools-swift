@@ -1,3 +1,6 @@
+"lessons.swipeTutorial.title" = "밀어서 페이지를 바꾸세요";
+"lessons.swipeTutorial.buttonText" = "알았어";
+
 /* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
 "lessons.resumeLessonModal.title" = "진행 재개";
 
