@@ -14,6 +14,8 @@ import UserNotifications
 
 class OptInNotificationViewModel: ObservableObject {
 
+    var isInitialPrompt: Bool = false
+
     private let viewOptInNotificationUseCase: ViewOptInNotificationUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
 
@@ -22,10 +24,12 @@ class OptInNotificationViewModel: ObservableObject {
     private weak var flowDelegate: FlowDelegate?
 
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    
 
     @Published private(set) var title: String = ""
     @Published private(set) var body: String = ""
     @Published private(set) var allowNotificationsActionTitle: String = ""
+    @Published private(set) var notificationSettingsActionTitle: String = ""
     @Published private(set) var maybeLaterActionTitle: String = ""
 
     init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewOptInNotificationUseCase: ViewOptInNotificationUseCase) {
@@ -51,8 +55,12 @@ class OptInNotificationViewModel: ObservableObject {
                 self?.body = domainModel.interfaceStrings.body
                 self?.allowNotificationsActionTitle =
                     domainModel.interfaceStrings.allowNotificationsActionTitle
+                self?.notificationSettingsActionTitle =
+                domainModel.interfaceStrings.notificationSettingsActionTitle
                 self?.maybeLaterActionTitle =
                     domainModel.interfaceStrings.maybeLaterActionTitle
+                
+                self?.isInitialPrompt = domainModel.isInitialPrompt
 
             }
             .store(in: &cancellables)
@@ -68,8 +76,13 @@ class OptInNotificationViewModel: ObservableObject {
 extension OptInNotificationViewModel {
 
     func allowNotificationsTapped() {
-
-        flowDelegate?.navigate(step: .allowNotificationsTappedFromOptInNotification)
+        
+        if (isInitialPrompt) {
+            flowDelegate?.navigate(step: .allowNotificationsTappedFromOptInNotification)
+        } else {
+            flowDelegate?.navigate(step: .settingsTappedFromOptInNotification)
+        }
+        
     }
 
     func maybeLaterTapped() {

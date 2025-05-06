@@ -58,7 +58,8 @@ class ShouldPromptForOptInNotification: ShouldPromptForOptInNotificationInterfac
                 return false
             }
             
-            let shouldPrompt: Bool = lastPromptedTwoMonthsAgoOrMore || isFirstPromptAttempt
+//            let shouldPrompt: Bool = lastPromptedTwoMonthsAgoOrMore || isFirstPromptAttempt
+            let shouldPrompt: Bool = true
             
             return shouldPrompt
         }

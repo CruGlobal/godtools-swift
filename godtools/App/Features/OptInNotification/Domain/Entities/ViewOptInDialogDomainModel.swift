@@ -6,9 +6,9 @@
 //  Copyright © 2025 Cru. All rights reserved.
 //
 
-import Foundation
-
-struct ViewOptInDialogDomainModel {
-    
-    let interfaceStrings: OptInDialogInterfaceStringsDomainModel
-}
+//import Foundation
+//
+//struct ViewOptInDialogDomainModel {
+//    
+//    let interfaceStrings: OptInDialogInterfaceStringsDomainModel
+//}

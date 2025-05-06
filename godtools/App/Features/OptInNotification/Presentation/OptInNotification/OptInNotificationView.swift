@@ -52,17 +52,17 @@ struct OptInNotificationView: View {
                 viewModel.allowNotificationsTapped()
 
             }) {
-                
                 RoundedRectangle(cornerRadius: 5)
                     .fill(ColorPalette.gtBlue.color)
             }
             .frame(height: 45)
             .overlay(
-                Text(viewModel.allowNotificationsActionTitle)
+                Text(viewModel.isInitialPrompt ? viewModel.allowNotificationsActionTitle : viewModel.notificationSettingsActionTitle)
                     .foregroundColor(.white)
             )
 
             Button(action: {
+                
                 viewModel.maybeLaterTapped()
 
             }) {

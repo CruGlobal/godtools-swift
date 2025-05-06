@@ -6,12 +6,12 @@
 //  Copyright © 2025 Cru. All rights reserved.
 //
 
-import Foundation
-
-struct OptInDialogInterfaceStringsDomainModel {
-    
-    let title: String
-    let body: String
-    let cancelActionTitle: String
-    let settingsActionTitle: String
-}
+//import Foundation
+//
+//struct OptInDialogInterfaceStringsDomainModel {
+//    
+//    let title: String
+//    let body: String
+//    let cancelActionTitle: String
+//    let settingsActionTitle: String
+//}

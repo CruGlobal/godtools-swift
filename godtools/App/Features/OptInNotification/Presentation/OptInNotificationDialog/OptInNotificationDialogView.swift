@@ -6,14 +6,14 @@
 //  Copyright © 2025 Cru. All rights reserved.
 //
 
-import UIKit
-
-class OptInNotificationDialogView: AlertMessageView {
-    init(viewModel: OptInNotificationDialogViewModel) {
-        super.init(viewModel: viewModel)
-    }
-
-    required init(viewModel: AlertMessageViewModelType) {
-        fatalError("init(viewModel:) has not been implemented")
-    }
-}
+//import UIKit
+//
+//class OptInNotificationDialogView: AlertMessageView {
+//    init(viewModel: OptInNotificationDialogViewModel) {
+//        super.init(viewModel: viewModel)
+//    }
+//
+//    required init(viewModel: AlertMessageViewModelType) {
+//        fatalError("init(viewModel:) has not been implemented")
+//    }
+//}

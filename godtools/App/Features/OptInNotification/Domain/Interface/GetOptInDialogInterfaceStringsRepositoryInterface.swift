@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-protocol GetOptInDialogInterfaceStringsRepositoryInterface {
-    
-    func getStringsPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<OptInDialogInterfaceStringsDomainModel, Never>
-}
+//protocol GetOptInDialogInterfaceStringsRepositoryInterface {
+//    
+//    func getStringsPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<OptInDialogInterfaceStringsDomainModel, Never>
+//}
