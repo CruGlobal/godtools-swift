@@ -28,18 +28,7 @@ class MobileContentLanguagesApi {
         baseUrl = config.getMobileContentApiBaseUrl()
     }
     
-    private var urlSession: URLSession {
-        return ignoreCacheSession.session
-    }
-    
-    private func getRequestSender(requestPriority: SendRequestPriority = .medium) -> RequestSender {
-        return priorityRequestSender.createPriorityRequestSender(
-            urlSession: urlSession,
-            sendRequestPriority: requestPriority
-        )
-    }
-    
-    private func getLanguagesRequest() -> URLRequest {
+    private func getLanguagesRequest(urlSession: URLSession) -> URLRequest {
         
         return requestBuilder.build(
             parameters: RequestBuilderParameters(
@@ -55,9 +44,13 @@ class MobileContentLanguagesApi {
     
     func getLanguages() -> AnyPublisher<[LanguageModel], Error> {
         
-        let urlRequest: URLRequest = getLanguagesRequest()
+        let urlSession: URLSession = ignoreCacheSession.session
         
-        return getRequestSender(requestPriority: .medium).sendDataTaskPublisher(urlRequest: urlRequest)
+        let urlRequest: URLRequest = getLanguagesRequest(urlSession: urlSession)
+        
+        let requestSender: RequestSender = priorityRequestSender.createRequestSender(sendRequestPriority: .medium)
+        
+        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
             .decodeRequestDataResponseForSuccessCodable()
             .map { (response: RequestCodableResponse<JsonApiResponseDataArray<LanguageModel>, NoResponseCodable>) in
                 

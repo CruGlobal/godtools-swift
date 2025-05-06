@@ -159,8 +159,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/CruGlobal/localization-services-ios",
       "state" : {
-        "revision" : "6d8f7d243854e3ce7caef1de672b8b7102f8cdbd",
-        "version" : "0.2.1"
+        "revision" : "b4e174fe755f17f8a97ccc20ad2801d954a19beb",
+        "version" : "0.2.2"
       }
     },
     {
@@ -231,8 +231,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/CruGlobal/request-operation-ios.git",
       "state" : {
-        "revision" : "4faace31da2e61d1c81c8ea0ecf6c78062817823",
-        "version" : "1.10.3"
+        "revision" : "051a2433776a600270e9c735fe6edd0323c5f7a1",
+        "version" : "1.11.0"
       }
     },
     {

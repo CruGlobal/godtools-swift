@@ -17,7 +17,7 @@ class TempPriorityRequestSender: PriorityRequestSenderInterface {
         
     }
     
-    func createPriorityRequestSender(urlSession: URLSession, sendRequestPriority: SendRequestPriority) -> RequestSender {
+    func createRequestSender(sendRequestPriority: SendRequestPriority) -> RequestSender {
         
         switch sendRequestPriority {
             
@@ -29,6 +29,6 @@ class TempPriorityRequestSender: PriorityRequestSenderInterface {
             break
         }
         
-        return RequestSender(session: urlSession)
+        return RequestSender()
     }
 }

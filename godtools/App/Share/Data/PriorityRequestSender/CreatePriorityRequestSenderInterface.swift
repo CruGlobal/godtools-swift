@@ -11,5 +11,5 @@ import RequestOperation
 
 protocol CreatePriorityRequestSenderInterface {
     
-    func createPriorityRequestSender(urlSession: URLSession, sendRequestPriority: SendRequestPriority) -> RequestSender
+    func createRequestSender(sendRequestPriority: SendRequestPriority) -> RequestSender
 }

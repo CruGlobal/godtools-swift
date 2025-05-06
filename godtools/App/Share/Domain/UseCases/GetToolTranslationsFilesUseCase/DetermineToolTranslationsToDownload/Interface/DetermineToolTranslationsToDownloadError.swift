@@ -10,7 +10,5 @@ import Foundation
 
 enum DetermineToolTranslationsToDownloadError: Error {
     
-    case failedToFetchResourceFromCache
-    case failedToFetchLanguageFromCache
-    case failedToFetchTranslationFromCache
+    case failedToFetchResourceFromCache(resourceNeeded: DetermineToolTranslationsResourceNeeded)
 }

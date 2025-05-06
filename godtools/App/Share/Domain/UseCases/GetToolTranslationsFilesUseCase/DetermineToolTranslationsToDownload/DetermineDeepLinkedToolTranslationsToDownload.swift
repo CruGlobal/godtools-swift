@@ -8,7 +8,7 @@
 
 import Foundation
 
-class DetermineDeepLinkedToolTranslationsToDownload: DetermineToolTranslationsToDownloadType {
+class DetermineDeepLinkedToolTranslationsToDownload: DetermineToolTranslationsToDownloadInterface {
     
     private let toolDeepLink: ToolDeepLink
     private let resourcesRepository: ResourcesRepository
@@ -32,11 +32,11 @@ class DetermineDeepLinkedToolTranslationsToDownload: DetermineToolTranslationsTo
     func determineToolTranslationsToDownload() -> Result<DetermineToolTranslationsToDownloadResult, DetermineToolTranslationsToDownloadError> {
         
         guard let resource = getResource() else {
-            return .failure(.failedToFetchResourceFromCache)
+            return .failure(.failedToFetchResourceFromCache(resourceNeeded: .abbreviation(value: toolDeepLink.resourceAbbreviation)))
         }
         
         guard let primaryTranslation = getPrimaryTranslation(toolDeepLink: toolDeepLink, resource: resource) else {
-            return .failure(.failedToFetchTranslationFromCache)
+            return .failure(.failedToFetchResourceFromCache(resourceNeeded: .abbreviation(value: toolDeepLink.resourceAbbreviation)))
         }
         
         var translations: [TranslationModel] = [primaryTranslation]
