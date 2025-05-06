@@ -12,5 +12,5 @@ import Combine
 
 protocol GetOptInNotificationInterfaceStringsRepositoryInterface {
     
-    func getStringsPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<OptInNotificationInterfaceStringsDomainModel, Never>
+    func getStringsPublisher(translateInLanguage: AppLanguageDomainModel, isB: Bool) -> AnyPublisher<OptInNotificationInterfaceStringsDomainModel, Never>
 }

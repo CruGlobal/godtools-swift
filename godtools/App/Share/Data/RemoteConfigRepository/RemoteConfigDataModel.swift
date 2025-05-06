@@ -12,4 +12,8 @@ struct RemoteConfigDataModel {
     
     let globalActivityIsEnabled: Bool?
     let toolContentFeaturePageCollectionPageEnabled: Bool?
+    
+    let optInNotificationEnabled: Bool?
+    let optInNotificationPromptLimit: Int?
+    let optInNotificationTimeInterval: Int?
 }

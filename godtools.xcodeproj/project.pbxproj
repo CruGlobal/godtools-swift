@@ -11358,20 +11358,20 @@
 			path = Cache;
 			sourceTree = "<group>";
 		};
-		45F80E362DAECB8D000A2F33 /* LastPromptedOptInNotificationRepository */ = {
+		45F80E362DAECB8D000A2F33 /* OptInNotificationRepository */ = {
 			isa = PBXGroup;
 			children = (
 				45F80E352DAECB8D000A2F33 /* OptInNotificationRepository.swift */,
 				451A77442DB1375A00B130C0 /* OptInNotificationRepositoryInterface.swift */,
 				45F80E342DAECB8D000A2F33 /* Cache */,
 			);
-			path = LastPromptedOptInNotificationRepository;
+			path = OptInNotificationRepository;
 			sourceTree = "<group>";
 		};
 		45F80E372DAECB8D000A2F33 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				45F80E362DAECB8D000A2F33 /* LastPromptedOptInNotificationRepository */,
+				45F80E362DAECB8D000A2F33 /* OptInNotificationRepository */,
 			);
 			path = Data;
 			sourceTree = "<group>";

@@ -3,6 +3,7 @@
 "optInNotification.title" = "Get Tips and Encouragement";
 "optInNotification.body" = "Stay equipped for conversations.\nAllow notifications today.";
 "optInNotification.allowNotifications" = "Allow Notifications";
+"optInNotification.notificationSettings" = "Notification Settings";
 "optInNotification.maybeLater" = "Maybe Later";
 "optInDialog.title" = "Enable Notifications";
 "optInDialog.body" = "Notifications are disabled. Please enable them in Settings.";
