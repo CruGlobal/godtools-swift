@@ -13,16 +13,17 @@ import Combine
 class MobileContentAuthTokenAPI {
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
-    private let requestSender: RequestSender
+    private let requestSender: RequestSender = RequestSender()
+    private let ignoreCacheSession: IgnoreCacheSession
     private let baseURL: String
     
     init(config: AppConfig, ignoreCacheSession: IgnoreCacheSession) {
         
-        requestSender = RequestSender(session: ignoreCacheSession.session)
+        self.ignoreCacheSession = ignoreCacheSession
         baseURL = config.getMobileContentApiBaseUrl()
     }
     
-    private func getAuthTokenRequest(providerToken: MobileContentAuthProviderToken, createUser: Bool) -> URLRequest {
+    private func getAuthTokenRequest(urlSession: URLSession, providerToken: MobileContentAuthProviderToken, createUser: Bool) -> URLRequest {
         
         var attributes: [String: Any] = Dictionary()
         
@@ -66,7 +67,7 @@ class MobileContentAuthTokenAPI {
         
         return requestBuilder.build(
             parameters: RequestBuilderParameters(
-                urlSession: requestSender.session,
+                urlSession: urlSession,
                 urlString: baseURL + "/auth",
                 method: .post,
                 headers: headers,
@@ -78,9 +79,11 @@ class MobileContentAuthTokenAPI {
     
     func fetchAuthTokenPublisher(providerToken: MobileContentAuthProviderToken, createUser: Bool) -> AnyPublisher<MobileContentAuthTokenDecodable, MobileContentApiError> {
         
-        let urlRequest: URLRequest = getAuthTokenRequest(providerToken: providerToken, createUser: createUser)
+        let urlSession: URLSession = ignoreCacheSession.session
         
-        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest)
+        let urlRequest: URLRequest = getAuthTokenRequest(urlSession: urlSession, providerToken: providerToken, createUser: createUser)
+        
+        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
             .decodeRequestDataResponseForSuccessOrFailureCodable()
             .mapError { (error: Error) in
                 return MobileContentApiError.other(error: error)

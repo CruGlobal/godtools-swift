@@ -19,6 +19,7 @@ class PersistUserToolLanguageSettingsUseCase {
     
     func persistUserToolSettingsPublisher(with toolId: String, primaryLanguageId: String, parallelLanguageId: String?) -> AnyPublisher<Bool, Never> {
         
-        return persistUserToolLanguageSettingsRepository.persistUserToolLanguageSettingsPublisher(toolId: toolId, primaryLanguageId: primaryLanguageId, parallelLanguageId: parallelLanguageId)
+        return persistUserToolLanguageSettingsRepository
+            .persistUserToolLanguageSettingsPublisher(toolId: toolId, primaryLanguageId: primaryLanguageId, parallelLanguageId: parallelLanguageId)
     }
 }

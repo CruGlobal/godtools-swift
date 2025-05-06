@@ -17,20 +17,23 @@ class MobileContentLanguagesApi {
     }
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
-    private let requestSender: RequestSender
+    private let requestSender: RequestSender = RequestSender()
+    private let ignoreCacheSession: IgnoreCacheSession
     private let baseUrl: String
     
     init(config: AppConfig, ignoreCacheSession: IgnoreCacheSession) {
             
-        requestSender = RequestSender(session: ignoreCacheSession.session)
+        self.ignoreCacheSession = ignoreCacheSession
         baseUrl = config.getMobileContentApiBaseUrl()
     }
     
-    private func getLanguagesRequest() -> URLRequest {
+    // MARK: - Languages
+    
+    private func getLanguagesRequest(urlSession: URLSession) -> URLRequest {
         
         return requestBuilder.build(
             parameters: RequestBuilderParameters(
-                urlSession: requestSender.session,
+                urlSession: urlSession,
                 urlString: baseUrl + Path.languages,
                 method: .get,
                 headers: nil,
@@ -42,9 +45,11 @@ class MobileContentLanguagesApi {
     
     func getLanguages() -> AnyPublisher<[LanguageModel], Error> {
         
-        let urlRequest: URLRequest = getLanguagesRequest()
+        let urlSession: URLSession = ignoreCacheSession.session
         
-        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest)
+        let urlRequest: URLRequest = getLanguagesRequest(urlSession: urlSession)
+        
+        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
             .decodeRequestDataResponseForSuccessCodable()
             .map { (response: RequestCodableResponse<JsonApiResponseDataArray<LanguageModel>, NoResponseCodable>) in
                 

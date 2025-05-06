@@ -12,12 +12,13 @@ import RequestOperation
 
 class MobileContentAttachmentsApi {
     
-    private let requestSender: RequestSender
+    private let requestSender: RequestSender = RequestSender()
+    private let ignoreCacheSession: IgnoreCacheSession
     private let baseUrl: String
     
     init(config: AppConfig, ignoreCacheSession: IgnoreCacheSession) {
                     
-        requestSender = RequestSender(session: ignoreCacheSession.session)
+        self.ignoreCacheSession = ignoreCacheSession
         baseUrl = config.getMobileContentApiBaseUrl()
     }
     
@@ -25,7 +26,7 @@ class MobileContentAttachmentsApi {
         
         let urlRequest: URLRequest = URLRequest(url: url)
         
-        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest)
+        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: ignoreCacheSession.session)
             .validate()
             .eraseToAnyPublisher()
     }

@@ -63,7 +63,7 @@ class OnboardingFlowTests: BaseFlowTests {
         watchVideoButton.tap()
         
         // Adding waitForExistence I believe helped with the fact this view is presented with an animation. ~Levi
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .watchOnboardingTutorialVideo, waitForExistence: 1)
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .watchOnboardingTutorialVideo, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
     }
     
     private func navigateBackToOnboardingTutorialFromWatchOnboardingTutorialVideo(app: XCUIApplication) {
@@ -85,19 +85,19 @@ class OnboardingFlowTests: BaseFlowTests {
         
         XCTAssertTrue(nextTutorialPageButton.exists)
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .onboardingTutorialPage1, waitForExistence: 0.5)
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .onboardingTutorialPage1, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
         
         nextTutorialPageButton.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .onboardingTutorialPage2, waitForExistence: 0.5)
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .onboardingTutorialPage2, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
         
         nextTutorialPageButton.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .onboardingTutorialPage3, waitForExistence: 0.5)
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .onboardingTutorialPage3, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
         
         nextTutorialPageButton.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .onboardingTutorialPage4, waitForExistence: 0.5)
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .onboardingTutorialPage4, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
     }
     
     func testSkippingOnboardingNavigatesToDashboardFavorites() {

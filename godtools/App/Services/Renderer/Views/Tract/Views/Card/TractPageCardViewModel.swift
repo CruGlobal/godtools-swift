@@ -87,6 +87,18 @@ class TractPageCardViewModel: MobileContentViewModel {
         return ""
     }
     
+    private func getTranslatedStringFromToolLanguageElseAppLanguage(localizedKey: String) -> String {
+        
+        if let languageTranslation = localizationServices.stringsRepository.stringForLocale(localeIdentifier: renderedPageContext.language.localeId, key: localizedKey) {
+            return languageTranslation
+        }
+        else if let appLanguageTranslation = localizationServices.stringsRepository.stringForLocale(localeIdentifier: renderedPageContext.appLanguage, key: localizedKey) {
+            return appLanguageTranslation
+        }
+        
+        return localizationServices.stringForEnglish(key: localizedKey)
+    }
+    
     var title: String? {
         return cardModel.label?.text
     }
@@ -121,7 +133,10 @@ class TractPageCardViewModel: MobileContentViewModel {
     }
     
     var previousButtonTitle: String? {
-        return localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: renderedPageContext.language.localeId, key: "card_status1")
+        
+        let prevLocalizedKey: String = LocalizableStringKeys.cardPrevButtonTitle.key
+        
+        return getTranslatedStringFromToolLanguageElseAppLanguage(localizedKey: prevLocalizedKey)
     }
     
     var previousButtonTitleColor: UIColor {
@@ -133,7 +148,10 @@ class TractPageCardViewModel: MobileContentViewModel {
     }
     
     var nextButtonTitle: String? {
-        return localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: renderedPageContext.language.localeId, key: "card_status2")
+        
+        let nextLocalizedKey: String = LocalizableStringKeys.cardNextButtonTitle.key
+        
+        return getTranslatedStringFromToolLanguageElseAppLanguage(localizedKey: nextLocalizedKey)
     }
     
     var nextButtonTitleColor: UIColor {

@@ -10,21 +10,17 @@ import Foundation
 import Combine
 
 class ResourcesRepository {
-        
-    private static var didSyncResourcesFromJsonFileCache: Bool = false
-    
+            
     private let api: MobileContentResourcesApi
     private let cache: RealmResourcesCache
     private let attachmentsRepository: AttachmentsRepository
-    private let translationsRepository: TranslationsRepository
     private let languagesRepository: LanguagesRepository
     
-    init(api: MobileContentResourcesApi, cache: RealmResourcesCache, attachmentsRepository: AttachmentsRepository, translationsRepository: TranslationsRepository, languagesRepository: LanguagesRepository) {
+    init(api: MobileContentResourcesApi, cache: RealmResourcesCache, attachmentsRepository: AttachmentsRepository, languagesRepository: LanguagesRepository) {
         
         self.api = api
         self.cache = cache
         self.attachmentsRepository = attachmentsRepository
-        self.translationsRepository = translationsRepository
         self.languagesRepository = languagesRepository
     }
     
@@ -67,9 +63,49 @@ class ResourcesRepository {
             .eraseToAnyPublisher()
     }
     
+    func syncResourceAndLatestTranslationsPublisher(resourceId: String) -> AnyPublisher<Void, Error> {
+        
+        return api.getResourcePlusLatestTranslationsAndAttachmentsPublisher(id: resourceId)
+            .flatMap({ (resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<Void, Error> in
+                
+                let languagesSyncResult = RealmLanguagesCacheSyncResult(languagesRemoved: [])
+                
+                return self.cache.syncResources(
+                    languagesSyncResult: languagesSyncResult,
+                    resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments,
+                    shouldRemoveDataThatNoLongerExists: false
+                )
+                .map { _ in
+                    return Void()
+                }
+                .eraseToAnyPublisher()
+            })
+            .eraseToAnyPublisher()
+    }
+    
+    func syncResourceAndLatestTranslationsPublisher(resourceAbbreviation: String) -> AnyPublisher<Void, Error> {
+        
+        return api.getResourcePlusLatestTranslationsAndAttachmentsPublisher(abbreviation: resourceAbbreviation)
+            .flatMap({ (resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<Void, Error> in
+                
+                let languagesSyncResult = RealmLanguagesCacheSyncResult(languagesRemoved: [])
+                
+                return self.cache.syncResources(
+                    languagesSyncResult: languagesSyncResult,
+                    resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments,
+                    shouldRemoveDataThatNoLongerExists: false
+                )
+                .map { _ in
+                    return Void()
+                }
+                .eraseToAnyPublisher()
+            })
+            .eraseToAnyPublisher()
+    }
+    
     func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments() -> AnyPublisher<RealmResourcesCacheSyncResult, Error> {
         
-        return syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFileIfNeeded()
+        return syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFile()
             .map({ result in
                     
                 return RealmResourcesCacheSyncResult(
@@ -111,26 +147,28 @@ class ResourcesRepository {
             .eraseToAnyPublisher()
     }
     
-    private func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFileIfNeeded() -> AnyPublisher<RealmResourcesCacheSyncResult?, Error> {
+    func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFile() -> AnyPublisher<RealmResourcesCacheSyncResult?, Error> {
         
-        guard !ResourcesRepository.didSyncResourcesFromJsonFileCache else {
+        let resourcesHaveBeenSynced: Bool = languagesRepository.numberOfLanguages > 0 && cache.numberOfResources > 0
+        
+        guard !resourcesHaveBeenSynced else {
             return Just(nil).setFailureType(to: Error.self)
                 .eraseToAnyPublisher()
         }
-        
-        ResourcesRepository.didSyncResourcesFromJsonFileCache = true
-        
-        guard languagesRepository.numberOfLanguages == 0 && cache.numberOfResources == 0 else {
-            return Just(nil).setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
-        }
-        
+                
         return Publishers
-            .CombineLatest(languagesRepository.syncLanguagesFromJsonFileCache(), ResourcesJsonFileCache(jsonServices: JsonServices()).getResourcesPlusLatestTranslationsAndAttachments().publisher)
+            .CombineLatest(
+                languagesRepository.syncLanguagesFromJsonFileCache(),
+                ResourcesJsonFileCache(jsonServices: JsonServices()).getResourcesPlusLatestTranslationsAndAttachments().publisher
+            )
             .flatMap({ (languagesSyncResult: RealmLanguagesCacheSyncResult, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> in
                 
-                return self.cache.syncResources(languagesSyncResult: languagesSyncResult, resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments)
-                    .eraseToAnyPublisher()
+                return self.cache.syncResources(
+                    languagesSyncResult: languagesSyncResult,
+                    resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments,
+                    shouldRemoveDataThatNoLongerExists: true
+                )
+                .eraseToAnyPublisher()
             })
             .flatMap({ resourcesCacheResult -> AnyPublisher<RealmResourcesCacheSyncResult?, Error> in
                 
@@ -146,8 +184,12 @@ class ResourcesRepository {
             .CombineLatest(languagesRepository.syncLanguagesFromRemote(), api.getResourcesPlusLatestTranslationsAndAttachments())
             .flatMap({ (languagesSyncResult: RealmLanguagesCacheSyncResult, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> in
                 
-                return self.cache.syncResources(languagesSyncResult: languagesSyncResult, resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments)
-                    .eraseToAnyPublisher()
+                return self.cache.syncResources(
+                    languagesSyncResult: languagesSyncResult,
+                    resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments,
+                    shouldRemoveDataThatNoLongerExists: true
+                )
+                .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
     }
