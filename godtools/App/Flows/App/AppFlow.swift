@@ -1183,19 +1183,19 @@ extension AppFlow {
 
     private func promptForOptInNotificationIfNeeded() {
             
-            cancellableForShouldPromptForOptInNotification = appDiContainer.feature.optInNotification.domainLayer
-                .getShouldPromptForOptInNotificationUseCase()
-                .shouldPromptPublisher()
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] (shouldPrompt: Bool) in
+        cancellableForShouldPromptForOptInNotification = appDiContainer.feature.optInNotification.domainLayer
+            .getShouldPromptForOptInNotificationUseCase()
+            .shouldPromptPublisher()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (shouldPrompt: Bool) in
                     
-                    self?.cancellableForShouldPromptForOptInNotification = nil
+                self?.cancellableForShouldPromptForOptInNotification = nil
                     
-                    if shouldPrompt {
+                if shouldPrompt {
                         self?.presentOptInNotificationFlow()
-                    }
                 }
-        }
+            }
+    }
     
     private func presentOptInNotificationFlow() {
         
