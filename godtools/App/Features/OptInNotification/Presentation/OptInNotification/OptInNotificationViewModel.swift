@@ -14,8 +14,6 @@ import UserNotifications
 
 class OptInNotificationViewModel: ObservableObject {
 
-    var isInitialPrompt: Bool = false
-
     private let viewOptInNotificationUseCase: ViewOptInNotificationUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
 
@@ -25,7 +23,8 @@ class OptInNotificationViewModel: ObservableObject {
 
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     
-
+    @Published private(set) var isInitialPrompt: Bool = false
+    
     @Published private(set) var title: String = ""
     @Published private(set) var body: String = ""
     @Published private(set) var allowNotificationsActionTitle: String = ""
@@ -50,7 +49,9 @@ class OptInNotificationViewModel: ObservableObject {
             .switchToLatest()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (domainModel: ViewOptInNotificationDomainModel) in
-               
+                
+                self?.isInitialPrompt = domainModel.isInitialPrompt
+                
                 self?.title = domainModel.interfaceStrings.title
                 self?.body = domainModel.interfaceStrings.body
                 self?.allowNotificationsActionTitle =
@@ -59,9 +60,6 @@ class OptInNotificationViewModel: ObservableObject {
                 domainModel.interfaceStrings.notificationSettingsActionTitle
                 self?.maybeLaterActionTitle =
                     domainModel.interfaceStrings.maybeLaterActionTitle
-                
-                self?.isInitialPrompt = domainModel.isInitialPrompt
-
             }
             .store(in: &cancellables)
     }

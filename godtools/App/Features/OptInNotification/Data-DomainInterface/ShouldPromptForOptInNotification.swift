@@ -54,7 +54,7 @@ class ShouldPromptForOptInNotification: ShouldPromptForOptInNotificationInterfac
             guard notificationStatus == .denied || notificationStatus == .undetermined else {
                 return false
             }
-
+            
             return lastPrompted < remoteTimeDate || isFirstPromptAttempt
         }
         .eraseToAnyPublisher()
