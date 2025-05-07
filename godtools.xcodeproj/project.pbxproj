@@ -16019,7 +16019,7 @@
 			repositoryURL = "https://github.com/CruGlobal/request-operation-ios.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 1.10.3;
+				minimumVersion = 1.11.0;
 			};
 		};
 		45D40C662A5315B400E8E4AE /* XCRemoteSwiftPackageReference "Starscream" */ = {
