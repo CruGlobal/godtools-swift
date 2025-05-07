@@ -1182,7 +1182,7 @@ extension AppFlow {
 extension AppFlow {
 
     private func promptForOptInNotificationIfNeeded() {
-            
+        
         cancellableForShouldPromptForOptInNotification = appDiContainer.feature.optInNotification.domainLayer
             .getShouldPromptForOptInNotificationUseCase()
             .shouldPromptPublisher()
