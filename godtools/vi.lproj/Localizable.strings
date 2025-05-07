@@ -1,3 +1,6 @@
+"lessons.swipeTutorial.title" = "Vuốt để chuyển trang";
+"lessons.swipeTutorial.buttonText" = "Hiểu rồi";
+
 /* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
 "lessons.resumeLessonModal.title" = "Tiếp tục Tiến trình";
 

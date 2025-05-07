@@ -1,3 +1,6 @@
+"lessons.swipeTutorial.title" = "পেজ পরিবর্তন করতে সোয়াইপ করুন";
+"lessons.swipeTutorial.buttonText" = "বুঝেছি";
+
 /* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
 "lessons.resumeLessonModal.title" = "প্রগতি পুনরায় চালু করুন";
 

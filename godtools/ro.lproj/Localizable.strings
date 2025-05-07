@@ -1,3 +1,6 @@
+"lessons.swipeTutorial.title" = "Glisează pentru a schimba paginile";
+"lessons.swipeTutorial.buttonText" = "Am înțeles";
+
 /* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
 "lessons.resumeLessonModal.title" = "Reia progresul";
 

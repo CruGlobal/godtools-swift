@@ -1,3 +1,6 @@
+"lessons.swipeTutorial.title" = "اسحب لتغيير الصفحات";
+"lessons.swipeTutorial.buttonText" = "فهمت";
+
 /* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
 "lessons.resumeLessonModal.title" = "استئناف التقدم";
 
