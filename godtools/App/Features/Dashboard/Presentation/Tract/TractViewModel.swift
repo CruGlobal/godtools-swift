@@ -48,10 +48,10 @@ class TractViewModel: MobileContentRendererViewModel {
         let primaryManifest: Manifest = renderer.pageRenderers[0].manifest
         
         navBarAppearance = AppNavigationBarAppearance(
-            backgroundColor: primaryManifest.navBarColor,
-            controlColor: primaryManifest.navBarControlColor,
+            backgroundColor: primaryManifest.navBarColor.toUIColor(),
+            controlColor: primaryManifest.navBarControlColor.toUIColor(),
             titleFont: FontLibrary.systemUIFont(size: 17, weight: .semibold),
-            titleColor: primaryManifest.navBarControlColor,
+            titleColor: primaryManifest.navBarControlColor.toUIColor(),
             isTranslucent: true
         )
         

@@ -29,7 +29,7 @@ class TractPageHeaderViewModel: MobileContentViewModel {
     }
     
     var backgroundColor: UIColor {
-        return headerModel.backgroundColor
+        return headerModel.backgroundColor.toUIColor()
     }
     
     func getNumber(numberLabel: UILabel) -> MobileContentTextView? {

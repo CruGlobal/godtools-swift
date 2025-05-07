@@ -58,7 +58,7 @@ class MobileContentPageViewModel: MobileContentViewModel {
     }
     
     var backgroundColor: UIColor {
-        return pageModel.backgroundColor
+        return pageModel.backgroundColor.toUIColor()
     }
     
     func getBackgroundImage(type: BackgroundImageType) -> MobileContentBackgroundImageViewModel? {

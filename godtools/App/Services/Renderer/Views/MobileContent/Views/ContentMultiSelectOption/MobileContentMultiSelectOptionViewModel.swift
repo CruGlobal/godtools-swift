@@ -24,8 +24,8 @@ class MobileContentMultiSelectOptionViewModel: MobileContentViewModel {
         self.multiSelectOptionModel = multiSelectOptionModel
         self.mobileContentAnalytics = mobileContentAnalytics
         
-        backgroundColor = ObservableValue(value: multiSelectOptionModel.backgroundColor)
-        
+        backgroundColor = ObservableValue(value: multiSelectOptionModel.backgroundColor.toUIColor())
+
         hidesShadow = multiSelectOptionModel.style == .flat
         
         super.init(baseModel: multiSelectOptionModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
@@ -36,8 +36,8 @@ class MobileContentMultiSelectOptionViewModel: MobileContentViewModel {
                 return
             }
             
-            let backgroundColor: UIColor = isSelected.boolValue ? weakSelf.multiSelectOptionModel.selectedColor : weakSelf.multiSelectOptionModel.backgroundColor
-            
+            let backgroundColor: UIColor = isSelected.boolValue ? weakSelf.multiSelectOptionModel.selectedColor.toUIColor() : weakSelf.multiSelectOptionModel.backgroundColor.toUIColor()
+
             weakSelf.backgroundColor.accept(value: backgroundColor)
         }
     }
