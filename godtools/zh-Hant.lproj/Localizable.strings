@@ -1,3 +1,6 @@
+"lessons.swipeTutorial.title" = "撥動即可換頁";
+"lessons.swipeTutorial.buttonText" = "知道了";
+
 /* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
 "lessons.resumeLessonModal.title" = "恢復進度";
 
