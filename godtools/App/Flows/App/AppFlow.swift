@@ -1188,11 +1188,11 @@ extension AppFlow {
             .shouldPromptPublisher()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (shouldPrompt: Bool) in
-                    
+                
                 self?.cancellableForShouldPromptForOptInNotification = nil
-                    
+                
                 if shouldPrompt {
-                        self?.presentOptInNotificationFlow()
+                    self?.presentOptInNotificationFlow()
                 }
             }
     }

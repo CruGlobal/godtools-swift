@@ -8,7 +8,7 @@
 
 import Foundation
 
-class OptInNotificationsUserDefaultsCache {
+class OptInNotificationUserDefaultsCache {
 
     enum Key: String, CaseIterable {
         case lastPrompted = "lastPromptedOptInNotification"
@@ -19,7 +19,7 @@ class OptInNotificationsUserDefaultsCache {
 
     static let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = OptInNotificationsUserDefaultsCache.dateFormat
+        formatter.dateFormat = OptInNotificationUserDefaultsCache.dateFormat
         return formatter
     }()
     

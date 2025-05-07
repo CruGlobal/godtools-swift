@@ -1488,7 +1488,7 @@
 		45F7BDD12B7CF0A000BC9691 /* ToolDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F7BDCE2B7CF0A000BC9691 /* ToolDownloader.swift */; };
 		45F7BDD22B7CF0A000BC9691 /* ToolDownloaderDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F7BDCF2B7CF0A000BC9691 /* ToolDownloaderDataModel.swift */; };
 		45F7E7602701F1AA00CC9FB9 /* MobileContentViewVisibilityState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F7E75F2701F1AA00CC9FB9 /* MobileContentViewVisibilityState.swift */; };
-		45F80E382DAECB8D000A2F33 /* OptInNotificationsUserDefaultsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F80E332DAECB8D000A2F33 /* OptInNotificationsUserDefaultsCache.swift */; };
+		45F80E382DAECB8D000A2F33 /* OptInNotificationUserDefaultsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F80E332DAECB8D000A2F33 /* OptInNotificationUserDefaultsCache.swift */; };
 		45F80E392DAECB8D000A2F33 /* OptInNotificationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F80E352DAECB8D000A2F33 /* OptInNotificationRepository.swift */; };
 		45F80E412DAECB9D000A2F33 /* OptInNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F80E3A2DAECB9D000A2F33 /* OptInNotificationView.swift */; };
 		45F80E422DAECB9D000A2F33 /* OptInNotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F80E3B2DAECB9D000A2F33 /* OptInNotificationViewModel.swift */; };
@@ -3230,7 +3230,7 @@
 		45F7BDCE2B7CF0A000BC9691 /* ToolDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolDownloader.swift; sourceTree = "<group>"; };
 		45F7BDCF2B7CF0A000BC9691 /* ToolDownloaderDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolDownloaderDataModel.swift; sourceTree = "<group>"; };
 		45F7E75F2701F1AA00CC9FB9 /* MobileContentViewVisibilityState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentViewVisibilityState.swift; sourceTree = "<group>"; };
-		45F80E332DAECB8D000A2F33 /* OptInNotificationsUserDefaultsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptInNotificationsUserDefaultsCache.swift; sourceTree = "<group>"; };
+		45F80E332DAECB8D000A2F33 /* OptInNotificationUserDefaultsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptInNotificationUserDefaultsCache.swift; sourceTree = "<group>"; };
 		45F80E352DAECB8D000A2F33 /* OptInNotificationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptInNotificationRepository.swift; sourceTree = "<group>"; };
 		45F80E3A2DAECB9D000A2F33 /* OptInNotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptInNotificationView.swift; sourceTree = "<group>"; };
 		45F80E3B2DAECB9D000A2F33 /* OptInNotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptInNotificationViewModel.swift; sourceTree = "<group>"; };
@@ -11333,7 +11333,7 @@
 		45F80E342DAECB8D000A2F33 /* Cache */ = {
 			isa = PBXGroup;
 			children = (
-				45F80E332DAECB8D000A2F33 /* OptInNotificationsUserDefaultsCache.swift */,
+				45F80E332DAECB8D000A2F33 /* OptInNotificationUserDefaultsCache.swift */,
 			);
 			path = Cache;
 			sourceTree = "<group>";
@@ -14585,7 +14585,7 @@
 				4578ED2C2D4C2A2A0032EFD5 /* MobileContentRendererViewModel.swift in Sources */,
 				4512D4C82B29125700DFAFB3 /* ViewToolSettingsToolLanguagesListUseCase.swift in Sources */,
 				455B6BA92D9C48D000815829 /* ActionCableChannelSubscriber.swift in Sources */,
-				45F80E382DAECB8D000A2F33 /* OptInNotificationsUserDefaultsCache.swift in Sources */,
+				45F80E382DAECB8D000A2F33 /* OptInNotificationUserDefaultsCache.swift in Sources */,
 				45F80E392DAECB8D000A2F33 /* OptInNotificationRepository.swift in Sources */,
 				455B6BAA2D9C48D000815829 /* ActionCableEventType.swift in Sources */,
 				455B6BAB2D9C48D000815829 /* WebSocketChannelPublisherInterface.swift in Sources */,

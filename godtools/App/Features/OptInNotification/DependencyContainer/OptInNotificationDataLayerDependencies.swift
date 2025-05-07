@@ -23,7 +23,7 @@ class OptInNotificationDataLayerDependencies {
 
     func getOptInNotificationRepository() -> OptInNotificationRepository {
         return OptInNotificationRepository(
-            cache: OptInNotificationsUserDefaultsCache(sharedUserDefaultsCache:coreDataLayer.getSharedUserDefaultsCache()), remoteConfigRepository: coreDataLayer.getRemoteConfigRepository()
+            cache: OptInNotificationUserDefaultsCache(sharedUserDefaultsCache:coreDataLayer.getSharedUserDefaultsCache()), remoteConfigRepository: coreDataLayer.getRemoteConfigRepository()
         )
     }
     

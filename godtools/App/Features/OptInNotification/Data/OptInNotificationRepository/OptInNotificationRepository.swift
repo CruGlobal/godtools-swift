@@ -10,10 +10,10 @@ import Foundation
 
 class OptInNotificationRepository: OptInNotificationRepositoryInterface {
     
-    private let cache: OptInNotificationsUserDefaultsCache
+    private let cache: OptInNotificationUserDefaultsCache
     private let remoteConfigRepository: RemoteConfigRepository
 
-    init(cache: OptInNotificationsUserDefaultsCache, remoteConfigRepository: RemoteConfigRepository) {
+    init(cache: OptInNotificationUserDefaultsCache, remoteConfigRepository: RemoteConfigRepository) {
         self.cache = cache
         self.remoteConfigRepository = remoteConfigRepository
     }
