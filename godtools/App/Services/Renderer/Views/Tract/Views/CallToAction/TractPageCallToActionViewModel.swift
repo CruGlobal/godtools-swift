@@ -43,11 +43,11 @@ class TractPageCallToActionViewModel: MobileContentViewModel {
     }
     
     var titleColor: UIColor {
-        return callToActionModel?.label?.textColor ?? renderedPageContext.pageModel.textColor
+        return callToActionModel?.label?.textColor.toUIColor() ?? renderedPageContext.pageModel.textColor.toUIColor()
     }
     
     var nextButtonColor: UIColor {
-        return callToActionModel?.controlColor ?? renderedPageContext.pageModel.primaryColor
+        return callToActionModel?.controlColor.toUIColor() ?? renderedPageContext.pageModel.primaryColor.toUIColor()
     }
     
     var nextButtonImage: UIImage? {
