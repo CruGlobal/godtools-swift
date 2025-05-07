@@ -39,12 +39,6 @@ class OptInNotificationDataLayerDependencies {
         )
     }
 
-//    func getOptInDialogInterfaceStringsRepositoryInterface() -> GetOptInDialogInterfaceStringsRepositoryInterface {
-//        return GetOptInDialogInterfaceStringsRepository(
-//            localizationServices: coreDataLayer.getLocalizationServices()
-//        )
-//    }
-
     func getRequestNotificationPermission() -> GetRequestNotificationPermissionInterface {
         return GetRequestNotificationPermission()
     }

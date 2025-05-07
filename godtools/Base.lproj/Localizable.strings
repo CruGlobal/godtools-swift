@@ -5,10 +5,6 @@
 "optInNotification.allowNotifications" = "Allow Notifications";
 "optInNotification.notificationSettings" = "Notification Settings";
 "optInNotification.maybeLater" = "Maybe Later";
-//"optInDialog.title" = "Enable Notifications";
-//"optInDialog.body" = "Notifications are disabled. Please enable them in Settings.";
-//"optInDialog.cancel" = "Cancel";
-//"optInDialog.settings" = "Settings";
 
 /* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
 "lessons.resumeLessonModal.title" = "Resume Progress?";

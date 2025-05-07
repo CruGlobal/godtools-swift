@@ -55,7 +55,7 @@ class ShouldPromptForOptInNotification: ShouldPromptForOptInNotificationInterfac
                 return false
             }
 
-            return lastPrompted > remoteTimeDate || isFirstPromptAttempt
+            return lastPrompted < remoteTimeDate || isFirstPromptAttempt
         }
         .eraseToAnyPublisher()
     }
