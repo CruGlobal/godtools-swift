@@ -21,6 +21,18 @@ class MockOptInNotificationRepository: OptInNotificationRepositoryInterface {
         self.promptCount = promptCount
     }
     
+    func getRemoteFeatureEnabled() -> Bool {
+        return false
+    }
+    
+    func getRemoteTimeInterval() -> Date {
+        return Date()
+    }
+    
+    func getRemotePromptLimit() -> Int {
+        return 0
+    }
+    
     func getLastPrompted() -> Date? {
         return lastPromptedDate
     }
