@@ -24,7 +24,6 @@ class OptInNotificationViewModel: ObservableObject {
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     
     @Published private(set) var isInitialPrompt: Bool = false
-    
     @Published private(set) var title: String = ""
     @Published private(set) var body: String = ""
     @Published private(set) var allowNotificationsActionTitle: String = ""
@@ -75,7 +74,7 @@ extension OptInNotificationViewModel {
 
     func allowNotificationsTapped() {
         
-        if (isInitialPrompt) {
+        if isInitialPrompt {
             flowDelegate?.navigate(step: .allowNotificationsTappedFromOptInNotification)
         } else {
             flowDelegate?.navigate(step: .settingsTappedFromOptInNotification)

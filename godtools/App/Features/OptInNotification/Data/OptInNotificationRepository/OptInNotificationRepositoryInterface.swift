@@ -13,7 +13,6 @@ protocol OptInNotificationRepositoryInterface {
     func getRemoteFeatureEnabled() -> Bool
     func getRemoteTimeInterval() -> Date
     func getRemotePromptLimit() -> Int
-    
     func getLastPrompted() -> Date?
     func getPromptCount() -> Int
     func recordPrompt()
