@@ -17,6 +17,11 @@
       "rangeStrategy": "update-lockfile"
     },
     {
+      "matchManagers": ["bundler", "ruby-version"],
+      "matchPackageNames": ["ruby"],
+      "separateMultipleMinor": true
+    },
+    {
       "matchManagers": [
         "cocoapods"
       ],

@@ -29,6 +29,8 @@ class GetOptInNotificationInterfaceStringsRepository: GetOptInNotificationInterf
             allowNotificationsActionTitle:
                 localizationServices.stringForLocaleElseEnglish(
                     localeIdentifier: translateInLanguage, key: "optInNotification.allowNotifications"),
+            notificationSettingsActionTitle: localizationServices.stringForLocaleElseEnglish(
+                localeIdentifier: translateInLanguage, key: "optInNotification.notificationSettings"),
             maybeLaterActionTitle:
                 localizationServices.stringForLocaleElseEnglish(
                     localeIdentifier: translateInLanguage, key: "optInNotification.maybeLater")

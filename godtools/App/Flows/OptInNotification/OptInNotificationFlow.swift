@@ -49,41 +49,9 @@ class OptInNotificationFlow: Flow {
             completeFlow(state: .completed)
             
         case .allowNotificationsTappedFromOptInNotification:
-                            
-            checkNotificationStatusCancellable = appDiContainer.feature.optInNotification.domainLayer
-                .getCheckNotificationStatusUseCase()
-                .getPermissionStatusPublisher()
-                .receive(on: DispatchQueue.main)
-                .sink(receiveValue: { [weak self] (status: PermissionStatusDomainModel) in
-                    
-                    self?.checkNotificationStatusCancellable = nil
-                    
-                    self?.navigationController.dismissPresented(animated: true, completion: {
-                        
-                        switch status {
-                            
-                        case .undetermined:
-                            self?.presentRequestNotificationPermission()
-                        
-                        case .approved:
-                            self?.completeFlow(state: .completed)
-                        
-                        case .denied:
-                            self?.presentOptInNotificationDialogView(animated: true)
-                        
-                        case .unknown:
-                            self?.presentOptInNotificationDialogView(animated: true)
-                        }
-                    })
-                })
+            presentRequestNotificationPermission()
             
-        case .maybeLaterTappedFromOptInNotification:
-            completeFlow(state: .completed)
-            
-        case .cancelTappedFromOptInNotificationDialog:
-            completeFlow(state: .completed)
-            
-        case .settingsTappedFromOptInNotificationDialog:
+        case .settingsTappedFromOptInNotification:
             
             completeFlow(state: .completed)
             
@@ -92,6 +60,9 @@ class OptInNotificationFlow: Flow {
             }
 
             UIApplication.shared.open(settingsURL, options: [:], completionHandler: nil)
+            
+        case .maybeLaterTappedFromOptInNotification:
+            completeFlow(state: .completed)
             
         case .dontAllowTappedFromRequestNotificationPermission:
             completeFlow(state: .completed)
@@ -148,42 +119,5 @@ extension OptInNotificationFlow {
                 }
             }
             .store(in: &cancellables)
-    }
-}
-
-// MARK: - Notification Dialog
-
-extension OptInNotificationFlow {
-    
-    private func presentOptInNotificationDialogView(animated: Bool) {
-        
-        appDiContainer.feature.optInNotification.domainLayer
-            .getViewOptInDialogUseCase()
-            .viewPublisher(appLanguage: appLanguage)
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (domainModel: ViewOptInDialogDomainModel) in
-                
-                self?.presentOptInNotificationDialogView(domainModel: domainModel, animated: true)
-            }
-            .store(in: &cancellables)
-    }
-    
-    private func presentOptInNotificationDialogView(domainModel: ViewOptInDialogDomainModel, animated: Bool) {
-        
-        let view = getOptInNotificationDialogView(domainModel: domainModel)
-
-        navigationController.present(view, animated: animated)
-    }
-    
-    private func getOptInNotificationDialogView(domainModel: ViewOptInDialogDomainModel) -> UIViewController {
-        
-        let viewModel = OptInNotificationDialogViewModel(
-            flowDelegate: self,
-            viewOptInDialogDomainModel: domainModel
-        )
-        
-        let view = OptInNotificationDialogView(viewModel: viewModel)
-        
-        return view.controller
     }
 }

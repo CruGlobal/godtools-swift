@@ -1,5 +1,5 @@
 //
-//  OptInNotificationsUserDefaultsCacheTests.swift
+//  OptInNotificationUserDefaultsCacheTests.swift
 //  godtools
 //
 //  Created by Levi Eggert on 4/16/25.
@@ -10,9 +10,9 @@ import Foundation
 import XCTest
 @testable import godtools
 
-class OptInNotificationsUserDefaultsCacheTests: XCTestCase {
+class OptInNotificationUserDefaultsCacheTests: XCTestCase {
     
-    private let cache: OptInNotificationsUserDefaultsCache = OptInNotificationsUserDefaultsCache(sharedUserDefaultsCache: SharedUserDefaultsCache())
+    private let cache: OptInNotificationUserDefaultsCache = OptInNotificationUserDefaultsCache(sharedUserDefaultsCache: SharedUserDefaultsCache())
     
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -28,12 +28,12 @@ class OptInNotificationsUserDefaultsCacheTests: XCTestCase {
         cache.recordPrompt()
         
         let todaysDate: Date = Date()
-        let todaysStringDate: String = OptInNotificationsUserDefaultsCache.dateFormatter.string(from: todaysDate)
+        let todaysStringDate: String = OptInNotificationUserDefaultsCache.dateFormatter.string(from: todaysDate)
         
         let lastPromptedStringDate: String?
         
         if let lastPromptedDate = cache.getLastPrompted() {
-            lastPromptedStringDate = OptInNotificationsUserDefaultsCache.dateFormatter.string(from: lastPromptedDate)
+            lastPromptedStringDate = OptInNotificationUserDefaultsCache.dateFormatter.string(from: lastPromptedDate)
         }
         else {
             lastPromptedStringDate = nil

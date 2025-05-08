@@ -1,3 +1,6 @@
+"lessons.swipeTutorial.title" = "スワイプでページを切り替えられます";
+"lessons.swipeTutorial.buttonText" = "了解";
+
 /* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
 "lessons.resumeLessonModal.title" = "進捗を再開";
 

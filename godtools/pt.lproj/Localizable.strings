@@ -1,3 +1,6 @@
+"lessons.swipeTutorial.title" = "Deslize para trocar de páginas";
+"lessons.swipeTutorial.buttonText" = "Entendi";
+
 /* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
 "lessons.resumeLessonModal.title" = "Retomar progresso";
 
