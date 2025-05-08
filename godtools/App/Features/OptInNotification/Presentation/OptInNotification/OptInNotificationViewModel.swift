@@ -31,7 +31,7 @@ class OptInNotificationViewModel: ObservableObject {
     
     @Published private(set) var title: String = ""
     @Published private(set) var body: String = ""
-    @Published private(set) var allowNotificationsActionTitle: String = ""
+    @Published private(set) var notificationsActionTitle: String = ""
     @Published private(set) var maybeLaterActionTitle: String = ""
 
     init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewOptInNotificationUseCase: ViewOptInNotificationUseCase, notificationPromptType: NotificationPromptType) {
@@ -54,16 +54,16 @@ class OptInNotificationViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (domainModel: ViewOptInNotificationDomainModel) in
                      
-                let notificationsActionTitle: String
+                let actionTitle: String
                 
                 switch notificationPromptType {
                 case .allow:
-                    notificationsActionTitle = domainModel.interfaceStrings.allowNotificationsActionTitle
+                    actionTitle = domainModel.interfaceStrings.allowNotificationsActionTitle
                 case .settings:
-                    notificationsActionTitle = domainModel.interfaceStrings.notificationSettingsActionTitle
+                    actionTitle = domainModel.interfaceStrings.notificationSettingsActionTitle
                 }
                 
-                self?.allowNotificationsActionTitle = notificationsActionTitle
+                self?.notificationsActionTitle = actionTitle
                 
                 self?.title = domainModel.interfaceStrings.title
                 self?.body = domainModel.interfaceStrings.body

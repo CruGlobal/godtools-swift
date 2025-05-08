@@ -58,7 +58,7 @@ struct OptInNotificationView: View {
             }
             .frame(height: 45)
             .overlay(
-                Text(viewModel.allowNotificationsActionTitle)
+                Text(viewModel.notificationsActionTitle)
                     .foregroundColor(.white)
             )
 
