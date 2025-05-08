@@ -11,8 +11,6 @@ import Combine
 
 class ShouldPromptForOptInNotification: ShouldPromptForOptInNotificationInterface {
     
-    private static let maxPrompts: Int = 5
-    
     private let getOnboardingTutorialIsAvailable: GetOnboardingTutorialIsAvailableInterface
     private let optInNotificationRepository: OptInNotificationRepositoryInterface
     private let checkNotificationStatus: GetCheckNotificationStatusInterface
@@ -30,52 +28,35 @@ class ShouldPromptForOptInNotification: ShouldPromptForOptInNotificationInterfac
         let isFirstPromptAttempt: Bool = promptCount == 0
         
         let lastPrompted: Date = optInNotificationRepository.getLastPrompted() ?? Date.distantPast
-                
-        let lastPromptedTwoMonthsAgoOrMore: Bool
-                
-        if let twoMonthsAgo = getDateTwoMonthsAgo() {
-            lastPromptedTwoMonthsAgoOrMore = lastPrompted < twoMonthsAgo
-        }
-        else {
-            lastPromptedTwoMonthsAgoOrMore = true
-        }
+        
+        let remoteTimeDate = optInNotificationRepository.getRemoteTimeInterval()
+        let remotePromptLimit = optInNotificationRepository.getRemotePromptLimit()
+        let remoteFeatureEnabled = optInNotificationRepository.getRemoteFeatureEnabled()
         
         return Publishers.CombineLatest(
             getOnboardingTutorialIsAvailable.isAvailablePublisher(),
             checkNotificationStatus.permissionStatusPublisher()
         )
         .map { (onboardingTutorialIsAvailable: Bool, notificationStatus: PermissionStatusDomainModel) in
-                        
+                      
             guard onboardingTutorialIsAvailable == false else {
                 return false
             }
             
-            guard promptCount < Self.maxPrompts else {
+            guard remoteFeatureEnabled == true else {
                 return false
             }
             
-            guard notificationStatus == .denied || notificationStatus == .undetermined  else {
+            guard promptCount < remotePromptLimit else {
                 return false
             }
             
-            let shouldPrompt: Bool = lastPromptedTwoMonthsAgoOrMore || isFirstPromptAttempt
+            guard notificationStatus == .denied || notificationStatus == .undetermined else {
+                return false
+            }
             
-            return shouldPrompt
+            return lastPrompted < remoteTimeDate || isFirstPromptAttempt
         }
         .eraseToAnyPublisher()
-    }
-    
-    private func getDateTwoMonthsAgo() -> Date? {
-        
-        let currentDate = Date()
-        let calendar = Calendar.current
-        
-        let twoMonthsAgo: Date? = calendar.date(
-            byAdding: .month,
-            value: -2,
-            to: currentDate
-        )
-        
-        return twoMonthsAgo
     }
 }
