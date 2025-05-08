@@ -58,7 +58,7 @@ struct OptInNotificationView: View {
             }
             .frame(height: 45)
             .overlay(
-                Text(viewModel.isInitialPrompt ? viewModel.allowNotificationsActionTitle : viewModel.notificationSettingsActionTitle)
+                Text(viewModel.allowNotificationsActionTitle)
                     .foregroundColor(.white)
             )
 
@@ -99,7 +99,8 @@ struct OptInNotificationView_Preview: PreviewProvider {
         let viewModel = OptInNotificationViewModel(
             flowDelegate: MockFlowDelegate(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            viewOptInNotificationUseCase: appDiContainer.feature.optInNotification.domainLayer.getViewOptInNotificationUseCase()
+            viewOptInNotificationUseCase: appDiContainer.feature.optInNotification.domainLayer.getViewOptInNotificationUseCase(),
+            notificationPromptType: .allow
         )
 
         return viewModel

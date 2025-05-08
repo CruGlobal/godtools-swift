@@ -13,28 +13,33 @@ import UIKit
 import UserNotifications
 
 class OptInNotificationViewModel: ObservableObject {
-
+    
+    enum NotificationPromptType {
+        case allow
+        case settings
+    }
+    
     private let viewOptInNotificationUseCase: ViewOptInNotificationUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
-
+    private let notificationPromptType: NotificationPromptType
+    
     private var cancellables: Set<AnyCancellable> = Set()
 
     private weak var flowDelegate: FlowDelegate?
 
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     
-    @Published private(set) var isInitialPrompt: Bool = false
     @Published private(set) var title: String = ""
     @Published private(set) var body: String = ""
     @Published private(set) var allowNotificationsActionTitle: String = ""
-    @Published private(set) var notificationSettingsActionTitle: String = ""
     @Published private(set) var maybeLaterActionTitle: String = ""
 
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewOptInNotificationUseCase: ViewOptInNotificationUseCase) {
+    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewOptInNotificationUseCase: ViewOptInNotificationUseCase, notificationPromptType: NotificationPromptType) {
 
         self.flowDelegate = flowDelegate
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.viewOptInNotificationUseCase = viewOptInNotificationUseCase
+        self.notificationPromptType = notificationPromptType
 
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
@@ -48,17 +53,21 @@ class OptInNotificationViewModel: ObservableObject {
             .switchToLatest()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (domainModel: ViewOptInNotificationDomainModel) in
+                     
+                let notificationsActionTitle: String
                 
-                self?.isInitialPrompt = domainModel.isInitialPrompt
+                switch notificationPromptType {
+                case .allow:
+                    notificationsActionTitle = domainModel.interfaceStrings.allowNotificationsActionTitle
+                case .settings:
+                    notificationsActionTitle = domainModel.interfaceStrings.notificationSettingsActionTitle
+                }
+                
+                self?.allowNotificationsActionTitle = notificationsActionTitle
                 
                 self?.title = domainModel.interfaceStrings.title
                 self?.body = domainModel.interfaceStrings.body
-                self?.allowNotificationsActionTitle =
-                    domainModel.interfaceStrings.allowNotificationsActionTitle
-                self?.notificationSettingsActionTitle =
-                domainModel.interfaceStrings.notificationSettingsActionTitle
-                self?.maybeLaterActionTitle =
-                    domainModel.interfaceStrings.maybeLaterActionTitle
+                self?.maybeLaterActionTitle = domainModel.interfaceStrings.maybeLaterActionTitle
             }
             .store(in: &cancellables)
     }
@@ -74,12 +83,12 @@ extension OptInNotificationViewModel {
 
     func allowNotificationsTapped() {
         
-        if isInitialPrompt {
+        switch notificationPromptType {
+        case .allow:
             flowDelegate?.navigate(step: .allowNotificationsTappedFromOptInNotification)
-        } else {
+        case .settings:
             flowDelegate?.navigate(step: .settingsTappedFromOptInNotification)
         }
-        
     }
 
     func maybeLaterTapped() {

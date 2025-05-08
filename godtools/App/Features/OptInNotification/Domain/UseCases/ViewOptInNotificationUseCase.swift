@@ -9,31 +9,21 @@
 import Combine
 import Foundation
 
-
 class ViewOptInNotificationUseCase {
 
-    private let getCheckNotificationStatus: GetCheckNotificationStatusInterface
     private let getInterfaceStringsRepository: GetOptInNotificationInterfaceStringsRepositoryInterface
 
-    init(getCheckNotificationStatus: GetCheckNotificationStatusInterface,
-        getInterfaceStringsRepository: GetOptInNotificationInterfaceStringsRepositoryInterface) {
+    init(getInterfaceStringsRepository: GetOptInNotificationInterfaceStringsRepositoryInterface) {
         
-        self.getCheckNotificationStatus = getCheckNotificationStatus
         self.getInterfaceStringsRepository = getInterfaceStringsRepository
     }
 
     func viewPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewOptInNotificationDomainModel, Never> {
         
-        return getCheckNotificationStatus.permissionStatusPublisher()
-            .flatMap { status in
-                
-                let isInitialPrompt = status == .undetermined
-                
-                return self.getInterfaceStringsRepository
-                    .getStringsPublisher(translateInLanguage: appLanguage)
-                    .map { interfaceStrings in
-                        ViewOptInNotificationDomainModel(interfaceStrings: interfaceStrings, isInitialPrompt: isInitialPrompt)
-                    }
+        return self.getInterfaceStringsRepository
+            .getStringsPublisher(translateInLanguage: appLanguage)
+            .map { interfaceStrings in
+                ViewOptInNotificationDomainModel(interfaceStrings: interfaceStrings)
             }
             .eraseToAnyPublisher()
     }

@@ -19,7 +19,6 @@ class OptInNotificationDomainLayerDependencies {
 
     func getViewOptInNotificationUseCase() -> ViewOptInNotificationUseCase {
         return ViewOptInNotificationUseCase(
-            getCheckNotificationStatus: dataLayer.getCheckNotificationStatus(),
             getInterfaceStringsRepository: dataLayer.getOptInNotificationInterfaceStringsRepositoryInterface()
         )
     }
