@@ -16,3 +16,16 @@ struct RealmResourcesCacheSyncResult {
     let attachmentsRemoved: [AttachmentModel]
     let downloadedTranslationsRemoved: [DownloadedTranslationDataModel]
 }
+
+extension RealmResourcesCacheSyncResult {
+    
+    static func emptyResult() -> RealmResourcesCacheSyncResult {
+        return RealmResourcesCacheSyncResult(
+            languagesSyncResult: RealmLanguagesCacheSyncResult(languagesRemoved: []),
+            resourcesRemoved: [],
+            translationsRemoved: [],
+            attachmentsRemoved: [],
+            downloadedTranslationsRemoved: []
+        )
+    }
+}
