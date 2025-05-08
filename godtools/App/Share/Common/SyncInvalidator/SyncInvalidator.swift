@@ -29,10 +29,13 @@ class SyncInvalidator {
             
             let elapsedTimeInSeconds: TimeInterval = Date().timeIntervalSince(lastSync)
             let elapsedTimeInMinutes: TimeInterval = elapsedTimeInSeconds / 60
+            let elapsedTimeInHours: TimeInterval = elapsedTimeInMinutes / 60
             
             switch timeInterval {
             case .minutes(let minute):
                 shouldSync = elapsedTimeInMinutes >= minute
+            case .hours(let hour):
+                shouldSync = elapsedTimeInHours >= hour
             }
         }
         else {
