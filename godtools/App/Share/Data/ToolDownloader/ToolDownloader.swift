@@ -27,7 +27,7 @@ class ToolDownloader {
         self.articleManifestAemRepository = articleManifestAemRepository
     }
     
-    func downloadToolsPublisher(tools: [DownloadToolDataModel]) -> AnyPublisher<ToolDownloaderDataModel, Error> {
+    func downloadToolsPublisher(tools: [DownloadToolDataModel], sendRequestPriority: SendRequestPriority) -> AnyPublisher<ToolDownloaderDataModel, Error> {
             
         var nonArticleTranslations: [TranslationModel] = Array()
         var articleTranslations: [TranslationModel] = Array()
@@ -77,7 +77,7 @@ class ToolDownloader {
         }
         
         let nonArticleTranslationDownloads: [AnyPublisher<Void, Error>] = getDownloadToolTranslationsPublishers(translations: nonArticleTranslations)
-        let attachmentsDownloads: [AnyPublisher<Void, Error>] = getDownloadAttachmentsPublishers(attachments: attachments)
+        let attachmentsDownloads: [AnyPublisher<Void, Error>] = getDownloadAttachmentsPublishers(attachments: attachments, sendRequestPriority: sendRequestPriority)
         let articleTranslationDownloads: [AnyPublisher<Void, Error>] = getDownloadArticlesPublishers(translations: articleTranslations)
         
         let allRequests: [AnyPublisher<Void, Error>] = nonArticleTranslationDownloads + attachmentsDownloads + articleTranslationDownloads
@@ -121,11 +121,11 @@ class ToolDownloader {
         return downloadTranslationsRequests
     }
     
-    private func getDownloadAttachmentsPublishers(attachments: [AttachmentModel]) -> [AnyPublisher<Void, Error>] {
+    private func getDownloadAttachmentsPublishers(attachments: [AttachmentModel], sendRequestPriority: SendRequestPriority) -> [AnyPublisher<Void, Error>] {
         
         let downloadAttachmentsRequests: [AnyPublisher<Void, Error>] = attachments
             .map { (attachment: AttachmentModel) in
-                self.attachmentsRepository.downloadAndCacheAttachmentIfNeeded(attachment: attachment)
+                self.attachmentsRepository.downloadAndCacheAttachmentIfNeeded(attachment: attachment, sendRequestPriority: sendRequestPriority)
                     .map { _ in
                         return Void()
                     }

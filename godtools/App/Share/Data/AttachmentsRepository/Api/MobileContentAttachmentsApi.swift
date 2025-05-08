@@ -12,19 +12,22 @@ import RequestOperation
 
 class MobileContentAttachmentsApi {
     
-    private let requestSender: RequestSender = RequestSender()
+    private let priorityRequestSender: PriorityRequestSenderInterface
     private let ignoreCacheSession: IgnoreCacheSession
     private let baseUrl: String
     
-    init(config: AppConfig, ignoreCacheSession: IgnoreCacheSession) {
+    init(config: AppConfig, ignoreCacheSession: IgnoreCacheSession, priorityRequestSender: PriorityRequestSenderInterface) {
                     
+        self.priorityRequestSender = priorityRequestSender
         self.ignoreCacheSession = ignoreCacheSession
         baseUrl = config.getMobileContentApiBaseUrl()
     }
     
-    func getAttachmentFile(url: URL) -> AnyPublisher<RequestDataResponse, Error> {
+    func getAttachmentFile(url: URL, sendRequestPriority: SendRequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
         
         let urlRequest: URLRequest = URLRequest(url: url)
+        
+        let requestSender: RequestSender = priorityRequestSender.createRequestSender(sendRequestPriority: sendRequestPriority)
         
         return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: ignoreCacheSession.session)
             .validate()

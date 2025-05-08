@@ -99,7 +99,7 @@ class AppDataLayerDependencies {
     
     func getAttachmentsRepository() -> AttachmentsRepository {
         return AttachmentsRepository(
-            api: MobileContentAttachmentsApi(config: getAppConfig(), ignoreCacheSession: sharedIgnoreCacheSession),
+            api: MobileContentAttachmentsApi(config: getAppConfig(), ignoreCacheSession: sharedIgnoreCacheSession, priorityRequestSender: getSharedPriorityRequestSender()),
             cache: RealmAttachmentsCache(realmDatabase: sharedRealmDatabase),
             resourcesFileCache: getResourcesFileCache(),
             bundle: AttachmentsBundleCache()
