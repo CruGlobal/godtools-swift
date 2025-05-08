@@ -11,5 +11,4 @@ import Foundation
 struct ViewOptInNotificationDomainModel {
     
     let interfaceStrings: OptInNotificationInterfaceStringsDomainModel
-    let isInitialPrompt: Bool
 }

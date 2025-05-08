@@ -33,7 +33,36 @@ class OptInNotificationFlow: Flow {
             .getLanguagePublisher()
             .assign(to: &$appLanguage)
         
-        presentOnNavigationController.present(getOptInNotificationView(), animated: true)
+        
+        checkNotificationStatusCancellable = appDiContainer.feature
+            .optInNotification
+            .domainLayer
+            .getCheckNotificationStatusUseCase()
+            .getPermissionStatusPublisher()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (status: PermissionStatusDomainModel) in
+                
+                self?.checkNotificationStatusCancellable = nil
+                
+                guard let weakSelf = self else {
+                    return
+                }
+                
+                let notificationPromptType: OptInNotificationViewModel.NotificationPromptType
+                
+                switch status {
+                case .undetermined:
+                    notificationPromptType = .allow
+                default:
+                    notificationPromptType = .settings
+                }
+                                
+                let optInNotificationView: UIViewController = weakSelf.getOptInNotificationView(
+                    notificationPromptType: notificationPromptType
+                )
+                
+                presentOnNavigationController.present(optInNotificationView, animated: true)
+            }
         
         appDiContainer.feature.optInNotification.dataLayer.getOptInNotificationRepository().recordPrompt()
     }
@@ -82,12 +111,13 @@ class OptInNotificationFlow: Flow {
 
 extension OptInNotificationFlow {
     
-    private func getOptInNotificationView() -> UIViewController {
+    private func getOptInNotificationView(notificationPromptType: OptInNotificationViewModel.NotificationPromptType) -> UIViewController {
         
         let viewModel = OptInNotificationViewModel(
             flowDelegate: self,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            viewOptInNotificationUseCase: appDiContainer.feature.optInNotification.domainLayer.getViewOptInNotificationUseCase()
+            viewOptInNotificationUseCase: appDiContainer.feature.optInNotification.domainLayer.getViewOptInNotificationUseCase(),
+            notificationPromptType: notificationPromptType
         )
         
         let view = OptInNotificationView(viewModel: viewModel)
