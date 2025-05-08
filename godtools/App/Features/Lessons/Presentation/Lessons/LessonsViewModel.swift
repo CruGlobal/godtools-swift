@@ -162,7 +162,7 @@ extension LessonsViewModel {
         )
     }
     
-    func refreshData() {
+    func pullToRefresh() {
         
         resourcesRepository
             .syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments()
