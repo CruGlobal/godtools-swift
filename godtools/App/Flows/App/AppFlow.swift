@@ -504,7 +504,7 @@ extension AppFlow {
     private func loadInitialData() {
         
         resourcesRepository
-            .syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments()
+            .syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments(sendRequestPriority: .medium)
             .flatMap({ (result: RealmResourcesCacheSyncResult) -> AnyPublisher<Void, Error> in
                 
                 return self.toolLanguageDownloader

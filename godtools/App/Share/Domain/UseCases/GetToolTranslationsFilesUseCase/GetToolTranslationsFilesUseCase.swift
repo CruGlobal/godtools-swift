@@ -12,6 +12,8 @@ import GodToolsToolParser
 
 class GetToolTranslationsFilesUseCase {
         
+    private static let defaultRequestPriority: SendRequestPriority = .high
+    
     private let resourcesRepository: ResourcesRepository
     private let translationsRepository: TranslationsRepository
     private let languagesRepository: LanguagesRepository
@@ -68,7 +70,7 @@ class GetToolTranslationsFilesUseCase {
                         
                         self.initiateDownloadStarted(downloadStarted: downloadStarted)
                             
-                        return self.translationsRepository.getTranslationManifestsFromRemote(translations: translations, manifestParserType: manifestParserType, includeRelatedFiles: includeRelatedFiles, shouldFallbackToLatestDownloadedTranslationIfRemoteFails: true)
+                        return self.translationsRepository.getTranslationManifestsFromRemote(translations: translations, manifestParserType: manifestParserType, sendRequestPriority: Self.defaultRequestPriority, includeRelatedFiles: includeRelatedFiles, shouldFallbackToLatestDownloadedTranslationIfRemoteFails: true)
                             .eraseToAnyPublisher()
                     })
                     .eraseToAnyPublisher()
@@ -220,12 +222,12 @@ class GetToolTranslationsFilesUseCase {
         
         case .abbreviation(let value):
             return resourcesRepository
-                .syncResourceAndLatestTranslationsPublisher(resourceAbbreviation: value)
+                .syncResourceAndLatestTranslationsPublisher(resourceAbbreviation: value, sendRequestPriority: Self.defaultRequestPriority)
                 .eraseToAnyPublisher()
             
         case .id(let value):
             return resourcesRepository
-                .syncResourceAndLatestTranslationsPublisher(resourceId: value)
+                .syncResourceAndLatestTranslationsPublisher(resourceId: value, sendRequestPriority: Self.defaultRequestPriority)
                 .eraseToAnyPublisher()
         }
     }

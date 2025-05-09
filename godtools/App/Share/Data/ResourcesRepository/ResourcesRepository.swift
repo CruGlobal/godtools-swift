@@ -63,9 +63,9 @@ class ResourcesRepository {
             .eraseToAnyPublisher()
     }
     
-    func syncResourceAndLatestTranslationsPublisher(resourceId: String) -> AnyPublisher<Void, Error> {
+    func syncResourceAndLatestTranslationsPublisher(resourceId: String, sendRequestPriority: SendRequestPriority) -> AnyPublisher<Void, Error> {
         
-        return api.getResourcePlusLatestTranslationsAndAttachmentsPublisher(id: resourceId)
+        return api.getResourcePlusLatestTranslationsAndAttachmentsPublisher(id: resourceId, sendRequestPriority: sendRequestPriority)
             .flatMap({ (resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<Void, Error> in
                 
                 let languagesSyncResult = RealmLanguagesCacheSyncResult(languagesRemoved: [])
@@ -83,9 +83,9 @@ class ResourcesRepository {
             .eraseToAnyPublisher()
     }
     
-    func syncResourceAndLatestTranslationsPublisher(resourceAbbreviation: String) -> AnyPublisher<Void, Error> {
+    func syncResourceAndLatestTranslationsPublisher(resourceAbbreviation: String, sendRequestPriority: SendRequestPriority) -> AnyPublisher<Void, Error> {
         
-        return api.getResourcePlusLatestTranslationsAndAttachmentsPublisher(abbreviation: resourceAbbreviation)
+        return api.getResourcePlusLatestTranslationsAndAttachmentsPublisher(abbreviation: resourceAbbreviation, sendRequestPriority: sendRequestPriority)
             .flatMap({ (resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<Void, Error> in
                 
                 let languagesSyncResult = RealmLanguagesCacheSyncResult(languagesRemoved: [])
@@ -103,7 +103,7 @@ class ResourcesRepository {
             .eraseToAnyPublisher()
     }
     
-    func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments() -> AnyPublisher<RealmResourcesCacheSyncResult, Error> {
+    func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments(sendRequestPriority: SendRequestPriority) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> {
         
         let resourcesHaveBeenSynced: Bool = getResourcesHaveBeenSynced()
         
@@ -114,14 +114,14 @@ class ResourcesRepository {
                     return RealmResourcesCacheSyncResult.emptyResult()
                 }
                 .catch { _ in
-                    return self.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote()
+                    return self.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote(sendRequestPriority: sendRequestPriority)
                         .eraseToAnyPublisher()
                 }
                 .eraseToAnyPublisher()
         }
         else {
             
-            return syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote()
+            return syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote(sendRequestPriority: sendRequestPriority)
                 .eraseToAnyPublisher()
         }
     }
@@ -164,10 +164,10 @@ class ResourcesRepository {
         return languagesRepository.numberOfLanguages > 0 && cache.numberOfResources > 0
     }
     
-    private func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote() -> AnyPublisher<RealmResourcesCacheSyncResult, Error> {
+    private func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote(sendRequestPriority: SendRequestPriority) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> {
         
         return Publishers
-            .CombineLatest(languagesRepository.syncLanguagesFromRemote(), api.getResourcesPlusLatestTranslationsAndAttachments())
+            .CombineLatest(languagesRepository.syncLanguagesFromRemote(), api.getResourcesPlusLatestTranslationsAndAttachments(sendRequestPriority: sendRequestPriority))
             .flatMap({ (languagesSyncResult: RealmLanguagesCacheSyncResult, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> in
                 
                 return self.cache.syncResources(
