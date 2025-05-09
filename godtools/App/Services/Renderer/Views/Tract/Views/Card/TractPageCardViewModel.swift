@@ -104,7 +104,7 @@ class TractPageCardViewModel: MobileContentViewModel {
     }
     
     var titleColor: UIColor {
-        return cardModel.label?.textColor ?? renderedPageContext.pageModel.primaryColor
+        return cardModel.label?.textColor.toUIColor() ?? renderedPageContext.pageModel.primaryColor.toUIColor()
     }
     
     var titleFont: UIFont {

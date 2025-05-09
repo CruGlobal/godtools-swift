@@ -30,6 +30,6 @@ class MobileContentHeadingViewModel: MobileContentViewModel {
     
     var textColor: UIColor {
         
-        return headingModel.textColor
+        return headingModel.textColor.toUIColor()
     }
 }
