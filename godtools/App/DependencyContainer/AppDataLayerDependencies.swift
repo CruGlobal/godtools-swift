@@ -260,6 +260,7 @@ class AppDataLayerDependencies {
         
         let api = MobileContentResourcesApi(
             config: getAppConfig(),
+            priorityRequestSender: getSharedPriorityRequestSender(),
             ignoreCacheSession: sharedIgnoreCacheSession
         )
         

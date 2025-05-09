@@ -220,12 +220,12 @@ class GetToolTranslationsFilesUseCase {
         
         case .abbreviation(let value):
             return resourcesRepository
-                .syncResourceAndLatestTranslationsPublisher(resourceAbbreviation: value)
+                .syncResourceAndLatestTranslationsPublisher(resourceAbbreviation: value, sendRequestPriority: .high)
                 .eraseToAnyPublisher()
             
         case .id(let value):
             return resourcesRepository
-                .syncResourceAndLatestTranslationsPublisher(resourceId: value)
+                .syncResourceAndLatestTranslationsPublisher(resourceId: value, sendRequestPriority: .high)
                 .eraseToAnyPublisher()
         }
     }
