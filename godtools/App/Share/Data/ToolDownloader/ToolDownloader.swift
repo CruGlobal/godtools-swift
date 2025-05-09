@@ -76,9 +76,9 @@ class ToolDownloader {
             }
         }
         
-        let nonArticleTranslationDownloads: [AnyPublisher<Void, Error>] = getDownloadToolTranslationsPublishers(translations: nonArticleTranslations)
+        let nonArticleTranslationDownloads: [AnyPublisher<Void, Error>] = getDownloadToolTranslationsPublishers(translations: nonArticleTranslations, sendRequestPriority: sendRequestPriority)
         let attachmentsDownloads: [AnyPublisher<Void, Error>] = getDownloadAttachmentsPublishers(attachments: attachments, sendRequestPriority: sendRequestPriority)
-        let articleTranslationDownloads: [AnyPublisher<Void, Error>] = getDownloadArticlesPublishers(translations: articleTranslations)
+        let articleTranslationDownloads: [AnyPublisher<Void, Error>] = getDownloadArticlesPublishers(translations: articleTranslations, sendRequestPriority: sendRequestPriority)
         
         let allRequests: [AnyPublisher<Void, Error>] = nonArticleTranslationDownloads + attachmentsDownloads + articleTranslationDownloads
         
@@ -108,10 +108,10 @@ class ToolDownloader {
             .eraseToAnyPublisher()
     }
     
-    private func getDownloadToolTranslationsPublishers(translations: [TranslationModel]) -> [AnyPublisher<Void, Error>] {
+    private func getDownloadToolTranslationsPublishers(translations: [TranslationModel], sendRequestPriority: SendRequestPriority) -> [AnyPublisher<Void, Error>] {
             
         let downloadTranslationsRequests: [AnyPublisher<Void, Error>] = translations.map { (translation: TranslationModel) in
-            self.translationsRepository.downloadAndCacheTranslationFiles(translation: translation)
+            self.translationsRepository.downloadAndCacheTranslationFiles(translation: translation, sendRequestPriority: sendRequestPriority)
                 .map { _ in
                     return Void()
                 }
@@ -135,7 +135,7 @@ class ToolDownloader {
         return downloadAttachmentsRequests
     }
     
-    private func getDownloadArticlesPublishers(translations: [TranslationModel]) -> [AnyPublisher<Void, Error>] {
+    private func getDownloadArticlesPublishers(translations: [TranslationModel], sendRequestPriority: SendRequestPriority) -> [AnyPublisher<Void, Error>] {
         
         let downloadArticlesRequests: [AnyPublisher<Void, Error>] = translations.compactMap { (translation: TranslationModel) in
             
@@ -146,6 +146,7 @@ class ToolDownloader {
             return self.translationsRepository.getTranslationManifestFromCacheElseRemote(
                 translation: translation,
                 manifestParserType: .manifestOnly,
+                sendRequestPriority: sendRequestPriority,
                 includeRelatedFiles: true,
                 shouldFallbackToLatestDownloadedTranslationIfRemoteFails: false
             )

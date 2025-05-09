@@ -13,13 +13,14 @@ import Combine
 class MobileContentTranslationsApi {
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
-    private let requestSender: RequestSender = RequestSender()
+    private let priorityRequestSender: PriorityRequestSenderInterface
     private let ignoreCacheSession: IgnoreCacheSession
     private let baseUrl: String
     
-    required init(config: AppConfig, ignoreCacheSession: IgnoreCacheSession) {
+    required init(config: AppConfig, priorityRequestSender: PriorityRequestSenderInterface, ignoreCacheSession: IgnoreCacheSession) {
                     
         self.ignoreCacheSession = ignoreCacheSession
+        self.priorityRequestSender = priorityRequestSender
         baseUrl = config.getMobileContentApiBaseUrl()
     }
     
@@ -39,11 +40,13 @@ class MobileContentTranslationsApi {
         )
     }
     
-    func getTranslationFile(fileName: String) -> AnyPublisher<RequestDataResponse, Error> {
+    func getTranslationFile(fileName: String, sendRequestPriority: SendRequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
         
         let urlSession: URLSession = ignoreCacheSession.session
         
         let urlRequest: URLRequest = getTranslationFileRequest(urlSession: urlSession, fileName: fileName)
+        
+        let requestSender: RequestSender = priorityRequestSender.createRequestSender(sendRequestPriority: sendRequestPriority)
         
         return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
             .validate()
@@ -66,11 +69,13 @@ class MobileContentTranslationsApi {
         )
     }
     
-    func getTranslationZipFile(translationId: String) -> AnyPublisher<RequestDataResponse, Error> {
+    func getTranslationZipFile(translationId: String, sendRequestPriority: SendRequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
         
         let urlSession: URLSession = ignoreCacheSession.session
         
         let urlRequest: URLRequest = getTranslationZipFileRequest(urlSession: urlSession, translationId: translationId)
+        
+        let requestSender: RequestSender = priorityRequestSender.createRequestSender(sendRequestPriority: sendRequestPriority)
         
         return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
             .validate()

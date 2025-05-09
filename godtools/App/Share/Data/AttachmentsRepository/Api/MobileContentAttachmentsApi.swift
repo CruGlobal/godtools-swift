@@ -16,7 +16,7 @@ class MobileContentAttachmentsApi {
     private let ignoreCacheSession: IgnoreCacheSession
     private let baseUrl: String
     
-    init(config: AppConfig, ignoreCacheSession: IgnoreCacheSession, priorityRequestSender: PriorityRequestSenderInterface) {
+    init(config: AppConfig, priorityRequestSender: PriorityRequestSenderInterface, ignoreCacheSession: IgnoreCacheSession) {
                     
         self.priorityRequestSender = priorityRequestSender
         self.ignoreCacheSession = ignoreCacheSession
