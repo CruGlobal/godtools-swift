@@ -41,13 +41,23 @@ jobs:
         run: echo $APP_STORE_CONNECT_API_JSON_PAYLOAD > fastlane/AppleAppStoreApi.json
 
       - name: Increment Xcode Project Build Number
-        run: bundle exec fastlane cru_shared_lane_increment_xcode_project_build_number_from_latest_firebase_distribution firebase_googleservice_info_plist_path:"godtools/GoogleService-Info-Debug.plist" firebase_service_credentials_file:"firebase_service_account_key.json"
+        run: |
+            if [ ${{ inputs.releaseBuild }} ]; then
+              bundle exec fastlane cru_shared_lane_increment_xcode_project_build_number_from_latest_firebase_distribution firebase_googleservice_info_plist_path:"godtools/GoogleService.plist" firebase_service_credentials_file:"firebase_service_account_key.json"
+            else
+              bundle exec fastlane cru_shared_lane_increment_xcode_project_build_number_from_latest_firebase_distribution firebase_googleservice_info_plist_path:"godtools/GoogleService-Info-Debug.plist" firebase_service_credentials_file:"firebase_service_account_key.json"
+            fi
 
       - name: Build And Deploy For Firebase Distribution
         env:
           MATCH_GIT_BASIC_AUTHORIZATION_PAT: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION_PAT }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-        run: bundle exec fastlane cru_shared_lane_build_and_deploy_for_testflight_release is_running_in_ci:true gym_destination:generic/platform=iOS distribute_to_firebase:true distribute_to_testflight:false firebase_googleservice_info_plist_path:"godtools/GoogleService-Info-Debug.plist" firebase_groups:"ios-testers" firebase_service_credentials_file:"firebase_service_account_key.json" gym_configuration:"Debug" gym_scheme:"GodTools-Staging" gym_bundle_identifier:"org.cru.godtools.beta" gym_provisioning_profile:"match Development org.cru.godtools.beta" gym_export_method:"development" code_signing_app_bundle_ids:"org.cru.godtools.beta" code_signing_provisioning_profile_names:"match Development org.cru.godtools.beta" match_type:"development"
+        run: |
+            if [ ${{ inputs.releaseBuild }} ]; then
+              bundle exec fastlane cru_shared_lane_build_and_deploy_for_testflight_release is_running_in_ci:true gym_destination:generic/platform=iOS distribute_to_firebase:true distribute_to_testflight:false firebase_googleservice_info_plist_path:"godtools/GoogleService.plist" firebase_groups:"ios-testers" firebase_service_credentials_file:"firebase_service_account_key.json" gym_configuration:"Debug" gym_scheme:"GodTools-Production" gym_bundle_identifier:"org.cru.godtools" gym_provisioning_profile:"match Development org.cru.godtools" gym_export_method:"development" code_signing_app_bundle_ids:"org.cru.godtools" code_signing_provisioning_profile_names:"match Development org.cru.godtools" match_type:"development"
+            else
+              bundle exec fastlane cru_shared_lane_build_and_deploy_for_testflight_release is_running_in_ci:true gym_destination:generic/platform=iOS distribute_to_firebase:true distribute_to_testflight:false firebase_googleservice_info_plist_path:"godtools/GoogleService-Info-Debug.plist" firebase_groups:"ios-testers" firebase_service_credentials_file:"firebase_service_account_key.json" gym_configuration:"Debug" gym_scheme:"GodTools-Staging" gym_bundle_identifier:"org.cru.godtools.beta" gym_provisioning_profile:"match Development org.cru.godtools.beta" gym_export_method:"development" code_signing_app_bundle_ids:"org.cru.godtools.beta" code_signing_provisioning_profile_names:"match Development org.cru.godtools.beta" match_type:"development"
+            fi
 
       - name: Archive Fastlane Gym Logs
         if: always()
