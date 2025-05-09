@@ -2,7 +2,7 @@ name: Distribute To Firebase
 
 on:
   workflow_dispatch:
-  inputs:
+    inputs:
       stagingBuild:
         description: 'Staging Build'
         default: false
