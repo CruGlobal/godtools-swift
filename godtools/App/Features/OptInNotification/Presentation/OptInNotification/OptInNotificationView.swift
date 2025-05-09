@@ -24,11 +24,12 @@ struct OptInNotificationView: View {
             ImageCatalog.notificationGraphic
                 .image
                 .resizable()
-                .scaledToFit()
-                .padding(EdgeInsets(top: 5, leading: 5, bottom: 0, trailing: 5))
+                .scaledToFill()
+                .padding(.horizontal, 15)
                 .overlay(
                     Rectangle()
                         .frame(height: 2)
+                        .padding(.horizontal, 5)
                         .foregroundColor(ColorPalette.gtBlue.color),
                     alignment: .bottom
                 )
@@ -37,12 +38,12 @@ struct OptInNotificationView: View {
                 .foregroundColor(ColorPalette.gtBlue.color)
                 .font(FontLibrary.sfProTextRegular.font(size: 30))
                 .fontWeight(.bold)
-                .padding(.vertical, 10)
+                .padding(.vertical, 8)
                 .minimumScaleFactor(0.5)
                 .lineLimit(1)
 
             Text(viewModel.body)
-                .font(FontLibrary.sfProTextRegular.font(size: 18))
+                .font(FontLibrary.sfProTextRegular.font(size: 17))
                 .foregroundStyle(ColorPalette.gtGrey.color)
                 .multilineTextAlignment(.center)
                 .padding(.bottom, 12)
@@ -52,17 +53,17 @@ struct OptInNotificationView: View {
                 viewModel.allowNotificationsTapped()
 
             }) {
-                
                 RoundedRectangle(cornerRadius: 5)
                     .fill(ColorPalette.gtBlue.color)
             }
             .frame(height: 45)
             .overlay(
-                Text(viewModel.allowNotificationsActionTitle)
+                Text(viewModel.notificationsActionTitle)
                     .foregroundColor(.white)
             )
 
             Button(action: {
+                
                 viewModel.maybeLaterTapped()
 
             }) {
@@ -70,7 +71,7 @@ struct OptInNotificationView: View {
                     .foregroundColor(ColorPalette.gtBlue.color)
             }
             .frame(height: 40)
-            .padding(.bottom, 50)
+            .padding(.bottom, 60)
             
         }
         .padding(.horizontal, 20)
@@ -98,7 +99,8 @@ struct OptInNotificationView_Preview: PreviewProvider {
         let viewModel = OptInNotificationViewModel(
             flowDelegate: MockFlowDelegate(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            viewOptInNotificationUseCase: appDiContainer.feature.optInNotification.domainLayer.getViewOptInNotificationUseCase()
+            viewOptInNotificationUseCase: appDiContainer.feature.optInNotification.domainLayer.getViewOptInNotificationUseCase(),
+            notificationPromptType: .allow
         )
 
         return viewModel

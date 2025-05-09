@@ -1,3 +1,6 @@
+"lessons.swipeTutorial.title" = "पृष्ठ बदलने के लिए स्वाइप करें";
+"lessons.swipeTutorial.buttonText" = "समझ गया";
+
 /* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
 "lessons.resumeLessonModal.title" = "प्रगति जारी रखें";
 

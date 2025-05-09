@@ -1,13 +1,10 @@
+"optInNotification.notificationSettings" = "Paziņojumu iestatījumi";
 "lessons.swipeTutorial.title" = "Velc, lai apskatītu citas lapas";
 "lessons.swipeTutorial.buttonText" = "Sapratu";
 "optInNotification.title" = "Saņem padomus un iedrošinājumu";
 "optInNotification.body" = "Esi sagatavots sarunām.\nAtļauj paziņojumus jau šodien!";
 "optInNotification.allowNotifications" = "Atļaut paziņojumus";
 "optInNotification.maybeLater" = "Varbūt vēlāk";
-"optInDialog.title" = "Iespējot paziņojumus";
-"optInDialog.body" = "Paziņojumi ir atspējoti. Lūdzu, iespējo tos sadaļā Iestatījumi.";
-"optInDialog.cancel" = "Atcelt";
-"optInDialog.settings" = "Iestatījumi";
 
 /* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
 "lessons.resumeLessonModal.title" = "Atsākt progresu?";

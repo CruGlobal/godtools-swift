@@ -1,3 +1,6 @@
+"lessons.swipeTutorial.title" = "Проведите по экрану, чтобы листать страницы";
+"lessons.swipeTutorial.buttonText" = "Понятно";
+
 /* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
 "lessons.resumeLessonModal.title" = "Продолжить урок";
 

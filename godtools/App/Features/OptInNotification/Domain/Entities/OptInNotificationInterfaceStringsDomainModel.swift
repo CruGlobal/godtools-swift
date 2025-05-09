@@ -13,5 +13,6 @@ struct OptInNotificationInterfaceStringsDomainModel {
     let title: String
     let body: String
     let allowNotificationsActionTitle: String
+    let notificationSettingsActionTitle: String
     let maybeLaterActionTitle: String
 }

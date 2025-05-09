@@ -93,9 +93,8 @@ enum FlowStep {
     // optInNotification
     case closeTappedFromOptInNotification
     case allowNotificationsTappedFromOptInNotification
+    case settingsTappedFromOptInNotification
     case maybeLaterTappedFromOptInNotification
-    case cancelTappedFromOptInNotificationDialog
-    case settingsTappedFromOptInNotificationDialog
     case dontAllowTappedFromRequestNotificationPermission
     case allowTappedFromRequestNotificationPermission
     case optInNotificationFlowCompleted(state: OptInNotificationFlowCompletedState)
