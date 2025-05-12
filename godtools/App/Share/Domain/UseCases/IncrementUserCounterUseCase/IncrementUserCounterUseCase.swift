@@ -50,6 +50,8 @@ class IncrementUserCounterUseCase {
                 // duplicate requests to fire when iterating over user counters to sync. For example, someone is offline using the app
                 // then connect back to the network.
                 // Maybe this can be moved to AppFlow loadInitialData method or trigger peridically when network is available. ~Levi
+                // Created SubTask GT-2612 in GT-2563.
+                
                 self.userCountersRepository.syncUpdatedUserCountersWithRemote(sendRequestPriority: .low)
                 
                 let userCounterDomainModel: UserCounterDomainModel
