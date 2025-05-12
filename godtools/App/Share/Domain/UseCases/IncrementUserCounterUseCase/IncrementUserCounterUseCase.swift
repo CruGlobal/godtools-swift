@@ -45,7 +45,11 @@ class IncrementUserCounterUseCase {
         return userCountersRepository.incrementCachedUserCounterBy1(id: userCounterId)
             .flatMap { (userCounterDataModels: [UserCounterDataModel]) in
                 
-                self.userCountersRepository.syncUpdatedUserCountersWithRemote()
+                // NOTE: Wondering if we should sync everytime an increment call is made?
+                // Seems that could get expensive and if multiple increments are fired it could cause
+                // duplicate requests to fire when iterating over user counters to sync.
+                // Maybe this can be moved to AppFlow loadInitialData method. ~Levi
+                self.userCountersRepository.syncUpdatedUserCountersWithRemote(sendRequestPriority: .low)
                 
                 let userCounterDomainModel: UserCounterDomainModel
                 

@@ -24,11 +24,11 @@ class UserCountersAPI: UserCountersAPIType {
         self.authSession = mobileContentApiAuthSession
     }
     
-    func fetchUserCountersPublisher() -> AnyPublisher<[UserCounterDecodable], Error> {
+    func fetchUserCountersPublisher(sendRequestPriority: SendRequestPriority) -> AnyPublisher<[UserCounterDecodable], Error> {
         
         let fetchRequest = getUserCountersRequest()
         
-        return authSession.sendAuthenticatedRequest(urlRequest: fetchRequest, urlSession: ignoreCacheSession)
+        return authSession.sendAuthenticatedRequest(urlRequest: fetchRequest, urlSession: ignoreCacheSession, sendRequestPriority: sendRequestPriority)
             .decode(type: JsonApiResponseDataArray<UserCounterDecodable>.self, decoder: JSONDecoder())
             .map {
                 return $0.dataArray
@@ -36,11 +36,11 @@ class UserCountersAPI: UserCountersAPIType {
             .eraseToAnyPublisher()
     }
     
-    func incrementUserCounterPublisher(id: String, increment: Int) -> AnyPublisher<UserCounterDecodable, Error> {
+    func incrementUserCounterPublisher(id: String, increment: Int, sendRequestPriority: SendRequestPriority) -> AnyPublisher<UserCounterDecodable, Error> {
         
         let incrementRequest = getIncrementUserCountersRequest(id: id, increment: increment)
         
-        return authSession.sendAuthenticatedRequest(urlRequest: incrementRequest, urlSession: ignoreCacheSession)
+        return authSession.sendAuthenticatedRequest(urlRequest: incrementRequest, urlSession: ignoreCacheSession, sendRequestPriority: sendRequestPriority)
             .decode(type: JsonApiResponseDataObject<UserCounterDecodable>.self, decoder: JSONDecoder())
             .map {
                 return $0.dataObject
