@@ -437,7 +437,6 @@ class AppDataLayerDependencies {
         return UserDetailsRepository(
             api: UserDetailsAPI(
                 config: getAppConfig(),
-                priorityRequestSender: getSharedPriorityRequestSender(),
                 ignoreCacheSession: sharedIgnoreCacheSession,
                 mobileContentApiAuthSession: getMobileContentApiAuthSession()
             ),

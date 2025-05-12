@@ -12,15 +12,13 @@ import Combine
 
 class UserDetailsAPI {
     
-    private let priorityRequestSender: PriorityRequestSenderInterface
     private let ignoreCacheSession: URLSession
     private let authSession: MobileContentApiAuthSession
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let baseURL: String
     
-    init(config: AppConfig, priorityRequestSender: PriorityRequestSenderInterface, ignoreCacheSession: IgnoreCacheSession, mobileContentApiAuthSession: MobileContentApiAuthSession) {
+    init(config: AppConfig, ignoreCacheSession: IgnoreCacheSession, mobileContentApiAuthSession: MobileContentApiAuthSession) {
         
-        self.priorityRequestSender = priorityRequestSender
         self.ignoreCacheSession = ignoreCacheSession.session
         self.authSession = mobileContentApiAuthSession
         self.baseURL = config.getMobileContentApiBaseUrl()
@@ -31,9 +29,7 @@ class UserDetailsAPI {
         let urlSession: URLSession = ignoreCacheSession
         
         let urlRequest: URLRequest = getAuthUserDetailsRequest(urlSession: urlSession)
-        
-        let requestSender: RequestSender = priorityRequestSender.createRequestSender(sendRequestPriority: sendRequestPriority)
-        
+                
         return authSession.sendAuthenticatedRequest(
             urlRequest: urlRequest,
             urlSession: ignoreCacheSession,
@@ -69,9 +65,7 @@ class UserDetailsAPI {
         let urlSession: URLSession = ignoreCacheSession
         
         let urlRequest = getDeleteAuthorizedUserDetailsRequest(urlSession: urlSession)
-        
-        let requestSender: RequestSender = priorityRequestSender.createRequestSender(sendRequestPriority: sendRequestPriority)
-        
+                
         return authSession.sendAuthenticatedRequest(
             urlRequest: urlRequest,
             urlSession: ignoreCacheSession,
