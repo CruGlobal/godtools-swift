@@ -45,7 +45,14 @@ class IncrementUserCounterUseCase {
         return userCountersRepository.incrementCachedUserCounterBy1(id: userCounterId)
             .flatMap { (userCounterDataModels: [UserCounterDataModel]) in
                 
-                self.userCountersRepository.syncUpdatedUserCountersWithRemote()
+                // NOTE: Wondering if we should sync everytime an increment call is made?
+                // Seems that could get expensive and if multiple increments are fired it could cause
+                // duplicate requests to fire when iterating over user counters to sync. For example, someone is offline using the app
+                // then connect back to the network.
+                // Maybe this can be moved to AppFlow loadInitialData method or trigger peridically when network is available. ~Levi
+                // Created SubTask GT-2612 in GT-2563.
+                
+                self.userCountersRepository.syncUpdatedUserCountersWithRemote(sendRequestPriority: .low)
                 
                 let userCounterDomainModel: UserCounterDomainModel
                 

@@ -13,13 +13,14 @@ import Combine
 class MobileContentAuthTokenAPI {
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
-    private let requestSender: RequestSender = RequestSender()
+    private let priorityRequestSender: PriorityRequestSenderInterface
     private let ignoreCacheSession: IgnoreCacheSession
     private let baseURL: String
     
-    init(config: AppConfig, ignoreCacheSession: IgnoreCacheSession) {
+    init(config: AppConfig, ignoreCacheSession: IgnoreCacheSession, priorityRequestSender: PriorityRequestSenderInterface) {
         
         self.ignoreCacheSession = ignoreCacheSession
+        self.priorityRequestSender = priorityRequestSender
         baseURL = config.getMobileContentApiBaseUrl()
     }
     
@@ -82,6 +83,8 @@ class MobileContentAuthTokenAPI {
         let urlSession: URLSession = ignoreCacheSession.session
         
         let urlRequest: URLRequest = getAuthTokenRequest(urlSession: urlSession, providerToken: providerToken, createUser: createUser)
+        
+        let requestSender: RequestSender = priorityRequestSender.createRequestSender(sendRequestPriority: .high)
         
         return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
             .decodeRequestDataResponseForSuccessOrFailureCodable()

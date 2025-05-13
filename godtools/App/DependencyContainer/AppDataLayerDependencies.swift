@@ -217,7 +217,8 @@ class AppDataLayerDependencies {
         return MobileContentAuthTokenRepository(
             api: MobileContentAuthTokenAPI(
                 config: getAppConfig(),
-                ignoreCacheSession: sharedIgnoreCacheSession
+                ignoreCacheSession: sharedIgnoreCacheSession,
+                priorityRequestSender: getSharedPriorityRequestSender()
             ),
             cache: MobileContentAuthTokenCache(
                 mobileContentAuthTokenKeychainAccessor: getMobileContentAuthTokenKeychainAccessor(),
@@ -228,7 +229,7 @@ class AppDataLayerDependencies {
     
     func getMobileContentApiAuthSession() -> MobileContentApiAuthSession {
         return MobileContentApiAuthSession(
-            ignoreCacheSession: sharedIgnoreCacheSession,
+            priorityRequestSender: getSharedPriorityRequestSender(),
             mobileContentAuthTokenRepository: getMobileContentAuthTokenRepository(),
             userAuthentication: getUserAuthentication()
         )
