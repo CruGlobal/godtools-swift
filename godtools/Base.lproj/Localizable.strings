@@ -1,9 +1,9 @@
+"optInNotification.notificationSettings" = "Notification Settings";
 "lessons.swipeTutorial.title" = "Swipe to change pages";
 "lessons.swipeTutorial.buttonText" = "Got it";
 "optInNotification.title" = "Get Tips and Encouragement";
 "optInNotification.body" = "Stay equipped for conversations.\nAllow notifications today.";
 "optInNotification.allowNotifications" = "Allow Notifications";
-"optInNotification.notificationSettings" = "Notification Settings";
 "optInNotification.maybeLater" = "Maybe Later";
 
 /* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */

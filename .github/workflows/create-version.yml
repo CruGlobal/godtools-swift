@@ -1,11 +1,6 @@
 name: Create Version
 
 on:
-  push:
-    branches: [ main, releases/* ]
-  pull_request:
-    branches: [ main, releases/* ]
-    
   workflow_dispatch:
     inputs:
       versionIncrementType:
