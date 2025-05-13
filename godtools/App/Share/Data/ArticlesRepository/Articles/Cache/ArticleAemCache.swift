@@ -13,12 +13,12 @@ class ArticleAemCache {
     
     private let fileCache: ArticleAemWebArchiveFileCache = ArticleAemWebArchiveFileCache()
     private let realmDatabase: RealmDatabase
-    private let webArchiveQueue: WebArchiveQueue
+    private let articleWebArchiver: ArticleWebArchiver
     
-    init(realmDatabase: RealmDatabase, webArchiveQueue: WebArchiveQueue) {
+    init(realmDatabase: RealmDatabase, articleWebArchiver: ArticleWebArchiver) {
         
         self.realmDatabase = realmDatabase
-        self.webArchiveQueue = webArchiveQueue
+        self.articleWebArchiver = articleWebArchiver
     }
     
     func getAemCacheObjectsOnBackgroundThread(aemUris: [String], completion: @escaping ((_ aemCacheObjects: [ArticleAemCacheObject]) -> Void)) {

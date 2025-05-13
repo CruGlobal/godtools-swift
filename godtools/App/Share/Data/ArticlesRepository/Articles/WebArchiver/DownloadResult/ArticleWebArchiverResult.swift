@@ -1,5 +1,5 @@
 //
-//  WebArchiveQueueResult.swift
+//  ArticleWebArchiverResult.swift
 //  godtools
 //
 //  Created by Levi Eggert on 6/23/20.
@@ -8,13 +8,13 @@
 
 import Foundation
 
-class WebArchiveQueueResult {
+class ArticleWebArchiverResult {
     
-    let successfulArchives: [WebArchiveOperationResult]
+    let successfulArchives: [ArticleWebArchiveData]
     let failedArchives: [WebArchiveOperationError]
     let totalAttemptedArchives: Int
     
-    init(successfulArchives: [WebArchiveOperationResult], failedArchives: [WebArchiveOperationError], totalAttemptedArchives: Int) {
+    init(successfulArchives: [ArticleWebArchiveData], failedArchives: [WebArchiveOperationError], totalAttemptedArchives: Int) {
         
         self.successfulArchives = successfulArchives
         self.failedArchives = failedArchives
@@ -28,5 +28,17 @@ class WebArchiveQueueResult {
         }
         
         return false
+    }
+}
+
+extension ArticleWebArchiverResult {
+    
+    static func getEmptyResult() -> ArticleWebArchiverResult {
+        
+        return ArticleWebArchiverResult(
+            successfulArchives: [],
+            failedArchives: [],
+            totalAttemptedArchives: 0
+        )
     }
 }

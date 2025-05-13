@@ -70,29 +70,34 @@ class AppDataLayerDependencies {
         return FirebaseInAppMessaging.shared
     }
     
-    func getArticleAemRepository() -> ArticleAemRepository {
-        return ArticleAemRepository(
-            downloader: ArticleAemDownloader(
+    private func getArticleAemCache() -> ArticleAemCache {
+        return ArticleAemCache(
+            realmDatabase: sharedRealmDatabase,
+            articleWebArchiver: ArticleWebArchiver(
                 priorityRequestSender: getSharedPriorityRequestSender(),
                 ignoreCacheSession: sharedIgnoreCacheSession
-            ),
-            cache: ArticleAemCache(
-                realmDatabase: sharedRealmDatabase,
-                webArchiveQueue: getWebArchiveQueue()
             )
+        )
+    }
+    
+    private func getArticleAemDownloader() -> ArticleAemDownloader {
+        return ArticleAemDownloader(
+            priorityRequestSender: getSharedPriorityRequestSender(),
+            ignoreCacheSession: sharedIgnoreCacheSession
+        )
+    }
+    
+    func getArticleAemRepository() -> ArticleAemRepository {
+        return ArticleAemRepository(
+            downloader: getArticleAemDownloader(),
+            cache: getArticleAemCache()
         )
     }
     
     func getArticleManifestAemRepository() -> ArticleManifestAemRepository {
         return ArticleManifestAemRepository(
-            downloader: ArticleAemDownloader(
-                priorityRequestSender: getSharedPriorityRequestSender(),
-                ignoreCacheSession: sharedIgnoreCacheSession
-            ),
-            cache: ArticleAemCache(
-                realmDatabase: sharedRealmDatabase,
-                webArchiveQueue: getWebArchiveQueue()
-            ),
+            downloader: getArticleAemDownloader(),
+            cache: getArticleAemCache(),
             categoryArticlesCache: RealmCategoryArticlesCache(
                 realmDatabase: sharedRealmDatabase
             )
@@ -464,10 +469,6 @@ class AppDataLayerDependencies {
                 realmDatabase: sharedRealmDatabase
             )
         )
-    }
-    
-    func getWebArchiveQueue() -> WebArchiveQueue {
-        return WebArchiveQueue(ignoreCacheSession: sharedIgnoreCacheSession)
     }
     
     func getNewWebSocket(url: URL) -> WebSocketInterface {
