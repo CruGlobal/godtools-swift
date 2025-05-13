@@ -147,6 +147,7 @@ class AppDataLayerDependencies {
         
         let api = FollowUpsApi(
             baseUrl: getAppConfig().getMobileContentApiBaseUrl(),
+            priorityRequestSender: getSharedPriorityRequestSender(),
             ignoreCacheSession: sharedIgnoreCacheSession
         )
         
