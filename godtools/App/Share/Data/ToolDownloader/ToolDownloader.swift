@@ -155,7 +155,8 @@ class ToolDownloader {
                 return self.articleManifestAemRepository.downloadAndCacheManifestAemUrisPublisher(
                     manifest: translationManifestDataModel.manifest,
                     languageCode: languageCode,
-                    forceDownload: true
+                    downloadCachePolicy: .ignoreCache,
+                    sendRequestPriority: sendRequestPriority
                 )
             }
             .map { _ in

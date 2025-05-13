@@ -7,13 +7,14 @@
 //
 
 import Foundation
-import RealmSwift
 import GodToolsToolParser
 import Combine
 import LocalizationServices
 
 class ArticleCategoriesViewModel {
         
+    private static var downloadArticlesCancellable: AnyCancellable?
+    
     private let resource: ResourceModel
     private let language: LanguageModel
     private let manifest: Manifest
@@ -81,16 +82,32 @@ class ArticleCategoriesViewModel {
 
     private func downloadArticles(forceDownload: Bool) {
         
-        cancelArticleDownload()
+        print("\n ** ArticleCategoriesViewModel Start Download ** ")
         
-        isLoading.accept(value: true)
+        Self.downloadArticlesCancellable = articleManifestAemRepository
+            .downloadAndCacheManifestAemUrisPublisher(
+                manifest: manifest,
+                languageCode: language.localeId,
+                downloadCachePolicy: .ignoreCache,
+                sendRequestPriority: .high
+            )
+            .sink(receiveValue: { (result: ArticleAemRepositoryResult) in
+                
+                print("\n ArticleCategoriesViewModel Completed Download")
+                print("  result: \(result)")
+            })
         
-        downloadArticlesReceipt = articleManifestAemRepository.downloadAndCacheManifestAemUrisReceipt(manifest: manifest, languageCode: language.localeId, forceDownload: forceDownload, completion: { [weak self] (result: ArticleAemRepositoryResult) in
-            
-            DispatchQueue.main.async { [weak self] in
-                self?.isLoading.accept(value: false)
-            }
-        })
+        
+//        cancelArticleDownload()
+//        
+//        isLoading.accept(value: true)
+//        
+//        downloadArticlesReceipt = articleManifestAemRepository.downloadAndCacheManifestAemUrisReceipt(manifest: manifest, languageCode: language.localeId, forceDownload: forceDownload, completion: { [weak self] (result: ArticleAemRepositoryResult) in
+//            
+//            DispatchQueue.main.async { [weak self] in
+//                self?.isLoading.accept(value: false)
+//            }
+//        })
     }
 }
 

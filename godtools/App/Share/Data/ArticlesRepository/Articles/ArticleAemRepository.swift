@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 open class ArticleAemRepository: NSObject {
     
@@ -28,41 +29,75 @@ open class ArticleAemRepository: NSObject {
     
     func getAemCacheObject(aemUri: String) -> ArticleAemCacheObject? {
         
-        return cache.getAemCacheObjectOnCurrentThread(aemUri: aemUri)
+        return cache.getAemCacheObject(aemUri: aemUri)
     }
     
-    func downloadAndCache(aemUris: [String], forceDownload: Bool = false, completion: @escaping ((_ result: ArticleAemRepositoryResult) -> Void)) -> OperationQueue {
+    func downloadAndCachePublisher(aemUris: [String], downloadCachePolicy: ArticleAemDownloaderCachePolicy, sendRequestPriority: SendRequestPriority) -> AnyPublisher<ArticleAemRepositoryResult, Never> {
         
         let aemUrisNeedingUpdate: [String]
-        let downloadCachePolicy: ArticleAemDownloadOperationCachePolicy
-        
-        if forceDownload {
-            aemUrisNeedingUpdate = aemUris
-            downloadCachePolicy = .ignoreCache
-        }
-        else {
+
+        switch downloadCachePolicy {
+            
+        case .fetchFromCacheUpToNextHour:
             aemUrisNeedingUpdate = filterAemUrisByLastUpdate(aemUris: aemUris)
-            downloadCachePolicy = .fetchFromCacheUpToNextHour
+        case .ignoreCache:
+            aemUrisNeedingUpdate = aemUris
         }
         
-        return downloader.download(aemUris: aemUrisNeedingUpdate, downloadCachePolicy: downloadCachePolicy) { [weak self] (downloaderResult: ArticleAemDownloaderResult) in
+        print("\n ArticleAemRepository - downloadAndCachePublisher()")
+        print("  aemUrisNeedingUpdate: \(aemUrisNeedingUpdate)")
+        print("  downloadCachePolicy: \(downloadCachePolicy)")
+        
+        return downloader.downloadPublisher(
+            aemUris: aemUrisNeedingUpdate,
+            downloadCachePolicy: downloadCachePolicy,
+            sendRequestPriority: sendRequestPriority
+        )
+        .map { (downloaderResult: ArticleAemDownloaderResult) in
             
-            guard let repository = self else {
-                return
-            }
+            // TODO: GT-2580 cache aemDataObjects repository.cache.storeAemDataObjects. ~Levi
             
-            let aemDataObjects: [ArticleAemData] = downloaderResult.aemDataObjects
-            
-            repository.cache.storeAemDataObjects(aemDataObjects: aemDataObjects, didStartWebArchiveClosure: { (webArchiveOperationQueue: OperationQueue) in
-                
-            }, completion: { (cacheResult: ArticleAemCacheResult) in
-                
-                let result = ArticleAemRepositoryResult(downloaderResult: downloaderResult, cacheResult: cacheResult)
-                
-                completion(result)
-            })
+            return ArticleAemRepositoryResult(
+                downloaderResult: downloaderResult,
+                cacheResult: ArticleAemCacheResult(numberOfArchivedObjects: 0, cacheErrorData: [])
+            )
         }
+        .eraseToAnyPublisher()
     }
+    
+    // TODO: Remove GT-2580. ~Levi
+//    func downloadAndCache(aemUris: [String], forceDownload: Bool = false, completion: @escaping ((_ result: ArticleAemRepositoryResult) -> Void)) -> OperationQueue {
+//        
+//        let aemUrisNeedingUpdate: [String]
+//        let downloadCachePolicy: ArticleAemDownloaderCachePolicy
+//        
+//        if forceDownload {
+//            aemUrisNeedingUpdate = aemUris
+//            downloadCachePolicy = .ignoreCache
+//        }
+//        else {
+//            aemUrisNeedingUpdate = filterAemUrisByLastUpdate(aemUris: aemUris)
+//            downloadCachePolicy = .fetchFromCacheUpToNextHour
+//        }
+//        
+//        return downloader.download(aemUris: aemUrisNeedingUpdate, downloadCachePolicy: downloadCachePolicy) { [weak self] (downloaderResult: ArticleAemDownloaderResult) in
+//            
+//            guard let repository = self else {
+//                return
+//            }
+//            
+//            let aemDataObjects: [ArticleAemData] = downloaderResult.aemDataObjects
+//            
+//            repository.cache.storeAemDataObjects(aemDataObjects: aemDataObjects, didStartWebArchiveClosure: { (webArchiveOperationQueue: OperationQueue) in
+//                
+//            }, completion: { (cacheResult: ArticleAemCacheResult) in
+//                
+//                let result = ArticleAemRepositoryResult(downloaderResult: downloaderResult, cacheResult: cacheResult)
+//                
+//                completion(result)
+//            })
+//        }
+//    }
     
     private func filterAemUrisByLastUpdate(aemUris: [String]) -> [String] {
         
@@ -74,7 +109,7 @@ open class ArticleAemRepository: NSObject {
             
             let shouldUpdateAemUri: Bool
             
-            if let aemCacheObject = cache.getAemCacheObjectOnCurrentThread(aemUri: aemUri) {
+            if let aemCacheObject = cache.getAemCacheObject(aemUri: aemUri) {
                 
                 let lastUpdatedAt: Date = aemCacheObject.aemData.updatedAt
                 let secondsSinceLastUpdate: Double = Date().timeIntervalSince(lastUpdatedAt)

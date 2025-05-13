@@ -73,6 +73,7 @@ class AppDataLayerDependencies {
     func getArticleAemRepository() -> ArticleAemRepository {
         return ArticleAemRepository(
             downloader: ArticleAemDownloader(
+                priorityRequestSender: getSharedPriorityRequestSender(),
                 ignoreCacheSession: sharedIgnoreCacheSession
             ),
             cache: ArticleAemCache(
@@ -85,6 +86,7 @@ class AppDataLayerDependencies {
     func getArticleManifestAemRepository() -> ArticleManifestAemRepository {
         return ArticleManifestAemRepository(
             downloader: ArticleAemDownloader(
+                priorityRequestSender: getSharedPriorityRequestSender(),
                 ignoreCacheSession: sharedIgnoreCacheSession
             ),
             cache: ArticleAemCache(

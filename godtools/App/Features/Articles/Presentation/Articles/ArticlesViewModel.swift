@@ -136,12 +136,14 @@ class ArticlesViewModel: NSObject {
         
         errorMessage.accept(value: nil)
         
+        // TODO: Implement in GT-2580. ~Levi
+        /*
         downloadArticlesReceipt = articleManifestAemRepository.downloadAndCacheManifestAemUrisReceipt(manifest: manifest, languageCode: language.localeId, forceDownload: forceDownload) { [weak self] (result: ArticleAemRepositoryResult) in
             self?.downloadArticlesReceipt = nil
             DispatchQueue.main.async { [weak self] in
                 self?.handleCompleteArticlesDownload(appLanguage: appLanguage, result: result)
             }
-        }
+        }*/
     }
     
     private func handleCompleteArticlesDownload(appLanguage: AppLanguageDomainModel, result: ArticleAemRepositoryResult) {

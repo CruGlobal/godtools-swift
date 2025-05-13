@@ -13,6 +13,7 @@ enum ArticleAemDownloadOperationError: Error {
     case cancelled
     case failedToParseJson(error: ArticleAemDataParserError)
     case failedToSerializeJson(error: Error)
+    case httpError(error: Error)
     case invalidAemJsonUrl
     case invalidAemSrcUrl
     case noNetworkConnection

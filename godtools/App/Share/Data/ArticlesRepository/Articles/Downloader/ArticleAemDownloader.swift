@@ -9,67 +9,169 @@
 import Foundation
 import RealmSwift
 import RequestOperation
+import Combine
 
 class ArticleAemDownloader {
             
-    private let session: URLSession
+    private let priorityRequestSender: PriorityRequestSenderInterface
+    private let ignoreCacheSession: IgnoreCacheSession
     private let maxAemJsonTreeLevels: Int = 9999
         
-    init(ignoreCacheSession: IgnoreCacheSession) {
+    init(priorityRequestSender: PriorityRequestSenderInterface, ignoreCacheSession: IgnoreCacheSession) {
         
-        self.session = ignoreCacheSession.session
+        self.priorityRequestSender = priorityRequestSender
+        self.ignoreCacheSession = ignoreCacheSession
     }
     
-    func download(aemUris: [String], downloadCachePolicy: ArticleAemDownloadOperationCachePolicy, completion: @escaping ((_ result: ArticleAemDownloaderResult) -> Void)) -> OperationQueue {
-                        
-        let queue = OperationQueue()
+    func downloadPublisher(aemUris: [String], downloadCachePolicy: ArticleAemDownloaderCachePolicy, sendRequestPriority: SendRequestPriority) -> AnyPublisher<ArticleAemDownloaderResult, Never> {
                 
-        var operations: [ArticleAemDownloadOperation] = Array()
-                
-        var aemDataObjects: [ArticleAemData] = Array()
-        var aemDownloadErrors: [ArticleAemDownloadOperationError] = Array()
-                        
-        for aemUri in aemUris {
+        let requests: [AnyPublisher<AemUriDownloadResult, Never>] = aemUris.map { (aemUri: String) in
             
-            let operation = ArticleAemDownloadOperation(
-                session: session,
+            return self.downloadAemUriPublisher(
                 aemUri: aemUri,
-                maxAemJsonTreeLevels: maxAemJsonTreeLevels,
-                cachePolicy: downloadCachePolicy
+                downloadCachePolicy: downloadCachePolicy,
+                sendRequestPriority: sendRequestPriority
             )
-            
-            operations.append(operation)
-            
-            operation.completionHandler { (response: RequestResponse, result: Result<ArticleAemData, ArticleAemDownloadOperationError>) in
+            .eraseToAnyPublisher()
+        }
+        
+        return Publishers.MergeMany(requests)
+            .collect()
+            .map { (results: [AemUriDownloadResult]) in
                 
-                switch result {
+                return ArticleAemDownloaderResult(
+                    aemDataObjects: results.compactMap { $0.articleAemData },
+                    aemDownloadErrors: results.compactMap { $0.downloadError }
+                )
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    private func downloadAemUriPublisher(aemUri: String, downloadCachePolicy: ArticleAemDownloaderCachePolicy, sendRequestPriority: SendRequestPriority) -> AnyPublisher<AemUriDownloadResult, Never> {
+        
+        guard let aemUrl = URL(string: aemUri) else {
+            
+            let error: ArticleAemDownloadOperationError = .invalidAemSrcUrl
+            
+            return Just(AemUriDownloadResult(articleAemData: nil, downloadError: error))
+                .eraseToAnyPublisher()
+        }
+                
+        let cacheTimeInterval: TimeInterval = downloadCachePolicy.getCacheTimeInterval()
+        
+        let urlJsonString: String = aemUri + "." + String(maxAemJsonTreeLevels) + ".json?_=\(cacheTimeInterval)"
+        
+        guard let urlJson: URL = URL(string: urlJsonString) else {
+            
+            let error: ArticleAemDownloadOperationError = .invalidAemJsonUrl
+            
+            return Just(AemUriDownloadResult(articleAemData: nil, downloadError: error))
+                .eraseToAnyPublisher()
+        }
+        
+        let errorDomain: String = "ArticleAemDownloadOperation"
+        let urlSession: URLSession = ignoreCacheSession.session
+        
+        let urlRequest = URLRequest(
+            url: urlJson,
+            cachePolicy: urlSession.configuration.requestCachePolicy,
+            timeoutInterval: urlSession.configuration.timeoutIntervalForRequest
+        )
+        
+        let requestSender: RequestSender = priorityRequestSender.createRequestSender(sendRequestPriority: sendRequestPriority)
+        
+        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
+            .flatMap { (response: RequestDataResponse) -> AnyPublisher<AemUriDownloadResult, Never> in
+                
+                let httpStatusCode: Int = response.urlResponse.httpStatusCode ?? -1
+                let isSuccessHttpStatusCode: Bool = httpStatusCode >= 200 && httpStatusCode < 400
+                
+                if isSuccessHttpStatusCode {
                     
-                case .success(let aemData):
-                    aemDataObjects.append(aemData)
+                    // validate json
+                    var jsonDictionary: [String: Any] = Dictionary()
+                    var jsonError: Error?
                     
-                case .failure(let aemDownloadError):
-                    aemDownloadErrors.append(aemDownloadError)
+                    do {
+                        let json: Any = try JSONSerialization.jsonObject(with: response.data, options: [])
+                        if let dictionary = json as? [String: Any] {
+                            jsonDictionary = dictionary
+                        }
+                    }
+                    catch let error {
+                        jsonError = error
+                    }
+                    
+                    if jsonDictionary.isEmpty, jsonError == nil {
+                        
+                        jsonError = NSError(
+                            domain: errorDomain,
+                            code: -1,
+                            userInfo: [NSLocalizedDescriptionKey: "Failed to parse jsonData because data does not exist."
+                        ])
+                    }
+                    
+                    if let jsonError = jsonError {
+                        let error: ArticleAemDownloadOperationError = .failedToSerializeJson(error: jsonError)
+                        return Just(AemUriDownloadResult(articleAemData: nil, downloadError: error))
+                            .eraseToAnyPublisher()
+                    }
+                    else {
+                        
+                        let aemDataParser = ArticleAemDataParser()
+                        
+                        let aemParserResult: Result<ArticleAemData, ArticleAemDataParserError> = aemDataParser.parse(
+                            aemUrl: aemUrl,
+                            aemJson: jsonDictionary
+                        )
+                        
+                        switch aemParserResult {
+                        
+                        case .success(let articleAemData):
+                            
+                            return Just(AemUriDownloadResult(articleAemData: articleAemData, downloadError: nil))
+                                .eraseToAnyPublisher()
+
+                        case .failure(let aemParserError):
+                            
+                            let error: ArticleAemDownloadOperationError = .failedToParseJson(error: aemParserError)
+                            return Just(AemUriDownloadResult(articleAemData: nil, downloadError: error))
+                                .eraseToAnyPublisher()
+                        }
+                    }
                 }
-                                                
-                if queue.operations.isEmpty {
+                else {
                     
-                    let result = ArticleAemDownloaderResult(
-                        aemDataObjects: aemDataObjects,
-                        aemDownloadErrors: aemDownloadErrors
-                    )
+                    let responseError: Error = NSError(
+                        domain: errorDomain,
+                        code: -1,
+                        userInfo: [NSLocalizedDescriptionKey: "The request failed with a status code: \(httpStatusCode)"
+                    ])
                     
-                    completion(result)
+                    let error: ArticleAemDownloadOperationError = .httpError(error: responseError)
+                    
+                    return Just(AemUriDownloadResult(articleAemData: nil, downloadError: error))
+                        .eraseToAnyPublisher()
                 }
             }
-        }
-        
-        if !operations.isEmpty {
-            queue.addOperations(operations, waitUntilFinished: false)
-        }
-        else {
-            completion(ArticleAemDownloaderResult(aemDataObjects: [], aemDownloadErrors: []))
-        }
-        
-        return queue
+            .catch { (error: Error) in
+                
+                let errorCode: Int = (error as NSError).code
+                let operationError: ArticleAemDownloadOperationError
+                
+                if errorCode == CFNetworkErrors.cfurlErrorCancelled.rawValue {
+                    operationError = .cancelled
+                }
+                else if errorCode == CFNetworkErrors.cfurlErrorNotConnectedToInternet.rawValue {
+                    operationError = .noNetworkConnection
+                }
+                else {
+                    operationError = .unknownError(error: error)
+                }
+                
+                return Just(AemUriDownloadResult(articleAemData: nil, downloadError: operationError))
+                    .eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
     }
 }

@@ -38,7 +38,7 @@ class ArticleAemCache {
         }
     }
     
-    func getAemCacheObjectOnCurrentThread(aemUri: String) -> ArticleAemCacheObject? {
+    func getAemCacheObject(aemUri: String) -> ArticleAemCacheObject? {
         
         let realm: Realm = realmDatabase.openRealm()
         
@@ -72,6 +72,7 @@ class ArticleAemCache {
         }
     }
     
+    // TODO: Create publisher GT-2580. ~Levi
     func storeAemDataObjects(aemDataObjects: [ArticleAemData], didStartWebArchiveClosure: @escaping ((_ webArchiveOperationQueue: OperationQueue) -> Void), completion: @escaping ((_ result: ArticleAemCacheResult) -> Void)) {
                     
         realmDatabase.background { realm in

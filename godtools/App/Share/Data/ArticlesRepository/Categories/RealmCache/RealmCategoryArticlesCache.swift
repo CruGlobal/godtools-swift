@@ -9,6 +9,7 @@
 import Foundation
 import RealmSwift
 import GodToolsToolParser
+import Combine
 
 class RealmCategoryArticlesCache {
     
@@ -25,6 +26,18 @@ class RealmCategoryArticlesCache {
             .objects(RealmCategoryArticle.self)
             .filter(NSPredicate(format: "categoryId == %@ AND languageCode == %@", categoryId, languageCode))
             .map({CategoryArticleModel(realmModel: $0)})
+    }
+    
+    func storeAemDataObjectsForCategoriesPublisher(categories: [ArticleCategory], languageCode: String, aemDataObjects: [ArticleAemData]) -> AnyPublisher<[Error], Never> {
+        
+        return Future() { promise in
+
+            self.storeAemDataObjectsForCategories(categories: categories, languageCode: languageCode, aemDataObjects: aemDataObjects) { (errors: [Error]) in
+                
+                promise(.success(errors))
+            }
+        }
+        .eraseToAnyPublisher()
     }
     
     func storeAemDataObjectsForCategories(categories: [ArticleCategory], languageCode: String, aemDataObjects: [ArticleAemData], completion: @escaping ((_ errors: [Error]) -> Void)) {
