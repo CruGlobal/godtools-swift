@@ -10,20 +10,15 @@ import Foundation
 import GodToolsToolParser
 import Combine
 
-class ArticleManifestAemRepository: NSObject, ArticleAemRepositoryType {
+class ArticleManifestAemRepository: ArticleAemRepository {
     
     private let categoryArticlesCache: RealmCategoryArticlesCache
-    
-    let downloader: ArticleAemDownloader
-    let cache: ArticleAemCache
-    
+        
     init(downloader: ArticleAemDownloader, cache: ArticleAemCache, categoryArticlesCache: RealmCategoryArticlesCache) {
         
         self.categoryArticlesCache = categoryArticlesCache
-        self.downloader = downloader
-        self.cache = cache
         
-        super.init()
+        super.init(downloader: downloader, cache: cache)
     }
     
     func getCategoryArticles(categoryId: String, languageCode: String) -> [CategoryArticleModel] {
@@ -68,7 +63,7 @@ class ArticleManifestAemRepository: NSObject, ArticleAemRepositoryType {
             )
         })
         
-        let downloadQueue = downloadAndCache(aemUris: aemUris, forceDownload: forceDownload) { [weak self] (result: ArticleAemRepositoryResult) in
+        let downloadQueue = super.downloadAndCache(aemUris: aemUris, forceDownload: forceDownload) { [weak self] (result: ArticleAemRepositoryResult) in
             
             let aemDataObjects: [ArticleAemData] = result.downloaderResult.aemDataObjects
             
