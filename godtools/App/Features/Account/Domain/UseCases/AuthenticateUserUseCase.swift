@@ -11,6 +11,8 @@ import Combine
 
 class AuthenticateUserUseCase {
     
+    private static var backgroundCancellables: Set<AnyCancellable> = Set()
+    
     private let authenticateUser: AuthenticateUserInterface
     private let emailSignUpService: EmailSignUpService
     private let firebaseAnalytics: FirebaseAnalytics
@@ -46,7 +48,12 @@ class AuthenticateUserUseCase {
             lastName: authUser.lastName
         )
         
-        _ = emailSignUpService.postNewEmailSignUpIfNeeded(emailSignUp: emailSignUp)
+        emailSignUpService
+            .postNewEmailSignUpIfNeededPublisher(emailSignUp: emailSignUp, sendRequestPriority: .medium)
+            .sink { _ in
+                
+            }
+            .store(in: &Self.backgroundCancellables)
     }
     
     private func setAnalyticsUserProperties(authUser: AuthUserDomainModel, authPlatform: AuthenticateUserAuthPlatformDomainModel) {
