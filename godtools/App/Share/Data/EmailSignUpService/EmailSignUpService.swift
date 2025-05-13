@@ -21,20 +21,12 @@ class EmailSignUpService {
         self.cache = cache
     }
     
-    func postNewEmailSignUpIfNeededPublisher(emailSignUp: EmailSignUpModel, sendRequestPriority: SendRequestPriority) -> AnyPublisher<Void, Never> {
+    func postNewEmailSignUpPublisher(emailSignUp: EmailSignUpModel, sendRequestPriority: SendRequestPriority) -> AnyPublisher<Void, Never> {
         
         guard !cache.emailIsRegistered(email: emailSignUp.email) else {
             return Just(Void())
                 .eraseToAnyPublisher()
         }
-        
-        return postNewEmailSignUpPublisher(
-            emailSignUp: emailSignUp,
-            sendRequestPriority: sendRequestPriority
-        )
-    }
-    
-    private func postNewEmailSignUpPublisher(emailSignUp: EmailSignUpModel, sendRequestPriority: SendRequestPriority) -> AnyPublisher<Void, Never> {
         
         return api.postEmailSignUpPublisher(emailSignUp: emailSignUp, sendRequestPriority: sendRequestPriority)
             .map { (response: RequestDataResponse) in

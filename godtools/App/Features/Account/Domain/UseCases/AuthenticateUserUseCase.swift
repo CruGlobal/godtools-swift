@@ -49,7 +49,7 @@ class AuthenticateUserUseCase {
         )
         
         emailSignUpService
-            .postNewEmailSignUpIfNeededPublisher(emailSignUp: emailSignUp, sendRequestPriority: .medium)
+            .postNewEmailSignUpPublisher(emailSignUp: emailSignUp, sendRequestPriority: .medium)
             .sink { _ in
                 
             }
