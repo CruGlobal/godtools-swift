@@ -157,8 +157,10 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
                         
                         appFlow.navigateToDashboard()
 
+                        appFlow.presentOptInNotificationFlow()
+                        
                         if shouldPromptForOptInNotification {
-                            appFlow.presentOptInNotificationFlow()
+                            //appFlow.presentOptInNotificationFlow()
                         }
                     }
                 })

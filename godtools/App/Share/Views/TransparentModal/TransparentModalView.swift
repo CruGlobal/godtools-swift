@@ -21,6 +21,7 @@ class TransparentModalView: UIViewController {
     private var didTriggerAnimationControllerForPresentationAnimation: Bool = false
     
     @IBOutlet weak private var overlayButton: UIButton!
+    @IBOutlet weak private var safeAreaView: UIView!
     
     required init(flowDelegate: FlowDelegate, modalView: TransparentModalCustomViewInterface, closeModalFlowStep: FlowStep) {
         
@@ -107,7 +108,7 @@ extension TransparentModalView {
             centerModalViewVertically(modalView: modalView)
         
         case .definedInCustomViewProtocol:
-            modalView.addToParentForCustomLayout(parent: view)
+            modalView.addToParentForCustomLayout(parent: view, parentSafeAreaView: safeAreaView)
         }
         
         modalView.transparentModalDidLayout()
