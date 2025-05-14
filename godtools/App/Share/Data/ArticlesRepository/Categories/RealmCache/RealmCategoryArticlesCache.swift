@@ -28,6 +28,23 @@ class RealmCategoryArticlesCache {
             .map({CategoryArticleModel(realmModel: $0)})
     }
     
+    func getCategoryArticlesPublisher(categoryId: String, languageCode: String) -> AnyPublisher<[CategoryArticleModel], Never> {
+        
+        return Future() { promise in
+            
+            self.realmDatabase.background { realm in
+                
+                let categoryArticles: [CategoryArticleModel] = realm
+                    .objects(RealmCategoryArticle.self)
+                    .filter(NSPredicate(format: "categoryId == %@ AND languageCode == %@", categoryId, languageCode))
+                    .map({CategoryArticleModel(realmModel: $0)})
+                
+                promise(.success(categoryArticles))
+            }
+        }
+        .eraseToAnyPublisher()
+    }
+    
     func storeAemDataObjectsForCategoriesPublisher(categories: [ArticleCategory], languageCode: String, aemDataObjects: [ArticleAemData]) -> AnyPublisher<[Error], Never> {
         
         return Future() { promise in

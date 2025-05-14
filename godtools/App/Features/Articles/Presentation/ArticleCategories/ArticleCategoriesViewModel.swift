@@ -13,6 +13,7 @@ import LocalizationServices
 
 class ArticleCategoriesViewModel {
         
+    private static var backgroundCancellables: Set<AnyCancellable> = Set()
     private static var downloadArticlesCancellable: AnyCancellable?
     
     private let resource: ResourceModel
@@ -24,10 +25,8 @@ class ArticleCategoriesViewModel {
     private let incrementUserCounterUseCase: IncrementUserCounterUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
+    private let categories: [GodToolsToolParser.Category]
     
-    private var categories: [GodToolsToolParser.Category] = Array()
-    private var downloadArticlesReceipt: ArticleManifestDownloadArticlesReceipt?
-    private var cancellables = Set<AnyCancellable>()
     private var pageViewCount: Int = 0
     
     private weak var flowDelegate: FlowDelegate?
@@ -47,10 +46,11 @@ class ArticleCategoriesViewModel {
         self.incrementUserCounterUseCase = incrementUserCounterUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
-                                                    
-        reloadCategories()
-        
-        downloadArticles(forceDownload: false)
+                
+        categories = manifest.categories
+        numberOfCategories.accept(value: categories.count)
+                
+        downloadArticles(downloadCachePolicy: .fetchFromCacheUpToNextHour)
     }
     
     deinit {
@@ -71,18 +71,15 @@ class ArticleCategoriesViewModel {
     }
     
     private func cancelArticleDownload() {
-        downloadArticlesReceipt?.cancel()
-        downloadArticlesReceipt = nil
+        Self.downloadArticlesCancellable?.cancel()
+        Self.downloadArticlesCancellable = nil
     }
     
-    private func reloadCategories() {
-        self.categories = manifest.categories
-        numberOfCategories.accept(value: categories.count)
-    }
-
-    private func downloadArticles(forceDownload: Bool) {
+    private func downloadArticles(downloadCachePolicy: ArticleAemDownloaderCachePolicy) {
+                
+        cancelArticleDownload()
         
-        print("\n ** ArticleCategoriesViewModel Start Download ** ")
+        isLoading.accept(value: true)
         
         Self.downloadArticlesCancellable = articleManifestAemRepository
             .downloadAndCacheManifestAemUrisPublisher(
@@ -91,23 +88,11 @@ class ArticleCategoriesViewModel {
                 downloadCachePolicy: .ignoreCache,
                 sendRequestPriority: .high
             )
-            .sink(receiveValue: { (result: ArticleAemRepositoryResult) in
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] (result: ArticleAemRepositoryResult) in
                 
-                print("\n ArticleCategoriesViewModel Completed Download")
-                print("  result: \(result)")
+                self?.isLoading.accept(value: false)
             })
-        
-        
-//        cancelArticleDownload()
-//        
-//        isLoading.accept(value: true)
-//        
-//        downloadArticlesReceipt = articleManifestAemRepository.downloadAndCacheManifestAemUrisReceipt(manifest: manifest, languageCode: language.localeId, forceDownload: forceDownload, completion: { [weak self] (result: ArticleAemRepositoryResult) in
-//            
-//            DispatchQueue.main.async { [weak self] in
-//                self?.isLoading.accept(value: false)
-//            }
-//        })
     }
 }
 
@@ -130,7 +115,7 @@ extension ArticleCategoriesViewModel {
                 } receiveValue: { _ in
                     
                 }
-                .store(in: &cancellables)
+                .store(in: &Self.backgroundCancellables)
         }
         
         trackScreenViewAnalyticsUseCase.trackScreen(
@@ -159,10 +144,10 @@ extension ArticleCategoriesViewModel {
         
         let category: GodToolsToolParser.Category = categories[index]
         
-        flowDelegate?.navigate(step: .articleCategoryTappedFromArticleCategories(resource: resource, language: language, category: category, manifest: manifest, currentArticleDownloadReceipt: downloadArticlesReceipt))
+        flowDelegate?.navigate(step: .articleCategoryTappedFromArticleCategories(resource: resource, language: language, category: category, manifest: manifest))
     }
     
     func refreshArticles() {
-        downloadArticles(forceDownload: true)
+        downloadArticles(downloadCachePolicy: .ignoreCache)
     }
 }

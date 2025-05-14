@@ -24,28 +24,41 @@ class ArticleAemCache {
         self.articleWebArchiver = articleWebArchiver
     }
     
-    func getAemCacheObjectsOnBackgroundThread(aemUris: [String], completion: @escaping ((_ aemCacheObjects: [ArticleAemCacheObject]) -> Void)) {
+    func observeArticleAemCacheObjectsChangedPublisher() -> AnyPublisher<Void, Never> {
         
-        guard aemUris.count > 0 else {
-            completion([])
-            return
-        }
+        return realmDatabase.openRealm()
+            .objects(RealmResource.self)
+            .objectWillChange
+            .eraseToAnyPublisher()
+    }
+    
+    func getAemCacheObjectsPublisher(aemUris: [String]) -> AnyPublisher<[ArticleAemCacheObject], Never> {
         
-        realmDatabase.background { (realm: Realm) in
-            
-            let aemCacheObjects: [ArticleAemCacheObject] = aemUris.compactMap({
-                self.getAemCacheObject(realm: realm, aemUri: $0)
-            })
-            
-            completion(aemCacheObjects)
+        return Future() { promise in
+
+            self.realmDatabase.background { realm in
+                    
+                let cachedObjects: [ArticleAemCacheObject] = aemUris.compactMap { (aemUri: String) in
+                    self.getAemCacheObject(realm: realm, aemUri: aemUri)
+                }
+                
+                promise(.success(cachedObjects))
+            }
         }
+        .eraseToAnyPublisher()
     }
     
     func getAemCacheObject(aemUri: String) -> ArticleAemCacheObject? {
+        return getAemCacheObject(realm: realmDatabase.openRealm(), aemUri: aemUri)
+    }
+    
+    private func getAemCacheObjects(aemUris: [String], realm: Realm) -> [ArticleAemCacheObject] {
         
-        let realm: Realm = realmDatabase.openRealm()
+        let cachedObjects: [ArticleAemCacheObject] = aemUris.compactMap { (aemUri: String) in
+            self.getAemCacheObject(realm: realm, aemUri: aemUri)
+        }
         
-        return getAemCacheObject(realm: realm, aemUri: aemUri)
+        return cachedObjects
     }
 
     private func getAemCacheObject(realm: Realm, aemUri: String) -> ArticleAemCacheObject? {
@@ -232,18 +245,24 @@ class ArticleAemCache {
                     }
                 }
                 
+                let saveAemDataToRealmError: Error?
+                
                 do {
                     try realm.write {
                         realm.add(realmDataObjectsToStore, update: .modified)
                     }
+                    
+                    saveAemDataToRealmError = nil
                 }
                 catch let error {
-
+                    
+                    saveAemDataToRealmError = error
                 }
                 
                 let result = ArticleAemCacheResult(
                     numberOfArchivedObjects: aemCacheArchivedObjects.count,
-                    cacheErrorData: cacheErrorData
+                    cacheErrorData: cacheErrorData,
+                    saveAemDataToRealmError: saveAemDataToRealmError
                 )
                 
                 promise(.success(result))

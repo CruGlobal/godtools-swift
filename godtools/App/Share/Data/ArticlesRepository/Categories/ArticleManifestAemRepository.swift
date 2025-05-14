@@ -26,6 +26,12 @@ class ArticleManifestAemRepository: ArticleAemRepository {
         return categoryArticlesCache.getCategoryArticles(categoryId: categoryId, languageCode: languageCode)
     }
     
+    func getCategoryArticlesPublisher(categoryId: String, languageCode: String) -> AnyPublisher<[CategoryArticleModel], Never> {
+        
+        return categoryArticlesCache.getCategoryArticlesPublisher(categoryId: categoryId, languageCode: languageCode)
+            .eraseToAnyPublisher()
+    }
+    
     func downloadAndCacheManifestAemUrisPublisher(manifest: Manifest, languageCode: String, downloadCachePolicy: ArticleAemDownloaderCachePolicy, sendRequestPriority: SendRequestPriority) -> AnyPublisher<ArticleAemRepositoryResult, Never> {
         
         let aemUris: [String] = manifest.aemImports.map({$0.absoluteString})

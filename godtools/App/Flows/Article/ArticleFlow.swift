@@ -68,9 +68,9 @@ class ArticleFlow: Flow {
         case .backTappedFromArticleCategories:
             flowDelegate?.navigate(step: .articleFlowCompleted(state: .userClosedArticle))
         
-        case .articleCategoryTappedFromArticleCategories(let resource, let language, let category, let manifest, let currentArticleDownloadReceipt):
+        case .articleCategoryTappedFromArticleCategories(let resource, let language, let category, let manifest):
             
-            let view = getArticles(resource: resource, language: language, category: category, manifest: manifest, currentArticleDownloadReceipt: currentArticleDownloadReceipt)
+            let view = getArticles(resource: resource, language: language, category: category, manifest: manifest)
             
             navigationController.pushViewController(view, animated: true)
             
@@ -113,7 +113,7 @@ class ArticleFlow: Flow {
 
 extension ArticleFlow {
     
-    private func getArticles(resource: ResourceModel, language: LanguageModel, category: GodToolsToolParser.Category, manifest: Manifest, currentArticleDownloadReceipt: ArticleManifestDownloadArticlesReceipt?) -> UIViewController {
+    private func getArticles(resource: ResourceModel, language: LanguageModel, category: GodToolsToolParser.Category, manifest: Manifest) -> UIViewController {
         
         let viewModel = ArticlesViewModel(
             flowDelegate: self,
@@ -124,8 +124,7 @@ extension ArticleFlow {
             articleManifestAemRepository: appDiContainer.dataLayer.getArticleManifestAemRepository(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
-            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
-            currentArticleDownloadReceipt: currentArticleDownloadReceipt
+            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase()
         )
         
         let backButton = AppBackBarItem(

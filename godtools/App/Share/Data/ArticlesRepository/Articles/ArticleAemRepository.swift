@@ -22,13 +22,18 @@ open class ArticleAemRepository: NSObject {
         super.init()
     }
     
-    func getAemCacheObjectsOnBackgroundThread(aemUris: [String], completion: @escaping ((_ aemCacheObjects: [ArticleAemCacheObject]) -> Void)) {
+    func observeArticleAemCacheObjectsChangedPublisher() -> AnyPublisher<Void, Never> {
+        return cache.observeArticleAemCacheObjectsChangedPublisher()
+            .eraseToAnyPublisher()
+    }
+    
+    func getAemCacheObjectsPublisher(aemUris: [String]) -> AnyPublisher<[ArticleAemCacheObject], Never> {
         
-        return cache.getAemCacheObjectsOnBackgroundThread(aemUris: aemUris, completion: completion)
+        return cache.getAemCacheObjectsPublisher(aemUris: aemUris)
+            .eraseToAnyPublisher()
     }
     
     func getAemCacheObject(aemUri: String) -> ArticleAemCacheObject? {
-        
         return cache.getAemCacheObject(aemUri: aemUri)
     }
     
@@ -44,60 +49,28 @@ open class ArticleAemRepository: NSObject {
             aemUrisNeedingUpdate = aemUris
         }
         
-        print("\n ArticleAemRepository - downloadAndCachePublisher()")
-        print("  aemUrisNeedingUpdate: \(aemUrisNeedingUpdate)")
-        print("  downloadCachePolicy: \(downloadCachePolicy)")
-        
         return downloader.downloadPublisher(
             aemUris: aemUrisNeedingUpdate,
             downloadCachePolicy: downloadCachePolicy,
             sendRequestPriority: sendRequestPriority
         )
-        .map { (downloaderResult: ArticleAemDownloaderResult) in
+        .flatMap { (downloaderResult: ArticleAemDownloaderResult) -> AnyPublisher<ArticleAemRepositoryResult, Never> in
             
-            // TODO: GT-2580 cache aemDataObjects repository.cache.storeAemDataObjects. ~Levi
-            
-            return ArticleAemRepositoryResult(
-                downloaderResult: downloaderResult,
-                cacheResult: ArticleAemCacheResult(numberOfArchivedObjects: 0, cacheErrorData: [])
+            return self.cache.storeAemDataObjectsPublisher(
+                aemDataObjects: downloaderResult.aemDataObjects,
+                sendRequestPriority: sendRequestPriority
             )
+            .map { (cacheResult: ArticleAemCacheResult) in
+                
+                return ArticleAemRepositoryResult(
+                    downloaderResult: downloaderResult,
+                    cacheResult: cacheResult
+                )
+            }
+            .eraseToAnyPublisher()
         }
         .eraseToAnyPublisher()
     }
-    
-    // TODO: Remove GT-2580. ~Levi
-//    func downloadAndCache(aemUris: [String], forceDownload: Bool = false, completion: @escaping ((_ result: ArticleAemRepositoryResult) -> Void)) -> OperationQueue {
-//        
-//        let aemUrisNeedingUpdate: [String]
-//        let downloadCachePolicy: ArticleAemDownloaderCachePolicy
-//        
-//        if forceDownload {
-//            aemUrisNeedingUpdate = aemUris
-//            downloadCachePolicy = .ignoreCache
-//        }
-//        else {
-//            aemUrisNeedingUpdate = filterAemUrisByLastUpdate(aemUris: aemUris)
-//            downloadCachePolicy = .fetchFromCacheUpToNextHour
-//        }
-//        
-//        return downloader.download(aemUris: aemUrisNeedingUpdate, downloadCachePolicy: downloadCachePolicy) { [weak self] (downloaderResult: ArticleAemDownloaderResult) in
-//            
-//            guard let repository = self else {
-//                return
-//            }
-//            
-//            let aemDataObjects: [ArticleAemData] = downloaderResult.aemDataObjects
-//            
-//            repository.cache.storeAemDataObjects(aemDataObjects: aemDataObjects, didStartWebArchiveClosure: { (webArchiveOperationQueue: OperationQueue) in
-//                
-//            }, completion: { (cacheResult: ArticleAemCacheResult) in
-//                
-//                let result = ArticleAemRepositoryResult(downloaderResult: downloaderResult, cacheResult: cacheResult)
-//                
-//                completion(result)
-//            })
-//        }
-//    }
     
     private func filterAemUrisByLastUpdate(aemUris: [String]) -> [String] {
         
