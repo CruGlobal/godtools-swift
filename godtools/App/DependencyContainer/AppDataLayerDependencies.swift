@@ -124,7 +124,10 @@ class AppDataLayerDependencies {
     
     func getEmailSignUpService() -> EmailSignUpService {
         return EmailSignUpService(
-            api: EmailSignUpApi(ignoreCacheSession: sharedIgnoreCacheSession),
+            api: EmailSignUpApi(
+                priorityRequestSender: getSharedPriorityRequestSender(),
+                ignoreCacheSession: sharedIgnoreCacheSession
+            ),
             cache: RealmEmailSignUpsCache(realmDatabase: sharedRealmDatabase)
         )
     }
