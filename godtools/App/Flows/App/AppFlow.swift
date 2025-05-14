@@ -519,8 +519,13 @@ extension AppFlow {
             })
             .store(in: &cancellables)
         
-        _ = followUpsService.postFailedFollowUpsIfNeeded()
-        
+        followUpsService
+            .postFailedFollowUpsIfNeededPublisher(sendRequestPriority: .low)
+            .sink { _ in
+                
+            }
+            .store(in: &cancellables)
+      
         resourceViewsService
             .postFailedResourceViewsIfNeededPublisher(sendRequestPriority: .low)
             .sink { _ in
