@@ -519,9 +519,19 @@ extension AppFlow {
             })
             .store(in: &cancellables)
         
-        _ = followUpsService.postFailedFollowUpsIfNeeded()
-        
-        _ = resourceViewsService.postFailedResourceViewsIfNeeded()
+        followUpsService
+            .postFailedFollowUpsIfNeededPublisher(sendRequestPriority: .low)
+            .sink { _ in
+                
+            }
+            .store(in: &cancellables)
+      
+        resourceViewsService
+            .postFailedResourceViewsIfNeededPublisher(sendRequestPriority: .low)
+            .sink { _ in
+                
+            }
+            .store(in: &cancellables)
         
         let authenticateUser: AuthenticateUserInterface = appDiContainer.feature.account.dataLayer.getAuthenticateUserInterface()
         

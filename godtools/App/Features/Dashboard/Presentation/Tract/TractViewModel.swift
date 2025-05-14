@@ -12,6 +12,8 @@ import Combine
 
 class TractViewModel: MobileContentRendererViewModel {
     
+    private static var backgroundCancellables: Set<AnyCancellable> = Set()
+    
     static let isLiveShareStreamingKey: String = "TractViewModel.isLiveShareStreamKey"
     
     private let tractRemoteSharePublisher: TractRemoteSharePublisher
@@ -152,7 +154,14 @@ class TractViewModel: MobileContentRendererViewModel {
         
         subscribeToLiveShareStreamIfNeeded()
         
-        _ = resourceViewsService.postNewResourceView(resourceId: resource.id)
+        resourceViewsService
+            .postNewResourceViewPublisher(resourceId: resource.id, sendRequestPriority: .medium)
+            .sink { _ in
+                
+            } receiveValue: { _ in
+                
+            }
+            .store(in: &Self.backgroundCancellables)
     }
     
     private func trackLanguageTapped(tappedLanguage: LanguageModel) {

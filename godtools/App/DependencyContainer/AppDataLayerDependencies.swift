@@ -131,7 +131,10 @@ class AppDataLayerDependencies {
     
     func getEmailSignUpService() -> EmailSignUpService {
         return EmailSignUpService(
-            api: EmailSignUpApi(ignoreCacheSession: sharedIgnoreCacheSession),
+            api: EmailSignUpApi(
+                priorityRequestSender: getSharedPriorityRequestSender(),
+                ignoreCacheSession: sharedIgnoreCacheSession
+            ),
             cache: RealmEmailSignUpsCache(realmDatabase: sharedRealmDatabase)
         )
     }
@@ -154,6 +157,7 @@ class AppDataLayerDependencies {
         
         let api = FollowUpsApi(
             baseUrl: getAppConfig().getMobileContentApiBaseUrl(),
+            priorityRequestSender: getSharedPriorityRequestSender(),
             ignoreCacheSession: sharedIgnoreCacheSession
         )
         
@@ -288,7 +292,11 @@ class AppDataLayerDependencies {
     func getResourceViewsService() -> ResourceViewsService {
         
         return ResourceViewsService(
-            resourceViewsApi: MobileContentResourceViewsApi(config: getAppConfig(), ignoreCacheSession: sharedIgnoreCacheSession),
+            resourceViewsApi: MobileContentResourceViewsApi(
+                config: getAppConfig(),
+                priorityRequestSender: getSharedPriorityRequestSender(),
+                ignoreCacheSession: sharedIgnoreCacheSession
+            ),
             failedResourceViewsCache: FailedResourceViewsCache(realmDatabase: sharedRealmDatabase)
         )
     }
