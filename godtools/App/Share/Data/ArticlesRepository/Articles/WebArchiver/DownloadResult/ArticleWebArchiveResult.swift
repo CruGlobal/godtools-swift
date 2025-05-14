@@ -11,9 +11,9 @@ import Foundation
 class ArticleWebArchiveResult {
     
     let data: ArticleWebArchiveData?
-    let error: WebArchiveOperationError?
+    let error: ArticleWebArchiveError?
     
-    init(data: ArticleWebArchiveData?, error: WebArchiveOperationError?) {
+    init(data: ArticleWebArchiveData?, error: ArticleWebArchiveError?) {
         
         self.data = data
         self.error = error

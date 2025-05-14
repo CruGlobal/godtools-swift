@@ -11,10 +11,10 @@ import Foundation
 class ArticleWebArchiverResult {
     
     let successfulArchives: [ArticleWebArchiveData]
-    let failedArchives: [WebArchiveOperationError]
+    let failedArchives: [ArticleWebArchiveError]
     let totalAttemptedArchives: Int
     
-    init(successfulArchives: [ArticleWebArchiveData], failedArchives: [WebArchiveOperationError], totalAttemptedArchives: Int) {
+    init(successfulArchives: [ArticleWebArchiveData], failedArchives: [ArticleWebArchiveError], totalAttemptedArchives: Int) {
         
         self.successfulArchives = successfulArchives
         self.failedArchives = failedArchives

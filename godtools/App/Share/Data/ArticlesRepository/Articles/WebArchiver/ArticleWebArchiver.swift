@@ -92,7 +92,7 @@ class ArticleWebArchiver {
                 }
                 catch let encodePlistDataError {
                     
-                    let archiveError: WebArchiveOperationError = .failedEncodingPlistData(error: encodePlistDataError)
+                    let archiveError: ArticleWebArchiveError = .failedEncodingPlistData(error: encodePlistDataError)
                     
                     return ArticleWebArchiveResult(data: nil, error: archiveError)
                 }
@@ -112,7 +112,7 @@ class ArticleWebArchiver {
                 userInfo: [NSLocalizedDescriptionKey: "Invalid url host."
             ])
             
-            let archiveError: WebArchiveOperationError = .invalidHost(error: error)
+            let archiveError: ArticleWebArchiveError = .invalidHost(error: error)
             
             return Just(ArchiveHtmlDocumentDataResult(data: nil, error: archiveError))
                 .eraseToAnyPublisher()
@@ -137,7 +137,7 @@ class ArticleWebArchiver {
                         userInfo: [NSLocalizedDescriptionKey: "The request failed with a status code: \(httpStatusCode)"
                     ])
                     
-                    let archiveError: WebArchiveOperationError = .responseError(error: error)
+                    let archiveError: ArticleWebArchiveError = .responseError(error: error)
                     
                     return Just(ArchiveHtmlDocumentDataResult(data: nil, error: archiveError))
                         .eraseToAnyPublisher()
@@ -150,7 +150,7 @@ class ArticleWebArchiver {
                         userInfo: [NSLocalizedDescriptionKey: "Failed to archive url because the mimetype is not text/html. Found mimeType: \(mimeType)"
                     ])
                     
-                    let archiveError: WebArchiveOperationError = .invalidMimeType(error: error)
+                    let archiveError: ArticleWebArchiveError = .invalidMimeType(error: error)
                     
                     return Just(ArchiveHtmlDocumentDataResult(data: nil, error: archiveError))
                         .eraseToAnyPublisher()
@@ -174,7 +174,7 @@ class ArticleWebArchiver {
                     }
                     catch let parseHtmlDocumentError {
                         
-                        let archiveError: WebArchiveOperationError = .failedToParseHtmlDocument(error: parseHtmlDocumentError)
+                        let archiveError: ArticleWebArchiveError = .failedToParseHtmlDocument(error: parseHtmlDocumentError)
                         
                         return Just(ArchiveHtmlDocumentDataResult(data: nil, error: archiveError))
                             .eraseToAnyPublisher()
@@ -188,7 +188,7 @@ class ArticleWebArchiver {
                         userInfo: [NSLocalizedDescriptionKey: "Failed to archive url there wasn't sufficent html to parse."
                     ])
                     
-                    let archiveError: WebArchiveOperationError = .failedToParseHtmlDocument(error: noHtmlData)
+                    let archiveError: ArticleWebArchiveError = .failedToParseHtmlDocument(error: noHtmlData)
                     
                     return Just(ArchiveHtmlDocumentDataResult(data: nil, error: archiveError))
                         .eraseToAnyPublisher()
@@ -197,7 +197,7 @@ class ArticleWebArchiver {
             .catch { (error: Error) in
                 
                 let errorCode: Int = (error as NSError).code
-                let operationError: WebArchiveOperationError
+                let operationError: ArticleWebArchiveError
                 
                 if errorCode == CFNetworkErrors.cfurlErrorCancelled.rawValue {
                     operationError = .cancelled

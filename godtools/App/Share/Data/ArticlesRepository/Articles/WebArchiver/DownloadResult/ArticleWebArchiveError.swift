@@ -1,5 +1,5 @@
 //
-//  WebArchiveOperationError.swift
+//  ArticleWebArchiveError.swift
 //  godtools
 //
 //  Created by Levi Eggert on 5/22/20.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum WebArchiveOperationError: Error {
+enum ArticleWebArchiveError: Error {
     
     case cancelled
     case failedEncodingPlistData(error: Error)

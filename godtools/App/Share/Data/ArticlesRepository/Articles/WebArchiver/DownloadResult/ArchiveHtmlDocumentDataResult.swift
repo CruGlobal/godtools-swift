@@ -12,9 +12,9 @@ import Fuzi
 class ArchiveHtmlDocumentDataResult {
     
     let data: HTMLDocumentData?
-    let error: WebArchiveOperationError?
+    let error: ArticleWebArchiveError?
     
-    init(data: HTMLDocumentData?, error: WebArchiveOperationError?) {
+    init(data: HTMLDocumentData?, error: ArticleWebArchiveError?) {
         
         self.data = data
         self.error = error
