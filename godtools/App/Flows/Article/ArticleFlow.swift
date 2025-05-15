@@ -9,8 +9,13 @@
 import UIKit
 import GodToolsToolParser
 import SwiftUI
+import Combine
 
 class ArticleFlow: Flow {
+    
+    private let downloadArticlesObservable: DownloadManifestArticlesObservable
+    
+    private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -25,14 +30,26 @@ class ArticleFlow: Flow {
         
         let languageTranslationManifest: MobileContentRendererLanguageTranslationManifest = toolTranslations.languageTranslationManifests[0]
         
+        downloadArticlesObservable = DownloadManifestArticlesObservable(
+            language: languageTranslationManifest.language,
+            manifest: languageTranslationManifest.manifest,
+            articleManifestAemRepository: appDiContainer.dataLayer.getArticleManifestAemRepository()
+        )
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+
+            print("\n\n ******** START ARTICLE DOWNLOAD ********")
+            
+            self.downloadArticlesObservable.downloadArticles(downloadCachePolicy: .fetchFromCacheUpToNextHour)
+        }
+        
         let viewModel = ArticleCategoriesViewModel(
             flowDelegate: self,
             resource: toolTranslations.tool,
             language: languageTranslationManifest.language,
             manifest: languageTranslationManifest.manifest,
-            articleManifestAemRepository: appDiContainer.dataLayer.getArticleManifestAemRepository(),
+            downloadArticlesObservable: downloadArticlesObservable,
             manifestResourcesCache: appDiContainer.getMobileContentRendererManifestResourcesCache(),
-            localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
@@ -121,6 +138,7 @@ extension ArticleFlow {
             language: language,
             category: category,
             manifest: manifest,
+            downloadArticlesObservable: downloadArticlesObservable,
             articleManifestAemRepository: appDiContainer.dataLayer.getArticleManifestAemRepository(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             localizationServices: appDiContainer.dataLayer.getLocalizationServices(),

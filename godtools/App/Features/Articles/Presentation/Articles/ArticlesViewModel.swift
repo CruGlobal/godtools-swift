@@ -12,15 +12,14 @@ import Combine
 import LocalizationServices
 
 class ArticlesViewModel: NSObject {
-    
-    private static var downloadArticlesCancellable: AnyCancellable?
-    
+        
     typealias AemUri = String
     
     private let resource: ResourceModel
     private let language: LanguageModel
     private let category: GodToolsToolParser.Category
     private let manifest: Manifest
+    private let downloadArticlesObservable: DownloadManifestArticlesObservable
     private let articleManifestAemRepository: ArticleManifestAemRepository
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let localizationServices: LocalizationServices
@@ -38,13 +37,14 @@ class ArticlesViewModel: NSObject {
         
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     
-    init(flowDelegate: FlowDelegate, resource: ResourceModel, language: LanguageModel, category: GodToolsToolParser.Category, manifest: Manifest, articleManifestAemRepository: ArticleManifestAemRepository, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, localizationServices: LocalizationServices, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
+    init(flowDelegate: FlowDelegate, resource: ResourceModel, language: LanguageModel, category: GodToolsToolParser.Category, manifest: Manifest, downloadArticlesObservable: DownloadManifestArticlesObservable, articleManifestAemRepository: ArticleManifestAemRepository, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, localizationServices: LocalizationServices, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
         self.language = language
         self.category = category
         self.manifest = manifest
+        self.downloadArticlesObservable = downloadArticlesObservable
         self.articleManifestAemRepository = articleManifestAemRepository
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.localizationServices = localizationServices
@@ -58,9 +58,55 @@ class ArticlesViewModel: NSObject {
                         
         navTitle.accept(value: category.label?.text ?? "")
         
-        articleManifestAemRepository
-            .observeArticleAemCacheObjectsChangedPublisher()
-            .flatMap { (onChange: Void) -> AnyPublisher<[AemUri], Never> in
+        downloadArticlesObservable
+            .$isDownloading
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (isDownloading: Bool) in
+
+                print("\n ArticlesViewModel")
+                print("  isDownloading: \(isDownloading)")
+                
+                self?.isLoading.accept(value: isDownloading)
+            }
+            .store(in: &cancellables)
+        
+        Publishers.CombineLatest(
+            $appLanguage.dropFirst(),
+            downloadArticlesObservable.$articleAemRepositoryResult
+        )
+        .map { (appLanguage: AppLanguageDomainModel, result: ArticleAemRepositoryResult) in
+            
+            if let downloadError = result.downloaderResult.downloadError {
+                
+                let downloadArticlesErrorViewModel = DownloadArticlesErrorViewModel(
+                    appLanguage: appLanguage,
+                    localizationServices: localizationServices,
+                    error: downloadError
+                )
+                
+                let errorViewModel = ArticlesErrorMessageViewModel(
+                    appLanguage: appLanguage,
+                    localizationServices: localizationServices,
+                    message: downloadArticlesErrorViewModel.message
+                )
+                
+                return errorViewModel
+            }
+            else {
+                
+                return nil
+            }
+        }
+        .receive(on: DispatchQueue.main)
+        .sink { [weak self] (errorViewModel: ArticlesErrorMessageViewModel?) in
+            
+            self?.errorMessage.accept(value: errorViewModel)
+        }
+        .store(in: &cancellables)
+        
+        downloadArticlesObservable
+            .$articleAemRepositoryResult.dropFirst()
+            .flatMap { (articleAemRepositoryResult: ArticleAemRepositoryResult) -> AnyPublisher<[AemUri], Never> in
                 
                 guard let categoryId = category.id else {
                     return Just([])
@@ -109,7 +155,6 @@ class ArticlesViewModel: NSObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (aemCacheObjects: [ArticleAemCacheObject]) in
                 
-                self?.isLoading.accept(value: false)
                 self?.articleAemCacheObjects = aemCacheObjects
                 self?.numberOfArticles.accept(value: aemCacheObjects.count)
             }
@@ -131,66 +176,6 @@ class ArticlesViewModel: NSObject {
     private var analyticsSiteSubSection: String {
         return "articles-list"
     }
-    
-    private func cancelArticleDownload() {
-        Self.downloadArticlesCancellable?.cancel()
-        Self.downloadArticlesCancellable = nil
-    }
-    
-    private func downloadArticles(downloadCachePolicy: ArticleAemDownloaderCachePolicy) {
-                
-        cancelArticleDownload()
-        
-        isLoading.accept(value: true)
-        
-        Self.downloadArticlesCancellable = articleManifestAemRepository
-            .downloadAndCacheManifestAemUrisPublisher(
-                manifest: manifest,
-                languageCode: language.localeId,
-                downloadCachePolicy: .ignoreCache,
-                sendRequestPriority: .high
-            )
-            .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] (result: ArticleAemRepositoryResult) in
-                
-                self?.isLoading.accept(value: false)
-            })
-    }
-    
-    // TODO: Implement error handling?  GT-2580 ~Levi
-//    private func handleCompleteArticlesDownload(appLanguage: AppLanguageDomainModel, result: ArticleAemRepositoryResult) {
-//                
-//        isLoading.accept(value: false)
-//        
-//        let cachedArticleAemUris: [AemUri] = getCachedArticleAemUris()
-//        
-//        reloadArticlesFromCache(aemUris: cachedArticleAemUris, completionOnMainThread: { [weak self] in
-//            
-//            guard let weakSelf = self else {
-//                return
-//            }
-//            
-//            if let downloadError = result.downloaderResult.downloadError, cachedArticleAemUris.isEmpty {
-//                
-//                let downloadArticlesErrorViewModel = DownloadArticlesErrorViewModel(
-//                    appLanguage: appLanguage,
-//                    localizationServices: weakSelf.localizationServices,
-//                    error: downloadError
-//                )
-//                
-//                let errorViewModel = ArticlesErrorMessageViewModel(
-//                    appLanguage: appLanguage,
-//                    localizationServices: weakSelf.localizationServices,
-//                    message: downloadArticlesErrorViewModel.message
-//                )
-//                
-//                weakSelf.errorMessage.accept(value: errorViewModel)
-//            }
-//            else {
-//                weakSelf.errorMessage.accept(value: nil)
-//            }
-//        })
-//    }
 }
 
 // MARK: - Inputs
@@ -230,6 +215,6 @@ extension ArticlesViewModel {
     
     func downloadArticlesTapped() {
         
-        downloadArticles(downloadCachePolicy: .ignoreCache)
+        downloadArticlesObservable.downloadArticles(downloadCachePolicy: .ignoreCache)
     }
 }
