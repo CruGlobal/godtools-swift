@@ -1,5 +1,10 @@
+"optInNotification.notificationSettings" = "Pengaturan Notifikasi";
 "lessons.swipeTutorial.title" = "Geser untuk mengganti halaman";
 "lessons.swipeTutorial.buttonText" = "Mengerti";
+"optInNotification.title" = "Dapatkan tip dan dorongan";
+"optInNotification.body" = "Selalu siap untuk percakapan.\nIzinkan notifikasi hari ini.";
+"optInNotification.allowNotifications" = "Izinkan Notifikasi";
+"optInNotification.maybeLater" = "Mungkin nanti";
 
 /* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
 "lessons.resumeLessonModal.title" = "Lanjutkan Kemajuan";

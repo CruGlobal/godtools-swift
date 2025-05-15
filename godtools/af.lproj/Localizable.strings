@@ -1,5 +1,10 @@
+"optInNotification.notificationSettings" = "Kennisgewing Instellings";
 "lessons.swipeTutorial.title" = "Swiep om bladsye te verander";
 "lessons.swipeTutorial.buttonText" = "Het dit";
+"optInNotification.title" = "Kry wenke en aanmoediging";
+"optInNotification.body" = "Bly toegerus vir geselsies.\nLaat kennisgewings vandag toe.";
+"optInNotification.allowNotifications" = "Laat Kennisgewings toe";
+"optInNotification.maybeLater" = "Miskien later";
 
 /* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
 "lessons.resumeLessonModal.title" = "Gaan aan waar jy opgehou het";
