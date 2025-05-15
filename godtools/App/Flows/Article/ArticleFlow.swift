@@ -36,12 +36,9 @@ class ArticleFlow: Flow {
             articleManifestAemRepository: appDiContainer.dataLayer.getArticleManifestAemRepository()
         )
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-
-            print("\n\n ******** START ARTICLE DOWNLOAD ********")
-            
-            self.downloadArticlesObservable.downloadArticles(downloadCachePolicy: .fetchFromCacheUpToNextHour)
-        }
+        downloadArticlesObservable.downloadArticles(
+            downloadCachePolicy: .fetchFromCacheUpToNextHour
+        )
         
         let viewModel = ArticleCategoriesViewModel(
             flowDelegate: self,
