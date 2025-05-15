@@ -29,12 +29,13 @@ class DownloadManifestArticlesObservable: ObservableObject {
     }
     
     func cancelDownload() {
+
         downloadArticlesCancellable?.cancel()
         downloadArticlesCancellable = nil
     }
     
     func downloadArticles(downloadCachePolicy: ArticleAemDownloaderCachePolicy) {
-        
+                
         cancelDownload()
         
         isDownloading = true
@@ -49,8 +50,21 @@ class DownloadManifestArticlesObservable: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] (articleAemRepositoryResult: ArticleAemRepositoryResult) in
                 
-                self?.articleAemRepositoryResult = articleAemRepositoryResult
-                self?.isDownloading = false
+                guard let weakSelf = self else {
+                    return
+                }
+                
+                let articleDownloadCancelled: Bool = articleAemRepositoryResult.downloaderResult.downloadError == .cancelled
+                let articleDownloadRunning: Bool = weakSelf.downloadArticlesCancellable != nil
+                
+                if articleDownloadCancelled && articleDownloadRunning {
+                    weakSelf.isDownloading = true
+                }
+                else {
+                    weakSelf.isDownloading = false
+                }
+                
+                weakSelf.articleAemRepositoryResult = articleAemRepositoryResult
             })
     }
 }

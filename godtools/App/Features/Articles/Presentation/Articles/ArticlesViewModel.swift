@@ -105,7 +105,7 @@ class ArticlesViewModel: NSObject {
         .store(in: &cancellables)
         
         downloadArticlesObservable
-            .$articleAemRepositoryResult.dropFirst()
+            .$articleAemRepositoryResult
             .flatMap { (articleAemRepositoryResult: ArticleAemRepositoryResult) -> AnyPublisher<[AemUri], Never> in
                 
                 guard let categoryId = category.id else {
