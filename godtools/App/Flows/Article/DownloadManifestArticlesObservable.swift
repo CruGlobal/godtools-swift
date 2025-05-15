@@ -44,7 +44,7 @@ class DownloadManifestArticlesObservable: ObservableObject {
             .downloadAndCacheManifestAemUrisPublisher(
                 manifest: manifest,
                 languageCode: language.localeId,
-                downloadCachePolicy: .ignoreCache,
+                downloadCachePolicy: downloadCachePolicy,
                 sendRequestPriority: .high
             )
             .receive(on: DispatchQueue.main)
