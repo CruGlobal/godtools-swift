@@ -57,7 +57,7 @@ class RealmCategoryArticlesCache {
         .eraseToAnyPublisher()
     }
     
-    func storeAemDataObjectsForCategories(categories: [ArticleCategory], languageCode: String, aemDataObjects: [ArticleAemData], completion: @escaping ((_ errors: [Error]) -> Void)) {
+    private func storeAemDataObjectsForCategories(categories: [ArticleCategory], languageCode: String, aemDataObjects: [ArticleAemData], completion: @escaping ((_ errors: [Error]) -> Void)) {
         
         realmDatabase.background { (realm: Realm) in
             

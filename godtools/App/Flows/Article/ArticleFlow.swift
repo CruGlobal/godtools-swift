@@ -14,9 +14,7 @@ import Combine
 class ArticleFlow: Flow {
     
     private let downloadArticlesObservable: DownloadManifestArticlesObservable
-    
-    private var cancellables: Set<AnyCancellable> = Set()
-    
+        
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
