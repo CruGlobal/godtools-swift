@@ -32,11 +32,11 @@ class UserCountersRepository {
         return UserCounterDomainModel(dataModel: userCounterDataModel)
     }
     
-    func getUserCountersChanged(reloadFromRemote: Bool) -> AnyPublisher<Void, Never> {
+    func getUserCountersChanged(reloadFromRemote: Bool, sendRequestPriority: SendRequestPriority) -> AnyPublisher<Void, Never> {
         
         if reloadFromRemote {
             
-            fetchRemoteUserCounters()
+            fetchRemoteUserCounters(sendRequestPriority: sendRequestPriority)
                 .sink(receiveCompletion: { _ in
                 }, receiveValue: { _ in
                     
@@ -52,9 +52,9 @@ class UserCountersRepository {
         return cache.getAllUserCounters()
     }
     
-    func fetchRemoteUserCounters() -> AnyPublisher<[UserCounterDataModel], Error> {
+    func fetchRemoteUserCounters(sendRequestPriority: SendRequestPriority) -> AnyPublisher<[UserCounterDataModel], Error> {
         
-        return api.fetchUserCountersPublisher()
+        return api.fetchUserCountersPublisher(sendRequestPriority: sendRequestPriority)
             .flatMap { (userCounters: [UserCounterDecodable]) in
                 
                 return self.cache.syncUserCounters(userCounters)
@@ -73,8 +73,8 @@ class UserCountersRepository {
         return cache.deleteAllUserCounters()
     }
     
-    func syncUpdatedUserCountersWithRemote() {
+    func syncUpdatedUserCountersWithRemote(sendRequestPriority: SendRequestPriority) {
         
-        remoteUserCountersSync.syncUpdatedUserCountersWithRemote()
+        remoteUserCountersSync.syncUpdatedUserCountersWithRemote(sendRequestPriority: sendRequestPriority)
     }
 }

@@ -12,6 +12,8 @@ import Combine
 
 class ArticleWebViewModel: NSObject, ObservableObject {
     
+    private static var backgroundCancellables: Set<AnyCancellable> = Set()
+    
     private let aemCacheObject: ArticleAemCacheObject
     private let flowType: ArticleWebViewModelFlowType
     private let incrementUserCounterUseCase: IncrementUserCounterUseCase
@@ -181,7 +183,7 @@ extension ArticleWebViewModel {
             } receiveValue: { _ in
                 
             }
-            .store(in: &cancellables)
+            .store(in: &Self.backgroundCancellables)
     }
     
     @objc func debugTapped() {

@@ -13,12 +13,13 @@ import Combine
 class MobileContentResourcesApi {
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
-    private let requestSender: RequestSender = RequestSender()
+    private let priorityRequestSender: PriorityRequestSenderInterface
     private let ignoreCacheSession: IgnoreCacheSession
     private let baseUrl: String
     
-    init(config: AppConfig, ignoreCacheSession: IgnoreCacheSession) {
+    init(config: AppConfig, priorityRequestSender: PriorityRequestSenderInterface, ignoreCacheSession: IgnoreCacheSession) {
                     
+        self.priorityRequestSender = priorityRequestSender
         self.ignoreCacheSession = ignoreCacheSession
         baseUrl = config.getMobileContentApiBaseUrl()
     }
@@ -39,11 +40,13 @@ class MobileContentResourcesApi {
         )
     }
     
-    func getResourcePlusLatestTranslationsAndAttachmentsPublisher(id: String) -> AnyPublisher<ResourcesPlusLatestTranslationsAndAttachmentsModel, Error> {
+    func getResourcePlusLatestTranslationsAndAttachmentsPublisher(id: String, sendRequestPriority: SendRequestPriority) -> AnyPublisher<ResourcesPlusLatestTranslationsAndAttachmentsModel, Error> {
         
         let urlSession: URLSession = ignoreCacheSession.session
         
         let urlRequest: URLRequest = getResourcePlusLatestTranslationsAndAttachmentsRequest(urlSession: urlSession, id: id)
+        
+        let requestSender: RequestSender = priorityRequestSender.createRequestSender(sendRequestPriority: sendRequestPriority)
         
         return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
             .decodeRequestDataResponseForSuccessOrFailureCodable()
@@ -69,11 +72,13 @@ class MobileContentResourcesApi {
         )
     }
     
-    func getResourcePlusLatestTranslationsAndAttachmentsPublisher(abbreviation: String) -> AnyPublisher<ResourcesPlusLatestTranslationsAndAttachmentsModel, Error> {
+    func getResourcePlusLatestTranslationsAndAttachmentsPublisher(abbreviation: String, sendRequestPriority: SendRequestPriority) -> AnyPublisher<ResourcesPlusLatestTranslationsAndAttachmentsModel, Error> {
         
         let urlSession: URLSession = ignoreCacheSession.session
         
         let urlRequest: URLRequest = getResourcePlusLatestTranslationsAndAttachmentsRequest(urlSession: urlSession, abbreviation: abbreviation)
+        
+        let requestSender: RequestSender = priorityRequestSender.createRequestSender(sendRequestPriority: sendRequestPriority)
         
         return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
             .decodeRequestDataResponseForSuccessOrFailureCodable()
@@ -101,11 +106,13 @@ class MobileContentResourcesApi {
         )
     }
     
-    func getResourcesPlusLatestTranslationsAndAttachments() -> AnyPublisher<ResourcesPlusLatestTranslationsAndAttachmentsModel, Error> {
+    func getResourcesPlusLatestTranslationsAndAttachments(sendRequestPriority: SendRequestPriority) -> AnyPublisher<ResourcesPlusLatestTranslationsAndAttachmentsModel, Error> {
         
         let urlSession: URLSession = ignoreCacheSession.session
         
         let urlRequest: URLRequest = getResourcesPlusLatestTranslationsAndAttachmentsRequest(urlSession: urlSession)
+        
+        let requestSender: RequestSender = priorityRequestSender.createRequestSender(sendRequestPriority: sendRequestPriority)
         
         return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
             .decodeRequestDataResponseForSuccessCodable()

@@ -1,5 +1,5 @@
 //
-//  ArticleAemDownloadGetCacheTimeInterval.swift
+//  ArticleAemDownloaderCachePolicy.swift
 //  godtools
 //
 //  Created by Levi Eggert on 3/28/23.
@@ -8,17 +8,19 @@
 
 import Foundation
 
-class ArticleAemDownloadGetCacheTimeInterval {
+enum ArticleAemDownloaderCachePolicy {
     
-    init() {
-        
-    }
+    case fetchFromCacheUpToNextHour
+    case ignoreCache
+}
+
+extension ArticleAemDownloaderCachePolicy {
     
-    func getCacheTimeInterval(cachePolicy: ArticleAemDownloadOperationCachePolicy) -> TimeInterval {
+    func getCacheTimeInterval() -> TimeInterval {
                 
         let secondsSinceEpoch: TimeInterval = Date().timeIntervalSince1970
         
-        switch cachePolicy {
+        switch self {
             
         case .fetchFromCacheUpToNextHour:
 
