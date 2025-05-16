@@ -13,6 +13,8 @@ struct OptInNotificationView: View {
     
     private let overlayTappedClosure: (() -> Void)?
     
+    @State private var showModal: Bool = false
+    
     @ObservedObject private var viewModel: OptInNotificationViewModel
 
     init(viewModel: OptInNotificationViewModel, overlayTappedClosure: (() -> Void)? = nil) {
@@ -25,7 +27,14 @@ struct OptInNotificationView: View {
         
         GeometryReader { geometry in
          
-            FullScreenOverlayView(tappedClosure: overlayTappedClosure)
+            FullScreenOverlayView(tappedClosure: {
+                
+                withAnimation {
+                    showModal = false
+                }
+                
+                overlayTappedClosure?()
+            })
             
             VStack(alignment: .leading, spacing: 0) {
                 
@@ -63,6 +72,10 @@ struct OptInNotificationView: View {
 
                     Button(action: {
                         
+                        withAnimation {
+                            showModal = false
+                        }
+                        
                         viewModel.allowNotificationsTapped()
 
                     }) {
@@ -77,6 +90,10 @@ struct OptInNotificationView: View {
                     .padding(.top, 18)
 
                     Button(action: {
+                        
+                        withAnimation {
+                            showModal = false
+                        }
                         
                         viewModel.maybeLaterTapped()
 
@@ -105,6 +122,12 @@ struct OptInNotificationView: View {
                         )
                 )
                 .padding(.horizontal, 20)
+                .offset(y: !showModal ? geometry.size.height * 0.75 : 0)
+            }
+        }
+        .onAppear {
+            withAnimation {
+                showModal = true
             }
         }
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
