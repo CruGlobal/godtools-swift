@@ -1,5 +1,10 @@
+"optInNotification.notificationSettings" = "Mipangilio ya Arifa";
 "lessons.swipeTutorial.title" = "Telezesha kidole ili kubadilisha kurasa";
 "lessons.swipeTutorial.buttonText" = "Nimeelewa";
+"optInNotification.title" = "Pata Vidokezo na Kutiwa Moyo";
+"optInNotification.body" = "Kaa tayari kwa mazungumzo.\nRuhusu arifa leo.";
+"optInNotification.allowNotifications" = "Ruhusu Arifa";
+"optInNotification.maybeLater" = "Labda Baadaye";
 
 /* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
 "lessons.resumeLessonModal.title" = "Rejelea Maendeleo";
