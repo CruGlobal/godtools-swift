@@ -11,79 +11,102 @@ import SwiftUI
 
 struct OptInNotificationView: View {
     
+    private let overlayTappedClosure: (() -> Void)?
+    
     @ObservedObject private var viewModel: OptInNotificationViewModel
 
-    init(viewModel: OptInNotificationViewModel) {
+    init(viewModel: OptInNotificationViewModel, overlayTappedClosure: (() -> Void)? = nil) {
+       
         self.viewModel = viewModel
+        self.overlayTappedClosure = overlayTappedClosure
     }
 
     var body: some View {
-
-        VStack {
+        
+        GeometryReader { geometry in
+         
+            FullScreenOverlayView(tappedClosure: overlayTappedClosure)
             
-            ImageCatalog.notificationGraphic
-                .image
-                .resizable()
-                .scaledToFill()
-                .padding(.horizontal, 15)
-                .overlay(
-                    Rectangle()
-                        .frame(height: 2)
-                        .padding(.horizontal, 5)
-                        .foregroundColor(ColorPalette.gtBlue.color),
-                    alignment: .bottom
-                )
-            
-            Text(viewModel.title)
-                .foregroundColor(ColorPalette.gtBlue.color)
-                .font(FontLibrary.sfProTextRegular.font(size: 30))
-                .fontWeight(.bold)
-                .padding(.vertical, 8)
-                .minimumScaleFactor(0.5)
-                .lineLimit(1)
-
-            Text(viewModel.body)
-                .font(FontLibrary.sfProTextRegular.font(size: 17))
-                .foregroundStyle(ColorPalette.gtGrey.color)
-                .multilineTextAlignment(.center)
-                .padding(.bottom, 12)
-
-            Button(action: {
+            VStack(alignment: .leading, spacing: 0) {
                 
-                viewModel.allowNotificationsTapped()
-
-            }) {
-                RoundedRectangle(cornerRadius: 5)
-                    .fill(ColorPalette.gtBlue.color)
-            }
-            .frame(height: 45)
-            .overlay(
-                Text(viewModel.notificationsActionTitle)
-                    .foregroundColor(.white)
-            )
-
-            Button(action: {
+                Spacer()
                 
-                viewModel.maybeLaterTapped()
+                VStack(alignment: .center, spacing: 0) {
+                    
+                    ImageCatalog.notificationGraphic
+                        .image
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 263, height: 140)
+                        .padding(.horizontal, 15)
+                        .overlay(
+                            Rectangle()
+                                .frame(height: 2)
+                                .padding(.horizontal, 5)
+                                .foregroundColor(ColorPalette.gtBlue.color),
+                            alignment: .bottom
+                        )
+                    
+                    Text(viewModel.title)
+                        .foregroundColor(ColorPalette.gtBlue.color)
+                        .font(FontLibrary.sfProTextRegular.font(size: 30))
+                        .fontWeight(.bold)
+                        .padding(.top, 20)
+                        .minimumScaleFactor(0.5)
+                        .lineLimit(1)
 
-            }) {
-                Text(viewModel.maybeLaterActionTitle)
-                    .foregroundColor(ColorPalette.gtBlue.color)
-            }
-            .frame(height: 40)
-            .padding(.bottom, 60)
-            
-        }
-        .padding(.horizontal, 20)
-        .background(
-            RoundedRectangle(cornerRadius: 10)
-                .stroke(ColorPalette.gtBlue.color, lineWidth: 8)
-                .overlay(
+                    Text(viewModel.body)
+                        .font(FontLibrary.sfProTextRegular.font(size: 17))
+                        .foregroundStyle(ColorPalette.gtGrey.color)
+                        .multilineTextAlignment(.center)
+                        .padding(.top, 13)
+
+                    Button(action: {
+                        
+                        viewModel.allowNotificationsTapped()
+
+                    }) {
+                        RoundedRectangle(cornerRadius: 5)
+                            .fill(ColorPalette.gtBlue.color)
+                    }
+                    .frame(height: 45)
+                    .overlay(
+                        Text(viewModel.notificationsActionTitle)
+                            .foregroundColor(.white)
+                    )
+                    .padding(.top, 18)
+
+                    Button(action: {
+                        
+                        viewModel.maybeLaterTapped()
+
+                    }) {
+                        
+                        ZStack(alignment: .center) {
+                            RoundedRectangle(cornerRadius: 5)
+                                .fill(Color.white)
+                            
+                            Text(viewModel.maybeLaterActionTitle)
+                                .foregroundColor(ColorPalette.gtBlue.color)
+                        }
+                    }
+                    .frame(height: 45)
+                    .padding(.top, 12)
+                    .padding(.bottom, 30)
+                    
+                }
+                .padding(.horizontal, 20)
+                .background(
                     RoundedRectangle(cornerRadius: 10)
-                        .foregroundStyle(.white)
+                        .stroke(ColorPalette.gtBlue.color, lineWidth: 8)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .foregroundStyle(.white)
+                        )
                 )
-        )
-        .padding(.horizontal, UIScreen.main.bounds.width * 0.05)
+                .padding(.horizontal, 20)
+            }
+        }
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
     }
 }

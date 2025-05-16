@@ -81,6 +81,10 @@ class TransparentModalView: UIViewController {
         // overlayButton
         overlayButton.backgroundColor = .black
         overlayButton.alpha = 0.4
+        
+        // safeAreaView
+        safeAreaView.isUserInteractionEnabled = false
+        safeAreaView.backgroundColor = .clear
                 
         // modalView
         addModalView(modalView: modalView)

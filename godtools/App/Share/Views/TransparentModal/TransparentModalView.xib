@@ -25,8 +25,8 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </button>
-                <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wf4-Ye-xly" userLabel="safeAreaView">
-                    <rect key="frame" x="0.0" y="98" width="414" height="714"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wf4-Ye-xly" userLabel="safeAreaView">
+                    <rect key="frame" x="0.0" y="48" width="414" height="814"/>
                     <color key="backgroundColor" systemColor="systemRedColor"/>
                 </view>
             </subviews>
@@ -36,11 +36,11 @@
                 <constraint firstItem="MH4-0e-G8I" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="8JU-4C-3Z8"/>
                 <constraint firstAttribute="bottom" secondItem="MH4-0e-G8I" secondAttribute="bottom" id="Rvi-pf-38x"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="wf4-Ye-xly" secondAttribute="trailing" id="Wr9-uf-mic"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="wf4-Ye-xly" secondAttribute="bottom" constant="50" id="ZfP-AQ-G1o"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="wf4-Ye-xly" secondAttribute="bottom" id="ZfP-AQ-G1o"/>
                 <constraint firstItem="MH4-0e-G8I" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Zfq-b8-XXM"/>
                 <constraint firstItem="wf4-Ye-xly" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="d5d-8m-ufs"/>
                 <constraint firstAttribute="trailing" secondItem="MH4-0e-G8I" secondAttribute="trailing" id="u7x-t3-vbW"/>
-                <constraint firstItem="wf4-Ye-xly" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="50" id="yZD-jl-nBO"/>
+                <constraint firstItem="wf4-Ye-xly" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="yZD-jl-nBO"/>
             </constraints>
             <point key="canvasLocation" x="139" y="144"/>
         </view>
