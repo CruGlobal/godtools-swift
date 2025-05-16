@@ -22,7 +22,7 @@ class MobileContentTextViewModel: MobileContentViewModel {
         
         self.textModel = textModel
         
-        self.textColor = textModel.textColor
+        self.textColor = textModel.textColor.toUIColor()
         
         super.init(baseModel: textModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }

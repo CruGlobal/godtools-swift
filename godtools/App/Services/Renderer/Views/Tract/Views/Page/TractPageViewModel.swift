@@ -53,7 +53,7 @@ class TractPageViewModel: MobileContentPageViewModel {
     var bottomViewColor: UIColor {
         
         let manifest: Manifest = renderedPageContext.manifest
-        let color: UIColor = manifest.navBarColor
+        let color: UIColor = manifest.navBarColor.toUIColor()
         
         return color.withAlphaComponent(0.1)
     }
