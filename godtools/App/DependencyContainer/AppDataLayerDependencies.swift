@@ -70,27 +70,34 @@ class AppDataLayerDependencies {
         return FirebaseInAppMessaging.shared
     }
     
+    private func getArticleAemCache() -> ArticleAemCache {
+        return ArticleAemCache(
+            realmDatabase: sharedRealmDatabase,
+            articleWebArchiver: ArticleWebArchiver(
+                priorityRequestSender: getSharedPriorityRequestSender(),
+                ignoreCacheSession: sharedIgnoreCacheSession
+            )
+        )
+    }
+    
+    private func getArticleAemDownloader() -> ArticleAemDownloader {
+        return ArticleAemDownloader(
+            priorityRequestSender: getSharedPriorityRequestSender(),
+            ignoreCacheSession: sharedIgnoreCacheSession
+        )
+    }
+    
     func getArticleAemRepository() -> ArticleAemRepository {
         return ArticleAemRepository(
-            downloader: ArticleAemDownloader(
-                ignoreCacheSession: sharedIgnoreCacheSession
-            ),
-            cache: ArticleAemCache(
-                realmDatabase: sharedRealmDatabase,
-                webArchiveQueue: getWebArchiveQueue()
-            )
+            downloader: getArticleAemDownloader(),
+            cache: getArticleAemCache()
         )
     }
     
     func getArticleManifestAemRepository() -> ArticleManifestAemRepository {
         return ArticleManifestAemRepository(
-            downloader: ArticleAemDownloader(
-                ignoreCacheSession: sharedIgnoreCacheSession
-            ),
-            cache: ArticleAemCache(
-                realmDatabase: sharedRealmDatabase,
-                webArchiveQueue: getWebArchiveQueue()
-            ),
+            downloader: getArticleAemDownloader(),
+            cache: getArticleAemCache(),
             categoryArticlesCache: RealmCategoryArticlesCache(
                 realmDatabase: sharedRealmDatabase
             )
@@ -470,10 +477,6 @@ class AppDataLayerDependencies {
                 realmDatabase: sharedRealmDatabase
             )
         )
-    }
-    
-    func getWebArchiveQueue() -> WebArchiveQueue {
-        return WebArchiveQueue(ignoreCacheSession: sharedIgnoreCacheSession)
     }
     
     func getNewWebSocket(url: URL) -> WebSocketInterface {
