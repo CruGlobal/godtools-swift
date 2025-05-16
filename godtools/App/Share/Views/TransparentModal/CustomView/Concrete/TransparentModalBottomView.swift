@@ -11,6 +11,8 @@ import SwiftUI
 
 class TransparentModalBottomView<Content: View>: AppHostingController<Content> {
             
+    private let bottomOffset: CGFloat = 0
+    
     private var modalBottomToParent: NSLayoutConstraint?
     private var modalHeightConstraint: NSLayoutConstraint?
     
@@ -38,7 +40,7 @@ extension TransparentModalBottomView: TransparentModalCustomViewInterface {
             return
         }
                 
-        bottomConstraint.constant = hidden ? heightConstraint.constant - 50 : 0
+        bottomConstraint.constant = hidden ? heightConstraint.constant - 50 : bottomOffset
         
         if animated {
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
@@ -70,17 +72,21 @@ extension TransparentModalBottomView: TransparentModalCustomViewInterface {
         return .definedInCustomViewProtocol
     }
     
-    func addToParentForCustomLayout(parent: UIView) {
+    func addToParentForCustomLayout(parent: UIView, parentSafeAreaView: UIView) {
                 
-        parent.addSubview(view)
+        view.drawBorder(color: .green, width: 2)
+        
+        let parentView: UIView = parentSafeAreaView
+        
+        parentView.addSubview(view)
         
         let modalHeight: CGFloat = getModalHeight() ?? floor(UIScreen.main.bounds.size.height * 0.5)
         
         view.translatesAutoresizingMaskIntoConstraints = false
         
-        _ = view.constrainLeadingToView(view: parent)
-        _ = view.constrainTrailingToView(view: parent)
-        modalBottomToParent = view.constrainBottomToView(view: parent, constant: 0)
+        _ = view.constrainLeadingToView(view: parentView)
+        _ = view.constrainTrailingToView(view: parentView)
+        modalBottomToParent = view.constrainBottomToView(view: parentView, constant: bottomOffset)
         modalHeightConstraint = view.addHeightConstraint(constant: modalHeight, priority: 500)
                 
         setModalHidden(hidden: true, animated: false, layoutIfNeeded: false)

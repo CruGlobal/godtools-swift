@@ -73,7 +73,7 @@ extension ToolSettingsHostingView: TransparentModalCustomViewInterface {
         return .definedInCustomViewProtocol
     }
     
-    func addToParentForCustomLayout(parent: UIView) {
+    func addToParentForCustomLayout(parent: UIView, parentSafeAreaView: UIView) {
                 
         parent.addSubview(view)
         
