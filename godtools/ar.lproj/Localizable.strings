@@ -1,5 +1,10 @@
+"optInNotification.notificationSettings" = "إعدادات الإشعارات";
 "lessons.swipeTutorial.title" = "اسحب لتغيير الصفحات";
 "lessons.swipeTutorial.buttonText" = "فهمت";
+"optInNotification.title" = "احصل على نصائح وتشجيع";
+"optInNotification.body" = "كن مستعدًا للمحادثات.\nفعّل الإشعارات اليوم.";
+"optInNotification.allowNotifications" = "السماح بالإخطارات";
+"optInNotification.maybeLater" = "ربما لاحقاً";
 
 /* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
 "lessons.resumeLessonModal.title" = "استئناف التقدم";
