@@ -1,5 +1,10 @@
+"optInNotification.notificationSettings" = "通知设置";
 "lessons.swipeTutorial.title" = "滑动切换页面";
 "lessons.swipeTutorial.buttonText" = "明白了";
+"optInNotification.title" = "获取实用技巧和励志金句";
+"optInNotification.body" = "随时准备开启对话。\n立即启用通知。";
+"optInNotification.allowNotifications" = "启用通知";
+"optInNotification.maybeLater" = "也许稍后";
 
 /* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
 "lessons.resumeLessonModal.title" = "恢复进度";

@@ -1,5 +1,10 @@
+"optInNotification.notificationSettings" = "通知設定";
 "lessons.swipeTutorial.title" = "撥動即可換頁";
 "lessons.swipeTutorial.buttonText" = "知道了";
+"optInNotification.title" = "獲取實用技巧與鼓勵";
+"optInNotification.body" = "隨時準備好聊天。  \n今天就開啟通知。";
+"optInNotification.allowNotifications" = "允許通知";
+"optInNotification.maybeLater" = "也許待會";
 
 /* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
 "lessons.resumeLessonModal.title" = "恢復進度";

@@ -1,5 +1,10 @@
+"optInNotification.notificationSettings" = "通知設定";
 "lessons.swipeTutorial.title" = "スワイプでページを切り替えられます";
 "lessons.swipeTutorial.buttonText" = "了解";
+"optInNotification.title" = "実践的なお役立ち情報と励ましを手に入れよう";
+"optInNotification.body" = "会話への準備を整えましょう。\n通知を許可してください。";
+"optInNotification.allowNotifications" = "通知を許可する";
+"optInNotification.maybeLater" = "たぶん後で";
 
 /* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
 "lessons.resumeLessonModal.title" = "進捗を再開";
