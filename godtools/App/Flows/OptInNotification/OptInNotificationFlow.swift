@@ -128,10 +128,10 @@ extension OptInNotificationFlow {
         let hostingView = AppHostingController<OptInNotificationView>(
             rootView: view,
             navigationBar: nil,
-            animateInAnimatedTransitioning: FadeAnimationTransition(fade: .fadeIn),
-            animateOutAnimatedTransitioning: FadeAnimationTransition(fade: .fadeOut)
+            animateInAnimatedTransitioning: NoAnimationTransition(transition: .transitionIn),
+            animateOutAnimatedTransitioning: NoAnimationTransition(transition: .transitionOut)
         )
-        
+
         hostingView.view.backgroundColor = .clear
         hostingView.modalPresentationStyle = .overCurrentContext
         
