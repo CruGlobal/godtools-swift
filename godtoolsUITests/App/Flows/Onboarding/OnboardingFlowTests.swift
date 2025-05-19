@@ -42,7 +42,7 @@ class OnboardingFlowTests: BaseFlowTests {
         
         chooseAppLanguageButton.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .appLanguages)
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .appLanguages, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
     }
     
     func testNavigationToWatchOnboardingVideoTutorialAndNavigationBackToOnboardingTutorial() {
@@ -108,7 +108,7 @@ class OnboardingFlowTests: BaseFlowTests {
         
         XCTAssertTrue(nextTutorialPageButton.exists)
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .onboardingTutorialPage1)
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .onboardingTutorialPage1, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
         
         nextTutorialPageButton.tap()
         
@@ -118,6 +118,6 @@ class OnboardingFlowTests: BaseFlowTests {
         
         skipTutorialButton.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .dashboardFavorites)
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .dashboardFavorites, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
     }
 }

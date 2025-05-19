@@ -47,7 +47,7 @@ class LanguageSettingsFlowTests: BaseFlowTests {
         
         chooseAppLanguageButton.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .appLanguages)
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .appLanguages, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
     }
     
     func testNavigationToDownloadableLanguagesList() {
@@ -60,6 +60,6 @@ class LanguageSettingsFlowTests: BaseFlowTests {
         
         editDownloadedLanguagesButton.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .downloadableLanguages)
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .downloadableLanguages, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
     }
 }
