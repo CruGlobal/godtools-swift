@@ -1,5 +1,10 @@
+"optInNotification.notificationSettings" = "نوٹیفکیشن سیٹنگز";
 "lessons.swipeTutorial.title" = "صفحات بدلنے کے لیے سوائپ کریں";
 "lessons.swipeTutorial.buttonText" = "سمجھ گیا";
+"optInNotification.title" = "تجاویز اور حوصلہ افزائی حاصل کریں";
+"optInNotification.body" = "بات چیت کے لیے تیار رہیں۔\nآج نوٹیفیکیشن کی اجازت دیں۔";
+"optInNotification.allowNotifications" = "نوٹیفیکیشن کی اجازت دیں";
+"optInNotification.maybeLater" = "شاید بعد میں";
 
 /* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
 "lessons.resumeLessonModal.title" = "پیش رفت دوبارہ شروع کریں";

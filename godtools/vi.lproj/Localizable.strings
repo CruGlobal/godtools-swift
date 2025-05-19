@@ -1,5 +1,10 @@
+"optInNotification.notificationSettings" = "Cài đặt Thông báo";
 "lessons.swipeTutorial.title" = "Vuốt để chuyển trang";
 "lessons.swipeTutorial.buttonText" = "Hiểu rồi";
+"optInNotification.title" = "Nhận Lời khuyên và Sự khích lệ";
+"optInNotification.body" = "Luôn sẵn sàng cho những cuộc trò chuyện.\nBật thông báo ngay hôm nay.";
+"optInNotification.allowNotifications" = "Cho phép thông báo";
+"optInNotification.maybeLater" = "Có lẽ Để sau";
 
 /* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
 "lessons.resumeLessonModal.title" = "Tiếp tục Tiến trình";
