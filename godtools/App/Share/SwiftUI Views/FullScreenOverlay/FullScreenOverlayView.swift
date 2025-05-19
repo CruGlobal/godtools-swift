@@ -37,9 +37,8 @@ struct FullScreenOverlayView: View {
                         .frame(width: overlaySize.width, height: overlaySize.height)
                 }
             }
+            .buttonStyle(.plain) // NOTE: Set to plain to remove the highlight when tapping the overlay. ~Levi
             .frame(width: overlaySize.width, height: overlaySize.height)
-            
-            
         }
         .ignoresSafeArea()
     }
