@@ -120,17 +120,22 @@ extension OptInNotificationFlow {
             notificationPromptType: notificationPromptType
         )
         
-        let view = OptInNotificationView(viewModel: viewModel)
+        let view = OptInNotificationView(viewModel: viewModel, overlayTappedClosure: { [weak self] in
+            
+            self?.navigate(step: .closeTappedFromOptInNotification)
+        })
         
-        let transparentModalBottomView = TransparentModalBottomView<OptInNotificationView>(view: view, navigationBar: nil)
-        
-        let transparentModal = TransparentModalView(
-            flowDelegate: self,
-            modalView: transparentModalBottomView,
-            closeModalFlowStep: .closeTappedFromOptInNotification
+        let hostingView = AppHostingController<OptInNotificationView>(
+            rootView: view,
+            navigationBar: nil,
+            animateInAnimatedTransitioning: NoAnimationTransition(transition: .transitionIn),
+            animateOutAnimatedTransitioning: NoAnimationTransition(transition: .transitionOut)
         )
+
+        hostingView.view.backgroundColor = .clear
+        hostingView.modalPresentationStyle = .overCurrentContext
         
-        return transparentModal
+        return hostingView
     }
     
     private func presentRequestNotificationPermission() {

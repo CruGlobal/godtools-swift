@@ -10,33 +10,40 @@ import UIKit
 
 class FadeAnimationTransition: NSObject, UIViewControllerAnimatedTransitioning {
     
+    static let defaultDuration: TimeInterval = 0.3
+    
     enum Fade {
         case fadeIn
         case fadeOut
     }
         
     private let fade: FadeAnimationTransition.Fade
-    private let duration: TimeInterval = 0.3
+    private let duration: TimeInterval
+    private let fadeOutAlpha: CGFloat
+    private let fadeInAlpha: CGFloat
     
-    init(fade: FadeAnimationTransition.Fade) {
+    init(fade: FadeAnimationTransition.Fade, duration: TimeInterval = FadeAnimationTransition.defaultDuration, fadeOutAlpha: CGFloat = 0, fadeInAlpha: CGFloat = 1) {
         
         self.fade = fade
+        self.duration = duration
+        self.fadeOutAlpha = fadeOutAlpha
+        self.fadeInAlpha = fadeInAlpha
         
         super.init()
     }
-        
+     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return self.duration
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        
+                
         if let fromViewController = transitionContext.viewController(forKey: .from), let toViewController = transitionContext.viewController(forKey: .to) {
             
             let containerView: UIView = transitionContext.containerView
             let fromView: UIView = fromViewController.view
             let toView: UIView = toViewController.view
-                        
+                                   
             switch fade {
             
             case .fadeIn:
@@ -47,25 +54,25 @@ class FadeAnimationTransition: NSObject, UIViewControllerAnimatedTransitioning {
                     toView.constrainEdgesToView(view: containerView)
                 }
                 
-                toView.alpha = 0
+                toView.alpha = fadeOutAlpha
                 
                 UIView.animate(withDuration: self.duration, delay: 0, options: .curveEaseOut, animations: {
-                    
-                    toView.alpha = 1
+                                        
+                    toView.alpha = self.fadeInAlpha
                     
                 }, completion: { (finished: Bool) in
-                    
+                                        
                     transitionContext.completeTransition(finished)
                 })
                 
             case .fadeOut:
                 
                 UIView.animate(withDuration: self.duration, delay: 0, options: .curveEaseOut, animations: {
-                    
-                    fromView.alpha = 0
+                                        
+                    fromView.alpha = self.fadeOutAlpha
                     
                 }, completion: { (finished: Bool) in
-                    
+                                        
                     transitionContext.completeTransition(finished)
                 })
             }
