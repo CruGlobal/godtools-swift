@@ -22,7 +22,7 @@ class MobileContentLinkViewModel: MobileContentViewModel {
         
         self.linkModel = linkModel
         self.mobileContentAnalytics = mobileContentAnalytics
-        self.titleColor = linkModel.text.textColor
+        self.titleColor = linkModel.text.textColor.toUIColor()
         
         super.init(baseModel: linkModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
     }
