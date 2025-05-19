@@ -1972,6 +1972,8 @@
 		452486E62B07C9AA007AD932 /* UserToolFiltersRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserToolFiltersRepository.swift; sourceTree = "<group>"; };
 		4526EDD32AEB274800D1A3D4 /* EvaluationOptionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvaluationOptionButton.swift; sourceTree = "<group>"; };
 		4526EDD52AEB330100D1A3D4 /* OverlayNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayNavigationController.swift; sourceTree = "<group>"; };
+		4527E5982DDBC6E9001B939B /* ha */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ha; path = ha.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		4527E5992DDBC6E9001B939B /* ha */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ha; path = ha.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4529B96528933A610011F16B /* ParseTranslationManifestForRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseTranslationManifestForRenderer.swift; sourceTree = "<group>"; };
 		4529B96B2893440E0011F16B /* TranslationManifestParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationManifestParser.swift; sourceTree = "<group>"; };
 		4529B96D289345480011F16B /* TranslationManifestParserType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationManifestParserType.swift; sourceTree = "<group>"; };
@@ -12854,6 +12856,7 @@
 				Base,
 				om,
 				ne,
+				ha,
 			);
 			mainGroup = 4F5732801EA69CF00082035C;
 			packageReferences = (
@@ -14877,6 +14880,7 @@
 				45C493F92C334A8E001D81F0 /* Base */,
 				45C8DF072D8B4D0500F231C1 /* om */,
 				4554A62B2D8DE7C800046941 /* ne */,
+				4527E5992DDBC6E9001B939B /* ha */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -14953,6 +14957,7 @@
 				45C493FA2C334A99001D81F0 /* Base */,
 				45C8DF062D8B4D0500F231C1 /* om */,
 				4554A62A2D8DE7C800046941 /* ne */,
+				4527E5982DDBC6E9001B939B /* ha */,
 			);
 			name = Localizable.stringsdict;
 			sourceTree = "<group>";

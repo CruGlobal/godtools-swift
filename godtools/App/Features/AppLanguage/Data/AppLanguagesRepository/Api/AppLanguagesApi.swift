@@ -26,6 +26,7 @@ class AppLanguagesApi {
             AppLanguageCodable(languageCode: "en", languageDirection: .leftToRight, languageScriptCode: nil),
             AppLanguageCodable(languageCode: "es", languageDirection: .leftToRight, languageScriptCode: nil),
             AppLanguageCodable(languageCode: "fr", languageDirection: .leftToRight, languageScriptCode: nil),
+            AppLanguageCodable(languageCode: "ha", languageDirection: .leftToRight, languageScriptCode: nil),
             AppLanguageCodable(languageCode: "hi", languageDirection: .leftToRight, languageScriptCode: nil),
             AppLanguageCodable(languageCode: "id", languageDirection: .leftToRight, languageScriptCode: nil),
             AppLanguageCodable(languageCode: "ja", languageDirection: .leftToRight, languageScriptCode: nil),
