@@ -35,6 +35,7 @@ struct OptInNotificationView: View {
                 
                 overlayTappedClosure?()
             })
+            .opacity(showModal ? 1 : 0)
             
             VStack(alignment: .leading, spacing: 0) {
                 
