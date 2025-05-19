@@ -127,7 +127,7 @@ final class UserCountersRepositoryTests: XCTestCase {
         let expectation = expectation(description: "Fetch Remote User Counters")
         var syncedDataModels = [UserCounterDataModel]()
         
-        userCountersRepository.fetchRemoteUserCounters()
+        userCountersRepository.fetchRemoteUserCounters(sendRequestPriority: .high)
             .sink { completion in
                 
                 switch completion {
@@ -184,7 +184,7 @@ final class UserCountersRepositoryTests: XCTestCase {
         let expectation = expectation(description: "Fetch Existing Remote User Counters")
         var syncedDataModels = [UserCounterDataModel]()
         
-        userCountersRepository.fetchRemoteUserCounters()
+        userCountersRepository.fetchRemoteUserCounters(sendRequestPriority: .high)
             .sink { completion in
                 
                 switch completion {
@@ -248,7 +248,7 @@ final class UserCountersRepositoryTests: XCTestCase {
         
         // Perform
         
-        userCountersRepository.syncUpdatedUserCountersWithRemote()
+        userCountersRepository.syncUpdatedUserCountersWithRemote(sendRequestPriority: .high)
         
         wait(for: [syncUpdateCompleteExpectation], timeout: 10)
         
@@ -308,7 +308,7 @@ extension UserCountersRepositoryTests {
         
         var userCounterChangedHitCount = 0
 
-        userCountersRepository.getUserCountersChanged(reloadFromRemote: false)
+        userCountersRepository.getUserCountersChanged(reloadFromRemote: false, sendRequestPriority: .high)
             .sink { _ in
                 
             } receiveValue: { _ in
