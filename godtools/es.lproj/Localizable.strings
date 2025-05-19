@@ -1,5 +1,10 @@
+"optInNotification.notificationSettings" = "Ajustes de notificaciones";
 "lessons.swipeTutorial.title" = "Desliza para cambiar páginas";
 "lessons.swipeTutorial.buttonText" = "Entendido";
+"optInNotification.title" = "Obtén consejos y ánimo";
+"optInNotification.body" = "Ten todo a punto para mantener conversaciones.\nActiva las notificaciones.";
+"optInNotification.allowNotifications" = "Permitir Notificaciones";
+"optInNotification.maybeLater" = "Tal vez después";
 
 /* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
 "lessons.resumeLessonModal.title" = "Reanudar progreso";

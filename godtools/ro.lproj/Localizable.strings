@@ -1,5 +1,10 @@
+"optInNotification.notificationSettings" = "Notificare/atenționare Setări";
 "lessons.swipeTutorial.title" = "Glisează pentru a schimba paginile";
 "lessons.swipeTutorial.buttonText" = "Am înțeles";
+"optInNotification.title" = "Primește sfaturi și încurajare";
+"optInNotification.body" = "Fii pregătit pentru conversații.\nPermite notificările astăzi.";
+"optInNotification.allowNotifications" = "Permite Notificări";
+"optInNotification.maybeLater" = "Poate mai târziu";
 
 /* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
 "lessons.resumeLessonModal.title" = "Reia progresul";
