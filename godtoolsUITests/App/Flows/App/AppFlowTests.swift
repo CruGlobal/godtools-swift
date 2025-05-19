@@ -37,7 +37,7 @@ class AppFlowTests: BaseFlowTests {
         
         menuButton.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .menu)
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .menu, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
     }
 }
 
@@ -133,7 +133,7 @@ extension AppFlowTests {
         
         toolDetails.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .toolDetails)
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .toolDetails, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
         
         let toolDetailsNavBack = app.queryButton(buttonAccessibility: .toolDetailsNavBack)
         
@@ -161,7 +161,7 @@ extension AppFlowTests {
         
         toolsCategoryFilter.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .toolsCategoryFilters)
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .toolsCategoryFilters, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
     }
     
     func testTappingToolsLanguageFilterOpensToolsLanguageFiltersList() {
@@ -176,7 +176,7 @@ extension AppFlowTests {
         
         toolsLanguageFilter.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .toolsLanguageFilters)
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .toolsLanguageFilters, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
     }
     
     func testTappingSpotlightToolFromToolsOpensToolDetails() {
@@ -196,7 +196,7 @@ extension AppFlowTests {
         
         spotlightTool.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .toolDetails)
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .toolDetails, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
     }
     
     func testTappingToolFromToolsOpensToolDetails() {
@@ -216,6 +216,6 @@ extension AppFlowTests {
         
         tool.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .toolDetails)
+        assertIfScreenDoesNotExist(app: app, screenAccessibility: .toolDetails, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
     }
 }

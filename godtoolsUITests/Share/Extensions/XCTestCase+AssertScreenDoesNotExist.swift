@@ -23,7 +23,7 @@ extension XCTestCase {
         }
     }
     
-    func assertIfScreenDoesNotExist(app: XCUIApplication, screenAccessibility: AccessibilityStrings.Screen) {
+    private func assertIfScreenDoesNotExist(app: XCUIApplication, screenAccessibility: AccessibilityStrings.Screen) {
         
         let screen = app.queryScreen(screenAccessibility: screenAccessibility)
         
