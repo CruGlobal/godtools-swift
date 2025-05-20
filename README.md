@@ -8,7 +8,7 @@ GodTools
 - [Architecture Responsibilities](#architecture-responsibilities)
 - [Localization](#localization)
 - [Fastlane](#fastlane)
-- [Build Errors and Pod Install Troubleshooting](#build-errors-pod-install-troubleshooting)
+- [Build Errors and Pod Install Troubleshooting](#build-errors-and-pod-install-troubleshooting)
 
 ### Requirements
 
