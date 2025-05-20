@@ -8,6 +8,7 @@ GodTools
 - [Architecture Responsibilities](#architecture-responsibilities)
 - [Localization](#localization)
 - [Fastlane](#fastlane)
+- [Build Errors and Pod Install Troubleshooting](#build-errors-pod-install-troubleshooting)
 
 ### Requirements
 
@@ -15,6 +16,7 @@ GodTools
 - Bundler
 - Cocoapods
 - Fastlane
+- Java 21SDK For Kotlin GodToolsToolParser (https://www.oracle.com/java/technologies/downloads/#java21)
 
 ### Architecture
 
@@ -137,6 +139,40 @@ Below are some helpful references to GitHub Actions Workflows and Fastlane Files
 - GitHub Actions OneSky Workflow: https://github.com/CruGlobal/godtools-swift/blob/develop/.github/workflows/download_onesky_translations.yml
 
 - GitHub Actions OneSky Workflow Dependency Plugin: https://github.com/thekie/fastlane-plugin-onesky
+
+#### Build Errors and Pod Install Troubleshooting
+
+Sometimes Xcode has random build and pod install errors.  This guide is a checklist to possibly resolve those issues.
+
+###### First do a full wipe of the project cache:
+
+1. Open Xcode.  Choose Product > Clean Build Folder.  Let that finish successfully.
+
+2. Quit Xcode.
+
+3. Delete all contents in Derived Data.  This is typically located in your user folder under Library/Developer/Xcode.  Example: /Users/your_user_name/Library/Developer/Xcode/DerivedData/.
+
+4. Xcode Cache is now cleared.
+
+###### Perform a fresh pod install.
+
+1. Go to checked out source code and delete the Pods folder and Podfile.lock.
+
+2. Run a new pod install including a pod repo update.  Run Command: pod install --repo-update.
+
+###### Double Check Command Line Tools
+
+1. Open Xcode.  Go to Settings > Locations.  Ensure the Command Line Tools option is showing your latest version of Xcode. 
+
+###### Pod Install Gradle Error
+
+1. If you have any Exceptions with build.gradle.kts or gradle related try restarting the computer.
+
+###### Swift Package Manager Errors
+
+1. First see about wiping project cache above.
+
+2. Open Xcode and choose File > Packages > Reset Package Caches and let that run.  Can then try File > Packages > Update to Latest Package Versions. 
 
 #### Conventions
 
