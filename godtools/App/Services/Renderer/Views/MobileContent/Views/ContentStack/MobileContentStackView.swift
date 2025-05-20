@@ -15,16 +15,22 @@ class MobileContentStackView: MobileContentView {
     
     init(viewModel: MobileContentViewModel, contentInsets: UIEdgeInsets?, scrollIsEnabled: Bool, itemSpacing: CGFloat? = nil) {
               
-        let content: [Content] = (viewModel.baseModels as? [Content]) ?? Array()
+        print("\n ***** MobileContentStackView init() ***** ")
         
-        composeViewController = ContentStackViewKt.ContentStackView(content: content)
+        let content: [Content] = (viewModel.baseModels as? [Content]) ?? Array()
                 
-        super.init(viewModel: viewModel, frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 0))
+        composeViewController = ContentStackViewKt.ContentStackView(content: content)
+        
+        print("  content: \(content.count)")
+        print("  composeView.bounds: \(composeViewController.view.bounds)")
+                
+        super.init(viewModel: viewModel, frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
 
         let composeView: UIView = composeViewController.view
-        composeView.translatesAutoresizingMaskIntoConstraints = false
+        //composeView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(composeView)
-        composeView.constrainEdgesToView(view: self)
+        composeView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height)
+        //composeView.constrainEdgesToView(view: self)
     }
     
     required init?(coder: NSCoder) {
