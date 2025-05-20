@@ -30,6 +30,7 @@ class MobileContentStackView: MobileContentView {
         //composeView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(composeView)
         composeView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height)
+        frame = UIScreen.main.bounds
         //composeView.constrainEdgesToView(view: self)
     }
     
@@ -39,9 +40,9 @@ class MobileContentStackView: MobileContentView {
     
     // MARK: - MobileContentView
     override var heightConstraintType: MobileContentViewHeightConstraintType {
-        let bounds: CGRect = composeViewController.view.bounds
-        print("\n *** Compose Bounds: \(bounds)")
-        return .equalToHeight(height: bounds.size.height)
+        //let bounds: CGRect = composeViewController.view.bounds
+        //print("\n *** Compose Bounds: \(bounds)")
+        return .equalToHeight(height: UIScreen.main.bounds.size.height)
     }
     
     // MARK: -
