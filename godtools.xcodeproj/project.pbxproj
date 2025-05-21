@@ -208,6 +208,7 @@
 		452556472C383CFA00AA0046 /* AppLanguageDataModelInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E4DBC32BECFB20006ED2F3 /* AppLanguageDataModelInterface.swift */; };
 		4526EDD42AEB274800D1A3D4 /* EvaluationOptionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4526EDD32AEB274800D1A3D4 /* EvaluationOptionButton.swift */; };
 		4526EDD62AEB330100D1A3D4 /* OverlayNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4526EDD52AEB330100D1A3D4 /* OverlayNavigationController.swift */; };
+		452804C02DDCE168001C4E37 /* MobileContentStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452804BF2DDCE15E001C4E37 /* MobileContentStackView.swift */; };
 		4529B96628933A610011F16B /* ParseTranslationManifestForRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4529B96528933A610011F16B /* ParseTranslationManifestForRenderer.swift */; };
 		4529B96C2893440E0011F16B /* TranslationManifestParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4529B96B2893440E0011F16B /* TranslationManifestParser.swift */; };
 		4529B96E289345480011F16B /* TranslationManifestParserType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4529B96D289345480011F16B /* TranslationManifestParserType.swift */; };
@@ -456,7 +457,7 @@
 		455583D9269F2DA500C3FF14 /* MobileContentTabsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45558378269F2DA400C3FF14 /* MobileContentTabsView.xib */; };
 		455583DA269F2DA500C3FF14 /* MobileContentAccordionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4555837A269F2DA400C3FF14 /* MobileContentAccordionView.swift */; };
 		455583DB269F2DA500C3FF14 /* MobileContentAccordionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4555837B269F2DA400C3FF14 /* MobileContentAccordionViewModel.swift */; };
-		455583DD269F2DA500C3FF14 /* MobileContentStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4555837E269F2DA400C3FF14 /* MobileContentStackView.swift */; };
+		455583DD269F2DA500C3FF14 /* LegacyMobileContentStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4555837E269F2DA400C3FF14 /* LegacyMobileContentStackView.swift */; };
 		455583E7269F2DA500C3FF14 /* MobileContentButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4555838B269F2DA500C3FF14 /* MobileContentButtonView.swift */; };
 		455583E9269F2DA500C3FF14 /* MobileContentButtonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4555838D269F2DA500C3FF14 /* MobileContentButtonViewModel.swift */; };
 		455583EA269F2DA500C3FF14 /* MobileContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4555838E269F2DA500C3FF14 /* MobileContentView.swift */; };
@@ -1974,6 +1975,7 @@
 		4526EDD52AEB330100D1A3D4 /* OverlayNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayNavigationController.swift; sourceTree = "<group>"; };
 		4527E5982DDBC6E9001B939B /* ha */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ha; path = ha.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		4527E5992DDBC6E9001B939B /* ha */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ha; path = ha.lproj/Localizable.strings; sourceTree = "<group>"; };
+		452804BF2DDCE15E001C4E37 /* MobileContentStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentStackView.swift; sourceTree = "<group>"; };
 		4529B96528933A610011F16B /* ParseTranslationManifestForRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseTranslationManifestForRenderer.swift; sourceTree = "<group>"; };
 		4529B96B2893440E0011F16B /* TranslationManifestParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationManifestParser.swift; sourceTree = "<group>"; };
 		4529B96D289345480011F16B /* TranslationManifestParserType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationManifestParserType.swift; sourceTree = "<group>"; };
@@ -2231,7 +2233,7 @@
 		45558378269F2DA400C3FF14 /* MobileContentTabsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MobileContentTabsView.xib; sourceTree = "<group>"; };
 		4555837A269F2DA400C3FF14 /* MobileContentAccordionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentAccordionView.swift; sourceTree = "<group>"; };
 		4555837B269F2DA400C3FF14 /* MobileContentAccordionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentAccordionViewModel.swift; sourceTree = "<group>"; };
-		4555837E269F2DA400C3FF14 /* MobileContentStackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentStackView.swift; sourceTree = "<group>"; };
+		4555837E269F2DA400C3FF14 /* LegacyMobileContentStackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegacyMobileContentStackView.swift; sourceTree = "<group>"; };
 		4555838B269F2DA500C3FF14 /* MobileContentButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentButtonView.swift; sourceTree = "<group>"; };
 		4555838D269F2DA500C3FF14 /* MobileContentButtonViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentButtonViewModel.swift; sourceTree = "<group>"; };
 		4555838E269F2DA500C3FF14 /* MobileContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentView.swift; sourceTree = "<group>"; };
@@ -6023,7 +6025,8 @@
 		4555837D269F2DA400C3FF14 /* ContentStack */ = {
 			isa = PBXGroup;
 			children = (
-				4555837E269F2DA400C3FF14 /* MobileContentStackView.swift */,
+				452804BF2DDCE15E001C4E37 /* MobileContentStackView.swift */,
+				4555837E269F2DA400C3FF14 /* LegacyMobileContentStackView.swift */,
 				453A4F302BED6745006E8B01 /* Models */,
 			);
 			path = ContentStack;
@@ -14321,6 +14324,7 @@
 				D4BE3F632C08074400887BFD /* PersistUserToolLanguageSettingsUseCase.swift in Sources */,
 				45C152382A43D1BD00F2A1E8 /* ToolSettingsShareablesView.swift in Sources */,
 				452486D22B07C98B007AD932 /* GetUserToolFiltersRepositoryInterface.swift in Sources */,
+				452804C02DDCE168001C4E37 /* MobileContentStackView.swift in Sources */,
 				45300B812C34283200E6F97D /* LocaleLanguageScriptNameInterface.swift in Sources */,
 				45D63EA2288F77D4009B4610 /* ResourceModelType.swift in Sources */,
 				D48018C028EF650700389565 /* DashboardView.swift in Sources */,
@@ -14332,7 +14336,7 @@
 				450EE28629A6648900524F64 /* ToolPathDeepLinkParser.swift in Sources */,
 				458CFE8C29D4E0B9007B423C /* LoadingArticleViewModel.swift in Sources */,
 				458B91C62B7D685B00785C6F /* GetFavoritesInterfaceStringsRepository.swift in Sources */,
-				455583DD269F2DA500C3FF14 /* MobileContentStackView.swift in Sources */,
+				455583DD269F2DA500C3FF14 /* LegacyMobileContentStackView.swift in Sources */,
 				D4C2A58E2C3C6F0E0035AB4D /* GetUserLessonFiltersUseCase.swift in Sources */,
 				453A2EFC2B3636E400C8F865 /* RemoveDownloadedToolLanguageRepositoryInterface.swift in Sources */,
 				45070A832ACF42AD00229EDD /* AppInterfaceStringBarItem.swift in Sources */,
