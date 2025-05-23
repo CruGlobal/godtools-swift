@@ -13,7 +13,7 @@ struct OptInNotificationView: View {
     
     private let overlayTappedClosure: (() -> Void)?
     
-    @State private var showModal: Bool = false
+    @State private var isVisible: Bool = false
     
     @ObservedObject private var viewModel: OptInNotificationViewModel
 
@@ -29,13 +29,11 @@ struct OptInNotificationView: View {
          
             FullScreenOverlayView(tappedClosure: {
                 
-                withAnimation {
-                    showModal = false
-                }
+                setIsVisible(isVisible: false)
                 
                 overlayTappedClosure?()
             })
-            .opacity(showModal ? 1 : 0)
+            .opacity(isVisible ? 1 : 0)
             
             VStack(alignment: .leading, spacing: 0) {
                 
@@ -73,9 +71,7 @@ struct OptInNotificationView: View {
 
                     Button(action: {
                         
-                        withAnimation {
-                            showModal = false
-                        }
+                        setIsVisible(isVisible: false)
                         
                         viewModel.allowNotificationsTapped()
 
@@ -92,10 +88,8 @@ struct OptInNotificationView: View {
 
                     Button(action: {
                         
-                        withAnimation {
-                            showModal = false
-                        }
-                        
+                        setIsVisible(isVisible: false)
+
                         viewModel.maybeLaterTapped()
 
                     }) {
@@ -123,15 +117,19 @@ struct OptInNotificationView: View {
                         )
                 )
                 .padding(.horizontal, 20)
-                .offset(y: !showModal ? geometry.size.height * 0.75 : 0)
+                .offset(y: !isVisible ? geometry.size.height * 0.75 : 0)
             }
         }
         .onAppear {
-            withAnimation {
-                showModal = true
-            }
+            setIsVisible(isVisible: true)
         }
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
+    }
+    
+    private func setIsVisible(isVisible: Bool) {
+        withAnimation {
+            self.isVisible = isVisible
+        }
     }
 }
 
