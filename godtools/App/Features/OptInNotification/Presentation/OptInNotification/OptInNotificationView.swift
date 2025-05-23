@@ -63,7 +63,7 @@ struct OptInNotificationView: View {
                         .fontWeight(.bold)
                         .padding(.top, 20)
                         .minimumScaleFactor(0.5)
-                        .lineLimit(1)
+                        .lineLimit(2)
 
                     Text(viewModel.body)
                         .font(FontLibrary.sfProTextRegular.font(size: 17))
