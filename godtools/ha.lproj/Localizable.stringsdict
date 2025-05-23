@@ -13,11 +13,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>%d language</string>
-<key>few</key>
-<string/>
+<string>%d harshe</string>
 <key>other</key>
-<string>%d languages</string>
+<string>%d harsuna</string>
 </dict>
 </dict>
 <key>lessons.filter.lessonsAvailable</key>
@@ -31,11 +29,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>%d Lesson available</string>
-<key>few</key>
-<string/>
+<string>%d akwai darussa</string>
 <key>other</key>
-<string>%d Lessons available</string>
+<string>%d akwai darussa</string>
 </dict>
 </dict>
 <key>account.activity.toolOpens</key>
@@ -49,11 +45,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Tool open</string>
-<key>few</key>
-<string/>
+<string>Kayan aiki yana buɗewa</string>
 <key>other</key>
-<string>Tool opens</string>
+<string>Kayan aiki yana buɗewa</string>
 </dict>
 </dict>
 <key>account.activity.lessonCompletions</key>
@@ -67,11 +61,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Lesson completion</string>
-<key>few</key>
-<string/>
+<string>Kammala darasi</string>
 <key>other</key>
-<string>Lesson completions</string>
+<string>Kammala darasi</string>
 </dict>
 </dict>
 <key>account.activity.screenShares</key>
@@ -85,11 +77,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Screen share</string>
-<key>few</key>
-<string/>
+<string>Raba allo</string>
 <key>other</key>
-<string>Screen shares</string>
+<string>Raba allo</string>
 </dict>
 </dict>
 <key>account.activity.linksShared</key>
@@ -103,11 +93,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Link share</string>
-<key>few</key>
-<string/>
+<string>raba mahada</string>
 <key>other</key>
-<string>Link shares</string>
+<string>raba hanyoyin haɗin gwiwa</string>
 </dict>
 </dict>
 <key>account.activity.languagesUsed</key>
@@ -121,11 +109,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Language used</string>
-<key>few</key>
-<string/>
+<string>An raba hanyoyin haɗin gwiwa</string>
 <key>other</key>
-<string>Languages used</string>
+<string>An raba hanyoyin haɗin gwiwa</string>
 </dict>
 </dict>
 <key>account.activity.sessions</key>
@@ -139,11 +125,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Session</string>
-<key>few</key>
-<string/>
+<string>Zama</string>
 <key>other</key>
-<string>Sessions</string>
+<string>Zama</string>
 </dict>
 </dict>
 <key>tools.filter.toolsAvailable</key>
@@ -157,11 +141,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>%d Tool available</string>
-<key>few</key>
-<string/>
+<string>%d akwai kayan aikin</string>
 <key>other</key>
-<string>%d Tools available</string>
+<string>%d akwai kayan aikin</string>
 </dict>
 </dict>
 <key>languageSettings.appLanguage.numberAvailable</key>
@@ -175,11 +157,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>1 Language available</string>
-<key>few</key>
-<string/>
+<string>%d akwai harsuna</string>
 <key>other</key>
-<string>%d Languages available</string>
+<string>%d akwai harsuna</string>
 </dict>
 </dict>
 <key>badges.imagesShared</key>
@@ -193,11 +173,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Shared 1 image</string>
-<key>few</key>
-<string/>
+<string>An raba hotuna 1</string>
 <key>other</key>
-<string>Shared %d images</string>
+<string>%d An raba hotuna</string>
 </dict>
 </dict>
 <key>badges.articlesOpened</key>
@@ -211,11 +189,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Read 1 article</string>
-<key>few</key>
-<string/>
+<string>Karanta labari daya</string>
 <key>other</key>
-<string>Read %d articles</string>
+<string>Karanta %d labarai</string>
 </dict>
 </dict>
 <key>badges.lessonsCompleted</key>
@@ -229,11 +205,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Completed 1 lesson</string>
-<key>few</key>
-<string/>
+<string>Kammala 1 darussa</string>
 <key>other</key>
-<string>Completed %d lessons</string>
+<string>Kammala %d darussa</string>
 </dict>
 </dict>
 <key>badges.toolsOpened</key>
@@ -247,11 +221,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Opened 1 tool</string>
-<key>few</key>
-<string/>
+<string>Kayan aiki daya dake bude</string>
 <key>other</key>
-<string>Opened %d tools</string>
+<string>Kayan %d aiki dake bude</string>
 </dict>
 </dict>
 <key>badges.tipsCompleted</key>
@@ -265,11 +237,9 @@
 <key>NSStringFormatValueTypeKey</key>
 <string>d</string>
 <key>one</key>
-<string>Completed 1 training tip</string>
-<key>few</key>
-<string/>
+<string>An kammala 1 shawarwarin horo</string>
 <key>other</key>
-<string>Completed %d training tips</string>
+<string>An kammala %d shawarwarin horo</string>
 </dict>
 </dict>
 </dict>
