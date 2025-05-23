@@ -167,7 +167,7 @@ class ResourcesRepository {
     private func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote(sendRequestPriority: SendRequestPriority) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> {
         
         return Publishers
-            .CombineLatest(languagesRepository.syncLanguagesFromRemote(), api.getResourcesPlusLatestTranslationsAndAttachments(sendRequestPriority: sendRequestPriority))
+            .CombineLatest(languagesRepository.syncLanguagesFromRemote(sendRequestPriority: sendRequestPriority), api.getResourcesPlusLatestTranslationsAndAttachments(sendRequestPriority: sendRequestPriority))
             .flatMap({ (languagesSyncResult: RealmLanguagesCacheSyncResult, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> in
                 
                 return self.cache.syncResources(

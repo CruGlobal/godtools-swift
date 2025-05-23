@@ -42,13 +42,13 @@ class MobileContentLanguagesApi {
         )
     }
     
-    func getLanguages() -> AnyPublisher<[LanguageModel], Error> {
+    func getLanguages(sendRequestPriority: SendRequestPriority) -> AnyPublisher<[LanguageModel], Error> {
         
         let urlSession: URLSession = ignoreCacheSession.session
         
         let urlRequest: URLRequest = getLanguagesRequest(urlSession: urlSession)
         
-        let requestSender: RequestSender = priorityRequestSender.createRequestSender(sendRequestPriority: .medium)
+        let requestSender: RequestSender = priorityRequestSender.createRequestSender(sendRequestPriority: sendRequestPriority)
         
         return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
             .decodeRequestDataResponseForSuccessCodable()
