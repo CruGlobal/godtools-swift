@@ -181,7 +181,7 @@ class GetToolTranslationsFilesUseCase {
     private func downloadResourcesFromRemoteAndDetermineTranslationsToDownloadPublisher(resourceNeeded: DetermineToolTranslationsResourceNeeded, determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadInterface) -> AnyPublisher<DetermineToolTranslationsToDownloadResult, Error> {
         
         return languagesRepository
-            .syncLanguagesFromRemote()
+            .syncLanguagesFromRemote(sendRequestPriority: Self.defaultRequestPriority)
             .flatMap({ (languagesSynced: RealmLanguagesCacheSyncResult) -> AnyPublisher<Void, Error> in
                 
                 self.syncResourcesPublisher(resourceNeeded: resourceNeeded)
