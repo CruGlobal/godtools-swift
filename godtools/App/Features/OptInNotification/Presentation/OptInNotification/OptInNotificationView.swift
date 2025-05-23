@@ -56,9 +56,9 @@ struct OptInNotificationView: View {
                         )
                     
                     Text(viewModel.title)
+                        .multilineTextAlignment(.center)
                         .foregroundColor(ColorPalette.gtBlue.color)
-                        .font(FontLibrary.sfProTextRegular.font(size: 30))
-                        .fontWeight(.bold)
+                        .font(FontLibrary.sfProTextBold.font(size: 30))
                         .padding(.top, 20)
                         .minimumScaleFactor(0.5)
                         .lineLimit(2)
