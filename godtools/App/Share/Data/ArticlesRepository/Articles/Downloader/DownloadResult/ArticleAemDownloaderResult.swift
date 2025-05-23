@@ -31,3 +31,10 @@ struct ArticleAemDownloaderResult {
         return nil
     }
 }
+
+extension ArticleAemDownloaderResult {
+    
+    static func emptyResult() -> ArticleAemDownloaderResult {
+        return ArticleAemDownloaderResult(aemDataObjects: [], aemDownloadErrors: [])
+    }
+}

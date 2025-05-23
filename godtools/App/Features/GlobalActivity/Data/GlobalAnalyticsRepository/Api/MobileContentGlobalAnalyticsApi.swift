@@ -15,12 +15,13 @@ class MobileContentGlobalAnalyticsApi {
     static let sharedGlobalAnalyticsId: String = "1"
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
-    private let requestSender: RequestSender = RequestSender()
+    private let priorityRequestSender: PriorityRequestSenderInterface
     private let ignoreCacheSession: IgnoreCacheSession
     private let baseUrl: String
     
-    init(baseUrl: String, ignoreCacheSession: IgnoreCacheSession) {
+    init(baseUrl: String, priorityRequestSender: PriorityRequestSenderInterface, ignoreCacheSession: IgnoreCacheSession) {
         
+        self.priorityRequestSender = priorityRequestSender
         self.ignoreCacheSession = ignoreCacheSession
         self.baseUrl = baseUrl
     }
@@ -41,11 +42,13 @@ class MobileContentGlobalAnalyticsApi {
         return urlRequest
     }
     
-    func getGlobalAnalyticsPublisher() -> AnyPublisher<MobileContentGlobalAnalyticsDecodable, Error> {
+    func getGlobalAnalyticsPublisher(sendRequestPriority: SendRequestPriority) -> AnyPublisher<MobileContentGlobalAnalyticsDecodable, Error> {
         
         let urlSession: URLSession = ignoreCacheSession.session
         
         let urlRequest: URLRequest = getGlobalAnalyticsUrlRequest(urlSession: urlSession)
+        
+        let requestSender: RequestSender = priorityRequestSender.createRequestSender(sendRequestPriority: sendRequestPriority)
         
         return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
             .decodeRequestDataResponseForSuccessCodable()

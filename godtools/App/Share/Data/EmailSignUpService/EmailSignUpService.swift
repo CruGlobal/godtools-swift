@@ -8,6 +8,7 @@
 
 import Foundation
 import RequestOperation
+import Combine
 
 class EmailSignUpService {
     
@@ -20,28 +21,30 @@ class EmailSignUpService {
         self.cache = cache
     }
     
-    func postNewEmailSignUpIfNeeded(emailSignUp: EmailSignUpModel) -> OperationQueue? {
+    func postNewEmailSignUpPublisher(emailSignUp: EmailSignUpModel, sendRequestPriority: SendRequestPriority) -> AnyPublisher<Void, Never> {
         
         guard !cache.emailIsRegistered(email: emailSignUp.email) else {
-            return nil
+            return Just(Void())
+                .eraseToAnyPublisher()
         }
         
-        return postNewEmailSignUp(emailSignUp: emailSignUp)
-    }
-    
-    private func postNewEmailSignUp(emailSignUp: EmailSignUpModel) -> OperationQueue {
-        
-        return api.postEmailSignUp(emailSignUp: emailSignUp) { [weak self] (response: RequestResponse) in
-                        
-            let httpStatusCode: Int = response.httpStatusCode ?? -1
-            let httpStatusCodeFailed: Bool = httpStatusCode < 200 || httpStatusCode >= 400
+        return api.postEmailSignUpPublisher(emailSignUp: emailSignUp, sendRequestPriority: sendRequestPriority)
+            .map { (response: RequestDataResponse) in
+                
+                let httpStatusCode: Int = response.urlResponse.httpStatusCode ?? -1
+                let httpStatusCodeSuccess: Bool = httpStatusCode >= 200 && httpStatusCode < 400
 
-            if !httpStatusCodeFailed {
-                DispatchQueue.main.async {
+                if httpStatusCodeSuccess {
                     let registeredEmailSignUp = EmailSignUpModel(model: emailSignUp, isRegistered: true)
-                    self?.cache.cacheEmailSignUp(emailSignUp: registeredEmailSignUp)
+                    self.cache.cacheEmailSignUp(emailSignUp: registeredEmailSignUp)
                 }
+
+                return Void()
             }
-        }
+            .catch { (error: Error) in
+                return Just(Void())
+                    .eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
     }
 }

@@ -30,7 +30,7 @@ class AccountDomainLayerDependencies {
     func getDeleteAccountUseCase() -> DeleteAccountUseCase {
         return DeleteAccountUseCase(
             userAuthentication: coreDataLayer.getUserAuthentication(),
-            userDetailsRepository: coreDataLayer.getUserDetailsRepository()
+            deleteUserDetails: dataLayer.getDeleteUserDetails()
         )
     }
     

@@ -44,7 +44,7 @@ class ToolLanguageDownloader {
             DownloadToolDataModel(toolId: $0.id, languages: [languageModel.code])
         })
                 
-        return toolDownloader.downloadToolsPublisher(tools: downloadTools)
+        return toolDownloader.downloadToolsPublisher(tools: downloadTools, sendRequestPriority: .low)
             .eraseToAnyPublisher()
     }
     

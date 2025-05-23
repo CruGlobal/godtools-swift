@@ -36,9 +36,9 @@ class UserDetailsRepository {
         return cache.getAuthUserDetails()
     }
     
-    func getAuthUserDetailsFromRemotePublisher() -> AnyPublisher<UserDetailsDataModel, Error> {
+    func getAuthUserDetailsFromRemotePublisher(sendRequestPriority: SendRequestPriority) -> AnyPublisher<UserDetailsDataModel, Error> {
         
-        return api.fetchUserDetailsPublisher()
+        return api.fetchUserDetailsPublisher(sendRequestPriority: sendRequestPriority)
             .flatMap { (usersMeCodable: MobileContentApiUsersMeCodable) in
                 
                 let userDetails = UserDetailsDataModel(userDetailsType: usersMeCodable)
@@ -49,9 +49,9 @@ class UserDetailsRepository {
             .eraseToAnyPublisher()
     }
     
-    func deleteAuthUserDetailsPublisher() -> AnyPublisher<Void, Error> {
+    func deleteAuthUserDetailsPublisher(sendRequestPriority: SendRequestPriority) -> AnyPublisher<Void, Error> {
         
-        return api.deleteAuthUserDetailsPublisher()
+        return api.deleteAuthUserDetailsPublisher(sendRequestPriority: sendRequestPriority)
             .eraseToAnyPublisher()
     }
 }

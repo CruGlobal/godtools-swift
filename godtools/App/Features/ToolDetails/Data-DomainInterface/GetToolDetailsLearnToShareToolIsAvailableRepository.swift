@@ -48,6 +48,7 @@ class GetToolDetailsLearnToShareToolIsAvailableRepository: GetToolDetailsLearnTo
                 return self.translationsRepository.getTranslationManifestFromRemote(
                     translation: translation,
                     manifestParserType: manifestParserType,
+                    sendRequestPriority: .high,
                     includeRelatedFiles: includeRelatedFiles,
                     shouldFallbackToLatestDownloadedTranslationIfRemoteFails: true
                 )

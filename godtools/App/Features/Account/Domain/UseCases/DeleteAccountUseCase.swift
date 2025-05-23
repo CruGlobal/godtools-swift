@@ -12,17 +12,17 @@ import Combine
 class DeleteAccountUseCase {
     
     private let userAuthentication: UserAuthentication
-    private let userDetailsRepository: UserDetailsRepository
+    private let deleteUserDetails: DeleteUserDetailsInterface
     
-    init(userAuthentication: UserAuthentication, userDetailsRepository: UserDetailsRepository) {
+    init(userAuthentication: UserAuthentication, deleteUserDetails: DeleteUserDetailsInterface) {
         
         self.userAuthentication = userAuthentication
-        self.userDetailsRepository = userDetailsRepository
+        self.deleteUserDetails = deleteUserDetails
     }
     
     func deleteAccountPublisher() -> AnyPublisher<Void, Error> {
                 
-        return userDetailsRepository.deleteAuthUserDetailsPublisher()
+        return deleteUserDetails.deleteUserDetailsPublisher()
             .flatMap({ (void: Void) -> AnyPublisher<Void, Error> in
                                 
                 return self.userAuthentication.signOutPublisher()

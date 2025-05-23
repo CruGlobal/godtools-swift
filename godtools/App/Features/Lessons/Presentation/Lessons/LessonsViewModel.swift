@@ -162,10 +162,10 @@ extension LessonsViewModel {
         )
     }
     
-    func refreshData() {
+    func pullToRefresh() {
         
         resourcesRepository
-            .syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments()
+            .syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments(sendRequestPriority: .high)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completed in
 

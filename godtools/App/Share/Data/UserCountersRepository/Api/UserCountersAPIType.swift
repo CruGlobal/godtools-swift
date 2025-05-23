@@ -11,6 +11,6 @@ import Combine
 
 protocol UserCountersAPIType {
     
-    func fetchUserCountersPublisher() -> AnyPublisher<[UserCounterDecodable], Error>
-    func incrementUserCounterPublisher(id: String, increment: Int) -> AnyPublisher<UserCounterDecodable, Error>
+    func fetchUserCountersPublisher(sendRequestPriority: SendRequestPriority) -> AnyPublisher<[UserCounterDecodable], Error>
+    func incrementUserCounterPublisher(id: String, increment: Int, sendRequestPriority: SendRequestPriority) -> AnyPublisher<UserCounterDecodable, Error>
 }
