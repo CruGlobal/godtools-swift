@@ -33,26 +33,27 @@ class RealmEmailSignUpsCache {
     
     func cacheEmailSignUp(emailSignUp: EmailSignUpModel) {
           
-        let realm: Realm = realmDatabase.openRealm()
-        
-        let realmEmailSignUp: RealmEmailSignUp
-        
-        if let existingRealmEmailSignUp = realm.object(ofType: RealmEmailSignUp.self, forPrimaryKey: emailSignUp.email) {
-            realmEmailSignUp = existingRealmEmailSignUp
-        }
-        else {
-            realmEmailSignUp = RealmEmailSignUp()
-        }
-        
-        realmEmailSignUp.mapFrom(model: emailSignUp)
-        
-        do {
-            try realm.write {
-                realm.add(realmEmailSignUp, update: .all)
+        realmDatabase.background { (realm: Realm) in
+            
+            let realmEmailSignUp: RealmEmailSignUp
+            
+            if let existingRealmEmailSignUp = realm.object(ofType: RealmEmailSignUp.self, forPrimaryKey: emailSignUp.email) {
+                realmEmailSignUp = existingRealmEmailSignUp
             }
-        }
-        catch let error {
-            assertionFailure(error.localizedDescription)
+            else {
+                realmEmailSignUp = RealmEmailSignUp()
+            }
+            
+            realmEmailSignUp.mapFrom(model: emailSignUp)
+            
+            do {
+                try realm.write {
+                    realm.add(realmEmailSignUp, update: .all)
+                }
+            }
+            catch let error {
+                assertionFailure(error.localizedDescription)
+            }
         }
     }
 }

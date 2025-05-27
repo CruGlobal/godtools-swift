@@ -1,14 +1,14 @@
 //
-//  WebArchiveOperationResult.swift
+//  ArticleWebArchiveData.swift
 //  godtools
 //
-//  Created by Levi Eggert on 4/25/20.
-//  Copyright © 2020 Cru. All rights reserved.
+//  Created by Levi Eggert on 5/13/25.
+//  Copyright © 2025 Cru. All rights reserved.
 //
 
 import Foundation
 
-class WebArchiveOperationResult {
+class ArticleWebArchiveData {
     
     let webArchiveUrl: WebArchiveUrl
     let webArchivePlistData: Data
