@@ -111,8 +111,45 @@ A Repository has the following responsibilities:
 #### Coordinator
 The coordinator is a pattern used for navigation decisions, navigation logic, and dependency injection.  In GodTools, any class that implements the Flow protocol is a class that implements the coordinator pattern.
 
-- Makes decisions when it comes to navigation.  Actions are sent to the coordinator and it's up to the coordinator to decide where to navigate next based on the action.  The GodTools actions are defined in the FlowStep enum.
+- Makes decisions when it comes to navigation.  Actions are sent to the coordinator and it's up to the coordinator to decide where to navigate next based on the action.  The GodTools actions are defined in the FlowStep enum (https://github.com/CruGlobal/godtools-swift/blob/master/godtools/App/Flows/Flow/FlowStep.swift).
 - Once navigation is determined, the coordinator will instantiate the view, viewModel, inject any dependencies, and then perform navigation. 
+
+##### Coordinator (Best Practices)
+
+- Navigation actions (steps) shouldn't describe where to navigate to next. It's up to the coordinator to respond to an action and decide where to navigate to next.
+- Flows can have child flows where a child flow will delegate to the parent flow that it has completed.  This is useful in cleaning up memory.
+- A child flow can share a UINavigationController stack with the parent flow.  This keeps navigation on the same stack.
+- A child flow can also have its own UINavigationController stack, for instance when presented modally.
+
+```swift
+// Create a class that implements Flow
+
+class MyFlow: Flow {
+
+    // NOTE: If this flow is a child of a parent flow can delegate up to the parent flow. Useful in cleaning up memory and telling the parent that the flow has completed.
+    private weak var flowDelegate: FlowDelegate?
+    
+    let appDiContainer: AppDiContainer
+    let navigationController: AppNavigationController
+
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController {
+        
+        self.flowDelegate = flowDelegate
+        self.appDiContainer = appDiContainer
+        // NOTE: This example is sharing the navigation stack with the parent flow.
+        self.navigationController = sharedNavigationController
+    }
+
+    func navigate(step: FlowStep) {
+        
+        switch step {
+
+        default:
+            break
+        }
+    }
+}
+```
 
 #### Additional Resources:
 - Solid principles: 
