@@ -120,6 +120,8 @@ The coordinator is a pattern used for navigation decisions, navigation logic, an
 - Flows can have child flows where a child flow will delegate to the parent flow that it has completed.  This is useful in cleaning up memory and responding to completed flows.
 - A child flow can share a UINavigationController stack with the parent flow.  This keeps navigation on the same stack.
 - A child flow can also have its own UINavigationController stack, for instance when presented modally.
+- In almost all cases the ViewModel will point to a FlowDelegate? reference and delegate actions defined in the FlowStep enum (https://github.com/CruGlobal/godtools-swift/blob/master/godtools/App/Flows/Flow/FlowStep.swift).
+- Because UIKit is used for navigation, UIBarButtonItems should also be configured in the Flow when creating the View (UIViewController).
 
 ```swift
 // Create a class that implements Flow
