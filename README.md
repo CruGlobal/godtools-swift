@@ -117,7 +117,7 @@ The coordinator is a pattern used for navigation decisions, navigation logic, an
 ##### Coordinator (Best Practices)
 
 - Navigation actions (steps) shouldn't describe where to navigate to next. It's up to the coordinator to respond to an action and decide where to navigate to next.
-- Flows can have child flows where a child flow will delegate to the parent flow that it has completed.  This is useful in cleaning up memory.
+- Flows can have child flows where a child flow will delegate to the parent flow that it has completed.  This is useful in cleaning up memory and responding to completed flows.
 - A child flow can share a UINavigationController stack with the parent flow.  This keeps navigation on the same stack.
 - A child flow can also have its own UINavigationController stack, for instance when presented modally.
 
@@ -126,7 +126,7 @@ The coordinator is a pattern used for navigation decisions, navigation logic, an
 
 class MyFlow: Flow {
 
-    // NOTE: If this flow is a child of a parent flow can delegate up to the parent flow. Useful in cleaning up memory and telling the parent that the flow has completed.
+    // NOTE: If this flow is a child of a parent flow it can delegate up to the parent flow. Useful in cleaning up memory and telling the parent that the flow has completed.
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
