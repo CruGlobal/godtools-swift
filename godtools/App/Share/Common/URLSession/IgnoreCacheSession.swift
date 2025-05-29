@@ -14,16 +14,8 @@ class IgnoreCacheSession {
     
     init() {
         
-        let configuration = URLSessionConfiguration.ephemeral
-        configuration.requestCachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
-        configuration.urlCache = nil
-        
-        configuration.httpCookieAcceptPolicy = HTTPCookie.AcceptPolicy.never
-        configuration.httpShouldSetCookies = false
-        configuration.httpCookieStorage = nil
-        
-        configuration.timeoutIntervalForRequest = 60
-     
-        session = URLSession(configuration: configuration)
+        session = URLSession(
+            configuration: CreateIgnoreCacheSessionConfig().createConfiguration()
+        )
     }
 }
