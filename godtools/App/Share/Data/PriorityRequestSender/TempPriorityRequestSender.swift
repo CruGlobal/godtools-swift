@@ -13,6 +13,8 @@ class TempPriorityRequestSender: PriorityRequestSenderInterface {
     
     static let shared: TempPriorityRequestSender = TempPriorityRequestSender()
     
+    private let urlSession: URLSession = IgnoreCacheSession().session
+    
     private init() {
         
     }
@@ -30,5 +32,10 @@ class TempPriorityRequestSender: PriorityRequestSenderInterface {
         }
         
         return RequestSender()
+    }
+    
+    func createUrlSession(sendRequestPriority: SendRequestPriority) -> URLSession {
+        
+        return urlSession
     }
 }
