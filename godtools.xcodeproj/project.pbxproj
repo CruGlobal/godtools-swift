@@ -414,8 +414,6 @@
 		454CA2022B7BD31F009A3976 /* AppLanguagesInterfaceStringsDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454CA2012B7BD31F009A3976 /* AppLanguagesInterfaceStringsDomainModel.swift */; };
 		454CA2042B7BD358009A3976 /* ViewAppLanguagesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454CA2032B7BD358009A3976 /* ViewAppLanguagesUseCase.swift */; };
 		454CC4132C5D268B00046437 /* LanguageDirectionDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454CC4122C5D268B00046437 /* LanguageDirectionDomainModel.swift */; };
-		454CD5D02DE906C9003F34A1 /* CreateUrlSessionConfigInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454CD5CF2DE906A2003F34A1 /* CreateUrlSessionConfigInterface.swift */; };
-		454CD5D22DE907A1003F34A1 /* CreateIgnoreCacheSessionConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454CD5D12DE90795003F34A1 /* CreateIgnoreCacheSessionConfig.swift */; };
 		4550BC702A33AC6D00256DEE /* HashableCurrentValueSubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4550BC6F2A33AC6D00256DEE /* HashableCurrentValueSubject.swift */; };
 		4550BC722A33B2CD00256DEE /* UserIsAuthenticatedDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4550BC712A33B2CD00256DEE /* UserIsAuthenticatedDomainModel.swift */; };
 		455258492D36F66E00FAC98D /* RemoteConfigRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455258472D36F66E00FAC98D /* RemoteConfigRepository.swift */; };
@@ -643,9 +641,8 @@
 		457CB0182DC1090300D2019F /* PersistToolLanguageSettingsInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457CB0132DC1090300D2019F /* PersistToolLanguageSettingsInterface.swift */; };
 		457E199A27C6E3AF00BABD49 /* MobileContentRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457E199927C6E3AF00BABD49 /* MobileContentRenderer.swift */; };
 		457F69322DE0C00E0078FEBC /* SendRequestPriority.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457F692F2DE0C00E0078FEBC /* SendRequestPriority.swift */; };
-		457F69332DE0C00E0078FEBC /* PriorityRequestSenderInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457F692E2DE0C00E0078FEBC /* PriorityRequestSenderInterface.swift */; };
+		457F69332DE0C00E0078FEBC /* GetUrlSessionPriorityInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457F692E2DE0C00E0078FEBC /* GetUrlSessionPriorityInterface.swift */; };
 		457F69342DE0C00E0078FEBC /* TempPriorityRequestSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457F69302DE0C00E0078FEBC /* TempPriorityRequestSender.swift */; };
-		457F69352DE0C00E0078FEBC /* CreatePriorityRequestSenderInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457F692D2DE0C00E0078FEBC /* CreatePriorityRequestSenderInterface.swift */; };
 		457F69372DE0C0360078FEBC /* DownloadManifestArticlesObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457F69362DE0C0360078FEBC /* DownloadManifestArticlesObservable.swift */; };
 		457F69392DE0C04A0078FEBC /* DeleteUserDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457F69382DE0C04A0078FEBC /* DeleteUserDetails.swift */; };
 		457F693B2DE0C0570078FEBC /* DeleteUserDetailsInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457F693A2DE0C0570078FEBC /* DeleteUserDetailsInterface.swift */; };
@@ -1255,7 +1252,6 @@
 		45D5EAA02B7E5C5700745F0D /* GetConfirmRemoveToolFromFavoritesInterfaceStringsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D5EA9F2B7E5C5700745F0D /* GetConfirmRemoveToolFromFavoritesInterfaceStringsRepository.swift */; };
 		45D63E52288F67CE009B4610 /* AppDomainLayerDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D63E50288F67CD009B4610 /* AppDomainLayerDependencies.swift */; };
 		45D63E53288F67CE009B4610 /* AppDataLayerDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D63E51288F67CD009B4610 /* AppDataLayerDependencies.swift */; };
-		45D63E56288F67F8009B4610 /* IgnoreCacheSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D63E55288F67F8009B4610 /* IgnoreCacheSession.swift */; };
 		45D63E5A288F6896009B4610 /* TranslationModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D63E58288F6896009B4610 /* TranslationModelType.swift */; };
 		45D63E5B288F6896009B4610 /* TranslationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D63E59288F6896009B4610 /* TranslationModel.swift */; };
 		45D63E5E288F689F009B4610 /* RealmTranslation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D63E5D288F689F009B4610 /* RealmTranslation.swift */; };
@@ -2191,8 +2187,6 @@
 		454CA2012B7BD31F009A3976 /* AppLanguagesInterfaceStringsDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLanguagesInterfaceStringsDomainModel.swift; sourceTree = "<group>"; };
 		454CA2032B7BD358009A3976 /* ViewAppLanguagesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewAppLanguagesUseCase.swift; sourceTree = "<group>"; };
 		454CC4122C5D268B00046437 /* LanguageDirectionDomainModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageDirectionDomainModel.swift; sourceTree = "<group>"; };
-		454CD5CF2DE906A2003F34A1 /* CreateUrlSessionConfigInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateUrlSessionConfigInterface.swift; sourceTree = "<group>"; };
-		454CD5D12DE90795003F34A1 /* CreateIgnoreCacheSessionConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateIgnoreCacheSessionConfig.swift; sourceTree = "<group>"; };
 		4550BC6F2A33AC6D00256DEE /* HashableCurrentValueSubject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HashableCurrentValueSubject.swift; sourceTree = "<group>"; };
 		4550BC712A33B2CD00256DEE /* UserIsAuthenticatedDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIsAuthenticatedDomainModel.swift; sourceTree = "<group>"; };
 		455258462D36F66E00FAC98D /* RemoteConfigDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteConfigDataModel.swift; sourceTree = "<group>"; };
@@ -2427,8 +2421,7 @@
 		457CB0142DC1090300D2019F /* PersistUserToolLanguageSettingsUseCase+PersistToolLanguageSettingsInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PersistUserToolLanguageSettingsUseCase+PersistToolLanguageSettingsInterface.swift"; sourceTree = "<group>"; };
 		457E199927C6E3AF00BABD49 /* MobileContentRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentRenderer.swift; sourceTree = "<group>"; };
 		457E7A372BE5B39800265D92 /* RealmDatabaseDeleteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmDatabaseDeleteTests.swift; sourceTree = "<group>"; };
-		457F692D2DE0C00E0078FEBC /* CreatePriorityRequestSenderInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePriorityRequestSenderInterface.swift; sourceTree = "<group>"; };
-		457F692E2DE0C00E0078FEBC /* PriorityRequestSenderInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityRequestSenderInterface.swift; sourceTree = "<group>"; };
+		457F692E2DE0C00E0078FEBC /* GetUrlSessionPriorityInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUrlSessionPriorityInterface.swift; sourceTree = "<group>"; };
 		457F692F2DE0C00E0078FEBC /* SendRequestPriority.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendRequestPriority.swift; sourceTree = "<group>"; };
 		457F69302DE0C00E0078FEBC /* TempPriorityRequestSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempPriorityRequestSender.swift; sourceTree = "<group>"; };
 		457F69362DE0C0360078FEBC /* DownloadManifestArticlesObservable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadManifestArticlesObservable.swift; sourceTree = "<group>"; };
@@ -3018,7 +3011,6 @@
 		45D5EA9F2B7E5C5700745F0D /* GetConfirmRemoveToolFromFavoritesInterfaceStringsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetConfirmRemoveToolFromFavoritesInterfaceStringsRepository.swift; sourceTree = "<group>"; };
 		45D63E50288F67CD009B4610 /* AppDomainLayerDependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDomainLayerDependencies.swift; sourceTree = "<group>"; };
 		45D63E51288F67CD009B4610 /* AppDataLayerDependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDataLayerDependencies.swift; sourceTree = "<group>"; };
-		45D63E55288F67F8009B4610 /* IgnoreCacheSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IgnoreCacheSession.swift; sourceTree = "<group>"; };
 		45D63E58288F6896009B4610 /* TranslationModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranslationModelType.swift; sourceTree = "<group>"; };
 		45D63E59288F6896009B4610 /* TranslationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranslationModel.swift; sourceTree = "<group>"; };
 		45D63E5D288F689F009B4610 /* RealmTranslation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmTranslation.swift; sourceTree = "<group>"; };
@@ -7060,8 +7052,7 @@
 		457F69312DE0C00E0078FEBC /* PriorityRequestSender */ = {
 			isa = PBXGroup;
 			children = (
-				457F692D2DE0C00E0078FEBC /* CreatePriorityRequestSenderInterface.swift */,
-				457F692E2DE0C00E0078FEBC /* PriorityRequestSenderInterface.swift */,
+				457F692E2DE0C00E0078FEBC /* GetUrlSessionPriorityInterface.swift */,
 				457F692F2DE0C00E0078FEBC /* SendRequestPriority.swift */,
 				457F69302DE0C00E0078FEBC /* TempPriorityRequestSender.swift */,
 			);
@@ -9081,7 +9072,6 @@
 				4521E5EA2D690BCC003E01FE /* SwiftUITimer */,
 				45E4DBB52BECFB09006ED2F3 /* SyncInvalidator */,
 				456DA4EF2CC96ADE004BFB1E /* UrlOpener */,
-				45D63E54288F67F8009B4610 /* URLSession */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -10067,16 +10057,6 @@
 				45B3F4592AC3ACC800D61BFD /* AppFeatureDiContainer.swift */,
 			);
 			path = DependencyContainer;
-			sourceTree = "<group>";
-		};
-		45D63E54288F67F8009B4610 /* URLSession */ = {
-			isa = PBXGroup;
-			children = (
-				454CD5D12DE90795003F34A1 /* CreateIgnoreCacheSessionConfig.swift */,
-				454CD5CF2DE906A2003F34A1 /* CreateUrlSessionConfigInterface.swift */,
-				45D63E55288F67F8009B4610 /* IgnoreCacheSession.swift */,
-			);
-			path = URLSession;
 			sourceTree = "<group>";
 		};
 		45D63E57288F6896009B4610 /* Models */ = {
@@ -13279,7 +13259,6 @@
 				D44CE5142DAD90D20009F4D1 /* LessonSwipeTutorialDiContainer.swift in Sources */,
 				455583C4269F2DA500C3FF14 /* MobileContentPageViewFactoryType.swift in Sources */,
 				45FE82592ACE5D8C00930C39 /* NavBarItemControllerType.swift in Sources */,
-				454CD5D02DE906C9003F34A1 /* CreateUrlSessionConfigInterface.swift in Sources */,
 				450DB5662AC355AA00B2FE3A /* AppLanguageListItemDomainModel.swift in Sources */,
 				45F379072B23642C00EEF039 /* GetLearnToShareToolTutorialItemsRepositoryInterface.swift in Sources */,
 				45ACBE072B1F64230017D17E /* LessonProgressView.swift in Sources */,
@@ -13287,7 +13266,6 @@
 				45645C142AFE770600BD233D /* GetShareToolScreenShareSessionInterfaceStringsRepositoryInterface.swift in Sources */,
 				45645C1A2AFE78A200BD233D /* ShareToolScreenShareSessionView.swift in Sources */,
 				B53E4B532DA9762200D637B0 /* PermissionStatusDomainModel.swift in Sources */,
-				45D63E56288F67F8009B4610 /* IgnoreCacheSession.swift in Sources */,
 				458B91C32B7D676900785C6F /* ViewFavoritesDomainModel.swift in Sources */,
 				459C56D225FF954F00F15967 /* (null) in Sources */,
 				45D63E86288F75B0009B4610 /* RealmAttachment.swift in Sources */,
@@ -14642,9 +14620,8 @@
 				45308EBF2BDC27C800A49D96 /* LessonEvaluationScaleDomainModel.swift in Sources */,
 				D4960CCE2CD177980090B114 /* ResumeLessonProgressModal.swift in Sources */,
 				457F69322DE0C00E0078FEBC /* SendRequestPriority.swift in Sources */,
-				457F69332DE0C00E0078FEBC /* PriorityRequestSenderInterface.swift in Sources */,
+				457F69332DE0C00E0078FEBC /* GetUrlSessionPriorityInterface.swift in Sources */,
 				457F69342DE0C00E0078FEBC /* TempPriorityRequestSender.swift in Sources */,
-				457F69352DE0C00E0078FEBC /* CreatePriorityRequestSenderInterface.swift in Sources */,
 				454CA1FA2B7BC2E6009A3976 /* StoreInitialAppLanguageUseCase.swift in Sources */,
 				45CE7FD42926A0940056168A /* AccountSectionsView.swift in Sources */,
 				4595E0E52A852DF400D88DAE /* RealmUserDetails+UserDetailsDataModelType.swift in Sources */,
@@ -14676,7 +14653,6 @@
 				45F80E392DAECB8D000A2F33 /* OptInNotificationRepository.swift in Sources */,
 				455B6BAA2D9C48D000815829 /* ActionCableEventType.swift in Sources */,
 				455B6BAB2D9C48D000815829 /* WebSocketChannelPublisherInterface.swift in Sources */,
-				454CD5D22DE907A1003F34A1 /* CreateIgnoreCacheSessionConfig.swift in Sources */,
 				455B6BAC2D9C48D000815829 /* ActionCableChannelPublisher.swift in Sources */,
 				455B6BAD2D9C48D000815829 /* ActionCableIdentifier.swift in Sources */,
 				455B6BAE2D9C48D000815829 /* WebSocketChannelSubscriberInterface.swift in Sources */,
@@ -16108,7 +16084,7 @@
 			repositoryURL = "https://github.com/CruGlobal/request-operation-ios.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 1.12.0;
+				minimumVersion = 1.12.1;
 			};
 		};
 		45D40C662A5315B400E8E4AE /* XCRemoteSwiftPackageReference "Starscream" */ = {

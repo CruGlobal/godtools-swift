@@ -13,22 +13,19 @@ import Fuzi
 
 class ArticleWebArchiver {
     
-    private let priorityRequestSender: PriorityRequestSenderInterface
-    private let ignoreCacheSession: IgnoreCacheSession
+    private let requestSender: RequestSender = RequestSender()
+    private let urlSessionPriority: GetUrlSessionPriorityInterface
     private let includeJavascript: Bool = true
     private let errorDomain: String = "ArticleWebArchiver"
         
-    init(priorityRequestSender: PriorityRequestSenderInterface, ignoreCacheSession: IgnoreCacheSession) {
+    init(urlSessionPriority: GetUrlSessionPriorityInterface) {
         
-        self.priorityRequestSender = priorityRequestSender
-        self.ignoreCacheSession = ignoreCacheSession
+        self.urlSessionPriority = urlSessionPriority
     }
     
     func archivePublisher(webArchiveUrls: [WebArchiveUrl], sendRequestPriority: SendRequestPriority) -> AnyPublisher<ArticleWebArchiverResult, Never> {
         
-        let urlSession: URLSession = ignoreCacheSession.session
-        
-        let requestSender: RequestSender = priorityRequestSender.createRequestSender(sendRequestPriority: sendRequestPriority)
+        let urlSession: URLSession = urlSessionPriority.getUrlSession(priority: sendRequestPriority)
         
         let requests: [AnyPublisher<ArticleWebArchiveResult, Never>] = webArchiveUrls.map { (webArchiveUrl: WebArchiveUrl) in
             

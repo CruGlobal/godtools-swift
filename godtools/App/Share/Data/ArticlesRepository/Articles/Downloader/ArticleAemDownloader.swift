@@ -12,14 +12,13 @@ import Combine
 
 class ArticleAemDownloader {
             
-    private let priorityRequestSender: PriorityRequestSenderInterface
-    private let ignoreCacheSession: IgnoreCacheSession
+    private let requestSender: RequestSender = RequestSender()
+    private let urlSessionPriority: GetUrlSessionPriorityInterface
     private let maxAemJsonTreeLevels: Int = 9999
         
-    init(priorityRequestSender: PriorityRequestSenderInterface, ignoreCacheSession: IgnoreCacheSession) {
+    init(urlSessionPriority: GetUrlSessionPriorityInterface) {
         
-        self.priorityRequestSender = priorityRequestSender
-        self.ignoreCacheSession = ignoreCacheSession
+        self.urlSessionPriority = urlSessionPriority
     }
     
     func downloadPublisher(aemUris: [String], downloadCachePolicy: ArticleAemDownloaderCachePolicy, sendRequestPriority: SendRequestPriority) -> AnyPublisher<ArticleAemDownloaderResult, Never> {
@@ -69,15 +68,13 @@ class ArticleAemDownloader {
         }
         
         let errorDomain: String = "ArticleAemDownloadOperation"
-        let urlSession: URLSession = ignoreCacheSession.session
+        let urlSession: URLSession = urlSessionPriority.getUrlSession(priority: sendRequestPriority)
         
         let urlRequest = URLRequest(
             url: urlJson,
             cachePolicy: urlSession.configuration.requestCachePolicy,
             timeoutInterval: urlSession.configuration.timeoutIntervalForRequest
         )
-        
-        let requestSender: RequestSender = priorityRequestSender.createRequestSender(sendRequestPriority: sendRequestPriority)
         
         return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
             .flatMap { (response: RequestDataResponse) -> AnyPublisher<AemUriDownloadResult, Never> in

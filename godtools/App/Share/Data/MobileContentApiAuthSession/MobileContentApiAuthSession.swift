@@ -12,21 +12,20 @@ import Combine
 
 class MobileContentApiAuthSession {
     
-    private let priorityRequestSender: PriorityRequestSenderInterface
+    private let requestSender: RequestSender = RequestSender()
     
     let mobileContentAuthTokenRepository: MobileContentAuthTokenRepository
     let userAuthentication: UserAuthentication
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
     
-    init(priorityRequestSender: PriorityRequestSenderInterface, mobileContentAuthTokenRepository: MobileContentAuthTokenRepository, userAuthentication: UserAuthentication) {
+    init(mobileContentAuthTokenRepository: MobileContentAuthTokenRepository, userAuthentication: UserAuthentication) {
      
-        self.priorityRequestSender = priorityRequestSender
         self.mobileContentAuthTokenRepository = mobileContentAuthTokenRepository
         self.userAuthentication = userAuthentication
     }
     
-    func sendAuthenticatedRequest(urlRequest: URLRequest, urlSession: URLSession, sendRequestPriority: SendRequestPriority) -> AnyPublisher<Data, Error> {
+    func sendAuthenticatedRequest(urlRequest: URLRequest, urlSession: URLSession) -> AnyPublisher<Data, Error> {
         
         return getAuthToken()
             .flatMap { (authToken: String) -> AnyPublisher<Data, Error> in
@@ -34,8 +33,7 @@ class MobileContentApiAuthSession {
                 return self.attemptDataTaskWithAuthToken(
                     authToken: authToken,
                     urlRequest: urlRequest,
-                    session: urlSession,
-                    sendRequestPriority: sendRequestPriority
+                    session: urlSession
                 )
                 .eraseToAnyPublisher()
                 
@@ -48,8 +46,7 @@ class MobileContentApiAuthSession {
                     
                     return self.fetchFreshAuthTokenAndReattemptDataTask(
                         urlRequest: urlRequest,
-                        session: urlSession,
-                        sendRequestPriority: sendRequestPriority
+                        session: urlSession
                     )
                     .eraseToAnyPublisher()
                 }
@@ -86,9 +83,7 @@ class MobileContentApiAuthSession {
             .eraseToAnyPublisher()
     }
     
-    private func attemptDataTaskWithAuthToken(authToken: String, urlRequest: URLRequest, session: URLSession, sendRequestPriority: SendRequestPriority) -> AnyPublisher<Data, Error> {
-
-        let requestSender: RequestSender = priorityRequestSender.createRequestSender(sendRequestPriority: sendRequestPriority)
+    private func attemptDataTaskWithAuthToken(authToken: String, urlRequest: URLRequest, session: URLSession) -> AnyPublisher<Data, Error> {
         
         let urlRequest: URLRequest = buildAuthenticatedRequest(from: urlRequest, authToken: authToken)
         
@@ -100,7 +95,7 @@ class MobileContentApiAuthSession {
             .eraseToAnyPublisher()
     }
     
-    private func fetchFreshAuthTokenAndReattemptDataTask(urlRequest: URLRequest, session: URLSession, sendRequestPriority: SendRequestPriority) -> AnyPublisher<Data, Error> {
+    private func fetchFreshAuthTokenAndReattemptDataTask(urlRequest: URLRequest, session: URLSession) -> AnyPublisher<Data, Error> {
         
         return fetchRemoteAuthToken()
             .flatMap { (authToken: String) -> AnyPublisher<Data, Error> in
@@ -108,8 +103,7 @@ class MobileContentApiAuthSession {
                 return self.attemptDataTaskWithAuthToken(
                     authToken: authToken,
                     urlRequest: urlRequest,
-                    session: session,
-                    sendRequestPriority: sendRequestPriority
+                    session: session
                 )
                 .eraseToAnyPublisher()
             }
