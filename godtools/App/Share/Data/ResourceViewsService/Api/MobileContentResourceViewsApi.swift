@@ -13,14 +13,13 @@ import Combine
 class MobileContentResourceViewsApi {
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
-    private let priorityRequestSender: PriorityRequestSenderInterface
-    private let ignoreCacheSession: IgnoreCacheSession
+    private let requestSender: RequestSender = RequestSender()
+    private let urlSessionPriority: GetUrlSessionPriorityInterface
     private let baseUrl: String
     
-    init(config: AppConfig, priorityRequestSender: PriorityRequestSenderInterface, ignoreCacheSession: IgnoreCacheSession) {
+    init(config: AppConfig, urlSessionPriority: GetUrlSessionPriorityInterface) {
                     
-        self.priorityRequestSender = priorityRequestSender
-        self.ignoreCacheSession = ignoreCacheSession
+        self.urlSessionPriority = urlSessionPriority
         baseUrl = config.getMobileContentApiBaseUrl()
     }
     
@@ -54,11 +53,9 @@ class MobileContentResourceViewsApi {
     
     func postResourceViewPublisher(resourceView: ResourceViewModelType, sendRequestPriority: SendRequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
         
-        let urlSession: URLSession = ignoreCacheSession.session
+        let urlSession: URLSession = urlSessionPriority.getUrlSession(priority: sendRequestPriority)
         
         let urlRequest = getResourceViewRequest(resourceView: resourceView, urlSession: urlSession)
-        
-        let requestSender: RequestSender = priorityRequestSender.createRequestSender(sendRequestPriority: sendRequestPriority)
         
         return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
             .eraseToAnyPublisher()

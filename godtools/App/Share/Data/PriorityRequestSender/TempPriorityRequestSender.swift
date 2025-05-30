@@ -9,19 +9,19 @@
 import Foundation
 import RequestOperation
 
-class TempPriorityRequestSender: PriorityRequestSenderInterface {
+class TempPriorityRequestSender: GetUrlSessionPriorityInterface {
     
     static let shared: TempPriorityRequestSender = TempPriorityRequestSender()
     
-    private let urlSession: URLSession = IgnoreCacheSession().session
+    private let urlSession: URLSession = URLSession(configuration: CreateIgnoreCacheSessionConfig().createConfig())
     
     private init() {
         
     }
     
-    func createRequestSender(sendRequestPriority: SendRequestPriority) -> RequestSender {
+    func getUrlSession(priority: SendRequestPriority) -> URLSession {
         
-        switch sendRequestPriority {
+        switch priority {
             
         case .low:
             break
@@ -30,11 +30,6 @@ class TempPriorityRequestSender: PriorityRequestSenderInterface {
         case .high:
             break
         }
-        
-        return RequestSender()
-    }
-    
-    func createUrlSession(sendRequestPriority: SendRequestPriority) -> URLSession {
         
         return urlSession
     }

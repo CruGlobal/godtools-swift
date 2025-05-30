@@ -12,28 +12,27 @@ import Combine
 
 class UserDetailsAPI {
     
-    private let ignoreCacheSession: URLSession
     private let authSession: MobileContentApiAuthSession
     private let requestBuilder: RequestBuilder = RequestBuilder()
+    private let urlSessionPriority: GetUrlSessionPriorityInterface
     private let baseURL: String
     
-    init(config: AppConfig, ignoreCacheSession: IgnoreCacheSession, mobileContentApiAuthSession: MobileContentApiAuthSession) {
+    init(config: AppConfig, urlSessionPriority: GetUrlSessionPriorityInterface, mobileContentApiAuthSession: MobileContentApiAuthSession) {
         
-        self.ignoreCacheSession = ignoreCacheSession.session
+        self.urlSessionPriority = urlSessionPriority
         self.authSession = mobileContentApiAuthSession
         self.baseURL = config.getMobileContentApiBaseUrl()
     }
     
     func fetchUserDetailsPublisher(sendRequestPriority: SendRequestPriority) -> AnyPublisher<MobileContentApiUsersMeCodable, Error> {
         
-        let urlSession: URLSession = ignoreCacheSession
+        let urlSession: URLSession = urlSessionPriority.getUrlSession(priority: sendRequestPriority)
         
         let urlRequest: URLRequest = getAuthUserDetailsRequest(urlSession: urlSession)
                 
         return authSession.sendAuthenticatedRequest(
             urlRequest: urlRequest,
-            urlSession: ignoreCacheSession,
-            sendRequestPriority: sendRequestPriority
+            urlSession: urlSession
         )
         .decode(type: JsonApiResponseDataObject<MobileContentApiUsersMeCodable>.self, decoder: JSONDecoder())
         .map {
@@ -62,14 +61,13 @@ class UserDetailsAPI {
     
     func deleteAuthUserDetailsPublisher(sendRequestPriority: SendRequestPriority) -> AnyPublisher<Void, Error> {
         
-        let urlSession: URLSession = ignoreCacheSession
+        let urlSession: URLSession = urlSessionPriority.getUrlSession(priority: sendRequestPriority)
         
         let urlRequest = getDeleteAuthorizedUserDetailsRequest(urlSession: urlSession)
                 
         return authSession.sendAuthenticatedRequest(
             urlRequest: urlRequest,
-            urlSession: ignoreCacheSession,
-            sendRequestPriority: sendRequestPriority
+            urlSession: urlSession
         )
         .map { (data: Data) in
             

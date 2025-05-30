@@ -14,23 +14,23 @@ class UserCountersAPI: UserCountersAPIType {
     
     private let authSession: MobileContentApiAuthSession
     private let baseURL: String
-    private let ignoreCacheSession: URLSession
+    private let urlSessionPriority: GetUrlSessionPriorityInterface
     private let requestBuilder: RequestBuilder = RequestBuilder()
     
-    init(config: AppConfig, ignoreCacheSession: IgnoreCacheSession, mobileContentApiAuthSession: MobileContentApiAuthSession) {
+    init(config: AppConfig, urlSessionPriority: GetUrlSessionPriorityInterface, mobileContentApiAuthSession: MobileContentApiAuthSession) {
         
         self.baseURL = config.getMobileContentApiBaseUrl()
-        self.ignoreCacheSession = ignoreCacheSession.session
+        self.urlSessionPriority = urlSessionPriority
         self.authSession = mobileContentApiAuthSession
     }
     
     func fetchUserCountersPublisher(sendRequestPriority: SendRequestPriority) -> AnyPublisher<[UserCounterDecodable], Error> {
         
-        let urlSession: URLSession = ignoreCacheSession
+        let urlSession: URLSession = urlSessionPriority.getUrlSession(priority: sendRequestPriority)
         
         let fetchRequest = getUserCountersRequest(urlSession: urlSession)
         
-        return authSession.sendAuthenticatedRequest(urlRequest: fetchRequest, urlSession: urlSession, sendRequestPriority: sendRequestPriority)
+        return authSession.sendAuthenticatedRequest(urlRequest: fetchRequest, urlSession: urlSession)
             .decode(type: JsonApiResponseDataArray<UserCounterDecodable>.self, decoder: JSONDecoder())
             .map {
                 return $0.dataArray
@@ -40,11 +40,11 @@ class UserCountersAPI: UserCountersAPIType {
     
     func incrementUserCounterPublisher(id: String, increment: Int, sendRequestPriority: SendRequestPriority) -> AnyPublisher<UserCounterDecodable, Error> {
         
-        let urlSession: URLSession = ignoreCacheSession
+        let urlSession: URLSession = urlSessionPriority.getUrlSession(priority: sendRequestPriority)
         
         let incrementRequest = getIncrementUserCountersRequest(id: id, increment: increment, urlSession: urlSession)
         
-        return authSession.sendAuthenticatedRequest(urlRequest: incrementRequest, urlSession: urlSession, sendRequestPriority: sendRequestPriority)
+        return authSession.sendAuthenticatedRequest(urlRequest: incrementRequest, urlSession: urlSession)
             .decode(type: JsonApiResponseDataObject<UserCounterDecodable>.self, decoder: JSONDecoder())
             .map {
                 return $0.dataObject

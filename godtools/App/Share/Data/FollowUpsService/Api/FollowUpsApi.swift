@@ -13,14 +13,13 @@ import Combine
 class FollowUpsApi {
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
-    private let priorityRequestSender: PriorityRequestSenderInterface
-    private let ignoreCacheSession: IgnoreCacheSession
+    private let requestSender: RequestSender = RequestSender()
+    private let urlSessionPriority: GetUrlSessionPriorityInterface
     private let baseUrl: String
     
-    init(baseUrl: String, priorityRequestSender: PriorityRequestSenderInterface, ignoreCacheSession: IgnoreCacheSession) {
+    init(baseUrl: String, urlSessionPriority: GetUrlSessionPriorityInterface) {
         
-        self.priorityRequestSender = priorityRequestSender
-        self.ignoreCacheSession = ignoreCacheSession
+        self.urlSessionPriority = urlSessionPriority
         self.baseUrl = baseUrl
     }
     
@@ -56,11 +55,9 @@ class FollowUpsApi {
     
     func postFollowUpPublisher(followUp: FollowUpModelType, sendRequestPriority: SendRequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
             
-        let urlSession: URLSession = ignoreCacheSession.session
+        let urlSession: URLSession = urlSessionPriority.getUrlSession(priority: sendRequestPriority)
         
         let urlRequest = getFollowUpRequest(followUp: followUp, urlSession: urlSession)
-        
-        let requestSender: RequestSender = priorityRequestSender.createRequestSender(sendRequestPriority: sendRequestPriority)
         
         return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
             .eraseToAnyPublisher()
