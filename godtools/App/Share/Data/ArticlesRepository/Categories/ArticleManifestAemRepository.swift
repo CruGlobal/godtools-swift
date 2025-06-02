@@ -13,12 +13,19 @@ import Combine
 class ArticleManifestAemRepository: ArticleAemRepository {
     
     private let categoryArticlesCache: RealmCategoryArticlesCache
+    private let sharedUserDefaultsCache: SharedUserDefaultsCache
         
-    init(downloader: ArticleAemDownloader, cache: ArticleAemCache, categoryArticlesCache: RealmCategoryArticlesCache) {
+    init(downloader: ArticleAemDownloader, cache: ArticleAemCache, categoryArticlesCache: RealmCategoryArticlesCache, sharedUserDefaultsCache: SharedUserDefaultsCache) {
         
         self.categoryArticlesCache = categoryArticlesCache
+        self.sharedUserDefaultsCache = sharedUserDefaultsCache
         
         super.init(downloader: downloader, cache: cache)
+    }
+    
+    private func getSyncInvalidatorId(translationId: String) -> String {
+        let prefix: String = "\(String(describing: ArticleManifestAemRepository.self)).syncInvalidator.id"
+        return prefix + translationId
     }
     
     func getCategoryArticles(categoryId: String, languageCode: String) -> [CategoryArticleModel] {
@@ -32,7 +39,20 @@ class ArticleManifestAemRepository: ArticleAemRepository {
             .eraseToAnyPublisher()
     }
     
-    func downloadAndCacheManifestAemUrisPublisher(manifest: Manifest, languageCode: String, downloadCachePolicy: ArticleAemDownloaderCachePolicy, sendRequestPriority: SendRequestPriority) -> AnyPublisher<ArticleAemRepositoryResult, Never> {
+    func downloadAndCacheManifestAemUrisPublisher(manifest: Manifest, translationId: String, languageCode: String, downloadCachePolicy: ArticleAemDownloaderCachePolicy, sendRequestPriority: SendRequestPriority, forceFetchFromRemote: Bool = false) -> AnyPublisher<ArticleAemRepositoryResult, Never> {
+                
+        let syncInvalidator = SyncInvalidator(
+            id: getSyncInvalidatorId(translationId: translationId),
+            timeInterval: .days(day: 5),
+            userDefaultsCache: sharedUserDefaultsCache
+        )
+        
+        let shouldSync: Bool = syncInvalidator.shouldSync
+        
+        guard syncInvalidator.shouldSync || forceFetchFromRemote else {
+            return Just(ArticleAemRepositoryResult.emptyResult())
+                .eraseToAnyPublisher()
+        }
         
         let aemUris: [String] = manifest.aemImports.map({$0.absoluteString})
         
@@ -56,6 +76,11 @@ class ArticleManifestAemRepository: ArticleAemRepository {
                 aemDataObjects: result.downloaderResult.aemDataObjects
             )
             .map { (cacheErrors: [Error]) in
+                
+                if cacheErrors.isEmpty {
+                    syncInvalidator.didSync()
+                }
+                
                 return result
             }
             .eraseToAnyPublisher()

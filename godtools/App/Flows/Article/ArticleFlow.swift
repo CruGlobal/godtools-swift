@@ -29,13 +29,15 @@ class ArticleFlow: Flow {
         let languageTranslationManifest: MobileContentRendererLanguageTranslationManifest = toolTranslations.languageTranslationManifests[0]
         
         downloadArticlesObservable = DownloadManifestArticlesObservable(
+            translation: languageTranslationManifest.translation,
             language: languageTranslationManifest.language,
             manifest: languageTranslationManifest.manifest,
             articleManifestAemRepository: appDiContainer.dataLayer.getArticleManifestAemRepository()
         )
         
         downloadArticlesObservable.downloadArticles(
-            downloadCachePolicy: .fetchFromCacheUpToNextHour
+            downloadCachePolicy: .fetchFromCacheUpToNextHour,
+            forceFetchFromRemote: false
         )
         
         let viewModel = ArticleCategoriesViewModel(
