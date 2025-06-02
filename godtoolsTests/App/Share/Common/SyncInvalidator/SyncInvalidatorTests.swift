@@ -15,11 +15,27 @@ class SyncInvalidatorTests: XCTestCase {
     
     private static let sharedCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
     private static let sharedSyncInvalidatorId: String = "SyncInvalidatorTests.syncInvalidatorKey"
+    private static let syncInvalidatorId_1: String = "SyncInvalidatorTests.syncInvalidatorKey.1"
+    private static let syncInvalidatorId_2: String = "SyncInvalidatorTests.syncInvalidatorKey.2"
     
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         SyncInvalidator(
             id: Self.sharedSyncInvalidatorId,
+            timeInterval: .days(day: 1),
+            userDefaultsCache: Self.sharedCache
+        )
+        .resetSync()
+        
+        SyncInvalidator(
+            id: Self.syncInvalidatorId_1,
+            timeInterval: .days(day: 1),
+            userDefaultsCache: Self.sharedCache
+        )
+        .resetSync()
+        
+        SyncInvalidator(
+            id: Self.syncInvalidatorId_2,
             timeInterval: .days(day: 1),
             userDefaultsCache: Self.sharedCache
         )
@@ -218,5 +234,33 @@ class SyncInvalidatorTests: XCTestCase {
         syncInvalidator.didSync(lastSyncDate: sixDaysAgo!)
         
         XCTAssertTrue(syncInvalidator.shouldSync)
+    }
+    
+    func testSyncInvalidatorIdIsUnique() {
+        
+        let syncInvalidator_1 = SyncInvalidator(
+            id: Self.syncInvalidatorId_1,
+            timeInterval: .hours(hour: 4),
+            userDefaultsCache: Self.sharedCache
+        )
+        
+        let syncInvalidator_2 = SyncInvalidator(
+            id: Self.syncInvalidatorId_2,
+            timeInterval: .hours(hour: 4),
+            userDefaultsCache: Self.sharedCache
+        )
+        
+        let twoHoursAgo: Date? = Calendar.current.date(
+            byAdding: DateComponents(hour: 2 * -1),
+            to: Date()
+        )
+        
+        XCTAssertNotNil(twoHoursAgo)
+        
+        syncInvalidator_1.didSync(lastSyncDate: twoHoursAgo!)
+        
+        XCTAssertFalse(syncInvalidator_1.shouldSync)
+        
+        XCTAssertTrue(syncInvalidator_2.shouldSync)
     }
 }
