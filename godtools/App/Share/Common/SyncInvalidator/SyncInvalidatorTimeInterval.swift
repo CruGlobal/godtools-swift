@@ -12,4 +12,5 @@ enum SyncInvalidatorTimeInterval {
     
     case minutes(minute: TimeInterval)
     case hours(hour: TimeInterval)
+    case days(day: TimeInterval)
 }
