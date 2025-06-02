@@ -12,6 +12,7 @@ import GodToolsToolParser
 
 class DownloadManifestArticlesObservable: ObservableObject {
     
+    private let translation: TranslationModel
     private let language: LanguageModel
     private let manifest: Manifest
     private let articleManifestAemRepository: ArticleManifestAemRepository
@@ -21,8 +22,9 @@ class DownloadManifestArticlesObservable: ObservableObject {
     @Published private(set) var articleAemRepositoryResult: ArticleAemRepositoryResult = ArticleAemRepositoryResult.emptyResult()
     @Published private(set) var isDownloading: Bool = false
     
-    init(language: LanguageModel, manifest: Manifest, articleManifestAemRepository: ArticleManifestAemRepository) {
+    init(translation: TranslationModel, language: LanguageModel, manifest: Manifest, articleManifestAemRepository: ArticleManifestAemRepository) {
         
+        self.translation = translation
         self.language = language
         self.manifest = manifest
         self.articleManifestAemRepository = articleManifestAemRepository
@@ -34,7 +36,7 @@ class DownloadManifestArticlesObservable: ObservableObject {
         downloadArticlesCancellable = nil
     }
     
-    func downloadArticles(downloadCachePolicy: ArticleAemDownloaderCachePolicy) {
+    func downloadArticles(downloadCachePolicy: ArticleAemDownloaderCachePolicy, forceFetchFromRemote: Bool) {
                 
         cancelDownload()
         
@@ -43,9 +45,11 @@ class DownloadManifestArticlesObservable: ObservableObject {
         downloadArticlesCancellable = articleManifestAemRepository
             .downloadAndCacheManifestAemUrisPublisher(
                 manifest: manifest,
+                translationId: translation.id,
                 languageCode: language.localeId,
                 downloadCachePolicy: downloadCachePolicy,
-                sendRequestPriority: .high
+                sendRequestPriority: .high,
+                forceFetchFromRemote: forceFetchFromRemote
             )
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] (articleAemRepositoryResult: ArticleAemRepositoryResult) in

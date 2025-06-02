@@ -22,7 +22,7 @@ class SyncInvalidator {
     }
     
     private var keyLastSyncDate: String {
-        return String(describing: ArticleAemDataParser.self) + ".keyLastSyncDate.\(id)"
+        return String(describing: SyncInvalidator.self) + ".keyLastSyncDate.\(id)"
     }
     
     var shouldSync: Bool {
@@ -34,12 +34,15 @@ class SyncInvalidator {
             let elapsedTimeInSeconds: TimeInterval = Date().timeIntervalSince(lastSync)
             let elapsedTimeInMinutes: TimeInterval = elapsedTimeInSeconds / 60
             let elapsedTimeInHours: TimeInterval = elapsedTimeInMinutes / 60
+            let elapsedTimeInDays: TimeInterval = elapsedTimeInHours / 24
             
             switch timeInterval {
             case .minutes(let minute):
                 shouldSync = elapsedTimeInMinutes >= minute
             case .hours(let hour):
                 shouldSync = elapsedTimeInHours >= hour
+            case .days(let day):
+                shouldSync = elapsedTimeInDays >= day
             }
         }
         else {
@@ -50,8 +53,8 @@ class SyncInvalidator {
         return shouldSync
     }
     
-    func didSync() {
-        storeLastSyncDate(date: Date())
+    func didSync(lastSyncDate: Date = Date()) {
+        storeLastSyncDate(date: lastSyncDate)
     }
     
     func resetSync() {

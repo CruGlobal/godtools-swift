@@ -97,7 +97,8 @@ class AppDataLayerDependencies {
             cache: getArticleAemCache(),
             categoryArticlesCache: RealmCategoryArticlesCache(
                 realmDatabase: sharedRealmDatabase
-            )
+            ),
+            sharedUserDefaultsCache: getSharedUserDefaultsCache()
         )
     }
     

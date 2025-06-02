@@ -130,6 +130,6 @@ extension ArticleCategoriesViewModel {
     
     func refreshArticles() {
         
-        downloadArticlesObservable.downloadArticles(downloadCachePolicy: .ignoreCache)
+        downloadArticlesObservable.downloadArticles(downloadCachePolicy: .ignoreCache, forceFetchFromRemote: true)
     }
 }

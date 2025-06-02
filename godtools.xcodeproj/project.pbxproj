@@ -1483,6 +1483,7 @@
 		45F7167A290A13530019B715 /* EmailSignUpModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F71674290A13530019B715 /* EmailSignUpModel.swift */; };
 		45F7167B290A13530019B715 /* EmailSignUpModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F71675290A13530019B715 /* EmailSignUpModelType.swift */; };
 		45F7167D290A136F0019B715 /* FirebaseAnalyticsLoggedInUserProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F7167C290A136F0019B715 /* FirebaseAnalyticsLoggedInUserProperties.swift */; };
+		45F785362DEE1383001CE64D /* SyncInvalidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F785352DEE1381001CE64D /* SyncInvalidatorTests.swift */; };
 		45F7B0B32AF18E3D00A0E7B4 /* GetMenuInterfaceStringsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F7B0B22AF18E3D00A0E7B4 /* GetMenuInterfaceStringsUseCase.swift */; };
 		45F7B0B52AF18E5E00A0E7B4 /* MenuInterfaceStringsDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F7B0B42AF18E5E00A0E7B4 /* MenuInterfaceStringsDomainModel.swift */; };
 		45F7B0B82AF18E9000A0E7B4 /* GetMenuInterfaceStringsRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F7B0B72AF18E9000A0E7B4 /* GetMenuInterfaceStringsRepositoryInterface.swift */; };
@@ -3231,6 +3232,7 @@
 		45F71674290A13530019B715 /* EmailSignUpModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailSignUpModel.swift; sourceTree = "<group>"; };
 		45F71675290A13530019B715 /* EmailSignUpModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailSignUpModelType.swift; sourceTree = "<group>"; };
 		45F7167C290A136F0019B715 /* FirebaseAnalyticsLoggedInUserProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseAnalyticsLoggedInUserProperties.swift; sourceTree = "<group>"; };
+		45F785352DEE1381001CE64D /* SyncInvalidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncInvalidatorTests.swift; sourceTree = "<group>"; };
 		45F7B0B22AF18E3D00A0E7B4 /* GetMenuInterfaceStringsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetMenuInterfaceStringsUseCase.swift; sourceTree = "<group>"; };
 		45F7B0B42AF18E5E00A0E7B4 /* MenuInterfaceStringsDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuInterfaceStringsDomainModel.swift; sourceTree = "<group>"; };
 		45F7B0B72AF18E9000A0E7B4 /* GetMenuInterfaceStringsRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetMenuInterfaceStringsRepositoryInterface.swift; sourceTree = "<group>"; };
@@ -5101,6 +5103,7 @@
 				45CC42FF2C38982800B0D82B /* LocaleLanguageScriptName */,
 				453689FF2ABB2D840028A570 /* SharedAppleExtensions */,
 				4585393C2C57DFFE00748BAF /* StringWithLocaleCount */,
+				45F785342DEE137A001CE64D /* SyncInvalidator */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -11361,6 +11364,14 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		45F785342DEE137A001CE64D /* SyncInvalidator */ = {
+			isa = PBXGroup;
+			children = (
+				45F785352DEE1381001CE64D /* SyncInvalidatorTests.swift */,
+			);
+			path = SyncInvalidator;
+			sourceTree = "<group>";
+		};
 		45F7B0B12AF18E2D00A0E7B4 /* GetMenuInterfaceStringsUseCase */ = {
 			isa = PBXGroup;
 			children = (
@@ -14803,6 +14814,7 @@
 				D4AAEC192D97307F008CDF8E /* RemoveFavoritedToolRepositoryTests.swift in Sources */,
 				45B9B07B2CDEB2D6001DF554 /* MobileContentBackgroundImageRendererTests.swift in Sources */,
 				45368A182ABB2D850028A570 /* TestRealmObject.swift in Sources */,
+				45F785362DEE1383001CE64D /* SyncInvalidatorTests.swift in Sources */,
 				453E2A122BC8C8810047D4C6 /* GetToolsRepositoryTests.swift in Sources */,
 				45F357B62C52E49200F31EB2 /* GetLessonFilterLanguagesRepositoryTests.swift in Sources */,
 				D4B26F592D8DF0A80019FA86 /* ReorderFavoritedToolRepositoryTests.swift in Sources */,
