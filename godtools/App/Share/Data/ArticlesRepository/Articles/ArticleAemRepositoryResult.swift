@@ -13,3 +13,13 @@ struct ArticleAemRepositoryResult {
     let downloaderResult: ArticleAemDownloaderResult
     let cacheResult: ArticleAemCacheResult
 }
+
+extension ArticleAemRepositoryResult {
+    
+    static func emptyResult() -> ArticleAemRepositoryResult {
+        return ArticleAemRepositoryResult(
+            downloaderResult: ArticleAemDownloaderResult(aemDataObjects: [], aemDownloadErrors: []),
+            cacheResult: ArticleAemCacheResult(numberOfArchivedObjects: 0, cacheErrorData: [], saveAemDataToRealmError: nil)
+        )
+    }
+}

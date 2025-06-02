@@ -10,8 +10,7 @@ import Foundation
 
 enum ArticleAemCacheError: Error {
     
-    case failedToAddNewRealmArticleAemData(error: Error)
-    case failedToUpdateExistingRealmArticleAemData(error: Error)
+    case failedToUpdateRealmArticleAemData(error: Error)
     case failedToRemoveWebArchivePlistData(error: Error)
     case failedToCacheWebArchivePlistData(error: Error)
 }

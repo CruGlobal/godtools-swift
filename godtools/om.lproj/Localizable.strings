@@ -1,5 +1,10 @@
+"optInNotification.notificationSettings" = "Seetiingii yaadachiiftuuwwanii";
 "lessons.swipeTutorial.title" = "Fuula kan biraatti darbuuf gara bitaatti ykn mirgaatti skriinii kana buti";
 "lessons.swipeTutorial.buttonText" = "Naaf galeera";
+"optInNotification.title" = "Yaadota gorsaa fi jajjabinaa argadhu";
+"optInNotification.body" = "Yaadachiftuuwwan akka siif dhufan eyyemuudhaan, maariiwwan itti aananiif qophaa'i.";
+"optInNotification.allowNotifications" = "Yaadachiiftuuwwaniif eyyemi";
+"optInNotification.maybeLater" = "Yeroo biraa";
 
 /* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
 "lessons.resumeLessonModal.title" = "Bakka dhaabdee itti fufi?";

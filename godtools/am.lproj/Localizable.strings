@@ -1,5 +1,10 @@
+"optInNotification.notificationSettings" = "የማሳወቂያ ቅንብሮች";
 "lessons.swipeTutorial.title" = "ገፆችን ለመቀየር ያንሸራቱ";
 "lessons.swipeTutorial.buttonText" = "ገባኝ";
+"optInNotification.title" = "ጠቃሚ ምክሮችን እና ማበረታቻዎችን ያግኙ";
+"optInNotification.body" = "ማሳወቂያዎች እንዲላክሎት ዛሬውኑ ይፍቀዱ !  ለቀጣይ ውይይት ዝግጁ ይሁኑ!";
+"optInNotification.allowNotifications" = "ማሳወቂያዎችን ፍቀድ";
+"optInNotification.maybeLater" = "ምናልባት ወደፊት";
 
 /* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
 "lessons.resumeLessonModal.title" = "ካቆሙበት ለመቀጠል";

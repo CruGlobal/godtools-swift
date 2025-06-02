@@ -57,7 +57,7 @@ class ToolDetailsVersionsCardViewModel: ObservableObject {
         }
         else {
             
-            getBannerImageCancellable = attachmentsRepository.getAttachmentImagePublisher(id: attachmentId)
+            getBannerImageCancellable = attachmentsRepository.getAttachmentImagePublisher(id: attachmentId, sendRequestPriority: .medium)
                 .receive(on: DispatchQueue.main)
                 .sink { [weak self] (image: Image?) in
                     self?.bannerImageData = OptionalImageData(image: image, imageIdForAnimationChange: attachmentId)

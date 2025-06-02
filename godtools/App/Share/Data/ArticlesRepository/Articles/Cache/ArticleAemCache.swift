@@ -8,41 +8,57 @@
 
 import Foundation
 import RealmSwift
+import Combine
 
 class ArticleAemCache {
     
+    typealias AemUri = String
+    
     private let fileCache: ArticleAemWebArchiveFileCache = ArticleAemWebArchiveFileCache()
     private let realmDatabase: RealmDatabase
-    private let webArchiveQueue: WebArchiveQueue
+    private let articleWebArchiver: ArticleWebArchiver
     
-    init(realmDatabase: RealmDatabase, webArchiveQueue: WebArchiveQueue) {
+    init(realmDatabase: RealmDatabase, articleWebArchiver: ArticleWebArchiver) {
         
         self.realmDatabase = realmDatabase
-        self.webArchiveQueue = webArchiveQueue
+        self.articleWebArchiver = articleWebArchiver
     }
     
-    func getAemCacheObjectsOnBackgroundThread(aemUris: [String], completion: @escaping ((_ aemCacheObjects: [ArticleAemCacheObject]) -> Void)) {
+    func observeArticleAemCacheObjectsChangedPublisher() -> AnyPublisher<Void, Never> {
         
-        guard aemUris.count > 0 else {
-            completion([])
-            return
-        }
-        
-        realmDatabase.background { (realm: Realm) in
-            
-            let aemCacheObjects: [ArticleAemCacheObject] = aemUris.compactMap({
-                self.getAemCacheObject(realm: realm, aemUri: $0)
-            })
-            
-            completion(aemCacheObjects)
-        }
+        return realmDatabase.openRealm()
+            .objects(RealmResource.self)
+            .objectWillChange
+            .eraseToAnyPublisher()
     }
     
-    func getAemCacheObjectOnCurrentThread(aemUri: String) -> ArticleAemCacheObject? {
+    func getAemCacheObjectsPublisher(aemUris: [String]) -> AnyPublisher<[ArticleAemCacheObject], Never> {
         
-        let realm: Realm = realmDatabase.openRealm()
+        return Future() { promise in
+
+            self.realmDatabase.background { realm in
+                    
+                let cachedObjects: [ArticleAemCacheObject] = aemUris.compactMap { (aemUri: String) in
+                    self.getAemCacheObject(realm: realm, aemUri: aemUri)
+                }
+                
+                promise(.success(cachedObjects))
+            }
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    func getAemCacheObject(aemUri: String) -> ArticleAemCacheObject? {
+        return getAemCacheObject(realm: realmDatabase.openRealm(), aemUri: aemUri)
+    }
+    
+    private func getAemCacheObjects(aemUris: [String], realm: Realm) -> [ArticleAemCacheObject] {
         
-        return getAemCacheObject(realm: realm, aemUri: aemUri)
+        let cachedObjects: [ArticleAemCacheObject] = aemUris.compactMap { (aemUri: String) in
+            self.getAemCacheObject(realm: realm, aemUri: aemUri)
+        }
+        
+        return cachedObjects
     }
 
     private func getAemCacheObject(realm: Realm, aemUri: String) -> ArticleAemCacheObject? {
@@ -72,65 +88,30 @@ class ArticleAemCache {
         }
     }
     
-    func storeAemDataObjects(aemDataObjects: [ArticleAemData], didStartWebArchiveClosure: @escaping ((_ webArchiveOperationQueue: OperationQueue) -> Void), completion: @escaping ((_ result: ArticleAemCacheResult) -> Void)) {
-                    
-        realmDatabase.background { realm in
-            
-            typealias AemUri = String
-            
-            var aemDataDictionary: [AemUri: ArticleAemData] = Dictionary()
-            var webArchiveUrls: [WebArchiveUrl] = Array()
-            
-            for aemData in aemDataObjects {
+    func storeAemDataObjectsPublisher(aemDataObjects: [ArticleAemData], sendRequestPriority: SendRequestPriority) -> AnyPublisher<ArticleAemCacheResult, Never> {
+        
+        return filterAemDataObjectsThatNeedDownloadedPublisher(aemDataObjects: aemDataObjects)
+            .flatMap({ (filteredData: ArticleAemDataObjectsThatNeedDownloading) -> AnyPublisher<(filteredData: ArticleAemDataObjectsThatNeedDownloading, archiverResult: ArticleWebArchiverResult), Never> in
                 
-                guard let webUrl = URL(string: aemData.webUrl) else {
-                    continue
-                }
+                return self.articleWebArchiver
+                    .archivePublisher(webArchiveUrls: filteredData.webArchiveUrls, sendRequestPriority: sendRequestPriority)
+                    .map { (archiverResult: ArticleWebArchiverResult) in
+                        return (filteredData: filteredData, archiverResult: archiverResult)
+                    }
+                    .eraseToAnyPublisher()
+            })
+            .flatMap({ (filteredData: ArticleAemDataObjectsThatNeedDownloading, archiverResult: ArticleWebArchiverResult) -> AnyPublisher<ArticleAemCacheResult, Never> in
                 
-                let dataIsNotCached: Bool
-                let uuidChanged: Bool
-                
-                if let aemCacheObject = self.getAemCacheObject(realm: realm, aemUri: aemData.aemUri), let cachedUUID = aemCacheObject.aemData.articleJcrContent?.uuid, let uuid = aemData.articleJcrContent?.uuid, !cachedUUID.isEmpty, !uuid.isEmpty {
-                    
-                    dataIsNotCached = false
-                    uuidChanged = cachedUUID != uuid
-                }
-                else {
-                    
-                    dataIsNotCached = true
-                    uuidChanged = false
-                }
-                
-                if dataIsNotCached || uuidChanged {
-                    
-                    let webArchiveUrl = WebArchiveUrl(
-                        webUrl: webUrl,
-                        uuid: aemData.aemUri
-                    )
-                    
-                    aemDataDictionary[aemData.aemUri] = aemData
-                    
-                    webArchiveUrls.append(webArchiveUrl)
-                }
-            }
-            
-            let webArchiveOperationQueue = self.webArchiveQueue.archive(webArchiveUrls: webArchiveUrls) { [weak self] (result: WebArchiveQueueResult) in
-                
-                guard let weakSelf = self else {
-                    completion(ArticleAemCacheResult(numberOfArchivedObjects: 0, cacheErrorData: []))
-                    return
-                }
-                
-                guard result.successfulArchives.count > 0 else {
-                    completion(ArticleAemCacheResult(numberOfArchivedObjects: 0, cacheErrorData: []))
-                    return
+                guard archiverResult.successfulArchives.count > 0 else {
+                    return Just(ArticleAemCacheResult.emptyResult())
+                        .eraseToAnyPublisher()
                 }
                 
                 var aemCacheArchivedObjects: [ArticleAemCacheArchivedObject] = Array()
                 
-                for webArchiveResult in result.successfulArchives {
+                for webArchiveResult in archiverResult.successfulArchives {
                     
-                    if let aemData = aemDataDictionary[webArchiveResult.webArchiveUrl.uuid] {
+                    if let aemData = filteredData.aemDataDictionary[webArchiveResult.webArchiveUrl.uuid] {
                         
                         let archivedObject = ArticleAemCacheArchivedObject(
                             aemData: aemData,
@@ -141,90 +122,154 @@ class ArticleAemCache {
                     }
                 }
                 
-                weakSelf.realmDatabase.background { realm in
-                    
-                    let articleAemCacheResult = weakSelf.storeAemCacheArchivedObjects(realm: realm, aemCacheArchivedObjects: aemCacheArchivedObjects)
-                    
-                    completion(articleAemCacheResult)
-                }
-            }
-            
-            didStartWebArchiveClosure(webArchiveOperationQueue)
-        }
+                return self.storeAemCacheArchivedObjectsPublisher(aemCacheArchivedObjects: aemCacheArchivedObjects)
+                    .eraseToAnyPublisher()
+            })
+            .eraseToAnyPublisher()
     }
     
-    private func storeAemCacheArchivedObjects(realm: Realm, aemCacheArchivedObjects: [ArticleAemCacheArchivedObject]) -> ArticleAemCacheResult {
+    private func filterAemDataObjectsThatNeedDownloadedPublisher(aemDataObjects: [ArticleAemData]) -> AnyPublisher<ArticleAemDataObjectsThatNeedDownloading, Never> {
+        
+        return Future() { promise in
+
+            self.realmDatabase.background { realm in
                 
-        var cacheErrorData: [ArticleAemCacheErrorData] = Array()
-        
-        for archivedObject in aemCacheArchivedObjects {
-            
-            let errorData = storeAemCacheArchivedObject(realm: realm, archivedObject: archivedObject)
-            cacheErrorData.append(errorData)
+                let filteredData: ArticleAemDataObjectsThatNeedDownloading = self.filterAemDataObjectsThatNeedDownloaded(
+                    aemDataObjects: aemDataObjects,
+                    realm: realm
+                )
+                
+                promise(.success(filteredData))
+            }
         }
-        
-        let result = ArticleAemCacheResult(
-            numberOfArchivedObjects: aemCacheArchivedObjects.count,
-            cacheErrorData: cacheErrorData
-        )
-        
-        return result
+        .eraseToAnyPublisher()
     }
     
-    private func storeAemCacheArchivedObject(realm: Realm, archivedObject: ArticleAemCacheArchivedObject) -> ArticleAemCacheErrorData {
+    private func filterAemDataObjectsThatNeedDownloaded(aemDataObjects: [ArticleAemData], realm: Realm) -> ArticleAemDataObjectsThatNeedDownloading {
+                
+        var aemDataDictionary: [AemUri: ArticleAemData] = Dictionary()
+        var webArchiveUrls: [WebArchiveUrl] = Array()
         
-        let aemData: ArticleAemData = archivedObject.aemData
-        let aemUri: String = aemData.aemUri
-        var cacheErrors: [ArticleAemCacheError] = Array()
+        for aemData in aemDataObjects {
+            
+            guard let webUrl = URL(string: aemData.webUrl) else {
+                continue
+            }
+            
+            let dataIsNotCached: Bool
+            let uuidChanged: Bool
+            
+            if let aemCacheObject = getAemCacheObject(realm: realm, aemUri: aemData.aemUri),
+               let cachedUUID = aemCacheObject.aemData.articleJcrContent?.uuid,
+               let uuid = aemData.articleJcrContent?.uuid, !cachedUUID.isEmpty, !uuid.isEmpty {
+                
+                dataIsNotCached = false
+                uuidChanged = cachedUUID != uuid
+            }
+            else {
+                
+                dataIsNotCached = true
+                uuidChanged = false
+            }
+            
+            if dataIsNotCached || uuidChanged {
+                
+                let webArchiveUrl = WebArchiveUrl(
+                    webUrl: webUrl,
+                    uuid: aemData.aemUri
+                )
+                
+                aemDataDictionary[aemData.aemUri] = aemData
+                
+                webArchiveUrls.append(webArchiveUrl)
+            }
+        }
         
-        if let existingRealmAemData = realm.object(ofType: RealmArticleAemData.self, forPrimaryKey: aemData.aemUri) {
+        return ArticleAemDataObjectsThatNeedDownloading(
+            aemDataDictionary: aemDataDictionary,
+            webArchiveUrls: webArchiveUrls
+        )
+    }
+    
+    private func storeAemCacheArchivedObjectsPublisher(aemCacheArchivedObjects: [ArticleAemCacheArchivedObject]) -> AnyPublisher<ArticleAemCacheResult, Never> {
+        
+        return Future() { promise in
+
+            self.realmDatabase.background { realm in
+                
+                var realmDataObjectsToStore: [RealmArticleAemData] = Array()
+                var cacheErrorData: [ArticleAemCacheErrorData] = Array()
+                
+                for archivedObject in aemCacheArchivedObjects {
+                    
+                    let aemData: ArticleAemData = archivedObject.aemData
+                    let aemUri: String = aemData.aemUri
+                    let existingRealmData: RealmArticleAemData? = realm.object(ofType: RealmArticleAemData.self, forPrimaryKey: aemData.aemUri)
+                    
+                    let realmDataToStore: RealmArticleAemData
+                    let webArchiveFilename: String
+                    
+                    var aemCacheErrors: [ArticleAemCacheError] = Array()
+                                        
+                    if let existingRealmData = existingRealmData {
                         
-            if let error = removeWebArchivePlistData(webArchiveFilename: existingRealmAemData.webArchiveFilename) {
-                cacheErrors.append(.failedToRemoveWebArchivePlistData(error: error))
-            }
-            
-            do {
-                try realm.write {
-                    existingRealmAemData.mapFrom(model: archivedObject.aemData, ignorePrimaryKey: true)
+                        webArchiveFilename = existingRealmData.webArchiveFilename
+                        
+                        if let removeWebArchiveError = self.removeWebArchivePlistData(webArchiveFilename: webArchiveFilename) {
+                            aemCacheErrors.append(removeWebArchiveError)
+                        }
+                        
+                        realmDataToStore = existingRealmData
+                        realmDataToStore.mapFrom(model: archivedObject.aemData, ignorePrimaryKey: true)
+                    }
+                    else {
+                        
+                        webArchiveFilename = UUID().uuidString
+                        
+                        realmDataToStore = RealmArticleAemData()
+                        realmDataToStore.mapFrom(model: archivedObject.aemData, ignorePrimaryKey: false)
+                        realmDataToStore.webArchiveFilename = webArchiveFilename
+                    }
+                    
+                    if let storeWebArchiveError = self.storeWebArchivePlistData(
+                        webArchiveFilename: webArchiveFilename,
+                        webArchivePlistData: archivedObject.webArchivePlistData
+                    ) {
+                        aemCacheErrors.append(storeWebArchiveError)
+                    }
+                    
+                    realmDataObjectsToStore.append(realmDataToStore)
+                    
+                    if aemCacheErrors.count > 0 {
+                        cacheErrorData.append(ArticleAemCacheErrorData(aemUri: aemUri, cacheErrors: aemCacheErrors))
+                    }
                 }
-            }
-            catch let error {
-                cacheErrors.append(.failedToUpdateExistingRealmArticleAemData(error: error))
-            }
-            
-            if let plistDataCacheError = storeWebArchivePlistData(
-                webArchiveFilename: existingRealmAemData.webArchiveFilename,
-                webArchivePlistData: archivedObject.webArchivePlistData
-            ) {
-                cacheErrors.append(plistDataCacheError)
-            }
-        }
-        else {
-            
-            let webArchiveFilename: String = UUID().uuidString
-            
-            let realmAemData: RealmArticleAemData = RealmArticleAemData()
-            realmAemData.mapFrom(model: aemData, ignorePrimaryKey: false)
-            realmAemData.webArchiveFilename = webArchiveFilename
-            
-            do {
-                try realm.write {
-                    realm.add(realmAemData)
+                
+                let saveAemDataToRealmError: Error?
+                
+                do {
+                    try realm.write {
+                        realm.add(realmDataObjectsToStore, update: .modified)
+                    }
+                    
+                    saveAemDataToRealmError = nil
                 }
-            }
-            catch let error {
-                cacheErrors.append(.failedToAddNewRealmArticleAemData(error: error))
-            }
-            
-            if let plistDataCacheError = storeWebArchivePlistData(
-                webArchiveFilename: webArchiveFilename,
-                webArchivePlistData: archivedObject.webArchivePlistData
-            ) {
-                cacheErrors.append(plistDataCacheError)
-            }
+                catch let error {
+                    
+                    saveAemDataToRealmError = error
+                }
+                
+                let result = ArticleAemCacheResult(
+                    numberOfArchivedObjects: aemCacheArchivedObjects.count,
+                    cacheErrorData: cacheErrorData,
+                    saveAemDataToRealmError: saveAemDataToRealmError
+                )
+                
+                promise(.success(result))
+                
+            }//end realmDatabase.background
         }
-        
-        return ArticleAemCacheErrorData(aemUri: aemUri, cacheErrors: cacheErrors)
+        .eraseToAnyPublisher()
     }
     
     private func storeWebArchivePlistData(webArchiveFilename: String, webArchivePlistData: Data) -> ArticleAemCacheError? {

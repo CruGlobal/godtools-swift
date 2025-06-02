@@ -22,9 +22,9 @@ class GlobalAnalyticsRepository {
         self.cache = cache
     }
     
-    func getGlobalAnalyticsChangedPublisher() -> AnyPublisher<GlobalAnalyticsDataModel?, Never> {
+    func getGlobalAnalyticsChangedPublisher(sendRequestPriority: SendRequestPriority) -> AnyPublisher<GlobalAnalyticsDataModel?, Never> {
                 
-        getGlobalAnalyticsFromRemotePublisher()
+        getGlobalAnalyticsFromRemotePublisher(sendRequestPriority: sendRequestPriority)
             .sink { value in
                 
             } receiveValue: { value in
@@ -36,9 +36,9 @@ class GlobalAnalyticsRepository {
             .eraseToAnyPublisher()
     }
     
-    private func getGlobalAnalyticsFromRemotePublisher() -> AnyPublisher<GlobalAnalyticsDataModel, Error> {
+    private func getGlobalAnalyticsFromRemotePublisher(sendRequestPriority: SendRequestPriority) -> AnyPublisher<GlobalAnalyticsDataModel, Error> {
         
-        return api.getGlobalAnalyticsPublisher()
+        return api.getGlobalAnalyticsPublisher(sendRequestPriority: sendRequestPriority)
             .flatMap({ (globalAnalytics: MobileContentGlobalAnalyticsDecodable) -> AnyPublisher<GlobalAnalyticsDataModel, Error> in
                 
                 return self.cache.storeGlobalAnalyticsPublisher(globalAnalytics: globalAnalytics)

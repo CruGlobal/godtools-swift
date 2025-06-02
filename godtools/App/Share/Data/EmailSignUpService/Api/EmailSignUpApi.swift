@@ -8,21 +8,22 @@
 
 import Foundation
 import RequestOperation
+import Combine
 
 class EmailSignUpApi {
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
+    private let requestSender: RequestSender = RequestSender()
+    private let urlSessionPriority: GetUrlSessionPriorityInterface
     private let baseUrl: String = "https://campaign-forms.cru.org"
     private let campaignId: String = "3fb6022c-5ef9-458c-928a-0380c4a0e57b"
     
-    let session: URLSession
-    
-    init(ignoreCacheSession: IgnoreCacheSession) {
+    init(urlSessionPriority: GetUrlSessionPriorityInterface) {
         
-        session = ignoreCacheSession.session
+        self.urlSessionPriority = urlSessionPriority
     }
     
-    private func newEmailSignUpRequest(emailSignUp: EmailSignUpModelType) -> URLRequest {
+    private func getEmailSignUpRequest(emailSignUp: EmailSignUpModelType, urlSession: URLSession) -> URLRequest {
         
         var body: [String: String] = Dictionary()
         
@@ -37,7 +38,7 @@ class EmailSignUpApi {
         
         let request: URLRequest = requestBuilder.build(
             parameters: RequestBuilderParameters(
-                urlSession: session,
+                urlSession: urlSession,
                 urlString: baseUrl + "/forms",
                 method: .post,
                 headers: ["Content-Type": "application/json"],
@@ -49,31 +50,13 @@ class EmailSignUpApi {
         return request
     }
     
-    func newEmailSignUpOperation(emailSignUp: EmailSignUpModelType) -> RequestOperation {
+    func postEmailSignUpPublisher(emailSignUp: EmailSignUpModelType, sendRequestPriority: SendRequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
         
-        let urlRequest: URLRequest = newEmailSignUpRequest(emailSignUp: emailSignUp)
+        let urlSession: URLSession = urlSessionPriority.getUrlSession(priority: sendRequestPriority)
         
-        let operation = RequestOperation(
-            session: session,
-            urlRequest: urlRequest
-        )
+        let urlRequest = getEmailSignUpRequest(emailSignUp: emailSignUp, urlSession: urlSession)
         
-        return operation
-    }
-        
-    func postEmailSignUp(emailSignUp: EmailSignUpModelType, complete: @escaping ((_ response: RequestResponse) -> Void)) -> OperationQueue {
-        
-        let operation = newEmailSignUpOperation(emailSignUp: emailSignUp)
-        
-        operation.setCompletionHandler { (response: RequestResponse) in
-            
-            complete(response)
-        }
-        
-        let queue = OperationQueue()
-        
-        queue.addOperations([operation], waitUntilFinished: false)
-        
-        return queue
+        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
+            .eraseToAnyPublisher()
     }
 }

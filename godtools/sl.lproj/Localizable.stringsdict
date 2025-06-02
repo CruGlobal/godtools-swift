@@ -4,6 +4,8 @@
 <dict>
 <key>toolDetails.toolVersion.numberOfLanguages</key>
 <dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@numberOfLanguages@</string>
 <key>numberOfLanguages</key>
 <dict>
 <key>NSStringFormatSpecTypeKey</key>
