@@ -53,8 +53,8 @@ class SyncInvalidator {
         return shouldSync
     }
     
-    func didSync() {
-        storeLastSyncDate(date: Date())
+    func didSync(lastSyncDate: Date = Date()) {
+        storeLastSyncDate(date: lastSyncDate)
     }
     
     func resetSync() {
