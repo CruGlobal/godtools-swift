@@ -52,19 +52,19 @@ struct ToolSettingsView: View {
                 Color.clear
                 
                 ZStack(alignment: .top) {
-                                        
+                                              
                     VStack(alignment: .leading, spacing: 0) {
                                  
                         ToolSettingsTopBarView(
                             title: viewModel.title,
-                            leadingInset: contentInsets.leading,
-                            trailingInset: contentInsets.trailing,
                             closeTapped: {
                                 setIsVisible(isVisible: false)
                                 viewModel.closeTapped()
                             }
                         )
                         .padding([.top], contentInsets.top)
+                        .padding([.leading], contentInsets.leading)
+                        .padding([.trailing], contentInsets.trailing)
                         .padding([.bottom], 10)
                                             
                         ScrollView(.vertical, showsIndicators: true) {
@@ -73,42 +73,39 @@ struct ToolSettingsView: View {
                                 if viewModel.hidesToolOptions == false {
                                     
                                     ToolSettingsOptionsView(
-                                        viewModel: viewModel,
-                                        leadingInset: contentInsets.leading,
-                                        trailingInset: contentInsets.trailing
+                                        viewModel: viewModel
                                     )
-                                    
-                                    FixedVerticalSpacer(height: separatorLineSpacing)
+                                    .padding([.leading], contentInsets.leading)
+                                    .padding([.trailing], contentInsets.trailing)
                                 }
                
                                 ToolSettingsSeparatorView(
-                                    separatorSpacing: 0,
-                                    separatorLeadingInset: contentInsets.leading,
-                                    separatorTrailingInset: contentInsets.trailing
+                                    separatorSpacing: 0
                                 )
-                                
-                                FixedVerticalSpacer(height: separatorLineSpacing)
-                                
+                                .padding([.top], separatorLineSpacing)
+                                .padding([.leading], contentInsets.leading)
+                                .padding([.trailing], contentInsets.trailing)
+                                                                
                                 ToolSettingsChooseLanguageView(
-                                    viewModel: viewModel,
-                                    geometryProxy: geometry,
-                                    leadingInset: contentInsets.leading,
-                                    trailingInset: contentInsets.trailing
+                                    viewModel: viewModel
                                 )
+                                .padding([.top], separatorLineSpacing)
+                                .padding([.leading], contentInsets.leading)
+                                .padding([.trailing], contentInsets.trailing)
                                 
                                 if viewModel.shareables.count > 0 {
                                     
                                     ToolSettingsSeparatorView(
-                                        separatorSpacing: separatorLineSpacing,
-                                        separatorLeadingInset: contentInsets.leading,
-                                        separatorTrailingInset: contentInsets.trailing
+                                        separatorSpacing: separatorLineSpacing
                                     )
+                                    .padding([.leading], contentInsets.leading)
+                                    .padding([.trailing], contentInsets.trailing)
                                     
                                     ToolSettingsShareablesView(
-                                        viewModel: viewModel,
-                                        leadingInset: contentInsets.leading,
-                                        trailingInset: contentInsets.trailing
+                                        viewModel: viewModel
                                     )
+                                    .padding([.leading], contentInsets.leading)
+                                    .padding([.trailing], contentInsets.trailing)
                                 }
                                 
                                 Rectangle()
@@ -124,12 +121,7 @@ struct ToolSettingsView: View {
                                 }
                             )
                         }//end ScrollView
-                        .frame(
-                            width: geometry.size.width - (Self.backgroundHorizontalPadding * 2),
-                            height: contentSize.height
-                        )
-                        .clipped()
-                        .padding([.leading], Self.backgroundHorizontalPadding)
+                        .frame(maxHeight: contentSize.height)
                     }//end VStack
                     .background(
                         RoundedRectangle(cornerRadius: Self.backgroundCornerRadius)

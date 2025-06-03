@@ -9,19 +9,12 @@
 import SwiftUI
 
 struct ToolSettingsShareablesView: View {
-    
-    private let relatedContentSize: CGSize = CGSize(width: 112, height: 112)
-    
+        
     @ObservedObject private var viewModel: ToolSettingsViewModel
-    
-    let leadingInset: CGFloat
-    let trailingInset: CGFloat
-    
-    init(viewModel: ToolSettingsViewModel, leadingInset: CGFloat, trailingInset: CGFloat) {
+
+    init(viewModel: ToolSettingsViewModel) {
         
         self.viewModel = viewModel
-        self.leadingInset = leadingInset
-        self.trailingInset = trailingInset
     }
         
     var body: some View {
@@ -31,7 +24,6 @@ struct ToolSettingsShareablesView: View {
             Text(viewModel.shareablesTitle)
                 .foregroundColor(ColorPalette.gtGrey.color)
                 .font(FontLibrary.sfProTextRegular.font(size: 19))
-                .padding(EdgeInsets(top: 0, leading: leadingInset, bottom: 0, trailing: 0))
             
             ScrollView(.horizontal, showsIndicators: false) {
                 
@@ -47,8 +39,6 @@ struct ToolSettingsShareablesView: View {
                         )
                     }
                 }
-                .padding([.leading], leadingInset)
-                .padding([.trailing], leadingInset)
             }
         }
     }
