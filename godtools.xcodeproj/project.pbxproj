@@ -378,9 +378,6 @@
 		4541A7F22D52D43B003E76CA /* MobileContentPageCollectionPagesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4541A7F12D52D43A003E76CA /* MobileContentPageCollectionPagesViewModel.swift */; };
 		45430CF12B1FB43E002B94A3 /* TextWithLinksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45430CF02B1FB43E002B94A3 /* TextWithLinksView.swift */; };
 		45430CF62B1FB638002B94A3 /* String+ToUrlMarkdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45430CF52B1FB638002B94A3 /* String+ToUrlMarkdown.swift */; };
-		45466F642DB02D21005E7FCC /* TransparentModalBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45466F602DB02D21005E7FCC /* TransparentModalBottomView.swift */; };
-		45466F652DB02D21005E7FCC /* TransparentModalCustomViewLayoutType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45466F632DB02D21005E7FCC /* TransparentModalCustomViewLayoutType.swift */; };
-		45466F662DB02D21005E7FCC /* TransparentModalCustomViewInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45466F622DB02D21005E7FCC /* TransparentModalCustomViewInterface.swift */; };
 		45466F682DB07A24005E7FCC /* ShouldPromptForOptInNotificationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45466F672DB07A1C005E7FCC /* ShouldPromptForOptInNotificationUseCase.swift */; };
 		45466F6A2DB07A5B005E7FCC /* ShouldPromptForOptInNotificationInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45466F692DB07A54005E7FCC /* ShouldPromptForOptInNotificationInterface.swift */; };
 		45466F6F2DB09417005E7FCC /* OptInNotificationsUserDefaultsCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45466F6E2DB09415005E7FCC /* OptInNotificationsUserDefaultsCacheTests.swift */; };
@@ -1165,12 +1162,9 @@
 		45BE4A822AF287D2004021DA /* ConfirmAppLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BE4A802AF287D2004021DA /* ConfirmAppLanguageView.swift */; };
 		45BE4A842AF287E3004021DA /* ConfirmAppLanguageInterfaceStringsDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BE4A832AF287E3004021DA /* ConfirmAppLanguageInterfaceStringsDomainModel.swift */; };
 		45BE4A862AF287F0004021DA /* ViewConfirmAppLanguageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BE4A852AF287F0004021DA /* ViewConfirmAppLanguageUseCase.swift */; };
-		45BF6EBA27050A29003596A4 /* TransparentModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BF6EB927050A29003596A4 /* TransparentModalView.swift */; };
-		45BF6EBC27050A3F003596A4 /* TransparentModalView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45BF6EBB27050A3F003596A4 /* TransparentModalView.xib */; };
 		45C0FAE12A8A7CFB009A7E71 /* PullToRefreshScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C0FAE02A8A7CFB009A7E71 /* PullToRefreshScrollView.swift */; };
 		45C1521F2A43D1BD00F2A1E8 /* ShareToolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C151EE2A43D1BD00F2A1E8 /* ShareToolView.swift */; };
 		45C152202A43D1BD00F2A1E8 /* ShareToolViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C151EF2A43D1BD00F2A1E8 /* ShareToolViewModel.swift */; };
-		45C1522F2A43D1BD00F2A1E8 /* ToolSettingsHostingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C152032A43D1BD00F2A1E8 /* ToolSettingsHostingView.swift */; };
 		45C152302A43D1BD00F2A1E8 /* ToolSettingsChooseLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C152062A43D1BD00F2A1E8 /* ToolSettingsChooseLanguageView.swift */; };
 		45C152342A43D1BD00F2A1E8 /* ToolSettingsOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C1520B2A43D1BD00F2A1E8 /* ToolSettingsOptionsView.swift */; };
 		45C152382A43D1BD00F2A1E8 /* ToolSettingsShareablesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C152112A43D1BD00F2A1E8 /* ToolSettingsShareablesView.swift */; };
@@ -2153,9 +2147,6 @@
 		4541A7F12D52D43A003E76CA /* MobileContentPageCollectionPagesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentPageCollectionPagesViewModel.swift; sourceTree = "<group>"; };
 		45430CF02B1FB43E002B94A3 /* TextWithLinksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWithLinksView.swift; sourceTree = "<group>"; };
 		45430CF52B1FB638002B94A3 /* String+ToUrlMarkdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ToUrlMarkdown.swift"; sourceTree = "<group>"; };
-		45466F602DB02D21005E7FCC /* TransparentModalBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentModalBottomView.swift; sourceTree = "<group>"; };
-		45466F622DB02D21005E7FCC /* TransparentModalCustomViewInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentModalCustomViewInterface.swift; sourceTree = "<group>"; };
-		45466F632DB02D21005E7FCC /* TransparentModalCustomViewLayoutType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentModalCustomViewLayoutType.swift; sourceTree = "<group>"; };
 		45466F672DB07A1C005E7FCC /* ShouldPromptForOptInNotificationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShouldPromptForOptInNotificationUseCase.swift; sourceTree = "<group>"; };
 		45466F692DB07A54005E7FCC /* ShouldPromptForOptInNotificationInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShouldPromptForOptInNotificationInterface.swift; sourceTree = "<group>"; };
 		45466F6E2DB09415005E7FCC /* OptInNotificationsUserDefaultsCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptInNotificationsUserDefaultsCacheTests.swift; sourceTree = "<group>"; };
@@ -2925,12 +2916,9 @@
 		45BE4A802AF287D2004021DA /* ConfirmAppLanguageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmAppLanguageView.swift; sourceTree = "<group>"; };
 		45BE4A832AF287E3004021DA /* ConfirmAppLanguageInterfaceStringsDomainModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmAppLanguageInterfaceStringsDomainModel.swift; sourceTree = "<group>"; };
 		45BE4A852AF287F0004021DA /* ViewConfirmAppLanguageUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewConfirmAppLanguageUseCase.swift; sourceTree = "<group>"; };
-		45BF6EB927050A29003596A4 /* TransparentModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentModalView.swift; sourceTree = "<group>"; };
-		45BF6EBB27050A3F003596A4 /* TransparentModalView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransparentModalView.xib; sourceTree = "<group>"; };
 		45C0FAE02A8A7CFB009A7E71 /* PullToRefreshScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PullToRefreshScrollView.swift; sourceTree = "<group>"; };
 		45C151EE2A43D1BD00F2A1E8 /* ShareToolView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareToolView.swift; sourceTree = "<group>"; };
 		45C151EF2A43D1BD00F2A1E8 /* ShareToolViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareToolViewModel.swift; sourceTree = "<group>"; };
-		45C152032A43D1BD00F2A1E8 /* ToolSettingsHostingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolSettingsHostingView.swift; sourceTree = "<group>"; };
 		45C152062A43D1BD00F2A1E8 /* ToolSettingsChooseLanguageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolSettingsChooseLanguageView.swift; sourceTree = "<group>"; };
 		45C1520B2A43D1BD00F2A1E8 /* ToolSettingsOptionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolSettingsOptionsView.swift; sourceTree = "<group>"; };
 		45C152112A43D1BD00F2A1E8 /* ToolSettingsShareablesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolSettingsShareablesView.swift; sourceTree = "<group>"; };
@@ -4551,7 +4539,6 @@
 		451CEDCF282C31C6006E5105 /* ToolSettings */ = {
 			isa = PBXGroup;
 			children = (
-				D4BE3F682C09065300887BFD /* Data */,
 				45EA5AAA2B22475A00D9E330 /* Data-DomainInterface */,
 				45EA5AA92B22474900D9E330 /* DependencyContainer */,
 				45C151EA2A43D1BD00F2A1E8 /* Domain */,
@@ -5609,14 +5596,6 @@
 				45D00A192B1FD0E3007D2B65 /* String+ParseUrls.swift */,
 			);
 			path = String;
-			sourceTree = "<group>";
-		};
-		45466F612DB02D21005E7FCC /* Concrete */ = {
-			isa = PBXGroup;
-			children = (
-				45466F602DB02D21005E7FCC /* TransparentModalBottomView.swift */,
-			);
-			path = Concrete;
 			sourceTree = "<group>";
 		};
 		45466F6B2DB0940D005E7FCC /* Cache */ = {
@@ -8865,7 +8844,6 @@
 				45FE821C2ACE5BFD00930C39 /* Navigation */,
 				45AD206A25938B4400A096A0 /* OnboardPrimaryButton */,
 				45AD18C425938A4E00A096A0 /* PageNavigationCollectionView */,
-				45BF6EB827050A0E003596A4 /* TransparentModal */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -9709,16 +9687,6 @@
 			path = ConfirmAppLanguage;
 			sourceTree = "<group>";
 		};
-		45BF6EB827050A0E003596A4 /* TransparentModal */ = {
-			isa = PBXGroup;
-			children = (
-				45EE6C3D2DAFFC7200DBD25D /* CustomView */,
-				45BF6EB927050A29003596A4 /* TransparentModalView.swift */,
-				45BF6EBB27050A3F003596A4 /* TransparentModalView.xib */,
-			);
-			path = TransparentModal;
-			sourceTree = "<group>";
-		};
 		45BF6EBD27050D26003596A4 /* AnimationTransitions */ = {
 			isa = PBXGroup;
 			children = (
@@ -9778,10 +9746,9 @@
 		45C152022A43D1BD00F2A1E8 /* ToolSettings */ = {
 			isa = PBXGroup;
 			children = (
-				45C152042A43D1BD00F2A1E8 /* Subviews */,
-				45C152032A43D1BD00F2A1E8 /* ToolSettingsHostingView.swift */,
 				45C152142A43D1BD00F2A1E8 /* ToolSettingsView.swift */,
 				45C152152A43D1BD00F2A1E8 /* ToolSettingsViewModel.swift */,
+				45C152042A43D1BD00F2A1E8 /* Subviews */,
 			);
 			path = ToolSettings;
 			sourceTree = "<group>";
@@ -11145,16 +11112,6 @@
 			path = OptInNotification;
 			sourceTree = "<group>";
 		};
-		45EE6C3D2DAFFC7200DBD25D /* CustomView */ = {
-			isa = PBXGroup;
-			children = (
-				45466F612DB02D21005E7FCC /* Concrete */,
-				45466F622DB02D21005E7FCC /* TransparentModalCustomViewInterface.swift */,
-				45466F632DB02D21005E7FCC /* TransparentModalCustomViewLayoutType.swift */,
-			);
-			path = CustomView;
-			sourceTree = "<group>";
-		};
 		45F1CE1F2B7D1F170008A3BC /* ToolLanguageDownloader */ = {
 			isa = PBXGroup;
 			children = (
@@ -12385,13 +12342,6 @@
 			path = SetCompletedTrainingTipUseCase;
 			sourceTree = "<group>";
 		};
-		D4BE3F682C09065300887BFD /* Data */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Data;
-			sourceTree = "<group>";
-		};
 		D4BE3F6B2C0907AE00887BFD /* UserToolSettingsRepository */ = {
 			isa = PBXGroup;
 			children = (
@@ -13005,7 +12955,6 @@
 				45558354269F2D1000C3FF14 /* LessonPageView.xib in Resources */,
 				451A17532756C10400D35D78 /* tutorial_lessons.json in Resources */,
 				4556AECE23E22185002C15E8 /* SF-Pro-Text-Light.otf in Resources */,
-				45BF6EBC27050A3F003596A4 /* TransparentModalView.xib in Resources */,
 				D163EA96254A00BE00BA4EA9 /* share_tool_tutorial_link.json in Resources */,
 				45BB427E2CBE9E0D00290F64 /* TractPageModalView.xib in Resources */,
 				45BB427F2CBE9E0D00290F64 /* TractPageView.xib in Resources */,
@@ -13088,9 +13037,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-godtoolsUITests/Pods-godtoolsUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-godtoolsUITests/Pods-godtoolsUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -13183,9 +13136,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-godtools/Pods-godtools-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-godtools/Pods-godtools-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -13200,9 +13157,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -13303,7 +13264,6 @@
 				4598BD252BF7DF6800196463 /* GetSocialSignInInterfaceStringsRepositoryInterface.swift in Sources */,
 				4564E20A2B1E181000DA4040 /* ToolShortcutLinksView.swift in Sources */,
 				45B338332AF4370700D18C63 /* TutorialPageDomainModel.swift in Sources */,
-				45BF6EBA27050A29003596A4 /* TransparentModalView.swift in Sources */,
 				452486CF2B07C987007AD932 /* GetUserToolFiltersUseCase.swift in Sources */,
 				45FB160E27DBDDB60009DF8E /* TractFlowCompletedState.swift in Sources */,
 				D43FC1C42B65E0F300F8310E /* GetConfirmAppLanguageInterfaceStringsRepository.swift in Sources */,
@@ -13603,7 +13563,6 @@
 				45AE974727C97A9400C2CB33 /* Header+MobileContentRenderableModel.swift in Sources */,
 				45B3F4482AC3A86100D61BFD /* RealmUserAppLanguage.swift in Sources */,
 				D47DF0442B28F9560079219B /* RealmDownloadedLanguagesCache.swift in Sources */,
-				45C1522F2A43D1BD00F2A1E8 /* ToolSettingsHostingView.swift in Sources */,
 				454BFDA82AFD8CD200104BC8 /* TractRemoteSharePublisherNavigationEvent.swift in Sources */,
 				45CC43062C3898B300B0D82B /* LocalizationLanguageNameRepository.swift in Sources */,
 				459C526F289418EB00DA9E95 /* TranslationManifestFileDataModel.swift in Sources */,
@@ -14130,9 +14089,6 @@
 				45D5EA9E2B7E5C2300745F0D /* GetConfirmRemoveToolFromFavoritesInterfaceStringsRepositoryInterface.swift in Sources */,
 				45AE975F27C97A9500C2CB33 /* Text+MobileContentRenderableModel.swift in Sources */,
 				45E8FAA72882FD4B00D7D569 /* RealmSHA256File.swift in Sources */,
-				45466F642DB02D21005E7FCC /* TransparentModalBottomView.swift in Sources */,
-				45466F652DB02D21005E7FCC /* TransparentModalCustomViewLayoutType.swift in Sources */,
-				45466F662DB02D21005E7FCC /* TransparentModalCustomViewInterface.swift in Sources */,
 				455583DB269F2DA500C3FF14 /* MobileContentAccordionViewModel.swift in Sources */,
 				4587212A2BFB7762005DA242 /* DeleteAccountUseCase.swift in Sources */,
 				B5B89A6B2D9A946C00C2FE1B /* GetCheckNotificationStatus.swift in Sources */,

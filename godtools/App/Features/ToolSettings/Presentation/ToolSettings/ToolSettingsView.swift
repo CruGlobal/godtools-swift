@@ -10,84 +10,143 @@ import SwiftUI
 
 struct ToolSettingsView: View {
     
-    private let contentInsets: EdgeInsets = EdgeInsets(top: 20, leading: 20, bottom: 0, trailing: 20)
+    private static let backgroundColor: Color = Color.white
+    private static let backgroundCornerRadius: CGFloat = 12
+    
+    static let backgroundHorizontalPadding: CGFloat = 10
+    
+    private let contentInsets: EdgeInsets = EdgeInsets(
+        top: 20,
+        leading: 15 + Self.backgroundHorizontalPadding,
+        bottom: 15,
+        trailing: 15 + Self.backgroundHorizontalPadding
+    )
     private let separatorLineSpacing: CGFloat = 25
-    private let bottomSpace: CGFloat = 15
+    private let overlayTappedClosure: (() -> Void)?
     
     @ObservedObject private var viewModel: ToolSettingsViewModel
     
-    init(viewModel: ToolSettingsViewModel) {
+    @State private var contentSize: CGSize = CGSize(width: 100, height: 100)
+    @State private var isVisible: Bool = false
+    
+    init(viewModel: ToolSettingsViewModel, overlayTappedClosure: (() -> Void)? = nil) {
         
         self.viewModel = viewModel
+        self.overlayTappedClosure = overlayTappedClosure
     }
     
     var body: some View {
+        
         GeometryReader { geometry in
             
-            VStack(spacing: 0) {
+            FullScreenOverlayView(tappedClosure: {
                 
-                ToolSettingsTopBarView(
-                    viewModel: viewModel,
-                    leadingInset: contentInsets.leading,
-                    trailingInset: contentInsets.trailing
-                )
+                setIsVisible(isVisible: false)
                 
-                FixedVerticalSpacer(height: 10)
+                overlayTappedClosure?()
+            })
+            .opacity(isVisible ? 1 : 0)
+            
+            ZStack(alignment: .bottom) {
                 
-                ScrollView(.vertical, showsIndicators: true) {
-                    VStack(spacing: 0) {
-                        
-                        if viewModel.hidesAllIconButtons == false {
-                            
-                            ToolSettingsOptionsView(
-                                viewModel: viewModel,
-                                leadingInset: contentInsets.leading,
-                                trailingInset: contentInsets.trailing
-                            )
-                            
-                            FixedVerticalSpacer(height: separatorLineSpacing)
-                        }
-       
-                        ToolSettingsSeparatorView(
-                            separatorSpacing: 0,
-                            separatorLeadingInset: contentInsets.leading,
-                            separatorTrailingInset: contentInsets.trailing
+                Color.clear
+                
+                ZStack(alignment: .top) {
+                                              
+                    VStack(alignment: .leading, spacing: 0) {
+                                 
+                        ToolSettingsTopBarView(
+                            title: viewModel.title,
+                            closeTapped: {
+                                setIsVisible(isVisible: false)
+                                viewModel.closeTapped()
+                            }
                         )
-                        
-                        FixedVerticalSpacer(height: separatorLineSpacing)
-                        
-                        ToolSettingsChooseLanguageView(
-                            viewModel: viewModel,
-                            geometryProxy: geometry,
-                            leadingInset: contentInsets.leading,
-                            trailingInset: contentInsets.trailing
-                        )
-                        
-                        if viewModel.shareables.count > 0 {
-                            
-                            ToolSettingsSeparatorView(
-                                separatorSpacing: separatorLineSpacing,
-                                separatorLeadingInset: contentInsets.leading,
-                                separatorTrailingInset: contentInsets.trailing
+                        .padding([.top], contentInsets.top)
+                        .padding([.leading], contentInsets.leading)
+                        .padding([.trailing], contentInsets.trailing)
+                        .padding([.bottom], 10)
+                                            
+                        ScrollView(.vertical, showsIndicators: true) {
+                            VStack(spacing: 0) {
+                                
+                                if viewModel.hidesToolOptions == false {
+                                    
+                                    ToolSettingsOptionsView(
+                                        viewModel: viewModel
+                                    )
+                                    .padding([.leading], contentInsets.leading)
+                                    .padding([.trailing], contentInsets.trailing)
+                                }
+               
+                                ToolSettingsSeparatorView(
+                                    separatorSpacing: 0
+                                )
+                                .padding([.top], separatorLineSpacing)
+                                .padding([.leading], contentInsets.leading)
+                                .padding([.trailing], contentInsets.trailing)
+                                                                
+                                ToolSettingsChooseLanguageView(
+                                    viewModel: viewModel
+                                )
+                                .padding([.top], separatorLineSpacing)
+                                .padding([.leading], contentInsets.leading)
+                                .padding([.trailing], contentInsets.trailing)
+                                
+                                if viewModel.shareables.count > 0 {
+                                    
+                                    ToolSettingsSeparatorView(
+                                        separatorSpacing: separatorLineSpacing
+                                    )
+                                    .padding([.leading], contentInsets.leading)
+                                    .padding([.trailing], contentInsets.trailing)
+                                    
+                                    ToolSettingsShareablesView(
+                                        viewModel: viewModel
+                                    )
+                                    .padding([.leading], contentInsets.leading)
+                                    .padding([.trailing], contentInsets.trailing)
+                                }
+                                
+                                Rectangle()
+                                    .frame(width: geometry.size.width, height: contentInsets.bottom)
+                                    .foregroundColor(.clear)
+                            }//end VStack
+                            .background(
+                                GeometryReader { geo -> Color in
+                                    DispatchQueue.main.async {
+                                        contentSize = geo.size
+                                    }
+                                    return Color.clear
+                                }
                             )
-                            
-                            ToolSettingsShareablesView(
-                                viewModel: viewModel,
-                                leadingInset: contentInsets.leading,
-                                trailingInset: contentInsets.trailing
+                        }//end ScrollView
+                        .clipped()
+                        .frame(maxHeight: contentSize.height)
+                    }//end VStack
+                    .background(
+                        RoundedRectangle(cornerRadius: Self.backgroundCornerRadius)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: Self.backgroundCornerRadius)
+                                    .foregroundStyle(Self.backgroundColor)
                             )
-                        }
-                        
-                        Rectangle()
-                            .frame(width: geometry.size.width, height: bottomSpace)
-                            .foregroundColor(.clear)
-                    }
-                }
-            }
+                            .padding(.leading, Self.backgroundHorizontalPadding)
+                            .padding(.trailing, Self.backgroundHorizontalPadding)
+                    )
+                }//end ZStack top content
+                .offset(y: !isVisible ? geometry.size.height * 0.75 : 0)
+                
+            }//end ZStack bottom
         }
-        .padding(EdgeInsets(top: contentInsets.top, leading: 0, bottom: 0, trailing: 0))
-        .background(Color.white)
-        .cornerRadius(12)
+        .onAppear {
+            setIsVisible(isVisible: true)
+        }
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
+    }
+    
+    private func setIsVisible(isVisible: Bool) {
+        withAnimation {
+            self.isVisible = isVisible
+        }
     }
 }

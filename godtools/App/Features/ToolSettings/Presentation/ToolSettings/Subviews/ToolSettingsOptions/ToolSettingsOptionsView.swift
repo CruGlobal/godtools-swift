@@ -11,15 +11,10 @@ import SwiftUI
 struct ToolSettingsOptionsView: View {
             
     @ObservedObject private var viewModel: ToolSettingsViewModel
-    
-    let leadingInset: CGFloat
-    let trailingInset: CGFloat
-    
-    init(viewModel: ToolSettingsViewModel, leadingInset: CGFloat, trailingInset: CGFloat) {
+        
+    init(viewModel: ToolSettingsViewModel) {
         
         self.viewModel = viewModel
-        self.leadingInset = leadingInset
-        self.trailingInset = trailingInset
     }
     
     var body: some View {
@@ -67,7 +62,6 @@ struct ToolSettingsOptionsView: View {
                         )
                     }
                 }
-                .padding(EdgeInsets(top: 0, leading: leadingInset, bottom: 0, trailing: trailingInset))
             }
         }
     }
