@@ -1334,6 +1334,7 @@
 		45E246992B446C68008223FB /* DashboardDiContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E246982B446C68008223FB /* DashboardDiContainer.swift */; };
 		45E2469B2B446C7B008223FB /* DashboardDataLayerDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E2469A2B446C7B008223FB /* DashboardDataLayerDependencies.swift */; };
 		45E2469D2B446C85008223FB /* DashboardDomainLayerDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E2469C2B446C85008223FB /* DashboardDomainLayerDependencies.swift */; };
+		45E2FC892DEE57360021B457 /* TestPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E2FC882DEE57340021B457 /* TestPreview.swift */; };
 		45E347592A49BD990014CCD1 /* AppRootController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E347582A49BD990014CCD1 /* AppRootController.swift */; };
 		45E347682A49BE230014CCD1 /* FlowStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E3475B2A49BE220014CCD1 /* FlowStep.swift */; };
 		45E347692A49BE230014CCD1 /* Flow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E3475C2A49BE220014CCD1 /* Flow.swift */; };
@@ -3089,6 +3090,7 @@
 		45E246982B446C68008223FB /* DashboardDiContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardDiContainer.swift; sourceTree = "<group>"; };
 		45E2469A2B446C7B008223FB /* DashboardDataLayerDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardDataLayerDependencies.swift; sourceTree = "<group>"; };
 		45E2469C2B446C85008223FB /* DashboardDomainLayerDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardDomainLayerDependencies.swift; sourceTree = "<group>"; };
+		45E2FC882DEE57340021B457 /* TestPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestPreview.swift; sourceTree = "<group>"; };
 		45E347582A49BD990014CCD1 /* AppRootController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppRootController.swift; sourceTree = "<group>"; };
 		45E3475B2A49BE220014CCD1 /* FlowStep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlowStep.swift; sourceTree = "<group>"; };
 		45E3475C2A49BE220014CCD1 /* Flow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Flow.swift; sourceTree = "<group>"; };
@@ -9234,6 +9236,7 @@
 			children = (
 				45D7CAE82A9BA22400913E12 /* Data */,
 				45B212B429229CBA00C9A94D /* DependencyContainer */,
+				45E2FC862DEE57190021B457 /* Presentation */,
 			);
 			path = Preview;
 			sourceTree = "<group>";
@@ -10556,6 +10559,22 @@
 				456423E62C00B72400B0B67E /* StoreInitialFavoritedToolsInterface.swift */,
 			);
 			path = Interface;
+			sourceTree = "<group>";
+		};
+		45E2FC862DEE57190021B457 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				45E2FC872DEE57310021B457 /* TestPreview */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		45E2FC872DEE57310021B457 /* TestPreview */ = {
+			isa = PBXGroup;
+			children = (
+				45E2FC882DEE57340021B457 /* TestPreview.swift */,
+			);
+			path = TestPreview;
 			sourceTree = "<group>";
 		};
 		45E3475A2A49BE220014CCD1 /* Flow */ = {
@@ -13077,9 +13096,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-godtoolsUITests/Pods-godtoolsUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-godtoolsUITests/Pods-godtoolsUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -13172,9 +13195,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-godtools/Pods-godtools-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-godtools/Pods-godtools-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -13189,9 +13216,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -13890,6 +13921,7 @@
 				453F0B6226EA369000436EE4 /* MobileContentMultiSelectOptionViewModel.swift in Sources */,
 				453C1BD52899A50C007332E2 /* RealmFavoritedResource.swift in Sources */,
 				455EE83A2AEC582900C3205C /* DownloadToolProgressInterfaceStringsDomainModel.swift in Sources */,
+				45E2FC892DEE57360021B457 /* TestPreview.swift in Sources */,
 				454BFDA62AFD8CD200104BC8 /* TractRemoteShareSubscriber.swift in Sources */,
 				455CB5792A439B6700E95834 /* LearnToShareToolViewModel.swift in Sources */,
 				45BE4A812AF287D2004021DA /* ConfirmAppLanguageViewModel.swift in Sources */,
