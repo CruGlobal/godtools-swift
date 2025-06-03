@@ -42,12 +42,16 @@ struct ToolSettingsChooseLanguageView: View {
                         viewModel.primaryLanguageTapped()
                     }
                 
-                Button {
+                Button(action: {
                     viewModel.swapLanguageTapped()
-                } label: {
-                    ImageCatalog.toolSettingsSwapLanguage.image
+                }) {
+                    ZStack(alignment: .center) {
+                        Rectangle()
+                            .fill(Color.clear)
+                            .frame(width: 44, height: languageDropDownHeight)
+                        ImageCatalog.toolSettingsSwapLanguage.image
+                    }
                 }
-                .frame(minWidth: 44, maxHeight: .infinity)
                 
                 ToolSettingsLanguageDropDownView(title: viewModel.parallelLanguageTitle)
                     .onTapGesture {
