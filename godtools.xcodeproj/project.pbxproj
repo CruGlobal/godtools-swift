@@ -4539,7 +4539,6 @@
 		451CEDCF282C31C6006E5105 /* ToolSettings */ = {
 			isa = PBXGroup;
 			children = (
-				D4BE3F682C09065300887BFD /* Data */,
 				45EA5AAA2B22475A00D9E330 /* Data-DomainInterface */,
 				45EA5AA92B22474900D9E330 /* DependencyContainer */,
 				45C151EA2A43D1BD00F2A1E8 /* Domain */,
@@ -9747,9 +9746,9 @@
 		45C152022A43D1BD00F2A1E8 /* ToolSettings */ = {
 			isa = PBXGroup;
 			children = (
-				45C152042A43D1BD00F2A1E8 /* Subviews */,
 				45C152142A43D1BD00F2A1E8 /* ToolSettingsView.swift */,
 				45C152152A43D1BD00F2A1E8 /* ToolSettingsViewModel.swift */,
+				45C152042A43D1BD00F2A1E8 /* Subviews */,
 			);
 			path = ToolSettings;
 			sourceTree = "<group>";
@@ -12341,13 +12340,6 @@
 				D4BC79E729B130970040651B /* SetCompletedTrainingTipUseCase.swift */,
 			);
 			path = SetCompletedTrainingTipUseCase;
-			sourceTree = "<group>";
-		};
-		D4BE3F682C09065300887BFD /* Data */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Data;
 			sourceTree = "<group>";
 		};
 		D4BE3F6B2C0907AE00887BFD /* UserToolSettingsRepository */ = {
