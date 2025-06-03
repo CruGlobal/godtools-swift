@@ -121,6 +121,7 @@ struct ToolSettingsView: View {
                                 }
                             )
                         }//end ScrollView
+                        .clipped()
                         .frame(maxHeight: contentSize.height)
                     }//end VStack
                     .background(
