@@ -10,12 +10,18 @@ import SwiftUI
 
 struct ToolSettingsView: View {
     
-    private let backgroundColor: Color = Color.red
-    private let backgroundCornerRadius: CGFloat = 12
-    private let backgroundHorizontalPadding: CGFloat = 10
-    private let contentInsets: EdgeInsets = EdgeInsets(top: 20, leading: 20, bottom: 0, trailing: 20)
+    private static let backgroundColor: Color = Color.white
+    private static let backgroundCornerRadius: CGFloat = 12
+    
+    static let backgroundHorizontalPadding: CGFloat = 10
+    
+    private let contentInsets: EdgeInsets = EdgeInsets(
+        top: 20,
+        leading: 15 + Self.backgroundHorizontalPadding,
+        bottom: 15,
+        trailing: 15 + Self.backgroundHorizontalPadding
+    )
     private let separatorLineSpacing: CGFloat = 25
-    private let bottomSpace: CGFloat = 15
     private let overlayTappedClosure: (() -> Void)?
     
     @ObservedObject private var viewModel: ToolSettingsViewModel
@@ -106,7 +112,7 @@ struct ToolSettingsView: View {
                                 }
                                 
                                 Rectangle()
-                                    .frame(width: geometry.size.width, height: bottomSpace)
+                                    .frame(width: geometry.size.width, height: contentInsets.bottom)
                                     .foregroundColor(.clear)
                             }//end VStack
                             .background(
@@ -118,16 +124,21 @@ struct ToolSettingsView: View {
                                 }
                             )
                         }//end ScrollView
-                        .frame(maxHeight: contentSize.height)
+                        .frame(
+                            width: geometry.size.width - (Self.backgroundHorizontalPadding * 2),
+                            height: contentSize.height
+                        )
+                        .clipped()
+                        .padding([.leading], Self.backgroundHorizontalPadding)
                     }//end VStack
                     .background(
-                        RoundedRectangle(cornerRadius: backgroundCornerRadius)
+                        RoundedRectangle(cornerRadius: Self.backgroundCornerRadius)
                             .overlay(
-                                RoundedRectangle(cornerRadius: backgroundCornerRadius)
-                                    .foregroundStyle(backgroundColor)
+                                RoundedRectangle(cornerRadius: Self.backgroundCornerRadius)
+                                    .foregroundStyle(Self.backgroundColor)
                             )
-                            .padding(.leading, backgroundHorizontalPadding)
-                            .padding(.trailing, backgroundHorizontalPadding)
+                            .padding(.leading, Self.backgroundHorizontalPadding)
+                            .padding(.trailing, Self.backgroundHorizontalPadding)
                     )
                 }//end ZStack top content
                 .offset(y: !isVisible ? geometry.size.height * 0.75 : 0)
