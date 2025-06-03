@@ -9,27 +9,28 @@
 import SwiftUI
 
 struct ToolSettingsTopBarView: View {
-        
-    @ObservedObject private var viewModel: ToolSettingsViewModel
+            
+    private let title: String
+    private let leadingInset: CGFloat
+    private let trailingInset: CGFloat
+    private let closeTapped: (() -> Void)?
     
-    let leadingInset: CGFloat
-    let trailingInset: CGFloat
-    
-    init(viewModel: ToolSettingsViewModel, leadingInset: CGFloat, trailingInset: CGFloat) {
+    init(title: String, leadingInset: CGFloat, trailingInset: CGFloat, closeTapped: (() -> Void)? = nil) {
         
-        self.viewModel = viewModel
+        self.title = title
         self.leadingInset = leadingInset
         self.trailingInset = trailingInset
+        self.closeTapped = closeTapped
     }
     
     var body: some View {
         HStack {
-            Text(viewModel.title)
+            Text(title)
                 .foregroundColor(ColorPalette.gtGrey.color)
                 .font(FontLibrary.sfProTextRegular.font(size: 23))
             Spacer()
             Button {
-                viewModel.closeTapped()
+                closeTapped?()
             } label: {
                 Image(ImageCatalog.navClose.name)
             }

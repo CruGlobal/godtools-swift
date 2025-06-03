@@ -168,14 +168,10 @@ extension ToolSettingsFlow {
             getShareableImageUseCase: appDiContainer.feature.shareables.domainLayer.getShareableImageUseCase()
         )
         
-        // TODO: Implement closeTappedFromToolSettings. ~Levi
-        /*
-        let view = OptInNotificationView(viewModel: viewModel, overlayTappedClosure: { [weak self] in
+        let toolSettingsView = ToolSettingsView(viewModel: viewModel, overlayTappedClosure: { [weak self] in
             
-            self?.navigate(step: .closeTappedFromOptInNotification)
-        })*/
-        
-        let toolSettingsView = ToolSettingsView(viewModel: viewModel)
+            self?.navigate(step: .closeTappedFromToolSettings)
+        })
         
         let hostingView = AppHostingController<ToolSettingsView>(
             rootView: toolSettingsView,

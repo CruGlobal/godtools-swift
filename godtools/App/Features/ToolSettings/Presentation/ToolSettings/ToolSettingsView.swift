@@ -17,7 +17,7 @@ struct ToolSettingsView: View {
     
     @ObservedObject private var viewModel: ToolSettingsViewModel
     
-    @State private var showModal: Bool = false
+    @State private var isVisible: Bool = false
     
     init(viewModel: ToolSettingsViewModel, overlayTappedClosure: (() -> Void)? = nil) {
         
@@ -31,89 +31,100 @@ struct ToolSettingsView: View {
             
             FullScreenOverlayView(tappedClosure: {
                 
-                withAnimation {
-                    showModal = false
-                }
+                setIsVisible(isVisible: false)
                 
                 overlayTappedClosure?()
             })
-            .opacity(showModal ? 1 : 0)
+            .opacity(isVisible ? 1 : 0)
             
-            VStack(alignment: .leading, spacing: 0) {
+            ZStack(alignment: .bottom) {
                 
-                Spacer()
+                Color.clear
                 
-                VStack(spacing: 0) {
+                ZStack(alignment: .top) {
                     
-                    ToolSettingsTopBarView(
-                        viewModel: viewModel,
-                        leadingInset: contentInsets.leading,
-                        trailingInset: contentInsets.trailing
-                    )
+                    Color.white
                     
-                    FixedVerticalSpacer(height: 10)
-                    
-                    ScrollView(.vertical, showsIndicators: true) {
-                        VStack(spacing: 0) {
-                            
-                            if viewModel.hidesAllIconButtons == false {
-                                
-                                ToolSettingsOptionsView(
-                                    viewModel: viewModel,
-                                    leadingInset: contentInsets.leading,
-                                    trailingInset: contentInsets.trailing
-                                )
-                                
-                                FixedVerticalSpacer(height: separatorLineSpacing)
+                    VStack(alignment: .leading, spacing: 0) {
+                                 
+                        ToolSettingsTopBarView(
+                            title: viewModel.title,
+                            leadingInset: contentInsets.leading,
+                            trailingInset: contentInsets.trailing,
+                            closeTapped: {
+                                setIsVisible(isVisible: false)
+                                viewModel.closeTapped()
                             }
-           
-                            ToolSettingsSeparatorView(
-                                separatorSpacing: 0,
-                                separatorLeadingInset: contentInsets.leading,
-                                separatorTrailingInset: contentInsets.trailing
-                            )
-                            
-                            FixedVerticalSpacer(height: separatorLineSpacing)
-                            
-                            ToolSettingsChooseLanguageView(
-                                viewModel: viewModel,
-                                geometryProxy: geometry,
-                                leadingInset: contentInsets.leading,
-                                trailingInset: contentInsets.trailing
-                            )
-                            
-                            if viewModel.shareables.count > 0 {
+                        )
+                        .padding([.top], contentInsets.top)
+                        .padding([.bottom], 10)
+                                            
+                        ScrollView(.vertical, showsIndicators: true) {
+                            VStack(spacing: 0) {
                                 
+                                if viewModel.hidesToolOptions == false {
+                                    
+                                    ToolSettingsOptionsView(
+                                        viewModel: viewModel,
+                                        leadingInset: contentInsets.leading,
+                                        trailingInset: contentInsets.trailing
+                                    )
+                                    
+                                    FixedVerticalSpacer(height: separatorLineSpacing)
+                                }
+               
                                 ToolSettingsSeparatorView(
-                                    separatorSpacing: separatorLineSpacing,
+                                    separatorSpacing: 0,
                                     separatorLeadingInset: contentInsets.leading,
                                     separatorTrailingInset: contentInsets.trailing
                                 )
                                 
-                                ToolSettingsShareablesView(
+                                FixedVerticalSpacer(height: separatorLineSpacing)
+                                
+                                ToolSettingsChooseLanguageView(
                                     viewModel: viewModel,
+                                    geometryProxy: geometry,
                                     leadingInset: contentInsets.leading,
                                     trailingInset: contentInsets.trailing
                                 )
+                                
+                                if viewModel.shareables.count > 0 {
+                                    
+                                    ToolSettingsSeparatorView(
+                                        separatorSpacing: separatorLineSpacing,
+                                        separatorLeadingInset: contentInsets.leading,
+                                        separatorTrailingInset: contentInsets.trailing
+                                    )
+                                    
+                                    ToolSettingsShareablesView(
+                                        viewModel: viewModel,
+                                        leadingInset: contentInsets.leading,
+                                        trailingInset: contentInsets.trailing
+                                    )
+                                }
+                                
+                                Rectangle()
+                                    .frame(width: geometry.size.width, height: bottomSpace)
+                                    .foregroundColor(.clear)
                             }
-                            
-                            Rectangle()
-                                .frame(width: geometry.size.width, height: bottomSpace)
-                                .foregroundColor(.clear)
-                        }
-                    }
-                }
-                .offset(y: !showModal ? geometry.size.height * 0.75 : 0)
-            }
+                        }//end ScrollView
+                    }//end VStack
+                }//end ZStack top content
+                .fixedSize(horizontal: false, vertical: true)
+                .cornerRadius(12)
+                .offset(y: !isVisible ? geometry.size.height * 0.75 : 0)
+                
+            }//end ZStack bottom
         }
         .onAppear {
-            withAnimation {
-                showModal = true
-            }
+            setIsVisible(isVisible: true)
         }
-        .padding(EdgeInsets(top: contentInsets.top, leading: 0, bottom: 0, trailing: 0))
-        .background(Color.white)
-        .cornerRadius(12)
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
+    }
+    
+    private func setIsVisible(isVisible: Bool) {
+        withAnimation {
+            self.isVisible = isVisible
+        }
     }
 }

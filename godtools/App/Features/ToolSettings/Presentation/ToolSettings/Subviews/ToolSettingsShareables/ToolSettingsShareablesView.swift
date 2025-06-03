@@ -35,7 +35,7 @@ struct ToolSettingsShareablesView: View {
             
             ScrollView(.horizontal, showsIndicators: false) {
                 
-                LazyHStack(alignment: .center, spacing: 10) {
+                HStack(alignment: .center, spacing: 10) {
                                         
                     ForEach(viewModel.shareables) { (shareable: ShareableDomainModel) in
                         
@@ -45,10 +45,10 @@ struct ToolSettingsShareablesView: View {
                                 viewModel.shareableTapped(shareable: shareable)
                             }
                         )
-                        .padding([.leading], viewModel.shareables.first == shareable ? leadingInset : 0)
-                        .padding([.trailing], viewModel.shareables.last == shareable ? leadingInset : 0)
                     }
                 }
+                .padding([.leading], leadingInset)
+                .padding([.trailing], leadingInset)
             }
         }
     }
