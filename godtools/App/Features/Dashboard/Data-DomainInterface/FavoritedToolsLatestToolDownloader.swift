@@ -48,7 +48,7 @@ class FavoritedToolsLatestToolDownloader: FavoritedToolsLatestToolDownloaderInte
         .flatMap({ (tools: [DownloadToolDataModel]) -> AnyPublisher<Void, Never> in
                         
             return self.toolDownloader
-                .downloadToolsPublisher(tools: tools)
+                .downloadToolsPublisher(tools: tools, sendRequestPriority: .medium)
                 .map { _ in
                     return Void()
                 }

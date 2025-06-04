@@ -29,24 +29,14 @@ class LoadingArticleViewModel: ObservableObject {
         self.appLanguage = appLanguage
         self.message = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: "Download in progress")
         
-        downloadArticle(
-            appLanguage: appLanguage,
-            aemUri: aemUri,
-            articleAemRepository: articleAemRepository,
-            localizationServices: localizationServices
-        )
-    }
-    
-    deinit {
-        print("x deinit: \(type(of: self))")
-        downloadArticleOperation?.cancelAllOperations()
-    }
-    
-    private func downloadArticle(appLanguage: AppLanguageDomainModel, aemUri: String, articleAemRepository: ArticleAemRepository, localizationServices: LocalizationServices) {
-        
-        downloadArticleOperation = articleAemRepository.downloadAndCache(aemUris: [aemUri]) { [weak self] (result: ArticleAemRepositoryResult) in
-             
-            DispatchQueue.main.async { [weak self] in
+        articleAemRepository
+            .downloadAndCachePublisher(
+                aemUris: [aemUri],
+                downloadCachePolicy: .fetchFromCacheUpToNextHour,
+                sendRequestPriority: .high
+            )
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (result: ArticleAemRepositoryResult) in
                 
                 if let aemCacheObject = articleAemRepository.getAemCacheObject(aemUri: aemUri) {
                     
@@ -69,6 +59,10 @@ class LoadingArticleViewModel: ObservableObject {
                     self?.flowDelegate?.navigate(step: .didFailToDownloadArticleFromLoadingArticle(alertMessage: alertMessage))
                 }
             }
-        }
+            .store(in: &cancellables)
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
     }
 }

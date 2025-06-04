@@ -77,14 +77,7 @@ class ToolSettingsFlow: Flow {
     }
     
     func getInitialView() -> UIViewController {
-                    
-        let transparentModal = TransparentModalView(
-            flowDelegate: self,
-            modalView: getToolSettingsView(),
-            closeModalFlowStep: .closeTappedFromToolSettings
-        )
-        
-        return transparentModal
+        return getToolSettingsView()
     }
     
     func didClose() {
@@ -164,7 +157,7 @@ class ToolSettingsFlow: Flow {
 
 extension ToolSettingsFlow {
     
-    private func getToolSettingsView() -> TransparentModalCustomViewInterface {
+    private func getToolSettingsView() -> UIViewController {
         
         let viewModel = ToolSettingsViewModel(
             flowDelegate: self,
@@ -175,12 +168,20 @@ extension ToolSettingsFlow {
             getShareableImageUseCase: appDiContainer.feature.shareables.domainLayer.getShareableImageUseCase()
         )
         
-        let toolSettingsView = ToolSettingsView(viewModel: viewModel)
+        let toolSettingsView = ToolSettingsView(viewModel: viewModel, overlayTappedClosure: { [weak self] in
+            
+            self?.navigate(step: .closeTappedFromToolSettings)
+        })
         
-        let hostingView = ToolSettingsHostingView(
-            view: toolSettingsView,
-            navigationBar: nil
+        let hostingView = AppHostingController<ToolSettingsView>(
+            rootView: toolSettingsView,
+            navigationBar: nil,
+            animateInAnimatedTransitioning: NoAnimationTransition(transition: .transitionIn),
+            animateOutAnimatedTransitioning: NoAnimationTransition(transition: .transitionOut)
         )
+
+        hostingView.view.backgroundColor = .clear
+        hostingView.modalPresentationStyle = .overCurrentContext
         
         return hostingView
     }

@@ -127,7 +127,7 @@ class ToolSettingsViewModel: ObservableObject {
 
 extension ToolSettingsViewModel {
     
-    var hidesAllIconButtons: Bool {
+    var hidesToolOptions: Bool {
         return hidesTrainingTipsButton && hidesShareScreenButton && hidesShareLinkButton
     }
     

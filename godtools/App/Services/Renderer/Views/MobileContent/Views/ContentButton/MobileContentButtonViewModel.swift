@@ -35,8 +35,8 @@ class MobileContentButtonViewModel: MobileContentViewModel {
         
         buttonWidth = MobileContentViewWidth(dimension: buttonModel.width)
         
-        let defaultBackgroundColor: UIColor = buttonModel.buttonColor
-        let defaultTitleColor: UIColor = buttonModel.text.textColor
+        let defaultBackgroundColor: UIColor = buttonModel.buttonColor.toUIColor()
+        titleColor = buttonModel.text.textColor.toUIColor()
         let defaultBorderColor: UIColor = .clear
         
         switch buttonModel.text.textAlign {
@@ -54,22 +54,18 @@ class MobileContentButtonViewModel: MobileContentViewModel {
         
         case .contained:
             backgroundColor = defaultBackgroundColor
-            titleColor = defaultTitleColor
             borderColor = defaultBorderColor
             
         case .outlined:
-            backgroundColor = buttonModel.backgroundColor
-            titleColor = buttonModel.buttonColor
-            borderColor = buttonModel.buttonColor
+            backgroundColor = buttonModel.backgroundColor.toUIColor()
+            borderColor = buttonModel.buttonColor.toUIColor()
             
         case .unknown:
             backgroundColor = defaultBackgroundColor
-            titleColor = defaultTitleColor
             borderColor = defaultBorderColor
             
         default:
             backgroundColor = defaultBackgroundColor
-            titleColor = defaultTitleColor
             borderColor = defaultBorderColor
         }
                 
