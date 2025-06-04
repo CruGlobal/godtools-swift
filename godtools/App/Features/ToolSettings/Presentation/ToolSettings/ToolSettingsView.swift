@@ -70,7 +70,7 @@ struct ToolSettingsView: View {
                         ScrollView(.vertical, showsIndicators: true) {
                             VStack(spacing: 0) {
                                 
-                                if viewModel.hidesToolOptions == false {
+                                if !viewModel.toolOptions.isEmpty {
                                     
                                     ToolSettingsOptionsView(
                                         viewModel: viewModel
