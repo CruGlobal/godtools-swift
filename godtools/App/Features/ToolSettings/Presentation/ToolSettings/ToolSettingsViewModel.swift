@@ -25,14 +25,13 @@ class ToolSettingsViewModel: ObservableObject {
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     @Published private var interfaceStrings: ToolSettingsInterfaceStringsDomainModel?
     
+    @Published private(set) var toolOptions: [ToolSettingsOption] = Array()
+    
     @Published var title: String = ""
     @Published var shareLinkTitle: String = ""
     @Published var screenShareTitle: String = ""
     @Published var trainingTipsIcon: SwiftUI.Image = Image("")
     @Published var trainingTipsTitle: String = ""
-    @Published var hidesTrainingTipsButton: Bool = true
-    @Published var hidesShareScreenButton: Bool = true
-    @Published var hidesShareLinkButton: Bool = true
     @Published var chooseLanguageTitle: String = ""
     @Published var chooseLanguageToggleMessage: String = ""
     @Published var primaryLanguageTitle: String = ""
@@ -48,8 +47,6 @@ class ToolSettingsViewModel: ObservableObject {
         self.viewToolSettingsUseCase = viewToolSettingsUseCase
         self.getShareablesUseCase = getShareablesUseCase
         self.getShareableImageUseCase = getShareableImageUseCase
-        self.hidesShareScreenButton = toolSettingsObserver.isRemoteShareable == false
-        self.hidesShareLinkButton = toolSettingsObserver.isLinkShareable == false
         
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
@@ -74,15 +71,18 @@ class ToolSettingsViewModel: ObservableObject {
         .switchToLatest()
         .receive(on: DispatchQueue.main)
         .sink { [weak self] (domainModel: ViewToolSettingsDomainModel) in
-                        
+                      
+            self?.toolOptions = Self.getAvailableToolOptions(
+                domainModel: domainModel,
+                toolSettingsObserver: toolSettingsObserver
+            )
+            
             self?.title = domainModel.interfaceStrings.title
             self?.shareLinkTitle = domainModel.interfaceStrings.toolOptionShareLink
             self?.screenShareTitle = domainModel.interfaceStrings.toolOptionScreenShare
             self?.chooseLanguageTitle = domainModel.interfaceStrings.languageSelectionTitle
             self?.chooseLanguageToggleMessage = domainModel.interfaceStrings.languageSelectionMessage
             self?.shareablesTitle = domainModel.interfaceStrings.relatedGraphicsTitle
-            
-            self?.hidesTrainingTipsButton = !domainModel.hasTips
             
             self?.interfaceStrings = domainModel.interfaceStrings
                             
@@ -121,15 +121,30 @@ class ToolSettingsViewModel: ObservableObject {
     deinit {
         print("x deinit: \(type(of: self))")
     }
+    
+    private static func getAvailableToolOptions(domainModel: ViewToolSettingsDomainModel, toolSettingsObserver: ToolSettingsObserver) -> [ToolSettingsOption] {
+        
+        var toolOptions: [ToolSettingsOption] = Array()
+        
+        if toolSettingsObserver.isLinkShareable {
+            toolOptions.append(.shareLink)
+        }
+        
+        if toolSettingsObserver.isRemoteShareable {
+            toolOptions.append(.shareScreen)
+        }
+        
+        if domainModel.hasTips {
+            toolOptions.append(.trainingTips)
+        }
+                
+        return toolOptions
+    }
 }
 
 // MARK: - Inputs
 
 extension ToolSettingsViewModel {
-    
-    var hidesToolOptions: Bool {
-        return hidesTrainingTipsButton && hidesShareScreenButton && hidesShareLinkButton
-    }
     
     func getShareableItemViewModel(shareable: ShareableDomainModel) -> ToolSettingsShareableItemViewModel {
         
