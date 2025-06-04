@@ -24,7 +24,7 @@ class MenuFlowTests: BaseFlowTests {
         
         launchApp()
         
-        super.assertIfInitialScreenDoesntExist(app: app)
+        super.assertIfInitialScreenDoesntExist()
     }
     
     func testNavigationToMenu() {
@@ -42,7 +42,7 @@ class MenuFlowTests: BaseFlowTests {
         
         menuButton.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .menu, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
+        assertIfScreenDoesNotExist(screenAccessibility: .menu)
     }
     
     func testNavigationToTutorial() {
@@ -57,7 +57,7 @@ class MenuFlowTests: BaseFlowTests {
         
         tutorialButton.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .tutorial, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
+        assertIfScreenDoesNotExist(screenAccessibility: .tutorial)
     }
     
     func testNavigationToLanguageSettings() {
@@ -72,7 +72,7 @@ class MenuFlowTests: BaseFlowTests {
         
         languageSettingsButton.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .languageSettings, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
+        assertIfScreenDoesNotExist(screenAccessibility: .languageSettings)
     }
     
     func testNavigationToCreateAccount() {
@@ -87,7 +87,7 @@ class MenuFlowTests: BaseFlowTests {
         
         createAccountButton.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .createAccount, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
+        assertIfScreenDoesNotExist(screenAccessibility: .createAccount)
     }
     
     func testNavigationToLogin() {
@@ -102,7 +102,7 @@ class MenuFlowTests: BaseFlowTests {
         
         loginButton.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .login, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
+        assertIfScreenDoesNotExist(screenAccessibility: .login)
     }
     
     func testNavigationToSendFeedback() {
@@ -117,7 +117,7 @@ class MenuFlowTests: BaseFlowTests {
         
         sendFeedbackButton.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .sendFeedback, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
+        assertIfScreenDoesNotExist(screenAccessibility: .sendFeedback)
     }
     
     func testNavigationToReportABug() {
@@ -132,7 +132,7 @@ class MenuFlowTests: BaseFlowTests {
         
         reportABugButton.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .reportABug, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
+        assertIfScreenDoesNotExist(screenAccessibility: .reportABug)
     }
     
     func testNavigationToAskAQuestion() {
@@ -147,7 +147,7 @@ class MenuFlowTests: BaseFlowTests {
         
         askAQuestionButton.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .askAQuestion, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
+        assertIfScreenDoesNotExist(screenAccessibility: .askAQuestion)
     }
     
 //    func testNavigationToLeaveAReview() {
@@ -162,7 +162,7 @@ class MenuFlowTests: BaseFlowTests {
 //        
 //        leaveAReviewButton.tap()
 //        
-//        assertIfScreenDoesNotExist(app: app, screenAccessibility: .leaveAReview)
+//        assertIfScreenDoesNotExist(screenAccessibility: .leaveAReview)
 //    }
     
     func testNavigationToShareAStoryWithUs() {
@@ -177,7 +177,7 @@ class MenuFlowTests: BaseFlowTests {
         
         askAQuestionButton.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .shareAStoryWithUs, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
+        assertIfScreenDoesNotExist(screenAccessibility: .shareAStoryWithUs)
     }
     
 //    func testNavigationToShareGodTools() {
@@ -192,7 +192,7 @@ class MenuFlowTests: BaseFlowTests {
 //        
 //        shareGodToolsButton.tap()
 //        
-//        assertIfScreenDoesNotExist(app: app, screenAccessibility: .shareGodTools, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
+//        assertIfScreenDoesNotExist(screenAccessibility: .shareGodTools)
 //    }
     
     func testNavigationToTermsOfUse() {
@@ -207,7 +207,7 @@ class MenuFlowTests: BaseFlowTests {
         
         termsOfUseButton.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .termsOfUse, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
+        assertIfScreenDoesNotExist(screenAccessibility: .termsOfUse)
     }
     
     func testNavigationToPrivacyPolicy() {
@@ -222,7 +222,7 @@ class MenuFlowTests: BaseFlowTests {
         
         privacyPolicyButton.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .privacyPolicy, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
+        assertIfScreenDoesNotExist(screenAccessibility: .privacyPolicy)
     }
     
     func testNavigationToCopyrightInfo() {
@@ -237,6 +237,6 @@ class MenuFlowTests: BaseFlowTests {
         
         copyrightInfoButton.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .copyrightInfo, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
+        assertIfScreenDoesNotExist(screenAccessibility: .copyrightInfo)
     }
 }

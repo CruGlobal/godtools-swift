@@ -11,9 +11,7 @@ import XCTest
 @testable import godtools
 
 class AppFlowTests: BaseFlowTests {
-    
-    static let defaultWaitForScreenExistence: TimeInterval = 2
-    
+        
     private func launchAppToDashboardFavorites() {
         
         super.launchApp(
@@ -37,7 +35,7 @@ class AppFlowTests: BaseFlowTests {
         
         menuButton.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .menu, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
+        assertIfScreenDoesNotExist(screenAccessibility: .menu)
     }
 }
 
@@ -53,7 +51,7 @@ extension AppFlowTests {
         
         tab.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: dashboardScreenAccessibility, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
+        assertIfScreenDoesNotExist(screenAccessibility: dashboardScreenAccessibility)
     }
     
     private func tabToLessons() {
@@ -118,7 +116,7 @@ extension AppFlowTests {
         
         toolDetails.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .toolDetails, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
+        assertIfScreenDoesNotExist(screenAccessibility: .toolDetails)
     }
     
     func testToolDetailsNavigatesBackToFavoritesWhenOpenedFromFavorites() {
@@ -133,7 +131,7 @@ extension AppFlowTests {
         
         toolDetails.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .toolDetails, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
+        assertIfScreenDoesNotExist(screenAccessibility: .toolDetails)
         
         let toolDetailsNavBack = app.queryButton(buttonAccessibility: .toolDetailsNavBack)
         
@@ -141,7 +139,7 @@ extension AppFlowTests {
         
         toolDetailsNavBack.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .dashboardFavorites, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
+        assertIfScreenDoesNotExist(screenAccessibility: .dashboardFavorites)
     }
 }
 
@@ -161,7 +159,7 @@ extension AppFlowTests {
         
         toolsCategoryFilter.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .toolsCategoryFilters, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
+        assertIfScreenDoesNotExist(screenAccessibility: .toolsCategoryFilters)
     }
     
     func testTappingToolsLanguageFilterOpensToolsLanguageFiltersList() {
@@ -176,7 +174,7 @@ extension AppFlowTests {
         
         toolsLanguageFilter.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .toolsLanguageFilters, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
+        assertIfScreenDoesNotExist(screenAccessibility: .toolsLanguageFilters)
     }
     
     func testTappingSpotlightToolFromToolsOpensToolDetails() {
@@ -196,7 +194,7 @@ extension AppFlowTests {
         
         spotlightTool.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .toolDetails, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
+        assertIfScreenDoesNotExist(screenAccessibility: .toolDetails)
     }
     
     func testTappingToolFromToolsOpensToolDetails() {
@@ -216,6 +214,6 @@ extension AppFlowTests {
         
         tool.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .toolDetails, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
+        assertIfScreenDoesNotExist(screenAccessibility: .toolDetails)
     }
 }
