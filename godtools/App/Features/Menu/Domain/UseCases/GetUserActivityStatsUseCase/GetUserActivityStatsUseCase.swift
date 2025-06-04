@@ -13,13 +13,15 @@ import LocalizationServices
 
 class GetUserActivityStatsUseCase {
     
-    private let localizationServices: LocalizationServices
+    private let localizationServices: LocalizationServicesInterface
     private let getTranslatedNumberCount: GetTranslatedNumberCount
+    private let stringWithLocaleCount: StringWithLocaleCountInterface
     
-    init(localizationServices: LocalizationServices, getTranslatedNumberCount: GetTranslatedNumberCount) {
+    init(localizationServices: LocalizationServicesInterface, getTranslatedNumberCount: GetTranslatedNumberCount, stringWithLocaleCount: StringWithLocaleCountInterface) {
         
         self.localizationServices = localizationServices
         self.getTranslatedNumberCount = getTranslatedNumberCount
+        self.stringWithLocaleCount = stringWithLocaleCount
     }
     
     func getUserActivityStats(from userActivity: UserActivity, translatedInAppLanguage: AppLanguageDomainModel) -> [UserActivityStatDomainModel] {
@@ -76,7 +78,9 @@ class GetUserActivityStatsUseCase {
             key: stringKey
         )
         
-        return String(format: formatString, locale: Locale(identifier: translatedInAppLanguage), activityCount)
+        let activityText: String = stringWithLocaleCount.getString(format: formatString, locale: Locale(identifier: translatedInAppLanguage), count: Int(activityCount))
+        
+        return activityText
     }
     
     private func getUserActivityFormattedCount(activityCount: Int32, translatedInAppLanguage: AppLanguageDomainModel) -> String {

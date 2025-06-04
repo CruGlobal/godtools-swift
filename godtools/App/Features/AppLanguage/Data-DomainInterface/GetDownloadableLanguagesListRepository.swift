@@ -16,16 +16,18 @@ class GetDownloadableLanguagesListRepository: GetDownloadableLanguagesListReposi
     private let downloadedLanguagesRepository: DownloadedLanguagesRepository
     private let getTranslatedLanguageName: GetTranslatedLanguageName
     private let resourcesRepository: ResourcesRepository
-    private let localizationServices: LocalizationServices
+    private let localizationServices: LocalizationServicesInterface
+    private let stringWithLocaleCount: StringWithLocaleCountInterface
     private let sortDate: Date = Date()
     
-    init(languagesRepository: LanguagesRepository, downloadedLanguagesRepository: DownloadedLanguagesRepository, getTranslatedLanguageName: GetTranslatedLanguageName, resourcesRepository: ResourcesRepository, localizationServices: LocalizationServices) {
+    init(languagesRepository: LanguagesRepository, downloadedLanguagesRepository: DownloadedLanguagesRepository, getTranslatedLanguageName: GetTranslatedLanguageName, resourcesRepository: ResourcesRepository, localizationServices: LocalizationServicesInterface, stringWithLocaleCount: StringWithLocaleCountInterface) {
         
         self.languagesRepository = languagesRepository
         self.downloadedLanguagesRepository = downloadedLanguagesRepository
         self.getTranslatedLanguageName = getTranslatedLanguageName
         self.resourcesRepository = resourcesRepository
         self.localizationServices = localizationServices
+        self.stringWithLocaleCount = stringWithLocaleCount
     }
     
     func getDownloadableLanguagesPublisher(currentAppLanguage: AppLanguageDomainModel) -> AnyPublisher<[DownloadableLanguageListItemDomainModel], Never> {
@@ -98,7 +100,7 @@ extension GetDownloadableLanguagesListRepository {
             key: ToolStringKeys.ToolFilter.toolsAvailableText.rawValue
         )
         
-        return String(format: formatString, locale: Locale(identifier: localeId), numberOfTools)
+        return stringWithLocaleCount.getString(format: formatString, locale: Locale(identifier: localeId), count: numberOfTools)
     }
     
     private func getDownloadStatus(for languageId: String) -> LanguageDownloadStatusDomainModel {
