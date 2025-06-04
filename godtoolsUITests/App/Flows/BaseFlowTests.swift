@@ -12,6 +12,8 @@ import XCTest
 
 class BaseFlowTests: XCTestCase {
         
+    private static let defaultWaitForScreenExistence: TimeInterval = 2
+    
     private(set) var app: XCUIApplication = XCUIApplication()
     private(set) var flowDeepLinkUrl: String = ""
     private(set) var initialScreen: AccessibilityStrings.Screen?
@@ -45,18 +47,23 @@ class BaseFlowTests: XCTestCase {
                         
         app.launch()
                 
-        assertIfInitialScreenDoesntExist(app: app)
+        assertIfInitialScreenDoesntExist()
     }
     
-    func assertIfInitialScreenDoesntExist(app: XCUIApplication) {
+    func assertIfInitialScreenDoesntExist() {
         
         if let initialScreen = initialScreen {
             
-            assertIfScreenDoesNotExist(app: app, screenAccessibility: initialScreen, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
+            assertIfScreenDoesNotExist(screenAccessibility: initialScreen)
         }
         else {
             
             XCTAssertNotNil(initialScreen)
         }
+    }
+    
+    func assertIfScreenDoesNotExist(screenAccessibility: AccessibilityStrings.Screen) {
+        
+        XCTAssertTrue(app.staticTexts[screenAccessibility.id].waitForExistence(timeout: Self.defaultWaitForScreenExistence))
     }
 }
