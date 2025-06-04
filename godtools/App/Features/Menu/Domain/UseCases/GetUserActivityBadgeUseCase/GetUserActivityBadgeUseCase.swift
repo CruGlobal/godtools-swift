@@ -13,11 +13,11 @@ import LocalizationServices
 
 class GetUserActivityBadgeUseCase {
     
-    private let localizationServices: LocalizationServices
+    private let localizationServices: LocalizationServicesInterface
     
     private let lightGreyTextColor = Color(red: 203 / 255, green: 203 / 255, blue: 203 / 255)
     
-    init(localizationServices: LocalizationServices) {
+    init(localizationServices: LocalizationServicesInterface) {
         
         self.localizationServices = localizationServices
     }

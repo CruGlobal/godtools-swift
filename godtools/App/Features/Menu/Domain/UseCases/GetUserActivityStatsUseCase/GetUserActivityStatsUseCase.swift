@@ -13,10 +13,10 @@ import LocalizationServices
 
 class GetUserActivityStatsUseCase {
     
-    private let localizationServices: LocalizationServices
+    private let localizationServices: LocalizationServicesInterface
     private let getTranslatedNumberCount: GetTranslatedNumberCount
     
-    init(localizationServices: LocalizationServices, getTranslatedNumberCount: GetTranslatedNumberCount) {
+    init(localizationServices: LocalizationServicesInterface, getTranslatedNumberCount: GetTranslatedNumberCount) {
         
         self.localizationServices = localizationServices
         self.getTranslatedNumberCount = getTranslatedNumberCount
