@@ -14,12 +14,14 @@ import LocalizationServices
 class GetUserActivityBadgeUseCase {
     
     private let localizationServices: LocalizationServicesInterface
+    private let stringWithLocaleCount: StringWithLocaleCountInterface
     
     private let lightGreyTextColor = Color(red: 203 / 255, green: 203 / 255, blue: 203 / 255)
     
-    init(localizationServices: LocalizationServicesInterface) {
+    init(localizationServices: LocalizationServicesInterface, stringWithLocaleCount: StringWithLocaleCountInterface) {
         
         self.localizationServices = localizationServices
+        self.stringWithLocaleCount = stringWithLocaleCount
     }
     
     func getBadge(from godToolsSharedLibraryBadge: Badge, translatedInAppLanguage: AppLanguageDomainModel) -> UserActivityBadgeDomainModel {
@@ -84,8 +86,8 @@ class GetUserActivityBadgeUseCase {
             key: stringLocalizationKey
         )
         
-        let badgeText: String = String(format: formatString, locale: Locale(identifier: translatedInAppLanguage), progressTarget)
-        
+        let badgeText: String = stringWithLocaleCount.getString(format: formatString, locale: Locale(identifier: translatedInAppLanguage), count: progressTarget)
+                
         return badgeText
     }
     
