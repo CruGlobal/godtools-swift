@@ -15,14 +15,16 @@ class GetToolFilterLanguagesRepository: GetToolFilterLanguagesRepositoryInterfac
     private let resourcesRepository: ResourcesRepository
     private let languagesRepository: LanguagesRepository
     private let getTranslatedLanguageName: GetTranslatedLanguageName
-    private let localizationServices: LocalizationServices
+    private let localizationServices: LocalizationServicesInterface
+    private let stringWithLocaleCount: StringWithLocaleCountInterface
     
-    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, getTranslatedLanguageName: GetTranslatedLanguageName, localizationServices: LocalizationServices) {
+    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, getTranslatedLanguageName: GetTranslatedLanguageName, localizationServices: LocalizationServicesInterface, stringWithLocaleCount: StringWithLocaleCountInterface) {
         
         self.resourcesRepository = resourcesRepository
         self.languagesRepository = languagesRepository
         self.getTranslatedLanguageName = getTranslatedLanguageName
         self.localizationServices = localizationServices
+        self.stringWithLocaleCount = stringWithLocaleCount
     }
     
     func getToolFilterLanguagesPublisher(translatedInAppLanguage: AppLanguageDomainModel, filteredByCategoryId: String?) -> AnyPublisher<[ToolFilterLanguageDomainModel], Never> {
@@ -149,8 +151,8 @@ extension GetToolFilterLanguagesRepository {
             key: ToolStringKeys.ToolFilter.toolsAvailableText.rawValue
         )
         
-        let localizedString = String(format: formatString, locale: Locale(identifier: translatedInAppLanguage), toolsAvailableCount)
-                
+        let localizedString: String = stringWithLocaleCount.getString(format: formatString, locale: Locale(identifier: translatedInAppLanguage), count: toolsAvailableCount)
+        
         return localizedString
     }
 }

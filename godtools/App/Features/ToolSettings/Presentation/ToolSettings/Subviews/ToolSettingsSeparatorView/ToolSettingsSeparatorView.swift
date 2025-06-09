@@ -10,9 +10,12 @@ import SwiftUI
 
 struct ToolSettingsSeparatorView: View {
     
-    let separatorSpacing: CGFloat
-    let separatorLeadingInset: CGFloat
-    let separatorTrailingInset: CGFloat
+    private let separatorSpacing: CGFloat
+    
+    init(separatorSpacing: CGFloat) {
+        
+        self.separatorSpacing = separatorSpacing
+    }
     
     var body: some View {
         
@@ -27,12 +30,5 @@ struct ToolSettingsSeparatorView: View {
                 .frame(maxWidth: .infinity, minHeight: separatorSpacing, maxHeight: separatorSpacing)
                 .foregroundColor(.clear)
         }
-        .padding(EdgeInsets(top: 0, leading: separatorLeadingInset, bottom: 0, trailing: separatorTrailingInset))
-    }
-}
-
-struct ToolSettingsSeparatorView_Preview: PreviewProvider {
-    static var previews: some View {
-        ToolSettingsSeparatorView(separatorSpacing: 25, separatorLeadingInset: 20, separatorTrailingInset: 20)
     }
 }

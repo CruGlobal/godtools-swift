@@ -42,7 +42,7 @@ class OnboardingFlowTests: BaseFlowTests {
         
         chooseAppLanguageButton.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .appLanguages)
+        assertIfScreenDoesNotExist(screenAccessibility: .appLanguages)
     }
     
     func testNavigationToWatchOnboardingVideoTutorialAndNavigationBackToOnboardingTutorial() {
@@ -63,7 +63,7 @@ class OnboardingFlowTests: BaseFlowTests {
         watchVideoButton.tap()
         
         // Adding waitForExistence I believe helped with the fact this view is presented with an animation. ~Levi
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .watchOnboardingTutorialVideo, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
+        assertIfScreenDoesNotExist(screenAccessibility: .watchOnboardingTutorialVideo)
     }
     
     private func navigateBackToOnboardingTutorialFromWatchOnboardingTutorialVideo(app: XCUIApplication) {
@@ -74,7 +74,7 @@ class OnboardingFlowTests: BaseFlowTests {
         
         closeVideoButton.tap()
         
-        super.assertIfInitialScreenDoesntExist(app: app)
+        super.assertIfInitialScreenDoesntExist()
     }
     
     func testNavigationThroughTutorialPagesUsingNextTutorialPageButton() {
@@ -85,19 +85,19 @@ class OnboardingFlowTests: BaseFlowTests {
         
         XCTAssertTrue(nextTutorialPageButton.exists)
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .onboardingTutorialPage1, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
+        assertIfScreenDoesNotExist(screenAccessibility: .onboardingTutorialPage1)
         
         nextTutorialPageButton.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .onboardingTutorialPage2, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
+        assertIfScreenDoesNotExist(screenAccessibility: .onboardingTutorialPage2)
         
         nextTutorialPageButton.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .onboardingTutorialPage3, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
+        assertIfScreenDoesNotExist(screenAccessibility: .onboardingTutorialPage3)
         
         nextTutorialPageButton.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .onboardingTutorialPage4, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
+        assertIfScreenDoesNotExist(screenAccessibility: .onboardingTutorialPage4)
     }
     
     func testSkippingOnboardingNavigatesToDashboardFavorites() {
@@ -108,7 +108,7 @@ class OnboardingFlowTests: BaseFlowTests {
         
         XCTAssertTrue(nextTutorialPageButton.exists)
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .onboardingTutorialPage1)
+        assertIfScreenDoesNotExist(screenAccessibility: .onboardingTutorialPage1)
         
         nextTutorialPageButton.tap()
         
@@ -118,6 +118,6 @@ class OnboardingFlowTests: BaseFlowTests {
         
         skipTutorialButton.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .dashboardFavorites)
+        assertIfScreenDoesNotExist(screenAccessibility: .dashboardFavorites)
     }
 }

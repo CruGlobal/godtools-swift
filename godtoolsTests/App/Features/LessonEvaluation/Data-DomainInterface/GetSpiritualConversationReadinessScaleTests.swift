@@ -105,9 +105,6 @@ class GetSpiritualConversationReadinessScaleTests: QuickSpec {
                 }
             }
             
-            // NOTE: Disabling this test since failing in iOS 18.  For some reason NumberFormatter and String format based on Locale isn't working with iOS 18 and iOS 18.1. See GT-2473. ~Levi
-            
-            /*
             context("When viewing the ready to share faith scale and my app language is arabic.") {
             
                 let getSpiritualConversationReadinessScale = GetSpiritualConversationReadinessScale(
@@ -144,12 +141,64 @@ class GetSpiritualConversationReadinessScaleTests: QuickSpec {
                             }
                             .store(in: &cancellables)
                     }
-
+                    
+                    if #available(iOS 18, *) {
+                        
+                        expect(readinessScaleRef?.minScale.valueTranslatedInAppLanguage).to(equal("1"))
+                        expect(readinessScaleRef?.maxScale.valueTranslatedInAppLanguage).to(equal("10"))
+                        expect(readinessScaleRef?.scale.valueTranslatedInAppLanguage).to(equal("5"))
+                    }
+                    else {
+                        
+                        expect(readinessScaleRef?.minScale.valueTranslatedInAppLanguage).to(equal("١"))
+                        expect(readinessScaleRef?.maxScale.valueTranslatedInAppLanguage).to(equal("١٠"))
+                        expect(readinessScaleRef?.scale.valueTranslatedInAppLanguage).to(equal("٥"))
+                    }
+                }
+            }
+            
+            context("When viewing the ready to share faith scale and my app language is eastern arabic.") {
+            
+                let getSpiritualConversationReadinessScale = GetSpiritualConversationReadinessScale(
+                    getTranslatedNumberCount: GetTranslatedNumberCount()
+                )
+                
+                it("I expect the min, max, and scale values to be translated in my app language eastern arabic.") {
+                    
+                    var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
+                    
+                    var sinkCount: Int = 0
+                    var sinkCompleted: Bool = false
+                    
+                    waitUntil { done in
+                        
+                        getSpiritualConversationReadinessScale
+                            .getScalePublisher(scale: 5, translateInAppLanguage: "ar_SA")
+                            .sink { (readinessScale: SpiritualConversationReadinessScaleDomainModel) in
+                                
+                                guard !sinkCompleted else {
+                                    return
+                                }
+                                
+                                sinkCount += 1
+                                
+                                if sinkCount == 1 {
+                                    
+                                    readinessScaleRef = readinessScale
+                                    
+                                    sinkCompleted = true
+                                    
+                                    done()
+                                }
+                            }
+                            .store(in: &cancellables)
+                    }
+                    
                     expect(readinessScaleRef?.minScale.valueTranslatedInAppLanguage).to(equal("١"))
                     expect(readinessScaleRef?.maxScale.valueTranslatedInAppLanguage).to(equal("١٠"))
                     expect(readinessScaleRef?.scale.valueTranslatedInAppLanguage).to(equal("٥"))
                 }
-            }*/
+            }
             
             context("When providing a scale value that is lower than the minimum 1.") {
             

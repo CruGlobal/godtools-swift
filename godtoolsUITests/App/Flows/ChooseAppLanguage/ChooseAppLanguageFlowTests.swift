@@ -35,6 +35,6 @@ class ChooseAppLanguageFlowTests: BaseFlowTests {
         
         firstAppLanguageListItem.tap()
         
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .confirmAppLanguage)
+        assertIfScreenDoesNotExist(screenAccessibility: .confirmAppLanguage)
     }
 }
