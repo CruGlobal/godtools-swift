@@ -6,8 +6,13 @@
 //  Copyright © 2024 Cru. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
-let appDelegateClass: AnyClass = NSClassFromString("TestsAppDelegate") ?? AppDelegate.self
+let isUnitTests: Bool = NSClassFromString("XCTestCase") != nil
 
-UIApplicationMain(CommandLine.argc, CommandLine.unsafeArgv, nil, NSStringFromClass(appDelegateClass))
+if isUnitTests {
+    TestsApp.main()
+}
+else {
+    GodToolsApp.main()
+}
