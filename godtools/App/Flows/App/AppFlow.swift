@@ -11,7 +11,7 @@ import MessageUI
 import SwiftUI
 import Combine
 
-class AppFlow: NSObject, ToolNavigationFlow, Flow {
+final class AppFlow: NSObject, UIViewControllerRepresentable, ToolNavigationFlow, Flow {
     
     private static let defaultStartingDashboardTab: DashboardTabTypeDomainModel = .favorites
     
@@ -102,6 +102,15 @@ class AppFlow: NSObject, ToolNavigationFlow, Flow {
     deinit {
         print("x deinit: \(type(of: self))")
         removeDeepLinkingObservers()
+    }
+    
+    
+    func makeUIViewController(context: Context) -> UIViewController {
+        return getInitialView()
+    }
+
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
+
     }
     
     func getInitialView() -> UIViewController {

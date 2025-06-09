@@ -47,7 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         )
     }()
     
-    private lazy var appFlow: AppFlow = {
+    lazy var appFlow: AppFlow = {
         AppFlow(
             appDiContainer: appDiContainer,
             appDeepLinkingService: appDeepLinkingService
@@ -71,6 +71,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
                             
+        print("\n AppDelegate.swift")
+        print("  didFinishLaunchingWithOptions launchOptions")
+        
         let appConfig: AppConfig = appDiContainer.dataLayer.getAppConfig()
         
         if appBuild.configuration == .analyticsLogging {
@@ -113,25 +116,41 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationWillResignActive(_ application: UIApplication) {
         
+        print("\n AppDelegate.swift")
+        print("  applicationWillResignActive()")
+        
         reloadShortcutItems(application: application)
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
+        
+        print("\n AppDelegate.swift")
+        print("  applicationDidEnterBackground()")
+        
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
+        
+        print("\n AppDelegate.swift")
+        print("  applicationWillEnterForeground()")
+        
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
+        
+        print("\n AppDelegate.swift")
+        print("  applicationDidBecomeActive()")
         
         reloadShortcutItems(application: application)
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
     
+        print("\n AppDelegate.swift")
+        print("  applicationWillTerminate()")
     }
 }
 
@@ -161,14 +180,20 @@ extension AppDelegate {
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
        
+        print("\n AppDelegate.swift")
+        print("  didRegisterForRemoteNotificationsWithDeviceToken")
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
        
+        print("\n AppDelegate.swift")
+        print("  didReceiveRemoteNotification")
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         
+        print("\n AppDelegate.swift")
+        print("  didReceiveRemoteNotification fetchCompletionHandler")
     }
 }
 
@@ -179,6 +204,9 @@ extension AppDelegate {
 extension AppDelegate {
     
     func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+        
+        print("\n AppDelegate.swift")
+        print("  performActionFor shortcutItem")
                
         let successfullyHandledQuickAction: Bool
         
@@ -219,6 +247,9 @@ extension AppDelegate {
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
                 
+        print("\n AppDelegate.swift")
+        print("  open url options")
+        
         if let firebaseDynamicLinkUrl = DynamicLinks.dynamicLinks().dynamicLink(fromCustomSchemeURL: url)?.url {
             _ = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: firebaseDynamicLinkUrl)))
             return true
@@ -243,7 +274,10 @@ extension AppDelegate {
 extension AppDelegate {
     
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
-                
+           
+        print("\n AppDelegate.swift")
+        print("  continue userActivity restorationHandler")
+        
         if userActivity.activityType != NSUserActivityTypeBrowsingWeb {
             return false
         }
