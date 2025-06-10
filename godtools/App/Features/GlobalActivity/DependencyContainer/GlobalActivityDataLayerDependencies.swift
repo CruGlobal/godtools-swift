@@ -24,7 +24,7 @@ class GlobalActivityDataLayerDependencies {
         return GlobalAnalyticsRepository(
             api: MobileContentGlobalAnalyticsApi(
                 baseUrl: coreDataLayer.getAppConfig().getMobileContentApiBaseUrl(),
-                ignoreCacheSession: coreDataLayer.getSharedIgnoreCacheSession()
+                urlSessionPriority: coreDataLayer.getSharedUrlSessionPriority()
             ),
             cache: RealmGlobalAnalyticsCache(
                 realmDatabase: coreDataLayer.getSharedRealmDatabase()

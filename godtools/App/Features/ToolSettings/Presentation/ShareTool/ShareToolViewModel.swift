@@ -11,6 +11,8 @@ import Combine
 
 class ShareToolViewModel {
         
+    private static var backgroundCancellables: Set<AnyCancellable> = Set()
+    
     private let toolId: String
     private let toolAnalyticsAbbreviation: String
     private let incrementUserCounterUseCase: IncrementUserCounterUseCase
@@ -87,6 +89,6 @@ extension ShareToolViewModel {
             } receiveValue: { _ in
 
             }
-            .store(in: &cancellables)
+            .store(in: &Self.backgroundCancellables)
     }
 }

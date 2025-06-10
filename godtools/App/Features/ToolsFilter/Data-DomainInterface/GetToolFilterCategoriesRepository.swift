@@ -13,12 +13,14 @@ import LocalizationServices
 class GetToolFilterCategoriesRepository: GetToolFilterCategoriesRepositoryInterface {
     
     private let resourcesRepository: ResourcesRepository
-    private let localizationServices: LocalizationServices
+    private let localizationServices: LocalizationServicesInterface
+    private let stringWithLocaleCount: StringWithLocaleCountInterface
 
-    init(resourcesRepository: ResourcesRepository, localizationServices: LocalizationServices) {
+    init(resourcesRepository: ResourcesRepository, localizationServices: LocalizationServicesInterface, stringWithLocaleCount: StringWithLocaleCountInterface) {
         
         self.resourcesRepository = resourcesRepository
         self.localizationServices = localizationServices
+        self.stringWithLocaleCount = stringWithLocaleCount
     }
     
     func getToolFilterCategoriesPublisher(translatedInAppLanguage: AppLanguageDomainModel, filteredByLanguageId: BCP47LanguageIdentifier?) -> AnyPublisher<[ToolFilterCategoryDomainModel], Never> {
@@ -117,6 +119,10 @@ extension GetToolFilterCategoriesRepository {
             key: ToolStringKeys.ToolFilter.toolsAvailableText.rawValue
         )
         
-        return String(format: formatString, locale: Locale(identifier: translatedInAppLanguage), toolsAvailableCount)
+        return stringWithLocaleCount.getString(
+            format: formatString,
+            locale: Locale(identifier: translatedInAppLanguage),
+            count: toolsAvailableCount
+        )
     }
 }

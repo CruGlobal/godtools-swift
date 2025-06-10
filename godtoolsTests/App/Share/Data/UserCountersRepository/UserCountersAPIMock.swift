@@ -26,14 +26,14 @@ class UserCountersAPIMock {
     
 extension UserCountersAPIMock: UserCountersAPIType {
     
-    func fetchUserCountersPublisher() -> AnyPublisher<[UserCounterDecodable], Error> {
+    func fetchUserCountersPublisher(sendRequestPriority: SendRequestPriority) -> AnyPublisher<[UserCounterDecodable], Error> {
         
         return Just(fetchedCounters)
             .setFailureType(to: Error.self)
             .eraseToAnyPublisher()
     }
     
-    func incrementUserCounterPublisher(id: String, increment: Int) -> AnyPublisher<UserCounterDecodable, Error> {
+    func incrementUserCounterPublisher(id: String, increment: Int, sendRequestPriority: SendRequestPriority) -> AnyPublisher<UserCounterDecodable, Error> {
         
         let remoteCount = remoteCountValues.removeFirst()
         let userCounterDecodable = UserCounterDecodable(id: id, count: increment + remoteCount)

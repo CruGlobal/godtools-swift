@@ -30,7 +30,8 @@ class ToolsFilterFeatureDataLayerDependencies {
     func getToolFilterCategoriesRepository() -> GetToolFilterCategoriesRepository {
         return GetToolFilterCategoriesRepository(
             resourcesRepository: coreDataLayer.getResourcesRepository(),
-            localizationServices: coreDataLayer.getLocalizationServices()
+            localizationServices: coreDataLayer.getLocalizationServices(),
+            stringWithLocaleCount: coreDataLayer.getStringWithLocaleCount()
         )
     }
     
@@ -45,7 +46,8 @@ class ToolsFilterFeatureDataLayerDependencies {
             resourcesRepository: coreDataLayer.getResourcesRepository(),
             languagesRepository: coreDataLayer.getLanguagesRepository(),
             getTranslatedLanguageName: coreDataLayer.getTranslatedLanguageName(),
-            localizationServices: coreDataLayer.getLocalizationServices()
+            localizationServices: coreDataLayer.getLocalizationServices(),
+            stringWithLocaleCount: coreDataLayer.getStringWithLocaleCount()
         )
     }
     
