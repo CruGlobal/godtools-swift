@@ -8,17 +8,15 @@
 
 import Foundation
 
-class DeepLinkingService: NSObject {
+class DeepLinkingService {
     
     private let manifest: DeepLinkingManifestInterface
     
     let deepLinkObserver: PassthroughValue<ParsedDeepLinkType?> = PassthroughValue()
         
-    required init(manifest: DeepLinkingManifestInterface) {
+    init(manifest: DeepLinkingManifestInterface) {
         
         self.manifest = manifest
-        
-        super.init()
     }
     
     func parseDeepLink(incomingDeepLink: IncomingDeepLinkType) -> ParsedDeepLinkType? {
