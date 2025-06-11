@@ -18,9 +18,9 @@ class MobileContentStackView: MobileContentView {
         print("\n ***** MobileContentStackView init() ***** ")
         
         let content: [Content] = (viewModel.baseModels as? [Content]) ?? Array()
-                
-        composeViewController = ContentStackViewKt.ContentStackView(content: content)
-        
+
+        composeViewController = ContentStackViewKt.ContentStackView(content: content, state: viewModel.rendererState)
+
         print("  content: \(content.count)")
         print("  composeView.bounds: \(composeViewController.view.bounds)")
                 
