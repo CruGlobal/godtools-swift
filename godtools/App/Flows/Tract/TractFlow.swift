@@ -157,7 +157,7 @@ extension TractFlow {
         
         let navBarLayoutDirection: UISemanticContentAttribute = ApplicationLayout.shared.currentDirection.semanticContentAttribute
         
-        let parentFlowIsHomeFlow: Bool = flowDelegate is AppFlow
+        let parentFlowIsHomeFlow: Bool = flowDelegate is DashboardFlow
         
         let viewModel = TractViewModel(
             flowDelegate: self,

@@ -52,10 +52,10 @@ class TutorialFlow: Flow {
         switch step {
                        
         case .closeTappedFromTutorial:
-            flowDelegate?.navigate(step: .closeTappedFromTutorial)
+            flowDelegate?.navigate(step: .tutorialFlowCompleted(state: .closed))
             
         case .startUsingGodToolsTappedFromTutorial:
-            flowDelegate?.navigate(step: .startUsingGodToolsTappedFromTutorial)
+            flowDelegate?.navigate(step: .tutorialFlowCompleted(state: .closed))
             
         default:
             break

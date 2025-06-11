@@ -46,9 +46,7 @@ class ArticleManifestAemRepository: ArticleAemRepository {
             timeInterval: .days(day: 5),
             userDefaultsCache: sharedUserDefaultsCache
         )
-        
-        let shouldSync: Bool = syncInvalidator.shouldSync
-        
+                
         guard syncInvalidator.shouldSync || forceFetchFromRemote else {
             return Just(ArticleAemRepositoryResult.emptyResult())
                 .eraseToAnyPublisher()

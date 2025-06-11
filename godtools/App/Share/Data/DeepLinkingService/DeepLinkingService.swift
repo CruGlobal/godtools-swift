@@ -7,18 +7,20 @@
 //
 
 import Foundation
+import Combine
 
-class DeepLinkingService: NSObject {
+class DeepLinkingService {
     
     private let manifest: DeepLinkingManifestInterface
-    
-    let deepLinkObserver: PassthroughValue<ParsedDeepLinkType?> = PassthroughValue()
-        
-    required init(manifest: DeepLinkingManifestInterface) {
+    private let lastParsedDeepLinkSubject: PassthroughSubject<ParsedDeepLinkType?, Never> = PassthroughSubject()
+            
+    init(manifest: DeepLinkingManifestInterface) {
         
         self.manifest = manifest
-        
-        super.init()
+    }
+    
+    var parsedDeepLinkPublisher: AnyPublisher<ParsedDeepLinkType?, Never> {
+        return lastParsedDeepLinkSubject.eraseToAnyPublisher()
     }
     
     func parseDeepLink(incomingDeepLink: IncomingDeepLinkType) -> ParsedDeepLinkType? {
@@ -58,7 +60,7 @@ class DeepLinkingService: NSObject {
             return false
         }
         
-        deepLinkObserver.accept(value: parsedDeepLink)
+        lastParsedDeepLinkSubject.send(parsedDeepLink)
         
         return true
     }
