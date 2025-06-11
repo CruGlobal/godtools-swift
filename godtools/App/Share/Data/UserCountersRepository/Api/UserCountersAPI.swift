@@ -14,21 +14,23 @@ class UserCountersAPI: UserCountersAPIType {
     
     private let authSession: MobileContentApiAuthSession
     private let baseURL: String
-    private let ignoreCacheSession: URLSession
+    private let urlSessionPriority: GetUrlSessionPriorityInterface
     private let requestBuilder: RequestBuilder = RequestBuilder()
     
-    init(config: AppConfig, ignoreCacheSession: IgnoreCacheSession, mobileContentApiAuthSession: MobileContentApiAuthSession) {
+    init(config: AppConfig, urlSessionPriority: GetUrlSessionPriorityInterface, mobileContentApiAuthSession: MobileContentApiAuthSession) {
         
         self.baseURL = config.getMobileContentApiBaseUrl()
-        self.ignoreCacheSession = ignoreCacheSession.session
+        self.urlSessionPriority = urlSessionPriority
         self.authSession = mobileContentApiAuthSession
     }
     
-    func fetchUserCountersPublisher() -> AnyPublisher<[UserCounterDecodable], Error> {
+    func fetchUserCountersPublisher(sendRequestPriority: SendRequestPriority) -> AnyPublisher<[UserCounterDecodable], Error> {
         
-        let fetchRequest = getUserCountersRequest()
+        let urlSession: URLSession = urlSessionPriority.getUrlSession(priority: sendRequestPriority)
         
-        return authSession.sendAuthenticatedRequest(urlRequest: fetchRequest, urlSession: ignoreCacheSession)
+        let fetchRequest = getUserCountersRequest(urlSession: urlSession)
+        
+        return authSession.sendAuthenticatedRequest(urlRequest: fetchRequest, urlSession: urlSession)
             .decode(type: JsonApiResponseDataArray<UserCounterDecodable>.self, decoder: JSONDecoder())
             .map {
                 return $0.dataArray
@@ -36,11 +38,13 @@ class UserCountersAPI: UserCountersAPIType {
             .eraseToAnyPublisher()
     }
     
-    func incrementUserCounterPublisher(id: String, increment: Int) -> AnyPublisher<UserCounterDecodable, Error> {
+    func incrementUserCounterPublisher(id: String, increment: Int, sendRequestPriority: SendRequestPriority) -> AnyPublisher<UserCounterDecodable, Error> {
         
-        let incrementRequest = getIncrementUserCountersRequest(id: id, increment: increment)
+        let urlSession: URLSession = urlSessionPriority.getUrlSession(priority: sendRequestPriority)
         
-        return authSession.sendAuthenticatedRequest(urlRequest: incrementRequest, urlSession: ignoreCacheSession)
+        let incrementRequest = getIncrementUserCountersRequest(id: id, increment: increment, urlSession: urlSession)
+        
+        return authSession.sendAuthenticatedRequest(urlRequest: incrementRequest, urlSession: urlSession)
             .decode(type: JsonApiResponseDataObject<UserCounterDecodable>.self, decoder: JSONDecoder())
             .map {
                 return $0.dataObject
@@ -48,7 +52,7 @@ class UserCountersAPI: UserCountersAPIType {
             .eraseToAnyPublisher()
     }
     
-    private func getUserCountersRequest() -> URLRequest {
+    private func getUserCountersRequest(urlSession: URLSession) -> URLRequest {
         
         let headers: [String: String] = [
             "Content-Type": "application/vnd.api+json"
@@ -56,7 +60,7 @@ class UserCountersAPI: UserCountersAPIType {
         
         return requestBuilder.build(
             parameters: RequestBuilderParameters(
-                urlSession: ignoreCacheSession,
+                urlSession: urlSession,
                 urlString: baseURL + "/users/me/counters",
                 method: .get,
                 headers: headers,
@@ -66,7 +70,7 @@ class UserCountersAPI: UserCountersAPIType {
         )
     }
     
-    private func getIncrementUserCountersRequest(id: String, increment: Int) -> URLRequest {
+    private func getIncrementUserCountersRequest(id: String, increment: Int, urlSession: URLSession) -> URLRequest {
         
         let headers: [String: String] = [
             "Content-Type": "application/vnd.api+json"
@@ -83,7 +87,7 @@ class UserCountersAPI: UserCountersAPIType {
         
         return requestBuilder.build(
             parameters: RequestBuilderParameters(
-                urlSession: ignoreCacheSession,
+                urlSession: urlSession,
                 urlString: baseURL + "/users/me/counters/\(id)",
                 method: .patch,
                 headers: headers,

@@ -11,6 +11,8 @@ import Combine
 
 class ShareShareableViewModel {
         
+    private static var backgroundCancellables: Set<AnyCancellable> = Set()
+    
     private let incrementUserCounterUseCase: IncrementUserCounterUseCase
    
     let imageToShare: UIImage
@@ -41,6 +43,6 @@ extension ShareShareableViewModel {
             } receiveValue: { _ in
                 
             }
-            .store(in: &cancellables)
+            .store(in: &Self.backgroundCancellables)
     }
 }

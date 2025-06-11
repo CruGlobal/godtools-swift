@@ -14,6 +14,8 @@ struct ToolLanguagesAvailableOfflineView: View {
     private let contentHorizontalInsets: CGFloat
     
     @ObservedObject private var viewModel: LanguageSettingsViewModel
+    
+    @State private var contentSize: CGSize = CGSize(width: 100, height: 100)
                 
     init(viewModel: LanguageSettingsViewModel, geometry: GeometryProxy, contentHorizontalInsets: CGFloat) {
         
@@ -40,41 +42,41 @@ struct ToolLanguagesAvailableOfflineView: View {
             SeparatorView()
                 .padding([.top], 11)
             
-            GeometryReader { scrollViewGeometry in
+            VStack(alignment: .leading, spacing: 0) {
                 
-                let buttonHeight: CGFloat = 50
-                let spaceBelowScrollView: CGFloat = 25
-                let scrollViewMaxHeight: CGFloat = scrollViewGeometry.size.height - buttonHeight - spaceBelowScrollView
-                
-                VStack(alignment: .leading, spacing: 0) {
+                ScrollView(.vertical, showsIndicators: true) {
                     
-                    ScrollView(.vertical, showsIndicators: true) {
+                    LazyVStack(alignment: .leading, spacing: 0) {
                         
-                        LazyVStack(alignment: .leading, spacing: 0) {
+                        ForEach(viewModel.downloadedLanguages) { downloadedLanguage in
                             
-                            ForEach(viewModel.downloadedLanguages) { downloadedLanguage in
-                                
-                                ToolLanguageAvailableOfflineLanguageView(downloadedLanguage: downloadedLanguage)
-                            }
+                            ToolLanguageAvailableOfflineLanguageView(downloadedLanguage: downloadedLanguage)
                         }
                     }
-                    .frame(maxHeight: scrollViewMaxHeight)
-                    .fixedSize(horizontal: false, vertical: true)
-                    
-                    FixedVerticalSpacer(height: spaceBelowScrollView)
-                    
-                    GTBlueButton(
-                        title: viewModel.editDownloadedLanguagesButtonTitle,
-                        font: FontLibrary.sfProTextRegular.font(size: 14),
-                        width: geometry.size.width - (contentHorizontalInsets * 2),
-                        height: buttonHeight,
-                        accessibility: .editDownloadedLanguages,
-                        action: {
-                            
-                            viewModel.editDownloadedLanguagesTapped()
+                    .background(
+                        GeometryReader { geo -> Color in
+                            DispatchQueue.main.async {
+                                contentSize = geo.size
+                            }
+                            return Color.clear
                         }
                     )
                 }
+                .frame(maxHeight: contentSize.height)
+                
+                FixedVerticalSpacer(height: 25)
+                
+                GTBlueButton(
+                    title: viewModel.editDownloadedLanguagesButtonTitle,
+                    font: FontLibrary.sfProTextRegular.font(size: 14),
+                    width: geometry.size.width - (contentHorizontalInsets * 2),
+                    height: 50,
+                    accessibility: .editDownloadedLanguages,
+                    action: {
+                        
+                        viewModel.editDownloadedLanguagesTapped()
+                    }
+                )
             }
             
         }

@@ -8,16 +8,13 @@
 
 import Foundation
 import Combine
+import RequestOperation
 
 class URLSessionWebSocket: NSObject, WebSocketInterface {
     
-    private let ignoreCacheSession: IgnoreCacheSession = IgnoreCacheSession()
+    private let session: URLSession = URLSession(configuration: CreateIgnoreCacheSessionConfig().createConfig())
     private let didConnectSubject: PassthroughSubject<Void, Never> = PassthroughSubject()
     private let didReceiveTextSubject: PassthroughSubject<String, Never> = PassthroughSubject()
-    
-    private var session: URLSession {
-        return ignoreCacheSession.session
-    }
     
     private var currentWebSocketTask: URLSessionWebSocketTask?
     private var keepAliveTimer: Timer?

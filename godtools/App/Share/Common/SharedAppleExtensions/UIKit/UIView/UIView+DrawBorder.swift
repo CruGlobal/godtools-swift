@@ -10,8 +10,8 @@ import UIKit
 
 extension UIView {
     
-    func drawBorder(color: UIColor = UIColor.red) {
-        layer.borderWidth = 1
+    func drawBorder(color: UIColor = UIColor.red, width: CGFloat = 1) {
+        layer.borderWidth = width
         layer.borderColor = color.cgColor
     }
 }
