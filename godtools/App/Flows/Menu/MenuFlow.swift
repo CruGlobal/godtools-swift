@@ -88,12 +88,8 @@ class MenuFlow: Flow {
             
         case .tutorialTappedFromMenu:
             navigateToTutorial()
-                        
-        case .closeTappedFromTutorial:
-            dismissTutorial()
             
-        case .startUsingGodToolsTappedFromTutorial:
-            flowDelegate?.navigate(step: .startUsingGodToolsTappedFromTutorial)
+        case .tutorialFlowCompleted( _):
             dismissTutorial()
             
         case .doneTappedFromMenu:

@@ -318,6 +318,10 @@
 		45373D762BE110390058E990 /* LocalizableStringKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45373D752BE110390058E990 /* LocalizableStringKeys.swift */; };
 		45373D782BE112700058E990 /* LocalizableStringDictKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45373D772BE112700058E990 /* LocalizableStringDictKeys.swift */; };
 		4537EBF12BA1ECF90024793C /* LanguageSettingsDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4537EBF02BA1ECF90024793C /* LanguageSettingsDeepLinkParser.swift */; };
+		4538351F2DF774C4005F1ABA /* DashboardFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4538351E2DF774BF005F1ABA /* DashboardFlow.swift */; };
+		453835212DF7754D005F1ABA /* DashboardFlow+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453835202DF77547005F1ABA /* DashboardFlow+Menu.swift */; };
+		453835232DF77F7D005F1ABA /* TutorialFlowCompletedState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453835222DF77F79005F1ABA /* TutorialFlowCompletedState.swift */; };
+		453835262DF78148005F1ABA /* DashboardFlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453835252DF78143005F1ABA /* DashboardFlowTests.swift */; };
 		453A2EF72B3636DA00C8F865 /* DownloadToolLanguageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453A2EF52B3636D900C8F865 /* DownloadToolLanguageUseCase.swift */; };
 		453A2EF82B3636DA00C8F865 /* RemoveDownloadedToolLanguageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453A2EF62B3636DA00C8F865 /* RemoveDownloadedToolLanguageUseCase.swift */; };
 		453A2EFC2B3636E400C8F865 /* RemoveDownloadedToolLanguageRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453A2EF92B3636E300C8F865 /* RemoveDownloadedToolLanguageRepositoryInterface.swift */; };
@@ -2084,6 +2088,10 @@
 		45373D752BE110390058E990 /* LocalizableStringKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizableStringKeys.swift; sourceTree = "<group>"; };
 		45373D772BE112700058E990 /* LocalizableStringDictKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizableStringDictKeys.swift; sourceTree = "<group>"; };
 		4537EBF02BA1ECF90024793C /* LanguageSettingsDeepLinkParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSettingsDeepLinkParser.swift; sourceTree = "<group>"; };
+		4538351E2DF774BF005F1ABA /* DashboardFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardFlow.swift; sourceTree = "<group>"; };
+		453835202DF77547005F1ABA /* DashboardFlow+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DashboardFlow+Menu.swift"; sourceTree = "<group>"; };
+		453835222DF77F79005F1ABA /* TutorialFlowCompletedState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialFlowCompletedState.swift; sourceTree = "<group>"; };
+		453835252DF78143005F1ABA /* DashboardFlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardFlowTests.swift; sourceTree = "<group>"; };
 		453A2EF52B3636D900C8F865 /* DownloadToolLanguageUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadToolLanguageUseCase.swift; sourceTree = "<group>"; };
 		453A2EF62B3636DA00C8F865 /* RemoveDownloadedToolLanguageUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoveDownloadedToolLanguageUseCase.swift; sourceTree = "<group>"; };
 		453A2EF92B3636E300C8F865 /* RemoveDownloadedToolLanguageRepositoryInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoveDownloadedToolLanguageRepositoryInterface.swift; sourceTree = "<group>"; };
@@ -5344,6 +5352,23 @@
 			path = LanguageSettings;
 			sourceTree = "<group>";
 		};
+		4538351D2DF774B7005F1ABA /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				4538351E2DF774BF005F1ABA /* DashboardFlow.swift */,
+				453835202DF77547005F1ABA /* DashboardFlow+Menu.swift */,
+			);
+			path = Dashboard;
+			sourceTree = "<group>";
+		};
+		453835242DF7813A005F1ABA /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				453835252DF78143005F1ABA /* DashboardFlowTests.swift */,
+			);
+			path = Dashboard;
+			sourceTree = "<group>";
+		};
 		453A4F302BED6745006E8B01 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -6725,6 +6750,7 @@
 			isa = PBXGroup;
 			children = (
 				45677763287DB1530044AEB2 /* TutorialFlow.swift */,
+				453835222DF77F79005F1ABA /* TutorialFlowCompletedState.swift */,
 			);
 			path = Tutorial;
 			sourceTree = "<group>";
@@ -8253,6 +8279,7 @@
 				45DC19162BB5B34D007542A5 /* BaseFlowTests.swift */,
 				451CF5932C4AAC4B00CD65C4 /* App */,
 				45DC19132BB5B338007542A5 /* ChooseAppLanguage */,
+				453835242DF7813A005F1ABA /* Dashboard */,
 				45DC19102BB5AB21007542A5 /* LanguageSettings */,
 				450FC7572C49590D00F87282 /* Menu */,
 				45A415EE2A99429B0030E2C7 /* Onboarding */,
@@ -8776,6 +8803,7 @@
 				454ADAE22ABDDC4500037C27 /* ChooseAppLanguage */,
 				459F86842AC51A8200B4E5CA /* ChooseAppLanguageNavigation */,
 				45FB15FB27DBDDB50009DF8E /* ChooseYourOwnAdventure */,
+				4538351D2DF774B7005F1ABA /* Dashboard */,
 				459602DF28400DBB00C66387 /* DownloadToolTranslations */,
 				45E3475A2A49BE220014CCD1 /* Flow */,
 				45E347622A49BE220014CCD1 /* Flow+NavigateToUrl */,
@@ -13191,6 +13219,7 @@
 				451F1EE42CD3B38B006CCF4E /* LaunchEnvironmentReader.swift in Sources */,
 				45FBE5722AB8A33200BFBE92 /* AccessibilityStrings.swift in Sources */,
 				45D318F12AE6F9D300D74A87 /* LanguageCodeDomainModel.swift in Sources */,
+				453835262DF78148005F1ABA /* DashboardFlowTests.swift in Sources */,
 				4585E4B82B05895200223A9B /* BCP47LanguageIdentifier.swift in Sources */,
 				45DC19152BB5B33F007542A5 /* ChooseAppLanguageFlowTests.swift in Sources */,
 				451CF5952C4AAC5500CD65C4 /* AppFlowTests.swift in Sources */,
@@ -13217,6 +13246,7 @@
 				45AD20BD25938F1A00A096A0 /* Signal.swift in Sources */,
 				D4960CD82CE6934E0090B114 /* ResumeLessonProgressModalViewModel.swift in Sources */,
 				4561AC9C279C4CD4003718C0 /* MobileContentCardCollectionPageViewModel.swift in Sources */,
+				453835232DF77F7D005F1ABA /* TutorialFlowCompletedState.swift in Sources */,
 				450D7B0428E32965006C3FDF /* DownloadedTranslationDataModel.swift in Sources */,
 				45BE4A862AF287F0004021DA /* ViewConfirmAppLanguageUseCase.swift in Sources */,
 				45DBE6212ACDA371008A93BF /* FeaturedLessonsDataLayerDependencies.swift in Sources */,
@@ -14261,6 +14291,7 @@
 				45BB42932CBE9E0D00290F64 /* TractPageCardsViewModel.swift in Sources */,
 				45BB42942CBE9E0D00290F64 /* TractPageCallToActionView.swift in Sources */,
 				45BB42952CBE9E0D00290F64 /* TractPageHeroViewModel.swift in Sources */,
+				453835212DF7754D005F1ABA /* DashboardFlow+Menu.swift in Sources */,
 				45BB42962CBE9E0D00290F64 /* TractPageViewFactory.swift in Sources */,
 				45BB42972CBE9E0D00290F64 /* TractPageModalViewModel.swift in Sources */,
 				45BB42982CBE9E0D00290F64 /* TractPageCardsView.swift in Sources */,
@@ -14297,6 +14328,7 @@
 				45369AD52AFA7FA500BD10F0 /* ToolScreenShareTutorialViewedDomainModel.swift in Sources */,
 				45A8351E2AD1A76E004F5593 /* ToolDetailsDomainModel.swift in Sources */,
 				45A8E43E2AFC105E008EF03D /* CreatingToolScreenShareSessionTimedOutViewModel.swift in Sources */,
+				4538351F2DF774C4005F1ABA /* DashboardFlow.swift in Sources */,
 				453AC11728F4A10400291791 /* FollowUpModelType.swift in Sources */,
 				4504BA1F2AF3ED4C001151E5 /* TutorialView.swift in Sources */,
 				458CFE8829D4E0B9007B423C /* ArticleCellViewModel.swift in Sources */,

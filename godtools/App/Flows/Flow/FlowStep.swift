@@ -77,7 +77,7 @@ enum FlowStep {
     case backTappedFromToolDetails
     case openToolTappedFromToolDetails(toolId: String, primaryLanguage: AppLanguageDomainModel, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?)
     case learnToShareToolTappedFromToolDetails(toolId: String, primaryLanguage: AppLanguageDomainModel, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?)
-    case urlLinkTappedFromToolDetail(url: URL, screenName: String, siteSection: String, siteSubSection: String, contentLanguage: String?, contentLanguageSecondary: String?)
+    case urlLinkTappedFromToolDetails(url: URL, screenName: String, siteSection: String, siteSubSection: String, contentLanguage: String?, contentLanguageSecondary: String?)
     
     // learnToShareTool
     case closeTappedFromLearnToShareTool(toolId: String, primaryLanguage: AppLanguageDomainModel, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?)
@@ -102,6 +102,7 @@ enum FlowStep {
     // tutorial
     case closeTappedFromTutorial
     case startUsingGodToolsTappedFromTutorial
+    case tutorialFlowCompleted(state: TutorialFlowCompletedState)
     
     // menu
     case doneTappedFromMenu
