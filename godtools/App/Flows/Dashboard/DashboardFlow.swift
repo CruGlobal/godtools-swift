@@ -325,7 +325,7 @@ class DashboardFlow: Flow, ToolNavigationFlow {
 
 extension DashboardFlow {
     
-    func getDashboardInNavigationStack() -> AppHostingController<DashboardView>? {
+    private func getDashboardInNavigationStack() -> AppHostingController<DashboardView>? {
         
         for viewController in navigationController.viewControllers {
             if let dashboardView = viewController as? AppHostingController<DashboardView> {
@@ -372,7 +372,7 @@ extension DashboardFlow {
         return hostingController
     }
     
-    func configureNavBarForDashboard() {
+    private func configureNavBarForDashboard() {
         
         AppDelegate.setWindowBackgroundColorForStatusBarColor(color: ColorPalette.gtBlue.uiColor)
                 
