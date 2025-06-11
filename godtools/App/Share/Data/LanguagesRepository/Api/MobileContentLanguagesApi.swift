@@ -18,16 +18,14 @@ class MobileContentLanguagesApi {
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let requestSender: RequestSender = RequestSender()
-    private let ignoreCacheSession: IgnoreCacheSession
+    private let urlSessionPriority: GetUrlSessionPriorityInterface
     private let baseUrl: String
     
-    init(config: AppConfig, ignoreCacheSession: IgnoreCacheSession) {
+    init(config: AppConfig, urlSessionPriority: GetUrlSessionPriorityInterface) {
             
-        self.ignoreCacheSession = ignoreCacheSession
+        self.urlSessionPriority = urlSessionPriority
         baseUrl = config.getMobileContentApiBaseUrl()
     }
-    
-    // MARK: - Languages
     
     private func getLanguagesRequest(urlSession: URLSession) -> URLRequest {
         
@@ -43,9 +41,9 @@ class MobileContentLanguagesApi {
         )
     }
     
-    func getLanguages() -> AnyPublisher<[LanguageModel], Error> {
+    func getLanguages(sendRequestPriority: SendRequestPriority) -> AnyPublisher<[LanguageModel], Error> {
         
-        let urlSession: URLSession = ignoreCacheSession.session
+        let urlSession: URLSession = urlSessionPriority.getUrlSession(priority: sendRequestPriority)
         
         let urlRequest: URLRequest = getLanguagesRequest(urlSession: urlSession)
         

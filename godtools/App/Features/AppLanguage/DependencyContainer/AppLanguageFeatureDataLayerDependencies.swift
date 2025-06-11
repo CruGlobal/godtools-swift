@@ -25,7 +25,7 @@ class AppLanguageFeatureDataLayerDependencies {
             realmDatabase: realmDatabase ?? coreDataLayer.getSharedRealmDatabase()
         )
         
-        let sync: AppLanguagesRepositorySyncInterface = sync ?? AppLanguagesRepositorySync(api: AppLanguagesApi(), cache: cache)
+        let sync: AppLanguagesRepositorySyncInterface = sync ?? AppLanguagesRepositorySync(api: AppLanguagesApi(), cache: cache, userDefaultsCache: coreDataLayer.getSharedUserDefaultsCache())
         
         return AppLanguagesRepository(
             cache: cache,
@@ -102,7 +102,8 @@ class AppLanguageFeatureDataLayerDependencies {
             downloadedLanguagesRepository: getDownloadedLanguagesRepository(),
             getTranslatedLanguageName: coreDataLayer.getTranslatedLanguageName(),
             resourcesRepository: coreDataLayer.getResourcesRepository(),
-            localizationServices: coreDataLayer.getLocalizationServices()
+            localizationServices: coreDataLayer.getLocalizationServices(),
+            stringWithLocaleCount: coreDataLayer.getStringWithLocaleCount()
         )
     }
     

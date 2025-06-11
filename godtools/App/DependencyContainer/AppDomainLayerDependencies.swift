@@ -121,14 +121,16 @@ class AppDomainLayerDependencies {
     
     func getUserActivityBadgeUseCase() -> GetUserActivityBadgeUseCase {
         return GetUserActivityBadgeUseCase(
-            localizationServices: dataLayer.getLocalizationServices()
+            localizationServices: dataLayer.getLocalizationServices(),
+            stringWithLocaleCount: dataLayer.getStringWithLocaleCount()
         )
     }
     
     func getUserActivityStatsUseCase() -> GetUserActivityStatsUseCase {
         return GetUserActivityStatsUseCase(
             localizationServices: dataLayer.getLocalizationServices(),
-            getTranslatedNumberCount: dataLayer.getTranslatedNumberCount()
+            getTranslatedNumberCount: dataLayer.getTranslatedNumberCount(),
+            stringWithLocaleCount: dataLayer.getStringWithLocaleCount()
         )
     }
     

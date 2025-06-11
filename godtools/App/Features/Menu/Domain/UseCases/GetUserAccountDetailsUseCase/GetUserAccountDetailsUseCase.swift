@@ -25,7 +25,7 @@ class GetUserAccountDetailsUseCase {
         
         return Publishers.CombineLatest(
             repository
-                .getAuthUserDetailsFromRemotePublisher()
+                .getAuthUserDetailsFromRemotePublisher(sendRequestPriority: .high)
                 .prepend(UserDetailsDataModel.emptyDataModel())
                 .catch({ _ in
                     return Just(UserDetailsDataModel.emptyDataModel())

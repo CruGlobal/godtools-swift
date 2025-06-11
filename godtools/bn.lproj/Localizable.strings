@@ -1,5 +1,10 @@
+"optInNotification.notificationSettings" = "নোটিফিকেশন সেটিংস";
 "lessons.swipeTutorial.title" = "পেজ পরিবর্তন করতে সোয়াইপ করুন";
 "lessons.swipeTutorial.buttonText" = "বুঝেছি";
+"optInNotification.title" = "পরামর্শ এবং উৎসাহ পান";
+"optInNotification.body" = "আলোচনার জন্য প্রস্তুত থাকুন।\nআজ নোটিফিকেশনগুলোকে অনুমতি দিন।";
+"optInNotification.allowNotifications" = "নোটিফিকেশনগুলোকে অনুমতি দিন";
+"optInNotification.maybeLater" = "হয়তো পরে";
 
 /* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
 "lessons.resumeLessonModal.title" = "প্রগতি পুনরায় চালু করুন";

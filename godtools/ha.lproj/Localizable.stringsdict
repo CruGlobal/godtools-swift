@@ -175,7 +175,7 @@
 <key>one</key>
 <string>An raba hotuna 1</string>
 <key>other</key>
-<string>An raba hotuna %d</string>
+<string>%d An raba hotuna</string>
 </dict>
 </dict>
 <key>badges.articlesOpened</key>
@@ -223,7 +223,7 @@
 <key>one</key>
 <string>Kayan aiki daya dake bude</string>
 <key>other</key>
-<string>Kayan aiki dake bude</string>
+<string>Kayan %d aiki dake bude</string>
 </dict>
 </dict>
 <key>badges.tipsCompleted</key>

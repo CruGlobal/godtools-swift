@@ -13,30 +13,35 @@ import Combine
 class UserDetailsAPI {
     
     private let authSession: MobileContentApiAuthSession
-    private let baseURL: String
-    private let ignoreCacheSession: URLSession
     private let requestBuilder: RequestBuilder = RequestBuilder()
+    private let urlSessionPriority: GetUrlSessionPriorityInterface
+    private let baseURL: String
     
-    init(config: AppConfig, ignoreCacheSession: IgnoreCacheSession, mobileContentApiAuthSession: MobileContentApiAuthSession) {
+    init(config: AppConfig, urlSessionPriority: GetUrlSessionPriorityInterface, mobileContentApiAuthSession: MobileContentApiAuthSession) {
         
-        self.baseURL = config.getMobileContentApiBaseUrl()
-        self.ignoreCacheSession = ignoreCacheSession.session
+        self.urlSessionPriority = urlSessionPriority
         self.authSession = mobileContentApiAuthSession
+        self.baseURL = config.getMobileContentApiBaseUrl()
     }
     
-    func fetchUserDetailsPublisher() -> AnyPublisher<MobileContentApiUsersMeCodable, Error> {
+    func fetchUserDetailsPublisher(sendRequestPriority: SendRequestPriority) -> AnyPublisher<MobileContentApiUsersMeCodable, Error> {
         
-        let urlRequest: URLRequest = getAuthUserDetailsRequest()
+        let urlSession: URLSession = urlSessionPriority.getUrlSession(priority: sendRequestPriority)
         
-        return authSession.sendAuthenticatedRequest(urlRequest: urlRequest, urlSession: ignoreCacheSession)
-            .decode(type: JsonApiResponseDataObject<MobileContentApiUsersMeCodable>.self, decoder: JSONDecoder())
-            .map {
-                return $0.dataObject
-            }
-            .eraseToAnyPublisher()
+        let urlRequest: URLRequest = getAuthUserDetailsRequest(urlSession: urlSession)
+                
+        return authSession.sendAuthenticatedRequest(
+            urlRequest: urlRequest,
+            urlSession: urlSession
+        )
+        .decode(type: JsonApiResponseDataObject<MobileContentApiUsersMeCodable>.self, decoder: JSONDecoder())
+        .map {
+            return $0.dataObject
+        }
+        .eraseToAnyPublisher()
     }
     
-    private func getAuthUserDetailsRequest() -> URLRequest {
+    private func getAuthUserDetailsRequest(urlSession: URLSession) -> URLRequest {
         
         let headers: [String: String] = [
             "Content-Type": "application/vnd.api+json"
@@ -44,7 +49,7 @@ class UserDetailsAPI {
         
         return requestBuilder.build(
             parameters: RequestBuilderParameters(
-                urlSession: ignoreCacheSession,
+                urlSession: urlSession,
                 urlString: baseURL + "/users/me",
                 method: .get,
                 headers: headers,
@@ -54,19 +59,24 @@ class UserDetailsAPI {
         )
     }
     
-    func deleteAuthUserDetailsPublisher() -> AnyPublisher<Void, Error> {
+    func deleteAuthUserDetailsPublisher(sendRequestPriority: SendRequestPriority) -> AnyPublisher<Void, Error> {
         
-        let urlRequest = getDeleteAuthorizedUserDetailsRequest()
+        let urlSession: URLSession = urlSessionPriority.getUrlSession(priority: sendRequestPriority)
         
-        return authSession.sendAuthenticatedRequest(urlRequest: urlRequest, urlSession: ignoreCacheSession)
-            .map { (data: Data) in
+        let urlRequest = getDeleteAuthorizedUserDetailsRequest(urlSession: urlSession)
                 
-                return ()
-            }
-            .eraseToAnyPublisher()
+        return authSession.sendAuthenticatedRequest(
+            urlRequest: urlRequest,
+            urlSession: urlSession
+        )
+        .map { (data: Data) in
+            
+            return ()
+        }
+        .eraseToAnyPublisher()
     }
     
-    private func getDeleteAuthorizedUserDetailsRequest() -> URLRequest {
+    private func getDeleteAuthorizedUserDetailsRequest(urlSession: URLSession) -> URLRequest {
         
         let headers: [String: String] = [
             "Content-Type": "application/vnd.api+json"
@@ -74,7 +84,7 @@ class UserDetailsAPI {
         
         return requestBuilder.build(
             parameters: RequestBuilderParameters(
-                urlSession: ignoreCacheSession,
+                urlSession: urlSession,
                 urlString: baseURL + "/users/me",
                 method: .delete,
                 headers: headers,
