@@ -11,7 +11,7 @@ import MessageUI
 import SwiftUI
 import Combine
 
-class AppFlow: NSObject, Flow, ToolNavigationFlow {
+class AppFlow: NSObject, Flow {
         
     private let deepLinkingService: DeepLinkingService
     private let appMessaging: AppMessagingInterface
@@ -23,7 +23,6 @@ class AppFlow: NSObject, Flow, ToolNavigationFlow {
     private var articleDeepLinkFlow: ArticleDeepLinkFlow?
     private var appLaunchedFromDeepLink: ParsedDeepLinkType?
     private var optInNotificationFlow: OptInNotificationFlow?
-    private var isObservingDeepLinking: Bool = false
     private var cancellableForAppLaunchedFromTerminatedStateOptions: AnyCancellable?
     private var cancellableForShouldPromptForOptInNotification: AnyCancellable?
     private var cancellables: Set<AnyCancellable> = Set()
@@ -33,12 +32,6 @@ class AppFlow: NSObject, Flow, ToolNavigationFlow {
     let appDiContainer: AppDiContainer
     let rootController: AppRootController = AppRootController(nibName: nil, bundle: nil)
     let navigationController: AppNavigationController
-    
-    var articleFlow: ArticleFlow?
-    var chooseYourOwnAdventureFlow: ChooseYourOwnAdventureFlow?
-    var lessonFlow: LessonFlow?
-    var tractFlow: TractFlow?
-    var downloadToolTranslationFlow: DownloadToolTranslationsFlow?
             
     init(appDiContainer: AppDiContainer, appDeepLinkingService: DeepLinkingService) {
         
@@ -66,7 +59,23 @@ class AppFlow: NSObject, Flow, ToolNavigationFlow {
         
         rootController.addChildController(child: navigationController)
         
-        addDeepLinkingObservers()
+        deepLinkingService
+            .parsedDeepLinkPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (deepLink: ParsedDeepLinkType?) in
+                
+                guard let weakSelf = self, let deepLink = deepLink else {
+                    return
+                }
+                
+                if !weakSelf.appLaunchObserver.appLaunched {
+                    weakSelf.appLaunchedFromDeepLink = deepLink
+                }
+                else {
+                    weakSelf.navigate(step: .deepLink(deepLinkType: deepLink))
+                }
+            }
+            .store(in: &cancellables)
         
         appMessaging.setMessagingDelegate(messagingDelegate: self)
         
@@ -86,7 +95,6 @@ class AppFlow: NSObject, Flow, ToolNavigationFlow {
     
     deinit {
         print("x deinit: \(type(of: self))")
-        removeDeepLinkingObservers()
     }
     
     func getInitialView() -> UIViewController {
@@ -347,39 +355,6 @@ extension AppFlow {
 
 extension AppFlow {
     
-    private func addDeepLinkingObservers() {
-        
-        guard !isObservingDeepLinking else {
-            return
-        }
-        
-        isObservingDeepLinking = true
-        
-        deepLinkingService.deepLinkObserver.addObserver(self) { [weak self] (optionalDeepLink: ParsedDeepLinkType?) in
-            
-            guard let deepLink = optionalDeepLink else {
-                return
-            }
-            
-            guard let weakSelf = self else {
-                return
-            }
-            
-            if !weakSelf.appLaunchObserver.appLaunched {
-                weakSelf.appLaunchedFromDeepLink = deepLink
-            }
-            else {
-                weakSelf.navigate(step: .deepLink(deepLinkType: deepLink))
-            }
-        }
-    }
-    
-    private func removeDeepLinkingObservers() {
-        
-        isObservingDeepLinking = false
-        deepLinkingService.deepLinkObserver.removeObserver(self)
-    }
-    
     private func navigateToDeepLink(deepLink: ParsedDeepLinkType) {
         
         switch deepLink {
@@ -388,7 +363,7 @@ extension AppFlow {
                
             dashboardFlow.navigateToDashboard(startingTab: .favorites, animatePopToToolsMenu: false, animateDismissingPresentedView: false, didCompleteDismissingPresentedView: nil)
                         
-            navigateToToolFromToolDeepLink(appLanguage: appLanguage, toolDeepLink: toolDeepLink, didCompleteToolNavigation: nil)
+            dashboardFlow.navigateToToolFromToolDeepLink(appLanguage: appLanguage, toolDeepLink: toolDeepLink, didCompleteToolNavigation: nil)
             
         case .articleAemUri(let aemUri):
             
