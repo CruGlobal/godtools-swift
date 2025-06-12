@@ -8,6 +8,7 @@
 
 import Foundation
 import Combine
+import RequestOperation
 
 class RemoteUserCountersSync {
     
@@ -22,7 +23,7 @@ class RemoteUserCountersSync {
         self.cache = cache
     }
     
-    func syncUpdatedUserCountersWithRemote(sendRequestPriority: SendRequestPriority) {
+    func syncUpdatedUserCountersWithRemote(requestPriority: RequestPriority) {
         
         if cancellables.isEmpty == false {
             for cancellable in cancellables {
@@ -38,7 +39,7 @@ class RemoteUserCountersSync {
             
             let incrementValue = userCounter.incrementValue
             
-            api.incrementUserCounterPublisher(id: userCounter.id, increment: incrementValue, sendRequestPriority: sendRequestPriority)
+            api.incrementUserCounterPublisher(id: userCounter.id, increment: incrementValue, requestPriority: requestPriority)
                 .flatMap { (userCounterUpdatedFromRemote: UserCounterDecodable) in
                     
                     return self.cache.syncUserCounter(userCounterUpdatedFromRemote, incrementValueBeforeRemoteUpdate: incrementValue)

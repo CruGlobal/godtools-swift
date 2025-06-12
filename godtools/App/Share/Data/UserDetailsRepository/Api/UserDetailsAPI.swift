@@ -14,19 +14,19 @@ class UserDetailsAPI {
     
     private let authSession: MobileContentApiAuthSession
     private let requestBuilder: RequestBuilder = RequestBuilder()
-    private let urlSessionPriority: GetUrlSessionPriorityInterface
+    private let urlSessionPriority: URLSessionPriority
     private let baseURL: String
     
-    init(config: AppConfig, urlSessionPriority: GetUrlSessionPriorityInterface, mobileContentApiAuthSession: MobileContentApiAuthSession) {
+    init(config: AppConfig, urlSessionPriority: URLSessionPriority, mobileContentApiAuthSession: MobileContentApiAuthSession) {
         
         self.urlSessionPriority = urlSessionPriority
         self.authSession = mobileContentApiAuthSession
         self.baseURL = config.getMobileContentApiBaseUrl()
     }
     
-    func fetchUserDetailsPublisher(sendRequestPriority: SendRequestPriority) -> AnyPublisher<MobileContentApiUsersMeCodable, Error> {
+    func fetchUserDetailsPublisher(requestPriority: RequestPriority) -> AnyPublisher<MobileContentApiUsersMeCodable, Error> {
         
-        let urlSession: URLSession = urlSessionPriority.getUrlSession(priority: sendRequestPriority)
+        let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
         let urlRequest: URLRequest = getAuthUserDetailsRequest(urlSession: urlSession)
                 
@@ -59,9 +59,9 @@ class UserDetailsAPI {
         )
     }
     
-    func deleteAuthUserDetailsPublisher(sendRequestPriority: SendRequestPriority) -> AnyPublisher<Void, Error> {
+    func deleteAuthUserDetailsPublisher(requestPriority: RequestPriority) -> AnyPublisher<Void, Error> {
         
-        let urlSession: URLSession = urlSessionPriority.getUrlSession(priority: sendRequestPriority)
+        let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
         let urlRequest = getDeleteAuthorizedUserDetailsRequest(urlSession: urlSession)
                 

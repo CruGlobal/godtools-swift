@@ -9,10 +9,11 @@
 import Foundation
 import Combine
 import GodToolsToolParser
+import RequestOperation
 
 class GetToolTranslationsFilesUseCase {
         
-    private static let defaultRequestPriority: SendRequestPriority = .high
+    private static let defaultRequestPriority: RequestPriority = .high
     
     private let resourcesRepository: ResourcesRepository
     private let translationsRepository: TranslationsRepository
@@ -70,7 +71,7 @@ class GetToolTranslationsFilesUseCase {
                         
                         self.initiateDownloadStarted(downloadStarted: downloadStarted)
                             
-                        return self.translationsRepository.getTranslationManifestsFromRemote(translations: translations, manifestParserType: manifestParserType, sendRequestPriority: Self.defaultRequestPriority, includeRelatedFiles: includeRelatedFiles, shouldFallbackToLatestDownloadedTranslationIfRemoteFails: true)
+                        return self.translationsRepository.getTranslationManifestsFromRemote(translations: translations, manifestParserType: manifestParserType, requestPriority: Self.defaultRequestPriority, includeRelatedFiles: includeRelatedFiles, shouldFallbackToLatestDownloadedTranslationIfRemoteFails: true)
                             .eraseToAnyPublisher()
                     })
                     .eraseToAnyPublisher()
@@ -181,7 +182,7 @@ class GetToolTranslationsFilesUseCase {
     private func downloadResourcesFromRemoteAndDetermineTranslationsToDownloadPublisher(resourceNeeded: DetermineToolTranslationsResourceNeeded, determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadInterface) -> AnyPublisher<DetermineToolTranslationsToDownloadResult, Error> {
         
         return languagesRepository
-            .syncLanguagesFromRemote(sendRequestPriority: Self.defaultRequestPriority)
+            .syncLanguagesFromRemote(requestPriority: Self.defaultRequestPriority)
             .flatMap({ (languagesSynced: RealmLanguagesCacheSyncResult) -> AnyPublisher<Void, Error> in
                 
                 self.syncResourcesPublisher(resourceNeeded: resourceNeeded)
@@ -222,12 +223,12 @@ class GetToolTranslationsFilesUseCase {
         
         case .abbreviation(let value):
             return resourcesRepository
-                .syncResourceAndLatestTranslationsPublisher(resourceAbbreviation: value, sendRequestPriority: Self.defaultRequestPriority)
+                .syncResourceAndLatestTranslationsPublisher(resourceAbbreviation: value, requestPriority: Self.defaultRequestPriority)
                 .eraseToAnyPublisher()
             
         case .id(let value):
             return resourcesRepository
-                .syncResourceAndLatestTranslationsPublisher(resourceId: value, sendRequestPriority: Self.defaultRequestPriority)
+                .syncResourceAndLatestTranslationsPublisher(resourceId: value, requestPriority: Self.defaultRequestPriority)
                 .eraseToAnyPublisher()
         }
     }

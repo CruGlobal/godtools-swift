@@ -8,6 +8,7 @@
 
 import Foundation
 import Combine
+import RequestOperation
 @testable import godtools
 
 class UserCountersAPIMock {
@@ -26,14 +27,14 @@ class UserCountersAPIMock {
     
 extension UserCountersAPIMock: UserCountersAPIType {
     
-    func fetchUserCountersPublisher(sendRequestPriority: SendRequestPriority) -> AnyPublisher<[UserCounterDecodable], Error> {
+    func fetchUserCountersPublisher(requestPriority: RequestPriority) -> AnyPublisher<[UserCounterDecodable], Error> {
         
         return Just(fetchedCounters)
             .setFailureType(to: Error.self)
             .eraseToAnyPublisher()
     }
     
-    func incrementUserCounterPublisher(id: String, increment: Int, sendRequestPriority: SendRequestPriority) -> AnyPublisher<UserCounterDecodable, Error> {
+    func incrementUserCounterPublisher(id: String, increment: Int, requestPriority: RequestPriority) -> AnyPublisher<UserCounterDecodable, Error> {
         
         let remoteCount = remoteCountValues.removeFirst()
         let userCounterDecodable = UserCounterDecodable(id: id, count: increment + remoteCount)

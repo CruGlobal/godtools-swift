@@ -8,6 +8,7 @@
 
 import Foundation
 import Combine
+import RequestOperation
 
 class UserDetailsRepository {
     
@@ -36,9 +37,9 @@ class UserDetailsRepository {
         return cache.getAuthUserDetails()
     }
     
-    func getAuthUserDetailsFromRemotePublisher(sendRequestPriority: SendRequestPriority) -> AnyPublisher<UserDetailsDataModel, Error> {
+    func getAuthUserDetailsFromRemotePublisher(requestPriority: RequestPriority) -> AnyPublisher<UserDetailsDataModel, Error> {
         
-        return api.fetchUserDetailsPublisher(sendRequestPriority: sendRequestPriority)
+        return api.fetchUserDetailsPublisher(requestPriority: requestPriority)
             .flatMap { (usersMeCodable: MobileContentApiUsersMeCodable) in
                 
                 let userDetails = UserDetailsDataModel(userDetailsType: usersMeCodable)
@@ -49,9 +50,9 @@ class UserDetailsRepository {
             .eraseToAnyPublisher()
     }
     
-    func deleteAuthUserDetailsPublisher(sendRequestPriority: SendRequestPriority) -> AnyPublisher<Void, Error> {
+    func deleteAuthUserDetailsPublisher(requestPriority: RequestPriority) -> AnyPublisher<Void, Error> {
         
-        return api.deleteAuthUserDetailsPublisher(sendRequestPriority: sendRequestPriority)
+        return api.deleteAuthUserDetailsPublisher(requestPriority: requestPriority)
             .eraseToAnyPublisher()
     }
 }

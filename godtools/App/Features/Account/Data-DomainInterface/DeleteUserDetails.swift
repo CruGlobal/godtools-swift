@@ -20,7 +20,7 @@ class DeleteUserDetails: DeleteUserDetailsInterface {
     
     func deleteUserDetailsPublisher() -> AnyPublisher<Void, Error> {
         
-        return userDetailsRepository.deleteAuthUserDetailsPublisher(sendRequestPriority: .high)
+        return userDetailsRepository.deleteAuthUserDetailsPublisher(requestPriority: .high)
             .eraseToAnyPublisher()
     }
 }

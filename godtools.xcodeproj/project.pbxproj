@@ -647,9 +647,6 @@
 		457CB0172DC1090300D2019F /* PersistUserToolLanguageSettingsUseCase+PersistToolLanguageSettingsInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457CB0142DC1090300D2019F /* PersistUserToolLanguageSettingsUseCase+PersistToolLanguageSettingsInterface.swift */; };
 		457CB0182DC1090300D2019F /* PersistToolLanguageSettingsInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457CB0132DC1090300D2019F /* PersistToolLanguageSettingsInterface.swift */; };
 		457E199A27C6E3AF00BABD49 /* MobileContentRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457E199927C6E3AF00BABD49 /* MobileContentRenderer.swift */; };
-		457F69322DE0C00E0078FEBC /* SendRequestPriority.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457F692F2DE0C00E0078FEBC /* SendRequestPriority.swift */; };
-		457F69332DE0C00E0078FEBC /* GetUrlSessionPriorityInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457F692E2DE0C00E0078FEBC /* GetUrlSessionPriorityInterface.swift */; };
-		457F69342DE0C00E0078FEBC /* TempPriorityRequestSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457F69302DE0C00E0078FEBC /* TempPriorityRequestSender.swift */; };
 		457F69372DE0C0360078FEBC /* DownloadManifestArticlesObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457F69362DE0C0360078FEBC /* DownloadManifestArticlesObservable.swift */; };
 		457F69392DE0C04A0078FEBC /* DeleteUserDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457F69382DE0C04A0078FEBC /* DeleteUserDetails.swift */; };
 		457F693B2DE0C0570078FEBC /* DeleteUserDetailsInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457F693A2DE0C0570078FEBC /* DeleteUserDetailsInterface.swift */; };
@@ -2431,9 +2428,6 @@
 		457CB0142DC1090300D2019F /* PersistUserToolLanguageSettingsUseCase+PersistToolLanguageSettingsInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PersistUserToolLanguageSettingsUseCase+PersistToolLanguageSettingsInterface.swift"; sourceTree = "<group>"; };
 		457E199927C6E3AF00BABD49 /* MobileContentRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentRenderer.swift; sourceTree = "<group>"; };
 		457E7A372BE5B39800265D92 /* RealmDatabaseDeleteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmDatabaseDeleteTests.swift; sourceTree = "<group>"; };
-		457F692E2DE0C00E0078FEBC /* GetUrlSessionPriorityInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUrlSessionPriorityInterface.swift; sourceTree = "<group>"; };
-		457F692F2DE0C00E0078FEBC /* SendRequestPriority.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendRequestPriority.swift; sourceTree = "<group>"; };
-		457F69302DE0C00E0078FEBC /* TempPriorityRequestSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempPriorityRequestSender.swift; sourceTree = "<group>"; };
 		457F69362DE0C0360078FEBC /* DownloadManifestArticlesObservable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadManifestArticlesObservable.swift; sourceTree = "<group>"; };
 		457F69382DE0C04A0078FEBC /* DeleteUserDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteUserDetails.swift; sourceTree = "<group>"; };
 		457F693A2DE0C0570078FEBC /* DeleteUserDetailsInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteUserDetailsInterface.swift; sourceTree = "<group>"; };
@@ -4254,7 +4248,6 @@
 				D409F2AB2928042100D9D2FE /* MobileContentApiAuthSession */,
 				D4B05FF3291061E8005852D0 /* MobileContentAuthTokenRepository */,
 				D42FEBDD287605D60002FAD9 /* OptInOnboardingBannerEnabledRepository */,
-				457F69312DE0C00E0078FEBC /* PriorityRequestSender */,
 				45B212A82922965F00C9A94D /* RealmDatabase */,
 				455258482D36F66E00FAC98D /* RemoteConfigRepository */,
 				45D63E8C288F77D4009B4610 /* ResourcesRepository */,
@@ -7071,16 +7064,6 @@
 				457CB0152DC1090300D2019F /* PersistToolLanguageSettings */,
 			);
 			path = Interfaces;
-			sourceTree = "<group>";
-		};
-		457F69312DE0C00E0078FEBC /* PriorityRequestSender */ = {
-			isa = PBXGroup;
-			children = (
-				457F692E2DE0C00E0078FEBC /* GetUrlSessionPriorityInterface.swift */,
-				457F692F2DE0C00E0078FEBC /* SendRequestPriority.swift */,
-				457F69302DE0C00E0078FEBC /* TempPriorityRequestSender.swift */,
-			);
-			path = PriorityRequestSender;
 			sourceTree = "<group>";
 		};
 		457F69442DE0C0E70078FEBC /* DownloadResult */ = {
@@ -14690,9 +14673,6 @@
 				4598BD112BF7DF6800196463 /* AuthenticationProviderResponse.swift in Sources */,
 				45308EBF2BDC27C800A49D96 /* LessonEvaluationScaleDomainModel.swift in Sources */,
 				D4960CCE2CD177980090B114 /* ResumeLessonProgressModal.swift in Sources */,
-				457F69322DE0C00E0078FEBC /* SendRequestPriority.swift in Sources */,
-				457F69332DE0C00E0078FEBC /* GetUrlSessionPriorityInterface.swift in Sources */,
-				457F69342DE0C00E0078FEBC /* TempPriorityRequestSender.swift in Sources */,
 				454CA1FA2B7BC2E6009A3976 /* StoreInitialAppLanguageUseCase.swift in Sources */,
 				4595E0E52A852DF400D88DAE /* RealmUserDetails+UserDetailsDataModelType.swift in Sources */,
 				45F267A328907F67006679F2 /* RealmResourcesCacheSyncResult.swift in Sources */,
@@ -16156,7 +16136,7 @@
 			repositoryURL = "https://github.com/CruGlobal/request-operation-ios.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 1.12.1;
+				minimumVersion = 1.12.2;
 			};
 		};
 		45D40C662A5315B400E8E4AE /* XCRemoteSwiftPackageReference "Starscream" */ = {

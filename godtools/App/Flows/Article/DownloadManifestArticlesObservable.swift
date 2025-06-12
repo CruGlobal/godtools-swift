@@ -48,7 +48,7 @@ class DownloadManifestArticlesObservable: ObservableObject {
                 translationId: translation.id,
                 languageCode: language.localeId,
                 downloadCachePolicy: downloadCachePolicy,
-                sendRequestPriority: .high,
+                requestPriority: .high,
                 forceFetchFromRemote: forceFetchFromRemote
             )
             .receive(on: DispatchQueue.main)

@@ -14,10 +14,10 @@ class MobileContentResourcesApi {
     
     private let requestSender: RequestSender = RequestSender()
     private let requestBuilder: RequestBuilder = RequestBuilder()
-    private let urlSessionPriority: GetUrlSessionPriorityInterface
+    private let urlSessionPriority: URLSessionPriority
     private let baseUrl: String
     
-    init(config: AppConfig, urlSessionPriority: GetUrlSessionPriorityInterface) {
+    init(config: AppConfig, urlSessionPriority: URLSessionPriority) {
                     
         self.urlSessionPriority = urlSessionPriority
         baseUrl = config.getMobileContentApiBaseUrl()
@@ -39,9 +39,9 @@ class MobileContentResourcesApi {
         )
     }
     
-    func getResourcePlusLatestTranslationsAndAttachmentsPublisher(id: String, sendRequestPriority: SendRequestPriority) -> AnyPublisher<ResourcesPlusLatestTranslationsAndAttachmentsModel, Error> {
+    func getResourcePlusLatestTranslationsAndAttachmentsPublisher(id: String, requestPriority: RequestPriority) -> AnyPublisher<ResourcesPlusLatestTranslationsAndAttachmentsModel, Error> {
         
-        let urlSession: URLSession = urlSessionPriority.getUrlSession(priority: sendRequestPriority)
+        let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
         let urlRequest: URLRequest = getResourcePlusLatestTranslationsAndAttachmentsRequest(urlSession: urlSession, id: id)
         
@@ -69,9 +69,9 @@ class MobileContentResourcesApi {
         )
     }
     
-    func getResourcePlusLatestTranslationsAndAttachmentsPublisher(abbreviation: String, sendRequestPriority: SendRequestPriority) -> AnyPublisher<ResourcesPlusLatestTranslationsAndAttachmentsModel, Error> {
+    func getResourcePlusLatestTranslationsAndAttachmentsPublisher(abbreviation: String, requestPriority: RequestPriority) -> AnyPublisher<ResourcesPlusLatestTranslationsAndAttachmentsModel, Error> {
         
-        let urlSession: URLSession = urlSessionPriority.getUrlSession(priority: sendRequestPriority)
+        let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
         let urlRequest: URLRequest = getResourcePlusLatestTranslationsAndAttachmentsRequest(urlSession: urlSession, abbreviation: abbreviation)
         
@@ -101,9 +101,9 @@ class MobileContentResourcesApi {
         )
     }
     
-    func getResourcesPlusLatestTranslationsAndAttachments(sendRequestPriority: SendRequestPriority) -> AnyPublisher<ResourcesPlusLatestTranslationsAndAttachmentsModel, Error> {
+    func getResourcesPlusLatestTranslationsAndAttachments(requestPriority: RequestPriority) -> AnyPublisher<ResourcesPlusLatestTranslationsAndAttachmentsModel, Error> {
         
-        let urlSession: URLSession = urlSessionPriority.getUrlSession(priority: sendRequestPriority)
+        let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
         let urlRequest: URLRequest = getResourcesPlusLatestTranslationsAndAttachmentsRequest(urlSession: urlSession)
         

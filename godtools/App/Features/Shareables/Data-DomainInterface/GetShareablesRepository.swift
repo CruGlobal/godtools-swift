@@ -29,7 +29,7 @@ class GetShareablesRepository: GetShareablesRepositoryInterface {
         return translationsRepository.getTranslationManifestFromCacheElseRemote(
             translation: translation,
             manifestParserType: .manifestOnly,
-            sendRequestPriority: .medium,
+            requestPriority: .medium,
             includeRelatedFiles: true,
             shouldFallbackToLatestDownloadedTranslationIfRemoteFails: false
         )

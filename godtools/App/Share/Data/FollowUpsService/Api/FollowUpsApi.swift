@@ -14,10 +14,10 @@ class FollowUpsApi {
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let requestSender: RequestSender = RequestSender()
-    private let urlSessionPriority: GetUrlSessionPriorityInterface
+    private let urlSessionPriority: URLSessionPriority
     private let baseUrl: String
     
-    init(baseUrl: String, urlSessionPriority: GetUrlSessionPriorityInterface) {
+    init(baseUrl: String, urlSessionPriority: URLSessionPriority) {
         
         self.urlSessionPriority = urlSessionPriority
         self.baseUrl = baseUrl
@@ -53,9 +53,9 @@ class FollowUpsApi {
         )
     }
     
-    func postFollowUpPublisher(followUp: FollowUpModelType, sendRequestPriority: SendRequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
+    func postFollowUpPublisher(followUp: FollowUpModelType, requestPriority: RequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
             
-        let urlSession: URLSession = urlSessionPriority.getUrlSession(priority: sendRequestPriority)
+        let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
         let urlRequest = getFollowUpRequest(followUp: followUp, urlSession: urlSession)
         

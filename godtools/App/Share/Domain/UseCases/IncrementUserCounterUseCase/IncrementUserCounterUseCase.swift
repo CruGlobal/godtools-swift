@@ -52,7 +52,7 @@ class IncrementUserCounterUseCase {
                 // Maybe this can be moved to AppFlow loadInitialData method or trigger peridically when network is available. ~Levi
                 // Created SubTask GT-2612 in GT-2563.
                 
-                self.userCountersRepository.syncUpdatedUserCountersWithRemote(sendRequestPriority: .low)
+                self.userCountersRepository.syncUpdatedUserCountersWithRemote(requestPriority: .low)
                 
                 let userCounterDomainModel: UserCounterDomainModel
                 

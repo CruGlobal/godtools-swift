@@ -13,22 +13,22 @@ import Combine
 class ArticleAemDownloader {
             
     private let requestSender: RequestSender = RequestSender()
-    private let urlSessionPriority: GetUrlSessionPriorityInterface
+    private let urlSessionPriority: URLSessionPriority
     private let maxAemJsonTreeLevels: Int = 9999
         
-    init(urlSessionPriority: GetUrlSessionPriorityInterface) {
+    init(urlSessionPriority: URLSessionPriority) {
         
         self.urlSessionPriority = urlSessionPriority
     }
     
-    func downloadPublisher(aemUris: [String], downloadCachePolicy: ArticleAemDownloaderCachePolicy, sendRequestPriority: SendRequestPriority) -> AnyPublisher<ArticleAemDownloaderResult, Never> {
+    func downloadPublisher(aemUris: [String], downloadCachePolicy: ArticleAemDownloaderCachePolicy, requestPriority: RequestPriority) -> AnyPublisher<ArticleAemDownloaderResult, Never> {
                 
         let requests: [AnyPublisher<AemUriDownloadResult, Never>] = aemUris.map { (aemUri: String) in
             
             return self.downloadAemUriPublisher(
                 aemUri: aemUri,
                 downloadCachePolicy: downloadCachePolicy,
-                sendRequestPriority: sendRequestPriority
+                requestPriority: requestPriority
             )
             .eraseToAnyPublisher()
         }
@@ -45,7 +45,7 @@ class ArticleAemDownloader {
             .eraseToAnyPublisher()
     }
     
-    private func downloadAemUriPublisher(aemUri: String, downloadCachePolicy: ArticleAemDownloaderCachePolicy, sendRequestPriority: SendRequestPriority) -> AnyPublisher<AemUriDownloadResult, Never> {
+    private func downloadAemUriPublisher(aemUri: String, downloadCachePolicy: ArticleAemDownloaderCachePolicy, requestPriority: RequestPriority) -> AnyPublisher<AemUriDownloadResult, Never> {
         
         guard let aemUrl = URL(string: aemUri) else {
             
@@ -68,7 +68,7 @@ class ArticleAemDownloader {
         }
         
         let errorDomain: String = "ArticleAemDownloadOperation"
-        let urlSession: URLSession = urlSessionPriority.getUrlSession(priority: sendRequestPriority)
+        let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
         let urlRequest = URLRequest(
             url: urlJson,

@@ -33,7 +33,7 @@ class LoadingArticleViewModel: ObservableObject {
             .downloadAndCachePublisher(
                 aemUris: [aemUri],
                 downloadCachePolicy: .fetchFromCacheUpToNextHour,
-                sendRequestPriority: .high
+                requestPriority: .high
             )
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (result: ArticleAemRepositoryResult) in
