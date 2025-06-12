@@ -16,10 +16,10 @@ class MobileContentGlobalAnalyticsApi {
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let requestSender: RequestSender = RequestSender()
-    private let urlSessionPriority: GetUrlSessionPriorityInterface
+    private let urlSessionPriority: URLSessionPriority
     private let baseUrl: String
     
-    init(baseUrl: String, urlSessionPriority: GetUrlSessionPriorityInterface) {
+    init(baseUrl: String, urlSessionPriority: URLSessionPriority) {
         
         self.urlSessionPriority = urlSessionPriority
         self.baseUrl = baseUrl
@@ -41,9 +41,9 @@ class MobileContentGlobalAnalyticsApi {
         return urlRequest
     }
     
-    func getGlobalAnalyticsPublisher(sendRequestPriority: SendRequestPriority) -> AnyPublisher<MobileContentGlobalAnalyticsDecodable, Error> {
+    func getGlobalAnalyticsPublisher(requestPriority: RequestPriority) -> AnyPublisher<MobileContentGlobalAnalyticsDecodable, Error> {
         
-        let urlSession: URLSession = urlSessionPriority.getUrlSession(priority: sendRequestPriority)
+        let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
         let urlRequest: URLRequest = getGlobalAnalyticsUrlRequest(urlSession: urlSession)
 

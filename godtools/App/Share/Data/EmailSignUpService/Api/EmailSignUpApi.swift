@@ -14,11 +14,11 @@ class EmailSignUpApi {
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let requestSender: RequestSender = RequestSender()
-    private let urlSessionPriority: GetUrlSessionPriorityInterface
+    private let urlSessionPriority: URLSessionPriority
     private let baseUrl: String = "https://campaign-forms.cru.org"
     private let campaignId: String = "3fb6022c-5ef9-458c-928a-0380c4a0e57b"
     
-    init(urlSessionPriority: GetUrlSessionPriorityInterface) {
+    init(urlSessionPriority: URLSessionPriority) {
         
         self.urlSessionPriority = urlSessionPriority
     }
@@ -50,9 +50,9 @@ class EmailSignUpApi {
         return request
     }
     
-    func postEmailSignUpPublisher(emailSignUp: EmailSignUpModelType, sendRequestPriority: SendRequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
+    func postEmailSignUpPublisher(emailSignUp: EmailSignUpModelType, requestPriority: RequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
         
-        let urlSession: URLSession = urlSessionPriority.getUrlSession(priority: sendRequestPriority)
+        let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
         let urlRequest = getEmailSignUpRequest(emailSignUp: emailSignUp, urlSession: urlSession)
         

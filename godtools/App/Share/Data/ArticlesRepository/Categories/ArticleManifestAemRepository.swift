@@ -9,6 +9,7 @@
 import Foundation
 import GodToolsToolParser
 import Combine
+import RequestOperation
 
 class ArticleManifestAemRepository: ArticleAemRepository {
     
@@ -39,7 +40,7 @@ class ArticleManifestAemRepository: ArticleAemRepository {
             .eraseToAnyPublisher()
     }
     
-    func downloadAndCacheManifestAemUrisPublisher(manifest: Manifest, translationId: String, languageCode: String, downloadCachePolicy: ArticleAemDownloaderCachePolicy, sendRequestPriority: SendRequestPriority, forceFetchFromRemote: Bool = false) -> AnyPublisher<ArticleAemRepositoryResult, Never> {
+    func downloadAndCacheManifestAemUrisPublisher(manifest: Manifest, translationId: String, languageCode: String, downloadCachePolicy: ArticleAemDownloaderCachePolicy, requestPriority: RequestPriority, forceFetchFromRemote: Bool = false) -> AnyPublisher<ArticleAemRepositoryResult, Never> {
                 
         let syncInvalidator = SyncInvalidator(
             id: getSyncInvalidatorId(translationId: translationId),
@@ -64,7 +65,7 @@ class ArticleManifestAemRepository: ArticleAemRepository {
         return super.downloadAndCachePublisher(
             aemUris: aemUris,
             downloadCachePolicy: downloadCachePolicy,
-            sendRequestPriority: sendRequestPriority
+            requestPriority: requestPriority
         )
         .flatMap { (result: ArticleAemRepositoryResult) -> AnyPublisher<ArticleAemRepositoryResult, Never> in
                                 

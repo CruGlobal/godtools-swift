@@ -8,6 +8,7 @@
 
 import Foundation
 import Combine
+import RequestOperation
 
 open class ArticleAemRepository: NSObject {
     
@@ -37,7 +38,7 @@ open class ArticleAemRepository: NSObject {
         return cache.getAemCacheObject(aemUri: aemUri)
     }
     
-    func downloadAndCachePublisher(aemUris: [String], downloadCachePolicy: ArticleAemDownloaderCachePolicy, sendRequestPriority: SendRequestPriority) -> AnyPublisher<ArticleAemRepositoryResult, Never> {
+    func downloadAndCachePublisher(aemUris: [String], downloadCachePolicy: ArticleAemDownloaderCachePolicy, requestPriority: RequestPriority) -> AnyPublisher<ArticleAemRepositoryResult, Never> {
         
         let aemUrisNeedingUpdate: [String]
 
@@ -52,13 +53,13 @@ open class ArticleAemRepository: NSObject {
         return downloader.downloadPublisher(
             aemUris: aemUrisNeedingUpdate,
             downloadCachePolicy: downloadCachePolicy,
-            sendRequestPriority: sendRequestPriority
+            requestPriority: requestPriority
         )
         .flatMap { (downloaderResult: ArticleAemDownloaderResult) -> AnyPublisher<ArticleAemRepositoryResult, Never> in
             
             return self.cache.storeAemDataObjectsPublisher(
                 aemDataObjects: downloaderResult.aemDataObjects,
-                sendRequestPriority: sendRequestPriority
+                requestPriority: requestPriority
             )
             .map { (cacheResult: ArticleAemCacheResult) in
                 

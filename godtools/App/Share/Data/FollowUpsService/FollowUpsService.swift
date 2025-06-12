@@ -21,9 +21,9 @@ class FollowUpsService {
         self.cache = cache
     }
     
-    func postFollowUpPublisher(followUp: FollowUpModel, sendRequestPriority: SendRequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
+    func postFollowUpPublisher(followUp: FollowUpModel, requestPriority: RequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
                             
-        return api.postFollowUpPublisher(followUp: followUp, sendRequestPriority: sendRequestPriority)
+        return api.postFollowUpPublisher(followUp: followUp, requestPriority: requestPriority)
             .mapError { (error: Error) in
                 
                 self.cache.cacheFailedFollowUps(followUps: [followUp])
@@ -44,7 +44,7 @@ class FollowUpsService {
             .eraseToAnyPublisher()
     }
     
-    func postFailedFollowUpsIfNeededPublisher(sendRequestPriority: SendRequestPriority) -> AnyPublisher<Void, Never> {
+    func postFailedFollowUpsIfNeededPublisher(requestPriority: RequestPriority) -> AnyPublisher<Void, Never> {
                 
         let failedFollowUps: [FollowUpModel] = cache.getFailedFollowUps()
                 
@@ -60,7 +60,7 @@ class FollowUpsService {
             
             return self.api.postFollowUpPublisher(
                 followUp: followUp,
-                sendRequestPriority: sendRequestPriority
+                requestPriority: requestPriority
             )
             .map { (response: RequestDataResponse) in
                 

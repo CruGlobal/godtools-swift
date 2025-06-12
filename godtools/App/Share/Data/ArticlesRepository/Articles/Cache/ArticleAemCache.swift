@@ -9,6 +9,7 @@
 import Foundation
 import RealmSwift
 import Combine
+import RequestOperation
 
 class ArticleAemCache {
     
@@ -88,13 +89,13 @@ class ArticleAemCache {
         }
     }
     
-    func storeAemDataObjectsPublisher(aemDataObjects: [ArticleAemData], sendRequestPriority: SendRequestPriority) -> AnyPublisher<ArticleAemCacheResult, Never> {
+    func storeAemDataObjectsPublisher(aemDataObjects: [ArticleAemData], requestPriority: RequestPriority) -> AnyPublisher<ArticleAemCacheResult, Never> {
         
         return filterAemDataObjectsThatNeedDownloadedPublisher(aemDataObjects: aemDataObjects)
             .flatMap({ (filteredData: ArticleAemDataObjectsThatNeedDownloading) -> AnyPublisher<(filteredData: ArticleAemDataObjectsThatNeedDownloading, archiverResult: ArticleWebArchiverResult), Never> in
                 
                 return self.articleWebArchiver
-                    .archivePublisher(webArchiveUrls: filteredData.webArchiveUrls, sendRequestPriority: sendRequestPriority)
+                    .archivePublisher(webArchiveUrls: filteredData.webArchiveUrls, requestPriority: requestPriority)
                     .map { (archiverResult: ArticleWebArchiverResult) in
                         return (filteredData: filteredData, archiverResult: archiverResult)
                     }

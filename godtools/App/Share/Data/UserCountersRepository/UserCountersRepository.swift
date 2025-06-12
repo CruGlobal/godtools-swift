@@ -8,6 +8,7 @@
 
 import Foundation
 import Combine
+import RequestOperation
 
 class UserCountersRepository {
     
@@ -32,11 +33,11 @@ class UserCountersRepository {
         return UserCounterDomainModel(dataModel: userCounterDataModel)
     }
     
-    func getUserCountersChanged(reloadFromRemote: Bool, sendRequestPriority: SendRequestPriority) -> AnyPublisher<Void, Never> {
+    func getUserCountersChanged(reloadFromRemote: Bool, requestPriority: RequestPriority) -> AnyPublisher<Void, Never> {
         
         if reloadFromRemote {
             
-            fetchRemoteUserCounters(sendRequestPriority: sendRequestPriority)
+            fetchRemoteUserCounters(requestPriority: requestPriority)
                 .sink(receiveCompletion: { _ in
                 }, receiveValue: { _ in
                     
@@ -52,9 +53,9 @@ class UserCountersRepository {
         return cache.getAllUserCounters()
     }
     
-    func fetchRemoteUserCounters(sendRequestPriority: SendRequestPriority) -> AnyPublisher<[UserCounterDataModel], Error> {
+    func fetchRemoteUserCounters(requestPriority: RequestPriority) -> AnyPublisher<[UserCounterDataModel], Error> {
         
-        return api.fetchUserCountersPublisher(sendRequestPriority: sendRequestPriority)
+        return api.fetchUserCountersPublisher(requestPriority: requestPriority)
             .flatMap { (userCounters: [UserCounterDecodable]) in
                 
                 return self.cache.syncUserCounters(userCounters)
@@ -73,8 +74,8 @@ class UserCountersRepository {
         return cache.deleteAllUserCounters()
     }
     
-    func syncUpdatedUserCountersWithRemote(sendRequestPriority: SendRequestPriority) {
+    func syncUpdatedUserCountersWithRemote(requestPriority: RequestPriority) {
         
-        remoteUserCountersSync.syncUpdatedUserCountersWithRemote(sendRequestPriority: sendRequestPriority)
+        remoteUserCountersSync.syncUpdatedUserCountersWithRemote(requestPriority: requestPriority)
     }
 }
