@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RequestOperation
 import SocialAuthentication
 import LocalizationServices
 
@@ -22,6 +23,7 @@ class AppDataLayerDependencies {
     private let sharedAppBuild: AppBuild
     private let sharedAppConfig: AppConfig
     private let sharedInfoPlist: InfoPlist
+    private let sharedUrlSessionPriority: URLSessionPriority = URLSessionPriority()
     private let sharedRealmDatabase: RealmDatabase
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
     private let sharedAnalytics: AnalyticsContainer
@@ -302,8 +304,8 @@ class AppDataLayerDependencies {
         return LaunchCountRepository.shared
     }
     
-    func getSharedUrlSessionPriority() -> GetUrlSessionPriorityInterface {
-        return TempPriorityRequestSender.shared
+    func getSharedUrlSessionPriority() -> URLSessionPriority {
+        return sharedUrlSessionPriority
     }
     
     func getSharedRealmDatabase() -> RealmDatabase {

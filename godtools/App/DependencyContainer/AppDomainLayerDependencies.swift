@@ -17,10 +17,6 @@ class AppDomainLayerDependencies {
         self.dataLayer = dataLayer
     }
     
-    func getAccountCreationIsSupportedUseCase() -> GetAccountCreationIsSupportedUseCase {
-        return GetAccountCreationIsSupportedUseCase()
-    }
-    
     func getAppUIDebuggingIsEnabledUseCase() -> GetAppUIDebuggingIsEnabledUseCase {
         return GetAppUIDebuggingIsEnabledUseCase(
             appBuild: dataLayer.getAppBuild()
@@ -140,12 +136,6 @@ class AppDomainLayerDependencies {
             getUserActivityStatsUseCase: getUserActivityStatsUseCase(),
             userCounterRepository: dataLayer.getUserCountersRepository(),
             completedTrainingTipRepository: dataLayer.getCompletedTrainingTipRepository()
-        )
-    }
-    
-    func getUserIsAuthenticatedUseCase() -> GetUserIsAuthenticatedUseCase {
-        return GetUserIsAuthenticatedUseCase(
-            userAuthentication: dataLayer.getUserAuthentication()
         )
     }
     

@@ -14,10 +14,10 @@ class MobileContentAuthTokenAPI {
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let requestSender: RequestSender = RequestSender()
-    private let urlSessionPriority: GetUrlSessionPriorityInterface
+    private let urlSessionPriority: URLSessionPriority
     private let baseURL: String
     
-    init(config: AppConfig, urlSessionPriority: GetUrlSessionPriorityInterface) {
+    init(config: AppConfig, urlSessionPriority: URLSessionPriority) {
         
         self.urlSessionPriority = urlSessionPriority
         baseURL = config.getMobileContentApiBaseUrl()
@@ -79,7 +79,7 @@ class MobileContentAuthTokenAPI {
     
     func fetchAuthTokenPublisher(providerToken: MobileContentAuthProviderToken, createUser: Bool) -> AnyPublisher<MobileContentAuthTokenDecodable, MobileContentApiError> {
         
-        let urlSession: URLSession = urlSessionPriority.getUrlSession(priority: .high)
+        let urlSession: URLSession = urlSessionPriority.getURLSession(priority: .high)
                 
         let urlRequest: URLRequest = getAuthTokenRequest(urlSession: urlSession, providerToken: providerToken, createUser: createUser)
                 

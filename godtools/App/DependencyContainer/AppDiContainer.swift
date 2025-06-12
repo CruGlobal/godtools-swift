@@ -59,6 +59,7 @@ class AppDiContainer {
         let toolsFilterDiContainer = ToolsFilterFeatureDiContainer(coreDataLayer: dataLayer)
         let toolShortcutLinks = ToolShortcutLinksDiContainer(coreDataLayer: dataLayer)
         let tutorialDiContainer = TutorialFeatureDiContainer(coreDataLayer: dataLayer)
+        let userActivityDiContainer = UserActivityDiContainer(coreDataLayer: dataLayer)
         
         feature = AppFeatureDiContainer(
             account: accountDiContainer,
@@ -85,7 +86,8 @@ class AppDiContainer {
             toolSettings: toolSettingsDiContainer,
             toolsFilter: toolsFilterDiContainer,
             toolShortcutLinks: toolShortcutLinks,
-            tutorial: tutorialDiContainer
+            tutorial: tutorialDiContainer,
+            userActivity: userActivityDiContainer
         )
                                                                 
         failedFollowUpsCache = FailedFollowUpsCache(realmDatabase: realmDatabase)

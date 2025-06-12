@@ -28,7 +28,7 @@ class GetUserActivityUseCase {
     func getUserActivityPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<UserActivityDomainModel, Never> {
         
         return userCounterRepository
-            .getUserCountersChanged(reloadFromRemote: true, sendRequestPriority: .high)
+            .getUserCountersChanged(reloadFromRemote: true, requestPriority: .high)
             .flatMap { _ in
                 
                 let allUserCounters = self.getAllUserCounters()

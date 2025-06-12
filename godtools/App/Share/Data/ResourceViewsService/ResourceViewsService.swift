@@ -25,11 +25,11 @@ class ResourceViewsService {
         print("x deinit: \(type(of: self))")
     }
     
-    func postNewResourceViewPublisher(resourceId: String, sendRequestPriority: SendRequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
+    func postNewResourceViewPublisher(resourceId: String, requestPriority: RequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
                 
         let resourceView = ResourceViewModel(resourceId: resourceId)
         
-        return resourceViewsApi.postResourceViewPublisher(resourceView: resourceView, sendRequestPriority: sendRequestPriority)
+        return resourceViewsApi.postResourceViewPublisher(resourceView: resourceView, requestPriority: requestPriority)
             .mapError { (error: Error) in
                 
                 self.failedResourceViewsCache.cacheFailedResourceViews(resourceViews: [resourceView])
@@ -50,7 +50,7 @@ class ResourceViewsService {
             .eraseToAnyPublisher()
     }
     
-    func postFailedResourceViewsIfNeededPublisher(sendRequestPriority: SendRequestPriority) -> AnyPublisher<Void, Never> {
+    func postFailedResourceViewsIfNeededPublisher(requestPriority: RequestPriority) -> AnyPublisher<Void, Never> {
                 
         let failedResourceViews: [ResourceViewModel] = failedResourceViewsCache.getFailedResourceViews()
                 
@@ -66,7 +66,7 @@ class ResourceViewsService {
             
             return self.resourceViewsApi.postResourceViewPublisher(
                 resourceView: resourceView,
-                sendRequestPriority: sendRequestPriority
+                requestPriority: requestPriority
             )
             .map { (response: RequestDataResponse) in
                 

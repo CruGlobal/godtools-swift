@@ -14,10 +14,10 @@ class MobileContentResourceViewsApi {
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let requestSender: RequestSender = RequestSender()
-    private let urlSessionPriority: GetUrlSessionPriorityInterface
+    private let urlSessionPriority: URLSessionPriority
     private let baseUrl: String
     
-    init(config: AppConfig, urlSessionPriority: GetUrlSessionPriorityInterface) {
+    init(config: AppConfig, urlSessionPriority: URLSessionPriority) {
                     
         self.urlSessionPriority = urlSessionPriority
         baseUrl = config.getMobileContentApiBaseUrl()
@@ -51,9 +51,9 @@ class MobileContentResourceViewsApi {
         )
     }
     
-    func postResourceViewPublisher(resourceView: ResourceViewModelType, sendRequestPriority: SendRequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
+    func postResourceViewPublisher(resourceView: ResourceViewModelType, requestPriority: RequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
         
-        let urlSession: URLSession = urlSessionPriority.getUrlSession(priority: sendRequestPriority)
+        let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
         let urlRequest = getResourceViewRequest(resourceView: resourceView, urlSession: urlSession)
         
