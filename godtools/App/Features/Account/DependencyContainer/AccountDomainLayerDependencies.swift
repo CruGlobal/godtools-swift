@@ -34,6 +34,10 @@ class AccountDomainLayerDependencies {
         )
     }
     
+    func getAccountCreationIsSupportedUseCase() -> GetAccountCreationIsSupportedUseCase {
+        return GetAccountCreationIsSupportedUseCase()
+    }
+    
     func getSocialCreateAccountInterfaceStringsUseCase() -> GetSocialCreateAccountInterfaceStringsUseCase {
         return GetSocialCreateAccountInterfaceStringsUseCase(
             getInterfaceStringsRepositoryInterface: dataLayer.getSocialCreateAccountInterfaceStringsRepositoryInterface()
@@ -43,6 +47,12 @@ class AccountDomainLayerDependencies {
     func getSocialSignInInterfaceStringsUseCase() -> GetSocialSignInInterfaceStringsUseCase {
         return GetSocialSignInInterfaceStringsUseCase(
             getInterfaceStringsRepositoryInterface: dataLayer.getSocialSignInInterfaceStringsRepositoryInterface()
+        )
+    }
+    
+    func getUserIsAuthenticatedUseCase() -> GetUserIsAuthenticatedUseCase {
+        return GetUserIsAuthenticatedUseCase(
+            userAuthentication: coreDataLayer.getUserAuthentication()
         )
     }
     
