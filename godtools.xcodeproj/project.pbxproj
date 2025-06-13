@@ -428,6 +428,9 @@
 		4552F54A2AD4745A0075415E /* TrackScreenViewAnalyticsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4552F5472AD474590075415E /* TrackScreenViewAnalyticsUseCase.swift */; };
 		4552F54B2AD4745A0075415E /* TrackActionAnalyticsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4552F5482AD4745A0075415E /* TrackActionAnalyticsUseCase.swift */; };
 		4552F54C2AD4745A0075415E /* TrackExitLinkAnalyticsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4552F5492AD4745A0075415E /* TrackExitLinkAnalyticsUseCase.swift */; };
+		4553C13D2DFC8C9A00F7CBDE /* ToolScreenShareQRCodeFeatureDomainLayerDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4553C1352DFC8C9A00F7CBDE /* ToolScreenShareQRCodeFeatureDomainLayerDependencies.swift */; };
+		4553C13E2DFC8C9A00F7CBDE /* ToolScreenShareQRCodeFeatureDataLayerDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4553C1332DFC8C9A00F7CBDE /* ToolScreenShareQRCodeFeatureDataLayerDependencies.swift */; };
+		4553C13F2DFC8C9A00F7CBDE /* ToolScreenShareQRCodeFeatureDiContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4553C1342DFC8C9A00F7CBDE /* ToolScreenShareQRCodeFeatureDiContainer.swift */; };
 		4554205B28B17AEA00368CFE /* AttachmentDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4554205A28B17AEA00368CFE /* AttachmentDataModel.swift */; };
 		455582E1269F2C1000C3FF14 /* TrainingViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455582D3269F2C1000C3FF14 /* TrainingViewFactory.swift */; };
 		455582E2269F2C1000C3FF14 /* TrainingTipView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 455582D6269F2C1000C3FF14 /* TrainingTipView.xib */; };
@@ -2201,6 +2204,9 @@
 		4552F5472AD474590075415E /* TrackScreenViewAnalyticsUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackScreenViewAnalyticsUseCase.swift; sourceTree = "<group>"; };
 		4552F5482AD4745A0075415E /* TrackActionAnalyticsUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackActionAnalyticsUseCase.swift; sourceTree = "<group>"; };
 		4552F5492AD4745A0075415E /* TrackExitLinkAnalyticsUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackExitLinkAnalyticsUseCase.swift; sourceTree = "<group>"; };
+		4553C1332DFC8C9A00F7CBDE /* ToolScreenShareQRCodeFeatureDataLayerDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolScreenShareQRCodeFeatureDataLayerDependencies.swift; sourceTree = "<group>"; };
+		4553C1342DFC8C9A00F7CBDE /* ToolScreenShareQRCodeFeatureDiContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolScreenShareQRCodeFeatureDiContainer.swift; sourceTree = "<group>"; };
+		4553C1352DFC8C9A00F7CBDE /* ToolScreenShareQRCodeFeatureDomainLayerDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolScreenShareQRCodeFeatureDomainLayerDependencies.swift; sourceTree = "<group>"; };
 		4554205A28B17AEA00368CFE /* AttachmentDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentDataModel.swift; sourceTree = "<group>"; };
 		4554A62A2D8DE7C800046941 /* ne */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ne; path = ne.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		4554A62B2D8DE7C800046941 /* ne */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ne; path = ne.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -5816,6 +5822,80 @@
 			path = RemoteConfigRepository;
 			sourceTree = "<group>";
 		};
+		4553C1312DFC8C9A00F7CBDE /* Data */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		4553C1322DFC8C9A00F7CBDE /* Data-DomainInterface */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Data-DomainInterface";
+			sourceTree = "<group>";
+		};
+		4553C1362DFC8C9A00F7CBDE /* DependencyContainer */ = {
+			isa = PBXGroup;
+			children = (
+				4553C1342DFC8C9A00F7CBDE /* ToolScreenShareQRCodeFeatureDiContainer.swift */,
+				4553C1332DFC8C9A00F7CBDE /* ToolScreenShareQRCodeFeatureDataLayerDependencies.swift */,
+				4553C1352DFC8C9A00F7CBDE /* ToolScreenShareQRCodeFeatureDomainLayerDependencies.swift */,
+			);
+			path = DependencyContainer;
+			sourceTree = "<group>";
+		};
+		4553C1372DFC8C9A00F7CBDE /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		4553C1382DFC8C9A00F7CBDE /* Interfaces */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Interfaces;
+			sourceTree = "<group>";
+		};
+		4553C1392DFC8C9A00F7CBDE /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = UseCases;
+			sourceTree = "<group>";
+		};
+		4553C13A2DFC8C9A00F7CBDE /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				4553C1372DFC8C9A00F7CBDE /* Entities */,
+				4553C1382DFC8C9A00F7CBDE /* Interfaces */,
+				4553C1392DFC8C9A00F7CBDE /* UseCases */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		4553C13B2DFC8C9A00F7CBDE /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		4553C13C2DFC8C9A00F7CBDE /* ToolScreenShareQRCode */ = {
+			isa = PBXGroup;
+			children = (
+				4553C1312DFC8C9A00F7CBDE /* Data */,
+				4553C1322DFC8C9A00F7CBDE /* Data-DomainInterface */,
+				4553C1362DFC8C9A00F7CBDE /* DependencyContainer */,
+				4553C13A2DFC8C9A00F7CBDE /* Domain */,
+				4553C13B2DFC8C9A00F7CBDE /* Presentation */,
+			);
+			path = ToolScreenShareQRCode;
+			sourceTree = "<group>";
+		};
 		455582D0269F2C1000C3FF14 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -8682,6 +8762,7 @@
 				45D814CB2B81050900AD00C5 /* SpotlightTools */,
 				45AD183E25938A4E00A096A0 /* ToolDetails */,
 				45369A9B2AFA7FA500BD10F0 /* ToolScreenShare */,
+				4553C13C2DFC8C9A00F7CBDE /* ToolScreenShareQRCode */,
 				451CEDCF282C31C6006E5105 /* ToolSettings */,
 				4524869E2B07C894007AD932 /* ToolsFilter */,
 				4564E1F22B1E180F00DA4040 /* ToolShortcutLinks */,
@@ -14244,6 +14325,9 @@
 				45C1527F2A44888100F2A1E8 /* LessonEvaluationView.swift in Sources */,
 				45AF47ED2B35E03500361EA7 /* GetToolSettingsToolHasTipsRepositoryInterface.swift in Sources */,
 				D42FEBDA287604570002FAD9 /* OptInOnboardingBannerEnabledRepository.swift in Sources */,
+				4553C13D2DFC8C9A00F7CBDE /* ToolScreenShareQRCodeFeatureDomainLayerDependencies.swift in Sources */,
+				4553C13E2DFC8C9A00F7CBDE /* ToolScreenShareQRCodeFeatureDataLayerDependencies.swift in Sources */,
+				4553C13F2DFC8C9A00F7CBDE /* ToolScreenShareQRCodeFeatureDiContainer.swift in Sources */,
 				455583D3269F2DA500C3FF14 /* MobileContentHeaderView.swift in Sources */,
 				453E00072B29FB7D00029402 /* LocaleLanguageRegionName.swift in Sources */,
 				D43FC1D22B814B8B00F8310E /* AccountInterfaceStringsDomainModel.swift in Sources */,
