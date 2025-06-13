@@ -55,6 +55,7 @@ class AppDiContainer {
         let spotlightToolsDiContainer = SpotlightToolsDiContainer(coreDataLayer: dataLayer)
         let toolDetailsDiContainer = ToolDetailsFeatureDiContainer(coreDataLayer: dataLayer)
         let toolScreenShareDiContainer = ToolScreenShareFeatureDiContainer(coreDataLayer: dataLayer)
+        let toolScreenShareQRCodeDiContainer = ToolScreenShareQRCodeFeatureDiContainer(coreDataLayer: dataLayer)
         let toolSettingsDiContainer = ToolSettingsDiContainer(coreDataLayer: dataLayer)
         let toolsFilterDiContainer = ToolsFilterFeatureDiContainer(coreDataLayer: dataLayer)
         let toolShortcutLinks = ToolShortcutLinksDiContainer(coreDataLayer: dataLayer)
@@ -83,6 +84,7 @@ class AppDiContainer {
             spotlightTools: spotlightToolsDiContainer,
             toolDetails: toolDetailsDiContainer,
             toolScreenShare: toolScreenShareDiContainer,
+            toolScreenShareQRCode: toolScreenShareQRCodeDiContainer,
             toolSettings: toolSettingsDiContainer,
             toolsFilter: toolsFilterDiContainer,
             toolShortcutLinks: toolShortcutLinks,
