@@ -74,8 +74,10 @@ class UserCountersRepository {
         return cache.deleteAllUserCounters()
     }
     
-    func syncUpdatedUserCountersWithRemote(requestPriority: RequestPriority) {
-        
-        remoteUserCountersSync.syncUpdatedUserCountersWithRemote(requestPriority: requestPriority)
+    func syncUpdatedUserCountersWithRemotePublisher(requestPriority: RequestPriority) -> AnyPublisher<Void, Error> {
+        return remoteUserCountersSync.syncUpdatedUserCountersWithRemotePublisher(
+            requestPriority: requestPriority
+        )
+        .eraseToAnyPublisher()
     }
 }
