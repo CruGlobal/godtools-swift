@@ -344,7 +344,10 @@ extension ToolScreenShareFlow {
         let shareMessage: String = String.localizedStringWithFormat(interfaceStrings.shareMessage, shareUrl)
 
         let viewModel = ShareToolScreenShareSessionViewModel(
+            flowDelegate: self,
+            domainModel: domainModel,
             shareMessage: shareMessage,
+            shareUrl: shareUrl,
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
         )
         
