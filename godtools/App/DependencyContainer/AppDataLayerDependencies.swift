@@ -279,7 +279,8 @@ class AppDataLayerDependencies {
             api: api,
             cache: cache,
             attachmentsRepository: getAttachmentsRepository(),
-            languagesRepository: getLanguagesRepository()
+            languagesRepository: getLanguagesRepository(),
+            sharedUserDefaultsCache: getSharedUserDefaultsCache()
         )
     }
     

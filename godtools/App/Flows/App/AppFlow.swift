@@ -234,7 +234,7 @@ extension AppFlow {
         let remoteConfigRepository: RemoteConfigRepository = appDiContainer.dataLayer.getRemoteConfigRepository()
         
         resourcesRepository
-            .syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments(requestPriority: .medium)
+            .syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsPublisher(requestPriority: .medium, forceFetchFromRemote: false)
             .flatMap({ (result: RealmResourcesCacheSyncResult) -> AnyPublisher<Void, Error> in
                 
                 return toolLanguageDownloader
