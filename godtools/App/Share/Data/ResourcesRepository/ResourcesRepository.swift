@@ -179,7 +179,7 @@ class ResourcesRepository {
         
         let syncInvalidator = SyncInvalidator(
             id: Self.syncInvalidatorIdForResourcesPlustLatestTranslationsAndAttachments,
-            timeInterval: .hours(hour: 4),
+            timeInterval: .hours(hour: 8),
             userDefaultsCache: sharedUserDefaultsCache
         )
         
