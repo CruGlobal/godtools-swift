@@ -131,11 +131,6 @@ class RealmDownloadedLanguagesCache {
             .objects(RealmDownloadedLanguage.self)
             .where { $0.downloadComplete == false }
         
-        let languagesIds: [String] = nonCompletedDownloads.map {
-            $0.languageId
-        }
-        print(languagesIds)
-        
         _ = realmDatabase.writeObjects(realm: realm, updatePolicy: .modified) { realm in
             
             for language in nonCompletedDownloads {
