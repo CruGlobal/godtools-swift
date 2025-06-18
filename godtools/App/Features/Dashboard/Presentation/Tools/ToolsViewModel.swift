@@ -208,7 +208,7 @@ extension ToolsViewModel {
     
     func pullToRefresh() {
         
-        resourcesRepository.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments(requestPriority: .high)
+        resourcesRepository.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsPublisher(requestPriority: .high, forceFetchFromRemote: true)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completed in
 

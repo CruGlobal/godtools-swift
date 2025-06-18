@@ -165,7 +165,7 @@ extension LessonsViewModel {
     func pullToRefresh() {
         
         resourcesRepository
-            .syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments(requestPriority: .high)
+            .syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsPublisher(requestPriority: .high, forceFetchFromRemote: true)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completed in
 
