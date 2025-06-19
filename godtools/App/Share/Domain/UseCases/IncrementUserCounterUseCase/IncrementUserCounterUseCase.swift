@@ -36,9 +36,6 @@ class IncrementUserCounterUseCase {
     
     func incrementUserCounter(for interaction: UserCounterInteraction) -> AnyPublisher<UserCounterDomainModel, Error> {
         
-        print("\n IncrementUserCounterUseCase increment user counter")
-        print("  interaction: \(interaction)")
-        
         guard let userCounterId = getUserCounterId(for: interaction) else {
             
             return Fail(error: UserCounterError.invalidUserCounterId)
