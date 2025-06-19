@@ -41,7 +41,7 @@ final class UserCountersRepositoryTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
     
-    func testIncrementUserCounter() throws {
+    func testIncrementUserCounter() {
 
         // Setup
         
@@ -84,7 +84,7 @@ final class UserCountersRepositoryTests: XCTestCase {
         XCTAssertEqual(updatedUserCounter!.latestCountFromAPI, 0)
     }
     
-    func testGetUserCounter() throws {
+    func testGetUserCounter() {
         
         // Setup
         
@@ -109,7 +109,7 @@ final class UserCountersRepositoryTests: XCTestCase {
         XCTAssertEqual(cachedCounter2!.count, counter2.count)
     }
     
-    func testFetchRemoteUserCountersWithNoLocalCounters() throws {
+    func testFetchRemoteUserCountersWithNoLocalCounters() {
         
         // Setup
         
@@ -164,7 +164,7 @@ final class UserCountersRepositoryTests: XCTestCase {
         XCTAssertEqual(counter2DataModel!.incrementValue, 0)
     }
     
-    func testFetchRemoteUserCountersWithExistingLocalCounters() throws {
+    func testFetchRemoteUserCountersWithExistingLocalCounters() {
         
         // Setup
         
@@ -229,13 +229,10 @@ final class UserCountersRepositoryTests: XCTestCase {
         XCTAssertEqual(counter2DomainModel!.count, localCounter2.count + remoteCounter2.count)
     }
     
-    func testSyncUpdatedUserCountersWithRemote() throws {
+    func testSyncUpdatedUserCountersWithRemote() {
         
         // Setup
-        
-        // number of data changes expected: 2 to cache mock counters + 2 for sync
-        let syncUpdateCompleteExpectation = makeExpectationForUserCounterChangesToOccur(numberOfChanges: 4)
-        
+                
         let localCounter1 = UserCounterDomainModel(id: "counter_1", count: 3)
         let localCounter2 = UserCounterDomainModel(id: "counter_2", count: 4)
         
@@ -248,9 +245,25 @@ final class UserCountersRepositoryTests: XCTestCase {
         
         // Perform
         
-        userCountersRepository.syncUpdatedUserCountersWithRemote(requestPriority: .high)
+        let expectation = expectation(description: "")
         
-        wait(for: [syncUpdateCompleteExpectation], timeout: 10)
+        userCountersRepository
+            .syncUpdatedUserCountersWithRemotePublisher(requestPriority: .high)
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    expectation.fulfill()
+                case .failure(let error):
+                    let didFail: Bool = true
+                    XCTAssertFalse(didFail, "Did fail with error: \(error)")
+                }
+            } receiveValue: { _ in
+                
+            }
+            .store(in: &cancellables)
+
+        
+        wait(for: [expectation], timeout: 10)
         
         // Assert
         
@@ -300,28 +313,5 @@ extension UserCountersRepositoryTests {
     
     private func assertLocalCounterIsNil(_ id: String) {
         XCTAssertNil(userCountersRepository.getUserCounter(id: id))
-    }
-    
-    private func makeExpectationForUserCounterChangesToOccur(numberOfChanges: Int) -> XCTestExpectation {
-        
-        let userCounterChangesCompleteExpectation = expectation(description: "User Counter Changes Complete")
-        
-        var userCounterChangedHitCount = 0
-
-        userCountersRepository.getUserCountersChanged(reloadFromRemote: false, requestPriority: .high)
-            .sink { _ in
-                
-            } receiveValue: { _ in
-                
-                userCounterChangedHitCount += 1
-                
-                if userCounterChangedHitCount == numberOfChanges {
-                    
-                    userCounterChangesCompleteExpectation.fulfill()
-                }
-            }
-            .store(in: &cancellables)
-        
-        return userCounterChangesCompleteExpectation
     }
 }
