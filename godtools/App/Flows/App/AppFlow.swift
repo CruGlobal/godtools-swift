@@ -32,6 +32,7 @@ class AppFlow: NSObject, Flow {
     let appDiContainer: AppDiContainer
     let rootController: AppRootController = AppRootController(nibName: nil, bundle: nil)
     let navigationController: AppNavigationController
+    let rootView: AppRootView
             
     init(appDiContainer: AppDiContainer, appDeepLinkingService: DeepLinkingService) {
         
@@ -45,6 +46,7 @@ class AppFlow: NSObject, Flow {
         
         self.appDiContainer = appDiContainer
         self.navigationController = AppNavigationController(navigationBarAppearance: navigationBarAppearance)
+        self.rootView = AppRootView(appRootController: rootController)
         self.deepLinkingService = appDeepLinkingService
         self.appMessaging = appDiContainer.dataLayer.getAppMessaging()
         self.dashboardFlow = DashboardFlow(appDiContainer: appDiContainer, sharedNavigationController: navigationController, rootController: rootController)
@@ -304,7 +306,7 @@ extension AppFlow {
         loadingView.addSubview(loadingImage)
         loadingImage.image = ImageCatalog.launchImage.uiImage
         loadingView.backgroundColor = .white
-        AppDelegate.getWindow()?.addSubview(loadingView)
+        GodToolsSceneDelegate.getWindow()?.addSubview(loadingView)
         
         return loadingView
     }
