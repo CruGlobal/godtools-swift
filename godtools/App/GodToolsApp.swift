@@ -83,6 +83,11 @@ struct GodToolsApp: App {
             }
         }
     }
+}
+
+// MARK: - Expose Some Dependency for GodToolsAppDelegate and GodToolsSceneDelegate
+
+extension GodToolsApp {
     
     static func getUIApplication() -> UIApplication {
         return UIApplication.shared
