@@ -6,8 +6,14 @@
 //  Copyright © 2024 Cru. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
-let appDelegateClass: AnyClass = NSClassFromString("TestsAppDelegate") ?? AppDelegate.self
+let isUnitTests: Bool = NSClassFromString("XCTestCase") != nil
+let runningForPreviews: String? = ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"]
 
-UIApplicationMain(CommandLine.argc, CommandLine.unsafeArgv, nil, NSStringFromClass(appDelegateClass))
+if isUnitTests {
+    TestsApp.main()
+}
+else {
+    GodToolsApp.main()
+}
