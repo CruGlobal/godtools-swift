@@ -70,8 +70,6 @@ struct GodToolsApp: App {
             }
             .ignoresSafeArea()
             .onOpenURL { (url: URL) in
-                print("\n GodToolsApp onOpenURL modifier")
-                print("  url: \(url.absoluteString)")
                 _ = Self.openUrl(url: url)
             }
         }
@@ -85,7 +83,6 @@ struct GodToolsApp: App {
             case .inactive:
                 break
             case .active:
-                print("\n GodToolsApp did become active")
                 reloadShortcutItems(application: application)
             @unknown default:
                 break
@@ -126,6 +123,40 @@ extension GodToolsApp {
 // MARK: - Open URL
 
 extension GodToolsApp {
+    
+    static func openUrlFromUserActivity(userActivity: NSUserActivity) -> Bool {
+        
+        if userActivity.activityType != NSUserActivityTypeBrowsingWeb {
+            return false
+        }
+
+        guard let url = userActivity.webpageURL else {
+            return false
+        }
+
+        let firebaseDynamicLinkHandled: Bool = DynamicLinks.dynamicLinks().handleUniversalLink(url) { (dynamicLink: DynamicLink?, error: Error?) in
+
+            guard let firebaseDynamicLinkUrl = dynamicLink?.url else {
+                return
+            }
+
+            DispatchQueue.main.async {
+                _ = Self.appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: firebaseDynamicLinkUrl)))
+            }
+        }
+
+        if firebaseDynamicLinkHandled {
+            return true
+        }
+
+        let deepLinkHandled: Bool = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
+
+        if deepLinkHandled {
+            return true
+        }
+
+        return false
+    }
     
     static func openUrl(url: URL) -> Bool {
         

@@ -24,14 +24,8 @@ class GodToolsSceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
-        print("\n GodToolsSceneDelegate will connect to session")
-        
-        if let userActivity = scene.userActivity {
-            print("  found user activity: \(userActivity)")
-        }
-        
-        if connectionOptions.shortcutItem != nil {
-            print("  has shortcut item")
+        if let userActivity = connectionOptions.userActivities.first {
+            _ = GodToolsApp.openUrlFromUserActivity(userActivity: userActivity)
         }
         
         if let windowScene = scene as? UIWindowScene {
@@ -61,9 +55,7 @@ extension GodToolsSceneDelegate {
 extension GodToolsSceneDelegate {
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
-        
-        print("\n GodToolsSceneDelegate openURLContexts")
-    
+            
         guard let url = URLContexts.first?.url else {
             return
         }
