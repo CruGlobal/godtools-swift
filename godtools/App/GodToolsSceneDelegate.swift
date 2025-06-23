@@ -24,13 +24,19 @@ class GodToolsSceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
-        if let userActivity = connectionOptions.userActivities.first {
-            _ = GodToolsApp.openUrlFromUserActivity(userActivity: userActivity)
-        }
-        
         if let windowScene = scene as? UIWindowScene {
             Self.window = windowScene.keyWindow
         }
+    }
+}
+
+// MARK: - UserActivity (Tells the delegate to handle the specified Handoff-related activity.)
+
+extension GodToolsSceneDelegate {
+    
+    func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
+        
+        _ = GodToolsApp.openUrlFromUserActivity(userActivity: userActivity)
     }
 }
 
