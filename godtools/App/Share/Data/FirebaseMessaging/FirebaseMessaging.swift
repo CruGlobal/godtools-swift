@@ -49,9 +49,20 @@ class FirebaseMessaging {
         }
         .eraseToAnyPublisher()
     }
+}
+
+// MARK: - Needed since method swizzling is disabled in Info.plist for SwiftUI App Life Cycle.
+// FirebaseAppDelegateProxyEnabled: NO
+
+extension FirebaseMessaging {
     
     static func registerDeviceToken(deviceToken: Data) {
         
         Messaging.messaging().apnsToken = deviceToken
+    }
+    
+    static func didReceiveMessage(userInfo: [AnyHashable: Any]) {
+        
+        Messaging.messaging().appDidReceiveMessage(userInfo)
     }
 }
