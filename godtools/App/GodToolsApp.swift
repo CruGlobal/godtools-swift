@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import FirebaseDynamicLinks
 
 struct GodToolsApp: App {
 
@@ -68,16 +69,24 @@ struct GodToolsApp: App {
                 Self.appFlow.rootView
             }
             .ignoresSafeArea()
+            .onOpenURL { (url: URL) in
+                print("\n GodToolsApp onOpenURL modifier")
+                print("  url: \(url.absoluteString)")
+                _ = Self.openUrl(url: url)
+            }
         }
         .onChange(of: scenePhase) { (phase: ScenePhase) in
 
+            let application = UIApplication.shared
+            
             switch phase {
             case .background:
-                reloadShortcutItems(application: Self.getUIApplication())
+                reloadShortcutItems(application: application)
             case .inactive:
                 break
             case .active:
-                reloadShortcutItems(application: Self.getUIApplication())
+                print("\n GodToolsApp did become active")
+                reloadShortcutItems(application: application)
             @unknown default:
                 break
             }
@@ -89,20 +98,8 @@ struct GodToolsApp: App {
 
 extension GodToolsApp {
     
-    static func getUIApplication() -> UIApplication {
-        return UIApplication.shared
-    }
-    
     static func getAppConfig() -> AppConfig {
         return appConfig
-    }
-    
-    static func getAppDiContainer() -> AppDiContainer {
-        return appDiContainer
-    }
-    
-    static func getAppDeepLinkingService() -> DeepLinkingService {
-        return appDeepLinkingService
     }
 }
 
@@ -123,5 +120,67 @@ extension GodToolsApp {
         )
         
         toolShortcutLinks = view
+    }
+}
+
+// MARK: - Open URL
+
+extension GodToolsApp {
+    
+    static func openUrl(url: URL) -> Bool {
+        
+        if let firebaseDynamicLinkUrl = DynamicLinks.dynamicLinks().dynamicLink(fromCustomSchemeURL: url)?.url {
+            _ = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: firebaseDynamicLinkUrl)))
+            return true
+        }
+        
+        // TODO: Test facebook login. ~Levi
+        
+        //let facebookHandled: Bool = ApplicationDelegate.shared.application(app, open: url, options: options)
+        
+        let deepLinkedHandled: Bool = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
+        
+        if deepLinkedHandled {
+            return true
+        }
+        
+        return false
+    }
+}
+
+// MARK: - Shortcut Items
+
+extension GodToolsApp {
+    
+    static func processShortcutItem(shortcutItem: UIApplicationShortcutItem) -> Bool {
+        
+        let successfullyHandledQuickAction: Bool
+        
+        if let toolDeepLinkUrlString = ToolShortcutLinksView.getToolDeepLinkUrl(shortcutItem: shortcutItem), let toolDeepLinkUrl = URL(string: toolDeepLinkUrlString) {
+            
+            let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase = appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
+            
+            trackActionAnalyticsUseCase.trackAction(
+                screenName: "",
+                actionName: AnalyticsConstants.ActionNames.toolOpenedShortcut,
+                siteSection: "",
+                siteSubSection: "",
+                appLanguage: nil,
+                contentLanguage: nil,
+                contentLanguageSecondary: nil,
+                url: nil,
+                data: [
+                    AnalyticsConstants.Keys.toolOpenedShortcutCountKey: 1
+                ]
+            )
+            
+            successfullyHandledQuickAction = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: toolDeepLinkUrl)))
+        }
+        else {
+            
+            successfullyHandledQuickAction = false
+        }
+
+        return successfullyHandledQuickAction
     }
 }
