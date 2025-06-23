@@ -49,4 +49,9 @@ class FirebaseMessaging {
         }
         .eraseToAnyPublisher()
     }
+    
+    static func registerDeviceToken(deviceToken: Data) {
+        
+        Messaging.messaging().apnsToken = deviceToken
+    }
 }

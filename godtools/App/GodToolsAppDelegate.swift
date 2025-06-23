@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import FacebookCore
-import FirebaseDynamicLinks
 import SocialAuthentication
 
 class GodToolsAppDelegate: NSObject, UIApplicationDelegate {
@@ -65,6 +63,8 @@ extension GodToolsAppDelegate {
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
        
         print("\n GodToolsAppDelegate: didRegisterForRemoteNotificationsWithDeviceToken")
+        
+        FirebaseMessaging.registerDeviceToken(deviceToken: deviceToken)
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
