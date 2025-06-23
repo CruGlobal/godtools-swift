@@ -14,7 +14,10 @@ class GodToolsSceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     private static var window: UIWindow?
     private static var windowBackgroundColor: UIColor = UIColor.white
-        
+    
+    private(set) static var willConnectShortcutItem: UIApplicationShortcutItem?
+    private(set) static var willConnectUserActivity: NSUserActivity?
+            
     static func getWindow() -> UIWindow? {
         return Self.window
     }
@@ -24,7 +27,19 @@ class GodToolsSceneDelegate: UIResponder, UIWindowSceneDelegate {
         Self.window?.backgroundColor = color
     }
     
+    static func clearWillConnectShortcutItem() {
+        Self.willConnectShortcutItem = nil
+    }
+    
+    static func clearWillConnectUserActivity() {
+        Self.willConnectUserActivity = nil
+    }
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+        
+        // Keeping a static reference so these can be handled in GodToolsApp scenePhase active. Needed when launching app from terminated state. ~Levi
+        Self.willConnectShortcutItem = connectionOptions.shortcutItem
+        Self.willConnectUserActivity = connectionOptions.userActivities.first
         
         if let windowScene = scene as? UIWindowScene {
             Self.window = windowScene.keyWindow

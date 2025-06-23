@@ -88,7 +88,18 @@ struct GodToolsApp: App {
             case .inactive:
                 break
             case .active:
-                break
+                
+                if let shortcutItem = GodToolsSceneDelegate.willConnectShortcutItem,
+                   GodToolsApp.processShortcutItem(shortcutItem: shortcutItem) {
+                   
+                    GodToolsSceneDelegate.clearWillConnectShortcutItem()
+                }
+                else if let activityItem = GodToolsSceneDelegate.willConnectUserActivity,
+                        GodToolsApp.openUrlFromUserActivity(userActivity: activityItem) {
+                    
+                    GodToolsSceneDelegate.clearWillConnectUserActivity()
+                }
+
             @unknown default:
                 break
             }
