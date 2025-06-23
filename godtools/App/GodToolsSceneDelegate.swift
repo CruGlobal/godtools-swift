@@ -56,7 +56,7 @@ extension GodToolsSceneDelegate {
     }
 }
 
-// MARK: -
+// MARK: - Asks the delegate to open one or more URLs.
 
 extension GodToolsSceneDelegate {
     
