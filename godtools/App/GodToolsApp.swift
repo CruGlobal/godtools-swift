@@ -32,11 +32,11 @@ struct GodToolsApp: App {
         return launchEnvironmentReader.getFirebaseEnabled() ?? true
     }
     
+    private let toolShortcutLinksViewModel: ToolShortcutLinksViewModel
+    
     @Environment(\.scenePhase) private var scenePhase
     
     @UIApplicationDelegateAdaptor private var appDelegate: GodToolsAppDelegate
-    
-    @State private var toolShortcutLinks: ToolShortcutLinksView?
 
     init() {
 
@@ -61,6 +61,11 @@ struct GodToolsApp: App {
                 incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url))
             )
         }
+        
+        toolShortcutLinksViewModel = ToolShortcutLinksViewModel(
+            getCurrentAppLanguageUseCase: Self.appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            viewToolShortcutLinksUseCase: Self.appDiContainer.feature.toolShortcutLinks.domainLayer.getViewToolShortcutLinksUseCase()
+        )
     }
 
     var body: some Scene {
@@ -83,7 +88,7 @@ struct GodToolsApp: App {
             case .inactive:
                 break
             case .active:
-                reloadShortcutItems(application: application)
+                break
             @unknown default:
                 break
             }
@@ -106,17 +111,7 @@ extension GodToolsApp {
     
     private func reloadShortcutItems(application: UIApplication) {
                 
-        let viewModel = ToolShortcutLinksViewModel(
-            getCurrentAppLanguageUseCase: Self.appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            viewToolShortcutLinksUseCase: Self.appDiContainer.feature.toolShortcutLinks.domainLayer.getViewToolShortcutLinksUseCase()
-        )
-            
-        let view = ToolShortcutLinksView(
-            application: application,
-            viewModel: viewModel
-        )
-        
-        toolShortcutLinks = view
+        application.shortcutItems = toolShortcutLinksViewModel.shortcutLinks
     }
 }
 
@@ -187,7 +182,7 @@ extension GodToolsApp {
         
         let successfullyHandledQuickAction: Bool
         
-        if let toolDeepLinkUrlString = ToolShortcutLinksView.getToolDeepLinkUrl(shortcutItem: shortcutItem), let toolDeepLinkUrl = URL(string: toolDeepLinkUrlString) {
+        if let toolDeepLinkUrlString = ToolShortcutLinksViewModel.getToolDeepLinkUrl(shortcutItem: shortcutItem), let toolDeepLinkUrl = URL(string: toolDeepLinkUrlString) {
             
             let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase = appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
             

@@ -569,7 +569,6 @@
 		4564E2072B1E181000DA4040 /* ViewToolShortcutLinksUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4564E1F92B1E180F00DA4040 /* ViewToolShortcutLinksUseCase.swift */; };
 		4564E2082B1E181000DA4040 /* ViewToolShortcutLinksDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4564E1FB2B1E180F00DA4040 /* ViewToolShortcutLinksDomainModel.swift */; };
 		4564E2092B1E181000DA4040 /* ToolShortcutLinkDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4564E1FC2B1E180F00DA4040 /* ToolShortcutLinkDomainModel.swift */; };
-		4564E20A2B1E181000DA4040 /* ToolShortcutLinksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4564E1FF2B1E180F00DA4040 /* ToolShortcutLinksView.swift */; };
 		4564E20B2B1E181000DA4040 /* ToolShortcutLinksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4564E2002B1E180F00DA4040 /* ToolShortcutLinksViewModel.swift */; };
 		4564E20C2B1E181000DA4040 /* ToolShortcutLinksDataLayerDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4564E2022B1E180F00DA4040 /* ToolShortcutLinksDataLayerDependencies.swift */; };
 		4564E20D2B1E181000DA4040 /* ToolShortcutLinksDomainLayerDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4564E2032B1E180F00DA4040 /* ToolShortcutLinksDomainLayerDependencies.swift */; };
@@ -2353,7 +2352,6 @@
 		4564E1F92B1E180F00DA4040 /* ViewToolShortcutLinksUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewToolShortcutLinksUseCase.swift; sourceTree = "<group>"; };
 		4564E1FB2B1E180F00DA4040 /* ViewToolShortcutLinksDomainModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewToolShortcutLinksDomainModel.swift; sourceTree = "<group>"; };
 		4564E1FC2B1E180F00DA4040 /* ToolShortcutLinkDomainModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolShortcutLinkDomainModel.swift; sourceTree = "<group>"; };
-		4564E1FF2B1E180F00DA4040 /* ToolShortcutLinksView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolShortcutLinksView.swift; sourceTree = "<group>"; };
 		4564E2002B1E180F00DA4040 /* ToolShortcutLinksViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolShortcutLinksViewModel.swift; sourceTree = "<group>"; };
 		4564E2022B1E180F00DA4040 /* ToolShortcutLinksDataLayerDependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolShortcutLinksDataLayerDependencies.swift; sourceTree = "<group>"; };
 		4564E2032B1E180F00DA4040 /* ToolShortcutLinksDomainLayerDependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolShortcutLinksDomainLayerDependencies.swift; sourceTree = "<group>"; };
@@ -6799,7 +6797,6 @@
 		4564E1FE2B1E180F00DA4040 /* ToolShortcutLinks */ = {
 			isa = PBXGroup;
 			children = (
-				4564E1FF2B1E180F00DA4040 /* ToolShortcutLinksView.swift */,
 				4564E2002B1E180F00DA4040 /* ToolShortcutLinksViewModel.swift */,
 			);
 			path = ToolShortcutLinks;
@@ -13440,7 +13437,6 @@
 				45AE975C27C97A9500C2CB33 /* CardCollectionPage+MobileContentRenderableModel.swift in Sources */,
 				450DB5622AC3552700B2FE3A /* GetAppLanguagesListUseCase.swift in Sources */,
 				4598BD252BF7DF6800196463 /* GetSocialSignInInterfaceStringsRepositoryInterface.swift in Sources */,
-				4564E20A2B1E181000DA4040 /* ToolShortcutLinksView.swift in Sources */,
 				45BBBE8C2DFA341E00D82262 /* UserActivityDiContainer.swift in Sources */,
 				45BBBE8D2DFA341E00D82262 /* UserActivityDomainLayerDependencies.swift in Sources */,
 				45BBBE8E2DFA341E00D82262 /* UserActivityDataLayerDependencies.swift in Sources */,
