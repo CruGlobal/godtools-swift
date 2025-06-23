@@ -17,6 +17,7 @@ class AppFlow: NSObject, Flow {
     private let appMessaging: AppMessagingInterface
     private let appLaunchObserver: AppLaunchObserver = AppLaunchObserver()
     private let dashboardFlow: DashboardFlow
+    private let rootController: AppRootController = AppRootController(nibName: nil, bundle: nil)
     
     private var onboardingFlow: OnboardingFlow?
     private var languageSettingsFlow: LanguageSettingsFlow?
@@ -30,7 +31,6 @@ class AppFlow: NSObject, Flow {
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
         
     let appDiContainer: AppDiContainer
-    let rootController: AppRootController = AppRootController(nibName: nil, bundle: nil)
     let navigationController: AppNavigationController
     let rootView: AppRootView
             
@@ -97,10 +97,6 @@ class AppFlow: NSObject, Flow {
     
     deinit {
         print("x deinit: \(type(of: self))")
-    }
-    
-    func getInitialView() -> UIViewController {
-        return rootController
     }
     
     func navigate(step: FlowStep) {
