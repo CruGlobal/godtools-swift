@@ -13,12 +13,14 @@ import FirebaseDynamicLinks
 class GodToolsSceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     private static var window: UIWindow?
+    private static var windowBackgroundColor: UIColor = UIColor.white
         
     static func getWindow() -> UIWindow? {
         return Self.window
     }
     
     static func setWindowBackgroundColorForStatusBarColor(color: UIColor) {
+        Self.windowBackgroundColor = color
         Self.window?.backgroundColor = color
     }
     
@@ -26,6 +28,7 @@ class GodToolsSceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         if let windowScene = scene as? UIWindowScene {
             Self.window = windowScene.keyWindow
+            Self.setWindowBackgroundColorForStatusBarColor(color: Self.windowBackgroundColor)
         }
     }
 }
