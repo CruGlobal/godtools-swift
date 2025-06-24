@@ -1,18 +1,18 @@
 //
-//  FacebookAuthentication+AuthenticationProviderInterface.swift
+//  FacebookAccessTokenProvider+AuthenticationProviderInterface.swift
 //  godtools
 //
-//  Created by Levi Eggert on 5/1/23.
-//  Copyright © 2023 Cru. All rights reserved.
+//  Created by Levi Eggert on 6/24/25.
+//  Copyright © 2025 Cru. All rights reserved.
 //
 
 import Foundation
 import UIKit
-import SocialAuthentication
 import Combine
+import SocialAuthentication
 import FBSDKLoginKit
 
-extension FacebookAuthentication: AuthenticationProviderInterface {
+extension FacebookAccessTokenProvider: AuthenticationProviderInterface {
     
     private func getResponseForPersistedData() -> Result<AuthenticationProviderResponse, Error> {
         
@@ -43,7 +43,7 @@ extension FacebookAuthentication: AuthenticationProviderInterface {
     func authenticatePublisher(presentingViewController: UIViewController) -> AnyPublisher<AuthenticationProviderResponse, Error> {
         
         return authenticatePublisher(from: presentingViewController)
-            .flatMap({ (response: FacebookAuthenticationResponse) -> AnyPublisher<AuthenticationProviderResponse, Error> in
+            .flatMap({ (response: FacebookAccessTokenProviderResponse) -> AnyPublisher<AuthenticationProviderResponse, Error> in
                 
                 if response.isCancelled {
                     return Fail(error: NSError.userCancelledError())
