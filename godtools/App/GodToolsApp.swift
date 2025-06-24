@@ -170,11 +170,7 @@ extension GodToolsApp {
             _ = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: firebaseDynamicLinkUrl)))
             return true
         }
-        
-        // TODO: Test facebook login. ~Levi
-        
-        //let facebookHandled: Bool = ApplicationDelegate.shared.application(app, open: url, options: options)
-        
+                
         let deepLinkedHandled: Bool = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
         
         if deepLinkedHandled {
