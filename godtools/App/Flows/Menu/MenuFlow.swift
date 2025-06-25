@@ -711,7 +711,7 @@ extension MenuFlow {
     
     private func copyFirebaseDeviceTokenToClipboard() {
         
-        appDiContainer.dataLayer.getFirebaseMessaging()
+        appDiContainer.dataLayer.getSharedFirebaseMessaging()
             .getDeviceTokenPublisher()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in

@@ -148,8 +148,8 @@ class AppDataLayerDependencies {
         return FavoritingToolMessageCache(userDefaultsCache: sharedUserDefaultsCache)
     }
     
-    func getFirebaseMessaging() -> FirebaseMessaging {
-        return FirebaseMessaging()
+    func getSharedFirebaseMessaging() -> FirebaseMessaging {
+        return FirebaseMessaging.shared
     }
     
     func getFollowUpsService() -> FollowUpsService {
