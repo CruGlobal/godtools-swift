@@ -41,7 +41,7 @@ extension FacebookLimitedLogin: AuthenticationProviderInterface {
     
     func renewTokenPublisher() -> AnyPublisher<AuthenticationProviderResponse, Error> {
         
-        // TODO: Implement. ~Levi
+        // TODO: GT-2392 Implement. ~Levi
         // TODO: Is refreshing oidc token an option? ~Levi
         
         let profile = AuthenticationProviderProfile(

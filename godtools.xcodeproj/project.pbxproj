@@ -16279,8 +16279,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/CruGlobal/social-authentication-ios.git";
 			requirement = {
-				branch = versions/0.6.1;
-				kind = branch;
+				kind = upToNextMinorVersion;
+				minimumVersion = 0.6.1;
 			};
 		};
 		45DF96472D386C1C00C6AE68 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
