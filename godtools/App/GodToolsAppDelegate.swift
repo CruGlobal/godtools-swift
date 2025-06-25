@@ -73,7 +73,7 @@ extension GodToolsAppDelegate: UNUserNotificationCenterDelegate {
         
         FirebaseMessaging.didReceiveMessage(userInfo: userInfo)
         
-        completionHandler([.badge, .sound])
+        completionHandler([.banner, .sound])
     }
     
     // Asks the delegate to process the user’s response to a delivered notification.
