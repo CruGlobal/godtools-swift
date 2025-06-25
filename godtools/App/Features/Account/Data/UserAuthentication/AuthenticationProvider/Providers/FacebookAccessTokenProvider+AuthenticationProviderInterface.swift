@@ -12,11 +12,14 @@ import Combine
 import SocialAuthentication
 import FBSDKLoginKit
 
+// NOTE: Requires App Tracking Transparency is enabled by the user.
+// Ensure Key (Privacy - Tracking Usage Description) with value is provided in the Info.plist.
+
 extension FacebookAccessTokenProvider: AuthenticationProviderInterface {
     
     private func getResponseForPersistedData() -> Result<AuthenticationProviderResponse, Error> {
         
-        guard let accessToken = getAccessToken(), let profile = getCurrentUserProfile() else {
+        guard let accessToken = getAccessToken(), let profile = FacebookProfile.current else {
             
             let error: Error = NSError.errorWithDescription(description: "Data not persisted.")
             
@@ -27,6 +30,7 @@ extension FacebookAccessTokenProvider: AuthenticationProviderInterface {
             accessToken: accessToken.tokenString,
             appleSignInAuthorizationCode: nil,
             idToken: nil,
+            oidcToken: nil,
             profile: AuthenticationProviderProfile(
                 email: profile.email,
                 familyName: profile.lastName,
@@ -76,34 +80,12 @@ extension FacebookAccessTokenProvider: AuthenticationProviderInterface {
     }
     
     func getAuthUserPublisher() -> AnyPublisher<AuthUserDomainModel?, Error> {
-                
-        if let profile = getCurrentUserProfile() {
-                    
-            return Just(mapProfileToAuthUser(profile: profile)).setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
-        }
         
-        return loadUserProfilePublisher()
-            .map { (profile: Profile?) in
-                
-                if let profile = profile {
-                    return self.mapProfileToAuthUser(profile: profile)
-                }
-                
-                return nil
+        return FacebookProfile()
+            .getCurrentUserProfilePublisher()
+            .compactMap { (profile: Profile?) in
+                profile?.toAuthUserDomainModel()
             }
             .eraseToAnyPublisher()
-    }
-    
-    private func mapProfileToAuthUser(profile: Profile) -> AuthUserDomainModel {
-        
-        return  AuthUserDomainModel(
-            email: profile.email ?? "",
-            firstName: profile.firstName,
-            grMasterPersonId: nil,
-            lastName: profile.lastName,
-            name: profile.name,
-            ssoGuid: nil
-        )
     }
 }

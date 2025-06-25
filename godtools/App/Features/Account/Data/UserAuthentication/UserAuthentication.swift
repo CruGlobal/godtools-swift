@@ -196,6 +196,7 @@ class UserAuthentication {
                     accessToken: nil,
                     appleSignInAuthorizationCode: nil,
                     idToken: nil,
+                    oidcToken: nil,
                     profile: authProviderProfile,
                     providerType: .apple,
                     refreshToken: persistedAppleRefreshToken

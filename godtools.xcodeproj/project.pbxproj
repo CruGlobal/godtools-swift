@@ -1084,6 +1084,8 @@
 		45B54C572A2641FE0042CD0E /* RealmDatabase+Read.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B54C542A2641FE0042CD0E /* RealmDatabase+Read.swift */; };
 		45B54C582A2641FE0042CD0E /* RealmDatabase+Write.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B54C552A2641FE0042CD0E /* RealmDatabase+Write.swift */; };
 		45B54C592A2641FE0042CD0E /* RealmDatabase+Delete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B54C562A2641FE0042CD0E /* RealmDatabase+Delete.swift */; };
+		45B5AF912E0C1ABF00714FEA /* FacebookLimitedLogin+AuthenticationProviderInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B5AF902E0C1AB900714FEA /* FacebookLimitedLogin+AuthenticationProviderInterface.swift */; };
+		45B5AF932E0C234900714FEA /* Profile+AuthUserDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B5AF922E0C234300714FEA /* Profile+AuthUserDomainModel.swift */; };
 		45B6480925E581660098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		45B6480A25E581660098BAF1 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		45B6480B25E581660098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
@@ -2858,6 +2860,8 @@
 		45B54C542A2641FE0042CD0E /* RealmDatabase+Read.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RealmDatabase+Read.swift"; sourceTree = "<group>"; };
 		45B54C552A2641FE0042CD0E /* RealmDatabase+Write.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RealmDatabase+Write.swift"; sourceTree = "<group>"; };
 		45B54C562A2641FE0042CD0E /* RealmDatabase+Delete.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RealmDatabase+Delete.swift"; sourceTree = "<group>"; };
+		45B5AF902E0C1AB900714FEA /* FacebookLimitedLogin+AuthenticationProviderInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FacebookLimitedLogin+AuthenticationProviderInterface.swift"; sourceTree = "<group>"; };
+		45B5AF922E0C234300714FEA /* Profile+AuthUserDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Profile+AuthUserDomainModel.swift"; sourceTree = "<group>"; };
 		45B6FF282BAA39660037B240 /* ViewToolFilterLanguagesUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewToolFilterLanguagesUseCase.swift; sourceTree = "<group>"; };
 		45B6FF292BAA39660037B240 /* ViewToolFilterCategoriesUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewToolFilterCategoriesUseCase.swift; sourceTree = "<group>"; };
 		45B6FF2C2BAA39710037B240 /* SearchToolFilterLanguagesRepositoryInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchToolFilterLanguagesRepositoryInterface.swift; sourceTree = "<group>"; };
@@ -7967,7 +7971,9 @@
 			children = (
 				4598BCDC2BF7DF6800196463 /* AppleAuthentication+AuthenticationProviderInterface.swift */,
 				453D62352E0B2F2000126D86 /* FacebookAccessTokenProvider+AuthenticationProviderInterface.swift */,
+				45B5AF902E0C1AB900714FEA /* FacebookLimitedLogin+AuthenticationProviderInterface.swift */,
 				4598BCDE2BF7DF6800196463 /* GoogleAuthentication+AuthenticationProviderInterface.swift */,
+				45B5AF922E0C234300714FEA /* Profile+AuthUserDomainModel.swift */,
 			);
 			path = Providers;
 			sourceTree = "<group>";
@@ -13559,6 +13565,7 @@
 				45C2AF482A817621004958AB /* PageControllAttributesType.swift in Sources */,
 				4512C8292B32388B00D162F3 /* ShareableImageDomainModel.swift in Sources */,
 				450F94DF27A1F38E009DEA43 /* MobileContentCardCollectionPageItemView.swift in Sources */,
+				45B5AF932E0C234900714FEA /* Profile+AuthUserDomainModel.swift in Sources */,
 				45AD1F5E25938A9800A096A0 /* StarscreamWebSocket.swift in Sources */,
 				D4C2A5602C30906C0035AB4D /* ViewLessonFilterLanguagesUseCase.swift in Sources */,
 				45677765287DB1530044AEB2 /* TutorialFlow.swift in Sources */,
@@ -14901,6 +14908,7 @@
 				45FB160727DBDDB60009DF8E /* LessonFlowCompletedState.swift in Sources */,
 				45F1CE212B7D1F210008A3BC /* ToolLanguageDownloader.swift in Sources */,
 				450D63AA2AC8A84600B90319 /* TrackScreenViewAnalyticsPropertiesDomainModel.swift in Sources */,
+				45B5AF912E0C1ABF00714FEA /* FacebookLimitedLogin+AuthenticationProviderInterface.swift in Sources */,
 				D409F2AA292559F100D9D2FE /* MobileContentAuthTokenError.swift in Sources */,
 				45006D462B80EB60002E480D /* ToolListItemDomainModel.swift in Sources */,
 				45043FA32BFB879400324573 /* GetDeleteAccountProgressInterfaceStringsRepository.swift in Sources */,
