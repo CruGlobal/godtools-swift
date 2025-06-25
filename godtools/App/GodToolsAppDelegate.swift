@@ -48,7 +48,7 @@ extension GodToolsAppDelegate {
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
                
-        FirebaseMessaging.registerDeviceToken(deviceToken: deviceToken)
+        FirebaseMessaging.shared.registerDeviceToken(deviceToken: deviceToken)
     }
 }
 
@@ -71,7 +71,7 @@ extension GodToolsAppDelegate: UNUserNotificationCenterDelegate {
         
         let userInfo: [AnyHashable: Any] = notification.request.content.userInfo
         
-        FirebaseMessaging.didReceiveMessage(userInfo: userInfo)
+        FirebaseMessaging.shared.didReceiveMessage(userInfo: userInfo)
         
         completionHandler([.banner, .sound])
     }
@@ -84,7 +84,7 @@ extension GodToolsAppDelegate: UNUserNotificationCenterDelegate {
         
         let userInfo: [AnyHashable: Any] = response.notification.request.content.userInfo
         
-        FirebaseMessaging.didReceiveMessage(userInfo: userInfo)
+        FirebaseMessaging.shared.didReceiveMessage(userInfo: userInfo)
         
         completionHandler()
     }

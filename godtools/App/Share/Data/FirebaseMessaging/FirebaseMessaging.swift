@@ -12,7 +12,9 @@ import Combine
 
 class FirebaseMessaging {
     
-    init() {
+    static let shared: FirebaseMessaging = FirebaseMessaging()
+    
+    private init() {
         
     }
     
@@ -56,12 +58,12 @@ class FirebaseMessaging {
 
 extension FirebaseMessaging {
     
-    static func registerDeviceToken(deviceToken: Data) {
+    func registerDeviceToken(deviceToken: Data) {
         
         Messaging.messaging().apnsToken = deviceToken
     }
     
-    static func didReceiveMessage(userInfo: [AnyHashable: Any]) {
+    func didReceiveMessage(userInfo: [AnyHashable: Any]) {
         
         Messaging.messaging().appDidReceiveMessage(userInfo)
     }
