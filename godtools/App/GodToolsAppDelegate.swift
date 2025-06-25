@@ -12,9 +12,7 @@ import SocialAuthentication
 class GodToolsAppDelegate: NSObject, UIApplicationDelegate {
         
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-                     
-        let application: UIApplication = UIApplication.shared
-        
+                             
         ConfigureFacebookOnAppLaunch.configure(
             application: application,
             launchOptions: launchOptions,
