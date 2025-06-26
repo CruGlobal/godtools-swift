@@ -1573,6 +1573,7 @@
 		D42FEBD62875D8D50002FAD9 /* GetOptInOnboardingTutorialAvailableUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42FEBD52875D8D50002FAD9 /* GetOptInOnboardingTutorialAvailableUseCase.swift */; };
 		D42FEBDA287604570002FAD9 /* OptInOnboardingBannerEnabledRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42FEBD9287604570002FAD9 /* OptInOnboardingBannerEnabledRepository.swift */; };
 		D43818AE2E0C7C6300D404FF /* ToolScreenShareQRCodeActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43818AD2E0C7C6300D404FF /* ToolScreenShareQRCodeActivity.swift */; };
+		D43818B02E0DCA8C00D404FF /* ToolScreenShareQRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43818AF2E0DCA8C00D404FF /* ToolScreenShareQRCodeView.swift */; };
 		D43FC1BE2B62EFD800F8310E /* View+AppLifecycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43FC1BD2B62EFD800F8310E /* View+AppLifecycle.swift */; };
 		D43FC1C02B64531F00F8310E /* ViewConfirmAppLanguageDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43FC1BF2B64531F00F8310E /* ViewConfirmAppLanguageDomainModel.swift */; };
 		D43FC1C22B65E08C00F8310E /* GetConfirmAppLanguageInterfaceStringsRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43FC1C12B65E08C00F8310E /* GetConfirmAppLanguageInterfaceStringsRepositoryInterface.swift */; };
@@ -3380,6 +3381,7 @@
 		D42FEBD52875D8D50002FAD9 /* GetOptInOnboardingTutorialAvailableUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOptInOnboardingTutorialAvailableUseCase.swift; sourceTree = "<group>"; };
 		D42FEBD9287604570002FAD9 /* OptInOnboardingBannerEnabledRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptInOnboardingBannerEnabledRepository.swift; sourceTree = "<group>"; };
 		D43818AD2E0C7C6300D404FF /* ToolScreenShareQRCodeActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ToolScreenShareQRCodeActivity.swift; path = godtools/App/Features/ToolScreenShareQRCode/ToolScreenShareQRCodeActivity.swift; sourceTree = SOURCE_ROOT; };
+		D43818AF2E0DCA8C00D404FF /* ToolScreenShareQRCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ToolScreenShareQRCodeView.swift; path = godtools/App/Features/ToolScreenShareQRCode/ToolScreenShareQRCodeView.swift; sourceTree = SOURCE_ROOT; };
 		D43FC1BD2B62EFD800F8310E /* View+AppLifecycle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+AppLifecycle.swift"; sourceTree = "<group>"; };
 		D43FC1BF2B64531F00F8310E /* ViewConfirmAppLanguageDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewConfirmAppLanguageDomainModel.swift; sourceTree = "<group>"; };
 		D43FC1C12B65E08C00F8310E /* GetConfirmAppLanguageInterfaceStringsRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetConfirmAppLanguageInterfaceStringsRepositoryInterface.swift; sourceTree = "<group>"; };
@@ -5883,6 +5885,7 @@
 			isa = PBXGroup;
 			children = (
 				D43818AD2E0C7C6300D404FF /* ToolScreenShareQRCodeActivity.swift */,
+				D43818AF2E0DCA8C00D404FF /* ToolScreenShareQRCodeView.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -14788,6 +14791,7 @@
 				455B6BA92D9C48D000815829 /* ActionCableChannelSubscriber.swift in Sources */,
 				45F80E382DAECB8D000A2F33 /* OptInNotificationUserDefaultsCache.swift in Sources */,
 				45F80E392DAECB8D000A2F33 /* OptInNotificationRepository.swift in Sources */,
+				D43818B02E0DCA8C00D404FF /* ToolScreenShareQRCodeView.swift in Sources */,
 				455B6BAA2D9C48D000815829 /* ActionCableEventType.swift in Sources */,
 				455B6BAB2D9C48D000815829 /* WebSocketChannelPublisherInterface.swift in Sources */,
 				455B6BAC2D9C48D000815829 /* ActionCableChannelPublisher.swift in Sources */,

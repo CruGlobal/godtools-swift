@@ -102,8 +102,9 @@ class TractFlow: ToolNavigationFlow, ToolSettingsNavigationFlow {
             openToolSettings(toolSettingsObserver: toolSettingsObserver, toolSettingsDidCloseClosure: toolSettingsDidCloseClosure)
             
         case .toolSettingsFlowCompleted( _):
-            
-            closeToolSettings()
+            return
+            // TODO: - figure out when to close tool settings so the flow doesn't deallocate while QR code still needs it
+//            closeToolSettings()
                         
         case .tractFlowCompleted( _):
             

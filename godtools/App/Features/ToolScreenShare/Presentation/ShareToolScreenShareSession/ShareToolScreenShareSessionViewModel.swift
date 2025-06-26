@@ -55,6 +55,7 @@ extension ShareToolScreenShareSessionViewModel {
     }
     
     func qrCodeTapped() {
-        // MARK: - TODO: Complete in GT-2578 subtask. ~Levi
+    
+        flowDelegate?.navigate(step: .shareQRCodeTappedFromToolScreenShareSession)
     }
 }
