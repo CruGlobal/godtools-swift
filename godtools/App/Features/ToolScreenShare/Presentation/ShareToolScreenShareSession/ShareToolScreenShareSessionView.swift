@@ -28,6 +28,12 @@ class ShareToolScreenShareSessionView {
         )
         
         controller.completionWithItemsHandler = { (activityType: UIActivity.ActivityType?, serviceCompleted: Bool, returnedItems: [Any]?, activityError: Error?) in
+            
+            if activityType == ToolScreenShareQRCodeActivity.activityType {
+                print("qr tapped...")
+            }
+            
+            
             viewModel.activityViewDismissed()
         }
         
