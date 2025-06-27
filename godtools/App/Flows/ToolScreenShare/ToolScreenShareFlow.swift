@@ -172,9 +172,7 @@ class ToolScreenShareFlow: Flow {
                 navigationController.present(view, animated: true, completion: nil)
                 
             case .failure(let error):
-                
-                flowDelegate?.navigate(step: .toolScreenShareFlowCompleted(state: .failedToLoadToolScreenShareRemoteSession))
-                
+                                
                 switch error {
                 
                 case .timedOut:
