@@ -11,17 +11,18 @@ import UIKit
 
 class ToolScreenShareQRCodeActivity: UIActivity {
     
-    var _activityTitle: String
-    var _activityImage: UIImage?
-    var activityItems = [Any]()
-    var action: ([Any]) -> Void
+    private let title: String
+    private let image: UIImage?
+    private let action: ([Any]) -> Void
+    
+    private var activityItems = [Any]()
     
     override var activityTitle: String? {
-        return _activityTitle
+        return title
     }
     
     override var activityImage: UIImage? {
-        return _activityImage
+        return image
     }
     
     override var activityType: UIActivity.ActivityType? {
@@ -34,8 +35,9 @@ class ToolScreenShareQRCodeActivity: UIActivity {
     
     init(performAction: @escaping ([Any]) -> Void) {
         
-        _activityTitle = "QR Code"
-        _activityImage = UIImage(named: "qr_code")
+        // TODO: - add interface string to ShareToolScreenShareSessionInterfaceStringsDomainModel
+        title = "QR Code"
+        image = UIImage(named: "qr_code")
         action = performAction
         
         super.init()
