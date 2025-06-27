@@ -25,7 +25,6 @@ class ToolScreenShareFlow: Flow {
     @Published private var shareToolScreenShareSessionDomainModel: ShareToolScreenShareSessionDomainModel?
     
     private weak var flowDelegate: FlowDelegate?
-    private var qrCodeViewPresenting: Bool = false
     
     let appDiContainer: AppDiContainer
     let navigationController: AppNavigationController
@@ -127,20 +126,16 @@ class ToolScreenShareFlow: Flow {
             presentCreatingToolScreenShareSession()
             
         case .closeTappedFromCreatingToolScreenShareSession:
-            
             dismissCreatingToolScreenShareSession()
             
         case .shareQRCodeTappedFromToolScreenShareSession:
-            qrCodeViewPresenting = true
             presentQRCodeView()
             
         case .dismissedShareToolScreenShareActivityViewController:
-            if qrCodeViewPresenting { return }
-            
-            flowDelegate?.navigate(step: .toolScreenShareFlowCompleted(state: .didLoadToolScreenShareRemoteSession))
+            break
             
         case .closeQRCodeTappedFromToolScreenShareSession:
-            qrCodeViewPresenting = false
+            break
             
         case .didCreateSessionFromCreatingToolScreenShareSession(let result):
             
