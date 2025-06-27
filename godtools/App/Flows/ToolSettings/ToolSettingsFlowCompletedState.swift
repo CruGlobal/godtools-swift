@@ -10,6 +10,6 @@ import Foundation
 
 enum ToolSettingsFlowCompletedState {
     
-    case toolScreenShareFlowCompleted(state: ToolScreenShareFlowCompletedState)
+    case toolScreenShareFlowStarted(toolSettingsObserver: ToolSettingsObserver)
     case userClosedToolSettings
 }

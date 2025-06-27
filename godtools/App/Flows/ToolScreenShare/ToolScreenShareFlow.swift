@@ -25,6 +25,7 @@ class ToolScreenShareFlow: Flow {
     @Published private var shareToolScreenShareSessionDomainModel: ShareToolScreenShareSessionDomainModel?
     
     private weak var flowDelegate: FlowDelegate?
+    private var qrCodeViewPresenting: Bool = false
     
     let appDiContainer: AppDiContainer
     let navigationController: AppNavigationController
@@ -125,20 +126,26 @@ class ToolScreenShareFlow: Flow {
             dismissToolScreenShareTutorial()
             presentCreatingToolScreenShareSession()
             
-        case .shareQRCodeTappedFromToolScreenShareSession:
-
-            presentQRCodeView()
-            
         case .closeTappedFromCreatingToolScreenShareSession:
             
             dismissCreatingToolScreenShareSession()
             
+        case .shareQRCodeTappedFromToolScreenShareSession:
+            qrCodeViewPresenting = true
+            presentQRCodeView()
+            
+        case .dismissedShareToolScreenShareActivityViewController:
+            if qrCodeViewPresenting { return }
+            
+            flowDelegate?.navigate(step: .toolScreenShareFlowCompleted(state: .didLoadToolScreenShareRemoteSession))
+            
+        case .closeQRCodeTappedFromToolScreenShareSession:
+            qrCodeViewPresenting = false
+            
         case .didCreateSessionFromCreatingToolScreenShareSession(let result):
             
             dismissCreatingToolScreenShareSession()
-            
-            flowDelegate?.navigate(step: .toolScreenShareFlowCompleted(state: .didLoadToolScreenShareRemoteSession))
-                        
+                                    
             switch result {
                 
             case .success(let channel):
@@ -165,6 +172,8 @@ class ToolScreenShareFlow: Flow {
                 navigationController.present(view, animated: true, completion: nil)
                 
             case .failure(let error):
+                
+                flowDelegate?.navigate(step: .toolScreenShareFlowCompleted(state: .failedToLoadToolScreenShareRemoteSession))
                 
                 switch error {
                 

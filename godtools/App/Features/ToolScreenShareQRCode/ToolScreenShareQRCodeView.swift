@@ -8,10 +8,12 @@
 
 import SwiftUI
 
-struct ToolScreenShareQRCodeView: View {
+struct ToolScreenShareQRCodeView: View {    
     var body: some View {
         
-        Text("QR Code")
+        Text("TODO: - QR Code goes here GT-2656")
+
+        .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
     }
 }
 

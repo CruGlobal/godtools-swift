@@ -211,6 +211,8 @@ enum FlowStep {
     case closeTappedFromCreatingToolScreenShareSession
     case didCreateSessionFromCreatingToolScreenShareSession(result: Result<WebSocketChannel, TractRemoteSharePublisherError>)
     case shareQRCodeTappedFromToolScreenShareSession
+    case dismissedShareToolScreenShareActivityViewController
+    case closeQRCodeTappedFromToolScreenShareSession
     case toolScreenShareFlowCompleted(state: ToolScreenShareFlowCompletedState)
     
     // download tool
