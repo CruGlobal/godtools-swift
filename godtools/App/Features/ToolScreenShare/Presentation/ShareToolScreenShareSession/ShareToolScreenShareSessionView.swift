@@ -27,7 +27,7 @@ class ShareToolScreenShareSessionView {
             applicationActivities: [shareQRCodeActivityItem]
         )
         
-        controller.completionWithItemsHandler = { _, _, _, _ in
+        controller.completionWithItemsHandler = { (activityType: UIActivity.ActivityType?, serviceCompleted: Bool, returnedItems: [Any]?, activityError: Error?) in
             viewModel.activityViewDismissed()
         }
         
