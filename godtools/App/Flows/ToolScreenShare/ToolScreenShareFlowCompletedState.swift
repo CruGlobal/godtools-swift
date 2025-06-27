@@ -12,4 +12,5 @@ enum ToolScreenShareFlowCompletedState {
     
     case didLoadToolScreenShareRemoteSession
     case userClosedToolScreenShareTutorial
+    case failedToLoadToolScreenShareRemoteSession
 }

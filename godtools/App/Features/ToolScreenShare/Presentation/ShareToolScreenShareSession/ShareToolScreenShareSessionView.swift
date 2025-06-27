@@ -18,10 +18,18 @@ class ShareToolScreenShareSessionView {
         
         self.viewModel = viewModel
         
+        let shareQRCodeActivityItem = ToolScreenShareQRCodeActivity(title: viewModel.qrCodeString) { sharedItems in
+            viewModel.qrCodeTapped()
+        }
+        
         controller = UIActivityViewController(
             activityItems: [viewModel.shareMessage],
-            applicationActivities: nil
+            applicationActivities: [shareQRCodeActivityItem]
         )
+        
+        controller.completionWithItemsHandler = { _, _, _, _ in
+            viewModel.activityViewDismissed()
+        }
         
         viewModel.pageViewed()
     }

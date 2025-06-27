@@ -15,7 +15,6 @@ class ToolSettingsFlow: Flow {
     private let toolSettingsObserver: ToolSettingsObserver
     private let toolSettingsDidCloseClosure: (() -> Void)?
     
-    private var toolScreenShareFlow: ToolScreenShareFlow?
     private var languagesListModal: UIViewController?
     private var reviewShareShareableModal: UIViewController?
     private var downloadToolTranslationsFlow: DownloadToolTranslationsFlow?
@@ -100,11 +99,8 @@ class ToolSettingsFlow: Flow {
             navigationController.present(getShareToolView(viewShareToolDomainModel: domainModel), animated: true, completion: nil)
                     
         case .screenShareTappedFromToolSettings:
-            presentToolScreenShareFlow()
-
-        case .toolScreenShareFlowCompleted(let state):
-            flowDelegate?.navigate(step: .toolSettingsFlowCompleted(state: .toolScreenShareFlowCompleted(state: state)))
-                                                
+            flowDelegate?.navigate(step: .toolSettingsFlowCompleted(state: .toolScreenShareFlowStarted(toolSettingsObserver: toolSettingsObserver)))
+        
         case .primaryLanguageTappedFromToolSettings:
             presentToolLanguagesList(listType: .choosePrimaryLanguage, animated: true)
             
@@ -254,35 +250,6 @@ extension ToolSettingsFlow {
         languagesListModal = hostingView
         
         return hostingView
-    }
-}
-
-// MARK: - Tool Screen Share Flow
-
-extension ToolSettingsFlow {
-    
-    private func presentToolScreenShareFlow() {
-        guard let toolSettingsObserver = toolSettingsObserver as? ToolScreenShareFlow.ToolScreenShareSettingsObserver else { return }
-        
-        let toolScreenShareFlow = ToolScreenShareFlow(
-            flowDelegate: self,
-            appDiContainer: appDiContainer,
-            sharedNavigationController: navigationController,
-            toolSettingsObserver: toolSettingsObserver
-        )
-        
-        self.toolScreenShareFlow = toolScreenShareFlow
-    }
-    
-    private func dismissToolScreenShareFlow() {
-        
-        guard toolScreenShareFlow != nil else {
-            return
-        }
-        
-        navigationController.dismissPresented(animated: true, completion: nil)
-        
-        toolScreenShareFlow = nil
     }
 }
 
