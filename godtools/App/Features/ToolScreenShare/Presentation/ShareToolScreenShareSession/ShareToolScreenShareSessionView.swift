@@ -18,7 +18,7 @@ class ShareToolScreenShareSessionView {
         
         self.viewModel = viewModel
         
-        let shareQRCodeActivityItem = ToolScreenShareQRCodeActivity { sharedItems in
+        let shareQRCodeActivityItem = ToolScreenShareQRCodeActivity(title: viewModel.qrCodeString) { sharedItems in
             viewModel.qrCodeTapped()
         }
         

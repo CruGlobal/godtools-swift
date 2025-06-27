@@ -33,10 +33,9 @@ class ToolScreenShareQRCodeActivity: UIActivity {
         return .share
     }
     
-    init(performAction: @escaping ([Any]) -> Void) {
+    init(title: String, performAction: @escaping ([Any]) -> Void) {
         
-        // TODO: - add interface string to ShareToolScreenShareSessionInterfaceStringsDomainModel
-        title = "QR Code"
+        self.title = title
         image = UIImage(named: "qr_code")
         action = performAction
         

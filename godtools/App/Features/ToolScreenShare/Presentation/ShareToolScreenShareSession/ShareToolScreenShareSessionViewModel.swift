@@ -15,6 +15,7 @@ class ShareToolScreenShareSessionViewModel {
     private let shareUrl: String
     
     let shareMessage: String
+    let qrCodeString: String
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -24,6 +25,7 @@ class ShareToolScreenShareSessionViewModel {
         self.domainModel = domainModel
         self.shareMessage = shareMessage
         self.shareUrl = shareUrl
+        self.qrCodeString = domainModel.interfaceStrings.qrCodeTitle
         
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
     }
