@@ -11,6 +11,8 @@ import UIKit
 
 class ToolScreenShareQRCodeActivity: UIActivity {
     
+    static let activityType: UIActivity.ActivityType = ActivityType(rawValue: "org.cru.godtools.screenShareQRCodeActivity")
+    
     private let title: String
     private let image: UIImage?
     private let action: ([Any]) -> Void
@@ -26,7 +28,7 @@ class ToolScreenShareQRCodeActivity: UIActivity {
     }
     
     override var activityType: UIActivity.ActivityType? {
-        return UIActivity.ActivityType(rawValue: "org.cru.godtools.screenShareQRCodeActivity")
+        return Self.activityType
     }
     
     override class var activityCategory: UIActivity.Category {
