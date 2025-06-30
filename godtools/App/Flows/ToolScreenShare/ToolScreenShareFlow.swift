@@ -132,10 +132,10 @@ class ToolScreenShareFlow: Flow {
             presentQRCodeView()
             
         case .dismissedShareToolScreenShareActivityViewController:
-            break
+            completeFlow()
             
-        case .closeQRCodeTappedFromToolScreenShareSession:
-            break
+        case .closeTappedFromShareQRCode:
+            completeFlow()
             
         case .didCreateSessionFromCreatingToolScreenShareSession(let result):
             
@@ -184,9 +184,19 @@ class ToolScreenShareFlow: Flow {
                 }
             }
             
+        case .cancelTappedFromCreateToolScreenShareSessionTimeout:
+            completeFlow()
+            
+        case .acceptTappedFromCreateToolScreenShareSessionTimeout:
+            completeFlow()
+            
         default:
             break
         }
+    }
+    
+    private func completeFlow() {
+        flowDelegate?.navigate(step: .toolScreenShareFlowCompleted(state: .completed))
     }
     
     private func presentToolScreenShareTutorial() {
@@ -342,6 +352,7 @@ extension ToolScreenShareFlow {
     private func getCreatingToolScreenShareSessionTimedOutView(domainModel: CreatingToolScreenShareSessionTimedOutDomainModel) -> UIViewController {
         
         let viewModel = CreatingToolScreenShareSessionTimedOutViewModel(
+            flowDelegate: self,
             domainModel: domainModel
         )
         

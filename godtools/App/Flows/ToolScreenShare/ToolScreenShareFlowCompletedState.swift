@@ -9,5 +9,5 @@
 import Foundation
 
 enum ToolScreenShareFlowCompletedState {
-    
+    case completed
 }
