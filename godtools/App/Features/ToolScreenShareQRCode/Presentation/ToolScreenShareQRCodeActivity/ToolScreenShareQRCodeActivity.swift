@@ -15,7 +15,6 @@ class ToolScreenShareQRCodeActivity: UIActivity {
     
     private let title: String
     private let image: UIImage?
-    private let action: ([Any]) -> Void
     
     private var activityItems = [Any]()
     
@@ -35,11 +34,10 @@ class ToolScreenShareQRCodeActivity: UIActivity {
         return .share
     }
     
-    init(title: String, performAction: @escaping ([Any]) -> Void) {
+    init(title: String) {
         
         self.title = title
         image = UIImage(named: "qr_code")
-        action = performAction
         
         super.init()
     }
@@ -53,7 +51,6 @@ class ToolScreenShareQRCodeActivity: UIActivity {
     }
     
     override func perform() {
-        action(activityItems)
         activityDidFinish(true)
     }
 }
