@@ -132,10 +132,10 @@ class ToolScreenShareFlow: Flow {
             presentQRCodeView()
             
         case .dismissedShareToolScreenShareActivityViewController:
-            completeFlow()
+            completeFlow(state: .userClosedShareModal)
             
         case .closeTappedFromShareQRCode:
-            completeFlow()
+            completeFlow(state: .userSharedQRCode)
             
         case .didCreateSessionFromCreatingToolScreenShareSession(let result):
             
@@ -185,18 +185,18 @@ class ToolScreenShareFlow: Flow {
             }
             
         case .cancelTappedFromCreateToolScreenShareSessionTimeout:
-            completeFlow()
+            completeFlow(state: .failedToCreateSession)
             
         case .acceptTappedFromCreateToolScreenShareSessionTimeout:
-            completeFlow()
+            completeFlow(state: .failedToCreateSession)
             
         default:
             break
         }
     }
     
-    private func completeFlow() {
-        flowDelegate?.navigate(step: .toolScreenShareFlowCompleted(state: .completed))
+    private func completeFlow(state: ToolScreenShareFlowCompletedState) {
+        flowDelegate?.navigate(step: .toolScreenShareFlowCompleted(state: state))
     }
     
     private func presentToolScreenShareTutorial() {

@@ -9,5 +9,7 @@
 import Foundation
 
 enum ToolScreenShareFlowCompletedState {
-    case completed
+    case failedToCreateSession
+    case userClosedShareModal
+    case userSharedQRCode
 }
