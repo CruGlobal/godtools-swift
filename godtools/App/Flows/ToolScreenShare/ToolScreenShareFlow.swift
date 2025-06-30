@@ -130,9 +130,9 @@ class ToolScreenShareFlow: Flow {
             
             dismissCreatingToolScreenShareSession()
             
-        case .shareQRCodeTappedFromToolScreenShareSession:
+        case .shareQRCodeTappedFromToolScreenShareSession(let shareUrl):
             qrCodeViewPresenting = true
-            presentQRCodeView()
+            presentQRCodeView(shareUrl: shareUrl)
             
         case .dismissedShareToolScreenShareActivityViewController:
             if qrCodeViewPresenting { return }
@@ -256,9 +256,9 @@ class ToolScreenShareFlow: Flow {
         creatingToolScreenShareSessionModal = nil
     }
     
-    private func presentQRCodeView() {
+    private func presentQRCodeView(shareUrl: String) {
         
-        let qrCodeView = getToolScreenShareQRCodeView()
+        let qrCodeView = getToolScreenShareQRCodeView(shareUrl: shareUrl)
         
         navigationController.present(qrCodeView, animated: true)
     }
@@ -378,9 +378,9 @@ extension ToolScreenShareFlow {
         return view.controller
     }
     
-    private func getToolScreenShareQRCodeView() -> UIViewController {
+    private func getToolScreenShareQRCodeView(shareUrl: String) -> UIViewController {
         
-        let view = ToolScreenShareQRCodeView()
+        let view = ToolScreenShareQRCodeView(shareUrl: shareUrl)
         
         let hostingView = AppHostingController<ToolScreenShareQRCodeView>(
             rootView: view,
