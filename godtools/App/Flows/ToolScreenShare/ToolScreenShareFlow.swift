@@ -128,8 +128,8 @@ class ToolScreenShareFlow: Flow {
         case .closeTappedFromCreatingToolScreenShareSession:
             dismissCreatingToolScreenShareSession()
             
-        case .shareQRCodeTappedFromToolScreenShareSession:
-            presentQRCodeView()
+        case .shareQRCodeTappedFromToolScreenShareSession(let shareUrl):
+            presentQRCodeView(shareUrl: shareUrl)
             
         case .dismissedShareToolScreenShareActivityViewController:
             completeFlow(state: .userClosedShareModal)
