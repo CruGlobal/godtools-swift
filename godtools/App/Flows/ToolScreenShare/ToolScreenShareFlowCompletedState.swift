@@ -9,8 +9,7 @@
 import Foundation
 
 enum ToolScreenShareFlowCompletedState {
-    
-    case didLoadToolScreenShareRemoteSession
-    case userClosedToolScreenShareTutorial
-    case failedToLoadToolScreenShareRemoteSession
+    case failedToCreateSession
+    case userClosedShareModal
+    case userSharedQRCode
 }

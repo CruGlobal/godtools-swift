@@ -28,7 +28,6 @@ class TractFlow: ToolNavigationFlow, ToolSettingsNavigationFlow {
     var tractFlow: TractFlow?
     var downloadToolTranslationFlow: DownloadToolTranslationsFlow?
     var toolSettingsFlow: ToolSettingsFlow?
-    private var toolScreenShareFlow: ToolScreenShareFlow?
     
     init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController?, appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel, liveShareStream: String?, selectedLanguageIndex: Int?, trainingTipsEnabled: Bool, initialPage: MobileContentRendererInitialPage?, initialPageSubIndex: Int?, persistToolLanguageSettings: PersistToolLanguageSettingsInterface?) {
         
@@ -102,19 +101,9 @@ class TractFlow: ToolNavigationFlow, ToolSettingsNavigationFlow {
                     
             openToolSettings(toolSettingsObserver: toolSettingsObserver, toolSettingsDidCloseClosure: toolSettingsDidCloseClosure)
             
-        case .toolSettingsFlowCompleted(let toolSettingCompletionState):
-            switch toolSettingCompletionState {
-                
-            case .toolScreenShareFlowStarted(let toolSettingsObserver):
-                closeToolSettings()
-                
-                presentToolScreenShareFlow(toolSettingsObserver: toolSettingsObserver)
-            default:
-                closeToolSettings()
-            }
+        case .toolSettingsFlowCompleted( _):
             
-        case .toolScreenShareFlowCompleted( _):
-            dismissToolScreenShareFlow()
+            closeToolSettings()
                         
         case .tractFlowCompleted( _):
             
@@ -305,34 +294,5 @@ extension TractFlow: MobileContentRendererNavigationDelegate {
         case .lessonsList:
             flowDelegate?.navigate(step: .tractFlowCompleted(state: .userClosedTractToLessonsList))
         }
-    }
-}
-
-// MARK: - Tool Screen Share Flow
-
-extension TractFlow {
-    
-    private func presentToolScreenShareFlow(toolSettingsObserver: ToolSettingsObserver) {
-        guard let toolSettingsObserver = toolSettingsObserver as? ToolScreenShareFlow.ToolScreenShareSettingsObserver else { return }
-        
-        let toolScreenShareFlow = ToolScreenShareFlow(
-            flowDelegate: self,
-            appDiContainer: appDiContainer,
-            sharedNavigationController: navigationController,
-            toolSettingsObserver: toolSettingsObserver
-        )
-        
-        self.toolScreenShareFlow = toolScreenShareFlow
-    }
-    
-    private func dismissToolScreenShareFlow() {
-        
-        guard toolScreenShareFlow != nil else {
-            return
-        }
-        
-        navigationController.dismissPresented(animated: true, completion: nil)
-        
-        toolScreenShareFlow = nil
     }
 }
