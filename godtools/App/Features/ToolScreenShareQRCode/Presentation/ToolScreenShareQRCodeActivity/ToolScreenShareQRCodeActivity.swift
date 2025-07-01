@@ -11,9 +11,10 @@ import UIKit
 
 class ToolScreenShareQRCodeActivity: UIActivity {
     
+    static let activityType: UIActivity.ActivityType = ActivityType(rawValue: "org.cru.godtools.screenShareQRCodeActivity")
+    
     private let title: String
     private let image: UIImage?
-    private let action: ([Any]) -> Void
     
     private var activityItems = [Any]()
     
@@ -26,18 +27,17 @@ class ToolScreenShareQRCodeActivity: UIActivity {
     }
     
     override var activityType: UIActivity.ActivityType? {
-        return UIActivity.ActivityType(rawValue: "org.cru.godtools.screenShareQRCodeActivity")
+        return Self.activityType
     }
     
     override class var activityCategory: UIActivity.Category {
         return .share
     }
     
-    init(title: String, performAction: @escaping ([Any]) -> Void) {
+    init(title: String) {
         
         self.title = title
         image = UIImage(named: "qr_code")
-        action = performAction
         
         super.init()
     }
@@ -51,7 +51,6 @@ class ToolScreenShareQRCodeActivity: UIActivity {
     }
     
     override func perform() {
-        action(activityItems)
         activityDidFinish(true)
     }
 }

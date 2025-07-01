@@ -15,6 +15,7 @@ class ToolSettingsFlow: Flow {
     private let toolSettingsObserver: ToolSettingsObserver
     private let toolSettingsDidCloseClosure: (() -> Void)?
     
+    private var toolScreenShareFlow: ToolScreenShareFlow?
     private var languagesListModal: UIViewController?
     private var reviewShareShareableModal: UIViewController?
     private var downloadToolTranslationsFlow: DownloadToolTranslationsFlow?
@@ -99,7 +100,18 @@ class ToolSettingsFlow: Flow {
             navigationController.present(getShareToolView(viewShareToolDomainModel: domainModel), animated: true, completion: nil)
                     
         case .screenShareTappedFromToolSettings:
-            flowDelegate?.navigate(step: .toolSettingsFlowCompleted(state: .toolScreenShareFlowStarted(toolSettingsObserver: toolSettingsObserver)))
+            presentToolScreenShareFlow()
+        
+        case .toolScreenShareFlowCompleted(let state):
+            
+            switch state {
+            case .failedToCreateSession:
+                break
+            case .userClosedShareModal:
+                completeFlow(state: .toolScreenShareFlowCompleted(state: state))
+            case .userSharedQRCode:
+                completeFlow(state: .toolScreenShareFlowCompleted(state: state))
+            }
         
         case .primaryLanguageTappedFromToolSettings:
             presentToolLanguagesList(listType: .choosePrimaryLanguage, animated: true)
@@ -146,6 +158,10 @@ class ToolSettingsFlow: Flow {
         default:
             break
         }
+    }
+    
+    private func completeFlow(state: ToolSettingsFlowCompletedState) {
+        flowDelegate?.navigate(step: .toolSettingsFlowCompleted(state: state))
     }
 }
 
@@ -250,6 +266,35 @@ extension ToolSettingsFlow {
         languagesListModal = hostingView
         
         return hostingView
+    }
+}
+
+// MARK: - Tool Screen Share Flow
+
+extension ToolSettingsFlow {
+    
+    private func presentToolScreenShareFlow() {
+        guard let toolSettingsObserver = toolSettingsObserver as? ToolScreenShareFlow.ToolScreenShareSettingsObserver else { return }
+        
+        let toolScreenShareFlow = ToolScreenShareFlow(
+            flowDelegate: self,
+            appDiContainer: appDiContainer,
+            sharedNavigationController: navigationController,
+            toolSettingsObserver: toolSettingsObserver
+        )
+        
+        self.toolScreenShareFlow = toolScreenShareFlow
+    }
+    
+    private func dismissToolScreenShareFlow() {
+        
+        guard toolScreenShareFlow != nil else {
+            return
+        }
+        
+        navigationController.dismissPresented(animated: true, completion: nil)
+        
+        toolScreenShareFlow = nil
     }
 }
 
