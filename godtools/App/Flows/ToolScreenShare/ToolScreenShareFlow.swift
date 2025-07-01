@@ -126,15 +126,21 @@ class ToolScreenShareFlow: Flow {
             presentCreatingToolScreenShareSession()
             
         case .closeTappedFromCreatingToolScreenShareSession:
-            
             dismissCreatingToolScreenShareSession()
+            
+        case .shareQRCodeTappedFromToolScreenShareSession:
+            presentQRCodeView()
+            
+        case .dismissedShareToolScreenShareActivityViewController:
+            completeFlow(state: .userClosedShareModal)
+            
+        case .closeTappedFromShareQRCode:
+            completeFlow(state: .userSharedQRCode)
             
         case .didCreateSessionFromCreatingToolScreenShareSession(let result):
             
             dismissCreatingToolScreenShareSession()
-            
-            flowDelegate?.navigate(step: .toolScreenShareFlowCompleted(state: .didLoadToolScreenShareRemoteSession))
-                        
+                                    
             switch result {
                 
             case .success(let channel):
@@ -161,7 +167,7 @@ class ToolScreenShareFlow: Flow {
                 navigationController.present(view, animated: true, completion: nil)
                 
             case .failure(let error):
-                
+                                
                 switch error {
                 
                 case .timedOut:
@@ -178,9 +184,19 @@ class ToolScreenShareFlow: Flow {
                 }
             }
             
+        case .cancelTappedFromCreateToolScreenShareSessionTimeout:
+            completeFlow(state: .failedToCreateSession)
+            
+        case .acceptTappedFromCreateToolScreenShareSessionTimeout:
+            completeFlow(state: .failedToCreateSession)
+            
         default:
             break
         }
+    }
+    
+    private func completeFlow(state: ToolScreenShareFlowCompletedState) {
+        flowDelegate?.navigate(step: .toolScreenShareFlowCompleted(state: state))
     }
     
     private func presentToolScreenShareTutorial() {
@@ -241,6 +257,13 @@ class ToolScreenShareFlow: Flow {
         
         modal.dismiss(animated: true)
         creatingToolScreenShareSessionModal = nil
+    }
+    
+    private func presentQRCodeView() {
+        
+        let qrCodeView = getToolScreenShareQRCodeView()
+        
+        navigationController.present(qrCodeView, animated: true)
     }
 }
 
@@ -329,6 +352,7 @@ extension ToolScreenShareFlow {
     private func getCreatingToolScreenShareSessionTimedOutView(domainModel: CreatingToolScreenShareSessionTimedOutDomainModel) -> UIViewController {
         
         let viewModel = CreatingToolScreenShareSessionTimedOutViewModel(
+            flowDelegate: self,
             domainModel: domainModel
         )
         
@@ -356,5 +380,17 @@ extension ToolScreenShareFlow {
         )
         
         return view.controller
+    }
+    
+    private func getToolScreenShareQRCodeView() -> UIViewController {
+        
+        let view = ToolScreenShareQRCodeView()
+        
+        let hostingView = AppHostingController<ToolScreenShareQRCodeView>(
+            rootView: view,
+            navigationBar: nil
+        )
+
+        return hostingView
     }
 }
