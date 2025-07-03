@@ -1580,6 +1580,7 @@
 		D43818C02E15B50200D404FF /* GetToolScreenShareQRCodeInterfaceStringsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43818BF2E15B50200D404FF /* GetToolScreenShareQRCodeInterfaceStringsRepository.swift */; };
 		D43818C22E15B70300D404FF /* ToolScreenShareQRCodeDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43818C12E15B70300D404FF /* ToolScreenShareQRCodeDomainModel.swift */; };
 		D43818C42E15B9BF00D404FF /* ToolScreenShareQRCodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43818C32E15B9BF00D404FF /* ToolScreenShareQRCodeViewModel.swift */; };
+		D43818C62E17173B00D404FF /* GTModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43818C52E17173B00D404FF /* GTModalView.swift */; };
 		D43FC1BE2B62EFD800F8310E /* View+AppLifecycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43FC1BD2B62EFD800F8310E /* View+AppLifecycle.swift */; };
 		D43FC1C02B64531F00F8310E /* ViewConfirmAppLanguageDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43FC1BF2B64531F00F8310E /* ViewConfirmAppLanguageDomainModel.swift */; };
 		D43FC1C22B65E08C00F8310E /* GetConfirmAppLanguageInterfaceStringsRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43FC1C12B65E08C00F8310E /* GetConfirmAppLanguageInterfaceStringsRepositoryInterface.swift */; };
@@ -3394,6 +3395,7 @@
 		D43818BF2E15B50200D404FF /* GetToolScreenShareQRCodeInterfaceStringsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetToolScreenShareQRCodeInterfaceStringsRepository.swift; sourceTree = "<group>"; };
 		D43818C12E15B70300D404FF /* ToolScreenShareQRCodeDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolScreenShareQRCodeDomainModel.swift; sourceTree = "<group>"; };
 		D43818C32E15B9BF00D404FF /* ToolScreenShareQRCodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolScreenShareQRCodeViewModel.swift; sourceTree = "<group>"; };
+		D43818C52E17173B00D404FF /* GTModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GTModalView.swift; sourceTree = "<group>"; };
 		D43FC1BD2B62EFD800F8310E /* View+AppLifecycle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+AppLifecycle.swift"; sourceTree = "<group>"; };
 		D43FC1BF2B64531F00F8310E /* ViewConfirmAppLanguageDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewConfirmAppLanguageDomainModel.swift; sourceTree = "<group>"; };
 		D43FC1C12B65E08C00F8310E /* GetConfirmAppLanguageInterfaceStringsRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetConfirmAppLanguageInterfaceStringsRepositoryInterface.swift; sourceTree = "<group>"; };
@@ -12160,6 +12162,7 @@
 				45E3478F2A49C04B0014CCD1 /* SeparatorView */,
 				45325F20285CF8B40078D932 /* TextWithLinks */,
 				45325F1D285CF8B40078D932 /* VideoView */,
+				D43818C52E17173B00D404FF /* GTModalView.swift */,
 			);
 			path = "SwiftUI Views";
 			sourceTree = "<group>";
@@ -14168,6 +14171,7 @@
 				4537EBF12BA1ECF90024793C /* LanguageSettingsDeepLinkParser.swift in Sources */,
 				4518450D2C47F46C004564B9 /* RealmInstanceCreator.swift in Sources */,
 				456AC19E2B8CEE6200169C11 /* ToolSettingsLanguages.swift in Sources */,
+				D43818C62E17173B00D404FF /* GTModalView.swift in Sources */,
 				45D63E73288F698C009B4610 /* LanguageModel.swift in Sources */,
 				45B3F4662AC3B1B800D61BFD /* GetAppInterfaceLayoutDirectionInterface.swift in Sources */,
 				D4AAEC152D972CF8008CDF8E /* ReorderFavoritedToolDomainModel.swift in Sources */,

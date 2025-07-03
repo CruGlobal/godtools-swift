@@ -398,6 +398,9 @@ extension ToolScreenShareFlow {
             rootView: view,
             navigationBar: nil
         )
+        
+        hostingView.view.backgroundColor = .clear
+        hostingView.modalPresentationStyle = .overFullScreen
 
         return hostingView
     }

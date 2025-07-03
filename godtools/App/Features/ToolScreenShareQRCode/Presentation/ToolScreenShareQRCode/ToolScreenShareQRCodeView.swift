@@ -18,42 +18,43 @@ struct ToolScreenShareQRCodeView: View {
     }
     
     var body: some View {
-        
-        VStack {
+
+        GTModalView {
             
-            HStack {
-                Spacer()
+            VStack {
+                HStack {
+                    Spacer()
+                    
+                    CloseButton {
+                        viewModel.closeTapped()
+                    }
+                    .padding(.top, 20)
+                    .padding(.trailing, 25)
+                }
                 
-                CloseButton {
+                Image(uiImage: generateQRCode())
+                    .interpolation(.none)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 200, height: 200)
+                    .padding(.top, 53)
+                    .padding(.bottom, 20)
+                
+                Text(viewModel.interfaceStrings?.qrCodeDescription ?? "")
+                    .multilineTextAlignment(.center)
+                    .padding(.bottom, 25)
+                    .padding(.horizontal, 70)
+                                
+                GTBlueButton(title: viewModel.interfaceStrings?.closeButtonTitle ?? "", font: FontLibrary.sfProDisplayRegular.font(size: 16), width: 150, height: 48) {
                     viewModel.closeTapped()
                 }
-                .padding([.top, .trailing], 10)
+                .padding(.bottom, 125)
             }
             
-            Spacer()
-            Spacer()
+        } overlayTappedClosure: {
             
-            Image(uiImage: generateQRCode())
-                .interpolation(.none)
-                .resizable()
-                .scaledToFit()
-                .frame(width: 200, height: 200)
-            
-            Spacer()
-            
-            Text(viewModel.interfaceStrings?.qrCodeDescription ?? "")
-            
-            Spacer()
-            
-            GTBlueButton(title: viewModel.interfaceStrings?.closeButtonTitle ?? "", font: FontLibrary.sfProDisplayRegular.font(size: 16), width: 150, height: 48) {
-                viewModel.closeTapped()
-            }
-            
-            Spacer()
-            Spacer()
+            viewModel.closeTapped()
         }
-        
-
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
     }
     
