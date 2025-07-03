@@ -58,7 +58,7 @@ extension ShareToolScreenShareSessionViewModel {
     
     func qrCodeTapped() {
     
-        flowDelegate?.navigate(step: .shareQRCodeTappedFromToolScreenShareSession)
+        flowDelegate?.navigate(step: .shareQRCodeTappedFromToolScreenShareSession(shareUrl: shareUrl))
     }
     
     func activityViewDismissed() {

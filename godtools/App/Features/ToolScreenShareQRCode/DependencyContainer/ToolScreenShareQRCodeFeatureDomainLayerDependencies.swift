@@ -16,4 +16,10 @@ class ToolScreenShareQRCodeFeatureDomainLayerDependencies {
         
         self.dataLayer = dataLayer
     }
+    
+    func getViewToolScreenShareQRCodeUseCase() -> ViewToolScreenShareQRCodeUseCase {
+        return ViewToolScreenShareQRCodeUseCase(
+            getInterfaceStringsRepositoryInterface: dataLayer.getToolScreenShareQRCodeInterfaceStringsRepositoryInterface()
+        )
+    }
 }
