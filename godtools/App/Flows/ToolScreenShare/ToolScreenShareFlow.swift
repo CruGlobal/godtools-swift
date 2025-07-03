@@ -135,6 +135,7 @@ class ToolScreenShareFlow: Flow {
             completeFlow(state: .userClosedShareModal)
             
         case .closeTappedFromShareQRCode:
+            navigationController.dismiss(animated: true)
             completeFlow(state: .userSharedQRCode)
             
         case .didCreateSessionFromCreatingToolScreenShareSession(let result):

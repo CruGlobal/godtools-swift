@@ -21,6 +21,15 @@ struct ToolScreenShareQRCodeView: View {
         
         VStack {
             
+            HStack {
+                Spacer()
+                
+                CloseButton {
+                    viewModel.closeTapped()
+                }
+                .padding([.top, .trailing], 10)
+            }
+            
             Spacer()
             Spacer()
             
@@ -36,8 +45,8 @@ struct ToolScreenShareQRCodeView: View {
             
             Spacer()
             
-            GTBlueButton(title: viewModel.interfaceStrings?.closeButtonTitle ?? "", width: 150, height: 48) {
-                
+            GTBlueButton(title: viewModel.interfaceStrings?.closeButtonTitle ?? "", font: FontLibrary.sfProDisplayRegular.font(size: 16), width: 150, height: 48) {
+                viewModel.closeTapped()
             }
             
             Spacer()

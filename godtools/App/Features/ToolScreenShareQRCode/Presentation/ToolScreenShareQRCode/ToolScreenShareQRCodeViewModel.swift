@@ -61,6 +61,6 @@ class ToolScreenShareQRCodeViewModel: ObservableObject {
 extension ToolScreenShareQRCodeViewModel {
     
     func closeTapped() {
-        
+        flowDelegate?.navigate(step: .closeTappedFromShareQRCode)
     }
 }
