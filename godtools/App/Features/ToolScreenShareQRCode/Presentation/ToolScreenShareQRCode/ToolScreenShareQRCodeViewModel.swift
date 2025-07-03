@@ -21,7 +21,7 @@ class ToolScreenShareQRCodeViewModel: ObservableObject {
     let shareUrl: String
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
-    @Published var interfaceStrings: ToolScreenShareQRCodeInterfaceStringsDomainModel?
+    @Published var interfaceStrings: ToolScreenShareQRCodeInterfaceStringsDomainModel = .emptyStrings()
     
     init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewToolScreenShareQRCodeUseCase: ViewToolScreenShareQRCodeUseCase, shareUrl: String) {
         

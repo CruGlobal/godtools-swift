@@ -40,12 +40,12 @@ struct ToolScreenShareQRCodeView: View {
                     .padding(.top, 53)
                     .padding(.bottom, 20)
                 
-                Text(viewModel.interfaceStrings?.qrCodeDescription ?? "")
+                Text(viewModel.interfaceStrings.qrCodeDescription)
                     .multilineTextAlignment(.center)
                     .padding(.bottom, 25)
                     .padding(.horizontal, 70)
                                 
-                GTBlueButton(title: viewModel.interfaceStrings?.closeButtonTitle ?? "", font: FontLibrary.sfProDisplayRegular.font(size: 16), width: 150, height: 48) {
+                GTBlueButton(title: viewModel.interfaceStrings.closeButtonTitle, font: FontLibrary.sfProDisplayRegular.font(size: 16), width: 150, height: 48) {
                     viewModel.closeTapped()
                 }
                 .padding(.bottom, 125)
