@@ -1,3 +1,5 @@
+"toolScreenShare.qrCode.closeButtonTitle" = "Close";
+"toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";
 "toolScreenShare.qrCode.title" = "QR Code";
 
 "optInNotification.notificationSettings" = "Notification Settings";

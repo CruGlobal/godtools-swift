@@ -384,7 +384,14 @@ extension ToolScreenShareFlow {
     
     private func getToolScreenShareQRCodeView(shareUrl: String) -> UIViewController {
         
-        let view = ToolScreenShareQRCodeView(shareUrl: shareUrl)
+        let viewModel = ToolScreenShareQRCodeViewModel(
+            flowDelegate: self,
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            viewToolScreenShareQRCodeUseCase: appDiContainer.feature.toolScreenShareQRCode.domainLayer.getViewToolScreenShareQRCodeUseCase(),
+            shareUrl: shareUrl
+        )
+        
+        let view = ToolScreenShareQRCodeView(viewModel: viewModel)
         
         let hostingView = AppHostingController<ToolScreenShareQRCodeView>(
             rootView: view,

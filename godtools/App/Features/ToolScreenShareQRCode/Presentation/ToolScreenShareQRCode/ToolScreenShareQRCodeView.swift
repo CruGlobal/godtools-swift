@@ -10,11 +10,11 @@ import SwiftUI
 import CoreImage.CIFilterBuiltins
 
 struct ToolScreenShareQRCodeView: View {
+        
+    @ObservedObject private var viewModel: ToolScreenShareQRCodeViewModel
     
-    private let shareUrl: String
-    
-    init(shareUrl: String) {
-        self.shareUrl = shareUrl
+    init(viewModel: ToolScreenShareQRCodeViewModel) {
+        self.viewModel = viewModel
     }
     
     var body: some View {
@@ -32,11 +32,11 @@ struct ToolScreenShareQRCodeView: View {
             
             Spacer()
             
-            Text("Scan this QR code to join along with me")
+            Text(viewModel.interfaceStrings?.qrCodeDescription ?? "")
             
             Spacer()
             
-            GTBlueButton(title: "Close", width: 150, height: 48) {
+            GTBlueButton(title: viewModel.interfaceStrings?.closeButtonTitle ?? "", width: 150, height: 48) {
                 
             }
             
@@ -52,7 +52,7 @@ struct ToolScreenShareQRCodeView: View {
         let context = CIContext()
         let filter = CIFilter.qrCodeGenerator()
         
-        filter.message = Data(shareUrl.utf8)
+        filter.message = Data(viewModel.shareUrl.utf8)
         
         if let outputImage = filter.outputImage {
             if let cgImage = context.createCGImage(outputImage, from: outputImage.extent) {
