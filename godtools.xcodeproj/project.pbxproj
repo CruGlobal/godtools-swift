@@ -1581,6 +1581,7 @@
 		D43818C22E15B70300D404FF /* ToolScreenShareQRCodeDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43818C12E15B70300D404FF /* ToolScreenShareQRCodeDomainModel.swift */; };
 		D43818C42E15B9BF00D404FF /* ToolScreenShareQRCodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43818C32E15B9BF00D404FF /* ToolScreenShareQRCodeViewModel.swift */; };
 		D43818C62E17173B00D404FF /* GTModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43818C52E17173B00D404FF /* GTModalView.swift */; };
+		D43818CA2E1C4F7100D404FF /* QRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43818C92E1C4F7100D404FF /* QRCodeView.swift */; };
 		D43FC1BE2B62EFD800F8310E /* View+AppLifecycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43FC1BD2B62EFD800F8310E /* View+AppLifecycle.swift */; };
 		D43FC1C02B64531F00F8310E /* ViewConfirmAppLanguageDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43FC1BF2B64531F00F8310E /* ViewConfirmAppLanguageDomainModel.swift */; };
 		D43FC1C22B65E08C00F8310E /* GetConfirmAppLanguageInterfaceStringsRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43FC1C12B65E08C00F8310E /* GetConfirmAppLanguageInterfaceStringsRepositoryInterface.swift */; };
@@ -3396,6 +3397,7 @@
 		D43818C12E15B70300D404FF /* ToolScreenShareQRCodeDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolScreenShareQRCodeDomainModel.swift; sourceTree = "<group>"; };
 		D43818C32E15B9BF00D404FF /* ToolScreenShareQRCodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolScreenShareQRCodeViewModel.swift; sourceTree = "<group>"; };
 		D43818C52E17173B00D404FF /* GTModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GTModalView.swift; sourceTree = "<group>"; };
+		D43818C92E1C4F7100D404FF /* QRCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeView.swift; sourceTree = "<group>"; };
 		D43FC1BD2B62EFD800F8310E /* View+AppLifecycle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+AppLifecycle.swift"; sourceTree = "<group>"; };
 		D43FC1BF2B64531F00F8310E /* ViewConfirmAppLanguageDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewConfirmAppLanguageDomainModel.swift; sourceTree = "<group>"; };
 		D43FC1C12B65E08C00F8310E /* GetConfirmAppLanguageInterfaceStringsRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetConfirmAppLanguageInterfaceStringsRepositoryInterface.swift; sourceTree = "<group>"; };
@@ -12115,6 +12117,22 @@
 			path = Data;
 			sourceTree = "<group>";
 		};
+		D43818C72E1C4F4D00D404FF /* QRCodeView */ = {
+			isa = PBXGroup;
+			children = (
+				D43818C92E1C4F7100D404FF /* QRCodeView.swift */,
+			);
+			path = QRCodeView;
+			sourceTree = "<group>";
+		};
+		D43818C82E1C4F5C00D404FF /* GTModalView */ = {
+			isa = PBXGroup;
+			children = (
+				D43818C52E17173B00D404FF /* GTModalView.swift */,
+			);
+			path = GTModalView;
+			sourceTree = "<group>";
+		};
 		D43FC1CD2B814B1C00F8310E /* ViewAccountUseCase */ = {
 			isa = PBXGroup;
 			children = (
@@ -12148,6 +12166,7 @@
 				4574C8452DD7CB0E00B9119E /* FullScreenOverlay */,
 				45EB4E712989C94000231C67 /* FullScreenVideoView */,
 				45E3477E2A49BFEB0014CCD1 /* GTBlueButton */,
+				D43818C82E1C4F5C00D404FF /* GTModalView */,
 				45E3477C2A49BFEB0014CCD1 /* GTWhiteButton */,
 				45E347822A49C0120014CCD1 /* LanguageSupportedText */,
 				45E347862A49C0120014CCD1 /* OptionalImage */,
@@ -12155,6 +12174,7 @@
 				457C4C722ABA315D00CFAC1D /* PagedView */,
 				45E347842A49C0120014CCD1 /* ProgressBarView */,
 				45C0FADF2A8A7CFB009A7E71 /* PullToRefreshScrollView */,
+				D43818C72E1C4F4D00D404FF /* QRCodeView */,
 				45E3478B2A49C04B0014CCD1 /* RoundedCorner */,
 				45E60CFD2AEAE1B800E14BEA /* ScaleValueSlider */,
 				D40D77B32AA7B5A2008D3642 /* SearchBar */,
@@ -12162,7 +12182,6 @@
 				45E3478F2A49C04B0014CCD1 /* SeparatorView */,
 				45325F20285CF8B40078D932 /* TextWithLinks */,
 				45325F1D285CF8B40078D932 /* VideoView */,
-				D43818C52E17173B00D404FF /* GTModalView.swift */,
 			);
 			path = "SwiftUI Views";
 			sourceTree = "<group>";
@@ -13478,6 +13497,7 @@
 				D4C2A5902C3C6F2D0035AB4D /* GetUserLessonFiltersRepositoryInterface.swift in Sources */,
 				D4B26F502D8B440F0019FA86 /* ReorderFavoritedToolUseCase.swift in Sources */,
 				452DFB3F2B7FB464003A4A59 /* GetAllYourFavoritedToolsInterfaceStringsRepository.swift in Sources */,
+				D43818CA2E1C4F7100D404FF /* QRCodeView.swift in Sources */,
 				45369ACF2AFA7FA500BD10F0 /* DidViewToolScreenShareTutorialUseCase.swift in Sources */,
 				453F84CE2A029FC00005101E /* ArticleAemData.swift in Sources */,
 				459E86EE28EDA86C00E197A5 /* DeepLinkingParserManifestUrl.swift in Sources */,

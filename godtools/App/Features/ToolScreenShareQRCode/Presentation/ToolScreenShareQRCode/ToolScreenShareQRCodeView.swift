@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import CoreImage.CIFilterBuiltins
 
 struct ToolScreenShareQRCodeView: View {
         
@@ -32,10 +31,7 @@ struct ToolScreenShareQRCodeView: View {
                     .padding(.trailing, 25)
                 }
                 
-                Image(uiImage: generateQRCode())
-                    .interpolation(.none)
-                    .resizable()
-                    .scaledToFit()
+                QRCodeView(data: Data(viewModel.shareUrl.utf8))
                     .frame(width: 200, height: 200)
                     .padding(.top, 53)
                     .padding(.bottom, 20)
@@ -56,20 +52,5 @@ struct ToolScreenShareQRCodeView: View {
             viewModel.closeTapped()
         }
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
-    }
-    
-    func generateQRCode() -> UIImage {
-        let context = CIContext()
-        let filter = CIFilter.qrCodeGenerator()
-        
-        filter.message = Data(viewModel.shareUrl.utf8)
-        
-        if let outputImage = filter.outputImage {
-            if let cgImage = context.createCGImage(outputImage, from: outputImage.extent) {
-                return UIImage(cgImage: cgImage)
-            }
-        }
-        
-        return UIImage(systemName: "xmark.circle") ?? UIImage()
     }
 }
