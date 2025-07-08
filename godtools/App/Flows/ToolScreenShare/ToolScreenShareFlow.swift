@@ -128,13 +128,14 @@ class ToolScreenShareFlow: Flow {
         case .closeTappedFromCreatingToolScreenShareSession:
             dismissCreatingToolScreenShareSession()
             
-        case .shareQRCodeTappedFromToolScreenShareSession:
-            presentQRCodeView()
+        case .shareQRCodeTappedFromToolScreenShareSession(let shareUrl):
+            presentQRCodeView(shareUrl: shareUrl)
             
         case .dismissedShareToolScreenShareActivityViewController:
             completeFlow(state: .userClosedShareModal)
             
         case .closeTappedFromShareQRCode:
+            navigationController.dismiss(animated: true)
             completeFlow(state: .userSharedQRCode)
             
         case .didCreateSessionFromCreatingToolScreenShareSession(let result):
@@ -259,9 +260,9 @@ class ToolScreenShareFlow: Flow {
         creatingToolScreenShareSessionModal = nil
     }
     
-    private func presentQRCodeView() {
+    private func presentQRCodeView(shareUrl: String) {
         
-        let qrCodeView = getToolScreenShareQRCodeView()
+        let qrCodeView = getToolScreenShareQRCodeView(shareUrl: shareUrl)
         
         navigationController.present(qrCodeView, animated: true)
     }
@@ -382,14 +383,24 @@ extension ToolScreenShareFlow {
         return view.controller
     }
     
-    private func getToolScreenShareQRCodeView() -> UIViewController {
+    private func getToolScreenShareQRCodeView(shareUrl: String) -> UIViewController {
         
-        let view = ToolScreenShareQRCodeView()
+        let viewModel = ToolScreenShareQRCodeViewModel(
+            flowDelegate: self,
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            viewToolScreenShareQRCodeUseCase: appDiContainer.feature.toolScreenShareQRCode.domainLayer.getViewToolScreenShareQRCodeUseCase(),
+            shareUrl: shareUrl
+        )
+        
+        let view = ToolScreenShareQRCodeView(viewModel: viewModel)
         
         let hostingView = AppHostingController<ToolScreenShareQRCodeView>(
             rootView: view,
             navigationBar: nil
         )
+        
+        hostingView.view.backgroundColor = .clear
+        hostingView.modalPresentationStyle = .overFullScreen
 
         return hostingView
     }

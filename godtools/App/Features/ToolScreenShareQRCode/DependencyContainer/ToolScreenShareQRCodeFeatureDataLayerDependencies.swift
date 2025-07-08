@@ -16,4 +16,14 @@ class ToolScreenShareQRCodeFeatureDataLayerDependencies {
         
         self.coreDataLayer = coreDataLayer
     }
+    
+    // MARK: - Data Layer Classes
+    
+    // MARK: - Domain Interface
+    
+    func getToolScreenShareQRCodeInterfaceStringsRepositoryInterface() -> GetToolScreenShareQRCodeInterfaceStringsRepositoryInterface {
+        return GetToolScreenShareQRCodeInterfaceStringsRepository(
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
 }
