@@ -51,9 +51,6 @@ class ArticleCategoriesViewModel {
             .$isDownloading
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (isDownloading: Bool) in
-
-                print("\n ArticleCategoriesViewModel")
-                print("  isDownloading: \(isDownloading)")
                 
                 self?.isLoading.accept(value: isDownloading)
             }
