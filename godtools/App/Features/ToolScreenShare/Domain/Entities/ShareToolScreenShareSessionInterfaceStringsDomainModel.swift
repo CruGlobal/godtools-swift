@@ -11,4 +11,5 @@ import Foundation
 struct ShareToolScreenShareSessionInterfaceStringsDomainModel {
     
     let shareMessage: String
+    let qrCodeTitle: String
 }

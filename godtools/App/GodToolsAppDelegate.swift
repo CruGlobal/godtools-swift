@@ -12,9 +12,7 @@ import SocialAuthentication
 class GodToolsAppDelegate: NSObject, UIApplicationDelegate {
         
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-                     
-        let application: UIApplication = UIApplication.shared
-        
+                             
         ConfigureFacebookOnAppLaunch.configure(
             application: application,
             launchOptions: launchOptions,
@@ -50,7 +48,7 @@ extension GodToolsAppDelegate {
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
                
-        FirebaseMessaging.registerDeviceToken(deviceToken: deviceToken)
+        FirebaseMessaging.shared.registerDeviceToken(deviceToken: deviceToken)
     }
 }
 
@@ -73,9 +71,9 @@ extension GodToolsAppDelegate: UNUserNotificationCenterDelegate {
         
         let userInfo: [AnyHashable: Any] = notification.request.content.userInfo
         
-        FirebaseMessaging.didReceiveMessage(userInfo: userInfo)
+        FirebaseMessaging.shared.didReceiveMessage(userInfo: userInfo)
         
-        completionHandler([.badge, .sound])
+        completionHandler([.banner, .sound])
     }
     
     // Asks the delegate to process the user’s response to a delivered notification.
@@ -86,7 +84,7 @@ extension GodToolsAppDelegate: UNUserNotificationCenterDelegate {
         
         let userInfo: [AnyHashable: Any] = response.notification.request.content.userInfo
         
-        FirebaseMessaging.didReceiveMessage(userInfo: userInfo)
+        FirebaseMessaging.shared.didReceiveMessage(userInfo: userInfo)
         
         completionHandler()
     }
