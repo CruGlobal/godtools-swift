@@ -24,9 +24,11 @@ class GetShareToolScreenShareSessionInterfaceStringsRepository: GetShareToolScre
         let localeId: String = translateInLanguage
         
         let shareMessage: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "share_tool_remote_link_message")
+        let qrCodeTitle: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "toolScreenShare.qrCode.title")
         
         let interfaceStrings = ShareToolScreenShareSessionInterfaceStringsDomainModel(
-            shareMessage: shareMessage
+            shareMessage: shareMessage,
+            qrCodeTitle: qrCodeTitle
         )
         
         return Just(interfaceStrings)
