@@ -37,7 +37,6 @@ struct GetToolScreenShareQRCodeInterfaceStringsRepositoryTests {
             )
         )
         
-        // the interface strings should be translated into Spanish
         let appLanguagePublisher: CurrentValueSubject<AppLanguageDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
         
         var englishInterfaceStringsRef: ToolScreenShareQRCodeInterfaceStringsDomainModel?
