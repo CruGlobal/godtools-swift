@@ -43,40 +43,32 @@ struct GetToolScreenShareQRCodeInterfaceStringsRepositoryTests {
         var spanishInterfaceStringsRef: ToolScreenShareQRCodeInterfaceStringsDomainModel?
         
         var sinkCount: Int = 0
-        var sinkCompleted: Bool = false
         
-
-        appLanguagePublisher
-            .flatMap { appLanguage in
-                
-                return getToolScreenShareQRCodeInterfaceStringsRepository.getStringsPublisher(translateInLanguage: appLanguage)
-                    .eraseToAnyPublisher()
-            }.sink { interfaceStrings in
-                
-                guard !sinkCompleted else {
-                    return
-                }
-                
-                sinkCount += 1
-                
-                if sinkCount == 1 {
+        await confirmation(expectedCount: 2) { confirmation in
+            appLanguagePublisher
+                .flatMap { appLanguage in
                     
-                    englishInterfaceStringsRef = interfaceStrings
-                }
-                else if sinkCount == 2 {
+                    return getToolScreenShareQRCodeInterfaceStringsRepository.getStringsPublisher(translateInLanguage: appLanguage)
+                        .eraseToAnyPublisher()
+                }.sink { interfaceStrings in
                     
-                    spanishInterfaceStringsRef = interfaceStrings
+                    sinkCount += 1
+                    confirmation()
                     
-                    sinkCompleted = true
+                    if sinkCount == 1 {
                         
-                    return  // done
+                        englishInterfaceStringsRef = interfaceStrings
+                        appLanguagePublisher.send(LanguageCodeDomainModel.spanish.rawValue)
+
+                    }
+                    else if sinkCount == 2 {
+                        
+                        spanishInterfaceStringsRef = interfaceStrings
+                    }
                 }
-                                                
-                if sinkCount == 1 {
-                    appLanguagePublisher.send(LanguageCodeDomainModel.spanish.rawValue)
-                }
-            }
-            .store(in: &cancellables)
+                .store(in: &cancellables)
+        }
+
         
         #expect(englishInterfaceStringsRef?.qrCodeDescription == "Scan this QR code to join along with me")
         #expect(spanishInterfaceStringsRef?.qrCodeDescription == "Escanea este código QR para unirte a mí")
