@@ -95,7 +95,6 @@
 		450DB5642AC3553E00B2FE3A /* GetAppLanguagesListRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450DB5632AC3553E00B2FE3A /* GetAppLanguagesListRepositoryInterface.swift */; };
 		450DB5662AC355AA00B2FE3A /* AppLanguageListItemDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450DB5652AC355AA00B2FE3A /* AppLanguageListItemDomainModel.swift */; };
 		450E64D62B570DBD00A74F6D /* BCP47LanguageIdentifier+TranslatableLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E64D52B570DBD00A74F6D /* BCP47LanguageIdentifier+TranslatableLanguage.swift */; };
-		450E6A772D89DF5500EB7EDE /* GetTranslatedPercentageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E6A762D89DF4F00EB7EDE /* GetTranslatedPercentageTests.swift */; };
 		450EE28529A6648900524F64 /* ToolDeepLinkToolPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EE27E29A6648900524F64 /* ToolDeepLinkToolPath.swift */; };
 		450EE28629A6648900524F64 /* ToolPathDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EE27F29A6648900524F64 /* ToolPathDeepLinkParser.swift */; };
 		450EE28729A6648900524F64 /* DashboardDeepLinkDashboardPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EE28129A6648900524F64 /* DashboardDeepLinkDashboardPath.swift */; };
@@ -424,6 +423,7 @@
 		454CA2022B7BD31F009A3976 /* AppLanguagesInterfaceStringsDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454CA2012B7BD31F009A3976 /* AppLanguagesInterfaceStringsDomainModel.swift */; };
 		454CA2042B7BD358009A3976 /* ViewAppLanguagesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454CA2032B7BD358009A3976 /* ViewAppLanguagesUseCase.swift */; };
 		454CC4132C5D268B00046437 /* LanguageDirectionDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454CC4122C5D268B00046437 /* LanguageDirectionDomainModel.swift */; };
+		454CE1572E26E89E0058AE54 /* GetTranslatedPercentageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454CE1562E26E8930058AE54 /* GetTranslatedPercentageTests.swift */; };
 		4550BC702A33AC6D00256DEE /* HashableCurrentValueSubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4550BC6F2A33AC6D00256DEE /* HashableCurrentValueSubject.swift */; };
 		455258492D36F66E00FAC98D /* RemoteConfigRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455258472D36F66E00FAC98D /* RemoteConfigRepository.swift */; };
 		4552584A2D36F66E00FAC98D /* RemoteConfigDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455258462D36F66E00FAC98D /* RemoteConfigDataModel.swift */; };
@@ -1889,7 +1889,6 @@
 		450DB5632AC3553E00B2FE3A /* GetAppLanguagesListRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAppLanguagesListRepositoryInterface.swift; sourceTree = "<group>"; };
 		450DB5652AC355AA00B2FE3A /* AppLanguageListItemDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLanguageListItemDomainModel.swift; sourceTree = "<group>"; };
 		450E64D52B570DBD00A74F6D /* BCP47LanguageIdentifier+TranslatableLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BCP47LanguageIdentifier+TranslatableLanguage.swift"; sourceTree = "<group>"; };
-		450E6A762D89DF4F00EB7EDE /* GetTranslatedPercentageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTranslatedPercentageTests.swift; sourceTree = "<group>"; };
 		450EE27E29A6648900524F64 /* ToolDeepLinkToolPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolDeepLinkToolPath.swift; sourceTree = "<group>"; };
 		450EE27F29A6648900524F64 /* ToolPathDeepLinkParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolPathDeepLinkParser.swift; sourceTree = "<group>"; };
 		450EE28129A6648900524F64 /* DashboardDeepLinkDashboardPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardDeepLinkDashboardPath.swift; sourceTree = "<group>"; };
@@ -2210,6 +2209,7 @@
 		454CA2012B7BD31F009A3976 /* AppLanguagesInterfaceStringsDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLanguagesInterfaceStringsDomainModel.swift; sourceTree = "<group>"; };
 		454CA2032B7BD358009A3976 /* ViewAppLanguagesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewAppLanguagesUseCase.swift; sourceTree = "<group>"; };
 		454CC4122C5D268B00046437 /* LanguageDirectionDomainModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageDirectionDomainModel.swift; sourceTree = "<group>"; };
+		454CE1562E26E8930058AE54 /* GetTranslatedPercentageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTranslatedPercentageTests.swift; sourceTree = "<group>"; };
 		4550BC6F2A33AC6D00256DEE /* HashableCurrentValueSubject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HashableCurrentValueSubject.swift; sourceTree = "<group>"; };
 		455258462D36F66E00FAC98D /* RemoteConfigDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteConfigDataModel.swift; sourceTree = "<group>"; };
 		455258472D36F66E00FAC98D /* RemoteConfigRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteConfigRepository.swift; sourceTree = "<group>"; };
@@ -4169,7 +4169,7 @@
 		450E6A752D89DF4300EB7EDE /* GetTranslatedPercentage */ = {
 			isa = PBXGroup;
 			children = (
-				450E6A762D89DF4F00EB7EDE /* GetTranslatedPercentageTests.swift */,
+				454CE1562E26E8930058AE54 /* GetTranslatedPercentageTests.swift */,
 			);
 			path = GetTranslatedPercentage;
 			sourceTree = "<group>";
@@ -14983,7 +14983,6 @@
 				450FB88A2BFBA0F80015D945 /* StoreInitialAppLanguageTests.swift in Sources */,
 				450FB88B2BFBA0F80015D945 /* GetLanguageSettingsInterfaceStringsRepositoryTests.swift in Sources */,
 				45CC42F92C38981F00B0D82B /* MockLocalizationLanguageNameRepository.swift in Sources */,
-				450E6A772D89DF5500EB7EDE /* GetTranslatedPercentageTests.swift in Sources */,
 				458539322C57C08000748BAF /* MockRealmResource.swift in Sources */,
 				450FB88C2BFBA0F80015D945 /* SearchAppLanguageInAppLanguagesListRepositoryTests.swift in Sources */,
 				45466F6F2DB09417005E7FCC /* OptInNotificationsUserDefaultsCacheTests.swift in Sources */,
@@ -14997,6 +14996,7 @@
 				458539362C57C0AA00748BAF /* MockRealmLanguage.swift in Sources */,
 				45E1986B2BA488C800BF14F3 /* TestsInMemoryRealmDatabase.swift in Sources */,
 				4505F5A42C4154D100F60F94 /* GetLessonFilterLanguagesInterfaceStringsRepositoryTests.swift in Sources */,
+				454CE1572E26E89E0058AE54 /* GetTranslatedPercentageTests.swift in Sources */,
 				450AC6B72DEE40D1003E49E6 /* GetTranslatedNumberCountTests.swift in Sources */,
 				45243C562C58221A00BD6F49 /* GetLessonsListRepositoryTests.swift in Sources */,
 				450FB8902BFBA1060015D945 /* RealmDatabaseDeleteTests.swift in Sources */,
