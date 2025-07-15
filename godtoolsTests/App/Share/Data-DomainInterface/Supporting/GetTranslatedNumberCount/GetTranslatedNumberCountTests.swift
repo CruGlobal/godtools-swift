@@ -19,7 +19,11 @@ struct GetTranslatedNumberCountTests {
     private static let englishLanguage = LanguageCodeDomainModel.english.rawValue
     
     @Test(
-        "When user is viewing an integer value in english, the value should display in english.",
+        """
+        Given: User is viewing an integer value in english.
+        When: The value is an integer.
+        Then: It should be translated in the english language.
+        """,
         arguments: [
             TestArgument(integerValue: 1, expectedValue: "1")
         ]
