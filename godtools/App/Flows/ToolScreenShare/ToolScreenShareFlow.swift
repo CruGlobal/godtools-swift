@@ -373,7 +373,8 @@ extension ToolScreenShareFlow {
             domainModel: domainModel,
             shareMessage: shareMessage,
             shareUrl: shareUrl,
-            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
+            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
+            appBuild: appDiContainer.dataLayer.getAppBuild()
         )
         
         let view = ShareToolScreenShareSessionView(
