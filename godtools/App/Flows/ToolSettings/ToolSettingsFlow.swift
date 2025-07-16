@@ -101,10 +101,18 @@ class ToolSettingsFlow: Flow {
                     
         case .screenShareTappedFromToolSettings:
             presentToolScreenShareFlow()
-
+        
         case .toolScreenShareFlowCompleted(let state):
-            flowDelegate?.navigate(step: .toolSettingsFlowCompleted(state: .toolScreenShareFlowCompleted(state: state)))
-                                                
+            
+            switch state {
+            case .failedToCreateSession:
+                break
+            case .userClosedShareModal:
+                completeFlow(state: .toolScreenShareFlowCompleted(state: state))
+            case .userSharedQRCode:
+                completeFlow(state: .toolScreenShareFlowCompleted(state: state))
+            }
+        
         case .primaryLanguageTappedFromToolSettings:
             presentToolLanguagesList(listType: .choosePrimaryLanguage, animated: true)
             
@@ -150,6 +158,10 @@ class ToolSettingsFlow: Flow {
         default:
             break
         }
+    }
+    
+    private func completeFlow(state: ToolSettingsFlowCompletedState) {
+        flowDelegate?.navigate(step: .toolSettingsFlowCompleted(state: state))
     }
 }
 
