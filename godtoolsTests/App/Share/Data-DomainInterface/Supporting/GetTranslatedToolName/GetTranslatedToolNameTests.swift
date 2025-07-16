@@ -94,10 +94,6 @@ extension GetTranslatedToolNameTests {
         )
     }
     
-    private static func getResource(testsDiContainer: TestsDiContainer, id: String) -> ResourceModel? {
-        return testsDiContainer.dataLayer.getResourcesRepository().getResource(id: id)
-    }
-    
     private static func getConfiguredRealmDatabase() -> TestsInMemoryRealmDatabase {
         
         let englishLanguage = getRealmLanguage(languageCode: .english)
