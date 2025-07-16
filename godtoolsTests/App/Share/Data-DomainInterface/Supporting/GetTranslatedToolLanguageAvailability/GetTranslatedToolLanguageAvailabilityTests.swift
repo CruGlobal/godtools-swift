@@ -44,7 +44,7 @@ struct GetTranslatedToolLanguageAvailabilityTests {
             )
         ]
     )
-    func testTranslateLanguageAvailabilityByToolIdIsAvailable(argument: TestArgument) {
+    func testTranslateLanguageAvailabilityByToolIdAndLanguageModelIsAvailable(argument: TestArgument) {
         
         let testsDiContainer: TestsDiContainer = Self.getTestsDiContainer()
         let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability = Self.getTranslatedToolLanguageAvailability(testsDiContainer: testsDiContainer)
@@ -91,7 +91,7 @@ struct GetTranslatedToolLanguageAvailabilityTests {
             )
         ]
     )
-    func testTranslateLanguageAvailabilityByToolIdIsNotAvailable(argument: TestArgument) {
+    func testTranslateLanguageAvailabilityByToolIdAndLanguageModelIsNotAvailable(argument: TestArgument) {
         
         let testsDiContainer: TestsDiContainer = Self.getTestsDiContainer()
         let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability = Self.getTranslatedToolLanguageAvailability(testsDiContainer: testsDiContainer)
@@ -101,6 +101,90 @@ struct GetTranslatedToolLanguageAvailabilityTests {
         let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel = getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(
             toolId: Self.toolId,
             language: language!,
+            translateInLanguage: argument.translateInLanguage
+        )
+        
+        print(toolLanguageAvailability)
+        
+        #expect(toolLanguageAvailability.isAvailable == argument.expectedIsAvailable)
+        #expect(toolLanguageAvailability.availabilityString.isEmpty == false)
+        #expect(toolLanguageAvailability.availabilityString == argument.expectedAvailabilityString)
+    }
+    
+    @Test(
+        """
+        Given: User is viewing a tool. 
+        When: The tool supports the provided language.
+        Then: The tool should be marked as available and the tool language name should be translated and marked as available.
+        """,
+        arguments: [
+            TestArgument(
+                availableInLanguageCode: LanguageCodeDomainModel.spanish.rawValue,
+                translateInLanguage: LanguageCodeDomainModel.spanish.rawValue,
+                expectedIsAvailable: true,
+                expectedAvailabilityString: Self.spanishInSpanish + " " + GetTranslatedToolLanguageAvailability.languageAvailableCheck
+            ),
+            TestArgument(
+                availableInLanguageCode: LanguageCodeDomainModel.spanish.rawValue,
+                translateInLanguage: LanguageCodeDomainModel.english.rawValue,
+                expectedIsAvailable: true,
+                expectedAvailabilityString: Self.spanishInEnglish + " " + GetTranslatedToolLanguageAvailability.languageAvailableCheck
+            )
+        ]
+    )
+    func testTranslateLanguageAvailabilityByToolIdAndAppLanguageIsAvailable(argument: TestArgument) {
+        
+        let testsDiContainer: TestsDiContainer = Self.getTestsDiContainer()
+        let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability = Self.getTranslatedToolLanguageAvailability(testsDiContainer: testsDiContainer)
+                
+        let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel = getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(
+            resource: Self.queryResource(id: Self.toolId, testsDiContainer: testsDiContainer)!,
+            language: argument.availableInLanguageCode,
+            translateInLanguage: argument.translateInLanguage
+        )
+        
+        print(toolLanguageAvailability)
+        
+        #expect(toolLanguageAvailability.isAvailable == argument.expectedIsAvailable)
+        #expect(toolLanguageAvailability.availabilityString.isEmpty == false)
+        #expect(toolLanguageAvailability.availabilityString == argument.expectedAvailabilityString)
+    }
+    
+    @Test(
+        """
+        Given: User is viewing a tool.
+        When: The tool doesn't support the provided language.
+        Then: The tool should be marked as not available and availability string should reflect as not available.
+        """,
+        arguments: [
+            TestArgument(
+                availableInLanguageCode: LanguageCodeDomainModel.czech.rawValue,
+                translateInLanguage: LanguageCodeDomainModel.czech.rawValue,
+                expectedIsAvailable: false,
+                expectedAvailabilityString: Self.languageNotAvailable
+            ),
+            TestArgument(
+                availableInLanguageCode: LanguageCodeDomainModel.czech.rawValue,
+                translateInLanguage: LanguageCodeDomainModel.english.rawValue,
+                expectedIsAvailable: false,
+                expectedAvailabilityString: Self.languageNotAvailable
+            ),
+            TestArgument(
+                availableInLanguageCode: LanguageCodeDomainModel.french.rawValue,
+                translateInLanguage: LanguageCodeDomainModel.english.rawValue,
+                expectedIsAvailable: false,
+                expectedAvailabilityString: Self.languageNotAvailable
+            )
+        ]
+    )
+    func testTranslateLanguageAvailabilityByToolIdAndAppLanguageIsNotAvailable(argument: TestArgument) {
+        
+        let testsDiContainer: TestsDiContainer = Self.getTestsDiContainer()
+        let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability = Self.getTranslatedToolLanguageAvailability(testsDiContainer: testsDiContainer)
+                
+        let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel = getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(
+            resource: Self.queryResource(id: Self.toolId, testsDiContainer: testsDiContainer)!,
+            language: argument.availableInLanguageCode,
             translateInLanguage: argument.translateInLanguage
         )
         
@@ -207,6 +291,10 @@ extension GetTranslatedToolLanguageAvailabilityTests {
             name: languageCode.rawValue + " Name",
             id: languageCode.rawValue
         )
+    }
+    
+    private static func queryResource(id: String, testsDiContainer: TestsDiContainer) -> ResourceModel? {
+        return testsDiContainer.dataLayer.getResourcesRepository().getResource(id: id)
     }
     
     private static func queryLanguage(id: String, testsDiContainer: TestsDiContainer) -> LanguageModel? {
