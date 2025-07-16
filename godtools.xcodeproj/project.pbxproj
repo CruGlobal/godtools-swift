@@ -1711,6 +1711,7 @@
 		D4C2A5962C3CAC240035AB4D /* StoreUserLessonFiltersUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C2A5952C3CAC240035AB4D /* StoreUserLessonFiltersUseCase.swift */; };
 		D4C2A5982C3CAC420035AB4D /* StoreUserLessonFiltersRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C2A5972C3CAC420035AB4D /* StoreUserLessonFiltersRepositoryInterface.swift */; };
 		D4C2A59A2C3CAD0E0035AB4D /* StoreUserLessonFiltersRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C2A5992C3CAD0E0035AB4D /* StoreUserLessonFiltersRepository.swift */; };
+		D4D5A50B2E21A4F900204CEF /* GetToolScreenShareQRCodeInterfaceStringsRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D5A50A2E21A4F900204CEF /* GetToolScreenShareQRCodeInterfaceStringsRepositoryTests.swift */; };
 		D4D6614A2CB077D0006B20BF /* LessonListItemProgressDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D661492CB077D0006B20BF /* LessonListItemProgressDomainModel.swift */; };
 		D4E243CC29EDC6A100EA4BB7 /* SendFeedbackWebContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E243CB29EDC6A100EA4BB7 /* SendFeedbackWebContent.swift */; };
 		D4E243CE29EDCA5700EA4BB7 /* ReportABugWebContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E243CD29EDCA5700EA4BB7 /* ReportABugWebContent.swift */; };
@@ -3594,6 +3595,7 @@
 		D4C2A5952C3CAC240035AB4D /* StoreUserLessonFiltersUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreUserLessonFiltersUseCase.swift; sourceTree = "<group>"; };
 		D4C2A5972C3CAC420035AB4D /* StoreUserLessonFiltersRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreUserLessonFiltersRepositoryInterface.swift; sourceTree = "<group>"; };
 		D4C2A5992C3CAD0E0035AB4D /* StoreUserLessonFiltersRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreUserLessonFiltersRepository.swift; sourceTree = "<group>"; };
+		D4D5A50A2E21A4F900204CEF /* GetToolScreenShareQRCodeInterfaceStringsRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetToolScreenShareQRCodeInterfaceStringsRepositoryTests.swift; sourceTree = "<group>"; };
 		D4D661492CB077D0006B20BF /* LessonListItemProgressDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonListItemProgressDomainModel.swift; sourceTree = "<group>"; };
 		D4E243CB29EDC6A100EA4BB7 /* SendFeedbackWebContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendFeedbackWebContent.swift; sourceTree = "<group>"; };
 		D4E243CD29EDCA5700EA4BB7 /* ReportABugWebContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportABugWebContent.swift; sourceTree = "<group>"; };
@@ -5155,6 +5157,7 @@
 				45243C552C58221A00BD6F49 /* Lessons */,
 				459DF8E42AE17A350035D97B /* Onboarding */,
 				45466F6D2DB0940D005E7FCC /* OptInNotification */,
+				D4D5A5082E21A40400204CEF /* ToolScreenShareQRCode */,
 				453FE09C2BBEDBF00090DED1 /* ToolsFilter */,
 			);
 			path = Features;
@@ -12755,6 +12758,22 @@
 			path = Cache;
 			sourceTree = "<group>";
 		};
+		D4D5A5082E21A40400204CEF /* ToolScreenShareQRCode */ = {
+			isa = PBXGroup;
+			children = (
+				D4D5A5092E21A4E100204CEF /* Data-DomainInterface */,
+			);
+			path = ToolScreenShareQRCode;
+			sourceTree = "<group>";
+		};
+		D4D5A5092E21A4E100204CEF /* Data-DomainInterface */ = {
+			isa = PBXGroup;
+			children = (
+				D4D5A50A2E21A4F900204CEF /* GetToolScreenShareQRCodeInterfaceStringsRepositoryTests.swift */,
+			);
+			path = "Data-DomainInterface";
+			sourceTree = "<group>";
+		};
 		D4E7EE082CA340EF00F75DA6 /* UserLessonProgress */ = {
 			isa = PBXGroup;
 			children = (
@@ -15011,6 +15030,7 @@
 				459ABF612B0BB29D0034499D /* RealmResourcesCacheTests.swift in Sources */,
 				45E6BBEC2C41642800A49960 /* GetTranslatedLanguageNameTests.swift in Sources */,
 				D4AAEC1B2D9C68D2008CDF8E /* ToggleToolFavoritedRepositoryTests.swift in Sources */,
+				D4D5A50B2E21A4F900204CEF /* GetToolScreenShareQRCodeInterfaceStringsRepositoryTests.swift in Sources */,
 				45D7783029A572CC00F23D99 /* PassthroughValue.swift in Sources */,
 				45E198692BA4822A00BF14F3 /* TestsDiContainer.swift in Sources */,
 				450FB88A2BFBA0F80015D945 /* StoreInitialAppLanguageTests.swift in Sources */,
