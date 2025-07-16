@@ -11,61 +11,104 @@ import Testing
 
 struct GetTranslatedToolLanguageAvailabilityTests {
     
+    struct TestArgument {
+        let availableInLanguageCode: String
+        let translateInLanguage: String
+        let expectedIsAvailable: Bool
+        let expectedAvailabilityString: String
+    }
+    
     private static let toolId: String = "0"
-    private static let translationToolNameInEnglish: String = "Tract Zero"
-    private static let translationToolNameInSpanish: String = "Tratado Zeri"
     private static let languageNotAvailable: String = "Language Not Available"
+    private static let spanishInEnglish: String = "Spanish"
+    private static let spanishInSpanish: String = "Español"
     
     @Test(
         """
-        Given:
-        When:
-        Then:
-        """
+        Given: User is viewing a tool. 
+        When: The tool supports the provided language.
+        Then: The tool should be marked as available and the tool language name should be translated and marked as available.
+        """,
+        arguments: [
+            TestArgument(
+                availableInLanguageCode: LanguageCodeDomainModel.spanish.rawValue,
+                translateInLanguage: LanguageCodeDomainModel.spanish.rawValue,
+                expectedIsAvailable: true,
+                expectedAvailabilityString: Self.spanishInSpanish + " " + GetTranslatedToolLanguageAvailability.languageAvailableCheck
+            ),
+            TestArgument(
+                availableInLanguageCode: LanguageCodeDomainModel.spanish.rawValue,
+                translateInLanguage: LanguageCodeDomainModel.english.rawValue,
+                expectedIsAvailable: true,
+                expectedAvailabilityString: Self.spanishInEnglish + " " + GetTranslatedToolLanguageAvailability.languageAvailableCheck
+            )
+        ]
     )
-    func testTranslateLanguageAvailabilityByToolIdIsAvailable() {
+    func testTranslateLanguageAvailabilityByToolIdIsAvailable(argument: TestArgument) {
         
         let testsDiContainer: TestsDiContainer = Self.getTestsDiContainer()
         let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability = Self.getTranslatedToolLanguageAvailability(testsDiContainer: testsDiContainer)
         
-        let spanishLanguage: LanguageModel? = Self.queryLanguage(id: LanguageCodeDomainModel.spanish.rawValue, testsDiContainer: testsDiContainer)
+        let language: LanguageModel? = Self.queryLanguage(id: argument.availableInLanguageCode, testsDiContainer: testsDiContainer)
         
         let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel = getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(
             toolId: Self.toolId,
-            language: spanishLanguage!,
-            translateInLanguage: LanguageCodeDomainModel.spanish.rawValue
+            language: language!,
+            translateInLanguage: argument.translateInLanguage
         )
         
         print(toolLanguageAvailability)
         
-        #expect(toolLanguageAvailability.isAvailable == true)
+        #expect(toolLanguageAvailability.isAvailable == argument.expectedIsAvailable)
         #expect(toolLanguageAvailability.availabilityString.isEmpty == false)
+        #expect(toolLanguageAvailability.availabilityString == argument.expectedAvailabilityString)
     }
     
     @Test(
         """
-        Given:
-        When:
-        Then:
-        """
+        Given: User is viewing a tool.
+        When: The tool doesn't support the provided language.
+        Then: The tool should be marked as not available and availability string should reflect as not available.
+        """,
+        arguments: [
+            TestArgument(
+                availableInLanguageCode: LanguageCodeDomainModel.czech.rawValue,
+                translateInLanguage: LanguageCodeDomainModel.czech.rawValue,
+                expectedIsAvailable: false,
+                expectedAvailabilityString: Self.languageNotAvailable
+            ),
+            TestArgument(
+                availableInLanguageCode: LanguageCodeDomainModel.czech.rawValue,
+                translateInLanguage: LanguageCodeDomainModel.english.rawValue,
+                expectedIsAvailable: false,
+                expectedAvailabilityString: Self.languageNotAvailable
+            ),
+            TestArgument(
+                availableInLanguageCode: LanguageCodeDomainModel.french.rawValue,
+                translateInLanguage: LanguageCodeDomainModel.english.rawValue,
+                expectedIsAvailable: false,
+                expectedAvailabilityString: Self.languageNotAvailable
+            )
+        ]
     )
-    func testTranslateLanguageAvailabilityByToolIdIsNotAvailable() {
+    func testTranslateLanguageAvailabilityByToolIdIsNotAvailable(argument: TestArgument) {
         
         let testsDiContainer: TestsDiContainer = Self.getTestsDiContainer()
         let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability = Self.getTranslatedToolLanguageAvailability(testsDiContainer: testsDiContainer)
         
-        let czechLanguage: LanguageModel? = Self.queryLanguage(id: LanguageCodeDomainModel.czech.rawValue, testsDiContainer: testsDiContainer)
+        let language: LanguageModel? = Self.queryLanguage(id: argument.availableInLanguageCode, testsDiContainer: testsDiContainer)
         
         let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel = getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(
             toolId: Self.toolId,
-            language: czechLanguage!,
-            translateInLanguage: LanguageCodeDomainModel.czech.rawValue
+            language: language!,
+            translateInLanguage: argument.translateInLanguage
         )
         
         print(toolLanguageAvailability)
         
-        #expect(toolLanguageAvailability.isAvailable == false)
+        #expect(toolLanguageAvailability.isAvailable == argument.expectedIsAvailable)
         #expect(toolLanguageAvailability.availabilityString.isEmpty == false)
+        #expect(toolLanguageAvailability.availabilityString == argument.expectedAvailabilityString)
     }
 }
 
@@ -89,21 +132,29 @@ extension GetTranslatedToolLanguageAvailabilityTests {
     private static func getTranslatedLanguageName() -> GetTranslatedLanguageName {
         
         let languageNames: [MockLocaleLanguageName.LanguageCode: [MockLocaleLanguageName.TranslateInLocaleId: MockLocaleLanguageName.LanguageName]] = [
+            LanguageCodeDomainModel.czech.rawValue: [
+                LanguageCodeDomainModel.czech.rawValue: "čeština",
+                LanguageCodeDomainModel.english.rawValue: "Czech",
+                LanguageCodeDomainModel.french.rawValue: "tchèque",
+                LanguageCodeDomainModel.spanish.rawValue: "Checo"
+            ],
             LanguageCodeDomainModel.english.rawValue: [
                 LanguageCodeDomainModel.czech.rawValue: "Angličtina",
                 LanguageCodeDomainModel.english.rawValue: "English",
                 LanguageCodeDomainModel.french.rawValue: "Anglais",
-                LanguageCodeDomainModel.portuguese.rawValue: "Inglês",
-                LanguageCodeDomainModel.russian.rawValue: "Английский",
                 LanguageCodeDomainModel.spanish.rawValue: "Inglés"
+            ],
+            LanguageCodeDomainModel.french.rawValue: [
+                LanguageCodeDomainModel.czech.rawValue: "francouzština",
+                LanguageCodeDomainModel.english.rawValue: "French",
+                LanguageCodeDomainModel.french.rawValue: "Français",
+                LanguageCodeDomainModel.spanish.rawValue: "Francés"
             ],
             LanguageCodeDomainModel.spanish.rawValue: [
                 LanguageCodeDomainModel.czech.rawValue: "španělština",
-                LanguageCodeDomainModel.english.rawValue: "Spanish",
+                LanguageCodeDomainModel.english.rawValue: Self.spanishInEnglish,
                 LanguageCodeDomainModel.french.rawValue: "Espagnol",
-                LanguageCodeDomainModel.portuguese.rawValue: "Espanhol",
-                LanguageCodeDomainModel.russian.rawValue: "испанский",
-                LanguageCodeDomainModel.spanish.rawValue: "Español"
+                LanguageCodeDomainModel.spanish.rawValue: Self.spanishInSpanish
             ]
         ]
         
@@ -142,20 +193,7 @@ extension GetTranslatedToolLanguageAvailabilityTests {
                 id: Self.toolId
             )
         ]
-        
-        let tract0EnglishTranslation: RealmTranslation = MockRealmTranslation.createTranslation(
-            translatedName: Self.translationToolNameInEnglish
-        )
-        let tract0SpanishTranslation: RealmTranslation = MockRealmTranslation.createTranslation(
-            translatedName: Self.translationToolNameInSpanish
-        )
-        
-        tract0EnglishTranslation.language = englishLanguage
-        tract0SpanishTranslation.language = spanishLanguage
-        
-        tracts[0].addLatestTranslation(translation: tract0EnglishTranslation)
-        tracts[0].addLatestTranslation(translation: tract0SpanishTranslation)
-        
+                
         let realmDatabase = TestsInMemoryRealmDatabase(
             addObjectsToDatabase: allLanguages + tracts
         )
@@ -181,13 +219,13 @@ extension GetTranslatedToolLanguageAvailabilityTests {
                 LanguageCodeDomainModel.czech.rawValue: [
                     GetTranslatedToolLanguageAvailability.localizedKeyLanguageNotAvailable: Self.languageNotAvailable
                 ],
+                LanguageCodeDomainModel.english.rawValue: [
+                    GetTranslatedToolLanguageAvailability.localizedKeyLanguageNotAvailable: Self.languageNotAvailable
+                ],
                 LanguageCodeDomainModel.french.rawValue: [
                     GetTranslatedToolLanguageAvailability.localizedKeyLanguageNotAvailable: Self.languageNotAvailable
                 ],
-                LanguageCodeDomainModel.portuguese.rawValue: [
-                    GetTranslatedToolLanguageAvailability.localizedKeyLanguageNotAvailable: Self.languageNotAvailable
-                ],
-                LanguageCodeDomainModel.russian.rawValue: [
+                LanguageCodeDomainModel.spanish.rawValue: [
                     GetTranslatedToolLanguageAvailability.localizedKeyLanguageNotAvailable: Self.languageNotAvailable
                 ]
             ]
