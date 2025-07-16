@@ -185,6 +185,7 @@
 		452291EB2DFA51C6001A0B0F /* UserIsAuthenticatedDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452291EA2DFA51C6001A0B0F /* UserIsAuthenticatedDomainModel.swift */; };
 		452291ED2DFA523C001A0B0F /* LogOutUserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452291EC2DFA523C001A0B0F /* LogOutUserUseCase.swift */; };
 		45229C602ABF630A009F5D31 /* AnalyticsContainer+TrackExitLinkAnalyticsInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45229C5F2ABF630A009F5D31 /* AnalyticsContainer+TrackExitLinkAnalyticsInterface.swift */; };
+		452339832E27D1E5005BF6F7 /* GetTranslatedToolNameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452339822E27D1E2005BF6F7 /* GetTranslatedToolNameTests.swift */; };
 		45243C562C58221A00BD6F49 /* GetLessonsListRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45243C532C58221A00BD6F49 /* GetLessonsListRepositoryTests.swift */; };
 		45243C5B2C5828C600BD6F49 /* MockRealmTranslation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45243C5A2C5828C600BD6F49 /* MockRealmTranslation.swift */; };
 		452486B82B07C894007AD932 /* ToolFilterLanguageSelectionRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452486AA2B07C894007AD932 /* ToolFilterLanguageSelectionRowView.swift */; };
@@ -1967,6 +1968,7 @@
 		452291EA2DFA51C6001A0B0F /* UserIsAuthenticatedDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIsAuthenticatedDomainModel.swift; sourceTree = "<group>"; };
 		452291EC2DFA523C001A0B0F /* LogOutUserUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogOutUserUseCase.swift; sourceTree = "<group>"; };
 		45229C5F2ABF630A009F5D31 /* AnalyticsContainer+TrackExitLinkAnalyticsInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AnalyticsContainer+TrackExitLinkAnalyticsInterface.swift"; sourceTree = "<group>"; };
+		452339822E27D1E2005BF6F7 /* GetTranslatedToolNameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTranslatedToolNameTests.swift; sourceTree = "<group>"; };
 		45243C532C58221A00BD6F49 /* GetLessonsListRepositoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetLessonsListRepositoryTests.swift; sourceTree = "<group>"; };
 		45243C5A2C5828C600BD6F49 /* MockRealmTranslation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRealmTranslation.swift; sourceTree = "<group>"; };
 		452486AA2B07C894007AD932 /* ToolFilterLanguageSelectionRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolFilterLanguageSelectionRowView.swift; sourceTree = "<group>"; };
@@ -4612,6 +4614,14 @@
 				4521E5E92D690BCC003E01FE /* SwiftUITimer.swift */,
 			);
 			path = SwiftUITimer;
+			sourceTree = "<group>";
+		};
+		452339812E27D1DC005BF6F7 /* GetTranslatedToolName */ = {
+			isa = PBXGroup;
+			children = (
+				452339822E27D1E2005BF6F7 /* GetTranslatedToolNameTests.swift */,
+			);
+			path = GetTranslatedToolName;
 			sourceTree = "<group>";
 		};
 		45243C542C58221A00BD6F49 /* Data-DomainInterface */ = {
@@ -10997,6 +11007,7 @@
 				45E6BBE92C41642800A49960 /* GetTranslatedLanguageName */,
 				450AC6B52DEE40C6003E49E6 /* GetTranslatedNumberCount */,
 				450E6A752D89DF4300EB7EDE /* GetTranslatedPercentage */,
+				452339812E27D1DC005BF6F7 /* GetTranslatedToolName */,
 			);
 			path = Supporting;
 			sourceTree = "<group>";
@@ -15017,6 +15028,7 @@
 				45368A192ABB2D850028A570 /* DeepLinkingServiceTests.swift in Sources */,
 				45192F522C470AEC005740E5 /* UserCountersAPIMock.swift in Sources */,
 				45CC43012C38982800B0D82B /* MockLocaleLanguageRegionName.swift in Sources */,
+				452339832E27D1E5005BF6F7 /* GetTranslatedToolNameTests.swift in Sources */,
 				45192F532C470AEC005740E5 /* UserCountersRepositoryTests.swift in Sources */,
 				450ADC452BECFE2F00988455 /* MockAppLanguagesRepositorySync.swift in Sources */,
 				457719AF2BE00FA600E7E4D8 /* MockDeviceSystemLanguage.swift in Sources */,
