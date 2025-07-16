@@ -1204,6 +1204,7 @@
 		45C2AF482A817621004958AB /* PageControllAttributesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C2AF462A817621004958AB /* PageControllAttributesType.swift */; };
 		45C2AF4A2A81764D004958AB /* GTPageControlAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C2AF492A81764D004958AB /* GTPageControlAttributes.swift */; };
 		45C321A72ACE7A89003B4F2C /* AppInterfaceStringNavBarItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C321A62ACE7A89003B4F2C /* AppInterfaceStringNavBarItemController.swift */; };
+		45C5A0DD2E28397E00BC3653 /* GetTranslatedToolLanguageAvailabilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C5A0DC2E28397C00BC3653 /* GetTranslatedToolLanguageAvailabilityTests.swift */; };
 		45C5DDCE2AE6BF1300C70BBA /* AccessibilityScreenElementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C5DDCD2AE6BF1300C70BBA /* AccessibilityScreenElementView.swift */; };
 		45C649BC2B31E14D000249E0 /* ViewShareToolUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C649BB2B31E14D000249E0 /* ViewShareToolUseCase.swift */; };
 		45C649BE2B31E178000249E0 /* ViewShareToolDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C649BD2B31E178000249E0 /* ViewShareToolDomainModel.swift */; };
@@ -2981,6 +2982,7 @@
 		45C321A62ACE7A89003B4F2C /* AppInterfaceStringNavBarItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInterfaceStringNavBarItemController.swift; sourceTree = "<group>"; };
 		45C493F92C334A8E001D81F0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		45C493FA2C334A99001D81F0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = Base; path = Base.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		45C5A0DC2E28397C00BC3653 /* GetTranslatedToolLanguageAvailabilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTranslatedToolLanguageAvailabilityTests.swift; sourceTree = "<group>"; };
 		45C5DDCD2AE6BF1300C70BBA /* AccessibilityScreenElementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityScreenElementView.swift; sourceTree = "<group>"; };
 		45C649BB2B31E14D000249E0 /* ViewShareToolUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewShareToolUseCase.swift; sourceTree = "<group>"; };
 		45C649BD2B31E178000249E0 /* ViewShareToolDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewShareToolDomainModel.swift; sourceTree = "<group>"; };
@@ -10127,6 +10129,14 @@
 			path = Attributes;
 			sourceTree = "<group>";
 		};
+		45C5A0DB2E28397700BC3653 /* GetTranslatedToolLanguageAvailability */ = {
+			isa = PBXGroup;
+			children = (
+				45C5A0DC2E28397C00BC3653 /* GetTranslatedToolLanguageAvailabilityTests.swift */,
+			);
+			path = GetTranslatedToolLanguageAvailability;
+			sourceTree = "<group>";
+		};
 		45C8835A2A93EDDF00F33E6D /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
@@ -11032,6 +11042,7 @@
 				450AC6B52DEE40C6003E49E6 /* GetTranslatedNumberCount */,
 				450E6A752D89DF4300EB7EDE /* GetTranslatedPercentage */,
 				45061D472E282E41002CD027 /* GetTranslatedToolCategory */,
+				45C5A0DB2E28397700BC3653 /* GetTranslatedToolLanguageAvailability */,
 				452339812E27D1DC005BF6F7 /* GetTranslatedToolName */,
 			);
 			path = Supporting;
@@ -15070,6 +15081,7 @@
 				45F357B62C52E49200F31EB2 /* GetLessonFilterLanguagesRepositoryTests.swift in Sources */,
 				D4B26F592D8DF0A80019FA86 /* ReorderFavoritedToolRepositoryTests.swift in Sources */,
 				45368A192ABB2D850028A570 /* DeepLinkingServiceTests.swift in Sources */,
+				45C5A0DD2E28397E00BC3653 /* GetTranslatedToolLanguageAvailabilityTests.swift in Sources */,
 				45192F522C470AEC005740E5 /* UserCountersAPIMock.swift in Sources */,
 				45CC43012C38982800B0D82B /* MockLocaleLanguageRegionName.swift in Sources */,
 				452339832E27D1E5005BF6F7 /* GetTranslatedToolNameTests.swift in Sources */,
