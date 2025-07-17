@@ -7,6 +7,7 @@ GodTools
 - [Architecture](#architecture)
 - [Architecture Responsibilities](#architecture-responsibilities)
 - [Localization](#localization)
+- [godtoolsTests Target](#godtoolstests-target)
 - [Fastlane](#fastlane)
 - [Build Errors and Pod Install Troubleshooting](#build-errors-and-pod-install-troubleshooting)
 
@@ -161,9 +162,11 @@ class MyFlow: Flow {
     - https://twittemb.github.io/posts/2017-11-08-RxFlow-Part1/
     - https://twittemb.github.io/posts/2017-12-09-RxFlow-Part2/
 
-#### Localization
+### Localization
 
 The GodTools app is localized for many languages which are translated in OneSky.  When adding new strings for localization, all one needs to do is update the Base Localizable.strings.  Newly added strings will be placed into OneSky and translations will be ordered.  The GitHub Action workflow Download And Commit OneSky Translations will run daily to create a pull request for any Localizable.strings files that have been updated in OneSky.
+
+### godtoolsTests Target
 
 #### Fastlane
 
