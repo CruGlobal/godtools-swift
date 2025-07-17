@@ -30,7 +30,7 @@ class MobileContentMultiSelectOptionViewModel: MobileContentViewModel {
         
         super.init(baseModel: multiSelectOptionModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
         
-        isSelectedFlowWatcher = multiSelectOptionModel.watchIsSelected(state: renderedPageContext.rendererState) { [weak self] (isSelected: KotlinBoolean) in
+        isSelectedFlowWatcher = multiSelectOptionModel.watchIsSelected(ctx: renderedPageContext.rendererState) { [weak self] (isSelected: KotlinBoolean) in
 
             guard let weakSelf = self else {
                 return
@@ -53,8 +53,8 @@ extension MobileContentMultiSelectOptionViewModel {
     
     func multiSelectOptionTapped() {
         
-        multiSelectOptionModel.toggleSelected(state: renderedPageContext.rendererState)
-                                
+        multiSelectOptionModel.toggleSelected(ctx: renderedPageContext.rendererState)
+
         mobileContentAnalytics.trackEvents(events: multiSelectOptionModel.getAnalyticsEvents(type: .clicked), renderedPageContext: renderedPageContext)
     }
 }
