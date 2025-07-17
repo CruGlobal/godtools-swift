@@ -11,6 +11,9 @@ import LocalizationServices
 
 class GetTranslatedToolLanguageAvailability {
     
+    static let languageAvailableCheck: String = "✓"
+    static let localizedKeyLanguageNotAvailable: String = "lessonCard.languageNotAvailable"
+    
     private let localizationServices: LocalizationServicesInterface
     private let resourcesRepository: ResourcesRepository
     private let languagesRepository: LanguagesRepository
@@ -65,11 +68,11 @@ class GetTranslatedToolLanguageAvailability {
         
         if resourceSupportsLanguage {
             
-            availabilityString = translatedLanguageName + " ✓"
+            availabilityString = translatedLanguageName + " " + Self.languageAvailableCheck
         }
         else {
             
-            let languageNotAvailable: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage.code, key: "lessonCard.languageNotAvailable")
+            let languageNotAvailable: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage.code, key: Self.localizedKeyLanguageNotAvailable)
             
             availabilityString = String(format: languageNotAvailable, locale: Locale(identifier: translateInLanguage.code), translatedLanguageName)
         }

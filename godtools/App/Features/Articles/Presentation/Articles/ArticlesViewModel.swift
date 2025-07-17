@@ -25,7 +25,6 @@ class ArticlesViewModel: NSObject {
     private let localizationServices: LocalizationServices
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
         
-    private var articleAemCacheObjects: [ArticleAemCacheObject] = Array()
     private var cancellables: Set<AnyCancellable> = Set()
     
     private weak var flowDelegate: FlowDelegate?
@@ -36,6 +35,7 @@ class ArticlesViewModel: NSObject {
     let errorMessage: ObservableValue<ArticlesErrorMessageViewModel?> = ObservableValue(value: nil)
         
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    @Published private var articleAemCacheObjects: [ArticleAemCacheObject] = Array()
     
     init(flowDelegate: FlowDelegate, resource: ResourceModel, language: LanguageModel, category: GodToolsToolParser.Category, manifest: Manifest, downloadArticlesObservable: DownloadManifestArticlesObservable, articleManifestAemRepository: ArticleManifestAemRepository, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, localizationServices: LocalizationServices, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
         
@@ -63,20 +63,21 @@ class ArticlesViewModel: NSObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (isDownloading: Bool) in
 
-                print("\n ArticlesViewModel")
-                print("  isDownloading: \(isDownloading)")
-                
                 self?.isLoading.accept(value: isDownloading)
             }
             .store(in: &cancellables)
         
-        Publishers.CombineLatest(
+        Publishers.CombineLatest3(
             $appLanguage.dropFirst(),
-            downloadArticlesObservable.$articleAemRepositoryResult
+            downloadArticlesObservable.$articleAemRepositoryResult,
+            $articleAemCacheObjects.dropFirst()
         )
-        .map { (appLanguage: AppLanguageDomainModel, result: ArticleAemRepositoryResult) in
+        .map { (appLanguage: AppLanguageDomainModel, result: ArticleAemRepositoryResult, articleAemCacheObjects: [ArticleAemCacheObject]) in
             
-            if let downloadError = result.downloaderResult.downloadError {
+            let downloadError: ArticleAemDownloaderError? = result.downloaderResult.downloadError
+            let noCachedResults: Bool = articleAemCacheObjects.isEmpty
+            
+            if let downloadError = downloadError, noCachedResults {
                 
                 let downloadArticlesErrorViewModel = DownloadArticlesErrorViewModel(
                     appLanguage: appLanguage,

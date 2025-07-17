@@ -154,7 +154,7 @@ class AppDiContainer {
     
     private func getMobileContentRendererUserAnalytics() -> MobileContentRendererUserAnalytics {
         return MobileContentRendererUserAnalytics(
-            incrementUserCounterUseCase: domainLayer.getIncrementUserCounterUseCase()
+            incrementUserCounterUseCase: feature.userActivity.domainLayer.getIncrementUserCounterUseCase()
         )
     }
     
