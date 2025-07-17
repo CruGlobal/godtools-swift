@@ -16,16 +16,18 @@ class ShareToolScreenShareSessionViewModel {
     
     let shareMessage: String
     let qrCodeString: String
+    let showQRCodeOption: Bool
     
     private weak var flowDelegate: FlowDelegate?
     
-    init(flowDelegate: FlowDelegate?, domainModel: ShareToolScreenShareSessionDomainModel, shareMessage: String, shareUrl: String, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(flowDelegate: FlowDelegate?, domainModel: ShareToolScreenShareSessionDomainModel, shareMessage: String, shareUrl: String, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, appBuild: AppBuild) {
             
         self.flowDelegate = flowDelegate
         self.domainModel = domainModel
         self.shareMessage = shareMessage
         self.shareUrl = shareUrl
         self.qrCodeString = domainModel.interfaceStrings.qrCodeTitle
+        self.showQRCodeOption = appBuild.isDebug
         
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
     }
