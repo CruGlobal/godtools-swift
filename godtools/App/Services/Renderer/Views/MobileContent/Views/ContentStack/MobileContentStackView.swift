@@ -18,8 +18,10 @@ class MobileContentStackView: MobileContentView {
         print("\n ***** MobileContentStackView init() ***** ")
         
         let content: [Content] = (viewModel.baseModels as? [Content]) ?? Array()
+        let resourcesDir: String = viewModel.renderedPageContext.resourcesCache.getRootDirectory()?.path ?? ""
+        let fileSystem = ResourcesFileSystemKt.ResourcesFileSystem(directory: resourcesDir)
 
-        composeViewController = ContentStackViewKt.ContentStackView(content: content, state: viewModel.rendererState)
+        composeViewController = ContentStackViewKt.ContentStackView(content: content, state: viewModel.rendererState, fileSystem: fileSystem)
 
         print("  content: \(content.count)")
         print("  composeView.bounds: \(composeViewController.view.bounds)")

@@ -23,10 +23,10 @@ class MobileContentFlowItemViewModel: MobileContentViewModel {
         
         let visibility: MobileContentViewVisibilityState
         
-        if flowItem.isGone(state: renderedPageContext.rendererState) {
+        if flowItem.isGone(ctx: renderedPageContext.rendererState) {
             visibility = .gone
         }
-        else if flowItem.isInvisible(state: renderedPageContext.rendererState) {
+        else if flowItem.isInvisible(ctx: renderedPageContext.rendererState) {
             visibility = .hidden
         }
         else {
@@ -37,7 +37,7 @@ class MobileContentFlowItemViewModel: MobileContentViewModel {
         
         super.init(baseModel: flowItem, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
         
-        visibilityFlowWatcher = flowItem.watchVisibility(state: renderedPageContext.rendererState, block: { [weak self] (invisible: KotlinBoolean, gone: KotlinBoolean) in
+        visibilityFlowWatcher = flowItem.watchVisibility(ctx: renderedPageContext.rendererState, block: { [weak self] (invisible: KotlinBoolean, gone: KotlinBoolean) in
             
             let visibilityStateValue: MobileContentViewVisibilityState
             
