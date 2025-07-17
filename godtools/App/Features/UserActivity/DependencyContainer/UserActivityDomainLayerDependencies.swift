@@ -18,4 +18,34 @@ class UserActivityDomainLayerDependencies {
         self.dataLayer = dataLayer
         self.coreDataLayer = coreDataLayer
     }
+    
+    func getIncrementUserCounterUseCase() -> IncrementUserCounterUseCase {
+        return IncrementUserCounterUseCase(
+            userCountersRepository: coreDataLayer.getUserCountersRepository()
+        )
+    }
+    
+    func getUserActivityBadgeUseCase() -> GetUserActivityBadgeUseCase {
+        return GetUserActivityBadgeUseCase(
+            localizationServices: coreDataLayer.getLocalizationServices(),
+            stringWithLocaleCount: coreDataLayer.getStringWithLocaleCount()
+        )
+    }
+    
+    func getUserActivityStatsUseCase() -> GetUserActivityStatsUseCase {
+        return GetUserActivityStatsUseCase(
+            localizationServices: coreDataLayer.getLocalizationServices(),
+            getTranslatedNumberCount: coreDataLayer.getTranslatedNumberCount(),
+            stringWithLocaleCount: coreDataLayer.getStringWithLocaleCount()
+        )
+    }
+    
+    func getUserActivityUseCase() -> GetUserActivityUseCase {
+        return GetUserActivityUseCase(
+            getUserActivityBadgeUseCase: getUserActivityBadgeUseCase(),
+            getUserActivityStatsUseCase: getUserActivityStatsUseCase(),
+            userCounterRepository: coreDataLayer.getUserCountersRepository(),
+            completedTrainingTipRepository: coreDataLayer.getCompletedTrainingTipRepository()
+        )
+    }
 }
