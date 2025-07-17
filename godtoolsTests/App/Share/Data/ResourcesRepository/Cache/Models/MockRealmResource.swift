@@ -11,19 +11,21 @@ import Foundation
 
 class MockRealmResource {
     
-    static func createTract(addLanguages: [LanguageCodeDomainModel], fromLanguages: [RealmLanguage], id: String = UUID().uuidString) -> RealmResource {
+    static func createTract(addLanguages: [LanguageCodeDomainModel], fromLanguages: [RealmLanguage], id: String = UUID().uuidString, attrDefaultLocale: String = "", attrCategory: String = "") -> RealmResource {
         
-        return createRealmResource(resourceType: .tract, addLanguages: addLanguages, fromLanguages: fromLanguages, id: id)
+        return createRealmResource(resourceType: .tract, addLanguages: addLanguages, fromLanguages: fromLanguages, id: id, attrDefaultLocale: attrDefaultLocale, attrCategory: attrCategory)
     }
     
-    static func createLesson(addLanguages: [LanguageCodeDomainModel], fromLanguages: [RealmLanguage], id: String = UUID().uuidString) -> RealmResource {
+    static func createLesson(addLanguages: [LanguageCodeDomainModel], fromLanguages: [RealmLanguage], id: String = UUID().uuidString, attrDefaultLocale: String = "", attrCategory: String = "") -> RealmResource {
         
-        return createRealmResource(resourceType: .lesson, addLanguages: addLanguages, fromLanguages: fromLanguages, id: id)
+        return createRealmResource(resourceType: .lesson, addLanguages: addLanguages, fromLanguages: fromLanguages, id: id, attrDefaultLocale: attrDefaultLocale, attrCategory: attrCategory)
     }
     
-    static func createRealmResource(resourceType: ResourceType, addLanguages: [LanguageCodeDomainModel], fromLanguages: [RealmLanguage], id: String = UUID().uuidString) -> RealmResource {
+    static func createRealmResource(resourceType: ResourceType, addLanguages: [LanguageCodeDomainModel], fromLanguages: [RealmLanguage], id: String = UUID().uuidString, attrDefaultLocale: String = "", attrCategory: String = "") -> RealmResource {
         
         let resource: RealmResource = RealmResource()
+        resource.attrCategory = attrCategory
+        resource.attrDefaultLocale = attrDefaultLocale
         resource.id = id
         resource.isHidden = false
         resource.resourceType = resourceType.rawValue
