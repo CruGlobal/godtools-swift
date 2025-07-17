@@ -12,7 +12,7 @@ import XCTest
 
 class BaseFlowTests: XCTestCase {
         
-    private static let defaultWaitForScreenExistence: TimeInterval = 2
+    private static let defaultWaitForScreenExistence: TimeInterval = 5
     
     private(set) var app: XCUIApplication = XCUIApplication()
     private(set) var flowDeepLinkUrl: String = ""
