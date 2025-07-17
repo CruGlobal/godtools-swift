@@ -375,7 +375,7 @@ extension MenuFlow {
             disableOptInOnboardingBannerUseCase: appDiContainer.domainLayer.getDisableOptInOnboardingBannerUseCase(),
             getAccountCreationIsSupportedUseCase: appDiContainer.feature.account.domainLayer.getAccountCreationIsSupportedUseCase(),
             getUserIsAuthenticatedUseCase: appDiContainer.feature.account.domainLayer.getUserIsAuthenticatedUseCase(),
-            logOutUserUseCase: appDiContainer.domainLayer.getLogOutUserUseCase(),
+            logOutUserUseCase: appDiContainer.feature.account.domainLayer.getLogOutUserUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
             appBuild: appDiContainer.dataLayer.getAppBuild()
@@ -524,11 +524,11 @@ extension MenuFlow {
         let viewModel = AccountViewModel(
             flowDelegate: self,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            getUserAccountDetailsUseCase: appDiContainer.domainLayer.getUserAccountDetailsUseCase(),
-            getUserActivityUseCase: appDiContainer.domainLayer.getUserActivityUseCase(),
+            getUserAccountDetailsUseCase: appDiContainer.feature.account.domainLayer.getUserAccountDetailsUseCase(),
+            getUserActivityUseCase: appDiContainer.feature.userActivity.domainLayer.getUserActivityUseCase(),
             viewGlobalActivityThisWeekUseCase: appDiContainer.feature.globalActivity.domainLayer.getViewGlobalActivityThisWeekUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
-            viewAccountUseCase: appDiContainer.domainLayer.getViewAccountUseCase(),
+            viewAccountUseCase: appDiContainer.feature.account.domainLayer.getViewAccountUseCase(),
             getGlobalActivityEnabledUseCase: appDiContainer.feature.globalActivity.domainLayer.getGlobalActivityEnabledUseCase()
         )
         

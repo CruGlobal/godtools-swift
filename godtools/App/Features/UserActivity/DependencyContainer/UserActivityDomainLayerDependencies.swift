@@ -21,16 +21,16 @@ class UserActivityDomainLayerDependencies {
     
     func getUserActivityBadgeUseCase() -> GetUserActivityBadgeUseCase {
         return GetUserActivityBadgeUseCase(
-            localizationServices: dataLayer.getLocalizationServices(),
-            stringWithLocaleCount: dataLayer.getStringWithLocaleCount()
+            localizationServices: coreDataLayer.getLocalizationServices(),
+            stringWithLocaleCount: coreDataLayer.getStringWithLocaleCount()
         )
     }
     
     func getUserActivityStatsUseCase() -> GetUserActivityStatsUseCase {
         return GetUserActivityStatsUseCase(
-            localizationServices: dataLayer.getLocalizationServices(),
-            getTranslatedNumberCount: dataLayer.getTranslatedNumberCount(),
-            stringWithLocaleCount: dataLayer.getStringWithLocaleCount()
+            localizationServices: coreDataLayer.getLocalizationServices(),
+            getTranslatedNumberCount: coreDataLayer.getTranslatedNumberCount(),
+            stringWithLocaleCount: coreDataLayer.getStringWithLocaleCount()
         )
     }
     
@@ -38,8 +38,8 @@ class UserActivityDomainLayerDependencies {
         return GetUserActivityUseCase(
             getUserActivityBadgeUseCase: getUserActivityBadgeUseCase(),
             getUserActivityStatsUseCase: getUserActivityStatsUseCase(),
-            userCounterRepository: dataLayer.getUserCountersRepository(),
-            completedTrainingTipRepository: dataLayer.getCompletedTrainingTipRepository()
+            userCounterRepository: coreDataLayer.getUserCountersRepository(),
+            completedTrainingTipRepository: coreDataLayer.getCompletedTrainingTipRepository()
         )
     }
 }

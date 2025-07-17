@@ -23,12 +23,6 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getDeleteUserCountersUseCase() -> DeleteUserCountersUseCase {
-        return DeleteUserCountersUseCase(
-            repository: dataLayer.getUserCountersRepository()
-        )
-    }
-    
     func getDisableOptInOnboardingBannerUseCase() -> DisableOptInOnboardingBannerUseCase {
         return DisableOptInOnboardingBannerUseCase(
             optInOnboardingBannerEnabledRepository: dataLayer.getOptInOnboardingBannerEnabledRepository()

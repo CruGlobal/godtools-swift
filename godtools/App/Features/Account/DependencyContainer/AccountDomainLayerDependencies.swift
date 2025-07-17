@@ -38,10 +38,16 @@ class AccountDomainLayerDependencies {
         )
     }
     
+    func getDeleteUserCountersUseCase() -> DeleteUserCountersUseCase {
+        return DeleteUserCountersUseCase(
+            repository: coreDataLayer.getUserCountersRepository()
+        )
+    }
+    
     func getLogOutUserUseCase() -> LogOutUserUseCase {
         return LogOutUserUseCase(
-            userAuthentication: dataLayer.getUserAuthentication(),
-            firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics,
+            userAuthentication: coreDataLayer.getUserAuthentication(),
+            firebaseAnalytics: coreDataLayer.getAnalytics().firebaseAnalytics,
             deleteUserCountersUseCase: getDeleteUserCountersUseCase()
         )
     }
@@ -61,7 +67,7 @@ class AccountDomainLayerDependencies {
     func getUserAccountDetailsUseCase() -> GetUserAccountDetailsUseCase {
         return GetUserAccountDetailsUseCase(
             repository: dataLayer.getUserDetailsRepository(),
-            localizationServices: dataLayer.getLocalizationServices()
+            localizationServices: coreDataLayer.getLocalizationServices()
         )
     }
     
