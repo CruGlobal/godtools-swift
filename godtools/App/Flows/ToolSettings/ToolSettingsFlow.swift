@@ -138,7 +138,7 @@ class ToolSettingsFlow: Flow {
                 
                 let viewModel = ShareShareableViewModel(
                     imageToShare: imageToShare,
-                    incrementUserCounterUseCase: weakSelf.appDiContainer.domainLayer.getIncrementUserCounterUseCase()
+                    incrementUserCounterUseCase: weakSelf.appDiContainer.feature.userActivity.domainLayer.getIncrementUserCounterUseCase()
                 )
                 
                 let view = ShareShareableView(viewModel: viewModel)
@@ -205,7 +205,7 @@ extension ToolSettingsFlow {
             toolId: toolSettingsObserver.toolId,
             toolAnalyticsAbbreviation: appDiContainer.dataLayer.getResourcesRepository().getResource(id: toolSettingsObserver.toolId)?.abbreviation ?? "",
             pageNumber: toolSettingsObserver.pageNumber,
-            incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase(),
+            incrementUserCounterUseCase: appDiContainer.feature.userActivity.domainLayer.getIncrementUserCounterUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
         )

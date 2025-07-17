@@ -29,12 +29,6 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getIncrementUserCounterUseCase() -> IncrementUserCounterUseCase {
-        return IncrementUserCounterUseCase(
-            userCountersRepository: dataLayer.getUserCountersRepository()
-        )
-    }
-    
     func getMenuInterfaceStringsUseCase() -> GetMenuInterfaceStringsUseCase {
         return GetMenuInterfaceStringsUseCase(
             getInterfaceStringsRepositoryInterface: dataLayer.getMenuInterfaceStringsRepositoryInterface()

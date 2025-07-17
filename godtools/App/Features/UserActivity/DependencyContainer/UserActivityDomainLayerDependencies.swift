@@ -19,6 +19,12 @@ class UserActivityDomainLayerDependencies {
         self.coreDataLayer = coreDataLayer
     }
     
+    func getIncrementUserCounterUseCase() -> IncrementUserCounterUseCase {
+        return IncrementUserCounterUseCase(
+            userCountersRepository: coreDataLayer.getUserCountersRepository()
+        )
+    }
+    
     func getUserActivityBadgeUseCase() -> GetUserActivityBadgeUseCase {
         return GetUserActivityBadgeUseCase(
             localizationServices: coreDataLayer.getLocalizationServices(),
