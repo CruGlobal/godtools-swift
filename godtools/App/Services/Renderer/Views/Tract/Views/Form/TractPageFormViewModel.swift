@@ -78,7 +78,7 @@ class TractPageFormViewModel: MobileContentFormViewModel {
         )
         
         followUpService
-            .postFollowUpPublisher(followUp: followUpModel, sendRequestPriority: .medium)
+            .postFollowUpPublisher(followUp: followUpModel, requestPriority: .medium)
             .sink { _ in
                 
             } receiveValue: { _ in

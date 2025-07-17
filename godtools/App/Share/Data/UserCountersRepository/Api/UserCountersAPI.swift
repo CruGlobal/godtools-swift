@@ -14,19 +14,19 @@ class UserCountersAPI: UserCountersAPIType {
     
     private let authSession: MobileContentApiAuthSession
     private let baseURL: String
-    private let urlSessionPriority: GetUrlSessionPriorityInterface
+    private let urlSessionPriority: URLSessionPriority
     private let requestBuilder: RequestBuilder = RequestBuilder()
     
-    init(config: AppConfig, urlSessionPriority: GetUrlSessionPriorityInterface, mobileContentApiAuthSession: MobileContentApiAuthSession) {
+    init(config: AppConfig, urlSessionPriority: URLSessionPriority, mobileContentApiAuthSession: MobileContentApiAuthSession) {
         
         self.baseURL = config.getMobileContentApiBaseUrl()
         self.urlSessionPriority = urlSessionPriority
         self.authSession = mobileContentApiAuthSession
     }
     
-    func fetchUserCountersPublisher(sendRequestPriority: SendRequestPriority) -> AnyPublisher<[UserCounterDecodable], Error> {
+    func fetchUserCountersPublisher(requestPriority: RequestPriority) -> AnyPublisher<[UserCounterDecodable], Error> {
         
-        let urlSession: URLSession = urlSessionPriority.getUrlSession(priority: sendRequestPriority)
+        let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
         let fetchRequest = getUserCountersRequest(urlSession: urlSession)
         
@@ -38,9 +38,9 @@ class UserCountersAPI: UserCountersAPIType {
             .eraseToAnyPublisher()
     }
     
-    func incrementUserCounterPublisher(id: String, increment: Int, sendRequestPriority: SendRequestPriority) -> AnyPublisher<UserCounterDecodable, Error> {
+    func incrementUserCounterPublisher(id: String, increment: Int, requestPriority: RequestPriority) -> AnyPublisher<UserCounterDecodable, Error> {
         
-        let urlSession: URLSession = urlSessionPriority.getUrlSession(priority: sendRequestPriority)
+        let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
         let incrementRequest = getIncrementUserCountersRequest(id: id, increment: increment, urlSession: urlSession)
         

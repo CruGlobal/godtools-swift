@@ -8,9 +8,10 @@
 
 import Foundation
 import Combine
+import RequestOperation
 
 protocol UserCountersAPIType {
     
-    func fetchUserCountersPublisher(sendRequestPriority: SendRequestPriority) -> AnyPublisher<[UserCounterDecodable], Error>
-    func incrementUserCounterPublisher(id: String, increment: Int, sendRequestPriority: SendRequestPriority) -> AnyPublisher<UserCounterDecodable, Error>
+    func fetchUserCountersPublisher(requestPriority: RequestPriority) -> AnyPublisher<[UserCounterDecodable], Error>
+    func incrementUserCounterPublisher(id: String, increment: Int, requestPriority: RequestPriority) -> AnyPublisher<UserCounterDecodable, Error>
 }

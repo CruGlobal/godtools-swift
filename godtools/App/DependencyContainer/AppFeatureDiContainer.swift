@@ -31,12 +31,42 @@ class AppFeatureDiContainer {
     let spotlightTools: SpotlightToolsDiContainer
     let toolDetails: ToolDetailsFeatureDiContainer
     let toolScreenShare: ToolScreenShareFeatureDiContainer
+    let toolScreenShareQRCode: ToolScreenShareQRCodeFeatureDiContainer
     let toolSettings: ToolSettingsDiContainer
     let toolsFilter: ToolsFilterFeatureDiContainer
     let toolShortcutLinks: ToolShortcutLinksDiContainer
     let tutorial: TutorialFeatureDiContainer
+    let userActivity: UserActivityDiContainer
     
-    init(account: AccountDiContainer, appLanguage: AppLanguageFeatureDiContainer, dashboard: DashboardDiContainer, downloadToolProgress: DownloadToolProgressFeatureDiContainer, favorites: FavoritesDiContainer, featuredLessons: FeaturedLessonsDiContainer, globalActivity: GlobalActivityDiContainer, learnToShareTool: LearnToShareToolDiContainer, lessonEvaluation: LessonEvaluationFeatureDiContainer, lessonFilter: LessonFilterDiContainer, lessons: LessonsFeatureDiContainer, lessonProgress: UserLessonProgressDiContainer, lessonSwipeTutorial: LessonSwipeTutorialDiContainer, onboarding: OnboardingDiContainer, optInNotification: OptInNotificationDiContainer, persistFavoritedToolLanguageSettings: PersistUserToolLanguageSettingsDiContainer, shareables: ShareablesDiContainer, shareGodTools: ShareGodToolsDiContainer, spotlightTools: SpotlightToolsDiContainer, toolDetails: ToolDetailsFeatureDiContainer, toolScreenShare: ToolScreenShareFeatureDiContainer, toolSettings: ToolSettingsDiContainer, toolsFilter: ToolsFilterFeatureDiContainer, toolShortcutLinks: ToolShortcutLinksDiContainer, tutorial: TutorialFeatureDiContainer) {
+    init(
+        account: AccountDiContainer,
+        appLanguage: AppLanguageFeatureDiContainer,
+        dashboard: DashboardDiContainer,
+        downloadToolProgress: DownloadToolProgressFeatureDiContainer,
+        favorites: FavoritesDiContainer,
+        featuredLessons: FeaturedLessonsDiContainer,
+        globalActivity: GlobalActivityDiContainer,
+        learnToShareTool: LearnToShareToolDiContainer,
+        lessonEvaluation: LessonEvaluationFeatureDiContainer,
+        lessonFilter: LessonFilterDiContainer,
+        lessons: LessonsFeatureDiContainer,
+        lessonProgress: UserLessonProgressDiContainer,
+        lessonSwipeTutorial: LessonSwipeTutorialDiContainer,
+        onboarding: OnboardingDiContainer,
+        optInNotification: OptInNotificationDiContainer,
+        persistFavoritedToolLanguageSettings: PersistUserToolLanguageSettingsDiContainer,
+        shareables: ShareablesDiContainer,
+        shareGodTools: ShareGodToolsDiContainer,
+        spotlightTools: SpotlightToolsDiContainer,
+        toolDetails: ToolDetailsFeatureDiContainer,
+        toolScreenShare: ToolScreenShareFeatureDiContainer,
+        toolScreenShareQRCode: ToolScreenShareQRCodeFeatureDiContainer,
+        toolSettings: ToolSettingsDiContainer,
+        toolsFilter: ToolsFilterFeatureDiContainer,
+        toolShortcutLinks: ToolShortcutLinksDiContainer,
+        tutorial: TutorialFeatureDiContainer,
+        userActivity: UserActivityDiContainer
+    ) {
         
         self.account = account
         self.appLanguage = appLanguage
@@ -59,9 +89,11 @@ class AppFeatureDiContainer {
         self.spotlightTools = spotlightTools
         self.toolDetails = toolDetails
         self.toolScreenShare = toolScreenShare
+        self.toolScreenShareQRCode = toolScreenShareQRCode
         self.toolSettings = toolSettings
         self.toolsFilter = toolsFilter
         self.toolShortcutLinks = toolShortcutLinks
         self.tutorial = tutorial
+        self.userActivity = userActivity
     }
 }

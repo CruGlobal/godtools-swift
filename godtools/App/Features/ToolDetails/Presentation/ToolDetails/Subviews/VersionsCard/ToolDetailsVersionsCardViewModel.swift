@@ -9,6 +9,7 @@
 import Foundation
 import SwiftUI
 import Combine
+import RequestOperation
 
 class ToolDetailsVersionsCardViewModel: ObservableObject {
     
@@ -57,7 +58,7 @@ class ToolDetailsVersionsCardViewModel: ObservableObject {
         }
         else {
             
-            getBannerImageCancellable = attachmentsRepository.getAttachmentImagePublisher(id: attachmentId, sendRequestPriority: .medium)
+            getBannerImageCancellable = attachmentsRepository.getAttachmentImagePublisher(id: attachmentId, requestPriority: .medium)
                 .receive(on: DispatchQueue.main)
                 .sink { [weak self] (image: Image?) in
                     self?.bannerImageData = OptionalImageData(image: image, imageIdForAnimationChange: attachmentId)

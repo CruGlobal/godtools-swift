@@ -155,7 +155,7 @@ class TractViewModel: MobileContentRendererViewModel {
         subscribeToLiveShareStreamIfNeeded()
         
         resourceViewsService
-            .postNewResourceViewPublisher(resourceId: resource.id, sendRequestPriority: .medium)
+            .postNewResourceViewPublisher(resourceId: resource.id, requestPriority: .medium)
             .sink { _ in
                 
             } receiveValue: { _ in

@@ -14,10 +14,10 @@ class MobileContentTranslationsApi {
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let requestSender: RequestSender = RequestSender()
-    private let urlSessionPriority: GetUrlSessionPriorityInterface
+    private let urlSessionPriority: URLSessionPriority
     private let baseUrl: String
     
-    required init(config: AppConfig, urlSessionPriority: GetUrlSessionPriorityInterface) {
+    required init(config: AppConfig, urlSessionPriority: URLSessionPriority) {
                     
         self.urlSessionPriority = urlSessionPriority
         baseUrl = config.getMobileContentApiBaseUrl()
@@ -39,9 +39,9 @@ class MobileContentTranslationsApi {
         )
     }
     
-    func getTranslationFile(fileName: String, sendRequestPriority: SendRequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
+    func getTranslationFile(fileName: String, requestPriority: RequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
         
-        let urlSession: URLSession = urlSessionPriority.getUrlSession(priority: sendRequestPriority)
+        let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
         let urlRequest: URLRequest = getTranslationFileRequest(urlSession: urlSession, fileName: fileName)
                 
@@ -66,9 +66,9 @@ class MobileContentTranslationsApi {
         )
     }
     
-    func getTranslationZipFile(translationId: String, sendRequestPriority: SendRequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
+    func getTranslationZipFile(translationId: String, requestPriority: RequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
         
-        let urlSession: URLSession = urlSessionPriority.getUrlSession(priority: sendRequestPriority)
+        let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
         let urlRequest: URLRequest = getTranslationZipFileRequest(urlSession: urlSession, translationId: translationId)
                 

@@ -234,7 +234,7 @@ extension AppFlow {
         let remoteConfigRepository: RemoteConfigRepository = appDiContainer.dataLayer.getRemoteConfigRepository()
         
         resourcesRepository
-            .syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments(sendRequestPriority: .medium)
+            .syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsPublisher(requestPriority: .medium, forceFetchFromRemote: false)
             .flatMap({ (result: RealmResourcesCacheSyncResult) -> AnyPublisher<Void, Error> in
                 
                 return toolLanguageDownloader
@@ -250,14 +250,14 @@ extension AppFlow {
             .store(in: &cancellables)
         
         followUpsService
-            .postFailedFollowUpsIfNeededPublisher(sendRequestPriority: .low)
+            .postFailedFollowUpsIfNeededPublisher(requestPriority: .low)
             .sink { _ in
                 
             }
             .store(in: &cancellables)
       
         resourceViewsService
-            .postFailedResourceViewsIfNeededPublisher(sendRequestPriority: .low)
+            .postFailedResourceViewsIfNeededPublisher(requestPriority: .low)
             .sink { _ in
                 
             }

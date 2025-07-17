@@ -222,7 +222,7 @@ extension FavoritesViewModel {
     
     func pullToRefresh() {
         
-        resourcesRepository.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments(sendRequestPriority: .high)
+        resourcesRepository.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsPublisher(requestPriority: .high, forceFetchFromRemote: true)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completed in
 
