@@ -167,8 +167,18 @@ class MyFlow: Flow {
 The GodTools app is localized for many languages which are translated in OneSky.  When adding new strings for localization, all one needs to do is update the Base Localizable.strings.  Newly added strings will be placed into OneSky and translations will be ordered.  The GitHub Action workflow Download And Commit OneSky Translations will run daily to create a pull request for any Localizable.strings files that have been updated in OneSky.
 
 ### godtoolsTests Target
+##### Behavior Tests
+Behavior tests are supposed to test and verify how the app should behave.  These tests are typically implemented against the domain interface implementation where the business logic lives and validate that the implementation gives us the expected business rules. Each test should start with a Given, When, Then acceptance criteria.
 
-#### Fastlane
+Given: The given paints an initial picture of the behavior to be tested. It will describe the starting state and any initial pieces to setup the behavior.
+When: The when describes the action or trigger to be carried out. This action or trigger is what produces the result we're testing.
+Then: The expected result of the action or trigger. Here we define what we expect the result to be.
+
+- Additional Resources on (Given, When, Then)
+    - https://martinfowler.com/bliki/GivenWhenThen.html
+    - https://www.ranorex.com/blog/given-when-then-tests/
+
+### Fastlane
 
 Below are some helpful references to GitHub Actions Workflows and Fastlane Files that the GodTools project uses.
 
