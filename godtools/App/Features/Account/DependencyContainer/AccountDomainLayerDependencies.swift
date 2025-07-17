@@ -19,6 +19,10 @@ class AccountDomainLayerDependencies {
         self.coreDataLayer = coreDataLayer
     }
     
+    func getAccountCreationIsSupportedUseCase() -> GetAccountCreationIsSupportedUseCase {
+        return GetAccountCreationIsSupportedUseCase()
+    }
+    
     func getAuthenticateUserUseCase() -> AuthenticateUserUseCase {
         return AuthenticateUserUseCase(
             authenticateUser: dataLayer.getAuthenticateUserInterface(),
@@ -34,8 +38,12 @@ class AccountDomainLayerDependencies {
         )
     }
     
-    func getAccountCreationIsSupportedUseCase() -> GetAccountCreationIsSupportedUseCase {
-        return GetAccountCreationIsSupportedUseCase()
+    func getLogOutUserUseCase() -> LogOutUserUseCase {
+        return LogOutUserUseCase(
+            userAuthentication: dataLayer.getUserAuthentication(),
+            firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics,
+            deleteUserCountersUseCase: getDeleteUserCountersUseCase()
+        )
     }
     
     func getSocialCreateAccountInterfaceStringsUseCase() -> GetSocialCreateAccountInterfaceStringsUseCase {
@@ -50,9 +58,22 @@ class AccountDomainLayerDependencies {
         )
     }
     
+    func getUserAccountDetailsUseCase() -> GetUserAccountDetailsUseCase {
+        return GetUserAccountDetailsUseCase(
+            repository: dataLayer.getUserDetailsRepository(),
+            localizationServices: dataLayer.getLocalizationServices()
+        )
+    }
+    
     func getUserIsAuthenticatedUseCase() -> GetUserIsAuthenticatedUseCase {
         return GetUserIsAuthenticatedUseCase(
             userAuthentication: coreDataLayer.getUserAuthentication()
+        )
+    }
+    
+    func getViewAccountUseCase() -> ViewAccountUseCase {
+        return ViewAccountUseCase(
+            getInterfaceStringsRepository: dataLayer.getAccountInterfaceStringsRepositoryInterface()
         )
     }
     

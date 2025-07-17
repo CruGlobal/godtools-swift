@@ -41,14 +41,6 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getLogOutUserUseCase() -> LogOutUserUseCase {
-        return LogOutUserUseCase(
-            userAuthentication: dataLayer.getUserAuthentication(),
-            firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics,
-            deleteUserCountersUseCase: getDeleteUserCountersUseCase()
-        )
-    }
-    
     func getMenuInterfaceStringsUseCase() -> GetMenuInterfaceStringsUseCase {
         return GetMenuInterfaceStringsUseCase(
             getInterfaceStringsRepositoryInterface: dataLayer.getMenuInterfaceStringsRepositoryInterface()
@@ -105,43 +97,6 @@ class AppDomainLayerDependencies {
     func getTrainingTipCompletedUseCase() -> GetTrainingTipCompletedUseCase {
         return GetTrainingTipCompletedUseCase(
             repository: dataLayer.getCompletedTrainingTipRepository()
-        )
-    }
-    
-    func getUserAccountDetailsUseCase() -> GetUserAccountDetailsUseCase {
-        return GetUserAccountDetailsUseCase(
-            repository: dataLayer.getUserDetailsRepository(),
-            localizationServices: dataLayer.getLocalizationServices()
-        )
-    }
-    
-    func getUserActivityBadgeUseCase() -> GetUserActivityBadgeUseCase {
-        return GetUserActivityBadgeUseCase(
-            localizationServices: dataLayer.getLocalizationServices(),
-            stringWithLocaleCount: dataLayer.getStringWithLocaleCount()
-        )
-    }
-    
-    func getUserActivityStatsUseCase() -> GetUserActivityStatsUseCase {
-        return GetUserActivityStatsUseCase(
-            localizationServices: dataLayer.getLocalizationServices(),
-            getTranslatedNumberCount: dataLayer.getTranslatedNumberCount(),
-            stringWithLocaleCount: dataLayer.getStringWithLocaleCount()
-        )
-    }
-    
-    func getUserActivityUseCase() -> GetUserActivityUseCase {
-        return GetUserActivityUseCase(
-            getUserActivityBadgeUseCase: getUserActivityBadgeUseCase(),
-            getUserActivityStatsUseCase: getUserActivityStatsUseCase(),
-            userCounterRepository: dataLayer.getUserCountersRepository(),
-            completedTrainingTipRepository: dataLayer.getCompletedTrainingTipRepository()
-        )
-    }
-    
-    func getViewAccountUseCase() -> ViewAccountUseCase {
-        return ViewAccountUseCase(
-            getInterfaceStringsRepository: dataLayer.getAccountInterfaceStringsRepositoryInterface()
         )
     }
     

@@ -18,4 +18,28 @@ class UserActivityDomainLayerDependencies {
         self.dataLayer = dataLayer
         self.coreDataLayer = coreDataLayer
     }
+    
+    func getUserActivityBadgeUseCase() -> GetUserActivityBadgeUseCase {
+        return GetUserActivityBadgeUseCase(
+            localizationServices: dataLayer.getLocalizationServices(),
+            stringWithLocaleCount: dataLayer.getStringWithLocaleCount()
+        )
+    }
+    
+    func getUserActivityStatsUseCase() -> GetUserActivityStatsUseCase {
+        return GetUserActivityStatsUseCase(
+            localizationServices: dataLayer.getLocalizationServices(),
+            getTranslatedNumberCount: dataLayer.getTranslatedNumberCount(),
+            stringWithLocaleCount: dataLayer.getStringWithLocaleCount()
+        )
+    }
+    
+    func getUserActivityUseCase() -> GetUserActivityUseCase {
+        return GetUserActivityUseCase(
+            getUserActivityBadgeUseCase: getUserActivityBadgeUseCase(),
+            getUserActivityStatsUseCase: getUserActivityStatsUseCase(),
+            userCounterRepository: dataLayer.getUserCountersRepository(),
+            completedTrainingTipRepository: dataLayer.getCompletedTrainingTipRepository()
+        )
+    }
 }
