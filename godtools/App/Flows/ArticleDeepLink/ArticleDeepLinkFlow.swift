@@ -128,7 +128,7 @@ extension ArticleDeepLinkFlow {
             flowDelegate: self,
             flowType: .deeplink,
             aemCacheObject: aemCacheObject,
-            incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase(),
+            incrementUserCounterUseCase: appDiContainer.feature.userActivity.domainLayer.getIncrementUserCounterUseCase(),
             getAppUIDebuggingIsEnabledUseCase: appDiContainer.domainLayer.getAppUIDebuggingIsEnabledUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase()
         )

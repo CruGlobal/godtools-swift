@@ -151,7 +151,7 @@ class ToolDownloader {
                 includeRelatedFiles: true,
                 shouldFallbackToLatestDownloadedTranslationIfRemoteFails: false
             )
-            .map { (translationManifestDataModel: TranslationManifestFileDataModel) in
+            .flatMap { (translationManifestDataModel: TranslationManifestFileDataModel) in
                 
                 return self.articleManifestAemRepository.downloadAndCacheManifestAemUrisPublisher(
                     manifest: translationManifestDataModel.manifest,
@@ -160,9 +160,10 @@ class ToolDownloader {
                     downloadCachePolicy: .ignoreCache,
                     requestPriority: requestPriority
                 )
-            }
-            .map { _ in
-                return Void()
+                .map { (result: ArticleAemRepositoryResult) in
+                    Void()
+                }
+                .eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
         }

@@ -282,7 +282,7 @@ extension AppFlow {
     
     private func countAppSessionLaunch() {
         
-        let incrementUserCounterUseCase = appDiContainer.domainLayer.getIncrementUserCounterUseCase()
+        let incrementUserCounterUseCase = appDiContainer.feature.userActivity.domainLayer.getIncrementUserCounterUseCase()
         
         incrementUserCounterUseCase.incrementUserCounter(for: .sessionLaunch)
             .receive(on: DispatchQueue.main)
