@@ -3793,7 +3793,6 @@
 		4504BA0F2AF3ED4C001151E5 /* Tutorial */ = {
 			isa = PBXGroup;
 			children = (
-				4504BA112AF3ED4C001151E5 /* Data */,
 				4504BA102AF3ED4C001151E5 /* Data-DomainInterface */,
 				4504BA1B2AF3ED4C001151E5 /* DependencyContainer */,
 				4504BA122AF3ED4C001151E5 /* Domain */,
@@ -3809,13 +3808,6 @@
 				45B3383A2AF43A2300D18C63 /* GetTutorialRepository.swift */,
 			);
 			path = "Data-DomainInterface";
-			sourceTree = "<group>";
-		};
-		4504BA112AF3ED4C001151E5 /* Data */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Data;
 			sourceTree = "<group>";
 		};
 		4504BA122AF3ED4C001151E5 /* Domain */ = {
@@ -4349,7 +4341,6 @@
 		4512C8102B3236C000D162F3 /* Shareables */ = {
 			isa = PBXGroup;
 			children = (
-				4512C8132B3236C000D162F3 /* Data */,
 				4512C8112B3236C000D162F3 /* Data-DomainInterface */,
 				4512C81B2B3236C000D162F3 /* DependencyContainer */,
 				4512C8142B3236C000D162F3 /* Domain */,
@@ -4367,13 +4358,6 @@
 				456AC1902B8CCA6100169C11 /* TrackShareShareableTap.swift */,
 			);
 			path = "Data-DomainInterface";
-			sourceTree = "<group>";
-		};
-		4512C8132B3236C000D162F3 /* Data */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Data;
 			sourceTree = "<group>";
 		};
 		4512C8142B3236C000D162F3 /* Domain */ = {
@@ -7418,7 +7402,6 @@
 		45880D6D2BD2B713008F021C /* ShareGodTools */ = {
 			isa = PBXGroup;
 			children = (
-				45880D722BD2B75B008F021C /* Data */,
 				45880D6E2BD2B75A008F021C /* Data-DomainInterface */,
 				45880D6F2BD2B75A008F021C /* DependencyContainer */,
 				45880D712BD2B75B008F021C /* Domain */,
@@ -7461,13 +7444,6 @@
 				45880D832BD2BBA6008F021C /* UseCases */,
 			);
 			path = Domain;
-			sourceTree = "<group>";
-		};
-		45880D722BD2B75B008F021C /* Data */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Data;
 			sourceTree = "<group>";
 		};
 		45880D7E2BD2BA97008F021C /* ShareGodTools */ = {
