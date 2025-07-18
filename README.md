@@ -168,7 +168,7 @@ The GodTools app is localized for many languages which are translated in OneSky.
 
 ### godtoolsTests Target
 ##### Behavior Tests
-Behavior tests (a by product of Behavior-Driven Development) are tests that verify how the app should behave.  In GodTools, these tests are typically implemented against the domain interface implementation where the business logic lives and validate that the implementation gives us the expected business rules. Each test should start with a Given, When, Then acceptance criteria.
+Behavior tests (a by product of Behavior-Driven Development) are tests that verify how the app should behave.  In GodTools, these tests are typically implemented against the domain interface implementation where the business logic lives and validate that the implementation gives us the expected business results. Each test should start with a Given, When, Then acceptance criteria.
 
 Given: Describes the initial state or context of the system before the behavior testing begins. It will set the stage by defining preconditions.
 When: Describes the action that will trigger the behavior to be tested. Most of the time this action will contain inputs that drive the behavior being tested. 
