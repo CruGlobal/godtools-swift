@@ -174,6 +174,12 @@ Given: Describes the initial state or context of the system before the behavior 
 When: Describes the action that will trigger the behavior to be tested. Most of the time this action will contain inputs that drive the behavior being tested. 
 Then: Describes what should happen as a result of the action. Outlines the expected outcome of the 'When' action, given the initial 'Given' state.
 
+Example:
+- Scenario: User is logging in with an invalid email. 
+- Given: User is logging in.
+- When: An invalid email is entered.
+- Then: Should receive an error message that the email is invalid.
+
 - Additional Resources on (Given, When, Then)
     - https://martinfowler.com/bliki/GivenWhenThen.html
     - https://www.ranorex.com/blog/given-when-then-tests/
