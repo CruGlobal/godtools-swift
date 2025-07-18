@@ -7,6 +7,7 @@ GodTools
 - [Architecture](#architecture)
 - [Architecture Responsibilities](#architecture-responsibilities)
 - [Localization](#localization)
+- [godtoolsTests Target](#godtoolstests-target)
 - [Fastlane](#fastlane)
 - [Build Errors and Pod Install Troubleshooting](#build-errors-and-pod-install-troubleshooting)
 
@@ -161,11 +162,29 @@ class MyFlow: Flow {
     - https://twittemb.github.io/posts/2017-11-08-RxFlow-Part1/
     - https://twittemb.github.io/posts/2017-12-09-RxFlow-Part2/
 
-#### Localization
+### Localization
 
 The GodTools app is localized for many languages which are translated in OneSky.  When adding new strings for localization, all one needs to do is update the Base Localizable.strings.  Newly added strings will be placed into OneSky and translations will be ordered.  The GitHub Action workflow Download And Commit OneSky Translations will run daily to create a pull request for any Localizable.strings files that have been updated in OneSky.
 
-#### Fastlane
+### godtoolsTests Target
+##### Behavior Tests
+Behavior tests (a by product of Behavior-Driven Development) are tests that verify how the app should behave.  In GodTools, these tests are typically implemented against the domain interface implementation where the business logic lives and validate that the implementation gives us the expected business results. Each test should start with a Given, When, Then acceptance criteria.
+
+Given: Describes the initial state or context of the system before the behavior testing begins. It will set the stage by defining preconditions.
+When: Describes the action that will trigger the behavior to be tested. Most of the time this action will contain inputs that drive the behavior being tested. 
+Then: Describes what should happen as a result of the action. Outlines the expected outcome of the 'When' action, given the initial 'Given' state.
+
+Example:
+- Scenario: User is logging in with an invalid email. 
+- Given: User is logging in.
+- When: An invalid email is entered.
+- Then: Should receive an error message that the email is invalid.
+
+- Additional Resources on (Given, When, Then)
+    - https://martinfowler.com/bliki/GivenWhenThen.html
+    - https://www.ranorex.com/blog/given-when-then-tests/
+
+### Fastlane
 
 Below are some helpful references to GitHub Actions Workflows and Fastlane Files that the GodTools project uses.
 
