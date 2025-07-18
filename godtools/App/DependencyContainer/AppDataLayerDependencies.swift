@@ -44,12 +44,6 @@ class AppDataLayerDependencies {
     
     // MARK: - Data Layer Classes
     
-    func getAccountInterfaceStringsRepositoryInterface() -> GetAccountInterfaceStringsRepositoryInterface {
-        return GetAccountInterfaceStringsRepository(
-            localizationServices: getLocalizationServices()
-        )
-    }
-    
     func getAnalytics() -> AnalyticsContainer {
         return sharedAnalytics
     }
@@ -436,20 +430,6 @@ class AppDataLayerDependencies {
             api: api,
             cache: cache,
             remoteUserCountersSync: RemoteUserCountersSync(api: api, cache: cache)
-        )
-    }
-    
-    func getUserDetailsRepository() -> UserDetailsRepository {
-        return UserDetailsRepository(
-            api: UserDetailsAPI(
-                config: getAppConfig(),
-                urlSessionPriority: getSharedUrlSessionPriority(),
-                mobileContentApiAuthSession: getMobileContentApiAuthSession()
-            ),
-            cache: RealmUserDetailsCache(
-                realmDatabase: sharedRealmDatabase,
-                authTokenRepository: getMobileContentAuthTokenRepository()
-            )
         )
     }
     
