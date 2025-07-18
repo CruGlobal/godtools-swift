@@ -321,7 +321,7 @@ extension ToolScreenShareFlow {
             getCurrentAppLanguage: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             viewCreatingToolScreenShareSessionUseCase: appDiContainer.feature.toolScreenShare.domainLayer.getViewCreatingToolScreenShareSessionUseCase(),
             tractRemoteSharePublisher: toolSettingsObserver.tractRemoteSharePublisher,
-            incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase()
+            incrementUserCounterUseCase: appDiContainer.feature.userActivity.domainLayer.getIncrementUserCounterUseCase()
         )
         
         let view = CreatingToolScreenShareSessionView(
@@ -373,7 +373,8 @@ extension ToolScreenShareFlow {
             domainModel: domainModel,
             shareMessage: shareMessage,
             shareUrl: shareUrl,
-            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
+            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
+            appBuild: appDiContainer.dataLayer.getAppBuild()
         )
         
         let view = ShareToolScreenShareSessionView(

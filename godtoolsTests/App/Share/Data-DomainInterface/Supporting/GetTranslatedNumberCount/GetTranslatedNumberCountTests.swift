@@ -6,35 +6,37 @@
 //  Copyright © 2025 Cru. All rights reserved.
 //
 
-import Foundation
+import Testing
 @testable import godtools
-import Quick
-import Nimble
 
-class GetTranslatedNumberCountTests: QuickSpec {
+struct GetTranslatedNumberCountTests {
     
-    override class func spec() {
-                        
-        describe("User is viewing an integer value.") {
-            
-            let integerValue: Int = 1
-            
-            context("When the value is \(integerValue) and language is english") {
+    struct TestArgument {
+        let integerValue: Int
+        let expectedValue: String
+    }
+    
+    private static let englishLanguage = LanguageCodeDomainModel.english.rawValue
+    
+    @Test(
+        """
+        Given: User is viewing an integer value in english.
+        When: The value is an integer.
+        Then: It should be translated in the english language.
+        """,
+        arguments: [
+            TestArgument(integerValue: 1, expectedValue: "1")
+        ]
+    )
+    func testPercentageIsRoundedDown(argument: TestArgument) {
                 
-                let expectedValue: String = "1"
-                
-                it("The value should display as \(expectedValue).") {
-                    
-                    let getTranslatedNumberCount = GetTranslatedNumberCount()
-                    
-                    let translation: String = getTranslatedNumberCount.getTranslatedCount(
-                        count: integerValue,
-                        translateInLanguage: LanguageCodeDomainModel.english.rawValue
-                    )
-                 
-                    expect(translation).to(equal(expectedValue))
-                }
-            }
-        }
+        let getTranslatedNumberCount = GetTranslatedNumberCount()
+        
+        let translation: String = getTranslatedNumberCount.getTranslatedCount(
+            count: argument.integerValue,
+            translateInLanguage: LanguageCodeDomainModel.english.rawValue
+        )
+                            
+        #expect(translation == argument.expectedValue)
     }
 }
