@@ -168,11 +168,11 @@ The GodTools app is localized for many languages which are translated in OneSky.
 
 ### godtoolsTests Target
 ##### Behavior Tests
-Behavior tests are supposed to test and verify how the app should behave.  These tests are typically implemented against the domain interface implementation where the business logic lives and validate that the implementation gives us the expected business rules. Each test should start with a Given, When, Then acceptance criteria.
+Behavior tests (a by product of Behavior-Driven Development) are tests that verify how the app should behave.  In GodTools, these tests are typically implemented against the domain interface implementation where the business logic lives and validate that the implementation gives us the expected business rules. Each test should start with a Given, When, Then acceptance criteria.
 
-Given: The given paints an initial picture of the behavior to be tested. It will describe the starting state and any initial pieces to setup the behavior.
-When: The when describes the action or trigger to be carried out. This action or trigger is what produces the result we're testing.
-Then: The expected result of the action or trigger. Here we define what we expect the result to be.
+Given: Describes the initial state or context of the system before the behavior testing begins. It will set the stage by defining preconditions.
+When: Describes the action that will trigger the behavior to be tested. Most of the time this action will contain inputs that drive the behavior being tested. 
+Then: Describes what should happen as a result of the action. Outlines the expected outcome of the 'When' action, given the initial 'Given' state.
 
 - Additional Resources on (Given, When, Then)
     - https://martinfowler.com/bliki/GivenWhenThen.html
