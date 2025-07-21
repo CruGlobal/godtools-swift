@@ -29,19 +29,19 @@ struct StringSearcherTests {
     private static let spanishSearchable = MockStringSearchable(searchableStrings: ["Spanish", "español"])
     
     @Test(
-                """
-                Given: A list of StringSearchable items, where each StringSearchable contains a list of searchable strings
-                When: The StringSearchable list is searched with a search term string
-                Then: StringSearcher should return a list of StringSearchables that have a searchable string matching the search term.
-                """,
-                arguments: [
-                    TestArgument(searchTerm: "English", expectedSearchResults: [englishSearchable, englishBahrainSearchable]),
-                    TestArgument(searchTerm: "Bangla", expectedSearchResults: []),
-                    TestArgument(searchTerm: "SH", expectedSearchResults: [englishSearchable, albanianSearchable, englishBahrainSearchable, spanishSearchable]),
-                    TestArgument(searchTerm: "french", expectedSearchResults: [frenchSearchable]),
-                    TestArgument(searchTerm: "ESPAÑOL", expectedSearchResults: [spanishSearchable]),
-                    TestArgument(searchTerm: "ai", expectedSearchResults: [englishBahrainSearchable, frenchSearchable])
-                ]
+        """
+        Given: A list of StringSearchable items, where each StringSearchable contains a list of searchable strings
+        When: The StringSearchable list is searched with a search term string
+        Then: StringSearcher should return a list of StringSearchables that have a searchable string matching the search term.
+        """,
+        arguments: [
+            TestArgument(searchTerm: "English", expectedSearchResults: [englishSearchable, englishBahrainSearchable]),
+            TestArgument(searchTerm: "Bangla", expectedSearchResults: []),
+            TestArgument(searchTerm: "SH", expectedSearchResults: [englishSearchable, albanianSearchable, englishBahrainSearchable, spanishSearchable]),
+            TestArgument(searchTerm: "french", expectedSearchResults: [frenchSearchable]),
+            TestArgument(searchTerm: "ESPAÑOL", expectedSearchResults: [spanishSearchable]),
+            TestArgument(searchTerm: "ai", expectedSearchResults: [englishBahrainSearchable, frenchSearchable])
+        ]
     )
     func stringSearcherTest(argument: TestArgument) {
         

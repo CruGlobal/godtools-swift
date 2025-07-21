@@ -5165,11 +5165,11 @@
 		453689FE2ABB2D840028A570 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				D42C1F0D2E2EBEBE0057D9F1 /* StringSearcher */,
 				45CC42FB2C38982700B0D82B /* LocaleLanguageName */,
 				45CC42FD2C38982800B0D82B /* LocaleLanguageRegionName */,
 				45CC42FF2C38982800B0D82B /* LocaleLanguageScriptName */,
 				453689FF2ABB2D840028A570 /* SharedAppleExtensions */,
+				D42C1F0D2E2EBEBE0057D9F1 /* StringSearcher */,
 				4585393C2C57DFFE00748BAF /* StringWithLocaleCount */,
 				45F785342DEE137A001CE64D /* SyncInvalidator */,
 			);
