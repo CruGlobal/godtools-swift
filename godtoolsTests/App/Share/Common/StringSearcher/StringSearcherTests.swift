@@ -40,7 +40,9 @@ struct StringSearcherTests {
             TestArgument(searchTerm: "SH", expectedSearchResults: [englishSearchable, albanianSearchable, englishBahrainSearchable, spanishSearchable]),
             TestArgument(searchTerm: "french", expectedSearchResults: [frenchSearchable]),
             TestArgument(searchTerm: "ESPAÑOL", expectedSearchResults: [spanishSearchable]),
-            TestArgument(searchTerm: "ai", expectedSearchResults: [englishBahrainSearchable, frenchSearchable])
+            TestArgument(searchTerm: "ai", expectedSearchResults: [englishBahrainSearchable, frenchSearchable]),
+            TestArgument(searchTerm: "", expectedSearchResults: [englishSearchable, albanianSearchable, croatianSearchable, englishBahrainSearchable, frenchSearchable, spanishSearchable]),
+            TestArgument(searchTerm: "(", expectedSearchResults: [englishBahrainSearchable])
         ]
     )
     func stringSearcherTest(argument: TestArgument) {
