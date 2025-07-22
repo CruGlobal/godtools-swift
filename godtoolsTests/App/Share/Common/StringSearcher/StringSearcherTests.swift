@@ -32,7 +32,7 @@ struct StringSearcherTests {
         """
         Given: A list of StringSearchable items, where each StringSearchable contains a list of searchable strings
         When: The StringSearchable list is searched with a search term string
-        Then: StringSearcher should return a list of StringSearchables that have a searchable string matching the search term.
+        Then: StringSearcher should return a case-insensitive list of StringSearchables that have a searchable string matching the search term.
         """,
         arguments: [
             TestArgument(searchTerm: "English", expectedSearchResults: [englishSearchable, englishBahrainSearchable]),
