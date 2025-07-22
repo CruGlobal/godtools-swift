@@ -2937,6 +2937,8 @@
 		45BBBE842DFA341E00D82262 /* UserActivityDiContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserActivityDiContainer.swift; sourceTree = "<group>"; };
 		45BBBE852DFA341E00D82262 /* UserActivityDomainLayerDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserActivityDomainLayerDependencies.swift; sourceTree = "<group>"; };
 		45BCD76E2ABB328C0097B4A5 /* DeviceSystemLanguage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceSystemLanguage.swift; sourceTree = "<group>"; };
+		45BD5F192E3033A800FF2AE1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		45BD5F1A2E3033A800FF2AE1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		45BD7A6F26A235780007426B /* MobileContentRendererPageViewFactories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentRendererPageViewFactories.swift; sourceTree = "<group>"; };
 		45BD7A7126A235F60007426B /* MobileContentRendererPageViewFactoriesType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentRendererPageViewFactoriesType.swift; sourceTree = "<group>"; };
 		45BDA5BA2954F605007E259B /* ResourceViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourceViewModelType.swift; sourceTree = "<group>"; };
@@ -2978,8 +2980,6 @@
 		45C2AF462A817621004958AB /* PageControllAttributesType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageControllAttributesType.swift; sourceTree = "<group>"; };
 		45C2AF492A81764D004958AB /* GTPageControlAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GTPageControlAttributes.swift; sourceTree = "<group>"; };
 		45C321A62ACE7A89003B4F2C /* AppInterfaceStringNavBarItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInterfaceStringNavBarItemController.swift; sourceTree = "<group>"; };
-		45C493F92C334A8E001D81F0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
-		45C493FA2C334A99001D81F0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = Base; path = Base.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		45C5A0DC2E28397C00BC3653 /* GetTranslatedToolLanguageAvailabilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTranslatedToolLanguageAvailabilityTests.swift; sourceTree = "<group>"; };
 		45C5DDCD2AE6BF1300C70BBA /* AccessibilityScreenElementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityScreenElementView.swift; sourceTree = "<group>"; };
 		45C649BB2B31E14D000249E0 /* ViewShareToolUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewShareToolUseCase.swift; sourceTree = "<group>"; };
@@ -13042,7 +13042,6 @@
 				ps,
 				ckb,
 				en,
-				Base,
 				om,
 				ne,
 				ha,
@@ -15101,10 +15100,10 @@
 				4555599B27B3194800A32A61 /* fi */,
 				4576FCD427EA0B6100CB9CC6 /* ps */,
 				4576FCD527EA0BC200CB9CC6 /* ckb */,
-				45C493F92C334A8E001D81F0 /* Base */,
 				45C8DF072D8B4D0500F231C1 /* om */,
 				4554A62B2D8DE7C800046941 /* ne */,
 				4527E5992DDBC6E9001B939B /* ha */,
+				45BD5F1A2E3033A800FF2AE1 /* en */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -15178,10 +15177,10 @@
 				D4B5231C29D761FC00D85213 /* uk */,
 				D4B5231D29D761FD00D85213 /* ur */,
 				D4B5231E29D761FD00D85213 /* vi */,
-				45C493FA2C334A99001D81F0 /* Base */,
 				45C8DF062D8B4D0500F231C1 /* om */,
 				4554A62A2D8DE7C800046941 /* ne */,
 				4527E5982DDBC6E9001B939B /* ha */,
+				45BD5F192E3033A800FF2AE1 /* en */,
 			);
 			name = Localizable.stringsdict;
 			sourceTree = "<group>";
