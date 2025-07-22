@@ -29,11 +29,7 @@ struct StringSearcherTests {
     private static let spanishSearchable = MockStringSearchable(searchableStrings: ["Spanish", "español"])
     
     @Test(
-        """
-        Given: A list of StringSearchable items, where each StringSearchable contains a list of searchable strings
-        When: The StringSearchable list is searched with a search term string
-        Then: StringSearcher should return a case-insensitive list of StringSearchables that have a searchable string matching the search term.
-        """,
+        "Search a list of StringSearchables with a search term string and return case-insensitive matches",
         arguments: [
             TestArgument(searchTerm: "English", expectedSearchResults: [englishSearchable, englishBahrainSearchable]),
             TestArgument(searchTerm: "Bangla", expectedSearchResults: []),
