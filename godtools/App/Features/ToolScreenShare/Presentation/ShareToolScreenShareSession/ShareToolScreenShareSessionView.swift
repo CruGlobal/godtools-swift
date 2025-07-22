@@ -18,13 +18,21 @@ class ShareToolScreenShareSessionView {
         
         self.viewModel = viewModel
         
-        let shareQRCodeActivityItem = ToolScreenShareQRCodeActivity(
-            title: viewModel.qrCodeString
-        )
+        let applicationActivities: [UIActivity]?
+        
+        if viewModel.showQRCodeOption {
+            
+            let shareQRCodeActivityItem = ToolScreenShareQRCodeActivity(
+                title: viewModel.qrCodeString
+            )
+            applicationActivities = [shareQRCodeActivityItem]
+        } else {
+            applicationActivities = nil
+        }
         
         controller = UIActivityViewController(
             activityItems: [viewModel.shareMessage],
-            applicationActivities: [shareQRCodeActivityItem]
+            applicationActivities: applicationActivities
         )
         
         controller.completionWithItemsHandler = { (activityType: UIActivity.ActivityType?, serviceCompleted: Bool, returnedItems: [Any]?, activityError: Error?) in
