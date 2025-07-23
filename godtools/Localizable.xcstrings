@@ -68320,6 +68320,17 @@
         }
       }
     },
+    "screenShareTutorial.generateQRCodeButton.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Generate QR code"
+          }
+        }
+      }
+    },
     "select_parallel_language" : {
       "extractionState" : "manual",
       "localizations" : {

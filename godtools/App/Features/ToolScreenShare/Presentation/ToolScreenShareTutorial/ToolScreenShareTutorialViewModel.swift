@@ -23,7 +23,7 @@ class ToolScreenShareTutorialViewModel: ObservableObject {
     private weak var flowDelegate: FlowDelegate?
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
-    @Published private var interfaceStrings: ToolScreenShareInterfaceStringsDomainModel?
+    @Published private var interfaceStrings: ToolScreenShareInterfaceStringsDomainModel = ToolScreenShareInterfaceStringsDomainModel.emptyStrings
     
     @Published private(set) var hidesSkipButton: Bool = false
     @Published private(set) var tutorialPages: [ToolScreenShareTutorialPageDomainModel] = Array()
