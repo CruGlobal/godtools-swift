@@ -53,8 +53,11 @@
 	</array>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
+	<key>UILaunchScreen</key>
+	<dict>
+		<key>UIImageName</key>
+		<string>LaunchImage</string>
+	</dict>
 	<key>NSUserTrackingUsageDescription</key>
 	<string>To login with Facebook please allow tracking.</string>
 	<key>CFBundleURLTypes</key>
