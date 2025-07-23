@@ -201,7 +201,10 @@ class AppDataLayerDependencies {
     }
     
     func getLocalizationServices() -> LocalizationServices {
-        return LocalizationServices(localizableStringsFilesBundle: Bundle.main)
+        return LocalizationServices(
+            localizableStringsFilesBundle: Bundle.main,
+            isUsingBaseInternationalization: false
+        )
     }
     
     func getMenuInterfaceStringsRepositoryInterface() -> GetMenuInterfaceStringsRepositoryInterface {
