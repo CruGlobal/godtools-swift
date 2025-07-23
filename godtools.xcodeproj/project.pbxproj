@@ -15977,8 +15977,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/CruGlobal/localization-services-ios";
 			requirement = {
-				branch = "include-en-language-code";
-				kind = branch;
+				kind = upToNextMinorVersion;
+				minimumVersion = 0.3.0;
 			};
 		};
 		D4997E0C28D4CED800205B4C /* XCRemoteSwiftPackageReference "youtube-ios-player-helper" */ = {
