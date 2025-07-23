@@ -11,8 +11,8 @@ import Combine
 
 class ToolScreenShareTutorialViewModel: ObservableObject {
     
-    private static var didViewToolScreenShareTutorialCancellable: AnyCancellable?
-    
+    private static var backgroundCancellables: Set<AnyCancellable> = Set()
+        
     private let toolId: String
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let viewToolScreenShareTutorialUseCase: ViewToolScreenShareTutorialUseCase
@@ -110,12 +110,13 @@ class ToolScreenShareTutorialViewModel: ObservableObject {
     
     private func markToolScreenShareTutorialViewed() {
      
-        ToolScreenShareTutorialViewModel.didViewToolScreenShareTutorialCancellable = didViewToolScreenShareTutorialUseCase
+        didViewToolScreenShareTutorialUseCase
             .didViewPublisher(toolId: toolId)
             .receive(on: DispatchQueue.main)
             .sink { _ in
                 
             }
+            .store(in: &Self.backgroundCancellables)
     }
 }
 
