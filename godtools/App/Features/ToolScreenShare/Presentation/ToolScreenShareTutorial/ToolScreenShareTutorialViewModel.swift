@@ -25,9 +25,10 @@ class ToolScreenShareTutorialViewModel: ObservableObject {
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     @Published private var interfaceStrings: ToolScreenShareInterfaceStringsDomainModel?
     
-    @Published var hidesSkipButton: Bool = false
-    @Published var tutorialPages: [ToolScreenShareTutorialPageDomainModel] = Array()
-    @Published var continueTitle: String = ""
+    @Published private(set) var hidesSkipButton: Bool = false
+    @Published private(set) var tutorialPages: [ToolScreenShareTutorialPageDomainModel] = Array()
+    @Published private(set) var continueTitle: String = ""
+    
     @Published var currentPage: Int = 0
     
     init(flowDelegate: FlowDelegate, toolId: String, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewToolScreenShareTutorialUseCase: ViewToolScreenShareTutorialUseCase, didViewToolScreenShareTutorialUseCase: DidViewToolScreenShareTutorialUseCase) {
