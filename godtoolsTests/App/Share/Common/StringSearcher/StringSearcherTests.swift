@@ -38,7 +38,6 @@ struct StringSearcherTests {
             TestArgument(searchTerm: "french", expectedSearchResults: [frenchSearchable]),
             TestArgument(searchTerm: "ESPAÑOL", expectedSearchResults: [spanishSearchable]),
             TestArgument(searchTerm: "ai", expectedSearchResults: [englishBahrainSearchable, frenchSearchable]),
-            TestArgument(searchTerm: "", expectedSearchResults: [englishSearchable, albanianSearchable, amharicSearchable, croatianSearchable, englishBahrainSearchable, frenchSearchable, spanishSearchable]),
             TestArgument(searchTerm: "(", expectedSearchResults: [englishBahrainSearchable]),
             TestArgument(searchTerm: "ማርኛ", expectedSearchResults: [amharicSearchable])
         ]
@@ -47,6 +46,26 @@ struct StringSearcherTests {
         
         let stringSearcher: StringSearcher = StringSearcher()
         
+        let searchableLanguages: [MockStringSearchable] = [
+            StringSearcherTests.englishSearchable, StringSearcherTests.albanianSearchable, StringSearcherTests.amharicSearchable, StringSearcherTests.croatianSearchable, StringSearcherTests.englishBahrainSearchable, StringSearcherTests.frenchSearchable, StringSearcherTests.spanishSearchable
+        ]
+        
+        let searchResults = stringSearcher.search(for: argument.searchTerm, in: searchableLanguages)
+        
+        #expect(searchResults == argument.expectedSearchResults)
+    }
+    
+    
+    @Test(
+        "Searching with an empty string should return original list of StringSearchables",
+        arguments: [
+            TestArgument(searchTerm: "", expectedSearchResults: [englishSearchable, albanianSearchable, amharicSearchable, croatianSearchable, englishBahrainSearchable, frenchSearchable, spanishSearchable])
+            ]
+    )
+    func emptyStringSearchTest(argument: TestArgument) {
+        
+        let stringSearcher: StringSearcher = StringSearcher()
+
         let searchableLanguages: [MockStringSearchable] = [
             StringSearcherTests.englishSearchable, StringSearcherTests.albanianSearchable, StringSearcherTests.amharicSearchable, StringSearcherTests.croatianSearchable, StringSearcherTests.englishBahrainSearchable, StringSearcherTests.frenchSearchable, StringSearcherTests.spanishSearchable
         ]
