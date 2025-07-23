@@ -142,6 +142,11 @@ extension ToolScreenShareTutorialViewModel {
         flowDelegate?.navigate(step: .skipTappedFromToolScreenShareTutorial)
     }
     
+    func generateQRCodeTapped() {
+        
+        flowDelegate?.navigate(step: .generateQRCodeTappedFromToolScreenShareTutorial)
+    }
+    
     func continueTapped() {
         
         let isOnLastPage: Bool = getIsOnLastPage(tutorialPages: tutorialPages)

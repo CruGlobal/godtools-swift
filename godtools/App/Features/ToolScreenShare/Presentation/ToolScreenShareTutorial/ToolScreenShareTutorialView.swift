@@ -86,6 +86,7 @@ struct ToolScreenShareTutorialView: View {
                             titleVerticalPadding: titlePadding
                         ) {
                             
+                            viewModel.generateQRCodeTapped()
                         }
                     }
                     

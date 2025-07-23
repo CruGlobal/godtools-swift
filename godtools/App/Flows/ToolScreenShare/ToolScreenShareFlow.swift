@@ -120,6 +120,9 @@ class ToolScreenShareFlow: Flow {
             dismissToolScreenShareTutorial()
             presentCreatingToolScreenShareSession()
             
+        case .generateQRCodeTappedFromToolScreenShareTutorial:
+            break
+            
         case .shareLinkTappedFromToolScreenShareTutorial:
            
             dismissToolScreenShareTutorial()
