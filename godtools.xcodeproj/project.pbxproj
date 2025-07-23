@@ -1271,6 +1271,7 @@
 		45D40C682A5315B400E8E4AE /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 45D40C672A5315B400E8E4AE /* Starscream */; };
 		45D40C6B2A5315D500E8E4AE /* Fuzi in Frameworks */ = {isa = PBXBuildFile; productRef = 45D40C6A2A5315D500E8E4AE /* Fuzi */; };
 		45D45F122E31701C00FAEC9B /* ToolScreenShareTutorialPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D45F102E31701C00FAEC9B /* ToolScreenShareTutorialPageView.swift */; };
+		45D45F142E31779500FAEC9B /* ToolScreenShareFlowCreateSessionTrigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D45F132E31778700FAEC9B /* ToolScreenShareFlowCreateSessionTrigger.swift */; };
 		45D48C8329F81082004E92B1 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45D48C8229F81082004E92B1 /* Colors.xcassets */; };
 		45D48C8629F81324004E92B1 /* SocialAuthentication in Frameworks */ = {isa = PBXBuildFile; productRef = 45D48C8529F81324004E92B1 /* SocialAuthentication */; };
 		45D48C8929F81692004E92B1 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D48C8829F81692004E92B1 /* AppConfig.swift */; };
@@ -3036,6 +3037,7 @@
 		45D341B92E2961E7001AF70B /* UserCounterDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCounterDomainModel.swift; sourceTree = "<group>"; };
 		45D3AAE0298AA69F0017E6DF /* VideoViewPlayerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewPlayerState.swift; sourceTree = "<group>"; };
 		45D45F102E31701C00FAEC9B /* ToolScreenShareTutorialPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolScreenShareTutorialPageView.swift; sourceTree = "<group>"; };
+		45D45F132E31778700FAEC9B /* ToolScreenShareFlowCreateSessionTrigger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolScreenShareFlowCreateSessionTrigger.swift; sourceTree = "<group>"; };
 		45D48C8229F81082004E92B1 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		45D48C8829F81692004E92B1 /* AppConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
 		45D4A6CE29B12AE200DED984 /* ToolDeepLinkPage+MobileContentRendererInitialPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ToolDeepLinkPage+MobileContentRendererInitialPage.swift"; sourceTree = "<group>"; };
@@ -10901,6 +10903,7 @@
 			isa = PBXGroup;
 			children = (
 				45E62FB92AFA927B00FFEC61 /* ToolScreenShareFlow.swift */,
+				45D45F132E31778700FAEC9B /* ToolScreenShareFlowCreateSessionTrigger.swift */,
 				45E62FBB2AFA9A6800FFEC61 /* ToolScreenShareFlowCompletedState.swift */,
 			);
 			path = ToolScreenShare;
@@ -13887,6 +13890,7 @@
 				45D341932E295D45001AF70B /* UserActivityStatDomainModel.swift in Sources */,
 				450D7B0528E32965006C3FDF /* DownloadedTranslationDataModelType.swift in Sources */,
 				D43FC1CA2B6997B600F8310E /* GetDownloadedLanguagesListRepository.swift in Sources */,
+				45D45F142E31779500FAEC9B /* ToolScreenShareFlowCreateSessionTrigger.swift in Sources */,
 				D4AFA4472BAC950800318023 /* GetToolFilterLanguagesInterfaceStringsRepositoryInterface.swift in Sources */,
 				45F379092B23642C00EEF039 /* ViewLearnToShareToolDomainModel.swift in Sources */,
 				458B91B62B7D5D6800785C6F /* FavoritesDataLayerDependencies.swift in Sources */,

@@ -11,7 +11,7 @@ import SwiftUI
 import Combine
 
 class ToolScreenShareFlow: Flow {
-
+    
     typealias ToolScreenShareSettingsObserver = ToolSettingsObserver & RemoteShareable
     
     private let toolSettingsObserver: ToolScreenShareSettingsObserver
@@ -98,12 +98,20 @@ class ToolScreenShareFlow: Flow {
         let tractRemoteSharePublisher: TractRemoteSharePublisher = toolSettingsObserver.tractRemoteSharePublisher
         
         if tractRemoteSharePublisher.webSocketIsConnected, let channel = tractRemoteSharePublisher.tractRemoteShareChannel {
-            navigate(step: .didCreateSessionFromCreatingToolScreenShareSession(result: .success(channel)))
+            
+            navigate(
+                step: .didCreateSessionFromCreatingToolScreenShareSession(
+                    result: .success(channel),
+                    createSessionTrigger: nil
+                )
+            )
         }
         else if toolScreenShareTutorialHasBeenViewed || (tractRemoteSharePublisher.webSocketIsConnected && tractRemoteSharePublisher.tractRemoteShareChannel != nil) {
+            
             presentCreatingToolScreenShareSession()
         }
         else {
+            
             presentToolScreenShareTutorial()
         }
     }
@@ -121,7 +129,9 @@ class ToolScreenShareFlow: Flow {
             presentCreatingToolScreenShareSession()
             
         case .generateQRCodeTappedFromToolScreenShareTutorial:
-            break
+            
+            dismissToolScreenShareTutorial()
+            presentCreatingToolScreenShareSession(createSessionTrigger: .generateQRCode)
             
         case .shareLinkTappedFromToolScreenShareTutorial:
            
@@ -141,7 +151,7 @@ class ToolScreenShareFlow: Flow {
             navigationController.dismiss(animated: true)
             completeFlow(state: .userSharedQRCode)
             
-        case .didCreateSessionFromCreatingToolScreenShareSession(let result):
+        case .didCreateSessionFromCreatingToolScreenShareSession(let result, let createSessionTrigger):
             
             dismissCreatingToolScreenShareSession()
                                     
@@ -166,9 +176,19 @@ class ToolScreenShareFlow: Flow {
                     return
                 }
                 
-                let view = getShareToolScreenShareSessionView(domainModel: domainModel, shareUrl: remoteShareUrl)
+                let sessionTrigger: ToolScreenShareFlowCreateSessionTrigger = createSessionTrigger ?? .shareLink
                 
-                navigationController.present(view, animated: true, completion: nil)
+                switch sessionTrigger {
+                
+                case .generateQRCode:
+                    presentQRCodeView(shareUrl: remoteShareUrl)
+                
+                case .shareLink:
+                    presentShareToolScreenShareSessionView(
+                        domainModel: domainModel,
+                        shareUrl: remoteShareUrl
+                    )
+                }
                 
             case .failure(let error):
                                 
@@ -235,13 +255,15 @@ class ToolScreenShareFlow: Flow {
         toolScreenShareTutorialModal = nil
     }
     
-    private func presentCreatingToolScreenShareSession() {
+    private func presentCreatingToolScreenShareSession(createSessionTrigger: ToolScreenShareFlowCreateSessionTrigger? = nil) {
         
         guard creatingToolScreenShareSessionModal == nil else {
             return
         }
         
-        let creatingToolScreenShareSessionView = getCreatingToolScreenShareSessionView()
+        let creatingToolScreenShareSessionView = getCreatingToolScreenShareSessionView(
+            createSessionTrigger: createSessionTrigger
+        )
         
         let modal = ModalNavigationController.defaultModal(
             rootView: creatingToolScreenShareSessionView,
@@ -261,6 +283,16 @@ class ToolScreenShareFlow: Flow {
         
         modal.dismiss(animated: true)
         creatingToolScreenShareSessionModal = nil
+    }
+    
+    private func presentShareToolScreenShareSessionView(domainModel: ShareToolScreenShareSessionDomainModel, shareUrl: String) {
+        
+        let view = getShareToolScreenShareSessionView(
+            domainModel: domainModel,
+            shareUrl: shareUrl
+        )
+        
+        navigationController.present(view, animated: true, completion: nil)
     }
     
     private func presentQRCodeView(shareUrl: String) {
@@ -316,11 +348,12 @@ extension ToolScreenShareFlow {
         return hostingView
     }
     
-    private func getCreatingToolScreenShareSessionView() -> UIViewController {
+    private func getCreatingToolScreenShareSessionView(createSessionTrigger: ToolScreenShareFlowCreateSessionTrigger? = nil) -> UIViewController {
         
         let viewModel = CreatingToolScreenShareSessionViewModel(
             flowDelegate: self,
             toolId: toolSettingsObserver.toolId,
+            createSessionTrigger: createSessionTrigger,
             getCurrentAppLanguage: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             viewCreatingToolScreenShareSessionUseCase: appDiContainer.feature.toolScreenShare.domainLayer.getViewCreatingToolScreenShareSessionUseCase(),
             tractRemoteSharePublisher: toolSettingsObserver.tractRemoteSharePublisher,
