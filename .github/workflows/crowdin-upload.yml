@@ -1,8 +1,9 @@
 name: Crowdin Translation Upload
 
 on:
-  push:
-    branches: [develop]
+  # push:
+  #   branches: [develop]
+  workflow_dispatch:
 
 permissions:
   id-token: write
