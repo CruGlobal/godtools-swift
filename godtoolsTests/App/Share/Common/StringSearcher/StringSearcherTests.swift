@@ -23,6 +23,7 @@ struct StringSearcherTests {
     
     private static let englishSearchable = MockStringSearchable(searchableStrings: ["English", "English"])
     private static let albanianSearchable = MockStringSearchable(searchableStrings: ["Albanian", "shqip"])
+    private static let amharicSearchable = MockStringSearchable(searchableStrings: ["Amharic", "አማርኛ"])
     private static let croatianSearchable = MockStringSearchable(searchableStrings: ["Croatian", "hrvatski"])
     private static let englishBahrainSearchable = MockStringSearchable(searchableStrings: ["English (Bahrain)", "English (Bahrain)"])
     private static let frenchSearchable = MockStringSearchable(searchableStrings: ["French", "français"])
@@ -37,8 +38,9 @@ struct StringSearcherTests {
             TestArgument(searchTerm: "french", expectedSearchResults: [frenchSearchable]),
             TestArgument(searchTerm: "ESPAÑOL", expectedSearchResults: [spanishSearchable]),
             TestArgument(searchTerm: "ai", expectedSearchResults: [englishBahrainSearchable, frenchSearchable]),
-            TestArgument(searchTerm: "", expectedSearchResults: [englishSearchable, albanianSearchable, croatianSearchable, englishBahrainSearchable, frenchSearchable, spanishSearchable]),
-            TestArgument(searchTerm: "(", expectedSearchResults: [englishBahrainSearchable])
+            TestArgument(searchTerm: "", expectedSearchResults: [englishSearchable, albanianSearchable, amharicSearchable, croatianSearchable, englishBahrainSearchable, frenchSearchable, spanishSearchable]),
+            TestArgument(searchTerm: "(", expectedSearchResults: [englishBahrainSearchable]),
+            TestArgument(searchTerm: "ማርኛ", expectedSearchResults: [amharicSearchable])
         ]
     )
     func stringSearcherTest(argument: TestArgument) {
@@ -46,7 +48,7 @@ struct StringSearcherTests {
         let stringSearcher: StringSearcher = StringSearcher()
         
         let searchableLanguages: [MockStringSearchable] = [
-            StringSearcherTests.englishSearchable, StringSearcherTests.albanianSearchable, StringSearcherTests.croatianSearchable, StringSearcherTests.englishBahrainSearchable, StringSearcherTests.frenchSearchable, StringSearcherTests.spanishSearchable
+            StringSearcherTests.englishSearchable, StringSearcherTests.albanianSearchable, StringSearcherTests.amharicSearchable, StringSearcherTests.croatianSearchable, StringSearcherTests.englishBahrainSearchable, StringSearcherTests.frenchSearchable, StringSearcherTests.spanishSearchable
         ]
         
         let searchResults = stringSearcher.search(for: argument.searchTerm, in: searchableLanguages)
