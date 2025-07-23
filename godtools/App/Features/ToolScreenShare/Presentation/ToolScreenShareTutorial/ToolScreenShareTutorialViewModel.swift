@@ -26,8 +26,10 @@ class ToolScreenShareTutorialViewModel: ObservableObject {
     @Published private var interfaceStrings: ToolScreenShareInterfaceStringsDomainModel = ToolScreenShareInterfaceStringsDomainModel.emptyStrings
     
     @Published private(set) var hidesSkipButton: Bool = false
+    @Published private(set) var hidesGenerateQRCodeButton: Bool = true
     @Published private(set) var tutorialPages: [ToolScreenShareTutorialPageDomainModel] = Array()
     @Published private(set) var continueTitle: String = ""
+    @Published private(set) var generateQRCodeButtonTitle: String = ""
     
     @Published var currentPage: Int = 0
     
@@ -57,6 +59,7 @@ class ToolScreenShareTutorialViewModel: ObservableObject {
                 
                 self?.interfaceStrings = toolScreenShareTutorial.interfaceStrings
                 self?.tutorialPages = toolScreenShareTutorial.pages
+                self?.generateQRCodeButtonTitle = toolScreenShareTutorial.interfaceStrings.generateQRCodeActionTitle
             }
             .store(in: &cancellables)
         
@@ -85,7 +88,10 @@ class ToolScreenShareTutorialViewModel: ObservableObject {
                 return
             }
             
-            weakSelf.hidesSkipButton = weakSelf.getIsOnLastPage(tutorialPages: tutorialPages)
+            let isOnLastPage: Bool = weakSelf.getIsOnLastPage(tutorialPages: tutorialPages)
+            
+            weakSelf.hidesSkipButton = isOnLastPage
+            weakSelf.hidesGenerateQRCodeButton = !isOnLastPage
         }
         .store(in: &cancellables)
     }
