@@ -14,7 +14,7 @@ class CreatingToolScreenShareSessionViewModel: ObservableObject {
     private static var incrementScreenShareInBackgroundCancellable: AnyCancellable?
     
     private let toolId: String
-    private let createSessionTrigger: ToolScreenShareFlowCreateSessionTrigger?
+    private let createSessionTrigger: ToolScreenShareFlowCreateSessionTrigger
     private let getCurrentAppLanguage: GetCurrentAppLanguageUseCase
     private let viewCreatingToolScreenShareSessionUseCase: ViewCreatingToolScreenShareSessionUseCase
     private let tractRemoteSharePublisher: TractRemoteSharePublisher
@@ -28,7 +28,7 @@ class CreatingToolScreenShareSessionViewModel: ObservableObject {
     
     @Published var creatingSessionMessage: String = ""
     
-    init(flowDelegate: FlowDelegate, toolId: String, createSessionTrigger: ToolScreenShareFlowCreateSessionTrigger?, getCurrentAppLanguage: GetCurrentAppLanguageUseCase, viewCreatingToolScreenShareSessionUseCase: ViewCreatingToolScreenShareSessionUseCase, tractRemoteSharePublisher: TractRemoteSharePublisher, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
+    init(flowDelegate: FlowDelegate, toolId: String, createSessionTrigger: ToolScreenShareFlowCreateSessionTrigger, getCurrentAppLanguage: GetCurrentAppLanguageUseCase, viewCreatingToolScreenShareSessionUseCase: ViewCreatingToolScreenShareSessionUseCase, tractRemoteSharePublisher: TractRemoteSharePublisher, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
         
         self.flowDelegate = flowDelegate
         self.toolId = toolId

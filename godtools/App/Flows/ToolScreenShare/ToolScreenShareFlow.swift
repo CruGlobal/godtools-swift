@@ -102,13 +102,13 @@ class ToolScreenShareFlow: Flow {
             navigate(
                 step: .didCreateSessionFromCreatingToolScreenShareSession(
                     result: .success(channel),
-                    createSessionTrigger: nil
+                    createSessionTrigger: .automatic
                 )
             )
         }
         else if toolScreenShareTutorialHasBeenViewed || (tractRemoteSharePublisher.webSocketIsConnected && tractRemoteSharePublisher.tractRemoteShareChannel != nil) {
             
-            presentCreatingToolScreenShareSession()
+            presentCreatingToolScreenShareSession(createSessionTrigger: .automatic)
         }
         else {
             
@@ -126,17 +126,17 @@ class ToolScreenShareFlow: Flow {
         case .skipTappedFromToolScreenShareTutorial:
             
             dismissToolScreenShareTutorial()
-            presentCreatingToolScreenShareSession()
+            presentCreatingToolScreenShareSession(createSessionTrigger: .skipTappedFromScreenShareTutorial)
             
         case .generateQRCodeTappedFromToolScreenShareTutorial:
             
             dismissToolScreenShareTutorial()
-            presentCreatingToolScreenShareSession(createSessionTrigger: .generateQRCode)
+            presentCreatingToolScreenShareSession(createSessionTrigger: .generateQRCodeTappedFromScreenShareTutorial)
             
         case .shareLinkTappedFromToolScreenShareTutorial:
            
             dismissToolScreenShareTutorial()
-            presentCreatingToolScreenShareSession()
+            presentCreatingToolScreenShareSession(createSessionTrigger: .shareLinkTappedFromScreenShareTutorial)
             
         case .closeTappedFromCreatingToolScreenShareSession:
             dismissCreatingToolScreenShareSession()
@@ -175,15 +175,22 @@ class ToolScreenShareFlow: Flow {
                     
                     return
                 }
+                                
+                switch createSessionTrigger {
                 
-                let sessionTrigger: ToolScreenShareFlowCreateSessionTrigger = createSessionTrigger ?? .shareLink
-                
-                switch sessionTrigger {
-                
-                case .generateQRCode:
+                case .automatic:
+                    break
+                    
+                case .generateQRCodeTappedFromScreenShareTutorial:
                     presentQRCodeView(shareUrl: remoteShareUrl)
-                
-                case .shareLink:
+                    
+                case .shareLinkTappedFromScreenShareTutorial:
+                    presentShareToolScreenShareSessionView(
+                        domainModel: domainModel,
+                        shareUrl: remoteShareUrl
+                    )
+                    
+                case .skipTappedFromScreenShareTutorial:
                     presentShareToolScreenShareSessionView(
                         domainModel: domainModel,
                         shareUrl: remoteShareUrl
@@ -255,7 +262,7 @@ class ToolScreenShareFlow: Flow {
         toolScreenShareTutorialModal = nil
     }
     
-    private func presentCreatingToolScreenShareSession(createSessionTrigger: ToolScreenShareFlowCreateSessionTrigger? = nil) {
+    private func presentCreatingToolScreenShareSession(createSessionTrigger: ToolScreenShareFlowCreateSessionTrigger) {
         
         guard creatingToolScreenShareSessionModal == nil else {
             return
@@ -364,7 +371,7 @@ extension ToolScreenShareFlow {
 
 extension ToolScreenShareFlow {
     
-    private func getCreatingToolScreenShareSessionView(createSessionTrigger: ToolScreenShareFlowCreateSessionTrigger? = nil) -> UIViewController {
+    private func getCreatingToolScreenShareSessionView(createSessionTrigger: ToolScreenShareFlowCreateSessionTrigger) -> UIViewController {
         
         let viewModel = CreatingToolScreenShareSessionViewModel(
             flowDelegate: self,
