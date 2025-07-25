@@ -179,7 +179,7 @@ class ToolScreenShareFlow: Flow {
                 switch createSessionTrigger {
                 
                 case .automatic:
-                    break
+                    presentToolScreenShareTutorial(showTutorialPages: .lastPageWithQRCodeOption)
                     
                 case .generateQRCodeTappedFromScreenShareTutorial:
                     presentQRCodeView(shareUrl: remoteShareUrl)
@@ -230,13 +230,16 @@ class ToolScreenShareFlow: Flow {
         flowDelegate?.navigate(step: .toolScreenShareFlowCompleted(state: state))
     }
     
-    private func presentToolScreenShareTutorial() {
+    private func presentToolScreenShareTutorial(showTutorialPages: ShowToolScreenShareTutorialPages = .allPages) {
         
         guard toolScreenShareTutorialModal == nil else {
             return
         }
         
-        let toolScreenShareTutorialView = getToolScreenShareTutorialView(toolId: toolSettingsObserver.toolId)
+        let toolScreenShareTutorialView = getToolScreenShareTutorialView(
+            toolId: toolSettingsObserver.toolId,
+            showTutorialPages: showTutorialPages
+        )
         
         let modal = ModalNavigationController.defaultModal(
             rootView: toolScreenShareTutorialView,
@@ -314,11 +317,12 @@ class ToolScreenShareFlow: Flow {
 
 extension ToolScreenShareFlow {
     
-    private func getToolScreenShareTutorialView(toolId: String) -> UIViewController {
+    private func getToolScreenShareTutorialView(toolId: String, showTutorialPages: ShowToolScreenShareTutorialPages) -> UIViewController {
         
         let viewModel = ToolScreenShareTutorialViewModel(
             flowDelegate: self,
             toolId: toolId,
+            showTutorialPages: showTutorialPages,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             viewToolScreenShareTutorialUseCase: appDiContainer.feature.toolScreenShare.domainLayer.getViewToolScreenShareTutorialUseCase(),
             didViewToolScreenShareTutorialUseCase: appDiContainer.feature.toolScreenShare.domainLayer.getDidViewToolScreenShareTutorialUseCase()
@@ -355,15 +359,6 @@ extension ToolScreenShareFlow {
         )
         
         return hostingView
-    }
-}
-
-// MARK: - Tool Screen Share Tutorial With QR Code Option View
-
-extension ToolScreenShareFlow {
-    
-    private func getToolScreenShareTutorialWithQRCodeOptionView() {
-        
     }
 }
 
