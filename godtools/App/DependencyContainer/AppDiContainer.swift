@@ -19,7 +19,7 @@ class AppDiContainer {
     let domainLayer: AppDomainLayerDependencies
     let feature: AppFeatureDiContainer
         
-    init(appBuild: AppBuild, appConfig: AppConfig, infoPlist: InfoPlist, realmDatabase: RealmDatabase, firebaseEnabled: Bool) {
+    init(appBuild: AppBuild, appConfig: AppConfig, realmDatabase: RealmDatabase, firebaseEnabled: Bool) {
                
         self.appBuild = appBuild
         self.realmDatabase = realmDatabase
@@ -27,7 +27,6 @@ class AppDiContainer {
         dataLayer = AppDataLayerDependencies(
             appBuild: appBuild,
             appConfig: appConfig,
-            infoPlist: infoPlist,
             realmDatabase: realmDatabase,
             firebaseEnabled: firebaseEnabled
         )
