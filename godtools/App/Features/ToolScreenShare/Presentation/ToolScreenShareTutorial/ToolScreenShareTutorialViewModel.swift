@@ -11,8 +11,8 @@ import Combine
 
 class ToolScreenShareTutorialViewModel: ObservableObject {
     
-    private static var didViewToolScreenShareTutorialCancellable: AnyCancellable?
-    
+    private static var backgroundCancellables: Set<AnyCancellable> = Set()
+        
     private let toolId: String
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let viewToolScreenShareTutorialUseCase: ViewToolScreenShareTutorialUseCase
@@ -23,11 +23,14 @@ class ToolScreenShareTutorialViewModel: ObservableObject {
     private weak var flowDelegate: FlowDelegate?
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
-    @Published private var interfaceStrings: ToolScreenShareInterfaceStringsDomainModel?
+    @Published private var interfaceStrings: ToolScreenShareInterfaceStringsDomainModel = ToolScreenShareInterfaceStringsDomainModel.emptyStrings
     
-    @Published var hidesSkipButton: Bool = false
-    @Published var tutorialPages: [ToolScreenShareTutorialPageDomainModel] = Array()
-    @Published var continueTitle: String = ""
+    @Published private(set) var hidesSkipButton: Bool = false
+    @Published private(set) var hidesGenerateQRCodeButton: Bool = true
+    @Published private(set) var tutorialPages: [ToolScreenShareTutorialPageDomainModel] = Array()
+    @Published private(set) var continueTitle: String = ""
+    @Published private(set) var generateQRCodeButtonTitle: String = ""
+    
     @Published var currentPage: Int = 0
     
     init(flowDelegate: FlowDelegate, toolId: String, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewToolScreenShareTutorialUseCase: ViewToolScreenShareTutorialUseCase, didViewToolScreenShareTutorialUseCase: DidViewToolScreenShareTutorialUseCase) {
@@ -56,6 +59,7 @@ class ToolScreenShareTutorialViewModel: ObservableObject {
                 
                 self?.interfaceStrings = toolScreenShareTutorial.interfaceStrings
                 self?.tutorialPages = toolScreenShareTutorial.pages
+                self?.generateQRCodeButtonTitle = toolScreenShareTutorial.interfaceStrings.generateQRCodeActionTitle
             }
             .store(in: &cancellables)
         
@@ -84,7 +88,10 @@ class ToolScreenShareTutorialViewModel: ObservableObject {
                 return
             }
             
-            weakSelf.hidesSkipButton = weakSelf.getIsOnLastPage(tutorialPages: tutorialPages)
+            let isOnLastPage: Bool = weakSelf.getIsOnLastPage(tutorialPages: tutorialPages)
+            
+            weakSelf.hidesSkipButton = isOnLastPage
+            weakSelf.hidesGenerateQRCodeButton = !isOnLastPage
         }
         .store(in: &cancellables)
     }
@@ -110,12 +117,13 @@ class ToolScreenShareTutorialViewModel: ObservableObject {
     
     private func markToolScreenShareTutorialViewed() {
      
-        ToolScreenShareTutorialViewModel.didViewToolScreenShareTutorialCancellable = didViewToolScreenShareTutorialUseCase
+        didViewToolScreenShareTutorialUseCase
             .didViewPublisher(toolId: toolId)
             .receive(on: DispatchQueue.main)
             .sink { _ in
                 
             }
+            .store(in: &Self.backgroundCancellables)
     }
 }
 
@@ -132,6 +140,11 @@ extension ToolScreenShareTutorialViewModel {
         markToolScreenShareTutorialViewed()
         
         flowDelegate?.navigate(step: .skipTappedFromToolScreenShareTutorial)
+    }
+    
+    func generateQRCodeTapped() {
+        
+        flowDelegate?.navigate(step: .generateQRCodeTappedFromToolScreenShareTutorial)
     }
     
     func continueTapped() {

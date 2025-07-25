@@ -24,6 +24,7 @@ class GetToolScreenShareTutorialInterfaceStringsRepository: GetToolScreenShareTu
         let localeId: String = translateInLanguage
         
         let interfaceStrings = ToolScreenShareInterfaceStringsDomainModel(
+            generateQRCodeActionTitle: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: "screenShareTutorial.generateQRCodeButton.title"),
             nextTutorialPageActionTitle: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: "tutorial.continueButton.title.continue"),
             shareLinkActionTitle: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: "share_link")
         )
