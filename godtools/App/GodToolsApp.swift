@@ -11,27 +11,24 @@ import FirebaseDynamicLinks
 
 struct GodToolsApp: App {
 
-    private static let appBuild: AppBuild = AppBuild(buildConfiguration: Self.infoPlist.getAppBuildConfiguration())
-    private static let appConfig: AppConfig = AppConfig(appBuild: Self.appBuild)
-    private static let appFlow: AppFlow = AppFlow(appDiContainer: Self.appDiContainer, appDeepLinkingService: Self.appDeepLinkingService)
-    private static let infoPlist: InfoPlist = InfoPlist()
+    private static let appBuild: AppBuild = AppBuild(buildConfiguration: InfoPlist().getAppBuildConfiguration())
+    private static let appConfig: AppConfig = AppConfig(appBuild: appBuild)
     private static let launchEnvironmentReader: LaunchEnvironmentReader = LaunchEnvironmentReader.createFromProcessInfo()
     private static let realmDatabase: RealmDatabase = RealmDatabase(databaseConfiguration: RealmDatabaseProductionConfiguration())
-
+    private static let appDeepLinkingService: DeepLinkingService = appDiContainer.dataLayer.getDeepLinkingService()
+    
     private static let appDiContainer = AppDiContainer(
         appBuild: appBuild,
         appConfig: appConfig,
-        infoPlist: infoPlist,
         realmDatabase: realmDatabase,
         firebaseEnabled: firebaseEnabled
     )
-
-    private static let appDeepLinkingService: DeepLinkingService = Self.appDiContainer.dataLayer.getDeepLinkingService()
 
     private static var firebaseEnabled: Bool {
         return launchEnvironmentReader.getFirebaseEnabled() ?? true
     }
     
+    private let appFlow: AppFlow
     private let toolShortcutLinksViewModel: ToolShortcutLinksViewModel
     
     @Environment(\.scenePhase) private var scenePhase
@@ -40,6 +37,11 @@ struct GodToolsApp: App {
 
     init() {
 
+        appFlow = AppFlow(
+            appDiContainer: Self.appDiContainer,
+            appDeepLinkingService: Self.appDeepLinkingService
+        )
+        
         if Self.appBuild.configuration == .analyticsLogging {
             Self.appDiContainer.getFirebaseDebugArguments().enable()
         }
@@ -54,13 +56,7 @@ struct GodToolsApp: App {
 
         Self.appDiContainer.dataLayer.getAnalytics().firebaseAnalytics.configure()
 
-        let uiTestsDeepLinkString: String? = Self.launchEnvironmentReader.getUrlDeepLink()
-
-        if let uiTestsDeepLinkString = uiTestsDeepLinkString, !uiTestsDeepLinkString.isEmpty, let url = URL(string: uiTestsDeepLinkString) {
-            _ = Self.appDeepLinkingService.parseDeepLinkAndNotify(
-                incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url))
-            )
-        }
+        Self.processUITestsDeepLink()
         
         toolShortcutLinksViewModel = ToolShortcutLinksViewModel(
             getCurrentAppLanguageUseCase: Self.appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
@@ -71,7 +67,7 @@ struct GodToolsApp: App {
     var body: some Scene {
         WindowGroup {
             GeometryReader { geometry in
-                Self.appFlow.rootView
+                appFlow.rootView
             }
             .ignoresSafeArea()
             .onOpenURL { (url: URL) in
@@ -83,10 +79,13 @@ struct GodToolsApp: App {
             let application = UIApplication.shared
             
             switch phase {
+            
             case .background:
                 reloadShortcutItems(application: application)
+            
             case .inactive:
                 break
+            
             case .active:
                 
                 if let shortcutItem = GodToolsSceneDelegate.willConnectShortcutItem,
@@ -215,5 +214,22 @@ extension GodToolsApp {
         }
 
         return successfullyHandledQuickAction
+    }
+}
+
+// MARK: - UITests Deep Link
+
+extension GodToolsApp {
+    
+    private static func processUITestsDeepLink() {
+        
+        let uiTestsDeepLinkString: String? = Self.launchEnvironmentReader.getUrlDeepLink()
+
+        if let uiTestsDeepLinkString = uiTestsDeepLinkString, !uiTestsDeepLinkString.isEmpty, let url = URL(string: uiTestsDeepLinkString) {
+                        
+            _ = Self.appDeepLinkingService.parseDeepLinkAndNotify(
+                incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url))
+            )
+        }
     }
 }

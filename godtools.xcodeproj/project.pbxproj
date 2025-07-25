@@ -322,7 +322,6 @@
 		45369AD62AFA7FA500BD10F0 /* ToolScreenShareTutorialPageMediaDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45369AB82AFA7FA500BD10F0 /* ToolScreenShareTutorialPageMediaDomainModel.swift */; };
 		45369AD72AFA7FA500BD10F0 /* ToolScreenShareTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45369ABB2AFA7FA500BD10F0 /* ToolScreenShareTutorialView.swift */; };
 		45369AD82AFA7FA500BD10F0 /* ToolScreenShareTutorialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45369ABC2AFA7FA500BD10F0 /* ToolScreenShareTutorialViewModel.swift */; };
-		45369AD92AFA7FA500BD10F0 /* ToolScreenShareTutorialPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45369ABE2AFA7FA500BD10F0 /* ToolScreenShareTutorialPageView.swift */; };
 		45369ADA2AFA7FA500BD10F0 /* ToolScreenShareFeatureDataLayerDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45369AC02AFA7FA500BD10F0 /* ToolScreenShareFeatureDataLayerDependencies.swift */; };
 		45369ADB2AFA7FA500BD10F0 /* ToolScreenShareFeatureDiContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45369AC12AFA7FA500BD10F0 /* ToolScreenShareFeatureDiContainer.swift */; };
 		45369ADC2AFA7FA500BD10F0 /* ToolScreenShareFeatureDomainLayerDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45369AC22AFA7FA500BD10F0 /* ToolScreenShareFeatureDomainLayerDependencies.swift */; };
@@ -546,6 +545,7 @@
 		455EE8492AEC5F6000C3205C /* ProgressTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455EE8482AEC5F6000C3205C /* ProgressTimer.swift */; };
 		45608B502CCAC121008C6D84 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45608B4F2CCAC11F008C6D84 /* main.swift */; };
 		4560C9B92B30F42700C68984 /* TranslationsDownloadProgressDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4560C9B82B30F42700C68984 /* TranslationsDownloadProgressDataModel.swift */; };
+		45610C5D2E32723600A7F5AF /* InfoPlist+AppBuildConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45610C5C2E32722D00A7F5AF /* InfoPlist+AppBuildConfiguration.swift */; };
 		4561AC94279C4C7D003718C0 /* MobileContentContentPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4561AC93279C4C7D003718C0 /* MobileContentContentPageView.swift */; };
 		4561AC96279C4C94003718C0 /* MobileContentContentPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4561AC95279C4C93003718C0 /* MobileContentContentPageViewModel.swift */; };
 		4561AC9A279C4CC6003718C0 /* MobileContentCardCollectionPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4561AC99279C4CC6003718C0 /* MobileContentCardCollectionPageView.swift */; };
@@ -1273,6 +1273,8 @@
 		45D3AAE1298AA69F0017E6DF /* VideoViewPlayerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3AAE0298AA69F0017E6DF /* VideoViewPlayerState.swift */; };
 		45D40C682A5315B400E8E4AE /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 45D40C672A5315B400E8E4AE /* Starscream */; };
 		45D40C6B2A5315D500E8E4AE /* Fuzi in Frameworks */ = {isa = PBXBuildFile; productRef = 45D40C6A2A5315D500E8E4AE /* Fuzi */; };
+		45D45F122E31701C00FAEC9B /* ToolScreenShareTutorialPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D45F102E31701C00FAEC9B /* ToolScreenShareTutorialPageView.swift */; };
+		45D45F142E31779500FAEC9B /* ToolScreenShareFlowCreateSessionTrigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D45F132E31778700FAEC9B /* ToolScreenShareFlowCreateSessionTrigger.swift */; };
 		45D48C8329F81082004E92B1 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45D48C8229F81082004E92B1 /* Colors.xcassets */; };
 		45D48C8629F81324004E92B1 /* SocialAuthentication in Frameworks */ = {isa = PBXBuildFile; productRef = 45D48C8529F81324004E92B1 /* SocialAuthentication */; };
 		45D48C8929F81692004E92B1 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D48C8829F81692004E92B1 /* AppConfig.swift */; };
@@ -1590,6 +1592,7 @@
 		D40D77B52AA900FB008D3642 /* ToolStringKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40D77B42AA900FB008D3642 /* ToolStringKeys.swift */; };
 		D40D77BA2AAF9891008D3642 /* ToolsFilterSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40D77B92AAF9891008D3642 /* ToolsFilterSectionView.swift */; };
 		D40D77BF2AB36766008D3642 /* SearchBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40D77BE2AB36766008D3642 /* SearchBarViewModel.swift */; };
+		D42C1F0F2E2EBEED0057D9F1 /* StringSearcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42C1F0E2E2EBEED0057D9F1 /* StringSearcherTests.swift */; };
 		D42FEBD62875D8D50002FAD9 /* GetOptInOnboardingTutorialAvailableUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42FEBD52875D8D50002FAD9 /* GetOptInOnboardingTutorialAvailableUseCase.swift */; };
 		D42FEBDA287604570002FAD9 /* OptInOnboardingBannerEnabledRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42FEBD9287604570002FAD9 /* OptInOnboardingBannerEnabledRepository.swift */; };
 		D43818B62E15B31500D404FF /* ViewToolScreenShareQRCodeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43818B52E15B31500D404FF /* ViewToolScreenShareQRCodeUseCase.swift */; };
@@ -2112,7 +2115,6 @@
 		45369AB82AFA7FA500BD10F0 /* ToolScreenShareTutorialPageMediaDomainModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolScreenShareTutorialPageMediaDomainModel.swift; sourceTree = "<group>"; };
 		45369ABB2AFA7FA500BD10F0 /* ToolScreenShareTutorialView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolScreenShareTutorialView.swift; sourceTree = "<group>"; };
 		45369ABC2AFA7FA500BD10F0 /* ToolScreenShareTutorialViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolScreenShareTutorialViewModel.swift; sourceTree = "<group>"; };
-		45369ABE2AFA7FA500BD10F0 /* ToolScreenShareTutorialPageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolScreenShareTutorialPageView.swift; sourceTree = "<group>"; };
 		45369AC02AFA7FA500BD10F0 /* ToolScreenShareFeatureDataLayerDependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolScreenShareFeatureDataLayerDependencies.swift; sourceTree = "<group>"; };
 		45369AC12AFA7FA500BD10F0 /* ToolScreenShareFeatureDiContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolScreenShareFeatureDiContainer.swift; sourceTree = "<group>"; };
 		45369AC22AFA7FA500BD10F0 /* ToolScreenShareFeatureDomainLayerDependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolScreenShareFeatureDomainLayerDependencies.swift; sourceTree = "<group>"; };
@@ -2337,6 +2339,7 @@
 		455EE8482AEC5F6000C3205C /* ProgressTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressTimer.swift; sourceTree = "<group>"; };
 		45608B4F2CCAC11F008C6D84 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		4560C9B82B30F42700C68984 /* TranslationsDownloadProgressDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationsDownloadProgressDataModel.swift; sourceTree = "<group>"; };
+		45610C5C2E32722D00A7F5AF /* InfoPlist+AppBuildConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InfoPlist+AppBuildConfiguration.swift"; sourceTree = "<group>"; };
 		4561AC93279C4C7D003718C0 /* MobileContentContentPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentContentPageView.swift; sourceTree = "<group>"; };
 		4561AC95279C4C93003718C0 /* MobileContentContentPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentContentPageViewModel.swift; sourceTree = "<group>"; };
 		4561AC99279C4CC6003718C0 /* MobileContentCardCollectionPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentCardCollectionPageView.swift; sourceTree = "<group>"; };
@@ -3040,6 +3043,8 @@
 		45D341B72E2961DF001AF70B /* IncrementUserCounterUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncrementUserCounterUseCase.swift; sourceTree = "<group>"; };
 		45D341B92E2961E7001AF70B /* UserCounterDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCounterDomainModel.swift; sourceTree = "<group>"; };
 		45D3AAE0298AA69F0017E6DF /* VideoViewPlayerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewPlayerState.swift; sourceTree = "<group>"; };
+		45D45F102E31701C00FAEC9B /* ToolScreenShareTutorialPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolScreenShareTutorialPageView.swift; sourceTree = "<group>"; };
+		45D45F132E31778700FAEC9B /* ToolScreenShareFlowCreateSessionTrigger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolScreenShareFlowCreateSessionTrigger.swift; sourceTree = "<group>"; };
 		45D48C8229F81082004E92B1 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		45D48C8829F81692004E92B1 /* AppConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
 		45D4A6CE29B12AE200DED984 /* ToolDeepLinkPage+MobileContentRendererInitialPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ToolDeepLinkPage+MobileContentRendererInitialPage.swift"; sourceTree = "<group>"; };
@@ -3354,6 +3359,7 @@
 		D40D77B42AA900FB008D3642 /* ToolStringKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolStringKeys.swift; sourceTree = "<group>"; };
 		D40D77B92AAF9891008D3642 /* ToolsFilterSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsFilterSectionView.swift; sourceTree = "<group>"; };
 		D40D77BE2AB36766008D3642 /* SearchBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarViewModel.swift; sourceTree = "<group>"; };
+		D42C1F0E2E2EBEED0057D9F1 /* StringSearcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringSearcherTests.swift; sourceTree = "<group>"; };
 		D42FEBD52875D8D50002FAD9 /* GetOptInOnboardingTutorialAvailableUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOptInOnboardingTutorialAvailableUseCase.swift; sourceTree = "<group>"; };
 		D42FEBD9287604570002FAD9 /* OptInOnboardingBannerEnabledRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptInOnboardingBannerEnabledRepository.swift; sourceTree = "<group>"; };
 		D43818B52E15B31500D404FF /* ViewToolScreenShareQRCodeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewToolScreenShareQRCodeUseCase.swift; sourceTree = "<group>"; };
@@ -5051,6 +5057,7 @@
 				45CC42FD2C38982800B0D82B /* LocaleLanguageRegionName */,
 				45CC42FF2C38982800B0D82B /* LocaleLanguageScriptName */,
 				453689FF2ABB2D840028A570 /* SharedAppleExtensions */,
+				D42C1F0D2E2EBEBE0057D9F1 /* StringSearcher */,
 				4585393C2C57DFFE00748BAF /* StringWithLocaleCount */,
 				45F785342DEE137A001CE64D /* SyncInvalidator */,
 			);
@@ -5273,7 +5280,7 @@
 		45369ABD2AFA7FA500BD10F0 /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
-				45369ABE2AFA7FA500BD10F0 /* ToolScreenShareTutorialPageView.swift */,
+				45D45F112E31701C00FAEC9B /* ToolScreenShareTutorialPage */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -6585,6 +6592,7 @@
 			isa = PBXGroup;
 			children = (
 				4563D99E2A94FC4700E0701C /* InfoPlist.swift */,
+				45610C5C2E32722D00A7F5AF /* InfoPlist+AppBuildConfiguration.swift */,
 			);
 			path = InfoPlist;
 			sourceTree = "<group>";
@@ -10126,6 +10134,14 @@
 			path = UserDetailsRepository;
 			sourceTree = "<group>";
 		};
+		45D45F112E31701C00FAEC9B /* ToolScreenShareTutorialPage */ = {
+			isa = PBXGroup;
+			children = (
+				45D45F102E31701C00FAEC9B /* ToolScreenShareTutorialPageView.swift */,
+			);
+			path = ToolScreenShareTutorialPage;
+			sourceTree = "<group>";
+		};
 		45D48C8729F81692004E92B1 /* AppConfig */ = {
 			isa = PBXGroup;
 			children = (
@@ -10899,6 +10915,7 @@
 			isa = PBXGroup;
 			children = (
 				45E62FB92AFA927B00FFEC61 /* ToolScreenShareFlow.swift */,
+				45D45F132E31778700FAEC9B /* ToolScreenShareFlowCreateSessionTrigger.swift */,
 				45E62FBB2AFA9A6800FFEC61 /* ToolScreenShareFlowCompletedState.swift */,
 			);
 			path = ToolScreenShare;
@@ -11900,6 +11917,14 @@
 				D4BE3F6B2C0907AE00887BFD /* UserToolSettingsRepository */,
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		D42C1F0D2E2EBEBE0057D9F1 /* StringSearcher */ = {
+			isa = PBXGroup;
+			children = (
+				D42C1F0E2E2EBEED0057D9F1 /* StringSearcherTests.swift */,
+			);
+			path = StringSearcher;
 			sourceTree = "<group>";
 		};
 		D42FEBDD287605D60002FAD9 /* OptInOnboardingBannerEnabledRepository */ = {
@@ -13473,7 +13498,6 @@
 				4534F9422AE9B6C200A7A071 /* CancelLessonEvaluationRepositoryInterface.swift in Sources */,
 				454ADAE62ABDDD3800037C27 /* ChooseAppLanguageFlowCompleted.swift in Sources */,
 				45F378F32B23641F00EEF039 /* ViewLearnToShareToolUseCase.swift in Sources */,
-				45369AD92AFA7FA500BD10F0 /* ToolScreenShareTutorialPageView.swift in Sources */,
 				45C5DDCE2AE6BF1300C70BBA /* AccessibilityScreenElementView.swift in Sources */,
 				45AC9DE22B28A9A400DEEBFE /* GetDownloadableLanguagesInterfaceStringsRepositoryInterface.swift in Sources */,
 				452486BD2B07C894007AD932 /* ToolsFilterFeatureDomainLayerDependencies.swift in Sources */,
@@ -13888,6 +13912,7 @@
 				45D341932E295D45001AF70B /* UserActivityStatDomainModel.swift in Sources */,
 				450D7B0528E32965006C3FDF /* DownloadedTranslationDataModelType.swift in Sources */,
 				D43FC1CA2B6997B600F8310E /* GetDownloadedLanguagesListRepository.swift in Sources */,
+				45D45F142E31779500FAEC9B /* ToolScreenShareFlowCreateSessionTrigger.swift in Sources */,
 				D4AFA4472BAC950800318023 /* GetToolFilterLanguagesInterfaceStringsRepositoryInterface.swift in Sources */,
 				45F379092B23642C00EEF039 /* ViewLearnToShareToolDomainModel.swift in Sources */,
 				458B91B62B7D5D6800785C6F /* FavoritesDataLayerDependencies.swift in Sources */,
@@ -13957,6 +13982,7 @@
 				45EB9B7329F16CF200CA74A8 /* UIButton+ImageColor.swift in Sources */,
 				45F378FC2B23642600EEF039 /* GetLearnToShareToolTutorialItemsRepository.swift in Sources */,
 				45B6482A25E593110098BAF1 /* (null) in Sources */,
+				45D45F122E31701C00FAEC9B /* ToolScreenShareTutorialPageView.swift in Sources */,
 				D42FEBD62875D8D50002FAD9 /* GetOptInOnboardingTutorialAvailableUseCase.swift in Sources */,
 				4534F92C2AE9A99200A7A071 /* TrackLessonFeedbackDomainModel.swift in Sources */,
 				D40D77BF2AB36766008D3642 /* SearchBarViewModel.swift in Sources */,
@@ -14218,6 +14244,7 @@
 				452DFB322B7F9F42003A4A59 /* ToolListItemInterfaceStringsDomainModel.swift in Sources */,
 				45308EC12BDC2A4500A49D96 /* ScaleValue.swift in Sources */,
 				45D2F5D02D5FD14600F811F6 /* DownloadableLanguageDownloadState.swift in Sources */,
+				45610C5D2E32723600A7F5AF /* InfoPlist+AppBuildConfiguration.swift in Sources */,
 				45B212AC2922965F00C9A94D /* RealmDatabase.swift in Sources */,
 				45EA5AA32B2246AF00D9E330 /* ViewToolSettingsUseCase.swift in Sources */,
 				4573133F28C1821100481640 /* ToolDetailsVersionsCardView.swift in Sources */,
@@ -14751,6 +14778,7 @@
 				450FB88B2BFBA0F80015D945 /* GetLanguageSettingsInterfaceStringsRepositoryTests.swift in Sources */,
 				45CC42F92C38981F00B0D82B /* MockLocalizationLanguageNameRepository.swift in Sources */,
 				458539322C57C08000748BAF /* MockRealmResource.swift in Sources */,
+				D42C1F0F2E2EBEED0057D9F1 /* StringSearcherTests.swift in Sources */,
 				450FB88C2BFBA0F80015D945 /* SearchAppLanguageInAppLanguagesListRepositoryTests.swift in Sources */,
 				45466F6F2DB09417005E7FCC /* OptInNotificationsUserDefaultsCacheTests.swift in Sources */,
 				D4C26CB22C5D1EAB0082B479 /* SetUserPreferredAppLanguageRepositoryTests.swift in Sources */,
@@ -15985,8 +16013,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/CruGlobal/localization-services-ios";
 			requirement = {
-				branch = "include-en-language-code";
-				kind = branch;
+				kind = upToNextMinorVersion;
+				minimumVersion = 0.3.0;
 			};
 		};
 		D4997E0C28D4CED800205B4C /* XCRemoteSwiftPackageReference "youtube-ios-player-helper" */ = {
