@@ -25,7 +25,7 @@ class UserCountersAPIMock {
     }
 }
     
-extension UserCountersAPIMock: UserCountersAPIType {
+extension UserCountersAPIMock: UserCountersApiInterface {
     
     func fetchUserCountersPublisher(requestPriority: RequestPriority) -> AnyPublisher<[UserCounterDecodable], Error> {
         
