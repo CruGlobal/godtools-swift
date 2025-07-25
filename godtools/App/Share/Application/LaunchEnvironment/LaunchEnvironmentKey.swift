@@ -15,5 +15,6 @@ enum LaunchEnvironmentKey: String {
     }
     
     case firebaseEnabled
+    case isUITests
     case urlDeeplink
 }

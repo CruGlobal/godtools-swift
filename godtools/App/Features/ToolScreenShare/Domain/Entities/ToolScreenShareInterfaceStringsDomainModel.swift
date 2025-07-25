@@ -10,6 +10,15 @@ import Foundation
 
 struct ToolScreenShareInterfaceStringsDomainModel {
     
+    let generateQRCodeActionTitle: String
     let nextTutorialPageActionTitle: String
     let shareLinkActionTitle: String
+    
+    static var emptyStrings: ToolScreenShareInterfaceStringsDomainModel {
+        return ToolScreenShareInterfaceStringsDomainModel(
+            generateQRCodeActionTitle: "",
+            nextTutorialPageActionTitle: "",
+            shareLinkActionTitle: ""
+        )
+    }
 }

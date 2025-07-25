@@ -14,6 +14,7 @@ class CreatingToolScreenShareSessionViewModel: ObservableObject {
     private static var incrementScreenShareInBackgroundCancellable: AnyCancellable?
     
     private let toolId: String
+    private let createSessionTrigger: ToolScreenShareFlowCreateSessionTrigger?
     private let getCurrentAppLanguage: GetCurrentAppLanguageUseCase
     private let viewCreatingToolScreenShareSessionUseCase: ViewCreatingToolScreenShareSessionUseCase
     private let tractRemoteSharePublisher: TractRemoteSharePublisher
@@ -27,10 +28,11 @@ class CreatingToolScreenShareSessionViewModel: ObservableObject {
     
     @Published var creatingSessionMessage: String = ""
     
-    init(flowDelegate: FlowDelegate, toolId: String, getCurrentAppLanguage: GetCurrentAppLanguageUseCase, viewCreatingToolScreenShareSessionUseCase: ViewCreatingToolScreenShareSessionUseCase, tractRemoteSharePublisher: TractRemoteSharePublisher, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
+    init(flowDelegate: FlowDelegate, toolId: String, createSessionTrigger: ToolScreenShareFlowCreateSessionTrigger?, getCurrentAppLanguage: GetCurrentAppLanguageUseCase, viewCreatingToolScreenShareSessionUseCase: ViewCreatingToolScreenShareSessionUseCase, tractRemoteSharePublisher: TractRemoteSharePublisher, incrementUserCounterUseCase: IncrementUserCounterUseCase) {
         
         self.flowDelegate = flowDelegate
         self.toolId = toolId
+        self.createSessionTrigger = createSessionTrigger
         self.getCurrentAppLanguage = getCurrentAppLanguage
         self.viewCreatingToolScreenShareSessionUseCase = viewCreatingToolScreenShareSessionUseCase
         self.tractRemoteSharePublisher = tractRemoteSharePublisher
@@ -88,7 +90,17 @@ class CreatingToolScreenShareSessionViewModel: ObservableObject {
     private func didCreateNewSubscriberChannelForPublish(result: Result<WebSocketChannel, TractRemoteSharePublisherError>) {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
-            self?.flowDelegate?.navigate(step: .didCreateSessionFromCreatingToolScreenShareSession(result: result))
+            
+            guard let weakSelf = self else {
+                return
+            }
+            
+            weakSelf.flowDelegate?.navigate(
+                step: .didCreateSessionFromCreatingToolScreenShareSession(
+                    result: result,
+                    createSessionTrigger: weakSelf.createSessionTrigger
+                )
+            )
         }
     }
 }

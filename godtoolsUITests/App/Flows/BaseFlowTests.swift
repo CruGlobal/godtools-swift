@@ -34,17 +34,25 @@ class BaseFlowTests: XCTestCase {
         super.tearDown()
     }
     
-    func launchApp(flowDeepLinkUrl: String, checkInitialScreenExists: AccessibilityStrings.Screen) {
+    private static func getNewApp(flowDeepLinkUrl: String) -> XCUIApplication {
         
-        self.app = XCUIApplication()
-        self.flowDeepLinkUrl = flowDeepLinkUrl
-        self.initialScreen = checkInitialScreenExists
+        let app = XCUIApplication()
         
         let launchEnvironmentWriter = LaunchEnvironmentWriter()
                                 
         launchEnvironmentWriter.setFirebaseEnabled(launchEnvironment: &app.launchEnvironment, enabled: false)
+        launchEnvironmentWriter.setIsUITests(launchEnvironment: &app.launchEnvironment, isUITests: true)
         launchEnvironmentWriter.setUrlDeepLink(launchEnvironment: &app.launchEnvironment, url: flowDeepLinkUrl)
-                        
+        
+        return app
+    }
+    
+    func launchApp(flowDeepLinkUrl: String, checkInitialScreenExists: AccessibilityStrings.Screen) {
+        
+        self.app = Self.getNewApp(flowDeepLinkUrl: flowDeepLinkUrl)
+        self.flowDeepLinkUrl = flowDeepLinkUrl
+        self.initialScreen = checkInitialScreenExists
+        
         app.launch()
                 
         assertIfInitialScreenDoesntExist()

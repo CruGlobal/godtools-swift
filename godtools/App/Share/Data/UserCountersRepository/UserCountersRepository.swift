@@ -12,13 +12,13 @@ import RequestOperation
 
 class UserCountersRepository {
     
-    private let api: UserCountersAPIType
+    private let api: UserCountersApiInterface
     private let cache: RealmUserCountersCache
     private let remoteUserCountersSync: RemoteUserCountersSync
     
     private var cancellables: Set<AnyCancellable> = Set()
     
-    init(api: UserCountersAPIType, cache: RealmUserCountersCache, remoteUserCountersSync: RemoteUserCountersSync) {
+    init(api: UserCountersApiInterface, cache: RealmUserCountersCache, remoteUserCountersSync: RemoteUserCountersSync) {
         self.api = api
         self.cache = cache
         self.remoteUserCountersSync = remoteUserCountersSync

@@ -12,10 +12,10 @@ import RequestOperation
 
 class RemoteUserCountersSync {
     
-    private let api: UserCountersAPIType
+    private let api: UserCountersApiInterface
     private let cache: RealmUserCountersCache
         
-    init(api: UserCountersAPIType, cache: RealmUserCountersCache) {
+    init(api: UserCountersApiInterface, cache: RealmUserCountersCache) {
         
         self.api = api
         self.cache = cache

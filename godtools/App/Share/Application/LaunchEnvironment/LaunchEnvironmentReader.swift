@@ -30,6 +30,15 @@ class LaunchEnvironmentReader {
         return Bool(stringBool)
     }
     
+    func getIsUITests() -> Bool? {
+        
+        guard let stringBool = launchEnvironment[LaunchEnvironmentKey.isUITests.value] else {
+            return nil
+        }
+        
+        return Bool(stringBool)
+    }
+    
     func getUrlDeepLink() -> String? {
         return launchEnvironment[LaunchEnvironmentKey.urlDeeplink.value]
     }
