@@ -103,17 +103,18 @@ struct ToolScreenShareTutorialView: View {
                     }
                 }
                 
-                if viewModel.tutorialPages.count > 0 {
+                if viewModel.tutorialPages.count > 1 {
                     
                     PageControl(
                         numberOfPages: viewModel.tutorialPages.count,
                         attributes: pageControlAttributes,
                         currentPage: $viewModel.currentPage
                     )
-                    .padding(EdgeInsets(top: 20, leading: 0, bottom: 20, trailing: 0))
+                    .padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0))
                 }
             }
             .frame(maxWidth: .infinity)
+            .padding([.bottom], 20)
         }
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
     }
