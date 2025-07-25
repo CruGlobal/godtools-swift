@@ -303,6 +303,8 @@ class ToolScreenShareFlow: Flow {
     }
 }
 
+// MARK: - Tool Screen Share Tutorial View
+
 extension ToolScreenShareFlow {
     
     private func getToolScreenShareTutorialView(toolId: String) -> UIViewController {
@@ -347,6 +349,20 @@ extension ToolScreenShareFlow {
         
         return hostingView
     }
+}
+
+// MARK: - Tool Screen Share Tutorial With QR Code Option View
+
+extension ToolScreenShareFlow {
+    
+    private func getToolScreenShareTutorialWithQRCodeOptionView() {
+        
+    }
+}
+
+// MARK: - Create Tool Screen Share Session View
+
+extension ToolScreenShareFlow {
     
     private func getCreatingToolScreenShareSessionView(createSessionTrigger: ToolScreenShareFlowCreateSessionTrigger? = nil) -> UIViewController {
         
@@ -385,6 +401,11 @@ extension ToolScreenShareFlow {
         
         return hostingView
     }
+}
+
+// MARK: - Create Screen Share Session Timed Out View
+
+extension ToolScreenShareFlow {
     
     private func getCreatingToolScreenShareSessionTimedOutView(domainModel: CreatingToolScreenShareSessionTimedOutDomainModel) -> UIViewController {
         
@@ -397,6 +418,11 @@ extension ToolScreenShareFlow {
         
         return view.controller
     }
+}
+
+// MARK: - Share Tool Screen Share Session View
+
+extension ToolScreenShareFlow {
     
     private func getShareToolScreenShareSessionView(domainModel: ShareToolScreenShareSessionDomainModel, shareUrl: String) -> UIViewController {
         
@@ -419,6 +445,11 @@ extension ToolScreenShareFlow {
         
         return view.controller
     }
+}
+
+// MARK: - Tool Screen Share QR Code View
+
+extension ToolScreenShareFlow {
     
     private func getToolScreenShareQRCodeView(shareUrl: String) -> UIViewController {
         
