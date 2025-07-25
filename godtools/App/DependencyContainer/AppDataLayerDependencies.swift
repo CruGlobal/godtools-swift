@@ -22,18 +22,16 @@ class AppDataLayerDependencies {
     
     private let sharedAppBuild: AppBuild
     private let sharedAppConfig: AppConfig
-    private let sharedInfoPlist: InfoPlist
     private let sharedUrlSessionPriority: URLSessionPriority = URLSessionPriority()
     private let sharedRealmDatabase: RealmDatabase
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
     private let sharedAnalytics: AnalyticsContainer
     private let firebaseEnabled: Bool
     
-    init(appBuild: AppBuild, appConfig: AppConfig, infoPlist: InfoPlist, realmDatabase: RealmDatabase, firebaseEnabled: Bool) {
+    init(appBuild: AppBuild, appConfig: AppConfig, realmDatabase: RealmDatabase, firebaseEnabled: Bool) {
         
         sharedAppBuild = appBuild
         sharedAppConfig = appConfig
-        sharedInfoPlist = infoPlist
         sharedRealmDatabase = realmDatabase
         self.firebaseEnabled = firebaseEnabled
         
@@ -164,7 +162,7 @@ class AppDataLayerDependencies {
     }
     
     func getInfoPlist() -> InfoPlist {
-        return sharedInfoPlist
+        return InfoPlist()
     }
     
     func getLanguagesRepository() -> LanguagesRepository {
