@@ -27,6 +27,7 @@ extension GoogleAuthentication: AuthenticationProviderInterface {
             accessToken: user.accessToken.tokenString,
             appleSignInAuthorizationCode: nil,
             idToken: idToken,
+            oidcToken: nil,
             profile: AuthenticationProviderProfile(
                 email: user.profile?.email,
                 familyName: user.profile?.familyName,

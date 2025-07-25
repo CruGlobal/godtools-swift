@@ -58,6 +58,8 @@
 		<key>UIImageName</key>
 		<string>LaunchImage</string>
 	</dict>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>To login with Facebook please allow tracking.</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
