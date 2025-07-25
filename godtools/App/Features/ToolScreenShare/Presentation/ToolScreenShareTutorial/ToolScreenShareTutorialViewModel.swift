@@ -20,6 +20,7 @@ class ToolScreenShareTutorialViewModel: ObservableObject {
     private let didViewToolScreenShareTutorialUseCase: DidViewToolScreenShareTutorialUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
+    private var didMarkTutorialAsViewed: Bool = false
         
     private weak var flowDelegate: FlowDelegate?
     
@@ -141,9 +142,11 @@ class ToolScreenShareTutorialViewModel: ObservableObject {
     
     private func markToolScreenShareTutorialViewed() {
      
-        guard showTutorialPages == .allPages else {
+        guard showTutorialPages == .allPages && !didMarkTutorialAsViewed else {
             return
         }
+        
+        didMarkTutorialAsViewed = true
         
         didViewToolScreenShareTutorialUseCase
             .didViewPublisher(toolId: toolId)
