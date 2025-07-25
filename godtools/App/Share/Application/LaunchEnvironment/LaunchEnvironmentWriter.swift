@@ -18,6 +18,10 @@ class LaunchEnvironmentWriter {
         launchEnvironment[LaunchEnvironmentKey.firebaseEnabled.value] = String(enabled)
     }
     
+    func setIsUITests(launchEnvironment: inout [String: String], isUITests: Bool) {
+        launchEnvironment[LaunchEnvironmentKey.isUITests.value] = String(isUITests)
+    }
+    
     func setUrlDeepLink(launchEnvironment: inout [String: String], url: String) {
         launchEnvironment[LaunchEnvironmentKey.urlDeeplink.value] = url
     }
