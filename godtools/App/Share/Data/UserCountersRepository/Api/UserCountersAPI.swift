@@ -10,7 +10,7 @@ import Foundation
 import RequestOperation
 import Combine
 
-class UserCountersAPI: UserCountersAPIType {
+class UserCountersAPI: UserCountersApiInterface {
     
     private let authSession: MobileContentApiAuthSession
     private let baseURL: String
