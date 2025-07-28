@@ -123,11 +123,6 @@ class ToolScreenShareFlow: Flow {
         case .closeTappedFromToolScreenShareTutorial:
             dismissToolScreenShareTutorial()
             
-        case .skipTappedFromToolScreenShareTutorial:
-            
-            dismissToolScreenShareTutorial()
-            presentCreatingToolScreenShareSession(createSessionTrigger: .skipTappedFromScreenShareTutorial)
-            
         case .generateQRCodeTappedFromToolScreenShareTutorial:
             
             dismissToolScreenShareTutorial()

@@ -207,7 +207,6 @@ enum FlowStep {
     // tool screen share
     case closeTappedFromToolScreenShareTutorial
     case generateQRCodeTappedFromToolScreenShareTutorial
-    case skipTappedFromToolScreenShareTutorial
     case shareLinkTappedFromToolScreenShareTutorial
     case closeTappedFromCreatingToolScreenShareSession
     case didCreateSessionFromCreatingToolScreenShareSession(result: Result<WebSocketChannel, TractRemoteSharePublisherError>, createSessionTrigger: ToolScreenShareFlowCreateSessionTrigger)

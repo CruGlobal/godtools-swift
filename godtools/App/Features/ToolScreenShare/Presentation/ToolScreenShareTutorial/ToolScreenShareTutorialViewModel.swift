@@ -167,7 +167,13 @@ extension ToolScreenShareTutorialViewModel {
     }
     
     @objc func skipTapped() {
-        flowDelegate?.navigate(step: .skipTappedFromToolScreenShareTutorial)
+        
+        guard tutorialPages.count > 0 else {
+            return
+        }
+        
+        let lastPage: Int = tutorialPages.count - 1
+        currentPage = lastPage
     }
     
     func generateQRCodeTapped() {
