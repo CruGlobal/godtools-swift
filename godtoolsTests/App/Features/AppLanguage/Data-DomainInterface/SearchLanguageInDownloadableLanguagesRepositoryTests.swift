@@ -6,17 +6,92 @@
 //  Copyright © 2024 Cru. All rights reserved.
 //
 
-import Foundation
+import Testing
 @testable import godtools
 import Combine
-import Quick
-import Nimble
 
-class SearchLanguageInDownloadableLanguagesRepositoryTests: QuickSpec {
+struct SearchLanguageInDownloadableLanguagesRepositoryTests {
     
-    override class func spec() {
+    private static let searchLanguageInDownloadableLanguages: SearchLanguageInDownloadableLanguagesRepository = getSearchLanguageInDownloadableLanguagesRepository()
+    private static let downloadableLanguagesList: [DownloadableLanguageListItemDomainModel] = getDownloadableLanguagesList()
+    
+    @Test(
+        """
+        Given: User is searching a language in the downloadable languages list.
+        When: The search text is a single letter 'c'.
+        Then: I should see all languages that contain a letter 'c' whether it be in the language translated in own language or language translated in app language regardless of placement and case sensitivity.
+        """
+    )
+    func searchingLanguagesWithSingleLetterSearchString() async {
         
         var cancellables: Set<AnyCancellable> = Set()
+        
+        var resultRef: [DownloadableLanguageListItemDomainModel] = Array()
+                
+        await confirmation(expectedCount: 1) { confirmation in
+            
+            Self.searchLanguageInDownloadableLanguages
+                .getSearchResultsPublisher(searchText: "c", downloadableLanguagesList: Self.downloadableLanguagesList)
+                .sink { (result: [DownloadableLanguageListItemDomainModel]) in
+                    
+                    confirmation()
+                    
+                    resultRef = result
+                }
+                .store(in: &cancellables)
+        }
+        
+        let searchedLanguages: [String] = resultRef.map({$0.languageId})
+        let expectedLanguageIds: [String] = ["1", "2", "4", "7"]
+        
+        #expect(searchedLanguages.elementsEqual(expectedLanguageIds))
+    }
+    
+    @Test(
+        """
+        Given: User is searching a language in the downloadable languages list.
+        When: The search text is multi-letter 'Ber'.
+        Then: I should see all languages that contain 'Ber' whether it be in the language translated in own language or language translated in app language regardless of placement and case sensitivity.
+        """
+    )
+    func searchingLanguagesWithMultiLetterSearchString() async {
+        
+        var cancellables: Set<AnyCancellable> = Set()
+        
+        var resultRef: [DownloadableLanguageListItemDomainModel] = Array()
+                
+        await confirmation(expectedCount: 1) { confirmation in
+            
+            Self.searchLanguageInDownloadableLanguages
+                .getSearchResultsPublisher(searchText: "Ber", downloadableLanguagesList: Self.downloadableLanguagesList)
+                .sink { (result: [DownloadableLanguageListItemDomainModel]) in
+                    
+                    confirmation()
+                    
+                    resultRef = result
+                }
+                .store(in: &cancellables)
+        }
+        
+        let searchedLanguages: [String] = resultRef.map({$0.languageId})
+        let expectedLanguageIds: [String] = ["2", "6", "7"]
+        
+        #expect(searchedLanguages.elementsEqual(expectedLanguageIds))
+    }
+}
+
+extension SearchLanguageInDownloadableLanguagesRepositoryTests {
+    
+    private static func getSearchLanguageInDownloadableLanguagesRepository() -> SearchLanguageInDownloadableLanguagesRepository {
+        
+        let searchLanguageInDownloadableLanguages = SearchLanguageInDownloadableLanguagesRepository(
+            stringSearcher: StringSearcher()
+        )
+        
+        return searchLanguageInDownloadableLanguages
+    }
+    
+    private static func getDownloadableLanguagesList() -> [DownloadableLanguageListItemDomainModel] {
         
         let downloadableLanguagesList = [
             DownloadableLanguageListItemDomainModel(
@@ -77,78 +152,6 @@ class SearchLanguageInDownloadableLanguagesRepositoryTests: QuickSpec {
             )
         ]
         
-        let searchLanguageInDownloadableLanguages = SearchLanguageInDownloadableLanguagesRepository(
-            stringSearcher: StringSearcher()
-        )
-        
-        describe("User is searching a language in the downloadable languages list.") {
-            
-            context("When the search text is a single letter 'c'.") {
-                
-                it("I should see all languages that contain a letter 'c' whether it be in the language translated in own language or language translated in app language regardless of placement and case sensitivity.") {
-                    
-                    var resultRef: [DownloadableLanguageListItemDomainModel] = Array()
-                    
-                    var sinkCompleted: Bool = false
-                    
-                    waitUntil { done in
-                        
-                        searchLanguageInDownloadableLanguages
-                            .getSearchResultsPublisher(searchText: "c", downloadableLanguagesList: downloadableLanguagesList)
-                            .sink { (result: [DownloadableLanguageListItemDomainModel]) in
-                                
-                                guard !sinkCompleted else {
-                                    return
-                                }
-                                
-                                resultRef = result
-                                
-                                sinkCompleted = true
-                                
-                                done()
-                            }
-                            .store(in: &cancellables)
-                    }
-                                        
-                    let expectedLanguageIds: [String] = ["1", "2", "4", "7"]
-                    
-                    expect(resultRef.map({$0.languageId})).to(contain(expectedLanguageIds))
-                }
-            }
-            
-            context("When the search text is multi-letter 'Ber'.") {
-                
-                it("I should see all languages that contain 'Ber' whether it be in the language translated in own language or language translated in app language regardless of placement and case sensitivity.") {
-                    
-                    var resultRef: [DownloadableLanguageListItemDomainModel] = Array()
-                    
-                    var sinkCompleted: Bool = false
-                    
-                    waitUntil { done in
-                        
-                        searchLanguageInDownloadableLanguages
-                            .getSearchResultsPublisher(searchText: "Ber", downloadableLanguagesList: downloadableLanguagesList)
-                            .sink { (result: [DownloadableLanguageListItemDomainModel]) in
-                                
-                                guard !sinkCompleted else {
-                                    return
-                                }
-                                
-                                resultRef = result
-                                
-                                sinkCompleted = true
-                                
-                                done()
-                            }
-                            .store(in: &cancellables)
-                    }
-                                        
-                    let expectedLanguageIds: [String] = ["2", "6", "7"]
-                    
-                    expect(resultRef.map({$0.languageId})).to(contain(expectedLanguageIds))
-                }
-            }
-        }
+        return downloadableLanguagesList
     }
 }
-
