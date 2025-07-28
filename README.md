@@ -187,7 +187,17 @@ Example:
     - https://www.ranorex.com/blog/given-when-then-tests/
 
 ##### Unit Tests
-Unit Tests focus more on the internals and individual pieces of code such as methods. These tests are isolated from anything else. 
+Unit Tests focus more on the internals and individual pieces of code such as methods. These tests are isolated from anything else.
+
+Common Gotchas:
+
+Because the TestsRealmDatabase by default uses a single realm instance on the main thread, there will be a crash when the realm instance is observing collection changes.
+
+*** Terminating app due to uncaught exception 'RLMException', reason:  
+Can only add notification blocks from within runloops.
+terminating due to uncaught exception of type NSException
+
+To ensure there isn't a crash the Test will need to be marked with the @MainActor to keep execution on the main thread.
 
 ### Fastlane
 
