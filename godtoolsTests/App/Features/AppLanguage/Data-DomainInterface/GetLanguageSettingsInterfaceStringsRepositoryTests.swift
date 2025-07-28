@@ -6,21 +6,172 @@
 //  Copyright © 2024 Cru. All rights reserved.
 //
 
-import Foundation
+import Testing
 @testable import godtools
 import Combine
-import Quick
-import Nimble
 
-class GetLanguageSettingsInterfaceStringsRepositoryTests: QuickSpec {
+struct GetLanguageSettingsInterfaceStringsRepositoryTests {
     
-    override class func spec() {
+    @Test(
+        """
+        Given: User is viewing the language settings.
+        When: The app is switched from English to Spanish.
+        Then: The interface strings should be translated into Spanish.
+        """
+    )
+    @MainActor func interfaceStringsAreTranslatedWhenAppLanguageChanges() async {
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        let testsDiContainer = TestsDiContainer()
+        let getLanguageSettingsInterfaceStringsRepository: GetLanguageSettingsInterfaceStringsRepository = Self.getLanguageSettingsInterfaceStringsRepository()
         
-        let testsRealmDatabase: RealmDatabase = testsDiContainer.dataLayer.getSharedRealmDatabase()
+        let appLanguagePublisher: CurrentValueSubject<AppLanguageDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
+        
+        var englishInterfaceStringsRef: LanguageSettingsInterfaceStringsDomainModel?
+        var spanishInterfaceStringsRef: LanguageSettingsInterfaceStringsDomainModel?
+        
+        var sinkCount: Int = 0
+        
+        await confirmation(expectedCount: 2) { confirmation in
+            
+            appLanguagePublisher
+                .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<LanguageSettingsInterfaceStringsDomainModel, Never> in
+                    
+                    return getLanguageSettingsInterfaceStringsRepository
+                        .getStringsPublisher(translateInAppLanguage: appLanguage)
+                        .eraseToAnyPublisher()
+                })
+                .sink { (interfaceStrings: LanguageSettingsInterfaceStringsDomainModel) in
+                    
+                    sinkCount += 1
+                    confirmation()
+                    
+                    if sinkCount == 1 {
+                        
+                        englishInterfaceStringsRef = interfaceStrings
+                        appLanguagePublisher.send(LanguageCodeDomainModel.spanish.rawValue)
+                    }
+                    else if sinkCount == 2 {
+                        
+                        spanishInterfaceStringsRef = interfaceStrings
+                    }
+                }
+                .store(in: &cancellables)
+        }
+        
+        #expect(englishInterfaceStringsRef?.navTitle == "Language settings")
+        #expect(englishInterfaceStringsRef?.appInterfaceLanguageTitle == "App interface language")
+        #expect(englishInterfaceStringsRef?.setAppLanguageMessage == "Set the language you'd like the whole app to be displayed in.")
+        #expect(englishInterfaceStringsRef?.toolLanguagesAvailableOfflineTitle == "Tool languages available offline")
+        #expect(englishInterfaceStringsRef?.downloadToolsForOfflineMessage == "Download all the tools in a language to make them available even if you're out of WiFi or cell service. Set the tool language via the options button within a tool.")
+        #expect(englishInterfaceStringsRef?.editDownloadedLanguagesButtonTitle == "Edit downloaded languages")
+                            
+        #expect(spanishInterfaceStringsRef?.navTitle == "Ajustes de idioma")
+        #expect(spanishInterfaceStringsRef?.appInterfaceLanguageTitle == "Idioma de la interfaz de la aplicación")
+        #expect(spanishInterfaceStringsRef?.setAppLanguageMessage == "Establece el idioma en el que deseas que se muestre toda la aplicación.")
+        #expect(spanishInterfaceStringsRef?.toolLanguagesAvailableOfflineTitle == "Idiomas de herramientas disponibles sin conexión")
+        #expect(spanishInterfaceStringsRef?.downloadToolsForOfflineMessage == "Descarga todas las herramientas en un idioma para que estén disponibles incluso si no tienes WiFi o servicio móvil. Establece el idioma de la herramienta mediante el botón de opciones dentro de una herramienta.")
+        #expect(spanishInterfaceStringsRef?.editDownloadedLanguagesButtonTitle == "Editar idiomas descargados")
+    }
+    
+    struct TestArgumentChooseAppLanguageButtonTitle {
+        let appLanguage: LanguageCodeDomainModel
+        let expectedValue: String
+    }
+    
+    @Test(
+        """
+        Given: User is viewing the language settings.
+        When: The app language is set.
+        Then: I expect the choose app language button title to display my chosen app language translated in my chosen app language.
+        """,
+        arguments: [
+            TestArgumentChooseAppLanguageButtonTitle(
+                appLanguage: .english,
+                expectedValue: "English"
+            ),
+            TestArgumentChooseAppLanguageButtonTitle(
+                appLanguage: .spanish,
+                expectedValue: "Español"
+            )
+        ]
+    )
+    @MainActor func chooseAppLanguageButtonTitleIsTranslatedInMyAppLanguage(argument: TestArgumentChooseAppLanguageButtonTitle) async {
+        
+        var cancellables: Set<AnyCancellable> = Set()
+        
+        let getLanguageSettingsInterfaceStringsRepository: GetLanguageSettingsInterfaceStringsRepository = Self.getLanguageSettingsInterfaceStringsRepository()
+        
+        var interfaceStringsRef: LanguageSettingsInterfaceStringsDomainModel?
+        
+        var sinkCount: Int = 0
+        
+        await confirmation(expectedCount: 1) { confirmation in
+            
+            getLanguageSettingsInterfaceStringsRepository
+                .getStringsPublisher(translateInAppLanguage: argument.appLanguage.rawValue)
+                .sink { (interfaceStrings: LanguageSettingsInterfaceStringsDomainModel) in
+                    
+                    sinkCount += 1
+                    confirmation()
+                    
+                    interfaceStringsRef = interfaceStrings
+                }
+                .store(in: &cancellables)
+        }
+        
+        #expect(interfaceStringsRef?.chooseAppLanguageButtonTitle == argument.expectedValue)
+    }
+    
+    struct TestArgumentNumberOfLanguages {
+        let appLanguage: LanguageCodeDomainModel
+        let expectedValue: String
+    }
+    
+    @Test(
+        """
+        Given: User is viewing the language settings.
+        When: The app language is set.
+        Then: I expect to see the number of app languages available translated in my app language.
+        """,
+        arguments: [
+            TestArgumentNumberOfLanguages(
+                appLanguage: .english,
+                expectedValue: "\(Self.getNumberOfTestAppLanguages()) Languages available"
+            )
+        ]
+    )
+    @MainActor func chooseAppLanguageIsTranslatedInMyLanguageEnglish(argument: TestArgumentNumberOfLanguages) async {
+        
+        var cancellables: Set<AnyCancellable> = Set()
+                
+        let getLanguageSettingsInterfaceStringsRepository: GetLanguageSettingsInterfaceStringsRepository = Self.getLanguageSettingsInterfaceStringsRepository()
+        
+        var interfaceStringsRef: LanguageSettingsInterfaceStringsDomainModel?
+        
+        var sinkCount: Int = 0
+        
+        await confirmation(expectedCount: 1) { confirmation in
+            
+            getLanguageSettingsInterfaceStringsRepository
+                .getStringsPublisher(translateInAppLanguage: argument.appLanguage.rawValue)
+                .sink { (interfaceStrings: LanguageSettingsInterfaceStringsDomainModel) in
+                    
+                    sinkCount += 1
+                    confirmation()
+                    
+                    interfaceStringsRef = interfaceStrings
+                }
+                .store(in: &cancellables)
+        }
+        
+        #expect(interfaceStringsRef?.numberOfAppLanguagesAvailable == argument.expectedValue)
+    }
+}
+
+extension GetLanguageSettingsInterfaceStringsRepositoryTests {
+    
+    private static func getAppLanguages() -> [AppLanguageCodable] {
         
         let appLanguages: [AppLanguageCodable] = [
             AppLanguageCodable(languageCode: "en", languageDirection: .leftToRight, languageScriptCode: nil),
@@ -30,8 +181,22 @@ class GetLanguageSettingsInterfaceStringsRepositoryTests: QuickSpec {
             AppLanguageCodable(languageCode: "lv", languageDirection: .leftToRight, languageScriptCode: nil)
         ]
         
-        let numberOfTestAppLanguages: Int = appLanguages.count
-
+        return appLanguages
+    }
+    
+    private static func getNumberOfTestAppLanguages() -> Int {
+        
+        return Self.getAppLanguages().count
+    }
+    
+    private static func getLanguageSettingsInterfaceStringsRepository() -> GetLanguageSettingsInterfaceStringsRepository {
+        
+        let testsDiContainer = TestsDiContainer()
+        
+        let testsRealmDatabase: RealmDatabase = testsDiContainer.dataLayer.getSharedRealmDatabase()
+        
+        let appLanguages: [AppLanguageCodable] = Self.getAppLanguages()
+        
         let mockAppLanguagesSync: AppLanguagesRepositorySyncInterface = MockAppLanguagesRepositorySync(
             realmDatabase: testsRealmDatabase,
             appLanguages: appLanguages
@@ -76,166 +241,6 @@ class GetLanguageSettingsInterfaceStringsRepositoryTests: QuickSpec {
             appLanguagesRepository: appLanguagesRepository
         )
         
-        describe("User is viewing the language settings.") {
-         
-            context("When the app language is switched from English to Spanish.") {
-                             
-                it("The interface strings should be translated into Spanish.") {
-                    
-                    let appLanguagePublisher: CurrentValueSubject<AppLanguageDomainModel, Never> = CurrentValueSubject(LanguageCodeDomainModel.english.value)
-                    
-                    var englishInterfaceStringsRef: LanguageSettingsInterfaceStringsDomainModel?
-                    var spanishInterfaceStringsRef: LanguageSettingsInterfaceStringsDomainModel?
-                    
-                    var sinkCount: Int = 0
-                    var sinkCompleted: Bool = false
-                    
-                    waitUntil { done in
-                        
-                        appLanguagePublisher
-                            .flatMap({ (appLanguage: AppLanguageDomainModel) -> AnyPublisher<LanguageSettingsInterfaceStringsDomainModel, Never> in
-                                
-                                return getLanguageSettingsInterfaceStringsRepository
-                                    .getStringsPublisher(translateInAppLanguage: appLanguage)
-                                    .eraseToAnyPublisher()
-                            })
-                            .sink { (interfaceStrings: LanguageSettingsInterfaceStringsDomainModel) in
-                                
-                                guard !sinkCompleted else {
-                                    return
-                                }
-                                
-                                sinkCount += 1
-                                
-                                if sinkCount == 1 {
-                                    
-                                    englishInterfaceStringsRef = interfaceStrings
-                                }
-                                else if sinkCount == 2 {
-                                    
-                                    spanishInterfaceStringsRef = interfaceStrings
-                                    
-                                    sinkCompleted = true
-                                    
-                                    done()
-                                }
-                                                                
-                                if sinkCount == 1 {
-                                    appLanguagePublisher.send(LanguageCodeDomainModel.spanish.rawValue)
-                                }
-                            }
-                            .store(in: &cancellables)
-                    }
-
-                    expect(englishInterfaceStringsRef?.navTitle).to(equal("Language settings"))
-                    expect(englishInterfaceStringsRef?.appInterfaceLanguageTitle).to(equal("App interface language"))
-                    expect(englishInterfaceStringsRef?.setAppLanguageMessage).to(equal("Set the language you'd like the whole app to be displayed in."))
-                    expect(englishInterfaceStringsRef?.toolLanguagesAvailableOfflineTitle).to(equal("Tool languages available offline"))
-                    expect(englishInterfaceStringsRef?.downloadToolsForOfflineMessage).to(equal("Download all the tools in a language to make them available even if you're out of WiFi or cell service. Set the tool language via the options button within a tool."))
-                    expect(englishInterfaceStringsRef?.editDownloadedLanguagesButtonTitle).to(equal("Edit downloaded languages"))
-                                        
-                    expect(spanishInterfaceStringsRef?.navTitle).to(equal("Ajustes de idioma"))
-                    expect(spanishInterfaceStringsRef?.appInterfaceLanguageTitle).to(equal("Idioma de la interfaz de la aplicación"))
-                    expect(spanishInterfaceStringsRef?.setAppLanguageMessage).to(equal("Establece el idioma en el que deseas que se muestre toda la aplicación."))
-                    expect(spanishInterfaceStringsRef?.toolLanguagesAvailableOfflineTitle).to(equal("Idiomas de herramientas disponibles sin conexión"))
-                    expect(spanishInterfaceStringsRef?.downloadToolsForOfflineMessage).to(equal("Descarga todas las herramientas en un idioma para que estén disponibles incluso si no tienes WiFi o servicio móvil. Establece el idioma de la herramienta mediante el botón de opciones dentro de una herramienta."))
-                    expect(spanishInterfaceStringsRef?.editDownloadedLanguagesButtonTitle).to(equal("Editar idiomas descargados"))
-                }
-            }
-            
-            context("When the app language is English.") {
-                
-                it("I expect the choose app language button title to display my app language English translated in English.") {
-                                        
-                    var interfaceStringsRef: LanguageSettingsInterfaceStringsDomainModel?
-                    var sinkCompleted: Bool = false
-                    
-                    waitUntil { done in
-                        
-                        getLanguageSettingsInterfaceStringsRepository
-                            .getStringsPublisher(translateInAppLanguage: "en")
-                            .sink { (interfaceStrings: LanguageSettingsInterfaceStringsDomainModel) in
-                                
-                                guard !sinkCompleted else {
-                                    return
-                                }
-                                
-                                sinkCompleted = true
-                                
-                                interfaceStringsRef = interfaceStrings
-                                
-                                done()
-                                
-                            }
-                            .store(in: &cancellables)
-                    }
-                    
-                    expect(interfaceStringsRef?.chooseAppLanguageButtonTitle).to(equal("English"))
-                }
-            }
-            
-            context("When the app language is Spanish.") {
-                
-                it("I expect the choose app language button title to display my app language Spanish translated in Spanish.") {
-                                        
-                    var interfaceStringsRef: LanguageSettingsInterfaceStringsDomainModel?
-                    var sinkCompleted: Bool = false
-                    
-                    waitUntil { done in
-                        
-                        getLanguageSettingsInterfaceStringsRepository
-                            .getStringsPublisher(translateInAppLanguage: "es")
-                            .sink { (interfaceStrings: LanguageSettingsInterfaceStringsDomainModel) in
-                                
-                                guard !sinkCompleted else {
-                                    return
-                                }
-                                
-                                sinkCompleted = true
-                                
-                                interfaceStringsRef = interfaceStrings
-                                
-                                done()
-                                
-                            }
-                            .store(in: &cancellables)
-                    }
-                    
-                    expect(interfaceStringsRef?.chooseAppLanguageButtonTitle).to(equal("Español"))
-                }
-            }
-            
-            context("When my app language is English.") {
-                       
-                it("I expect to see the number of app languages available translated in my app language English.") {
-                                        
-                    var interfaceStringsRef: LanguageSettingsInterfaceStringsDomainModel?
-                    var sinkCompleted: Bool = false
-                    
-                    waitUntil { done in
-                        
-                        getLanguageSettingsInterfaceStringsRepository
-                            .getStringsPublisher(translateInAppLanguage: "en")
-                            .sink { (interfaceStrings: LanguageSettingsInterfaceStringsDomainModel) in
-                                
-                                guard !sinkCompleted else {
-                                    return
-                                }
-                                
-                                sinkCompleted = true
-                                
-                                interfaceStringsRef = interfaceStrings
-                                                                
-                                done()
-                                
-                            }
-                            .store(in: &cancellables)
-                    }
-                                        
-                    expect(interfaceStringsRef?.numberOfAppLanguagesAvailable).to(contain("\(numberOfTestAppLanguages)"))
-                    expect(interfaceStringsRef?.numberOfAppLanguagesAvailable).to(equal("\(numberOfTestAppLanguages) Languages available"))
-                }
-            }
-        }
+        return getLanguageSettingsInterfaceStringsRepository
     }
 }
