@@ -5698,6 +5698,21 @@
 			path = RemoteConfigRepository;
 			sourceTree = "<group>";
 		};
+		4553BF302E37CC2000CD4AFE /* Data-DomainInterface */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Data-DomainInterface";
+			sourceTree = "<group>";
+		};
+		4553BF312E37CC2000CD4AFE /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				4553BF302E37CC2000CD4AFE /* Data-DomainInterface */,
+			);
+			path = Dashboard;
+			sourceTree = "<group>";
+		};
 		4553C1362DFC8C9A00F7CBDE /* DependencyContainer */ = {
 			isa = PBXGroup;
 			children = (
@@ -10527,6 +10542,7 @@
 			isa = PBXGroup;
 			children = (
 				45D73BC72E341D9000D25E16 /* AppLanguage */,
+				4553BF312E37CC2000CD4AFE /* Dashboard */,
 			);
 			path = Features;
 			sourceTree = "<group>";
