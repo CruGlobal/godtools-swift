@@ -12,9 +12,6 @@ import Combine
 
 struct SearchAppLanguageInAppLanguagesListRepositoryTests {
     
-    private static let searchAppLanguageList: SearchAppLanguageInAppLanguagesListRepository = getSearchAppLanguageInAppLanguagesListRepository()
-    private static let appLanguagesList: [AppLanguageListItemDomainModel] = getAppLanguagesList()
-    
     @Test(
         """
         Given: User is searching an app language in the app languages list.
@@ -24,14 +21,17 @@ struct SearchAppLanguageInAppLanguagesListRepositoryTests {
     )
     func searchingAppLanguagesWithSingleLetterSearchString() async {
         
+        let searchAppLanguageList: SearchAppLanguageInAppLanguagesListRepository = Self.getSearchAppLanguageInAppLanguagesListRepository()
+        let appLanguagesList: [AppLanguageListItemDomainModel] = Self.getAppLanguagesList()
+        
         var cancellables: Set<AnyCancellable> = Set()
         
         var resultRef: [AppLanguageListItemDomainModel] = Array()
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            Self.searchAppLanguageList
-                .getSearchResultsPublisher(searchText: "e", appLanguagesList: Self.appLanguagesList)
+            searchAppLanguageList
+                .getSearchResultsPublisher(searchText: "e", appLanguagesList: appLanguagesList)
                 .sink { (result: [AppLanguageListItemDomainModel]) in
                 
                     confirmation()
@@ -57,14 +57,17 @@ struct SearchAppLanguageInAppLanguagesListRepositoryTests {
     )
     func searchingAppLanguagesWithMultiLetterSearchString() async {
         
+        let searchAppLanguageList: SearchAppLanguageInAppLanguagesListRepository = Self.getSearchAppLanguageInAppLanguagesListRepository()
+        let appLanguagesList: [AppLanguageListItemDomainModel] = Self.getAppLanguagesList()
+        
         var cancellables: Set<AnyCancellable> = Set()
         
         var resultRef: [AppLanguageListItemDomainModel] = Array()
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            Self.searchAppLanguageList
-                .getSearchResultsPublisher(searchText: "Ind", appLanguagesList: Self.appLanguagesList)
+            searchAppLanguageList
+                .getSearchResultsPublisher(searchText: "Ind", appLanguagesList: appLanguagesList)
                 .sink { (result: [AppLanguageListItemDomainModel]) in
                 
                     confirmation()

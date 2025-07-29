@@ -28,7 +28,8 @@ class GetLessonFilterLanguagesRepository: GetLessonFilterLanguagesRepositoryInte
     
     func getLessonFilterLanguagesPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<[LessonFilterLanguageDomainModel], Never> {
         
-        return resourcesRepository.getResourcesChangedPublisher()
+        return resourcesRepository
+            .getResourcesChangedPublisher()
             .flatMap { _ in
                 
                 let languageIds = self.resourcesRepository.getAllLessonLanguageIds()
@@ -68,7 +69,7 @@ extension GetLessonFilterLanguagesRepository {
     private func createLessonLanguageFilterDomainModelList(from languageIds: [String], translatedInAppLanguage: AppLanguageDomainModel) -> [LessonFilterLanguageDomainModel] {
         
         let languages: [LessonFilterLanguageDomainModel] = languagesRepository.getLanguages(ids: languageIds)
-            .compactMap { languageModel in
+            .compactMap { (languageModel: LanguageModel) in
                 
                 let lessonsAvailableCount: Int = resourcesRepository.getAllLessonsCount(filterByLanguageId: languageModel.id)
                 
@@ -76,11 +77,14 @@ extension GetLessonFilterLanguagesRepository {
                     return nil
                 }
                 
-                return self.createLessonLanguageFilterDomainModel(with: languageModel, translatedInAppLanguage: translatedInAppLanguage)
+                return self.createLessonLanguageFilterDomainModel(
+                    with: languageModel,
+                    translatedInAppLanguage: translatedInAppLanguage
+                )
             }
-            .sorted { language1, language2 in
+            .sorted { (language1: LessonFilterLanguageDomainModel, language2: LessonFilterLanguageDomainModel) in
                 
-                return language1.translatedName.lowercased() < language2.translatedName.lowercased()
+                return language1.languageNameTranslatedInAppLanguage.lowercased() < language2.languageNameTranslatedInAppLanguage.lowercased()
             }
         
         return languages
@@ -90,15 +94,15 @@ extension GetLessonFilterLanguagesRepository {
         
         let lessonsAvailableCount: Int = resourcesRepository.getAllLessonsCount(filterByLanguageId: languageModel.id)
 
-        let languageName = getTranslatedLanguageName.getLanguageName(language: languageModel.code, translatedInLanguage: languageModel.code)
-        let translatedLanguageName = getTranslatedLanguageName.getLanguageName(language: languageModel.code, translatedInLanguage: translatedInAppLanguage)
+        let languageNameTranslatedInLanguage = getTranslatedLanguageName.getLanguageName(language: languageModel.code, translatedInLanguage: languageModel.code)
+        let languageNameTranslatedInAppLanguage = getTranslatedLanguageName.getLanguageName(language: languageModel.code, translatedInLanguage: translatedInAppLanguage)
         
         let lessonsAvailableText: String = getLessonsAvailableText(lessonsAvailableCount: lessonsAvailableCount, translatedInAppLanguage: translatedInAppLanguage)
         
         return LessonFilterLanguageDomainModel(
             languageId: languageModel.id,
-            languageName: languageName,
-            translatedName: translatedLanguageName,
+            languageNameTranslatedInLanguage: languageNameTranslatedInLanguage,
+            languageNameTranslatedInAppLanguage: languageNameTranslatedInAppLanguage,
             lessonsAvailableText: lessonsAvailableText
         )
     }

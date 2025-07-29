@@ -34,7 +34,10 @@ class ResourcesRepository {
     }
     
     func getResourcesChangedPublisher() -> AnyPublisher<Void, Never> {
-        return cache.getResourcesChangedPublisher()
+        return cache
+            .getResourcesChangedPublisher()
+            .prepend(Void())
+            .eraseToAnyPublisher()
     }
     
     func getResource(id: String) -> ResourceModel? {

@@ -10,15 +10,15 @@ import Foundation
 
 struct LessonFilterLanguageDomainModel {
     let languageId: String
-    let languageName: String
-    let translatedName: String
+    let languageNameTranslatedInLanguage: String
+    let languageNameTranslatedInAppLanguage: String
     let lessonsAvailableText: String
 }
 
 extension LessonFilterLanguageDomainModel: StringSearchable {
     
     var searchableStrings: [String] {
-        return [languageName, translatedName]
+        return [languageNameTranslatedInLanguage, languageNameTranslatedInAppLanguage]
     }
 }
 
