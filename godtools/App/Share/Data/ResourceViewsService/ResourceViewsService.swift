@@ -21,10 +21,6 @@ class ResourceViewsService {
         self.failedResourceViewsCache = failedResourceViewsCache
     }
     
-    deinit {
-        print("x deinit: \(type(of: self))")
-    }
-    
     func postNewResourceViewPublisher(resourceId: String, requestPriority: RequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
                 
         let resourceView = ResourceViewModel(resourceId: resourceId)

@@ -22,18 +22,16 @@ class AppDataLayerDependencies {
     
     private let sharedAppBuild: AppBuild
     private let sharedAppConfig: AppConfig
-    private let sharedInfoPlist: InfoPlist
     private let sharedUrlSessionPriority: URLSessionPriority = URLSessionPriority()
     private let sharedRealmDatabase: RealmDatabase
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
     private let sharedAnalytics: AnalyticsContainer
     private let firebaseEnabled: Bool
     
-    init(appBuild: AppBuild, appConfig: AppConfig, infoPlist: InfoPlist, realmDatabase: RealmDatabase, firebaseEnabled: Bool) {
+    init(appBuild: AppBuild, appConfig: AppConfig, realmDatabase: RealmDatabase, firebaseEnabled: Bool) {
         
         sharedAppBuild = appBuild
         sharedAppConfig = appConfig
-        sharedInfoPlist = infoPlist
         sharedRealmDatabase = realmDatabase
         self.firebaseEnabled = firebaseEnabled
         
@@ -142,8 +140,8 @@ class AppDataLayerDependencies {
         return FavoritingToolMessageCache(userDefaultsCache: sharedUserDefaultsCache)
     }
     
-    func getFirebaseMessaging() -> FirebaseMessaging {
-        return FirebaseMessaging()
+    func getSharedFirebaseMessaging() -> FirebaseMessaging {
+        return FirebaseMessaging.shared
     }
     
     func getFollowUpsService() -> FollowUpsService {
@@ -164,7 +162,7 @@ class AppDataLayerDependencies {
     }
     
     func getInfoPlist() -> InfoPlist {
-        return sharedInfoPlist
+        return InfoPlist()
     }
     
     func getLanguagesRepository() -> LanguagesRepository {
@@ -201,7 +199,10 @@ class AppDataLayerDependencies {
     }
     
     func getLocalizationServices() -> LocalizationServices {
-        return LocalizationServices(localizableStringsFilesBundle: Bundle.main)
+        return LocalizationServices(
+            localizableStringsFilesBundle: Bundle.main,
+            isUsingBaseInternationalization: false
+        )
     }
     
     func getMenuInterfaceStringsRepositoryInterface() -> GetMenuInterfaceStringsRepositoryInterface {

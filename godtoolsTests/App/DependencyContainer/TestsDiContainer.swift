@@ -20,7 +20,6 @@ class TestsDiContainer: AppDiContainer {
         super.init(
             appBuild: appBuild,
             appConfig: appConfig,
-            infoPlist: InfoPlist(),
             realmDatabase: realmDatabase,
             firebaseEnabled: false
         )
