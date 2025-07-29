@@ -11,7 +11,6 @@ import SwiftUI
 struct ToolScreenShareTutorialView: View {
     
     private let pageControlAttributes: PageControlAttributesType = GTPageControlAttributes()
-    private let continueButtonHorizontalPadding: CGFloat = 50
     private let continueButtonHeight: CGFloat = 50
     
     @ObservedObject private var viewModel: ToolScreenShareTutorialViewModel
@@ -59,23 +58,63 @@ struct ToolScreenShareTutorialView: View {
                     .tabViewStyle(.page(indexDisplayMode: .never))
                     .animation(.easeOut, value: viewModel.currentPage)
                 }
-
-                GTBlueButton(title: viewModel.continueTitle, font: FontLibrary.sfProTextRegular.font(size: 18), width: geometry.size.width - (continueButtonHorizontalPadding * 2), height: continueButtonHeight) {
+                
+                HStack(alignment: .center, spacing: 12) {
                     
-                    viewModel.continueTapped()
+                    let isSingleButton: Bool = viewModel.hidesGenerateQRCodeButton
+                    
+                    let horizontalPadding: CGFloat = isSingleButton ? 50 : 30
+                    
+                    let titlePadding: CGFloat? = isSingleButton ? nil : 4
+                    
+                    let buttonWidth: CGFloat = isSingleButton
+                    ? (geometry.size.width - (horizontalPadding * 2))
+                    : floor(geometry.size.width / 2) - horizontalPadding
+                    
+                    let buttonFontSize: CGFloat = isSingleButton ? 18 : 16
+                    
+                    let buttonFont: Font = FontLibrary.sfProTextRegular.font(size: buttonFontSize)
+                    
+                    if !viewModel.hidesGenerateQRCodeButton {
+                        
+                        GTWhiteButton(
+                            title: viewModel.generateQRCodeButtonTitle,
+                            font: buttonFont,
+                            width: buttonWidth,
+                            height: continueButtonHeight,
+                            titleHorizontalPadding: titlePadding,
+                            titleVerticalPadding: titlePadding
+                        ) {
+                            
+                            viewModel.generateQRCodeTapped()
+                        }
+                    }
+                    
+                    GTBlueButton(
+                        title: viewModel.continueTitle,
+                        font: buttonFont,
+                        width: buttonWidth,
+                        height: continueButtonHeight,
+                        titleHorizontalPadding: titlePadding,
+                        titleVerticalPadding: titlePadding
+                    ) {
+                        
+                        viewModel.continueTapped()
+                    }
                 }
                 
-                if viewModel.tutorialPages.count > 0 {
+                if viewModel.tutorialPages.count > 1 {
                     
                     PageControl(
                         numberOfPages: viewModel.tutorialPages.count,
                         attributes: pageControlAttributes,
                         currentPage: $viewModel.currentPage
                     )
-                    .padding(EdgeInsets(top: 20, leading: 0, bottom: 20, trailing: 0))
+                    .padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0))
                 }
             }
             .frame(maxWidth: .infinity)
+            .padding([.bottom], 20)
         }
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
     }

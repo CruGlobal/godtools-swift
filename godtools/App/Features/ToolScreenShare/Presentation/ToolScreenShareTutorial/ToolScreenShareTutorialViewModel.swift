@@ -11,29 +11,35 @@ import Combine
 
 class ToolScreenShareTutorialViewModel: ObservableObject {
     
-    private static var didViewToolScreenShareTutorialCancellable: AnyCancellable?
-    
+    private static var backgroundCancellables: Set<AnyCancellable> = Set()
+        
     private let toolId: String
+    private let showTutorialPages: ShowToolScreenShareTutorialPages
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let viewToolScreenShareTutorialUseCase: ViewToolScreenShareTutorialUseCase
     private let didViewToolScreenShareTutorialUseCase: DidViewToolScreenShareTutorialUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
+    private var didMarkTutorialAsViewed: Bool = false
         
     private weak var flowDelegate: FlowDelegate?
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
-    @Published private var interfaceStrings: ToolScreenShareInterfaceStringsDomainModel?
+    @Published private var interfaceStrings: ToolScreenShareInterfaceStringsDomainModel = ToolScreenShareInterfaceStringsDomainModel.emptyStrings
     
-    @Published var hidesSkipButton: Bool = false
-    @Published var tutorialPages: [ToolScreenShareTutorialPageDomainModel] = Array()
-    @Published var continueTitle: String = ""
+    @Published private(set) var hidesSkipButton: Bool = false
+    @Published private(set) var hidesGenerateQRCodeButton: Bool = true
+    @Published private(set) var tutorialPages: [ToolScreenShareTutorialPageDomainModel] = Array()
+    @Published private(set) var continueTitle: String = ""
+    @Published private(set) var generateQRCodeButtonTitle: String = ""
+    
     @Published var currentPage: Int = 0
     
-    init(flowDelegate: FlowDelegate, toolId: String, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewToolScreenShareTutorialUseCase: ViewToolScreenShareTutorialUseCase, didViewToolScreenShareTutorialUseCase: DidViewToolScreenShareTutorialUseCase) {
+    init(flowDelegate: FlowDelegate, toolId: String, showTutorialPages: ShowToolScreenShareTutorialPages, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewToolScreenShareTutorialUseCase: ViewToolScreenShareTutorialUseCase, didViewToolScreenShareTutorialUseCase: DidViewToolScreenShareTutorialUseCase) {
         
         self.flowDelegate = flowDelegate
         self.toolId = toolId
+        self.showTutorialPages = showTutorialPages
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.viewToolScreenShareTutorialUseCase = viewToolScreenShareTutorialUseCase
         self.didViewToolScreenShareTutorialUseCase = didViewToolScreenShareTutorialUseCase
@@ -55,7 +61,26 @@ class ToolScreenShareTutorialViewModel: ObservableObject {
             .sink { [weak self] (toolScreenShareTutorial: ToolScreenShareTutorialDomainModel) in
                 
                 self?.interfaceStrings = toolScreenShareTutorial.interfaceStrings
-                self?.tutorialPages = toolScreenShareTutorial.pages
+                self?.generateQRCodeButtonTitle = toolScreenShareTutorial.interfaceStrings.generateQRCodeActionTitle
+                
+                let tutorialPages: [ToolScreenShareTutorialPageDomainModel]
+                
+                switch showTutorialPages {
+                
+                case .lastPageWithQRCodeOption:
+                   
+                    if let lastPage = toolScreenShareTutorial.pages.last {
+                        tutorialPages = [lastPage]
+                    }
+                    else {
+                        tutorialPages = toolScreenShareTutorial.pages
+                    }
+                    
+                default:
+                    tutorialPages = toolScreenShareTutorial.pages
+                }
+                
+                self?.tutorialPages = tutorialPages
             }
             .store(in: &cancellables)
         
@@ -84,7 +109,14 @@ class ToolScreenShareTutorialViewModel: ObservableObject {
                 return
             }
             
-            weakSelf.hidesSkipButton = weakSelf.getIsOnLastPage(tutorialPages: tutorialPages)
+            let isOnLastPage: Bool = weakSelf.getIsOnLastPage(tutorialPages: tutorialPages)
+            
+            if isOnLastPage {
+                weakSelf.markToolScreenShareTutorialViewed()
+            }
+            
+            weakSelf.hidesSkipButton = isOnLastPage
+            weakSelf.hidesGenerateQRCodeButton = !isOnLastPage
         }
         .store(in: &cancellables)
     }
@@ -110,12 +142,19 @@ class ToolScreenShareTutorialViewModel: ObservableObject {
     
     private func markToolScreenShareTutorialViewed() {
      
-        ToolScreenShareTutorialViewModel.didViewToolScreenShareTutorialCancellable = didViewToolScreenShareTutorialUseCase
+        guard showTutorialPages == .allPages && !didMarkTutorialAsViewed else {
+            return
+        }
+        
+        didMarkTutorialAsViewed = true
+        
+        didViewToolScreenShareTutorialUseCase
             .didViewPublisher(toolId: toolId)
             .receive(on: DispatchQueue.main)
             .sink { _ in
                 
             }
+            .store(in: &Self.backgroundCancellables)
     }
 }
 
@@ -129,9 +168,16 @@ extension ToolScreenShareTutorialViewModel {
     
     @objc func skipTapped() {
         
-        markToolScreenShareTutorialViewed()
+        guard tutorialPages.count > 0 else {
+            return
+        }
         
-        flowDelegate?.navigate(step: .skipTappedFromToolScreenShareTutorial)
+        let lastPage: Int = tutorialPages.count - 1
+        currentPage = lastPage
+    }
+    
+    func generateQRCodeTapped() {
+        flowDelegate?.navigate(step: .generateQRCodeTappedFromToolScreenShareTutorial)
     }
     
     func continueTapped() {
@@ -151,9 +197,6 @@ extension ToolScreenShareTutorialViewModel {
     }
     
     private func shareLinkTapped() {
-        
-        markToolScreenShareTutorialViewed()
-        
         flowDelegate?.navigate(step: .shareLinkTappedFromToolScreenShareTutorial)
     }
 }
