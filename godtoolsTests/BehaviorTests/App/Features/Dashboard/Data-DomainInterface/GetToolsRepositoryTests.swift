@@ -378,22 +378,11 @@ extension GetToolsRepositoryTests {
     
     private static func getToolsRepository(allTools: [RealmResource]) -> GetToolsRepository {
         
-        let realmDatabase: RealmDatabase = TestsInMemoryRealmDatabase()
-        
-        let testsDiContainer = TestsDiContainer(realmDatabase: realmDatabase)
-                    
         let realmObjectsToAdd: [Object] = allTools
         
-        let realm: Realm = realmDatabase.openRealm()
-                    
-        do {
-            try realm.write {
-                realm.add(realmObjectsToAdd, update: .all)
-            }
-        }
-        catch _ {
-            
-        }
+        let realmDatabase: RealmDatabase = TestsInMemoryRealmDatabase(addObjectsToDatabase: realmObjectsToAdd)
+        
+        let testsDiContainer = TestsDiContainer(realmDatabase: realmDatabase)
         
         let getToolsRepository = GetToolsRepository(
             resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),
