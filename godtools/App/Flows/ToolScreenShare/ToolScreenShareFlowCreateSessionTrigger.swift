@@ -10,6 +10,8 @@ import Foundation
 
 enum ToolScreenShareFlowCreateSessionTrigger {
     
-    case generateQRCode
-    case shareLink
+    case automatic
+    case generateQRCodeTappedFromScreenShareTutorial
+    case shareLinkTappedFromScreenShareTutorial
+    case skipTappedFromScreenShareTutorial
 }
