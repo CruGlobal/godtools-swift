@@ -14,6 +14,7 @@ import RealmSwift
 
 struct GetToolsRepositoryTests {
     
+    private static let testsDiContainer: TestsDiContainer = TestsDiContainer(realmDatabase: TestsInMemoryRealmDatabase(addObjectsToDatabase: Self.allTools))
     private static let englishLanguage: RealmLanguage = Self.getLanguage(id: "0", code: .english)
     private static let frenchLanguage: RealmLanguage = Self.getLanguage(id: "1", code: .french)
     private static let russianLanguage: RealmLanguage = Self.getLanguage(id: "2", code: .russian)
@@ -23,7 +24,6 @@ struct GetToolsRepositoryTests {
     private static let growthTools: [RealmResource] = Self.getGrowthTools()
     private static let articleTools: [RealmResource] = Self.getArticleTools()
     private static let allTools: [RealmResource] = conversationStarterTools + gospelTools + growthTools + articleTools
-    private static let toolsRepository: GetToolsRepository = getToolsRepository(allTools: allTools)
     private static let categoryConversationStarter: String = "conversation_starter"
     private static let categoryGospel: String = "gospel"
     private static let categoryArticles: String = "articles"
@@ -38,13 +38,15 @@ struct GetToolsRepositoryTests {
     )
     @MainActor func anyCategoryAndAnyLanguageShouldShowAllTools() async {
         
+        let toolsRepository = Self.getToolsRepository()
+        
         var cancellables: Set<AnyCancellable> = Set()
         
         var toolsListRef: [ToolListItemDomainModel] = Array()
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            Self.toolsRepository
+            toolsRepository
                 .getToolsPublisher(
                     translatedInAppLanguage: "",
                     languageIdForAvailabilityText: nil,
@@ -76,6 +78,8 @@ struct GetToolsRepositoryTests {
     )
     @MainActor func categoryGrowthCategoryAndAnyLanguageShouldShowCategoryGrowthTools() async {
         
+        let toolsRepository = Self.getToolsRepository()
+        
         var cancellables: Set<AnyCancellable> = Set()
         
         var toolsListRef: [ToolListItemDomainModel] = Array()
@@ -93,7 +97,7 @@ struct GetToolsRepositoryTests {
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            Self.toolsRepository
+            toolsRepository
                 .getToolsPublisher(
                     translatedInAppLanguage: "",
                     languageIdForAvailabilityText: nil,
@@ -125,6 +129,8 @@ struct GetToolsRepositoryTests {
     )
     @MainActor func categoryIsAnyAndLanguageIsRussianShouldShowToolsThatSupportRussian() async {
         
+        let toolsRepository = Self.getToolsRepository()
+        
         var cancellables: Set<AnyCancellable> = Set()
         
         var toolsListRef: [ToolListItemDomainModel] = Array()
@@ -144,7 +150,7 @@ struct GetToolsRepositoryTests {
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            Self.toolsRepository
+            toolsRepository
                 .getToolsPublisher(
                     translatedInAppLanguage: "",
                     languageIdForAvailabilityText: nil,
@@ -176,6 +182,8 @@ struct GetToolsRepositoryTests {
     )
     @MainActor func categoryIsAnyAndLanguageIsSpanishShouldShowToolsThatSupportSpanish() async {
         
+        let toolsRepository = Self.getToolsRepository()
+        
         var cancellables: Set<AnyCancellable> = Set()
         
         var toolsListRef: [ToolListItemDomainModel] = Array()
@@ -195,7 +203,7 @@ struct GetToolsRepositoryTests {
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            Self.toolsRepository
+            toolsRepository
                 .getToolsPublisher(
                     translatedInAppLanguage: "",
                     languageIdForAvailabilityText: nil,
@@ -376,13 +384,9 @@ extension GetToolsRepositoryTests {
         }
     }
     
-    private static func getToolsRepository(allTools: [RealmResource]) -> GetToolsRepository {
+    private static func getToolsRepository() -> GetToolsRepository {
         
-        let realmObjectsToAdd: [Object] = allTools
-        
-        let realmDatabase: RealmDatabase = TestsInMemoryRealmDatabase(addObjectsToDatabase: realmObjectsToAdd)
-        
-        let testsDiContainer = TestsDiContainer(realmDatabase: realmDatabase)
+        let testsDiContainer: TestsDiContainer = Self.testsDiContainer
         
         let getToolsRepository = GetToolsRepository(
             resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),

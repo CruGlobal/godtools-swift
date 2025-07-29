@@ -11,10 +11,7 @@ import Testing
 import Combine
 
 struct SearchLanguageInDownloadableLanguagesRepositoryTests {
-    
-    private static let searchLanguageInDownloadableLanguages: SearchLanguageInDownloadableLanguagesRepository = getSearchLanguageInDownloadableLanguagesRepository()
-    private static let downloadableLanguagesList: [DownloadableLanguageListItemDomainModel] = getDownloadableLanguagesList()
-    
+        
     @Test(
         """
         Given: User is searching a language in the downloadable languages list.
@@ -24,14 +21,17 @@ struct SearchLanguageInDownloadableLanguagesRepositoryTests {
     )
     func searchingLanguagesWithSingleLetterSearchString() async {
         
+        let searchLanguageInDownloadableLanguages: SearchLanguageInDownloadableLanguagesRepository = Self.getSearchLanguageInDownloadableLanguagesRepository()
+        let downloadableLanguagesList: [DownloadableLanguageListItemDomainModel] = Self.getDownloadableLanguagesList()
+        
         var cancellables: Set<AnyCancellable> = Set()
         
         var resultRef: [DownloadableLanguageListItemDomainModel] = Array()
                 
         await confirmation(expectedCount: 1) { confirmation in
             
-            Self.searchLanguageInDownloadableLanguages
-                .getSearchResultsPublisher(searchText: "c", downloadableLanguagesList: Self.downloadableLanguagesList)
+            searchLanguageInDownloadableLanguages
+                .getSearchResultsPublisher(searchText: "c", downloadableLanguagesList: downloadableLanguagesList)
                 .sink { (result: [DownloadableLanguageListItemDomainModel]) in
                     
                     confirmation()
@@ -56,14 +56,17 @@ struct SearchLanguageInDownloadableLanguagesRepositoryTests {
     )
     func searchingLanguagesWithMultiLetterSearchString() async {
         
+        let searchLanguageInDownloadableLanguages: SearchLanguageInDownloadableLanguagesRepository = Self.getSearchLanguageInDownloadableLanguagesRepository()
+        let downloadableLanguagesList: [DownloadableLanguageListItemDomainModel] = Self.getDownloadableLanguagesList()
+        
         var cancellables: Set<AnyCancellable> = Set()
         
         var resultRef: [DownloadableLanguageListItemDomainModel] = Array()
                 
         await confirmation(expectedCount: 1) { confirmation in
             
-            Self.searchLanguageInDownloadableLanguages
-                .getSearchResultsPublisher(searchText: "Ber", downloadableLanguagesList: Self.downloadableLanguagesList)
+            searchLanguageInDownloadableLanguages
+                .getSearchResultsPublisher(searchText: "Ber", downloadableLanguagesList: downloadableLanguagesList)
                 .sink { (result: [DownloadableLanguageListItemDomainModel]) in
                     
                     confirmation()
@@ -84,11 +87,9 @@ extension SearchLanguageInDownloadableLanguagesRepositoryTests {
     
     private static func getSearchLanguageInDownloadableLanguagesRepository() -> SearchLanguageInDownloadableLanguagesRepository {
         
-        let searchLanguageInDownloadableLanguages = SearchLanguageInDownloadableLanguagesRepository(
+        return SearchLanguageInDownloadableLanguagesRepository(
             stringSearcher: StringSearcher()
         )
-        
-        return searchLanguageInDownloadableLanguages
     }
     
     private static func getDownloadableLanguagesList() -> [DownloadableLanguageListItemDomainModel] {
