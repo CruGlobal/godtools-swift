@@ -6,283 +6,236 @@
 //  Copyright © 2024 Cru. All rights reserved.
 //
 
-import Foundation
+import Testing
 @testable import godtools
 import Combine
-import Quick
-import Nimble
 
-class GetSpiritualConversationReadinessScaleTests: QuickSpec {
+struct GetSpiritualConversationReadinessScaleTests {
     
-    override class func spec() {
+    @Test(
+        """
+        Given: User is evaluating a lesson.
+        When: Viewing the ready to share faith scale minimum and maximum values.
+        Then: I expect the minimum value to be 1 and maximum value to be 10.
+        """
+    )
+    @MainActor func confirmReadinessScaleMinAndMaxValuesAreCorrect() async {
+        
+        let getSpiritualConversationReadinessScale = GetSpiritualConversationReadinessScale(
+            getTranslatedNumberCount: GetTranslatedNumberCount()
+        )
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        describe("User is evaluating a lesson.") {
+        var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
         
-            context("When viewing the ready to share faith scale minimum and maximum values.") {
+        await confirmation(expectedCount: 1) { confirmation in
             
-                let getSpiritualConversationReadinessScale = GetSpiritualConversationReadinessScale(
-                    getTranslatedNumberCount: GetTranslatedNumberCount()
-                )
-                
-                it("I expect the minimum value to be 1 and maximum value to be 10.") {
-                                        
-                    var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
+            getSpiritualConversationReadinessScale
+                .getScalePublisher(scale: 5, translateInAppLanguage: LanguageCodeDomainModel.english.rawValue)
+                .sink { (readinessScale: SpiritualConversationReadinessScaleDomainModel) in
                     
-                    var sinkCount: Int = 0
-                    var sinkCompleted: Bool = false
+                    readinessScaleRef = readinessScale
                     
-                    waitUntil { done in
-                        
-                        getSpiritualConversationReadinessScale
-                            .getScalePublisher(scale: 5, translateInAppLanguage: LanguageCodeDomainModel.english.rawValue)
-                            .sink { (readinessScale: SpiritualConversationReadinessScaleDomainModel) in
-                                
-                                guard !sinkCompleted else {
-                                    return
-                                }
-                                
-                                sinkCount += 1
-                                
-                                if sinkCount == 1 {
-                                    
-                                    readinessScaleRef = readinessScale
-                                    
-                                    sinkCompleted = true
-                                    
-                                    done()
-                                }
-                            }
-                            .store(in: &cancellables)
-                    }
-
-                    expect(readinessScaleRef?.minScale.integerValue).to(equal(1))
-                    expect(readinessScaleRef?.maxScale.integerValue).to(equal(10))
+                    confirmation()
                 }
-            }
-            
-            context("When viewing the ready to share faith scale and my app language is english.") {
-            
-                let getSpiritualConversationReadinessScale = GetSpiritualConversationReadinessScale(
-                    getTranslatedNumberCount: GetTranslatedNumberCount()
-                )
-                
-                it("I expect the min, max, and scale values to be translated in my app language english.") {
-                    
-                    var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
-                    
-                    var sinkCount: Int = 0
-                    var sinkCompleted: Bool = false
-                    
-                    waitUntil { done in
-                        
-                        getSpiritualConversationReadinessScale
-                            .getScalePublisher(scale: 5, translateInAppLanguage: LanguageCodeDomainModel.english.rawValue)
-                            .sink { (readinessScale: SpiritualConversationReadinessScaleDomainModel) in
-                                
-                                guard !sinkCompleted else {
-                                    return
-                                }
-                                
-                                sinkCount += 1
-                                
-                                if sinkCount == 1 {
-                                    
-                                    readinessScaleRef = readinessScale
-                                    
-                                    sinkCompleted = true
-                                    
-                                    done()
-                                }
-                            }
-                            .store(in: &cancellables)
-                    }
-
-                    expect(readinessScaleRef?.minScale.valueTranslatedInAppLanguage).to(equal("1"))
-                    expect(readinessScaleRef?.maxScale.valueTranslatedInAppLanguage).to(equal("10"))
-                    expect(readinessScaleRef?.scale.valueTranslatedInAppLanguage).to(equal("5"))
-                }
-            }
-            
-            context("When viewing the ready to share faith scale and my app language is arabic.") {
-            
-                let getSpiritualConversationReadinessScale = GetSpiritualConversationReadinessScale(
-                    getTranslatedNumberCount: GetTranslatedNumberCount()
-                )
-                
-                it("I expect the min, max, and scale values to be translated in my app language arabic.") {
-                    
-                    var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
-                    
-                    var sinkCount: Int = 0
-                    var sinkCompleted: Bool = false
-                    
-                    waitUntil { done in
-                        
-                        getSpiritualConversationReadinessScale
-                            .getScalePublisher(scale: 5, translateInAppLanguage: LanguageCodeDomainModel.arabic.rawValue)
-                            .sink { (readinessScale: SpiritualConversationReadinessScaleDomainModel) in
-                                
-                                guard !sinkCompleted else {
-                                    return
-                                }
-                                
-                                sinkCount += 1
-                                
-                                if sinkCount == 1 {
-                                    
-                                    readinessScaleRef = readinessScale
-                                    
-                                    sinkCompleted = true
-                                    
-                                    done()
-                                }
-                            }
-                            .store(in: &cancellables)
-                    }
-                    
-                    if #available(iOS 18, *) {
-                        
-                        expect(readinessScaleRef?.minScale.valueTranslatedInAppLanguage).to(equal("1"))
-                        expect(readinessScaleRef?.maxScale.valueTranslatedInAppLanguage).to(equal("10"))
-                        expect(readinessScaleRef?.scale.valueTranslatedInAppLanguage).to(equal("5"))
-                    }
-                    else {
-                        
-                        expect(readinessScaleRef?.minScale.valueTranslatedInAppLanguage).to(equal("١"))
-                        expect(readinessScaleRef?.maxScale.valueTranslatedInAppLanguage).to(equal("١٠"))
-                        expect(readinessScaleRef?.scale.valueTranslatedInAppLanguage).to(equal("٥"))
-                    }
-                }
-            }
-            
-            context("When viewing the ready to share faith scale and my app language is eastern arabic.") {
-            
-                let getSpiritualConversationReadinessScale = GetSpiritualConversationReadinessScale(
-                    getTranslatedNumberCount: GetTranslatedNumberCount()
-                )
-                
-                it("I expect the min, max, and scale values to be translated in my app language eastern arabic.") {
-                    
-                    var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
-                    
-                    var sinkCount: Int = 0
-                    var sinkCompleted: Bool = false
-                    
-                    waitUntil { done in
-                        
-                        getSpiritualConversationReadinessScale
-                            .getScalePublisher(scale: 5, translateInAppLanguage: "ar_SA")
-                            .sink { (readinessScale: SpiritualConversationReadinessScaleDomainModel) in
-                                
-                                guard !sinkCompleted else {
-                                    return
-                                }
-                                
-                                sinkCount += 1
-                                
-                                if sinkCount == 1 {
-                                    
-                                    readinessScaleRef = readinessScale
-                                    
-                                    sinkCompleted = true
-                                    
-                                    done()
-                                }
-                            }
-                            .store(in: &cancellables)
-                    }
-                    
-                    expect(readinessScaleRef?.minScale.valueTranslatedInAppLanguage).to(equal("١"))
-                    expect(readinessScaleRef?.maxScale.valueTranslatedInAppLanguage).to(equal("١٠"))
-                    expect(readinessScaleRef?.scale.valueTranslatedInAppLanguage).to(equal("٥"))
-                }
-            }
-            
-            context("When providing a scale value that is lower than the minimum 1.") {
-            
-                let getSpiritualConversationReadinessScale = GetSpiritualConversationReadinessScale(
-                    getTranslatedNumberCount: GetTranslatedNumberCount()
-                )
-                
-                it("I expect the scale value to equal the minimum scale value 1.") {
-                    
-                    var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
-                    
-                    var sinkCount: Int = 0
-                    var sinkCompleted: Bool = false
-                    
-                    waitUntil { done in
-                        
-                        getSpiritualConversationReadinessScale
-                            .getScalePublisher(scale: -10, translateInAppLanguage: LanguageCodeDomainModel.english.rawValue)
-                            .sink { (readinessScale: SpiritualConversationReadinessScaleDomainModel) in
-                                
-                                guard !sinkCompleted else {
-                                    return
-                                }
-                                
-                                sinkCount += 1
-                                
-                                if sinkCount == 1 {
-                                    
-                                    readinessScaleRef = readinessScale
-                                    
-                                    sinkCompleted = true
-                                    
-                                    done()
-                                }
-                            }
-                            .store(in: &cancellables)
-                    }
-
-                    expect(readinessScaleRef?.scale.integerValue).to(equal(1))
-                    expect(readinessScaleRef?.scale.valueTranslatedInAppLanguage).to(equal("1"))
-                }
-            }
-            
-            context("When providing a scale value that is greater than the maximum 10.") {
-            
-                let getSpiritualConversationReadinessScale = GetSpiritualConversationReadinessScale(
-                    getTranslatedNumberCount: GetTranslatedNumberCount()
-                )
-                
-                it("I expect the scale value to equal the maximum scale value 10.") {
-                    
-                    var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
-                    
-                    var sinkCount: Int = 0
-                    var sinkCompleted: Bool = false
-                    
-                    waitUntil { done in
-                        
-                        getSpiritualConversationReadinessScale
-                            .getScalePublisher(scale: 99999, translateInAppLanguage: LanguageCodeDomainModel.english.rawValue)
-                            .sink { (readinessScale: SpiritualConversationReadinessScaleDomainModel) in
-                                
-                                guard !sinkCompleted else {
-                                    return
-                                }
-                                
-                                sinkCount += 1
-                                
-                                if sinkCount == 1 {
-                                    
-                                    readinessScaleRef = readinessScale
-                                    
-                                    sinkCompleted = true
-                                    
-                                    done()
-                                }
-                            }
-                            .store(in: &cancellables)
-                    }
-
-                    expect(readinessScaleRef?.scale.integerValue).to(equal(10))
-                    expect(readinessScaleRef?.scale.valueTranslatedInAppLanguage).to(equal("10"))
-                }
-            }
+                .store(in: &cancellables)
         }
+        
+        #expect(readinessScaleRef?.minScale.integerValue == 1)
+        #expect(readinessScaleRef?.maxScale.integerValue == 10)
+    }
+    
+    @Test(
+        """
+        Given: User is evaluating a lesson.
+        When: Viewing the ready to share faith scale and my app language is english.
+        Then: I expect the min, max, and scale values to be translated in my app language english.
+        """
+    )
+    @MainActor func readinessScaleIsTranslatedInEnglish() async {
+        
+        let getSpiritualConversationReadinessScale = GetSpiritualConversationReadinessScale(
+            getTranslatedNumberCount: GetTranslatedNumberCount()
+        )
+        
+        var cancellables: Set<AnyCancellable> = Set()
+        
+        var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
+        
+        await confirmation(expectedCount: 1) { confirmation in
+            
+            getSpiritualConversationReadinessScale
+                .getScalePublisher(scale: 5, translateInAppLanguage: LanguageCodeDomainModel.english.rawValue)
+                .sink { (readinessScale: SpiritualConversationReadinessScaleDomainModel) in
+                    
+                    readinessScaleRef = readinessScale
+                    
+                    confirmation()
+                }
+                .store(in: &cancellables)
+        }
+        
+        #expect(readinessScaleRef?.minScale.valueTranslatedInAppLanguage == "1")
+        #expect(readinessScaleRef?.maxScale.valueTranslatedInAppLanguage == "10")
+        #expect(readinessScaleRef?.scale.valueTranslatedInAppLanguage == "5")
+    }
+    
+    @Test(
+        """
+        Given: User is evaluating a lesson.
+        When: Viewing the ready to share faith scale and my app language is arabic.
+        Then: I expect the min, max, and scale values to be translated in my app language arabic.
+        """
+    )
+    @MainActor func readinessScaleIsTranslatedInArabic() async {
+        
+        let getSpiritualConversationReadinessScale = GetSpiritualConversationReadinessScale(
+            getTranslatedNumberCount: GetTranslatedNumberCount()
+        )
+        
+        var cancellables: Set<AnyCancellable> = Set()
+        
+        var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
+        
+        await confirmation(expectedCount: 1) { confirmation in
+            
+            getSpiritualConversationReadinessScale
+                .getScalePublisher(scale: 5, translateInAppLanguage: LanguageCodeDomainModel.arabic.rawValue)
+                .sink { (readinessScale: SpiritualConversationReadinessScaleDomainModel) in
+                    
+                    readinessScaleRef = readinessScale
+                    
+                    confirmation()
+                }
+                .store(in: &cancellables)
+        }
+        
+        if #available(iOS 18, *) {
+            
+            #expect(readinessScaleRef?.minScale.valueTranslatedInAppLanguage == "1")
+            #expect(readinessScaleRef?.maxScale.valueTranslatedInAppLanguage == "10")
+            #expect(readinessScaleRef?.scale.valueTranslatedInAppLanguage == "5")
+        }
+        else {
+            
+            #expect(readinessScaleRef?.minScale.valueTranslatedInAppLanguage == "١")
+            #expect(readinessScaleRef?.maxScale.valueTranslatedInAppLanguage == "١٠")
+            #expect(readinessScaleRef?.scale.valueTranslatedInAppLanguage == "٥")
+        }
+    }
+    
+    @Test(
+        """
+        Given: User is evaluating a lesson.
+        When: Viewing the ready to share faith scale and my app language is eastern arabic.
+        Then: I expect the min, max, and scale values to be translated in my app language eastern arabic.
+        """
+    )
+    @MainActor func readinessScaleIsTranslatedInEasternArabic() async {
+        
+        let getSpiritualConversationReadinessScale = GetSpiritualConversationReadinessScale(
+            getTranslatedNumberCount: GetTranslatedNumberCount()
+        )
+        
+        var cancellables: Set<AnyCancellable> = Set()
+        
+        var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
+        
+        await confirmation(expectedCount: 1) { confirmation in
+            
+            getSpiritualConversationReadinessScale
+                .getScalePublisher(scale: 5, translateInAppLanguage: "ar_SA")
+                .sink { (readinessScale: SpiritualConversationReadinessScaleDomainModel) in
+                    
+                    readinessScaleRef = readinessScale
+                    
+                    confirmation()
+                }
+                .store(in: &cancellables)
+        }
+        
+        #expect(readinessScaleRef?.minScale.valueTranslatedInAppLanguage == "١")
+        #expect(readinessScaleRef?.maxScale.valueTranslatedInAppLanguage == "١٠")
+        #expect(readinessScaleRef?.scale.valueTranslatedInAppLanguage == "٥")
+    }
+    
+    struct TestClampingScale {
+        
+        let scaleValue: Int
+    }
+    
+    @Test(
+        """
+        Given: User is evaluating a lesson.
+        When: Providing a scale value that is lower than the minimum 1.
+        Then: I expect the scale value to equal the minimum scale value 1.
+        """,
+        arguments: [
+            TestClampingScale(scaleValue: 0),
+            TestClampingScale(scaleValue: -10)
+        ]
+    )
+    @MainActor func readinessScaleIsClampedToMin(argument: TestClampingScale) async {
+        
+        let getSpiritualConversationReadinessScale = GetSpiritualConversationReadinessScale(
+            getTranslatedNumberCount: GetTranslatedNumberCount()
+        )
+        
+        var cancellables: Set<AnyCancellable> = Set()
+        
+        var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
+        
+        await confirmation(expectedCount: 1) { confirmation in
+            
+            getSpiritualConversationReadinessScale
+                .getScalePublisher(scale: argument.scaleValue, translateInAppLanguage: LanguageCodeDomainModel.english.rawValue)
+                .sink { (readinessScale: SpiritualConversationReadinessScaleDomainModel) in
+                    
+                    readinessScaleRef = readinessScale
+                    
+                    confirmation()
+                }
+                .store(in: &cancellables)
+        }
+        
+        #expect(readinessScaleRef?.scale.integerValue == 1)
+    }
+    
+    @Test(
+        """
+        Given: User is evaluating a lesson.
+        When: Providing a scale value that is greater than the maximum 10.
+        Then: I expect the scale value to equal the maximum scale value 10.
+        """,
+        arguments: [
+            TestClampingScale(scaleValue: 11),
+            TestClampingScale(scaleValue: 99999)
+        ]
+    )
+    @MainActor func readinessScaleIsClampedToMax(argument: TestClampingScale) async {
+        
+        let getSpiritualConversationReadinessScale = GetSpiritualConversationReadinessScale(
+            getTranslatedNumberCount: GetTranslatedNumberCount()
+        )
+        
+        var cancellables: Set<AnyCancellable> = Set()
+        
+        var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
+        
+        await confirmation(expectedCount: 1) { confirmation in
+            
+            getSpiritualConversationReadinessScale
+                .getScalePublisher(scale: argument.scaleValue, translateInAppLanguage: LanguageCodeDomainModel.english.rawValue)
+                .sink { (readinessScale: SpiritualConversationReadinessScaleDomainModel) in
+                    
+                    readinessScaleRef = readinessScale
+                    
+                    confirmation()
+                }
+                .store(in: &cancellables)
+        }
+        
+        #expect(readinessScaleRef?.scale.integerValue == 10)
     }
 }
