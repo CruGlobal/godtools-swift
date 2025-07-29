@@ -31,15 +31,15 @@ struct GetLessonFilterLanguagesRepositoryTests {
         
         var languagesRef: [LessonFilterLanguageDomainModel] = Array()
         
-        await confirmation(expectedCount: 1) { confirmation in
+        await withCheckedContinuation { continuation in
             
             lessonFilterLanguagesRepository
                 .getLessonFilterLanguagesPublisher(translatedInAppLanguage: appLanguageRussian)
                 .sink { (languages: [LessonFilterLanguageDomainModel]) in
 
-                    confirmation()
-
                     languagesRef = languages
+                    
+                    continuation.resume(returning: ())
                 }
                 .store(in: &cancellables)
         }
@@ -90,15 +90,15 @@ struct GetLessonFilterLanguagesRepositoryTests {
                 
         var languagesRef: [LessonFilterLanguageDomainModel] = Array()
         
-        await confirmation(expectedCount: 1) { confirmation in
+        await withCheckedContinuation { continuation in
             
             lessonFilterLanguagesRepository
                 .getLessonFilterLanguagesPublisher(translatedInAppLanguage: argument.appLanguage.rawValue)
                 .sink { (languages: [LessonFilterLanguageDomainModel]) in
-
-                    confirmation()
-
+                    
                     languagesRef = languages
+                    
+                    continuation.resume(returning: ())
                 }
                 .store(in: &cancellables)
         }
@@ -124,15 +124,15 @@ struct GetLessonFilterLanguagesRepositoryTests {
         
         var languagesRef: [LessonFilterLanguageDomainModel] = Array()
         
-        await confirmation(expectedCount: 1) { confirmation in
+        await withCheckedContinuation { continuation in
             
             lessonFilterLanguagesRepository
                 .getLessonFilterLanguagesPublisher(translatedInAppLanguage: appLanguageEnglish)
                 .sink { (languages: [LessonFilterLanguageDomainModel]) in
 
-                    confirmation()
-
                     languagesRef = languages
+                    
+                    continuation.resume(returning: ())
                 }
                 .store(in: &cancellables)
         }
