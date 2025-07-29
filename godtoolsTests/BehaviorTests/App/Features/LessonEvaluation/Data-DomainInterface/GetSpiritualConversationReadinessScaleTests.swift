@@ -21,9 +21,7 @@ struct GetSpiritualConversationReadinessScaleTests {
     )
     @MainActor func confirmReadinessScaleMinAndMaxValuesAreCorrect() async {
         
-        let getSpiritualConversationReadinessScale = GetSpiritualConversationReadinessScale(
-            getTranslatedNumberCount: GetTranslatedNumberCount()
-        )
+        let getSpiritualConversationReadinessScale = Self.getSpiritualConversationReadinessScale()
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -55,9 +53,7 @@ struct GetSpiritualConversationReadinessScaleTests {
     )
     @MainActor func readinessScaleIsTranslatedInEnglish() async {
         
-        let getSpiritualConversationReadinessScale = GetSpiritualConversationReadinessScale(
-            getTranslatedNumberCount: GetTranslatedNumberCount()
-        )
+        let getSpiritualConversationReadinessScale = Self.getSpiritualConversationReadinessScale()
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -90,9 +86,7 @@ struct GetSpiritualConversationReadinessScaleTests {
     )
     @MainActor func readinessScaleIsTranslatedInArabic() async {
         
-        let getSpiritualConversationReadinessScale = GetSpiritualConversationReadinessScale(
-            getTranslatedNumberCount: GetTranslatedNumberCount()
-        )
+        let getSpiritualConversationReadinessScale = Self.getSpiritualConversationReadinessScale()
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -134,9 +128,7 @@ struct GetSpiritualConversationReadinessScaleTests {
     )
     @MainActor func readinessScaleIsTranslatedInEasternArabic() async {
         
-        let getSpiritualConversationReadinessScale = GetSpiritualConversationReadinessScale(
-            getTranslatedNumberCount: GetTranslatedNumberCount()
-        )
+        let getSpiritualConversationReadinessScale = Self.getSpiritualConversationReadinessScale()
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -215,9 +207,7 @@ struct GetSpiritualConversationReadinessScaleTests {
     )
     @MainActor func readinessScaleIsClampedToMax(argument: TestClampingScale) async {
         
-        let getSpiritualConversationReadinessScale = GetSpiritualConversationReadinessScale(
-            getTranslatedNumberCount: GetTranslatedNumberCount()
-        )
+        let getSpiritualConversationReadinessScale = Self.getSpiritualConversationReadinessScale()
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -237,5 +227,15 @@ struct GetSpiritualConversationReadinessScaleTests {
         }
         
         #expect(readinessScaleRef?.scale.integerValue == 10)
+    }
+}
+
+extension GetSpiritualConversationReadinessScaleTests {
+    
+    private static func getSpiritualConversationReadinessScale() -> GetSpiritualConversationReadinessScale {
+        
+        return GetSpiritualConversationReadinessScale(
+            getTranslatedNumberCount: GetTranslatedNumberCount()
+        )
     }
 }
