@@ -166,15 +166,20 @@ struct GetUserLessonFiltersRepositoryTests {
         var originalLessonLanguageFilterRef: LessonFilterLanguageDomainModel?
         var selectedLessonLanguageFilterRef: LessonFilterLanguageDomainModel?
         var sinkCount: Int = 0
-        
+           
         await withCheckedContinuation { continuation in
+            
+            let task = Task {
+                try await Task.sleep(nanoseconds: 2_000_000_000) // 2 seconds
+                continuation.resume(returning: ())
+            }
             
             getUserLessonFiltersRepository
                 .getUserLessonLanguageFilterPublisher(translatedInAppLanguage: appLanguageFrench)
                 .sink { (lessonLanguageFilter: LessonFilterLanguageDomainModel?) in
                         
                     sinkCount += 1
-                                                    
+                                                                        
                     if sinkCount == 1 {
                         
                         originalLessonLanguageFilterRef = lessonLanguageFilter
@@ -183,7 +188,9 @@ struct GetUserLessonFiltersRepositoryTests {
                     else if sinkCount == 2 {
                         
                         selectedLessonLanguageFilterRef = lessonLanguageFilter
+                        task.cancel()
                         continuation.resume(returning: ())
+                        
                     }
                 }
                 .store(in: &cancellables)
