@@ -12,4 +12,8 @@ struct UserAccountDetailsDomainModel {
     
     let name: String
     let joinedOnString: String
+    
+    static func emptyUserAccountDetails() -> UserAccountDetailsDomainModel {
+        return UserAccountDetailsDomainModel(name: "", joinedOnString: "")
+    }
 }
