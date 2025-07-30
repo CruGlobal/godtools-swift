@@ -8,7 +8,6 @@
 
 import Foundation
 import Combine
-import RequestOperation
 import LocalizationServices
 
 class GetUserAccountDetailsRepository: GetUserAccountDetailsRepositoryInterface {
