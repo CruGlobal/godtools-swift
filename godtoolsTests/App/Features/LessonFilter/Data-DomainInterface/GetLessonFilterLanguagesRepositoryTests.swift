@@ -31,17 +31,19 @@ struct GetLessonFilterLanguagesRepositoryTests {
         
         var languagesRef: [LessonFilterLanguageDomainModel] = Array()
         
-        await withCheckedContinuation { continuation in
+        await confirmation(expectedCount: 1) { confirmation in
             
             lessonFilterLanguagesRepository
                 .getLessonFilterLanguagesPublisher(translatedInAppLanguage: appLanguageRussian)
                 .sink { (languages: [LessonFilterLanguageDomainModel]) in
 
-                    languagesRef = languages
+                    confirmation()
                     
-                    continuation.resume(returning: ())
+                    languagesRef = languages
                 }
                 .store(in: &cancellables)
+            
+            try? await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
         }
         
         let afrikaansLanguage: LessonFilterLanguageDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.afrikaans.rawValue})
@@ -90,17 +92,19 @@ struct GetLessonFilterLanguagesRepositoryTests {
                 
         var languagesRef: [LessonFilterLanguageDomainModel] = Array()
         
-        await withCheckedContinuation { continuation in
+        await confirmation(expectedCount: 1) { confirmation in
             
             lessonFilterLanguagesRepository
                 .getLessonFilterLanguagesPublisher(translatedInAppLanguage: argument.appLanguage.rawValue)
                 .sink { (languages: [LessonFilterLanguageDomainModel]) in
                     
-                    languagesRef = languages
+                    confirmation()
                     
-                    continuation.resume(returning: ())
+                    languagesRef = languages
                 }
                 .store(in: &cancellables)
+            
+            try? await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
         }
         
         #expect(languagesRef.map({$0.languageNameTranslatedInAppLanguage}) == argument.expectedValue)
@@ -124,19 +128,21 @@ struct GetLessonFilterLanguagesRepositoryTests {
         
         var languagesRef: [LessonFilterLanguageDomainModel] = Array()
         
-        await withCheckedContinuation { continuation in
+        await confirmation(expectedCount: 1) { confirmation in
             
             lessonFilterLanguagesRepository
                 .getLessonFilterLanguagesPublisher(translatedInAppLanguage: appLanguageEnglish)
                 .sink { (languages: [LessonFilterLanguageDomainModel]) in
 
-                    languagesRef = languages
+                    confirmation()
                     
-                    continuation.resume(returning: ())
+                    languagesRef = languages
                 }
                 .store(in: &cancellables)
+            
+            try? await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
         }
-        
+
         let afrikaansLanguage: LessonFilterLanguageDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.afrikaans.rawValue})
         let czechLanguage: LessonFilterLanguageDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.czech.rawValue})
         let englishLanguage: LessonFilterLanguageDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.english.rawValue})
