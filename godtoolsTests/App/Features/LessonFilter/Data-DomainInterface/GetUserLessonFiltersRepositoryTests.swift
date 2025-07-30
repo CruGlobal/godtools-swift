@@ -166,33 +166,39 @@ struct GetUserLessonFiltersRepositoryTests {
         var originalLessonLanguageFilterRef: LessonFilterLanguageDomainModel?
         var selectedLessonLanguageFilterRef: LessonFilterLanguageDomainModel?
         var sinkCount: Int = 0
-        
+    
         await confirmation(expectedCount: 2) { confirmation in
             
-            getUserLessonFiltersRepository
-                .getUserLessonLanguageFilterPublisher(translatedInAppLanguage: appLanguageFrench)
-                .sink { (lessonLanguageFilter: LessonFilterLanguageDomainModel?) in
-                    
-                    confirmation()
-                    
-                    sinkCount += 1
-                    
-                    if sinkCount == 1 {
-                        
-                        originalLessonLanguageFilterRef = lessonLanguageFilter
-                        userLessonFiltersRepository.storeUserLessonLanguageFilter(with: spanishLanguage.id)
-                    }
-                    else if sinkCount == 2 {
-                        
-                        selectedLessonLanguageFilterRef = lessonLanguageFilter
-                        
-                    }
+            await withCheckedContinuation { continuation in
+                
+                let task = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
                 }
-                .store(in: &cancellables)
+                
+                getUserLessonFiltersRepository
+                    .getUserLessonLanguageFilterPublisher(translatedInAppLanguage: appLanguageFrench)
+                    .sink { (lessonLanguageFilter: LessonFilterLanguageDomainModel?) in
                         
-            try? await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                        confirmation()
+                        
+                        sinkCount += 1
+                                                
+                        if sinkCount == 1 {
+                            
+                            originalLessonLanguageFilterRef = lessonLanguageFilter
+                            userLessonFiltersRepository.storeUserLessonLanguageFilter(with: spanishLanguage.id)
+                        }
+                        else if sinkCount == 2 {
+                            selectedLessonLanguageFilterRef = lessonLanguageFilter
+                            task.cancel()
+                            continuation.resume(returning: ())
+                        }
+                    }
+                    .store(in: &cancellables)
+            }
         }
-        
+                
         #expect(originalLessonLanguageFilterRef?.languageNameTranslatedInLanguage == "Français")
         #expect(originalLessonLanguageFilterRef?.languageNameTranslatedInAppLanguage == "Français")
         

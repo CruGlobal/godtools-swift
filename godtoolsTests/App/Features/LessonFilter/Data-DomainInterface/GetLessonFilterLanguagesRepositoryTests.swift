@@ -33,17 +33,26 @@ struct GetLessonFilterLanguagesRepositoryTests {
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            lessonFilterLanguagesRepository
-                .getLessonFilterLanguagesPublisher(translatedInAppLanguage: appLanguageRussian)
-                .sink { (languages: [LessonFilterLanguageDomainModel]) in
-
-                    confirmation()
-                    
-                    languagesRef = languages
+            await withCheckedContinuation { continuation in
+                
+                let sleepingTask = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
                 }
-                .store(in: &cancellables)
-            
-            try? await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                
+                lessonFilterLanguagesRepository
+                    .getLessonFilterLanguagesPublisher(translatedInAppLanguage: appLanguageRussian)
+                    .sink { (languages: [LessonFilterLanguageDomainModel]) in
+
+                        confirmation()
+                        
+                        languagesRef = languages
+                        
+                        sleepingTask.cancel()
+                        continuation.resume(returning: ())
+                    }
+                    .store(in: &cancellables)
+            }
         }
         
         let afrikaansLanguage: LessonFilterLanguageDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.afrikaans.rawValue})
@@ -94,17 +103,26 @@ struct GetLessonFilterLanguagesRepositoryTests {
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            lessonFilterLanguagesRepository
-                .getLessonFilterLanguagesPublisher(translatedInAppLanguage: argument.appLanguage.rawValue)
-                .sink { (languages: [LessonFilterLanguageDomainModel]) in
-                    
-                    confirmation()
-                    
-                    languagesRef = languages
+            await withCheckedContinuation { continuation in
+                
+                let sleepingTask = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
                 }
-                .store(in: &cancellables)
-            
-            try? await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                
+                lessonFilterLanguagesRepository
+                    .getLessonFilterLanguagesPublisher(translatedInAppLanguage: argument.appLanguage.rawValue)
+                    .sink { (languages: [LessonFilterLanguageDomainModel]) in
+                        
+                        confirmation()
+                        
+                        languagesRef = languages
+                        
+                        sleepingTask.cancel()
+                        continuation.resume(returning: ())
+                    }
+                    .store(in: &cancellables)
+            }
         }
         
         #expect(languagesRef.map({$0.languageNameTranslatedInAppLanguage}) == argument.expectedValue)
@@ -127,6 +145,30 @@ struct GetLessonFilterLanguagesRepositoryTests {
         let appLanguageEnglish: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
         
         var languagesRef: [LessonFilterLanguageDomainModel] = Array()
+        
+        await confirmation(expectedCount: 1) { confirmation in
+            
+            await withCheckedContinuation { continuation in
+                
+                let sleepingTask = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
+                }
+                
+                lessonFilterLanguagesRepository
+                    .getLessonFilterLanguagesPublisher(translatedInAppLanguage: appLanguageEnglish)
+                    .sink { (languages: [LessonFilterLanguageDomainModel]) in
+
+                        confirmation()
+                        
+                        languagesRef = languages
+                        
+                        sleepingTask.cancel()
+                        continuation.resume(returning: ())
+                    }
+                    .store(in: &cancellables)
+            }
+        }
         
         await confirmation(expectedCount: 1) { confirmation in
             
