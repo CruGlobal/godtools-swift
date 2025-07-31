@@ -1,0 +1,19 @@
+{
+  "configurations" : [
+    {
+      "id" : "B80F29DE-6AF9-4171-9679-0ADB72D79B38",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true,
+    "uiTestingScreenshotsLifetime" : "keepNever"
+  },
+  "testTargets" : [
+
+  ],
+  "version" : 1
+}

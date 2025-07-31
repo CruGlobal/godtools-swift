@@ -27,7 +27,10 @@ jobs:
         uses: ./.github/actions/pod-install
 
       - name: Run Tests and Generate Code Coverage Report (.xcresult)
-        run: bundle exec fastlane cru_shared_lane_run_tests output_directory:fastlane_scan_output_directory result_bundle:true reset_simulator:true should_clear_derived_data:true
+        run: bundle exec fastlane cru_shared_lane_run_tests testplan:Tests output_directory:fastlane_scan_output_directory result_bundle:true reset_simulator:true should_clear_derived_data:true
+
+        - name: Run UITests and Generate Code Coverage Report (.xcresult)
+        run: bundle exec fastlane cru_shared_lane_run_tests testplan:UITests output_directory:fastlane_scan_output_directory result_bundle:true reset_simulator:true should_clear_derived_data:true
 
       - name: Install XCResultParser
         run: brew install a7ex/homebrew-formulae/xcresultparser
