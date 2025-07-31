@@ -71,8 +71,8 @@ class GetUserLessonFiltersRepositoryTests: QuickSpec {
                         
                     }
                     
-                    expect(lessonLanguageFilterRef?.languageName).to(equal("Español"))
-                    expect(lessonLanguageFilterRef?.translatedName).to(equal("Español"))
+                    expect(lessonLanguageFilterRef?.languageNameTranslatedInLanguage).to(equal("Español"))
+                    expect(lessonLanguageFilterRef?.languageNameTranslatedInAppLanguage).to(equal("Español"))
                 }
             }
             
@@ -136,8 +136,8 @@ class GetUserLessonFiltersRepositoryTests: QuickSpec {
                         
                     }
                     
-                    expect(lessonLanguageFilterRef?.languageName).to(equal("Français"))
-                    expect(lessonLanguageFilterRef?.translatedName).to(equal("Français"))
+                    expect(lessonLanguageFilterRef?.languageNameTranslatedInLanguage).to(equal("Français"))
+                    expect(lessonLanguageFilterRef?.languageNameTranslatedInAppLanguage).to(equal("Français"))
                 }
             }
             
@@ -201,11 +201,11 @@ class GetUserLessonFiltersRepositoryTests: QuickSpec {
                             .store(in: &cancellables)
                     }
                     
-                    expect(originalLessonLanguageFilterRef?.languageName).to(equal("Français"))
-                    expect(originalLessonLanguageFilterRef?.translatedName).to(equal("Français"))
+                    expect(originalLessonLanguageFilterRef?.languageNameTranslatedInLanguage).to(equal("Français"))
+                    expect(originalLessonLanguageFilterRef?.languageNameTranslatedInAppLanguage).to(equal("Français"))
                     
-                    expect(selectedLessonLanguageFilterRef?.languageName).to(equal("Español"))
-                    expect(selectedLessonLanguageFilterRef?.translatedName).to(equal("Espagnol"))
+                    expect(selectedLessonLanguageFilterRef?.languageNameTranslatedInLanguage).to(equal("Español"))
+                    expect(selectedLessonLanguageFilterRef?.languageNameTranslatedInAppLanguage).to(equal("Espagnol"))
                 }
             }
         }

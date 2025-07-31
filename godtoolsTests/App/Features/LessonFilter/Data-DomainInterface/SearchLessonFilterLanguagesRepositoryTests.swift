@@ -29,12 +29,12 @@ class SearchLessonFilterLanguagesRepositoryTests: QuickSpec {
             context("When a user inputs a lowercased single letter search string \(lowercasedSingleLetterSearchString)") {
                 
                 let allLanguages: [LessonFilterLanguageDomainModel] = [
-                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "Church", lessonsAvailableText: ""),
-                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "church", lessonsAvailableText: ""),
-                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "food", lessonsAvailableText: ""),
-                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "Food", lessonsAvailableText: ""),
-                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "soccer", lessonsAvailableText: ""),
-                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "soCCer", lessonsAvailableText: "")
+                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Church", lessonsAvailableText: ""),
+                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "church", lessonsAvailableText: ""),
+                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "food", lessonsAvailableText: ""),
+                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Food", lessonsAvailableText: ""),
+                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "soccer", lessonsAvailableText: ""),
+                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "soCCer", lessonsAvailableText: "")
                 ]
                 
                 it("I expect all languages that contain the lowercased single letter search string \(lowercasedSingleLetterSearchString) ignoring case.") {
@@ -54,7 +54,7 @@ class SearchLessonFilterLanguagesRepositoryTests: QuickSpec {
                                 
                                 sinkCompleted = true
                                 
-                                searchedLanguages = languages.map({$0.translatedName})
+                                searchedLanguages = languages.map({$0.languageNameTranslatedInAppLanguage})
                                 
                                 done()
                             }
@@ -75,14 +75,14 @@ class SearchLessonFilterLanguagesRepositoryTests: QuickSpec {
             context("When a user inputs an uppercased single letter search string \(uppercasedSingleLetterSearchString)") {
                 
                 let allLanguages: [LessonFilterLanguageDomainModel] = [
-                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "Church", lessonsAvailableText: ""),
-                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "church", lessonsAvailableText: ""),
-                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "foody", lessonsAvailableText: ""),
-                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "Food", lessonsAvailableText: ""),
-                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "soccer", lessonsAvailableText: ""),
-                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "soCCer", lessonsAvailableText: ""),
-                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "Yellow", lessonsAvailableText: ""),
-                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "may", lessonsAvailableText: "")
+                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Church", lessonsAvailableText: ""),
+                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "church", lessonsAvailableText: ""),
+                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "foody", lessonsAvailableText: ""),
+                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Food", lessonsAvailableText: ""),
+                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "soccer", lessonsAvailableText: ""),
+                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "soCCer", lessonsAvailableText: ""),
+                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Yellow", lessonsAvailableText: ""),
+                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "may", lessonsAvailableText: "")
                 ]
                 
                 it("I expect all languages that contain the uppercased single letter search string \(uppercasedSingleLetterSearchString) ignoring case.") {
@@ -102,7 +102,7 @@ class SearchLessonFilterLanguagesRepositoryTests: QuickSpec {
                                 
                                 sinkCompleted = true
                                 
-                                searchedLanguages = languages.map({$0.translatedName})
+                                searchedLanguages = languages.map({$0.languageNameTranslatedInAppLanguage})
                                 
                                 done()
                             }
@@ -123,16 +123,16 @@ class SearchLessonFilterLanguagesRepositoryTests: QuickSpec {
             context("When a user inputs a multi-text search string \(multiTextSearchString)") {
                 
                 let allLanguages: [LessonFilterLanguageDomainModel] = [
-                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "blAnd", lessonsAvailableText: ""),
-                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "land", lessonsAvailableText: ""),
-                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "Canned", lessonsAvailableText: ""),
-                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "WAND", lessonsAvailableText: ""),
-                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "wander", lessonsAvailableText: ""),
-                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "pAnda", lessonsAvailableText: ""),
-                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "bran", lessonsAvailableText: ""),
-                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "Tan", lessonsAvailableText: ""),
-                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "Tanned", lessonsAvailableText: ""),
-                    LessonFilterLanguageDomainModel(languageId: "",  languageName: "", translatedName: "sanded", lessonsAvailableText: "")
+                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "blAnd", lessonsAvailableText: ""),
+                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "land", lessonsAvailableText: ""),
+                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Canned", lessonsAvailableText: ""),
+                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "WAND", lessonsAvailableText: ""),
+                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "wander", lessonsAvailableText: ""),
+                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "pAnda", lessonsAvailableText: ""),
+                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "bran", lessonsAvailableText: ""),
+                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Tan", lessonsAvailableText: ""),
+                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Tanned", lessonsAvailableText: ""),
+                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "sanded", lessonsAvailableText: "")
                 ]
                 
                 it("I expect all languages that contain the multi-text search string \(multiTextSearchString) ignoring case.") {
@@ -152,7 +152,7 @@ class SearchLessonFilterLanguagesRepositoryTests: QuickSpec {
                                 
                                 sinkCompleted = true
                                 
-                                searchedLanguages = languages.map({$0.translatedName})
+                                searchedLanguages = languages.map({$0.languageNameTranslatedInAppLanguage})
                                 
                                 done()
                             }

@@ -157,8 +157,8 @@ class GetLessonsListRepositoryTests: QuickSpec {
                                 
                 let spanishLanguageFilter = LessonFilterLanguageDomainModel(
                     languageId: spanishLanguage.id,
-                    languageName: "",
-                    translatedName: "",
+                    languageNameTranslatedInLanguage: "",
+                    languageNameTranslatedInAppLanguage: "",
                     lessonsAvailableText: ""
                 )
                 
@@ -235,8 +235,8 @@ class GetLessonsListRepositoryTests: QuickSpec {
                                 
                 let spanishLanguageFilter = LessonFilterLanguageDomainModel(
                     languageId: spanishLanguage.id,
-                    languageName: "",
-                    translatedName: "",
+                    languageNameTranslatedInLanguage: "",
+                    languageNameTranslatedInAppLanguage: "",
                     lessonsAvailableText: ""
                 )
                 
