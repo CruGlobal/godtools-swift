@@ -72,7 +72,6 @@ struct ToolsView: View {
                                     layout: .landscape,
                                     showsCategory: true,
                                     navButtonTitleHorizontalPadding: nil,
-                                    accessibility: .tool,
                                     favoriteTappedClosure: {
                                         
                                         viewModel.toolFavoriteTapped(tool: tool)

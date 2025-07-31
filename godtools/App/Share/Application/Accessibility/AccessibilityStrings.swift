@@ -91,6 +91,5 @@ class AccessibilityStrings {
         case toolsLanguageFilter = "Tools Language Filter"
         case tutorial = "Tutorial"
         case watchOnboardingTutorialVideo = "Watch Onboarding Tutorial Video Button"
-        
     }
 }
