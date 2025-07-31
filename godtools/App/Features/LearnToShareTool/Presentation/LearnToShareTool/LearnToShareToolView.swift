@@ -59,7 +59,13 @@ struct LearnToShareToolView: View {
                     .animation(.easeOut, value: viewModel.currentPage)
                 }
                 
-                GTBlueButton(title: viewModel.continueTitle, font: FontLibrary.sfProTextRegular.font(size: 18), width: geometry.size.width - (continueButtonPadding * 2), height: 50) {
+                GTBlueButton(
+                    title: viewModel.continueTitle,
+                    font: FontLibrary.sfProTextRegular.font(size: 18),
+                    width: geometry.size.width - (continueButtonPadding * 2),
+                    height: 50,
+                    accessibility: viewModel.continueButtonAccessibility
+                ) {
                     
                     viewModel.continueTapped()
                 }

@@ -36,8 +36,25 @@ class LearnToShareToolFlowTests: BaseFlowTests {
         assertIfScreenDoesNotExist(screenAccessibility: .toolDetails)
     }
     
-    private func getLearnToShareButton() -> XCUIElement {
+    private func openToolToToolDetailsAndNavigateToLearnToShareFlow(toolName: String) {
+        
+        openToolToToolDetails(toolName: toolName)
+        
+        let learnToShareButton = getLearnToShareButtonFromToolDetails()
+        
+        XCTAssertTrue(learnToShareButton.exists)
+                
+        learnToShareButton.tap()
+        
+        assertIfScreenDoesNotExist(screenAccessibility: .learnToShareTool)
+    }
+    
+    private func getLearnToShareButtonFromToolDetails() -> XCUIElement {
         return app.queryButton(buttonAccessibility: .learnToShare)
+    }
+    
+    private func getContinueButtonFromLearnToShare() -> XCUIElement {
+        app.queryButton(buttonAccessibility: .continueForward, waitForExistence: 1)
     }
     
     func testInitialScreenIsDashboardFavorites() {
@@ -45,18 +62,32 @@ class LearnToShareToolFlowTests: BaseFlowTests {
         launchAppToDashboardTools()
     }
     
-    func testTappingLearnToShare() {
+    func testTappingLearnToShareFromToolDetailsNavigatesToLearnToShareFlow() {
         
         launchAppToDashboardTools()
                 
-        openToolToToolDetails(toolName: ToolNames.English.fourSpiritualLaws)
+        openToolToToolDetailsAndNavigateToLearnToShareFlow(toolName: ToolNames.English.fourSpiritualLaws)
+    }
+    
+    func testNavigationThroughLearnToShareOpensToolWhenStartTrainingIsTapped() {
         
-        let learnToShareButton = getLearnToShareButton()
-        
-        XCTAssertTrue(learnToShareButton.exists)
+        launchAppToDashboardTools()
                 
-        learnToShareButton.tap()
+        openToolToToolDetailsAndNavigateToLearnToShareFlow(toolName: ToolNames.English.fourSpiritualLaws)
         
-        assertIfScreenDoesNotExist(screenAccessibility: .learnToShareTool)
+        var continueButton: XCUIElement = getContinueButtonFromLearnToShare()
+        
+        while continueButton.exists {
+            continueButton.tap()
+            continueButton = getContinueButtonFromLearnToShare()
+        }
+        
+        let startTrainingButton = app.queryButton(buttonAccessibility: .startTraining, waitForExistence: 1)
+        
+        XCTAssertTrue(startTrainingButton.exists)
+                
+        startTrainingButton.tap()
+        
+        assertIfScreenDoesNotExist(screenAccessibility: .tract)
     }
 }
