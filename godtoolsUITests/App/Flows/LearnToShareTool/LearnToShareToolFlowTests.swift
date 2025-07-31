@@ -57,7 +57,7 @@ class LearnToShareToolFlowTests: BaseFlowTests {
         app.queryButton(buttonAccessibility: .continueForward, waitForExistence: 1)
     }
     
-    func testInitialScreenIsDashboardFavorites() {
+    func testInitialScreenIsDashboardTools() {
         
         launchAppToDashboardTools()
     }
