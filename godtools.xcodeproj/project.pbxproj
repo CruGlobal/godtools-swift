@@ -2345,6 +2345,7 @@
 		4561C40B27C6891600C4A367 /* MobileContentAccordionSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentAccordionSectionView.swift; sourceTree = "<group>"; };
 		4561C40D27C6891600C4A367 /* MobileContentAccordionSectionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MobileContentAccordionSectionView.xib; sourceTree = "<group>"; };
 		4561C40E27C6891600C4A367 /* MobileContentAccordionSectionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentAccordionSectionViewModel.swift; sourceTree = "<group>"; };
+		45637BCF2E3BB7CA00501917 /* UnitTests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = UnitTests.xctestplan; sourceTree = "<group>"; };
 		4563D99E2A94FC4700E0701C /* InfoPlist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoPlist.swift; sourceTree = "<group>"; };
 		4563D9A02A94FC7A00E0701C /* AppDiContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDiContainer.swift; sourceTree = "<group>"; };
 		456423E62C00B72400B0B67E /* StoreInitialFavoritedToolsInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreInitialFavoritedToolsInterface.swift; sourceTree = "<group>"; };
@@ -6500,6 +6501,14 @@
 				453A4F362BED6B02006E8B01 /* Models */,
 			);
 			path = ContentAccordionSection;
+			sourceTree = "<group>";
+		};
+		45637BCE2E3BB79D00501917 /* TestPlans */ = {
+			isa = PBXGroup;
+			children = (
+				45637BCF2E3BB7CA00501917 /* UnitTests.xctestplan */,
+			);
+			path = TestPlans;
 			sourceTree = "<group>";
 		};
 		4563D99D2A94FC4700E0701C /* InfoPlist */ = {
@@ -11936,6 +11945,7 @@
 				4F0CCC1E1EE73E9D00AE4E45 /* Podfile */,
 				0D9B3E5467200B09BA255F79 /* Pods */,
 				45FD5E0828AACA960016E05A /* Scripts */,
+				45637BCE2E3BB79D00501917 /* TestPlans */,
 				20ECC28E617DF10976739E6B /* Frameworks */,
 			);
 			sourceTree = "<group>";
