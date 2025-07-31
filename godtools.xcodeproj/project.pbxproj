@@ -2690,7 +2690,6 @@
 		45A464C92A7BE18800E8BAF0 /* FirebaseAnalytics+MobileContentRendererAnalyticsSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FirebaseAnalytics+MobileContentRendererAnalyticsSystem.swift"; sourceTree = "<group>"; };
 		45A4AB162E3BDF16008070DD /* UITests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = UITests.xctestplan; sourceTree = "<group>"; };
 		45A4AB172E3BDF28008070DD /* Tests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = Tests.xctestplan; sourceTree = "<group>"; };
-		45A4AB182E3BDFE9008070DD /* Empty.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = Empty.xctestplan; sourceTree = "<group>"; };
 		45A5200D26C481DB009B68D4 /* MobileContentRendererManifestResourcesCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentRendererManifestResourcesCache.swift; sourceTree = "<group>"; };
 		45A833562ADEC4D3007C8D77 /* InvisibleChooseAppLanguageButtonForNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvisibleChooseAppLanguageButtonForNavigationBar.swift; sourceTree = "<group>"; };
 		45A8350D2AD1A40D004F5593 /* GetToolDetailsMediaUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetToolDetailsMediaUseCase.swift; sourceTree = "<group>"; };
@@ -6508,7 +6507,6 @@
 		45637BCE2E3BB79D00501917 /* TestPlans */ = {
 			isa = PBXGroup;
 			children = (
-				45A4AB182E3BDFE9008070DD /* Empty.xctestplan */,
 				45A4AB172E3BDF28008070DD /* Tests.xctestplan */,
 				45A4AB162E3BDF16008070DD /* UITests.xctestplan */,
 			);
