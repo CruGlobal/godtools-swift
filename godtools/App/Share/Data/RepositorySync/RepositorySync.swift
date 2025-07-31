@@ -34,6 +34,15 @@ open class RepositorySync<DataModelType, ExternalDataFetchType: RepositorySyncEx
     
     func getObjectPublisher(id: String, cachePolicy: RepositorySyncCachePolicy, requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
         
+        // TODO:
+        /*
+            - I think observing should be optional. Either make a flag or separate method?  If in the middle of a combine chain we wouldn't want to observe.
+            - Is there a better way to setup RepositorySyncMapping?  I couldn't get it to work with a protocol and associated types. Not sure I like the open class because there isn't an explicit way to force subclasses to override parent methods.
+            - Can we observe the specific realm object and only trigger when there are actual changes? (https://www.mongodb.com/docs/atlas/device-sdks/sdk/swift/react-to-changes/)
+            -
+            - 
+         */
+        
         print("\n get object publisher")
         print("  id: \(id)")
         print("  cache policy: \(cachePolicy)")
