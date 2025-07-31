@@ -76,4 +76,11 @@ class AccountDataLayerDependencies {
             localizationServices: coreDataLayer.getLocalizationServices()
         )
     }
+    
+    func getUserAccountDetailsRepositoryInterface() -> GetUserAccountDetailsRepositoryInterface {
+        return GetUserAccountDetailsRepository(
+            userDetailsRepository: getUserDetailsRepository(),
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
 }
