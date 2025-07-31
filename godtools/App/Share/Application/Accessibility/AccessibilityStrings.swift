@@ -26,6 +26,7 @@ class AccessibilityStrings {
         case dashboardLessons = "Dashboard Lessons"
         case dashboardTools = "Dashboard Tools"
         case downloadableLanguages = "Downloadable Languages"
+        case learnToShareTool
         case languageSettings = "Language Settings"
         case leaveAReview = "Leave A Review"
         case login = "Login"
@@ -69,6 +70,7 @@ class AccessibilityStrings {
         case editDownloadedLanguages = "Edit Downloaded Languages"
         case favoriteTool = "Favorite Tool"
         case languageSettings = "Language Settings"
+        case learnToShare = "Learn To Share"
         case leaveAReview = "Leave A Review"
         case lessonsLanguageFilter = "Lessons Language Filter"
         case login = "Login"

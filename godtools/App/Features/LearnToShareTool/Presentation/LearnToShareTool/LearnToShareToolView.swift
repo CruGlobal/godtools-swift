@@ -24,6 +24,8 @@ struct LearnToShareToolView: View {
         
         GeometryReader { geometry in
             
+            AccessibilityScreenElementView(screenAccessibility: .learnToShareTool)
+            
             VStack(spacing: 0) {
                 
                 if viewModel.learnToShareToolItems.count > 0 {
