@@ -29,7 +29,7 @@ jobs:
       - name: Run Tests and Generate Code Coverage Report (.xcresult)
         run: bundle exec fastlane cru_shared_lane_run_tests testplan:Tests output_directory:fastlane_scan_output_directory result_bundle:true reset_simulator:true should_clear_derived_data:true
 
-        - name: Run UITests and Generate Code Coverage Report (.xcresult)
+      - name: Run UITests and Generate Code Coverage Report (.xcresult)
         run: bundle exec fastlane cru_shared_lane_run_tests testplan:UITests output_directory:fastlane_scan_output_directory result_bundle:true reset_simulator:true should_clear_derived_data:true
 
       - name: Install XCResultParser
