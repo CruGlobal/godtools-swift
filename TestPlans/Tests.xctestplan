@@ -1,0 +1,25 @@
+{
+  "configurations" : [
+    {
+      "id" : "4C66E78E-3CD0-465B-B005-81482C10F2D6",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true,
+    "uiTestingScreenshotsLifetime" : "keepNever"
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:godtools.xcodeproj",
+        "identifier" : "684328F01EB7CF66005E9131",
+        "name" : "godtoolsTests"
+      }
+    }
+  ],
+  "version" : 1
+}
