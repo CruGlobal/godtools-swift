@@ -52,7 +52,6 @@ struct ToolSpotlightView: View {
                             layout: .thumbnail,
                             showsCategory: false,
                             navButtonTitleHorizontalPadding: nil,
-                            accessibility: .spotlightTool,
                             favoriteTappedClosure: {
                                 
                                 viewModel.spotlightToolFavoriteTapped(spotlightTool: spotlightTool)

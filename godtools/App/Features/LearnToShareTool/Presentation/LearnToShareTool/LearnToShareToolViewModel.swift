@@ -25,6 +25,8 @@ class LearnToShareToolViewModel: ObservableObject {
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     @Published private var viewLearnToShareToolDomainModel: ViewLearnToShareToolDomainModel?
     
+    @Published private(set) var continueButtonAccessibility: AccessibilityStrings.Button = .continueForward
+    
     @Published var hidesBackButton: Bool = true
     @Published var learnToShareToolItems: [LearnToShareToolItemDomainModel] = Array()
     @Published var continueTitle: String = ""
@@ -75,6 +77,7 @@ class LearnToShareToolViewModel: ObservableObject {
             let isOnLastPage: Bool = weakSelf.isOnLastPage
             
             weakSelf.continueTitle = isOnLastPage ? domainModel.interfaceStrings.startTrainingActionTitle : domainModel.interfaceStrings.nextTutorialItemActionTitle
+            weakSelf.continueButtonAccessibility = isOnLastPage ? .startTraining : .continueForward
         }
         .store(in: &cancellables)
         
@@ -131,7 +134,7 @@ extension LearnToShareToolViewModel {
     func continueTapped() {
         
         if isOnLastPage {
-            flowDelegate?.navigate(step: .continueTappedFromLearnToShareTool(toolId: toolId, primaryLanguage: toolPrimaryLanguage, parallelLanguage: toolParallelLanguage, selectedLanguageIndex: toolSelectedLanguageIndex))
+            flowDelegate?.navigate(step: .startTrainingTappedFromLearnToShareTool(toolId: toolId, primaryLanguage: toolPrimaryLanguage, parallelLanguage: toolParallelLanguage, selectedLanguageIndex: toolSelectedLanguageIndex))
         }
         else {
             currentPage += 1
