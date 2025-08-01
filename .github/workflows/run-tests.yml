@@ -26,9 +26,11 @@ jobs:
       - name: Pod Install
         uses: ./.github/actions/pod-install
 
+      # - Run all tests and build single xcresult.
       # - name: Run All Tests and Generate Code Coverage Report (.xcresult)
       #   run: bundle exec fastlane cru_shared_lane_run_tests testplan:AllTests output_directory:fastlane_scan_output_directory result_bundle:true reset_simulator:true should_clear_derived_data:true
 
+      # - Runs Tests and UITests separately and merges xcresults into single xcresult.
       - name: Run Tests and Generate Code Coverage Report (.xcresult)
         run: bundle exec fastlane cru_shared_lane_run_tests testplan:Tests output_directory:fastlane_scan_output_directory/tests result_bundle:true reset_simulator:true should_clear_derived_data:true
 
@@ -61,16 +63,16 @@ jobs:
       #     xcode: true
       #     xcode_archive_path: /Users/runner/work/godtools-swift/godtools-swift/fastlane_scan_output_directory/GodTools-Production.xcresult
 
-      - name: Archive XCode Logs
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: xcode-logs
-          path: "/Users/runner/Library/Developer/Xcode/DerivedData/Logs/godtools-*/**"
+      # - name: Archive XCode Logs
+      #   if: always()
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: xcode-logs
+      #     path: "/Users/runner/Library/Developer/Xcode/DerivedData/Logs/godtools-*/**"
 
-      - name: Archive XCode Archive Path
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: fastlane-scan-output
-          path: "/Users/runner/work/godtools-swift/godtools-swift/fastlane_scan_output_directory/*"
+      # - name: Archive XCode Archive Path
+      #   if: always()
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: fastlane-scan-output
+      #     path: "/Users/runner/work/godtools-swift/godtools-swift/fastlane_scan_output_directory/*"
