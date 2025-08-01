@@ -902,7 +902,6 @@
 		459F86862AC51A9A00B4E5CA /* ChooseAppLanguageNavigationFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459F86852AC51A9A00B4E5CA /* ChooseAppLanguageNavigationFlow.swift */; };
 		459F86892AC5B21D00B4E5CA /* ChooseAppLanguageCenteredHorizontallyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459F86882AC5B21D00B4E5CA /* ChooseAppLanguageCenteredHorizontallyView.swift */; };
 		45A415F32A99429C0030E2C7 /* OnboardingFlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A415EF2A99429B0030E2C7 /* OnboardingFlowTests.swift */; };
-		45A415F42A99429C0030E2C7 /* XCUIApplication+Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A415F22A99429B0030E2C7 /* XCUIApplication+Query.swift */; };
 		45A416062A9943D50030E2C7 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 45A416052A9943D50030E2C7 /* Lottie */; };
 		45A416082A9943D50030E2C7 /* RequestOperation in Frameworks */ = {isa = PBXBuildFile; productRef = 45A416072A9943D50030E2C7 /* RequestOperation */; };
 		45A4160C2A9943D50030E2C7 /* YouTubeiOSPlayerHelper in Frameworks */ = {isa = PBXBuildFile; productRef = 45A4160B2A9943D50030E2C7 /* YouTubeiOSPlayerHelper */; };
@@ -1067,6 +1066,9 @@
 		45B0F6A72DBBCC300011FF1D /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 45B0F6A62DBBCC300011FF1D /* FirebaseMessaging */; };
 		45B212AC2922965F00C9A94D /* RealmDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B212AA2922965F00C9A94D /* RealmDatabase.swift */; };
 		45B212B629229CBA00C9A94D /* SwiftUIPreviewDiContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B212B529229CBA00C9A94D /* SwiftUIPreviewDiContainer.swift */; };
+		45B224F72E3B909F002C4042 /* LearnToShareToolFlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B224F62E3B9099002C4042 /* LearnToShareToolFlowTests.swift */; };
+		45B224FE2E3B9791002C4042 /* XCUIApplication+Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B224FA2E3B9791002C4042 /* XCUIApplication+Query.swift */; };
+		45B225002E3B97A0002C4042 /* ToolNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B224FF2E3B979B002C4042 /* ToolNames.swift */; };
 		45B3382B2AF42A3900D18C63 /* GetTutorialInterfaceStringsRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B3382A2AF42A3900D18C63 /* GetTutorialInterfaceStringsRepositoryInterface.swift */; };
 		45B3382F2AF42A6400D18C63 /* TutorialInterfaceStringsDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B3382E2AF42A6400D18C63 /* TutorialInterfaceStringsDomainModel.swift */; };
 		45B338312AF42A9400D18C63 /* GetTutorialInterfaceStringsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B338302AF42A9400D18C63 /* GetTutorialInterfaceStringsRepository.swift */; };
@@ -1612,6 +1614,8 @@
 		D43818C42E15B9BF00D404FF /* ToolScreenShareQRCodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43818C32E15B9BF00D404FF /* ToolScreenShareQRCodeViewModel.swift */; };
 		D43818C62E17173B00D404FF /* GTModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43818C52E17173B00D404FF /* GTModalView.swift */; };
 		D43818CA2E1C4F7100D404FF /* QRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43818C92E1C4F7100D404FF /* QRCodeView.swift */; };
+		D43A72222E3AA978001B7C07 /* GetUserAccountDetailsRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43A72212E3AA978001B7C07 /* GetUserAccountDetailsRepositoryInterface.swift */; };
+		D43A72242E3AAC9B001B7C07 /* GetUserAccountDetailsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43A72232E3AAC9B001B7C07 /* GetUserAccountDetailsRepository.swift */; };
 		D43C00392E3177C5003210E7 /* GetSearchBarInterfaceStringsRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43C00382E3177C5003210E7 /* GetSearchBarInterfaceStringsRepositoryTests.swift */; };
 		D43FC1BE2B62EFD800F8310E /* View+AppLifecycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43FC1BD2B62EFD800F8310E /* View+AppLifecycle.swift */; };
 		D43FC1C02B64531F00F8310E /* ViewConfirmAppLanguageDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43FC1BF2B64531F00F8310E /* ViewConfirmAppLanguageDomainModel.swift */; };
@@ -2705,7 +2709,6 @@
 		459F86852AC51A9A00B4E5CA /* ChooseAppLanguageNavigationFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseAppLanguageNavigationFlow.swift; sourceTree = "<group>"; };
 		459F86882AC5B21D00B4E5CA /* ChooseAppLanguageCenteredHorizontallyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseAppLanguageCenteredHorizontallyView.swift; sourceTree = "<group>"; };
 		45A415EF2A99429B0030E2C7 /* OnboardingFlowTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingFlowTests.swift; sourceTree = "<group>"; };
-		45A415F22A99429B0030E2C7 /* XCUIApplication+Query.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCUIApplication+Query.swift"; sourceTree = "<group>"; };
 		45A464C72A7BE18800E8BAF0 /* MobileContentRendererUserAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentRendererUserAnalytics.swift; sourceTree = "<group>"; };
 		45A464C92A7BE18800E8BAF0 /* FirebaseAnalytics+MobileContentRendererAnalyticsSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FirebaseAnalytics+MobileContentRendererAnalyticsSystem.swift"; sourceTree = "<group>"; };
 		45A5200D26C481DB009B68D4 /* MobileContentRendererManifestResourcesCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentRendererManifestResourcesCache.swift; sourceTree = "<group>"; };
@@ -2862,6 +2865,9 @@
 		45B0F6A42DBBCB9C0011FF1D /* FirebaseMessaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseMessaging.swift; sourceTree = "<group>"; };
 		45B212AA2922965F00C9A94D /* RealmDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmDatabase.swift; sourceTree = "<group>"; };
 		45B212B529229CBA00C9A94D /* SwiftUIPreviewDiContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftUIPreviewDiContainer.swift; sourceTree = "<group>"; };
+		45B224F62E3B9099002C4042 /* LearnToShareToolFlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnToShareToolFlowTests.swift; sourceTree = "<group>"; };
+		45B224FA2E3B9791002C4042 /* XCUIApplication+Query.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCUIApplication+Query.swift"; sourceTree = "<group>"; };
+		45B224FF2E3B979B002C4042 /* ToolNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolNames.swift; sourceTree = "<group>"; };
 		45B3382A2AF42A3900D18C63 /* GetTutorialInterfaceStringsRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTutorialInterfaceStringsRepositoryInterface.swift; sourceTree = "<group>"; };
 		45B3382E2AF42A6400D18C63 /* TutorialInterfaceStringsDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialInterfaceStringsDomainModel.swift; sourceTree = "<group>"; };
 		45B338302AF42A9400D18C63 /* GetTutorialInterfaceStringsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTutorialInterfaceStringsRepository.swift; sourceTree = "<group>"; };
@@ -3389,6 +3395,8 @@
 		D43818C32E15B9BF00D404FF /* ToolScreenShareQRCodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolScreenShareQRCodeViewModel.swift; sourceTree = "<group>"; };
 		D43818C52E17173B00D404FF /* GTModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GTModalView.swift; sourceTree = "<group>"; };
 		D43818C92E1C4F7100D404FF /* QRCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeView.swift; sourceTree = "<group>"; };
+		D43A72212E3AA978001B7C07 /* GetUserAccountDetailsRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserAccountDetailsRepositoryInterface.swift; sourceTree = "<group>"; };
+		D43A72232E3AAC9B001B7C07 /* GetUserAccountDetailsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserAccountDetailsRepository.swift; sourceTree = "<group>"; };
 		D43C00382E3177C5003210E7 /* GetSearchBarInterfaceStringsRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSearchBarInterfaceStringsRepositoryTests.swift; sourceTree = "<group>"; };
 		D43FC1BD2B62EFD800F8310E /* View+AppLifecycle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+AppLifecycle.swift"; sourceTree = "<group>"; };
 		D43FC1BF2B64531F00F8310E /* ViewConfirmAppLanguageDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewConfirmAppLanguageDomainModel.swift; sourceTree = "<group>"; };
@@ -8157,6 +8165,7 @@
 				45043FA22BFB879400324573 /* GetDeleteAccountProgressInterfaceStringsRepository.swift */,
 				4598BCEB2BF7DF6800196463 /* GetSocialCreateAccountInterfaceStringsRepository.swift */,
 				4598BCEC2BF7DF6800196463 /* GetSocialSignInInterfaceStringsRepository.swift */,
+				D43A72232E3AAC9B001B7C07 /* GetUserAccountDetailsRepository.swift */,
 			);
 			path = "Data-DomainInterface";
 			sourceTree = "<group>";
@@ -8204,6 +8213,7 @@
 				45043FA02BFB875A00324573 /* GetDeleteAccountProgressInterfaceStringsInterface.swift */,
 				4598BCFB2BF7DF6800196463 /* GetSocialCreateAccountInterfaceStringsRepositoryInterface.swift */,
 				4598BCFC2BF7DF6800196463 /* GetSocialSignInInterfaceStringsRepositoryInterface.swift */,
+				D43A72212E3AA978001B7C07 /* GetUserAccountDetailsRepositoryInterface.swift */,
 			);
 			path = Interface;
 			sourceTree = "<group>";
@@ -8468,6 +8478,7 @@
 				45DC19132BB5B338007542A5 /* ChooseAppLanguage */,
 				453835242DF7813A005F1ABA /* Dashboard */,
 				45DC19102BB5AB21007542A5 /* LanguageSettings */,
+				45B224F52E3B9094002C4042 /* LearnToShareTool */,
 				450FC7572C49590D00F87282 /* Menu */,
 				45A415EE2A99429B0030E2C7 /* Onboarding */,
 			);
@@ -8480,22 +8491,6 @@
 				45A415EF2A99429B0030E2C7 /* OnboardingFlowTests.swift */,
 			);
 			path = Onboarding;
-			sourceTree = "<group>";
-		};
-		45A415F02A99429B0030E2C7 /* Share */ = {
-			isa = PBXGroup;
-			children = (
-				45A415F12A99429B0030E2C7 /* Extensions */,
-			);
-			path = Share;
-			sourceTree = "<group>";
-		};
-		45A415F12A99429B0030E2C7 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				45A415F22A99429B0030E2C7 /* XCUIApplication+Query.swift */,
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 		45A464C52A7BE18800E8BAF0 /* Systems */ = {
@@ -9452,6 +9447,39 @@
 				45B212B529229CBA00C9A94D /* SwiftUIPreviewDiContainer.swift */,
 			);
 			path = DependencyContainer;
+			sourceTree = "<group>";
+		};
+		45B224F52E3B9094002C4042 /* LearnToShareTool */ = {
+			isa = PBXGroup;
+			children = (
+				45B224F62E3B9099002C4042 /* LearnToShareToolFlowTests.swift */,
+			);
+			path = LearnToShareTool;
+			sourceTree = "<group>";
+		};
+		45B224FB2E3B9791002C4042 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				45B224FA2E3B9791002C4042 /* XCUIApplication+Query.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		45B224FC2E3B9791002C4042 /* Strings */ = {
+			isa = PBXGroup;
+			children = (
+				45B224FF2E3B979B002C4042 /* ToolNames.swift */,
+			);
+			path = Strings;
+			sourceTree = "<group>";
+		};
+		45B224FD2E3B9791002C4042 /* Share */ = {
+			isa = PBXGroup;
+			children = (
+				45B224FB2E3B9791002C4042 /* Extensions */,
+				45B224FC2E3B9791002C4042 /* Strings */,
+			);
+			path = Share;
 			sourceTree = "<group>";
 		};
 		45B2E7182BC044F70077A3C3 /* AppLanguage */ = {
@@ -11971,7 +11999,7 @@
 			children = (
 				4F12297020852BE3008842CC /* Info.plist */,
 				45A415EC2A99429B0030E2C7 /* App */,
-				45A415F02A99429B0030E2C7 /* Share */,
+				45B224FD2E3B9791002C4042 /* Share */,
 			);
 			path = godtoolsUITests;
 			sourceTree = "<group>";
@@ -13435,15 +13463,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				459B7E692ABA3A4A0088F44B /* LaunchEnvironmentKey.swift in Sources */,
-				45A415F42A99429C0030E2C7 /* XCUIApplication+Query.swift in Sources */,
 				450FC7592C49591700F87282 /* MenuFlowTests.swift in Sources */,
 				451F1EE42CD3B38B006CCF4E /* LaunchEnvironmentReader.swift in Sources */,
+				45B224FE2E3B9791002C4042 /* XCUIApplication+Query.swift in Sources */,
 				45FBE5722AB8A33200BFBE92 /* AccessibilityStrings.swift in Sources */,
 				45D318F12AE6F9D300D74A87 /* LanguageCodeDomainModel.swift in Sources */,
 				453835262DF78148005F1ABA /* DashboardFlowTests.swift in Sources */,
 				4585E4B82B05895200223A9B /* BCP47LanguageIdentifier.swift in Sources */,
+				45B225002E3B97A0002C4042 /* ToolNames.swift in Sources */,
 				45DC19152BB5B33F007542A5 /* ChooseAppLanguageFlowTests.swift in Sources */,
 				451CF5952C4AAC5500CD65C4 /* AppFlowTests.swift in Sources */,
+				45B224F72E3B909F002C4042 /* LearnToShareToolFlowTests.swift in Sources */,
 				45D318FB2AE7020200D74A87 /* AppLanguageDataModel.swift in Sources */,
 				45A415F32A99429C0030E2C7 /* OnboardingFlowTests.swift in Sources */,
 				45DC19122BB5AB2C007542A5 /* LanguageSettingsFlowTests.swift in Sources */,
@@ -13902,12 +13932,14 @@
 				45B6480925E581660098BAF1 /* (null) in Sources */,
 				45EB9B8329F16CF200CA74A8 /* Color+RGB.swift in Sources */,
 				453D88972E05D41600C868DE /* GodToolsAppDelegate.swift in Sources */,
+				D43A72242E3AAC9B001B7C07 /* GetUserAccountDetailsRepository.swift in Sources */,
 				45558407269F2DA500C3FF14 /* MobileContentPagesViewModel.swift in Sources */,
 				45ACCA582CD2BFBB00567AE6 /* AppMessagingInterface.swift in Sources */,
 				458E93412B62A06F0087D45D /* AppShareBarItem.swift in Sources */,
 				455582E1269F2C1000C3FF14 /* TrainingViewFactory.swift in Sources */,
 				459C527128941A5B00DA9E95 /* TranslationFilesDataModel.swift in Sources */,
 				45F378FB2B23642600EEF039 /* GetLearnToShareToolInterfaceStringsRepository.swift in Sources */,
+				D43A72222E3AA978001B7C07 /* GetUserAccountDetailsRepositoryInterface.swift in Sources */,
 				4556CEAE29F2E07900643BBC /* ArticleDebugView.swift in Sources */,
 				454CA2002B7BD30B009A3976 /* ViewAppLanguagesDomainModel.swift in Sources */,
 				D40D77BA2AAF9891008D3642 /* ToolsFilterSectionView.swift in Sources */,
@@ -15234,7 +15266,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 6.3.11;
+				MARKETING_VERSION = 6.3.12;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -15438,7 +15470,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 6.3.11;
+				MARKETING_VERSION = 6.3.12;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools.beta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -15641,7 +15673,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 6.3.11;
+				MARKETING_VERSION = 6.3.12;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools.beta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -15844,7 +15876,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 6.3.11;
+				MARKETING_VERSION = 6.3.12;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -16083,7 +16115,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 6.3.11;
+				MARKETING_VERSION = 6.3.12;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DRELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
 				PRODUCT_NAME = "$(TARGET_NAME)";

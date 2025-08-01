@@ -40,7 +40,6 @@ struct AllYourFavoriteToolsView: View {
                             layout: .landscape,
                             showsCategory: true,
                             navButtonTitleHorizontalPadding: YourFavoriteToolsView.toolCardNavButtonTitleHorizontalPadding,
-                            accessibility: .favoriteTool,
                             favoriteTappedClosure: {
                                 
                                 viewModel.unfavoriteToolTapped(tool: tool)

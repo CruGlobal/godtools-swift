@@ -18,6 +18,7 @@ class ToolCardViewModel: ObservableObject {
     private var getBannerImageCancellable: AnyCancellable?
     
     let tool: ToolListItemDomainModelInterface
+    let accessibilityWithToolName: String
     
     @Published var bannerImageData: OptionalImageData?
     @Published var isFavorited = false
@@ -27,7 +28,7 @@ class ToolCardViewModel: ObservableObject {
     @Published var detailsButtonTitle: String = ""
     @Published var openButtonTitle: String = ""
             
-    init(tool: ToolListItemDomainModelInterface, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, attachmentsRepository: AttachmentsRepository) {
+    init(tool: ToolListItemDomainModelInterface, accessibility: AccessibilityStrings.Button, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, attachmentsRepository: AttachmentsRepository) {
         
         self.tool = tool
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
@@ -39,6 +40,8 @@ class ToolCardViewModel: ObservableObject {
         isFavorited = tool.isFavorited
         openButtonTitle = tool.interfaceStrings.openToolActionTitle
         detailsButtonTitle = tool.interfaceStrings.openToolDetailsActionTitle
+        
+        accessibilityWithToolName = accessibility.rawValue + " " + tool.name.lowercased()
         
         getToolIsFavoritedUseCase
             .getToolIsFavoritedPublisher(toolId: tool.dataModelId)
