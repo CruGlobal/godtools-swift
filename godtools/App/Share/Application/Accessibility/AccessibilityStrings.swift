@@ -45,6 +45,7 @@ class AccessibilityStrings {
         case toolDetails = "Tool Details"
         case toolsCategoryFilters = "Tools Category Filters"
         case toolsLanguageFilters = "Tools Language Filters"
+        case toolSettings = "Tool Settings"
         case tract = "Tract"
         case tutorial = "Tutorial"
         case watchOnboardingTutorialVideo = "Watch Onboarding Tutorial Video Screen"
@@ -84,6 +85,8 @@ class AccessibilityStrings {
         case sendFeedback
         case shareAStoryWithUs = "Share A Story With Us"
         case shareGodTools = "Share GodTools"
+        case shareLink = "Share Link"
+        case shareScreen = "Share Screen"
         case skipOnboardingTutorial = "Skip Onboarding Tutorial Button"
         case spotlightTool = "Spotlight Tool"
         case startTraining = "Start Training"
@@ -94,6 +97,8 @@ class AccessibilityStrings {
         case toolDetailsNavBack = "Tool Details Nav Back"
         case toolsCategoryFilter = "Tools Category Filter"
         case toolsLanguageFilter = "Tools Language Filter"
+        case toolSettings = "Tool Settings"
+        case trainingTips = "Training Tips"
         case tutorial = "Tutorial"
         case watchOnboardingTutorialVideo = "Watch Onboarding Tutorial Video Button"
     }

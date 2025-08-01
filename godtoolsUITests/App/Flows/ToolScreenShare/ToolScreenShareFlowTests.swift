@@ -12,16 +12,35 @@ import XCTest
 
 class ToolScreenShareFlowTests: BaseFlowTests {
     
-    private func launchAppToTeachMeToShareTool() {
+    private func launchAppToToolScreenShare() {
         
         super.launchApp(
             flowDeepLinkUrl: "godtools://org.cru.godtools/tool/tract/teachmetoshare/en",
             checkInitialScreenExists: .tract
         )
+        
+        let toolSettingsButton = app.queryButton(buttonAccessibility: .toolSettings)
+        
+        XCTAssertTrue(toolSettingsButton.exists)
+        
+        toolSettingsButton.tap()
+        
+        assertIfScreenDoesNotExist(screenAccessibility: .toolSettings)
+        
+        let shareScreenButton = app.queryDescendants(id: AccessibilityStrings.Button.shareScreen.id)
+                
+        guard let shareScreenButton = shareScreenButton else {
+            XCTAssertNotNil(shareScreenButton, "Found nil element.")
+            return
+        }
+        
+        XCTAssertTrue(shareScreenButton.exists)
+        
+        shareScreenButton.tap()
     }
     
-    func testInitialScreenIsTeachMeToShareTool() {
+    func testInitialScreenIsToolScreenShare() {
         
-        launchAppToTeachMeToShareTool()
+        launchAppToToolScreenShare()
     }
 }

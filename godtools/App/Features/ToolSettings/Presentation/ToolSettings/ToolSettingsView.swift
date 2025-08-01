@@ -39,6 +39,8 @@ struct ToolSettingsView: View {
         
         GeometryReader { geometry in
             
+            AccessibilityScreenElementView(screenAccessibility: .toolSettings)
+            
             FullScreenOverlayView(tappedClosure: {
                 
                 setIsVisible(isVisible: false)
