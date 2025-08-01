@@ -68,7 +68,7 @@ class OnboardingFlowTests: BaseFlowTests {
     
     private func navigateBackToOnboardingTutorialFromWatchOnboardingTutorialVideo(app: XCUIApplication) {
         
-        let closeVideoButton = app.queryButton(buttonAccessibility: .closeOnboardingTutorialVideo)
+        let closeVideoButton = app.queryButton(buttonAccessibility: .close)
         
         XCTAssertTrue(closeVideoButton.exists)
         

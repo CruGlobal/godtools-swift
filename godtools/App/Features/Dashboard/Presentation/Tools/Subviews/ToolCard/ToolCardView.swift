@@ -24,7 +24,6 @@ struct ToolCardView: View {
     private let navButtonTitleHorizontalPadding: CGFloat?
     private let contentHorizontalInsets: CGFloat = 15
     private let showsCategory: Bool
-    private let accessibility: AccessibilityStrings.Button?
     private let favoriteTappedClosure: (() -> Void)?
     private let toolDetailsTappedClosure: (() -> Void)?
     private let openToolTappedClosure: (() -> Void)?
@@ -32,7 +31,7 @@ struct ToolCardView: View {
     
     @ObservedObject private var viewModel: ToolCardViewModel
     
-    init(viewModel: ToolCardViewModel, geometry: GeometryProxy, layout: ToolCardLayout, showsCategory: Bool, navButtonTitleHorizontalPadding: CGFloat?, accessibility: AccessibilityStrings.Button?, favoriteTappedClosure: (() -> Void)?, toolDetailsTappedClosure: (() -> Void)?, openToolTappedClosure: (() -> Void)?, toolTappedClosure: (() -> Void)?) {
+    init(viewModel: ToolCardViewModel, geometry: GeometryProxy, layout: ToolCardLayout, showsCategory: Bool, navButtonTitleHorizontalPadding: CGFloat?, favoriteTappedClosure: (() -> Void)?, toolDetailsTappedClosure: (() -> Void)?, openToolTappedClosure: (() -> Void)?, toolTappedClosure: (() -> Void)?) {
         
         var navButtons: [ToolCardNavButtonType] = Array()
         
@@ -52,7 +51,6 @@ struct ToolCardView: View {
         self.navButtons = navButtons
         self.showsCategory = showsCategory
         self.navButtonTitleHorizontalPadding = navButtonTitleHorizontalPadding
-        self.accessibility = accessibility
         self.favoriteTappedClosure = favoriteTappedClosure
         self.toolDetailsTappedClosure = toolDetailsTappedClosure
         self.openToolTappedClosure = openToolTappedClosure
@@ -89,9 +87,7 @@ struct ToolCardView: View {
         
         ZStack(alignment: .topLeading) {
             
-            if let accessibilityIdentifier = accessibility?.id {
-                AccessibilityTapAreaView(accessibilityIdentifier: accessibilityIdentifier)
-            }
+            AccessibilityTapAreaView(accessibilityIdentifier: viewModel.accessibilityWithToolName)
             
             backgroundColor
             
@@ -210,6 +206,7 @@ struct ToolCardView_Previews: PreviewProvider {
         
         return ToolCardViewModel(
             tool: tool,
+            accessibility: .tool,
             getToolIsFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToolIsFavoritedUseCase(),
             attachmentsRepository: appDiContainer.dataLayer.getAttachmentsRepository()
         )
@@ -227,7 +224,6 @@ struct ToolCardView_Previews: PreviewProvider {
                 layout: .landscape,
                 showsCategory: true,
                 navButtonTitleHorizontalPadding: nil,
-                accessibility: nil,
                 favoriteTappedClosure: nil,
                 toolDetailsTappedClosure: nil,
                 openToolTappedClosure: nil,

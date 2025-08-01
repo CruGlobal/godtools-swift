@@ -328,8 +328,7 @@ extension ToolScreenShareFlow {
         let closeButton = AppCloseBarItem(
             color: ColorPalette.gtBlue.uiColor,
             target: viewModel,
-            action: #selector(viewModel.closeTapped),
-            accessibilityIdentifier: nil
+            action: #selector(viewModel.closeTapped)
         )
         
         let skipButton = AppSkipBarItem(
@@ -380,8 +379,7 @@ extension ToolScreenShareFlow {
         let closeButton = AppCloseBarItem(
             color: ColorPalette.gtBlue.uiColor,
             target: viewModel,
-            action: #selector(viewModel.closeTapped),
-            accessibilityIdentifier: nil
+            action: #selector(viewModel.closeTapped)
         )
         
         let navigationBar = AppNavigationBar(

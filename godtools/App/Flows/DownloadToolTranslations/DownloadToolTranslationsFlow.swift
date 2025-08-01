@@ -99,8 +99,7 @@ class DownloadToolTranslationsFlow: Flow {
         let closeButton = AppCloseBarItem(
             color: ColorPalette.gtBlue.uiColor,
             target: viewModel,
-            action: #selector(viewModel.closeTapped),
-            accessibilityIdentifier: nil
+            action: #selector(viewModel.closeTapped)
         )
         
         let hostingView = AppHostingController<DownloadToolProgressView>(

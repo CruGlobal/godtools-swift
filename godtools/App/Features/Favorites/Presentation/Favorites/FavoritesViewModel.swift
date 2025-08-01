@@ -279,6 +279,7 @@ extension FavoritesViewModel {
                 
         return ToolCardViewModel(
             tool: tool,
+            accessibility: .favoriteTool,
             getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
             attachmentsRepository: attachmentsRepository
         )

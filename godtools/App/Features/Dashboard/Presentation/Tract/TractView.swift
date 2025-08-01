@@ -31,6 +31,8 @@ class TractView: MobileContentRendererView {
     override func viewDidLoad() {
         super.viewDidLoad()
         print("view didload: \(type(of: self))")
+        
+        addScreenAccessibility(screenAccessibility: .tract)
     }
     
     override func setupBinding() {
