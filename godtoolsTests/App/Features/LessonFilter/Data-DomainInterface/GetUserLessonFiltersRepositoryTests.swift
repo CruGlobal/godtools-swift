@@ -6,229 +6,213 @@
 //  Copyright © 2024 Cru. All rights reserved.
 //
 
-import Foundation
+import Testing
 @testable import godtools
 import Combine
-import Quick
-import Nimble
 import RealmSwift
 
-class GetUserLessonFiltersRepositoryTests: QuickSpec {
+struct GetUserLessonFiltersRepositoryTests {
     
-    override class func spec() {
-    
+    @Test(
+        """
+        Given: User is viewing the language filter in the lessons list.
+        When: A lesson language filter hasn't been selected by the user.
+        Then: The lesson language filter should default to the current app language when lessons exist in the current app language.
+        """
+    )
+    @MainActor func lessonsLanguageFilterDefaultsToAppLanguageWhenLessonsExistInAppLanguage() async {
+        
         var cancellables: Set<AnyCancellable> = Set()
         
-        describe("User is viewing the language filter in the lessons list.") {
-         
-            context("When a lesson language filter hasn't been selected by the user.") {
-                
-                it("The lesson language filter should default to the current app language spanish when spanish lessons exist.") {
-                    
-                    let appLanguageSpanish: AppLanguageDomainModel = LanguageCodeDomainModel.spanish.rawValue
-                    
-                    let spanishLanguage = RealmLanguage()
-                    spanishLanguage.id = "0"
-                    spanishLanguage.code = LanguageCodeDomainModel.spanish.rawValue
-                    spanishLanguage.name = "Spanish Name"
-                    
-                    let spanishLesson_0 = RealmResource()
-                    spanishLesson_0.id = "es-lesson-0"
-                    spanishLesson_0.resourceType = ResourceType.lesson.rawValue
-                    spanishLesson_0.addLanguage(language: spanishLanguage)
-                    
-                    let realmObjectsToAdd: [Object] = [spanishLanguage, spanishLesson_0]
-                    
-                    let testsDiContainer = TestsDiContainer(
-                        realmDatabase: Self.getRealmDatabase(addRealmObjects: realmObjectsToAdd)
-                    )
-                    
-                    let getUserLessonFiltersRepository = GetUserLessonFiltersRepository(
-                        userLessonFiltersRepository: Self.getUserLessonFiltersRepository(testsDiContainer: testsDiContainer),
-                        getLessonFilterLanguagesRepository: Self.getLessonFilterLanguagesRepository(testsDiContainer: testsDiContainer)
-                    )
-                    
-                    var lessonLanguageFilterRef: LessonFilterLanguageDomainModel?
-                    var sinkCompleted: Bool = false
-                    
-                    waitUntil { done in
-                        
-                        getUserLessonFiltersRepository
-                            .getUserLessonLanguageFilterPublisher(translatedInAppLanguage: appLanguageSpanish)
-                            .sink { (lessonLanguageFilter: LessonFilterLanguageDomainModel?) in
-                                
-                                guard !sinkCompleted else {
-                                    return
-                                }
-                                
-                                sinkCompleted = true
-                                
-                                lessonLanguageFilterRef = lessonLanguageFilter
-                                
-                                done()
-                            }
-                            .store(in: &cancellables)
-                        
-                    }
-                    
-                    expect(lessonLanguageFilterRef?.languageName).to(equal("Español"))
-                    expect(lessonLanguageFilterRef?.translatedName).to(equal("Español"))
-                }
-            }
+        let appLanguageSpanish: AppLanguageDomainModel = LanguageCodeDomainModel.spanish.rawValue
+        
+        let spanishLanguage = RealmLanguage()
+        spanishLanguage.id = "0"
+        spanishLanguage.code = LanguageCodeDomainModel.spanish.rawValue
+        spanishLanguage.name = "Spanish Name"
+        
+        let spanishLesson_0 = RealmResource()
+        spanishLesson_0.id = "es-lesson-0"
+        spanishLesson_0.resourceType = ResourceType.lesson.rawValue
+        spanishLesson_0.addLanguage(language: spanishLanguage)
+        
+        let realmObjectsToAdd: [Object] = [spanishLanguage, spanishLesson_0]
+        
+        let testsDiContainer = TestsDiContainer(
+            realmDatabase: Self.getRealmDatabase(addRealmObjects: realmObjectsToAdd)
+        )
+        
+        let getUserLessonFiltersRepository = GetUserLessonFiltersRepository(
+            userLessonFiltersRepository: Self.getUserLessonFiltersRepository(testsDiContainer: testsDiContainer),
+            getLessonFilterLanguagesRepository: Self.getLessonFilterLanguagesRepository(testsDiContainer: testsDiContainer)
+        )
+        
+        var lessonLanguageFilterRef: LessonFilterLanguageDomainModel?
+        
+        await confirmation(expectedCount: 1) { confirmation in
             
-            context("When a lesson language filter hasn't been selected by the user.") {
-                
-                it("The lesson language filter should default to the current app language french even when there are no lessons in french.") {
-                    
-                    let appLanguageFrench: AppLanguageDomainModel = LanguageCodeDomainModel.french.rawValue
-                    
-                    let spanishLanguage = RealmLanguage()
-                    spanishLanguage.id = "0"
-                    spanishLanguage.code = LanguageCodeDomainModel.spanish.rawValue
-                    spanishLanguage.name = "Spanish Name"
-                    
-                    let frenchLanguage = RealmLanguage()
-                    frenchLanguage.id = "1"
-                    frenchLanguage.code = LanguageCodeDomainModel.french.rawValue
-                    frenchLanguage.name = "French Name"
-                    
-                    let spanishLesson_0 = RealmResource()
-                    spanishLesson_0.id = "es-lesson-0"
-                    spanishLesson_0.resourceType = ResourceType.lesson.rawValue
-                    spanishLesson_0.addLanguage(language: spanishLanguage)
-                    
-                    let frenchTract_0 = RealmResource()
-                    frenchTract_0.id = "fr-lesson-0"
-                    frenchTract_0.resourceType = ResourceType.tract.rawValue
-                    frenchTract_0.addLanguage(language: frenchLanguage)
-                    
-                    let realmObjectsToAdd: [Object] = [spanishLanguage, frenchLanguage, spanishLesson_0, frenchTract_0]
-                    
-                    let testsDiContainer = TestsDiContainer(
-                        realmDatabase: Self.getRealmDatabase(addRealmObjects: realmObjectsToAdd)
-                    )
-                    
-                    let getUserLessonFiltersRepository = GetUserLessonFiltersRepository(
-                        userLessonFiltersRepository: Self.getUserLessonFiltersRepository(testsDiContainer: testsDiContainer),
-                        getLessonFilterLanguagesRepository: Self.getLessonFilterLanguagesRepository(testsDiContainer: testsDiContainer)
-                    )
-                    
-                    var lessonLanguageFilterRef: LessonFilterLanguageDomainModel?
-                    var sinkCompleted: Bool = false
-                    
-                    waitUntil { done in
+            getUserLessonFiltersRepository
+                .getUserLessonLanguageFilterPublisher(translatedInAppLanguage: appLanguageSpanish)
+                .sink { (lessonLanguageFilter: LessonFilterLanguageDomainModel?) in
                         
-                        getUserLessonFiltersRepository
-                            .getUserLessonLanguageFilterPublisher(translatedInAppLanguage: appLanguageFrench)
-                            .sink { (lessonLanguageFilter: LessonFilterLanguageDomainModel?) in
-                                
-                                guard !sinkCompleted else {
-                                    return
-                                }
-                                
-                                sinkCompleted = true
-                                
-                                lessonLanguageFilterRef = lessonLanguageFilter
-                                
-                                done()
-                            }
-                            .store(in: &cancellables)
-                        
-                    }
-                    
-                    expect(lessonLanguageFilterRef?.languageName).to(equal("Français"))
-                    expect(lessonLanguageFilterRef?.translatedName).to(equal("Français"))
+                    confirmation()
+
+                    lessonLanguageFilterRef = lessonLanguageFilter
                 }
-            }
-            
-            context("When the app language is french and the user has selected lesson language filter spanish.") {
-                
-                it("The lesson language filter should be spanish.") {
-                    
-                    let appLanguageFrench: AppLanguageDomainModel = LanguageCodeDomainModel.french.rawValue
-                    
-                    let spanishLanguage = RealmLanguage()
-                    spanishLanguage.id = "0"
-                    spanishLanguage.code = LanguageCodeDomainModel.spanish.rawValue
-                    spanishLanguage.name = "Spanish Name"
-                    
-                    let frenchLanguage = RealmLanguage()
-                    frenchLanguage.id = "1"
-                    frenchLanguage.code = LanguageCodeDomainModel.french.rawValue
-                    frenchLanguage.name = "French Name"
-                    
-                    let testsDiContainer = TestsDiContainer(
-                        realmDatabase: Self.getRealmDatabase(addRealmObjects: [spanishLanguage, frenchLanguage])
-                    )
-                    
-                    let userLessonFiltersRepository: UserLessonFiltersRepository = Self.getUserLessonFiltersRepository(testsDiContainer: testsDiContainer)
-                    
-                    let getUserLessonFiltersRepository = GetUserLessonFiltersRepository(
-                        userLessonFiltersRepository: userLessonFiltersRepository,
-                        getLessonFilterLanguagesRepository: Self.getLessonFilterLanguagesRepository(testsDiContainer: testsDiContainer)
-                    )
-                    
-                    var originalLessonLanguageFilterRef: LessonFilterLanguageDomainModel?
-                    var selectedLessonLanguageFilterRef: LessonFilterLanguageDomainModel?
-                    var sinkCount: Int = 0
-                    var sinkCompleted: Bool = false
-                    
-                    waitUntil { done in
-                        
-                        getUserLessonFiltersRepository
-                            .getUserLessonLanguageFilterPublisher(translatedInAppLanguage: appLanguageFrench)
-                            .sink { (lessonLanguageFilter: LessonFilterLanguageDomainModel?) in
-                                
-                                guard !sinkCompleted else {
-                                    return
-                                }
-                                
-                                sinkCount += 1
-                                                                
-                                if sinkCount == 1 {
-                                    
-                                    originalLessonLanguageFilterRef = lessonLanguageFilter
-                                    userLessonFiltersRepository.storeUserLessonLanguageFilter(with: spanishLanguage.id)
-                                }
-                                else if sinkCount == 2 {
-                                    
-                                    selectedLessonLanguageFilterRef = lessonLanguageFilter
-                                    
-                                    sinkCompleted = true
-                                    done()
-                                }
-                            }
-                            .store(in: &cancellables)
-                    }
-                    
-                    expect(originalLessonLanguageFilterRef?.languageName).to(equal("Français"))
-                    expect(originalLessonLanguageFilterRef?.translatedName).to(equal("Français"))
-                    
-                    expect(selectedLessonLanguageFilterRef?.languageName).to(equal("Español"))
-                    expect(selectedLessonLanguageFilterRef?.translatedName).to(equal("Espagnol"))
-                }
-            }
+                .store(in: &cancellables)
         }
+        
+        #expect(lessonLanguageFilterRef?.languageNameTranslatedInLanguage == "Español")
+        #expect(lessonLanguageFilterRef?.languageNameTranslatedInAppLanguage == "Español")
     }
     
-    private static func getRealmDatabase(addRealmObjects: [Object]) -> RealmDatabase {
+    @Test(
+        """
+        Given: User is viewing the language filter in the lessons list.
+        When: A lesson language filter hasn't been selected by the user.
+        Then: The lesson language filter should default to the current app language even when lessons don't exist in the current app language.
+        """
+    )
+    @MainActor func lessonsLanguageFilterDefaultsToAppLanguageWhenLessonsDontExistInAppLanguage() async {
         
-        let realmDatabase: RealmDatabase = TestsInMemoryRealmDatabase()
+        var cancellables: Set<AnyCancellable> = Set()
         
-        let realmObjectsToAdd: [Object] = addRealmObjects
+        let appLanguageFrench: AppLanguageDomainModel = LanguageCodeDomainModel.french.rawValue
         
-        let realm: Realm = realmDatabase.openRealm()
-                    
-        do {
-            try realm.write {
-                realm.add(realmObjectsToAdd, update: .all)
+        let spanishLanguage = RealmLanguage()
+        spanishLanguage.id = "0"
+        spanishLanguage.code = LanguageCodeDomainModel.spanish.rawValue
+        spanishLanguage.name = "Spanish Name"
+        
+        let frenchLanguage = RealmLanguage()
+        frenchLanguage.id = "1"
+        frenchLanguage.code = LanguageCodeDomainModel.french.rawValue
+        frenchLanguage.name = "French Name"
+        
+        let spanishLesson_0 = RealmResource()
+        spanishLesson_0.id = "es-lesson-0"
+        spanishLesson_0.resourceType = ResourceType.lesson.rawValue
+        spanishLesson_0.addLanguage(language: spanishLanguage)
+        
+        let frenchTract_0 = RealmResource()
+        frenchTract_0.id = "fr-lesson-0"
+        frenchTract_0.resourceType = ResourceType.tract.rawValue
+        frenchTract_0.addLanguage(language: frenchLanguage)
+        
+        let realmObjectsToAdd: [Object] = [spanishLanguage, frenchLanguage, spanishLesson_0, frenchTract_0]
+        
+        let testsDiContainer = TestsDiContainer(
+            realmDatabase: Self.getRealmDatabase(addRealmObjects: realmObjectsToAdd)
+        )
+        
+        let getUserLessonFiltersRepository = GetUserLessonFiltersRepository(
+            userLessonFiltersRepository: Self.getUserLessonFiltersRepository(testsDiContainer: testsDiContainer),
+            getLessonFilterLanguagesRepository: Self.getLessonFilterLanguagesRepository(testsDiContainer: testsDiContainer)
+        )
+        
+        var lessonLanguageFilterRef: LessonFilterLanguageDomainModel?
+                
+        await confirmation(expectedCount: 1) { confirmation in
+            
+            getUserLessonFiltersRepository
+                .getUserLessonLanguageFilterPublisher(translatedInAppLanguage: appLanguageFrench)
+                .sink { (lessonLanguageFilter: LessonFilterLanguageDomainModel?) in
+                        
+                    confirmation()
+
+                    lessonLanguageFilterRef = lessonLanguageFilter
+                }
+                .store(in: &cancellables)
+        }
+        
+        #expect(lessonLanguageFilterRef?.languageNameTranslatedInLanguage == "Français")
+        #expect(lessonLanguageFilterRef?.languageNameTranslatedInAppLanguage == "Français")
+    }
+    
+    @Test(
+        """
+        Given: User is viewing the language filter in the lessons list.
+        When: The app language is french and the user has selected lesson language filter spanish.
+        Then: The lesson language filter should be spanish.
+        """
+    )
+    @MainActor func lessonsLanguageFilterIsTheSelectedLanguageFilterAndNotDefaultingAppLanguage() async {
+        
+        var cancellables: Set<AnyCancellable> = Set()
+        
+        let appLanguageFrench: AppLanguageDomainModel = LanguageCodeDomainModel.french.rawValue
+        
+        let spanishLanguage = RealmLanguage()
+        spanishLanguage.id = "0"
+        spanishLanguage.code = LanguageCodeDomainModel.spanish.rawValue
+        spanishLanguage.name = "Spanish Name"
+        
+        let frenchLanguage = RealmLanguage()
+        frenchLanguage.id = "1"
+        frenchLanguage.code = LanguageCodeDomainModel.french.rawValue
+        frenchLanguage.name = "French Name"
+        
+        let testsDiContainer = TestsDiContainer(
+            realmDatabase: Self.getRealmDatabase(addRealmObjects: [spanishLanguage, frenchLanguage])
+        )
+        
+        let userLessonFiltersRepository: UserLessonFiltersRepository = Self.getUserLessonFiltersRepository(testsDiContainer: testsDiContainer)
+        
+        let getUserLessonFiltersRepository = GetUserLessonFiltersRepository(
+            userLessonFiltersRepository: userLessonFiltersRepository,
+            getLessonFilterLanguagesRepository: Self.getLessonFilterLanguagesRepository(testsDiContainer: testsDiContainer)
+        )
+        
+        var originalLessonLanguageFilterRef: LessonFilterLanguageDomainModel?
+        var selectedLessonLanguageFilterRef: LessonFilterLanguageDomainModel?
+        var sinkCount: Int = 0
+    
+        await confirmation(expectedCount: 2) { confirmation in
+            
+            await withCheckedContinuation { continuation in
+                
+                let task = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
+                }
+                
+                getUserLessonFiltersRepository
+                    .getUserLessonLanguageFilterPublisher(translatedInAppLanguage: appLanguageFrench)
+                    .sink { (lessonLanguageFilter: LessonFilterLanguageDomainModel?) in
+                        
+                        confirmation()
+                        
+                        sinkCount += 1
+                                                
+                        if sinkCount == 1 {
+                            
+                            originalLessonLanguageFilterRef = lessonLanguageFilter
+                            userLessonFiltersRepository.storeUserLessonLanguageFilter(with: spanishLanguage.id)
+                        }
+                        else if sinkCount == 2 {
+                            selectedLessonLanguageFilterRef = lessonLanguageFilter
+                            task.cancel()
+                            continuation.resume(returning: ())
+                        }
+                    }
+                    .store(in: &cancellables)
             }
         }
-        catch _ {
-            
-        }
+                
+        #expect(originalLessonLanguageFilterRef?.languageNameTranslatedInLanguage == "Français")
+        #expect(originalLessonLanguageFilterRef?.languageNameTranslatedInAppLanguage == "Français")
         
-        return realmDatabase
+        #expect(selectedLessonLanguageFilterRef?.languageNameTranslatedInLanguage == "Español")
+        #expect(selectedLessonLanguageFilterRef?.languageNameTranslatedInAppLanguage == "Espagnol")
+    }
+}
+
+extension GetUserLessonFiltersRepositoryTests {
+    
+    private static func getRealmDatabase(addRealmObjects: [Object]) -> RealmDatabase {
+        return TestsInMemoryRealmDatabase(
+            addObjectsToDatabase: addRealmObjects
+        )
     }
     
     private static func getUserLessonFiltersRepository(testsDiContainer: TestsDiContainer) -> UserLessonFiltersRepository {

@@ -201,55 +201,56 @@ class ArticleAemCache {
                 var realmDataObjectsToStore: [RealmArticleAemData] = Array()
                 var cacheErrorData: [ArticleAemCacheErrorData] = Array()
                 
-                for archivedObject in aemCacheArchivedObjects {
-                    
-                    let aemData: ArticleAemData = archivedObject.aemData
-                    let aemUri: String = aemData.aemUri
-                    let existingRealmData: RealmArticleAemData? = realm.object(ofType: RealmArticleAemData.self, forPrimaryKey: aemData.aemUri)
-                    
-                    let realmDataToStore: RealmArticleAemData
-                    let webArchiveFilename: String
-                    
-                    var aemCacheErrors: [ArticleAemCacheError] = Array()
-                                        
-                    if let existingRealmData = existingRealmData {
-                        
-                        webArchiveFilename = existingRealmData.webArchiveFilename
-                        
-                        if let removeWebArchiveError = self.removeWebArchivePlistData(webArchiveFilename: webArchiveFilename) {
-                            aemCacheErrors.append(removeWebArchiveError)
-                        }
-                        
-                        realmDataToStore = existingRealmData
-                        realmDataToStore.mapFrom(model: archivedObject.aemData, ignorePrimaryKey: true)
-                    }
-                    else {
-                        
-                        webArchiveFilename = UUID().uuidString
-                        
-                        realmDataToStore = RealmArticleAemData()
-                        realmDataToStore.mapFrom(model: archivedObject.aemData, ignorePrimaryKey: false)
-                        realmDataToStore.webArchiveFilename = webArchiveFilename
-                    }
-                    
-                    if let storeWebArchiveError = self.storeWebArchivePlistData(
-                        webArchiveFilename: webArchiveFilename,
-                        webArchivePlistData: archivedObject.webArchivePlistData
-                    ) {
-                        aemCacheErrors.append(storeWebArchiveError)
-                    }
-                    
-                    realmDataObjectsToStore.append(realmDataToStore)
-                    
-                    if aemCacheErrors.count > 0 {
-                        cacheErrorData.append(ArticleAemCacheErrorData(aemUri: aemUri, cacheErrors: aemCacheErrors))
-                    }
-                }
-                
                 let saveAemDataToRealmError: Error?
                 
                 do {
                     try realm.write {
+                        
+                        for archivedObject in aemCacheArchivedObjects {
+                            
+                            let aemData: ArticleAemData = archivedObject.aemData
+                            let aemUri: String = aemData.aemUri
+                            let existingRealmData: RealmArticleAemData? = realm.object(ofType: RealmArticleAemData.self, forPrimaryKey: aemData.aemUri)
+                            
+                            let realmDataToStore: RealmArticleAemData
+                            let webArchiveFilename: String
+                            
+                            var aemCacheErrors: [ArticleAemCacheError] = Array()
+                                                
+                            if let existingRealmData = existingRealmData {
+                                
+                                webArchiveFilename = existingRealmData.webArchiveFilename
+                                
+                                if let removeWebArchiveError = self.removeWebArchivePlistData(webArchiveFilename: webArchiveFilename) {
+                                    aemCacheErrors.append(removeWebArchiveError)
+                                }
+                                
+                                realmDataToStore = existingRealmData
+                                realmDataToStore.mapFrom(model: archivedObject.aemData, ignorePrimaryKey: true)
+                            }
+                            else {
+                                
+                                webArchiveFilename = UUID().uuidString
+                                
+                                realmDataToStore = RealmArticleAemData()
+                                realmDataToStore.mapFrom(model: archivedObject.aemData, ignorePrimaryKey: false)
+                                realmDataToStore.webArchiveFilename = webArchiveFilename
+                            }
+                            
+                            if let storeWebArchiveError = self.storeWebArchivePlistData(
+                                webArchiveFilename: webArchiveFilename,
+                                webArchivePlistData: archivedObject.webArchivePlistData
+                            ) {
+                                aemCacheErrors.append(storeWebArchiveError)
+                            }
+                            
+                            realmDataObjectsToStore.append(realmDataToStore)
+                            
+                            if aemCacheErrors.count > 0 {
+                                cacheErrorData.append(ArticleAemCacheErrorData(aemUri: aemUri, cacheErrors: aemCacheErrors))
+                            }
+                        }
+                        
                         realm.add(realmDataObjectsToStore, update: .modified)
                     }
                     

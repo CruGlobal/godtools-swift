@@ -66,8 +66,7 @@ class AccountDomainLayerDependencies {
     
     func getUserAccountDetailsUseCase() -> GetUserAccountDetailsUseCase {
         return GetUserAccountDetailsUseCase(
-            repository: dataLayer.getUserDetailsRepository(),
-            localizationServices: coreDataLayer.getLocalizationServices()
+            getUserAccountDetailsRepository: dataLayer.getUserAccountDetailsRepositoryInterface()
         )
     }
     
