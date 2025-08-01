@@ -103,7 +103,7 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
             videoEndedStep: .videoEndedOnOnboardingTutorial
         )
         
-        presentVideoModal(viewModel: viewModel, screenAccessibility: .watchOnboardingTutorialVideo, closeVideoButtonAccessibility: .closeOnboardingTutorialVideo)
+        presentVideoModal(viewModel: viewModel, screenAccessibility: .watchOnboardingTutorialVideo)
     }
     
     private func completeOnboardingFlow(onboardingFlowCompletedState: OnboardingFlowCompletedState?) {
