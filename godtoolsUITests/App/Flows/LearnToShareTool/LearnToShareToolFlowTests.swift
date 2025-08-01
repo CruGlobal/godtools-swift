@@ -69,6 +69,21 @@ class LearnToShareToolFlowTests: BaseFlowTests {
         openToolToToolDetailsAndNavigateToLearnToShareFlow(toolName: ToolNames.English.fourSpiritualLaws)
     }
     
+    func testTappingCloseLearnToShareOpensTool() {
+        
+        launchAppToDashboardTools()
+                
+        openToolToToolDetailsAndNavigateToLearnToShareFlow(toolName: ToolNames.English.fourSpiritualLaws)
+        
+        let closeButton: XCUIElement = app.queryButton(buttonAccessibility: .close)
+        
+        XCTAssertTrue(closeButton.exists)
+        
+        closeButton.tap()
+        
+        assertIfScreenDoesNotExist(screenAccessibility: .tract)
+    }
+    
     func testNavigationThroughLearnToShareOpensToolWhenStartTrainingIsTapped() {
         
         launchAppToDashboardTools()
