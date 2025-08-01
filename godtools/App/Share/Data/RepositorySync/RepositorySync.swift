@@ -11,7 +11,7 @@ import Combine
 import RequestOperation
 import RealmSwift
 
-open class RepositorySync<DataModelType, ExternalDataFetchType: RepositorySyncExternalDataFetchInterface, RealmObjectType: Object> {
+open class RepositorySync<DataModelType, ExternalDataFetchType: RepositorySyncExternalDataFetchInterface, RealmObjectType: IdentifiableRealmObject> {
       
     private let externalDataFetch: ExternalDataFetchType
     private let realmDatabase: RealmDatabase
@@ -31,6 +31,28 @@ open class RepositorySync<DataModelType, ExternalDataFetchType: RepositorySyncEx
             self.dataModelMapping.toDataModel(externalObject: $0)
         }
     }
+}
+
+// MARK: - Objects
+
+extension RepositorySync {
+    
+    func getObjectsPublisher(cachePolicy: RepositorySyncCachePolicy, requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
+        
+        return Just(RepositorySyncResponse(objects: []))
+            .eraseToAnyPublisher()
+    }
+    
+    func observeObjectsPublisher(cachePolicy: RepositorySyncCachePolicy, requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
+        
+        return Just(RepositorySyncResponse(objects: []))
+            .eraseToAnyPublisher()
+    }
+}
+
+// MARK: - Object By Id
+
+extension RepositorySync {
     
     func getObjectPublisher(id: String, cachePolicy: RepositorySyncCachePolicy, requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
         
@@ -100,9 +122,46 @@ open class RepositorySync<DataModelType, ExternalDataFetchType: RepositorySyncEx
             .eraseToAnyPublisher()
     }
     
-    func getObjectsPublisher(cachePolicy: RepositorySyncCachePolicy, requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
+    func observeObjectPublisher(id: String, cachePolicy: RepositorySyncCachePolicy) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
         
-        return Just(RepositorySyncResponse(objects: []))
+        let realmObject: RealmObjectType
+        let realm: Realm = realmDatabase.openRealm()
+        
+        if let existingObject = realm.object(ofType: RealmObjectType.self, forPrimaryKey: id) {
+            
+            realmObject = existingObject
+        }
+        else {
+            
+            realmObject = RealmObjectType()
+            realmObject.id = id
+            
+            _ = realmDatabase.writeObjects(realm: realm) { realm in
+                return [realmObject]
+            }
+        }
+        
+        realmObject.observe { change in
+            
+        }
+        
+        let response = RepositorySyncResponse<DataModelType>(objects: [])
+        
+        return Just(response)
             .eraseToAnyPublisher()
+    }
+    
+    private func observeObjectPublisher(object: RealmObjectType) -> AnyPublisher<Void, Never> {
+        
+        
+        
+        return Future { promise in
+            
+            let token = object.observe { change in
+                
+                promise(.success(Void()))
+            }
+        }
+        .eraseToAnyPublisher()
     }
 }
