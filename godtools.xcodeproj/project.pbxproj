@@ -421,6 +421,9 @@
 		454CA2042B7BD358009A3976 /* ViewAppLanguagesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454CA2032B7BD358009A3976 /* ViewAppLanguagesUseCase.swift */; };
 		454CC4132C5D268B00046437 /* LanguageDirectionDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454CC4122C5D268B00046437 /* LanguageDirectionDomainModel.swift */; };
 		454CE1572E26E89E0058AE54 /* GetTranslatedPercentageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454CE1562E26E8930058AE54 /* GetTranslatedPercentageTests.swift */; };
+		454F05D32E3CF66C002814E9 /* FacebookAccessTokenProvider+AuthenticationProviderInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F05D02E3CF66C002814E9 /* FacebookAccessTokenProvider+AuthenticationProviderInterface.swift */; };
+		454F05D42E3CF66C002814E9 /* FacebookLimitedLogin+AuthenticationProviderInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F05D12E3CF66C002814E9 /* FacebookLimitedLogin+AuthenticationProviderInterface.swift */; };
+		454F05D52E3CF66C002814E9 /* Profile+AuthUserDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F05D22E3CF66C002814E9 /* Profile+AuthUserDomainModel.swift */; };
 		4550BC702A33AC6D00256DEE /* HashableCurrentValueSubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4550BC6F2A33AC6D00256DEE /* HashableCurrentValueSubject.swift */; };
 		455258492D36F66E00FAC98D /* RemoteConfigRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455258472D36F66E00FAC98D /* RemoteConfigRepository.swift */; };
 		4552584A2D36F66E00FAC98D /* RemoteConfigDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455258462D36F66E00FAC98D /* RemoteConfigDataModel.swift */; };
@@ -828,7 +831,6 @@
 		45965D4F2B44890F001C9AA5 /* GetDashboardInterfaceStringsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45965D4E2B44890F001C9AA5 /* GetDashboardInterfaceStringsRepository.swift */; };
 		4597101629CDE02400C47040 /* View+CornerRadius.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4597101529CDE02400C47040 /* View+CornerRadius.swift */; };
 		4598BD0D2BF7DF6800196463 /* AppleAuthentication+AuthenticationProviderInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4598BCDC2BF7DF6800196463 /* AppleAuthentication+AuthenticationProviderInterface.swift */; };
-		4598BD0E2BF7DF6800196463 /* FacebookAuthentication+AuthenticationProviderInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4598BCDD2BF7DF6800196463 /* FacebookAuthentication+AuthenticationProviderInterface.swift */; };
 		4598BD0F2BF7DF6800196463 /* GoogleAuthentication+AuthenticationProviderInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4598BCDE2BF7DF6800196463 /* GoogleAuthentication+AuthenticationProviderInterface.swift */; };
 		4598BD102BF7DF6800196463 /* AuthenticationProviderProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4598BCE02BF7DF6800196463 /* AuthenticationProviderProfile.swift */; };
 		4598BD112BF7DF6800196463 /* AuthenticationProviderResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4598BCE12BF7DF6800196463 /* AuthenticationProviderResponse.swift */; };
@@ -2224,6 +2226,9 @@
 		454CA2032B7BD358009A3976 /* ViewAppLanguagesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewAppLanguagesUseCase.swift; sourceTree = "<group>"; };
 		454CC4122C5D268B00046437 /* LanguageDirectionDomainModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageDirectionDomainModel.swift; sourceTree = "<group>"; };
 		454CE1562E26E8930058AE54 /* GetTranslatedPercentageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTranslatedPercentageTests.swift; sourceTree = "<group>"; };
+		454F05D02E3CF66C002814E9 /* FacebookAccessTokenProvider+AuthenticationProviderInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FacebookAccessTokenProvider+AuthenticationProviderInterface.swift"; sourceTree = "<group>"; };
+		454F05D12E3CF66C002814E9 /* FacebookLimitedLogin+AuthenticationProviderInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FacebookLimitedLogin+AuthenticationProviderInterface.swift"; sourceTree = "<group>"; };
+		454F05D22E3CF66C002814E9 /* Profile+AuthUserDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Profile+AuthUserDomainModel.swift"; sourceTree = "<group>"; };
 		4550BC6F2A33AC6D00256DEE /* HashableCurrentValueSubject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HashableCurrentValueSubject.swift; sourceTree = "<group>"; };
 		455258462D36F66E00FAC98D /* RemoteConfigDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteConfigDataModel.swift; sourceTree = "<group>"; };
 		455258472D36F66E00FAC98D /* RemoteConfigRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteConfigRepository.swift; sourceTree = "<group>"; };
@@ -2628,7 +2633,6 @@
 		45965D4E2B44890F001C9AA5 /* GetDashboardInterfaceStringsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetDashboardInterfaceStringsRepository.swift; sourceTree = "<group>"; };
 		4597101529CDE02400C47040 /* View+CornerRadius.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "View+CornerRadius.swift"; sourceTree = "<group>"; };
 		4598BCDC2BF7DF6800196463 /* AppleAuthentication+AuthenticationProviderInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppleAuthentication+AuthenticationProviderInterface.swift"; sourceTree = "<group>"; };
-		4598BCDD2BF7DF6800196463 /* FacebookAuthentication+AuthenticationProviderInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FacebookAuthentication+AuthenticationProviderInterface.swift"; sourceTree = "<group>"; };
 		4598BCDE2BF7DF6800196463 /* GoogleAuthentication+AuthenticationProviderInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GoogleAuthentication+AuthenticationProviderInterface.swift"; sourceTree = "<group>"; };
 		4598BCE02BF7DF6800196463 /* AuthenticationProviderProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationProviderProfile.swift; sourceTree = "<group>"; };
 		4598BCE12BF7DF6800196463 /* AuthenticationProviderResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationProviderResponse.swift; sourceTree = "<group>"; };
@@ -8070,8 +8074,10 @@
 			isa = PBXGroup;
 			children = (
 				4598BCDC2BF7DF6800196463 /* AppleAuthentication+AuthenticationProviderInterface.swift */,
-				4598BCDD2BF7DF6800196463 /* FacebookAuthentication+AuthenticationProviderInterface.swift */,
+				454F05D02E3CF66C002814E9 /* FacebookAccessTokenProvider+AuthenticationProviderInterface.swift */,
+				454F05D12E3CF66C002814E9 /* FacebookLimitedLogin+AuthenticationProviderInterface.swift */,
 				4598BCDE2BF7DF6800196463 /* GoogleAuthentication+AuthenticationProviderInterface.swift */,
+				454F05D22E3CF66C002814E9 /* Profile+AuthUserDomainModel.swift */,
 			);
 			path = Providers;
 			sourceTree = "<group>";
@@ -13785,6 +13791,9 @@
 				452DFB3B2B7FB40F003A4A59 /* ViewAllYourFavoritedToolsDomainModel.swift in Sources */,
 				452F278C2B838CEC00844B9A /* RemoveFavoritedToolRepository.swift in Sources */,
 				454ADADD2ABDDA3900037C27 /* AppLanguagesViewModel.swift in Sources */,
+				454F05D32E3CF66C002814E9 /* FacebookAccessTokenProvider+AuthenticationProviderInterface.swift in Sources */,
+				454F05D42E3CF66C002814E9 /* FacebookLimitedLogin+AuthenticationProviderInterface.swift in Sources */,
+				454F05D52E3CF66C002814E9 /* Profile+AuthUserDomainModel.swift in Sources */,
 				4567777F287DB21F0044AEB2 /* ToolTrainingViewModel.swift in Sources */,
 				4512C80B2B322D5900D162F3 /* ToolSettingsShareableItemView.swift in Sources */,
 				D4E7EE222CA5E5CA00F75DA6 /* StoreUserLessonProgressUseCase.swift in Sources */,
@@ -13843,7 +13852,6 @@
 				45D5EAA02B7E5C5700745F0D /* GetConfirmRemoveToolFromFavoritesInterfaceStringsRepository.swift in Sources */,
 				4512D4D22B29127C00DFAFB3 /* GetToolSettingsToolLanguagesListRepository.swift in Sources */,
 				458CFE8E29D4E0B9007B423C /* ArticleWebView.swift in Sources */,
-				4598BD0E2BF7DF6800196463 /* FacebookAuthentication+AuthenticationProviderInterface.swift in Sources */,
 				45074B622D3851AD004083F3 /* FirebaseRemoteConfigWrapper.swift in Sources */,
 				45131A0D2AB498AD0085AF0D /* ColorPalette.swift in Sources */,
 				456AC1912B8CCA6100169C11 /* TrackShareShareableTap.swift in Sources */,
@@ -16212,7 +16220,7 @@
 			repositoryURL = "https://github.com/CruGlobal/social-authentication-ios.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.5.1;
+				minimumVersion = 0.6.1;
 			};
 		};
 		45DF96472D386C1C00C6AE68 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
