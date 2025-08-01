@@ -184,6 +184,7 @@
 		45229C602ABF630A009F5D31 /* AnalyticsContainer+TrackExitLinkAnalyticsInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45229C5F2ABF630A009F5D31 /* AnalyticsContainer+TrackExitLinkAnalyticsInterface.swift */; };
 		452339832E27D1E5005BF6F7 /* GetTranslatedToolNameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452339822E27D1E2005BF6F7 /* GetTranslatedToolNameTests.swift */; };
 		45243C562C58221A00BD6F49 /* GetLessonsListRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45243C532C58221A00BD6F49 /* GetLessonsListRepositoryTests.swift */; };
+		452447262E3D12D700C0831A /* ToolScreenShareFlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452447252E3D12D300C0831A /* ToolScreenShareFlowTests.swift */; };
 		452486B82B07C894007AD932 /* ToolFilterLanguageSelectionRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452486AA2B07C894007AD932 /* ToolFilterLanguageSelectionRowView.swift */; };
 		452486B92B07C894007AD932 /* ToolFilterLanguageSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452486AB2B07C894007AD932 /* ToolFilterLanguageSelectionView.swift */; };
 		452486BB2B07C894007AD932 /* ToolFilterCategorySelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452486AF2B07C894007AD932 /* ToolFilterCategorySelectionView.swift */; };
@@ -1987,6 +1988,7 @@
 		45229C5F2ABF630A009F5D31 /* AnalyticsContainer+TrackExitLinkAnalyticsInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AnalyticsContainer+TrackExitLinkAnalyticsInterface.swift"; sourceTree = "<group>"; };
 		452339822E27D1E2005BF6F7 /* GetTranslatedToolNameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTranslatedToolNameTests.swift; sourceTree = "<group>"; };
 		45243C532C58221A00BD6F49 /* GetLessonsListRepositoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetLessonsListRepositoryTests.swift; sourceTree = "<group>"; };
+		452447252E3D12D300C0831A /* ToolScreenShareFlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolScreenShareFlowTests.swift; sourceTree = "<group>"; };
 		452486AA2B07C894007AD932 /* ToolFilterLanguageSelectionRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolFilterLanguageSelectionRowView.swift; sourceTree = "<group>"; };
 		452486AB2B07C894007AD932 /* ToolFilterLanguageSelectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolFilterLanguageSelectionView.swift; sourceTree = "<group>"; };
 		452486AF2B07C894007AD932 /* ToolFilterCategorySelectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolFilterCategorySelectionView.swift; sourceTree = "<group>"; };
@@ -4514,6 +4516,14 @@
 				45243C542C58221A00BD6F49 /* Data-DomainInterface */,
 			);
 			path = Lessons;
+			sourceTree = "<group>";
+		};
+		452447242E3D12C900C0831A /* ToolScreenShare */ = {
+			isa = PBXGroup;
+			children = (
+				452447252E3D12D300C0831A /* ToolScreenShareFlowTests.swift */,
+			);
+			path = ToolScreenShare;
 			sourceTree = "<group>";
 		};
 		4524869E2B07C894007AD932 /* ToolsFilter */ = {
@@ -8440,6 +8450,7 @@
 				45B224F52E3B9094002C4042 /* LearnToShareTool */,
 				450FC7572C49590D00F87282 /* Menu */,
 				45A415EE2A99429B0030E2C7 /* Onboarding */,
+				452447242E3D12C900C0831A /* ToolScreenShare */,
 			);
 			path = Flows;
 			sourceTree = "<group>";
@@ -13432,6 +13443,7 @@
 				4585E4B82B05895200223A9B /* BCP47LanguageIdentifier.swift in Sources */,
 				45B225002E3B97A0002C4042 /* ToolNames.swift in Sources */,
 				45DC19152BB5B33F007542A5 /* ChooseAppLanguageFlowTests.swift in Sources */,
+				452447262E3D12D700C0831A /* ToolScreenShareFlowTests.swift in Sources */,
 				451CF5952C4AAC5500CD65C4 /* AppFlowTests.swift in Sources */,
 				45B224F72E3B909F002C4042 /* LearnToShareToolFlowTests.swift in Sources */,
 				45D318FB2AE7020200D74A87 /* AppLanguageDataModel.swift in Sources */,
