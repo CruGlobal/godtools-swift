@@ -36,7 +36,7 @@ jobs:
         run: bundle exec fastlane cru_shared_lane_run_tests testplan:UITests output_directory:fastlane_scan_output_directory/uitests result_bundle:true reset_simulator:true should_clear_derived_data:true
 
       - name: Merge XCResult Files
-        run: xcrun xcresulttool merge /Users/runner/work/godtools-swift/godtools-swift/fastlane_scan_output_directory/tests/GodTools-Production.xcresult /Users/runner/work/godtools-swift/godtools-swift/fastlane_scan_output_directory/uitests/GodTools-Production.xcresult --output-path GodTools-Production.xcresult
+        run: xcrun xcresulttool merge /Users/runner/work/godtools-swift/godtools-swift/fastlane_scan_output_directory/tests/GodTools-Production.xcresult /Users/runner/work/godtools-swift/godtools-swift/fastlane_scan_output_directory/uitests/GodTools-Production.xcresult --output-path /Users/runner/work/godtools-swift/godtools-swift/fastlane_scan_output_directory/GodTools-Production.xcresult
 
       - name: Install XCResultParser
         run: brew install a7ex/homebrew-formulae/xcresultparser
