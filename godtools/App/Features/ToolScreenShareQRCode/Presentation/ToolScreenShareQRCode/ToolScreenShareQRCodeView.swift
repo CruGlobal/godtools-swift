@@ -18,7 +18,7 @@ struct ToolScreenShareQRCodeView: View {
     
     var body: some View {
 
-        GTModalView {
+        GTModalView { geometry in
             
             VStack {
                 HStack {

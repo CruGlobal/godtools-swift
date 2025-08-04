@@ -10,18 +10,17 @@ import SwiftUI
 
 struct GTModalView<Content: View>: View {
     
-    private let content: Content
+    private let content: (_ geometry: GeometryProxy) -> Content
     private let overlayTappedClosure: (() -> Void)?
-    
     private let backgroundColor: Color = Color.white
     private let backgroundCornerRadius: CGFloat = 12
     private let backgroundHorizontalPadding: CGFloat = 10
     
     @State private var isVisible: Bool = false
     
-    init(@ViewBuilder content: () -> Content, overlayTappedClosure: (() -> Void)? = nil) {
+    init(@ViewBuilder content: @escaping (_ geometry: GeometryProxy) -> Content, overlayTappedClosure: (() -> Void)?) {
         
-        self.content = content()
+        self.content = content
         self.overlayTappedClosure = overlayTappedClosure
     }
     
@@ -45,8 +44,7 @@ struct GTModalView<Content: View>: View {
                                               
                     VStack(alignment: .leading, spacing: 0) {
                                  
-                       content
-                          
+                       content(geometry)
                     }
                     .background(
                         RoundedRectangle(cornerRadius: backgroundCornerRadius)
@@ -59,7 +57,6 @@ struct GTModalView<Content: View>: View {
                     )
                 }
                 .offset(y: !isVisible ? geometry.size.height * 0.75 : 0)
-                
             }
         }
         .onAppear {
