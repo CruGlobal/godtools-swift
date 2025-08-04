@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import UIKit
 
 struct GTModalView<Content: View>: View {
     
@@ -19,12 +18,15 @@ struct GTModalView<Content: View>: View {
     private let contentAnimationDuration: TimeInterval = 0.3
     
     @State private var overlayOpacity: CGFloat = 0
-    @State private var contentBottomOffsetY: CGFloat = UIScreen.main.bounds.size.height
+    @State private var contentBottomOffsetY: CGFloat = 1000
     @State private var contentHeight: CGFloat = 100
     
-    init(@ViewBuilder content: @escaping (_ geometry: GeometryProxy) -> Content, overlayTappedClosure: (() -> Void)?) {
+    @Binding private var isHidden: Bool
+    
+    init(@ViewBuilder content: @escaping (_ geometry: GeometryProxy) -> Content, isHidden: Binding<Bool>, overlayTappedClosure: (() -> Void)?) {
         
         self.content = content
+        self._isHidden = isHidden
         self.overlayTappedClosure = overlayTappedClosure
     }
     
@@ -34,7 +36,7 @@ struct GTModalView<Content: View>: View {
             
             FullScreenOverlayView(tappedClosure: {
                 
-                setContentHidden()
+                isHidden = true
                 overlayTappedClosure?()
             })
             .opacity(overlayOpacity)
@@ -45,21 +47,27 @@ struct GTModalView<Content: View>: View {
                 Color.clear
                 
                 ZStack(alignment: .top) {
-                                              
+                    
                     VStack(alignment: .leading, spacing: 0) {
-                                 
-                       content(geometry)
+                        
+                        content(geometry)
                             .background(
                                 GeometryReader { contentGeometry -> Color in
                                     DispatchQueue.main.async {
                                         
-                                        contentHeight = contentGeometry.size.height
+                                        let currentContentHeight: CGFloat = self.contentHeight
+                                        let newContentHeight: CGFloat = contentGeometry.size.height
                                         
-                                        if isHidden {
-                                            contentBottomOffsetY = contentHeight
+                                        if currentContentHeight != newContentHeight {
+                                            
+                                            contentHeight = contentGeometry.size.height
+                                            
+                                            if isHidden {
+                                                contentBottomOffsetY = contentHeight
+                                            }
                                         }
                                     }
-                                    return Color.clear
+                                    return Color.clear // NOTE: If this errors it could be because of a syntax error in GTModalView.swift. ~Levi
                                 }
                             )
                     }
@@ -77,23 +85,20 @@ struct GTModalView<Content: View>: View {
                 .animation(.easeOut(duration: contentAnimationDuration), value: contentBottomOffsetY)
             }
         }
+        .onChange(of: $isHidden.wrappedValue, perform: { (isHiddenValue: Bool) in
+            
+            if isHiddenValue {
+                overlayOpacity = 0
+                contentBottomOffsetY = contentHeight
+            }
+            else {
+                overlayOpacity = 1
+                contentBottomOffsetY = 0 // Set to 0 since the content uses a ZStack with alignment bottom.  This will place the content bottom at the bottom of the screen. ~Levi
+            }
+        })
         .onAppear {
-            setContentVisible()
+            isHidden = false
         }
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
-    }
-    
-    private var isHidden: Bool {
-        return overlayOpacity == 0
-    }
-    
-    private func setContentVisible() {
-        overlayOpacity = 1
-        contentBottomOffsetY = 0 // Set to 0 since the content uses a ZStack with alignment bottom.  This will place the content bottom at the bottom of the screen. ~Levi
-    }
-    
-    private func setContentHidden() {
-        overlayOpacity = 0
-        contentBottomOffsetY = contentHeight
     }
 }

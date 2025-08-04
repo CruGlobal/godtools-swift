@@ -22,6 +22,7 @@ struct ToolSettingsView: View {
     
     @ObservedObject private var viewModel: ToolSettingsViewModel
     
+    @State private var modalIsHidden: Bool = true
     @State private var scrollContentHeight: CGFloat = 100
     
     init(viewModel: ToolSettingsViewModel) {
@@ -31,13 +32,14 @@ struct ToolSettingsView: View {
     
     var body: some View {
         
-        GTModalView { geometry in
+        GTModalView(content: { geometry in
             
             VStack(alignment: .leading, spacing: 0) {
                          
                 ToolSettingsTopBarView(
                     title: viewModel.title,
                     closeTapped: {
+                        modalIsHidden = true
                         viewModel.closeTapped()
                     }
                 )
@@ -103,8 +105,9 @@ struct ToolSettingsView: View {
                 .clipped()
                 .frame(maxHeight: scrollContentHeight)
             }//end VStack
-        } overlayTappedClosure: {
+        }, isHidden: $modalIsHidden, overlayTappedClosure: {
+            
             viewModel.closeTapped()
-        }
+        })
     }
 }
