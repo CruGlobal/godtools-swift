@@ -58,11 +58,11 @@
             reference = "container:TestPlans/UITests.xctestplan">
          </TestPlanReference>
          <TestPlanReference
-            reference = "container:TestPlans/Tests.xctestplan"
-            default = "YES">
+            reference = "container:TestPlans/Tests.xctestplan">
          </TestPlanReference>
          <TestPlanReference
-            reference = "container:TestPlans/AllTests.xctestplan">
+            reference = "container:TestPlans/AllTests.xctestplan"
+            default = "YES">
          </TestPlanReference>
       </TestPlans>
    </TestAction>
