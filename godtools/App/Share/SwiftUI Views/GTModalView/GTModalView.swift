@@ -16,7 +16,7 @@ struct GTModalView<Content: View>: View {
     private let backgroundColor: Color = Color.white
     private let backgroundCornerRadius: CGFloat = 12
     private let backgroundHorizontalPadding: CGFloat = 10
-    private let contentAnimationDuration: TimeInterval = 0.4
+    private let contentAnimationDuration: TimeInterval = 0.3
     
     @State private var overlayOpacity: CGFloat = 0
     @State private var contentBottomOffsetY: CGFloat = UIScreen.main.bounds.size.height
