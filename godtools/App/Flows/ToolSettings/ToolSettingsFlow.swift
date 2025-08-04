@@ -180,10 +180,7 @@ extension ToolSettingsFlow {
             getShareableImageUseCase: appDiContainer.feature.shareables.domainLayer.getShareableImageUseCase()
         )
         
-        let toolSettingsView = ToolSettingsView(viewModel: viewModel, overlayTappedClosure: { [weak self] in
-            
-            self?.navigate(step: .closeTappedFromToolSettings)
-        })
+        let toolSettingsView = ToolSettingsView(viewModel: viewModel)
         
         let hostingView = AppHostingController<ToolSettingsView>(
             rootView: toolSettingsView,
