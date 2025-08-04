@@ -111,3 +111,11 @@ struct ToolSettingsView: View {
         })
     }
 }
+
+extension ToolSettingsView {
+    
+    func setModalIsHidden(isHidden: Bool) {
+    
+        self.modalIsHidden = isHidden
+    }
+}
