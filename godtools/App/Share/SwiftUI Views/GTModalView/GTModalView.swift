@@ -57,10 +57,24 @@ struct GTModalView<Content: View>: View {
                                         
                                         let currentContentHeight: CGFloat = self.contentHeight
                                         let newContentHeight: CGFloat = contentGeometry.size.height
+                                        let minimumHeight: CGFloat = floor(geometry.size.height * 0.33)
+                                        let maximumHeight: CGFloat = geometry.size.height
                                         
-                                        if currentContentHeight != newContentHeight {
+                                        let clampedContentHeight: CGFloat
+                                        
+                                        if newContentHeight < minimumHeight {
+                                            clampedContentHeight = minimumHeight
+                                        }
+                                        else if newContentHeight > maximumHeight {
+                                            clampedContentHeight = maximumHeight
+                                        }
+                                        else {
+                                            clampedContentHeight = newContentHeight
+                                        }
+                                        
+                                        if currentContentHeight != clampedContentHeight {
                                             
-                                            contentHeight = contentGeometry.size.height
+                                            contentHeight = clampedContentHeight
                                             
                                             if isHidden {
                                                 contentBottomOffsetY = contentHeight
