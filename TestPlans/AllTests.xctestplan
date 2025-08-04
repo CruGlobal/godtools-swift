@@ -1,0 +1,31 @@
+{
+  "configurations" : [
+    {
+      "id" : "CEA79D13-909A-4A12-8CF7-AF50FDB29FE3",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:godtools.xcodeproj",
+        "identifier" : "684328F01EB7CF66005E9131",
+        "name" : "godtoolsTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:godtools.xcodeproj",
+        "identifier" : "4F12296B20852BE3008842CC",
+        "name" : "godtoolsUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

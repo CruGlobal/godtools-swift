@@ -35,7 +35,7 @@ struct GetLessonFilterLanguagesRepositoryTests {
             
             await withCheckedContinuation { continuation in
                 
-                let sleepingTask = Task {
+                let timeoutTask = Task {
                     try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
                     continuation.resume(returning: ())
                 }
@@ -48,7 +48,7 @@ struct GetLessonFilterLanguagesRepositoryTests {
                         
                         languagesRef = languages
                         
-                        sleepingTask.cancel()
+                        timeoutTask.cancel()
                         continuation.resume(returning: ())
                     }
                     .store(in: &cancellables)
@@ -105,7 +105,7 @@ struct GetLessonFilterLanguagesRepositoryTests {
             
             await withCheckedContinuation { continuation in
                 
-                let sleepingTask = Task {
+                let timeoutTask = Task {
                     try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
                     continuation.resume(returning: ())
                 }
@@ -118,7 +118,7 @@ struct GetLessonFilterLanguagesRepositoryTests {
                         
                         languagesRef = languages
                         
-                        sleepingTask.cancel()
+                        timeoutTask.cancel()
                         continuation.resume(returning: ())
                     }
                     .store(in: &cancellables)
@@ -150,7 +150,7 @@ struct GetLessonFilterLanguagesRepositoryTests {
             
             await withCheckedContinuation { continuation in
                 
-                let sleepingTask = Task {
+                let timeoutTask = Task {
                     try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
                     continuation.resume(returning: ())
                 }
@@ -163,7 +163,7 @@ struct GetLessonFilterLanguagesRepositoryTests {
                         
                         languagesRef = languages
                         
-                        sleepingTask.cancel()
+                        timeoutTask.cancel()
                         continuation.resume(returning: ())
                     }
                     .store(in: &cancellables)
