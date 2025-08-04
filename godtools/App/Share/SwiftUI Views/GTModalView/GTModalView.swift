@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct GTModalView<Content: View>: View {
     
@@ -15,8 +16,11 @@ struct GTModalView<Content: View>: View {
     private let backgroundColor: Color = Color.white
     private let backgroundCornerRadius: CGFloat = 12
     private let backgroundHorizontalPadding: CGFloat = 10
+    private let contentAnimationDuration: TimeInterval = 0.4
     
-    @State private var isVisible: Bool = false
+    @State private var overlayOpacity: CGFloat = 0
+    @State private var contentBottomOffsetY: CGFloat = UIScreen.main.bounds.size.height
+    @State private var contentHeight: CGFloat = 100
     
     init(@ViewBuilder content: @escaping (_ geometry: GeometryProxy) -> Content, overlayTappedClosure: (() -> Void)?) {
         
@@ -30,11 +34,11 @@ struct GTModalView<Content: View>: View {
             
             FullScreenOverlayView(tappedClosure: {
                 
-                setIsVisible(isVisible: false)
-                
+                setContentHidden()
                 overlayTappedClosure?()
             })
-            .opacity(isVisible ? 1 : 0)
+            .opacity(overlayOpacity)
+            .animation(.easeOut(duration: contentAnimationDuration), value: overlayOpacity)
             
             ZStack(alignment: .bottom) {
                 
@@ -45,6 +49,19 @@ struct GTModalView<Content: View>: View {
                     VStack(alignment: .leading, spacing: 0) {
                                  
                        content(geometry)
+                            .background(
+                                GeometryReader { contentGeometry -> Color in
+                                    DispatchQueue.main.async {
+                                        
+                                        contentHeight = contentGeometry.size.height
+                                        
+                                        if isHidden {
+                                            contentBottomOffsetY = contentHeight
+                                        }
+                                    }
+                                    return Color.clear
+                                }
+                            )
                     }
                     .background(
                         RoundedRectangle(cornerRadius: backgroundCornerRadius)
@@ -56,18 +73,27 @@ struct GTModalView<Content: View>: View {
                             .padding(.trailing, backgroundHorizontalPadding)
                     )
                 }
-                .offset(y: !isVisible ? geometry.size.height * 0.75 : 0)
+                .offset(y: contentBottomOffsetY)
+                .animation(.easeOut(duration: contentAnimationDuration), value: contentBottomOffsetY)
             }
         }
         .onAppear {
-            setIsVisible(isVisible: true)
+            setContentVisible()
         }
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
     }
     
-    private func setIsVisible(isVisible: Bool) {
-        withAnimation {
-            self.isVisible = isVisible
-        }
+    private var isHidden: Bool {
+        return overlayOpacity == 0
+    }
+    
+    private func setContentVisible() {
+        overlayOpacity = 1
+        contentBottomOffsetY = 0 // Set to 0 since the content uses a ZStack with alignment bottom.  This will place the content bottom at the bottom of the screen. ~Levi
+    }
+    
+    private func setContentHidden() {
+        overlayOpacity = 0
+        contentBottomOffsetY = contentHeight
     }
 }
