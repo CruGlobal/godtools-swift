@@ -14,14 +14,16 @@ struct ToolSettingsOptionView: View {
     private let title: String
     private let titleColorStyle: ToolSettingsOptionViewTitleColorStyle
     private let iconImage: Image
+    private let accessibility: AccessibilityStrings.Button?
     private let tappedClosure: (() -> Void)?
         
-    init(viewBackground: ToolSettingsOptionViewBackground, title: String, titleColorStyle: ToolSettingsOptionViewTitleColorStyle, iconImage: Image, tappedClosure: (() -> Void)?) {
+    init(viewBackground: ToolSettingsOptionViewBackground, title: String, titleColorStyle: ToolSettingsOptionViewTitleColorStyle, iconImage: Image, accessibility: AccessibilityStrings.Button?, tappedClosure: (() -> Void)?) {
         
         self.viewBackground = viewBackground
         self.title = title
         self.titleColorStyle = titleColorStyle
         self.iconImage = iconImage
+        self.accessibility = accessibility
         self.tappedClosure = tappedClosure
     }
     
@@ -29,6 +31,10 @@ struct ToolSettingsOptionView: View {
         
         ZStack(alignment: .center) { 
         
+            if let accessibilityId = accessibility?.id {
+                AccessibilityTapAreaView(accessibilityIdentifier: accessibilityId)
+            }
+            
             if let image = viewBackground.getImage() {
                 
                 image

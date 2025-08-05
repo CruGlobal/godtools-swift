@@ -15,6 +15,7 @@ class ToolSettingsFlow: Flow {
     private let toolSettingsObserver: ToolSettingsObserver
     private let toolSettingsDidCloseClosure: (() -> Void)?
     
+    private var toolSettingsView: AppHostingController<ToolSettingsView>?
     private var toolScreenShareFlow: ToolScreenShareFlow?
     private var languagesListModal: UIViewController?
     private var reviewShareShareableModal: UIViewController?
@@ -30,11 +31,11 @@ class ToolSettingsFlow: Flow {
     let appDiContainer: AppDiContainer
     let navigationController: AppNavigationController
     
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, toolSettingsObserver: ToolSettingsObserver, toolSettingsDidCloseClosure: (() -> Void)? = nil) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, presentInNavigationController: AppNavigationController, toolSettingsObserver: ToolSettingsObserver, toolSettingsDidCloseClosure: (() -> Void)? = nil) {
             
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
-        self.navigationController = sharedNavigationController
+        self.navigationController = presentInNavigationController
         self.toolSettingsObserver = toolSettingsObserver
         self.toolSettingsDidCloseClosure = toolSettingsDidCloseClosure
         
@@ -70,14 +71,12 @@ class ToolSettingsFlow: Flow {
             .getViewedPublisher(toolId: toolSettingsObserver.toolId)
             .receive(on: DispatchQueue.main)
             .assign(to: &$toolScreenShareTutorialHasBeenViewedDomainModel)
+        
+        presentToolSettings()
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
-    }
-    
-    func getInitialView() -> UIViewController {
-        return getToolSettingsView()
     }
     
     func didClose() {
@@ -165,11 +164,47 @@ class ToolSettingsFlow: Flow {
     }
 }
 
-// MARK: -
+// MARK: - ToolSettingsView
 
 extension ToolSettingsFlow {
     
-    private func getToolSettingsView() -> UIViewController {
+    private func presentToolSettings() {
+        
+        guard toolSettingsView == nil else {
+            return
+        }
+        
+        let toolSettingsView: AppHostingController<ToolSettingsView> = getToolSettingsView()
+        
+        self.toolSettingsView = toolSettingsView
+        
+        navigationController.present(
+            toolSettingsView,
+            animated: true
+        )
+    }
+    
+    private func dismissToolSettingsIfPresented(animated: Bool, completion: (() -> Void)?) {
+        
+        guard let toolSettingsView = self.toolSettingsView else {
+            completion?()
+            return
+        }
+        
+        toolSettingsView.rootView.setModalIsHidden(isHidden: true)
+        
+        if animated {
+            toolSettingsView.dismiss(animated: true, completion: completion)
+        }
+        else {
+            toolSettingsView.dismiss(animated: false)
+            completion?()
+        }
+        
+        self.toolSettingsView = nil
+    }
+    
+    private func getToolSettingsView() -> AppHostingController<ToolSettingsView> {
         
         let viewModel = ToolSettingsViewModel(
             flowDelegate: self,
@@ -180,10 +215,7 @@ extension ToolSettingsFlow {
             getShareableImageUseCase: appDiContainer.feature.shareables.domainLayer.getShareableImageUseCase()
         )
         
-        let toolSettingsView = ToolSettingsView(viewModel: viewModel, overlayTappedClosure: { [weak self] in
-            
-            self?.navigate(step: .closeTappedFromToolSettings)
-        })
+        let toolSettingsView = ToolSettingsView(viewModel: viewModel)
         
         let hostingView = AppHostingController<ToolSettingsView>(
             rootView: toolSettingsView,
@@ -197,6 +229,11 @@ extension ToolSettingsFlow {
         
         return hostingView
     }
+}
+
+// MARK: - Share Tool View
+
+extension ToolSettingsFlow {
     
     private func getShareToolView(viewShareToolDomainModel: ViewShareToolDomainModel) -> UIViewController {
                 
@@ -274,16 +311,26 @@ extension ToolSettingsFlow {
 extension ToolSettingsFlow {
     
     private func presentToolScreenShareFlow() {
-        guard let toolSettingsObserver = toolSettingsObserver as? ToolScreenShareFlow.ToolScreenShareSettingsObserver else { return }
         
-        let toolScreenShareFlow = ToolScreenShareFlow(
-            flowDelegate: self,
-            appDiContainer: appDiContainer,
-            sharedNavigationController: navigationController,
-            toolSettingsObserver: toolSettingsObserver
-        )
+        guard let toolSettingsObserver = toolSettingsObserver as? ToolScreenShareFlow.ToolScreenShareSettingsObserver else {
+            return
+        }
         
-        self.toolScreenShareFlow = toolScreenShareFlow
+        dismissToolSettingsIfPresented(animated: true) { [weak self] in
+         
+            guard let weakSelf = self else {
+                return
+            }
+            
+            let toolScreenShareFlow = ToolScreenShareFlow(
+                flowDelegate: weakSelf,
+                appDiContainer: weakSelf.appDiContainer,
+                sharedNavigationController: weakSelf.navigationController,
+                toolSettingsObserver: toolSettingsObserver
+            )
+            
+            weakSelf.toolScreenShareFlow = toolScreenShareFlow
+        }
     }
     
     private func dismissToolScreenShareFlow() {

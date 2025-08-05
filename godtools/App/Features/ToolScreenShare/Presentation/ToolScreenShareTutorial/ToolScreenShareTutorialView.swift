@@ -24,6 +24,8 @@ struct ToolScreenShareTutorialView: View {
         
         GeometryReader { geometry in
             
+            AccessibilityScreenElementView(screenAccessibility: .toolScreenShareTutorial)
+            
             VStack(alignment: .center, spacing: 0) {
                 
                 FixedVerticalSpacer(height: 50)
@@ -59,44 +61,56 @@ struct ToolScreenShareTutorialView: View {
                     .animation(.easeOut, value: viewModel.currentPage)
                 }
                 
-                HStack(alignment: .center, spacing: 12) {
+                if !viewModel.hidesGenerateQRCodeButton && !viewModel.hidesShareLinkButton {
                     
-                    let isSingleButton: Bool = viewModel.hidesGenerateQRCodeButton
-                    
-                    let horizontalPadding: CGFloat = isSingleButton ? 50 : 30
-                    
-                    let titlePadding: CGFloat? = isSingleButton ? nil : 4
-                    
-                    let buttonWidth: CGFloat = isSingleButton
-                    ? (geometry.size.width - (horizontalPadding * 2))
-                    : floor(geometry.size.width / 2) - horizontalPadding
-                    
-                    let buttonFontSize: CGFloat = isSingleButton ? 18 : 16
-                    
+                    let buttonFontSize: CGFloat = 16
                     let buttonFont: Font = FontLibrary.sfProTextRegular.font(size: buttonFontSize)
+                    let horizontalPadding: CGFloat = 30
+                    let buttonWidth: CGFloat = floor(geometry.size.width / 2) - horizontalPadding
+                    let titlePadding: CGFloat = 4
                     
-                    if !viewModel.hidesGenerateQRCodeButton {
-                        
+                    HStack(alignment: .center, spacing: 12) {
+
                         GTWhiteButton(
                             title: viewModel.generateQRCodeButtonTitle,
                             font: buttonFont,
                             width: buttonWidth,
                             height: continueButtonHeight,
                             titleHorizontalPadding: titlePadding,
-                            titleVerticalPadding: titlePadding
+                            titleVerticalPadding: titlePadding,
+                            accessibility: .generateQRCode
                         ) {
                             
                             viewModel.generateQRCodeTapped()
                         }
+                        
+                        GTBlueButton(
+                            title: viewModel.shareLinkButtonTitle,
+                            font: buttonFont,
+                            width: buttonWidth,
+                            height: continueButtonHeight,
+                            titleHorizontalPadding: titlePadding,
+                            titleVerticalPadding: titlePadding,
+                            accessibility: .shareLink
+                        ) {
+                            
+                            viewModel.continueTapped()
+                        }
                     }
+                }
+                
+                if !viewModel.hidesContinueButton {
+                    
+                    let horizontalPadding: CGFloat = 30
                     
                     GTBlueButton(
                         title: viewModel.continueTitle,
-                        font: buttonFont,
-                        width: buttonWidth,
+                        font: FontLibrary.sfProTextRegular.font(size: 18),
+                        width: geometry.size.width - (horizontalPadding * 2),
                         height: continueButtonHeight,
-                        titleHorizontalPadding: titlePadding,
-                        titleVerticalPadding: titlePadding
+                        titleHorizontalPadding: nil,
+                        titleVerticalPadding: nil,
+                        accessibility: .continueForward
                     ) {
                         
                         viewModel.continueTapped()
