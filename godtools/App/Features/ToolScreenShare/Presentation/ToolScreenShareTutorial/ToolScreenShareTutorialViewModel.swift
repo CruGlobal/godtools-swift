@@ -28,10 +28,13 @@ class ToolScreenShareTutorialViewModel: ObservableObject {
     @Published private var interfaceStrings: ToolScreenShareInterfaceStringsDomainModel = ToolScreenShareInterfaceStringsDomainModel.emptyStrings
     
     @Published private(set) var hidesSkipButton: Bool = false
+    @Published private(set) var hidesContinueButton: Bool = false
     @Published private(set) var hidesGenerateQRCodeButton: Bool = true
+    @Published private(set) var hidesShareLinkButton: Bool = true
     @Published private(set) var tutorialPages: [ToolScreenShareTutorialPageDomainModel] = Array()
-    @Published private(set) var continueTitle: String = ""
     @Published private(set) var generateQRCodeButtonTitle: String = ""
+    @Published private(set) var shareLinkButtonTitle: String = ""
+    @Published private(set) var continueTitle: String = ""
     
     @Published var currentPage: Int = 0
     
@@ -62,6 +65,8 @@ class ToolScreenShareTutorialViewModel: ObservableObject {
                 
                 self?.interfaceStrings = toolScreenShareTutorial.interfaceStrings
                 self?.generateQRCodeButtonTitle = toolScreenShareTutorial.interfaceStrings.generateQRCodeActionTitle
+                self?.shareLinkButtonTitle = toolScreenShareTutorial.interfaceStrings.shareLinkActionTitle
+                self?.continueTitle = toolScreenShareTutorial.interfaceStrings.nextTutorialPageActionTitle
                 
                 let tutorialPages: [ToolScreenShareTutorialPageDomainModel]
                 
@@ -83,20 +88,6 @@ class ToolScreenShareTutorialViewModel: ObservableObject {
                 self?.tutorialPages = tutorialPages
             }
             .store(in: &cancellables)
-        
-        Publishers.CombineLatest3(
-            $currentPage,
-            $interfaceStrings,
-            $tutorialPages.dropFirst()
-        )
-        .receive(on: DispatchQueue.main)
-        .sink { [weak self] (currentPage: Int, interfaceStrings: ToolScreenShareInterfaceStringsDomainModel?, tutorialPages: [ToolScreenShareTutorialPageDomainModel]) in
-            
-            if let interfaceStrings = interfaceStrings {
-                self?.refreshContinueTitle(interfaceStrings: interfaceStrings, tutorialPages: tutorialPages)
-            }
-        }
-        .store(in: &cancellables)
 
         Publishers.CombineLatest(
             $currentPage,
@@ -117,6 +108,8 @@ class ToolScreenShareTutorialViewModel: ObservableObject {
             
             weakSelf.hidesSkipButton = isOnLastPage
             weakSelf.hidesGenerateQRCodeButton = !isOnLastPage
+            weakSelf.hidesShareLinkButton = !isOnLastPage
+            weakSelf.hidesContinueButton = isOnLastPage
         }
         .store(in: &cancellables)
     }
@@ -131,13 +124,6 @@ class ToolScreenShareTutorialViewModel: ObservableObject {
     
     private func getIsOnLastPage(tutorialPages: [ToolScreenShareTutorialPageDomainModel]) -> Bool {
         return currentPage >= tutorialPages.count - 1
-    }
-    
-    private func refreshContinueTitle(interfaceStrings: ToolScreenShareInterfaceStringsDomainModel, tutorialPages: [ToolScreenShareTutorialPageDomainModel]) {
-        
-        let isOnLastPage: Bool = getIsOnLastPage(tutorialPages: tutorialPages)
-        
-        continueTitle = !isOnLastPage ? interfaceStrings.nextTutorialPageActionTitle : interfaceStrings.shareLinkActionTitle
     }
     
     private func markToolScreenShareTutorialViewed() {
@@ -175,28 +161,20 @@ extension ToolScreenShareTutorialViewModel {
         let lastPage: Int = tutorialPages.count - 1
         currentPage = lastPage
     }
+
+    func continueTapped() {
+        nextPageTapped()
+    }
     
     func generateQRCodeTapped() {
         flowDelegate?.navigate(step: .generateQRCodeTappedFromToolScreenShareTutorial)
     }
     
-    func continueTapped() {
-        
-        let isOnLastPage: Bool = getIsOnLastPage(tutorialPages: tutorialPages)
-        
-        if isOnLastPage {
-            shareLinkTapped()
-        }
-        else {
-            nextPageTapped()
-        }
+    func shareLinkTapped() {
+        flowDelegate?.navigate(step: .shareLinkTappedFromToolScreenShareTutorial)
     }
     
     private func nextPageTapped() {
         currentPage += 1
-    }
-    
-    private func shareLinkTapped() {
-        flowDelegate?.navigate(step: .shareLinkTappedFromToolScreenShareTutorial)
     }
 }

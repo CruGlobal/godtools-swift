@@ -12,13 +12,15 @@ struct ToolScreenShareQRCodeView: View {
         
     @ObservedObject private var viewModel: ToolScreenShareQRCodeViewModel
     
+    @State private var modalIsHidden: Bool = true
+    
     init(viewModel: ToolScreenShareQRCodeViewModel) {
         self.viewModel = viewModel
     }
     
     var body: some View {
 
-        GTModalView {
+        GTModalView (content: { geometry in
             
             VStack {
                 HStack {
@@ -42,15 +44,17 @@ struct ToolScreenShareQRCodeView: View {
                     .padding(.horizontal, 70)
                                 
                 GTBlueButton(title: viewModel.interfaceStrings.closeButtonTitle, font: FontLibrary.sfProDisplayRegular.font(size: 16), width: 150, height: 48) {
+                    
+                    modalIsHidden = true
                     viewModel.closeTapped()
                 }
                 .padding(.bottom, 125)
             }
             
-        } overlayTappedClosure: {
+        }, isHidden: $modalIsHidden, overlayTappedClosure: {
             
             viewModel.closeTapped()
-        }
+        })
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
     }
 }
