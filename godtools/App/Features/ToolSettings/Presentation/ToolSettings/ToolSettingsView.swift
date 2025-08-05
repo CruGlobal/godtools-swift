@@ -34,6 +34,8 @@ struct ToolSettingsView: View {
         
         GTModalView(content: { geometry in
             
+            AccessibilityScreenElementView(screenAccessibility: .toolSettings)
+            
             VStack(alignment: .leading, spacing: 0) {
                          
                 ToolSettingsTopBarView(
