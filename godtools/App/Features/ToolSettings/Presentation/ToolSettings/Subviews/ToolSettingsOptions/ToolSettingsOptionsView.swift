@@ -33,6 +33,7 @@ struct ToolSettingsOptionsView: View {
                                 title: viewModel.shareLinkTitle,
                                 titleColorStyle: .darkBackground,
                                 iconImage: ImageCatalog.toolSettingsOptionShareLink.image,
+                                accessibility: .shareLink,
                                 tappedClosure: {
                                     viewModel.shareLinkTapped()
                                 }
@@ -44,6 +45,7 @@ struct ToolSettingsOptionsView: View {
                                 title: viewModel.screenShareTitle,
                                 titleColorStyle: .lightBackground,
                                 iconImage: ImageCatalog.toolSettingsOptionScreenShare.image,
+                                accessibility: .shareScreen,
                                 tappedClosure: {
                                     viewModel.screenShareTapped()
                                 }
@@ -55,6 +57,7 @@ struct ToolSettingsOptionsView: View {
                                 title: viewModel.trainingTipsTitle,
                                 titleColorStyle: .lightBackground,
                                 iconImage: viewModel.trainingTipsIcon,
+                                accessibility: .trainingTips,
                                 tappedClosure: {
                                     viewModel.trainingTipsTapped()
                                 }

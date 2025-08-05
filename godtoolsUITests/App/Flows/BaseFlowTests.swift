@@ -38,11 +38,19 @@ class BaseFlowTests: XCTestCase {
         
         let app = XCUIApplication()
         
-        let launchEnvironmentWriter = LaunchEnvironmentWriter()
-                                
-        launchEnvironmentWriter.setFirebaseEnabled(launchEnvironment: &app.launchEnvironment, enabled: false)
-        launchEnvironmentWriter.setIsUITests(launchEnvironment: &app.launchEnvironment, isUITests: true)
-        launchEnvironmentWriter.setUrlDeepLink(launchEnvironment: &app.launchEnvironment, url: flowDeepLinkUrl)
+        let launchEnvironmentWriter = LaunchEnvironmentWriter(environmentName: UITestsLaunchEnvironment.environmentName)
+                        
+        launchEnvironmentWriter.writeBoolValue(
+            launchEnvironment: &app.launchEnvironment,
+            key: UITestsLaunchEnvironmentKey.isUITests.value,
+            value: true
+        )
+        
+        launchEnvironmentWriter.writeStringValue(
+            launchEnvironment: &app.launchEnvironment,
+            key: UITestsLaunchEnvironmentKey.urlDeeplink.value,
+            value: flowDeepLinkUrl
+        )
         
         return app
     }

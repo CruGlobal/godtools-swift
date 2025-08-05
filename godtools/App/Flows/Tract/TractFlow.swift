@@ -209,7 +209,7 @@ extension TractFlow {
                 color: nil,
                 target: viewModel,
                 action: #selector(viewModel.toolSettingsTapped),
-                accessibilityIdentifier: nil
+                accessibilityIdentifier: AccessibilityStrings.Button.toolSettings.id
             ),
             hidesBarItemPublisher: nil
         )

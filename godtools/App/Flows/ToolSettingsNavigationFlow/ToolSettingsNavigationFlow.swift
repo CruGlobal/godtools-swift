@@ -16,15 +16,14 @@ protocol ToolSettingsNavigationFlow: Flow {
 extension ToolSettingsNavigationFlow {
     
     func openToolSettings(toolSettingsObserver: ToolSettingsObserver, toolSettingsDidCloseClosure: (() -> Void)?) {
+        
         let toolSettingsFlow = ToolSettingsFlow(
             flowDelegate: self,
             appDiContainer: appDiContainer,
-            sharedNavigationController: navigationController,
+            presentInNavigationController: navigationController,
             toolSettingsObserver: toolSettingsObserver,
             toolSettingsDidCloseClosure: toolSettingsDidCloseClosure
         )
-        
-        navigationController.present(toolSettingsFlow.getInitialView(), animated: true)
         
         self.toolSettingsFlow = toolSettingsFlow
     }
