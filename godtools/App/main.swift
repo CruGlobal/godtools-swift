@@ -9,7 +9,7 @@
 import Foundation
 
 let isUnitTests: Bool = NSClassFromString("XCTestCase") != nil
-let isUITests: Bool = LaunchEnvironmentReader.createFromProcessInfo().getIsUITests() ?? false
+let isUITests: Bool = UITestsLaunchEnvironment().getIsUITests() ?? false
 let runningForPreviews: String? = ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"]
 
 if isUnitTests {
