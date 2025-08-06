@@ -11,7 +11,7 @@ import RealmSwift
 
 class SwiftUIPreviewDatabase: RealmDatabase {
     
-    override init(databaseConfiguration: RealmDatabaseConfiguration, realmInstanceCreationType: RealmInstanceCreationType = .alwaysCreatesANewRealmInstance) {
+    override init(databaseConfiguration: RealmDatabaseConfiguration, realmInstanceCreationType: RealmInstanceCreationType = .usesASingleSharedRealmInstance) {
         
         super.init(databaseConfiguration: databaseConfiguration, realmInstanceCreationType: realmInstanceCreationType)
         
