@@ -32,6 +32,7 @@ extension AppleAuthentication: AuthenticationProviderInterface {
             accessToken: nil,
             appleSignInAuthorizationCode: authCode,
             idToken: appleAuthResponse.identityToken,
+            oidcToken: nil,
             profile: AuthenticationProviderProfile(
                 email: appleAuthResponse.email,
                 familyName: appleAuthResponse.fullName?.familyName,
