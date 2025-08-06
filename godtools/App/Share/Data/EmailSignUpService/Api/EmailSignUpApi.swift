@@ -13,14 +13,15 @@ import Combine
 class EmailSignUpApi {
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
-    private let requestSender: RequestSender = RequestSender()
     private let urlSessionPriority: URLSessionPriority
+    private let requestSender: RequestSender
     private let baseUrl: String = "https://campaign-forms.cru.org"
     private let campaignId: String = "3fb6022c-5ef9-458c-928a-0380c4a0e57b"
     
-    init(urlSessionPriority: URLSessionPriority) {
+    init(urlSessionPriority: URLSessionPriority, requestSender: RequestSender) {
         
         self.urlSessionPriority = urlSessionPriority
+        self.requestSender = requestSender
     }
     
     private func getEmailSignUpRequest(emailSignUp: EmailSignUpModelType, urlSession: URLSession) -> URLRequest {

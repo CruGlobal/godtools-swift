@@ -89,6 +89,7 @@ class AccessibilityStrings {
         case shareGodTools = "Share GodTools"
         case shareLink = "Share Link"
         case shareScreen = "Share Screen"
+        case skip = "Skip"
         case skipOnboardingTutorial = "Skip Onboarding Tutorial Button"
         case spotlightTool = "Spotlight Tool"
         case startTraining = "Start Training"

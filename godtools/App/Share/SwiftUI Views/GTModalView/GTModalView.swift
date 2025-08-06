@@ -14,7 +14,9 @@ struct GTModalView<Content: View>: View {
     private let overlayTappedClosure: (() -> Void)?
     private let backgroundColor: Color = Color.white
     private let backgroundCornerRadius: CGFloat = 12
-    private let backgroundHorizontalPadding: CGFloat = 10
+    private let backgroundHorizontalPadding: CGFloat
+    private let strokeColor: Color
+    private let strokeLineWidth: CGFloat
     private let contentAnimationDuration: TimeInterval = 0.3
     
     @State private var overlayOpacity: CGFloat = 0
@@ -23,11 +25,14 @@ struct GTModalView<Content: View>: View {
     
     @Binding private var isHidden: Bool
     
-    init(@ViewBuilder content: @escaping (_ geometry: GeometryProxy) -> Content, isHidden: Binding<Bool>, overlayTappedClosure: (() -> Void)?) {
+    init(@ViewBuilder content: @escaping (_ geometry: GeometryProxy) -> Content, isHidden: Binding<Bool>, overlayTappedClosure: (() -> Void)?, backgroundHorizontalPadding: CGFloat = 10, strokeColor: Color = Color.clear, strokeLineWidth: CGFloat = 0) {
         
         self.content = content
         self._isHidden = isHidden
         self.overlayTappedClosure = overlayTappedClosure
+        self.backgroundHorizontalPadding = backgroundHorizontalPadding
+        self.strokeColor = strokeColor
+        self.strokeLineWidth = strokeLineWidth
     }
     
     var body: some View {
@@ -87,6 +92,7 @@ struct GTModalView<Content: View>: View {
                     }
                     .background(
                         RoundedRectangle(cornerRadius: backgroundCornerRadius)
+                            .stroke(strokeColor, lineWidth: strokeLineWidth)
                             .overlay(
                                 RoundedRectangle(cornerRadius: backgroundCornerRadius)
                                     .foregroundStyle(backgroundColor)

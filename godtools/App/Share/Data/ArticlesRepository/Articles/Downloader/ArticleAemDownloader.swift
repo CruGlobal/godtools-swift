@@ -12,13 +12,14 @@ import Combine
 
 class ArticleAemDownloader {
             
-    private let requestSender: RequestSender = RequestSender()
     private let urlSessionPriority: URLSessionPriority
+    private let requestSender: RequestSender
     private let maxAemJsonTreeLevels: Int = 9999
         
-    init(urlSessionPriority: URLSessionPriority) {
+    init(urlSessionPriority: URLSessionPriority, requestSender: RequestSender) {
         
         self.urlSessionPriority = urlSessionPriority
+        self.requestSender = requestSender
     }
     
     func downloadPublisher(aemUris: [String], downloadCachePolicy: ArticleAemDownloaderCachePolicy, requestPriority: RequestPriority) -> AnyPublisher<ArticleAemDownloaderResult, Never> {
