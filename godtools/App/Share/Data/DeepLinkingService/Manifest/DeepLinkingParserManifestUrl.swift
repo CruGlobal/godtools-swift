@@ -29,6 +29,12 @@ class DeepLinkingParserManifestUrl: DeepLinkingParserManifestInterface {
         
         case .url(let incomingUrl):
             
+            let schemeOrHostIsEmpty: Bool = scheme.isEmpty || host.isEmpty
+            
+            guard !schemeOrHostIsEmpty else {
+                return nil
+            }
+            
             guard scheme == incomingUrl.url.scheme else {
                 return nil
             }
