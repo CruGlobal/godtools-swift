@@ -149,7 +149,7 @@ struct DeepLinkingParserManifestUrlTests {
                 host: Self.hostGodToolsApp,
                 path: nil,
                 parserClass: MockEmptyDeepLinkParser.self,
-                incomingDeepLinkUrl: "https://knowgod.com",
+                incomingDeepLinkUrl: "https://godtoolsapp.com",
                 expectedParserClass: MockEmptyDeepLinkParser.self
             ),
             TestArgument(
@@ -179,6 +179,286 @@ struct DeepLinkingParserManifestUrlTests {
                         
         #expect(parser == nil)
         #expect(Self.getParserTypesMatch(parser: parser, expectedParserType: argument.expectedParserClass) == false)
+    }
+    
+    @Test(
+        "Should return a matching parser when manifest path is null and incoming deep link url has a path.",
+        arguments: [
+            TestArgument(
+                scheme: Self.schemeHttps,
+                host: Self.hostGodToolsApp,
+                path: nil,
+                parserClass: MockEmptyDeepLinkParser.self,
+                incomingDeepLinkUrl: "https://godtoolsapp.com/",
+                expectedParserClass: MockEmptyDeepLinkParser.self
+            ),
+            TestArgument(
+                scheme: Self.schemeHttps,
+                host: Self.hostGodToolsApp,
+                path: nil,
+                parserClass: MockEmptyDeepLinkParser.self,
+                incomingDeepLinkUrl: "https://godtoolsapp.com/path_0",
+                expectedParserClass: MockEmptyDeepLinkParser.self
+            ),
+            TestArgument(
+                scheme: Self.schemeHttps,
+                host: Self.hostGodToolsApp,
+                path: nil,
+                parserClass: MockEmptyDeepLinkParser.self,
+                incomingDeepLinkUrl: "https://godtoolsapp.com/path_0/path_1?param_0=0",
+                expectedParserClass: MockEmptyDeepLinkParser.self
+            )
+        ]
+    )
+    func findsDeepLinkParserWhenPathIsNullAndIncomingDeepLinkUrlHasAPath(argument: TestArgument) async {
+        
+        let deepLinkingParserUrlManifest = DeepLinkingParserManifestUrl(
+            scheme: argument.scheme,
+            host: argument.host,
+            path: argument.path,
+            parserClass: argument.parserClass
+        )
+        
+        let url = IncomingDeepLinkUrl(url: URL(string: argument.incomingDeepLinkUrl)!)
+        
+        let incomingDeepLink: IncomingDeepLinkType = .url(incomingUrl: url)
+        
+        let parser: DeepLinkParserInterface? = deepLinkingParserUrlManifest.getParserIfValidIncomingDeepLink(incomingDeepLink: incomingDeepLink)
+                        
+        #expect(parser != nil)
+        #expect(Self.getParserTypesMatch(parser: parser, expectedParserType: argument.expectedParserClass))
+    }
+    
+    @Test(
+        "Should return a parser when manifest path is empty and incoming deep link url path is empty.",
+        arguments: [
+            TestArgument(
+                scheme: Self.schemeHttps,
+                host: Self.hostGodToolsApp,
+                path: "",
+                parserClass: MockEmptyDeepLinkParser.self,
+                incomingDeepLinkUrl: "https://godtoolsapp.com/",
+                expectedParserClass: MockEmptyDeepLinkParser.self
+            ),
+            TestArgument(
+                scheme: Self.schemeHttps,
+                host: Self.hostGodToolsApp,
+                path: "",
+                parserClass: MockEmptyDeepLinkParser.self,
+                incomingDeepLinkUrl: "https://godtoolsapp.com",
+                expectedParserClass: MockEmptyDeepLinkParser.self
+            )
+        ]
+    )
+    func returnsDeepLinkParserWhenPathIsEmptyAndIncomingDeepLinkUrlPathIsEmpty(argument: TestArgument) async {
+        
+        let deepLinkingParserUrlManifest = DeepLinkingParserManifestUrl(
+            scheme: argument.scheme,
+            host: argument.host,
+            path: argument.path,
+            parserClass: argument.parserClass
+        )
+        
+        let url = IncomingDeepLinkUrl(url: URL(string: argument.incomingDeepLinkUrl)!)
+        
+        let incomingDeepLink: IncomingDeepLinkType = .url(incomingUrl: url)
+        
+        let parser: DeepLinkParserInterface? = deepLinkingParserUrlManifest.getParserIfValidIncomingDeepLink(incomingDeepLink: incomingDeepLink)
+                        
+        #expect(parser != nil)
+        #expect(Self.getParserTypesMatch(parser: parser, expectedParserType: argument.expectedParserClass))
+    }
+    
+    @Test(
+        "Should return a null parser when manifest path is empty and incoming deep link url has a path.",
+        arguments: [
+            TestArgument(
+                scheme: Self.schemeHttps,
+                host: Self.hostGodToolsApp,
+                path: "",
+                parserClass: MockEmptyDeepLinkParser.self,
+                incomingDeepLinkUrl: "https://godtoolsapp.com/path_0",
+                expectedParserClass: MockEmptyDeepLinkParser.self
+            ),
+            TestArgument(
+                scheme: Self.schemeHttps,
+                host: Self.hostGodToolsApp,
+                path: "",
+                parserClass: MockEmptyDeepLinkParser.self,
+                incomingDeepLinkUrl: "https://godtoolsapp.com/path_0/path_1?param_0=0",
+                expectedParserClass: MockEmptyDeepLinkParser.self
+            )
+        ]
+    )
+    func returnsNullDeepLinkParserWhenPathIsEmptyAndIncomingDeepLinkUrlHasAPath(argument: TestArgument) async {
+        
+        let deepLinkingParserUrlManifest = DeepLinkingParserManifestUrl(
+            scheme: argument.scheme,
+            host: argument.host,
+            path: argument.path,
+            parserClass: argument.parserClass
+        )
+        
+        let url = IncomingDeepLinkUrl(url: URL(string: argument.incomingDeepLinkUrl)!)
+        
+        let incomingDeepLink: IncomingDeepLinkType = .url(incomingUrl: url)
+        
+        let parser: DeepLinkParserInterface? = deepLinkingParserUrlManifest.getParserIfValidIncomingDeepLink(incomingDeepLink: incomingDeepLink)
+                        
+        #expect(parser == nil)
+        #expect(Self.getParserTypesMatch(parser: parser, expectedParserType: argument.expectedParserClass) == false)
+    }
+    
+    @Test(
+        "Should return a null parser when manifest path is larger than incoming deep link url path.",
+        arguments: [
+            TestArgument(
+                scheme: Self.schemeHttps,
+                host: Self.hostGodToolsApp,
+                path: "path_0/path_1/path_2",
+                parserClass: MockEmptyDeepLinkParser.self,
+                incomingDeepLinkUrl: "https://godtoolsapp.com/path_0",
+                expectedParserClass: MockEmptyDeepLinkParser.self
+            ),
+            TestArgument(
+                scheme: Self.schemeHttps,
+                host: Self.hostGodToolsApp,
+                path: "path_0/path_1/path_2",
+                parserClass: MockEmptyDeepLinkParser.self,
+                incomingDeepLinkUrl: "https://godtoolsapp.com/path_0/path_1",
+                expectedParserClass: MockEmptyDeepLinkParser.self
+            )
+        ]
+    )
+    func returnsNullDeepLinkParserWhenPathIsLargerThanIncomingDeepLinkUrlPath(argument: TestArgument) async {
+        
+        let deepLinkingParserUrlManifest = DeepLinkingParserManifestUrl(
+            scheme: argument.scheme,
+            host: argument.host,
+            path: argument.path,
+            parserClass: argument.parserClass
+        )
+        
+        let url = IncomingDeepLinkUrl(url: URL(string: argument.incomingDeepLinkUrl)!)
+        
+        let incomingDeepLink: IncomingDeepLinkType = .url(incomingUrl: url)
+        
+        let parser: DeepLinkParserInterface? = deepLinkingParserUrlManifest.getParserIfValidIncomingDeepLink(incomingDeepLink: incomingDeepLink)
+                        
+        #expect(parser == nil)
+        #expect(Self.getParserTypesMatch(parser: parser, expectedParserType: argument.expectedParserClass) == false)
+    }
+    
+    @Test(
+        "Should return a null parser when manifest path does not match incoming deep link url path.",
+        arguments: [
+            TestArgument(
+                scheme: Self.schemeHttps,
+                host: Self.hostGodToolsApp,
+                path: "path_0/path_1/path_2",
+                parserClass: MockEmptyDeepLinkParser.self,
+                incomingDeepLinkUrl: "https://godtoolsapp.com/path_2/path_1/path_0",
+                expectedParserClass: MockEmptyDeepLinkParser.self
+            ),
+            TestArgument(
+                scheme: Self.schemeHttps,
+                host: Self.hostGodToolsApp,
+                path: "path_0/path_1/path_2",
+                parserClass: MockEmptyDeepLinkParser.self,
+                incomingDeepLinkUrl: "https://godtoolsapp.com/path_0/path_0/path_2",
+                expectedParserClass: MockEmptyDeepLinkParser.self
+            )
+        ]
+    )
+    func returnsNullDeepLinkParserWhenPathDoesNotMatchIncomingDeepLinkUrlPath(argument: TestArgument) async {
+        
+        let deepLinkingParserUrlManifest = DeepLinkingParserManifestUrl(
+            scheme: argument.scheme,
+            host: argument.host,
+            path: argument.path,
+            parserClass: argument.parserClass
+        )
+        
+        let url = IncomingDeepLinkUrl(url: URL(string: argument.incomingDeepLinkUrl)!)
+        
+        let incomingDeepLink: IncomingDeepLinkType = .url(incomingUrl: url)
+        
+        let parser: DeepLinkParserInterface? = deepLinkingParserUrlManifest.getParserIfValidIncomingDeepLink(incomingDeepLink: incomingDeepLink)
+                        
+        #expect(parser == nil)
+        #expect(Self.getParserTypesMatch(parser: parser, expectedParserType: argument.expectedParserClass) == false)
+    }
+    
+    @Test(
+        "Should return a parser when manifest path matches some or all of the incoming deep link url path.",
+        arguments: [
+            TestArgument(
+                scheme: Self.schemeHttps,
+                host: Self.hostGodToolsApp,
+                path: "path_0",
+                parserClass: MockEmptyDeepLinkParser.self,
+                incomingDeepLinkUrl: "https://godtoolsapp.com/path_0",
+                expectedParserClass: MockEmptyDeepLinkParser.self
+            ),
+            TestArgument(
+                scheme: Self.schemeHttps,
+                host: Self.hostGodToolsApp,
+                path: "path_0",
+                parserClass: MockEmptyDeepLinkParser.self,
+                incomingDeepLinkUrl: "https://godtoolsapp.com/path_0/path_1",
+                expectedParserClass: MockEmptyDeepLinkParser.self
+            ),
+            TestArgument(
+                scheme: Self.schemeHttps,
+                host: Self.hostGodToolsApp,
+                path: "path_0",
+                parserClass: MockEmptyDeepLinkParser.self,
+                incomingDeepLinkUrl: "https://godtoolsapp.com/path_0/path_1?param_0=0",
+                expectedParserClass: MockEmptyDeepLinkParser.self
+            ),
+            TestArgument(
+                scheme: Self.schemeHttps,
+                host: Self.hostGodToolsApp,
+                path: "path_0/path_1",
+                parserClass: MockEmptyDeepLinkParser.self,
+                incomingDeepLinkUrl: "https://godtoolsapp.com/path_0/path_1/path_2",
+                expectedParserClass: MockEmptyDeepLinkParser.self
+            ),
+            TestArgument(
+                scheme: Self.schemeHttps,
+                host: Self.hostGodToolsApp,
+                path: "path_0/path_1/path_2",
+                parserClass: MockEmptyDeepLinkParser.self,
+                incomingDeepLinkUrl: "https://godtoolsapp.com/path_0/path_1/path_2",
+                expectedParserClass: MockEmptyDeepLinkParser.self
+            ),
+            TestArgument(
+                scheme: Self.schemeHttps,
+                host: Self.hostGodToolsApp,
+                path: "path_0/path_1/path_2",
+                parserClass: MockEmptyDeepLinkParser.self,
+                incomingDeepLinkUrl: "https://godtoolsapp.com/path_0/path_1/path_2?param_0=0",
+                expectedParserClass: MockEmptyDeepLinkParser.self
+            )
+        ]
+    )
+    func returnsDeepLinkParserWhenManifestHasAPathAndIncomingDeepLinkUrlHasAPath(argument: TestArgument) async {
+        
+        let deepLinkingParserUrlManifest = DeepLinkingParserManifestUrl(
+            scheme: argument.scheme,
+            host: argument.host,
+            path: argument.path,
+            parserClass: argument.parserClass
+        )
+        
+        let url = IncomingDeepLinkUrl(url: URL(string: argument.incomingDeepLinkUrl)!)
+        
+        let incomingDeepLink: IncomingDeepLinkType = .url(incomingUrl: url)
+        
+        let parser: DeepLinkParserInterface? = deepLinkingParserUrlManifest.getParserIfValidIncomingDeepLink(incomingDeepLink: incomingDeepLink)
+                        
+        #expect(parser != nil)
+        #expect(Self.getParserTypesMatch(parser: parser, expectedParserType: argument.expectedParserClass))
     }
 }
 

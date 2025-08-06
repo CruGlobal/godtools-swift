@@ -53,21 +53,33 @@ class DeepLinkingParserManifestUrl: DeepLinkingParserManifestInterface {
     
     private func isValidPath(incomingUrl: IncomingDeepLinkUrl) -> Bool {
         
-        let path: String = self.path ?? ""
-        
-        guard !path.isEmpty else {
+        guard let path = self.path else {
             return true
+        }
+        
+        let incomingUrlRootPath: String? = incomingUrl.rootPath
+        let incomingUrlRootPathIsEmpty: Bool
+        
+        if let incomingUrlRootPath = incomingUrlRootPath {
+            incomingUrlRootPathIsEmpty = incomingUrlRootPath.isEmpty
+        }
+        else {
+            incomingUrlRootPathIsEmpty = true
+        }
+        
+        if path.isEmpty && incomingUrlRootPathIsEmpty {
+            return true
+        }
+        else if path.isEmpty && !incomingUrlRootPathIsEmpty {
+            return false
         }
         
         let pathComponents: [String] = path.components(separatedBy: "/").filter({$0 != "/"})
-        
-        guard !pathComponents.isEmpty else {
-            return true
-        }
-        
         let incomingPathComponents: [String] = incomingUrl.pathComponents.filter({$0 != "/"})
         
-        guard pathComponents.count <= incomingPathComponents.count else {
+        let pathComponentsIsLessThanOrEqualToIncomingPathComponents: Bool = pathComponents.count <= incomingPathComponents.count
+        
+        guard pathComponentsIsLessThanOrEqualToIncomingPathComponents else {
             return false
         }
         
