@@ -44,9 +44,33 @@ class ToolScreenShareFlowTests: BaseFlowTests {
         app.queryButton(buttonAccessibility: .continueForward, waitForExistence: 1)
     }
     
+    private func assertIsLastPageWithGenerateQRCodeAndShareLinkButtons() {
+        
+        let generateQRCodeButton = app.queryButton(buttonAccessibility: .generateQRCode, waitForExistence: 1)
+        
+        let shareLinkButton = app.queryButton(buttonAccessibility: .shareLink, waitForExistence: 1)
+        
+        XCTAssertTrue(generateQRCodeButton.exists)
+        
+        XCTAssertTrue(shareLinkButton.exists)
+    }
+    
     func testInitialScreenIsToolScreenShare() {
         
         launchAppToToolScreenShare()
+    }
+    
+    func testSkipNavigatesToLastPageWithGenerateQRCodeAndShareLinkButtons() {
+        
+        launchAppToToolScreenShare()
+        
+        let skipButton: XCUIElement = app.queryButton(buttonAccessibility: .skip)
+        
+        XCTAssertTrue(skipButton.exists)
+        
+        skipButton.tap()
+        
+        assertIsLastPageWithGenerateQRCodeAndShareLinkButtons()
     }
     
     func testNavigationThroughToolScreenShareWithContinueButtonLandsOnLastPageWithGenerateQRCodeAndShareLinkButtons() {
@@ -60,12 +84,6 @@ class ToolScreenShareFlowTests: BaseFlowTests {
             continueButton = getContinueButtonFromToolScreenShareTutorial()
         }
         
-        let generateQRCodeButton = app.queryButton(buttonAccessibility: .generateQRCode, waitForExistence: 1)
-        
-        let shareLinkButton = app.queryButton(buttonAccessibility: .shareLink, waitForExistence: 1)
-        
-        XCTAssertTrue(generateQRCodeButton.exists)
-        
-        XCTAssertTrue(shareLinkButton.exists)
+        assertIsLastPageWithGenerateQRCodeAndShareLinkButtons()
     }
 }
