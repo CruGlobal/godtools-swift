@@ -335,7 +335,7 @@ extension ToolScreenShareFlow {
             localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             target: viewModel,
             action: #selector(viewModel.skipTapped),
-            accessibilityIdentifier: nil,
+            accessibilityIdentifier: AccessibilityStrings.Button.skip.id,
             hidesBarItemPublisher: viewModel.$hidesSkipButton.eraseToAnyPublisher()
         )
         
