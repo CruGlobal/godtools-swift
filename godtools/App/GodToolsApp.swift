@@ -34,7 +34,7 @@ struct GodToolsApp: App {
     }
     
     private static var urlSessionEnabled: Bool {
-        return !isUITests
+        return true//!isUITests
     }
     
     private let appFlow: AppFlow
