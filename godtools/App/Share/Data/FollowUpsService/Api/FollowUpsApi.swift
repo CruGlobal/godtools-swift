@@ -13,13 +13,14 @@ import Combine
 class FollowUpsApi {
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
-    private let requestSender: RequestSender = RequestSender()
     private let urlSessionPriority: URLSessionPriority
+    private let requestSender: RequestSender
     private let baseUrl: String
     
-    init(baseUrl: String, urlSessionPriority: URLSessionPriority) {
+    init(baseUrl: String, urlSessionPriority: URLSessionPriority, requestSender: RequestSender) {
         
         self.urlSessionPriority = urlSessionPriority
+        self.requestSender = requestSender
         self.baseUrl = baseUrl
     }
     

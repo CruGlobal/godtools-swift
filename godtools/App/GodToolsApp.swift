@@ -21,7 +21,8 @@ struct GodToolsApp: App {
         appBuild: appBuild,
         appConfig: appConfig,
         realmDatabase: realmDatabase,
-        firebaseEnabled: firebaseEnabled
+        firebaseEnabled: firebaseEnabled,
+        urlSessionEnabled: urlSessionEnabled
     )
     
     private static var isUITests: Bool {
@@ -29,6 +30,10 @@ struct GodToolsApp: App {
     }
 
     private static var firebaseEnabled: Bool {
+        return !isUITests
+    }
+    
+    private static var urlSessionEnabled: Bool {
         return !isUITests
     }
     

@@ -170,6 +170,7 @@
 		451F1EDB2CD3AF14006CCF4E /* DisabledInAppMessaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451F1EDA2CD3AF13006CCF4E /* DisabledInAppMessaging.swift */; };
 		451F1EE32CD3B38B006CCF4E /* LaunchEnvironmentReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451F1EE22CD3B387006CCF4E /* LaunchEnvironmentReader.swift */; };
 		451F1EE42CD3B38B006CCF4E /* LaunchEnvironmentReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451F1EE22CD3B387006CCF4E /* LaunchEnvironmentReader.swift */; };
+		45210E382E437E7000A5017B /* DoesNotSendUrlRequestSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45210E322E437E7000A5017B /* DoesNotSendUrlRequestSender.swift */; };
 		4521B2802B32851F00C8A473 /* GetShareableImageRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4521B27F2B32851F00C8A473 /* GetShareableImageRepositoryInterface.swift */; };
 		4521B2822B32853E00C8A473 /* GetShareableImageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4521B2812B32853E00C8A473 /* GetShareableImageRepository.swift */; };
 		4521E5EB2D690BCC003E01FE /* SwiftUITimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4521E5E92D690BCC003E01FE /* SwiftUITimer.swift */; };
@@ -1978,6 +1979,7 @@
 		451F1EE22CD3B387006CCF4E /* LaunchEnvironmentReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchEnvironmentReader.swift; sourceTree = "<group>"; };
 		451F7A802ABD2F1100006EF2 /* Quick.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Quick.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		451F7A822ABD2F1400006EF2 /* Nimble.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		45210E322E437E7000A5017B /* DoesNotSendUrlRequestSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoesNotSendUrlRequestSender.swift; sourceTree = "<group>"; };
 		4521B27F2B32851F00C8A473 /* GetShareableImageRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetShareableImageRepositoryInterface.swift; sourceTree = "<group>"; };
 		4521B2812B32853E00C8A473 /* GetShareableImageRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetShareableImageRepository.swift; sourceTree = "<group>"; };
 		4521E5E92D690BCC003E01FE /* SwiftUITimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUITimer.swift; sourceTree = "<group>"; };
@@ -4146,6 +4148,7 @@
 				D42FEBDD287605D60002FAD9 /* OptInOnboardingBannerEnabledRepository */,
 				45B212A82922965F00C9A94D /* RealmDatabase */,
 				455258482D36F66E00FAC98D /* RemoteConfigRepository */,
+				45210E352E437E7000A5017B /* RequestSender */,
 				45D63E8C288F77D4009B4610 /* ResourcesRepository */,
 				45E8FA9D2882FD1B00D7D569 /* ResourcesSHA256FileCache */,
 				45BDA5B92954F5CF007E259B /* ResourceViewsService */,
@@ -4481,6 +4484,14 @@
 				451F1EDA2CD3AF13006CCF4E /* DisabledInAppMessaging.swift */,
 			);
 			path = DisabledInAppMessaging;
+			sourceTree = "<group>";
+		};
+		45210E352E437E7000A5017B /* RequestSender */ = {
+			isa = PBXGroup;
+			children = (
+				45210E322E437E7000A5017B /* DoesNotSendUrlRequestSender.swift */,
+			);
+			path = RequestSender;
 			sourceTree = "<group>";
 		};
 		4521E5EA2D690BCC003E01FE /* SwiftUITimer */ = {
@@ -15025,6 +15036,7 @@
 				45E4DBCB2BECFB20006ED2F3 /* AppLanguageCodable.swift in Sources */,
 				4534F9202AE99EBC00A7A071 /* GetLessonEvaluationInterfaceStringsRepository.swift in Sources */,
 				45D63E76288F698C009B4610 /* MobileContentLanguagesApi.swift in Sources */,
+				45210E382E437E7000A5017B /* DoesNotSendUrlRequestSender.swift in Sources */,
 				D4C2A5812C348FAD0035AB4D /* SearchLessonFilterLanguagesRepository.swift in Sources */,
 				454B47E82AE024E000C7B5E7 /* OnboardingDataLayerDependencies.swift in Sources */,
 				457766E72AD6F3180093B19A /* GetToolDetailsInterfaceStringsRepository.swift in Sources */,

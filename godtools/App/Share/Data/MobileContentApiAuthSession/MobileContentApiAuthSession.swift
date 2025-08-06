@@ -12,15 +12,16 @@ import Combine
 
 class MobileContentApiAuthSession {
     
-    private let requestSender: RequestSender = RequestSender()
+    private let requestSender: RequestSender
     
     let mobileContentAuthTokenRepository: MobileContentAuthTokenRepository
     let userAuthentication: UserAuthentication
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
     
-    init(mobileContentAuthTokenRepository: MobileContentAuthTokenRepository, userAuthentication: UserAuthentication) {
+    init(requestSender: RequestSender, mobileContentAuthTokenRepository: MobileContentAuthTokenRepository, userAuthentication: UserAuthentication) {
      
+        self.requestSender = requestSender
         self.mobileContentAuthTokenRepository = mobileContentAuthTokenRepository
         self.userAuthentication = userAuthentication
     }
