@@ -8,7 +8,6 @@
 
 import Foundation
 import XCTest
-@testable import godtools
 
 class DashboardFlowTests: BaseFlowTests {
         
@@ -203,7 +202,7 @@ extension DashboardFlowTests {
         
         tabToTools()
         
-        let tool = app.queryDescendants(id: AccessibilityStrings.Button.tool.rawValue + " " + ToolNames.English.teachMeToShare)
+        let tool = app.queryDescendants(id: AccessibilityStrings.Button.tool.rawValue + " " + SwiftUIPreviewToolNames.English.teachMeToShare)
                 
         guard let tool = tool else {
             XCTAssertNotNil(tool, "Found nil element.")

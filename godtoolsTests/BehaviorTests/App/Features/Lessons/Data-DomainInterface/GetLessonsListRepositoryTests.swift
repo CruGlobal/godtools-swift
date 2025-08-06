@@ -6,18 +6,192 @@
 //  Copyright © 2024 Cru. All rights reserved.
 //
 
-import Foundation
+import Testing
 @testable import godtools
 import Combine
-import Quick
-import Nimble
-import RealmSwift
 
-class GetLessonsListRepositoryTests: QuickSpec {
+struct GetLessonsListRepositoryTests {
     
-    override class func spec() {
+    private static let realmDatabase: RealmDatabase = getRealmDatabase()
+    
+    private static let spanishLanguageId: String = LanguageCodeDomainModel.spanish.rawValue
+    
+    @Test(
+        """
+        Given: User is viewing the lessons list.
+        When: My app language is english and lesson language filter is spanish.
+        Then: I expect to see lessons that only include the spanish language.
+        """
+    )
+    @MainActor func onlyShowLessonsThatSupportMyLessonLanguageFilter() async {
         
         var cancellables: Set<AnyCancellable> = Set()
+        
+        let appLanguageEnglish: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+                        
+        let spanishLanguageFilter = LessonFilterLanguageDomainModel(
+            languageId: Self.spanishLanguageId,
+            languageNameTranslatedInLanguage: "",
+            languageNameTranslatedInAppLanguage: "",
+            lessonsAvailableText: ""
+        )
+        
+        let getLessonsListRepository: GetLessonsListRepository = Self.getLessonsListRepository()
+        
+        var lessonsRef: [LessonListItemDomainModel] = Array()
+        
+        var sinkCount: Int = 0
+        
+        await withCheckedContinuation { continuation in
+            
+            let timeoutTask = Task {
+                try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                continuation.resume(returning: ())
+            }
+            
+            getLessonsListRepository
+                .getLessonsListPublisher(
+                    appLanguage: appLanguageEnglish,
+                    filterLessonsByLanguage: spanishLanguageFilter
+                )
+                .sink { (lessons: [LessonListItemDomainModel]) in
+                                        
+                    sinkCount += 1
+                    
+                    if sinkCount == 1 {
+                        
+                        lessonsRef = lessons
+                        
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    }
+                }
+                .store(in: &cancellables)
+        }
+        
+        let lessonIds: [String] = lessonsRef
+            .map { $0.id }
+            .sorted { $0 < $1 }
+        
+        #expect(lessonIds == ["0", "2", "4", "6", "8"])
+    }
+    
+    @Test(
+        """
+        Given: User is viewing the lessons list.
+        When: My app language is arabic and my lesson language filter hasn't been selected and instead defaults to my app language arabic.
+        Then: I expect the lesson names to be translated in arabic.
+        """
+    )
+    @MainActor func lessonNamesAreTranslatedInAppLanguageWhenNoLanguageFilterSelected() async {
+        
+        var cancellables: Set<AnyCancellable> = Set()
+        
+        let appLanguageArabic: AppLanguageDomainModel = LanguageCodeDomainModel.arabic.rawValue
+                                
+        let getLessonsListRepository: GetLessonsListRepository = Self.getLessonsListRepository()
+        
+        var lessonsRef: [LessonListItemDomainModel] = Array()
+        
+        var sinkCount: Int = 0
+        
+        await withCheckedContinuation { continuation in
+            
+            let timeoutTask = Task {
+                try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                continuation.resume(returning: ())
+            }
+            
+            getLessonsListRepository
+                .getLessonsListPublisher(
+                    appLanguage: appLanguageArabic,
+                    filterLessonsByLanguage: nil
+                )
+                .sink { (lessons: [LessonListItemDomainModel]) in
+                                        
+                    sinkCount += 1
+                    
+                    if sinkCount == 1 {
+                        
+                        lessonsRef = lessons
+                        
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    }
+                }
+                .store(in: &cancellables)
+        }
+        
+        #expect(lessonsRef.first(where: { $0.id == "0" })?.name == "الدرس صفر")
+        #expect(lessonsRef.first(where: { $0.id == "5" })?.name == "الدرس الخامس")
+        #expect(lessonsRef.first(where: { $0.id == "6" })?.name == "الدرس السادس")
+        #expect(lessonsRef.first(where: { $0.id == "8" })?.name == "الدرس الثامن")
+    }
+    
+    @Test(
+        """
+        Given: User is viewing the lessons list.
+        When: My app language is english and lesson language filter is spanish.
+        Then: I expect the lesson names to be translated in my lesson language filter spanish.
+        """
+    )
+    @MainActor func lessonNamesAreTranslatedInLessonLanguageFilter() async {
+        
+        var cancellables: Set<AnyCancellable> = Set()
+        
+        let appLanguageEnglish: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+                        
+        let spanishLanguageFilter = LessonFilterLanguageDomainModel(
+            languageId: LanguageCodeDomainModel.spanish.rawValue,
+            languageNameTranslatedInLanguage: "",
+            languageNameTranslatedInAppLanguage: "",
+            lessonsAvailableText: ""
+        )
+                                
+        let getLessonsListRepository: GetLessonsListRepository = Self.getLessonsListRepository()
+        
+        var lessonsRef: [LessonListItemDomainModel] = Array()
+        
+        var sinkCount: Int = 0
+        
+        await withCheckedContinuation { continuation in
+            
+            let timeoutTask = Task {
+                try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                continuation.resume(returning: ())
+            }
+            
+            getLessonsListRepository
+                .getLessonsListPublisher(
+                    appLanguage: appLanguageEnglish,
+                    filterLessonsByLanguage: spanishLanguageFilter
+                )
+                .sink { (lessons: [LessonListItemDomainModel]) in
+                                        
+                    sinkCount += 1
+                    
+                    if sinkCount == 1 {
+                        
+                        lessonsRef = lessons
+                        
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+                    }
+                }
+                .store(in: &cancellables)
+        }
+        
+        #expect(lessonsRef.first(where: { $0.id == "0" })?.name == "Lección cero")
+        #expect(lessonsRef.first(where: { $0.id == "2" })?.name == "Leccion dos")
+        #expect(lessonsRef.first(where: { $0.id == "4" })?.name == "Lección cuatro")
+        #expect(lessonsRef.first(where: { $0.id == "6" })?.name == "Lección seis")
+        #expect(lessonsRef.first(where: { $0.id == "8" })?.name == "Lección ocho")
+    }
+}
+
+extension GetLessonsListRepositoryTests {
+ 
+    private static func getRealmDatabase() -> RealmDatabase {
         
         let afrikaansLanguage: RealmLanguage = Self.getRealmLanguage(languageCode: .afrikaans)
         let arabicLanguage: RealmLanguage =  Self.getRealmLanguage(languageCode: .arabic)
@@ -139,144 +313,28 @@ class GetLessonsListRepositoryTests: QuickSpec {
             addObjectsToDatabase: allLanguages + lessons
         )
         
-        let testsDiContainer = TestsDiContainer(realmDatabase: realmDatabase)
+        return realmDatabase
+    }
+    
+    private static func getLessonsListRepository() -> GetLessonsListRepository {
+                
+        let testsDiContainer = TestsDiContainer(realmDatabase: Self.realmDatabase)
         
-        let getLessonsListRepository = GetLessonsListRepository(
+        return GetLessonsListRepository(
             resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),
             languagesRepository: testsDiContainer.dataLayer.getLanguagesRepository(),
             getTranslatedToolName: Self.getTranslatedToolName(testsDiContainer: testsDiContainer),
-            getTranslatedToolLanguageAvailability: Self.getTranslatedToolLanguageAvailability(testsDiContainer: testsDiContainer), 
+            getTranslatedToolLanguageAvailability: Self.getTranslatedToolLanguageAvailability(testsDiContainer: testsDiContainer),
             getLessonListItemProgressRepository: testsDiContainer.dataLayer.getLessonListItemProgressRepository()
         )
-        
-        describe("User is viewing the lessons list.") {
-            
-            context("When my app language is english and lesson language filter is spanish.") {
-                
-                let appLanguageEnglish: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
-                                
-                let spanishLanguageFilter = LessonFilterLanguageDomainModel(
-                    languageId: spanishLanguage.id,
-                    languageNameTranslatedInLanguage: "",
-                    languageNameTranslatedInAppLanguage: "",
-                    lessonsAvailableText: ""
-                )
-                
-                it("I expect to see lessons that only include the spanish language.") {
-                    
-                    var lessonsRef: [LessonListItemDomainModel] = Array()
-                    var sinkCompleted: Bool = false
-                    
-                    waitUntil { done in
-                        
-                        getLessonsListRepository
-                            .getLessonsListPublisher(appLanguage: appLanguageEnglish, filterLessonsByLanguage: spanishLanguageFilter)
-                            .sink { (lessons: [LessonListItemDomainModel]) in
-                                
-                                guard !sinkCompleted else {
-                                    return
-                                }
-                                
-                                sinkCompleted = true
-                                
-                                lessonsRef = lessons
-                                
-                                done()
-                            }
-                            .store(in: &cancellables)
-                    }
-                    
-                    let lessonIds: [String] = lessonsRef
-                        .map { $0.id }
-                        .sorted { $0 < $1 }
-                    
-                    expect(lessonIds).to(equal(["0", "2", "4", "6", "8"]))
-                }
-            }
-            
-            context("When my app language is arabic and my lesson language filter hasn't been selected and instead defaults to my app language arabic.") {
-                
-                let appLanguageArabic: AppLanguageDomainModel = LanguageCodeDomainModel.arabic.rawValue
-                                
-                it("I expect the lesson names to be translated in arabic.") {
-                    
-                    var lessonsRef: [LessonListItemDomainModel] = Array()
-                    var sinkCompleted: Bool = false
-                    
-                    waitUntil { done in
-                        
-                        getLessonsListRepository
-                            .getLessonsListPublisher(appLanguage: appLanguageArabic, filterLessonsByLanguage: nil)
-                            .sink { (lessons: [LessonListItemDomainModel]) in
-                                
-                                guard !sinkCompleted else {
-                                    return
-                                }
-                                
-                                sinkCompleted = true
-                                
-                                lessonsRef = lessons
-                                
-                                done()
-                            }
-                            .store(in: &cancellables)
-                    }
-                    
-                    expect(lessonsRef.first(where: { $0.id == "0" })?.name).to(equal("الدرس صفر"))
-                    expect(lessonsRef.first(where: { $0.id == "5" })?.name).to(equal("الدرس الخامس"))
-                    expect(lessonsRef.first(where: { $0.id == "6" })?.name).to(equal("الدرس السادس"))
-                    expect(lessonsRef.first(where: { $0.id == "8" })?.name).to(equal("الدرس الثامن"))
-                }
-            }
-            
-            context("When my app language is english and lesson language filter is spanish.") {
-                
-                let appLanguageEnglish: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
-                                
-                let spanishLanguageFilter = LessonFilterLanguageDomainModel(
-                    languageId: spanishLanguage.id,
-                    languageNameTranslatedInLanguage: "",
-                    languageNameTranslatedInAppLanguage: "",
-                    lessonsAvailableText: ""
-                )
-                
-                it("I expect the lesson names to be translated in my lesson language filter spanish.") {
-                    
-                    var lessonsRef: [LessonListItemDomainModel] = Array()
-                    var sinkCompleted: Bool = false
-                    
-                    waitUntil { done in
-                        
-                        getLessonsListRepository
-                            .getLessonsListPublisher(appLanguage: appLanguageEnglish, filterLessonsByLanguage: spanishLanguageFilter)
-                            .sink { (lessons: [LessonListItemDomainModel]) in
-                                
-                                guard !sinkCompleted else {
-                                    return
-                                }
-                                
-                                sinkCompleted = true
-                                
-                                lessonsRef = lessons
-                                
-                                done()
-                            }
-                            .store(in: &cancellables)
-                    }
-                    
-                    expect(lessonsRef.first(where: { $0.id == "0" })?.name).to(equal("Lección cero"))
-                    expect(lessonsRef.first(where: { $0.id == "2" })?.name).to(equal("Leccion dos"))
-                    expect(lessonsRef.first(where: { $0.id == "4" })?.name).to(equal("Lección cuatro"))
-                    expect(lessonsRef.first(where: { $0.id == "6" })?.name).to(equal("Lección seis"))
-                    expect(lessonsRef.first(where: { $0.id == "8" })?.name).to(equal("Lección ocho"))
-                }
-            }
-        }
     }
     
     private static func getRealmLanguage(languageCode: LanguageCodeDomainModel) -> RealmLanguage {
-        
-        return MockRealmLanguage.getLanguage(language: languageCode, name: languageCode.rawValue + " Name", id: languageCode.rawValue)
+        return MockRealmLanguage.getLanguage(
+            language: languageCode,
+            name: languageCode.rawValue + " Name",
+            id: languageCode.rawValue
+        )
     }
     
     private static func getTranslatedToolName(testsDiContainer: TestsDiContainer) -> GetTranslatedToolName {

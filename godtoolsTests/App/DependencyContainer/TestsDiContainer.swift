@@ -21,7 +21,8 @@ class TestsDiContainer: AppDiContainer {
             appBuild: appBuild,
             appConfig: appConfig,
             realmDatabase: realmDatabase,
-            firebaseEnabled: false
+            firebaseEnabled: false,
+            urlSessionEnabled: false
         )
     }
 }

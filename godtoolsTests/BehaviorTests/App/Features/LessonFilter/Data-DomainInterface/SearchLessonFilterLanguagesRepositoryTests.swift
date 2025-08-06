@@ -6,167 +6,83 @@
 //  Copyright © 2024 Cru. All rights reserved.
 //
 
-import Foundation
+import Testing
 @testable import godtools
 import Combine
-import Quick
-import Nimble
 
-class SearchLessonFilterLanguagesRepositoryTests: QuickSpec {
+struct SearchLessonFilterLanguagesRepositoryTests {
+        
+    private static let allLessonFilterLanguages: [LessonFilterLanguageDomainModel] = [
+        LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "blAnd", lessonsAvailableText: ""),
+        LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "bran", lessonsAvailableText: ""),
+        LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Canned", lessonsAvailableText: ""),
+        LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Church", lessonsAvailableText: ""),
+        LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "church", lessonsAvailableText: ""),
+        LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "food", lessonsAvailableText: ""),
+        LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Food", lessonsAvailableText: ""),
+        LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "foody", lessonsAvailableText: ""),
+        LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "land", lessonsAvailableText: ""),
+        LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "may", lessonsAvailableText: ""),
+        LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "pAnda", lessonsAvailableText: ""),
+        LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "sanded", lessonsAvailableText: ""),
+        LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "soccer", lessonsAvailableText: ""),
+        LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "soCCer", lessonsAvailableText: ""),
+        LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Tan", lessonsAvailableText: ""),
+        LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Tanned", lessonsAvailableText: ""),
+        LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "WAND", lessonsAvailableText: ""),
+        LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "wander", lessonsAvailableText: ""),
+        LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Yellow", lessonsAvailableText: "")
+    ]
     
-    override class func spec() {
-     
+    struct TestArgument {
+        let searchString: String
+        let expectedLanguages: [String]
+    }
+    
+    @Test(
+        """
+        Given: User is searching a category in the tools filter categories list.
+        When: User inputs a search string."
+        Then: I expect to see all categories that contain the search string ignoring case.
+        """,
+        arguments: [
+            TestArgument(
+                searchString: "c",
+                expectedLanguages: ["Canned", "Church", "church", "soccer", "soCCer"]
+            ),
+            TestArgument(
+                searchString: "Y",
+                expectedLanguages: ["foody", "may", "Yellow"]
+            ),
+            TestArgument(
+                searchString: "anD",
+                expectedLanguages: ["blAnd", "land", "pAnda", "sanded", "WAND", "wander"]
+            )
+        ]
+    )
+    func showsLessonFilterLanguagesContainingSearchString(argument: TestArgument) async {
+        
+        let searchLessonFilterLanguagesRepository = SearchLessonFilterLanguagesRepository(
+            stringSearcher: StringSearcher()
+        )
+        
         var cancellables: Set<AnyCancellable> = Set()
         
-        describe("User is searching a language in the lesson filter languages list.") {
-            
-            let searchLessonFilterLanguagesRepository = SearchLessonFilterLanguagesRepository(
-                stringSearcher: StringSearcher()
-            )
-            
-            let lowercasedSingleLetterSearchString: String = "c"
-            
-            context("When a user inputs a lowercased single letter search string \(lowercasedSingleLetterSearchString)") {
+        var searchedLanguages: [String] = Array()
                 
-                let allLanguages: [LessonFilterLanguageDomainModel] = [
-                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Church", lessonsAvailableText: ""),
-                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "church", lessonsAvailableText: ""),
-                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "food", lessonsAvailableText: ""),
-                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Food", lessonsAvailableText: ""),
-                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "soccer", lessonsAvailableText: ""),
-                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "soCCer", lessonsAvailableText: "")
-                ]
-                
-                it("I expect all languages that contain the lowercased single letter search string \(lowercasedSingleLetterSearchString) ignoring case.") {
+        await confirmation(expectedCount: 1) { confirmation in
+            
+            searchLessonFilterLanguagesRepository
+                .getSearchResultsPublisher(for: argument.searchString, in: Self.allLessonFilterLanguages)
+                .sink { (languages: [LessonFilterLanguageDomainModel]) in
                     
-                    var searchedLanguages: [String] = Array()
-                    var sinkCompleted: Bool = false
+                    confirmation()
                     
-                    waitUntil { done in
-                        
-                        searchLessonFilterLanguagesRepository
-                            .getSearchResultsPublisher(for: lowercasedSingleLetterSearchString, in: allLanguages)
-                            .sink { (languages: [LessonFilterLanguageDomainModel]) in
-                                
-                                guard !sinkCompleted else {
-                                    return
-                                }
-                                
-                                sinkCompleted = true
-                                
-                                searchedLanguages = languages.map({$0.languageNameTranslatedInAppLanguage})
-                                
-                                done()
-                            }
-                            .store(in: &cancellables)
-                    }
-                    
-                    let expectedLanguages: [String] = ["soccer", "soCCer", "Church", "church"]
-                    let shouldNotContainLanguages: [String] = ["food", "Food"]
-                    
-                    expect(searchedLanguages.count).to(equal(expectedLanguages.count))
-                    expect(searchedLanguages).to(contain(expectedLanguages))
-                    expect(searchedLanguages).toNot(contain(shouldNotContainLanguages))
+                    searchedLanguages = languages.map({$0.languageNameTranslatedInAppLanguage})
                 }
-            }
-            
-            let uppercasedSingleLetterSearchString: String = "Y"
-            
-            context("When a user inputs an uppercased single letter search string \(uppercasedSingleLetterSearchString)") {
-                
-                let allLanguages: [LessonFilterLanguageDomainModel] = [
-                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Church", lessonsAvailableText: ""),
-                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "church", lessonsAvailableText: ""),
-                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "foody", lessonsAvailableText: ""),
-                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Food", lessonsAvailableText: ""),
-                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "soccer", lessonsAvailableText: ""),
-                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "soCCer", lessonsAvailableText: ""),
-                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Yellow", lessonsAvailableText: ""),
-                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "may", lessonsAvailableText: "")
-                ]
-                
-                it("I expect all languages that contain the uppercased single letter search string \(uppercasedSingleLetterSearchString) ignoring case.") {
-                    
-                    var searchedLanguages: [String] = Array()
-                    var sinkCompleted: Bool = false
-                    
-                    waitUntil { done in
-                        
-                        searchLessonFilterLanguagesRepository
-                            .getSearchResultsPublisher(for: uppercasedSingleLetterSearchString, in: allLanguages)
-                            .sink { (languages: [LessonFilterLanguageDomainModel]) in
-                                
-                                guard !sinkCompleted else {
-                                    return
-                                }
-                                
-                                sinkCompleted = true
-                                
-                                searchedLanguages = languages.map({$0.languageNameTranslatedInAppLanguage})
-                                
-                                done()
-                            }
-                            .store(in: &cancellables)
-                    }
-                    
-                    let expectedLanguages: [String] = ["foody", "Yellow", "may"]
-                    let shouldNotContainLanguages: [String] = ["Church", "church", "Food", "soccer", "soCCer"]
-                    
-                    expect(searchedLanguages.count).to(equal(expectedLanguages.count))
-                    expect(searchedLanguages).to(contain(expectedLanguages))
-                    expect(searchedLanguages).toNot(contain(shouldNotContainLanguages))
-                }
-            }
-            
-            let multiTextSearchString: String = "anD"
-            
-            context("When a user inputs a multi-text search string \(multiTextSearchString)") {
-                
-                let allLanguages: [LessonFilterLanguageDomainModel] = [
-                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "blAnd", lessonsAvailableText: ""),
-                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "land", lessonsAvailableText: ""),
-                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Canned", lessonsAvailableText: ""),
-                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "WAND", lessonsAvailableText: ""),
-                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "wander", lessonsAvailableText: ""),
-                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "pAnda", lessonsAvailableText: ""),
-                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "bran", lessonsAvailableText: ""),
-                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Tan", lessonsAvailableText: ""),
-                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Tanned", lessonsAvailableText: ""),
-                    LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "sanded", lessonsAvailableText: "")
-                ]
-                
-                it("I expect all languages that contain the multi-text search string \(multiTextSearchString) ignoring case.") {
-                    
-                    var searchedLanguages: [String] = Array()
-                    var sinkCompleted: Bool = false
-                    
-                    waitUntil { done in
-                        
-                        searchLessonFilterLanguagesRepository
-                            .getSearchResultsPublisher(for: multiTextSearchString, in: allLanguages)
-                            .sink { (languages: [LessonFilterLanguageDomainModel]) in
-                                
-                                guard !sinkCompleted else {
-                                    return
-                                }
-                                
-                                sinkCompleted = true
-                                
-                                searchedLanguages = languages.map({$0.languageNameTranslatedInAppLanguage})
-                                
-                                done()
-                            }
-                            .store(in: &cancellables)
-                    }
-                    
-                    let expectedLanguages: [String] = ["blAnd", "land", "WAND", "wander", "pAnda", "sanded"]
-                    let shouldNotContainLanguages: [String] = ["Canned", "bran", "Tan", "Tanned"]
-                    
-                    expect(searchedLanguages.count).to(equal(expectedLanguages.count))
-                    expect(searchedLanguages).to(contain(expectedLanguages))
-                    expect(searchedLanguages).toNot(contain(shouldNotContainLanguages))
-                }
-            }
+                .store(in: &cancellables)
         }
+        
+        #expect(argument.expectedLanguages.elementsEqual(searchedLanguages))
     }
 }
