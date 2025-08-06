@@ -11,7 +11,7 @@ import RealmSwift
 
 class SwiftUIPreviewDiContainer {
     
-    private static let previewDatabase: SwiftUIPreviewDatabase = SwiftUIPreviewDatabase(databaseConfiguration: SwiftUIPreviewDatabaseConfiguration())
+    private static let previewDatabase: SwiftUIPreviewDatabase = SwiftUIPreviewDatabase()
     
     init() {
         

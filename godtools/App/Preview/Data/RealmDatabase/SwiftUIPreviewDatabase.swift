@@ -11,9 +11,9 @@ import RealmSwift
 
 class SwiftUIPreviewDatabase: RealmDatabase {
     
-    override init(databaseConfiguration: RealmDatabaseConfiguration, realmInstanceCreationType: RealmInstanceCreationType = .usesASingleSharedRealmInstance) {
+    init() {
         
-        super.init(databaseConfiguration: databaseConfiguration, realmInstanceCreationType: realmInstanceCreationType)
+        super.init(databaseConfiguration: SwiftUIPreviewDatabaseConfiguration(), realmInstanceCreationType: .usesASingleSharedRealmInstance)
         
         let objects: [Object] = getResources() + getLanguages()
         
@@ -33,17 +33,11 @@ class SwiftUIPreviewDatabase: RealmDatabase {
     
     private func getResources() -> [RealmResource] {
         
-        let resourceKgpGospel = RealmResource()
-        
-        resourceKgpGospel.abbreviation = "kgp"
-        resourceKgpGospel.attrCategory = "gospel"
-        resourceKgpGospel.attrSpotlight = true
-        resourceKgpGospel.id = "1"
-        resourceKgpGospel.name = "Preview Resource"
-        resourceKgpGospel.resourceDescription = ""
-        resourceKgpGospel.totalViews = 12579
-        
-        return [resourceKgpGospel]
+        return [
+            Self.getKgpTool(),
+            Self.getTeachMeToShareTool(),
+            Self.getFourSpiritualLawsTool()
+        ]
     }
     
     private func getLanguages() -> [RealmLanguage] {
@@ -56,5 +50,53 @@ class SwiftUIPreviewDatabase: RealmDatabase {
         english.name = "English"
         
         return [english]
+    }
+}
+
+extension SwiftUIPreviewDatabase {
+    
+    private static func getKgpTool() -> RealmResource {
+        
+        let resource = RealmResource()
+        
+        resource.abbreviation = "kgp"
+        resource.attrCategory = "gospel"
+        resource.attrSpotlight = true
+        resource.id = "1"
+        resource.name = SwiftUIPreviewToolNames.English.knowingGodPersonally
+        resource.resourceDescription = "A Gospel presentation that uses hand drawn images to help illustrate God's invitation to know Him personally. \n\nConversation starter: Has anyone ever shared with you how you can know God personally?\n\nAll Bible references are from the New Living Translation."
+        resource.totalViews = 12579
+        
+        return resource
+    }
+    
+    private static func getTeachMeToShareTool() -> RealmResource {
+        
+        let resource = RealmResource()
+        
+        resource.abbreviation = "teachmetoshare"
+        resource.attrCategory = "training"
+        resource.attrSpotlight = true
+        resource.id = "8"
+        resource.name = SwiftUIPreviewToolNames.English.teachMeToShare
+        resource.resourceDescription = "Training tips on how to share your faith."
+        resource.totalViews = 615670
+        
+        return resource
+    }
+    
+    private static func getFourSpiritualLawsTool() -> RealmResource {
+        
+        let resource = RealmResource()
+        
+        resource.abbreviation = "fourlaws"
+        resource.attrCategory = "gospel"
+        resource.attrSpotlight = false
+        resource.id = "4"
+        resource.name = SwiftUIPreviewToolNames.English.fourSpiritualLaws
+        resource.resourceDescription = "Classic gospel presentation of God's invitation to those who don't yet know him. \n\nConversation starter: I have a summary of the Bible's message using four simple ideas. May I share it with you?\n\nAll Bible references are from the New American Standard Bible unless otherwise stated."
+        resource.totalViews = 2533146
+        
+        return resource
     }
 }

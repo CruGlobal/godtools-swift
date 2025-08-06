@@ -8,7 +8,6 @@
 
 import Foundation
 import XCTest
-@testable import godtools
 
 class LearnToShareToolFlowTests: BaseFlowTests {
     
@@ -66,14 +65,14 @@ class LearnToShareToolFlowTests: BaseFlowTests {
         
         launchAppToDashboardTools()
                 
-        openToolToToolDetailsAndNavigateToLearnToShareFlow(toolName: ToolNames.English.fourSpiritualLaws)
+        openToolToToolDetailsAndNavigateToLearnToShareFlow(toolName: SwiftUIPreviewToolNames.English.fourSpiritualLaws)
     }
     
     func testTappingCloseLearnToShareOpensTool() {
         
         launchAppToDashboardTools()
                 
-        openToolToToolDetailsAndNavigateToLearnToShareFlow(toolName: ToolNames.English.fourSpiritualLaws)
+        openToolToToolDetailsAndNavigateToLearnToShareFlow(toolName: SwiftUIPreviewToolNames.English.fourSpiritualLaws)
         
         let closeButton: XCUIElement = app.queryButton(buttonAccessibility: .close)
         
@@ -88,7 +87,7 @@ class LearnToShareToolFlowTests: BaseFlowTests {
         
         launchAppToDashboardTools()
                 
-        openToolToToolDetailsAndNavigateToLearnToShareFlow(toolName: ToolNames.English.fourSpiritualLaws)
+        openToolToToolDetailsAndNavigateToLearnToShareFlow(toolName: SwiftUIPreviewToolNames.English.fourSpiritualLaws)
         
         var continueButton: XCUIElement = getContinueButtonFromLearnToShare()
         
