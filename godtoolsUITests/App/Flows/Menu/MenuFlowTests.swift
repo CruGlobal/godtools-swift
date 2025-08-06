@@ -8,7 +8,6 @@
 
 import Foundation
 import XCTest
-@testable import godtools
 
 class MenuFlowTests: BaseFlowTests {
         

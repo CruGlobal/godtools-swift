@@ -12,14 +12,15 @@ import Combine
 
 class MobileContentResourcesApi {
     
-    private let requestSender: RequestSender = RequestSender()
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let urlSessionPriority: URLSessionPriority
+    private let requestSender: RequestSender
     private let baseUrl: String
     
-    init(config: AppConfig, urlSessionPriority: URLSessionPriority) {
+    init(config: AppConfig, urlSessionPriority: URLSessionPriority, requestSender: RequestSender) {
                     
         self.urlSessionPriority = urlSessionPriority
+        self.requestSender = requestSender
         baseUrl = config.getMobileContentApiBaseUrl()
     }
     
