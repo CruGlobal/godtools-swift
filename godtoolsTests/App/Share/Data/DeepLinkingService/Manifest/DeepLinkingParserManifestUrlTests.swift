@@ -22,7 +22,7 @@ struct DeepLinkingParserManifestUrlTests {
     
     struct TestArgument {
         let scheme: String
-        let host: String
+        let hosts: [String]
         let path: String?
         let parserClass: DeepLinkParserInterface.Type
         let incomingDeepLinkUrl: String
@@ -34,7 +34,7 @@ struct DeepLinkingParserManifestUrlTests {
         arguments: [
             TestArgument(
                 scheme: Self.schemeHttps,
-                host: Self.hostGodToolsApp,
+                hosts: [Self.hostGodToolsApp],
                 path: nil,
                 parserClass: MockEmptyDeepLinkParser.self,
                 incomingDeepLinkUrl: "https://godtoolsapp.com",
@@ -42,7 +42,7 @@ struct DeepLinkingParserManifestUrlTests {
             ),
             TestArgument(
                 scheme: Self.schemeHttp,
-                host: Self.hostGodToolsApp,
+                hosts: [Self.hostGodToolsApp],
                 path: nil,
                 parserClass: MockEmptyDeepLinkParser.self,
                 incomingDeepLinkUrl: "http://godtoolsapp.com",
@@ -50,7 +50,7 @@ struct DeepLinkingParserManifestUrlTests {
             ),
             TestArgument(
                 scheme: Self.schemeGodtools,
-                host: Self.hostKnowGod,
+                hosts: [Self.hostKnowGod],
                 path: nil,
                 parserClass: MockEmptyDeepLinkParser.self,
                 incomingDeepLinkUrl: "godtools://knowgod.com",
@@ -62,7 +62,7 @@ struct DeepLinkingParserManifestUrlTests {
         
         let deepLinkingParserUrlManifest = DeepLinkingParserManifestUrl(
             scheme: argument.scheme,
-            host: argument.host,
+            hosts: argument.hosts,
             path: argument.path,
             parserClass: argument.parserClass
         )
@@ -82,7 +82,7 @@ struct DeepLinkingParserManifestUrlTests {
         arguments: [
             TestArgument(
                 scheme: "",
-                host: Self.hostGodToolsApp,
+                hosts: [Self.hostGodToolsApp],
                 path: nil,
                 parserClass: MockEmptyDeepLinkParser.self,
                 incomingDeepLinkUrl: "https://godtoolsapp.com",
@@ -90,7 +90,7 @@ struct DeepLinkingParserManifestUrlTests {
             ),
             TestArgument(
                 scheme: "",
-                host: Self.hostGodToolsApp,
+                hosts: [Self.hostGodToolsApp],
                 path: nil,
                 parserClass: MockEmptyDeepLinkParser.self,
                 incomingDeepLinkUrl: "://godtoolsapp.com",
@@ -98,7 +98,7 @@ struct DeepLinkingParserManifestUrlTests {
             ),
             TestArgument(
                 scheme: Self.schemeHttps,
-                host: "",
+                hosts: [""],
                 path: nil,
                 parserClass: MockEmptyDeepLinkParser.self,
                 incomingDeepLinkUrl: "https://",
@@ -106,7 +106,15 @@ struct DeepLinkingParserManifestUrlTests {
             ),
             TestArgument(
                 scheme: Self.schemeHttps,
-                host: "",
+                hosts: [""],
+                path: nil,
+                parserClass: MockEmptyDeepLinkParser.self,
+                incomingDeepLinkUrl: "https://godtoolsapp.com",
+                expectedParserClass: nil
+            ),
+            TestArgument(
+                scheme: Self.schemeHttps,
+                hosts: [],
                 path: nil,
                 parserClass: MockEmptyDeepLinkParser.self,
                 incomingDeepLinkUrl: "https://godtoolsapp.com",
@@ -118,7 +126,7 @@ struct DeepLinkingParserManifestUrlTests {
         
         let deepLinkingParserUrlManifest = DeepLinkingParserManifestUrl(
             scheme: argument.scheme,
-            host: argument.host,
+            hosts: argument.hosts,
             path: argument.path,
             parserClass: argument.parserClass
         )
@@ -138,7 +146,7 @@ struct DeepLinkingParserManifestUrlTests {
         arguments: [
             TestArgument(
                 scheme: Self.schemeHttps,
-                host: Self.hostGodToolsApp,
+                hosts: [Self.hostGodToolsApp],
                 path: nil,
                 parserClass: MockEmptyDeepLinkParser.self,
                 incomingDeepLinkUrl: "http://godtoolsapp.com",
@@ -146,7 +154,7 @@ struct DeepLinkingParserManifestUrlTests {
             ),
             TestArgument(
                 scheme: Self.schemeHttp,
-                host: Self.hostGodToolsApp,
+                hosts: [Self.hostGodToolsApp],
                 path: nil,
                 parserClass: MockEmptyDeepLinkParser.self,
                 incomingDeepLinkUrl: "https://godtoolsapp.com",
@@ -154,7 +162,7 @@ struct DeepLinkingParserManifestUrlTests {
             ),
             TestArgument(
                 scheme: Self.schemeGodtools,
-                host: Self.hostKnowGod,
+                hosts: [Self.hostKnowGod],
                 path: nil,
                 parserClass: MockEmptyDeepLinkParser.self,
                 incomingDeepLinkUrl: "godtools://godtoolsapp.com",
@@ -166,7 +174,7 @@ struct DeepLinkingParserManifestUrlTests {
         
         let deepLinkingParserUrlManifest = DeepLinkingParserManifestUrl(
             scheme: argument.scheme,
-            host: argument.host,
+            hosts: argument.hosts,
             path: argument.path,
             parserClass: argument.parserClass
         )
@@ -186,7 +194,7 @@ struct DeepLinkingParserManifestUrlTests {
         arguments: [
             TestArgument(
                 scheme: Self.schemeHttps,
-                host: Self.hostGodToolsApp,
+                hosts: [Self.hostGodToolsApp],
                 path: nil,
                 parserClass: MockEmptyDeepLinkParser.self,
                 incomingDeepLinkUrl: "https://godtoolsapp.com/",
@@ -194,7 +202,7 @@ struct DeepLinkingParserManifestUrlTests {
             ),
             TestArgument(
                 scheme: Self.schemeHttps,
-                host: Self.hostGodToolsApp,
+                hosts: [Self.hostGodToolsApp],
                 path: nil,
                 parserClass: MockEmptyDeepLinkParser.self,
                 incomingDeepLinkUrl: "https://godtoolsapp.com/path_0",
@@ -202,7 +210,7 @@ struct DeepLinkingParserManifestUrlTests {
             ),
             TestArgument(
                 scheme: Self.schemeHttps,
-                host: Self.hostGodToolsApp,
+                hosts: [Self.hostGodToolsApp],
                 path: nil,
                 parserClass: MockEmptyDeepLinkParser.self,
                 incomingDeepLinkUrl: "https://godtoolsapp.com/path_0/path_1?param_0=0",
@@ -214,7 +222,7 @@ struct DeepLinkingParserManifestUrlTests {
         
         let deepLinkingParserUrlManifest = DeepLinkingParserManifestUrl(
             scheme: argument.scheme,
-            host: argument.host,
+            hosts: argument.hosts,
             path: argument.path,
             parserClass: argument.parserClass
         )
@@ -234,7 +242,7 @@ struct DeepLinkingParserManifestUrlTests {
         arguments: [
             TestArgument(
                 scheme: Self.schemeHttps,
-                host: Self.hostGodToolsApp,
+                hosts: [Self.hostGodToolsApp],
                 path: "",
                 parserClass: MockEmptyDeepLinkParser.self,
                 incomingDeepLinkUrl: "https://godtoolsapp.com/",
@@ -242,7 +250,7 @@ struct DeepLinkingParserManifestUrlTests {
             ),
             TestArgument(
                 scheme: Self.schemeHttps,
-                host: Self.hostGodToolsApp,
+                hosts: [Self.hostGodToolsApp],
                 path: "",
                 parserClass: MockEmptyDeepLinkParser.self,
                 incomingDeepLinkUrl: "https://godtoolsapp.com",
@@ -254,7 +262,7 @@ struct DeepLinkingParserManifestUrlTests {
         
         let deepLinkingParserUrlManifest = DeepLinkingParserManifestUrl(
             scheme: argument.scheme,
-            host: argument.host,
+            hosts: argument.hosts,
             path: argument.path,
             parserClass: argument.parserClass
         )
@@ -274,7 +282,7 @@ struct DeepLinkingParserManifestUrlTests {
         arguments: [
             TestArgument(
                 scheme: Self.schemeHttps,
-                host: Self.hostGodToolsApp,
+                hosts: [Self.hostGodToolsApp],
                 path: "",
                 parserClass: MockEmptyDeepLinkParser.self,
                 incomingDeepLinkUrl: "https://godtoolsapp.com/path_0",
@@ -282,7 +290,7 @@ struct DeepLinkingParserManifestUrlTests {
             ),
             TestArgument(
                 scheme: Self.schemeHttps,
-                host: Self.hostGodToolsApp,
+                hosts: [Self.hostGodToolsApp],
                 path: "",
                 parserClass: MockEmptyDeepLinkParser.self,
                 incomingDeepLinkUrl: "https://godtoolsapp.com/path_0/path_1?param_0=0",
@@ -294,7 +302,7 @@ struct DeepLinkingParserManifestUrlTests {
         
         let deepLinkingParserUrlManifest = DeepLinkingParserManifestUrl(
             scheme: argument.scheme,
-            host: argument.host,
+            hosts: argument.hosts,
             path: argument.path,
             parserClass: argument.parserClass
         )
@@ -314,7 +322,7 @@ struct DeepLinkingParserManifestUrlTests {
         arguments: [
             TestArgument(
                 scheme: Self.schemeHttps,
-                host: Self.hostGodToolsApp,
+                hosts: [Self.hostGodToolsApp],
                 path: "path_0/path_1/path_2",
                 parserClass: MockEmptyDeepLinkParser.self,
                 incomingDeepLinkUrl: "https://godtoolsapp.com/path_0",
@@ -322,7 +330,7 @@ struct DeepLinkingParserManifestUrlTests {
             ),
             TestArgument(
                 scheme: Self.schemeHttps,
-                host: Self.hostGodToolsApp,
+                hosts: [Self.hostGodToolsApp],
                 path: "path_0/path_1/path_2",
                 parserClass: MockEmptyDeepLinkParser.self,
                 incomingDeepLinkUrl: "https://godtoolsapp.com/path_0/path_1",
@@ -334,7 +342,7 @@ struct DeepLinkingParserManifestUrlTests {
         
         let deepLinkingParserUrlManifest = DeepLinkingParserManifestUrl(
             scheme: argument.scheme,
-            host: argument.host,
+            hosts: argument.hosts,
             path: argument.path,
             parserClass: argument.parserClass
         )
@@ -354,7 +362,7 @@ struct DeepLinkingParserManifestUrlTests {
         arguments: [
             TestArgument(
                 scheme: Self.schemeHttps,
-                host: Self.hostGodToolsApp,
+                hosts: [Self.hostGodToolsApp],
                 path: "path_0/path_1/path_2",
                 parserClass: MockEmptyDeepLinkParser.self,
                 incomingDeepLinkUrl: "https://godtoolsapp.com/path_2/path_1/path_0",
@@ -362,7 +370,7 @@ struct DeepLinkingParserManifestUrlTests {
             ),
             TestArgument(
                 scheme: Self.schemeHttps,
-                host: Self.hostGodToolsApp,
+                hosts: [Self.hostGodToolsApp],
                 path: "path_0/path_1/path_2",
                 parserClass: MockEmptyDeepLinkParser.self,
                 incomingDeepLinkUrl: "https://godtoolsapp.com/path_0/path_0/path_2",
@@ -374,7 +382,7 @@ struct DeepLinkingParserManifestUrlTests {
         
         let deepLinkingParserUrlManifest = DeepLinkingParserManifestUrl(
             scheme: argument.scheme,
-            host: argument.host,
+            hosts: argument.hosts,
             path: argument.path,
             parserClass: argument.parserClass
         )
@@ -394,7 +402,7 @@ struct DeepLinkingParserManifestUrlTests {
         arguments: [
             TestArgument(
                 scheme: Self.schemeHttps,
-                host: Self.hostGodToolsApp,
+                hosts: [Self.hostGodToolsApp],
                 path: "path_0",
                 parserClass: MockEmptyDeepLinkParser.self,
                 incomingDeepLinkUrl: "https://godtoolsapp.com/path_0",
@@ -402,7 +410,7 @@ struct DeepLinkingParserManifestUrlTests {
             ),
             TestArgument(
                 scheme: Self.schemeHttps,
-                host: Self.hostGodToolsApp,
+                hosts: [Self.hostGodToolsApp],
                 path: "path_0",
                 parserClass: MockEmptyDeepLinkParser.self,
                 incomingDeepLinkUrl: "https://godtoolsapp.com/path_0/path_1",
@@ -410,7 +418,7 @@ struct DeepLinkingParserManifestUrlTests {
             ),
             TestArgument(
                 scheme: Self.schemeHttps,
-                host: Self.hostGodToolsApp,
+                hosts: [Self.hostGodToolsApp],
                 path: "path_0",
                 parserClass: MockEmptyDeepLinkParser.self,
                 incomingDeepLinkUrl: "https://godtoolsapp.com/path_0/path_1?param_0=0",
@@ -418,7 +426,7 @@ struct DeepLinkingParserManifestUrlTests {
             ),
             TestArgument(
                 scheme: Self.schemeHttps,
-                host: Self.hostGodToolsApp,
+                hosts: [Self.hostGodToolsApp],
                 path: "path_0/path_1",
                 parserClass: MockEmptyDeepLinkParser.self,
                 incomingDeepLinkUrl: "https://godtoolsapp.com/path_0/path_1/path_2",
@@ -426,7 +434,7 @@ struct DeepLinkingParserManifestUrlTests {
             ),
             TestArgument(
                 scheme: Self.schemeHttps,
-                host: Self.hostGodToolsApp,
+                hosts: [Self.hostGodToolsApp],
                 path: "path_0/path_1/path_2",
                 parserClass: MockEmptyDeepLinkParser.self,
                 incomingDeepLinkUrl: "https://godtoolsapp.com/path_0/path_1/path_2",
@@ -434,7 +442,7 @@ struct DeepLinkingParserManifestUrlTests {
             ),
             TestArgument(
                 scheme: Self.schemeHttps,
-                host: Self.hostGodToolsApp,
+                hosts: [Self.hostGodToolsApp],
                 path: "path_0/path_1/path_2",
                 parserClass: MockEmptyDeepLinkParser.self,
                 incomingDeepLinkUrl: "https://godtoolsapp.com/path_0/path_1/path_2?param_0=0",
@@ -446,7 +454,7 @@ struct DeepLinkingParserManifestUrlTests {
         
         let deepLinkingParserUrlManifest = DeepLinkingParserManifestUrl(
             scheme: argument.scheme,
-            host: argument.host,
+            hosts: argument.hosts,
             path: argument.path,
             parserClass: argument.parserClass
         )

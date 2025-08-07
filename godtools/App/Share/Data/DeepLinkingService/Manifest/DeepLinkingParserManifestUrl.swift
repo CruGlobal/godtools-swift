@@ -11,14 +11,14 @@ import Foundation
 class DeepLinkingParserManifestUrl: DeepLinkingParserManifestInterface {
     
     let scheme: String
-    let host: String
+    let hosts: [String]
     let path: String?
     let parserClass: DeepLinkParserInterface.Type
     
-    init(scheme: String, host: String, path: String?, parserClass: DeepLinkParserInterface.Type) {
+    init(scheme: String, hosts: [String], path: String?, parserClass: DeepLinkParserInterface.Type) {
         
         self.scheme = scheme
-        self.host = host
+        self.hosts = hosts
         self.path = path
         self.parserClass = parserClass
     }
@@ -29,7 +29,7 @@ class DeepLinkingParserManifestUrl: DeepLinkingParserManifestInterface {
         
         case .url(let incomingUrl):
             
-            let schemeOrHostIsEmpty: Bool = scheme.isEmpty || host.isEmpty
+            let schemeOrHostIsEmpty: Bool = scheme.isEmpty || hosts.isEmpty
             
             guard !schemeOrHostIsEmpty else {
                 return nil
@@ -39,7 +39,7 @@ class DeepLinkingParserManifestUrl: DeepLinkingParserManifestInterface {
                 return nil
             }
             
-            guard host == incomingUrl.url.host else {
+            guard let incomingUrlHost = incomingUrl.url.host, hosts.contains(incomingUrlHost) else {
                 return nil
             }
             

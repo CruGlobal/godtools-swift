@@ -23,79 +23,79 @@ class GodToolsDeepLinkingManifest: DeepLinkingManifestInterface {
         parserManifests = [
             DeepLinkingParserManifestUrl(
                 scheme: Self.schemeGodTools,
-                host: Self.hostGodTools,
+                hosts: [Self.hostGodTools],
                 path: "dashboard",
                 parserClass: DashboardPathDeepLinkParser.self
             ),
             DeepLinkingParserManifestUrl(
                 scheme: Self.schemeHttps,
-                host: Self.hostGodToolsApp,
+                hosts: [Self.hostGodToolsApp],
                 path: "deeplink/dashboard",
                 parserClass: DashboardPathDeepLinkParser.self
             ),
             DeepLinkingParserManifestUrl(
                 scheme: Self.schemeGodTools,
-                host: Self.hostGodTools,
+                hosts: [Self.hostGodTools],
                 path: "tool",
                 parserClass: ToolPathDeepLinkParser.self
             ),
             DeepLinkingParserManifestUrl(
                 scheme: Self.schemeHttps,
-                host: Self.hostGodToolsApp,
+                hosts: [Self.hostGodToolsApp],
                 path: "deeplink/tool",
                 parserClass: ToolPathDeepLinkParser.self
             ),
             DeepLinkingParserManifestUrl(
                 scheme: Self.schemeHttps,
-                host: Self.hostGodToolsApp,
+                hosts: [Self.hostGodToolsApp],
                 path: "article/aem",
                 parserClass: ArticleAemPathDeepLinkParser.self
             ),
             DeepLinkingParserManifestUrl(
                 scheme: Self.schemeHttps,
-                host: Self.hostKnowGod,
+                hosts: [Self.hostKnowGod],
                 path: nil,
                 parserClass: KnowGodDeepLinkParser.self
             ),
             DeepLinkingParserManifestUrl(
                 scheme: Self.schemeGodTools,
-                host: Self.hostKnowGod,
+                hosts: [Self.hostKnowGod],
                 path: nil,
                 parserClass: KnowGodDeepLinkParser.self
             ),
             DeepLinkingParserManifestUrl(
                 scheme: Self.schemeHttps,
-                host: Self.hostKnowGod,
+                hosts: [Self.hostKnowGod],
                 path: nil,
                 parserClass: LegacyKnowGodDeepLinkParser.self
             ),
             DeepLinkingParserManifestUrl(
                 scheme: Self.schemeGodTools,
-                host: Self.hostKnowGod,
+                hosts: [Self.hostKnowGod],
                 path: nil,
                 parserClass: LegacyKnowGodDeepLinkParser.self
             ),
             DeepLinkingParserManifestUrl(
                 scheme: Self.schemeHttps,
-                host: Self.hostGodToolsApp,
+                hosts: [Self.hostGodToolsApp],
                 path: "lessons",
                 parserClass: GodToolsAppLessonsPathDeepLinkParser.self
             ),
             DeepLinkingParserManifestUrl(
                 scheme: Self.schemeGodTools,
-                host: Self.hostGodTools,
+                hosts: [Self.hostGodTools],
                 path: "settings/language",
                 parserClass: LanguageSettingsDeepLinkParser.self
             ),
             DeepLinkingParserManifestUrl(
                 scheme: Self.schemeHttps,
-                host: Self.hostGodToolsApp,
+                hosts: [Self.hostGodToolsApp],
                 path: "deeplink/settings/language",
                 parserClass: LanguageSettingsDeepLinkParser.self
             ),
             DeepLinkingParserManifestUrl(
                 scheme: Self.schemeGodTools,
-                host: Self.hostGodTools,
+                hosts: [Self.hostGodTools],
                 path: "ui_tests",
                 parserClass: UITestsDeepLinkParser.self
             )
