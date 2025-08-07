@@ -60,7 +60,6 @@ struct GetUserAccountDetailsRepositoryTests {
             #expect(userAccountDetails?.joinedOnString == joinedOnStringExpected)
         }
     }
-
 }
 
 // MARK: - Private

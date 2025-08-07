@@ -12,8 +12,6 @@ import Combine
 
 class MockMobileContentAuthTokenAPI {
     
-    var shouldReturnError = false
-    var errorToReturn: MobileContentApiError = .other(error: NSError(domain: "TestError", code: -1))
     var fetchedAuthToken: MobileContentAuthTokenDecodable?
     
     func setMockFetchResponse(fetchedAuthToken: MobileContentAuthTokenDecodable) {
