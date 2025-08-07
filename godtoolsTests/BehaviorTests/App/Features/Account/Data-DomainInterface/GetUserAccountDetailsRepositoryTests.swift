@@ -53,7 +53,7 @@ struct GetUserAccountDetailsRepositoryTests {
                 .store(in: &cancellables)
             
             let locale = Locale(identifier: argument.appLanguage.rawValue)
-            let createdAtDateString = getDateFormatter(locale: locale).string(from: Self.userCreatedAt)
+            let createdAtDateString = Self.getDateFormatter(locale: locale).string(from: Self.userCreatedAt)
             let joinedOnStringExpected = "\(argument.joinedOnString) \(createdAtDateString)"
             
             #expect(userAccountDetails?.name == Self.userFullName)
@@ -133,7 +133,7 @@ extension GetUserAccountDetailsRepositoryTests {
         return getUserAccountDetailsRepository
     }
     
-    private func getDateFormatter(locale: Locale) -> DateFormatter {
+    private static func getDateFormatter(locale: Locale) -> DateFormatter {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = locale
         dateFormatter.dateStyle = .medium
