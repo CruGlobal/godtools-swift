@@ -10,7 +10,7 @@ import Foundation
 import RequestOperation
 import Combine
 
-class MobileContentAuthTokenAPI {
+class MobileContentAuthTokenAPI: MobileContentAuthTokenAPIInterface {
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let requestSender: RequestSender = RequestSender()

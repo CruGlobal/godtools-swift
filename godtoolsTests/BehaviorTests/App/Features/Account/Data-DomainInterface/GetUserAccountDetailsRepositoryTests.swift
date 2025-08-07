@@ -42,7 +42,7 @@ struct GetUserAccountDetailsRepositoryTests {
                 }
                 .store(in: &cancellables)
 
-            #expect(userAccountDetails?.name == Self.userGivenName)
+            #expect(userAccountDetails?.name == Self.userFullName)
         }
     }
 
@@ -74,10 +74,12 @@ extension GetUserAccountDetailsRepositoryTests {
     private static func getUserDetailsRepository() -> GetUserAccountDetailsRepository {
         
         let realmDatabase = getConfiguredRealmDatabase()
-        let testsDiContainer = TestsDiContainer(realmDatabase: realmDatabase)
+        
+        let mockMobileContentAuthTokenKeychainAccessor = MockMobileContentAuthTokenKeychainAccessor()
+        mockMobileContentAuthTokenKeychainAccessor.setUserId(userId)
         
         let mobileContentAuthTokenCache = MobileContentAuthTokenCache(
-            mobileContentAuthTokenKeychainAccessor: MockMobileContentAuthTokenKeychainAccessor(userId: userId),
+            mobileContentAuthTokenKeychainAccessor: mockMobileContentAuthTokenKeychainAccessor,
             realmCache: RealmMobileContentAuthTokenCache(realmDatabase: realmDatabase)
         )
         let authTokenRepository = MobileContentAuthTokenRepository(
@@ -86,10 +88,16 @@ extension GetUserAccountDetailsRepositoryTests {
         )
         let userDetailsRepository = UserDetailsRepository(
             api: MockUserDetailsAPI(),
-            cache: RealmUserDetailsCache(realmDatabase: realmDatabase, authTokenRepository: authTokenRepository))
+            cache: RealmUserDetailsCache(
+                realmDatabase: realmDatabase,
+                authTokenRepository: authTokenRepository
+            )
+        )
         
+        let testsDiContainer = TestsDiContainer(realmDatabase: realmDatabase)
+
         let getUserAccountDetailsRepository = GetUserAccountDetailsRepository(
-            userDetailsRepository: testsDiContainer.feature.account.dataLayer.getUserDetailsRepository(),
+            userDetailsRepository: userDetailsRepository,
             localizationServices: testsDiContainer.dataLayer.getLocalizationServices()
         )
         
