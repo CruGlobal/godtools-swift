@@ -17,12 +17,13 @@ struct GetUserAccountDetailsRepositoryTests {
     private static let userFamilyName = "Smith"
     private static let userGivenName = "John"
     private static let userFullName = "John Smith"
+    private static let userCreatedAt = Date()
     
     @Test(
         """
         Given: User is logged in and viewing the Settings menu
         When: The user navigates to the Activity page
-        Then: Activity page should populate with the user's account details.
+        Then: Activity page should populate with the user's name and "joined on" date.
         """
     )
     @MainActor func testGetUserAccountDetails() async {
@@ -41,8 +42,11 @@ struct GetUserAccountDetailsRepositoryTests {
                     userAccountDetails = result
                 }
                 .store(in: &cancellables)
+            
+            let createdAtDateString = DateFormatter.localizedString(from: Self.userCreatedAt, dateStyle: .medium, timeStyle: .none)
 
             #expect(userAccountDetails?.name == Self.userFullName)
+            #expect(userAccountDetails?.joinedOnString == "Joined \(createdAtDateString)")
         }
     }
 
@@ -59,6 +63,7 @@ extension GetUserAccountDetailsRepositoryTests {
         userDetails.familyName = userFamilyName
         userDetails.givenName = userGivenName
         userDetails.name = userFullName
+        userDetails.createdAt = userCreatedAt
         
         let realmAuthTokenData = RealmMobileContentAuthToken()
         realmAuthTokenData.userId = userId
