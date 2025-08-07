@@ -19,14 +19,23 @@ struct GetUserAccountDetailsRepositoryTests {
     private static let userFullName = "John Smith"
     private static let userCreatedAt = Date()
     
+    struct TestArgument {
+        let appLanguage: LanguageCodeDomainModel
+        let joinedOnString: String
+    }
+    
     @Test(
         """
-        Given: User is logged in and viewing the Settings menu
+        Given: User is logged in and app language is set
         When: The user navigates to the Activity page
-        Then: Activity page should populate with the user's name and "joined on" date.
-        """
+        Then: Activity page should populate with the user's name and "joined on" date translated in app language.
+        """,
+        arguments: [
+            TestArgument(appLanguage: .english, joinedOnString: "Joined"),
+            TestArgument(appLanguage: .spanish, joinedOnString: "Unirse")
+        ]
     )
-    @MainActor func testGetUserAccountDetails() async {
+    @MainActor func testGetUserAccountDetails(argument: TestArgument) async {
         
         let getUserAccountDetailsRepository = Self.getUserDetailsRepository()
         
@@ -35,7 +44,7 @@ struct GetUserAccountDetailsRepositoryTests {
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            getUserAccountDetailsRepository.getUserAccountDetailsPublisher(appLanguage: LanguageCodeDomainModel.english.rawValue)
+            getUserAccountDetailsRepository.getUserAccountDetailsPublisher(appLanguage: argument.appLanguage.rawValue)
                 .sink { (result: UserAccountDetailsDomainModel) in
                     
                     confirmation()
@@ -43,10 +52,12 @@ struct GetUserAccountDetailsRepositoryTests {
                 }
                 .store(in: &cancellables)
             
-            let createdAtDateString = DateFormatter.localizedString(from: Self.userCreatedAt, dateStyle: .medium, timeStyle: .none)
-
+            let locale = Locale(identifier: argument.appLanguage.rawValue)
+            let createdAtDateString = getDateFormatter(locale: locale).string(from: Self.userCreatedAt)
+            let joinedOnStringExpected = "\(argument.joinedOnString) \(createdAtDateString)"
+            
             #expect(userAccountDetails?.name == Self.userFullName)
-            #expect(userAccountDetails?.joinedOnString == "Joined \(createdAtDateString)")
+            #expect(userAccountDetails?.joinedOnString == joinedOnStringExpected)
         }
     }
 
@@ -75,6 +86,22 @@ extension GetUserAccountDetailsRepositoryTests {
         return realmDatabase
     }
 
+    private static func getLocalizationServices() -> MockLocalizationServices {
+        
+        let accountJoinedOn = "account.joinedOn"
+        
+        let localizableStrings: [MockLocalizationServices.LocaleId: [MockLocalizationServices.StringKey: String]] = [
+            LanguageCodeDomainModel.english.value: [
+                accountJoinedOn: "Joined %@"
+            ],
+            LanguageCodeDomainModel.spanish.value: [
+                accountJoinedOn: "Unirse %@"
+            ]
+        ]
+        
+        return MockLocalizationServices(localizableStrings: localizableStrings)
+    }
+
     
     private static func getUserDetailsRepository() -> GetUserAccountDetailsRepository {
         
@@ -99,13 +126,19 @@ extension GetUserAccountDetailsRepositoryTests {
             )
         )
         
-        let testsDiContainer = TestsDiContainer(realmDatabase: realmDatabase)
-
         let getUserAccountDetailsRepository = GetUserAccountDetailsRepository(
             userDetailsRepository: userDetailsRepository,
-            localizationServices: testsDiContainer.dataLayer.getLocalizationServices()
+            localizationServices: getLocalizationServices()
         )
         
         return getUserAccountDetailsRepository
+    }
+    
+    private func getDateFormatter(locale: Locale) -> DateFormatter {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = locale
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .none
+        return dateFormatter
     }
 }
