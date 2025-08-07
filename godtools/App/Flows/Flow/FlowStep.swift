@@ -81,7 +81,7 @@ enum FlowStep {
     
     // learnToShareTool
     case closeTappedFromLearnToShareTool(toolId: String, primaryLanguage: AppLanguageDomainModel, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?)
-    case continueTappedFromLearnToShareTool(toolId: String, primaryLanguage: AppLanguageDomainModel, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?)
+    case startTrainingTappedFromLearnToShareTool(toolId: String, primaryLanguage: AppLanguageDomainModel, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?)
             
     // tool
     case homeTappedFromTool(isScreenSharing: Bool)

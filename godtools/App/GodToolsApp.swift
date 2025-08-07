@@ -13,7 +13,7 @@ struct GodToolsApp: App {
 
     private static let appBuild: AppBuild = AppBuild(buildConfiguration: InfoPlist().getAppBuildConfiguration())
     private static let appConfig: AppConfig = AppConfig(appBuild: appBuild)
-    private static let launchEnvironmentReader: LaunchEnvironmentReader = LaunchEnvironmentReader.createFromProcessInfo()
+    private static let uiTestsLaunchEnvironment: UITestsLaunchEnvironment = UITestsLaunchEnvironment()
     private static let realmDatabase: RealmDatabase = RealmDatabase(databaseConfiguration: RealmDatabaseProductionConfiguration())
     private static let appDeepLinkingService: DeepLinkingService = appDiContainer.dataLayer.getDeepLinkingService()
     
@@ -21,11 +21,20 @@ struct GodToolsApp: App {
         appBuild: appBuild,
         appConfig: appConfig,
         realmDatabase: realmDatabase,
-        firebaseEnabled: firebaseEnabled
+        firebaseEnabled: firebaseEnabled,
+        urlSessionEnabled: urlSessionEnabled
     )
+    
+    private static var isUITests: Bool {
+        return uiTestsLaunchEnvironment.getIsUITests() ?? false
+    }
 
     private static var firebaseEnabled: Bool {
-        return launchEnvironmentReader.getFirebaseEnabled() ?? true
+        return !isUITests
+    }
+    
+    private static var urlSessionEnabled: Bool {
+        return true//!isUITests
     }
     
     private let appFlow: AppFlow
@@ -223,7 +232,7 @@ extension GodToolsApp {
     
     private static func processUITestsDeepLink() {
         
-        let uiTestsDeepLinkString: String? = Self.launchEnvironmentReader.getUrlDeepLink()
+        let uiTestsDeepLinkString: String? = Self.uiTestsLaunchEnvironment.getUrlDeepLink()
 
         if let uiTestsDeepLinkString = uiTestsDeepLinkString, !uiTestsDeepLinkString.isEmpty, let url = URL(string: uiTestsDeepLinkString) {
                         

@@ -8,7 +8,6 @@
 
 import Foundation
 import XCTest
-@testable import godtools
 
 class DashboardFlowTests: BaseFlowTests {
         
@@ -183,7 +182,7 @@ extension DashboardFlowTests {
         
         tabToTools()
         
-        let spotlightTool = app.queryDescendants(id: AccessibilityStrings.Button.spotlightTool.id)
+        let spotlightTool = app.descendants(matching: .any).matching(NSPredicate(format: "identifier CONTAINS[cd] %@", AccessibilityStrings.Button.spotlightTool.id)).allElementsBoundByIndex.first
         
         guard let spotlightTool = spotlightTool else {
             XCTAssertNotNil(spotlightTool, "Found nil element.")
@@ -203,8 +202,8 @@ extension DashboardFlowTests {
         
         tabToTools()
         
-        let tool = app.queryDescendants(id: AccessibilityStrings.Button.tool.id)
-        
+        let tool = app.queryDescendants(id: AccessibilityStrings.Button.tool.rawValue + " " + SwiftUIPreviewToolNames.English.teachMeToShare)
+                
         guard let tool = tool else {
             XCTAssertNotNil(tool, "Found nil element.")
             return
