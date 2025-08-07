@@ -60,6 +60,19 @@ class ToolScreenShareFlowTests: BaseFlowTests {
         launchAppToToolScreenShare()
     }
     
+    func testCloseButtonClosesBackToTool() {
+        
+        launchAppToToolScreenShare()
+        
+        let closeButton: XCUIElement = app.queryButton(buttonAccessibility: .close)
+        
+        XCTAssertTrue(closeButton.exists)
+        
+        closeButton.tap()
+        
+        assertIfScreenDoesNotExist(screenAccessibility: .tract)
+    }
+    
     func testSkipNavigatesToLastPageWithGenerateQRCodeAndShareLinkButtons() {
         
         launchAppToToolScreenShare()
