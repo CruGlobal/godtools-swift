@@ -13,9 +13,9 @@ import LocalizationServices
 class GetUserAccountDetailsRepository: GetUserAccountDetailsRepositoryInterface {
     
     private let userDetailsRepository: UserDetailsRepository
-    private let localizationServices: LocalizationServices
+    private let localizationServices: LocalizationServicesInterface
     
-    init(userDetailsRepository: UserDetailsRepository, localizationServices: LocalizationServices) {
+    init(userDetailsRepository: UserDetailsRepository, localizationServices: LocalizationServicesInterface) {
         self.userDetailsRepository = userDetailsRepository
         self.localizationServices = localizationServices
     }

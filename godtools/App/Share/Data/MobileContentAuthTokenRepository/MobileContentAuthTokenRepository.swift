@@ -11,10 +11,10 @@ import Combine
 
 class MobileContentAuthTokenRepository {
     
-    private let api: MobileContentAuthTokenAPI
+    private let api: MobileContentAuthTokenAPIInterface
     private let cache: MobileContentAuthTokenCache
         
-    init(api: MobileContentAuthTokenAPI, cache: MobileContentAuthTokenCache) {
+    init(api: MobileContentAuthTokenAPIInterface, cache: MobileContentAuthTokenCache) {
         
         self.api = api
         self.cache = cache

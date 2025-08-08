@@ -10,7 +10,7 @@ import Foundation
 import RequestOperation
 import Combine
 
-class UserDetailsAPI {
+class UserDetailsAPI: UserDetailsAPIInterface {
     
     private let authSession: MobileContentApiAuthSession
     private let requestBuilder: RequestBuilder = RequestBuilder()

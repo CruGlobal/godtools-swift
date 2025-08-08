@@ -12,10 +12,10 @@ import RequestOperation
 
 class UserDetailsRepository {
     
-    private let api: UserDetailsAPI
+    private let api: UserDetailsAPIInterface
     private let cache: RealmUserDetailsCache
     
-    init(api: UserDetailsAPI, cache: RealmUserDetailsCache) {
+    init(api: UserDetailsAPIInterface, cache: RealmUserDetailsCache) {
         self.api = api
         self.cache = cache
     }
