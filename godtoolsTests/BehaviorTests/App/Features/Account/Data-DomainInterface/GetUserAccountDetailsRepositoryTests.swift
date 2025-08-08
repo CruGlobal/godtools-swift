@@ -35,7 +35,7 @@ struct GetUserAccountDetailsRepositoryTests {
             TestArgument(appLanguage: .spanish, joinedOnString: "Unirse")
         ]
     )
-    @MainActor func testGetUserAccountDetails(argument: TestArgument) async {
+    @MainActor func testGetUserAccountDetailsInAppLanguage(argument: TestArgument) async {
         
         let getUserAccountDetailsRepository = Self.getUserDetailsRepository()
         
@@ -60,20 +60,165 @@ struct GetUserAccountDetailsRepositoryTests {
             #expect(userAccountDetails?.joinedOnString == joinedOnStringExpected)
         }
     }
+    
+    @Test(
+        """
+        Given: User is logged in but user details are nil
+        When: The user navigates to the Activity page
+        Then: Activity page should populate with empty strings
+        """
+    )
+    @MainActor func testGetNilUserDetails() async {
+        
+        let getUserAccountDetailsRepository = Self.getUserDetailsRepository(emptyRealm: true)
+        
+        var cancellables: Set<AnyCancellable> = Set()
+        var userAccountDetails: UserAccountDetailsDomainModel?
+        
+        await confirmation(expectedCount: 1) { confirmation in
+            
+            getUserAccountDetailsRepository.getUserAccountDetailsPublisher(appLanguage: LanguageCodeDomainModel.english.rawValue)
+                .sink { (result: UserAccountDetailsDomainModel) in
+                    
+                    confirmation()
+                    userAccountDetails = result
+                }
+                .store(in: &cancellables)
+            
+            #expect(userAccountDetails?.name == "")
+            #expect(userAccountDetails?.joinedOnString == "")
+        }
+    }
+    
+    @Test(
+        """
+        Given: User is logged in but their full name is nil
+        When: The user navigates to the Activity page
+        Then: Activity page should populate the user's name using given and family names.
+        """
+    )
+    @MainActor func testGetUserDetailsWithNilName() async {
+        
+        let getUserAccountDetailsRepository = Self.getUserDetailsRepository(name: nil)
+        
+        var cancellables: Set<AnyCancellable> = Set()
+        var userAccountDetails: UserAccountDetailsDomainModel?
+        
+        await confirmation(expectedCount: 1) { confirmation in
+            
+            getUserAccountDetailsRepository.getUserAccountDetailsPublisher(appLanguage: LanguageCodeDomainModel.english.rawValue)
+                .sink { (result: UserAccountDetailsDomainModel) in
+                    
+                    confirmation()
+                    userAccountDetails = result
+                }
+                .store(in: &cancellables)
+            
+            #expect(userAccountDetails?.name == "\(Self.userGivenName) \(Self.userFamilyName)")
+        }
+    }
+    
+    @Test(
+        """
+        Given: User is logged in but their family name and full name is nil
+        When: The user navigates to the Activity page
+        Then: Activity page should populate the user's name with the user's given name.
+        """
+    )
+    @MainActor func testGetUserDetailsWithNilFamilyAndFullNames() async {
+        
+        let getUserAccountDetailsRepository = Self.getUserDetailsRepository(familyName: nil, name: nil)
+        
+        var cancellables: Set<AnyCancellable> = Set()
+        var userAccountDetails: UserAccountDetailsDomainModel?
+        
+        await confirmation(expectedCount: 1) { confirmation in
+            
+            getUserAccountDetailsRepository.getUserAccountDetailsPublisher(appLanguage: LanguageCodeDomainModel.english.rawValue)
+                .sink { (result: UserAccountDetailsDomainModel) in
+                    
+                    confirmation()
+                    userAccountDetails = result
+                }
+                .store(in: &cancellables)
+            
+            #expect(userAccountDetails?.name == Self.userGivenName)
+        }
+    }
+    
+    @Test(
+        """
+        Given: User is logged in but all names are nil
+        When: The user navigates to the Activity page
+        Then: Activity page should populate the user's name with an empty string
+        """
+    )
+    @MainActor func testGetUserDetailsWithAllNilNames() async {
+        
+        let getUserAccountDetailsRepository = Self.getUserDetailsRepository(familyName: nil, givenName: nil, name: nil)
+        
+        var cancellables: Set<AnyCancellable> = Set()
+        var userAccountDetails: UserAccountDetailsDomainModel?
+        
+        await confirmation(expectedCount: 1) { confirmation in
+            
+            getUserAccountDetailsRepository.getUserAccountDetailsPublisher(appLanguage: LanguageCodeDomainModel.english.rawValue)
+                .sink { (result: UserAccountDetailsDomainModel) in
+                    
+                    confirmation()
+                    userAccountDetails = result
+                }
+                .store(in: &cancellables)
+            
+            #expect(userAccountDetails?.name == "")
+        }
+    }
+    
+    @Test(
+        """
+        Given: User is logged in but their createdAt date is nil
+        When: The user navigates to the Activity page
+        Then: Activity page should populate the "joined on" string with an empty string
+        """
+    )
+    @MainActor func testGetUserDetailsWithNilJoinedOn() async {
+        
+        let getUserAccountDetailsRepository = Self.getUserDetailsRepository(createdAt: nil)
+        
+        var cancellables: Set<AnyCancellable> = Set()
+        var userAccountDetails: UserAccountDetailsDomainModel?
+        
+        await confirmation(expectedCount: 1) { confirmation in
+            
+            getUserAccountDetailsRepository.getUserAccountDetailsPublisher(appLanguage: LanguageCodeDomainModel.english.rawValue)
+                .sink { (result: UserAccountDetailsDomainModel) in
+                    
+                    confirmation()
+                    userAccountDetails = result
+                }
+                .store(in: &cancellables)
+            
+            #expect(userAccountDetails?.joinedOnString == "")
+        }
+    }
 }
 
 // MARK: - Private
 
 extension GetUserAccountDetailsRepositoryTests {
     
-    private static func getConfiguredRealmDatabase() -> TestsInMemoryRealmDatabase {
+    private static func getConfiguredRealmDatabase(emptyRealm: Bool, familyName: String?, givenName: String?, name: String?, createdAt: Date?) -> TestsInMemoryRealmDatabase {
+        
+        if emptyRealm {
+            return TestsInMemoryRealmDatabase()
+        }
         
         let userDetails = RealmUserDetails()
         userDetails.id = userId
-        userDetails.familyName = userFamilyName
-        userDetails.givenName = userGivenName
-        userDetails.name = userFullName
-        userDetails.createdAt = userCreatedAt
+        userDetails.familyName = familyName
+        userDetails.givenName = givenName
+        userDetails.name = name
+        userDetails.createdAt = createdAt
         
         let realmAuthTokenData = RealmMobileContentAuthToken()
         realmAuthTokenData.userId = userId
@@ -102,9 +247,9 @@ extension GetUserAccountDetailsRepositoryTests {
     }
 
     
-    private static func getUserDetailsRepository() -> GetUserAccountDetailsRepository {
+    private static func getUserDetailsRepository(emptyRealm: Bool = false, familyName: String? = Self.userFamilyName, givenName: String? = Self.userGivenName, name: String? = Self.userFullName, createdAt: Date? = Self.userCreatedAt) -> GetUserAccountDetailsRepository {
         
-        let realmDatabase = getConfiguredRealmDatabase()
+        let realmDatabase = getConfiguredRealmDatabase(emptyRealm: emptyRealm, familyName: familyName, givenName: givenName, name: name, createdAt: createdAt)
         
         let mockMobileContentAuthTokenKeychainAccessor = MockMobileContentAuthTokenKeychainAccessor()
         mockMobileContentAuthTokenKeychainAccessor.setUserId(userId)
