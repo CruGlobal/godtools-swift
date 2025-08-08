@@ -259,7 +259,7 @@ extension GetUserAccountDetailsRepositoryTests {
             realmCache: RealmMobileContentAuthTokenCache(realmDatabase: realmDatabase)
         )
         let authTokenRepository = MobileContentAuthTokenRepository(
-            api: MockMobileContentAuthTokenAPI(),
+            api: MockMobileContentAuthTokenAPI(fetchedAuthToken: nil),
             cache: mobileContentAuthTokenCache
         )
         let userDetailsRepository = UserDetailsRepository(

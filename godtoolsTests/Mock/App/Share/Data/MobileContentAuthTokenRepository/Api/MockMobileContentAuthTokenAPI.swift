@@ -12,9 +12,9 @@ import Combine
 
 class MockMobileContentAuthTokenAPI {
     
-    var fetchedAuthToken: MobileContentAuthTokenDecodable?
+    private let fetchedAuthToken: MobileContentAuthTokenDecodable?
     
-    func setMockFetchResponse(fetchedAuthToken: MobileContentAuthTokenDecodable) {
+    init(fetchedAuthToken: MobileContentAuthTokenDecodable?) {
         self.fetchedAuthToken = fetchedAuthToken
     }
 }
