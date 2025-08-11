@@ -117,6 +117,7 @@
 		450FC7592C49591700F87282 /* MenuFlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450FC7582C49591700F87282 /* MenuFlowTests.swift */; };
 		4511ED762E4A33AA00DE0118 /* SwiftUITimerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4511ED752E4A33A600DE0118 /* SwiftUITimerTests.swift */; };
 		4511ED792E4A3A1600DE0118 /* StringWithLocaleCountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4511ED782E4A3A1400DE0118 /* StringWithLocaleCountTests.swift */; };
+		4511ED7C2E4A3B8E00DE0118 /* ProgressTimerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4511ED7B2E4A3B8D00DE0118 /* ProgressTimerTests.swift */; };
 		4512C80A2B322D5900D162F3 /* ToolSettingsShareableItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4512C8082B322D5900D162F3 /* ToolSettingsShareableItemViewModel.swift */; };
 		4512C80B2B322D5900D162F3 /* ToolSettingsShareableItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4512C8092B322D5900D162F3 /* ToolSettingsShareableItemView.swift */; };
 		4512C80F2B322E4900D162F3 /* ToolSettingsLanguageDropDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4512C80E2B322E4900D162F3 /* ToolSettingsLanguageDropDownView.swift */; };
@@ -1932,6 +1933,7 @@
 		450FC7582C49591700F87282 /* MenuFlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuFlowTests.swift; sourceTree = "<group>"; };
 		4511ED752E4A33A600DE0118 /* SwiftUITimerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUITimerTests.swift; sourceTree = "<group>"; };
 		4511ED782E4A3A1400DE0118 /* StringWithLocaleCountTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringWithLocaleCountTests.swift; sourceTree = "<group>"; };
+		4511ED7B2E4A3B8D00DE0118 /* ProgressTimerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressTimerTests.swift; sourceTree = "<group>"; };
 		4512C8082B322D5900D162F3 /* ToolSettingsShareableItemViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolSettingsShareableItemViewModel.swift; sourceTree = "<group>"; };
 		4512C8092B322D5900D162F3 /* ToolSettingsShareableItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolSettingsShareableItemView.swift; sourceTree = "<group>"; };
 		4512C80E2B322E4900D162F3 /* ToolSettingsLanguageDropDownView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolSettingsLanguageDropDownView.swift; sourceTree = "<group>"; };
@@ -4185,6 +4187,14 @@
 			path = StringWithLocaleCount;
 			sourceTree = "<group>";
 		};
+		4511ED7A2E4A3B8600DE0118 /* ProgressTimer */ = {
+			isa = PBXGroup;
+			children = (
+				4511ED7B2E4A3B8D00DE0118 /* ProgressTimerTests.swift */,
+			);
+			path = ProgressTimer;
+			sourceTree = "<group>";
+		};
 		4512C8062B322D5900D162F3 /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
@@ -5029,6 +5039,7 @@
 		453689FE2ABB2D840028A570 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				4511ED7A2E4A3B8600DE0118 /* ProgressTimer */,
 				453689FF2ABB2D840028A570 /* SharedAppleExtensions */,
 				D42C1F0D2E2EBEBE0057D9F1 /* StringSearcher */,
 				4511ED772E4A3A0F00DE0118 /* StringWithLocaleCount */,
@@ -15164,6 +15175,7 @@
 				452339832E27D1E5005BF6F7 /* GetTranslatedToolNameTests.swift in Sources */,
 				456835352E34095100657255 /* MockRealmTranslation.swift in Sources */,
 				45192F532C470AEC005740E5 /* UserCountersRepositoryTests.swift in Sources */,
+				4511ED7C2E4A3B8E00DE0118 /* ProgressTimerTests.swift in Sources */,
 				45368A162ABB2D850028A570 /* LocaleTests.swift in Sources */,
 				450FB88F2BFBA0FD0015D945 /* Collection+SafeLookupTests.swift in Sources */,
 				45AA12DB2BE55D1D00C85BFF /* TestRealmObjectMapping.swift in Sources */,
