@@ -6,20 +6,26 @@
 //  Copyright © 2024 Cru. All rights reserved.
 //
 
+import Testing
 import Foundation
 @testable import godtools
 import Combine
-import Quick
-import Nimble
 
-class SetUserPreferredAppLanguageRepositoryTests: QuickSpec {
-    
-    override class func spec() {
+struct SetUserPreferredAppLanguageRepositoryTests {
+        
+    @Test(
+        """
+        Given: User is viewing the language settings
+        When: The app language is switched from English to Spanish
+        Then: The user's lesson language filter should update to Spanish.
+        """
+    )
+    @MainActor func spec() async {
         
         var cancellables: Set<AnyCancellable> = Set()
         
         let allLanguages: [RealmLanguage] = SetUserPreferredAppLanguageRepositoryTests.getAllLanguages()
-                        
+        
         let realmDatabase: RealmDatabase = TestsInMemoryRealmDatabase(
             addObjectsToDatabase: allLanguages
         )
@@ -36,44 +42,28 @@ class SetUserPreferredAppLanguageRepositoryTests: QuickSpec {
             userLessonFiltersRepository: testsDiContainer.dataLayer.getUserLessonFiltersRepository(),
             getLessonFilterLanguagesRepository: testsDiContainer.feature.lessonFilter.dataLayer.getLessonFilterLanguagesRepository()
         )
-                
-        describe("User is viewing the language settings.") {
+        
+        let appLanguageSpanish = LanguageCodeDomainModel.spanish.rawValue
+        let realmLanguageSpanish = allLanguages.first(where: { $0.code == appLanguageSpanish.languageCode })
+        var lessonLanguageFilterRef: LessonFilterLanguageDomainModel?
+        
+        await confirmation(expectedCount: 1) { confirmation in
             
-            context("When the app language is switched from English to Spanish") {
-                
-                it("The user's lesson language filter should update to Spanish") {
-                                        
-                    let appLanguageSpanish: AppLanguageDomainModel = LanguageCodeDomainModel.spanish.rawValue
-                    let realmLanguageSpanish = allLanguages.first(where: { $0.code == appLanguageSpanish.languageCode })
-
-                    var lessonLanguageFilterRef: LessonFilterLanguageDomainModel?
-                    var sinkCompleted: Bool = false
+            setUserPreferredAppLanguageRepository.setLanguagePublisher(appLanguage: LanguageCodeDomainModel.spanish.rawValue)
+                .flatMap { _ in
                     
-                    waitUntil { done in
-                        
-                        setUserPreferredAppLanguageRepository.setLanguagePublisher(appLanguage: appLanguageSpanish)
-                            .flatMap { _ in
-                                
-                                return getUserLessonFiltersRepository.getUserLessonLanguageFilterPublisher(translatedInAppLanguage: appLanguageSpanish)
-                            }
-                            .sink { lessonFilterLanguage in
-                                if sinkCompleted {
-                                    return
-                                }
-                                
-                                sinkCompleted = true
-                                lessonLanguageFilterRef = lessonFilterLanguage
-                                
-                                done()
-                            }
-                            .store(in: &cancellables)
-                    }
-                    
-                    expect(realmLanguageSpanish).toNot(beNil())
-                    expect(lessonLanguageFilterRef?.languageId).to(equal(realmLanguageSpanish?.id))
+                    return getUserLessonFiltersRepository.getUserLessonLanguageFilterPublisher(translatedInAppLanguage: appLanguageSpanish)
                 }
-            }
+                .sink { lessonFilterLanguage in
+                    
+                    confirmation()
+                    lessonLanguageFilterRef = lessonFilterLanguage
+                }
+                .store(in: &cancellables)
         }
+        
+        #expect(realmLanguageSpanish != nil)
+        #expect(lessonLanguageFilterRef?.languageId == realmLanguageSpanish?.id)
     }
     
     private static func getAllLanguages() -> [RealmLanguage] {
@@ -93,6 +83,9 @@ class SetUserPreferredAppLanguageRepositoryTests: QuickSpec {
             getRealmLanguage(languageCode: .vietnamese)
         ]
     }
+}
+
+extension SetUserPreferredAppLanguageRepositoryTests {
     
     private static func getRealmLanguage(languageCode: LanguageCodeDomainModel) -> RealmLanguage {
         
