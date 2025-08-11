@@ -616,6 +616,8 @@
 		456BB8D42DB2966500E7BFFD /* AppLaunchState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456BB8D32DB2965C00E7BFFD /* AppLaunchState.swift */; };
 		456BD2CC27020C75004D7B19 /* MobileContentViewHeightConstraintType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456BD2CB27020C75004D7B19 /* MobileContentViewHeightConstraintType.swift */; };
 		456C02E62E38F0E000E3E49E /* GetDownloadToolProgressInterfaceStringsRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456C02E32E38F0E000E3E49E /* GetDownloadToolProgressInterfaceStringsRepositoryTests.swift */; };
+		456D39C62E43B89700854D6A /* DeepLinkingParserManifestUrlTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456D39C52E43B89600854D6A /* DeepLinkingParserManifestUrlTests.swift */; };
+		456D39CA2E43B9F100854D6A /* MockEmptyDeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456D39C92E43B9E000854D6A /* MockEmptyDeepLinkParser.swift */; };
 		456DA4F02CC96ADE004BFB1E /* OpenUrlWithSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456DA4ED2CC96ADE004BFB1E /* OpenUrlWithSwiftUI.swift */; };
 		456DA4F12CC96ADE004BFB1E /* UrlOpenerInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456DA4EC2CC96ADE004BFB1E /* UrlOpenerInterface.swift */; };
 		456DA4F22CC96ADE004BFB1E /* OpenUrlWithUIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456DA4EE2CC96ADE004BFB1E /* OpenUrlWithUIKit.swift */; };
@@ -2430,6 +2432,8 @@
 		456BB8D32DB2965C00E7BFFD /* AppLaunchState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLaunchState.swift; sourceTree = "<group>"; };
 		456BD2CB27020C75004D7B19 /* MobileContentViewHeightConstraintType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentViewHeightConstraintType.swift; sourceTree = "<group>"; };
 		456C02E32E38F0E000E3E49E /* GetDownloadToolProgressInterfaceStringsRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetDownloadToolProgressInterfaceStringsRepositoryTests.swift; sourceTree = "<group>"; };
+		456D39C52E43B89600854D6A /* DeepLinkingParserManifestUrlTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkingParserManifestUrlTests.swift; sourceTree = "<group>"; };
+		456D39C92E43B9E000854D6A /* MockEmptyDeepLinkParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockEmptyDeepLinkParser.swift; sourceTree = "<group>"; };
 		456DA4EC2CC96ADE004BFB1E /* UrlOpenerInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlOpenerInterface.swift; sourceTree = "<group>"; };
 		456DA4ED2CC96ADE004BFB1E /* OpenUrlWithSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenUrlWithSwiftUI.swift; sourceTree = "<group>"; };
 		456DA4EE2CC96ADE004BFB1E /* OpenUrlWithUIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenUrlWithUIKit.swift; sourceTree = "<group>"; };
@@ -5077,6 +5081,7 @@
 			isa = PBXGroup;
 			children = (
 				45368A0A2ABB2D840028A570 /* DeepLinkingServiceTests.swift */,
+				456D39C42E43B88400854D6A /* Manifest */,
 			);
 			path = DeepLinkingService;
 			sourceTree = "<group>";
@@ -6741,6 +6746,7 @@
 		456834FB2E3405B100657255 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				456D39C82E43B9D200854D6A /* DeepLinkingService */,
 				4568352C2E3408E400657255 /* LanguagesRepository */,
 				4568352F2E34092400657255 /* LaunchCountRepository */,
 				456834F82E3405B100657255 /* LocalizationLanguageNameRepository */,
@@ -7074,6 +7080,30 @@
 				456C02E42E38F0E000E3E49E /* Data-DomainInterface */,
 			);
 			path = DownloadToolProgress;
+			sourceTree = "<group>";
+		};
+		456D39C42E43B88400854D6A /* Manifest */ = {
+			isa = PBXGroup;
+			children = (
+				456D39C52E43B89600854D6A /* DeepLinkingParserManifestUrlTests.swift */,
+			);
+			path = Manifest;
+			sourceTree = "<group>";
+		};
+		456D39C72E43B9D200854D6A /* Parsers */ = {
+			isa = PBXGroup;
+			children = (
+				456D39C92E43B9E000854D6A /* MockEmptyDeepLinkParser.swift */,
+			);
+			path = Parsers;
+			sourceTree = "<group>";
+		};
+		456D39C82E43B9D200854D6A /* DeepLinkingService */ = {
+			isa = PBXGroup;
+			children = (
+				456D39C72E43B9D200854D6A /* Parsers */,
+			);
+			path = DeepLinkingService;
 			sourceTree = "<group>";
 		};
 		456DA4EF2CC96ADE004BFB1E /* UrlOpener */ = {
@@ -15080,9 +15110,11 @@
 				459D375F2E37C83B007BCF27 /* StoreInitialAppLanguageTests.swift in Sources */,
 				459D37602E37C83B007BCF27 /* SearchAppLanguageInAppLanguagesListRepositoryTests.swift in Sources */,
 				450AC6B72DEE40D1003E49E6 /* GetTranslatedNumberCountTests.swift in Sources */,
+				456D39C62E43B89700854D6A /* DeepLinkingParserManifestUrlTests.swift in Sources */,
 				452447202E3D114F00C0831A /* GetLessonFilterLanguagesInterfaceStringsRepositoryTests.swift in Sources */,
 				452447212E3D114F00C0831A /* GetUserLessonFiltersRepositoryTests.swift in Sources */,
 				452447222E3D114F00C0831A /* SearchLessonFilterLanguagesRepositoryTests.swift in Sources */,
+				456D39CA2E43B9F100854D6A /* MockEmptyDeepLinkParser.swift in Sources */,
 				452447232E3D114F00C0831A /* GetLessonFilterLanguagesRepositoryTests.swift in Sources */,
 				450FB8902BFBA1060015D945 /* RealmDatabaseDeleteTests.swift in Sources */,
 				456835032E3405FE00657255 /* MockRealmResource.swift in Sources */,
