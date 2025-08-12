@@ -12,11 +12,13 @@ import UIKit
 
 class FileCache {
     
-    let fileManager: FileManager = FileManager.default
+    let fileManager: FileManager
     let rootDirectory: String
     let errorDomain: String
     
-    init(rootDirectory: String) {
+    init(rootDirectory: String, fileManager: FileManager = FileManager.default) {
+        
+        self.fileManager = fileManager
         self.rootDirectory = rootDirectory
         self.errorDomain = "\(type(of: self))"
     }
@@ -193,17 +195,7 @@ class FileCache {
             return error
         }
     }
-    
-    func removeDirectory(location: FileCacheLocation) -> Error? {
-        
-        switch getDirectory(location: location) {
-        case .success(let directoryUrl):
-            return removeItem(url: directoryUrl)
-        case .failure(let error):
-            return error
-        }
-    }
-    
+
     func removeFile(location: FileCacheLocation) -> Error? {
         
         switch getFile(location: location) {
