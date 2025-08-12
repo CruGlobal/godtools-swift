@@ -433,6 +433,9 @@ class AppDataLayerDependencies {
                 .apple: AppleAuthentication(
                     appleUserPersistentStore: AppleUserPersistentStore()
                 ),
+//                .facebook: FacebookAccessTokenProvider(
+//                    configuration: FacebookAccessTokenProviderConfiguration(permissions: ["email"])
+//                ),
                 .facebook: FacebookLimitedLogin(
                     configuration: FacebookLimitedLoginConfiguration(
                         permissions: ["email"]
