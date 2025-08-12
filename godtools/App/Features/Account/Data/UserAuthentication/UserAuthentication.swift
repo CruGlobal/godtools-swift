@@ -247,11 +247,14 @@ class UserAuthentication {
                         
         case .facebook:
             
-            guard let accessToken = authProviderResponse.accessToken, !accessToken.isEmpty else {
-                return .failure(NSError.errorWithDescription(description: "Missing facebook accesstoken."))
+            if let accessToken = authProviderResponse.accessToken, !accessToken.isEmpty {
+                return .success(.facebook(accessToken: accessToken))
+            }
+            else if let oidcToken = authProviderResponse.oidcToken, !oidcToken.isEmpty {
+                return .success(.facebookLimitedLogin(oidcToken: oidcToken))
             }
             
-            return .success(.facebook(accessToken: accessToken))
+            return .failure(NSError.errorWithDescription(description: "Missing facebook accessToken or oidcToken."))
             
         case .google:
             

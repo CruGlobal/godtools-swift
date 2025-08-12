@@ -50,6 +50,10 @@ class MobileContentAuthTokenAPI {
             
             attributes["facebook_access_token"] = accessToken
             
+        case .facebookLimitedLogin(let oidcToken):
+            
+            attributes["facebook_id_token"] = oidcToken
+            
         case .google(let idToken):
             
             attributes["google_id_token"] = idToken
@@ -85,6 +89,11 @@ class MobileContentAuthTokenAPI {
         let urlRequest: URLRequest = getAuthTokenRequest(urlSession: urlSession, providerToken: providerToken, createUser: createUser)
                 
         return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
+            .map { (response: RequestDataResponse) in
+                // TODO: Remove map and print statement. ~Levi
+                print(response.getDataString() ?? "")
+                return response
+            }
             .decodeRequestDataResponseForSuccessOrFailureCodable()
             .mapError { (error: Error) in
                 return MobileContentApiError.other(error: error)
