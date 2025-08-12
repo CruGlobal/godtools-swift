@@ -9,9 +9,10 @@
 import Testing
 @testable import godtools
 import Foundation
+import UIKit
 
 @Suite(.serialized)
-struct FileCacheTests {
+class FileCacheTests {
     
     private static let testsFileCacheRootDirectory: String = "tests_file_cache"
     private static let tempDirectoryName: String = "temp_directory"
@@ -565,6 +566,74 @@ struct FileCacheTests {
             case .failure(let error):
                 throw error
             }
+        }
+    }
+    
+    @Test("")
+    func getUIImage() async throws {
+        
+        let fileCache = Self.getTestsFileCache()
+        
+        switch fileCache.getRootDirectory() {
+        case .success( _):
+            break
+        case .failure(let error):
+            throw error
+        }
+        
+        let imageFromPreviewAssets: UIImage = try #require(UIImage(named: "previewBannerImage", in: Bundle.main, with: nil))
+        let imageData: Data = try #require(imageFromPreviewAssets.jpegData(compressionQuality: 0.8))
+        
+        let imageName: String = "previewAsset.jpg"
+        
+        let fileLocation = FileCacheLocation(relativeUrlString: imageName)
+        
+        switch fileCache.storeFile(location: fileLocation, data: imageData) {
+        case .success( _):
+            break
+        case .failure(let error):
+            throw error
+        }
+        
+        switch fileCache.getUIImage(location: fileLocation) {
+        case .success(let uiImage):
+            #expect(uiImage != nil)
+        case .failure(let error):
+            throw error
+        }
+    }
+    
+    @Test("")
+    func getImage() async throws {
+        
+        let fileCache = Self.getTestsFileCache()
+        
+        switch fileCache.getRootDirectory() {
+        case .success( _):
+            break
+        case .failure(let error):
+            throw error
+        }
+        
+        let imageFromPreviewAssets: UIImage = try #require(UIImage(named: "previewBannerImage", in: Bundle.main, with: nil))
+        let imageData: Data = try #require(imageFromPreviewAssets.jpegData(compressionQuality: 0.8))
+        
+        let imageName: String = "previewAsset.jpg"
+        
+        let fileLocation = FileCacheLocation(relativeUrlString: imageName)
+        
+        switch fileCache.storeFile(location: fileLocation, data: imageData) {
+        case .success( _):
+            break
+        case .failure(let error):
+            throw error
+        }
+        
+        switch fileCache.getImage(location: fileLocation) {
+        case .success(let image):
+            #expect(image != nil)
+        case .failure(let error):
+            throw error
         }
     }
 }
