@@ -65,12 +65,7 @@ class SwiftUITimer: ObservableObject {
     var publisher: Timer.TimerPublisher {
         return timerPublisher
     }
-    
-    func toggle() {
-        
-        isRunning ? stop() : start()
-    }
-    
+
     func start() {
         
         stop()
