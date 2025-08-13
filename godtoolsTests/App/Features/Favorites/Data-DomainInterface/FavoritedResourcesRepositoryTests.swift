@@ -20,11 +20,7 @@ struct FavoritedResourcesRepositoryTests {
     }
     
     @Test(
-        """
-        Given: User has only tools A and B favorited.
-        When: Tool C, D, and E are all added to favorites simultaneously
-        Then: Tool C, D, and E should get added to favorites at position 0, 1, and 2.  Positions of tools A and B should update to 3 and 4 respectivel
-        """,
+        "Tools should be added to favorites and all resource positions updated in reserve order that they were added.",
         arguments: [
             TestArgument(resourcesInRealmIdsAtPositions: ["A": 0, "B": 1], resourceIdsToAdd: ["C", "D", "E"], expectedUpdatedIdsAtPositions: ["C": 0, "D": 1, "E": 2, "A": 3, "B": 4]),
             TestArgument(resourcesInRealmIdsAtPositions: [:], resourceIdsToAdd: ["A", "B", "C"], expectedUpdatedIdsAtPositions: ["A": 0, "B": 1, "C": 2]),
@@ -61,6 +57,15 @@ struct FavoritedResourcesRepositoryTests {
             )
         }
     }
+    
+    // TODO:
+//    @MainActor func testDeleteFavoritedResourcePublisher() async {
+//        
+//    }
+    
+//    @MainActor func testReorderFavoritedResources() async {
+//
+//    }
 }
 
 extension FavoritedResourcesRepositoryTests {
