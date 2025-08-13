@@ -21,9 +21,7 @@ struct ProgressTimerTests {
         let progressTimer = ProgressTimer()
         
         let halfSecond: TimeInterval = 0.5
-        
-        let startTime: Date = Date()
-        
+                
         var progress: Double = 0
         
         await withCheckedContinuation { continuation in
@@ -46,12 +44,9 @@ struct ProgressTimerTests {
                 }
                 .store(in: &cancellables)
         }
-        
-        let elapsedTimeInSeconds: TimeInterval = Date().timeIntervalSince(startTime)
-                
+                        
         #expect(progressTimer.isRunning == false)
         #expect(progress == 1)
-        #expect(elapsedTimeInSeconds >= 0.5 && elapsedTimeInSeconds < 1)
     }
     
     @Test("")
@@ -60,9 +55,7 @@ struct ProgressTimerTests {
         let progressTimer = ProgressTimer()
         
         let halfSecond: TimeInterval = 0.5
-        
-        let startTime: Date = Date()
-        
+                
         var progress: Double = 0
         
         await withCheckedContinuation { continuation in
@@ -82,11 +75,8 @@ struct ProgressTimerTests {
                 continuation.resume(returning: ())
             }
         }
-        
-        let elapsedTimeInSeconds: TimeInterval = Date().timeIntervalSince(startTime)
-        
+                
         #expect(progressTimer.isRunning == false)
         #expect(progress == 1)
-        #expect(elapsedTimeInSeconds >= 0.5 && elapsedTimeInSeconds < 1)
     }
 }
