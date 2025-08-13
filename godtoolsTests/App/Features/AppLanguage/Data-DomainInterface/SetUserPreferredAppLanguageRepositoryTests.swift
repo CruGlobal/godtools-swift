@@ -20,7 +20,7 @@ struct SetUserPreferredAppLanguageRepositoryTests {
         Then: The user's lesson language filter should update to Spanish.
         """
     )
-    @MainActor func spec() async {
+    @MainActor func setUserPreferredAppLanguageRepositoryTest() async {
         
         var cancellables: Set<AnyCancellable> = Set()
         
