@@ -38,7 +38,7 @@ class AppConfig: AppConfigInterface {
         
         return FacebookConfiguration(
             appId: "448969905944197",
-            clientToken: "c621fb460c15157aa90d8ba0cebceaa4",
+            clientToken: "be1edf48d86ed54a24951ededa62eda2",
             displayName: "GodTools",
             isAutoLogAppEventsEnabled: true,
             isAdvertiserIDCollectionEnabled: false,
