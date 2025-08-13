@@ -24,9 +24,21 @@ class AppConfig: AppConfigInterface {
         
     func getFacebookConfiguration() -> FacebookConfiguration {
         
+        // production
+        
+//        return FacebookConfiguration(
+//            appId: "2236701616451487",
+//            clientToken: "3b6bf5b7c128a970337c4fa1860ffa6e",
+//            displayName: "GodTools",
+//            isAutoLogAppEventsEnabled: true,
+//            isAdvertiserIDCollectionEnabled: false,
+//            isSKAdNetworkReportEnabled: false
+//        )
+        
+        
         return FacebookConfiguration(
-            appId: "2236701616451487",
-            clientToken: "3b6bf5b7c128a970337c4fa1860ffa6e",
+            appId: "448969905944197",
+            clientToken: "c621fb460c15157aa90d8ba0cebceaa4",
             displayName: "GodTools",
             isAutoLogAppEventsEnabled: true,
             isAdvertiserIDCollectionEnabled: false,
