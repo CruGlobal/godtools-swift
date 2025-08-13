@@ -1617,6 +1617,13 @@
 		D43818CA2E1C4F7100D404FF /* QRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43818C92E1C4F7100D404FF /* QRCodeView.swift */; };
 		D43A72222E3AA978001B7C07 /* GetUserAccountDetailsRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43A72212E3AA978001B7C07 /* GetUserAccountDetailsRepositoryInterface.swift */; };
 		D43A72242E3AAC9B001B7C07 /* GetUserAccountDetailsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43A72232E3AAC9B001B7C07 /* GetUserAccountDetailsRepository.swift */; };
+		D43A72282E3D45C4001B7C07 /* GetUserAccountDetailsRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43A72272E3D45C4001B7C07 /* GetUserAccountDetailsRepositoryTests.swift */; };
+		D43A722E2E43D969001B7C07 /* MockMobileContentAuthTokenKeychainAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43A722D2E43D969001B7C07 /* MockMobileContentAuthTokenKeychainAccessor.swift */; };
+		D43A72302E43D996001B7C07 /* MobileContentAuthTokenKeychainAccessorInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43A722F2E43D996001B7C07 /* MobileContentAuthTokenKeychainAccessorInterface.swift */; };
+		D43A72332E43DBD6001B7C07 /* MockMobileContentAuthTokenAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43A72322E43DBD6001B7C07 /* MockMobileContentAuthTokenAPI.swift */; };
+		D43A72352E43DCE4001B7C07 /* MobileContentAuthTokenAPIInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43A72342E43DCE4001B7C07 /* MobileContentAuthTokenAPIInterface.swift */; };
+		D43A72372E43EC9E001B7C07 /* UserDetailsAPIInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43A72362E43EC9E001B7C07 /* UserDetailsAPIInterface.swift */; };
+		D43A723D2E43ED33001B7C07 /* MockUserDetailsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43A723C2E43ED33001B7C07 /* MockUserDetailsAPI.swift */; };
 		D43C00392E3177C5003210E7 /* GetSearchBarInterfaceStringsRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43C00382E3177C5003210E7 /* GetSearchBarInterfaceStringsRepositoryTests.swift */; };
 		D43FC1BE2B62EFD800F8310E /* View+AppLifecycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43FC1BD2B62EFD800F8310E /* View+AppLifecycle.swift */; };
 		D43FC1C02B64531F00F8310E /* ViewConfirmAppLanguageDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43FC1BF2B64531F00F8310E /* ViewConfirmAppLanguageDomainModel.swift */; };
@@ -3399,6 +3406,13 @@
 		D43818C92E1C4F7100D404FF /* QRCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeView.swift; sourceTree = "<group>"; };
 		D43A72212E3AA978001B7C07 /* GetUserAccountDetailsRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserAccountDetailsRepositoryInterface.swift; sourceTree = "<group>"; };
 		D43A72232E3AAC9B001B7C07 /* GetUserAccountDetailsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserAccountDetailsRepository.swift; sourceTree = "<group>"; };
+		D43A72272E3D45C4001B7C07 /* GetUserAccountDetailsRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserAccountDetailsRepositoryTests.swift; sourceTree = "<group>"; };
+		D43A722D2E43D969001B7C07 /* MockMobileContentAuthTokenKeychainAccessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMobileContentAuthTokenKeychainAccessor.swift; sourceTree = "<group>"; };
+		D43A722F2E43D996001B7C07 /* MobileContentAuthTokenKeychainAccessorInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentAuthTokenKeychainAccessorInterface.swift; sourceTree = "<group>"; };
+		D43A72322E43DBD6001B7C07 /* MockMobileContentAuthTokenAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMobileContentAuthTokenAPI.swift; sourceTree = "<group>"; };
+		D43A72342E43DCE4001B7C07 /* MobileContentAuthTokenAPIInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContentAuthTokenAPIInterface.swift; sourceTree = "<group>"; };
+		D43A72362E43EC9E001B7C07 /* UserDetailsAPIInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsAPIInterface.swift; sourceTree = "<group>"; };
+		D43A723C2E43ED33001B7C07 /* MockUserDetailsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserDetailsAPI.swift; sourceTree = "<group>"; };
 		D43C00382E3177C5003210E7 /* GetSearchBarInterfaceStringsRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSearchBarInterfaceStringsRepositoryTests.swift; sourceTree = "<group>"; };
 		D43FC1BD2B62EFD800F8310E /* View+AppLifecycle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+AppLifecycle.swift"; sourceTree = "<group>"; };
 		D43FC1BF2B64531F00F8310E /* ViewConfirmAppLanguageDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewConfirmAppLanguageDomainModel.swift; sourceTree = "<group>"; };
@@ -6703,6 +6717,7 @@
 		456834F32E34053000657255 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				D43A72392E43ECFD001B7C07 /* Account */,
 				4568350D2E34075300657255 /* AppLanguage */,
 				456835112E34075300657255 /* Onboarding */,
 				456835162E3407DA00657255 /* OptInNotification */,
@@ -6751,6 +6766,7 @@
 				4568352F2E34092400657255 /* LaunchCountRepository */,
 				456834F82E3405B100657255 /* LocalizationLanguageNameRepository */,
 				456834FA2E3405B100657255 /* LocalizationServices */,
+				D43A72292E43D91A001B7C07 /* MobileContentAuthTokenRepository */,
 				456835022E3405FE00657255 /* ResourcesRepository */,
 				456835342E34095100657255 /* TranslationsRepository */,
 				456835382E3409CB00657255 /* UserCountersRepository */,
@@ -10354,6 +10370,7 @@
 			isa = PBXGroup;
 			children = (
 				45D341972E295DBB001AF70B /* UserDetailsAPI.swift */,
+				D43A72362E43EC9E001B7C07 /* UserDetailsAPIInterface.swift */,
 				45D341962E295DBB001AF70B /* Models */,
 			);
 			path = Api;
@@ -10638,6 +10655,7 @@
 		45D73BC82E341D9000D25E16 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				D43A72252E3D4555001B7C07 /* Account */,
 				45D73BC72E341D9000D25E16 /* AppLanguage */,
 				4553BF312E37CC2000CD4AFE /* Dashboard */,
 				456C02E52E38F0E000E3E49E /* DownloadToolProgress */,
@@ -12303,6 +12321,79 @@
 			path = GTModalView;
 			sourceTree = "<group>";
 		};
+		D43A72252E3D4555001B7C07 /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				D43A72262E3D4575001B7C07 /* Data-DomainInterface */,
+			);
+			path = Account;
+			sourceTree = "<group>";
+		};
+		D43A72262E3D4575001B7C07 /* Data-DomainInterface */ = {
+			isa = PBXGroup;
+			children = (
+				D43A72272E3D45C4001B7C07 /* GetUserAccountDetailsRepositoryTests.swift */,
+			);
+			path = "Data-DomainInterface";
+			sourceTree = "<group>";
+		};
+		D43A72292E43D91A001B7C07 /* MobileContentAuthTokenRepository */ = {
+			isa = PBXGroup;
+			children = (
+				D43A72312E43DBB3001B7C07 /* Api */,
+				D43A722A2E43D947001B7C07 /* Cache */,
+			);
+			path = MobileContentAuthTokenRepository;
+			sourceTree = "<group>";
+		};
+		D43A722A2E43D947001B7C07 /* Cache */ = {
+			isa = PBXGroup;
+			children = (
+				D43A722D2E43D969001B7C07 /* MockMobileContentAuthTokenKeychainAccessor.swift */,
+			);
+			path = Cache;
+			sourceTree = "<group>";
+		};
+		D43A72312E43DBB3001B7C07 /* Api */ = {
+			isa = PBXGroup;
+			children = (
+				D43A72322E43DBD6001B7C07 /* MockMobileContentAuthTokenAPI.swift */,
+			);
+			path = Api;
+			sourceTree = "<group>";
+		};
+		D43A72382E43ECEE001B7C07 /* UserDetailsRepository */ = {
+			isa = PBXGroup;
+			children = (
+				D43A723B2E43ED27001B7C07 /* Api */,
+			);
+			path = UserDetailsRepository;
+			sourceTree = "<group>";
+		};
+		D43A72392E43ECFD001B7C07 /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				D43A723A2E43ED12001B7C07 /* Data */,
+			);
+			path = Account;
+			sourceTree = "<group>";
+		};
+		D43A723A2E43ED12001B7C07 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				D43A72382E43ECEE001B7C07 /* UserDetailsRepository */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		D43A723B2E43ED27001B7C07 /* Api */ = {
+			isa = PBXGroup;
+			children = (
+				D43A723C2E43ED33001B7C07 /* MockUserDetailsAPI.swift */,
+			);
+			path = Api;
+			sourceTree = "<group>";
+		};
 		D43C00362E317797003210E7 /* GetSearchBarInterfaceStringsRepository */ = {
 			isa = PBXGroup;
 			children = (
@@ -12598,6 +12689,7 @@
 			children = (
 				45D752132A2E33DF005E747F /* MobileContentAuthProviderToken.swift */,
 				D4B05FF829106462005852D0 /* MobileContentAuthTokenAPI.swift */,
+				D43A72342E43DCE4001B7C07 /* MobileContentAuthTokenAPIInterface.swift */,
 				D4B05FFD2911BA9C005852D0 /* Models */,
 			);
 			path = Api;
@@ -12617,6 +12709,7 @@
 				D4B060062915647B005852D0 /* KeychainServiceResponse.swift */,
 				D4B060012912C335005852D0 /* MobileContentAuthTokenCache.swift */,
 				D4B060032913096A005852D0 /* MobileContentAuthTokenKeychainAccessor.swift */,
+				D43A722F2E43D996001B7C07 /* MobileContentAuthTokenKeychainAccessorInterface.swift */,
 				4566DCAC2A2686AB00B989A2 /* Realm */,
 			);
 			path = Cache;
@@ -14287,6 +14380,7 @@
 				45051207275AA71F0081BF56 /* MobileContentParagraphViewModel.swift in Sources */,
 				458CFE9929D4E0B9007B423C /* ArticleCategoryCell.swift in Sources */,
 				45CBD9FB2BA343590007DEC8 /* GetOnboardingTutorialIsAvailableInterface.swift in Sources */,
+				D43A72302E43D996001B7C07 /* MobileContentAuthTokenKeychainAccessorInterface.swift in Sources */,
 				D4960CC62CC6D77B0090B114 /* GetTranslatedPercentage.swift in Sources */,
 				45AE973C27C97A9400C2CB33 /* MultiplatformCards.swift in Sources */,
 				45558409269F2DA500C3FF14 /* MobileContentPageCell.swift in Sources */,
@@ -14593,6 +14687,7 @@
 				45BB428D2CBE9E0D00290F64 /* TractPageModalsView.swift in Sources */,
 				45BB428E2CBE9E0D00290F64 /* TractPageCardAnalyticsScreenName.swift in Sources */,
 				45BB428F2CBE9E0D00290F64 /* TractPageModalsViewModel.swift in Sources */,
+				D43A72352E43DCE4001B7C07 /* MobileContentAuthTokenAPIInterface.swift in Sources */,
 				45BB42902CBE9E0D00290F64 /* TractPageModalView.swift in Sources */,
 				45BB42912CBE9E0D00290F64 /* TractPageCallToActionViewModel.swift in Sources */,
 				453D88992E05D51100C868DE /* GodToolsSceneDelegate.swift in Sources */,
@@ -14697,6 +14792,7 @@
 				45070A832ACF42AD00229EDD /* AppInterfaceStringBarItem.swift in Sources */,
 				45D341842E295D13001AF70B /* GetUserAccountDetailsUseCase.swift in Sources */,
 				45D341852E295D13001AF70B /* ViewAccountUseCase.swift in Sources */,
+				D43A72372E43EC9E001B7C07 /* UserDetailsAPIInterface.swift in Sources */,
 				45AAC2A92BB30F0A000AE690 /* GlobalAnalyticsDataModel.swift in Sources */,
 				452486B82B07C894007AD932 /* ToolFilterLanguageSelectionRowView.swift in Sources */,
 				4535BE162B348BF100A8B62F /* ReviewShareShareableView.swift in Sources */,
@@ -15092,6 +15188,7 @@
 				45E6BBEC2C41642800A49960 /* GetTranslatedLanguageNameTests.swift in Sources */,
 				4553BF332E37EE4200CD4AFE /* GetToolsRepositoryTests.swift in Sources */,
 				D4AAEC1B2D9C68D2008CDF8E /* ToggleToolFavoritedRepositoryTests.swift in Sources */,
+				D43A72332E43DBD6001B7C07 /* MockMobileContentAuthTokenAPI.swift in Sources */,
 				D4D5A50B2E21A4F900204CEF /* GetToolScreenShareQRCodeInterfaceStringsRepositoryTests.swift in Sources */,
 				45D7783029A572CC00F23D99 /* PassthroughValue.swift in Sources */,
 				45D73BCB2E341D9000D25E16 /* GetAppLanguagesInterfaceStringsRepositoryTests.swift in Sources */,
@@ -15117,6 +15214,7 @@
 				456D39CA2E43B9F100854D6A /* MockEmptyDeepLinkParser.swift in Sources */,
 				452447232E3D114F00C0831A /* GetLessonFilterLanguagesRepositoryTests.swift in Sources */,
 				450FB8902BFBA1060015D945 /* RealmDatabaseDeleteTests.swift in Sources */,
+				D43A723D2E43ED33001B7C07 /* MockUserDetailsAPI.swift in Sources */,
 				456835032E3405FE00657255 /* MockRealmResource.swift in Sources */,
 				450FB8912BFBA1060015D945 /* RealmDatabaseReadTests.swift in Sources */,
 				450FB8922BFBA1060015D945 /* RealmDatabaseWriteTests.swift in Sources */,
@@ -15135,6 +15233,8 @@
 				456835272E34088800657255 /* MockLocaleLanguageRegionName.swift in Sources */,
 				456C02E62E38F0E000E3E49E /* GetDownloadToolProgressInterfaceStringsRepositoryTests.swift in Sources */,
 				45AB28B02E427E5C000B7F9D /* SearchToolFilterCategoriesRepositoryTests.swift in Sources */,
+				D43A72282E3D45C4001B7C07 /* GetUserAccountDetailsRepositoryTests.swift in Sources */,
+				D43A722E2E43D969001B7C07 /* MockMobileContentAuthTokenKeychainAccessor.swift in Sources */,
 				456835282E34088800657255 /* MockStringWithLocaleCount.swift in Sources */,
 				4591CCC82E391ACA00C3C40C /* GetSpiritualConversationReadinessScaleTests.swift in Sources */,
 				4568351B2E34082E00657255 /* MockDeviceSystemLanguage.swift in Sources */,
