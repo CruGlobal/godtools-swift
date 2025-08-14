@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import FirebaseDynamicLinks
 
 struct GodToolsApp: App {
 
@@ -148,21 +147,6 @@ extension GodToolsApp {
             return false
         }
 
-        let firebaseDynamicLinkHandled: Bool = DynamicLinks.dynamicLinks().handleUniversalLink(url) { (dynamicLink: DynamicLink?, error: Error?) in
-
-            guard let firebaseDynamicLinkUrl = dynamicLink?.url else {
-                return
-            }
-
-            DispatchQueue.main.async {
-                _ = Self.appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: firebaseDynamicLinkUrl)))
-            }
-        }
-
-        if firebaseDynamicLinkHandled {
-            return true
-        }
-
         let deepLinkHandled: Bool = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
 
         if deepLinkHandled {
@@ -173,11 +157,6 @@ extension GodToolsApp {
     }
     
     static func openUrl(url: URL) -> Bool {
-        
-        if let firebaseDynamicLinkUrl = DynamicLinks.dynamicLinks().dynamicLink(fromCustomSchemeURL: url)?.url {
-            _ = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: firebaseDynamicLinkUrl)))
-            return true
-        }
                 
         let deepLinkedHandled: Bool = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
         
