@@ -28,7 +28,7 @@ class ChooseAppLanguageFlowTests: BaseFlowTests {
         
         launchApp()
         
-        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .appLanguageListItem, buttonQueryType: .firstMatching)
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .appLanguageListItem, buttonQueryType: .firstMatch)
         
         assertIfScreenDoesNotExist(screenAccessibility: .confirmAppLanguage)
     }

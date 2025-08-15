@@ -13,6 +13,7 @@ class BaseFlowTests: XCTestCase {
         
     private static let defaultWaitForScreenExistence: TimeInterval = 2
     private static let defaultWaitForButtonExistence: TimeInterval = 2
+    private static let defaultButtonQueryType: ButtonQueryType = .exactMatch
     
     private(set) var app: XCUIApplication = XCUIApplication()
     private(set) var flowDeepLinkUrl: String = ""
@@ -103,17 +104,53 @@ extension BaseFlowTests {
 extension BaseFlowTests {
     
     enum ButtonQueryType {
-        case buttons
-        case firstMatch
-        case descendantsFirstMatch
+        case exactMatch // If only one SwiftUI Button exists with this identifier.
+        case firstMatch // If multiple SwiftUI Buttons exist with the same identifier. Use the first matching in the query.
+        case searchDescendants // For non SwiftUI Buttons.  This could be VStack, ZStack, etc.
     }
     
-    func assertIfButtonDoesNotExistElseTap(buttonAccessibility: AccessibilityStrings.Button, buttonQueryType: ButtonQueryType = .buttons) {
+    func assertIfButtonDoesNotExist(buttonAccessibility: AccessibilityStrings.Button, buttonQueryType: ButtonQueryType = BaseFlowTests.defaultButtonQueryType) {
         
-        assertIfButtonDoesNotExistElseTap(buttonId: buttonAccessibility.id, buttonQueryType: buttonQueryType)
+        assertIfButtonDoesNotExist(buttonId: buttonAccessibility.id, buttonQueryType: buttonQueryType, shouldTapButton: false)
     }
     
-    func assertIfButtonDoesNotExistElseTap(buttonId: String, buttonQueryType: ButtonQueryType = .buttons) {
+    func assertIfButtonDoesNotExistElseTap(buttonAccessibility: AccessibilityStrings.Button, buttonQueryType: ButtonQueryType = BaseFlowTests.defaultButtonQueryType) {
+        
+        assertIfButtonDoesNotExist(buttonId: buttonAccessibility.id, buttonQueryType: buttonQueryType, shouldTapButton: true)
+    }
+    
+    func tapWhileExists(buttonAccessibility: AccessibilityStrings.Button, buttonQueryType: ButtonQueryType = BaseFlowTests.defaultButtonQueryType, maxTapCount: Int = 10) {
+        
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: buttonAccessibility, buttonQueryType: buttonQueryType)
+        
+        var tapCount: Int = 1
+        var buttonExists: Bool = true
+        
+        while buttonExists && tapCount < maxTapCount {
+            
+            if queryButtonWithWaitForExistence(buttonId: buttonAccessibility.id, buttonQueryType: buttonQueryType),
+               let button = queryButton(buttonId: buttonAccessibility.id, buttonQueryType: buttonQueryType)  {
+                
+                tapCount += 1
+                buttonExists = true
+                
+                button.tap()
+                
+            }
+            else {
+                
+                buttonExists = false
+            }
+        }
+        
+        XCTAssertFalse(tapCount == maxTapCount, "Reached max button tap count.  Either this is intended or there is an error in the app navigation.")
+    }
+    
+    func assertIfButtonDoesNotExistElseTap(buttonId: String, buttonQueryType: ButtonQueryType = BaseFlowTests.defaultButtonQueryType) {
+        assertIfButtonDoesNotExist(buttonId: buttonId, buttonQueryType: buttonQueryType, shouldTapButton: true)
+    }
+    
+    func assertIfButtonDoesNotExist(buttonId: String, buttonQueryType: ButtonQueryType = BaseFlowTests.defaultButtonQueryType, shouldTapButton: Bool) {
         
         guard queryButtonWithWaitForExistence(buttonId: buttonId, buttonQueryType: buttonQueryType) else {
             let buttonExists: Bool = false
@@ -130,7 +167,9 @@ extension BaseFlowTests {
         
         XCTAssertTrue(button.exists)
                 
-        button.tap()
+        if shouldTapButton {
+            button.tap()
+        }
     }
     
     private func queryButtonWithWaitForExistence(buttonId: String, buttonQueryType: ButtonQueryType) -> Bool {
@@ -145,13 +184,13 @@ extension BaseFlowTests {
     private func queryButton(buttonId: String, buttonQueryType: ButtonQueryType) -> XCUIElement? {
         
         switch buttonQueryType {
-        case .buttons:
+        case .exactMatch:
             return app.buttons[buttonId]
             
         case .firstMatch:
             return app.buttons.matching(identifier: buttonId).firstMatch
             
-        case .descendantsFirstMatch:
+        case .searchDescendants:
             return app.queryDescendants(id: buttonId)
         }
     }
