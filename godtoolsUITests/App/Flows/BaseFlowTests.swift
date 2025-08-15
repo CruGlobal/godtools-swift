@@ -12,6 +12,7 @@ import XCTest
 class BaseFlowTests: XCTestCase {
         
     private static let defaultWaitForScreenExistence: TimeInterval = 5
+    private static let defaultWaitForButtonExistence: TimeInterval = 2
     
     private(set) var app: XCUIApplication = XCUIApplication()
     private(set) var flowDeepLinkUrl: String = ""
@@ -94,5 +95,53 @@ extension BaseFlowTests {
         // ~Levi
         
         XCTAssertTrue(app.staticTexts[screenAccessibility.id].waitForExistence(timeout: Self.defaultWaitForScreenExistence))
+    }
+}
+
+// MARK: - Button Query and Assertion
+
+extension BaseFlowTests {
+    
+    enum ButtonQueryType {
+        case firstMatching
+        case queryFromButtons
+    }
+    
+    func assertIfButtonDoesNotExistElseTap(buttonAccessibility: AccessibilityStrings.Button, buttonQueryType: ButtonQueryType = .queryFromButtons) {
+        
+        guard queryButtonWithWaitForExistence(buttonAccessibility: buttonAccessibility, buttonQueryType: buttonQueryType) else {
+            let buttonExists: Bool = false
+            XCTAssertTrue(buttonExists)
+            return
+        }
+        
+        let button: XCUIElement = queryButton(buttonAccessibility: buttonAccessibility, buttonQueryType: buttonQueryType)
+        
+        XCTAssertTrue(button.exists)
+                
+        button.tap()
+    }
+    
+    private func queryButtonWithWaitForExistence(buttonAccessibility: AccessibilityStrings.Button, buttonQueryType: ButtonQueryType) -> Bool {
+        
+        switch buttonQueryType {
+        case .queryFromButtons:
+            return app.buttons[buttonAccessibility.id].waitForExistence(timeout: Self.defaultWaitForButtonExistence)
+        
+        case .firstMatching:
+            return app.buttons.matching(identifier: buttonAccessibility.id).firstMatch.waitForExistence(timeout: Self.defaultWaitForButtonExistence)
+        }
+    }
+    
+    private func queryButton(buttonAccessibility: AccessibilityStrings.Button, buttonQueryType: ButtonQueryType) -> XCUIElement {
+        
+        switch buttonQueryType {
+            
+        case .queryFromButtons:
+            return app.buttons[buttonAccessibility.id]
+            
+        case .firstMatching:
+            return app.buttons.matching(identifier: buttonAccessibility.id).firstMatch
+        }
     }
 }
