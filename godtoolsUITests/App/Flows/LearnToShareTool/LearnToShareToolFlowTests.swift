@@ -11,96 +11,62 @@ import XCTest
 
 class LearnToShareToolFlowTests: BaseFlowTests {
     
-    private func launchAppToDashboardTools() {
+    private func launchAppToToolDetails() {
         
         super.launchApp(
             flowDeepLinkUrl: "godtools://org.cru.godtools/dashboard/tools",
             checkInitialScreenExists: .dashboardTools
         )
-    }
-    
-    private func openToolToToolDetails(toolName: String) {
         
-        let teachMeToShare = app.queryDescendants(id: AccessibilityStrings.Button.tool.rawValue + " " + toolName)
+        let toolId: String = AccessibilityStrings.Button.getToolButtonAccessibility(
+            toolButton: .tool,
+            toolName: .fourSpiritualLaws
+        )
         
-        guard let teachMeToShare = teachMeToShare else {
-            XCTAssertNotNil(teachMeToShare, "Found nil element.")
-            return
-        }
-
-        XCTAssertTrue(teachMeToShare.exists)
-        
-        teachMeToShare.tap()
+        assertIfButtonDoesNotExistElseTap(buttonId: toolId, buttonQueryType: .searchDescendants)
         
         assertIfScreenDoesNotExist(screenAccessibility: .toolDetails)
     }
-    
-    private func openToolToToolDetailsAndNavigateToLearnToShareFlow(toolName: String) {
-        
-        openToolToToolDetails(toolName: toolName)
-        
-        let learnToShareButton = getLearnToShareButtonFromToolDetails()
-        
-        XCTAssertTrue(learnToShareButton.exists)
+
+    private func navigateToLearnToShareFromToolsDetails() {
                 
-        learnToShareButton.tap()
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .learnToShare)
         
         assertIfScreenDoesNotExist(screenAccessibility: .learnToShareTool)
     }
     
-    private func getLearnToShareButtonFromToolDetails() -> XCUIElement {
-        return app.queryButton(buttonAccessibility: .learnToShare)
-    }
-    
-    private func getContinueButtonFromLearnToShare() -> XCUIElement {
-        app.queryButton(buttonAccessibility: .continueForward, waitForExistence: 1)
-    }
-    
-    func testInitialScreenIsDashboardTools() {
+    func testInitialScreenIsToolDetails() {
         
-        launchAppToDashboardTools()
+        launchAppToToolDetails()
     }
     
     func testTappingLearnToShareFromToolDetailsNavigatesToLearnToShareFlow() {
         
-        launchAppToDashboardTools()
-                
-        openToolToToolDetailsAndNavigateToLearnToShareFlow(toolName: SwiftUIPreviewToolNames.English.fourSpiritualLaws)
+        launchAppToToolDetails()
+        
+        navigateToLearnToShareFromToolsDetails()
     }
     
-    func testTappingCloseLearnToShareOpensTool() {
+    func testTappingCloseLearnToShareNavigatesToTheTool() {
         
-        launchAppToDashboardTools()
-                
-        openToolToToolDetailsAndNavigateToLearnToShareFlow(toolName: SwiftUIPreviewToolNames.English.fourSpiritualLaws)
+        launchAppToToolDetails()
         
-        let closeButton: XCUIElement = app.queryButton(buttonAccessibility: .close)
+        navigateToLearnToShareFromToolsDetails()
         
-        XCTAssertTrue(closeButton.exists)
-        
-        closeButton.tap()
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .close)
         
         assertIfScreenDoesNotExist(screenAccessibility: .tract)
     }
     
     func testNavigationThroughLearnToShareOpensToolWhenStartTrainingIsTapped() {
         
-        launchAppToDashboardTools()
-                
-        openToolToToolDetailsAndNavigateToLearnToShareFlow(toolName: SwiftUIPreviewToolNames.English.fourSpiritualLaws)
+        launchAppToToolDetails()
         
-        var continueButton: XCUIElement = getContinueButtonFromLearnToShare()
+        navigateToLearnToShareFromToolsDetails()
         
-        while continueButton.exists {
-            continueButton.tap()
-            continueButton = getContinueButtonFromLearnToShare()
-        }
+        tapWhileExists(buttonAccessibility: .continueForward)
         
-        let startTrainingButton = app.queryButton(buttonAccessibility: .startTraining, waitForExistence: 1)
-        
-        XCTAssertTrue(startTrainingButton.exists)
-                
-        startTrainingButton.tap()
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .startTraining)
         
         assertIfScreenDoesNotExist(screenAccessibility: .tract)
     }

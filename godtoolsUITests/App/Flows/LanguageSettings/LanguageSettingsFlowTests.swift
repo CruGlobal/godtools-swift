@@ -19,16 +19,6 @@ class LanguageSettingsFlowTests: BaseFlowTests {
         )
     }
     
-    private func getChooseAppLanguageButton(app: XCUIApplication) -> XCUIElement {
-        return app.queryButton(buttonAccessibility: .chooseAppLanguage)
-    }
-    
-    private func getEditDownloadedLanguagesButton(app: XCUIApplication) -> XCUIElement {
-        return app.queryButton(buttonAccessibility: .editDownloadedLanguages)
-    }
-    
-    // MARK: - Tests
-    
     func testInitialScreenIsLanguageSettings() {
         
         launchApp()
@@ -40,11 +30,7 @@ class LanguageSettingsFlowTests: BaseFlowTests {
         
         launchApp()
         
-        let chooseAppLanguageButton = getChooseAppLanguageButton(app: app)
-        
-        XCTAssertTrue(chooseAppLanguageButton.exists)
-        
-        chooseAppLanguageButton.tap()
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .chooseAppLanguage)
         
         assertIfScreenDoesNotExist(screenAccessibility: .appLanguages)
     }
@@ -53,11 +39,7 @@ class LanguageSettingsFlowTests: BaseFlowTests {
         
         launchApp()
         
-        let editDownloadedLanguagesButton = getEditDownloadedLanguagesButton(app: app)
-        
-        XCTAssertTrue(editDownloadedLanguagesButton.exists)
-        
-        editDownloadedLanguagesButton.tap()
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .editDownloadedLanguages)
         
         assertIfScreenDoesNotExist(screenAccessibility: .downloadableLanguages)
     }

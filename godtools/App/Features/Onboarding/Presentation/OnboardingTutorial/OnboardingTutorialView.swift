@@ -61,7 +61,7 @@ struct OnboardingTutorialView: View {
                     .animation(.easeOut, value: viewModel.currentPage)
                 }
                 
-                OnboardingTutorialPrimaryButton(geometry: geometry, title: viewModel.continueButtonTitle, accessibility: .nextOnboardingTutorial) {
+                OnboardingTutorialPrimaryButton(geometry: geometry, title: viewModel.continueButtonTitle, accessibility: viewModel.continueButtonAccessibility) {
                     viewModel.continueTapped()
                 }
                 
@@ -88,6 +88,8 @@ struct OnboardingTutorialView: View {
     
     @ViewBuilder private func getOnboardingTutorialView(index: Int, geometry: GeometryProxy) -> some View {
         
+        let screenAccessibilityId = AccessibilityStrings.Screen.getPageAccessibility(screen: .onboardingTutorialPage, page: index)
+        
         switch viewModel.pages[index] {
             
         case .readyForEveryConversation:
@@ -95,7 +97,7 @@ struct OnboardingTutorialView: View {
             OnboardingTutorialReadyForEveryConversationView(
                 viewModel: viewModel.getOnboardingTutorialReadyForEveryConversationViewModel(),
                 geometry: geometry,
-                screenAccessibility: .onboardingTutorialPage1,
+                screenAccessibilityId: screenAccessibilityId,
                 watchVideoTappedClosure: {
                     viewModel.watchReadyForEveryConversationVideoTapped()
                 }
@@ -106,7 +108,7 @@ struct OnboardingTutorialView: View {
             OnboardingTutorialMediaView(
                 viewModel: viewModel.getOnboardingTutorialTalkAboutGodWithAnyoneViewModel(),
                 geometry: geometry,
-                screenAccessibility: .onboardingTutorialPage2
+                screenAccessibilityId: screenAccessibilityId
             )
             
         case .prepareForTheMomentsThatMatter:
@@ -114,7 +116,7 @@ struct OnboardingTutorialView: View {
             OnboardingTutorialMediaView(
                 viewModel: viewModel.getOnboardingTutorialPrepareForTheMomentsThatMatterViewModel(),
                 geometry: geometry,
-                screenAccessibility: .onboardingTutorialPage3
+                screenAccessibilityId: screenAccessibilityId
             )
             
         case .helpSomeoneDiscoverJesus:
@@ -122,7 +124,7 @@ struct OnboardingTutorialView: View {
             OnboardingTutorialMediaView(
                 viewModel: viewModel.getOnboardingTutorialHelpSomeoneDiscoverJesusViewModel(),
                 geometry: geometry,
-                screenAccessibility: .onboardingTutorialPage4
+                screenAccessibilityId: screenAccessibilityId
             )
         }
     }

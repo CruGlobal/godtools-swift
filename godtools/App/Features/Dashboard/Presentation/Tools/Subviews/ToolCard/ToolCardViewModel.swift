@@ -41,8 +41,8 @@ class ToolCardViewModel: ObservableObject {
         openButtonTitle = tool.interfaceStrings.openToolActionTitle
         detailsButtonTitle = tool.interfaceStrings.openToolDetailsActionTitle
         
-        accessibilityWithToolName = accessibility.rawValue + " " + tool.name.lowercased()
-        
+        accessibilityWithToolName = AccessibilityStrings.Button.getToolButtonAccessibility(toolButton: accessibility, toolName: tool.name)
+                
         getToolIsFavoritedUseCase
             .getToolIsFavoritedPublisher(toolId: tool.dataModelId)
             .map { $0.isFavorited }

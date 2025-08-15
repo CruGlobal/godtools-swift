@@ -19,6 +19,14 @@ class DashboardFlowTests: BaseFlowTests {
         )
     }
     
+    private func launchAppToDashboardTools() {
+        
+        super.launchApp(
+            flowDeepLinkUrl: "godtools://org.cru.godtools/dashboard/tools",
+            checkInitialScreenExists: .dashboardTools
+        )
+    }
+    
     func testInitialScreenIsDashboardFavorites() {
         
         launchAppToDashboardFavorites()
@@ -28,11 +36,7 @@ class DashboardFlowTests: BaseFlowTests {
         
         launchAppToDashboardFavorites()
         
-        let menuButton = app.queryButton(buttonAccessibility: .dashboardMenu)
-        
-        XCTAssertTrue(menuButton.exists)
-        
-        menuButton.tap()
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .dashboardMenu)
         
         assertIfScreenDoesNotExist(screenAccessibility: .menu)
     }
@@ -44,11 +48,7 @@ extension DashboardFlowTests {
     
     private func tabToScreenInDashboard(tabAccessibility: AccessibilityStrings.Button, dashboardScreenAccessibility: AccessibilityStrings.Screen) {
         
-        let tab = app.queryFirstButtonMatching(buttonAccessibility: tabAccessibility)
-        
-        XCTAssertTrue(tab.exists)
-        
-        tab.tap()
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: tabAccessibility, buttonQueryType: .firstMatch)
         
         assertIfScreenDoesNotExist(screenAccessibility: dashboardScreenAccessibility)
     }
@@ -108,12 +108,8 @@ extension DashboardFlowTests {
         launchAppToDashboardFavorites()
         
         tabToFavorites()
-                
-        let toolDetails = app.queryFirstButtonMatching(buttonAccessibility: .toolDetails)
         
-        XCTAssertTrue(toolDetails.exists)
-        
-        toolDetails.tap()
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .toolDetails, buttonQueryType: .firstMatch)
         
         assertIfScreenDoesNotExist(screenAccessibility: .toolDetails)
     }
@@ -124,19 +120,11 @@ extension DashboardFlowTests {
         
         tabToFavorites()
         
-        let toolDetails = app.queryFirstButtonMatching(buttonAccessibility: .toolDetails)
-        
-        XCTAssertTrue(toolDetails.exists)
-        
-        toolDetails.tap()
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .toolDetails, buttonQueryType: .firstMatch)
         
         assertIfScreenDoesNotExist(screenAccessibility: .toolDetails)
         
-        let toolDetailsNavBack = app.queryButton(buttonAccessibility: .toolDetailsNavBack)
-        
-        XCTAssertTrue(toolDetailsNavBack.exists)
-        
-        toolDetailsNavBack.tap()
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .toolDetailsNavBack)
         
         assertIfScreenDoesNotExist(screenAccessibility: .dashboardFavorites)
     }
@@ -148,70 +136,46 @@ extension DashboardFlowTests {
     
     func testTappingToolsCategoryFilterOpensToolsCategoryFiltersList() {
         
-        launchAppToDashboardFavorites()
+        launchAppToDashboardTools()
         
-        tabToTools()
-        
-        let toolsCategoryFilter = app.queryButton(buttonAccessibility: .toolsCategoryFilter)
-        
-        XCTAssertTrue(toolsCategoryFilter.exists)
-        
-        toolsCategoryFilter.tap()
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .toolsCategoryFilter)
         
         assertIfScreenDoesNotExist(screenAccessibility: .toolsCategoryFilters)
     }
     
     func testTappingToolsLanguageFilterOpensToolsLanguageFiltersList() {
         
-        launchAppToDashboardFavorites()
-        
-        tabToTools()
-        
-        let toolsLanguageFilter = app.queryButton(buttonAccessibility: .toolsLanguageFilter)
-        
-        XCTAssertTrue(toolsLanguageFilter.exists)
-        
-        toolsLanguageFilter.tap()
+        launchAppToDashboardTools()
+                
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .toolsLanguageFilter)
         
         assertIfScreenDoesNotExist(screenAccessibility: .toolsLanguageFilters)
     }
     
     func testTappingSpotlightToolFromToolsOpensToolDetails() {
         
-        launchAppToDashboardFavorites()
+        launchAppToDashboardTools()
         
-        tabToTools()
+        let spotlightToolId: String = AccessibilityStrings.Button.getToolButtonAccessibility(
+            toolButton: .spotlightTool,
+            toolName: .teachMeToShare
+        )
         
-        let spotlightTool = app.descendants(matching: .any).matching(NSPredicate(format: "identifier CONTAINS[cd] %@", AccessibilityStrings.Button.spotlightTool.id)).allElementsBoundByIndex.first
-        
-        guard let spotlightTool = spotlightTool else {
-            XCTAssertNotNil(spotlightTool, "Found nil element.")
-            return
-        }
-        
-        XCTAssertTrue(spotlightTool.exists)
-        
-        spotlightTool.tap()
+        assertIfButtonDoesNotExistElseTap(buttonId: spotlightToolId, buttonQueryType: .searchDescendants)
         
         assertIfScreenDoesNotExist(screenAccessibility: .toolDetails)
     }
     
     func testTappingToolFromToolsOpensToolDetails() {
         
-        launchAppToDashboardFavorites()
+        launchAppToDashboardTools()
         
-        tabToTools()
+        let toolId: String = AccessibilityStrings.Button.getToolButtonAccessibility(
+            toolButton: .tool,
+            toolName: .fourSpiritualLaws
+        )
         
-        let tool = app.queryDescendants(id: AccessibilityStrings.Button.tool.rawValue + " " + SwiftUIPreviewToolNames.English.teachMeToShare)
-                
-        guard let tool = tool else {
-            XCTAssertNotNil(tool, "Found nil element.")
-            return
-        }
-
-        XCTAssertTrue(tool.exists)
-        
-        tool.tap()
+        assertIfButtonDoesNotExistElseTap(buttonId: toolId, buttonQueryType: .searchDescendants)
         
         assertIfScreenDoesNotExist(screenAccessibility: .toolDetails)
     }

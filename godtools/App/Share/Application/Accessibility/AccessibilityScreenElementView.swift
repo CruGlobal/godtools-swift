@@ -14,16 +14,19 @@ import SwiftUI
 
 struct AccessibilityScreenElementView: View {
     
-    private let screenAccessibility: AccessibilityStrings.Screen
+    private let screenAccessibilityId: String
     
     init(screenAccessibility: AccessibilityStrings.Screen) {
-        
-        self.screenAccessibility = screenAccessibility
+        screenAccessibilityId = screenAccessibility.id
+    }
+    
+    init(id: String) {
+        screenAccessibilityId = id
     }
     
     var body: some View {
         Text("")
             .frame(width: 0, height: 0)
-            .accessibilityIdentifier(screenAccessibility.id)
+            .accessibilityIdentifier(screenAccessibilityId)
     }
 }
