@@ -104,5 +104,19 @@ class AccessibilityStrings {
         case trainingTips = "Training Tips"
         case tutorial = "Tutorial"
         case watchOnboardingTutorialVideo = "Watch Onboarding Tutorial Video Button"
+        
+        static func getToolButtonAccessibility(toolButton: Button, toolName: Button.ToolName) -> String {
+            return Self.getToolButtonAccessibility(toolButton: toolButton, toolName: toolName.rawValue)
+        }
+        
+        static func getToolButtonAccessibility(toolButton: Button, toolName: String) -> String {
+            return toolButton.id + " - " + toolName.lowercased()
+        }
+        
+        enum ToolName: String {
+            case fourSpiritualLaws = "four spiritual laws"
+            case knowingGodPersonally = "knowing god personally"
+            case teachMeToShare = "teach me to share"
+        }
     }
 }
