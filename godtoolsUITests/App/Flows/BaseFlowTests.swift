@@ -64,6 +64,11 @@ class BaseFlowTests: XCTestCase {
                 
         assertIfInitialScreenDoesntExist()
     }
+}
+
+// MARK: - Screen Query and Assertion
+
+extension BaseFlowTests {
     
     func assertIfInitialScreenDoesntExist() {
         
@@ -78,6 +83,15 @@ class BaseFlowTests: XCTestCase {
     }
     
     func assertIfScreenDoesNotExist(screenAccessibility: AccessibilityStrings.Screen) {
+        
+        // NOTE:
+        //  I needed to place screen accessibility id's on an element within the screen view hierarchy rather than
+        //  on the top level view itself.  I noticed in SwiftUI the top level element id was overriding child elements.
+        //
+        //  For SwiftUI see AccessibilityScreenElementView.swift
+        //  For UIKit see UIViewController+AccessibilityScreenId.swift
+        //
+        // ~Levi
         
         XCTAssertTrue(app.staticTexts[screenAccessibility.id].waitForExistence(timeout: Self.defaultWaitForScreenExistence))
     }
