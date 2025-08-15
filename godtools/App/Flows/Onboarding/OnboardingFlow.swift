@@ -135,7 +135,7 @@ extension OnboardingFlow {
             localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             target: viewModel,
             action: #selector(viewModel.skipTapped),
-            accessibilityIdentifier: AccessibilityStrings.Button.skipOnboardingTutorial.id,
+            accessibilityIdentifier: AccessibilityStrings.Button.skip.id,
             hidesBarItemPublisher: viewModel.$hidesSkipButton.eraseToAnyPublisher()
         )
         
