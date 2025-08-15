@@ -11,7 +11,7 @@ import XCTest
 
 class BaseFlowTests: XCTestCase {
         
-    private static let defaultWaitForScreenExistence: TimeInterval = 5
+    private static let defaultWaitForScreenExistence: TimeInterval = 2
     private static let defaultWaitForButtonExistence: TimeInterval = 2
     
     private(set) var app: XCUIApplication = XCUIApplication()
@@ -103,45 +103,56 @@ extension BaseFlowTests {
 extension BaseFlowTests {
     
     enum ButtonQueryType {
-        case firstMatching
-        case queryFromButtons
+        case buttons
+        case firstMatch
+        case descendantsFirstMatch
     }
     
-    func assertIfButtonDoesNotExistElseTap(buttonAccessibility: AccessibilityStrings.Button, buttonQueryType: ButtonQueryType = .queryFromButtons) {
+    func assertIfButtonDoesNotExistElseTap(buttonAccessibility: AccessibilityStrings.Button, buttonQueryType: ButtonQueryType = .buttons) {
         
-        guard queryButtonWithWaitForExistence(buttonAccessibility: buttonAccessibility, buttonQueryType: buttonQueryType) else {
+        assertIfButtonDoesNotExistElseTap(buttonId: buttonAccessibility.id, buttonQueryType: buttonQueryType)
+    }
+    
+    func assertIfButtonDoesNotExistElseTap(buttonId: String, buttonQueryType: ButtonQueryType = .buttons) {
+        
+        guard queryButtonWithWaitForExistence(buttonId: buttonId, buttonQueryType: buttonQueryType) else {
             let buttonExists: Bool = false
             XCTAssertTrue(buttonExists)
             return
         }
         
-        let button: XCUIElement = queryButton(buttonAccessibility: buttonAccessibility, buttonQueryType: buttonQueryType)
+        let button = queryButton(buttonId: buttonId, buttonQueryType: buttonQueryType)
+        
+        guard let button = button else {
+            XCTAssertNotNil(button, "Found nil element.")
+            return
+        }
         
         XCTAssertTrue(button.exists)
                 
         button.tap()
     }
     
-    private func queryButtonWithWaitForExistence(buttonAccessibility: AccessibilityStrings.Button, buttonQueryType: ButtonQueryType) -> Bool {
+    private func queryButtonWithWaitForExistence(buttonId: String, buttonQueryType: ButtonQueryType) -> Bool {
         
-        switch buttonQueryType {
-        case .queryFromButtons:
-            return app.buttons[buttonAccessibility.id].waitForExistence(timeout: Self.defaultWaitForButtonExistence)
-        
-        case .firstMatching:
-            return app.buttons.matching(identifier: buttonAccessibility.id).firstMatch.waitForExistence(timeout: Self.defaultWaitForButtonExistence)
+        guard let button = queryButton(buttonId: buttonId, buttonQueryType: buttonQueryType) else {
+            return true
         }
+        
+        return button.waitForExistence(timeout: Self.defaultWaitForButtonExistence)
     }
     
-    private func queryButton(buttonAccessibility: AccessibilityStrings.Button, buttonQueryType: ButtonQueryType) -> XCUIElement {
+    private func queryButton(buttonId: String, buttonQueryType: ButtonQueryType) -> XCUIElement? {
         
         switch buttonQueryType {
+        case .buttons:
+            return app.buttons[buttonId]
             
-        case .queryFromButtons:
-            return app.buttons[buttonAccessibility.id]
+        case .firstMatch:
+            return app.buttons.matching(identifier: buttonId).firstMatch
             
-        case .firstMatching:
-            return app.buttons.matching(identifier: buttonAccessibility.id).firstMatch
+        case .descendantsFirstMatch:
+            return app.queryDescendants(id: buttonId)
         }
     }
 }
