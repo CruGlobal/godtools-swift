@@ -42,7 +42,8 @@ class AppLanguageFeatureDataLayerDependencies {
             resourcesRepository: coreDataLayer.getResourcesRepository(),
             languagesRepository: coreDataLayer.getLanguagesRepository(),
             toolDownloader: coreDataLayer.getToolDownloader(),
-            downloadedLanguagesRepository: getDownloadedLanguagesRepository()
+            downloadedLanguagesRepository: getDownloadedLanguagesRepository(),
+            cache: RealmToolLanguageDownloaderCache(realmDatabase: coreDataLayer.getSharedRealmDatabase())
         )
     }
     
@@ -112,6 +113,13 @@ class AppLanguageFeatureDataLayerDependencies {
             languagesRepository: coreDataLayer.getLanguagesRepository(),
             downloadedLanguagesRepository: getDownloadedLanguagesRepository(),
             getTranslatedLanguageName: coreDataLayer.getTranslatedLanguageName()
+        )
+    }
+    
+    func getDownloadToolLanguageProgress() -> GetDownloadToolLanguageProgressInterface {
+        return GetDownloadToolLanguageProgress(
+            toolLanguageDownloader: getToolLanguageDownloader(),
+            downloadedLanguagesRepository: getDownloadedLanguagesRepository()
         )
     }
     
