@@ -42,6 +42,12 @@ struct RepositorySyncTests {
                 expectedConfirmationCount: 1,
                 externalDataModels: Self.getMockRepositorySyncDataModels(startingId: 0, count: 2),
                 expectedDataModelIds: ["0", "1"]
+            ),
+            TestArgument(
+                cachePolicy: .fetchIgnoringCacheData,
+                expectedConfirmationCount: 1,
+                externalDataModels: Self.getMockRepositorySyncDataModels(startingId: 0, count: 0),
+                expectedDataModelIds: []
             )
           ]
     )

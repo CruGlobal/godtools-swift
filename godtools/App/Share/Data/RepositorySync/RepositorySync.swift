@@ -39,19 +39,83 @@ extension RepositorySync {
     
     func getObjectsPublisher(cachePolicy: RepositorySyncCachePolicy, requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
         
-        let realmDatabase: RealmDatabase = self.realmDatabase
+        switch cachePolicy {
+            
+        case .fetchIgnoringCacheData:
+            
+            fetchAndStoreObjectsFromExternalDataFetchPublisher(
+                requestPriority: requestPriority
+            )
+            .sink { (response: RepositorySyncResponse<DataModelType>) in
+                
+            }
+            .store(in: &cancellables)
+            
+            return observeObjectsChangePublisher()
+                .eraseToAnyPublisher()
+            
+        case .returnCacheDataDontFetch:
+            break
         
-        externalDataFetch
+        case .returnCacheDataElseFetch:
+            break
+        
+        case .returnCacheDataAndFetch:
+            break
+        }
+        
+        let response = RepositorySyncResponse<DataModelType>(
+            objects: [],
+            errors: []
+        )
+        
+        return Just(response)
+            .eraseToAnyPublisher()
+        
+    }
+    
+    func observeObjectsPublisher(cachePolicy: RepositorySyncCachePolicy, requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
+        
+        return Just(RepositorySyncResponse(objects: [], errors: []))
+            .eraseToAnyPublisher()
+    }
+    
+    private func observeObjectsChangePublisher() -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
+        
+
+        let realm: Realm = realmDatabase.openRealm()
+        
+        return realm
+            .objects(RealmObjectType.self)
+            .objectWillChange
+            .map {
+                
+                let results: Results<RealmObjectType> = realm.objects(RealmObjectType.self)
+                
+                let dataModels: [DataModelType] = results.compactMap {
+                    self.dataModelMapping.toDataModel(persistObject: $0)
+                }
+                
+                let response = RepositorySyncResponse(objects: dataModels, errors: [])
+                
+                return response
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    private func fetchAndStoreObjectsFromExternalDataFetchPublisher(requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
+        
+        return externalDataFetch
             .getObjectsPublisher(requestPriority: requestPriority)
             .flatMap({ (response: RepositorySyncResponse<ExternalDataFetchType.DataModel>) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> in
                 
-                let dataModels: [DataModelType] = response.objects.compactMap {
+                let responseDataModels: [DataModelType] = response.objects.compactMap {
                     self.dataModelMapping.toDataModel(externalObject: $0)
                 }
                 
-                return realmDatabase.writeObjectsPublisher { (realm: Realm) in
+                return self.realmDatabase.writeObjectsPublisher { (realm: Realm) in
                    
-                    let realmObjects: [RealmObjectType] = dataModels.compactMap {
+                    let realmObjects: [RealmObjectType] = responseDataModels.compactMap {
                         self.dataModelMapping.toPersistObject(dataModel: $0)
                     }
                     
@@ -59,11 +123,7 @@ extension RepositorySync {
                     
                 } mapInBackgroundClosure: { (realmObjects: [RealmObjectType]) in
                     
-                    let dataModels: [DataModelType] = realmObjects.compactMap {
-                        self.dataModelMapping.toDataModel(persistObject: $0)
-                    }
-                    
-                    return dataModels
+                    return responseDataModels
                 }
                 .map {
                     RepositorySyncResponse(objects: $0, errors: [])
@@ -71,7 +131,7 @@ extension RepositorySync {
                 .catch({ (error: Error) in
                     
                     let response = RepositorySyncResponse(
-                        objects: dataModels,
+                        objects: responseDataModels,
                         errors: [error]
                     )
                     
@@ -80,27 +140,6 @@ extension RepositorySync {
                 })
                 .eraseToAnyPublisher()
             })
-            .sink { [weak self] (response: RepositorySyncResponse<DataModelType>) in
-                
-            }
-            .store(in: &cancellables)
-        
-        return realmDatabase.openRealm()
-            .objects(RealmObjectType.self)
-            .objectWillChange
-            .map {
-                
-                let dataModels: Array<DataModelType> = Array()
-                let response = RepositorySyncResponse(objects: dataModels)
-                
-                return response
-            }
-            .eraseToAnyPublisher()
-    }
-    
-    func observeObjectsPublisher(cachePolicy: RepositorySyncCachePolicy, requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
-        
-        return Just(RepositorySyncResponse(objects: []))
             .eraseToAnyPublisher()
     }
 }
@@ -147,13 +186,15 @@ extension RepositorySync {
                 .map { (dataModels: [DataModelType]) in
                     
                     return RepositorySyncResponse<DataModelType>(
-                        objects: dataModels
+                        objects: dataModels,
+                        errors: []
                     )
                 }
                 .catch { (error: Error) in
                     
                     let response: RepositorySyncResponse<DataModelType> = RepositorySyncResponse(
-                        objects: Array<DataModelType>()
+                        objects: Array<DataModelType>(),
+                        errors: []
                     )
                     
                     return Just(response)
@@ -172,7 +213,7 @@ extension RepositorySync {
             .objects(RealmObjectType.self)
             .objectWillChange
             .map { _ in
-                return RepositorySyncResponse(objects: [])
+                return RepositorySyncResponse(objects: [], errors: [])
             }
             .eraseToAnyPublisher()
     }
@@ -200,7 +241,7 @@ extension RepositorySync {
             
         }
         
-        let response = RepositorySyncResponse<DataModelType>(objects: [])
+        let response = RepositorySyncResponse<DataModelType>(objects: [], errors: [])
         
         return Just(response)
             .eraseToAnyPublisher()

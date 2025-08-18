@@ -34,7 +34,7 @@ class MockRepositorySyncExternalDataFetch: RepositorySyncExternalDataFetchInterf
                     fetchedObjects = Array()
                 }
                 
-                return Just(RepositorySyncResponse(objects: fetchedObjects))
+                return Just(RepositorySyncResponse(objects: fetchedObjects, errors: []))
                     .eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
@@ -42,7 +42,7 @@ class MockRepositorySyncExternalDataFetch: RepositorySyncExternalDataFetchInterf
     
     func getObjectsPublisher(requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<MockRepositorySyncDataModel>, Never> {
         
-        return Just(RepositorySyncResponse(objects: objects))
+        return Just(RepositorySyncResponse(objects: objects, errors: []))
             .eraseToAnyPublisher()
     }
     
