@@ -8,6 +8,7 @@
 
 import Foundation
 import RequestOperation
+import Combine
 
 class FollowUpsService {
     
@@ -20,58 +21,81 @@ class FollowUpsService {
         self.cache = cache
     }
     
-    func postNewFollowUp(followUp: FollowUpModel) -> OperationQueue {
-        
-        return api.postFollowUp(followUp: followUp) { [weak self] (response: RequestResponse) in
-            
-            let httpStatusCode: Int = response.httpStatusCode ?? -1
-            let httpStatusCodeFailed: Bool = httpStatusCode < 200 || httpStatusCode >= 400
-            
-            if httpStatusCodeFailed {
-                self?.cache.cacheFailedFollowUps(followUps: [followUp])
+    func postFollowUpPublisher(followUp: FollowUpModel, requestPriority: RequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
+                            
+        return api.postFollowUpPublisher(followUp: followUp, requestPriority: requestPriority)
+            .mapError { (error: Error) in
+                
+                self.cache.cacheFailedFollowUps(followUps: [followUp])
+                
+                return error
             }
-        }
+            .map { (response: RequestDataResponse) in
+                
+                let httpStatusCode: Int = response.urlResponse.httpStatusCode ?? -1
+                let httpStatusCodeFailed: Bool = httpStatusCode < 200 || httpStatusCode >= 400
+                                
+                if httpStatusCodeFailed {
+                    self.cache.cacheFailedFollowUps(followUps: [followUp])
+                }
+                
+                return response
+            }
+            .eraseToAnyPublisher()
     }
     
-    func postFailedFollowUpsIfNeeded() -> OperationQueue? {
-        
+    func postFailedFollowUpsIfNeededPublisher(requestPriority: RequestPriority) -> AnyPublisher<Void, Never> {
+                
         let failedFollowUps: [FollowUpModel] = cache.getFailedFollowUps()
-        
+                
         guard !failedFollowUps.isEmpty else {
-            return nil
+            return Just(Void())
+                .eraseToAnyPublisher()
         }
         
-        let queue = OperationQueue()
-        
-        var operations: [RequestOperation] = Array()
         var successfulPostedFollowUps: [FollowUpModel] = Array()
+        var requestCompletionCount: Int = 0
+        
+        let requests: [AnyPublisher<Bool, Never>] = failedFollowUps.map { (followUp: FollowUpModel) in
+            
+            return self.api.postFollowUpPublisher(
+                followUp: followUp,
+                requestPriority: requestPriority
+            )
+            .map { (response: RequestDataResponse) in
                 
-        for followUp in failedFollowUps {
-            
-            let operation: RequestOperation = api.newFollowUpsOperation(followUp: followUp)
-            
-            operations.append(operation)
-            
-            operation.setCompletionHandler { [weak self] (response: RequestResponse) in
-                
-                let httpStatusCode: Int = response.httpStatusCode ?? -1
+                let httpStatusCode: Int = response.urlResponse.httpStatusCode ?? -1
                 let httpStatusCodeSuccess: Bool = httpStatusCode >= 200 && httpStatusCode < 400
-                let isConnectedToNetwork: Bool = !response.notConnectedToInternet
-                let failedForBadRequest: Bool = !httpStatusCodeSuccess && isConnectedToNetwork
+                                
+                return httpStatusCodeSuccess
+            }
+            .catch { _ in
+                return Just(false)
+                    .eraseToAnyPublisher()
+            }
+            .map { (isSuccess: Bool) in
                 
-                if httpStatusCodeSuccess || failedForBadRequest {
-                    
+                requestCompletionCount += 1
+                                
+                if isSuccess {
                     successfulPostedFollowUps.append(followUp)
                 }
                 
-                if queue.operations.isEmpty {
-                    self?.cache.deleteFollowUps(followUps: successfulPostedFollowUps)
+                let isLastRequest: Bool = requestCompletionCount == failedFollowUps.count
+                                
+                if isLastRequest {
+                    self.cache.deleteFollowUps(followUps: successfulPostedFollowUps)
                 }
+                
+                return isSuccess
             }
+            .eraseToAnyPublisher()
         }
         
-        queue.addOperations(operations, waitUntilFinished: false)
-        
-        return queue
+        return Publishers.MergeMany(requests)
+            .map { _ in
+                return Void()
+            }
+            .eraseToAnyPublisher()
     }
 }

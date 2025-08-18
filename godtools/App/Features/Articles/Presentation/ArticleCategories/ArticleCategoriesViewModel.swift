@@ -7,26 +7,24 @@
 //
 
 import Foundation
-import RealmSwift
 import GodToolsToolParser
 import Combine
-import LocalizationServices
 
 class ArticleCategoriesViewModel {
         
+    private static var backgroundCancellables: Set<AnyCancellable> = Set()
+    
     private let resource: ResourceModel
     private let language: LanguageModel
     private let manifest: Manifest
-    private let articleManifestAemRepository: ArticleManifestAemRepository
-    private let localizationServices: LocalizationServices
+    private let downloadArticlesObservable: DownloadManifestArticlesObservable
     private let manifestResourcesCache: MobileContentRendererManifestResourcesCache
     private let incrementUserCounterUseCase: IncrementUserCounterUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
+    private let categories: [GodToolsToolParser.Category]
     
-    private var categories: [GodToolsToolParser.Category] = Array()
-    private var downloadArticlesReceipt: ArticleManifestDownloadArticlesReceipt?
-    private var cancellables = Set<AnyCancellable>()
+    private var cancellables: Set<AnyCancellable> = Set()
     private var pageViewCount: Int = 0
     
     private weak var flowDelegate: FlowDelegate?
@@ -34,27 +32,33 @@ class ArticleCategoriesViewModel {
     let numberOfCategories: ObservableValue<Int> = ObservableValue(value: 0)
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
         
-    init(flowDelegate: FlowDelegate, resource: ResourceModel, language: LanguageModel, manifest: Manifest, articleManifestAemRepository: ArticleManifestAemRepository, manifestResourcesCache: MobileContentRendererManifestResourcesCache, localizationServices: LocalizationServices, incrementUserCounterUseCase: IncrementUserCounterUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(flowDelegate: FlowDelegate, resource: ResourceModel, language: LanguageModel, manifest: Manifest, downloadArticlesObservable: DownloadManifestArticlesObservable, manifestResourcesCache: MobileContentRendererManifestResourcesCache, incrementUserCounterUseCase: IncrementUserCounterUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
         self.language = language
         self.manifest = manifest
-        self.articleManifestAemRepository = articleManifestAemRepository
+        self.downloadArticlesObservable = downloadArticlesObservable
         self.manifestResourcesCache = manifestResourcesCache
-        self.localizationServices = localizationServices
         self.incrementUserCounterUseCase = incrementUserCounterUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
-                                                    
-        reloadCategories()
-        
-        downloadArticles(forceDownload: false)
+                
+        categories = manifest.categories
+        numberOfCategories.accept(value: categories.count)
+                        
+        downloadArticlesObservable
+            .$isDownloading
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (isDownloading: Bool) in
+                
+                self?.isLoading.accept(value: isDownloading)
+            }
+            .store(in: &cancellables)
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
-        cancelArticleDownload()
     }
     
     private var analyticsScreenName: String {
@@ -67,30 +71,6 @@ class ArticleCategoriesViewModel {
     
     private var analyticsSiteSubSection: String {
         return ""
-    }
-    
-    private func cancelArticleDownload() {
-        downloadArticlesReceipt?.cancel()
-        downloadArticlesReceipt = nil
-    }
-    
-    private func reloadCategories() {
-        self.categories = manifest.categories
-        numberOfCategories.accept(value: categories.count)
-    }
-
-    private func downloadArticles(forceDownload: Bool) {
-        
-        cancelArticleDownload()
-        
-        isLoading.accept(value: true)
-        
-        downloadArticlesReceipt = articleManifestAemRepository.downloadAndCacheManifestAemUrisReceipt(manifest: manifest, languageCode: language.localeId, forceDownload: forceDownload, completion: { [weak self] (result: ArticleAemRepositoryResult) in
-            
-            DispatchQueue.main.async { [weak self] in
-                self?.isLoading.accept(value: false)
-            }
-        })
     }
 }
 
@@ -113,7 +93,7 @@ extension ArticleCategoriesViewModel {
                 } receiveValue: { _ in
                     
                 }
-                .store(in: &cancellables)
+                .store(in: &Self.backgroundCancellables)
         }
         
         trackScreenViewAnalyticsUseCase.trackScreen(
@@ -142,10 +122,11 @@ extension ArticleCategoriesViewModel {
         
         let category: GodToolsToolParser.Category = categories[index]
         
-        flowDelegate?.navigate(step: .articleCategoryTappedFromArticleCategories(resource: resource, language: language, category: category, manifest: manifest, currentArticleDownloadReceipt: downloadArticlesReceipt))
+        flowDelegate?.navigate(step: .articleCategoryTappedFromArticleCategories(resource: resource, language: language, category: category, manifest: manifest))
     }
     
     func refreshArticles() {
-        downloadArticles(forceDownload: true)
+        
+        downloadArticlesObservable.downloadArticles(downloadCachePolicy: .ignoreCache, forceFetchFromRemote: true)
     }
 }

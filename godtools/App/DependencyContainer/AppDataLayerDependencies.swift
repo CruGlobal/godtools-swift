@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RequestOperation
 import SocialAuthentication
 import LocalizationServices
 
@@ -21,33 +22,33 @@ class AppDataLayerDependencies {
     
     private let sharedAppBuild: AppBuild
     private let sharedAppConfig: AppConfig
-    private let sharedInfoPlist: InfoPlist
+    private let sharedUrlSessionPriority: URLSessionPriority = URLSessionPriority()
+    private let sharedRequestSender: RequestSender
     private let sharedRealmDatabase: RealmDatabase
-    private let sharedIgnoreCacheSession: IgnoreCacheSession = IgnoreCacheSession()
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
     private let sharedAnalytics: AnalyticsContainer
     private let firebaseEnabled: Bool
     
-    init(appBuild: AppBuild, appConfig: AppConfig, infoPlist: InfoPlist, realmDatabase: RealmDatabase, firebaseEnabled: Bool) {
+    init(appBuild: AppBuild, appConfig: AppConfig, realmDatabase: RealmDatabase, firebaseEnabled: Bool, urlSessionEnabled: Bool) {
         
         sharedAppBuild = appBuild
         sharedAppConfig = appConfig
-        sharedInfoPlist = infoPlist
         sharedRealmDatabase = realmDatabase
         self.firebaseEnabled = firebaseEnabled
         
         sharedAnalytics = AnalyticsContainer(
             firebaseAnalytics: FirebaseAnalytics(appBuild: appBuild, loggingEnabled: appBuild.configuration == .analyticsLogging)
         )
+        
+        if urlSessionEnabled {
+            sharedRequestSender = RequestSender()
+        }
+        else {
+            sharedRequestSender = DoesNotSendUrlRequestSender()
+        }
     }
     
     // MARK: - Data Layer Classes
-    
-    func getAccountInterfaceStringsRepositoryInterface() -> GetAccountInterfaceStringsRepositoryInterface {
-        return GetAccountInterfaceStringsRepository(
-            localizationServices: getLocalizationServices()
-        )
-    }
     
     func getAnalytics() -> AnalyticsContainer {
         return sharedAnalytics
@@ -70,36 +71,48 @@ class AppDataLayerDependencies {
         return FirebaseInAppMessaging.shared
     }
     
+    private func getArticleAemCache() -> ArticleAemCache {
+        return ArticleAemCache(
+            realmDatabase: sharedRealmDatabase,
+            articleWebArchiver: ArticleWebArchiver(
+                urlSessionPriority: getSharedUrlSessionPriority(),
+                requestSender: getSharedRequestSender()
+            )
+        )
+    }
+    
+    private func getArticleAemDownloader() -> ArticleAemDownloader {
+        return ArticleAemDownloader(
+            urlSessionPriority: getSharedUrlSessionPriority(),
+            requestSender: getSharedRequestSender()
+        )
+    }
+    
     func getArticleAemRepository() -> ArticleAemRepository {
         return ArticleAemRepository(
-            downloader: ArticleAemDownloader(
-                ignoreCacheSession: sharedIgnoreCacheSession
-            ),
-            cache: ArticleAemCache(
-                realmDatabase: sharedRealmDatabase,
-                webArchiveQueue: getWebArchiveQueue()
-            )
+            downloader: getArticleAemDownloader(),
+            cache: getArticleAemCache()
         )
     }
     
     func getArticleManifestAemRepository() -> ArticleManifestAemRepository {
         return ArticleManifestAemRepository(
-            downloader: ArticleAemDownloader(
-                ignoreCacheSession: sharedIgnoreCacheSession
-            ),
-            cache: ArticleAemCache(
-                realmDatabase: sharedRealmDatabase,
-                webArchiveQueue: getWebArchiveQueue()
-            ),
+            downloader: getArticleAemDownloader(),
+            cache: getArticleAemCache(),
             categoryArticlesCache: RealmCategoryArticlesCache(
                 realmDatabase: sharedRealmDatabase
-            )
+            ),
+            sharedUserDefaultsCache: getSharedUserDefaultsCache()
         )
     }
     
     func getAttachmentsRepository() -> AttachmentsRepository {
         return AttachmentsRepository(
-            api: MobileContentAttachmentsApi(config: getAppConfig(), ignoreCacheSession: sharedIgnoreCacheSession),
+            api: MobileContentAttachmentsApi(
+                config: getAppConfig(),
+                urlSessionPriority: getSharedUrlSessionPriority(),
+                requestSender: getSharedRequestSender()
+            ),
             cache: RealmAttachmentsCache(realmDatabase: sharedRealmDatabase),
             resourcesFileCache: getResourcesFileCache(),
             bundle: AttachmentsBundleCache()
@@ -124,7 +137,10 @@ class AppDataLayerDependencies {
     
     func getEmailSignUpService() -> EmailSignUpService {
         return EmailSignUpService(
-            api: EmailSignUpApi(ignoreCacheSession: sharedIgnoreCacheSession),
+            api: EmailSignUpApi(
+                urlSessionPriority: getSharedUrlSessionPriority(),
+                requestSender: getSharedRequestSender()
+            ),
             cache: RealmEmailSignUpsCache(realmDatabase: sharedRealmDatabase)
         )
     }
@@ -139,15 +155,16 @@ class AppDataLayerDependencies {
         return FavoritingToolMessageCache(userDefaultsCache: sharedUserDefaultsCache)
     }
     
-    func getFirebaseMessaging() -> FirebaseMessaging {
-        return FirebaseMessaging()
+    func getSharedFirebaseMessaging() -> FirebaseMessaging {
+        return FirebaseMessaging.shared
     }
     
     func getFollowUpsService() -> FollowUpsService {
         
         let api = FollowUpsApi(
             baseUrl: getAppConfig().getMobileContentApiBaseUrl(),
-            ignoreCacheSession: sharedIgnoreCacheSession
+            urlSessionPriority: getSharedUrlSessionPriority(),
+            requestSender: getSharedRequestSender()
         )
         
         let cache = FailedFollowUpsCache(
@@ -161,14 +178,15 @@ class AppDataLayerDependencies {
     }
     
     func getInfoPlist() -> InfoPlist {
-        return sharedInfoPlist
+        return InfoPlist()
     }
     
     func getLanguagesRepository() -> LanguagesRepository {
         
         let api = MobileContentLanguagesApi(
             config: getAppConfig(),
-            ignoreCacheSession: sharedIgnoreCacheSession
+            urlSessionPriority: getSharedUrlSessionPriority(),
+            requestSender: getSharedRequestSender()
         )
         
         let cache = RealmLanguagesCache(
@@ -198,7 +216,10 @@ class AppDataLayerDependencies {
     }
     
     func getLocalizationServices() -> LocalizationServices {
-        return LocalizationServices(localizableStringsFilesBundle: Bundle.main)
+        return LocalizationServices(
+            localizableStringsFilesBundle: Bundle.main,
+            isUsingBaseInternationalization: false
+        )
     }
     
     func getMenuInterfaceStringsRepositoryInterface() -> GetMenuInterfaceStringsRepositoryInterface {
@@ -216,7 +237,8 @@ class AppDataLayerDependencies {
         return MobileContentAuthTokenRepository(
             api: MobileContentAuthTokenAPI(
                 config: getAppConfig(),
-                ignoreCacheSession: sharedIgnoreCacheSession
+                urlSessionPriority: getSharedUrlSessionPriority(),
+                requestSender: getSharedRequestSender()
             ),
             cache: MobileContentAuthTokenCache(
                 mobileContentAuthTokenKeychainAccessor: getMobileContentAuthTokenKeychainAccessor(),
@@ -227,7 +249,7 @@ class AppDataLayerDependencies {
     
     func getMobileContentApiAuthSession() -> MobileContentApiAuthSession {
         return MobileContentApiAuthSession(
-            ignoreCacheSession: sharedIgnoreCacheSession,
+            requestSender: getSharedRequestSender(),
             mobileContentAuthTokenRepository: getMobileContentAuthTokenRepository(),
             userAuthentication: getUserAuthentication()
         )
@@ -259,7 +281,8 @@ class AppDataLayerDependencies {
         
         let api = MobileContentResourcesApi(
             config: getAppConfig(),
-            ignoreCacheSession: sharedIgnoreCacheSession
+            urlSessionPriority: getSharedUrlSessionPriority(),
+            requestSender: getSharedRequestSender()
         )
         
         let cache = RealmResourcesCache(
@@ -271,15 +294,19 @@ class AppDataLayerDependencies {
             api: api,
             cache: cache,
             attachmentsRepository: getAttachmentsRepository(),
-            translationsRepository: getTranslationsRepository(),
-            languagesRepository: getLanguagesRepository()
+            languagesRepository: getLanguagesRepository(),
+            sharedUserDefaultsCache: getSharedUserDefaultsCache()
         )
     }
     
     func getResourceViewsService() -> ResourceViewsService {
         
         return ResourceViewsService(
-            resourceViewsApi: MobileContentResourceViewsApi(config: getAppConfig(), ignoreCacheSession: sharedIgnoreCacheSession),
+            resourceViewsApi: MobileContentResourceViewsApi(
+                config: getAppConfig(),
+                urlSessionPriority: getSharedUrlSessionPriority(),
+                requestSender: getSharedRequestSender()
+            ),
             failedResourceViewsCache: FailedResourceViewsCache(realmDatabase: sharedRealmDatabase)
         )
     }
@@ -290,16 +317,20 @@ class AppDataLayerDependencies {
         )
     }
     
-    func getSharedIgnoreCacheSession() -> IgnoreCacheSession {
-        return sharedIgnoreCacheSession
-    }
-    
     func getSharedLaunchCountRepository() -> LaunchCountRepository {
         return LaunchCountRepository.shared
     }
     
+    func getSharedUrlSessionPriority() -> URLSessionPriority {
+        return sharedUrlSessionPriority
+    }
+    
     func getSharedRealmDatabase() -> RealmDatabase {
         return sharedRealmDatabase
+    }
+    
+    func getSharedRequestSender() -> RequestSender {
+        return sharedRequestSender
     }
     
     func getSharedUserDefaultsCache() -> SharedUserDefaultsCache {
@@ -375,7 +406,11 @@ class AppDataLayerDependencies {
     func getTranslationsRepository() -> TranslationsRepository {        
         return TranslationsRepository(
             infoPlist: getInfoPlist(),
-            api: MobileContentTranslationsApi(config: getAppConfig(), ignoreCacheSession: sharedIgnoreCacheSession),
+            api: MobileContentTranslationsApi(
+                config: getAppConfig(),
+                urlSessionPriority: getSharedUrlSessionPriority(),
+                requestSender: getSharedRequestSender()
+            ),
             cache: RealmTranslationsCache(realmDatabase: sharedRealmDatabase),
             resourcesFileCache: getResourcesFileCache(),
             trackDownloadedTranslationsRepository: getTrackDownloadedTranslationsRepository(),
@@ -412,7 +447,7 @@ class AppDataLayerDependencies {
         
         let api = UserCountersAPI(
             config: getAppConfig(),
-            ignoreCacheSession: sharedIgnoreCacheSession,
+            urlSessionPriority: getSharedUrlSessionPriority(),
             mobileContentApiAuthSession: getMobileContentApiAuthSession()
         )
         
@@ -425,20 +460,6 @@ class AppDataLayerDependencies {
             api: api,
             cache: cache,
             remoteUserCountersSync: RemoteUserCountersSync(api: api, cache: cache)
-        )
-    }
-    
-    func getUserDetailsRepository() -> UserDetailsRepository {
-        return UserDetailsRepository(
-            api: UserDetailsAPI(
-                config: getAppConfig(),
-                ignoreCacheSession: sharedIgnoreCacheSession,
-                mobileContentApiAuthSession: getMobileContentApiAuthSession()
-            ),
-            cache: RealmUserDetailsCache(
-                realmDatabase: sharedRealmDatabase,
-                authTokenRepository: getMobileContentAuthTokenRepository()
-            )
         )
     }
     
@@ -456,10 +477,6 @@ class AppDataLayerDependencies {
                 realmDatabase: sharedRealmDatabase
             )
         )
-    }
-    
-    func getWebArchiveQueue() -> WebArchiveQueue {
-        return WebArchiveQueue(ignoreCacheSession: sharedIgnoreCacheSession)
     }
     
     func getNewWebSocket(url: URL) -> WebSocketInterface {

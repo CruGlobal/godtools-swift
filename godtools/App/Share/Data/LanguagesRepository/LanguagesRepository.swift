@@ -9,6 +9,7 @@
 import Foundation
 import Combine
 import RealmSwift
+import RequestOperation
 
 class LanguagesRepository {
     
@@ -53,9 +54,9 @@ class LanguagesRepository {
         return cache.getLanguagesPublisher()
     }
     
-    func syncLanguagesFromRemote() -> AnyPublisher<RealmLanguagesCacheSyncResult, Error> {
+    func syncLanguagesFromRemote(requestPriority: RequestPriority) -> AnyPublisher<RealmLanguagesCacheSyncResult, Error> {
         
-        return api.getLanguages()
+        return api.getLanguages(requestPriority: requestPriority)
             .flatMap({ languages -> AnyPublisher<RealmLanguagesCacheSyncResult, Error> in
                 
                 return self.cache.syncLanguages(languages: languages)

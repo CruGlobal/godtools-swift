@@ -78,6 +78,7 @@ class ToolLanguageDownloader {
             DownloadToolDataModel(toolId: $0.id, languages: [languageModel.code])
         })
                 
+<<<<<<< HEAD
         return toolDownloader.downloadToolsPublisher(tools: downloadTools)
             .flatMap({ (dataModel: ToolDownloaderDataModel) -> AnyPublisher<ToolLanguageDownload?, Error> in
                 
@@ -99,6 +100,9 @@ class ToolLanguageDownloader {
                     return ToolDownloaderDataModel(attachments: [], progress: 0, translations: [])
                 }
             }
+=======
+        return toolDownloader.downloadToolsPublisher(tools: downloadTools, requestPriority: .low)
+>>>>>>> develop
             .eraseToAnyPublisher()
     }
     

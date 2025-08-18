@@ -17,39 +17,15 @@ class AppDomainLayerDependencies {
         self.dataLayer = dataLayer
     }
     
-    func getAccountCreationIsSupportedUseCase() -> GetAccountCreationIsSupportedUseCase {
-        return GetAccountCreationIsSupportedUseCase()
-    }
-    
     func getAppUIDebuggingIsEnabledUseCase() -> GetAppUIDebuggingIsEnabledUseCase {
         return GetAppUIDebuggingIsEnabledUseCase(
             appBuild: dataLayer.getAppBuild()
         )
     }
     
-    func getDeleteUserCountersUseCase() -> DeleteUserCountersUseCase {
-        return DeleteUserCountersUseCase(
-            repository: dataLayer.getUserCountersRepository()
-        )
-    }
-    
     func getDisableOptInOnboardingBannerUseCase() -> DisableOptInOnboardingBannerUseCase {
         return DisableOptInOnboardingBannerUseCase(
             optInOnboardingBannerEnabledRepository: dataLayer.getOptInOnboardingBannerEnabledRepository()
-        )
-    }
-    
-    func getIncrementUserCounterUseCase() -> IncrementUserCounterUseCase {
-        return IncrementUserCounterUseCase(
-            userCountersRepository: dataLayer.getUserCountersRepository()
-        )
-    }
-    
-    func getLogOutUserUseCase() -> LogOutUserUseCase {
-        return LogOutUserUseCase(
-            userAuthentication: dataLayer.getUserAuthentication(),
-            firebaseAnalytics: dataLayer.getAnalytics().firebaseAnalytics,
-            deleteUserCountersUseCase: getDeleteUserCountersUseCase()
         )
     }
     
@@ -109,47 +85,6 @@ class AppDomainLayerDependencies {
     func getTrainingTipCompletedUseCase() -> GetTrainingTipCompletedUseCase {
         return GetTrainingTipCompletedUseCase(
             repository: dataLayer.getCompletedTrainingTipRepository()
-        )
-    }
-    
-    func getUserAccountDetailsUseCase() -> GetUserAccountDetailsUseCase {
-        return GetUserAccountDetailsUseCase(
-            repository: dataLayer.getUserDetailsRepository(),
-            localizationServices: dataLayer.getLocalizationServices()
-        )
-    }
-    
-    func getUserActivityBadgeUseCase() -> GetUserActivityBadgeUseCase {
-        return GetUserActivityBadgeUseCase(
-            localizationServices: dataLayer.getLocalizationServices()
-        )
-    }
-    
-    func getUserActivityStatsUseCase() -> GetUserActivityStatsUseCase {
-        return GetUserActivityStatsUseCase(
-            localizationServices: dataLayer.getLocalizationServices(),
-            getTranslatedNumberCount: dataLayer.getTranslatedNumberCount()
-        )
-    }
-    
-    func getUserActivityUseCase() -> GetUserActivityUseCase {
-        return GetUserActivityUseCase(
-            getUserActivityBadgeUseCase: getUserActivityBadgeUseCase(),
-            getUserActivityStatsUseCase: getUserActivityStatsUseCase(),
-            userCounterRepository: dataLayer.getUserCountersRepository(),
-            completedTrainingTipRepository: dataLayer.getCompletedTrainingTipRepository()
-        )
-    }
-    
-    func getUserIsAuthenticatedUseCase() -> GetUserIsAuthenticatedUseCase {
-        return GetUserIsAuthenticatedUseCase(
-            userAuthentication: dataLayer.getUserAuthentication()
-        )
-    }
-    
-    func getViewAccountUseCase() -> ViewAccountUseCase {
-        return ViewAccountUseCase(
-            getInterfaceStringsRepository: dataLayer.getAccountInterfaceStringsRepositoryInterface()
         )
     }
     

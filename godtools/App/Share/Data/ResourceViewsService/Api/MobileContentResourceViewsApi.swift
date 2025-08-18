@@ -8,20 +8,23 @@
 
 import Foundation
 import RequestOperation
+import Combine
 
 class MobileContentResourceViewsApi {
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
-    private let session: URLSession
+    private let urlSessionPriority: URLSessionPriority
+    private let requestSender: RequestSender
     private let baseUrl: String
     
-    init(config: AppConfig, ignoreCacheSession: IgnoreCacheSession) {
+    init(config: AppConfig, urlSessionPriority: URLSessionPriority, requestSender: RequestSender) {
                     
-        session = ignoreCacheSession.session
+        self.urlSessionPriority = urlSessionPriority
+        self.requestSender = requestSender
         baseUrl = config.getMobileContentApiBaseUrl()
     }
     
-    private func newResourceViewRequest(resourceView: ResourceViewModelType) -> URLRequest {
+    private func getResourceViewRequest(resourceView: ResourceViewModelType, urlSession: URLSession) -> URLRequest {
         
         let headers: [String: String] = [
             "Content-Type": "application/vnd.api+json"
@@ -39,7 +42,7 @@ class MobileContentResourceViewsApi {
         
         return requestBuilder.build(
             parameters: RequestBuilderParameters(
-                urlSession: session,
+                urlSession: urlSession,
                 urlString: baseUrl + "/views",
                 method: .post,
                 headers: headers,
@@ -49,30 +52,13 @@ class MobileContentResourceViewsApi {
         )
     }
     
-    func newResourceViewOperation(resourceView: ResourceViewModelType) -> RequestOperation {
+    func postResourceViewPublisher(resourceView: ResourceViewModelType, requestPriority: RequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
         
-        let urlRequest = newResourceViewRequest(resourceView: resourceView)
-        let operation = RequestOperation(
-            session: session,
-            urlRequest: urlRequest
-        )
+        let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
-        return operation
-    }
-    
-    func postResourceView(resourceView: ResourceViewModelType, complete: @escaping ((_ response: RequestResponse) -> Void)) -> OperationQueue {
+        let urlRequest = getResourceViewRequest(resourceView: resourceView, urlSession: urlSession)
         
-        let operation: RequestOperation = newResourceViewOperation(resourceView: resourceView)
-        
-        operation.setCompletionHandler { (response: RequestResponse) in
-            
-            complete(response)
-        }
-        
-        let queue = OperationQueue()
-        
-        queue.addOperations([operation], waitUntilFinished: false)
-        
-        return queue
+        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
+            .eraseToAnyPublisher()
     }
 }

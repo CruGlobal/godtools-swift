@@ -77,11 +77,11 @@ enum FlowStep {
     case backTappedFromToolDetails
     case openToolTappedFromToolDetails(toolId: String, primaryLanguage: AppLanguageDomainModel, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?)
     case learnToShareToolTappedFromToolDetails(toolId: String, primaryLanguage: AppLanguageDomainModel, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?)
-    case urlLinkTappedFromToolDetail(url: URL, screenName: String, siteSection: String, siteSubSection: String, contentLanguage: String?, contentLanguageSecondary: String?)
+    case urlLinkTappedFromToolDetails(url: URL, screenName: String, siteSection: String, siteSubSection: String, contentLanguage: String?, contentLanguageSecondary: String?)
     
     // learnToShareTool
     case closeTappedFromLearnToShareTool(toolId: String, primaryLanguage: AppLanguageDomainModel, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?)
-    case continueTappedFromLearnToShareTool(toolId: String, primaryLanguage: AppLanguageDomainModel, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?)
+    case startTrainingTappedFromLearnToShareTool(toolId: String, primaryLanguage: AppLanguageDomainModel, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?)
             
     // tool
     case homeTappedFromTool(isScreenSharing: Bool)
@@ -93,9 +93,8 @@ enum FlowStep {
     // optInNotification
     case closeTappedFromOptInNotification
     case allowNotificationsTappedFromOptInNotification
+    case settingsTappedFromOptInNotification
     case maybeLaterTappedFromOptInNotification
-    case cancelTappedFromOptInNotificationDialog
-    case settingsTappedFromOptInNotificationDialog
     case dontAllowTappedFromRequestNotificationPermission
     case allowTappedFromRequestNotificationPermission
     case optInNotificationFlowCompleted(state: OptInNotificationFlowCompletedState)
@@ -103,6 +102,7 @@ enum FlowStep {
     // tutorial
     case closeTappedFromTutorial
     case startUsingGodToolsTappedFromTutorial
+    case tutorialFlowCompleted(state: TutorialFlowCompletedState)
     
     // menu
     case doneTappedFromMenu
@@ -169,7 +169,7 @@ enum FlowStep {
     
     // article
     case backTappedFromArticleCategories
-    case articleCategoryTappedFromArticleCategories(resource: ResourceModel, language: LanguageModel, category: GodToolsToolParser.Category, manifest: Manifest, currentArticleDownloadReceipt: ArticleManifestDownloadArticlesReceipt?)
+    case articleCategoryTappedFromArticleCategories(resource: ResourceModel, language: LanguageModel, category: GodToolsToolParser.Category, manifest: Manifest)
     case backTappedFromArticles
     case articleTappedFromArticles(resource: ResourceModel, aemCacheObject: ArticleAemCacheObject)
     case backTappedFromArticle
@@ -206,10 +206,15 @@ enum FlowStep {
     
     // tool screen share
     case closeTappedFromToolScreenShareTutorial
-    case skipTappedFromToolScreenShareTutorial
+    case generateQRCodeTappedFromToolScreenShareTutorial
     case shareLinkTappedFromToolScreenShareTutorial
     case closeTappedFromCreatingToolScreenShareSession
-    case didCreateSessionFromCreatingToolScreenShareSession(result: Result<WebSocketChannel, TractRemoteSharePublisherError>)
+    case didCreateSessionFromCreatingToolScreenShareSession(result: Result<WebSocketChannel, TractRemoteSharePublisherError>, createSessionTrigger: ToolScreenShareFlowCreateSessionTrigger)
+    case cancelTappedFromCreateToolScreenShareSessionTimeout
+    case acceptTappedFromCreateToolScreenShareSessionTimeout
+    case shareQRCodeTappedFromToolScreenShareSession(shareUrl: String)
+    case dismissedShareToolScreenShareActivityViewController
+    case closeTappedFromShareQRCode
     case toolScreenShareFlowCompleted(state: ToolScreenShareFlowCompletedState)
     
     // download tool

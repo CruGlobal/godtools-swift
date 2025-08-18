@@ -52,10 +52,10 @@ class TutorialFlow: Flow {
         switch step {
                        
         case .closeTappedFromTutorial:
-            flowDelegate?.navigate(step: .closeTappedFromTutorial)
+            flowDelegate?.navigate(step: .tutorialFlowCompleted(state: .closed))
             
         case .startUsingGodToolsTappedFromTutorial:
-            flowDelegate?.navigate(step: .startUsingGodToolsTappedFromTutorial)
+            flowDelegate?.navigate(step: .tutorialFlowCompleted(state: .closed))
             
         default:
             break
@@ -88,8 +88,7 @@ extension TutorialFlow {
         let closeButton = AppCloseBarItem(
             color: nil,
             target: viewModel,
-            action: #selector(viewModel.closeTapped),
-            accessibilityIdentifier: nil
+            action: #selector(viewModel.closeTapped)
         )
         
         let hostingView = AppHostingController<TutorialView>(

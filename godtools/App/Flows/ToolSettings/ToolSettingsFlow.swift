@@ -15,6 +15,7 @@ class ToolSettingsFlow: Flow {
     private let toolSettingsObserver: ToolSettingsObserver
     private let toolSettingsDidCloseClosure: (() -> Void)?
     
+    private var toolSettingsView: AppHostingController<ToolSettingsView>?
     private var toolScreenShareFlow: ToolScreenShareFlow?
     private var languagesListModal: UIViewController?
     private var reviewShareShareableModal: UIViewController?
@@ -30,11 +31,11 @@ class ToolSettingsFlow: Flow {
     let appDiContainer: AppDiContainer
     let navigationController: AppNavigationController
     
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: AppNavigationController, toolSettingsObserver: ToolSettingsObserver, toolSettingsDidCloseClosure: (() -> Void)? = nil) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, presentInNavigationController: AppNavigationController, toolSettingsObserver: ToolSettingsObserver, toolSettingsDidCloseClosure: (() -> Void)? = nil) {
             
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
-        self.navigationController = sharedNavigationController
+        self.navigationController = presentInNavigationController
         self.toolSettingsObserver = toolSettingsObserver
         self.toolSettingsDidCloseClosure = toolSettingsDidCloseClosure
         
@@ -70,21 +71,12 @@ class ToolSettingsFlow: Flow {
             .getViewedPublisher(toolId: toolSettingsObserver.toolId)
             .receive(on: DispatchQueue.main)
             .assign(to: &$toolScreenShareTutorialHasBeenViewedDomainModel)
+        
+        presentToolSettings()
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
-    }
-    
-    func getInitialView() -> UIViewController {
-                    
-        let transparentModal = TransparentModalView(
-            flowDelegate: self,
-            modalView: getToolSettingsView(),
-            closeModalFlowStep: .closeTappedFromToolSettings
-        )
-        
-        return transparentModal
     }
     
     func didClose() {
@@ -108,10 +100,18 @@ class ToolSettingsFlow: Flow {
                     
         case .screenShareTappedFromToolSettings:
             presentToolScreenShareFlow()
-
+        
         case .toolScreenShareFlowCompleted(let state):
-            flowDelegate?.navigate(step: .toolSettingsFlowCompleted(state: .toolScreenShareFlowCompleted(state: state)))
-                                                
+            
+            switch state {
+            case .failedToCreateSession:
+                break
+            case .userClosedShareModal:
+                completeFlow(state: .toolScreenShareFlowCompleted(state: state))
+            case .userSharedQRCode:
+                completeFlow(state: .toolScreenShareFlowCompleted(state: state))
+            }
+        
         case .primaryLanguageTappedFromToolSettings:
             presentToolLanguagesList(listType: .choosePrimaryLanguage, animated: true)
             
@@ -137,7 +137,7 @@ class ToolSettingsFlow: Flow {
                 
                 let viewModel = ShareShareableViewModel(
                     imageToShare: imageToShare,
-                    incrementUserCounterUseCase: weakSelf.appDiContainer.domainLayer.getIncrementUserCounterUseCase()
+                    incrementUserCounterUseCase: weakSelf.appDiContainer.feature.userActivity.domainLayer.getIncrementUserCounterUseCase()
                 )
                 
                 let view = ShareShareableView(viewModel: viewModel)
@@ -158,13 +158,53 @@ class ToolSettingsFlow: Flow {
             break
         }
     }
+    
+    private func completeFlow(state: ToolSettingsFlowCompletedState) {
+        flowDelegate?.navigate(step: .toolSettingsFlowCompleted(state: state))
+    }
 }
 
-// MARK: -
+// MARK: - ToolSettingsView
 
 extension ToolSettingsFlow {
     
-    private func getToolSettingsView() -> TransparentModalCustomViewInterface {
+    private func presentToolSettings() {
+        
+        guard toolSettingsView == nil else {
+            return
+        }
+        
+        let toolSettingsView: AppHostingController<ToolSettingsView> = getToolSettingsView()
+        
+        self.toolSettingsView = toolSettingsView
+        
+        navigationController.present(
+            toolSettingsView,
+            animated: true
+        )
+    }
+    
+    private func dismissToolSettingsIfPresented(animated: Bool, completion: (() -> Void)?) {
+        
+        guard let toolSettingsView = self.toolSettingsView else {
+            completion?()
+            return
+        }
+        
+        toolSettingsView.rootView.setModalIsHidden(isHidden: true)
+        
+        if animated {
+            toolSettingsView.dismiss(animated: true, completion: completion)
+        }
+        else {
+            toolSettingsView.dismiss(animated: false)
+            completion?()
+        }
+        
+        self.toolSettingsView = nil
+    }
+    
+    private func getToolSettingsView() -> AppHostingController<ToolSettingsView> {
         
         let viewModel = ToolSettingsViewModel(
             flowDelegate: self,
@@ -177,13 +217,23 @@ extension ToolSettingsFlow {
         
         let toolSettingsView = ToolSettingsView(viewModel: viewModel)
         
-        let hostingView = ToolSettingsHostingView(
-            view: toolSettingsView,
-            navigationBar: nil
+        let hostingView = AppHostingController<ToolSettingsView>(
+            rootView: toolSettingsView,
+            navigationBar: nil,
+            animateInAnimatedTransitioning: NoAnimationTransition(transition: .transitionIn),
+            animateOutAnimatedTransitioning: NoAnimationTransition(transition: .transitionOut)
         )
+
+        hostingView.view.backgroundColor = .clear
+        hostingView.modalPresentationStyle = .overCurrentContext
         
         return hostingView
     }
+}
+
+// MARK: - Share Tool View
+
+extension ToolSettingsFlow {
     
     private func getShareToolView(viewShareToolDomainModel: ViewShareToolDomainModel) -> UIViewController {
                 
@@ -192,7 +242,7 @@ extension ToolSettingsFlow {
             toolId: toolSettingsObserver.toolId,
             toolAnalyticsAbbreviation: appDiContainer.dataLayer.getResourcesRepository().getResource(id: toolSettingsObserver.toolId)?.abbreviation ?? "",
             pageNumber: toolSettingsObserver.pageNumber,
-            incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase(),
+            incrementUserCounterUseCase: appDiContainer.feature.userActivity.domainLayer.getIncrementUserCounterUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
         )
@@ -261,16 +311,26 @@ extension ToolSettingsFlow {
 extension ToolSettingsFlow {
     
     private func presentToolScreenShareFlow() {
-        guard let toolSettingsObserver = toolSettingsObserver as? ToolScreenShareFlow.ToolScreenShareSettingsObserver else { return }
         
-        let toolScreenShareFlow = ToolScreenShareFlow(
-            flowDelegate: self,
-            appDiContainer: appDiContainer,
-            sharedNavigationController: navigationController,
-            toolSettingsObserver: toolSettingsObserver
-        )
+        guard let toolSettingsObserver = toolSettingsObserver as? ToolScreenShareFlow.ToolScreenShareSettingsObserver else {
+            return
+        }
         
-        self.toolScreenShareFlow = toolScreenShareFlow
+        dismissToolSettingsIfPresented(animated: true) { [weak self] in
+         
+            guard let weakSelf = self else {
+                return
+            }
+            
+            let toolScreenShareFlow = ToolScreenShareFlow(
+                flowDelegate: weakSelf,
+                appDiContainer: weakSelf.appDiContainer,
+                sharedNavigationController: weakSelf.navigationController,
+                toolSettingsObserver: toolSettingsObserver
+            )
+            
+            weakSelf.toolScreenShareFlow = toolScreenShareFlow
+        }
     }
     
     private func dismissToolScreenShareFlow() {

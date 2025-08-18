@@ -9,9 +9,12 @@
 import Foundation
 import Combine
 import GodToolsToolParser
+import RequestOperation
 
 class GetToolTranslationsFilesUseCase {
         
+    private static let defaultRequestPriority: RequestPriority = .high
+    
     private let resourcesRepository: ResourcesRepository
     private let translationsRepository: TranslationsRepository
     private let languagesRepository: LanguagesRepository
@@ -26,7 +29,7 @@ class GetToolTranslationsFilesUseCase {
         self.languagesRepository = languagesRepository
     }
     
-    func getToolTranslationsFilesPublisher(filter: GetToolTranslationsFilesFilter, determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, downloadStarted: (() -> Void)?) -> AnyPublisher<ToolTranslationsDomainModel, Error> {
+    func getToolTranslationsFilesPublisher(filter: GetToolTranslationsFilesFilter, determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadInterface, downloadStarted: (() -> Void)?) -> AnyPublisher<ToolTranslationsDomainModel, Error> {
                 
         let manifestParserType: TranslationManifestParserType
         let includeRelatedFiles: Bool
@@ -47,15 +50,15 @@ class GetToolTranslationsFilesUseCase {
                 
                 self.initiateDownloadStarted(downloadStarted: downloadStarted)
                 
-                return self.resourcesRepository.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments()
-                    .flatMap({ (result: RealmResourcesCacheSyncResult) -> AnyPublisher<DetermineToolTranslationsToDownloadResult, Error> in
-                        return determineToolTranslationsToDownload.determineToolTranslationsToDownload().publisher
-                            .mapError { (error: DetermineToolTranslationsToDownloadError) in
-                                return error as Error
-                            }
-                            .eraseToAnyPublisher()
-                    })
+                switch error {
+                case .failedToFetchResourceFromCache(let resourceNeeded):
+                    
+                    return self.downloadResourcesFromJsonFileCacheAndDetermineTranslationsToDownloadPublisher(
+                        resourceNeeded: resourceNeeded,
+                        determineToolTranslationsToDownload: determineToolTranslationsToDownload
+                    )
                     .eraseToAnyPublisher()
+                }
             })
             .flatMap({ (result: DetermineToolTranslationsToDownloadResult) -> AnyPublisher<[TranslationManifestFileDataModel], Error> in
                    
@@ -68,7 +71,7 @@ class GetToolTranslationsFilesUseCase {
                         
                         self.initiateDownloadStarted(downloadStarted: downloadStarted)
                             
-                        return self.translationsRepository.getTranslationManifestsFromRemote(translations: translations, manifestParserType: manifestParserType, includeRelatedFiles: includeRelatedFiles, shouldFallbackToLatestDownloadedTranslationIfRemoteFails: true)
+                        return self.translationsRepository.getTranslationManifestsFromRemote(translations: translations, manifestParserType: manifestParserType, requestPriority: Self.defaultRequestPriority, includeRelatedFiles: includeRelatedFiles, shouldFallbackToLatestDownloadedTranslationIfRemoteFails: true)
                             .eraseToAnyPublisher()
                     })
                     .eraseToAnyPublisher()
@@ -141,5 +144,92 @@ class GetToolTranslationsFilesUseCase {
         }
         
         return sortedLanguageTranslationManifests
+    }
+    
+    private func downloadResourcesFromJsonFileCacheAndDetermineTranslationsToDownloadPublisher(resourceNeeded: DetermineToolTranslationsResourceNeeded, determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadInterface) -> AnyPublisher<DetermineToolTranslationsToDownloadResult, Error> {
+        
+        return resourcesRepository
+            .syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFile()
+            .flatMap({ (didSyncResources: RealmResourcesCacheSyncResult?) -> AnyPublisher<DetermineToolTranslationsToDownloadResult, Error> in
+                
+                let determineResult: Result<DetermineToolTranslationsToDownloadResult, DetermineToolTranslationsToDownloadError> = determineToolTranslationsToDownload.determineToolTranslationsToDownload()
+                
+                switch determineResult {
+                
+                case .success(let translationsResult):
+                   
+                    return Just(translationsResult)
+                        .setFailureType(to: Error.self)
+                        .eraseToAnyPublisher()
+               
+                case .failure(let determineTranslationsError):
+                    
+                    switch determineTranslationsError {
+                    
+                    case .failedToFetchResourceFromCache(let resourceNeeded):
+                        
+                        return self.downloadResourcesFromRemoteAndDetermineTranslationsToDownloadPublisher(
+                            resourceNeeded: resourceNeeded,
+                            determineToolTranslationsToDownload: determineToolTranslationsToDownload
+                        )
+                        .eraseToAnyPublisher()
+                    }
+                }
+            })
+            .eraseToAnyPublisher()
+    }
+    
+    private func downloadResourcesFromRemoteAndDetermineTranslationsToDownloadPublisher(resourceNeeded: DetermineToolTranslationsResourceNeeded, determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadInterface) -> AnyPublisher<DetermineToolTranslationsToDownloadResult, Error> {
+        
+        return languagesRepository
+            .syncLanguagesFromRemote(requestPriority: Self.defaultRequestPriority)
+            .flatMap({ (languagesSynced: RealmLanguagesCacheSyncResult) -> AnyPublisher<Void, Error> in
+                
+                self.syncResourcesPublisher(resourceNeeded: resourceNeeded)
+                    .eraseToAnyPublisher()
+            })
+            .flatMap({ (didSyncResources: Void) -> AnyPublisher<DetermineToolTranslationsToDownloadResult, Error> in
+                
+                let determineResult: Result<DetermineToolTranslationsToDownloadResult, DetermineToolTranslationsToDownloadError> = determineToolTranslationsToDownload.determineToolTranslationsToDownload()
+                
+                switch determineResult {
+                
+                case .success(let translationsResult):
+                   
+                    return Just(translationsResult)
+                        .setFailureType(to: Error.self)
+                        .eraseToAnyPublisher()
+               
+                case .failure(let determineTranslationsError):
+                    
+                    switch determineTranslationsError {
+                    
+                    case .failedToFetchResourceFromCache( _):
+                       
+                        let error: Error = NSError.errorWithDescription(description: "Failed to fetch resources needed.")
+                       
+                        return Fail(error: error)
+                            .eraseToAnyPublisher()
+                    }
+                    
+                }
+            })
+            .eraseToAnyPublisher()
+    }
+    
+    private func syncResourcesPublisher(resourceNeeded: DetermineToolTranslationsResourceNeeded) -> AnyPublisher<Void, Error> {
+        
+        switch resourceNeeded {
+        
+        case .abbreviation(let value):
+            return resourcesRepository
+                .syncResourceAndLatestTranslationsPublisher(resourceAbbreviation: value, requestPriority: Self.defaultRequestPriority)
+                .eraseToAnyPublisher()
+            
+        case .id(let value):
+            return resourcesRepository
+                .syncResourceAndLatestTranslationsPublisher(resourceId: value, requestPriority: Self.defaultRequestPriority)
+                .eraseToAnyPublisher()
+        }
     }
 }

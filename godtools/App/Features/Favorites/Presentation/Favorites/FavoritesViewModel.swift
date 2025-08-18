@@ -222,7 +222,7 @@ extension FavoritesViewModel {
     
     func pullToRefresh() {
         
-        resourcesRepository.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachments()
+        resourcesRepository.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsPublisher(requestPriority: .high, forceFetchFromRemote: true)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completed in
 
@@ -279,6 +279,7 @@ extension FavoritesViewModel {
                 
         return ToolCardViewModel(
             tool: tool,
+            accessibility: .favoriteTool,
             getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
             attachmentsRepository: attachmentsRepository
         )

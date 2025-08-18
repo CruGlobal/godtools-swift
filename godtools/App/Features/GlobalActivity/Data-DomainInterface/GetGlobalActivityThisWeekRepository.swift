@@ -25,7 +25,7 @@ class GetGlobalActivityThisWeekRepository: GetGlobalActivityThisWeekRepositoryIn
     
     func getActivityPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<[GlobalActivityThisWeekDomainModel], Never> {
         
-        return globalAnalyticsRepository.getGlobalAnalyticsChangedPublisher()
+        return globalAnalyticsRepository.getGlobalAnalyticsChangedPublisher(requestPriority: .high)
         .flatMap({ (dataModel: GlobalAnalyticsDataModel?) -> AnyPublisher<[GlobalActivityThisWeekDomainModel], Never> in
             
             guard let dataModel = dataModel else {

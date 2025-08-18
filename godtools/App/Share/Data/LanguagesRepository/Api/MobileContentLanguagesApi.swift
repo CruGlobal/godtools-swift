@@ -17,20 +17,22 @@ class MobileContentLanguagesApi {
     }
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
+    private let urlSessionPriority: URLSessionPriority
     private let requestSender: RequestSender
     private let baseUrl: String
     
-    init(config: AppConfig, ignoreCacheSession: IgnoreCacheSession) {
+    init(config: AppConfig, urlSessionPriority: URLSessionPriority, requestSender: RequestSender) {
             
-        requestSender = RequestSender(session: ignoreCacheSession.session)
+        self.urlSessionPriority = urlSessionPriority
+        self.requestSender = requestSender
         baseUrl = config.getMobileContentApiBaseUrl()
     }
     
-    private func getLanguagesRequest() -> URLRequest {
+    private func getLanguagesRequest(urlSession: URLSession) -> URLRequest {
         
         return requestBuilder.build(
             parameters: RequestBuilderParameters(
-                urlSession: requestSender.session,
+                urlSession: urlSession,
                 urlString: baseUrl + Path.languages,
                 method: .get,
                 headers: nil,
@@ -40,11 +42,13 @@ class MobileContentLanguagesApi {
         )
     }
     
-    func getLanguages() -> AnyPublisher<[LanguageModel], Error> {
+    func getLanguages(requestPriority: RequestPriority) -> AnyPublisher<[LanguageModel], Error> {
         
-        let urlRequest: URLRequest = getLanguagesRequest()
+        let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
-        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest)
+        let urlRequest: URLRequest = getLanguagesRequest(urlSession: urlSession)
+        
+        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
             .decodeRequestDataResponseForSuccessCodable()
             .map { (response: RequestCodableResponse<JsonApiResponseDataArray<LanguageModel>, NoResponseCodable>) in
                 

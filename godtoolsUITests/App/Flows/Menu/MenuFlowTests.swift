@@ -8,235 +8,140 @@
 
 import Foundation
 import XCTest
-@testable import godtools
 
 class MenuFlowTests: BaseFlowTests {
         
-    private func launchApp() {
+    private func launchAppToMenu() {
         
         super.launchApp(
             flowDeepLinkUrl: "godtools://org.cru.godtools/dashboard/tools",
             checkInitialScreenExists: .dashboardTools
         )
+        
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .dashboardMenu)
+        
+        assertIfScreenDoesNotExist(screenAccessibility: .menu)
     }
     
-    func testInitialScreenIsDashboard() {
+    func testInitialScreenIsMenu() {
         
-        launchApp()
-        
-        super.assertIfInitialScreenDoesntExist(app: app)
-    }
-    
-    func testNavigationToMenu() {
-        
-        launchApp()
-        
-        navigateToMenu()
-    }
-    
-    private func navigateToMenu() {
-        
-        let menuButton = app.queryButton(buttonAccessibility: .dashboardMenu)
-        
-        XCTAssertTrue(menuButton.exists)
-        
-        menuButton.tap()
-        
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .menu, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
+        launchAppToMenu()
     }
     
     func testNavigationToTutorial() {
         
-        launchApp()
+        launchAppToMenu()
         
-        navigateToMenu()
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .tutorial)
         
-        let tutorialButton = app.queryButton(buttonAccessibility: .tutorial)
-        
-        XCTAssertTrue(tutorialButton.exists)
-        
-        tutorialButton.tap()
-        
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .tutorial)
+        assertIfScreenDoesNotExist(screenAccessibility: .tutorial)
     }
     
     func testNavigationToLanguageSettings() {
         
-        launchApp()
+        launchAppToMenu()
         
-        navigateToMenu()
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .languageSettings)
         
-        let languageSettingsButton = app.queryButton(buttonAccessibility: .languageSettings)
-        
-        XCTAssertTrue(languageSettingsButton.exists)
-        
-        languageSettingsButton.tap()
-        
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .languageSettings)
+        assertIfScreenDoesNotExist(screenAccessibility: .languageSettings)
     }
     
     func testNavigationToCreateAccount() {
         
-        launchApp()
+        launchAppToMenu()
         
-        navigateToMenu()
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .createAccount)
         
-        let createAccountButton = app.queryButton(buttonAccessibility: .createAccount)
-        
-        XCTAssertTrue(createAccountButton.exists)
-        
-        createAccountButton.tap()
-        
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .createAccount)
+        assertIfScreenDoesNotExist(screenAccessibility: .createAccount)
     }
     
     func testNavigationToLogin() {
         
-        launchApp()
+        launchAppToMenu()
         
-        navigateToMenu()
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .login)
         
-        let loginButton = app.queryButton(buttonAccessibility: .login)
-        
-        XCTAssertTrue(loginButton.exists)
-        
-        loginButton.tap()
-        
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .login)
+        assertIfScreenDoesNotExist(screenAccessibility: .login)
     }
     
     func testNavigationToSendFeedback() {
         
-        launchApp()
+        launchAppToMenu()
         
-        navigateToMenu()
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .sendFeedback)
         
-        let sendFeedbackButton = app.queryButton(buttonAccessibility: .sendFeedback)
-        
-        XCTAssertTrue(sendFeedbackButton.exists)
-        
-        sendFeedbackButton.tap()
-        
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .sendFeedback, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
+        assertIfScreenDoesNotExist(screenAccessibility: .sendFeedback)
     }
     
     func testNavigationToReportABug() {
         
-        launchApp()
+        launchAppToMenu()
         
-        navigateToMenu()
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .reportABug)
         
-        let reportABugButton = app.queryButton(buttonAccessibility: .reportABug)
-        
-        XCTAssertTrue(reportABugButton.exists)
-        
-        reportABugButton.tap()
-        
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .reportABug)
+        assertIfScreenDoesNotExist(screenAccessibility: .reportABug)
     }
     
     func testNavigationToAskAQuestion() {
         
-        launchApp()
+        launchAppToMenu()
         
-        navigateToMenu()
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .askAQuestion)
         
-        let askAQuestionButton = app.queryButton(buttonAccessibility: .askAQuestion)
-        
-        XCTAssertTrue(askAQuestionButton.exists)
-        
-        askAQuestionButton.tap()
-        
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .askAQuestion)
+        assertIfScreenDoesNotExist(screenAccessibility: .askAQuestion)
     }
     
 //    func testNavigationToLeaveAReview() {
 //        
-//        launchApp()
-//        
-//        navigateToMenu()
-//        
-//        let leaveAReviewButton = app.queryButton(buttonAccessibility: .leaveAReview)
-//        
-//        XCTAssertTrue(leaveAReviewButton.exists)
-//        
-//        leaveAReviewButton.tap()
-//        
-//        assertIfScreenDoesNotExist(app: app, screenAccessibility: .leaveAReview)
+//        launchAppToMenu()
+//
+//        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .leaveAReview)
+//
+//        assertIfScreenDoesNotExist(screenAccessibility: .leaveAReview)
 //    }
     
     func testNavigationToShareAStoryWithUs() {
         
-        launchApp()
+        launchAppToMenu()
         
-        navigateToMenu()
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .shareAStoryWithUs)
         
-        let askAQuestionButton = app.queryButton(buttonAccessibility: .shareAStoryWithUs)
-        
-        XCTAssertTrue(askAQuestionButton.exists)
-        
-        askAQuestionButton.tap()
-        
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .shareAStoryWithUs)
+        assertIfScreenDoesNotExist(screenAccessibility: .shareAStoryWithUs)
     }
     
 //    func testNavigationToShareGodTools() {
 //        
-//        launchApp()
-//        
-//        navigateToMenu()
-//        
-//        let shareGodToolsButton = app.queryButton(buttonAccessibility: .shareGodTools)
-//        
-//        XCTAssertTrue(shareGodToolsButton.exists)
-//        
-//        shareGodToolsButton.tap()
-//        
-//        assertIfScreenDoesNotExist(app: app, screenAccessibility: .shareGodTools, waitForExistence: AppFlowTests.defaultWaitForScreenExistence)
+//        launchAppToMenu()
+//
+//        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .shareGodTools)
+//
+//        assertIfScreenDoesNotExist(screenAccessibility: .shareGodTools)
 //    }
     
     func testNavigationToTermsOfUse() {
         
-        launchApp()
+        launchAppToMenu()
         
-        navigateToMenu()
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .termsOfUse)
         
-        let termsOfUseButton = app.queryButton(buttonAccessibility: .termsOfUse)
-        
-        XCTAssertTrue(termsOfUseButton.exists)
-        
-        termsOfUseButton.tap()
-        
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .termsOfUse)
+        assertIfScreenDoesNotExist(screenAccessibility: .termsOfUse)
     }
     
     func testNavigationToPrivacyPolicy() {
         
-        launchApp()
+        launchAppToMenu()
         
-        navigateToMenu()
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .privacyPolicy)
         
-        let privacyPolicyButton = app.queryButton(buttonAccessibility: .privacyPolicy)
-        
-        XCTAssertTrue(privacyPolicyButton.exists)
-        
-        privacyPolicyButton.tap()
-        
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .privacyPolicy)
+        assertIfScreenDoesNotExist(screenAccessibility: .privacyPolicy)
     }
     
     func testNavigationToCopyrightInfo() {
         
-        launchApp()
+        launchAppToMenu()
         
-        navigateToMenu()
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .copyrightInfo)
         
-        let copyrightInfoButton = app.queryButton(buttonAccessibility: .copyrightInfo)
-        
-        XCTAssertTrue(copyrightInfoButton.exists)
-        
-        copyrightInfoButton.tap()
-        
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .copyrightInfo)
+        assertIfScreenDoesNotExist(screenAccessibility: .copyrightInfo)
     }
 }

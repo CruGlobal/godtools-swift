@@ -50,7 +50,6 @@ struct YourFavoriteToolsView: View {
                                 layout: .thumbnail,
                                 showsCategory: true,
                                 navButtonTitleHorizontalPadding: Self.toolCardNavButtonTitleHorizontalPadding,
-                                accessibility: .favoriteTool,
                                 favoriteTappedClosure: {
                                     
                                     viewModel.unfavoriteToolTapped(tool: tool)

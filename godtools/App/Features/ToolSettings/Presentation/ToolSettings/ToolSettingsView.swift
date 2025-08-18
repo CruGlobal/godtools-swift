@@ -9,12 +9,21 @@
 import SwiftUI
 
 struct ToolSettingsView: View {
+        
+    static let backgroundHorizontalPadding: CGFloat = 10
     
-    private let contentInsets: EdgeInsets = EdgeInsets(top: 20, leading: 20, bottom: 0, trailing: 20)
+    private let contentInsets: EdgeInsets = EdgeInsets(
+        top: 20,
+        leading: 15 + Self.backgroundHorizontalPadding,
+        bottom: 15,
+        trailing: 15 + Self.backgroundHorizontalPadding
+    )
     private let separatorLineSpacing: CGFloat = 25
-    private let bottomSpace: CGFloat = 15
     
     @ObservedObject private var viewModel: ToolSettingsViewModel
+    
+    @State private var modalIsHidden: Bool = true
+    @State private var scrollContentHeight: CGFloat = 100
     
     init(viewModel: ToolSettingsViewModel) {
         
@@ -22,72 +31,93 @@ struct ToolSettingsView: View {
     }
     
     var body: some View {
-        GeometryReader { geometry in
+        
+        GTModalView(content: { geometry in
             
-            VStack(spacing: 0) {
-                
+            AccessibilityScreenElementView(screenAccessibility: .toolSettings)
+            
+            VStack(alignment: .leading, spacing: 0) {
+                         
                 ToolSettingsTopBarView(
-                    viewModel: viewModel,
-                    leadingInset: contentInsets.leading,
-                    trailingInset: contentInsets.trailing
+                    title: viewModel.title,
+                    closeTapped: {
+                        modalIsHidden = true
+                        viewModel.closeTapped()
+                    }
                 )
-                
-                FixedVerticalSpacer(height: 10)
-                
+                .padding([.top], contentInsets.top)
+                .padding([.leading], contentInsets.leading)
+                .padding([.trailing], contentInsets.trailing)
+                .padding([.bottom], 10)
+                                    
                 ScrollView(.vertical, showsIndicators: true) {
                     VStack(spacing: 0) {
                         
-                        if viewModel.hidesAllIconButtons == false {
+                        if !viewModel.toolOptions.isEmpty {
                             
                             ToolSettingsOptionsView(
-                                viewModel: viewModel,
-                                leadingInset: contentInsets.leading,
-                                trailingInset: contentInsets.trailing
+                                viewModel: viewModel
                             )
-                            
-                            FixedVerticalSpacer(height: separatorLineSpacing)
+                            .padding([.leading], contentInsets.leading)
+                            .padding([.trailing], contentInsets.trailing)
                         }
        
                         ToolSettingsSeparatorView(
-                            separatorSpacing: 0,
-                            separatorLeadingInset: contentInsets.leading,
-                            separatorTrailingInset: contentInsets.trailing
+                            separatorSpacing: 0
                         )
-                        
-                        FixedVerticalSpacer(height: separatorLineSpacing)
-                        
+                        .padding([.top], separatorLineSpacing)
+                        .padding([.leading], contentInsets.leading)
+                        .padding([.trailing], contentInsets.trailing)
+                                                        
                         ToolSettingsChooseLanguageView(
-                            viewModel: viewModel,
-                            geometryProxy: geometry,
-                            leadingInset: contentInsets.leading,
-                            trailingInset: contentInsets.trailing
+                            viewModel: viewModel
                         )
+                        .padding([.top], separatorLineSpacing)
+                        .padding([.leading], contentInsets.leading)
+                        .padding([.trailing], contentInsets.trailing)
                         
                         if viewModel.shareables.count > 0 {
                             
                             ToolSettingsSeparatorView(
-                                separatorSpacing: separatorLineSpacing,
-                                separatorLeadingInset: contentInsets.leading,
-                                separatorTrailingInset: contentInsets.trailing
+                                separatorSpacing: separatorLineSpacing
                             )
+                            .padding([.leading], contentInsets.leading)
+                            .padding([.trailing], contentInsets.trailing)
                             
                             ToolSettingsShareablesView(
-                                viewModel: viewModel,
-                                leadingInset: contentInsets.leading,
-                                trailingInset: contentInsets.trailing
+                                viewModel: viewModel
                             )
+                            .padding([.leading], contentInsets.leading)
+                            .padding([.trailing], contentInsets.trailing)
                         }
                         
                         Rectangle()
-                            .frame(width: geometry.size.width, height: bottomSpace)
+                            .frame(width: geometry.size.width, height: contentInsets.bottom)
                             .foregroundColor(.clear)
-                    }
-                }
-            }
-        }
-        .padding(EdgeInsets(top: contentInsets.top, leading: 0, bottom: 0, trailing: 0))
-        .background(Color.white)
-        .cornerRadius(12)
-        .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
+                    }//end VStack
+                    .background(
+                        GeometryReader { scrollContentGeometry -> Color in
+                            DispatchQueue.main.async {
+                                scrollContentHeight = scrollContentGeometry.size.height
+                            }
+                            return Color.clear
+                        }
+                    )
+                }//end ScrollView
+                .clipped()
+                .frame(maxHeight: scrollContentHeight)
+            }//end VStack
+        }, isHidden: $modalIsHidden, overlayTappedClosure: {
+            
+            viewModel.closeTapped()
+        })
+    }
+}
+
+extension ToolSettingsView {
+    
+    func setModalIsHidden(isHidden: Bool) {
+    
+        self.modalIsHidden = isHidden
     }
 }

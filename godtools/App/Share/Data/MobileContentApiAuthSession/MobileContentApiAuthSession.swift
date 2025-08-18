@@ -12,34 +12,18 @@ import Combine
 
 class MobileContentApiAuthSession {
     
-    let ignoreCacheSession: URLSession
+    private let requestSender: RequestSender
+    
     let mobileContentAuthTokenRepository: MobileContentAuthTokenRepository
     let userAuthentication: UserAuthentication
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
     
-    init(ignoreCacheSession: IgnoreCacheSession, mobileContentAuthTokenRepository: MobileContentAuthTokenRepository, userAuthentication: UserAuthentication) {
+    init(requestSender: RequestSender, mobileContentAuthTokenRepository: MobileContentAuthTokenRepository, userAuthentication: UserAuthentication) {
      
-        self.ignoreCacheSession = ignoreCacheSession.session
+        self.requestSender = requestSender
         self.mobileContentAuthTokenRepository = mobileContentAuthTokenRepository
         self.userAuthentication = userAuthentication
-    }
-    
-    func sendGetRequestIgnoringCache(with urlString: String) -> AnyPublisher<Data, Error> {
-        
-        let urlRequest = requestBuilder.build(
-            parameters: RequestBuilderParameters(
-                urlSession: ignoreCacheSession,
-                urlString: urlString,
-                method: .get,
-                headers: nil,
-                httpBody: nil,
-                queryItems: nil
-            )
-        )
-        
-        return sendAuthenticatedRequest(urlRequest: urlRequest, urlSession: ignoreCacheSession)
-            .eraseToAnyPublisher()
     }
     
     func sendAuthenticatedRequest(urlRequest: URLRequest, urlSession: URLSession) -> AnyPublisher<Data, Error> {
@@ -47,8 +31,12 @@ class MobileContentApiAuthSession {
         return getAuthToken()
             .flatMap { (authToken: String) -> AnyPublisher<Data, Error> in
 
-                return self.attemptDataTaskWithAuthToken(authToken, urlRequest: urlRequest, session: urlSession)
-                    .eraseToAnyPublisher()
+                return self.attemptDataTaskWithAuthToken(
+                    authToken: authToken,
+                    urlRequest: urlRequest,
+                    session: urlSession
+                )
+                .eraseToAnyPublisher()
                 
             }
             .catch({ (error: Error) -> AnyPublisher<Data, Error> in
@@ -56,8 +44,12 @@ class MobileContentApiAuthSession {
                 let notAuthorized: Bool = error.code == 401
                 
                 if notAuthorized {
-                    return self.fetchFreshAuthTokenAndReattemptDataTask(urlRequest: urlRequest, session: urlSession)
-                        .eraseToAnyPublisher()
+                    
+                    return self.fetchFreshAuthTokenAndReattemptDataTask(
+                        urlRequest: urlRequest,
+                        session: urlSession
+                    )
+                    .eraseToAnyPublisher()
                 }
                 
                 return Fail(error: error)
@@ -92,11 +84,11 @@ class MobileContentApiAuthSession {
             .eraseToAnyPublisher()
     }
     
-    private func attemptDataTaskWithAuthToken(_ authToken: String, urlRequest: URLRequest, session: URLSession) -> AnyPublisher<Data, Error> {
-
-        let requestSender = RequestSender(session: session)
+    private func attemptDataTaskWithAuthToken(authToken: String, urlRequest: URLRequest, session: URLSession) -> AnyPublisher<Data, Error> {
         
-        return requestSender.sendDataTaskPublisher(urlRequest: buildAuthenticatedRequest(from: urlRequest, authToken: authToken))
+        let urlRequest: URLRequest = buildAuthenticatedRequest(from: urlRequest, authToken: authToken)
+        
+        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: session)
             .validate()
             .map {
                 $0.data
@@ -109,8 +101,12 @@ class MobileContentApiAuthSession {
         return fetchRemoteAuthToken()
             .flatMap { (authToken: String) -> AnyPublisher<Data, Error> in
             
-                return self.attemptDataTaskWithAuthToken(authToken, urlRequest: urlRequest, session: session)
-                    .eraseToAnyPublisher()
+                return self.attemptDataTaskWithAuthToken(
+                    authToken: authToken,
+                    urlRequest: urlRequest,
+                    session: session
+                )
+                .eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
     }

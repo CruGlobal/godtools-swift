@@ -9,7 +9,7 @@
 import Foundation
 import Security
 
-class MobileContentAuthTokenKeychainAccessor {
+class MobileContentAuthTokenKeychainAccessor: MobileContentAuthTokenKeychainAccessorInterface {
     
     enum Service: String {
         case mobileContent

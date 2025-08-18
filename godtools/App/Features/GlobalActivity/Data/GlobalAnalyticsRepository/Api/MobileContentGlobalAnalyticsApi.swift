@@ -15,20 +15,22 @@ class MobileContentGlobalAnalyticsApi {
     static let sharedGlobalAnalyticsId: String = "1"
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
+    private let urlSessionPriority: URLSessionPriority
     private let requestSender: RequestSender
     private let baseUrl: String
     
-    init(baseUrl: String, ignoreCacheSession: IgnoreCacheSession) {
+    init(baseUrl: String, urlSessionPriority: URLSessionPriority, requestSender: RequestSender) {
         
-        requestSender = RequestSender(session: ignoreCacheSession.session)
+        self.urlSessionPriority = urlSessionPriority
+        self.requestSender = requestSender
         self.baseUrl = baseUrl
     }
-        
-    private func getGlobalAnalyticsUrlRequest() -> URLRequest {
+      
+    private func getGlobalAnalyticsUrlRequest(urlSession: URLSession) -> URLRequest {
         
         let urlRequest: URLRequest = requestBuilder.build(
             parameters: RequestBuilderParameters(
-                urlSession: requestSender.session,
+                urlSession: urlSession,
                 urlString: baseUrl + "/analytics/global",
                 method: .get,
                 headers: nil,
@@ -40,11 +42,13 @@ class MobileContentGlobalAnalyticsApi {
         return urlRequest
     }
     
-    func getGlobalAnalyticsPublisher() -> AnyPublisher<MobileContentGlobalAnalyticsDecodable, Error> {
+    func getGlobalAnalyticsPublisher(requestPriority: RequestPriority) -> AnyPublisher<MobileContentGlobalAnalyticsDecodable, Error> {
         
-        let urlRequest: URLRequest = getGlobalAnalyticsUrlRequest()
+        let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
-        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest)
+        let urlRequest: URLRequest = getGlobalAnalyticsUrlRequest(urlSession: urlSession)
+
+        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
             .decodeRequestDataResponseForSuccessCodable()
             .map { (response: RequestCodableResponse<JsonApiResponseDataObject<MobileContentGlobalAnalyticsDecodable>, NoResponseCodable>) in
                 

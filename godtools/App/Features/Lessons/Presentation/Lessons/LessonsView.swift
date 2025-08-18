@@ -81,7 +81,7 @@ struct LessonsView: View {
                 .padding([.bottom], DashboardView.scrollViewBottomSpacingToTabBar)
                 
             } refreshHandler: {
-                viewModel.refreshData()
+                viewModel.pullToRefresh()
             }
             .opacity(viewModel.isLoadingLessons ? 0 : 1)
             .animation(.easeOut, value: !viewModel.isLoadingLessons)

@@ -19,6 +19,10 @@ class AccountDomainLayerDependencies {
         self.coreDataLayer = coreDataLayer
     }
     
+    func getAccountCreationIsSupportedUseCase() -> GetAccountCreationIsSupportedUseCase {
+        return GetAccountCreationIsSupportedUseCase()
+    }
+    
     func getAuthenticateUserUseCase() -> AuthenticateUserUseCase {
         return AuthenticateUserUseCase(
             authenticateUser: dataLayer.getAuthenticateUserInterface(),
@@ -30,7 +34,21 @@ class AccountDomainLayerDependencies {
     func getDeleteAccountUseCase() -> DeleteAccountUseCase {
         return DeleteAccountUseCase(
             userAuthentication: coreDataLayer.getUserAuthentication(),
-            userDetailsRepository: coreDataLayer.getUserDetailsRepository()
+            deleteUserDetails: dataLayer.getDeleteUserDetails()
+        )
+    }
+    
+    func getDeleteUserCountersUseCase() -> DeleteUserCountersUseCase {
+        return DeleteUserCountersUseCase(
+            repository: coreDataLayer.getUserCountersRepository()
+        )
+    }
+    
+    func getLogOutUserUseCase() -> LogOutUserUseCase {
+        return LogOutUserUseCase(
+            userAuthentication: coreDataLayer.getUserAuthentication(),
+            firebaseAnalytics: coreDataLayer.getAnalytics().firebaseAnalytics,
+            deleteUserCountersUseCase: getDeleteUserCountersUseCase()
         )
     }
     
@@ -43,6 +61,24 @@ class AccountDomainLayerDependencies {
     func getSocialSignInInterfaceStringsUseCase() -> GetSocialSignInInterfaceStringsUseCase {
         return GetSocialSignInInterfaceStringsUseCase(
             getInterfaceStringsRepositoryInterface: dataLayer.getSocialSignInInterfaceStringsRepositoryInterface()
+        )
+    }
+    
+    func getUserAccountDetailsUseCase() -> GetUserAccountDetailsUseCase {
+        return GetUserAccountDetailsUseCase(
+            getUserAccountDetailsRepository: dataLayer.getUserAccountDetailsRepositoryInterface()
+        )
+    }
+    
+    func getUserIsAuthenticatedUseCase() -> GetUserIsAuthenticatedUseCase {
+        return GetUserIsAuthenticatedUseCase(
+            userAuthentication: coreDataLayer.getUserAuthentication()
+        )
+    }
+    
+    func getViewAccountUseCase() -> ViewAccountUseCase {
+        return ViewAccountUseCase(
+            getInterfaceStringsRepository: dataLayer.getAccountInterfaceStringsRepositoryInterface()
         )
     }
     

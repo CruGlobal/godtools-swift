@@ -12,6 +12,8 @@ import Combine
 
 class TractViewModel: MobileContentRendererViewModel {
     
+    private static var backgroundCancellables: Set<AnyCancellable> = Set()
+    
     static let isLiveShareStreamingKey: String = "TractViewModel.isLiveShareStreamKey"
     
     private let tractRemoteSharePublisher: TractRemoteSharePublisher
@@ -48,10 +50,10 @@ class TractViewModel: MobileContentRendererViewModel {
         let primaryManifest: Manifest = renderer.pageRenderers[0].manifest
         
         navBarAppearance = AppNavigationBarAppearance(
-            backgroundColor: primaryManifest.navBarColor,
-            controlColor: primaryManifest.navBarControlColor,
+            backgroundColor: primaryManifest.navBarColor.toUIColor(),
+            controlColor: primaryManifest.navBarControlColor.toUIColor(),
             titleFont: FontLibrary.systemUIFont(size: 17, weight: .semibold),
-            titleColor: primaryManifest.navBarControlColor,
+            titleColor: primaryManifest.navBarControlColor.toUIColor(),
             isTranslucent: true
         )
         
@@ -152,7 +154,14 @@ class TractViewModel: MobileContentRendererViewModel {
         
         subscribeToLiveShareStreamIfNeeded()
         
-        _ = resourceViewsService.postNewResourceView(resourceId: resource.id)
+        resourceViewsService
+            .postNewResourceViewPublisher(resourceId: resource.id, requestPriority: .medium)
+            .sink { _ in
+                
+            } receiveValue: { _ in
+                
+            }
+            .store(in: &Self.backgroundCancellables)
     }
     
     private func trackLanguageTapped(tappedLanguage: LanguageModel) {

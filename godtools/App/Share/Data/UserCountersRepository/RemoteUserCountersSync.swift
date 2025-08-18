@@ -8,48 +8,52 @@
 
 import Foundation
 import Combine
+import RequestOperation
 
 class RemoteUserCountersSync {
     
-    private let api: UserCountersAPIType
+    private let api: UserCountersApiInterface
     private let cache: RealmUserCountersCache
-    
-    private var cancellables: Set<AnyCancellable> = Set()
-    
-    init(api: UserCountersAPIType, cache: RealmUserCountersCache) {
+        
+    init(api: UserCountersApiInterface, cache: RealmUserCountersCache) {
         
         self.api = api
         self.cache = cache
     }
     
-    func syncUpdatedUserCountersWithRemote() {
+    func syncUpdatedUserCountersWithRemotePublisher(requestPriority: RequestPriority) -> AnyPublisher<Void, Error> {
         
-        if cancellables.isEmpty == false {
-            for cancellable in cancellables {
-                cancellable.cancel()
-            }
-            
-            cancellables.removeAll()
-        }
+        let cache: RealmUserCountersCache = self.cache
+        let userCountersToSync: [UserCounterDataModel] = cache.getUserCountersWithIncrementGreaterThanZero()
         
-        let userCountersToSync = cache.getUserCountersWithIncrementGreaterThanZero()
-        
-        for userCounter in userCountersToSync {
+        let publishers: [AnyPublisher<Void, Error>] = userCountersToSync.map { (userCounter: UserCounterDataModel) in
+           
+            let incrementValue: Int = userCounter.incrementValue
             
-            let incrementValue = userCounter.incrementValue
-            
-            api.incrementUserCounterPublisher(id: userCounter.id, increment: incrementValue)
-                .flatMap { (userCounterUpdatedFromRemote: UserCounterDecodable) in
-                    
-                    return self.cache.syncUserCounter(userCounterUpdatedFromRemote, incrementValueBeforeRemoteUpdate: incrementValue)
-                        .eraseToAnyPublisher()
+            return api.incrementUserCounterPublisher(
+                id: userCounter.id,
+                increment: incrementValue,
+                requestPriority: requestPriority
+            )
+            .flatMap { (userCounterUpdatedFromRemote: UserCounterDecodable) in
+                
+                cache.syncUserCounter(
+                    userCounterUpdatedFromRemote,
+                    incrementValueBeforeRemoteUpdate: incrementValue
+                )
+                .map { _ in
+                    return Void()
                 }
-                .sink(receiveCompletion: { _ in
-                                        
-                }, receiveValue: { _ in
-                    
-                })
-                .store(in: &cancellables)
+                .eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
         }
+        
+        return Publishers.MergeMany(publishers)
+            .collect()
+            .map { _ in
+                Void()
+            }
+            .eraseToAnyPublisher()
     }
 }

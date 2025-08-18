@@ -8,7 +8,6 @@
 
 import Foundation
 import XCTest
-@testable import godtools
 
 class ChooseAppLanguageFlowTests: BaseFlowTests {
         
@@ -28,13 +27,9 @@ class ChooseAppLanguageFlowTests: BaseFlowTests {
     func testTappingAppLanguageNavigatesToConfirmAppLanguage() {
         
         launchApp()
-                
-        let firstAppLanguageListItem = app.queryFirstButtonMatching(buttonAccessibility: .appLanguageListItem)
         
-        XCTAssertTrue(firstAppLanguageListItem.exists)
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .appLanguageListItem, buttonQueryType: .firstMatch)
         
-        firstAppLanguageListItem.tap()
-        
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .confirmAppLanguage)
+        assertIfScreenDoesNotExist(screenAccessibility: .confirmAppLanguage)
     }
 }

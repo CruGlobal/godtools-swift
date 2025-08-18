@@ -19,7 +19,27 @@ class AccountDataLayerDependencies {
     
     // MARK: - Data Layer Classes
     
+    func getUserDetailsRepository() -> UserDetailsRepository {
+        return UserDetailsRepository(
+            api: UserDetailsAPI(
+                config: coreDataLayer.getAppConfig(),
+                urlSessionPriority: coreDataLayer.getSharedUrlSessionPriority(),
+                mobileContentApiAuthSession: coreDataLayer.getMobileContentApiAuthSession()
+            ),
+            cache: RealmUserDetailsCache(
+                realmDatabase: coreDataLayer.getSharedRealmDatabase(),
+                authTokenRepository: coreDataLayer.getMobileContentAuthTokenRepository()
+            )
+        )
+    }
+    
     // MARK: - Domain Interface
+    
+    func getAccountInterfaceStringsRepositoryInterface() -> GetAccountInterfaceStringsRepositoryInterface {
+        return GetAccountInterfaceStringsRepository(
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
     
     func getAuthenticateUserInterface() -> AuthenticateUserInterface {
         return AuthenticateUser(
@@ -39,6 +59,12 @@ class AccountDataLayerDependencies {
         )
     }
     
+    func getDeleteUserDetails() -> DeleteUserDetailsInterface {
+        return DeleteUserDetails(
+            userDetailsRepository: getUserDetailsRepository()
+        )
+    }
+    
     func getSocialCreateAccountInterfaceStringsRepositoryInterface() -> GetSocialCreateAccountInterfaceStringsRepositoryInterface {
         return GetSocialCreateAccountInterfaceStringsRepository(
             localizationServices: coreDataLayer.getLocalizationServices()
@@ -47,6 +73,13 @@ class AccountDataLayerDependencies {
     
     func getSocialSignInInterfaceStringsRepositoryInterface() -> GetSocialSignInInterfaceStringsRepositoryInterface {
         return GetSocialSignInInterfaceStringsRepository(
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
+    
+    func getUserAccountDetailsRepositoryInterface() -> GetUserAccountDetailsRepositoryInterface {
+        return GetUserAccountDetailsRepository(
+            userDetailsRepository: getUserDetailsRepository(),
             localizationServices: coreDataLayer.getLocalizationServices()
         )
     }

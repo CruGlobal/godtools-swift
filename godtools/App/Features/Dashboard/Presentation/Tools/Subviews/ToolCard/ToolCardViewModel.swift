@@ -18,6 +18,7 @@ class ToolCardViewModel: ObservableObject {
     private var getBannerImageCancellable: AnyCancellable?
     
     let tool: ToolListItemDomainModelInterface
+    let accessibilityWithToolName: String
     
     @Published var bannerImageData: OptionalImageData?
     @Published var isFavorited = false
@@ -27,7 +28,7 @@ class ToolCardViewModel: ObservableObject {
     @Published var detailsButtonTitle: String = ""
     @Published var openButtonTitle: String = ""
             
-    init(tool: ToolListItemDomainModelInterface, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, attachmentsRepository: AttachmentsRepository) {
+    init(tool: ToolListItemDomainModelInterface, accessibility: AccessibilityStrings.Button, getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase, attachmentsRepository: AttachmentsRepository) {
         
         self.tool = tool
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
@@ -40,6 +41,8 @@ class ToolCardViewModel: ObservableObject {
         openButtonTitle = tool.interfaceStrings.openToolActionTitle
         detailsButtonTitle = tool.interfaceStrings.openToolDetailsActionTitle
         
+        accessibilityWithToolName = AccessibilityStrings.Button.getToolButtonAccessibility(toolButton: accessibility, toolName: tool.name)
+                
         getToolIsFavoritedUseCase
             .getToolIsFavoritedPublisher(toolId: tool.dataModelId)
             .map { $0.isFavorited }
@@ -61,7 +64,7 @@ class ToolCardViewModel: ObservableObject {
         }
         else {
             
-            getBannerImageCancellable = attachmentsRepository.getAttachmentImagePublisher(id: attachmentId)
+            getBannerImageCancellable = attachmentsRepository.getAttachmentImagePublisher(id: attachmentId, requestPriority: .high)
                 .receive(on: DispatchQueue.main)
                 .sink { [weak self] (image: Image?) in
                     self?.bannerImageData = OptionalImageData(image: image, imageIdForAnimationChange: attachmentId)

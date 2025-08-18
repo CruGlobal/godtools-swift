@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class PersistUserToolLanguageSettingsUseCase: PersistToolLanguageSettingsInterface {
+class PersistUserToolLanguageSettingsUseCase {
     
     private let persistUserToolLanguageSettingsRepository: PersistUserToolLanguageSettingsRepositoryInterface
     
@@ -17,8 +17,9 @@ class PersistUserToolLanguageSettingsUseCase: PersistToolLanguageSettingsInterfa
         self.persistUserToolLanguageSettingsRepository = persistUserToolLanguageSettingsRepositoryInterface
     }
     
-    func persistToolLanguageSettingsPublisher(with toolId: String, primaryLanguageId: String, parallelLanguageId: String?) -> AnyPublisher<Bool, Never> {
+    func persistUserToolSettingsPublisher(with toolId: String, primaryLanguageId: String, parallelLanguageId: String?) -> AnyPublisher<Bool, Never> {
         
-        return persistUserToolLanguageSettingsRepository.persistUserToolLanguageSettingsPublisher(toolId: toolId, primaryLanguageId: primaryLanguageId, parallelLanguageId: parallelLanguageId)
+        return persistUserToolLanguageSettingsRepository
+            .persistUserToolLanguageSettingsPublisher(toolId: toolId, primaryLanguageId: primaryLanguageId, parallelLanguageId: parallelLanguageId)
     }
 }

@@ -28,11 +28,11 @@ struct LessonFilterLanguageSelectionRowView: View {
                     
                     let titleFont = isSelected ? FontLibrary.sfProTextBold : FontLibrary.sfProTextRegular
                     
-                    Text(language.languageName)
+                    Text(language.languageNameTranslatedInLanguage)
                         .font(titleFont.font(size: 15))
                         .foregroundColor(ColorPalette.gtGrey.color)
                                             
-                    Text(language.translatedName)
+                    Text(language.languageNameTranslatedInAppLanguage)
                         .font(FontLibrary.sfProTextRegular.font(size: 15))
                         .foregroundColor(LessonFilterLanguageSelectionRowView.lightGrey)
                 }

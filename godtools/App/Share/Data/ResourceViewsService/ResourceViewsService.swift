@@ -8,6 +8,7 @@
 
 import Foundation
 import RequestOperation
+import Combine
 
 class ResourceViewsService {
     
@@ -20,64 +21,83 @@ class ResourceViewsService {
         self.failedResourceViewsCache = failedResourceViewsCache
     }
     
-    deinit {
-        print("x deinit: \(type(of: self))")
-    }
-    
-    func postNewResourceView(resourceId: String) -> OperationQueue {
-        
+    func postNewResourceViewPublisher(resourceId: String, requestPriority: RequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
+                
         let resourceView = ResourceViewModel(resourceId: resourceId)
         
-        return resourceViewsApi.postResourceView(resourceView: resourceView) { [weak self] (response: RequestResponse) in
-            
-            let httpStatusCode: Int = response.httpStatusCode ?? -1
-            let httpStatusCodeFailed: Bool = httpStatusCode < 200 || httpStatusCode >= 400
-            
-            if httpStatusCodeFailed {
-                self?.failedResourceViewsCache.cacheFailedResourceViews(resourceViews: [resourceView])
+        return resourceViewsApi.postResourceViewPublisher(resourceView: resourceView, requestPriority: requestPriority)
+            .mapError { (error: Error) in
+                
+                self.failedResourceViewsCache.cacheFailedResourceViews(resourceViews: [resourceView])
+                
+                return error
             }
-        }
+            .map { (response: RequestDataResponse) in
+                
+                let httpStatusCode: Int = response.urlResponse.httpStatusCode ?? -1
+                let httpStatusCodeFailed: Bool = httpStatusCode < 200 || httpStatusCode >= 400
+                                
+                if httpStatusCodeFailed {
+                    self.failedResourceViewsCache.cacheFailedResourceViews(resourceViews: [resourceView])
+                }
+                
+                return response
+            }
+            .eraseToAnyPublisher()
     }
     
-    func postFailedResourceViewsIfNeeded() -> OperationQueue? {
-        
+    func postFailedResourceViewsIfNeededPublisher(requestPriority: RequestPriority) -> AnyPublisher<Void, Never> {
+                
         let failedResourceViews: [ResourceViewModel] = failedResourceViewsCache.getFailedResourceViews()
-        
+                
         guard !failedResourceViews.isEmpty else {
-            return nil
+            return Just(Void())
+                .eraseToAnyPublisher()
         }
         
-        let queue = OperationQueue()
-        
-        var operations: [RequestOperation] = Array()
         var successfulPostedResourceViews: [ResourceViewModel] = Array()
+        var requestCompletionCount: Int = 0
+        
+        let requests: [AnyPublisher<Bool, Never>] = failedResourceViews.map { (resourceView: ResourceViewModel) in
+            
+            return self.resourceViewsApi.postResourceViewPublisher(
+                resourceView: resourceView,
+                requestPriority: requestPriority
+            )
+            .map { (response: RequestDataResponse) in
                 
-        for resourceView in failedResourceViews {
-            
-            let operation: RequestOperation = resourceViewsApi.newResourceViewOperation(resourceView: resourceView)
-            
-            operations.append(operation)
-            
-            operation.setCompletionHandler { [weak self] (response: RequestResponse) in
-                
-                let httpStatusCode: Int = response.httpStatusCode ?? -1
+                let httpStatusCode: Int = response.urlResponse.httpStatusCode ?? -1
                 let httpStatusCodeSuccess: Bool = httpStatusCode >= 200 && httpStatusCode < 400
-                let isConnectedToNetwork: Bool = !response.notConnectedToInternet
-                let failedForBadRequest: Bool = !httpStatusCodeSuccess && isConnectedToNetwork
+                                
+                return httpStatusCodeSuccess
+            }
+            .catch { _ in
+                return Just(false)
+                    .eraseToAnyPublisher()
+            }
+            .map { (isSuccess: Bool) in
                 
-                if httpStatusCodeSuccess || failedForBadRequest {
-                    
+                requestCompletionCount += 1
+                                
+                if isSuccess {
                     successfulPostedResourceViews.append(resourceView)
                 }
                 
-                if queue.operations.isEmpty {
-                    self?.failedResourceViewsCache.deleteFailedResourceViews(resourceViews: successfulPostedResourceViews)
+                let isLastRequest: Bool = requestCompletionCount == failedResourceViews.count
+                                
+                if isLastRequest {
+                    self.failedResourceViewsCache.deleteFailedResourceViews(resourceViews: successfulPostedResourceViews)
                 }
+                
+                return isSuccess
             }
+            .eraseToAnyPublisher()
         }
         
-        queue.addOperations(operations, waitUntilFinished: false)
-        
-        return queue
+        return Publishers.MergeMany(requests)
+            .map { _ in
+                return Void()
+            }
+            .eraseToAnyPublisher()
     }
 }

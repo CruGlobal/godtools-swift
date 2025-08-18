@@ -88,12 +88,8 @@ class MenuFlow: Flow {
             
         case .tutorialTappedFromMenu:
             navigateToTutorial()
-                        
-        case .closeTappedFromTutorial:
-            dismissTutorial()
             
-        case .startUsingGodToolsTappedFromTutorial:
-            flowDelegate?.navigate(step: .startUsingGodToolsTappedFromTutorial)
+        case .tutorialFlowCompleted( _):
             dismissTutorial()
             
         case .doneTappedFromMenu:
@@ -377,9 +373,9 @@ extension MenuFlow {
             getMenuInterfaceStringsUseCase: appDiContainer.domainLayer.getMenuInterfaceStringsUseCase(),
             getOptInOnboardingTutorialAvailableUseCase: appDiContainer.domainLayer.getOptInOnboardingTutorialAvailableUseCase(),
             disableOptInOnboardingBannerUseCase: appDiContainer.domainLayer.getDisableOptInOnboardingBannerUseCase(),
-            getAccountCreationIsSupportedUseCase: appDiContainer.domainLayer.getAccountCreationIsSupportedUseCase(),
-            getUserIsAuthenticatedUseCase: appDiContainer.domainLayer.getUserIsAuthenticatedUseCase(),
-            logOutUserUseCase: appDiContainer.domainLayer.getLogOutUserUseCase(),
+            getAccountCreationIsSupportedUseCase: appDiContainer.feature.account.domainLayer.getAccountCreationIsSupportedUseCase(),
+            getUserIsAuthenticatedUseCase: appDiContainer.feature.account.domainLayer.getUserIsAuthenticatedUseCase(),
+            logOutUserUseCase: appDiContainer.feature.account.domainLayer.getLogOutUserUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
             appBuild: appDiContainer.dataLayer.getAppBuild()
@@ -449,8 +445,7 @@ extension MenuFlow {
         let closeButton = AppCloseBarItem(
             color: .white,
             target: viewModel,
-            action: #selector(viewModel.closeTapped),
-            accessibilityIdentifier: nil
+            action: #selector(viewModel.closeTapped)
         )
         
         let hostingView = AppHostingController<SocialSignInView>(
@@ -528,11 +523,11 @@ extension MenuFlow {
         let viewModel = AccountViewModel(
             flowDelegate: self,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            getUserAccountDetailsUseCase: appDiContainer.domainLayer.getUserAccountDetailsUseCase(),
-            getUserActivityUseCase: appDiContainer.domainLayer.getUserActivityUseCase(),
+            getUserAccountDetailsUseCase: appDiContainer.feature.account.domainLayer.getUserAccountDetailsUseCase(),
+            getUserActivityUseCase: appDiContainer.feature.userActivity.domainLayer.getUserActivityUseCase(),
             viewGlobalActivityThisWeekUseCase: appDiContainer.feature.globalActivity.domainLayer.getViewGlobalActivityThisWeekUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
-            viewAccountUseCase: appDiContainer.domainLayer.getViewAccountUseCase(),
+            viewAccountUseCase: appDiContainer.feature.account.domainLayer.getViewAccountUseCase(),
             getGlobalActivityEnabledUseCase: appDiContainer.feature.globalActivity.domainLayer.getGlobalActivityEnabledUseCase()
         )
         
@@ -578,8 +573,7 @@ extension MenuFlow {
         let closeButton = AppCloseBarItem(
             color: nil,
             target: viewModel,
-            action: #selector(viewModel.closeTapped),
-            accessibilityIdentifier: nil
+            action: #selector(viewModel.closeTapped)
         )
         
         let hostingView = AppHostingController<DeleteAccountView>(
@@ -715,7 +709,7 @@ extension MenuFlow {
     
     private func copyFirebaseDeviceTokenToClipboard() {
         
-        appDiContainer.dataLayer.getFirebaseMessaging()
+        appDiContainer.dataLayer.getSharedFirebaseMessaging()
             .getDeviceTokenPublisher()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in

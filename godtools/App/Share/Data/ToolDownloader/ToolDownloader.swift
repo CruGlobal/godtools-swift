@@ -9,6 +9,7 @@
 import Foundation
 import Combine
 import GodToolsToolParser
+import RequestOperation
 
 class ToolDownloader {
     
@@ -27,7 +28,7 @@ class ToolDownloader {
         self.articleManifestAemRepository = articleManifestAemRepository
     }
     
-    func downloadToolsPublisher(tools: [DownloadToolDataModel]) -> AnyPublisher<ToolDownloaderDataModel, Error> {
+    func downloadToolsPublisher(tools: [DownloadToolDataModel], requestPriority: RequestPriority) -> AnyPublisher<ToolDownloaderDataModel, Error> {
             
         var nonArticleTranslations: [TranslationModel] = Array()
         var articleTranslations: [TranslationModel] = Array()
@@ -76,9 +77,9 @@ class ToolDownloader {
             }
         }
         
-        let nonArticleTranslationDownloads: [AnyPublisher<Void, Error>] = getDownloadToolTranslationsPublishers(translations: nonArticleTranslations)
-        let attachmentsDownloads: [AnyPublisher<Void, Error>] = getDownloadAttachmentsPublishers(attachments: attachments)
-        let articleTranslationDownloads: [AnyPublisher<Void, Error>] = getDownloadArticlesPublishers(translations: articleTranslations)
+        let nonArticleTranslationDownloads: [AnyPublisher<Void, Error>] = getDownloadToolTranslationsPublishers(translations: nonArticleTranslations, requestPriority: requestPriority)
+        let attachmentsDownloads: [AnyPublisher<Void, Error>] = getDownloadAttachmentsPublishers(attachments: attachments, requestPriority: requestPriority)
+        let articleTranslationDownloads: [AnyPublisher<Void, Error>] = getDownloadArticlesPublishers(translations: articleTranslations, requestPriority: requestPriority)
         
         let allRequests: [AnyPublisher<Void, Error>] = nonArticleTranslationDownloads + attachmentsDownloads + articleTranslationDownloads
         
@@ -108,10 +109,10 @@ class ToolDownloader {
             .eraseToAnyPublisher()
     }
     
-    private func getDownloadToolTranslationsPublishers(translations: [TranslationModel]) -> [AnyPublisher<Void, Error>] {
+    private func getDownloadToolTranslationsPublishers(translations: [TranslationModel], requestPriority: RequestPriority) -> [AnyPublisher<Void, Error>] {
             
         let downloadTranslationsRequests: [AnyPublisher<Void, Error>] = translations.map { (translation: TranslationModel) in
-            self.translationsRepository.downloadAndCacheTranslationFiles(translation: translation)
+            self.translationsRepository.downloadAndCacheTranslationFiles(translation: translation, requestPriority: requestPriority)
                 .map { _ in
                     return Void()
                 }
@@ -121,11 +122,11 @@ class ToolDownloader {
         return downloadTranslationsRequests
     }
     
-    private func getDownloadAttachmentsPublishers(attachments: [AttachmentModel]) -> [AnyPublisher<Void, Error>] {
+    private func getDownloadAttachmentsPublishers(attachments: [AttachmentModel], requestPriority: RequestPriority) -> [AnyPublisher<Void, Error>] {
         
         let downloadAttachmentsRequests: [AnyPublisher<Void, Error>] = attachments
             .map { (attachment: AttachmentModel) in
-                self.attachmentsRepository.downloadAndCacheAttachmentIfNeeded(attachment: attachment)
+                self.attachmentsRepository.downloadAndCacheAttachmentIfNeeded(attachment: attachment, requestPriority: requestPriority)
                     .map { _ in
                         return Void()
                     }
@@ -135,7 +136,7 @@ class ToolDownloader {
         return downloadAttachmentsRequests
     }
     
-    private func getDownloadArticlesPublishers(translations: [TranslationModel]) -> [AnyPublisher<Void, Error>] {
+    private func getDownloadArticlesPublishers(translations: [TranslationModel], requestPriority: RequestPriority) -> [AnyPublisher<Void, Error>] {
         
         let downloadArticlesRequests: [AnyPublisher<Void, Error>] = translations.compactMap { (translation: TranslationModel) in
             
@@ -146,19 +147,23 @@ class ToolDownloader {
             return self.translationsRepository.getTranslationManifestFromCacheElseRemote(
                 translation: translation,
                 manifestParserType: .manifestOnly,
+                requestPriority: requestPriority,
                 includeRelatedFiles: true,
                 shouldFallbackToLatestDownloadedTranslationIfRemoteFails: false
             )
-            .map { (translationManifestDataModel: TranslationManifestFileDataModel) in
+            .flatMap { (translationManifestDataModel: TranslationManifestFileDataModel) in
                 
                 return self.articleManifestAemRepository.downloadAndCacheManifestAemUrisPublisher(
                     manifest: translationManifestDataModel.manifest,
+                    translationId: translation.id,
                     languageCode: languageCode,
-                    forceDownload: true
+                    downloadCachePolicy: .ignoreCache,
+                    requestPriority: requestPriority
                 )
-            }
-            .map { _ in
-                return Void()
+                .map { (result: ArticleAemRepositoryResult) in
+                    Void()
+                }
+                .eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
         }

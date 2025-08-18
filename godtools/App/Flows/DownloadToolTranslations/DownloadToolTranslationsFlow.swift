@@ -11,7 +11,7 @@ import Combine
 
 class DownloadToolTranslationsFlow: Flow {
         
-    private let determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType
+    private let determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadInterface
     private let getToolTranslationsFilesUseCase: GetToolTranslationsFilesUseCase
     private let didDownloadToolTranslations: ((_ result: Result<ToolTranslationsDomainModel, Error>) -> Void)
     
@@ -24,7 +24,7 @@ class DownloadToolTranslationsFlow: Flow {
     let appDiContainer: AppDiContainer
     let navigationController: AppNavigationController
     
-    init(presentInFlow: Flow, appDiContainer: AppDiContainer, determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType, didDownloadToolTranslations: @escaping ((_ result: Result<ToolTranslationsDomainModel, Error>) -> Void)) {
+    init(presentInFlow: Flow, appDiContainer: AppDiContainer, determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadInterface, didDownloadToolTranslations: @escaping ((_ result: Result<ToolTranslationsDomainModel, Error>) -> Void)) {
         
         self.presentInFlow = presentInFlow
         self.appDiContainer = appDiContainer
@@ -99,8 +99,7 @@ class DownloadToolTranslationsFlow: Flow {
         let closeButton = AppCloseBarItem(
             color: ColorPalette.gtBlue.uiColor,
             target: viewModel,
-            action: #selector(viewModel.closeTapped),
-            accessibilityIdentifier: nil
+            action: #selector(viewModel.closeTapped)
         )
         
         let hostingView = AppHostingController<DownloadToolProgressView>(

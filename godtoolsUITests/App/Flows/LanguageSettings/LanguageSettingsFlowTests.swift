@@ -8,7 +8,6 @@
 
 import Foundation
 import XCTest
-@testable import godtools
 
 class LanguageSettingsFlowTests: BaseFlowTests {
         
@@ -20,46 +19,28 @@ class LanguageSettingsFlowTests: BaseFlowTests {
         )
     }
     
-    private func getChooseAppLanguageButton(app: XCUIApplication) -> XCUIElement {
-        return app.queryButton(buttonAccessibility: .chooseAppLanguage)
-    }
-    
-    private func getEditDownloadedLanguagesButton(app: XCUIApplication) -> XCUIElement {
-        return app.queryButton(buttonAccessibility: .editDownloadedLanguages)
-    }
-    
-    // MARK: - Tests
-    
     func testInitialScreenIsLanguageSettings() {
         
         launchApp()
         
-        super.assertIfInitialScreenDoesntExist(app: app)
+        super.assertIfInitialScreenDoesntExist()
     }
     
     func testNavigationToAppLanguagesList() {
         
         launchApp()
         
-        let chooseAppLanguageButton = getChooseAppLanguageButton(app: app)
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .chooseAppLanguage)
         
-        XCTAssertTrue(chooseAppLanguageButton.exists)
-        
-        chooseAppLanguageButton.tap()
-        
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .appLanguages)
+        assertIfScreenDoesNotExist(screenAccessibility: .appLanguages)
     }
     
     func testNavigationToDownloadableLanguagesList() {
         
         launchApp()
         
-        let editDownloadedLanguagesButton = getEditDownloadedLanguagesButton(app: app)
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .editDownloadedLanguages)
         
-        XCTAssertTrue(editDownloadedLanguagesButton.exists)
-        
-        editDownloadedLanguagesButton.tap()
-        
-        assertIfScreenDoesNotExist(app: app, screenAccessibility: .downloadableLanguages)
+        assertIfScreenDoesNotExist(screenAccessibility: .downloadableLanguages)
     }
 }

@@ -13,22 +13,24 @@ import Combine
 class MobileContentTranslationsApi {
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
+    private let urlSessionPriority: URLSessionPriority
     private let requestSender: RequestSender
     private let baseUrl: String
     
-    required init(config: AppConfig, ignoreCacheSession: IgnoreCacheSession) {
+    required init(config: AppConfig, urlSessionPriority: URLSessionPriority, requestSender: RequestSender) {
                     
-        requestSender = RequestSender(session: ignoreCacheSession.session)
+        self.urlSessionPriority = urlSessionPriority
+        self.requestSender = requestSender
         baseUrl = config.getMobileContentApiBaseUrl()
     }
     
     // MARK: - Files
     
-    private func getTranslationFileRequest(fileName: String) -> URLRequest {
+    private func getTranslationFileRequest(urlSession: URLSession, fileName: String) -> URLRequest {
         
         return requestBuilder.build(
             parameters: RequestBuilderParameters(
-                urlSession: requestSender.session,
+                urlSession: urlSession,
                 urlString: baseUrl + "/translations/files/" + fileName,
                 method: .get,
                 headers: nil,
@@ -38,22 +40,24 @@ class MobileContentTranslationsApi {
         )
     }
     
-    func getTranslationFile(fileName: String) -> AnyPublisher<RequestDataResponse, Error> {
+    func getTranslationFile(fileName: String, requestPriority: RequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
         
-        let urlRequest: URLRequest = getTranslationFileRequest(fileName: fileName)
+        let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
-        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest)
+        let urlRequest: URLRequest = getTranslationFileRequest(urlSession: urlSession, fileName: fileName)
+                
+        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
             .validate()
             .eraseToAnyPublisher()
     }
     
     // MARK: - Translation Zip File Data
     
-    private func getTranslationZipFileRequest(translationId: String) -> URLRequest {
+    private func getTranslationZipFileRequest(urlSession: URLSession, translationId: String) -> URLRequest {
         
         return requestBuilder.build(
             parameters: RequestBuilderParameters(
-                urlSession: requestSender.session,
+                urlSession: urlSession,
                 urlString: baseUrl + "/translations/" + translationId,
                 method: .get,
                 headers: nil,
@@ -63,11 +67,13 @@ class MobileContentTranslationsApi {
         )
     }
     
-    func getTranslationZipFile(translationId: String) -> AnyPublisher<RequestDataResponse, Error> {
+    func getTranslationZipFile(translationId: String, requestPriority: RequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
         
-        let urlRequest: URLRequest = getTranslationZipFileRequest(translationId: translationId)
+        let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
-        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest)
+        let urlRequest: URLRequest = getTranslationZipFileRequest(urlSession: urlSession, translationId: translationId)
+                
+        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
             .validate()
             .eraseToAnyPublisher()
     }

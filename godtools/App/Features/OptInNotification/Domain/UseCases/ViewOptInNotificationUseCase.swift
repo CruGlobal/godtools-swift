@@ -9,10 +9,9 @@
 import Combine
 import Foundation
 
-
 class ViewOptInNotificationUseCase {
 
-    private let getInterfaceStringsRepository:GetOptInNotificationInterfaceStringsRepositoryInterface
+    private let getInterfaceStringsRepository: GetOptInNotificationInterfaceStringsRepositoryInterface
 
     init(getInterfaceStringsRepository: GetOptInNotificationInterfaceStringsRepositoryInterface) {
         
@@ -20,13 +19,12 @@ class ViewOptInNotificationUseCase {
     }
 
     func viewPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewOptInNotificationDomainModel, Never> {
-
-        return getInterfaceStringsRepository
+        
+        return self.getInterfaceStringsRepository
             .getStringsPublisher(translateInLanguage: appLanguage)
-            .map {
-                ViewOptInNotificationDomainModel(interfaceStrings: $0)
+            .map { interfaceStrings in
+                ViewOptInNotificationDomainModel(interfaceStrings: interfaceStrings)
             }
             .eraseToAnyPublisher()
-
     }
 }

@@ -9,21 +9,24 @@
 import Foundation
 import GodToolsToolParser
 import Combine
+import RequestOperation
 
-class ArticleManifestAemRepository: NSObject, ArticleAemRepositoryType {
+class ArticleManifestAemRepository: ArticleAemRepository {
     
     private let categoryArticlesCache: RealmCategoryArticlesCache
-    
-    let downloader: ArticleAemDownloader
-    let cache: ArticleAemCache
-    
-    init(downloader: ArticleAemDownloader, cache: ArticleAemCache, categoryArticlesCache: RealmCategoryArticlesCache) {
+    private let sharedUserDefaultsCache: SharedUserDefaultsCache
+        
+    init(downloader: ArticleAemDownloader, cache: ArticleAemCache, categoryArticlesCache: RealmCategoryArticlesCache, sharedUserDefaultsCache: SharedUserDefaultsCache) {
         
         self.categoryArticlesCache = categoryArticlesCache
-        self.downloader = downloader
-        self.cache = cache
+        self.sharedUserDefaultsCache = sharedUserDefaultsCache
         
-        super.init()
+        super.init(downloader: downloader, cache: cache)
+    }
+    
+    private func getSyncInvalidatorId(translationId: String) -> String {
+        let prefix: String = "\(String(describing: ArticleManifestAemRepository.self)).syncInvalidator.id"
+        return prefix + translationId
     }
     
     func getCategoryArticles(categoryId: String, languageCode: String) -> [CategoryArticleModel] {
@@ -31,34 +34,25 @@ class ArticleManifestAemRepository: NSObject, ArticleAemRepositoryType {
         return categoryArticlesCache.getCategoryArticles(categoryId: categoryId, languageCode: languageCode)
     }
     
-    func downloadAndCacheManifestAemUrisReceipt(manifest: Manifest, languageCode: String, forceDownload: Bool, completion: @escaping ((_ result: ArticleAemRepositoryResult) -> Void)) -> ArticleManifestDownloadArticlesReceipt {
-                
-        let receipt = ArticleManifestDownloadArticlesReceipt()
+    func getCategoryArticlesPublisher(categoryId: String, languageCode: String) -> AnyPublisher<[CategoryArticleModel], Never> {
         
-        let downloadQueue = downloadAndCacheManifestAemUrisOperationQueue(manifest: manifest, languageCode: languageCode, forceDownload: forceDownload) { result in
-            
-            receipt.downloadCompleted(result: result)
-        }
-        
-        receipt.downloadStarted(downloadQueue: downloadQueue)
-        
-        return receipt
+        return categoryArticlesCache.getCategoryArticlesPublisher(categoryId: categoryId, languageCode: languageCode)
+            .eraseToAnyPublisher()
     }
     
-    func downloadAndCacheManifestAemUrisPublisher(manifest: Manifest, languageCode: String, forceDownload: Bool) -> AnyPublisher<ArticleAemRepositoryResult, Never> {
-        
-        return Future() { promise in
-            
-            _ = self.downloadAndCacheManifestAemUrisOperationQueue(manifest: manifest, languageCode: languageCode, forceDownload: forceDownload) { result in
+    func downloadAndCacheManifestAemUrisPublisher(manifest: Manifest, translationId: String, languageCode: String, downloadCachePolicy: ArticleAemDownloaderCachePolicy, requestPriority: RequestPriority, forceFetchFromRemote: Bool = false) -> AnyPublisher<ArticleAemRepositoryResult, Never> {
                 
-                promise(.success(result))
-            }
+        let syncInvalidator = SyncInvalidator(
+            id: getSyncInvalidatorId(translationId: translationId),
+            timeInterval: .days(day: 5),
+            userDefaultsCache: sharedUserDefaultsCache
+        )
+                
+        guard syncInvalidator.shouldSync || forceFetchFromRemote else {
+            return Just(ArticleAemRepositoryResult.emptyResult())
+                .eraseToAnyPublisher()
         }
-        .eraseToAnyPublisher()
-    }
-    
-    private func downloadAndCacheManifestAemUrisOperationQueue(manifest: Manifest, languageCode: String, forceDownload: Bool, completion: @escaping ((_ result: ArticleAemRepositoryResult) -> Void)) -> OperationQueue {
-                
+        
         let aemUris: [String] = manifest.aemImports.map({$0.absoluteString})
         
         let categories: [ArticleCategory] = manifest.categories.map({
@@ -68,16 +62,28 @@ class ArticleManifestAemRepository: NSObject, ArticleAemRepositoryType {
             )
         })
         
-        let downloadQueue = downloadAndCache(aemUris: aemUris, forceDownload: forceDownload) { [weak self] (result: ArticleAemRepositoryResult) in
-            
-            let aemDataObjects: [ArticleAemData] = result.downloaderResult.aemDataObjects
-            
-            self?.categoryArticlesCache.storeAemDataObjectsForCategories(categories: categories, languageCode: languageCode, aemDataObjects: aemDataObjects) { (cacheError: [Error]) in
+        return super.downloadAndCachePublisher(
+            aemUris: aemUris,
+            downloadCachePolicy: downloadCachePolicy,
+            requestPriority: requestPriority
+        )
+        .flatMap { (result: ArticleAemRepositoryResult) -> AnyPublisher<ArticleAemRepositoryResult, Never> in
+                                
+            return self.categoryArticlesCache.storeAemDataObjectsForCategoriesPublisher(
+                categories: categories,
+                languageCode: languageCode,
+                aemDataObjects: result.downloaderResult.aemDataObjects
+            )
+            .map { (cacheErrors: [Error]) in
                 
-                completion(result)
+                if cacheErrors.isEmpty {
+                    syncInvalidator.didSync()
+                }
+                
+                return result
             }
+            .eraseToAnyPublisher()
         }
-        
-        return downloadQueue
+        .eraseToAnyPublisher()
     }
 }

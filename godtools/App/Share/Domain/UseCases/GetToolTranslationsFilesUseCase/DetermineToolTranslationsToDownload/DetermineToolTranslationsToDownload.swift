@@ -8,7 +8,7 @@
 
 import Foundation
 
-class DetermineToolTranslationsToDownload: DetermineToolTranslationsToDownloadType {
+class DetermineToolTranslationsToDownload: DetermineToolTranslationsToDownloadInterface {
     
     private let resourceId: String
     private let languageIds: [String]
@@ -30,7 +30,7 @@ class DetermineToolTranslationsToDownload: DetermineToolTranslationsToDownloadTy
     func determineToolTranslationsToDownload() -> Result<DetermineToolTranslationsToDownloadResult, DetermineToolTranslationsToDownloadError> {
         
         guard let resource = getResource() else {
-            return .failure(.failedToFetchResourceFromCache)
+            return .failure(.failedToFetchResourceFromCache(resourceNeeded: .id(value: resourceId)))
         }
         
         let supportedLanguageIds: [String] = languageIds.filter({resource.supportsLanguage(languageId: $0)})
@@ -40,7 +40,7 @@ class DetermineToolTranslationsToDownload: DetermineToolTranslationsToDownloadTy
         for languageId in supportedLanguageIds {
             
             guard let translation = translationsRepository.getLatestTranslation(resourceId: resourceId, languageId: languageId) else {
-                return .failure(.failedToFetchTranslationFromCache)
+                return .failure(.failedToFetchResourceFromCache(resourceNeeded: .id(value: resourceId)))
             }
             
             translations.append(translation)

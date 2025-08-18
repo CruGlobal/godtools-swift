@@ -11,12 +11,21 @@ import Foundation
 class ShareToolScreenShareSessionViewModel {
     
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
+    private let domainModel: ShareToolScreenShareSessionDomainModel
+    private let shareUrl: String
     
     let shareMessage: String
+    let qrCodeString: String
     
-    init(shareMessage: String, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    private weak var flowDelegate: FlowDelegate?
+    
+    init(flowDelegate: FlowDelegate?, domainModel: ShareToolScreenShareSessionDomainModel, shareMessage: String, shareUrl: String, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
             
+        self.flowDelegate = flowDelegate
+        self.domainModel = domainModel
         self.shareMessage = shareMessage
+        self.shareUrl = shareUrl
+        self.qrCodeString = domainModel.interfaceStrings.qrCodeTitle
         
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
     }
@@ -45,5 +54,15 @@ extension ShareToolScreenShareSessionViewModel {
                 AnalyticsConstants.Keys.shareScreenEngagedCountKey: 1
             ]
         )
+    }
+    
+    func qrCodeTapped() {
+    
+        flowDelegate?.navigate(step: .shareQRCodeTappedFromToolScreenShareSession(shareUrl: shareUrl))
+    }
+    
+    func activityViewDismissed() {
+        
+        flowDelegate?.navigate(step: .dismissedShareToolScreenShareActivityViewController)
     }
 }

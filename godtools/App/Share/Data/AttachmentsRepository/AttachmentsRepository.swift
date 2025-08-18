@@ -49,12 +49,12 @@ class AttachmentsRepository {
         return Image(uiImage: uiImage)
     }
     
-    func getAttachmentImagePublisher(id: String) -> AnyPublisher<Image?, Never> {
+    func getAttachmentImagePublisher(id: String, requestPriority: RequestPriority) -> AnyPublisher<Image?, Never> {
         
         return getAttachmentModelPublisher(id: id)
             .flatMap({ attachment -> AnyPublisher<AttachmentDataModel, Error> in
               
-                return self.getAttachmentFromCacheElseRemote(attachment: attachment)
+                return self.getAttachmentFromCacheElseRemote(attachment: attachment, requestPriority: requestPriority)
                     .eraseToAnyPublisher()
             })
             .flatMap({ attachmentDataModel -> AnyPublisher<Image?, Error> in
@@ -78,12 +78,12 @@ class AttachmentsRepository {
             .eraseToAnyPublisher()
     }
     
-    func getAttachmentDataPublisher(id: String) -> AnyPublisher<Data?, Never> {
+    func getAttachmentDataPublisher(id: String, requestPriority: RequestPriority) -> AnyPublisher<Data?, Never> {
 
         return getAttachmentModelPublisher(id: id)
             .flatMap({ attachment -> AnyPublisher<AttachmentDataModel, Error> in
     
-                return self.getAttachmentFromCacheElseRemote(attachment: attachment)
+                return self.getAttachmentFromCacheElseRemote(attachment: attachment, requestPriority: requestPriority)
                     .eraseToAnyPublisher()
             })
             .flatMap({ attachmentDataModel -> AnyPublisher<Data?, Error> in
@@ -99,12 +99,12 @@ class AttachmentsRepository {
             .eraseToAnyPublisher()
     }
     
-    func getAttachmentUrlPublisher(id: String) -> AnyPublisher<URL?, Never> {
+    func getAttachmentUrlPublisher(id: String, requestPriority: RequestPriority) -> AnyPublisher<URL?, Never> {
          
         return getAttachmentModelPublisher(id: id)
             .flatMap({ attachment -> AnyPublisher<AttachmentDataModel, Error> in
     
-                return self.getAttachmentFromCacheElseRemote(attachment: attachment)
+                return self.getAttachmentFromCacheElseRemote(attachment: attachment, requestPriority: requestPriority)
                     .eraseToAnyPublisher()
             })
             .flatMap({ attachmentDataModel -> AnyPublisher<URL?, Error> in
@@ -143,11 +143,11 @@ extension AttachmentsRepository {
             .eraseToAnyPublisher()
     }
     
-    private func getAttachmentFromCacheElseRemote(attachment: AttachmentModel) -> AnyPublisher<AttachmentDataModel, Error> {
+    private func getAttachmentFromCacheElseRemote(attachment: AttachmentModel, requestPriority: RequestPriority) -> AnyPublisher<AttachmentDataModel, Error> {
         
         return getAttachmentFromCachePublisher(attachment: attachment)
             .catch { (error: Error) in
-                return self.downloadAndCacheAttachment(attachment: attachment)
+                return self.downloadAndCacheAttachment(attachment: attachment, requestPriority: requestPriority)
                     .eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
@@ -196,7 +196,7 @@ extension AttachmentsRepository {
             .eraseToAnyPublisher()
     }
     
-    private func downloadAndCacheAttachment(attachment: AttachmentModel) -> AnyPublisher<AttachmentDataModel, Error> {
+    private func downloadAndCacheAttachment(attachment: AttachmentModel, requestPriority: RequestPriority) -> AnyPublisher<AttachmentDataModel, Error> {
         
         guard let url = URL(string: attachment.file) else {
             let error: Error = NSError.errorWithDescription(description: "Failed to download attachment file. Invalid URL if file attribute.")
@@ -204,7 +204,7 @@ extension AttachmentsRepository {
                 .eraseToAnyPublisher()
         }
         
-        return api.getAttachmentFile(url: url)
+        return api.getAttachmentFile(url: url, requestPriority: requestPriority)
             .flatMap({ (response: RequestDataResponse) -> AnyPublisher<(Data, FileCacheLocation), Error> in
                 
                 let justData = Just(response.data)
@@ -235,11 +235,11 @@ extension AttachmentsRepository {
             .eraseToAnyPublisher()
     }
     
-    func downloadAndCacheAttachmentIfNeeded(attachment: AttachmentModel) -> AnyPublisher<AttachmentDataModel, Error> {
+    func downloadAndCacheAttachmentIfNeeded(attachment: AttachmentModel, requestPriority: RequestPriority) -> AnyPublisher<AttachmentDataModel, Error> {
         
         return getAttachmentFromCachePublisher(attachment: attachment)
             .catch { (error: Error) in
-                return self.downloadAndCacheAttachment(attachment: attachment)
+                return self.downloadAndCacheAttachment(attachment: attachment, requestPriority: requestPriority)
                     .eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()

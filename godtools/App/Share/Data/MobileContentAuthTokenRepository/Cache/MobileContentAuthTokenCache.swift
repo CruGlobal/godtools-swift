@@ -16,10 +16,10 @@ class MobileContentAuthTokenCache {
     private static let sharedHashableAuthTokenSubject: HashableCurrentValueSubject<UserId, MobileContentAuthTokenDataModel, Never> = HashableCurrentValueSubject()
     private static let sharedAuthUserId: UserId = "shared_auth_user_id"
     
-    private let keychainAccessor: MobileContentAuthTokenKeychainAccessor
+    private let keychainAccessor: MobileContentAuthTokenKeychainAccessorInterface
     private let realmCache: RealmMobileContentAuthTokenCache
     
-    init(mobileContentAuthTokenKeychainAccessor: MobileContentAuthTokenKeychainAccessor, realmCache: RealmMobileContentAuthTokenCache) {
+    init(mobileContentAuthTokenKeychainAccessor: MobileContentAuthTokenKeychainAccessorInterface, realmCache: RealmMobileContentAuthTokenCache) {
         
         self.keychainAccessor = mobileContentAuthTokenKeychainAccessor
         self.realmCache = realmCache

@@ -12,4 +12,12 @@ struct ArticleAemCacheResult {
     
     let numberOfArchivedObjects: Int
     let cacheErrorData: [ArticleAemCacheErrorData]
+    let saveAemDataToRealmError: Error?
+}
+
+extension ArticleAemCacheResult {
+    
+    static func emptyResult() -> ArticleAemCacheResult {
+        return ArticleAemCacheResult(numberOfArchivedObjects: 0, cacheErrorData: [], saveAemDataToRealmError: nil)
+    }
 }

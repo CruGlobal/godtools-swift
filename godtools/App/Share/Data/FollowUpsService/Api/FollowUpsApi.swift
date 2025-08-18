@@ -8,20 +8,23 @@
 
 import Foundation
 import RequestOperation
+import Combine
 
 class FollowUpsApi {
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
-    private let session: URLSession
+    private let urlSessionPriority: URLSessionPriority
+    private let requestSender: RequestSender
     private let baseUrl: String
     
-    init(baseUrl: String, ignoreCacheSession: IgnoreCacheSession) {
+    init(baseUrl: String, urlSessionPriority: URLSessionPriority, requestSender: RequestSender) {
         
-        session = ignoreCacheSession.session
+        self.urlSessionPriority = urlSessionPriority
+        self.requestSender = requestSender
         self.baseUrl = baseUrl
     }
     
-    private func newFollowUpsRequest(followUp: FollowUpModelType) -> URLRequest {
+    private func getFollowUpRequest(followUp: FollowUpModelType, urlSession: URLSession) -> URLRequest {
         
         let headers: [String: String] = [
             "Content-Type": "application/vnd.api+json"
@@ -41,7 +44,7 @@ class FollowUpsApi {
         
         return requestBuilder.build(
             parameters: RequestBuilderParameters(
-                urlSession: session,
+                urlSession: urlSession,
                 urlString: baseUrl + "/follow_ups",
                 method: .post,
                 headers: headers,
@@ -51,30 +54,13 @@ class FollowUpsApi {
         )
     }
     
-    func newFollowUpsOperation(followUp: FollowUpModelType) -> RequestOperation {
-        
-        let urlRequest = newFollowUpsRequest(followUp: followUp)
-        let operation = RequestOperation(
-            session: session,
-            urlRequest: urlRequest
-        )
-        
-        return operation
-    }
-    
-    func postFollowUp(followUp: FollowUpModelType, complete: @escaping ((_ response: RequestResponse) -> Void)) -> OperationQueue {
-        
-        let operation: RequestOperation = newFollowUpsOperation(followUp: followUp)
-        
-        operation.setCompletionHandler { (response: RequestResponse) in
+    func postFollowUpPublisher(followUp: FollowUpModelType, requestPriority: RequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
             
-            complete(response)
-        }
+        let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
-        let queue = OperationQueue()
+        let urlRequest = getFollowUpRequest(followUp: followUp, urlSession: urlSession)
         
-        queue.addOperations([operation], waitUntilFinished: false)
-        
-        return queue
+        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
+            .eraseToAnyPublisher()
     }
 }

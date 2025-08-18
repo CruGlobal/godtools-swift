@@ -10,19 +10,21 @@ import Foundation
 import RequestOperation
 import Combine
 
-class MobileContentAuthTokenAPI {
+class MobileContentAuthTokenAPI: MobileContentAuthTokenAPIInterface {
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
+    private let urlSessionPriority: URLSessionPriority
     private let requestSender: RequestSender
     private let baseURL: String
     
-    init(config: AppConfig, ignoreCacheSession: IgnoreCacheSession) {
+    init(config: AppConfig, urlSessionPriority: URLSessionPriority, requestSender: RequestSender) {
         
-        requestSender = RequestSender(session: ignoreCacheSession.session)
+        self.urlSessionPriority = urlSessionPriority
+        self.requestSender = requestSender
         baseURL = config.getMobileContentApiBaseUrl()
     }
     
-    private func getAuthTokenRequest(providerToken: MobileContentAuthProviderToken, createUser: Bool) -> URLRequest {
+    private func getAuthTokenRequest(urlSession: URLSession, providerToken: MobileContentAuthProviderToken, createUser: Bool) -> URLRequest {
         
         var attributes: [String: Any] = Dictionary()
         
@@ -66,7 +68,7 @@ class MobileContentAuthTokenAPI {
         
         return requestBuilder.build(
             parameters: RequestBuilderParameters(
-                urlSession: requestSender.session,
+                urlSession: urlSession,
                 urlString: baseURL + "/auth",
                 method: .post,
                 headers: headers,
@@ -78,9 +80,11 @@ class MobileContentAuthTokenAPI {
     
     func fetchAuthTokenPublisher(providerToken: MobileContentAuthProviderToken, createUser: Bool) -> AnyPublisher<MobileContentAuthTokenDecodable, MobileContentApiError> {
         
-        let urlRequest: URLRequest = getAuthTokenRequest(providerToken: providerToken, createUser: createUser)
-        
-        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest)
+        let urlSession: URLSession = urlSessionPriority.getURLSession(priority: .high)
+                
+        let urlRequest: URLRequest = getAuthTokenRequest(urlSession: urlSession, providerToken: providerToken, createUser: createUser)
+                
+        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
             .decodeRequestDataResponseForSuccessOrFailureCodable()
             .mapError { (error: Error) in
                 return MobileContentApiError.other(error: error)

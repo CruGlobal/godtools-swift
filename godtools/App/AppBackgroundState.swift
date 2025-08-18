@@ -27,7 +27,7 @@ class AppBackgroundState {
         guard !isStarted else {
             return
         }
-        
+                
         isStarted = true
                         
         appDiContainer.feature.appLanguage.domainLayer
@@ -53,6 +53,11 @@ class AppBackgroundState {
             resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
             launchCountRepository: appDiContainer.dataLayer.getSharedLaunchCountRepository(),
             storeInitialFavoritedToolsUseCase: appDiContainer.feature.dashboard.domainLayer.getStoreInitialFavoritedToolsUseCase()
+        )
+        
+        syncUserCounters(
+            userIsAuthenticatedUseCase: appDiContainer.feature.account.domainLayer.getUserIsAuthenticatedUseCase(),
+            userCountersRepository: appDiContainer.dataLayer.getUserCountersRepository()
         )
     }
     
@@ -94,6 +99,42 @@ class AppBackgroundState {
         .sink { _ in
             
         }
+        .store(in: &cancellables)
+    }
+    
+    private func syncUserCounters(userIsAuthenticatedUseCase: GetUserIsAuthenticatedUseCase, userCountersRepository: UserCountersRepository) {
+                
+        Publishers.CombineLatest(
+            userIsAuthenticatedUseCase.getIsAuthenticatedPublisher(),
+            userCountersRepository.getUserCountersChanged(reloadFromRemote: false, requestPriority: .low)
+        )
+        .map { (isAuthenticatedDomainModel: UserIsAuthenticatedDomainModel, userCountersChanged: Void) in
+                        
+            if isAuthenticatedDomainModel.isAuthenticated {
+                return userCountersRepository
+                    .syncUpdatedUserCountersWithRemotePublisher(requestPriority: .low)
+                    .eraseToAnyPublisher()
+            }
+            else {
+                return Just(Void())
+                    .setFailureType(to: Error.self)
+                    .eraseToAnyPublisher()
+            }
+        }
+        .switchToLatest()
+        .receive(on: DispatchQueue.main)
+        .sink(receiveCompletion: { completion in
+                        
+            switch completion {
+            case .finished:
+                break
+            case .failure( _):
+                break
+            }
+            
+        }, receiveValue: {
+            
+        })
         .store(in: &cancellables)
     }
 }

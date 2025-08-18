@@ -19,7 +19,7 @@ class AppDiContainer {
     let domainLayer: AppDomainLayerDependencies
     let feature: AppFeatureDiContainer
         
-    init(appBuild: AppBuild, appConfig: AppConfig, infoPlist: InfoPlist, realmDatabase: RealmDatabase, firebaseEnabled: Bool) {
+    init(appBuild: AppBuild, appConfig: AppConfig, realmDatabase: RealmDatabase, firebaseEnabled: Bool, urlSessionEnabled: Bool) {
                
         self.appBuild = appBuild
         self.realmDatabase = realmDatabase
@@ -27,9 +27,9 @@ class AppDiContainer {
         dataLayer = AppDataLayerDependencies(
             appBuild: appBuild,
             appConfig: appConfig,
-            infoPlist: infoPlist,
             realmDatabase: realmDatabase,
-            firebaseEnabled: firebaseEnabled
+            firebaseEnabled: firebaseEnabled,
+            urlSessionEnabled: urlSessionEnabled
         )
         
         domainLayer = AppDomainLayerDependencies(dataLayer: dataLayer)
@@ -55,10 +55,12 @@ class AppDiContainer {
         let spotlightToolsDiContainer = SpotlightToolsDiContainer(coreDataLayer: dataLayer)
         let toolDetailsDiContainer = ToolDetailsFeatureDiContainer(coreDataLayer: dataLayer)
         let toolScreenShareDiContainer = ToolScreenShareFeatureDiContainer(coreDataLayer: dataLayer)
+        let toolScreenShareQRCodeDiContainer = ToolScreenShareQRCodeFeatureDiContainer(coreDataLayer: dataLayer)
         let toolSettingsDiContainer = ToolSettingsDiContainer(coreDataLayer: dataLayer)
         let toolsFilterDiContainer = ToolsFilterFeatureDiContainer(coreDataLayer: dataLayer)
         let toolShortcutLinks = ToolShortcutLinksDiContainer(coreDataLayer: dataLayer)
         let tutorialDiContainer = TutorialFeatureDiContainer(coreDataLayer: dataLayer)
+        let userActivityDiContainer = UserActivityDiContainer(coreDataLayer: dataLayer)
         
         feature = AppFeatureDiContainer(
             account: accountDiContainer,
@@ -82,10 +84,12 @@ class AppDiContainer {
             spotlightTools: spotlightToolsDiContainer,
             toolDetails: toolDetailsDiContainer,
             toolScreenShare: toolScreenShareDiContainer,
+            toolScreenShareQRCode: toolScreenShareQRCodeDiContainer,
             toolSettings: toolSettingsDiContainer,
             toolsFilter: toolsFilterDiContainer,
             toolShortcutLinks: toolShortcutLinks,
-            tutorial: tutorialDiContainer
+            tutorial: tutorialDiContainer,
+            userActivity: userActivityDiContainer
         )
                                                                 
         failedFollowUpsCache = FailedFollowUpsCache(realmDatabase: realmDatabase)
@@ -150,7 +154,7 @@ class AppDiContainer {
     
     private func getMobileContentRendererUserAnalytics() -> MobileContentRendererUserAnalytics {
         return MobileContentRendererUserAnalytics(
-            incrementUserCounterUseCase: domainLayer.getIncrementUserCounterUseCase()
+            incrementUserCounterUseCase: feature.userActivity.domainLayer.getIncrementUserCounterUseCase()
         )
     }
     

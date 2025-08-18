@@ -157,7 +157,7 @@ extension TractFlow {
         
         let navBarLayoutDirection: UISemanticContentAttribute = ApplicationLayout.shared.currentDirection.semanticContentAttribute
         
-        let parentFlowIsHomeFlow: Bool = flowDelegate is AppFlow
+        let parentFlowIsHomeFlow: Bool = flowDelegate is DashboardFlow
         
         let viewModel = TractViewModel(
             flowDelegate: self,
@@ -176,7 +176,7 @@ extension TractFlow {
             initialPage: initialPage,
             initialPageSubIndex: initialPageSubIndex,
             trainingTipsEnabled: trainingTipsEnabled,
-            incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase(), 
+            incrementUserCounterUseCase: appDiContainer.feature.userActivity.domainLayer.getIncrementUserCounterUseCase(), 
             selectedLanguageIndex: selectedLanguageIndex,
             persistToolLanguageSettings: persistToolLanguageSettings
         )
@@ -209,7 +209,7 @@ extension TractFlow {
                 color: nil,
                 target: viewModel,
                 action: #selector(viewModel.toolSettingsTapped),
-                accessibilityIdentifier: nil
+                accessibilityIdentifier: AccessibilityStrings.Button.toolSettings.id
             ),
             hidesBarItemPublisher: nil
         )

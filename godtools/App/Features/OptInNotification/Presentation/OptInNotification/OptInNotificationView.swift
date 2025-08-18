@@ -11,79 +11,94 @@ import SwiftUI
 
 struct OptInNotificationView: View {
     
+    private let modalHorizontalPadding: CGFloat = 20
+    private let buttonFontSize: CGFloat = 17
+    private let buttonHeight: CGFloat = 50
+    private let buttonHorizontalPadding: CGFloat = 20
+    private let overlayTappedClosure: (() -> Void)?
+    
     @ObservedObject private var viewModel: OptInNotificationViewModel
+    
+    @State private var modalIsHidden: Bool = true
 
-    init(viewModel: OptInNotificationViewModel) {
+    init(viewModel: OptInNotificationViewModel, overlayTappedClosure: (() -> Void)? = nil) {
+       
         self.viewModel = viewModel
+        self.overlayTappedClosure = overlayTappedClosure
     }
 
     var body: some View {
-
-        VStack {
+        
+        GTModalView(content: { geometry in
             
-            ImageCatalog.notificationGraphic
-                .image
-                .resizable()
-                .scaledToFit()
-                .padding(EdgeInsets(top: 5, leading: 5, bottom: 0, trailing: 5))
-                .overlay(
-                    Rectangle()
-                        .frame(height: 2)
-                        .foregroundColor(ColorPalette.gtBlue.color),
-                    alignment: .bottom
-                )
-            
-            Text(viewModel.title)
-                .foregroundColor(ColorPalette.gtBlue.color)
-                .font(FontLibrary.sfProTextRegular.font(size: 30))
-                .fontWeight(.bold)
-                .padding(.vertical, 10)
-                .minimumScaleFactor(0.5)
-                .lineLimit(1)
-
-            Text(viewModel.body)
-                .font(FontLibrary.sfProTextRegular.font(size: 18))
-                .foregroundStyle(ColorPalette.gtGrey.color)
-                .multilineTextAlignment(.center)
-                .padding(.bottom, 12)
-
-            Button(action: {
+            VStack(alignment: .center, spacing: 0) {
                 
-                viewModel.allowNotificationsTapped()
-
-            }) {
+                ImageCatalog.notificationGraphic
+                    .image
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 263, height: 140)
+                    .padding(.horizontal, 15)
+                    .overlay(
+                        Rectangle()
+                            .frame(height: 2)
+                            .padding(.horizontal, 5)
+                            .foregroundColor(ColorPalette.gtBlue.color),
+                        alignment: .bottom
+                    )
                 
-                RoundedRectangle(cornerRadius: 5)
-                    .fill(ColorPalette.gtBlue.color)
-            }
-            .frame(height: 45)
-            .overlay(
-                Text(viewModel.allowNotificationsActionTitle)
-                    .foregroundColor(.white)
-            )
-
-            Button(action: {
-                viewModel.maybeLaterTapped()
-
-            }) {
-                Text(viewModel.maybeLaterActionTitle)
+                Text(viewModel.title)
+                    .multilineTextAlignment(.center)
                     .foregroundColor(ColorPalette.gtBlue.color)
-            }
-            .frame(height: 40)
-            .padding(.bottom, 50)
-            
-        }
-        .padding(.horizontal, 20)
-        .background(
-            RoundedRectangle(cornerRadius: 10)
-                .stroke(ColorPalette.gtBlue.color, lineWidth: 8)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 10)
-                        .foregroundStyle(.white)
+                    .font(FontLibrary.sfProTextBold.font(size: 30))
+                    .padding(.top, 20)
+                    .minimumScaleFactor(0.5)
+                    .lineLimit(2)
+
+                Text(viewModel.body)
+                    .font(FontLibrary.sfProTextRegular.font(size: 17))
+                    .foregroundStyle(ColorPalette.gtGrey.color)
+                    .multilineTextAlignment(.center)
+                    .padding(.top, 13)
+                
+                let buttonWidth: CGFloat = geometry.size.width - (modalHorizontalPadding * 2) - (buttonHorizontalPadding * 2)
+                
+                GTBlueButton(
+                    title: viewModel.notificationsActionTitle,
+                    fontSize: buttonFontSize,
+                    width: buttonWidth,
+                    height: buttonHeight,
+                    action: {
+                        
+                        modalIsHidden = true
+                        
+                        viewModel.allowNotificationsTapped()
+                    }
                 )
-        )
-        .padding(.horizontal, UIScreen.main.bounds.width * 0.05)
-        .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
+                .padding(.top, 18)
+                
+                GTWhiteButton(
+                    title: viewModel.maybeLaterActionTitle,
+                    fontSize: buttonFontSize,
+                    width: buttonWidth,
+                    height: buttonHeight,
+                    action: {
+                        
+                        modalIsHidden = true
+
+                        viewModel.maybeLaterTapped()
+                    }
+                )
+                .padding(.top, 12)
+                
+                FixedVerticalSpacer(height: 30)
+            }
+            
+        }, isHidden: $modalIsHidden, overlayTappedClosure: {
+            
+            overlayTappedClosure?()
+            
+        }, backgroundHorizontalPadding: modalHorizontalPadding, strokeColor: ColorPalette.gtBlue.color, strokeLineWidth: 8)
     }
 }
 
@@ -98,7 +113,8 @@ struct OptInNotificationView_Preview: PreviewProvider {
         let viewModel = OptInNotificationViewModel(
             flowDelegate: MockFlowDelegate(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            viewOptInNotificationUseCase: appDiContainer.feature.optInNotification.domainLayer.getViewOptInNotificationUseCase()
+            viewOptInNotificationUseCase: appDiContainer.feature.optInNotification.domainLayer.getViewOptInNotificationUseCase(),
+            notificationPromptType: .allow
         )
 
         return viewModel

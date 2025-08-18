@@ -1,11 +1,6 @@
 name: Create Version
 
 on:
-  push:
-    branches: [ main, releases/* ]
-  pull_request:
-    branches: [ main, releases/* ]
-    
   workflow_dispatch:
     inputs:
       versionIncrementType:
@@ -57,7 +52,7 @@ jobs:
       version: ${{ steps.version.outputs.version }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Set Version Output
         id: version
         run: |
@@ -165,7 +160,7 @@ jobs:
     needs: [ current_version, new_version ]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Set Xcode Project Version to New Version
         run: |
           sed -i "s/MARKETING_VERSION = ${{ needs.current_version.outputs.version }}/MARKETING_VERSION = ${{ needs.new_version.outputs.version }}/g" godtools.xcodeproj/project.pbxproj
