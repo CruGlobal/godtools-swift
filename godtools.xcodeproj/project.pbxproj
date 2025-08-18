@@ -1175,6 +1175,7 @@
 		45C925022B45E7AA005947DB /* AppHomeBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C925012B45E7AA005947DB /* AppHomeBarItem.swift */; };
 		45C94E612C4EDF1C004D80FE /* AccessibilityTapAreaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C94E602C4EDF1C004D80FE /* AccessibilityTapAreaView.swift */; };
 		45CAB4EA28A2CE8000224B5F /* KeyboardNotificationObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CAB4E928A2CE7F00224B5F /* KeyboardNotificationObserver.swift */; };
+		45CBD3B52E53B1F90081A1DE /* Profile+AuthenticationProviderProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CBD3B42E53B1F50081A1DE /* Profile+AuthenticationProviderProfile.swift */; };
 		45CBD9FB2BA343590007DEC8 /* GetOnboardingTutorialIsAvailableInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CBD9FA2BA343590007DEC8 /* GetOnboardingTutorialIsAvailableInterface.swift */; };
 		45CBD9FD2BA343DE0007DEC8 /* GetOnboardingTutorialIsAvailable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CBD9FC2BA343DE0007DEC8 /* GetOnboardingTutorialIsAvailable.swift */; };
 		45CBDA012BA38EF60007DEC8 /* LaunchCountRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CBDA002BA38EF60007DEC8 /* LaunchCountRepositoryInterface.swift */; };
@@ -2895,6 +2896,7 @@
 		45C925012B45E7AA005947DB /* AppHomeBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppHomeBarItem.swift; sourceTree = "<group>"; };
 		45C94E602C4EDF1C004D80FE /* AccessibilityTapAreaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityTapAreaView.swift; sourceTree = "<group>"; };
 		45CAB4E928A2CE7F00224B5F /* KeyboardNotificationObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardNotificationObserver.swift; sourceTree = "<group>"; };
+		45CBD3B42E53B1F50081A1DE /* Profile+AuthenticationProviderProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Profile+AuthenticationProviderProfile.swift"; sourceTree = "<group>"; };
 		45CBD9FA2BA343590007DEC8 /* GetOnboardingTutorialIsAvailableInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOnboardingTutorialIsAvailableInterface.swift; sourceTree = "<group>"; };
 		45CBD9FC2BA343DE0007DEC8 /* GetOnboardingTutorialIsAvailable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOnboardingTutorialIsAvailable.swift; sourceTree = "<group>"; };
 		45CBDA002BA38EF60007DEC8 /* LaunchCountRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchCountRepositoryInterface.swift; sourceTree = "<group>"; };
@@ -7343,6 +7345,7 @@
 				458D41462E5347EA00F74229 /* FacebookAccessTokenProvider+AuthenticationProviderInterface.swift */,
 				458D41472E5347EA00F74229 /* FacebookLimitedLogin+AuthenticationProviderInterface.swift */,
 				4598BCDE2BF7DF6800196463 /* GoogleAuthentication+AuthenticationProviderInterface.swift */,
+				45CBD3B42E53B1F50081A1DE /* Profile+AuthenticationProviderProfile.swift */,
 				458D41482E5347EA00F74229 /* Profile+AuthUserDomainModel.swift */,
 			);
 			path = Providers;
@@ -12562,6 +12565,7 @@
 				451CCF1D27A9D87600E8D2D3 /* MobileContentCardCollectionPagePositionState.swift in Sources */,
 				4598BD242BF7DF6800196463 /* GetSocialCreateAccountInterfaceStringsRepositoryInterface.swift in Sources */,
 				45AE975927C97A9500C2CB33 /* TipPage+MobileContentRenderableModel.swift in Sources */,
+				45CBD3B52E53B1F90081A1DE /* Profile+AuthenticationProviderProfile.swift in Sources */,
 				45AE975B27C97A9500C2CB33 /* Link+MobileContentRenderableModel.swift in Sources */,
 				45920D542A8D495C00E336A8 /* ToolCardLanguageAvailabilityView.swift in Sources */,
 				453C1BD82899A523007332E2 /* FavoritedResourcesRepository.swift in Sources */,
@@ -15128,7 +15132,7 @@
 			repositoryURL = "https://github.com/CruGlobal/social-authentication-ios.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.6.1;
+				minimumVersion = 0.6.2;
 			};
 		};
 		45DF96472D386C1C00C6AE68 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {

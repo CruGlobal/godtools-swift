@@ -31,12 +31,7 @@ extension FacebookAccessTokenProvider: AuthenticationProviderInterface {
             appleSignInAuthorizationCode: nil,
             idToken: nil,
             oidcToken: nil,
-            profile: AuthenticationProviderProfile(
-                email: profile.email,
-                familyName: profile.lastName,
-                givenName: profile.firstName,
-                name: profile.name
-            ),
+            profile: profile.toAuthProviderProfile(),
             providerType: .facebook,
             refreshToken: nil
         )

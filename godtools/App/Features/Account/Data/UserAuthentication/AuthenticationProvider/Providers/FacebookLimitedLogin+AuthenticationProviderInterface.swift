@@ -17,21 +17,29 @@ extension FacebookLimitedLogin: AuthenticationProviderInterface {
     func authenticatePublisher(presentingViewController: UIViewController) -> AnyPublisher<AuthenticationProviderResponse, Error> {
         
         return authenticatePublisher(from: presentingViewController)
-            .map { (response: FacebookLimitedLoginResponse) in
-                   
-                let profile = AuthenticationProviderProfile(
-                    email: nil,
-                    familyName: nil,
-                    givenName: nil,
-                    name: nil
-                )
+            .flatMap({ (response: FacebookLimitedLoginResponse) -> AnyPublisher<(response: FacebookLimitedLoginResponse, profile: Profile?), Never> in
                 
+                return FacebookProfile()
+                    .getCurrentUserProfilePublisher()
+                    .catch { (error: Error) in
+                        return Just(nil)
+                            .eraseToAnyPublisher()
+                    }
+                    .map { (profile: Profile?) in
+                        return (response: response, profile: profile)
+                    }
+                    .eraseToAnyPublisher()
+            })
+            .map { (response: FacebookLimitedLoginResponse, profile: Profile?) in
+                   
+                let providerProfile: AuthenticationProviderProfile = profile?.toAuthProviderProfile() ?? AuthenticationProviderProfile.emptyProfile
+
                 return AuthenticationProviderResponse(
                     accessToken: nil,
                     appleSignInAuthorizationCode: nil,
                     idToken: nil,
                     oidcToken: response.oidcToken,
-                    profile: profile,
+                    profile: providerProfile,
                     providerType: .facebook,
                     refreshToken: nil
                 )
@@ -41,28 +49,32 @@ extension FacebookLimitedLogin: AuthenticationProviderInterface {
     
     func renewTokenPublisher() -> AnyPublisher<AuthenticationProviderResponse, Error> {
         
-        // TODO: GT-2392 Implement. ~Levi
-        // TODO: Is refreshing oidc token an option? ~Levi
-        
-        let profile = AuthenticationProviderProfile(
-            email: nil,
-            familyName: nil,
-            givenName: nil,
-            name: nil
-        )
-        
-        let response = AuthenticationProviderResponse(
-            accessToken: nil,
-            appleSignInAuthorizationCode: nil,
-            idToken: nil,
-            oidcToken: nil,
-            profile: profile,
-            providerType: .facebook,
-            refreshToken: nil
-        )
-        
-        return Just(response)
-            .setFailureType(to: Error.self)
+        return FacebookProfile()
+            .getCurrentUserProfilePublisher()
+            .catch { (error: Error) in
+                return Just(nil)
+                    .eraseToAnyPublisher()
+            }
+            .flatMap({ (profile: Profile?) -> AnyPublisher<AuthenticationProviderResponse, Error> in
+
+                let providerProfile: AuthenticationProviderProfile = profile?.toAuthProviderProfile() ?? AuthenticationProviderProfile.emptyProfile
+                
+                let oidcToken: String? = self.getAuthenticationTokenString()
+                
+                let response = AuthenticationProviderResponse(
+                    accessToken: nil,
+                    appleSignInAuthorizationCode: nil,
+                    idToken: nil,
+                    oidcToken: oidcToken,
+                    profile: providerProfile,
+                    providerType: .facebook,
+                    refreshToken: nil
+                )
+                
+                return Just(response)
+                    .setFailureType(to: Error.self)
+                    .eraseToAnyPublisher()
+            })
             .eraseToAnyPublisher()
     }
     
