@@ -220,7 +220,7 @@ extension RepositorySyncTests {
         )
         
         return RepositorySync<MockRepositorySyncDataModel, MockRepositorySyncExternalDataFetch, MockRepositorySyncRealmObject>(
-            externalDataFetch: Self.getEmptyExternalDataFetch(),
+            externalDataFetch: Self.getExternalDataFetch(objects: argument.externalDataModels),
             realmDatabase: realmDatabase,
             dataModelMapping: MockRepositorySyncMapping()
         )
@@ -304,7 +304,9 @@ extension RepositorySyncTests {
         
         var dataModels: [MockRepositorySyncDataModel] = Array()
         
-        for index in startingId ..< count {
+        let endingId: Int = startingId + count
+        
+        for index in startingId ..< endingId {
             dataModels.append(
                 MockRepositorySyncDataModel(
                     id: "\(index)",
