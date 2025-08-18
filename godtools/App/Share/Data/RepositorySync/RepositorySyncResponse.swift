@@ -11,4 +11,5 @@ import Foundation
 public struct RepositorySyncResponse<DataModel> {
     
     let objects: [DataModel]
+    let errors: [Error]
 }

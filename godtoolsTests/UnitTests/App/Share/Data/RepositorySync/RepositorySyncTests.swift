@@ -45,7 +45,7 @@ struct RepositorySyncTests {
             )
           ]
     )
-    @MainActor func fetchingExternalDataIsTriggeredOnceWhenIgnoringCachedData(argument: TestArgument) async {
+    @MainActor func fetchingExternalDataObjectsIsTriggeredOnceWhenIgnoringCachedData(argument: TestArgument) async {
         
         let repositorySync: RepositorySync<MockRepositorySyncDataModel, MockRepositorySyncExternalDataFetch, MockRepositorySyncRealmObject> = getRepositorySyncFromTestArgument(
             argument: argument

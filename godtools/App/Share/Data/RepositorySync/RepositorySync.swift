@@ -39,7 +39,62 @@ extension RepositorySync {
     
     func getObjectsPublisher(cachePolicy: RepositorySyncCachePolicy, requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
         
-        return Just(RepositorySyncResponse(objects: []))
+        let realmDatabase: RealmDatabase = self.realmDatabase
+        
+        externalDataFetch
+            .getObjectsPublisher(requestPriority: requestPriority)
+            .flatMap({ (response: RepositorySyncResponse<ExternalDataFetchType.DataModel>) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> in
+                
+                let dataModels: [DataModelType] = response.objects.compactMap {
+                    self.dataModelMapping.toDataModel(externalObject: $0)
+                }
+                
+                return realmDatabase.writeObjectsPublisher { (realm: Realm) in
+                   
+                    let realmObjects: [RealmObjectType] = dataModels.compactMap {
+                        self.dataModelMapping.toPersistObject(dataModel: $0)
+                    }
+                    
+                    return realmObjects
+                    
+                } mapInBackgroundClosure: { (realmObjects: [RealmObjectType]) in
+                    
+                    let dataModels: [DataModelType] = realmObjects.compactMap {
+                        self.dataModelMapping.toDataModel(persistObject: $0)
+                    }
+                    
+                    return dataModels
+                }
+                .map {
+                    RepositorySyncResponse(objects: $0, errors: [])
+                }
+                .catch({ (error: Error) in
+                    
+                    let response = RepositorySyncResponse(
+                        objects: dataModels,
+                        errors: [error]
+                    )
+                    
+                    return Just(response)
+                        .eraseToAnyPublisher()
+                })
+                .eraseToAnyPublisher()
+            })
+            .sink { [weak self] (response: RepositorySyncResponse<DataModelType>) in
+                
+            }
+            .store(in: &cancellables)
+        
+        return realmDatabase.openRealm()
+            .objects(RealmObjectType.self)
+            .objectWillChange
+            .map {
+                
+                let dataModels: Array<DataModelType> = Array()
+                let response = RepositorySyncResponse(objects: dataModels)
+                
+                return response
+            }
             .eraseToAnyPublisher()
     }
     
