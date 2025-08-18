@@ -89,11 +89,6 @@ class MobileContentAuthTokenAPI: MobileContentAuthTokenAPIInterface {
         let urlRequest: URLRequest = getAuthTokenRequest(urlSession: urlSession, providerToken: providerToken, createUser: createUser)
                 
         return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
-            .map { (response: RequestDataResponse) in
-                // TODO: Remove map and print statement. ~Levi
-                print(response.getDataString() ?? "")
-                return response
-            }
             .decodeRequestDataResponseForSuccessOrFailureCodable()
             .mapError { (error: Error) in
                 return MobileContentApiError.other(error: error)
