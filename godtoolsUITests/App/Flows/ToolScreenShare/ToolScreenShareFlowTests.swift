@@ -18,41 +18,20 @@ class ToolScreenShareFlowTests: BaseFlowTests {
             checkInitialScreenExists: .tract
         )
         
-        let toolSettingsButton = app.queryButton(buttonAccessibility: .toolSettings)
-        
-        XCTAssertTrue(toolSettingsButton.exists)
-        
-        toolSettingsButton.tap()
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .toolSettings)
         
         assertIfScreenDoesNotExist(screenAccessibility: .toolSettings)
         
-        let shareScreenButton = app.queryDescendants(id: AccessibilityStrings.Button.shareScreen.id)
-                
-        guard let shareScreenButton = shareScreenButton else {
-            XCTAssertNotNil(shareScreenButton, "Found nil element.")
-            return
-        }
-        
-        XCTAssertTrue(shareScreenButton.exists)
-        
-        shareScreenButton.tap()
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .shareScreen, buttonQueryType: .searchDescendants)
         
         assertIfScreenDoesNotExist(screenAccessibility: .toolScreenShareTutorial)
     }
     
-    private func getContinueButtonFromToolScreenShareTutorial() -> XCUIElement {
-        app.queryButton(buttonAccessibility: .continueForward, waitForExistence: 1)
-    }
-    
     private func assertIsLastPageWithGenerateQRCodeAndShareLinkButtons() {
         
-        let generateQRCodeButton = app.queryButton(buttonAccessibility: .generateQRCode, waitForExistence: 1)
+        assertIfButtonDoesNotExist(buttonAccessibility: .generateQRCode)
         
-        let shareLinkButton = app.queryButton(buttonAccessibility: .shareLink, waitForExistence: 1)
-        
-        XCTAssertTrue(generateQRCodeButton.exists)
-        
-        XCTAssertTrue(shareLinkButton.exists)
+        assertIfButtonDoesNotExist(buttonAccessibility: .shareLink)
     }
     
     func testInitialScreenIsToolScreenShare() {
@@ -60,15 +39,20 @@ class ToolScreenShareFlowTests: BaseFlowTests {
         launchAppToToolScreenShare()
     }
     
+    func testCloseButtonClosesBackToTool() {
+        
+        launchAppToToolScreenShare()
+        
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .close)
+        
+        assertIfScreenDoesNotExist(screenAccessibility: .tract)
+    }
+    
     func testSkipNavigatesToLastPageWithGenerateQRCodeAndShareLinkButtons() {
         
         launchAppToToolScreenShare()
         
-        let skipButton: XCUIElement = app.queryButton(buttonAccessibility: .skip)
-        
-        XCTAssertTrue(skipButton.exists)
-        
-        skipButton.tap()
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .skip)
         
         assertIsLastPageWithGenerateQRCodeAndShareLinkButtons()
     }
@@ -77,12 +61,7 @@ class ToolScreenShareFlowTests: BaseFlowTests {
         
         launchAppToToolScreenShare()
         
-        var continueButton: XCUIElement = getContinueButtonFromToolScreenShareTutorial()
-        
-        while continueButton.exists {
-            continueButton.tap()
-            continueButton = getContinueButtonFromToolScreenShareTutorial()
-        }
+        tapWhileExists(buttonAccessibility: .continueForward)
         
         assertIsLastPageWithGenerateQRCodeAndShareLinkButtons()
     }
