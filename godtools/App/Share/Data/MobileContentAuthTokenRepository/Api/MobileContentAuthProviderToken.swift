@@ -12,7 +12,6 @@ enum MobileContentAuthProviderToken {
     
     case appleAuth(authCode: String, givenName: String?, familyName: String?, name: String?)
     case appleRefresh(refreshToken: String)
-    case facebook(accessToken: String)
     case facebookLimitedLogin(oidcToken: String)
     case google(idToken: String)
 }

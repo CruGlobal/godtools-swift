@@ -45,10 +45,6 @@ class MobileContentAuthTokenAPI: MobileContentAuthTokenAPIInterface {
             
             attributes["apple_refresh_token"] = refreshToken
             attributes["create_user"] = nil // Will not provide create_user flag on apple refresh.
-                        
-        case .facebook(let accessToken):
-            
-            attributes["facebook_access_token"] = accessToken
             
         case .facebookLimitedLogin(let oidcToken):
             
