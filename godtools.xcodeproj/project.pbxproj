@@ -750,6 +750,9 @@
 		458D01832B1E4ED30029523C /* LessonsInterfaceStringsDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458D01822B1E4ED30029523C /* LessonsInterfaceStringsDomainModel.swift */; };
 		458D01852B1E4F230029523C /* GetLessonsInterfaceStringsRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458D01842B1E4F230029523C /* GetLessonsInterfaceStringsRepositoryInterface.swift */; };
 		458D01872B1E4F590029523C /* GetLessonsInterfaceStringsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458D01862B1E4F590029523C /* GetLessonsInterfaceStringsRepository.swift */; };
+		458D41492E5347EA00F74229 /* Profile+AuthUserDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458D41482E5347EA00F74229 /* Profile+AuthUserDomainModel.swift */; };
+		458D414A2E5347EA00F74229 /* FacebookLimitedLogin+AuthenticationProviderInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458D41472E5347EA00F74229 /* FacebookLimitedLogin+AuthenticationProviderInterface.swift */; };
+		458D414B2E5347EA00F74229 /* FacebookAccessTokenProvider+AuthenticationProviderInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458D41462E5347EA00F74229 /* FacebookAccessTokenProvider+AuthenticationProviderInterface.swift */; };
 		458D5BA12A3A07570078B015 /* MobileContentPagesNavigationEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458D5B9F2A3A07560078B015 /* MobileContentPagesNavigationEvent.swift */; };
 		458E410B2A9CCE55009769DF /* AppBuildConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458E410A2A9CCE55009769DF /* AppBuildConfiguration.swift */; };
 		458E93412B62A06F0087D45D /* AppShareBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458E93402B62A06F0087D45D /* AppShareBarItem.swift */; };
@@ -791,7 +794,6 @@
 		45965D4F2B44890F001C9AA5 /* GetDashboardInterfaceStringsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45965D4E2B44890F001C9AA5 /* GetDashboardInterfaceStringsRepository.swift */; };
 		4597101629CDE02400C47040 /* View+CornerRadius.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4597101529CDE02400C47040 /* View+CornerRadius.swift */; };
 		4598BD0D2BF7DF6800196463 /* AppleAuthentication+AuthenticationProviderInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4598BCDC2BF7DF6800196463 /* AppleAuthentication+AuthenticationProviderInterface.swift */; };
-		4598BD0E2BF7DF6800196463 /* FacebookAuthentication+AuthenticationProviderInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4598BCDD2BF7DF6800196463 /* FacebookAuthentication+AuthenticationProviderInterface.swift */; };
 		4598BD0F2BF7DF6800196463 /* GoogleAuthentication+AuthenticationProviderInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4598BCDE2BF7DF6800196463 /* GoogleAuthentication+AuthenticationProviderInterface.swift */; };
 		4598BD102BF7DF6800196463 /* AuthenticationProviderProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4598BCE02BF7DF6800196463 /* AuthenticationProviderProfile.swift */; };
 		4598BD112BF7DF6800196463 /* AuthenticationProviderResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4598BCE12BF7DF6800196463 /* AuthenticationProviderResponse.swift */; };
@@ -1173,6 +1175,7 @@
 		45C925022B45E7AA005947DB /* AppHomeBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C925012B45E7AA005947DB /* AppHomeBarItem.swift */; };
 		45C94E612C4EDF1C004D80FE /* AccessibilityTapAreaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C94E602C4EDF1C004D80FE /* AccessibilityTapAreaView.swift */; };
 		45CAB4EA28A2CE8000224B5F /* KeyboardNotificationObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CAB4E928A2CE7F00224B5F /* KeyboardNotificationObserver.swift */; };
+		45CBD3B52E53B1F90081A1DE /* Profile+AuthenticationProviderProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CBD3B42E53B1F50081A1DE /* Profile+AuthenticationProviderProfile.swift */; };
 		45CBD9FB2BA343590007DEC8 /* GetOnboardingTutorialIsAvailableInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CBD9FA2BA343590007DEC8 /* GetOnboardingTutorialIsAvailableInterface.swift */; };
 		45CBD9FD2BA343DE0007DEC8 /* GetOnboardingTutorialIsAvailable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CBD9FC2BA343DE0007DEC8 /* GetOnboardingTutorialIsAvailable.swift */; };
 		45CBDA012BA38EF60007DEC8 /* LaunchCountRepositoryInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CBDA002BA38EF60007DEC8 /* LaunchCountRepositoryInterface.swift */; };
@@ -2486,6 +2489,9 @@
 		458D01822B1E4ED30029523C /* LessonsInterfaceStringsDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsInterfaceStringsDomainModel.swift; sourceTree = "<group>"; };
 		458D01842B1E4F230029523C /* GetLessonsInterfaceStringsRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLessonsInterfaceStringsRepositoryInterface.swift; sourceTree = "<group>"; };
 		458D01862B1E4F590029523C /* GetLessonsInterfaceStringsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLessonsInterfaceStringsRepository.swift; sourceTree = "<group>"; };
+		458D41462E5347EA00F74229 /* FacebookAccessTokenProvider+AuthenticationProviderInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FacebookAccessTokenProvider+AuthenticationProviderInterface.swift"; sourceTree = "<group>"; };
+		458D41472E5347EA00F74229 /* FacebookLimitedLogin+AuthenticationProviderInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FacebookLimitedLogin+AuthenticationProviderInterface.swift"; sourceTree = "<group>"; };
+		458D41482E5347EA00F74229 /* Profile+AuthUserDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Profile+AuthUserDomainModel.swift"; sourceTree = "<group>"; };
 		458D5B9F2A3A07560078B015 /* MobileContentPagesNavigationEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileContentPagesNavigationEvent.swift; sourceTree = "<group>"; };
 		458E410A2A9CCE55009769DF /* AppBuildConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBuildConfiguration.swift; sourceTree = "<group>"; };
 		458E93402B62A06F0087D45D /* AppShareBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppShareBarItem.swift; sourceTree = "<group>"; };
@@ -2527,7 +2533,6 @@
 		45965D4E2B44890F001C9AA5 /* GetDashboardInterfaceStringsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetDashboardInterfaceStringsRepository.swift; sourceTree = "<group>"; };
 		4597101529CDE02400C47040 /* View+CornerRadius.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "View+CornerRadius.swift"; sourceTree = "<group>"; };
 		4598BCDC2BF7DF6800196463 /* AppleAuthentication+AuthenticationProviderInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppleAuthentication+AuthenticationProviderInterface.swift"; sourceTree = "<group>"; };
-		4598BCDD2BF7DF6800196463 /* FacebookAuthentication+AuthenticationProviderInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FacebookAuthentication+AuthenticationProviderInterface.swift"; sourceTree = "<group>"; };
 		4598BCDE2BF7DF6800196463 /* GoogleAuthentication+AuthenticationProviderInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GoogleAuthentication+AuthenticationProviderInterface.swift"; sourceTree = "<group>"; };
 		4598BCE02BF7DF6800196463 /* AuthenticationProviderProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationProviderProfile.swift; sourceTree = "<group>"; };
 		4598BCE12BF7DF6800196463 /* AuthenticationProviderResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationProviderResponse.swift; sourceTree = "<group>"; };
@@ -2891,6 +2896,7 @@
 		45C925012B45E7AA005947DB /* AppHomeBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppHomeBarItem.swift; sourceTree = "<group>"; };
 		45C94E602C4EDF1C004D80FE /* AccessibilityTapAreaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityTapAreaView.swift; sourceTree = "<group>"; };
 		45CAB4E928A2CE7F00224B5F /* KeyboardNotificationObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardNotificationObserver.swift; sourceTree = "<group>"; };
+		45CBD3B42E53B1F50081A1DE /* Profile+AuthenticationProviderProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Profile+AuthenticationProviderProfile.swift"; sourceTree = "<group>"; };
 		45CBD9FA2BA343590007DEC8 /* GetOnboardingTutorialIsAvailableInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOnboardingTutorialIsAvailableInterface.swift; sourceTree = "<group>"; };
 		45CBD9FC2BA343DE0007DEC8 /* GetOnboardingTutorialIsAvailable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOnboardingTutorialIsAvailable.swift; sourceTree = "<group>"; };
 		45CBDA002BA38EF60007DEC8 /* LaunchCountRepositoryInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchCountRepositoryInterface.swift; sourceTree = "<group>"; };
@@ -7336,8 +7342,11 @@
 			isa = PBXGroup;
 			children = (
 				4598BCDC2BF7DF6800196463 /* AppleAuthentication+AuthenticationProviderInterface.swift */,
-				4598BCDD2BF7DF6800196463 /* FacebookAuthentication+AuthenticationProviderInterface.swift */,
+				458D41462E5347EA00F74229 /* FacebookAccessTokenProvider+AuthenticationProviderInterface.swift */,
+				458D41472E5347EA00F74229 /* FacebookLimitedLogin+AuthenticationProviderInterface.swift */,
 				4598BCDE2BF7DF6800196463 /* GoogleAuthentication+AuthenticationProviderInterface.swift */,
+				45CBD3B42E53B1F50081A1DE /* Profile+AuthenticationProviderProfile.swift */,
+				458D41482E5347EA00F74229 /* Profile+AuthUserDomainModel.swift */,
 			);
 			path = Providers;
 			sourceTree = "<group>";
@@ -12485,6 +12494,9 @@
 				D4C2A58C2C35DAD80035AB4D /* UserLessonFiltersRepository.swift in Sources */,
 				45880D742BD2B769008F021C /* ShareGodToolsDiContainer.swift in Sources */,
 				4504D00428BD00E400D8A5FD /* GodToolsParserLogger.swift in Sources */,
+				458D41492E5347EA00F74229 /* Profile+AuthUserDomainModel.swift in Sources */,
+				458D414A2E5347EA00F74229 /* FacebookLimitedLogin+AuthenticationProviderInterface.swift in Sources */,
+				458D414B2E5347EA00F74229 /* FacebookAccessTokenProvider+AuthenticationProviderInterface.swift in Sources */,
 				4567777E287DB21F0044AEB2 /* ToolTrainingView.swift in Sources */,
 				45AE975D27C97A9500C2CB33 /* Tip+MobileContentRenderableModel.swift in Sources */,
 				45D08D702AFABF4400ADA673 /* ToolSettingsFlowCompletedState.swift in Sources */,
@@ -12553,6 +12565,7 @@
 				451CCF1D27A9D87600E8D2D3 /* MobileContentCardCollectionPagePositionState.swift in Sources */,
 				4598BD242BF7DF6800196463 /* GetSocialCreateAccountInterfaceStringsRepositoryInterface.swift in Sources */,
 				45AE975927C97A9500C2CB33 /* TipPage+MobileContentRenderableModel.swift in Sources */,
+				45CBD3B52E53B1F90081A1DE /* Profile+AuthenticationProviderProfile.swift in Sources */,
 				45AE975B27C97A9500C2CB33 /* Link+MobileContentRenderableModel.swift in Sources */,
 				45920D542A8D495C00E336A8 /* ToolCardLanguageAvailabilityView.swift in Sources */,
 				453C1BD82899A523007332E2 /* FavoritedResourcesRepository.swift in Sources */,
@@ -12807,7 +12820,6 @@
 				45D5EAA02B7E5C5700745F0D /* GetConfirmRemoveToolFromFavoritesInterfaceStringsRepository.swift in Sources */,
 				4512D4D22B29127C00DFAFB3 /* GetToolSettingsToolLanguagesListRepository.swift in Sources */,
 				458CFE8E29D4E0B9007B423C /* ArticleWebView.swift in Sources */,
-				4598BD0E2BF7DF6800196463 /* FacebookAuthentication+AuthenticationProviderInterface.swift in Sources */,
 				45074B622D3851AD004083F3 /* FirebaseRemoteConfigWrapper.swift in Sources */,
 				45131A0D2AB498AD0085AF0D /* ColorPalette.swift in Sources */,
 				456AC1912B8CCA6100169C11 /* TrackShareShareableTap.swift in Sources */,
@@ -15120,7 +15132,7 @@
 			repositoryURL = "https://github.com/CruGlobal/social-authentication-ios.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.5.1;
+				minimumVersion = 0.6.2;
 			};
 		};
 		45DF96472D386C1C00C6AE68 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {

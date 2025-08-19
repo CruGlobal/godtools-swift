@@ -1,22 +1,25 @@
 //
-//  FacebookAuthentication+AuthenticationProviderInterface.swift
+//  FacebookAccessTokenProvider+AuthenticationProviderInterface.swift
 //  godtools
 //
-//  Created by Levi Eggert on 5/1/23.
-//  Copyright © 2023 Cru. All rights reserved.
+//  Created by Levi Eggert on 6/24/25.
+//  Copyright © 2025 Cru. All rights reserved.
 //
 
 import Foundation
 import UIKit
-import SocialAuthentication
 import Combine
+import SocialAuthentication
 import FBSDKLoginKit
 
-extension FacebookAuthentication: AuthenticationProviderInterface {
+// NOTE: Requires App Tracking Transparency is enabled by the user.
+// Ensure Key (Privacy - Tracking Usage Description) with value is provided in the Info.plist.
+
+extension FacebookAccessTokenProvider: AuthenticationProviderInterface {
     
     private func getResponseForPersistedData() -> Result<AuthenticationProviderResponse, Error> {
         
-        guard let accessToken = getAccessToken(), let profile = getCurrentUserProfile() else {
+        guard let accessToken = getAccessToken(), let profile = FacebookProfile.current else {
             
             let error: Error = NSError.errorWithDescription(description: "Data not persisted.")
             
@@ -27,12 +30,8 @@ extension FacebookAuthentication: AuthenticationProviderInterface {
             accessToken: accessToken.tokenString,
             appleSignInAuthorizationCode: nil,
             idToken: nil,
-            profile: AuthenticationProviderProfile(
-                email: profile.email,
-                familyName: profile.lastName,
-                givenName: profile.firstName,
-                name: profile.name
-            ),
+            oidcToken: nil,
+            profile: profile.toAuthProviderProfile(),
             providerType: .facebook,
             refreshToken: nil
         )
@@ -43,7 +42,7 @@ extension FacebookAuthentication: AuthenticationProviderInterface {
     func authenticatePublisher(presentingViewController: UIViewController) -> AnyPublisher<AuthenticationProviderResponse, Error> {
         
         return authenticatePublisher(from: presentingViewController)
-            .flatMap({ (response: FacebookAuthenticationResponse) -> AnyPublisher<AuthenticationProviderResponse, Error> in
+            .flatMap({ (response: FacebookAccessTokenProviderResponse) -> AnyPublisher<AuthenticationProviderResponse, Error> in
                 
                 if response.isCancelled {
                     return Fail(error: NSError.userCancelledError())
@@ -76,34 +75,12 @@ extension FacebookAuthentication: AuthenticationProviderInterface {
     }
     
     func getAuthUserPublisher() -> AnyPublisher<AuthUserDomainModel?, Error> {
-                
-        if let profile = getCurrentUserProfile() {
-                    
-            return Just(mapProfileToAuthUser(profile: profile)).setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
-        }
         
-        return loadUserProfilePublisher()
-            .map { (profile: Profile?) in
-                
-                if let profile = profile {
-                    return self.mapProfileToAuthUser(profile: profile)
-                }
-                
-                return nil
+        return FacebookProfile()
+            .getCurrentUserProfilePublisher()
+            .compactMap { (profile: Profile?) in
+                profile?.toAuthUserDomainModel()
             }
             .eraseToAnyPublisher()
-    }
-    
-    private func mapProfileToAuthUser(profile: Profile) -> AuthUserDomainModel {
-        
-        return  AuthUserDomainModel(
-            email: profile.email ?? "",
-            firstName: profile.firstName,
-            grMasterPersonId: nil,
-            lastName: profile.lastName,
-            name: profile.name,
-            ssoGuid: nil
-        )
     }
 }

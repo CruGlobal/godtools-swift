@@ -196,6 +196,7 @@ class UserAuthentication {
                     accessToken: nil,
                     appleSignInAuthorizationCode: nil,
                     idToken: nil,
+                    oidcToken: nil,
                     profile: authProviderProfile,
                     providerType: .apple,
                     refreshToken: persistedAppleRefreshToken
@@ -246,11 +247,11 @@ class UserAuthentication {
                         
         case .facebook:
             
-            guard let accessToken = authProviderResponse.accessToken, !accessToken.isEmpty else {
-                return .failure(NSError.errorWithDescription(description: "Missing facebook accesstoken."))
+            if let oidcToken = authProviderResponse.oidcToken, !oidcToken.isEmpty {
+                return .success(.facebookLimitedLogin(oidcToken: oidcToken))
             }
             
-            return .success(.facebook(accessToken: accessToken))
+            return .failure(NSError.errorWithDescription(description: "Missing facebook oidcToken."))
             
         case .google:
             

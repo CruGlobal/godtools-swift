@@ -14,4 +14,8 @@ struct AuthenticationProviderProfile {
     let familyName: String?
     let givenName: String?
     let name: String?
+    
+    static var emptyProfile: AuthenticationProviderProfile {
+        return AuthenticationProviderProfile(email: nil, familyName: nil, givenName: nil, name: nil)
+    }
 }

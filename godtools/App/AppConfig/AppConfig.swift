@@ -24,6 +24,19 @@ class AppConfig: AppConfigInterface {
         
     func getFacebookConfiguration() -> FacebookConfiguration {
         
+        // NOTE: Currently staging isn't supported because the facebook app id is also configured in the Info.plist which is only supporting a single fb app id. ~Levi
+        // staging
+        /*
+        return FacebookConfiguration(
+            appId: "448969905944197",
+            clientToken: "be1edf48d86ed54a24951ededa62eda2",
+            displayName: "GodTools-Staging",
+            isAutoLogAppEventsEnabled: true,
+            isAdvertiserIDCollectionEnabled: false,
+            isSKAdNetworkReportEnabled: false
+        )*/
+        
+        // production
         return FacebookConfiguration(
             appId: "2236701616451487",
             clientToken: "3b6bf5b7c128a970337c4fa1860ffa6e",
