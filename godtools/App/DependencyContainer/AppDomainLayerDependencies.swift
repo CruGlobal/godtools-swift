@@ -29,12 +29,6 @@ class AppDomainLayerDependencies {
         )
     }
     
-    func getMenuInterfaceStringsUseCase() -> GetMenuInterfaceStringsUseCase {
-        return GetMenuInterfaceStringsUseCase(
-            getInterfaceStringsRepositoryInterface: dataLayer.getMenuInterfaceStringsRepositoryInterface()
-        )
-    }
-    
     func getOptInOnboardingBannerEnabledUseCase() -> GetOptInOnboardingBannerEnabledUseCase {
         return GetOptInOnboardingBannerEnabledUseCase(
             getOptInOnboardingTutorialAvailableUseCase: getOptInOnboardingTutorialAvailableUseCase(),
