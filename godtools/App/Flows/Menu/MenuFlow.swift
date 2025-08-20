@@ -370,7 +370,7 @@ extension MenuFlow {
         let viewModel = MenuViewModel(
             flowDelegate: self,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            getMenuInterfaceStringsUseCase: appDiContainer.domainLayer.getMenuInterfaceStringsUseCase(),
+            getMenuInterfaceStringsUseCase: appDiContainer.feature.menu.domainLayer.getMenuInterfaceStringsUseCase(),
             getOptInOnboardingTutorialAvailableUseCase: appDiContainer.domainLayer.getOptInOnboardingTutorialAvailableUseCase(),
             disableOptInOnboardingBannerUseCase: appDiContainer.domainLayer.getDisableOptInOnboardingBannerUseCase(),
             getAccountCreationIsSupportedUseCase: appDiContainer.feature.account.domainLayer.getAccountCreationIsSupportedUseCase(),

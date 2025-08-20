@@ -222,13 +222,6 @@ class AppDataLayerDependencies {
         )
     }
     
-    func getMenuInterfaceStringsRepositoryInterface() -> GetMenuInterfaceStringsRepositoryInterface {
-        return GetMenuInterfaceStringsRepository(
-            localizationServices: getLocalizationServices(),
-            infoPlist: getInfoPlist()
-        )
-    }
-    
     func getMobileContentAuthTokenKeychainAccessor() -> MobileContentAuthTokenKeychainAccessor {
         return MobileContentAuthTokenKeychainAccessor()
     }
