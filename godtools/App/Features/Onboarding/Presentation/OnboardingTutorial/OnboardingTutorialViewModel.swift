@@ -12,6 +12,7 @@ import Combine
 class OnboardingTutorialViewModel: ObservableObject {
     
     private static let tutorialPages: [OnboardingTutorialPage] = [.readyForEveryConversation, .talkAboutGodWithAnyone, .prepareForTheMomentsThatMatter, .helpSomeoneDiscoverJesus]
+    private static let continueButtonContinueAccessibility: AccessibilityStrings.Button = .continueForward
     
     private static var trackInBackgroundViewedOnboardingTutorialCancellable: AnyCancellable?
     
@@ -30,6 +31,8 @@ class OnboardingTutorialViewModel: ObservableObject {
     private weak var flowDelegate: FlowDelegate?
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
+    
+    @Published private(set) var continueButtonAccessibility: AccessibilityStrings.Button = OnboardingTutorialViewModel.continueButtonContinueAccessibility
     
     @Published var hidesSkipButton: Bool = true
     @Published var currentPage: Int = 0
@@ -132,25 +135,30 @@ class OnboardingTutorialViewModel: ObservableObject {
         
         let hidesSkipButton: Bool
         let continueButtonTitle: String
+        let continueButtonAccessibility: AccessibilityStrings.Button
                 
         if isFirstPage {
             
             hidesSkipButton = true
             continueButtonTitle = interfaceStrings?.beginTutorialButtonTitle ?? ""
+            continueButtonAccessibility = Self.continueButtonContinueAccessibility
         }
         else if isLastPage {
             
             hidesSkipButton = true
             continueButtonTitle = interfaceStrings?.endTutorialButtonTitle ?? ""
+            continueButtonAccessibility = .getStarted
         }
         else {
          
             hidesSkipButton = false
             continueButtonTitle = interfaceStrings?.nextTutorialPageButtonTitle ?? ""
+            continueButtonAccessibility = Self.continueButtonContinueAccessibility
         }
         
         self.hidesSkipButton = hidesSkipButton
         self.continueButtonTitle = continueButtonTitle
+        self.continueButtonAccessibility = continueButtonAccessibility
         
         if page >= 0 && page < pages.count {
          

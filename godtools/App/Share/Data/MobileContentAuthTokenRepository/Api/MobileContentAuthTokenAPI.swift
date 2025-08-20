@@ -10,7 +10,7 @@ import Foundation
 import RequestOperation
 import Combine
 
-class MobileContentAuthTokenAPI {
+class MobileContentAuthTokenAPI: MobileContentAuthTokenAPIInterface {
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let urlSessionPriority: URLSessionPriority
@@ -45,10 +45,10 @@ class MobileContentAuthTokenAPI {
             
             attributes["apple_refresh_token"] = refreshToken
             attributes["create_user"] = nil // Will not provide create_user flag on apple refresh.
-                        
-        case .facebook(let accessToken):
             
-            attributes["facebook_access_token"] = accessToken
+        case .facebookLimitedLogin(let oidcToken):
+            
+            attributes["facebook_id_token"] = oidcToken
             
         case .google(let idToken):
             

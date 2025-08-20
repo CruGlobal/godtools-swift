@@ -11,24 +11,24 @@ import SwiftUI
 struct OnboardingTutorialMediaView: View {
         
     private let animationAspectRatio: CGSize = CGSize(width: 154, height: 139)
-    private let screenAccessibility: AccessibilityStrings.Screen
+    private let screenAccessibilityId: String
     
     @ObservedObject private var viewModel: OnboardingTutorialMediaViewModel
         
     let geometry: GeometryProxy
     
-    init(viewModel: OnboardingTutorialMediaViewModel, geometry: GeometryProxy, screenAccessibility: AccessibilityStrings.Screen) {
+    init(viewModel: OnboardingTutorialMediaViewModel, geometry: GeometryProxy, screenAccessibilityId: String) {
         
         self.viewModel = viewModel
         self.geometry = geometry
-        self.screenAccessibility = screenAccessibility
+        self.screenAccessibilityId = screenAccessibilityId
     }
     
     var body: some View {
         
         VStack(alignment: .center, spacing: 0) {
                     
-            AccessibilityScreenElementView(screenAccessibility: screenAccessibility)
+            AccessibilityScreenElementView(id: screenAccessibilityId)
             
             Text(viewModel.title)
                 .multilineTextAlignment(.center)

@@ -51,8 +51,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/facebook/facebook-ios-sdk.git",
       "state" : {
-        "revision" : "3fe31c168903759de1c5752d12856c5c437c6862",
-        "version" : "16.3.1"
+        "revision" : "b28dde427715b45a26ebebf697929f4a81b15e04",
+        "version" : "18.0.0"
       }
     },
     {
@@ -240,8 +240,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/CruGlobal/social-authentication-ios.git",
       "state" : {
-        "revision" : "176b6c1231d4777f777f176fbb8272721e73b181",
-        "version" : "0.5.1"
+        "revision" : "8b2f54e5d01447550db41d47346b24ba7f0e38cc",
+        "version" : "0.6.2"
       }
     },
     {

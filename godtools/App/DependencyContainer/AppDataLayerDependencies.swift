@@ -222,13 +222,6 @@ class AppDataLayerDependencies {
         )
     }
     
-    func getMenuInterfaceStringsRepositoryInterface() -> GetMenuInterfaceStringsRepositoryInterface {
-        return GetMenuInterfaceStringsRepository(
-            localizationServices: getLocalizationServices(),
-            infoPlist: getInfoPlist()
-        )
-    }
-    
     func getMobileContentAuthTokenKeychainAccessor() -> MobileContentAuthTokenKeychainAccessor {
         return MobileContentAuthTokenKeychainAccessor()
     }
@@ -425,14 +418,16 @@ class AppDataLayerDependencies {
     }
 
     func getUserAuthentication() -> UserAuthentication {
-        
+                
         return UserAuthentication(
             authenticationProviders: [
                 .apple: AppleAuthentication(
                     appleUserPersistentStore: AppleUserPersistentStore()
                 ),
-                .facebook: FacebookAuthentication(
-                    configuration: FacebookAuthenticationConfiguration(permissions: ["email"])
+                .facebook: FacebookLimitedLogin(
+                    configuration: FacebookLimitedLoginConfiguration(
+                        permissions: ["email"]
+                    )
                 ),
                 .google: GoogleAuthentication(
                     configuration: getAppConfig().getGoogleAuthenticationConfiguration()

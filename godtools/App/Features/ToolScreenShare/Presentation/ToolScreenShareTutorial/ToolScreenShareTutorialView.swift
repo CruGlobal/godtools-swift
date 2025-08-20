@@ -94,7 +94,7 @@ struct ToolScreenShareTutorialView: View {
                             accessibility: .shareLink
                         ) {
                             
-                            viewModel.continueTapped()
+                            viewModel.shareLinkTapped()
                         }
                     }
                 }
