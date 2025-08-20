@@ -21,7 +21,7 @@ class OnboardingDataLayerDependencies {
     
     private func getOnboardingTutorialViewedRepository() -> OnboardingTutorialViewedRepository {
         return OnboardingTutorialViewedRepository(
-            cache: OnboardingTutorialViewedUserDefaultsCache(sharedUserDefaultsCache: coreDataLayer.getSharedUserDefaultsCache())
+            cache: OnboardingTutorialViewedUserDefaultsCache(userDefaultsCache: coreDataLayer.getUserDefaultsCache())
         )
     }
     
@@ -35,7 +35,7 @@ class OnboardingDataLayerDependencies {
     
     func getOnboardingTutorialIsAvailable() -> GetOnboardingTutorialIsAvailableInterface {
         return GetOnboardingTutorialIsAvailable(
-            launchCountRepository: coreDataLayer.getSharedLaunchCountRepository(),
+            launchCountRepository: coreDataLayer.getLaunchCountRepository(),
             onboardingTutorialViewedRepository: getOnboardingTutorialViewedRepository()
         )
     }

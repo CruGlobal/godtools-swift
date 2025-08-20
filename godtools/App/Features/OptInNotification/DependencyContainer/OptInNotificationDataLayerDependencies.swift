@@ -23,12 +23,11 @@ class OptInNotificationDataLayerDependencies {
 
     func getOptInNotificationRepository() -> OptInNotificationRepository {
         return OptInNotificationRepository(
-            cache: OptInNotificationUserDefaultsCache(sharedUserDefaultsCache:coreDataLayer.getSharedUserDefaultsCache()), remoteConfigRepository: coreDataLayer.getRemoteConfigRepository()
+            cache: OptInNotificationUserDefaultsCache(
+                userDefaultsCache:coreDataLayer.getUserDefaultsCache()
+            ),
+            remoteConfigRepository: coreDataLayer.getRemoteConfigRepository()
         )
-    }
-    
-    func getLaunchCountRepository() -> LaunchCountRepository {
-        return coreDataLayer.getSharedLaunchCountRepository()
     }
 
     // MARK: - Domain Interface

@@ -11,7 +11,7 @@ import RequestOperation
 import SocialAuthentication
 import LocalizationServices
 
-class AppDataLayerDependencies {
+class AppDataLayerDependencies: DataLayerDependenciesInterface {
     
     enum WebSocketType {
         case starscream
@@ -102,7 +102,7 @@ class AppDataLayerDependencies {
             categoryArticlesCache: RealmCategoryArticlesCache(
                 realmDatabase: sharedRealmDatabase
             ),
-            sharedUserDefaultsCache: getSharedUserDefaultsCache()
+            userDefaultsCache: getUserDefaultsCache()
         )
     }
     
@@ -200,6 +200,10 @@ class AppDataLayerDependencies {
         )
     }
     
+    func getLaunchCountRepository() -> LaunchCountRepositoryInterface {
+        return LaunchCountRepository.shared
+    }
+    
     func getLessonListItemProgressRepository() -> GetLessonListItemProgressRepository {
         return GetLessonListItemProgressRepository(
             lessonProgressRepository: getUserLessonProgressRepository(),
@@ -215,7 +219,7 @@ class AppDataLayerDependencies {
         )
     }
     
-    func getLocalizationServices() -> LocalizationServices {
+    func getLocalizationServices() -> LocalizationServicesInterface {
         return LocalizationServices(
             localizableStringsFilesBundle: Bundle.main,
             isUsingBaseInternationalization: false
@@ -288,7 +292,7 @@ class AppDataLayerDependencies {
             cache: cache,
             attachmentsRepository: getAttachmentsRepository(),
             languagesRepository: getLanguagesRepository(),
-            sharedUserDefaultsCache: getSharedUserDefaultsCache()
+            userDefaultsCache: getUserDefaultsCache()
         )
     }
     
@@ -310,10 +314,6 @@ class AppDataLayerDependencies {
         )
     }
     
-    func getSharedLaunchCountRepository() -> LaunchCountRepository {
-        return LaunchCountRepository.shared
-    }
-    
     func getSharedUrlSessionPriority() -> URLSessionPriority {
         return sharedUrlSessionPriority
     }
@@ -324,10 +324,6 @@ class AppDataLayerDependencies {
     
     func getSharedRequestSender() -> RequestSender {
         return sharedRequestSender
-    }
-    
-    func getSharedUserDefaultsCache() -> SharedUserDefaultsCache {
-        return sharedUserDefaultsCache
     }
     
     func getStringWithLocaleCount() -> StringWithLocaleCountInterface {
@@ -456,6 +452,10 @@ class AppDataLayerDependencies {
             cache: cache,
             remoteUserCountersSync: RemoteUserCountersSync(api: api, cache: cache)
         )
+    }
+    
+    func getUserDefaultsCache() -> UserDefaultsCacheInterface {
+        return sharedUserDefaultsCache
     }
     
     func getUserLessonFiltersRepository() -> UserLessonFiltersRepository {

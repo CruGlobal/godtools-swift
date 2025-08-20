@@ -12,10 +12,10 @@ import LocalizationServices
 
 class GetMenuInterfaceStringsRepository: GetMenuInterfaceStringsRepositoryInterface {
     
-    private let localizationServices: LocalizationServices
+    private let localizationServices: LocalizationServicesInterface
     private let infoPlist: InfoPlist
     
-    init(localizationServices: LocalizationServices, infoPlist: InfoPlist) {
+    init(localizationServices: LocalizationServicesInterface, infoPlist: InfoPlist) {
         
         self.localizationServices = localizationServices
         self.infoPlist = infoPlist

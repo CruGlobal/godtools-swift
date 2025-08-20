@@ -20,7 +20,7 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
         
         let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase = appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase()
         let mobileContentAnalytics: MobileContentRendererAnalytics = appDiContainer.getMobileContentRendererAnalytics()
-        let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
+        let localizationServices: LocalizationServicesInterface = appDiContainer.dataLayer.getLocalizationServices()
         let followUpsService: FollowUpsService = appDiContainer.dataLayer.getFollowUpsService()
         let cardJumpService: CardJumpService = appDiContainer.getCardJumpService()
         

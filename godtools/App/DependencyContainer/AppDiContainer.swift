@@ -98,7 +98,7 @@ class AppDiContainer {
     }
     
     func getCardJumpService() -> CardJumpService {
-        return CardJumpService(cardJumpCache: CardJumpUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache))
+        return CardJumpService(cardJumpCache: CardJumpUserDefaultsCache(userDefaultsCache: sharedUserDefaultsCache))
     }
     
     func getUrlOpener() -> UrlOpenerInterface {

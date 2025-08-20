@@ -12,9 +12,9 @@ import LocalizationServices
 
 class GetToolFilterLanguagesInterfaceStringsRepository: GetToolFilterLanguagesInterfaceStringsRepositoryInterface {
     
-    private let localizationServices: LocalizationServices
+    private let localizationServices: LocalizationServicesInterface
     
-    init(localizationServices: LocalizationServices) {
+    init(localizationServices: LocalizationServicesInterface) {
         self.localizationServices = localizationServices
     }
     
