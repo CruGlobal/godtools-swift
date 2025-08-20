@@ -16,7 +16,7 @@ struct SendFeedbackWebContent: WebContentType {
     let analyticsScreenName: String = "Send Feedback"
     let analyticsSiteSection: String = "menu"
     
-    init(localizationServices: LocalizationServices) {
+    init(localizationServices: LocalizationServicesInterface) {
         
         navTitle = localizationServices.stringForSystemElseEnglish(key: "menu.sendFeedback")
     }

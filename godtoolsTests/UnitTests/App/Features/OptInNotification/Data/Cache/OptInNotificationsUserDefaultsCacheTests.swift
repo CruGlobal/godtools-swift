@@ -12,7 +12,7 @@ import XCTest
 
 class OptInNotificationUserDefaultsCacheTests: XCTestCase {
     
-    private let cache: OptInNotificationUserDefaultsCache = OptInNotificationUserDefaultsCache(sharedUserDefaultsCache: SharedUserDefaultsCache())
+    private let cache: OptInNotificationUserDefaultsCache = OptInNotificationUserDefaultsCache(userDefaultsCache: SharedUserDefaultsCache())
     
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.

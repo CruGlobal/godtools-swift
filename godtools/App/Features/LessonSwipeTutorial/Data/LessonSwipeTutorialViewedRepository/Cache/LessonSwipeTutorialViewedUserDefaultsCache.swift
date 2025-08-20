@@ -10,20 +10,20 @@ import Foundation
 
 class LessonSwipeTutorialViewedUserDefaultsCache {
     
-    private let sharedUserDefaultsCache: SharedUserDefaultsCache
+    private let userDefaultsCache: UserDefaultsCacheInterface
     private let lessonSwipeTutorialViewedKey: String = "lessonSwipeTutorialViewed"
     
-    init(sharedUserDefaultsCache: SharedUserDefaultsCache) {
-        self.sharedUserDefaultsCache = sharedUserDefaultsCache
+    init(userDefaultsCache: UserDefaultsCacheInterface) {
+        self.userDefaultsCache = userDefaultsCache
     }
     
     func getLessonSwipeTutorialViewed() -> Bool {
-        return sharedUserDefaultsCache.getValue(key: lessonSwipeTutorialViewedKey) as? Bool ?? false
+        return userDefaultsCache.getValue(key: lessonSwipeTutorialViewedKey) as? Bool ?? false
     }
     
     func storeLessonSwipeTutorialViewed(viewed: Bool) {
         
-        sharedUserDefaultsCache.cache(value: viewed, forKey: lessonSwipeTutorialViewedKey)
-        sharedUserDefaultsCache.commitChanges()
+        userDefaultsCache.cache(value: viewed, forKey: lessonSwipeTutorialViewedKey)
+        userDefaultsCache.commitChanges()
     }
 }

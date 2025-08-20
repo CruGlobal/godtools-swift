@@ -72,7 +72,7 @@ class TractFlow: ToolNavigationFlow, ToolSettingsNavigationFlow {
             
             if isScreenSharing {
                 
-                let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
+                let localizationServices: LocalizationServicesInterface = appDiContainer.dataLayer.getLocalizationServices()
                                 
                 let viewModel = AlertMessageViewModel(
                     title: nil,

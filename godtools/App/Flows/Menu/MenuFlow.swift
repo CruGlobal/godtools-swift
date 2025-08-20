@@ -253,7 +253,7 @@ class MenuFlow: Flow {
 
         case .didFinishAccountDeletionWithSuccessFromDeleteAccountProgress:
             
-            let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
+            let localizationServices: LocalizationServicesInterface = appDiContainer.dataLayer.getLocalizationServices()
             let appLanguage: AppLanguageDomainModel = self.appLanguage
             
             navigationController.dismissPresented(animated: true) {
@@ -491,7 +491,7 @@ extension MenuFlow {
     
     private func getAuthErrorAlertMessage(authError: AuthErrorDomainModel) -> AlertMessageType {
         
-        let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
+        let localizationServices: LocalizationServicesInterface = appDiContainer.dataLayer.getLocalizationServices()
         let appLanguageLocaleId = appLanguage.localeId
         
         let message: String
@@ -603,7 +603,7 @@ extension MenuFlow {
     
     private func getConfirmDeleteAccountView() -> UIViewController {
         
-        let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
+        let localizationServices: LocalizationServicesInterface = appDiContainer.dataLayer.getLocalizationServices()
         
         let viewController = UIAlertController(
             title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.confirmDeleteAccountTitle.key),
