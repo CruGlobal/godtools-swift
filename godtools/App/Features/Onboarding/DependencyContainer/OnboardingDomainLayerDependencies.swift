@@ -10,28 +10,28 @@ import Foundation
 
 class OnboardingDomainLayerDependencies {
     
-    private let dataLayer: OnboardingDataLayerDependencies
+    private let businessLayer: OnboardingBusinessLayerDependencies
     
-    init(dataLayer: OnboardingDataLayerDependencies) {
+    init(businessLayer: OnboardingBusinessLayerDependencies) {
         
-        self.dataLayer = dataLayer
+        self.businessLayer = businessLayer
     }
     
     func getOnboardingTutorialInterfaceStringsUseCase() -> GetOnboardingTutorialInterfaceStringsUseCase {
         return GetOnboardingTutorialInterfaceStringsUseCase(
-            getStringsRepositoryInterface: dataLayer.getOnboardingTutorialInterfaceStringsRepositoryInterface()
+            stringsRepository: businessLayer.getOnboardingTutorialInterfaceStringsRepositoryInterface()
         )
     }
     
     func getOnboardingTutorialIsAvailableUseCase() -> GetOnboardingTutorialIsAvailableUseCase {
         return GetOnboardingTutorialIsAvailableUseCase(
-            onboardingTutorialIsAvailable: dataLayer.getOnboardingTutorialIsAvailable()
+            onboardingTutorialIsAvailable: businessLayer.getOnboardingTutorialIsAvailable()
         )
     }
     
     func getTrackViewedOnboardingTutorialUseCase() -> TrackViewedOnboardingTutorialUseCase {
         return TrackViewedOnboardingTutorialUseCase(
-            storeViewedRepositoryInterface: dataLayer.getStoreOnboardingTutorialViewedRepositoryInterface()
+            storeViewedRepository: businessLayer.getStoreOnboardingTutorialViewedRepositoryInterface()
         )
     }
 }

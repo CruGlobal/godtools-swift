@@ -9,13 +9,15 @@
 import Foundation
 
 class OnboardingDiContainer {
-    
-    let dataLayer: OnboardingDataLayerDependencies
+        
+    let dataLayer: OnboardingDataLayerDependenciesInterface
+    let businessLayer: OnboardingBusinessLayerDependencies
     let domainLayer: OnboardingDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies) {
+    init(coreDataLayer: CoreDataLayerDependenciesInterface, dataLayer: OnboardingDataLayerDependenciesInterface, businessLayer: OnboardingBusinessLayerDependencies) {
         
-        dataLayer = OnboardingDataLayerDependencies(coreDataLayer: coreDataLayer)
-        domainLayer = OnboardingDomainLayerDependencies(dataLayer: dataLayer)
+        self.dataLayer = dataLayer
+        self.businessLayer = businessLayer
+        domainLayer = OnboardingDomainLayerDependencies(businessLayer: businessLayer)
     }
 }

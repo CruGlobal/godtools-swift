@@ -11,7 +11,7 @@ import RequestOperation
 import SocialAuthentication
 import LocalizationServices
 
-class AppDataLayerDependencies: DataLayerDependenciesInterface {
+class AppDataLayerDependencies: CoreDataLayerDependenciesInterface {
     
     enum WebSocketType {
         case starscream
