@@ -19,7 +19,7 @@ class OnboardingDomainLayerDependencies {
     
     func getOnboardingTutorialInterfaceStringsUseCase() -> GetOnboardingTutorialInterfaceStringsUseCase {
         return GetOnboardingTutorialInterfaceStringsUseCase(
-            stringsRepository: businessLayer.getOnboardingTutorialInterfaceStringsRepositoryInterface()
+            stringsRepository: businessLayer.getOnboardingTutorialInterfaceStringsRepository()
         )
     }
     
@@ -31,7 +31,7 @@ class OnboardingDomainLayerDependencies {
     
     func getTrackViewedOnboardingTutorialUseCase() -> TrackViewedOnboardingTutorialUseCase {
         return TrackViewedOnboardingTutorialUseCase(
-            storeViewedRepository: businessLayer.getStoreOnboardingTutorialViewedRepositoryInterface()
+            storeViewedRepository: businessLayer.getStoreOnboardingTutorialViewedRepository()
         )
     }
 }

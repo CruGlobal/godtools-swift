@@ -19,7 +19,7 @@ class OnboardingBusinessLayerDependencies {
         self.dataLayer = dataLayer
     }
     
-    func getOnboardingTutorialInterfaceStringsRepositoryInterface() -> GetOnboardingTutorialInterfaceStringsRepositoryInterface {
+    func getOnboardingTutorialInterfaceStringsRepository() -> GetOnboardingTutorialInterfaceStringsRepositoryInterface {
         return GetOnboardingTutorialInterfaceStringsRepository(
             localizationServices: coreDataLayer.getLocalizationServices()
         )
@@ -32,7 +32,7 @@ class OnboardingBusinessLayerDependencies {
         )
     }
     
-    func getStoreOnboardingTutorialViewedRepositoryInterface() -> StoreOnboardingTutorialViewedRepositoryInterface {
+    func getStoreOnboardingTutorialViewedRepository() -> StoreOnboardingTutorialViewedRepositoryInterface {
         return StoreOnboardingTutorialViewedRepository(
             onboardingTutorialViewedRepository: dataLayer.getOnboardingTutorialViewedRepository()
         )
