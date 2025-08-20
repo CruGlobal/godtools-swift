@@ -22,7 +22,7 @@ class TestsDiContainer: AppDiContainer {
             appConfig: appConfig,
             realmDatabase: realmDatabase,
             firebaseEnabled: false,
-            urlSessionEnabled: false
+            dataLayerType: .godtools
         )
     }
 }

@@ -22,7 +22,7 @@ struct GodToolsApp: App {
         appConfig: appConfig,
         realmDatabase: realmDatabase,
         firebaseEnabled: firebaseEnabled,
-        urlSessionEnabled: urlSessionEnabled
+        dataLayerType: dataLayerType
     )
     
     private static var isUITests: Bool {
@@ -33,8 +33,12 @@ struct GodToolsApp: App {
         return !isUITests
     }
     
-    private static var urlSessionEnabled: Bool {
-        return true//!isUITests
+    private static var dataLayerType: AppDiContainer.DataLayerType {
+        if isUITests {
+            return .mock
+        }
+        
+        return .godtools
     }
     
     private let appFlow: AppFlow

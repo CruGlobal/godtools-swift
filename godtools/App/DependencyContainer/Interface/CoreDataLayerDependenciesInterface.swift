@@ -8,10 +8,12 @@
 
 import Foundation
 import LocalizationServices
+import RequestOperation
 
 protocol CoreDataLayerDependenciesInterface {
     
     func getLaunchCountRepository() -> LaunchCountRepositoryInterface
     func getLocalizationServices() -> LocalizationServicesInterface
+    func getRequestSender() -> RequestSender
     func getUserDefaultsCache() -> UserDefaultsCacheInterface
 }
