@@ -457,12 +457,14 @@ extension ToolScreenShareFlow {
         
         let hostingView = AppHostingController<ToolScreenShareQRCodeView>(
             rootView: view,
-            navigationBar: nil
+            navigationBar: nil,
+            animateInAnimatedTransitioning: NoAnimationTransition(transition: .transitionIn),
+            animateOutAnimatedTransitioning: NoAnimationTransition(transition: .transitionOut)
         )
-        
-        hostingView.view.backgroundColor = .clear
-        hostingView.modalPresentationStyle = .overFullScreen
 
+        hostingView.view.backgroundColor = .clear
+        hostingView.modalPresentationStyle = .overCurrentContext
+        
         return hostingView
     }
 }

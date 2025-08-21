@@ -15,10 +15,10 @@ class GetLessonListItemProgressRepository {
     
     private let lessonProgressRepository: UserLessonProgressRepository
     private let userCountersRepository: UserCountersRepository
-    private let localizationServices: LocalizationServices
+    private let localizationServices: LocalizationServicesInterface
     private let getTranslatedPercentage: GetTranslatedPercentage
     
-    init(lessonProgressRepository: UserLessonProgressRepository, userCountersRepository: UserCountersRepository, localizationServices: LocalizationServices, getTranslatedPercentage: GetTranslatedPercentage) {
+    init(lessonProgressRepository: UserLessonProgressRepository, userCountersRepository: UserCountersRepository, localizationServices: LocalizationServicesInterface, getTranslatedPercentage: GetTranslatedPercentage) {
         self.lessonProgressRepository = lessonProgressRepository
         self.userCountersRepository = userCountersRepository
         self.localizationServices = localizationServices

@@ -7,7 +7,6 @@
 //
 
 import Foundation
-@testable import godtools
 import LocalizationServices
 
 class MockLocalizationServices: LocalizationServicesInterface {
@@ -84,6 +83,19 @@ class MockLocalizationServices: LocalizationServicesInterface {
         return MockLocalizationServices(
             localizableStrings: mutableLocalizedLanguageNames
         )
+    }
+    
+    func stringForLocale(localeIdentifier: String?, key: String) -> String? {
+        
+        guard let localeIdentifier = localeIdentifier else {
+            return ""
+        }
+        
+        guard let localizedStrings = localizableStrings[localeIdentifier] else {
+            return ""
+        }
+        
+        return localizedStrings[key]
     }
     
     func stringForEnglish(key: String) -> String {

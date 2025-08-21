@@ -16,12 +16,12 @@ class TractPageFormViewModel: MobileContentFormViewModel {
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
     
     private let followUpService: FollowUpsService
-    private let localizationServices: LocalizationServices
+    private let localizationServices: LocalizationServicesInterface
     
     let didSendFollowUpSignal: SignalValue<[EventId]> = SignalValue()
     let error: ObservableValue<MobileContentErrorViewModel?> = ObservableValue(value: nil)
     
-    init(formModel: Form, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics, followUpService: FollowUpsService, localizationServices: LocalizationServices) {
+    init(formModel: Form, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics, followUpService: FollowUpsService, localizationServices: LocalizationServicesInterface) {
         
         self.followUpService = followUpService
         self.localizationServices = localizationServices

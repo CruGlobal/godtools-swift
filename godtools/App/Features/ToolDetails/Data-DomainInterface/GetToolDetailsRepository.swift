@@ -15,11 +15,11 @@ class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
     private let resourcesRepository: ResourcesRepository
     private let languagesRepository: LanguagesRepository
     private let translationsRepository: TranslationsRepository
-    private let localizationServices: LocalizationServices
+    private let localizationServices: LocalizationServicesInterface
     private let getTranslatedLanguageName: GetTranslatedLanguageName
     private let favoritedResourcesRepository: FavoritedResourcesRepository
     
-    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, translationsRepository: TranslationsRepository, localizationServices: LocalizationServices, getTranslatedLanguageName: GetTranslatedLanguageName, favoritedResourcesRepository: FavoritedResourcesRepository) {
+    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, translationsRepository: TranslationsRepository, localizationServices: LocalizationServicesInterface, getTranslatedLanguageName: GetTranslatedLanguageName, favoritedResourcesRepository: FavoritedResourcesRepository) {
         
         self.resourcesRepository = resourcesRepository
         self.languagesRepository = languagesRepository

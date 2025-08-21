@@ -7,21 +7,27 @@
 //
 
 import Foundation
-@testable import godtools
 import Combine
 
 class MockOnboardingTutorialViewedRepository: OnboardingTutorialViewedRepositoryInterface {
     
-    private let tutorialViewed: Bool
+    private var tutorialViewed: Bool = false
     
     init(tutorialViewed: Bool) {
         
         self.tutorialViewed = tutorialViewed
     }
     
+    func getOnboardingTutorialViewed() -> Bool {
+        return tutorialViewed
+    }
+    
     func getOnboardingTutorialViewedPublisher() -> AnyPublisher<Bool, Never> {
-        
         return Just(tutorialViewed)
             .eraseToAnyPublisher()
+    }
+    
+    func storeOnboardingTutorialViewed(viewed: Bool) {
+        tutorialViewed = viewed
     }
 }

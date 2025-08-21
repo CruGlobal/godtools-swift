@@ -12,10 +12,10 @@ import LocalizationServices
 
 class GetConfirmRemoveToolFromFavoritesInterfaceStringsRepository: GetConfirmRemoveToolFromFavoritesInterfaceStringsRepositoryInterface {
     
-    private let localizationServices: LocalizationServices
+    private let localizationServices: LocalizationServicesInterface
     private let getTranslatedToolName: GetTranslatedToolName
     
-    init(localizationServices: LocalizationServices, getTranslatedToolName: GetTranslatedToolName) {
+    init(localizationServices: LocalizationServicesInterface, getTranslatedToolName: GetTranslatedToolName) {
         
         self.localizationServices = localizationServices
         self.getTranslatedToolName = getTranslatedToolName

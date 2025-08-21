@@ -13,10 +13,10 @@ import LocalizationServices
 class GetGlobalActivityThisWeekRepository: GetGlobalActivityThisWeekRepositoryInterface {
     
     private let globalAnalyticsRepository: GlobalAnalyticsRepository
-    private let localizationServices: LocalizationServices
+    private let localizationServices: LocalizationServicesInterface
     private let getTranslatedNumberCount: GetTranslatedNumberCount
     
-    init(globalAnalyticsRepository: GlobalAnalyticsRepository, localizationServices: LocalizationServices, getTranslatedNumberCount: GetTranslatedNumberCount) {
+    init(globalAnalyticsRepository: GlobalAnalyticsRepository, localizationServices: LocalizationServicesInterface, getTranslatedNumberCount: GetTranslatedNumberCount) {
         
         self.globalAnalyticsRepository = globalAnalyticsRepository
         self.localizationServices = localizationServices

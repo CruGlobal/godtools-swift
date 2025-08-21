@@ -16,7 +16,7 @@ struct AskAQuestionWebContent: WebContentType {
     let analyticsScreenName: String = "Ask A Question"
     let analyticsSiteSection: String = "menu"
     
-    init(localizationServices: LocalizationServices) {
+    init(localizationServices: LocalizationServicesInterface) {
         
         navTitle = localizationServices.stringForSystemElseEnglish(key: "menu.askAQuestion")
     }

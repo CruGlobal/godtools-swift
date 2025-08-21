@@ -10,11 +10,11 @@ import Foundation
 
 class CardJumpUserDefaultsCache {
     
-    private let sharedUserDefaultsCache: SharedUserDefaultsCache
+    private let userDefaultsCache: UserDefaultsCacheInterface
     
-    init(sharedUserDefaultsCache: SharedUserDefaultsCache) {
+    init(userDefaultsCache: UserDefaultsCacheInterface) {
         
-        self.sharedUserDefaultsCache = sharedUserDefaultsCache
+        self.userDefaultsCache = userDefaultsCache
     }
     
     private var didShowCardJumpKey: String {
@@ -22,14 +22,14 @@ class CardJumpUserDefaultsCache {
     }
     
     var didShowCardJump: Bool {
-        if let value = sharedUserDefaultsCache.getValue(key: didShowCardJumpKey) as? Bool {
+        if let value = userDefaultsCache.getValue(key: didShowCardJumpKey) as? Bool {
             return value
         }
         return false
     }
     
     func cacheDidShowCardJump() {
-        sharedUserDefaultsCache.cache(value: true, forKey: didShowCardJumpKey)
-        sharedUserDefaultsCache.commitChanges()
+        userDefaultsCache.cache(value: true, forKey: didShowCardJumpKey)
+        userDefaultsCache.commitChanges()
     }
 }
