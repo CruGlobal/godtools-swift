@@ -11,16 +11,16 @@ import Combine
 
 class TrackViewedOnboardingTutorialUseCase {
     
-    private let storeViewedRepositoryInterface: StoreOnboardingTutorialViewedRepositoryInterface
+    private let storeViewedRepository: StoreOnboardingTutorialViewedRepositoryInterface
     
-    init(storeViewedRepositoryInterface: StoreOnboardingTutorialViewedRepositoryInterface) {
+    init(storeViewedRepository: StoreOnboardingTutorialViewedRepositoryInterface) {
         
-        self.storeViewedRepositoryInterface = storeViewedRepositoryInterface
+        self.storeViewedRepository = storeViewedRepository
     }
     
     func viewedPublisher() -> AnyPublisher<Void, Never> {
         
-        return storeViewedRepositoryInterface.storeViewedPublisher()
+        return storeViewedRepository.storeViewedPublisher()
             .eraseToAnyPublisher()
     }
 }

@@ -10,6 +10,11 @@ import UIKit
 
 class AppDiContainer {
         
+    enum DataLayerType {
+        case godtools
+        case mock
+    }
+    
     private let appBuild: AppBuild
     private let realmDatabase: RealmDatabase
     private let failedFollowUpsCache: FailedFollowUpsCache
@@ -18,22 +23,37 @@ class AppDiContainer {
     let dataLayer: AppDataLayerDependencies
     let domainLayer: AppDomainLayerDependencies
     let feature: AppFeatureDiContainer
-        
-    init(appBuild: AppBuild, appConfig: AppConfig, realmDatabase: RealmDatabase, firebaseEnabled: Bool, urlSessionEnabled: Bool) {
+    
+    init(appBuild: AppBuild, appConfig: AppConfig, realmDatabase: RealmDatabase, firebaseEnabled: Bool, dataLayerType: DataLayerType) {
                
         self.appBuild = appBuild
         self.realmDatabase = realmDatabase
         
+        // TODO: Once CoreDataLayerDependenciesInterface is complete, will need to create the dataLayer based on DataLayerType. ~Levi
         dataLayer = AppDataLayerDependencies(
             appBuild: appBuild,
             appConfig: appConfig,
             realmDatabase: realmDatabase,
-            firebaseEnabled: firebaseEnabled,
-            urlSessionEnabled: urlSessionEnabled
+            firebaseEnabled: firebaseEnabled
         )
         
         domainLayer = AppDomainLayerDependencies(dataLayer: dataLayer)
         
+        // feature data layer dependencies
+        let onboardingDataLayer: OnboardingDataLayerDependenciesInterface
+        
+        switch dataLayerType {
+        case .godtools:
+            onboardingDataLayer = OnboardingDataLayerDependencies(coreDataLayer: dataLayer)
+            
+        case .mock:
+            onboardingDataLayer = MockOnboardingDataLayerDependencies()
+        }
+                
+        // feature domain interface layer dependencies
+        let onboardingDomainInterfaceLayer = OnboardingDomainInterfaceDependencies(coreDataLayer: dataLayer, dataLayer: onboardingDataLayer)
+        
+        // feature dependency containers
         let accountDiContainer = AccountDiContainer(coreDataLayer: dataLayer)
         let appLanguageDiContainer = AppLanguageFeatureDiContainer(coreDataLayer: dataLayer)
         let dashboardDiContainer = DashboardDiContainer(coreDataLayer: dataLayer)
@@ -48,8 +68,8 @@ class AppDiContainer {
         let lessonProgressDiContainer = UserLessonProgressDiContainer(coreDataLayer: dataLayer)
         let lessonSwipeTutorialDiContainer = LessonSwipeTutorialDiContainer(coreDataLayer: dataLayer)
         let menuDiContainer = MenuDiContainer(coreDataLayer: dataLayer)
-        let onboardingDiContainer = OnboardingDiContainer(coreDataLayer: dataLayer)
-        let optInNotification = OptInNotificationDiContainer(coreDataLayer: dataLayer, getOnboardingTutorialIsAvailable: onboardingDiContainer.dataLayer.getOnboardingTutorialIsAvailable())
+        let onboardingDiContainer = OnboardingDiContainer(coreDataLayer: dataLayer, dataLayer: onboardingDataLayer, domainInterfaceLayer: onboardingDomainInterfaceLayer)
+        let optInNotification = OptInNotificationDiContainer(coreDataLayer: dataLayer, getOnboardingTutorialIsAvailable: onboardingDomainInterfaceLayer.getOnboardingTutorialIsAvailable())
         let persistFavoritedToolLanguageSettingsDiContainer = PersistUserToolLanguageSettingsDiContainer(coreDataLayer: dataLayer)
         let shareablesDiContainer: ShareablesDiContainer = ShareablesDiContainer(coreDataLayer: dataLayer)
         let shareGodToolsDiContainer = ShareGodToolsDiContainer(coreDataLayer: dataLayer)

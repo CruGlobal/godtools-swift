@@ -8,41 +8,20 @@
 
 import Foundation
 
-class OnboardingDataLayerDependencies {
+class OnboardingDataLayerDependencies: OnboardingDataLayerDependenciesInterface {
     
-    private let coreDataLayer: AppDataLayerDependencies
+    private let coreDataLayer: CoreDataLayerDependenciesInterface
     
-    init(coreDataLayer: AppDataLayerDependencies) {
+    init(coreDataLayer: CoreDataLayerDependenciesInterface) {
         
         self.coreDataLayer = coreDataLayer
     }
     
-    // MARK: - Data Layer Classes
-    
-    private func getOnboardingTutorialViewedRepository() -> OnboardingTutorialViewedRepository {
+    func getOnboardingTutorialViewedRepository() -> OnboardingTutorialViewedRepositoryInterface {
         return OnboardingTutorialViewedRepository(
-            cache: OnboardingTutorialViewedUserDefaultsCache(userDefaultsCache: coreDataLayer.getUserDefaultsCache())
-        )
-    }
-    
-    // MARK: - Domain Interface
-    
-    func getOnboardingTutorialInterfaceStringsRepositoryInterface() -> GetOnboardingTutorialInterfaceStringsRepositoryInterface {
-        return GetOnboardingTutorialInterfaceStringsRepository(
-            localizationServices: coreDataLayer.getLocalizationServices()
-        )
-    }
-    
-    func getOnboardingTutorialIsAvailable() -> GetOnboardingTutorialIsAvailableInterface {
-        return GetOnboardingTutorialIsAvailable(
-            launchCountRepository: coreDataLayer.getLaunchCountRepository(),
-            onboardingTutorialViewedRepository: getOnboardingTutorialViewedRepository()
-        )
-    }
-    
-    func getStoreOnboardingTutorialViewedRepositoryInterface() -> StoreOnboardingTutorialViewedRepositoryInterface {
-        return StoreOnboardingTutorialViewedRepository(
-            onboardingTutorialViewedRepository: getOnboardingTutorialViewedRepository()
+            cache: OnboardingTutorialViewedUserDefaultsCache(
+                userDefaultsCache: coreDataLayer.getUserDefaultsCache()
+            )
         )
     }
 }
