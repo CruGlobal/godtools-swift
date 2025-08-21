@@ -28,6 +28,10 @@ class MockDataLayerDependencies: CoreDataLayerDependenciesInterface {
         return coreDataLayer.getAppBuild()
     }
     
+    func getAppConfig() -> AppConfig {
+        return coreDataLayer.getAppConfig()
+    }
+    
     func getAppMessaging() -> AppMessagingInterface {
         return DisabledInAppMessaging()
     }

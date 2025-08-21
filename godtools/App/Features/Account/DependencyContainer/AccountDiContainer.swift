@@ -10,12 +10,14 @@ import Foundation
 
 class AccountDiContainer {
     
-    let dataLayer: AccountDataLayerDependencies
+    let dataLayer: AccountDataLayerDependenciesInterface
+    let domainInterfaceLayer: AccountDomainInterfaceDependencies
     let domainLayer: AccountDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies) {
+    init(coreDataLayer: CoreDataLayerDependenciesInterface, dataLayer: AccountDataLayerDependenciesInterface, domainInterfaceLayer: AccountDomainInterfaceDependencies) {
         
-        dataLayer = AccountDataLayerDependencies(coreDataLayer: coreDataLayer)
-        domainLayer = AccountDomainLayerDependencies(dataLayer: dataLayer, coreDataLayer: coreDataLayer)
+        self.dataLayer = dataLayer
+        self.domainInterfaceLayer = domainInterfaceLayer
+        domainLayer = AccountDomainLayerDependencies(coreDataLayer: coreDataLayer, domainInterfaceLayer: domainInterfaceLayer)
     }
 }
