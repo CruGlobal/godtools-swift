@@ -261,7 +261,7 @@ extension AppFlow {
             }
             .store(in: &cancellables)
         
-        let authenticateUser: AuthenticateUserInterface = appDiContainer.feature.account.dataLayer.getAuthenticateUserInterface()
+        let authenticateUser: AuthenticateUserInterface = appDiContainer.feature.account.domainInterfaceLayer.getAuthenticateUser()
         
         authenticateUser.renewAuthenticationPublisher()
             .receive(on: DispatchQueue.main)
