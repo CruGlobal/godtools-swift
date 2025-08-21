@@ -1,5 +1,5 @@
 //
-//  OnboardingBusinessLayerDependencies.swift
+//  OnboardingDomainInterfaceDependencies.swift
 //  godtools
 //
 //  Created by Levi Eggert on 8/20/25.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class OnboardingBusinessLayerDependencies {
+class OnboardingDomainInterfaceDependencies {
     
     private let coreDataLayer: CoreDataLayerDependenciesInterface
     private let dataLayer: OnboardingDataLayerDependenciesInterface

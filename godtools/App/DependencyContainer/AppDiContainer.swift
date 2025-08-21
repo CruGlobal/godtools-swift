@@ -50,8 +50,8 @@ class AppDiContainer {
             onboardingDataLayer = MockOnboardingDataLayerDependencies()
         }
                 
-        // feature business layer dependencies
-        let onboardingBusinessLayer = OnboardingBusinessLayerDependencies(coreDataLayer: dataLayer, dataLayer: onboardingDataLayer)
+        // feature domain interface layer dependencies
+        let onboardingDomainInterfaceLayer = OnboardingDomainInterfaceDependencies(coreDataLayer: dataLayer, dataLayer: onboardingDataLayer)
         
         // feature dependency containers
         let accountDiContainer = AccountDiContainer(coreDataLayer: dataLayer)
@@ -68,8 +68,8 @@ class AppDiContainer {
         let lessonProgressDiContainer = UserLessonProgressDiContainer(coreDataLayer: dataLayer)
         let lessonSwipeTutorialDiContainer = LessonSwipeTutorialDiContainer(coreDataLayer: dataLayer)
         let menuDiContainer = MenuDiContainer(coreDataLayer: dataLayer)
-        let onboardingDiContainer = OnboardingDiContainer(coreDataLayer: dataLayer, dataLayer: onboardingDataLayer, businessLayer: onboardingBusinessLayer)
-        let optInNotification = OptInNotificationDiContainer(coreDataLayer: dataLayer, getOnboardingTutorialIsAvailable: onboardingBusinessLayer.getOnboardingTutorialIsAvailable())
+        let onboardingDiContainer = OnboardingDiContainer(coreDataLayer: dataLayer, dataLayer: onboardingDataLayer, domainInterfaceLayer: onboardingDomainInterfaceLayer)
+        let optInNotification = OptInNotificationDiContainer(coreDataLayer: dataLayer, getOnboardingTutorialIsAvailable: onboardingDomainInterfaceLayer.getOnboardingTutorialIsAvailable())
         let persistFavoritedToolLanguageSettingsDiContainer = PersistUserToolLanguageSettingsDiContainer(coreDataLayer: dataLayer)
         let shareablesDiContainer: ShareablesDiContainer = ShareablesDiContainer(coreDataLayer: dataLayer)
         let shareGodToolsDiContainer = ShareGodToolsDiContainer(coreDataLayer: dataLayer)
