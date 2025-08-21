@@ -10,12 +10,14 @@ import Foundation
 
 class SpotlightToolsDiContainer {
     
-    let dataLayer: SpotlightToolsDataLayerDependencies
+    let dataLayer: SpotlightToolsDataLayerDependenciesInterface
+    let domainInterfaceLayer: SpotlightToolsDomainInterfaceDependencies
     let domainLayer: SpotlightToolsDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies) {
+    init(coreDataLayer: CoreDataLayerDependenciesInterface, dataLayer: SpotlightToolsDataLayerDependenciesInterface, domainInterfaceLayer: SpotlightToolsDomainInterfaceDependencies) {
         
-        dataLayer = SpotlightToolsDataLayerDependencies(coreDataLayer: coreDataLayer)
-        domainLayer = SpotlightToolsDomainLayerDependencies(dataLayer: dataLayer)
+        self.dataLayer = dataLayer
+        self.domainInterfaceLayer = domainInterfaceLayer
+        domainLayer = SpotlightToolsDomainLayerDependencies(domainInterfaceLayer: domainInterfaceLayer)
     }
 }

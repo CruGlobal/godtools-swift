@@ -148,10 +148,6 @@ class AppDataLayerDependencies: CoreDataLayerDependenciesInterface {
         return FavoritingToolMessageCache(userDefaultsCache: sharedUserDefaultsCache)
     }
     
-    func getSharedFirebaseMessaging() -> FirebaseMessaging {
-        return FirebaseMessaging.shared
-    }
-    
     func getFollowUpsService() -> FollowUpsService {
         
         let api = FollowUpsApi(
@@ -311,6 +307,10 @@ class AppDataLayerDependencies: CoreDataLayerDependenciesInterface {
         )
     }
     
+    func getSharedFirebaseMessaging() -> FirebaseMessaging {
+        return FirebaseMessaging.shared
+    }
+    
     func getSharedUrlSessionPriority() -> URLSessionPriority {
         return sharedUrlSessionPriority
     }
@@ -369,19 +369,19 @@ class AppDataLayerDependencies: CoreDataLayerDependenciesInterface {
         )
     }
     
-    func getTranslatedToolName() -> GetTranslatedToolName {
-        return GetTranslatedToolName(
-            resourcesRepository: getResourcesRepository(),
-            translationsRepository: getTranslationsRepository()
-        )
-    }
-    
     func getTranslatedToolLanguageAvailability() -> GetTranslatedToolLanguageAvailability {
         return GetTranslatedToolLanguageAvailability(
             localizationServices: getLocalizationServices(),
             resourcesRepository: getResourcesRepository(),
             languagesRepository: getLanguagesRepository(),
             getTranslatedLanguageName: getTranslatedLanguageName()
+        )
+    }
+    
+    func getTranslatedToolName() -> GetTranslatedToolName {
+        return GetTranslatedToolName(
+            resourcesRepository: getResourcesRepository(),
+            translationsRepository: getTranslationsRepository()
         )
     }
     
@@ -467,7 +467,7 @@ class AppDataLayerDependencies: CoreDataLayerDependenciesInterface {
         )
     }
     
-    func getNewWebSocket(url: URL) -> WebSocketInterface {
+    func getWebSocket(url: URL) -> WebSocketInterface {
         
         switch Self.defaultWebSocketType {
         case .starscream:

@@ -8,28 +8,12 @@
 
 import Foundation
 
-class SpotlightToolsDataLayerDependencies {
+class SpotlightToolsDataLayerDependencies: SpotlightToolsDataLayerDependenciesInterface {
     
-    private let coreDataLayer: AppDataLayerDependencies
+    private let coreDataLayer: CoreDataLayerDependenciesInterface
     
-    init(coreDataLayer: AppDataLayerDependencies) {
+    init(coreDataLayer: CoreDataLayerDependenciesInterface) {
         
         self.coreDataLayer = coreDataLayer
-    }
-    
-    // MARK: - Data Layer Classes
-    
-    // MARK: - Domain Interface
-    
-    func getSpotlightToolsRepository() -> GetSpotlightToolsRepositoryInterface {
-        return GetSpotlightToolsRepository(
-            resourcesRepository: coreDataLayer.getResourcesRepository(),
-            favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository(),
-            languagesRepository: coreDataLayer.getLanguagesRepository(),
-            getTranslatedToolName: coreDataLayer.getTranslatedToolName(),
-            getTranslatedToolCategory: coreDataLayer.getTranslatedToolCategory(),
-            getToolListItemInterfaceStringsRepository: coreDataLayer.getToolListItemInterfaceStringsRepository(),
-            getTranslatedToolLanguageAvailability: coreDataLayer.getTranslatedToolLanguageAvailability()
-        )
     }
 }

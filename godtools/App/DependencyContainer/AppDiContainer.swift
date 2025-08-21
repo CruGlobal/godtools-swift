@@ -41,17 +41,21 @@ class AppDiContainer {
         
         // feature data layer dependencies
         let onboardingDataLayer: OnboardingDataLayerDependenciesInterface
+        let spotlightToolsDataLayer: SpotlightToolsDataLayerDependenciesInterface
         
         switch dataLayerType {
         case .godtools:
             onboardingDataLayer = OnboardingDataLayerDependencies(coreDataLayer: dataLayer)
+            spotlightToolsDataLayer = SpotlightToolsDataLayerDependencies(coreDataLayer: dataLayer)
             
         case .mock:
             onboardingDataLayer = MockOnboardingDataLayerDependencies()
+            spotlightToolsDataLayer = MockSpotlightToolsDataLayerDependencies()
         }
                 
         // feature domain interface layer dependencies
         let onboardingDomainInterfaceLayer = OnboardingDomainInterfaceDependencies(coreDataLayer: dataLayer, dataLayer: onboardingDataLayer)
+        let spotlightToolsDomainInterfaceLayer = SpotlightToolsDomainInterfaceDependencies(coreDataLayer: dataLayer, dataLayer: spotlightToolsDataLayer)
         
         // feature dependency containers
         let accountDiContainer = AccountDiContainer(coreDataLayer: dataLayer)
@@ -73,7 +77,7 @@ class AppDiContainer {
         let persistFavoritedToolLanguageSettingsDiContainer = PersistUserToolLanguageSettingsDiContainer(coreDataLayer: dataLayer)
         let shareablesDiContainer: ShareablesDiContainer = ShareablesDiContainer(coreDataLayer: dataLayer)
         let shareGodToolsDiContainer = ShareGodToolsDiContainer(coreDataLayer: dataLayer)
-        let spotlightToolsDiContainer = SpotlightToolsDiContainer(coreDataLayer: dataLayer)
+        let spotlightToolsDiContainer = SpotlightToolsDiContainer(coreDataLayer: dataLayer, dataLayer: spotlightToolsDataLayer, domainInterfaceLayer: spotlightToolsDomainInterfaceLayer)
         let toolDetailsDiContainer = ToolDetailsFeatureDiContainer(coreDataLayer: dataLayer)
         let toolScreenShareDiContainer = ToolScreenShareFeatureDiContainer(coreDataLayer: dataLayer)
         let toolScreenShareQRCodeDiContainer = ToolScreenShareQRCodeFeatureDiContainer(coreDataLayer: dataLayer)
