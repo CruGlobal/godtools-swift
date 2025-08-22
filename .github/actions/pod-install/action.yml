@@ -9,7 +9,7 @@ runs:
         xcode-version: '16.3.0'
     # Required for KotlinMultiplatform
     - name: Setup Java
-      uses: actions/setup-java@v4
+      uses: actions/setup-java@v5
       with:
         distribution: "temurin"
         java-version-file: ".java-version"
