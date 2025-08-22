@@ -13,8 +13,7 @@ import RequestOperation
 protocol CoreDataLayerDependenciesInterface {
     
     func getAnalytics() -> AnalyticsContainer
-    func getAppBuild() -> AppBuild
-    func getAppConfig() -> AppConfig
+    func getAppConfig() -> AppConfigInterface
     func getAppMessaging() -> AppMessagingInterface
     func getArticleAemRepository() -> ArticleAemRepository
     func getArticleManifestAemRepository() -> ArticleManifestAemRepository

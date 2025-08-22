@@ -1,28 +1,44 @@
 //
-//  AppConfig.swift
+//  GodToolsAppConfig.swift
 //  godtools
 //
-//  Created by Levi Eggert on 2/12/20.
-//  Copyright © 2020 Cru. All rights reserved.
+//  Created by Levi Eggert on 8/22/25.
+//  Copyright © 2025 Cru. All rights reserved.
 //
 
 import Foundation
 import SocialAuthentication
 
-class AppConfig: AppConfigInterface {
-        
+class GodToolsAppConfig: AppConfigInterface {
+    
     private let appBuild: AppBuild
         
-    init(appBuild: AppBuild) {
+    init() {
         
-        self.appBuild = appBuild
+        appBuild = AppBuild(buildConfiguration: InfoPlist().getAppBuildConfiguration())
+    }
+    
+    var buildConfig: AppBuildConfiguration {
+        return appBuild.configuration
+    }
+    
+    var environment: AppEnvironment {
+        return appBuild.environment
+    }
+    
+    var firebaseEnabled: Bool {
+        return true
+    }
+    
+    var isDebug: Bool {
+        return appBuild.isDebug
     }
     
     func getAppleAppId() -> String {
         return "542773210"
     }
         
-    func getFacebookConfiguration() -> FacebookConfiguration {
+    func getFacebookConfiguration() -> FacebookConfiguration? {
         
         // NOTE: Currently staging isn't supported because the facebook app id is also configured in the Info.plist which is only supporting a single fb app id. ~Levi
         // staging
@@ -58,13 +74,8 @@ class AppConfig: AppConfigInterface {
         }
     }
     
-    func getGoogleAuthenticationConfiguration() -> GoogleAuthenticationConfiguration {
+    func getGoogleAuthenticationConfiguration() -> GoogleAuthenticationConfiguration? {
         
-        return AppConfig.getGoogleAuthenticationConfiguration(environment: appBuild.environment)
-    }
-    
-    private static func getGoogleAuthenticationConfiguration(environment: AppEnvironment) -> GoogleAuthenticationConfiguration {
-                        
         let clientId: String
         let serverClientId: String
         
@@ -82,7 +93,11 @@ class AppConfig: AppConfigInterface {
         return GoogleAuthenticationConfiguration(clientId: clientId, serverClientId: serverClientId, hostedDomain: nil, openIDRealm: nil)
     }
     
-    func getMobileContentApiBaseUrl(scheme: String = "https") -> String {
+    func getMobileContentApiBaseUrl() -> String {
+        return getMobileContentApiBaseUrlByScheme()
+    }
+    
+    private func getMobileContentApiBaseUrlByScheme(scheme: String = "https") -> String {
         
         switch appBuild.environment {
         
@@ -94,7 +109,6 @@ class AppConfig: AppConfigInterface {
     }
     
     func getTractRemoteShareConnectionUrl() -> String {
-        
-        return getMobileContentApiBaseUrl(scheme: "wss") + "/" + "cable"
+        return getMobileContentApiBaseUrlByScheme(scheme: "wss") + "/" + "cable"
     }
 }

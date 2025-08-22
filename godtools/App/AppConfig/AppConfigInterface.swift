@@ -11,10 +11,15 @@ import SocialAuthentication
 
 protocol AppConfigInterface {
     
+    var buildConfig: AppBuildConfiguration { get }
+    var environment: AppEnvironment { get }
+    var firebaseEnabled: Bool { get }
+    var isDebug: Bool { get }
+    
     func getAppleAppId() -> String
-    func getFacebookConfiguration() -> FacebookConfiguration
+    func getFacebookConfiguration() -> FacebookConfiguration?
     func getFirebaseGoogleServiceFileName() -> String
-    func getGoogleAuthenticationConfiguration() -> GoogleAuthenticationConfiguration
-    func getMobileContentApiBaseUrl(scheme: String) -> String
+    func getGoogleAuthenticationConfiguration() -> GoogleAuthenticationConfiguration?
+    func getMobileContentApiBaseUrl() -> String
     func getTractRemoteShareConnectionUrl() -> String
 }

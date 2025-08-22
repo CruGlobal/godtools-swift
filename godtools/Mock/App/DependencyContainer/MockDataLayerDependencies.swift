@@ -24,11 +24,7 @@ class MockDataLayerDependencies: CoreDataLayerDependenciesInterface {
         return coreDataLayer.getAnalytics()
     }
     
-    func getAppBuild() -> AppBuild {
-        return coreDataLayer.getAppBuild()
-    }
-    
-    func getAppConfig() -> AppConfig {
+    func getAppConfig() -> AppConfigInterface {
         return coreDataLayer.getAppConfig()
     }
     

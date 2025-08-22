@@ -20,24 +20,19 @@ class AppDataLayerDependencies: CoreDataLayerDependenciesInterface {
     
     private static let defaultWebSocketType: WebSocketType = .urlSession
     
-    private let sharedAppBuild: AppBuild
-    private let sharedAppConfig: AppConfig
+    private let sharedAppConfig: AppConfigInterface
     private let sharedUrlSessionPriority: URLSessionPriority = URLSessionPriority()
-    private let sharedRequestSender: RequestSender = RequestSender()
     private let sharedRealmDatabase: RealmDatabase
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
     private let sharedAnalytics: AnalyticsContainer
-    private let firebaseEnabled: Bool
     
-    init(appBuild: AppBuild, appConfig: AppConfig, realmDatabase: RealmDatabase, firebaseEnabled: Bool) {
+    init(appConfig: AppConfigInterface, realmDatabase: RealmDatabase) {
         
-        sharedAppBuild = appBuild
         sharedAppConfig = appConfig
         sharedRealmDatabase = realmDatabase
-        self.firebaseEnabled = firebaseEnabled
         
         sharedAnalytics = AnalyticsContainer(
-            firebaseAnalytics: FirebaseAnalytics(appBuild: appBuild, loggingEnabled: appBuild.configuration == .analyticsLogging)
+            firebaseAnalytics: FirebaseAnalytics(isDebug: appConfig.isDebug, loggingEnabled: appConfig.buildConfig == .analyticsLogging)
         )
     }
     
@@ -47,21 +42,12 @@ class AppDataLayerDependencies: CoreDataLayerDependenciesInterface {
         return sharedAnalytics
     }
     
-    func getAppBuild() -> AppBuild {
-        return sharedAppBuild
-    }
-    
-    func getAppConfig() -> AppConfig {
+    func getAppConfig() -> AppConfigInterface {
         return sharedAppConfig
     }
     
     func getAppMessaging() -> AppMessagingInterface {
-        
-        guard firebaseEnabled else {
-            return DisabledInAppMessaging()
-        }
-        
-        return FirebaseInAppMessaging.shared
+        return sharedAppConfig.firebaseEnabled ? FirebaseInAppMessaging.shared : DisabledInAppMessaging()
     }
     
     private func getArticleAemCache() -> ArticleAemCache {
@@ -248,14 +234,13 @@ class AppDataLayerDependencies: CoreDataLayerDependenciesInterface {
     }
     
     func getRemoteConfigRepository() -> RemoteConfigRepository {
-        
         return RemoteConfigRepository(
-            remoteDatabase: firebaseEnabled ? FirebaseRemoteConfigWrapper() : DisabledRemoteConfigDatabase()
+            remoteDatabase: sharedAppConfig.firebaseEnabled ? FirebaseRemoteConfigWrapper() : DisabledRemoteConfigDatabase()
         )
     }
     
     func getRequestSender() -> RequestSender {
-        return sharedRequestSender
+        return RequestSender()
     }
     
     func getResourcesFileCache() -> ResourcesSHA256FileCache {
@@ -408,20 +393,24 @@ class AppDataLayerDependencies: CoreDataLayerDependenciesInterface {
 
     func getUserAuthentication() -> UserAuthentication {
                 
+        var authenticationProviders: [AuthenticationProviderType: AuthenticationProviderInterface] = Dictionary()
+        
+        authenticationProviders[.apple] = AppleAuthentication(
+            appleUserPersistentStore: AppleUserPersistentStore()
+        )
+        
+        authenticationProviders[.facebook] = FacebookLimitedLogin(
+            configuration: FacebookLimitedLoginConfiguration(permissions: ["email"])
+        )
+        
+        if let googleAuthConfiguration = getAppConfig().getGoogleAuthenticationConfiguration() {
+            authenticationProviders[.google] = GoogleAuthentication(
+                configuration: googleAuthConfiguration
+            )
+        }
+        
         return UserAuthentication(
-            authenticationProviders: [
-                .apple: AppleAuthentication(
-                    appleUserPersistentStore: AppleUserPersistentStore()
-                ),
-                .facebook: FacebookLimitedLogin(
-                    configuration: FacebookLimitedLoginConfiguration(
-                        permissions: ["email"]
-                    )
-                ),
-                .google: GoogleAuthentication(
-                    configuration: getAppConfig().getGoogleAuthenticationConfiguration()
-                )
-            ],
+            authenticationProviders: authenticationProviders,
             lastAuthenticatedProviderCache: LastAuthenticatedProviderCache(userDefaultsCache: sharedUserDefaultsCache),
             mobileContentAuthTokenRepository: getMobileContentAuthTokenRepository()
         )

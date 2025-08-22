@@ -15,7 +15,6 @@ class AppDiContainer {
         case mock
     }
     
-    private let appBuild: AppBuild
     private let realmDatabase: RealmDatabase
     private let failedFollowUpsCache: FailedFollowUpsCache
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
@@ -24,17 +23,14 @@ class AppDiContainer {
     let domainLayer: AppDomainLayerDependencies
     let feature: AppFeatureDiContainer
     
-    init(appBuild: AppBuild, appConfig: AppConfig, realmDatabase: RealmDatabase, firebaseEnabled: Bool, dataLayerType: DataLayerType) {
+    init(appConfig: AppConfigInterface, realmDatabase: RealmDatabase, dataLayerType: DataLayerType) {
                
-        self.appBuild = appBuild
         self.realmDatabase = realmDatabase
         
         // TODO: Once CoreDataLayerDependenciesInterface is complete, will need to create the dataLayer based on DataLayerType. ~Levi
         dataLayer = AppDataLayerDependencies(
-            appBuild: appBuild,
             appConfig: appConfig,
-            realmDatabase: realmDatabase,
-            firebaseEnabled: firebaseEnabled
+            realmDatabase: realmDatabase
         )
         
         domainLayer = AppDomainLayerDependencies(dataLayer: dataLayer)

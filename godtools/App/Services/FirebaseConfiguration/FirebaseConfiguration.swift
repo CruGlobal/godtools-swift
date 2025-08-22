@@ -11,9 +11,9 @@ import FirebaseCore
 
 class FirebaseConfiguration {
     
-    private let config: AppConfig
+    private let config: AppConfigInterface
         
-    required init(config: AppConfig) {
+    init(config: AppConfigInterface) {
         
         self.config = config
     }
