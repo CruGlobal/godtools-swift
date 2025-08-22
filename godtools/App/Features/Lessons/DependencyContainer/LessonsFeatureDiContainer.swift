@@ -13,7 +13,7 @@ class LessonsFeatureDiContainer {
     let dataLayer: LessonsFeatureDataLayerDependencies
     let domainLayer: LessonsFeatureDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies) {
+    init(coreDataLayer: CoreDataLayerDependenciesInterface) {
         
         dataLayer = LessonsFeatureDataLayerDependencies(coreDataLayer: coreDataLayer)
         

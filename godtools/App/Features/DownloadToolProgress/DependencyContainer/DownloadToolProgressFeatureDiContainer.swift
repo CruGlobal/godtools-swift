@@ -13,7 +13,7 @@ class DownloadToolProgressFeatureDiContainer {
     let dataLayer: DownloadToolProgressFeatureDataLayerDependencies
     let domainLayer: DownloadToolProgressFeatureDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies) {
+    init(coreDataLayer: CoreDataLayerDependenciesInterface) {
         
         dataLayer = DownloadToolProgressFeatureDataLayerDependencies(coreDataLayer: coreDataLayer)
         

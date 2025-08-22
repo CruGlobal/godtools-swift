@@ -13,7 +13,7 @@ class PersistUserToolLanguageSettingsDiContainer {
     let dataLayer: PersistUserToolLanguageSettingsDataLayerDependencies
     let domainLayer: PersistUserToolLanguageSettingsDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies) {
+    init(coreDataLayer: CoreDataLayerDependenciesInterface) {
         
         dataLayer = PersistUserToolLanguageSettingsDataLayerDependencies(coreDataLayer: coreDataLayer)
         domainLayer = PersistUserToolLanguageSettingsDomainLayerDependencies(dataLayer: dataLayer)

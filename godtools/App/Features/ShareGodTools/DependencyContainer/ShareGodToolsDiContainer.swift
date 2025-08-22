@@ -13,7 +13,7 @@ class ShareGodToolsDiContainer {
     let dataLayer: ShareGodToolsDataLayerDependencies
     let domainLayer: ShareGodToolsDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies) {
+    init(coreDataLayer: CoreDataLayerDependenciesInterface) {
         
         dataLayer = ShareGodToolsDataLayerDependencies(coreDataLayer: coreDataLayer)
         domainLayer = ShareGodToolsDomainLayerDependencies(dataLayer: dataLayer)

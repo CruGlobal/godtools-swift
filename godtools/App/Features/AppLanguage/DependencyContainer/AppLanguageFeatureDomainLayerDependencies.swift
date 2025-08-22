@@ -11,9 +11,9 @@ import Foundation
 class AppLanguageFeatureDomainLayerDependencies {
     
     private let dataLayer: AppLanguageFeatureDataLayerDependencies
-    private let coreDataLayer: AppDataLayerDependencies
+    private let coreDataLayer: CoreDataLayerDependenciesInterface
     
-    init(dataLayer: AppLanguageFeatureDataLayerDependencies, coreDataLayer: AppDataLayerDependencies) {
+    init(dataLayer: AppLanguageFeatureDataLayerDependencies, coreDataLayer: CoreDataLayerDependenciesInterface) {
         
         self.dataLayer = dataLayer
         self.coreDataLayer = coreDataLayer

@@ -13,7 +13,7 @@ class UserLessonProgressDiContainer {
     let dataLayer: UserLessonProgressDataLayerDependencies
     let domainLayer: UserLessonProgressDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies) {
+    init(coreDataLayer: CoreDataLayerDependenciesInterface) {
         
         dataLayer = UserLessonProgressDataLayerDependencies(coreDataLayer: coreDataLayer)
         domainLayer = UserLessonProgressDomainLayerDependencies(dataLayer: dataLayer, coreDataLayer: coreDataLayer)

@@ -13,7 +13,7 @@ class LearnToShareToolDiContainer {
     let dataLayer: LearnToShareToolDataLayerDependencies
     let domainLayer: LearnToShareToolDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies) {
+    init(coreDataLayer: CoreDataLayerDependenciesInterface) {
         
         dataLayer = LearnToShareToolDataLayerDependencies(coreDataLayer: coreDataLayer)
         domainLayer = LearnToShareToolDomainLayerDependencies(dataLayer: dataLayer)

@@ -11,9 +11,9 @@ import Foundation
 class UserLessonProgressDomainLayerDependencies {
     
     private let dataLayer: UserLessonProgressDataLayerDependencies
-    private let coreDataLayer: AppDataLayerDependencies
+    private let coreDataLayer: CoreDataLayerDependenciesInterface
     
-    init(dataLayer: UserLessonProgressDataLayerDependencies, coreDataLayer: AppDataLayerDependencies) {
+    init(dataLayer: UserLessonProgressDataLayerDependencies, coreDataLayer: CoreDataLayerDependenciesInterface) {
         self.dataLayer = dataLayer
         self.coreDataLayer = coreDataLayer
     }

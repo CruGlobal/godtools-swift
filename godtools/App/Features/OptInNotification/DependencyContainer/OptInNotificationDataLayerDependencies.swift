@@ -10,10 +10,10 @@ import Foundation
 
 class OptInNotificationDataLayerDependencies {
 
-    private let coreDataLayer: AppDataLayerDependencies
+    private let coreDataLayer: CoreDataLayerDependenciesInterface
     private let getOnboardingTutorialIsAvailable: GetOnboardingTutorialIsAvailableInterface
 
-    init(coreDataLayer: AppDataLayerDependencies, getOnboardingTutorialIsAvailable: GetOnboardingTutorialIsAvailableInterface) {
+    init(coreDataLayer: CoreDataLayerDependenciesInterface, getOnboardingTutorialIsAvailable: GetOnboardingTutorialIsAvailableInterface) {
 
         self.coreDataLayer = coreDataLayer
         self.getOnboardingTutorialIsAvailable = getOnboardingTutorialIsAvailable

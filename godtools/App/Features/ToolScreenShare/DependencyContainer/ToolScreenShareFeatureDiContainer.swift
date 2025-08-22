@@ -13,7 +13,7 @@ class ToolScreenShareFeatureDiContainer {
     let dataLayer: ToolScreenShareFeatureDataLayerDependencies
     let domainLayer: ToolScreenShareFeatureDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies) {
+    init(coreDataLayer: CoreDataLayerDependenciesInterface) {
         
         dataLayer = ToolScreenShareFeatureDataLayerDependencies(coreDataLayer: coreDataLayer)
         domainLayer = ToolScreenShareFeatureDomainLayerDependencies(dataLayer: dataLayer)

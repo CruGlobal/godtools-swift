@@ -13,7 +13,7 @@ class DashboardDiContainer {
     let dataLayer: DashboardDataLayerDependencies
     let domainLayer: DashboardDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies) {
+    init(coreDataLayer: CoreDataLayerDependenciesInterface) {
         
         dataLayer = DashboardDataLayerDependencies(coreDataLayer: coreDataLayer)
         

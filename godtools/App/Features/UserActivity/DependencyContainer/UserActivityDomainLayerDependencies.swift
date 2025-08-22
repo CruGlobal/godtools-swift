@@ -11,9 +11,9 @@ import Foundation
 class UserActivityDomainLayerDependencies {
     
     private let dataLayer: UserActivityDataLayerDependencies
-    private let coreDataLayer: AppDataLayerDependencies
+    private let coreDataLayer: CoreDataLayerDependenciesInterface
     
-    init(dataLayer: UserActivityDataLayerDependencies, coreDataLayer: AppDataLayerDependencies) {
+    init(dataLayer: UserActivityDataLayerDependencies, coreDataLayer: CoreDataLayerDependenciesInterface) {
         
         self.dataLayer = dataLayer
         self.coreDataLayer = coreDataLayer

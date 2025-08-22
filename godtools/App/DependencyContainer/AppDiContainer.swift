@@ -20,7 +20,7 @@ class AppDiContainer {
     private let failedFollowUpsCache: FailedFollowUpsCache
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
     
-    let dataLayer: AppDataLayerDependencies
+    let dataLayer: CoreDataLayerDependenciesInterface
     let domainLayer: AppDomainLayerDependencies
     let feature: AppFeatureDiContainer
     
@@ -28,14 +28,21 @@ class AppDiContainer {
                
         self.appBuild = appBuild
         self.realmDatabase = realmDatabase
-        
-        // TODO: Once CoreDataLayerDependenciesInterface is complete, will need to create the dataLayer based on DataLayerType. ~Levi
-        dataLayer = AppDataLayerDependencies(
+                
+        // TODO: Once MockDataLayerDependencies is no longer pointing to AppDataLayerDependencies, we can remove this. ~Levi
+        let godtoolsDataLayer = AppDataLayerDependencies(
             appBuild: appBuild,
             appConfig: appConfig,
             realmDatabase: realmDatabase,
             firebaseEnabled: firebaseEnabled
         )
+        
+        switch dataLayerType {
+        case .godtools:
+            dataLayer = godtoolsDataLayer
+        case .mock:
+            dataLayer = MockDataLayerDependencies(coreDataLayer: godtoolsDataLayer)
+        }
         
         domainLayer = AppDomainLayerDependencies(dataLayer: dataLayer)
         

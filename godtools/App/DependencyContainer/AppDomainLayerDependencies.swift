@@ -10,9 +10,9 @@ import Foundation
 
 class AppDomainLayerDependencies {
         
-    private let dataLayer: AppDataLayerDependencies
+    private let dataLayer: CoreDataLayerDependenciesInterface
     
-    init(dataLayer: AppDataLayerDependencies) {
+    init(dataLayer: CoreDataLayerDependenciesInterface) {
         
         self.dataLayer = dataLayer
     }

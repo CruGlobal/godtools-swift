@@ -11,9 +11,9 @@ import Foundation
 class LessonEvaluationFeatureDomainLayerDependencies {
     
     private let dataLayer: LessonEvaluationFeatureDataLayerDependencies
-    private let coreDataLayer: AppDataLayerDependencies
+    private let coreDataLayer: CoreDataLayerDependenciesInterface
     
-    init(dataLayer: LessonEvaluationFeatureDataLayerDependencies, coreDataLayer: AppDataLayerDependencies) {
+    init(dataLayer: LessonEvaluationFeatureDataLayerDependencies, coreDataLayer: CoreDataLayerDependenciesInterface) {
         
         self.dataLayer = dataLayer
         self.coreDataLayer = coreDataLayer

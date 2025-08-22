@@ -11,9 +11,9 @@ import Foundation
 class ToolDetailsFeatureDomainLayerDependencies {
     
     private let dataLayer: ToolDetailsFeatureDataLayerDependencies
-    private let coreDataLayer: AppDataLayerDependencies
+    private let coreDataLayer: CoreDataLayerDependenciesInterface
     
-    init(dataLayer: ToolDetailsFeatureDataLayerDependencies, coreDataLayer: AppDataLayerDependencies) {
+    init(dataLayer: ToolDetailsFeatureDataLayerDependencies, coreDataLayer: CoreDataLayerDependenciesInterface) {
         
         self.dataLayer = dataLayer
         self.coreDataLayer = coreDataLayer

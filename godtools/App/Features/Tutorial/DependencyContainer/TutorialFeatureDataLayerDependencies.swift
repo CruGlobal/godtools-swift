@@ -10,9 +10,9 @@ import Foundation
 
 class TutorialFeatureDataLayerDependencies {
     
-    private let coreDataLayer: AppDataLayerDependencies
+    private let coreDataLayer: CoreDataLayerDependenciesInterface
     
-    init(coreDataLayer: AppDataLayerDependencies) {
+    init(coreDataLayer: CoreDataLayerDependenciesInterface) {
         
         self.coreDataLayer = coreDataLayer
     }

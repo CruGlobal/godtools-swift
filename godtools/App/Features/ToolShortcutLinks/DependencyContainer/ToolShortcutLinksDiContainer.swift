@@ -13,7 +13,7 @@ class ToolShortcutLinksDiContainer {
     let dataLayer: ToolShortcutLinksDataLayerDependencies
     let domainLayer: ToolShortcutLinksDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies) {
+    init(coreDataLayer: CoreDataLayerDependenciesInterface) {
         
         dataLayer = ToolShortcutLinksDataLayerDependencies(coreDataLayer: coreDataLayer)
         domainLayer = ToolShortcutLinksDomainLayerDependencies(dataLayer: dataLayer)

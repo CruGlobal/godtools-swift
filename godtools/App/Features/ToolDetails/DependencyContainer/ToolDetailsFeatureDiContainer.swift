@@ -13,7 +13,7 @@ class ToolDetailsFeatureDiContainer {
     let dataLayer: ToolDetailsFeatureDataLayerDependencies
     let domainLayer: ToolDetailsFeatureDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies) {
+    init(coreDataLayer: CoreDataLayerDependenciesInterface) {
         
         dataLayer = ToolDetailsFeatureDataLayerDependencies(coreDataLayer: coreDataLayer)
         domainLayer = ToolDetailsFeatureDomainLayerDependencies(dataLayer: dataLayer, coreDataLayer: coreDataLayer)

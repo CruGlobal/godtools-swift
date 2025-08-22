@@ -13,7 +13,7 @@ class UserActivityDiContainer {
     let dataLayer: UserActivityDataLayerDependencies
     let domainLayer: UserActivityDomainLayerDependencies
     
-    init(coreDataLayer: AppDataLayerDependencies) {
+    init(coreDataLayer: CoreDataLayerDependenciesInterface) {
         
         dataLayer = UserActivityDataLayerDependencies(coreDataLayer: coreDataLayer)
         domainLayer = UserActivityDomainLayerDependencies(dataLayer: dataLayer, coreDataLayer: coreDataLayer)
