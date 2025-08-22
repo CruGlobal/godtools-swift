@@ -72,6 +72,10 @@ class MockDataLayerDependencies: CoreDataLayerDependenciesInterface {
         return coreDataLayer.getFavoritingToolMessageCache()
     }
     
+    func getFirebaseConfiguration() -> FirebaseConfigurationInterface {
+        return DisabledFirebaseConfiguration()
+    }
+    
     func getFollowUpsService() -> FollowUpsService {
         return coreDataLayer.getFollowUpsService()
     }
@@ -117,7 +121,9 @@ class MockDataLayerDependencies: CoreDataLayerDependenciesInterface {
     }
     
     func getRemoteConfigRepository() -> RemoteConfigRepository {
-        return coreDataLayer.getRemoteConfigRepository()
+        return RemoteConfigRepository(
+            remoteDatabase: DisabledRemoteConfigDatabase()
+        )
     }
     
     func getRequestSender() -> RequestSender {

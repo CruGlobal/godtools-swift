@@ -25,7 +25,6 @@ class SwiftUIPreviewDiContainer {
             appBuild: appBuild,
             appConfig: AppConfig(appBuild: appBuild),
             realmDatabase: SwiftUIPreviewDiContainer.previewDatabase,
-            firebaseEnabled: false,
             dataLayerType: .mock
         )
     }

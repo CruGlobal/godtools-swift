@@ -21,7 +21,6 @@ struct GodToolsApp: App {
         appBuild: appBuild,
         appConfig: appConfig,
         realmDatabase: realmDatabase,
-        firebaseEnabled: firebaseEnabled,
         dataLayerType: dataLayerType
     )
     
@@ -29,10 +28,6 @@ struct GodToolsApp: App {
         return uiTestsLaunchEnvironment.getIsUITests() ?? false
     }
 
-    private static var firebaseEnabled: Bool {
-        return !isUITests
-    }
-    
     private static var dataLayerType: AppDiContainer.DataLayerType {
         if isUITests {
             return .mock
@@ -59,9 +54,7 @@ struct GodToolsApp: App {
             Self.appDiContainer.getFirebaseDebugArguments().enable()
         }
 
-        if Self.firebaseEnabled {
-            Self.appDiContainer.getFirebaseConfiguration().configure()
-        }
+        Self.appDiContainer.dataLayer.getFirebaseConfiguration().configure()
 
         if Self.appBuild.configuration == .release {
             GodToolsParserLogger.shared.start()

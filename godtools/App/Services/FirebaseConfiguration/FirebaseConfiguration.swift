@@ -9,11 +9,11 @@
 import Foundation
 import FirebaseCore
 
-class FirebaseConfiguration {
+class FirebaseConfiguration: FirebaseConfigurationInterface {
     
     private let config: AppConfig
         
-    required init(config: AppConfig) {
+    init(config: AppConfig) {
         
         self.config = config
     }

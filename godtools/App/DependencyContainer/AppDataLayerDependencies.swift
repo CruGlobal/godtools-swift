@@ -27,14 +27,12 @@ class AppDataLayerDependencies: CoreDataLayerDependenciesInterface {
     private let sharedRealmDatabase: RealmDatabase
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
     private let sharedAnalytics: AnalyticsContainer
-    private let firebaseEnabled: Bool
     
-    init(appBuild: AppBuild, appConfig: AppConfig, realmDatabase: RealmDatabase, firebaseEnabled: Bool) {
+    init(appBuild: AppBuild, appConfig: AppConfig, realmDatabase: RealmDatabase) {
         
         sharedAppBuild = appBuild
         sharedAppConfig = appConfig
         sharedRealmDatabase = realmDatabase
-        self.firebaseEnabled = firebaseEnabled
         
         sharedAnalytics = AnalyticsContainer(
             firebaseAnalytics: FirebaseAnalytics(appBuild: appBuild, loggingEnabled: appBuild.configuration == .analyticsLogging)
@@ -56,11 +54,6 @@ class AppDataLayerDependencies: CoreDataLayerDependenciesInterface {
     }
     
     func getAppMessaging() -> AppMessagingInterface {
-        
-        guard firebaseEnabled else {
-            return DisabledInAppMessaging()
-        }
-        
         return FirebaseInAppMessaging.shared
     }
     
@@ -146,6 +139,10 @@ class AppDataLayerDependencies: CoreDataLayerDependenciesInterface {
     
     func getFavoritingToolMessageCache() -> FavoritingToolMessageCache {
         return FavoritingToolMessageCache(userDefaultsCache: sharedUserDefaultsCache)
+    }
+    
+    func getFirebaseConfiguration() -> FirebaseConfigurationInterface {
+        return FirebaseConfiguration(config: getAppConfig())
     }
     
     func getFollowUpsService() -> FollowUpsService {
@@ -248,9 +245,8 @@ class AppDataLayerDependencies: CoreDataLayerDependenciesInterface {
     }
     
     func getRemoteConfigRepository() -> RemoteConfigRepository {
-        
         return RemoteConfigRepository(
-            remoteDatabase: firebaseEnabled ? FirebaseRemoteConfigWrapper() : DisabledRemoteConfigDatabase()
+            remoteDatabase: FirebaseRemoteConfigWrapper()
         )
     }
     

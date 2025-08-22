@@ -24,7 +24,7 @@ class AppDiContainer {
     let domainLayer: AppDomainLayerDependencies
     let feature: AppFeatureDiContainer
     
-    init(appBuild: AppBuild, appConfig: AppConfig, realmDatabase: RealmDatabase, firebaseEnabled: Bool, dataLayerType: DataLayerType) {
+    init(appBuild: AppBuild, appConfig: AppConfig, realmDatabase: RealmDatabase, dataLayerType: DataLayerType) {
                
         self.appBuild = appBuild
         self.realmDatabase = realmDatabase
@@ -33,8 +33,7 @@ class AppDiContainer {
         let godtoolsDataLayer = AppDataLayerDependencies(
             appBuild: appBuild,
             appConfig: appConfig,
-            realmDatabase: realmDatabase,
-            firebaseEnabled: firebaseEnabled
+            realmDatabase: realmDatabase
         )
         
         switch dataLayerType {
@@ -137,10 +136,6 @@ class AppDiContainer {
     
     func getUrlOpener() -> UrlOpenerInterface {
         return OpenUrlWithSwiftUI() // TODO: GT-2466 Return OpenUrlWithUIKit() once supporting FBSDK 17.3+ ~Levi
-    }
-    
-    func getFirebaseConfiguration() -> FirebaseConfiguration {
-        return FirebaseConfiguration(config: dataLayer.getAppConfig())
     }
     
     func getFirebaseDebugArguments() -> FirebaseDebugArguments {

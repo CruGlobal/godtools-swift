@@ -25,6 +25,7 @@ protocol CoreDataLayerDependenciesInterface {
     func getEmailSignUpService() -> EmailSignUpService
     func getFavoritedResourcesRepository() -> FavoritedResourcesRepository
     func getFavoritingToolMessageCache() -> FavoritingToolMessageCache
+    func getFirebaseConfiguration() -> FirebaseConfigurationInterface
     func getFollowUpsService() -> FollowUpsService
     func getInfoPlist() -> InfoPlist
     func getLanguagesRepository() -> LanguagesRepository
