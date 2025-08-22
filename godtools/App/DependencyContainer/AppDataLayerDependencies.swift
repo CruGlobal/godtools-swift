@@ -145,6 +145,10 @@ class AppDataLayerDependencies: CoreDataLayerDependenciesInterface {
         return FirebaseConfiguration(config: getAppConfig())
     }
     
+    func getFirebaseDebugArguments() -> FirebaseDebugArgumentsInterface {
+        return FirebaseDebugArguments()
+    }
+    
     func getFollowUpsService() -> FollowUpsService {
         
         let api = FollowUpsApi(

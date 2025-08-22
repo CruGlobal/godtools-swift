@@ -51,7 +51,7 @@ struct GodToolsApp: App {
         )
         
         if Self.appBuild.configuration == .analyticsLogging {
-            Self.appDiContainer.getFirebaseDebugArguments().enable()
+            Self.appDiContainer.dataLayer.getFirebaseDebugArguments().enable()
         }
 
         Self.appDiContainer.dataLayer.getFirebaseConfiguration().configure()

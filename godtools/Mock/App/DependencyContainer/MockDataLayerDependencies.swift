@@ -76,6 +76,10 @@ class MockDataLayerDependencies: CoreDataLayerDependenciesInterface {
         return DisabledFirebaseConfiguration()
     }
     
+    func getFirebaseDebugArguments() -> FirebaseDebugArgumentsInterface {
+        return NoFirebaseDebugArguments()
+    }
+    
     func getFollowUpsService() -> FollowUpsService {
         return coreDataLayer.getFollowUpsService()
     }

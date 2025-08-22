@@ -26,6 +26,7 @@ protocol CoreDataLayerDependenciesInterface {
     func getFavoritedResourcesRepository() -> FavoritedResourcesRepository
     func getFavoritingToolMessageCache() -> FavoritingToolMessageCache
     func getFirebaseConfiguration() -> FirebaseConfigurationInterface
+    func getFirebaseDebugArguments() -> FirebaseDebugArgumentsInterface
     func getFollowUpsService() -> FollowUpsService
     func getInfoPlist() -> InfoPlist
     func getLanguagesRepository() -> LanguagesRepository
