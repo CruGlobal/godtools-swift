@@ -22,7 +22,7 @@ class SwiftUIPreviewDiContainer {
         let appBuild = AppBuild(buildConfiguration: .production)
         
         return AppDiContainer(
-            appConfig: AppConfig(appBuild: appBuild),
+            appConfig: UITestsAppConfig(),
             realmDatabase: SwiftUIPreviewDiContainer.previewDatabase,
             dataLayerType: .mock
         )
