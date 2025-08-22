@@ -40,15 +40,18 @@ class AppDiContainer {
         domainLayer = AppDomainLayerDependencies(dataLayer: dataLayer)
         
         // feature data layer dependencies
+        let accountDataLayer: AccountDataLayerDependenciesInterface
         let onboardingDataLayer: OnboardingDataLayerDependenciesInterface
         let spotlightToolsDataLayer: SpotlightToolsDataLayerDependenciesInterface
         
         switch dataLayerType {
         case .godtools:
+            accountDataLayer = AccountDataLayerDependencies(coreDataLayer: dataLayer)
             onboardingDataLayer = OnboardingDataLayerDependencies(coreDataLayer: dataLayer)
             spotlightToolsDataLayer = SpotlightToolsDataLayerDependencies(coreDataLayer: dataLayer)
             
         case .mock:
+            accountDataLayer = AccountDataLayerDependencies(coreDataLayer: dataLayer) // NOTE: For now won't use mock until interfaces can be created. ~Levi
             onboardingDataLayer = MockOnboardingDataLayerDependencies()
             spotlightToolsDataLayer = MockSpotlightToolsDataLayerDependencies()
         }
@@ -58,7 +61,7 @@ class AppDiContainer {
         let spotlightToolsDomainInterfaceLayer = SpotlightToolsDomainInterfaceDependencies(coreDataLayer: dataLayer, dataLayer: spotlightToolsDataLayer)
         
         // feature dependency containers
-        let accountDiContainer = AccountDiContainer(coreDataLayer: dataLayer)
+        let accountDiContainer = AccountDiContainer(coreDataLayer: dataLayer, dataLayer: accountDataLayer, domainInterfaceLayer: AccountDomainInterfaceDependencies(coreDataLayer: dataLayer, dataLayer: accountDataLayer))
         let appLanguageDiContainer = AppLanguageFeatureDiContainer(coreDataLayer: dataLayer)
         let dashboardDiContainer = DashboardDiContainer(coreDataLayer: dataLayer)
         let downloadToolProgressDiContainer = DownloadToolProgressFeatureDiContainer(coreDataLayer: dataLayer)

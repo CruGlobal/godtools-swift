@@ -10,13 +10,14 @@ import Foundation
 
 class AccountDomainLayerDependencies {
     
-    private let dataLayer: AccountDataLayerDependencies
-    private let coreDataLayer: AppDataLayerDependencies
+    // TODO: Need to refactor so reference (coreDataLayer: CoreDataLayerDependenciesInterface) is not in this class. UseCases should only point to interfaces for dependency inversion. ~Levi
+    private let coreDataLayer: CoreDataLayerDependenciesInterface
+    private let domainInterfaceLayer: AccountDomainInterfaceDependencies
     
-    init(dataLayer: AccountDataLayerDependencies, coreDataLayer: AppDataLayerDependencies) {
+    init(coreDataLayer: CoreDataLayerDependenciesInterface, domainInterfaceLayer: AccountDomainInterfaceDependencies) {
         
-        self.dataLayer = dataLayer
         self.coreDataLayer = coreDataLayer
+        self.domainInterfaceLayer = domainInterfaceLayer
     }
     
     func getAccountCreationIsSupportedUseCase() -> GetAccountCreationIsSupportedUseCase {
@@ -25,7 +26,7 @@ class AccountDomainLayerDependencies {
     
     func getAuthenticateUserUseCase() -> AuthenticateUserUseCase {
         return AuthenticateUserUseCase(
-            authenticateUser: dataLayer.getAuthenticateUserInterface(),
+            authenticateUser: domainInterfaceLayer.getAuthenticateUser(),
             emailSignUpService: coreDataLayer.getEmailSignUpService(),
             firebaseAnalytics: coreDataLayer.getAnalytics().firebaseAnalytics
         )
@@ -34,7 +35,7 @@ class AccountDomainLayerDependencies {
     func getDeleteAccountUseCase() -> DeleteAccountUseCase {
         return DeleteAccountUseCase(
             userAuthentication: coreDataLayer.getUserAuthentication(),
-            deleteUserDetails: dataLayer.getDeleteUserDetails()
+            deleteUserDetails: domainInterfaceLayer.getDeleteUserDetails()
         )
     }
     
@@ -54,19 +55,19 @@ class AccountDomainLayerDependencies {
     
     func getSocialCreateAccountInterfaceStringsUseCase() -> GetSocialCreateAccountInterfaceStringsUseCase {
         return GetSocialCreateAccountInterfaceStringsUseCase(
-            getInterfaceStringsRepositoryInterface: dataLayer.getSocialCreateAccountInterfaceStringsRepositoryInterface()
+            getInterfaceStringsRepositoryInterface: domainInterfaceLayer.getSocialCreateAccountInterfaceStringsRepository()
         )
     }
     
     func getSocialSignInInterfaceStringsUseCase() -> GetSocialSignInInterfaceStringsUseCase {
         return GetSocialSignInInterfaceStringsUseCase(
-            getInterfaceStringsRepositoryInterface: dataLayer.getSocialSignInInterfaceStringsRepositoryInterface()
+            getInterfaceStringsRepositoryInterface: domainInterfaceLayer.getSocialSignInInterfaceStringsRepository()
         )
     }
     
     func getUserAccountDetailsUseCase() -> GetUserAccountDetailsUseCase {
         return GetUserAccountDetailsUseCase(
-            getUserAccountDetailsRepository: dataLayer.getUserAccountDetailsRepositoryInterface()
+            getUserAccountDetailsRepository: domainInterfaceLayer.getUserAccountDetailsRepository()
         )
     }
     
@@ -78,19 +79,19 @@ class AccountDomainLayerDependencies {
     
     func getViewAccountUseCase() -> ViewAccountUseCase {
         return ViewAccountUseCase(
-            getInterfaceStringsRepository: dataLayer.getAccountInterfaceStringsRepositoryInterface()
+            getInterfaceStringsRepository: domainInterfaceLayer.getAccountInterfaceStringsRepository()
         )
     }
     
     func getViewDeleteAccountUseCase() -> ViewDeleteAccountUseCase {
         return ViewDeleteAccountUseCase(
-            getInterfaceStringsRepository: dataLayer.getDeleteAccountInterfaceStringsRepository()
+            getInterfaceStringsRepository: domainInterfaceLayer.getDeleteAccountInterfaceStringsRepository()
         )
     }
     
     func getViewDeleteAccountProgressUseCase() -> ViewDeleteAccountProgressUseCase {
         return ViewDeleteAccountProgressUseCase(
-            getInterfaceStringsRepository: dataLayer.getDeleteAccountProgressInterfaceStringsRepository()
+            getInterfaceStringsRepository: domainInterfaceLayer.getDeleteAccountProgressInterfaceStringsRepository()
         )
     }
 }
