@@ -21,7 +21,9 @@ class MockDataLayerDependencies: CoreDataLayerDependenciesInterface {
     }
     
     func getAnalytics() -> AnalyticsContainer {
-        return coreDataLayer.getAnalytics()
+        return AnalyticsContainer(
+            firebaseAnalytics: DisabledFirebaseAnalytics()
+        )
     }
     
     func getAppBuild() -> AppBuild {

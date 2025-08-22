@@ -10,7 +10,7 @@ import Foundation
 import FirebaseAnalytics
 import FirebaseCore
 
-class FirebaseAnalytics {
+class FirebaseAnalytics: FirebaseAnalyticsInterface {
     
     private let appBuild: AppBuild
     private let loggingEnabled: Bool

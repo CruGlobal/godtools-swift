@@ -11,12 +11,12 @@ import Foundation
 class AnalyticsContainer {
      
     // analytics systems
-    let firebaseAnalytics: FirebaseAnalytics
+    let firebaseAnalytics: FirebaseAnalyticsInterface
 
     // shared analytics tracking
     let trackActionAnalytics: TrackActionAnalytics
             
-    init(firebaseAnalytics: FirebaseAnalytics) {
+    init(firebaseAnalytics: FirebaseAnalyticsInterface) {
                 
         trackActionAnalytics = TrackActionAnalytics(firebaseAnalytics: firebaseAnalytics)
 
