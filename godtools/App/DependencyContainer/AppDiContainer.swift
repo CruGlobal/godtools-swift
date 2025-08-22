@@ -10,6 +10,11 @@ import UIKit
 
 class AppDiContainer {
         
+    enum DataLayerType {
+        case godtools
+        case mock
+    }
+    
     private let appBuild: AppBuild
     private let realmDatabase: RealmDatabase
     private let failedFollowUpsCache: FailedFollowUpsCache
@@ -18,23 +23,45 @@ class AppDiContainer {
     let dataLayer: AppDataLayerDependencies
     let domainLayer: AppDomainLayerDependencies
     let feature: AppFeatureDiContainer
-        
-    init(appBuild: AppBuild, appConfig: AppConfig, realmDatabase: RealmDatabase, firebaseEnabled: Bool, urlSessionEnabled: Bool) {
+    
+    init(appBuild: AppBuild, appConfig: AppConfig, realmDatabase: RealmDatabase, firebaseEnabled: Bool, dataLayerType: DataLayerType) {
                
         self.appBuild = appBuild
         self.realmDatabase = realmDatabase
         
+        // TODO: Once CoreDataLayerDependenciesInterface is complete, will need to create the dataLayer based on DataLayerType. ~Levi
         dataLayer = AppDataLayerDependencies(
             appBuild: appBuild,
             appConfig: appConfig,
             realmDatabase: realmDatabase,
-            firebaseEnabled: firebaseEnabled,
-            urlSessionEnabled: urlSessionEnabled
+            firebaseEnabled: firebaseEnabled
         )
         
         domainLayer = AppDomainLayerDependencies(dataLayer: dataLayer)
         
-        let accountDiContainer = AccountDiContainer(coreDataLayer: dataLayer)
+        // feature data layer dependencies
+        let accountDataLayer: AccountDataLayerDependenciesInterface
+        let onboardingDataLayer: OnboardingDataLayerDependenciesInterface
+        let spotlightToolsDataLayer: SpotlightToolsDataLayerDependenciesInterface
+        
+        switch dataLayerType {
+        case .godtools:
+            accountDataLayer = AccountDataLayerDependencies(coreDataLayer: dataLayer)
+            onboardingDataLayer = OnboardingDataLayerDependencies(coreDataLayer: dataLayer)
+            spotlightToolsDataLayer = SpotlightToolsDataLayerDependencies(coreDataLayer: dataLayer)
+            
+        case .mock:
+            accountDataLayer = AccountDataLayerDependencies(coreDataLayer: dataLayer) // NOTE: For now won't use mock until interfaces can be created. ~Levi
+            onboardingDataLayer = MockOnboardingDataLayerDependencies()
+            spotlightToolsDataLayer = MockSpotlightToolsDataLayerDependencies()
+        }
+                
+        // feature domain interface layer dependencies
+        let onboardingDomainInterfaceLayer = OnboardingDomainInterfaceDependencies(coreDataLayer: dataLayer, dataLayer: onboardingDataLayer)
+        let spotlightToolsDomainInterfaceLayer = SpotlightToolsDomainInterfaceDependencies(coreDataLayer: dataLayer, dataLayer: spotlightToolsDataLayer)
+        
+        // feature dependency containers
+        let accountDiContainer = AccountDiContainer(coreDataLayer: dataLayer, dataLayer: accountDataLayer, domainInterfaceLayer: AccountDomainInterfaceDependencies(coreDataLayer: dataLayer, dataLayer: accountDataLayer))
         let appLanguageDiContainer = AppLanguageFeatureDiContainer(coreDataLayer: dataLayer)
         let dashboardDiContainer = DashboardDiContainer(coreDataLayer: dataLayer)
         let downloadToolProgressDiContainer = DownloadToolProgressFeatureDiContainer(coreDataLayer: dataLayer)
@@ -47,12 +74,13 @@ class AppDiContainer {
         let lessonsDiContainer = LessonsFeatureDiContainer(coreDataLayer: dataLayer)
         let lessonProgressDiContainer = UserLessonProgressDiContainer(coreDataLayer: dataLayer)
         let lessonSwipeTutorialDiContainer = LessonSwipeTutorialDiContainer(coreDataLayer: dataLayer)
-        let onboardingDiContainer = OnboardingDiContainer(coreDataLayer: dataLayer)
-        let optInNotification = OptInNotificationDiContainer(coreDataLayer: dataLayer, getOnboardingTutorialIsAvailable: onboardingDiContainer.dataLayer.getOnboardingTutorialIsAvailable())
+        let menuDiContainer = MenuDiContainer(coreDataLayer: dataLayer)
+        let onboardingDiContainer = OnboardingDiContainer(coreDataLayer: dataLayer, dataLayer: onboardingDataLayer, domainInterfaceLayer: onboardingDomainInterfaceLayer)
+        let optInNotification = OptInNotificationDiContainer(coreDataLayer: dataLayer, getOnboardingTutorialIsAvailable: onboardingDomainInterfaceLayer.getOnboardingTutorialIsAvailable())
         let persistFavoritedToolLanguageSettingsDiContainer = PersistUserToolLanguageSettingsDiContainer(coreDataLayer: dataLayer)
         let shareablesDiContainer: ShareablesDiContainer = ShareablesDiContainer(coreDataLayer: dataLayer)
         let shareGodToolsDiContainer = ShareGodToolsDiContainer(coreDataLayer: dataLayer)
-        let spotlightToolsDiContainer = SpotlightToolsDiContainer(coreDataLayer: dataLayer)
+        let spotlightToolsDiContainer = SpotlightToolsDiContainer(coreDataLayer: dataLayer, dataLayer: spotlightToolsDataLayer, domainInterfaceLayer: spotlightToolsDomainInterfaceLayer)
         let toolDetailsDiContainer = ToolDetailsFeatureDiContainer(coreDataLayer: dataLayer)
         let toolScreenShareDiContainer = ToolScreenShareFeatureDiContainer(coreDataLayer: dataLayer)
         let toolScreenShareQRCodeDiContainer = ToolScreenShareQRCodeFeatureDiContainer(coreDataLayer: dataLayer)
@@ -76,6 +104,7 @@ class AppDiContainer {
             lessons: lessonsDiContainer, 
             lessonProgress: lessonProgressDiContainer,
             lessonSwipeTutorial: lessonSwipeTutorialDiContainer,
+            menu: menuDiContainer,
             onboarding: onboardingDiContainer,
             optInNotification: optInNotification,
             persistFavoritedToolLanguageSettings: persistFavoritedToolLanguageSettingsDiContainer,
@@ -96,7 +125,7 @@ class AppDiContainer {
     }
     
     func getCardJumpService() -> CardJumpService {
-        return CardJumpService(cardJumpCache: CardJumpUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache))
+        return CardJumpService(cardJumpCache: CardJumpUserDefaultsCache(userDefaultsCache: sharedUserDefaultsCache))
     }
     
     func getUrlOpener() -> UrlOpenerInterface {

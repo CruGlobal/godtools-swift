@@ -18,15 +18,15 @@ class ResourcesRepository {
     private let cache: RealmResourcesCache
     private let attachmentsRepository: AttachmentsRepository
     private let languagesRepository: LanguagesRepository
-    private let sharedUserDefaultsCache: SharedUserDefaultsCache
+    private let userDefaultsCache: UserDefaultsCacheInterface
     
-    init(api: MobileContentResourcesApi, cache: RealmResourcesCache, attachmentsRepository: AttachmentsRepository, languagesRepository: LanguagesRepository, sharedUserDefaultsCache: SharedUserDefaultsCache) {
+    init(api: MobileContentResourcesApi, cache: RealmResourcesCache, attachmentsRepository: AttachmentsRepository, languagesRepository: LanguagesRepository, userDefaultsCache: UserDefaultsCacheInterface) {
         
         self.api = api
         self.cache = cache
         self.attachmentsRepository = attachmentsRepository
         self.languagesRepository = languagesRepository
-        self.sharedUserDefaultsCache = sharedUserDefaultsCache
+        self.userDefaultsCache = userDefaultsCache
     }
     
     var numberOfResources: Int {
@@ -182,7 +182,7 @@ class ResourcesRepository {
         let syncInvalidator = SyncInvalidator(
             id: Self.syncInvalidatorIdForResourcesPlustLatestTranslationsAndAttachments,
             timeInterval: .hours(hour: 8),
-            userDefaultsCache: sharedUserDefaultsCache
+            userDefaultsCache: userDefaultsCache
         )
         
         let shouldFetchFromRemote: Bool = forceFetchFromRemote || syncInvalidator.shouldSync

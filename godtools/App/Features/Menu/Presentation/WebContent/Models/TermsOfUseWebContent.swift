@@ -16,7 +16,7 @@ struct TermsOfUseWebContent: WebContentType {
     let analyticsScreenName: String = "Terms of Use"
     let analyticsSiteSection: String = "menu"
     
-    init(localizationServices: LocalizationServices) {
+    init(localizationServices: LocalizationServicesInterface) {
         
         navTitle = localizationServices.stringForSystemElseEnglish(key: "terms_of_use")
     }

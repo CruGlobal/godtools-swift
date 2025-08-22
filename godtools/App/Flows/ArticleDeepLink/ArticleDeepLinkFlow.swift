@@ -67,7 +67,7 @@ class ArticleDeepLinkFlow: Flow {
             
         case .didFailToDownloadArticleFromLoadingArticle(let alertMessage):
             
-            let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
+            let localizationServices: LocalizationServicesInterface = appDiContainer.dataLayer.getLocalizationServices()
             let appLanguage: AppLanguageDomainModel = self.appLanguage
             
             navigationController.dismiss(animated: true) { [weak self] in

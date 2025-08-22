@@ -12,9 +12,9 @@ class SyncInvalidator {
     
     private let id: String
     private let timeInterval: SyncInvalidatorTimeInterval
-    private let userDefaultsCache: SharedUserDefaultsCache
+    private let userDefaultsCache: UserDefaultsCacheInterface
     
-    init(id: String, timeInterval: SyncInvalidatorTimeInterval, userDefaultsCache: SharedUserDefaultsCache) {
+    init(id: String, timeInterval: SyncInvalidatorTimeInterval, userDefaultsCache: UserDefaultsCacheInterface) {
         
         self.id = id
         self.timeInterval = timeInterval

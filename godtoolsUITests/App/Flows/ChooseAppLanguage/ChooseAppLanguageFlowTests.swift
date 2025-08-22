@@ -27,12 +27,8 @@ class ChooseAppLanguageFlowTests: BaseFlowTests {
     func testTappingAppLanguageNavigatesToConfirmAppLanguage() {
         
         launchApp()
-                
-        let firstAppLanguageListItem = app.queryFirstButtonMatching(buttonAccessibility: .appLanguageListItem)
         
-        XCTAssertTrue(firstAppLanguageListItem.exists)
-        
-        firstAppLanguageListItem.tap()
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .appLanguageListItem, buttonQueryType: .firstMatch)
         
         assertIfScreenDoesNotExist(screenAccessibility: .confirmAppLanguage)
     }

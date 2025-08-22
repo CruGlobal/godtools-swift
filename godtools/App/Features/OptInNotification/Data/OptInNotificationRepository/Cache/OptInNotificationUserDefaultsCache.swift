@@ -23,11 +23,11 @@ class OptInNotificationUserDefaultsCache {
         return formatter
     }()
     
-    private let sharedUserDefaultsCache: SharedUserDefaultsCache
+    private let userDefaultsCache: UserDefaultsCacheInterface
 
-    init(sharedUserDefaultsCache: SharedUserDefaultsCache) {
+    init(userDefaultsCache: UserDefaultsCacheInterface) {
 
-        self.sharedUserDefaultsCache = sharedUserDefaultsCache
+        self.userDefaultsCache = userDefaultsCache
     }
     
     func deleteAllData() {
@@ -36,17 +36,17 @@ class OptInNotificationUserDefaultsCache {
         
         for key in allKeys {
             
-            sharedUserDefaultsCache.deleteValue(
+            userDefaultsCache.deleteValue(
                 key: key.rawValue
             )
         }
         
-        sharedUserDefaultsCache.commitChanges()
+        userDefaultsCache.commitChanges()
     }
 
     func getLastPrompted() -> Date? {
        
-        guard let lastPrompted = sharedUserDefaultsCache.getValue(key: Key.lastPrompted.rawValue) as? String else {
+        guard let lastPrompted = userDefaultsCache.getValue(key: Key.lastPrompted.rawValue) as? String else {
             return nil
         }
 
@@ -60,7 +60,7 @@ class OptInNotificationUserDefaultsCache {
 
     func getPromptCount() -> Int {
         
-        guard let promptCount = sharedUserDefaultsCache.getValue(key: Key.promptedCount.rawValue) as? Int else {
+        guard let promptCount = userDefaultsCache.getValue(key: Key.promptedCount.rawValue) as? Int else {
             return 0
         }
 
@@ -75,16 +75,16 @@ class OptInNotificationUserDefaultsCache {
         let todaysDate: Date = Date()
         let stringDate: String = Self.dateFormatter.string(from: todaysDate)
         
-        sharedUserDefaultsCache.cache(
+        userDefaultsCache.cache(
             value: stringDate,
             forKey: Key.lastPrompted.rawValue
         )
 
-        sharedUserDefaultsCache.cache(
+        userDefaultsCache.cache(
             value: updatedPromptCount,
             forKey: Key.promptedCount.rawValue
         )
 
-        sharedUserDefaultsCache.commitChanges()
+        userDefaultsCache.commitChanges()
     }
 }
