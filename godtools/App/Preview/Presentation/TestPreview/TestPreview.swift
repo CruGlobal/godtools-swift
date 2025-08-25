@@ -33,7 +33,7 @@ struct TestPreview: View {
 
 #Preview {
     
-    let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
+    let appDiContainer = AppDiContainer.createUITestsDiContainer()
     let resource: ResourceModel? = appDiContainer.dataLayer.getResourcesRepository().getResource(id: "1")
     
     TestPreview(
