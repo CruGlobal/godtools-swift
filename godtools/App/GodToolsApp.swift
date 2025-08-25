@@ -52,11 +52,11 @@ struct GodToolsApp: App {
         )
         
         if Self.appConfig.buildConfig == .analyticsLogging {
-            Self.appDiContainer.getFirebaseDebugArguments().enable()
+            Self.appDiContainer.dataLayer.getFirebaseDebugArguments().enable()
         }
 
         if Self.appConfig.firebaseEnabled {
-            Self.appDiContainer.getFirebaseConfiguration().configure()
+            Self.appDiContainer.dataLayer.getFirebaseConfiguration().configure()
         }
 
         if Self.appConfig.buildConfig == .release {

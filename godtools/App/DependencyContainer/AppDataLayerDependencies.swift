@@ -134,6 +134,14 @@ class AppDataLayerDependencies {
         return FavoritingToolMessageCache(userDefaultsCache: sharedUserDefaultsCache)
     }
     
+    func getFirebaseConfiguration() -> FirebaseConfiguration {
+        return FirebaseConfiguration(config: getAppConfig())
+    }
+    
+    func getFirebaseDebugArguments() -> FirebaseDebugArguments {
+        return FirebaseDebugArguments()
+    }
+    
     func getFollowUpsService() -> FollowUpsService {
         
         let api = FollowUpsApi(
