@@ -273,7 +273,7 @@ class MenuFlow: Flow {
             }
             
         case .copyFirebaseDeviceTokenTappedFromMenu:
-            if appDiContainer.dataLayer.getAppBuild().isDebug {
+            if appDiContainer.dataLayer.getAppConfig().isDebug {
                 copyFirebaseDeviceTokenToClipboard()
             }
             
@@ -378,7 +378,7 @@ extension MenuFlow {
             logOutUserUseCase: appDiContainer.feature.account.domainLayer.getLogOutUserUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
-            appBuild: appDiContainer.dataLayer.getAppBuild()
+            appConfig: appDiContainer.dataLayer.getAppConfig()
         )
         
         let view = MenuView(viewModel: viewModel)

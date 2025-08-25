@@ -7,6 +7,7 @@
 //
 
 import Foundation
+@testable import godtools
 import Combine
 
 class MockLaunchCountRepository: LaunchCountRepositoryInterface {
@@ -16,6 +17,10 @@ class MockLaunchCountRepository: LaunchCountRepositoryInterface {
     init(launchCount: Int) {
         
         self.launchCount = launchCount
+    }
+    
+    func getLaunchCount() -> Int {
+        return launchCount
     }
     
     func getLaunchCountPublisher() -> AnyPublisher<Int, Never> {

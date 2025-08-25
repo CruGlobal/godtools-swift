@@ -10,11 +10,11 @@ import Foundation
 
 class AccountDomainLayerDependencies {
     
-    // TODO: Need to refactor so reference (coreDataLayer: CoreDataLayerDependenciesInterface) is not in this class. UseCases should only point to interfaces for dependency inversion. ~Levi
-    private let coreDataLayer: CoreDataLayerDependenciesInterface
+    // TODO: Need to refactor so reference (coreDataLayer: AppDataLayerDependencies) is not in this class. UseCases should only point to interfaces for dependency inversion. ~Levi
+    private let coreDataLayer: AppDataLayerDependencies
     private let domainInterfaceLayer: AccountDomainInterfaceDependencies
     
-    init(coreDataLayer: CoreDataLayerDependenciesInterface, domainInterfaceLayer: AccountDomainInterfaceDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, domainInterfaceLayer: AccountDomainInterfaceDependencies) {
         
         self.coreDataLayer = coreDataLayer
         self.domainInterfaceLayer = domainInterfaceLayer

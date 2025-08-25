@@ -10,10 +10,10 @@ import Foundation
 
 class AccountDomainInterfaceDependencies {
     
-    private let coreDataLayer: CoreDataLayerDependenciesInterface
-    private let dataLayer: AccountDataLayerDependenciesInterface
+    private let coreDataLayer: AppDataLayerDependencies
+    private let dataLayer: AccountDataLayerDependencies
     
-    init(coreDataLayer: CoreDataLayerDependenciesInterface, dataLayer: AccountDataLayerDependenciesInterface) {
+    init(coreDataLayer: AppDataLayerDependencies, dataLayer: AccountDataLayerDependencies) {
         
         self.coreDataLayer = coreDataLayer
         self.dataLayer = dataLayer

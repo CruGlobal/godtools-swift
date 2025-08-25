@@ -2,10 +2,10 @@ import Foundation
 
 class TemplateDomainInterfaceDependencies {
     
-    private let coreDataLayer: CoreDataLayerDependenciesInterface
-    private let dataLayer: TemplateDataLayerDependenciesInterface
+    private let coreDataLayer: AppDataLayerDependencies
+    private let dataLayer: TemplateDataLayerDependencies
     
-    init(coreDataLayer: CoreDataLayerDependenciesInterface, dataLayer: TemplateDataLayerDependenciesInterface) {
+    init(coreDataLayer: AppDataLayerDependencies, dataLayer: TemplateDataLayerDependencies) {
         
         self.coreDataLayer = coreDataLayer
         self.dataLayer = dataLayer

@@ -98,7 +98,7 @@ struct LessonsView_Preview: PreviewProvider {
     
     static func getLessonsViewModel() -> LessonsViewModel {
         
-        let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
+        let appDiContainer = AppDiContainer.createUITestsDiContainer()
         
         let viewModel = LessonsViewModel(
             flowDelegate: MockFlowDelegate(),

@@ -17,7 +17,7 @@ class UserCountersAPI: UserCountersApiInterface {
     private let urlSessionPriority: URLSessionPriority
     private let requestBuilder: RequestBuilder = RequestBuilder()
     
-    init(config: AppConfig, urlSessionPriority: URLSessionPriority, mobileContentApiAuthSession: MobileContentApiAuthSession) {
+    init(config: AppConfigInterface, urlSessionPriority: URLSessionPriority, mobileContentApiAuthSession: MobileContentApiAuthSession) {
         
         self.baseURL = config.getMobileContentApiBaseUrl()
         self.urlSessionPriority = urlSessionPriority
