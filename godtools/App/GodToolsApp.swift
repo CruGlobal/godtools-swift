@@ -46,19 +46,19 @@ struct GodToolsApp: App {
 
     init() {
 
+        if Self.appConfig.firebaseEnabled {
+            Self.appDiContainer.dataLayer.getFirebaseConfiguration().configure()
+        }
+        
+        if Self.appConfig.buildConfig == .analyticsLogging {
+            Self.appDiContainer.dataLayer.getFirebaseDebugArguments().enable()
+        }
+        
         appFlow = AppFlow(
             appDiContainer: Self.appDiContainer,
             appDeepLinkingService: Self.appDeepLinkingService
         )
         
-        if Self.appConfig.buildConfig == .analyticsLogging {
-            Self.appDiContainer.getFirebaseDebugArguments().enable()
-        }
-
-        if Self.appConfig.firebaseEnabled {
-            Self.appDiContainer.getFirebaseConfiguration().configure()
-        }
-
         if Self.appConfig.buildConfig == .release {
             GodToolsParserLogger.shared.start()
         }

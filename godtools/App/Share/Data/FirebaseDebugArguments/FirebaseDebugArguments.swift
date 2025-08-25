@@ -13,8 +13,7 @@ class FirebaseDebugArguments {
     private let enableFirebaseDebugArguments: [String]
     private let disableFirebaseDebugArguments: [String]
             
-    required init() {
-        
+    init() {
         self.enableFirebaseDebugArguments = ["-FIRDebugEnabled", "-FIRAnalyticsDebugEnabled"]
         self.disableFirebaseDebugArguments = ["-FIRDebugDisabled", "-FIRAnalyticsDebugDisabled"]
     }

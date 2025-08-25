@@ -11,6 +11,7 @@ import SocialAuthentication
 
 protocol AppConfigInterface {
     
+    var analyticsEnabled: Bool { get }
     var buildConfig: AppBuildConfiguration { get }
     var environment: AppEnvironment { get }
     var firebaseEnabled: Bool { get }

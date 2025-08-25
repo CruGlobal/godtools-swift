@@ -10,9 +10,9 @@ import Foundation
 
 class TrackActionAnalytics {
     
-    private let firebaseAnalytics: FirebaseAnalytics
+    private let firebaseAnalytics: FirebaseAnalyticsInterface
     
-    init(firebaseAnalytics: FirebaseAnalytics) {
+    init(firebaseAnalytics: FirebaseAnalyticsInterface) {
         
         self.firebaseAnalytics = firebaseAnalytics
     }

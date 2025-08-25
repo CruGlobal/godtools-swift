@@ -18,6 +18,10 @@ class TestsAppConfig: AppConfigInterface {
         self.realmDatabase = realmDatabase
     }
     
+    var analyticsEnabled: Bool {
+        return false
+    }
+    
     var buildConfig: AppBuildConfiguration {
         return .production
     }

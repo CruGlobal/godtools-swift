@@ -110,14 +110,6 @@ class AppDiContainer {
         return OpenUrlWithSwiftUI() // TODO: GT-2466 Return OpenUrlWithUIKit() once supporting FBSDK 17.3+ ~Levi
     }
     
-    func getFirebaseConfiguration() -> FirebaseConfiguration {
-        return FirebaseConfiguration(config: dataLayer.getAppConfig())
-    }
-    
-    func getFirebaseDebugArguments() -> FirebaseDebugArguments {
-        return FirebaseDebugArguments()
-    }
-    
     func getMobileContentRenderer(type: MobileContentRendererPageViewFactoriesType, navigation: MobileContentRendererNavigation, appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel) -> MobileContentRenderer {
 
         let pageViewFactories: MobileContentRendererPageViewFactories = MobileContentRendererPageViewFactories(
