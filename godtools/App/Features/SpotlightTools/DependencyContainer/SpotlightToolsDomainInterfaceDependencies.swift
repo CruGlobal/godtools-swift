@@ -10,10 +10,10 @@ import Foundation
 
 class SpotlightToolsDomainInterfaceDependencies {
     
-    private let coreDataLayer: CoreDataLayerDependenciesInterface
-    private let dataLayer: SpotlightToolsDataLayerDependenciesInterface
+    private let coreDataLayer: AppDataLayerDependencies
+    private let dataLayer: SpotlightToolsDataLayerDependencies
     
-    init(coreDataLayer: CoreDataLayerDependenciesInterface, dataLayer: SpotlightToolsDataLayerDependenciesInterface) {
+    init(coreDataLayer: AppDataLayerDependencies, dataLayer: SpotlightToolsDataLayerDependencies) {
         
         self.coreDataLayer = coreDataLayer
         self.dataLayer = dataLayer

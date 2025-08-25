@@ -11,36 +11,32 @@ import FirebaseDynamicLinks
 
 struct GodToolsApp: App {
 
-    private static let appBuild: AppBuild = AppBuild(buildConfiguration: InfoPlist().getAppBuildConfiguration())
-    private static let appConfig: AppConfig = AppConfig(appBuild: appBuild)
-    private static let uiTestsLaunchEnvironment: UITestsLaunchEnvironment = UITestsLaunchEnvironment()
-    private static let realmDatabase: RealmDatabase = RealmDatabase(databaseConfiguration: RealmDatabaseProductionConfiguration())
+    private enum AppLaunchType {
+        case godtools
+        case uiTests
+    }
+    
     private static let appDeepLinkingService: DeepLinkingService = appDiContainer.dataLayer.getDeepLinkingService()
+    private static let appDiContainer = AppDiContainer(appConfig: appConfig)
+    private static let uiTestsLaunchEnvironment: UITestsLaunchEnvironment = UITestsLaunchEnvironment()
     
-    private static let appDiContainer = AppDiContainer(
-        appBuild: appBuild,
-        appConfig: appConfig,
-        realmDatabase: realmDatabase,
-        firebaseEnabled: firebaseEnabled,
-        dataLayerType: dataLayerType
-    )
-    
-    private static var isUITests: Bool {
-        return uiTestsLaunchEnvironment.getIsUITests() ?? false
-    }
-
-    private static var firebaseEnabled: Bool {
-        return !isUITests
-    }
-    
-    private static var dataLayerType: AppDiContainer.DataLayerType {
-        if isUITests {
-            return .mock
+    private static let appConfig: AppConfigInterface = {
+        switch appLaunchType {
+        case .godtools:
+            return GodToolsAppConfig()
+        case .uiTests:
+            return UITestsAppConfig()
         }
-        
+    }()
+    
+    private static var appLaunchType: AppLaunchType {
+        let isUITests: Bool = uiTestsLaunchEnvironment.getIsUITests() ?? false
+        if isUITests {
+            return .uiTests
+        }
         return .godtools
     }
-    
+
     private let appFlow: AppFlow
     private let toolShortcutLinksViewModel: ToolShortcutLinksViewModel
     
@@ -55,19 +51,21 @@ struct GodToolsApp: App {
             appDeepLinkingService: Self.appDeepLinkingService
         )
         
-        if Self.appBuild.configuration == .analyticsLogging {
+        if Self.appConfig.buildConfig == .analyticsLogging {
             Self.appDiContainer.getFirebaseDebugArguments().enable()
         }
 
-        if Self.firebaseEnabled {
+        if Self.appConfig.firebaseEnabled {
             Self.appDiContainer.getFirebaseConfiguration().configure()
         }
 
-        if Self.appBuild.configuration == .release {
+        if Self.appConfig.buildConfig == .release {
             GodToolsParserLogger.shared.start()
         }
-
-        Self.appDiContainer.dataLayer.getAnalytics().firebaseAnalytics.configure()
+        
+        if Self.appConfig.firebaseEnabled {
+            Self.appDiContainer.dataLayer.getAnalytics().firebaseAnalytics.configure()
+        }
 
         Self.processUITestsDeepLink()
         
@@ -123,7 +121,7 @@ struct GodToolsApp: App {
 
 extension GodToolsApp {
     
-    static func getAppConfig() -> AppConfig {
+    static func getAppConfig() -> AppConfigInterface {
         return appConfig
     }
 }

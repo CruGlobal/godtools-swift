@@ -84,7 +84,7 @@ struct ReviewShareShareableViewPreview: PreviewProvider {
     
     static func getReviewShareShareableViewModel() -> ReviewShareShareableViewModel {
                 
-        let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
+        let appDiContainer = AppDiContainer.createUITestsDiContainer()
                         
         return ReviewShareShareableViewModel(
             flowDelegate: MockFlowDelegate(),

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+@testable import godtools
 import Combine
 
 class MockLaunchCountRepository: LaunchCountRepositoryInterface {

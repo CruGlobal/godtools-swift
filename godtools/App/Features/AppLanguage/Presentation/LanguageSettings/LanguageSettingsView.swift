@@ -55,7 +55,7 @@ struct LanguageSettingsView_Preview: PreviewProvider {
     
     static var previews: some View {
         
-        let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
+        let appDiContainer = AppDiContainer.createUITestsDiContainer()
         
         let viewModel = LanguageSettingsViewModel(
             flowDelegate: MockFlowDelegate(),

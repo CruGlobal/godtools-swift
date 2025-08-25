@@ -13,11 +13,14 @@ class GodToolsAppDelegate: NSObject, UIApplicationDelegate {
         
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
                              
-        ConfigureFacebookOnAppLaunch.configure(
-            application: application,
-            launchOptions: launchOptions,
-            configuration: GodToolsApp.getAppConfig().getFacebookConfiguration()
-        )
+        if let facebookConfiguration = GodToolsApp.getAppConfig().getFacebookConfiguration() {
+            
+            ConfigureFacebookOnAppLaunch.configure(
+                application: application,
+                launchOptions: launchOptions,
+                configuration: facebookConfiguration
+            )
+        }
         
         registerForRemoteNotifications(application: application)
         

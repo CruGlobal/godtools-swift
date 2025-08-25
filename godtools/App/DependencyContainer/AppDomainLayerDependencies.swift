@@ -19,7 +19,7 @@ class AppDomainLayerDependencies {
     
     func getAppUIDebuggingIsEnabledUseCase() -> GetAppUIDebuggingIsEnabledUseCase {
         return GetAppUIDebuggingIsEnabledUseCase(
-            appBuild: dataLayer.getAppBuild()
+            appConfig: dataLayer.getAppConfig()
         )
     }
     

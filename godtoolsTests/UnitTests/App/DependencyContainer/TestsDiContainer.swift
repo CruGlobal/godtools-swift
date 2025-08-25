@@ -12,17 +12,9 @@ import Foundation
 class TestsDiContainer: AppDiContainer {
     
     init(realmDatabase: RealmDatabase = TestsInMemoryRealmDatabase()) {
-        
-        let appBuild = AppBuild(buildConfiguration: nil)
-        
-        let appConfig = AppConfig(appBuild: appBuild)
-                
+   
         super.init(
-            appBuild: appBuild,
-            appConfig: appConfig,
-            realmDatabase: realmDatabase,
-            firebaseEnabled: false,
-            dataLayerType: .godtools
+            appConfig: TestsAppConfig(realmDatabase: realmDatabase)
         )
     }
 }
