@@ -32,7 +32,21 @@ class AppDataLayerDependencies {
         sharedRealmDatabase = appConfig.getRealmDatabase()
         
         sharedAnalytics = AnalyticsContainer(
-            firebaseAnalytics: FirebaseAnalytics(isDebug: appConfig.isDebug, loggingEnabled: appConfig.buildConfig == .analyticsLogging)
+            firebaseAnalytics: Self.getFirebaseAnalytics(appConfig: appConfig)
+        )
+    }
+    
+    private static func getFirebaseAnalytics(appConfig: AppConfigInterface) -> FirebaseAnalyticsInterface {
+        
+        let firebaseAnalyticsEnabled: Bool = appConfig.analyticsEnabled && appConfig.firebaseEnabled
+        
+        guard firebaseAnalyticsEnabled else {
+            return DisabledFirebaseAnalytics()
+        }
+        
+        return FirebaseAnalytics(
+            isDebug: appConfig.isDebug,
+            loggingEnabled: appConfig.buildConfig == .analyticsLogging
         )
     }
     

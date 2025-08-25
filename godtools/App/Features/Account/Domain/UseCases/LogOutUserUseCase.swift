@@ -12,10 +12,10 @@ import Combine
 class LogOutUserUseCase {
     
     private let userAuthentication: UserAuthentication
-    private let firebaseAnalytics: FirebaseAnalytics
+    private let firebaseAnalytics: FirebaseAnalyticsInterface
     private let deleteUserCountersUseCase: DeleteUserCountersUseCase
     
-    init(userAuthentication: UserAuthentication, firebaseAnalytics: FirebaseAnalytics, deleteUserCountersUseCase: DeleteUserCountersUseCase) {
+    init(userAuthentication: UserAuthentication, firebaseAnalytics: FirebaseAnalyticsInterface, deleteUserCountersUseCase: DeleteUserCountersUseCase) {
         
         self.userAuthentication = userAuthentication
         self.firebaseAnalytics = firebaseAnalytics
