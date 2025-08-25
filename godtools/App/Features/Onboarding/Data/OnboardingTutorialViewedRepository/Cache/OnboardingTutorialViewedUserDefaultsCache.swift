@@ -10,17 +10,17 @@ import Foundation
 
 class OnboardingTutorialViewedUserDefaultsCache {
         
-    private let sharedUserDefaultsCache: SharedUserDefaultsCache
+    private let userDefaultsCache: UserDefaultsCacheInterface
     private let onboardingTutorialViewedCacheKey: String = "keyOnboardingTutorialViewed"
     
-    init(sharedUserDefaultsCache: SharedUserDefaultsCache) {
+    init(userDefaultsCache: UserDefaultsCacheInterface) {
         
-        self.sharedUserDefaultsCache = sharedUserDefaultsCache
+        self.userDefaultsCache = userDefaultsCache
     }
     
     func getOnboardingTutorialViewed() -> Bool {
        
-        guard let viewed = sharedUserDefaultsCache.getValue(key: onboardingTutorialViewedCacheKey) as? Bool else {
+        guard let viewed = userDefaultsCache.getValue(key: onboardingTutorialViewedCacheKey) as? Bool else {
             return false
         }
         
@@ -29,7 +29,7 @@ class OnboardingTutorialViewedUserDefaultsCache {
     
     func storeOnboardingTutorialViewed(viewed: Bool) {
         
-        sharedUserDefaultsCache.cache(value: viewed, forKey: onboardingTutorialViewedCacheKey)
-        sharedUserDefaultsCache.commitChanges()
+        userDefaultsCache.cache(value: viewed, forKey: onboardingTutorialViewedCacheKey)
+        userDefaultsCache.commitChanges()
     }
 }

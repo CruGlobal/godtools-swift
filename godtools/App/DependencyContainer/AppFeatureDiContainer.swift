@@ -23,6 +23,7 @@ class AppFeatureDiContainer {
     let lessons: LessonsFeatureDiContainer
     let lessonProgress: UserLessonProgressDiContainer
     let lessonSwipeTutorial: LessonSwipeTutorialDiContainer
+    let menu: MenuDiContainer
     let onboarding: OnboardingDiContainer
     let optInNotification: OptInNotificationDiContainer
     let persistFavoritedToolLanguageSettings: PersistUserToolLanguageSettingsDiContainer
@@ -52,6 +53,7 @@ class AppFeatureDiContainer {
         lessons: LessonsFeatureDiContainer,
         lessonProgress: UserLessonProgressDiContainer,
         lessonSwipeTutorial: LessonSwipeTutorialDiContainer,
+        menu: MenuDiContainer,
         onboarding: OnboardingDiContainer,
         optInNotification: OptInNotificationDiContainer,
         persistFavoritedToolLanguageSettings: PersistUserToolLanguageSettingsDiContainer,
@@ -81,6 +83,7 @@ class AppFeatureDiContainer {
         self.lessons = lessons
         self.lessonProgress = lessonProgress
         self.lessonSwipeTutorial = lessonSwipeTutorial
+        self.menu = menu
         self.onboarding = onboarding
         self.optInNotification = optInNotification
         self.persistFavoritedToolLanguageSettings = persistFavoritedToolLanguageSettings

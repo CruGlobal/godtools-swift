@@ -11,16 +11,16 @@ import Combine
 
 class GetAppUIDebuggingIsEnabledUseCase {
     
-    private let appBuild: AppBuild
+    private let appConfig: AppConfigInterface
     
-    init(appBuild: AppBuild) {
+    init(appConfig: AppConfigInterface) {
         
-        self.appBuild = appBuild
+        self.appConfig = appConfig
     }
     
     func getIsEnabledPublisher() -> AnyPublisher<Bool, Never> {
         
-        let isEnabled: Bool = appBuild.isDebug
+        let isEnabled: Bool = appConfig.isDebug
         
         return Just(isEnabled)
             .eraseToAnyPublisher()

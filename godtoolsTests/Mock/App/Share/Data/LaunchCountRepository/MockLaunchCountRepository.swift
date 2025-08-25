@@ -19,6 +19,10 @@ class MockLaunchCountRepository: LaunchCountRepositoryInterface {
         self.launchCount = launchCount
     }
     
+    func getLaunchCount() -> Int {
+        return launchCount
+    }
+    
     func getLaunchCountPublisher() -> AnyPublisher<Int, Never> {
         
         return Just(launchCount)

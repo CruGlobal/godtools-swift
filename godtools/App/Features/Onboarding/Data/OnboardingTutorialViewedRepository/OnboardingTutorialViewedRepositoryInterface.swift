@@ -11,5 +11,7 @@ import Combine
 
 protocol OnboardingTutorialViewedRepositoryInterface {
     
+    func getOnboardingTutorialViewed() -> Bool
     func getOnboardingTutorialViewedPublisher() -> AnyPublisher<Bool, Never>
+    func storeOnboardingTutorialViewed(viewed: Bool)
 }

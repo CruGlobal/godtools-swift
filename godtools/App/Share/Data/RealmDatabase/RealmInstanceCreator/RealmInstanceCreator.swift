@@ -37,7 +37,8 @@ class RealmInstanceCreator {
     func createBackgroundRealm(async: @escaping ((_ realm: Realm) -> Void)) {
              
         if let sharedRealm = sharedRealm {
-            return async(sharedRealm)
+            async(sharedRealm)
+            return
         }
         
         backgroundQueue.async {

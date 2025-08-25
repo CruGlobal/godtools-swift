@@ -17,7 +17,7 @@ class MobileContentTranslationsApi {
     private let requestSender: RequestSender
     private let baseUrl: String
     
-    required init(config: AppConfig, urlSessionPriority: URLSessionPriority, requestSender: RequestSender) {
+    init(config: AppConfigInterface, urlSessionPriority: URLSessionPriority, requestSender: RequestSender) {
                     
         self.urlSessionPriority = urlSessionPriority
         self.requestSender = requestSender

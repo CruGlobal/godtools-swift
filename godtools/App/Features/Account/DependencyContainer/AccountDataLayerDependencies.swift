@@ -16,9 +16,7 @@ class AccountDataLayerDependencies {
         
         self.coreDataLayer = coreDataLayer
     }
-    
-    // MARK: - Data Layer Classes
-    
+        
     func getUserDetailsRepository() -> UserDetailsRepository {
         return UserDetailsRepository(
             api: UserDetailsAPI(
@@ -30,57 +28,6 @@ class AccountDataLayerDependencies {
                 realmDatabase: coreDataLayer.getSharedRealmDatabase(),
                 authTokenRepository: coreDataLayer.getMobileContentAuthTokenRepository()
             )
-        )
-    }
-    
-    // MARK: - Domain Interface
-    
-    func getAccountInterfaceStringsRepositoryInterface() -> GetAccountInterfaceStringsRepositoryInterface {
-        return GetAccountInterfaceStringsRepository(
-            localizationServices: coreDataLayer.getLocalizationServices()
-        )
-    }
-    
-    func getAuthenticateUserInterface() -> AuthenticateUserInterface {
-        return AuthenticateUser(
-            userAuthentication: coreDataLayer.getUserAuthentication()
-        )
-    }
-    
-    func getDeleteAccountInterfaceStringsRepository() -> GetDeleteAccountInterfaceStringsRepositoryInterface {
-        return GetDeleteAccountInterfaceStringsRepository(
-            localizationServices: coreDataLayer.getLocalizationServices()
-        )
-    }
-    
-    func getDeleteAccountProgressInterfaceStringsRepository() -> GetDeleteAccountProgressInterfaceStringsInterface {
-        return GetDeleteAccountProgressInterfaceStringsRepository(
-            localizationServices: coreDataLayer.getLocalizationServices()
-        )
-    }
-    
-    func getDeleteUserDetails() -> DeleteUserDetailsInterface {
-        return DeleteUserDetails(
-            userDetailsRepository: getUserDetailsRepository()
-        )
-    }
-    
-    func getSocialCreateAccountInterfaceStringsRepositoryInterface() -> GetSocialCreateAccountInterfaceStringsRepositoryInterface {
-        return GetSocialCreateAccountInterfaceStringsRepository(
-            localizationServices: coreDataLayer.getLocalizationServices()
-        )
-    }
-    
-    func getSocialSignInInterfaceStringsRepositoryInterface() -> GetSocialSignInInterfaceStringsRepositoryInterface {
-        return GetSocialSignInInterfaceStringsRepository(
-            localizationServices: coreDataLayer.getLocalizationServices()
-        )
-    }
-    
-    func getUserAccountDetailsRepositoryInterface() -> GetUserAccountDetailsRepositoryInterface {
-        return GetUserAccountDetailsRepository(
-            userDetailsRepository: getUserDetailsRepository(),
-            localizationServices: coreDataLayer.getLocalizationServices()
         )
     }
 }
