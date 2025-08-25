@@ -10,7 +10,7 @@ import Foundation
 
 enum RealmInstanceCreationType {
     
-    // Should always be the default.
+    // Typically should be the default. See comment on usesASingleSharedRealmInstance.
     case alwaysCreatesANewRealmInstance
     
     // This is best used when using an in memory Realm (not using disk) because when using an in memory realm once the Realm instance goes out of scope, all data will be deleted.
