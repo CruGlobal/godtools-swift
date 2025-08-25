@@ -7,11 +7,19 @@
 //
 
 import Foundation
+import RequestOperation
 
 public enum RepositorySyncCachePolicy {
     
-    case fetchIgnoringCacheData // fetches remote data and stores remote data to cache
-    case returnCacheDataDontFetch // fetches cached data, doesn't fetch data from remote
-    case returnCacheDataElseFetch // fetches cached data, if no cached data, fetches data from remote and stores remote data to cache
-    case returnCacheDataAndFetch // fetches cached data and fetches remote data and stores remote data to cache
+    // Fetches remote data and stores remote data to cache.
+    case fetchIgnoringCacheData(requestPriority: RequestPriority)
+    
+    // Fetches cached data, doesn't fetch data from remote.
+    case returnCacheDataDontFetch
+    
+    // Fetches cached data, if no cached data, fetches data from remote and stores remote data to cache.
+    case returnCacheDataElseFetch(requestPriority: RequestPriority)
+    
+    // Fetches cached data and fetches remote data and stores remote data to cache.
+    case returnCacheDataAndFetch(requestPriority: RequestPriority)
 }

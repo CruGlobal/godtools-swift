@@ -10,6 +10,12 @@ import Foundation
 
 public struct RepositorySyncResponse<DataModel> {
     
-    let objects: [DataModel]
-    let errors: [Error]
+    public let objects: [DataModel]
+    public let errors: [Error]
+    
+    public init(objects: [DataModel], errors: [Error]) {
+        
+        self.objects = objects
+        self.errors = errors
+    }
 }

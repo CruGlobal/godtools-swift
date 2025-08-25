@@ -16,53 +16,43 @@ struct RepositorySyncTests {
     
     struct TestArgument {
         let realmFileName: String = "RepositorySyncTests_" + UUID().uuidString
-        let cachePolicy: RepositorySyncCachePolicy
-        let expectedConfirmationCount: Int
-        let externalDataModels: [MockRepositorySyncDataModel]
+        let initialPersistedObjectsIds: [String]
+        let externalDataModelIds: [String]
         let expectedDataModelIds: [String]
+        let expectedNumberOfChanges: Int?
     }
-    
-    // MARK: - Objects Tests
-    
+
+    // MARK: - Fetch Objects Ignoring Cache Data
+
     @Test(arguments: [
-            TestArgument(
-                cachePolicy: .fetchIgnoringCacheData,
-                expectedConfirmationCount: 1,
-                externalDataModels: Self.getMockRepositorySyncDataModels(startingId: 1, count: 1),
-                expectedDataModelIds: ["1"]
-            ),
-            TestArgument(
-                cachePolicy: .fetchIgnoringCacheData,
-                expectedConfirmationCount: 1,
-                externalDataModels: Self.getMockRepositorySyncDataModels(startingId: 5, count: 4),
-                expectedDataModelIds: ["5", "6", "7", "8"]
-            ),
-            TestArgument(
-                cachePolicy: .fetchIgnoringCacheData,
-                expectedConfirmationCount: 1,
-                externalDataModels: Self.getMockRepositorySyncDataModels(startingId: 0, count: 2),
-                expectedDataModelIds: ["0", "1"]
-            ),
-            TestArgument(
-                cachePolicy: .fetchIgnoringCacheData,
-                expectedConfirmationCount: 1,
-                externalDataModels: Self.getMockRepositorySyncDataModels(startingId: 0, count: 0),
-                expectedDataModelIds: []
-            )
-          ]
-    )
-    @MainActor func fetchingExternalDataObjectsIsTriggeredOnceWhenIgnoringCachedData(argument: TestArgument) async {
+        TestArgument(
+            initialPersistedObjectsIds: [],
+            externalDataModelIds: [],
+            expectedDataModelIds: [],
+            expectedNumberOfChanges: 1
+        ),
+        TestArgument(
+            initialPersistedObjectsIds: [],
+            externalDataModelIds: ["0", "1"],
+            expectedDataModelIds: ["0", "1"],
+            expectedNumberOfChanges: 2
+        )
+    ])
+    @MainActor func observingDataChangesWhenIgnoringCachedData(argument: TestArgument) async {
         
         let repositorySync: RepositorySync<MockRepositorySyncDataModel, MockRepositorySyncExternalDataFetch, MockRepositorySyncRealmObject> = getRepositorySyncFromTestArgument(
             argument: argument
         )
-        
+                
         var cancellables: Set<AnyCancellable> = Set()
         
         var sinkCount: Int = 0
+        var cachedResponseRef: RepositorySyncResponse<MockRepositorySyncDataModel>?
         var responseRef: RepositorySyncResponse<MockRepositorySyncDataModel>?
         
-        await confirmation(expectedCount: argument.expectedConfirmationCount) { confirmation in
+        let expectedChangesCount: Int = argument.expectedNumberOfChanges ?? 1
+        
+        await confirmation(expectedCount: expectedChangesCount) { confirmation in
             
             await withCheckedContinuation { continuation in
                 
@@ -73,8 +63,8 @@ struct RepositorySyncTests {
                 
                 repositorySync
                     .getObjectsPublisher(
-                        cachePolicy: argument.cachePolicy,
-                        requestPriority: .medium
+                        cachePolicy: .fetchIgnoringCacheData(requestPriority: .medium),
+                        shouldObserveDataChanges: true
                     )
                     .sink { (response: RepositorySyncResponse<MockRepositorySyncDataModel>) in
                         
@@ -82,7 +72,19 @@ struct RepositorySyncTests {
                         
                         sinkCount += 1
                         
-                        if sinkCount == argument.expectedConfirmationCount {
+                        if expectedChangesCount == 1 {
+                            
+                            cachedResponseRef = response
+                            responseRef = response
+                            
+                            timeoutTask.cancel()
+                            continuation.resume(returning: ())
+                        }
+                        else if sinkCount == 1 {
+                            
+                            cachedResponseRef = response
+                        }
+                        else if sinkCount == expectedChangesCount {
                             
                             responseRef = response
                             
@@ -96,7 +98,87 @@ struct RepositorySyncTests {
         
         cleanUpRepositorySyncFromTestArgument(argument: argument)
         
-        let responseDataModelIds: [String] = getSortedResponseObjectsDataModelIds(response: responseRef)
+        let cachedResponseDataModelIds: [String] = sortResponseObjectsDataModelIds(response: cachedResponseRef)
+        
+        #expect(cachedResponseDataModelIds == argument.initialPersistedObjectsIds)
+        
+        let responseDataModelIds: [String] = sortResponseObjectsDataModelIds(response: responseRef)
+        
+        #expect(responseDataModelIds == argument.expectedDataModelIds)
+    }
+    
+    @Test(arguments: [
+        TestArgument(
+            initialPersistedObjectsIds: ["0", "1"],
+            externalDataModelIds: ["5", "6", "7", "8", "9"],
+            expectedDataModelIds: ["0", "1", "5", "6", "7", "8", "9"],
+            expectedNumberOfChanges: nil
+        ),
+        TestArgument(
+            initialPersistedObjectsIds: [],
+            externalDataModelIds: ["1", "2"],
+            expectedDataModelIds: ["1", "2"],
+            expectedNumberOfChanges: nil
+        ),
+        TestArgument(
+            initialPersistedObjectsIds: ["2", "3"],
+            externalDataModelIds: [],
+            expectedDataModelIds: ["2", "3"],
+            expectedNumberOfChanges: nil
+        ),
+        TestArgument(
+            initialPersistedObjectsIds: [],
+            externalDataModelIds: [],
+            expectedDataModelIds: [],
+            expectedNumberOfChanges: nil
+        )
+    ])
+    @MainActor func fetchingExternalDataObjectsIsTriggeredOnceWhenIgnoringCachedDataAndNotObservingDataChanges(argument: TestArgument) async {
+        
+        let repositorySync: RepositorySync<MockRepositorySyncDataModel, MockRepositorySyncExternalDataFetch, MockRepositorySyncRealmObject> = getRepositorySyncFromTestArgument(
+            argument: argument
+        )
+                
+        var cancellables: Set<AnyCancellable> = Set()
+        
+        var sinkCount: Int = 0
+        var responseRef: RepositorySyncResponse<MockRepositorySyncDataModel>?
+        
+        await confirmation(expectedCount: 1) { confirmation in
+            
+            await withCheckedContinuation { continuation in
+                
+                let timeoutTask = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
+                }
+                
+                repositorySync
+                    .getObjectsPublisher(
+                        cachePolicy: .fetchIgnoringCacheData(requestPriority: .medium),
+                        shouldObserveDataChanges: false
+                    )
+                    .sink { (response: RepositorySyncResponse<MockRepositorySyncDataModel>) in
+                        
+                        confirmation()
+                        
+                        sinkCount += 1
+                        
+                        if sinkCount == 1 {
+                            
+                            responseRef = response
+                            
+                            timeoutTask.cancel()
+                            continuation.resume(returning: ())
+                        }
+                    }
+                    .store(in: &cancellables)
+            }
+        }
+        
+        cleanUpRepositorySyncFromTestArgument(argument: argument)
+        
+        let responseDataModelIds: [String] = sortResponseObjectsDataModelIds(response: responseRef)
         
         #expect(responseDataModelIds == argument.expectedDataModelIds)
     }
@@ -220,13 +302,29 @@ extension RepositorySyncTests {
     
     private func getRepositorySyncFromTestArgument(argument: TestArgument) -> RepositorySync<MockRepositorySyncDataModel, MockRepositorySyncExternalDataFetch, MockRepositorySyncRealmObject> {
      
+        let initialObjects: [MockRepositorySyncRealmObject] = argument.initialPersistedObjectsIds.map {
+            let object = MockRepositorySyncRealmObject()
+            object.id = $0
+            object.name = "name" + $0
+            return object
+        }
+        
         let realmDatabase: RealmDatabase = Self.getRealmDatabase(
             fileName: argument.realmFileName,
-            addObjects: []
+            addObjects: initialObjects
         )
         
+        let externalDataModels: [MockRepositorySyncDataModel] = argument.externalDataModelIds.map {
+            MockRepositorySyncDataModel(
+                id: $0,
+                name: "name " + $0
+            )
+        }
+        
+        let externalDataFetch = MockRepositorySyncExternalDataFetch(objects: externalDataModels)
+        
         return RepositorySync<MockRepositorySyncDataModel, MockRepositorySyncExternalDataFetch, MockRepositorySyncRealmObject>(
-            externalDataFetch: Self.getExternalDataFetch(objects: argument.externalDataModels),
+            externalDataFetch: externalDataFetch,
             realmDatabase: realmDatabase,
             dataModelMapping: MockRepositorySyncMapping()
         )
@@ -236,8 +334,11 @@ extension RepositorySyncTests {
         
         _ = Self.deleteRealmDatabaseFile(fileName: argument.realmFileName)
     }
+}
+
+extension RepositorySyncTests {
     
-    private func getSortedResponseObjectsDataModelIds(response: RepositorySyncResponse<MockRepositorySyncDataModel>?) -> [String] {
+    private func sortResponseObjectsDataModelIds(response: RepositorySyncResponse<MockRepositorySyncDataModel>?) -> [String] {
         
         let responseObjects: [MockRepositorySyncDataModel] = response?.objects ?? Array()
         
@@ -247,6 +348,11 @@ extension RepositorySyncTests {
             $0 < $1
         }
     }
+}
+
+// MARK: - Realm Database
+
+extension RepositorySyncTests {
     
     private static func getRealmDatabaseConfiguration(fileName: String) -> RealmDatabaseConfiguration {
         return RealmDatabaseConfiguration(
@@ -275,52 +381,25 @@ extension RepositorySyncTests {
     private static func getRealmDatabase(fileName: String, addObjects: [Object]) -> RealmDatabase {
         
         let realmDatabase: RealmDatabase = RealmDatabase(
-            databaseConfiguration: RealmDatabaseConfiguration(
-                cacheType: .disk(
-                    fileName: fileName,
-                    migrationBlock: {migration,oldSchemaVersion in }),
-                schemaVersion: 1
-            )
+            databaseConfiguration: Self.getRealmDatabaseConfiguration(fileName: fileName)
         )
         
         _ = realmDatabase.deleteAllObjects()
         
         if addObjects.count > 0 {
             
-            _ = realmDatabase.writeObjects(realm: realmDatabase.openRealm()) { realm in
-                return addObjects
+            let realm: Realm = realmDatabase.openRealm()
+            
+            do {
+                try realm.write {
+                    realm.add(addObjects, update: .all)
+                }
+            }
+            catch let error {
+                assertionFailure(error.localizedDescription)
             }
         }
 
         return realmDatabase
-    }
-    
-    private static func getEmptyExternalDataFetch() -> MockRepositorySyncExternalDataFetch {
-        return Self.getExternalDataFetch(objects: [])
-    }
-    
-    private static func getExternalDataFetch(objects: [MockRepositorySyncDataModel]) -> MockRepositorySyncExternalDataFetch {
-        
-        return MockRepositorySyncExternalDataFetch(
-            objects: objects
-        )
-    }
-    
-    private static func getMockRepositorySyncDataModels(startingId: Int, count: Int) -> [MockRepositorySyncDataModel] {
-        
-        var dataModels: [MockRepositorySyncDataModel] = Array()
-        
-        let endingId: Int = startingId + count
-        
-        for index in startingId ..< endingId {
-            dataModels.append(
-                MockRepositorySyncDataModel(
-                    id: "\(index)",
-                    name: "name \(index)"
-                )
-            )
-        }
-        
-        return dataModels
     }
 }
