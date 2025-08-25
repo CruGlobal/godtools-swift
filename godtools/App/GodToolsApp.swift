@@ -11,39 +11,32 @@ import FirebaseDynamicLinks
 
 struct GodToolsApp: App {
 
+    private enum AppLaunchType {
+        case godtools
+        case uiTests
+    }
+    
+    private static let appDeepLinkingService: DeepLinkingService = appDiContainer.dataLayer.getDeepLinkingService()
+    private static let appDiContainer = AppDiContainer(appConfig: appConfig)
+    private static let uiTestsLaunchEnvironment: UITestsLaunchEnvironment = UITestsLaunchEnvironment()
+    
     private static let appConfig: AppConfigInterface = {
-        if isUITests {
+        switch appLaunchType {
+        case .godtools:
+            return GodToolsAppConfig()
+        case .uiTests:
             return UITestsAppConfig()
         }
-        return GodToolsAppConfig()
     }()
     
-    private static let uiTestsLaunchEnvironment: UITestsLaunchEnvironment = UITestsLaunchEnvironment()
-    private static let realmDatabase: RealmDatabase = RealmDatabase(databaseConfiguration: RealmDatabaseProductionConfiguration())
-    private static let appDeepLinkingService: DeepLinkingService = appDiContainer.dataLayer.getDeepLinkingService()
-    
-    private static let appDiContainer = AppDiContainer(
-        appConfig: appConfig,
-        realmDatabase: realmDatabase,
-        dataLayerType: dataLayerType
-    )
-    
-    private static var isUITests: Bool {
-        return uiTestsLaunchEnvironment.getIsUITests() ?? false
-    }
-
-    private static var firebaseEnabled: Bool {
-        return !isUITests
-    }
-    
-    private static var dataLayerType: AppDiContainer.DataLayerType {
+    private static var appLaunchType: AppLaunchType {
+        let isUITests: Bool = uiTestsLaunchEnvironment.getIsUITests() ?? false
         if isUITests {
-            return .mock
+            return .uiTests
         }
-        
         return .godtools
     }
-    
+
     private let appFlow: AppFlow
     private let toolShortcutLinksViewModel: ToolShortcutLinksViewModel
     
@@ -62,15 +55,17 @@ struct GodToolsApp: App {
             Self.appDiContainer.getFirebaseDebugArguments().enable()
         }
 
-        if Self.firebaseEnabled {
+        if Self.appConfig.firebaseEnabled {
             Self.appDiContainer.getFirebaseConfiguration().configure()
         }
 
         if Self.appConfig.buildConfig == .release {
             GodToolsParserLogger.shared.start()
         }
-
-        Self.appDiContainer.dataLayer.getAnalytics().firebaseAnalytics.configure()
+        
+        if Self.appConfig.firebaseEnabled {
+            Self.appDiContainer.dataLayer.getAnalytics().firebaseAnalytics.configure()
+        }
 
         Self.processUITestsDeepLink()
         

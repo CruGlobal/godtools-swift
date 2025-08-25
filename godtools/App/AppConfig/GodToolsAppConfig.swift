@@ -37,6 +37,10 @@ class GodToolsAppConfig: AppConfigInterface {
     func getAppleAppId() -> String {
         return "542773210"
     }
+    
+    var urlRequestsEnabled: Bool {
+        return true
+    }
         
     func getFacebookConfiguration() -> FacebookConfiguration? {
         
@@ -94,12 +98,30 @@ class GodToolsAppConfig: AppConfigInterface {
     }
     
     func getMobileContentApiBaseUrl() -> String {
-        return getMobileContentApiBaseUrlByScheme()
+        return Self.getMobileContentApiBaseUrlByScheme(environment: environment)
     }
     
-    private func getMobileContentApiBaseUrlByScheme(scheme: String = "https") -> String {
+    func getRealmDatabase() -> RealmDatabase {
         
         switch appBuild.environment {
+        
+        case .staging:
+            return RealmDatabase(databaseConfiguration: RealmDatabaseStagingConfiguration())
+        case .production:
+            return RealmDatabase(databaseConfiguration: RealmDatabaseProductionConfiguration())
+        }
+    }
+    
+    func getTractRemoteShareConnectionUrl() -> String {
+        return Self.getTractRemoteShareWebSocketUrl(environment: environment)
+    }
+}
+
+extension GodToolsAppConfig {
+    
+    static func getMobileContentApiBaseUrlByScheme(environment: AppEnvironment, scheme: String = "https") -> String {
+        
+        switch environment {
         
         case .staging:
             return "\(scheme)://mobile-content-api-stage.cru.org"
@@ -108,7 +130,8 @@ class GodToolsAppConfig: AppConfigInterface {
         }
     }
     
-    func getTractRemoteShareConnectionUrl() -> String {
-        return getMobileContentApiBaseUrlByScheme(scheme: "wss") + "/" + "cable"
+    static func getTractRemoteShareWebSocketUrl(environment: AppEnvironment) -> String {
+        
+        return Self.getMobileContentApiBaseUrlByScheme(environment: environment, scheme: "wss") + "/" + "cable"
     }
 }

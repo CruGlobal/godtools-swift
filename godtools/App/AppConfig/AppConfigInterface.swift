@@ -15,11 +15,13 @@ protocol AppConfigInterface {
     var environment: AppEnvironment { get }
     var firebaseEnabled: Bool { get }
     var isDebug: Bool { get }
+    var urlRequestsEnabled: Bool { get }
     
     func getAppleAppId() -> String
     func getFacebookConfiguration() -> FacebookConfiguration?
     func getFirebaseGoogleServiceFileName() -> String
     func getGoogleAuthenticationConfiguration() -> GoogleAuthenticationConfiguration?
     func getMobileContentApiBaseUrl() -> String
+    func getRealmDatabase() -> RealmDatabase
     func getTractRemoteShareConnectionUrl() -> String
 }

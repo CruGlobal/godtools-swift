@@ -8,6 +8,7 @@
 
 import Foundation
 import SocialAuthentication
+import RealmSwift
 
 class UITestsAppConfig: AppConfigInterface {
     
@@ -31,6 +32,10 @@ class UITestsAppConfig: AppConfigInterface {
         return false
     }
     
+    var urlRequestsEnabled: Bool {
+        return true
+    }
+    
     func getAppleAppId() -> String {
         return ""
     }
@@ -48,10 +53,14 @@ class UITestsAppConfig: AppConfigInterface {
     }
     
     func getMobileContentApiBaseUrl() -> String {
-        return ""
+        return GodToolsAppConfig.getMobileContentApiBaseUrlByScheme(environment: environment, scheme: "https")
+    }
+    
+    func getRealmDatabase() -> RealmDatabase {
+        return UITestsRealmDatabase()
     }
     
     func getTractRemoteShareConnectionUrl() -> String {
-        return ""
+        return GodToolsAppConfig.getTractRemoteShareWebSocketUrl(environment: environment)
     }
 }
