@@ -18,6 +18,10 @@ class GodToolsAppConfig: AppConfigInterface {
         appBuild = AppBuild(buildConfiguration: InfoPlist().getAppBuildConfiguration())
     }
     
+    var analyticsEnabled: Bool {
+        return true
+    }
+    
     var buildConfig: AppBuildConfiguration {
         return appBuild.configuration
     }

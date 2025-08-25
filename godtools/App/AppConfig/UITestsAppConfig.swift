@@ -16,6 +16,10 @@ class UITestsAppConfig: AppConfigInterface {
         
     }
     
+    var analyticsEnabled: Bool {
+        return false
+    }
+    
     var buildConfig: AppBuildConfiguration {
         return .production
     }
