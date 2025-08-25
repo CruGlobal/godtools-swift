@@ -11,7 +11,7 @@ import RequestOperation
 import SocialAuthentication
 import LocalizationServices
 
-class AppDataLayerDependencies: CoreDataLayerDependenciesInterface {
+class AppDataLayerDependencies {
     
     enum WebSocketType {
         case starscream
@@ -26,10 +26,10 @@ class AppDataLayerDependencies: CoreDataLayerDependenciesInterface {
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
     private let sharedAnalytics: AnalyticsContainer
     
-    init(appConfig: AppConfigInterface, realmDatabase: RealmDatabase) {
+    init(appConfig: AppConfigInterface) {
         
         sharedAppConfig = appConfig
-        sharedRealmDatabase = realmDatabase
+        sharedRealmDatabase = appConfig.getRealmDatabase()
         
         sharedAnalytics = AnalyticsContainer(
             firebaseAnalytics: FirebaseAnalytics(isDebug: appConfig.isDebug, loggingEnabled: appConfig.buildConfig == .analyticsLogging)
@@ -240,7 +240,7 @@ class AppDataLayerDependencies: CoreDataLayerDependenciesInterface {
     }
     
     func getRequestSender() -> RequestSender {
-        return RequestSender()
+        return sharedAppConfig.urlRequestsEnabled ? RequestSender() : DoesNotSendUrlRequestSender()
     }
     
     func getResourcesFileCache() -> ResourcesSHA256FileCache {

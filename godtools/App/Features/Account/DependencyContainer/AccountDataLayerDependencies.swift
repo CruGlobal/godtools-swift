@@ -8,11 +8,11 @@
 
 import Foundation
 
-class AccountDataLayerDependencies: AccountDataLayerDependenciesInterface {
+class AccountDataLayerDependencies {
     
-    private let coreDataLayer: CoreDataLayerDependenciesInterface
+    private let coreDataLayer: AppDataLayerDependencies
     
-    init(coreDataLayer: CoreDataLayerDependenciesInterface) {
+    init(coreDataLayer: AppDataLayerDependencies) {
         
         self.coreDataLayer = coreDataLayer
     }

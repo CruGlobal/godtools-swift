@@ -10,10 +10,10 @@ import Foundation
 
 class OnboardingDomainInterfaceDependencies {
     
-    private let coreDataLayer: CoreDataLayerDependenciesInterface
-    private let dataLayer: OnboardingDataLayerDependenciesInterface
+    private let coreDataLayer: AppDataLayerDependencies
+    private let dataLayer: OnboardingDataLayerDependencies
     
-    init(coreDataLayer: CoreDataLayerDependenciesInterface, dataLayer: OnboardingDataLayerDependenciesInterface) {
+    init(coreDataLayer: AppDataLayerDependencies, dataLayer: OnboardingDataLayerDependencies) {
         
         self.coreDataLayer = coreDataLayer
         self.dataLayer = dataLayer

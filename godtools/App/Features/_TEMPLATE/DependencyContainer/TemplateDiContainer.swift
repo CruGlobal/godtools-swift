@@ -6,7 +6,7 @@ class TemplateDiContainer {
     let domainInterfaceLayer: TemplateDomainInterfaceDependencies
     let domainLayer: TemplateDomainLayerDependencies
     
-    init(coreDataLayer: CoreDataLayerDependenciesInterface, dataLayer: TemplateDataLayerDependenciesInterface, domainInterfaceLayer: TemplateDomainInterfaceDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, dataLayer: TemplateDataLayerDependenciesInterface, domainInterfaceLayer: TemplateDomainInterfaceDependencies) {
         
         self.dataLayer = dataLayer
         self.domainInterfaceLayer = domainInterfaceLayer

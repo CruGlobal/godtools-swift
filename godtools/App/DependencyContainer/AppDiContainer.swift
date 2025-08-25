@@ -10,12 +10,6 @@ import UIKit
 
 class AppDiContainer {
         
-    enum DataLayerType {
-        case godtools
-        case mock
-    }
-    
-    private let realmDatabase: RealmDatabase
     private let failedFollowUpsCache: FailedFollowUpsCache
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
     
@@ -23,35 +17,19 @@ class AppDiContainer {
     let domainLayer: AppDomainLayerDependencies
     let feature: AppFeatureDiContainer
     
-    init(appConfig: AppConfigInterface, realmDatabase: RealmDatabase, dataLayerType: DataLayerType) {
-               
-        self.realmDatabase = realmDatabase
-        
-        // TODO: Once CoreDataLayerDependenciesInterface is complete, will need to create the dataLayer based on DataLayerType. ~Levi
+    init(appConfig: AppConfigInterface) {
+                       
         dataLayer = AppDataLayerDependencies(
-            appConfig: appConfig,
-            realmDatabase: realmDatabase
+            appConfig: appConfig
         )
         
         domainLayer = AppDomainLayerDependencies(dataLayer: dataLayer)
-        
-        // feature data layer dependencies
-        let accountDataLayer: AccountDataLayerDependenciesInterface
-        let onboardingDataLayer: OnboardingDataLayerDependenciesInterface
-        let spotlightToolsDataLayer: SpotlightToolsDataLayerDependenciesInterface
-        
-        switch dataLayerType {
-        case .godtools:
-            accountDataLayer = AccountDataLayerDependencies(coreDataLayer: dataLayer)
-            onboardingDataLayer = OnboardingDataLayerDependencies(coreDataLayer: dataLayer)
-            spotlightToolsDataLayer = SpotlightToolsDataLayerDependencies(coreDataLayer: dataLayer)
-            
-        case .mock:
-            accountDataLayer = AccountDataLayerDependencies(coreDataLayer: dataLayer) // NOTE: For now won't use mock until interfaces can be created. ~Levi
-            onboardingDataLayer = MockOnboardingDataLayerDependencies()
-            spotlightToolsDataLayer = MockSpotlightToolsDataLayerDependencies()
-        }
                 
+        // feature data layer dependencies
+        let accountDataLayer = AccountDataLayerDependencies(coreDataLayer: dataLayer)
+        let onboardingDataLayer = OnboardingDataLayerDependencies(coreDataLayer: dataLayer)
+        let spotlightToolsDataLayer = SpotlightToolsDataLayerDependencies(coreDataLayer: dataLayer)
+        
         // feature domain interface layer dependencies
         let onboardingDomainInterfaceLayer = OnboardingDomainInterfaceDependencies(coreDataLayer: dataLayer, dataLayer: onboardingDataLayer)
         let spotlightToolsDomainInterfaceLayer = SpotlightToolsDomainInterfaceDependencies(coreDataLayer: dataLayer, dataLayer: spotlightToolsDataLayer)
@@ -117,7 +95,11 @@ class AppDiContainer {
             userActivity: userActivityDiContainer
         )
                                                                 
-        failedFollowUpsCache = FailedFollowUpsCache(realmDatabase: realmDatabase)
+        failedFollowUpsCache = FailedFollowUpsCache(realmDatabase: dataLayer.getSharedRealmDatabase())
+    }
+    
+    static func createUITestsDiContainer() -> AppDiContainer {
+        return AppDiContainer(appConfig: UITestsAppConfig())
     }
     
     func getCardJumpService() -> CardJumpService {
