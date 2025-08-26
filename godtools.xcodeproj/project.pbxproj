@@ -41,7 +41,6 @@
 		45D48C8629F81324004E92B1 /* SocialAuthentication in Frameworks */ = {isa = PBXBuildFile; productRef = 45D48C8529F81324004E92B1 /* SocialAuthentication */; };
 		45DF96492D386C1C00C6AE68 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 45DF96482D386C1C00C6AE68 /* FirebaseAnalytics */; };
 		45DF964B2D386C1C00C6AE68 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 45DF964A2D386C1C00C6AE68 /* FirebaseCrashlytics */; };
-		45DF964D2D386C1C00C6AE68 /* FirebaseDynamicLinks in Frameworks */ = {isa = PBXBuildFile; productRef = 45DF964C2D386C1C00C6AE68 /* FirebaseDynamicLinks */; };
 		45DF964F2D386C1C00C6AE68 /* FirebaseInAppMessaging-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 45DF964E2D386C1C00C6AE68 /* FirebaseInAppMessaging-Beta */; };
 		45DF96512D386C1C00C6AE68 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 45DF96502D386C1C00C6AE68 /* FirebaseRemoteConfig */; };
 		45DF96532D386D3800C6AE68 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 45DF96522D386D3800C6AE68 /* FirebaseAnalytics */; };
@@ -306,7 +305,6 @@
 				45DF96492D386C1C00C6AE68 /* FirebaseAnalytics in Frameworks */,
 				4F2500621F0C1E8D00364FBC /* AdSupport.framework in Frameworks */,
 				4581EAA32BFBE194008115FF /* RealmSwift in Frameworks */,
-				45DF964D2D386C1C00C6AE68 /* FirebaseDynamicLinks in Frameworks */,
 				45CF09702784B910007F13D3 /* RequestOperation in Frameworks */,
 				45DF96512D386C1C00C6AE68 /* FirebaseRemoteConfig in Frameworks */,
 				45E7D4C42977430A008C7503 /* ZipArchive in Frameworks */,
@@ -497,7 +495,6 @@
 				45F671902C3344010017C8C2 /* LocalizationServices */,
 				45DF96482D386C1C00C6AE68 /* FirebaseAnalytics */,
 				45DF964A2D386C1C00C6AE68 /* FirebaseCrashlytics */,
-				45DF964C2D386C1C00C6AE68 /* FirebaseDynamicLinks */,
 				45DF964E2D386C1C00C6AE68 /* FirebaseInAppMessaging-Beta */,
 				45DF96502D386C1C00C6AE68 /* FirebaseRemoteConfig */,
 				45B0F6A62DBBCC300011FF1D /* FirebaseMessaging */,
@@ -2156,11 +2153,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 45DF96472D386C1C00C6AE68 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseCrashlytics;
-		};
-		45DF964C2D386C1C00C6AE68 /* FirebaseDynamicLinks */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 45DF96472D386C1C00C6AE68 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseDynamicLinks;
 		};
 		45DF964E2D386C1C00C6AE68 /* FirebaseInAppMessaging-Beta */ = {
 			isa = XCSwiftPackageProductDependency;
