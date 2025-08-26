@@ -25522,6 +25522,12 @@
             "value" : "Sblmnya"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Forrige"
+          }
+        },
         "ne" : {
           "stringUnit" : {
             "state" : "translated",
@@ -25939,6 +25945,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Seterusnya"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neste"
           }
         },
         "ne" : {
@@ -39407,6 +39419,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bahasa Parsi (Parsi)"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Persisk (farsi)"
           }
         },
         "ne" : {
@@ -76809,6 +76827,12 @@
             "value" : "Makalah"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Artikler"
+          }
+        },
         "ne" : {
           "stringUnit" : {
             "state" : "translated",
@@ -77167,6 +77191,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pemula Pembualan"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Samtalestarter"
           }
         },
         "ne" : {
@@ -77529,6 +77559,12 @@
             "value" : "Jemputan Gospel"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gospel-invitasjon"
+          }
+        },
         "ne" : {
           "stringUnit" : {
             "state" : "translated",
@@ -77889,6 +77925,12 @@
             "value" : "Kemajuan Kristian"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kristen vekst"
+          }
+        },
         "ne" : {
           "stringUnit" : {
             "state" : "translated",
@@ -78247,6 +78289,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Latihan"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opplæring"
           }
         },
         "ne" : {
