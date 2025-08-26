@@ -18,41 +18,156 @@ struct RepositorySyncTests {
         let realmFileName: String = "RepositorySyncTests_" + UUID().uuidString
         let initialPersistedObjectsIds: [String]
         let externalDataModelIds: [String]
-        let expectedDataModelIds: [String]
-        let expectedNumberOfChanges: Int?
+        let expectedCacheResponseDataModelIds: [String]
+        let expectedResponseDataModelIds: [String]
+        let expectedNumberOfChanges: Int
+        let cachePolicy: RepositorySyncCachePolicy
     }
-
-    // MARK: - Fetch Objects Ignoring Cache Data
-
+    
     @Test(arguments: [
         TestArgument(
-            initialPersistedObjectsIds: [],
-            externalDataModelIds: [],
-            expectedDataModelIds: [],
-            expectedNumberOfChanges: 1
+            initialPersistedObjectsIds: ["0", "1"],
+            externalDataModelIds: ["5", "6", "7", "8", "9"],
+            expectedCacheResponseDataModelIds: [],
+            expectedResponseDataModelIds: ["0", "1", "5", "6", "7", "8", "9"],
+            expectedNumberOfChanges: 1,
+            cachePolicy: .fetchIgnoringCacheData(requestPriority: .medium, observeChanges: false)
         ),
         TestArgument(
             initialPersistedObjectsIds: [],
-            externalDataModelIds: ["0", "1"],
-            expectedDataModelIds: ["0", "1"],
-            expectedNumberOfChanges: 2
-        )
+            externalDataModelIds: ["1", "2"],
+            expectedCacheResponseDataModelIds: [],
+            expectedResponseDataModelIds: ["1", "2"],
+            expectedNumberOfChanges: 1,
+            cachePolicy: .fetchIgnoringCacheData(requestPriority: .medium, observeChanges: false)
+        ),
+        TestArgument(
+            initialPersistedObjectsIds: ["2", "3"],
+            externalDataModelIds: [],
+            expectedCacheResponseDataModelIds: [],
+            expectedResponseDataModelIds: ["2", "3"],
+            expectedNumberOfChanges: 1,
+            cachePolicy: .fetchIgnoringCacheData(requestPriority: .medium, observeChanges: false)
+        ),
+        TestArgument(
+            initialPersistedObjectsIds: [],
+            externalDataModelIds: [],
+            expectedCacheResponseDataModelIds: [],
+            expectedResponseDataModelIds: [],
+            expectedNumberOfChanges: 1,
+            cachePolicy: .fetchIgnoringCacheData(requestPriority: .medium, observeChanges: false)
+        ),
+        TestArgument(
+            initialPersistedObjectsIds: ["0", "1"],
+            externalDataModelIds: ["5", "6", "7", "8", "9"],
+            expectedCacheResponseDataModelIds: [],
+            expectedResponseDataModelIds: ["0", "1"],
+            expectedNumberOfChanges: 1,
+            cachePolicy: .returnCacheDataDontFetch(observeChanges: false)
+        ),
+        TestArgument(
+            initialPersistedObjectsIds: [],
+            externalDataModelIds: ["1", "2"],
+            expectedCacheResponseDataModelIds: [],
+            expectedResponseDataModelIds: [],
+            expectedNumberOfChanges: 1,
+            cachePolicy: .returnCacheDataDontFetch(observeChanges: false)
+        ),
+        TestArgument(
+            initialPersistedObjectsIds: ["2", "3"],
+            externalDataModelIds: [],
+            expectedCacheResponseDataModelIds: [],
+            expectedResponseDataModelIds: ["2", "3"],
+            expectedNumberOfChanges: 1,
+            cachePolicy: .returnCacheDataDontFetch(observeChanges: false)
+        ),
+        TestArgument(
+            initialPersistedObjectsIds: [],
+            externalDataModelIds: [],
+            expectedCacheResponseDataModelIds: [],
+            expectedResponseDataModelIds: [],
+            expectedNumberOfChanges: 1,
+            cachePolicy: .returnCacheDataDontFetch(observeChanges: false)
+        ),
+        TestArgument(
+            initialPersistedObjectsIds: ["0", "1"],
+            externalDataModelIds: ["5", "6", "7", "8", "9"],
+            expectedCacheResponseDataModelIds: [],
+            expectedResponseDataModelIds: ["0", "1"],
+            expectedNumberOfChanges: 1,
+            cachePolicy: .returnCacheDataElseFetch(requestPriority: .medium, observeChanges: false)
+        ),
+        TestArgument(
+            initialPersistedObjectsIds: [],
+            externalDataModelIds: ["1", "2"],
+            expectedCacheResponseDataModelIds: [],
+            expectedResponseDataModelIds: ["1", "2"],
+            expectedNumberOfChanges: 1,
+            cachePolicy: .returnCacheDataElseFetch(requestPriority: .medium, observeChanges: false)
+        ),
+        TestArgument(
+            initialPersistedObjectsIds: ["2", "3"],
+            externalDataModelIds: [],
+            expectedCacheResponseDataModelIds: [],
+            expectedResponseDataModelIds: ["2", "3"],
+            expectedNumberOfChanges: 1,
+            cachePolicy: .returnCacheDataElseFetch(requestPriority: .medium, observeChanges: false)
+        ),
+        TestArgument(
+            initialPersistedObjectsIds: [],
+            externalDataModelIds: [],
+            expectedCacheResponseDataModelIds: [],
+            expectedResponseDataModelIds: [],
+            expectedNumberOfChanges: 1,
+            cachePolicy: .returnCacheDataElseFetch(requestPriority: .medium, observeChanges: false)
+        )/*,
+        TestArgument(
+            initialPersistedObjectsIds: ["0", "1"],
+            externalDataModelIds: ["5", "6", "7", "8", "9"],
+            expectedCacheResponseDataModelIds: ["0", "1"],
+            expectedResponseDataModelIds: ["0", "1", "5", "6", "7", "8", "9"],
+            expectedNumberOfChanges: 2,
+            cachePolicy: .returnCacheDataAndFetch(requestPriority: .medium)
+        ),
+        TestArgument(
+            initialPersistedObjectsIds: [],
+            externalDataModelIds: ["1", "2"],
+            expectedCacheResponseDataModelIds: [],
+            expectedResponseDataModelIds: ["1", "2"],
+            expectedNumberOfChanges: 2,
+            cachePolicy: .returnCacheDataAndFetch(requestPriority: .medium)
+        ),
+        TestArgument(
+            initialPersistedObjectsIds: ["2", "3"],
+            externalDataModelIds: [],
+            expectedCacheResponseDataModelIds: ["2", "3"],
+            expectedResponseDataModelIds: ["2", "3"],
+            expectedNumberOfChanges: 2,
+            cachePolicy: .returnCacheDataAndFetch(requestPriority: .medium)
+        ),
+        TestArgument(
+            initialPersistedObjectsIds: [],
+            externalDataModelIds: [],
+            expectedCacheResponseDataModelIds: [],
+            expectedResponseDataModelIds: [],
+            expectedNumberOfChanges: 2,
+            cachePolicy: .returnCacheDataAndFetch(requestPriority: .medium)
+        )*/
     ])
-    @MainActor func observingDataChangesWhenIgnoringCachedData(argument: TestArgument) async {
+    @MainActor func fetchingExternalDataObjectsWhenNotObservingDataChanges(argument: TestArgument) async {
         
         let repositorySync: RepositorySync<MockRepositorySyncDataModel, MockRepositorySyncExternalDataFetch, MockRepositorySyncRealmObject> = getRepositorySyncFromTestArgument(
             argument: argument
         )
                 
         var cancellables: Set<AnyCancellable> = Set()
-        
+                
         var sinkCount: Int = 0
-        var cachedResponseRef: RepositorySyncResponse<MockRepositorySyncDataModel>?
+        
+        var cachedResponseRef: RepositorySyncResponse<MockRepositorySyncDataModel>? // Not recorded or tested if expected changes is 1. ~Levi
         var responseRef: RepositorySyncResponse<MockRepositorySyncDataModel>?
         
-        let expectedChangesCount: Int = argument.expectedNumberOfChanges ?? 1
-        
-        await confirmation(expectedCount: expectedChangesCount) { confirmation in
+        await confirmation(expectedCount: argument.expectedNumberOfChanges) { confirmation in
             
             await withCheckedContinuation { continuation in
                 
@@ -63,8 +178,7 @@ struct RepositorySyncTests {
                 
                 repositorySync
                     .getObjectsPublisher(
-                        cachePolicy: .fetchIgnoringCacheData(requestPriority: .medium),
-                        shouldObserveDataChanges: true
+                        cachePolicy: argument.cachePolicy
                     )
                     .sink { (response: RepositorySyncResponse<MockRepositorySyncDataModel>) in
                         
@@ -72,9 +186,8 @@ struct RepositorySyncTests {
                         
                         sinkCount += 1
                         
-                        if expectedChangesCount == 1 {
+                        if argument.expectedNumberOfChanges == 1 {
                             
-                            cachedResponseRef = response
                             responseRef = response
                             
                             timeoutTask.cancel()
@@ -84,7 +197,7 @@ struct RepositorySyncTests {
                             
                             cachedResponseRef = response
                         }
-                        else if sinkCount == expectedChangesCount {
+                        else if sinkCount == argument.expectedNumberOfChanges {
                             
                             responseRef = response
                             
@@ -98,53 +211,42 @@ struct RepositorySyncTests {
         
         cleanUpRepositorySyncFromTestArgument(argument: argument)
         
-        let cachedResponseDataModelIds: [String] = sortResponseObjectsDataModelIds(response: cachedResponseRef)
-        
-        #expect(cachedResponseDataModelIds == argument.initialPersistedObjectsIds)
+        if argument.expectedNumberOfChanges > 1 {
+            
+            let cachedResponseDataModelIds: [String] = sortResponseObjectsDataModelIds(response: cachedResponseRef)
+            
+            #expect(cachedResponseDataModelIds == argument.initialPersistedObjectsIds)
+        }
         
         let responseDataModelIds: [String] = sortResponseObjectsDataModelIds(response: responseRef)
         
-        #expect(responseDataModelIds == argument.expectedDataModelIds)
+        #expect(responseDataModelIds == argument.expectedResponseDataModelIds)
     }
     
     @Test(arguments: [
         TestArgument(
             initialPersistedObjectsIds: ["0", "1"],
             externalDataModelIds: ["5", "6", "7", "8", "9"],
-            expectedDataModelIds: ["0", "1", "5", "6", "7", "8", "9"],
-            expectedNumberOfChanges: nil
-        ),
-        TestArgument(
-            initialPersistedObjectsIds: [],
-            externalDataModelIds: ["1", "2"],
-            expectedDataModelIds: ["1", "2"],
-            expectedNumberOfChanges: nil
-        ),
-        TestArgument(
-            initialPersistedObjectsIds: ["2", "3"],
-            externalDataModelIds: [],
-            expectedDataModelIds: ["2", "3"],
-            expectedNumberOfChanges: nil
-        ),
-        TestArgument(
-            initialPersistedObjectsIds: [],
-            externalDataModelIds: [],
-            expectedDataModelIds: [],
-            expectedNumberOfChanges: nil
+            expectedCacheResponseDataModelIds: ["0", "1"],
+            expectedResponseDataModelIds: ["0", "1", "5", "6", "7", "8", "9"],
+            expectedNumberOfChanges: 2,
+            cachePolicy: .returnCacheDataAndFetch(requestPriority: .medium)
         )
     ])
-    @MainActor func fetchingExternalDataObjectsIsTriggeredOnceWhenIgnoringCachedDataAndNotObservingDataChanges(argument: TestArgument) async {
+    @MainActor func fetchingExternalDataObjectsWhenNotObservingDataChangesCopy(argument: TestArgument) async {
         
         let repositorySync: RepositorySync<MockRepositorySyncDataModel, MockRepositorySyncExternalDataFetch, MockRepositorySyncRealmObject> = getRepositorySyncFromTestArgument(
             argument: argument
         )
                 
         var cancellables: Set<AnyCancellable> = Set()
-        
+                
         var sinkCount: Int = 0
+        
+        var cachedResponseRef: RepositorySyncResponse<MockRepositorySyncDataModel>? // Not recorded or tested if expected changes is 1. ~Levi
         var responseRef: RepositorySyncResponse<MockRepositorySyncDataModel>?
         
-        await confirmation(expectedCount: 1) { confirmation in
+        await confirmation(expectedCount: argument.expectedNumberOfChanges) { confirmation in
             
             await withCheckedContinuation { continuation in
                 
@@ -155,22 +257,36 @@ struct RepositorySyncTests {
                 
                 repositorySync
                     .getObjectsPublisher(
-                        cachePolicy: .fetchIgnoringCacheData(requestPriority: .medium),
-                        shouldObserveDataChanges: false
+                        cachePolicy: argument.cachePolicy
                     )
                     .sink { (response: RepositorySyncResponse<MockRepositorySyncDataModel>) in
                         
                         confirmation()
                         
                         sinkCount += 1
-                        
-                        if sinkCount == 1 {
+                                                
+                        if argument.expectedNumberOfChanges == 1 {
                             
                             responseRef = response
                             
                             timeoutTask.cancel()
                             continuation.resume(returning: ())
                         }
+                        else if sinkCount == 1 {
+                            
+                            cachedResponseRef = response
+                        }
+                        else if sinkCount == argument.expectedNumberOfChanges {
+                            
+                            responseRef = response
+                            
+                            timeoutTask.cancel()
+                            continuation.resume(returning: ())
+                        }
+                        
+                        print("\n SINK COUNT -> \(sinkCount)")
+                        print("   cachedResponseRef: \(sortResponseObjectsDataModelIds(response: cachedResponseRef))")
+                        print("   responseRef: \(sortResponseObjectsDataModelIds(response: responseRef))")
                     }
                     .store(in: &cancellables)
             }
@@ -178,9 +294,16 @@ struct RepositorySyncTests {
         
         cleanUpRepositorySyncFromTestArgument(argument: argument)
         
+        if argument.expectedNumberOfChanges > 1 {
+            
+            let cachedResponseDataModelIds: [String] = sortResponseObjectsDataModelIds(response: cachedResponseRef)
+            
+            #expect(cachedResponseDataModelIds == argument.expectedCacheResponseDataModelIds)
+        }
+        
         let responseDataModelIds: [String] = sortResponseObjectsDataModelIds(response: responseRef)
         
-        #expect(responseDataModelIds == argument.expectedDataModelIds)
+        #expect(responseDataModelIds == argument.expectedResponseDataModelIds)
     }
     
     // MARK: - Object By Id Tests

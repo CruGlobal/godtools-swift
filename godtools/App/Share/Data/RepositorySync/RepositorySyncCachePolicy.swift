@@ -12,14 +12,15 @@ import RequestOperation
 public enum RepositorySyncCachePolicy {
     
     // Fetches remote data and stores remote data to cache.
-    case fetchIgnoringCacheData(requestPriority: RequestPriority)
+    case fetchIgnoringCacheData(requestPriority: RequestPriority, observeChanges: Bool)
     
     // Fetches cached data, doesn't fetch data from remote.
-    case returnCacheDataDontFetch
+    case returnCacheDataDontFetch(observeChanges: Bool)
     
     // Fetches cached data, if no cached data, fetches data from remote and stores remote data to cache.
-    case returnCacheDataElseFetch(requestPriority: RequestPriority)
+    case returnCacheDataElseFetch(requestPriority: RequestPriority, observeChanges: Bool)
     
     // Fetches cached data and fetches remote data and stores remote data to cache.
+    // By default will observe changes.
     case returnCacheDataAndFetch(requestPriority: RequestPriority)
 }

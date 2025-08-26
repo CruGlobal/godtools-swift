@@ -37,11 +37,11 @@ open class RepositorySync<DataModelType, ExternalDataFetchType: RepositorySyncEx
 
 extension RepositorySync {
     
-    func getResults(realm: Realm) -> Results<RealmObjectType> {
+    func getCachedResults(realm: Realm) -> Results<RealmObjectType> {
         return realm.objects(RealmObjectType.self)
     }
     
-    func getObjectsToDataModelsPublisher() -> AnyPublisher<[DataModelType], Never> {
+    func getCachedObjectsToDataModelsPublisher() -> AnyPublisher<[DataModelType], Never> {
         return realmDatabase
             .readObjectsPublisher { (results: Results<RealmObjectType>) in
                 let objects: [DataModelType] = results.compactMap {
@@ -52,8 +52,8 @@ extension RepositorySync {
             .eraseToAnyPublisher()
     }
     
-    func getObjectsToResponsePublisher() -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
-        return getObjectsToDataModelsPublisher()
+    func getCachedObjectsToResponsePublisher() -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
+        return getCachedObjectsToDataModelsPublisher()
             .map { (dataModels: [DataModelType]) in
                 return RepositorySyncResponse(
                     objects: dataModels,
@@ -68,20 +68,22 @@ extension RepositorySync {
 
 extension RepositorySync {
     
-    func getObjectsPublisher(cachePolicy: RepositorySyncCachePolicy, shouldObserveDataChanges: Bool) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
+    func getObjectsPublisher(cachePolicy: RepositorySyncCachePolicy) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
         
         switch cachePolicy {
             
-        case .fetchIgnoringCacheData(let requestPriority):
+        case .fetchIgnoringCacheData(let requestPriority, let observeChanges):
             
-            if shouldObserveDataChanges {
+            if observeChanges {
                 
                 makeSinkingfetchAndStoreObjectsFromExternalDataFetch(
                     requestPriority: requestPriority
                 )
                 
-                return observeObjectsChangePublisher()
-                    .eraseToAnyPublisher()
+                return fetchCachedObjectsAndObserveChangesPublisher(
+                    realm: realmDatabase.openRealm()
+                )
+                .eraseToAnyPublisher()
             }
             else {
                 
@@ -90,30 +92,32 @@ extension RepositorySync {
                 )
                 .flatMap({ (response: RepositorySyncResponse<DataModelType>) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> in
                     
-                    return self.getObjectsToResponsePublisher()
+                    return self.getCachedObjectsToResponsePublisher()
                         .eraseToAnyPublisher()
                 })
                 
                 .eraseToAnyPublisher()
             }
             
-        case .returnCacheDataDontFetch:
+        case .returnCacheDataDontFetch(let observeChanges):
             
-            if shouldObserveDataChanges {
+            if observeChanges {
                
-                return observeObjectsChangePublisher()
-                    .eraseToAnyPublisher()
+                return fetchCachedObjectsAndObserveChangesPublisher(
+                    realm: realmDatabase.openRealm()
+                )
+                .eraseToAnyPublisher()
             }
             else {
                
-                return getObjectsToResponsePublisher()
+                return getCachedObjectsToResponsePublisher()
             }
         
-        case .returnCacheDataElseFetch(let requestPriority):
+        case .returnCacheDataElseFetch(let requestPriority, let observeChanges):
             
-            if shouldObserveDataChanges {
+            if observeChanges {
                         
-                let numberOfRealmObjects: Int = getResults(realm: realmDatabase.openRealm()).count
+                let numberOfRealmObjects: Int = getCachedResults(realm: realmDatabase.openRealm()).count
                 
                 if numberOfRealmObjects == 0 {
                     
@@ -122,12 +126,14 @@ extension RepositorySync {
                     )
                 }
                 
-                return observeObjectsChangePublisher()
-                    .eraseToAnyPublisher()
+                return fetchCachedObjectsAndObserveChangesPublisher(
+                    realm: realmDatabase.openRealm()
+                )
+                .eraseToAnyPublisher()
             }
             else {
                 
-                return getObjectsToDataModelsPublisher()
+                return getCachedObjectsToDataModelsPublisher()
                     .flatMap({ (dataModels: [DataModelType]) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> in
                         
                         guard !dataModels.isEmpty else {
@@ -150,35 +156,50 @@ extension RepositorySync {
         
         case .returnCacheDataAndFetch(let requestPriority):
             
-            if shouldObserveDataChanges {
-                
-            }
-            else {
-                
-            }
-        }
-        
-        let response = RepositorySyncResponse<DataModelType>(
-            objects: [],
-            errors: []
-        )
-        
-        return Just(response)
+            makeSinkingfetchAndStoreObjectsFromExternalDataFetch(
+                requestPriority: requestPriority
+            )
+            
+            return fetchCachedObjectsAndObserveChangesPublisher(
+                realm: realmDatabase.openRealm()
+            )
             .eraseToAnyPublisher()
-        
+        }
     }
     
-    private func observeObjectsChangePublisher() -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
+    private func fetchCachedObjectsAndObserveChangesPublisher(realm: Realm) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
         
-        let realm: Realm = realmDatabase.openRealm()
+        return objectWillChangeWithPrependWhenEmpty(
+            realm: realm
+        )
+        .flatMap({ willChange -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> in
+            print("\n WILL CHANGE TRIGGERED")
+            return self.getCachedObjectsToResponsePublisher()
+                .eraseToAnyPublisher()
+        })
+        .eraseToAnyPublisher()
+    }
+    
+    private func objectWillChangeWithPrependWhenEmpty(realm: Realm) -> AnyPublisher<Void, Never> {
+             
+        let numberOfRealmObjects: Int = getCachedResults(realm: realm).count
+        
+        guard numberOfRealmObjects == 0 else {
+         
+            print("\n OBSERVING WITH PREPEND")
+            
+            return realm
+                .objects(RealmObjectType.self)
+                .objectWillChange
+                .prepend(Void())
+                .eraseToAnyPublisher()
+        }
+        
+        print("\n OBSERVING")
         
         return realm
             .objects(RealmObjectType.self)
             .objectWillChange
-            .flatMap({ willChange -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> in
-                return self.getObjectsToResponsePublisher()
-                    .eraseToAnyPublisher()
-            })
             .eraseToAnyPublisher()
     }
     
@@ -203,11 +224,15 @@ extension RepositorySync {
                     self.dataModelMapping.toDataModel(externalObject: $0)
                 }
                 
+                print("\n DID FETCH EXTERNAL DATA MODELS: \(responseDataModels)")
+                
                 return self.realmDatabase.writeObjectsPublisher { (realm: Realm) in
                    
                     let realmObjects: [RealmObjectType] = responseDataModels.compactMap {
                         self.dataModelMapping.toPersistObject(dataModel: $0)
                     }
+                    
+                    print("\n WRITE OBJECTS TO REALM: \(realmObjects.map{$0.id})")
                     
                     return realmObjects
                     
