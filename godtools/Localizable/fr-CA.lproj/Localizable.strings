@@ -1,0 +1,228 @@
+/* This About refers to a specific tool in the app. */
+"toolDetails.about.title" = "À propos";
+
+/* This means that the tool/resource is not available in the currently selected language. */
+"lessonCard.languageNotAvailable" = "Indisponible en %@";
+
+"tool_menu_item.tools" = "Outils";
+"lessons.pageTitle" = "Cours faits pour vous";
+"lessons.pageSubtitle" = "Des idées pratiques pour tisser des liens et entamer des conversations constructives.";
+"toolSettings.languagesAvailable.title" = "Langues disponibles";
+"toolDetails.versions.message" = "Choisissez une autre version de cet outil ci-dessous. Chaque version met en avant un style et du contenu uniques vous permettant de trouver celui qui correspond le mieux à votre conversation. Vous pouvez ajouter plusieurs versions du même outil à vos favoris.";
+"favorites.noTools.title" = "Aucun outil favori à afficher";
+"favorites.noTools.description" = "Touchez l'icône de cœur pour ajouter un outil à vos favoris et le rendre disponible hors ligne.";
+"favorites.noTools.button" = "Accéder aux outils";
+"toolSettings.shareImagePreview.shareImageButton.title" = "Partager l'image";
+"favorites.pageTitle" = "Bienvenue dans GodTools";
+"favorites.favoriteLessons.title" = "Cours mis en avant";
+"favorites.favoriteTools.title" = "Vos outils préférés";
+"favorites.favoriteTools.viewAll" = "Tout afficher";
+
+/* Please keep to a 9 character limit, longer phrases may get cut off */
+"favorites.favoriteLessons.details" = "Détails";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
+"toolSettings.languagesList.deleteLanguage.title" = "Aucun";
+
+"toolSettings.chooseLanguage.toggleMessage" = "Basculez entre deux langues différentes dans cet outil.";
+"toolDetails.versions.title" = "Versions";
+"toolDetails.learnToShareToolButton.title" = "Apprendre à partager cet outil";
+"toolSettings.title" = "Options de l'outil";
+"toolSettings.option.shareLink.title" = "Partagez un lien";
+"toolSettings.option.screenShare.title" = "Partagez votre écran";
+"toolSettings.option.trainingTips.show.title" = "Astuces de formation";
+"toolSettings.option.trainingTips.hide.title" = "Cacher les astuces";
+"toolSettings.chooseLanguage.title" = "Langue parallèle";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "Parallèle";
+"toolSettings.shareables.title" = "Images liées";
+"allTools.spotlight.title" = "Outils mis en avant";
+"allTools.spotlight.description" = "Voici quelques outils qui seraient à votre goût";
+"allTools.categories.title" = "Catégories";
+"tool_menu_item.lessons" = "Cours";
+"onboardingTutorial.beginButton.title" = "Commencer";
+"onboardingTutorial.nextButton.title" = "Suivant";
+"tool_offline_favorite_message" = "Appuyez sur l'icône en forme de cœur pour ajouter un outil à vos favoris et le rendre disponible hors ligne.";
+
+/* This is a category description of a tool that helps you start a conversation */
+"tool_category_conversation_starter" = "Engager la conversation";
+
+/* This phrase describes a category of tool that helps someone grow in their Christian faith */
+"tool_category_growth" = "Progression chrétienne";
+
+"share_link" = "Partagez un lien";
+"share_tool_menu.remote_share_tool" = "Partagez votre écran";
+"share_tool_menu.send_tool" = "Envoyer cet outil";
+"share_tool_screen_tutorial.share_your_screen.title" = "Partagez votre écran";
+"share_tool_screen_tutorial.share_your_screen.message" = "Cette option enverra un lien vers cet outil à un ami. Lorsque le lien est ouvert, une session de partage d'écran débutera.";
+"share_tool_screen_tutorial.mirrored_experience.title" = "Expérience miroir";
+"share_tool_screen_tutorial.mirrored_experience.message" = "Lorsque vous faites défiler l'outil sur votre téléphone, l'écran de votre ami fera la même chose. Ceci vous permet d'explorer un outil ensemble sur 2 appareils à la fois.";
+"share_tool_screen_tutorial.get_started.title" = "Commencer";
+"share_tool_screen_tutorial.get_started.message" = "Envoyez le lien à une personne ou plus pour débuter une session de partage d'écran maintenant.";
+"share_tool_remote_link_message" = "Bonjour, suivez-moi avec GodTools via le partage d'écran. Voici le lien : %@ 
+
+Si vous recevez ce message plus tard, le lien pourrait ne pas fonctionner. Nous pouvons réessayer à un autre moment.";
+"exit_tract_remote_share_session.message" = "Quitter la session de partage à distance maintenant ?";
+"load_tool_remote_session.message" = "Début du partage d'écran...";
+"onboardingTutorial.0.title" = "Prêt pour la conversation";
+"onboardingTutorial.0.videoLink.title" = "Regarder la vidéo";
+"onboardingTutorial.1.title" = "Parlez de Dieu avec n’importe qui";
+"onboardingTutorial.1.message" = "GodTools vous aide à partager des conversations significatives à propos de Dieu.";
+"onboardingTutorial.2.title" = "Préparez-vous pour les moments qui comptent";
+"onboardingTutorial.2.message" = "Découvrez comment faire des conversations sur la foi un aspect naturel de votre vie.";
+"onboardingTutorial.3.title" = "Aidez quelqu’un à découvrir Jésus";
+"onboardingTutorial.3.message" = "GodTools est votre guide pour communiquer l’évangile de façons claires et pertinentes.";
+
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "Formation";
+
+/*
+ * This is an invitation for a user to open a tool
+ * Please keep to a 9 character limit, longer phrases may get cut off
+*/
+"open" = "Ouvrir";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "Ajouter aux favoris";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "Retirer des favoris";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "L'outil est en cours de téléchargement. Pour éviter toute attente dans le futur, mettez cet outil dans vos favoris afin qu'il soit disponible hors ligne.
+";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "Téléchargement de la traduction la plus récente pour cet outil.";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "Retirer des Favoris? ";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "Voulez-vous vraiment retirer %@ de vos favoris? ";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "Invitation à l'évangile";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "Articles";
+"language_onboard" = "Plus de 90 langues";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "Vous avez téléchargé tous les outils disponibles.";
+
+/* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
+"my_tools" = "Favoris";
+
+/* The user will click this toggle switch to go find a library of more offerings or "Tools". */
+"find_tools" = "Tous les outils";
+
+"unavailable" = "Non disponible";
+
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "Sauter";
+
+// Onboarding
+"add_new_tools" = "Ajouter de nouveaux outils";
+"set_your_languages" = "Réglez vos languages";
+"okay" = "D'accord";
+// Menu
+"menu_general" = "Général";
+"menu_share" = "Partager";
+"menu_legal" = "Légal";
+"language_settings" = "Paramètres de langue";
+// Login
+"login" = "Connexion";
+"logout" = "Déconnexion";
+"create_account" = "Créer un compte";
+"account_login" = "Connexion au compte";
+
+// Tool Detail
+"about" = "À propos";
+"help" = "Aide";
+"contact_us" = "Contactez-nous";
+"preview_mode_translators_only" = "Mode aperçu (traducteurs seulement)";
+"share_god_tools" = "Partager l'application GodTools";
+"share_a_story_with_us" = "Partager une histoire avec nous";
+"terms_of_use" = "Conditions d'utilisation";
+"privacy_policy" = "Politique de confidentialité";
+"copyright_info" = "Renseignements de droits d'auteur";
+"share_god_tools_share_sheet_text" = "Téléchargez l'application GodTools ici : https://godtoolsapp.com
+
+Retrouvez également la version en ligne à l'adresse : https://knowgod.com/";
+
+// Add Tools
+"add_tools" = "Ajouter des outils";
+
+"total_views" = "%d vues";
+"total_languages" = "%d langues";
+
+// Language Settings
+"primary_language" = "Langue principale";
+"select_primary_language" = "Sélectionnez une langue principale";
+"parallel_language" = "Langue parallèle";
+"select_parallel_language" = "Sélectionnez une langue parallèle";
+"share_god_tools_native_language" = "Partagez GodTools avec quelqu'un dans leur langue natale";
+"not_every_tool_is_available" = "Les outils ne sont pas disponibles dans chaque langue";
+
+// Settings
+"settings" = "Paramètres";
+
+// Alert & Info Controllers
+"download_error" = "Erreur de téléchargement";
+"no_internet_title" = "Aucune connexion à internet";
+"no_internet" = "Veuillez vérifier votre connexion internet et réessayer.";
+
+"the_tool_you_requested_is_loading" = "Chargement de l'outil que vous avez demandé...";
+"loading" = "Chargement...";
+
+// Actions
+"yes" = "Oui";
+"no" = "Non";
+
+// Tract - Sharing
+"tract_share_message" ="Ce lien vous mènera vers la version web de la dernière page que nous avons regardée ensemble aujourd'hui : %@. 
+
+Parlons un peu plus !
+
+L'application est téléchargeable sur https://godtoolsapp.com";
+
+// Buttons
+"download" = "Télécharger";
+"dismiss" = "Ignorer";
+"done" = "Terminé";
+"remove" = "Retirer";
+"clear" = "Effacer";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Ouvrir l'outil";
+
+// Alerts
+"error" = "Erreur";
+"OK" = "OK";
+"cancel" = "Annuler";
+"required_field_missing" = "« %@ » est un champ requis.";
+
+"onboardingTutorial.getStartedButton.title" = "Commencer";
+
+// About
+"general_about_1" = "GodTools vous aide à partager votre foi facilement et de façon claire.";
+"general_about_2" = "Ces outils vous aident à expliquer avec confiance à quelqu'un comment il peut commencer une relation avec Dieu à travers Jésus-Christ, même si vous n'avez jamais partagé votre foi par le passé ou que votre interlocuteur parle une autre langue.";
+"general_about_3" = "Choisissez parmi une variété d'outils selon votre préférence et votre public. Les outils ne sont pas tous disponibles dans chaque langue.";
+"general_about_4" = "Les liens vers d'autres ressources sont inclus à la fin de chaque outil.";
+"general_about_5" = "Une connexion Internet est requise pour télécharger chaque nouvel outil et/ou nouvelle langue. Une fois le téléchargement effectué, l'outil ou la langue peut être utilisé en ligne.";
+"general_about_6" = "Des questions? Des suggestions? Des demandes? Contactez-nous à support@godtoolsapp.com";
+"general_about_7" = "Une version en ligne de ces outils peut être utilisée sur knowgod.com. Intégrez-la sur votre site!";
+"general_about_8" = "Visitez godtoolsapp.com pour plus d'informations.";
+"tutorial.continueButton.title.continue" = "Continuer";
+"general_about_9" = "Lors de vos initiatives de partager votre foi, souvenez-vous que Dieu est celui qui change le cœur. Aimez chaque personne en l'écoutant pour la comprendre.";
+"general_about_10" = "« Que votre parole soit toujours accompagnée de grâce, assaisonnée de sel, afin que vous sachiez comment il faut répondre à chacun. » Colossiens 4:6";
+
+// Downloads
+"Download in progress" = "Téléchargement en cours";
+
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
+"card_status1" = "Préc";
+"card_status2" = "Suiv";
+
+// Language Name Strings
+"language_name_fa" = "Perse (Farsi)";
+

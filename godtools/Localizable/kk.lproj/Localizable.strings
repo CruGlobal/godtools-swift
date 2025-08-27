@@ -1,0 +1,18 @@
+/* This About refers to a specific tool in the app. */
+"toolDetails.about.title" = "туралы";
+/* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
+"my_tools" = "Менің құралдарым";
+
+/* The user will click this toggle switch to go find a library of more offerings or "Tools". */
+"find_tools" = "Құралдарды табу";
+
+// Downloads
+"Download in progress" = "Жүктеу орындалуда";
+
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
+"card_status1" = "Алдыңғы";
+"card_status2" = "Келесі";
+
+// Language Name Strings
+"language_name_fa" = "Парсы (фарси)";
+
