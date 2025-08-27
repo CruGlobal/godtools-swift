@@ -39160,6 +39160,9 @@
         }
       }
     },
+    "It looks like you clicked a link for GodTools" : {
+
+    },
     "language_download_error" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -65443,6 +65446,9 @@
           }
         }
       }
+    },
+    "Please tap the paste button below.  This will allow us to take you to the content you requested in GodTools." : {
+
     },
     "preview_mode_translators_only" : {
       "extractionState" : "manual",

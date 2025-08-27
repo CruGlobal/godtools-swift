@@ -139,6 +139,13 @@ class AppFlow: NSObject, Flow {
                     
                     let launchCount: Int = appFlow.launchCountRepository.getLaunchCount()
                     
+                    if launchCount == 1 {
+                        // first launch, need to ask if user came from deferred deep link
+                        
+                        appFlow.navigate(step: .showDeferredDeepLinkModal)
+                    }
+                    
+                    
                     if let deepLink = appFlow.appLaunchedFromDeepLink {
                         
                         appFlow.appLaunchedFromDeepLink = nil
@@ -186,6 +193,11 @@ class AppFlow: NSObject, Flow {
             
         case .deepLink(let deepLink):
             navigateToDeepLink(deepLink: deepLink)
+            
+        case .showDeferredDeepLinkModal:
+            
+            let deferredDeepLinkModal = getDeferredDeepLinkModal()
+            navigationController.present(deferredDeepLinkModal, animated: true)
             
         case .showOnboardingTutorial(let animated):
             navigateToOnboarding(animated: animated)
@@ -417,6 +429,16 @@ extension AppFlow {
                         
             navigateToOnboarding(animated: true)
         }
+    }
+    
+    private func getDeferredDeepLinkModal() -> UIViewController {
+        let view = DeferredDeepLinkModalView()
+        let hostingController = AppHostingController<DeferredDeepLinkModalView>(
+            rootView: view,
+            navigationBar: nil
+        )
+        
+        return hostingController
     }
 }
 

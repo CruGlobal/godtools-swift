@@ -15,6 +15,7 @@ enum FlowStep {
     // app
     case appLaunched(state: AppLaunchState)
     case deepLink(deepLinkType: ParsedDeepLinkType)
+    case showDeferredDeepLinkModal
     case showOnboardingTutorial(animated: Bool)
     case onboardingFlowCompleted(onboardingFlowCompletedState: OnboardingFlowCompletedState?)
     case buttonWithUrlTappedFromAppMessage(url: URL)
