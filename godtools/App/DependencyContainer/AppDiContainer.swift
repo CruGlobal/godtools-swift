@@ -10,13 +10,6 @@ import UIKit
 
 class AppDiContainer {
         
-    enum DataLayerType {
-        case godtools
-        case mock
-    }
-    
-    private let appBuild: AppBuild
-    private let realmDatabase: RealmDatabase
     private let failedFollowUpsCache: FailedFollowUpsCache
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
     
@@ -24,41 +17,25 @@ class AppDiContainer {
     let domainLayer: AppDomainLayerDependencies
     let feature: AppFeatureDiContainer
     
-    init(appBuild: AppBuild, appConfig: AppConfig, realmDatabase: RealmDatabase, firebaseEnabled: Bool, dataLayerType: DataLayerType) {
-               
-        self.appBuild = appBuild
-        self.realmDatabase = realmDatabase
-        
-        // TODO: Once CoreDataLayerDependenciesInterface is complete, will need to create the dataLayer based on DataLayerType. ~Levi
+    init(appConfig: AppConfigInterface) {
+                       
         dataLayer = AppDataLayerDependencies(
-            appBuild: appBuild,
-            appConfig: appConfig,
-            realmDatabase: realmDatabase,
-            firebaseEnabled: firebaseEnabled
+            appConfig: appConfig
         )
         
         domainLayer = AppDomainLayerDependencies(dataLayer: dataLayer)
-        
-        // feature data layer dependencies
-        let onboardingDataLayer: OnboardingDataLayerDependenciesInterface
-        let spotlightToolsDataLayer: SpotlightToolsDataLayerDependenciesInterface
-        
-        switch dataLayerType {
-        case .godtools:
-            onboardingDataLayer = OnboardingDataLayerDependencies(coreDataLayer: dataLayer)
-            spotlightToolsDataLayer = SpotlightToolsDataLayerDependencies(coreDataLayer: dataLayer)
-            
-        case .mock:
-            onboardingDataLayer = MockOnboardingDataLayerDependencies()
-            spotlightToolsDataLayer = MockSpotlightToolsDataLayerDependencies()
-        }
                 
+        // feature data layer dependencies
+        let accountDataLayer = AccountDataLayerDependencies(coreDataLayer: dataLayer)
+        let onboardingDataLayer = OnboardingDataLayerDependencies(coreDataLayer: dataLayer)
+        let spotlightToolsDataLayer = SpotlightToolsDataLayerDependencies(coreDataLayer: dataLayer)
+        
         // feature domain interface layer dependencies
         let onboardingDomainInterfaceLayer = OnboardingDomainInterfaceDependencies(coreDataLayer: dataLayer, dataLayer: onboardingDataLayer)
         let spotlightToolsDomainInterfaceLayer = SpotlightToolsDomainInterfaceDependencies(coreDataLayer: dataLayer, dataLayer: spotlightToolsDataLayer)
         
         // feature dependency containers
-        let accountDiContainer = AccountDiContainer(coreDataLayer: dataLayer)
+        let accountDiContainer = AccountDiContainer(coreDataLayer: dataLayer, dataLayer: accountDataLayer, domainInterfaceLayer: AccountDomainInterfaceDependencies(coreDataLayer: dataLayer, dataLayer: accountDataLayer))
         let appLanguageDiContainer = AppLanguageFeatureDiContainer(coreDataLayer: dataLayer)
         let dashboardDiContainer = DashboardDiContainer(coreDataLayer: dataLayer)
         let downloadToolProgressDiContainer = DownloadToolProgressFeatureDiContainer(coreDataLayer: dataLayer)
@@ -118,7 +95,11 @@ class AppDiContainer {
             userActivity: userActivityDiContainer
         )
                                                                 
-        failedFollowUpsCache = FailedFollowUpsCache(realmDatabase: realmDatabase)
+        failedFollowUpsCache = FailedFollowUpsCache(realmDatabase: dataLayer.getSharedRealmDatabase())
+    }
+    
+    static func createUITestsDiContainer() -> AppDiContainer {
+        return AppDiContainer(appConfig: UITestsAppConfig())
     }
     
     func getCardJumpService() -> CardJumpService {
@@ -127,14 +108,6 @@ class AppDiContainer {
     
     func getUrlOpener() -> UrlOpenerInterface {
         return OpenUrlWithSwiftUI() // TODO: GT-2466 Return OpenUrlWithUIKit() once supporting FBSDK 17.3+ ~Levi
-    }
-    
-    func getFirebaseConfiguration() -> FirebaseConfiguration {
-        return FirebaseConfiguration(config: dataLayer.getAppConfig())
-    }
-    
-    func getFirebaseDebugArguments() -> FirebaseDebugArguments {
-        return FirebaseDebugArguments()
     }
     
     func getMobileContentRenderer(type: MobileContentRendererPageViewFactoriesType, navigation: MobileContentRendererNavigation, appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel) -> MobileContentRenderer {

@@ -1,0 +1,390 @@
+"optInNotification.notificationSettings" = "Kennisgewing Instellings";
+"lessons.swipeTutorial.title" = "Swiep om bladsye te verander";
+"lessons.swipeTutorial.buttonText" = "Het dit";
+"optInNotification.title" = "Kry wenke en aanmoediging";
+"optInNotification.body" = "Bly toegerus vir geselsies.\nLaat kennisgewings vandag toe.";
+"optInNotification.allowNotifications" = "Laat Kennisgewings toe";
+"optInNotification.maybeLater" = "Miskien later";
+
+/* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
+"lessons.resumeLessonModal.title" = "Gaan aan waar jy opgehou het";
+
+"lessons.resumeLessonModal.subtitle" = "Wil jy aangaan waar jy laas opgehou het?";
+"lessons.resumeLessonModal.startOverButton" = "Begin oor";
+"lessons.resumeLessonModal.continueButton" = "Gaan aan";
+"lessons.lessonCompleted" = "Klaar";
+"lessons.completionProgress" = "%@ Klaar";
+"network_connection_lost" = "Die netwerkverbinding is verbreek.";
+"language_name_fil" = "Filipino (Tagalog)";
+"lessons.filter.navBar.language" = "Lestaal";
+"lessons.languageFilter.title" = "Lesse in:";
+"language_name_fil-x-taglish" = "Die netwerkverbinding was verbreek";
+"language_name_sid" = " Netwerkverbinding is verbreek";
+"onboardingTutorial.chooseLanguageButton.title" = "Kies taal";
+"languageSettings.confirmAppLanguage.message" = "Jy het %@ as jou app-taal gekies. Dit sal die taal van die hele GodTools-app verander. Is jy seker?";
+"languageSettings.confirmAppLanguage.changeLanguageButton.title" = "Verander taal";
+"languageSettings.confirmAppLanguage.nevermindButton.title" = "Maak nie saak nie";
+"languageSettings.downloadableLanguages.title" = "Aflaaibare tale";
+"languageSettings.appInterface.title" = "App-koppelvlaktaal";
+"languageSettings.appInterface.message" = "Stel die taal in wat jy wil hê in die hele app vertoon moet word.";
+"languageSettings.appInterface.languagesAvailable" = "Tale beskikbaar";
+"languageSettings.toolLanguagesAvailableOffline.title" = "Tale waarin hulpmiddels van lyn af beskikbaar is.";
+"languageSettings.toolLanguagesAvailableOffline.message" = "Laai al die hulpmiddels in 'n taal af om dit beskikbaar te maak, selfs as jy buite WiFi of seldiens is. Stel die hulpmiddeltaal in via die opsie-knoppie binne 'n hulpmiddel.";
+"languageSettings.toolLanguagesAvailableOffline.editDownloadedLanguagesButton.title" = "Wysig afgelaaide tale";
+"allTools.filter.title" = "Filtreer";
+"allTools.filter.anyCategory" = "Enige kategorieë";
+"allTools.filter.anyLanguage" = "Enige taal";
+"allTools.filter.navBar.language" = "Filtreer deur taal";
+"allTools.filter.navBar.category" = "Filtreer deur kategorieë";
+"languageSettings.appLanguage.title" = "App-Taal";
+"authError.userAccountAlreadyExists.message" = "Gebruikersrekening bestaan reeds.";
+"authError.userAccountNotFound.message" = "Gebruikersrekening kan nie gevind word nie.";
+"createAccount.title" = "Skep rekening";
+"createAccount.subtitle" = "Skep 'n rekening om ware stories, aanmoediging en praktiese wenke by jou vingerpunte te hê.";
+"deleteAccountProgress.title" = "Rekening word verwyder...";
+"confirmDeleteAccount.title" = "Is jy seker?";
+"confirmDeleteAccount.confirmButton.title" = "Verwyder rekening";
+"accountDeletedAlert.title" = "Rekening Verwyder";
+"accountDeletedAlert.message" = "Jou rekening is verwyder.";
+"deleteAccount.title" = "Moenie so haastig gaan nie";
+"deleteAccount.subtitle" = "As jy jou rekening verwyder, sal jy nie toegang hê tot jou gunsteling hulpmiddel of rekeningaktiwiteit nie.";
+"deleteAccount.confirmButton.title" = "Verwyder my rekening";
+"deleteAccount.cancelButton.title" = "Behou my rekening";
+"signIn.title" = "Teken in";
+"signIn.subtitle" = "Meld by jou rekening aan om ware stories, aanmoediging en praktiese wenke op jou vingerpunte te hê.";
+"signIn.google" = "Teken in deur Google";
+"signIn.facebook" = "Meld aan deur Facebook";
+"signIn.apple" = "Gaan aan met Apple";
+"menu_getStarted" = "Begin";
+"menu_support" = "Ondersteun";
+"menu_about" = "Oor";
+"menu.sendFeedback" = "Stuur terugvoer";
+"menu.reportABug" = "Rapporteer 'n fout";
+"menu.askAQuestion" = "Vra 'n vraag";
+"menu.leaveAReview" = "Lewer 'n resensie";
+"account.badges.sectionTitle" = "Jou plakkers";
+"account.activity.sectionTitle" = "Jou aktiwiteite";
+
+/* Just translate "Joined" - leave the %@ - this is the date they started using GodTools */
+"account.joinedOn" = "Aangesluit %@";
+
+"account.globalActivity.title" = "Globale Aktiwiteit";
+"toolDetails.conversationStarters.title" = "Ysbreker";
+
+/* A list of the main points of the tool will live behind a section called "Outline" */
+"toolDetails.outline.title" = "Opsomming";
+
+"toolDetails.bibleReferences.title" = "Bybelverwysings";
+
+/* This About refers to a specific tool in the app. */
+"toolDetails.about.title" = "Aangaande";
+
+/* This means that the tool/resource is not available in the currently selected language. */
+"lessonCard.languageNotAvailable" = "Nie beskikbaar in %@";
+
+"menu.deleteAccount" = "Verwyder rekening";
+"alert.mailAppUnavailable.title" = "Posadres nie beskikbaar";
+"alert.mailAppUnavailable.message" = "Die epos-app is óf nie gespesifiseer, óf nie beskikbaar op hierdie toestel nie.";
+"tool_menu_item.tools" = "Hulpmiddels";
+"lessons.pageTitle" = "Lesse vir jou gemaak";
+"lessons.pageSubtitle" = "Praktiese idees om verhoudings te bou en betekenisvolle gesprekke te voer.";
+"toolSettings.languagesAvailable.title" = "Beskikbare tale";
+"toolDetails.versions.message" = "Kies ’n ander weergawe van die hulpmiddel hieronder. Elke weergawe beskik oor ’n unieke styl en inhoud sodat jy die een kan vind wat die beste vir jou gesprek is. Jy kan vele gunsteling  weergawes van dieselfde hulpmiddel vind.";
+"favorites.noTools.title" = "Geen gunsteling hulpmiddel om te wys nie";
+"favorites.noTools.description" = "Tik op die hart-ikoon om dit ’n gunsteling hulpmiddel te maak wat van lyn af beskikbaar is.";
+"favorites.noTools.button" = "Gaan na Hulpmiddel";
+"toolSettings.shareImagePreview.shareImageButton.title" = "Deel beeld";
+"favorites.pageTitle" = "Welkom by GodTools";
+"favorites.favoriteLessons.title" = "Les in gebruik";
+"favorites.favoriteTools.title" = "Jou gunsteling hulpmiddel";
+"favorites.favoriteTools.viewAll" = "Sien almal";
+
+/* Please keep to a 9 character limit, longer phrases may get cut off */
+"favorites.favoriteLessons.details" = "Details";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
+"toolSettings.languagesList.deleteLanguage.title" = "Geen";
+
+"toolSettings.chooseLanguage.toggleMessage" = "Wissel tussen twee verskillende tale in hierdie hulpmiddel.";
+"toolDetails.versions.title" = "Weergawes";
+"toolDetails.learnToShareToolButton.title" = "Leer hoe om hierdie hulpmiddel te deel";
+"toolSettings.title" = "Hulpmiddel-opsies";
+"toolSettings.option.shareLink.title" = "Deel 'n skakel";
+"toolSettings.option.screenShare.title" = "Deel jou skerm";
+"toolSettings.option.trainingTips.show.title" = "Opleidingswenke";
+"toolSettings.option.trainingTips.hide.title" = "Vesteek wenke";
+"toolSettings.chooseLanguage.title" = "Parallele taal";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "Parallel";
+"toolSettings.shareables.title" = "Verwante simbole";
+"allTools.spotlight.title" = "Hulpmiddel in gebruik";
+"allTools.spotlight.description" = "Hier is van die hulpmiddels wat ons dink jy van sal hou";
+"allTools.categories.title" = "Kategorieë";
+"training_tip_ask" = "Vra";
+"training_tip_consider" = "Oorweeg";
+"training_tip_prepare" = "Berei voor";
+"training_tip_quote" = "Kwoteer";
+"training_tip_tip" = "Wenk";
+"start_training" = "Begin Opleiding";
+"close" = "Maak toe";
+"tool_menu_item.lessons" = "Lesse";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.continueButton.title.closeTutorial" = "Handleiding toe";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.tool.title" = "Hulpmiddels";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.tool.message" = "Elke hulpmiddel is geskep vir verskillende stadiums van die gesprek- voor, gedurende of na dit.";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.toolTip.title" = "Hulpmiddelwenke";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.toolTip.message" = "GodTools wenke lei jou terwyl jy iemand help om die evangelie te verstaan en Jesus te ontmoet.";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.screenShare.title" = "Deel skerm";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.screenShare.message" = "Jy kan nou jou skerm op afstand deel sodat die ander persoon kan volg terwyl jy 'n hulpmiddel gebruik om die evangelie te bespreek.";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.lesson.title" = "Lesse";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.lesson.message" = "In elke GodTools-les leer jy iets wat jou sal help om werklike gesprekke oor God te hê.";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.findTutorial.title" = "Vind hierdie handleiding in die menu wanneer jy dit nodig het.";
+
+"onboardingTutorial.beginButton.title" = "Begin";
+"onboardingTutorial.nextButton.title" = "Volgende";
+"tool_offline_favorite_message" = "Maak die hulpmiddel beskikbaar deur die hart-ikoon te tik wat dit tot jou gunstelinge sal byvoeg.";
+
+/* This is a category description of a tool that helps you start a conversation */
+"tool_category_conversation_starter" = "Gespreksinlyding";
+
+/* This phrase describes a category of tool that helps someone grow in their Christian faith */
+"tool_category_growth" = "Christelike Groei";
+
+"share_link" = "Deel 'n skakel";
+"share_tool_menu.remote_share_tool" = "Deel jou skerm";
+"share_tool_menu.send_tool" = "Stuur hierdie hulpmiddel";
+"share_tool_screen_tutorial.share_your_screen.title" = "Deel jou skerm";
+"share_tool_screen_tutorial.share_your_screen.message" = "Hierdie opsie sal 'n skakel van hierdie werkstuk na 'n vriend stuur. Wanneer die skakel oopgemaak word, sal die skermdelingsessie begin.";
+"share_tool_screen_tutorial.mirrored_experience.title" = "Weerspieëlde ondervinding";
+"share_tool_screen_tutorial.mirrored_experience.message" = "Terwyl jy die hulpmiddel op jou foon blaai, sal jou vriend se foon op dieselfde manier reageer. Dit laat jou toe om die hulpmiddel saam op 2 toestelle op dieselfde tyd te verken.";
+"share_tool_screen_tutorial.get_started.title" = "Kom ons begin";
+"share_tool_screen_tutorial.get_started.message" = "Stuur die skakel na een of meer mense om nou 'n skermdeelsessie te begin.";
+"share_tool_remote_link_message" = "Haai, volg saam met my in GodTools via skermdeling. Hier is die skakel: %@ 
+
+As jy nie hierdie boodskap gou kry nie, mag dit wees omdat die skakel nog nie werk nie. Ons kan later weer probeer.";
+"exit_tract_remote_share_session.message" = "Wil jy nou die afstand-deelsessie verlaat?";
+"load_tool_remote_session.message" = "Begin van skermdeling...";
+"learn_to_share_tool.learn_to_share.title" = "Leer om met enige iemand te deel";
+"learn_to_share_tool.learn_to_share.message" = "Oefen om soveel wenke te gebruik as wat jy nodig het om selfversekerd te voel om hierdie hulpmiddel met ander te deel.";
+"learn_to_share_tool.tips_light_the_way.title" = "Wenke om die pad te verlig";
+"learn_to_share_tool.tips_light_the_way.message" = "Op sekere skerms sal jy 'n verskeidenheid ikone sien. Druk op die ikoon om 'n wenk te vertoon wat jou sal help om oor die inhoud van die skerm te praat.";
+"learn_to_share_tool.light_up_the_tips.title" = "Verlig die wenke";
+"learn_to_share_tool.light_up_the_tips.message" = "Wanneer die wenk verlig, het jy die deel van die opleiding voltooi.  Oefen om so veel as moontlik wenke te gebruik wat jy benodig om met selfvertroue die hulpmiddel te verduidelik";
+"lesson_evaluation.title" = "Hersien";
+"lesson_evaluation.wasThisHelpful" = "Het hierdie les jou gehelp?";
+"lesson_evaluation.shareFaith" = "Hoe gereed voel jy om 'n geestelike gesprek te begin?";
+"lesson_evaluation.sendButtonTitle" = "Stuur terugvoer";
+"onboardingTutorial.0.title" = "Gereed vir elke gesprek";
+"onboardingTutorial.0.videoLink.title" = "Kyk video";
+"onboardingTutorial.1.title" = "Praat oor God met enige een";
+"onboardingTutorial.1.message" = "GodTools help jou om sinvolle gesprekke oor God te hê.";
+"onboardingTutorial.2.title" = "Berei voor vir die oomblikke wat saak maak";
+"onboardingTutorial.2.message" = "Leer hoe om gesprekke te voer oor geloof as ’n natuurllike deel van jou lewe";
+"onboardingTutorial.3.title" = "Help iemand om Jesus te ontdek";
+"onboardingTutorial.3.message" = "GodTools is jou gids om die evangelie op duidelike en relevante maniere te kommunikeer.";
+
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "Opleiding";
+
+/*
+ * This is an invitation for a user to open a tool
+ * Please keep to a 9 character limit, longer phrases may get cut off
+*/
+"open" = "Maak oop";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "Voeg by Gunstelinge";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "Verwyder van Gunstelinge";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "Die hulpmiddel laai af. Om te verhoed om in die toekoms te wag, merk as gunsteling sodat hierdie gereedskap van lyn af beskikbaar is.";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "Besig om die mees onlangse vertaling vir hierdie hulpmiddel af te laai.";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "Verwyder van Gunstelinge?";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "Is jy seker jy wil %@ van jou gunstelinglys afhaal? ";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "Evangelie Uitnodiging";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "Artikels";
+
+"articles.downloadArticlesButton.title.retryDownload" = "Laai Weer Af";
+
+/* This is to let users know which version of the app is installed on their phone */
+"menu_version" = "Weergawe";
+"language_onboard" = "90+ Tale";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "Jy het alle beskikbare hulpmiddels afgelaai.";
+
+/* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
+"my_tools" = "Gunstelinge";
+
+/* The user will click this toggle switch to go find a library of more offerings or "Tools". */
+"find_tools" = "Alle hulpmiddels";
+
+"unavailable" = "Nie beskikbaar";
+
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "Slaan oor";
+
+// Onboarding
+"add_new_tools" = "Voeg nuwe hulpmiddels by";
+"set_your_languages" = "Stel jou Tale in";
+"okay" = "Oukei";
+// Menu
+"menu_general" = "Algemeen";
+"menu_account" = "Rekening";
+"menu_share" = "Deel";
+"menu_legal" = "Wetlik";
+"language_settings" = "Taal-instellings";
+"menu.tutorial" = "Handleiding";
+"menu.my_account" = "My Rekening";
+
+// Login
+"login" = "Meld aan";
+"logout" = "Teken uit";
+"create_account" = "Skep rekening";
+"account_login" = "Rekening aanmelding";
+
+// Tool Detail
+"about" = "Aangaande";
+"help" = "Gewilde Vrae";
+"contact_us" = "Kontak ons";
+"share_god_tools" = "Deel GodTools";
+"share_a_story_with_us" = "Deel 'n storie met ons";
+"terms_of_use" = "Gebruiksvoorwaardes";
+"privacy_policy" = "Privaatheidsbeleid";
+"copyright_info" = "Kopiereg inligting";
+"share_god_tools_share_sheet_text" = "Laai die GodTools-app af:
+http://godtoolsapp.com
+'n Aanlynweergawe kan gevind word by
+https://knowgod.com/";
+
+// Add Tools
+"add_tools" = "Voeg hulpmiddels by";
+
+"total_views" = "%d kyke";
+"total_languages" = "%d tale";
+
+// Language Settings
+"primary_language" = "Primêre taal";
+"select_primary_language" = "Kies ’n primêre taal";
+"parallel_language" = "Parallele taal";
+"select_parallel_language" = "Kies 'n parallele taal";
+"share_god_tools_native_language" = "Deel GodTools met iemand in hulle moedertaal";
+"not_every_tool_is_available" = "Nie elke hulpmiddel is in elke taal beskikbaar nie";
+
+// Settings
+"settings" = "Instellings";
+
+// Alert & Info Controllers
+"download_error" = "Aflaai fout";
+"no_internet_title" = "Geen internetverbinding";
+"no_internet" = "Kontroleer asseblief u internetverbinding en probeer weer.";
+
+"the_tool_you_requested_is_loading" = "Die hulpmiddel wat jy aangevra het is besig om te laai...";
+"loading" = "Besig om te laai...";
+
+// Actions
+"yes" = "Ja";
+"no" = "Nee";
+
+// Tract - Sharing
+"tract_share_message" ="Hierdie skakel sal jou na die webweergawe neem van die bladsy waarna ons vandag saam gekyk het: %@ 
+
+Kom ons gesels nog!
+
+Hierdie app kan afgelaai word vanaf 
+https://godtoolsapp.com";
+
+// Buttons
+"download" = "Laai af";
+"dismiss" = "Laat gaan";
+"done" = "Gedoen";
+"remove" = "Verwyder";
+"clear" = "Maak skoon";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Maak hulpmiddel oop";
+
+// Alerts
+"error" = "Fout";
+"OK" = "Ok";
+"cancel" = "Kanselleer";
+"required_field_missing" = "%@ is ’n vereisde veld.";
+
+"onboardingTutorial.getStartedButton.title" = "Begin";
+
+// About
+"general_about_1" = "GodTools help jou om jou geloof op 'n maklike en duidelike manier te deel.";
+// Tutorial
+"tutorial.tutorialItem.0.title" = "Kyk";
+"general_about_2" = "Hierdie hulpmiddele help jou om met selfvertroue aan iemand te verduidelik hoe hulle 'n verhouding met God kan hê deur Jesus Christus, selfs as jy nog nooit voorheen jou geloof gedeel het nie of hulle dalk 'n ander taal praat.";
+"general_about_3" = "Kies van 'n verskeidenheid hulpmiddele gebaseer op jou voorkeur en jou gehoor. Nie alle hulpmiddele is in elke taal bekikbaar nie.";
+"general_about_4" = "Skakels na ander hulpbronne is ingesluit aan die einde van elke hulpmiddel.";
+"general_about_5" = "Jy moet aanlyn verbind wees om elke nuwe hulpmiddel en/of taal af te laai. As hulle klaar afgelaai is, kan hulle van lyn af gebruik word.";
+"general_about_6" = "Vrae? Aanbevelings? Versoeke? Kontak ons by support@godtoolsapp.com";
+"general_about_7" = "'n Aanlyn weergawe van hierdie hulpmiddels kan by knowgod.com gevind word. Maak dit deel van jou eie webwerf!";
+"tutorial.tutorialItem.3.title" = "Hierdie handleiding is weer beskikbaar in die menu";
+"general_about_8" = "Besoek godtoolsapp.com vir meer inligting.";
+"tutorial.continueButton.title.continue" = "Gaan voort";
+"general_about_9" = "Terwyl jy die inisiatief neem om jou geloof te deel, onthou God is die een wat die hart verander. Wees lief vir elke persoon deur goed te luister vir begrip.";
+"tutorial.continueButton.title.startUsingGodTools" = "Begin GodTools gebruik";
+
+"general_about_10" = "\"Wat julle sê, moet altyd vriendelik wees en van goeie smaak getuig; en julle moet weet hoe julle elkeen behoort te antwoord.\" Kolossense 4:6";
+
+// OpenTutorial
+"openTutorial.showTutorialLabel.text" = "Wys My 'n Handleiding";
+// Downloads
+"Download in progress" = "Besig om af te laai";
+
+"openTutorial.openTutorialButton.title" = "Maak Handleiding Oop";
+
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
+"card_status1" = "Vorige";
+// Account
+"account.navTitle" = "My Profiel";
+"card_status2" = "Volgende";
+
+"account.activity.title" = "Aktiwiteit";
+
+// Language Name Strings
+"language_name_fa" = "Persies (Farsi)";
+
+// Account Activity
+"accountActivity.globalAnalytics.header.title" = "Globale Aktiwiteit";
+"accountActivity.globalAnalytics.users.title" = "Unieke\nGebruikers";
+"onboardingWelcome.titleLabel.tagline" = "Help Jou Om Jou Geloof Te Deel";
+"accountActivity.globalAnalytics.gospelPresentation.title" = "Evangelie\nAanbiedings";
+"accountActivity.globalAnalytics.launches.title" = "Sessies";
+// OnboardingTutorial
+"onboardingTutorial.aboutAppItem.0.title" = "Deel Met Ander";
+"accountActivity.globalAnalytics.countries.title" = "Lande";
+
+"onboardingTutorial.showMoreButton.title" = "Wys My Meer";

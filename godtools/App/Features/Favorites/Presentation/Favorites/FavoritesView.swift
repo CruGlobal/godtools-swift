@@ -100,7 +100,7 @@ struct FavoritesView_Preview: PreviewProvider {
     
     static func getFavoritesViewModel() -> FavoritesViewModel {
         
-        let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
+        let appDiContainer = AppDiContainer.createUITestsDiContainer()
         
         let viewModel = FavoritesViewModel(
             flowDelegate: MockFlowDelegate(),

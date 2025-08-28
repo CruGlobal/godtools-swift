@@ -1,0 +1,226 @@
+/* This About refers to a specific tool in the app. */
+"toolDetails.about.title" = "Névjegy";
+
+/* This means that the tool/resource is not available in the currently selected language. */
+"lessonCard.languageNotAvailable" = "Nem elérhető itt: %@";
+
+"tool_menu_item.tools" = "Eszköz";
+"lessons.pageTitle" = "Neked szóló szentleckék";
+"lessons.pageSubtitle" = "Gyakorlati ötletek a kapcsolatépítéshez és az értelmes beszélgetések megkezdéséhez.";
+"toolSettings.languagesAvailable.title" = "Elérhető nyelvek";
+"toolDetails.versions.message" = "Válaszd ki alább az eszköz egy másik verzióját. Mindegyik változat egyedi stílusú és tartalmú, így megtalálhatod a beszélgetéshez legmegfelelőbbet. Ugyanannak az eszköznek több verzióját is kedvencévé teheted.";
+"favorites.noTools.title" = "Nincsenek megjelenítendő kedvenc eszközök";
+"favorites.noTools.description" = "Koppints a szív ikonra, ha kedvenc eszközödet szeretnéd offline elérhetővé tenni.";
+"favorites.noTools.button" = "Ugrás az eszközökhöz";
+"toolSettings.shareImagePreview.shareImageButton.title" = "Kép megosztása";
+"favorites.pageTitle" = "Üdvözöl a GodTools";
+"favorites.favoriteLessons.title" = "Kiemelt lecke";
+"favorites.favoriteTools.title" = "Kedvenc eszközeid";
+"favorites.favoriteTools.viewAll" = "Összes megtekintése";
+
+/* Please keep to a 9 character limit, longer phrases may get cut off */
+"favorites.favoriteLessons.details" = "Részletek";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
+"toolSettings.languagesList.deleteLanguage.title" = "Egyik sem";
+
+"toolSettings.chooseLanguage.toggleMessage" = "Ebben az eszközben két különböző nyelv között válthatsz.";
+"toolDetails.versions.title" = "Verziók";
+"toolDetails.learnToShareToolButton.title" = "Ismerd meg az eszközmegosztást";
+"toolSettings.title" = "Eszköz opciók";
+"toolSettings.option.shareLink.title" = "Hivatkozás megosztása";
+"toolSettings.option.screenShare.title" = "Képernyő megosztása";
+"toolSettings.option.trainingTips.show.title" = "Képzési tippek";
+"toolSettings.option.trainingTips.hide.title" = "Tippek elrejtése";
+"toolSettings.chooseLanguage.title" = "Párhuzamos nyelv";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "Párhuzamos";
+"toolSettings.shareables.title" = "Kapcsolódó grafika";
+"allTools.spotlight.title" = "Eszköz reflektorfényben";
+"allTools.spotlight.description" = "Íme néhány eszköz, amelyről úgy gondoltuk, hogy tetszeni fog";
+"allTools.categories.title" = "Kategóriák";
+"tool_menu_item.lessons" = "Szentleckék";
+"onboardingTutorial.beginButton.title" = "Kezdés";
+"onboardingTutorial.nextButton.title" = "Következő";
+"tool_offline_favorite_message" = "Offline elérhetővé teheted az eszközt a szív ikonra kattintva, amivel hozzáadod a kedvenceidhez.";
+
+/* This is a category description of a tool that helps you start a conversation */
+"tool_category_conversation_starter" = "Beszélgetés indító";
+
+/* This phrase describes a category of tool that helps someone grow in their Christian faith */
+"tool_category_growth" = "Hitbeli növekedés";
+
+"share_link" = "Hivatkozás megosztása";
+"share_tool_menu.remote_share_tool" = "Képernyő megosztása";
+"share_tool_menu.send_tool" = "Küldd el ezt az eszközt";
+"share_tool_screen_tutorial.share_your_screen.title" = "Képernyő megosztása";
+"share_tool_screen_tutorial.share_your_screen.message" = "Ezzel az opció az eszközhöz egy link küldhető egy ismerősnek. A hivatkozás megnyitása egy képernyőmegosztó munkamenetet indít el.";
+"share_tool_screen_tutorial.mirrored_experience.title" = "Mirrored-élmény";
+"share_tool_screen_tutorial.mirrored_experience.message" = "Miközben az eszközt görgeted a telefonodon, az ismerősöd ugyanilyen módon reagál. Ez lehetővé teszi, hogy 2 készüléken egyidejűleg közösen végigjárjátok az eszközt.";
+"share_tool_screen_tutorial.get_started.title" = "Első lépések";
+"share_tool_screen_tutorial.get_started.message" = "Küldd el a hivatkozást egy-két embernek, hogy elindíthass egy képernyőmegosztó munkamenetet.";
+"share_tool_remote_link_message" = "Szia! Gyere, tarts velem a GodTools világába képernyőmegosztáson keresztül. A hivatkozás: %@ Ha csak később kapod meg ezt az üzenetet, lehet, hogy a hivatkozás még nem működik. Egy későbbi alkalommal újra próbálkozhatunk.";
+"exit_tract_remote_share_session.message" = "Kilép most a távmegosztási munkamenetből?";
+"load_tool_remote_session.message" = "Képernyőmegosztás indítása...";
+"onboardingTutorial.0.title" = "Minden beszélgetésre készen áll";
+"onboardingTutorial.0.videoLink.title" = "Videó megtekintése";
+"onboardingTutorial.1.title" = "Beszélgess bárkivel Istenről";
+"onboardingTutorial.1.message" = "A GodTools segít értelmes beszélgetéseket folytatni Istenről.";
+"onboardingTutorial.2.title" = "Készülj fel a fontos pillanatokra";
+"onboardingTutorial.2.message" = "Ismerd meg, hogyan teheted a hitről szóló beszélgetéseket életed természetes részévé.";
+"onboardingTutorial.3.title" = "Segíts valakinek felfedezni Jézust";
+"onboardingTutorial.3.message" = "A GodTools az útmutatód ahhoz, hogy érthető és releváns módon kommunikáld az evangéliumot.";
+
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "Képzés";
+
+/*
+ * This is an invitation for a user to open a tool
+ * Please keep to a 9 character limit, longer phrases may get cut off
+*/
+"open" = "Megnyitás";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "Hozzáadás Kedvencekhez";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "Eltávolítás Kedvencek közül";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "Az eszköz letöltés alatt. A jövőben a várakozás elkerülése érdekében az eszköz kedvencelésével offline is elérhető lesz.
+";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "Az eszköz legfrissebb fordításának letöltése.";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "Eltávolítás Kedvencek közül?";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "Biztos szeretnéd eltávolítani ezt: %@ a Kedvencek közül? ";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "Gospel meghívás";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "Cikkek";
+"language_onboard" = "90+ nyelv";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "Az összes elérhető eszközt letöltötted.";
+
+/* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
+"my_tools" = "Kedvencek";
+
+/* The user will click this toggle switch to go find a library of more offerings or "Tools". */
+"find_tools" = "Minden eszköz";
+
+"unavailable" = "Nem elérhető";
+
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "Átugrás";
+
+// Onboarding
+"add_new_tools" = "Új eszközök hozzáadása";
+"set_your_languages" = "A nyelvek beállítása";
+"okay" = "OK";
+// Menu
+"menu_general" = "Általános";
+"menu_share" = "Megosztás";
+"menu_legal" = "Jogi információk";
+"language_settings" = "Nyelvbeállítások";
+// Login
+"login" = "Bejelentkezés";
+"logout" = "Kijelentkezés";
+"create_account" = "Fiók létrehozása";
+"account_login" = "Bejelentkezés a fiókba";
+
+// Tool Detail
+"about" = "Névjegy";
+"help" = "Súgó";
+"contact_us" = "Kapcsolatfelvétel";
+"preview_mode_translators_only" = "Előnézet mód (csak fordítóknak)";
+"share_god_tools" = "GodTools alkalmazás megosztása";
+"share_a_story_with_us" = "Ossz meg velünk egy történetet";
+"terms_of_use" = "Használati feltételek";
+"privacy_policy" = "Adatvédelmi irányelvek";
+"copyright_info" = "Jogvédelem";
+"share_god_tools_share_sheet_text" = "Töltsd le a GodTools alkalmazást: https://godtoolsapp.com
+
+A https://knowgod.com/ címen egy online verzió található";
+
+// Add Tools
+"add_tools" = "Eszközök hozzáadása";
+
+"total_views" = "%d nézet";
+"total_languages" = "%d nyelv";
+
+// Language Settings
+"primary_language" = "Elsődleges nyelv";
+"select_primary_language" = "Válassz ki egy elsődleges nyelvet";
+"parallel_language" = "Párhuzamos nyelv";
+"select_parallel_language" = "Válassz egy párhuzamos nyelvet";
+"share_god_tools_native_language" = "Oszd meg a GodTools alkalmazást valakivel az illető anyanyelvén";
+"not_every_tool_is_available" = "Nem minden eszköz áll rendelkezésre minden nyelven";
+
+// Settings
+"settings" = "Beállítások";
+
+// Alert & Info Controllers
+"download_error" = "Letöltés hibája";
+"no_internet_title" = "Nincs internetkapcsolat";
+"no_internet" = "Ellenőrizze az internetkapcsolatot, majd próbálja újra";
+
+"the_tool_you_requested_is_loading" = "A kért eszköz betöltése folyamatban...";
+"loading" = "Betöltés...";
+
+// Actions
+"yes" = "Igen";
+"no" = "Nem";
+
+// Tract - Sharing
+"tract_share_message" ="A hivatkozás elvezet az oldal webes verziójára, amelyet ma együtt néztünk: %@. 
+
+Beszélgessünk még!
+
+Az alkalmazás a https://godtoolsapp.com címről tölthető le";
+
+// Buttons
+"download" = "Letöltés";
+"dismiss" = "Elvet";
+"done" = "Kész";
+"remove" = "Eltávolítás";
+"clear" = "Törlés";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Eszköz megnyitása";
+
+// Alerts
+"error" = "Hiba";
+"OK" = "OK";
+"cancel" = "Mégse";
+"required_field_missing" = "A \"%@\" kötelező mező.";
+
+"onboardingTutorial.getStartedButton.title" = "Első lépések";
+
+// About
+"general_about_1" = "A GodTools segít, hogy megoszd hitedet egyszerű és közérthető módon.";
+"general_about_2" = "Ezek az eszközök segítségedre vannak abban, hogy magabiztosan elmagyarázd valakinek, hogyan alakíthat ki kapcsolatot Istennel Jézus Krisztus közvetítésével, még akkor is, ha eddig még sohasem osztottad meg hitedet másokkal, vagy ha az illető más nyelvet beszél.";
+"general_about_3" = "Számos eszköz közül választhatsz tetszésed szerint, vagy a hallgatóságodnak megfelelően. Nem minden eszköz áll rendelkezésre minden nyelven.";
+"general_about_4" = "Az egyes eszközök végén további forrásokra mutató hivatkozásokat találsz.";
+"general_about_5" = "Az új eszközök vagy nyelvek letöltéséhez internetkapcsolat szükséges. A letöltés után internetkapcsolat nélkül is használhatók.";
+"general_about_6" = "Kérdések? Javaslatok? Kérések? Lépj velünk kapcsolatba a support@godtoolsapp.com címen";
+"general_about_7" = "Az eszközök online verzióját megtalálhatod a knowgod.com címen. Építsd be a saját oldaladba!";
+"general_about_8" = "További információk a godtoolsapp.com címen.";
+"tutorial.continueButton.title.continue" = "Folytasd";
+"general_about_9" = "Ha magadhoz ragadod a kezdeményezést, és megosztod hitedet, ne feledd, hogy Isten az, aki az emberek szívét megváltoztatja. Szeress mindenkit, hallgasd meg és értsd meg őket.";
+"general_about_10" = "„Beszédetek legyen mindig szíves, sóval ízes, akkor majd helyesen meg tudtok felelni mindenkinek.” Kolosszeieknek írt levél 4:6";
+
+// Downloads
+"Download in progress" = "Letöltés folyamatban";
+
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
+"card_status1" = "Előző";
+"card_status2" = "Következő";
+
+// Language Name Strings
+"language_name_fa" = "Perzsa (fárszi)";
+

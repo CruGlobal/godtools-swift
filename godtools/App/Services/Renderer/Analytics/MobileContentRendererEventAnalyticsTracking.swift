@@ -14,9 +14,9 @@ class MobileContentRendererEventAnalyticsTracking {
     private static let actionContentEvent: String = "content_event"
     private static let paramEventId: String = "event_id"
     
-    private let firebaseAnalytics: FirebaseAnalytics
+    private let firebaseAnalytics: FirebaseAnalyticsInterface
     
-    init(firebaseAnalytics: FirebaseAnalytics) {
+    init(firebaseAnalytics: FirebaseAnalyticsInterface) {
         
         self.firebaseAnalytics = firebaseAnalytics
     }

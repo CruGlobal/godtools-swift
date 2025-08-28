@@ -1,0 +1,218 @@
+/* This About refers to a specific tool in the app. */
+"toolDetails.about.title" = "เกี่ยวกับ";
+
+/* This means that the tool/resource is not available in the currently selected language. */
+"lessonCard.languageNotAvailable" = "ไม่พร้อมใช้งานได้ใน %@";
+
+"tool_menu_item.tools" = "เครื่องมือ";
+"lessons.pageTitle" = "บทเรียนที่สร้างมาเพื่อคุณ";
+"lessons.pageSubtitle" = "แนวคิดเชิงปฏิบัติเพื่อสร้างความสัมพันธ์และเริ่มต้นบทสนทนาที่มีความหมาย";
+"toolSettings.languagesAvailable.title" = "ภาษาที่พร้อมใช้งาน";
+"toolDetails.versions.message" = "เลือกเครื่องมือนี้ในเวอร์ชันอื่นด้านล่าง แต่ละเวอร์ชันมีสไตล์และเนื้อหาที่เป็นเอกลักษณ์ คุณจึงสามารถค้นหาเวอร์ชันที่เหมาะกับการสนทนาของคุณได้มากที่สุด คุณสามารถตั้งเป็นรายการโปรดได้หลายเวอร์ชันสำหรับเครื่องมือเดียว";
+"favorites.noTools.title" = "ไม่มีเครื่องมือโปรดที่จะแสดง";
+"favorites.noTools.description" = "แตะที่ไอคอนรูปหัวใจเพื่อตั้งเป็นเครื่องมือโปรดและตั้งค่าให้ใช้งานแบบออฟไลน์ได้";
+"favorites.noTools.button" = "ไปที่เครื่องมือ";
+"toolSettings.shareImagePreview.shareImageButton.title" = "แชร์รูปภาพ";
+"favorites.pageTitle" = "ยินดีต้อนรับสู่ GodTools";
+"favorites.favoriteLessons.title" = "บทเรียนแนะนำ";
+"favorites.favoriteTools.title" = "เครื่องมือโปรดของคุณ";
+"favorites.favoriteTools.viewAll" = "ดูทั้งหมด";
+"toolSettings.chooseLanguage.toggleMessage" = "สลับไปมาระหว่างสองภาษาในเครื่องมือนี้";
+"toolDetails.versions.title" = "เวอร์ชัน";
+"toolDetails.learnToShareToolButton.title" = "เรียนรู้ที่จะแชร์เครื่องมือนี้";
+"toolSettings.title" = "ตัวเลือกเครื่องมือ";
+"toolSettings.option.shareLink.title" = "แชร์ลิงค์";
+"toolSettings.option.screenShare.title" = "แชร์หน้าจอของคุณ";
+"toolSettings.option.trainingTips.show.title" = "เคล็ดลับการฝึก";
+"toolSettings.option.trainingTips.hide.title" = "ซ่อนเคล็ดลับ";
+"toolSettings.chooseLanguage.title" = "ภาษาพาราเลล";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "พาราเลล";
+"toolSettings.shareables.title" = "กราฟิกที่เกี่ยวข้อง";
+"allTools.spotlight.title" = "เครื่องมือโดดเด่น";
+"allTools.spotlight.description" = "นี่คือเครื่องมือที่เราคิดว่าคุณอาจชอบ";
+"allTools.categories.title" = "หมวดหมู่";
+"tool_menu_item.lessons" = "บทเรียน";
+"onboardingTutorial.beginButton.title" = "เริ่มต้น";
+"onboardingTutorial.nextButton.title" = "ต่อไป";
+"tool_offline_favorite_message" = "ทำให้เครื่องมือพร้อมใช้งานแบบออฟไลน์โดยแตะที่ไอคอนรูปหัวใจเพื่อเพิ่มไว้ในรายการโปรดของคุณ";
+
+/* This is a category description of a tool that helps you start a conversation */
+"tool_category_conversation_starter" = "ผู้เริ่มบทสนทนา";
+
+/* This phrase describes a category of tool that helps someone grow in their Christian faith */
+"tool_category_growth" = "ชีวิตคริสเตียนเจริญขึ้น";
+
+"share_link" = "แชร์ลิงค์";
+"share_tool_menu.remote_share_tool" = "แชร์หน้าจอของคุณ";
+"share_tool_menu.send_tool" = "ส่งเครื่องมือนี้";
+"share_tool_screen_tutorial.share_your_screen.title" = "แชร์หน้าจอของคุณ";
+"share_tool_screen_tutorial.share_your_screen.message" = "ตัวเลือกนี้จะส่งลิงก์ไปยังเครื่องมือนี้ให้กับเพื่อน เมื่อเปิดลิงก์ขึ้นมาจะเริ่มเซสชันการแชร์หน้าจอ";
+"share_tool_screen_tutorial.mirrored_experience.title" = "การสะท้อนหน้าจอ (Mirror)";
+"share_tool_screen_tutorial.mirrored_experience.message" = "เมื่อคุณเลื่อนเครื่องมือขึ้นลงบนโทรศัพท์ หน้าจอของเพื่อนจะตอบสนองในลักษณะเดียวกัน สิ่งนี้ช่วยให้คุณสามารถดูเครื่องมือพร้อมกันบนอุปกรณ์ 2 เครื่องในเวลาเดียวกัน";
+"share_tool_screen_tutorial.get_started.title" = "เริ่มต้นใช้งาน";
+"share_tool_screen_tutorial.get_started.message" = "ส่งลิงก์ไปยังบุคคลตั้งแต่หนึ่งคนขึ้นไปเพื่อเริ่มเซสชันการแชร์หน้าจอทันที ปัจจุบัน";
+"share_tool_remote_link_message" = "สวัสดี ติดตามไปกับฉันใน GodTools ผ่านการแชร์หน้าจอ นี่คือลิงค์: %@ 
+
+หากคุณไม่ได้รับข้อความนี้หลังจากผ่านไปสักพัก ลิงก์อาจยังใช้งานไม่ได้ เราสามารถลองอีกครั้งในภายหลัง";
+"exit_tract_remote_share_session.message" = "ออกจากเซสชันการแชร์ทางไกลตอนนี้หรือไม่";
+"load_tool_remote_session.message" = "กำลังเริ่มการแชร์หน้าจอ...";
+"onboardingTutorial.0.title" = "พร้อมสำหรับทุกการสนทนา";
+"onboardingTutorial.0.videoLink.title" = "ดูวิดีโอ";
+"onboardingTutorial.1.title" = "พูดคุยเรื่องพระเจ้ากับใครก็ได้";
+"onboardingTutorial.1.message" = "GodTools ช่วยให้คุณมีบทสนทนาที่มีความหมายเกี่ยวกับพระเจ้า";
+"onboardingTutorial.2.title" = "เตรียมพร้อมสำหรับช่วงเวลาที่สำคัญ";
+"onboardingTutorial.2.message" = "เรียนรู้วิธีสนทนาเกี่ยวกับความศรัทธา ซึ่งเป็นส่วนหนึ่งของชีวิตคุณ";
+"onboardingTutorial.3.title" = "ช่วยใครซักคนให้รู้จักกับพระเยซู";
+"onboardingTutorial.3.message" = "GodTools ชี้แนะแนวทางในการสื่อสารพระกิตติคุณอย่างชัดเจนและตรงประเด็น";
+
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "การฝึกซ้อม";
+
+/*
+ * This is an invitation for a user to open a tool
+ * Please keep to a 9 character limit, longer phrases may get cut off
+*/
+"open" = "เปิด";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "เพิ่มไปยังรายการโปรด";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "ลบออกจากรายการโปรด";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "กำลังดาวน์โหลดเครื่องมือ เพื่อหลีกเลี่ยงการรอในอนาคต เพิ่มเครื่องมือนี้ในรายการโปรดเพื่อทำให้เครื่องมือพร้อมใช้งานแบบออฟไลน์";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "กำลังดาวน์โหลดการแปลล่าสุดจากเครื่องมือนี้";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "ลบออกจากรายการโปรดหรือไม่";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "แน่ใจหรือไม่ว่าต้องการลบ%@ออกจากรายการโปรด";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "คำเชิญพระกิตติคุณ";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "บทความ";
+"language_onboard" = "กว่า 90 ภาษา";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "คุณดาวน์โหลดเครื่องมือทั้งหมดแล้ว";
+
+/* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
+"my_tools" = "รายการโปรด";
+
+/* The user will click this toggle switch to go find a library of more offerings or "Tools". */
+"find_tools" = "เครื่องมือทั้งหมด";
+
+"unavailable" = "ใช้ไม่ได้";
+
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "ข้าม";
+
+// Onboarding
+"add_new_tools" = "เพิ่มเครื่องมือใหม่";
+"set_your_languages" = "ตั้งค่าภาษา";
+"okay" = "โอเค";
+// Menu
+"menu_general" = "ทั่วไป";
+"menu_share" = "แชร์";
+"menu_legal" = "กฎหมาย";
+"language_settings" = "การตั้งค่าภาษา";
+// Login
+"login" = "เข้าสู่ระบบ";
+"logout" = "ออกจากระบบ";
+"create_account" = "ลงทะเบียน";
+"account_login" = "เข้าสู่บัญชี";
+
+// Tool Detail
+"about" = "เกี่ยวกับ";
+"help" = "ช่วยเหลือ";
+"contact_us" = "ติดต่อเรา";
+"preview_mode_translators_only" = "โหมดพรีวิว (นักแปลเท่านั้น)";
+"share_god_tools" = "แชร์แอป GodTools";
+"share_a_story_with_us" = "แชร์เรื่องราวกับเรา";
+"terms_of_use" = "เงื่อนไขการใช้งาน";
+"privacy_policy" = "นโยบายความเป็นส่วนตัว";
+"copyright_info" = "ข้อมูลลิขสิทธิ์";
+"share_god_tools_share_sheet_text" = "ดาวน์โหลดแอป GodTools ได้จาก https://godtoolsapp.com
+
+สามารถดูเวอร์ชั่นออนไลน์ได้ที่ https://knowgod.com/";
+
+// Add Tools
+"add_tools" = "เพิ่มเครื่องมือ";
+
+"total_views" = "ดู %d ครั้ง";
+"total_languages" = "%d ภาษา";
+
+// Language Settings
+"primary_language" = "ภาษาหลัก";
+"select_primary_language" = "เลือกภาษาหลัก";
+"parallel_language" = "ภาษาพาราเลล";
+"select_parallel_language" = "เลือกภาษาพาราเลล";
+"share_god_tools_native_language" = "แชร์ GodTools เป็นภาษาของผู้รับ";
+"not_every_tool_is_available" = "มีเครื่องมือไม่ครบทุกภาษา";
+
+// Settings
+"settings" = "การตั้งค่า";
+
+// Alert & Info Controllers
+"download_error" = "ข้อผิดพลาดในการดาวน์โหลด";
+"no_internet_title" = "ไม่มีการเชื่อมต่ออินเทอร์เน็ต";
+"no_internet" = "โปรดตรวจสอบการเชื่อมต่ออินเทอร์เน็ต แล้วลองอีกครั้ง";
+
+"the_tool_you_requested_is_loading" = "กำลังโหลดเครื่องมือที่คุณร้องขอ…";
+"loading" = "กำลังโหลด...";
+
+// Actions
+"yes" = "ใช่";
+"no" = "ไม่";
+
+// Tract - Sharing
+"tract_share_message" ="ลิงก์นี้จะนำคุณไปยังหน้าเพจที่เราดูด้วยกันวันนี้: %@. มาคุยกันอีก!
+
+สามารถดาวน์โหลดแอปได้ที่ https://godtoolsapp.com";
+
+// Buttons
+"download" = "ดาวน์โหลด";
+"dismiss" = "ยกเลิก";
+"done" = "เสร็จ";
+"remove" = "ลบออก";
+"clear" = "ล้าง";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "เปิดเครื่องมือ";
+
+// Alerts
+"error" = "ข้อผิดพลาด";
+"OK" = "ตกลง";
+"cancel" = "ยกเลิก";
+"required_field_missing" = "\"%@\" เป็นช่องบังคับ";
+
+"onboardingTutorial.getStartedButton.title" = "เริ่มต้นใช้งาน";
+
+// About
+"general_about_1" = "GodTools เป็นแอปที่ให้คุณแชร์ศรัทธาที่มีได้อย่างง่ายดายและชัดเจน";
+"general_about_2" = "เครื่องมือเหล่านี้จะช่วยให้คุณอธิบายได้อย่างมั่นใจถึงวิธีเริ่มต้นความสัมพันธ์กับพระผู้เป็นเจ้าผ่านพระเยซูคริสต์ ถึงแม้คุณจะไม่เคยเผยแผ่ศรัทธามาก่อนหรือผู้ฟังไม่ได้พูดภาษาเดียวกันกับคุณ";
+"general_about_3" = "เลือกเครื่องมือต่างๆ ได้ตามการกำหนดลักษณะและผู้รับฟัง มีเครื่องมือไม่ครบทุกภาษา";
+"general_about_4" = "ลิงก์ไปยังทรัพยากรอื่นๆ จะอยู่ที่ด้านท้ายของเครื่องมือ";
+"general_about_5" = "โปรดเชื่อมต่ออินเทอร์เน็ตเพื่อดาวน์โหลดเครื่องมือและ/หรือภาษาใหม่ หลังจากดาวน์โหลดแล้ว คุณสามารถใช้เครื่องมือเหล่านี้ได้ในขณะออฟไลน์";
+"general_about_6" = "หากมีคำถาม ข้อเสนอแนะ หรือต้องการความช่วยเหลือ โปรดติดต่อเราที่ support@godtoolsapp.com";
+"general_about_7" = "ค้นเครื่องมือออนไลน์ได้จาก knowgod.com แล้วดาวน์โหลดไว้ในเว็บไซต์ของคุณ!";
+"general_about_8" = "ดูข้อมูลเพิ่มเติมได้ที่ godtoolsapp.com";
+"tutorial.continueButton.title.continue" = "ต่อไป";
+"general_about_9" = "ในการเผยแผ่ศรัทธาที่คุณมีต่อพระผู้เป็นเจ้า โปรดระลึกว่าพระองค์เป็นผู้เปลี่ยนแปลงจิตใจ ขอให้เปิดใจฟังอย่างเข้าอกเข้าใจ";
+"general_about_10" = "\"จงให้ถ้อยคำของท่านทั้งหลายประกอบด้วยเมตตาคุณเสมอ ปรุงด้วยเกลือให้มีรส เพื่อท่านจะได้รู้ว่าควรจะตอบแต่ละคนอย่างไร\" โคโลสี 4:6";
+
+// Downloads
+"Download in progress" = "อยู่ระหว่างการดาวน์โหลด";
+
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
+"card_status1" = "ก่อนหน้า";
+"card_status2" = "ถัดไป";
+
+// Language Name Strings
+"language_name_fa" = "เปอร์เซีย (ฟาร์ซี)";
+

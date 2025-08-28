@@ -1,0 +1,226 @@
+/* This About refers to a specific tool in the app. */
+"toolDetails.about.title" = "O";
+
+/* This means that the tool/resource is not available in the currently selected language. */
+"lessonCard.languageNotAvailable" = "Није доступно у %@";
+
+"tool_menu_item.tools" = "Aлатке";
+"lessons.pageTitle" = "Лекције направљене за вас";
+"lessons.pageSubtitle" = "Практичне идеје за изградњу односа и почетак смислених разговора.";
+"toolSettings.languagesAvailable.title" = "Доступни језици";
+"toolDetails.versions.message" = "Одаберите другу верзију овог алата у наставку. Свака верзија има јединствен стил и садржај тако да можете пронаћи ону која је најбоља за ваш разговор. Можете фаворизовати више верзија истог алата.";
+"favorites.noTools.title" = "Нема омиљених алата за приказ";
+"favorites.noTools.description" = "Додирните икону срца да бисте фаворизирали алат и учинили га доступним ван мреже.";
+"favorites.noTools.button" = "Иди у алате";
+"toolSettings.shareImagePreview.shareImageButton.title" = "Подели слику";
+"favorites.pageTitle" = "Добродошли у GodTools";
+"favorites.favoriteLessons.title" = "Истакнута лекција";
+"favorites.favoriteTools.title" = "Ваши омиљени алати";
+"favorites.favoriteTools.viewAll" = "Прикажи све";
+
+/* Please keep to a 9 character limit, longer phrases may get cut off */
+"favorites.favoriteLessons.details" = "Детаљи";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
+"toolSettings.languagesList.deleteLanguage.title" = "Ниједно";
+
+"toolSettings.chooseLanguage.toggleMessage" = "Пребаците се између два различита језика у овој алатки.";
+"toolDetails.versions.title" = "Верзије";
+"toolDetails.learnToShareToolButton.title" = "Сазнајте како да користиш овај алат";
+"toolSettings.title" = "Опције алата";
+"toolSettings.option.shareLink.title" = "Подели везу";
+"toolSettings.option.screenShare.title" = "Подели екран";
+"toolSettings.option.trainingTips.show.title" = "Савети за обуку";
+"toolSettings.option.trainingTips.hide.title" = "Сакриј савете";
+"toolSettings.chooseLanguage.title" = "Паралелни језик";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "Паралелни";
+"toolSettings.shareables.title" = "Повезане графике";
+"allTools.spotlight.title" = "Издвојени алат";
+"allTools.spotlight.description" = "Ево неких алата који би вам се могли свидети";
+"allTools.categories.title" = "Категорије";
+"tool_menu_item.lessons" = "Лекције";
+"onboardingTutorial.beginButton.title" = "Почни";
+"onboardingTutorial.nextButton.title" = "Следеће";
+"tool_offline_favorite_message" = "Омогући да алатка буде доступна ван мреже тако што ћете додирнути иконицу срце која ће је додати у омиљене.";
+
+/* This is a category description of a tool that helps you start a conversation */
+"tool_category_conversation_starter" = "Почетак разговора";
+
+/* This phrase describes a category of tool that helps someone grow in their Christian faith */
+"tool_category_growth" = "Хришћанско узрастање";
+
+"share_link" = "Подели везу";
+"share_tool_menu.remote_share_tool" = "Подели екран";
+"share_tool_menu.send_tool" = "Пошаљи ову алатку";
+"share_tool_screen_tutorial.share_your_screen.title" = "Подели екран";
+"share_tool_screen_tutorial.share_your_screen.message" = "Ова опција ће послати везу са овом алатком пријатељу. По отварању везе, започеће сесија дељења екрана.";
+"share_tool_screen_tutorial.mirrored_experience.title" = "Искуство пресликавања";
+"share_tool_screen_tutorial.mirrored_experience.message" = "Док померате алатку на свом телефону, екран вашег пријатеља ће реаговати на исти начин. Ово вам омогућава да истовремено заједно пређете преко алатке на 2 уређаја.";
+"share_tool_screen_tutorial.get_started.title" = "Започни";
+"share_tool_screen_tutorial.get_started.message" = "Пошаљите везу једној или више особа да бисте одмах започели сесију дељења екрана.";
+"share_tool_remote_link_message" = "Здраво, пратите заједно са мном у апликацији GodTools преко дељења екрана. Ево везе: %@ 
+
+Ако ову поруку не примите до касније, веза можда неће радити. Можемо да пробамо поново други пут.";
+"exit_tract_remote_share_session.message" = "Изађите из сесије даљинског дељења одмах?";
+"load_tool_remote_session.message" = "Почетак дељења екрана...";
+"onboardingTutorial.0.title" = "Спремни за сваки разговор";
+"onboardingTutorial.0.videoLink.title" = "Погледајте видео запис";
+"onboardingTutorial.1.title" = "Разговарајте о Богу са било ким";
+"onboardingTutorial.1.message" = "GodTools вам помаже да водите смислене разговоре о Богу.";
+"onboardingTutorial.2.title" = "Припремите се за важне тренутке";
+"onboardingTutorial.2.message" = "Научите како да разговоре о вери учините природним делом свог живота.";
+"onboardingTutorial.3.title" = "Помозите некоме да открије Исуса";
+"onboardingTutorial.3.message" = "GodTools је ваш водич за представљање јеванђеља на јасан и релевантан начин.";
+
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "Обука";
+
+/*
+ * This is an invitation for a user to open a tool
+ * Please keep to a 9 character limit, longer phrases may get cut off
+*/
+"open" = "Отвори";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "Додај у Омиљене";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "Уклони из Омиљених";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "Алатка се преузима. У будуће, да бисте избегли чекање додајте ову алатку у омиљене да би била доступна ван мреже. 
+";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "Преузима се најновији превод за ову алатку.";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "Уклони из омиљених? ";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "Заиста желите да уклоните %@ из омиљених? ";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "Јеванђељски позив";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "Чланци";
+"language_onboard" = "Перко 90 језика";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "Преузели сте све доступне алатке.";
+
+/* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
+"my_tools" = "Омиљено";
+
+/* The user will click this toggle switch to go find a library of more offerings or "Tools". */
+"find_tools" = "Све алатке";
+
+"unavailable" = "Недоступно";
+
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "Прескочи";
+
+// Onboarding
+"add_new_tools" = "Додај нове алатке";
+"set_your_languages" = "Подесите своје језике";
+"okay" = "У реду";
+// Menu
+"menu_general" = "Опште";
+"menu_share" = "Подели";
+"menu_legal" = "Правно";
+"language_settings" = "Подешавање језика";
+// Login
+"login" = "Пријава";
+"logout" = "Одјава";
+"create_account" = "Креирајте налог";
+"account_login" = "Пријава у налог";
+
+// Tool Detail
+"about" = "О";
+"help" = "Помоћ";
+"contact_us" = "Контактирајте нас";
+"preview_mode_translators_only" = "Режим прегледа (само за преводиоце)";
+"share_god_tools" = "Поделите апликацију GodTools";
+"share_a_story_with_us" = "Поделите причу са нама";
+"terms_of_use" = "Услови коришћења";
+"privacy_policy" = "Политика приватности";
+"copyright_info" = "Информације о ауторском праву";
+"share_god_tools_share_sheet_text" = "Преузмите апликацију GodTools: https://godtoolsapp.com";
+
+// Add Tools
+"add_tools" = "Додај алатке";
+
+"total_views" = "%d прегледа";
+"total_languages" = "%d језика";
+
+// Language Settings
+"primary_language" = "Примарни језик";
+"select_primary_language" = "Изаберите примарни језик";
+"parallel_language" = "Паралелни језик";
+"select_parallel_language" = "Изаберите паралелни језик";
+"share_god_tools_native_language" = "Поделите апликацију GodTools са неким на њиховом матерњем језику";
+"not_every_tool_is_available" = "Сви алати нису доступни на сваком језику";
+
+// Settings
+"settings" = "Подешавања";
+
+// Alert & Info Controllers
+"download_error" = "Грешка приликом преузимања";
+"no_internet_title" = "Нема интернет везе";
+"no_internet" = "Проверите везу са интернетом и покушајте поново.";
+
+"the_tool_you_requested_is_loading" = "Алатка коју сте тражили се учитава…";
+"loading" = "Учитавање...";
+
+// Actions
+"yes" = "Да";
+"no" = "Не";
+
+// Tract - Sharing
+"tract_share_message" ="Ова веза ће вас одвести на веб верзију странице коју смо последњи пут гледали заједно данас: %@. 
+
+Хајде да разговарамо више!
+
+Апликација се може преузети са https://godtoolsapp.com";
+
+// Buttons
+"download" = "Преузми";
+"dismiss" = "Одбаци";
+"done" = "Готово";
+"remove" = "Уклони";
+"clear" = "Обриши";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Отворени алат";
+
+// Alerts
+"error" = "Грешка";
+"OK" = "У реду";
+"cancel" = "Откажи";
+"required_field_missing" = "\"%@\" је обавезно поље.";
+
+"onboardingTutorial.getStartedButton.title" = "Започни";
+
+// About
+"general_about_1" = "Апликација GodTools вам помаже да поделите своју веру на лак и јасан начин.";
+"general_about_2" = "Ови алати вам помажу да некоме објасните сигурно како могу да започну везу са Богом кроз Исуса Христа, чак и ако никада раније нису делили своју веру или говорили на другом језику.";
+"general_about_3" = "Одаберите различите алате на основу ваших подешавања и ваше публике. Нису сви алати доступни на сваком језику.";
+"general_about_4" = "Везе са другим ресурсима су садржане на крају сваког алата.";
+"general_about_5" = "Мрежна веза је неопходна за преузимање сваког новог алата и/или језика. Чим се преузму, могу се користити ван мреже.";
+"general_about_6" = "Питања? Предлози? Захтеви? Контактирајте нас на support@godtoolsapp.com";
+"general_about_7" = "Верзија ових алата на мрежи се може наћи на knowgod.com. Уградите га на свом сајту!";
+"general_about_8" = "Посетите godtoolsapp.com за више информација.";
+"tutorial.continueButton.title.continue" = "Настави";
+"general_about_9" = "Чим предузмете иницијативу да поделите своју веру, сетите се да је Бог онај који мења срце. Волите сваку особу тако што ћете је слушати да бисте је разумели.";
+"general_about_10" = "„Реч ваша да бива свагда у благодати, сољу зачињена, да знате како вам свакоме треба одговарати.“ Колошани 4, 6";
+
+// Downloads
+"Download in progress" = "Преузимање је у току";
+
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
+"card_status1" = "Претходно";
+"card_status2" = "Следеће";
+
+// Language Name Strings
+"language_name_fa" = "Персијски (фарси)";
+

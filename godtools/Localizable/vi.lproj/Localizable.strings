@@ -1,0 +1,410 @@
+"optInNotification.notificationSettings" = "Cài đặt Thông báo";
+"lessons.swipeTutorial.title" = "Vuốt để chuyển trang";
+"lessons.swipeTutorial.buttonText" = "Hiểu rồi";
+"optInNotification.title" = "Nhận Lời khuyên và Sự khích lệ";
+"optInNotification.body" = "Luôn sẵn sàng cho những cuộc trò chuyện.\nBật thông báo ngay hôm nay.";
+"optInNotification.allowNotifications" = "Cho phép thông báo";
+"optInNotification.maybeLater" = "Có lẽ Để sau";
+
+/* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
+"lessons.resumeLessonModal.title" = "Tiếp tục Tiến trình";
+
+"lessons.resumeLessonModal.subtitle" = "Bạn có muốn tiếp tục từ nơi bạn đã dừng lại không?";
+"lessons.resumeLessonModal.startOverButton" = "Bắt đầu lại";
+"lessons.resumeLessonModal.continueButton" = "Tiếp tục";
+"lessons.lessonCompleted" = "Hoàn Tất";
+"lessons.completionProgress" = "%@ hoàn tất";
+"network_connection_lost" = "Kết nối mạng đã bị mất.";
+"language_name_fil" = "Tiếng Philippines (Tagalog)";
+"lessons.filter.navBar.language" = "Ngôn ngữ bài học";
+"lessons.languageFilter.title" = "Bài học bằng:";
+"language_name_fil-x-taglish" = "Taglish";
+"language_name_sid" = "Sidama";
+"onboardingTutorial.chooseLanguageButton.title" = "Chọn ngôn ngữ";
+"languageSettings.confirmAppLanguage.message" = "Bạn đã lựa chọn %@ làm ngôn ngữ ứng dụng. Toàn bộ ứng dụng GodTools sẽ được thay đổi sang ngôn ngữ này. Bạn có chắc chắn?";
+"languageSettings.confirmAppLanguage.changeLanguageButton.title" = "Thay đổi ngôn ngữ";
+"languageSettings.confirmAppLanguage.nevermindButton.title" = "Bỏ qua";
+"languageSettings.downloadableLanguages.title" = "Các ngôn ngữ có thể tải xuống";
+"languageSettings.appInterface.title" = "Giao diện ngôn ngữ của ứng dụng";
+"languageSettings.appInterface.message" = "Cài đặt ngôn ngữ mà bạn muốn cho toàn bộ ứng dụng.";
+"languageSettings.appInterface.languagesAvailable" = "Những ngôn ngữ sẵn có";
+"languageSettings.toolLanguagesAvailableOffline.title" = "Công cụ ngôn ngữ sẵn có khi offline";
+"languageSettings.toolLanguagesAvailableOffline.message" = "Tải tất cả công cụ có trong một ngôn ngữ để sẵn dùng ngay cả khi không có kết nối internet.";
+"languageSettings.toolLanguagesAvailableOffline.editDownloadedLanguagesButton.title" = "Tùy chỉnh các ngôn ngữ được tải về";
+"allTools.filter.title" = "Bộ lọc";
+"allTools.filter.anyCategory" = "Bất kỳ loại nào";
+"allTools.filter.anyLanguage" = "Bất kỳ ngôn ngữ nào";
+"allTools.filter.navBar.language" = "Lọc theo ngôn ngữ";
+"allTools.filter.navBar.category" = "Lọc theo danh mục";
+"languageSettings.appLanguage.title" = "Ngôn ngữ ứng dụng";
+"authError.userAccountAlreadyExists.message" = "Tài khoản người dùng đã tồn tại.";
+"authError.userAccountNotFound.message" = "Không tìm thấy tài khoản người dùng.";
+"createAccount.title" = "Tạo tài khoản";
+"createAccount.subtitle" = "Tạo một tài khoản để có những câu chuyện, sự khích lệ và gợi ý thực hành trong tầm tay bạn.";
+"deleteAccountProgress.title" = "Đang xóa tài khoản...";
+"confirmDeleteAccount.title" = "Bạn có chắc không?";
+"confirmDeleteAccount.confirmButton.title" = "Xóa tài khoản";
+"accountDeletedAlert.title" = "Tài khoản đã bị xóa";
+"accountDeletedAlert.message" = "Tài khoản của bạn đã bị xóa.";
+"deleteAccount.title" = "Đừng đi sớm thế";
+"deleteAccount.subtitle" = "Nếu xóa tài khoản của mình, bạn sẽ không thể truy cập các công cụ hoặc hoạt động tài khoản yêu thích nữa.";
+"deleteAccount.confirmButton.title" = "Xóa tài khoản của tôi đi";
+"deleteAccount.cancelButton.title" = "Giữ tài khoản của tôi lại";
+"signIn.title" = "Đăng nhập";
+"signIn.subtitle" = "Đăng nhập vào tài khoản của bạn để có những câu chuyện thực tế, những lời động viên và những lời khuyên thiết thực trong tầm tay.";
+"signIn.google" = "Đăng nhập bằng Google";
+"signIn.facebook" = "Đăng nhập Facebook";
+"signIn.apple" = "Tiếp tục với Apple";
+"menu_getStarted" = "Bắt đầu";
+"menu_support" = "Hỗ trợ";
+"menu_about" = "Giới thiệu";
+"menu.sendFeedback" = "Gửi ý kiến";
+"menu.reportABug" = "Báo cáo lỗi";
+"menu.askAQuestion" = "Đặt câu hỏi";
+"menu.leaveAReview" = "Để lại đánh giá";
+"account.badges.sectionTitle" = "Huy hiệu";
+"account.activity.sectionTitle" = "Hoạt động của bạn";
+
+/* Just translate "Joined" - leave the %@ - this is the date they started using GodTools */
+"account.joinedOn" = "Tham gia %@";
+
+"account.globalActivity.title" = "Hoạt động toàn cầu";
+"toolDetails.conversationStarters.title" = "Bắt đầu cuộc đối thoại";
+
+/* A list of the main points of the tool will live behind a section called "Outline" */
+"toolDetails.outline.title" = "Điểm chính";
+
+"toolDetails.bibleReferences.title" = "Tham khảo Kinh Thánh";
+
+/* This About refers to a specific tool in the app. */
+"toolDetails.about.title" = "Về...";
+
+/* This means that the tool/resource is not available in the currently selected language. */
+"lessonCard.languageNotAvailable" = "Không có sẵn trong %@";
+
+"menu.deleteAccount" = "Xóa tài khoản";
+"alert.mailAppUnavailable.title" = "Ứng dụng thư không khả dụng";
+"alert.mailAppUnavailable.message" = "Ứng dụng Thư gốc chưa được cấu hình hoặc không khả dụng trên thiết bị này.";
+"tool_menu_item.tools" = "Công cụ";
+"lessons.pageTitle" = "Bài học dành cho bạn";
+"lessons.pageSubtitle" = "Những ý tưởng thiết thực giúp xây dựng mối quan hệ và bắt đầu cuộc trò chuyện đầy ý nghĩa.";
+"toolSettings.languagesAvailable.title" = "Những ngôn ngữ sẵn có";
+"toolDetails.versions.message" = "Chọn một phiên bản khác của công cụ này ở bên dưới. Mỗi phiên bản có các tính năng và nội dung riêng biệt nhằm phù hợp nhất cho cuộc trò chuyện của bạn. Bạn có thể đánh dấu yêu thích nhiều phiên bản khác nhau của cùng một công cụ.";
+"favorites.noTools.title" = "Không có công cụ yêu thích nào";
+"favorites.noTools.description" = "Bấm vào biểu tượng trái tim để đánh dấu công cụ yêu thích và sử dụng ngay cả khi không có internet.";
+"favorites.noTools.button" = "Đến kho Công cụ";
+"toolSettings.shareImagePreview.shareImageButton.title" = "Gửi hình ảnh";
+"favorites.pageTitle" = "Chào mừng đến với GodTools";
+"favorites.favoriteLessons.title" = "Bài học đặc sắc";
+"favorites.favoriteTools.title" = "Công cụ yêu thích của bạn";
+"favorites.favoriteTools.viewAll" = "Xem tất cả";
+
+/* Please keep to a 9 character limit, longer phrases may get cut off */
+"favorites.favoriteLessons.details" = "Chi tiết";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
+"toolSettings.languagesList.deleteLanguage.title" = "Không";
+
+"toolSettings.chooseLanguage.toggleMessage" = "Chuyển đổi giữa 2 ngôn ngữ khác nhau trong công cụ này.";
+"toolDetails.versions.title" = "Phiên bản";
+"toolDetails.learnToShareToolButton.title" = "Học cách chia sẻ công cụ này";
+"toolSettings.title" = "Những lựa chọn";
+"toolSettings.option.shareLink.title" = "Chia sẻ đường link";
+"toolSettings.option.screenShare.title" = "Chia sẻ màn hình";
+"toolSettings.option.trainingTips.show.title" = "Gợi ý hướng dẫn";
+"toolSettings.option.trainingTips.hide.title" = "Ẩn phần gợi ý";
+"toolSettings.chooseLanguage.title" = "Ngôn ngữ song song";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "Song song";
+"toolSettings.shareables.title" = "Hình ảnh tương ứng";
+"allTools.spotlight.title" = "Nổi bật công cụ";
+"allTools.spotlight.description" = "Có lẽ bạn sẽ thích một số công cụ này";
+"allTools.categories.title" = "Các mục";
+"training_tip_ask" = "Hỏi";
+"training_tip_consider" = "Xem xét";
+"training_tip_prepare" = "Chuẩn bị";
+"training_tip_quote" = "Trích dẫn";
+"training_tip_tip" = "Lời gợi ý";
+"start_training" = "Bắt đầu";
+"close" = "Đóng";
+"tool_menu_item.lessons" = "Bài học";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.continueButton.title.closeTutorial" = "Đóng hướng dẫn";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.tool.title" = "Công cụ";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.tool.message" = "Mỗi công cụ sẽ thích hợp với từng mức độ của cuộc trò chuyện - trước, trong và sau.";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.toolTip.title" = "Gợi ý";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.toolTip.message" = "Các gợi ý của God Tools sẽ hướng dẫn để bạn có thể giúp người khác hiểu về Phúc Âm và biết Chúa Giê-xu.";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.screenShare.title" = "Chia sẻ màn hình";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.screenShare.message" = "Bây giờ bạn có thể chia sẻ màn hình từ xa và người kia có thể cùng theo dõi trong lúc bạn sử dụng một công cụ để chia sẻ Phúc Âm.";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.lesson.title" = "Bài học";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.lesson.message" = "Trong mỗi bài học, bạn sẽ học cách giúp bạn có thể trò chuyện nói về Chúa.";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.findTutorial.title" = "Bạn có thể tìm thấy phần hướng dẫn trong mục lục bất cứ lúc nào.";
+
+"onboardingTutorial.beginButton.title" = "Bắt đầu";
+"onboardingTutorial.nextButton.title" = "Tiếp theo";
+"tool_offline_favorite_message" = "Để sử dụng công cụ khi không có mạng internet, bấm vào biểu tượng trái tim để đưa công cụ vào phần Ưa thích của bạn.";
+
+/* This is a category description of a tool that helps you start a conversation */
+"tool_category_conversation_starter" = "Bắt đầu cuộc trò chuyện";
+
+/* This phrase describes a category of tool that helps someone grow in their Christian faith */
+"tool_category_growth" = "Tăng trưởng trong đời sống Cơ Đốc";
+
+"share_link" = "Chia sẻ đường link";
+"share_tool_menu.remote_share_tool" = "Chia sẻ màn hình của bạn";
+"share_tool_menu.send_tool" = "Gửi công cụ này";
+"share_tool_screen_tutorial.share_your_screen.title" = "Chia sẻ màn hình của bạn";
+"share_tool_screen_tutorial.share_your_screen.message" = "Tùy chọn này sẽ gửi một đường link về công cụ này cho một người bạn. Khi đường link được mở, nó sẽ bắt đầu phần chia sẻ màn hình.";
+"share_tool_screen_tutorial.mirrored_experience.title" = "Trải nghiệm song song";
+"share_tool_screen_tutorial.mirrored_experience.message" = "Khi bạn lướt công cụ trên điện thoại của mình, màn hình của bạn bè cũng sẽ được lướt theo. Điều này sẽ giúp bạn và người nghe có thể xem cùng công cụ cùng lúc trên 2 thiết bị khác nhau.";
+"share_tool_screen_tutorial.get_started.title" = "Bắt đầu";
+"share_tool_screen_tutorial.get_started.message" = "Gửi link tới một hoặc nhiều người để bắt đầu chia sẻ màn hình ngay bây giờ.";
+"share_tool_remote_link_message" = "Xin chào, hãy theo dõi cùng tôi trong GodTools thông qua chia sẻ màn hình. Đây là liên kết: %@ Nếu bạn không nhận được thông báo này sau đó, liên kết có thể vẫn không hoạt động. Chúng ta có thể thử lại vào lúc khác.";
+"exit_tract_remote_share_session.message" = "Thoát khỏi chế độ chia sẻ từ xa?";
+"load_tool_remote_session.message" = "Bắt đầu chia sẻ màn hình…";
+"learn_to_share_tool.learn_to_share.title" = "Học cách chia sẻ về công cụ này với người khác";
+"learn_to_share_tool.learn_to_share.message" = "Thực hành sử dụng các lời gợi ý sẽ giúp bạn tự tin khi chia sẻ với người khác.";
+"learn_to_share_tool.tips_light_the_way.title" = "Những gợi ý để chỉ dẫn";
+"learn_to_share_tool.tips_light_the_way.message" = "Trên màn hình, bạn sẽ thấy một số biểu tượng. Bấm vào biểu tượng để xem lời gợi ý giúp bạn trình bày về nội dung bạn đang xem trên màn hình.";
+"learn_to_share_tool.light_up_the_tips.title" = "Bật sáng lời gợi ý";
+"learn_to_share_tool.light_up_the_tips.message" = "Khi lời gợi ý bật sáng lên, nó báo hiệu rằng bạn đã hoàn thành phần hướng dẫn đó. Bạn không nhất thiết phải sử dụng tất cả các lời gợi ý trong tất cả các phần khi chia sẻ.";
+"lesson_evaluation.title" = "Xem lại";
+"lesson_evaluation.wasThisHelpful" = "Bài học này có ích cho bạn không?";
+"lesson_evaluation.shareFaith" = "Mức độ bạn cảm thấy sẵn sàng cho cuộc trò chuyện tâm linh?";
+"lesson_evaluation.sendButtonTitle" = "Gửi đánh giá";
+"onboardingTutorial.0.title" = "Sẵn sàng cho mọi cuộc trò chuyện";
+"onboardingTutorial.0.videoLink.title" = "Xem video";
+"onboardingTutorial.1.title" = "Nói về Chúa với người khác";
+"onboardingTutorial.1.message" = "GodTools giúp bạn có những cuộc trò chuyện đầy ý nghĩa về Chúa.";
+"onboardingTutorial.2.title" = "Sẵn sàng cho những thời điểm quan trọng";
+"onboardingTutorial.2.message" = "Học cách trò chuyện chia sẻ đức tin như là điều tự nhiên trong đời sống bạn.";
+"onboardingTutorial.3.title" = "Giúp người khác khám phá về Chúa Giê-xu";
+"onboardingTutorial.3.message" = "GodTools là sự chỉ dẫn để bạn chia sẻ Phúc Âm cách rõ ràng và thích hợp.";
+
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "Đào tạo";
+
+/*
+ * This is an invitation for a user to open a tool
+ * Please keep to a 9 character limit, longer phrases may get cut off
+*/
+"open" = "Mở";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "Thêm vào Ưa thích";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "Gỡ bỏ khỏi Ưa thích";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "Công cụ đang tải xuống. Để tránh phải chờ đợi trong tương lai, hãy đánh dấu yêu thích công cụ này để nó có thể khả dụng ngoại tuyến.";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "Đang tải cập nhật mới nhất.";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "Xóa khỏi Ưa thích? ";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "Bạn có chắc chắn muốn xóa %@ khỏi mục Ưa thích của mình không?";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "Lời mời đến với Phúc Âm";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "Bài viết";
+
+"articles.downloadArticlesButton.title.retryDownload" = "Thử lại tải xuống";
+
+/* This is to let users know which version of the app is installed on their phone */
+"menu_version" = "Phiên bản";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
+"articles.loadingView.downloadingArticles" = "Đang tải bài viết...";
+"language_onboard" = "Hơn 90 Ngôn ngữ";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "Bạn đã tải về tất cả các công cụ sẵn có.";
+
+/* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
+"my_tools" = "Ưa thích";
+
+/* The user will click this toggle switch to go find a library of more offerings or "Tools". */
+"find_tools" = "Tất cả Công cụ";
+
+"unavailable" = "Không sẵn có";
+
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "Bỏ qua ";
+
+// Onboarding
+"add_new_tools" = "Thêm các Công cụ Mới";
+"set_your_languages" = "Thiết lập Ngôn ngữ của bạn";
+"okay" = "Ok";
+// Menu
+"menu_general" = "Tổng quát";
+"menu_account" = "Tài khoản";
+"menu_share" = "Chia sẻ";
+"menu_legal" = "Hợp pháp";
+"language_settings" = "Các thiết lập ngôn ngữ";
+"menu.tutorial" = "Hướng dẫn";
+"menu.my_account" = "Tài khoản của tôi";
+
+// Login
+"login" = "Đăng nhập";
+"logout" = "Đăng xuất";
+"create_account" = "Tạo Tài khoản";
+"account_login" = "Đăng nhập Tài khoản";
+
+// Tool Detail
+"about" = "Giới thiệu";
+"help" = "Câu hỏi thường gặp";
+"contact_us" = "Liên hệ";
+"preview_mode_translators_only" = "Chế độ Xem trước (chỉ dành cho phiên dịch viên)";
+"share_god_tools" = "Chia sẻ ứng dụng GodTools";
+"share_a_story_with_us" = "Chia sẻ câu chuyện với chúng tôi";
+"terms_of_use" = "Điều khoản sử dụng";
+"privacy_policy" = "Chính sách quyền riêng tư";
+"copyright_info" = "Thông tin Bản quyền";
+"share_god_tools_share_sheet_text" = "Tải về ứng dụng GodTools. http://godtoolsapp.com
+
+Một phiên bản trực tuyến có thể tìm thấy ở https://knowgod.com/";
+
+// Add Tools
+"add_tools" = "Thêm Công cụ";
+
+"total_views" = "%d lượt xem";
+"total_languages" = "%d ngôn ngữ";
+
+// Language Settings
+"primary_language" = "Ngôn ngữ chính";
+"select_primary_language" = "Chọn một Ngôn ngữ Chính";
+"parallel_language" = "Ngôn ngữ song song";
+"select_parallel_language" = "Chọn một ngôn ngữ song song";
+"share_god_tools_native_language" = "Chia sẻ GodTools với một ai đó bằng ngôn ngữ bản địa của họ";
+"not_every_tool_is_available" = "Không phải mọi công cụ đều có sẵn trong mọi ngôn ngữ.";
+
+// Settings
+"settings" = "Các thiết lập";
+
+// Alert & Info Controllers
+"download_error" = "Lỗi Tải về";
+"no_internet_title" = "Không có kết nối internet";
+"no_internet" = "Vui lòng kiểm tra kết nối internet của bạn và thử lại.";
+
+"the_tool_you_requested_is_loading" = "Công cụ bạn yêu cầu đang tải...";
+"loading" = "Đang tải...";
+
+// Actions
+"yes" = "Có";
+"no" = "Không";
+
+// Tract - Sharing
+"tract_share_message" ="Liên kết này sẽ đưa bạn đến phiên bản web của những gì chúng ta đã thảo luận hôm nay: %@. 
+
+Hãy thảo luận thêm!
+
+Có thể tải xuống ứng dụng từ https://godtoolsapp.com";
+
+// Buttons
+"download" = "Tải về";
+"dismiss" = "Bỏ qua";
+"done" = "Đã xong";
+"remove" = "Loại bỏ";
+"clear" = "Rõ ràng";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Mở công cụ";
+
+// Alerts
+"error" = "Lỗi";
+"OK" = "OK";
+"cancel" = "Hủy";
+"required_field_missing" = "\"%@\" là một trường bắt buộc.";
+
+"onboardingTutorial.getStartedButton.title" = "Bắt đầu";
+
+// About
+"general_about_1" = "GodTools giúp bạn chia sẻ niềm tin của mình theo cách đơn giản và rõ ràng.";
+// Tutorial
+"tutorial.tutorialItem.0.title" = "Xem";
+"general_about_2" = "Những công cụ này giúp bạn tự tin trình bày với người khác cách họ có thể bắt đầu mối quan hệ với Đức Chúa Trời qua Chúa Giê-xu Christ, ngay cả khi bạn chưa từng chia sẻ đức tin hoặc người nghe nói ngôn ngữ khác với bạn.";
+"tutorial.tutorialItem.0.message" = "Xem GodTools có gì trong video demo của chúng tôi
+(Chạm vào video để hiển thị cài đặt cho phụ đề)";
+"general_about_3" = "Chọn các công cụ dựa trên sự ưu tiên và người bạn sắp chia sẻ. Không phải tất cả các công cụ đều sẵn có trong mọi ngôn ngữ.";
+"tutorial.tutorialItem.1.title" = "Chuẩn bị";
+"general_about_4" = "Ở trang cuối của mỗi công cụ đều có đường link đến các nguồn tham khảo thêm.";
+"tutorial.tutorialItem.1.message" = "Làm quen với một số công cụ. Bạn có thể bắt đầu với công cụ \"Hướng Dẫn Tôi Chia Sẻ\".
+
+Nhấn nút \"Giới thiệu\" để biết thêm về công cụ.";
+"general_about_5" = "Để tải công cụ mới hoặc ngôn ngữ mới, điện thoại cần được kết nối internet. Sau khi tải về, bạn hoàn toàn có thể sử dụng chúng offline.";
+"tutorial.tutorialItem.2.title" = "Thử";
+"general_about_6" = "Bạn có thắc mắc, đóng góp, đề xuất? Hãy liên hệ chúng tôi tại support@godtoolsapp.com";
+"tutorial.tutorialItem.2.message" = "Mỗi người khi bắt đầu đều là người mới học. Hãy thử sử dụng một công cụ trong một cuộc trò chuyện và xem bạn học được những gì.";
+"general_about_7" = "Bạn có thể tìm thấy một phiên bản trực tuyến của những công cụ này tại knowgod.com/vi. Bạn cũng có thể tạo nhúng trên trang web riêng của mình.";
+"tutorial.tutorialItem.3.title" = "Bạn có thể xem lại hướng dẫn này trong menu";
+"general_about_8" = "Ghé thăm godtoolsapp.com/vi để biết thêm thông tin.";
+"tutorial.continueButton.title.continue" = "Tiếp tục";
+"general_about_9" = "Khi bạn chủ động chia sẻ đức tin của mình, hãy nhớ rằng chính Chúa là Đấng thay đổi tấm lòng. Hãy bày tỏ tình yêu thương với từng người bạn chia sẻ bằng cách lắng nghe để hiểu hơn về họ.";
+"tutorial.continueButton.title.startUsingGodTools" = "Bắt đầu sử dụng GodTools";
+
+"general_about_10" = "\"Lời nói của anh em phải luôn có ân hậu và nêm thêm muối, để anh em biết phải đối đáp thế nào với mỗi người.\" Cô-lô-se 4:6";
+
+// OpenTutorial
+"openTutorial.showTutorialLabel.text" = "Cho tôi xem hướng dẫn";
+// Downloads
+"Download in progress" = "Đang tải về";
+
+"openTutorial.openTutorialButton.title" = "Mở hướng dẫn";
+
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
+"card_status1" = "Trước";
+// Account
+"account.navTitle" = "Hồ sơ của tôi";
+"card_status2" = "Tiếp theo";
+
+"account.activity.title" = "Hoạt động";
+
+// Language Name Strings
+"language_name_fa" = "Tiếng Iran (Ba Tư)";
+
+// Account Activity
+"accountActivity.globalAnalytics.header.title" = "Hoạt động toàn cầu";
+// OnboardingWelcome
+"onboardingWelcome.titleLabel.welcome" = "Chào mừng ";
+"accountActivity.globalAnalytics.users.title" = "Người dùng\nduy nhất";
+"onboardingWelcome.titleLabel.tagline" = "Giúp bạn chia sẻ đức tin của mình";
+"accountActivity.globalAnalytics.gospelPresentation.title" = "Trình bày\nPhúc Âm";
+"accountActivity.globalAnalytics.launches.title" = "Phần";
+// OnboardingTutorial
+"onboardingTutorial.aboutAppItem.0.title" = "Chia sẻ với người khác";
+"accountActivity.globalAnalytics.countries.title" = "Quốc gia";
+
+"onboardingTutorial.aboutAppItem.0.message" = "GodTools được xây dựng để dẫn dắt các cuộc trò chuyện về đức tin của bạn";
+"onboardingTutorial.aboutAppItem.1.title" = "Chọn công cụ của bạn";
+"onboardingTutorial.aboutAppItem.1.message" = "GodTools trợ giúp bạn trước, trong và sau một cuộc trò chuyện về tâm linh";
+"onboardingTutorial.aboutAppItem.2.title" = "Luôn sẵn sàng ";
+"onboardingTutorial.aboutAppItem.2.message" = "GodTools luôn đồng hành để trợ giúp và sẵn sàng khi bạn";
+"onboardingTutorial.appUsageItem.0.message" = "Chuẩn bị cho bất kỳ cuộc trò chuyện nào";
+"onboardingTutorial.appUsageItem.1.message" = "Hướng dẫn về Kinh Phúc âm";
+"onboardingTutorial.appUsageItem.2.message" = "Xem hai ngôn ngữ cạnh nhau";
+"onboardingTutorial.appUsageItem.3.message" = "Chọn từ hơn 90 ngôn ngữ";
+"onboardingTutorial.appUsageItem.4.message" = "Trợ giúp ai đó bắt đầu với tư cách là Cơ đốc Nhân";
+"onboardingTutorial.showMoreButton.title" = "Cho tôi xem nhiều hơn";

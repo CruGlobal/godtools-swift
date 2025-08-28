@@ -191,7 +191,7 @@ struct ToolCardView_Previews: PreviewProvider {
     
     static func getPreviewToolCardViewModel() -> ToolCardViewModel {
         
-        let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
+        let appDiContainer = AppDiContainer.createUITestsDiContainer()
             
         let tool = ToolListItemDomainModel(
             interfaceStrings: ToolListItemInterfaceStringsDomainModel(openToolActionTitle: "Open", openToolDetailsActionTitle: "Tool Details"),

@@ -16,7 +16,7 @@ class DoesNotSendUrlRequestSender: RequestSender {
                 
         let stringData = "String data"
         let data: Data = stringData.data(using: .utf8) ?? Data()
-        let urlResponse = URLResponse()
+        let urlResponse: URLResponse = HTTPURLResponse(url: URL(string: "https://mobile-content-api.cru.org")!, statusCode: 200, httpVersion: nil, headerFields: nil)!
         
         let response = RequestDataResponse(data: data, urlResponse: urlResponse)
         
