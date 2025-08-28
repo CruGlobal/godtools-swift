@@ -39,6 +39,10 @@ struct GodToolsApp: App {
     private let appFlow: AppFlow
     private let toolShortcutLinksViewModel: ToolShortcutLinksViewModel
     
+    static var isDebug: Bool {
+        return appConfig.isDebug
+    }
+    
     @Environment(\.scenePhase) private var scenePhase
     
     @UIApplicationDelegateAdaptor private var appDelegate: GodToolsAppDelegate

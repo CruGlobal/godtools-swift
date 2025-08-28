@@ -61,40 +61,47 @@ struct ToolScreenShareTutorialView: View {
                     .animation(.easeOut, value: viewModel.currentPage)
                 }
                 
-                if !viewModel.hidesGenerateQRCodeButton && !viewModel.hidesShareLinkButton {
+                if viewModel.shareOptions.count > 0 {
                     
                     let buttonFontSize: CGFloat = 16
                     let buttonFont: Font = FontLibrary.sfProTextRegular.font(size: buttonFontSize)
                     let horizontalPadding: CGFloat = 30
-                    let buttonWidth: CGFloat = floor(geometry.size.width / 2) - horizontalPadding
+                    let numberOfButtons: CGFloat = CGFloat(viewModel.shareOptions.count)
+                    let buttonWidth: CGFloat = floor(geometry.size.width / numberOfButtons) - horizontalPadding
                     let titlePadding: CGFloat = 4
                     
                     HStack(alignment: .center, spacing: 12) {
-
-                        GTWhiteButton(
-                            title: viewModel.generateQRCodeButtonTitle,
-                            font: buttonFont,
-                            width: buttonWidth,
-                            height: continueButtonHeight,
-                            titleHorizontalPadding: titlePadding,
-                            titleVerticalPadding: titlePadding,
-                            accessibility: .generateQRCode
-                        ) {
+                        
+                        if viewModel.shareOptions.contains(.qrCode) {
                             
-                            viewModel.generateQRCodeTapped()
+                            GTWhiteButton(
+                                title: viewModel.generateQRCodeButtonTitle,
+                                font: buttonFont,
+                                width: buttonWidth,
+                                height: continueButtonHeight,
+                                titleHorizontalPadding: titlePadding,
+                                titleVerticalPadding: titlePadding,
+                                accessibility: .generateQRCode
+                            ) {
+                                
+                                viewModel.generateQRCodeTapped()
+                            }
                         }
                         
-                        GTBlueButton(
-                            title: viewModel.shareLinkButtonTitle,
-                            font: buttonFont,
-                            width: buttonWidth,
-                            height: continueButtonHeight,
-                            titleHorizontalPadding: titlePadding,
-                            titleVerticalPadding: titlePadding,
-                            accessibility: .shareLink
-                        ) {
+                        if viewModel.shareOptions.contains(.shareLink) {
                             
-                            viewModel.shareLinkTapped()
+                            GTBlueButton(
+                                title: viewModel.shareLinkButtonTitle,
+                                font: buttonFont,
+                                width: buttonWidth,
+                                height: continueButtonHeight,
+                                titleHorizontalPadding: titlePadding,
+                                titleVerticalPadding: titlePadding,
+                                accessibility: .shareLink
+                            ) {
+                                
+                                viewModel.shareLinkTapped()
+                            }
                         }
                     }
                 }
