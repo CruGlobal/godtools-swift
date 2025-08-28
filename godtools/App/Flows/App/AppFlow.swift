@@ -432,7 +432,13 @@ extension AppFlow {
     }
     
     private func getDeferredDeepLinkModal() -> UIViewController {
-        let view = DeferredDeepLinkModalView()
+        let viewModel = DeferredDeepLinkModalViewModel(
+            flowDelegate: self,
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase()
+        )
+        
+        let view = DeferredDeepLinkModalView(viewModel: viewModel)
+        
         let hostingController = AppHostingController<DeferredDeepLinkModalView>(
             rootView: view,
             navigationBar: nil
