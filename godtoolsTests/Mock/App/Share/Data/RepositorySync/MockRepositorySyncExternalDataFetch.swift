@@ -13,7 +13,7 @@ import RequestOperation
 
 class MockRepositorySyncExternalDataFetch: RepositorySyncExternalDataFetchInterface {
         
-    private static let delayRequestSeconds: TimeInterval = 0.05
+    private static let delayRequestSeconds: TimeInterval = 1
     
     private let objects: [MockRepositorySyncDataModel]
     

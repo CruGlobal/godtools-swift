@@ -173,7 +173,6 @@ extension RepositorySync {
             realm: realm
         )
         .flatMap({ willChange -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> in
-            print("\n WILL CHANGE TRIGGERED")
             return self.getCachedObjectsToResponsePublisher()
                 .eraseToAnyPublisher()
         })
@@ -181,22 +180,6 @@ extension RepositorySync {
     }
     
     private func objectWillChangeWithPrependWhenEmpty(realm: Realm) -> AnyPublisher<Void, Never> {
-             
-        let numberOfRealmObjects: Int = getCachedResults(realm: realm).count
-        
-        guard numberOfRealmObjects == 0 else {
-         
-            print("\n OBSERVING WITH PREPEND")
-            
-            return realm
-                .objects(RealmObjectType.self)
-                .objectWillChange
-                .prepend(Void())
-                .eraseToAnyPublisher()
-        }
-        
-        print("\n OBSERVING")
-        
         return realm
             .objects(RealmObjectType.self)
             .objectWillChange
@@ -223,17 +206,13 @@ extension RepositorySync {
                 let responseDataModels: [DataModelType] = response.objects.compactMap {
                     self.dataModelMapping.toDataModel(externalObject: $0)
                 }
-                
-                print("\n DID FETCH EXTERNAL DATA MODELS: \(responseDataModels)")
-                
+                                
                 return self.realmDatabase.writeObjectsPublisher { (realm: Realm) in
                    
                     let realmObjects: [RealmObjectType] = responseDataModels.compactMap {
                         self.dataModelMapping.toPersistObject(dataModel: $0)
                     }
-                    
-                    print("\n WRITE OBJECTS TO REALM: \(realmObjects.map{$0.id})")
-                    
+                                        
                     return realmObjects
                     
                 } mapInBackgroundClosure: { (realmObjects: [RealmObjectType]) in
@@ -273,10 +252,6 @@ extension RepositorySync {
             - How do we handle more complex external data fetching?  For instance, a url request could contain query parameters and http body. Do we force that on subclasses of repository sync?  Do we provide methods for subclasses to hook into for observing, pushing data models for syncing, etc?
             -
          */
-        
-        print("\n get object publisher")
-        print("  id: \(id)")
-        print("  cache policy: \(cachePolicy)")
         
         externalDataFetch
             .getObjectPublisher(id: id, requestPriority: requestPriority)
@@ -319,7 +294,6 @@ extension RepositorySync {
             })
             .sink { (response: RepositorySyncResponse<DataModelType>) in
                 
-                print("\n DID SINK data models: \(response.objects)")
             }
             .store(in: &cancellables)
         
