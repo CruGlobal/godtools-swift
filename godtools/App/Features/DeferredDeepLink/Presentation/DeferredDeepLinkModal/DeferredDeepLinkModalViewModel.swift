@@ -40,7 +40,7 @@ class DeferredDeepLinkModalViewModel: ObservableObject {
 extension DeferredDeepLinkModalViewModel {
     
     func closeButtonTapped() {
-        
+        flowDelegate?.navigate(step: .closeTappedFromDeferredDeepLinkModal)
     }
     
     func pasteButtonTapped() {
@@ -48,6 +48,6 @@ extension DeferredDeepLinkModalViewModel {
     }
     
     func cancelButtonTapped() {
-        
+        flowDelegate?.navigate(step: .cancelTappedFromDeferredDeepLinkModal)
     }
 }

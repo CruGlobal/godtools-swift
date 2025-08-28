@@ -22,6 +22,10 @@ enum FlowStep {
     case menuTappedFromTools
     case openTutorialTappedFromTools
     
+    // deferred deep link modal
+    case closeTappedFromDeferredDeepLinkModal
+    case cancelTappedFromDeferredDeepLinkModal
+    
     // onboarding
     case chooseAppLanguageTappedFromOnboardingTutorial
     case videoButtonTappedFromOnboardingTutorial(youtubeVideoId: String)
