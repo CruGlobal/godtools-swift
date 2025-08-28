@@ -1,0 +1,227 @@
+/* This About refers to a specific tool in the app. */
+"toolDetails.about.title" = "Про";
+
+/* This means that the tool/resource is not available in the currently selected language. */
+"lessonCard.languageNotAvailable" = "Не доступно %@";
+
+"tool_menu_item.tools" = "Інструменти";
+"lessons.pageTitle" = "Уроки, створені для вас";
+"lessons.pageSubtitle" = "Практичні ідеї для побудови відносин і початку змістовних розмов.";
+"toolSettings.languagesAvailable.title" = "Доступні мови";
+"toolDetails.versions.message" = "Виберіть іншу версію інструмента нижче. Кожна версія має унікальний стиль і контент, щоб ви могли знайти те, що найкраще підійде для вашої розмови. Ви можете вибрати кілька версій одного інструмента.";
+"favorites.noTools.title" = "Немає вибраних інструментів";
+"favorites.noTools.description" = "Торкніться значка серця, щоб додати інструмент у вибране й зробити його доступним у режимі офлайн.";
+"favorites.noTools.button" = "До інструментів";
+"toolSettings.shareImagePreview.shareImageButton.title" = "Поширте зображення";
+"favorites.pageTitle" = "Вітаємо у GodTools";
+"favorites.favoriteLessons.title" = "Рекомендований урок";
+"favorites.favoriteTools.title" = "Ваші вибрані інструменти";
+"favorites.favoriteTools.viewAll" = "Переглянути все";
+
+/* Please keep to a 9 character limit, longer phrases may get cut off */
+"favorites.favoriteLessons.details" = "Відомості";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
+"toolSettings.languagesList.deleteLanguage.title" = "Нічого";
+
+"toolSettings.chooseLanguage.toggleMessage" = "Перемикайтесь між двома мовами у цьому інструменті.";
+"toolDetails.versions.title" = "Версії";
+"toolDetails.learnToShareToolButton.title" = "Дізнайтесь, як поширити цей інструмент";
+"toolSettings.title" = "Параметри інструмента";
+"toolSettings.option.shareLink.title" = "Поширте посилання";
+"toolSettings.option.screenShare.title" = "Поділитися екраном";
+"toolSettings.option.trainingTips.show.title" = "Підказки з навчання";
+"toolSettings.option.trainingTips.hide.title" = "Приховати підказки";
+"toolSettings.chooseLanguage.title" = "Додаткова мова";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "Додатково";
+"toolSettings.shareables.title" = "Пов'язані зображення";
+"allTools.spotlight.title" = "Огляд інструментів";
+"allTools.spotlight.description" = "Вам можуть сподобатися ці інструменти";
+"allTools.categories.title" = "Категорії";
+"tool_menu_item.lessons" = "Уроки";
+"onboardingTutorial.beginButton.title" = "Почати";
+"onboardingTutorial.nextButton.title" = "Далі";
+"tool_offline_favorite_message" = "Інструмент буде доступним у режимі офлайн, якщо торкнутись значка серця. Його буде додано до улюбленого.";
+
+/* This is a category description of a tool that helps you start a conversation */
+"tool_category_conversation_starter" = "Початок розмови";
+
+/* This phrase describes a category of tool that helps someone grow in their Christian faith */
+"tool_category_growth" = "Духовний ріст";
+
+"share_link" = "Поширте посилання";
+"share_tool_menu.remote_share_tool" = "Поділитися екраном";
+"share_tool_menu.send_tool" = "Відправити інструмент";
+"share_tool_screen_tutorial.share_your_screen.title" = "Поділитися екраном";
+"share_tool_screen_tutorial.share_your_screen.message" = "Ви можете надіслати другу чи подрузі посилання на цей інструмент. Коли він чи вона відкриє посилання, розпочнеться демонстрація екрану.";
+"share_tool_screen_tutorial.mirrored_experience.title" = "Функція віддзеркалення";
+"share_tool_screen_tutorial.mirrored_experience.message" = "На екрані вашого друга буде показуватися те, що ви переглядаєте в інструменті на вашому телефоні. Це дозволить зробити огляд інструменту одночасно на двох пристроях.";
+"share_tool_screen_tutorial.get_started.title" = "Розпочати";
+"share_tool_screen_tutorial.get_started.message" = "Відправте посилання людям, з якими ви хочете розпочати сеанс демонстрації екрану.";
+"share_tool_remote_link_message" = "Вітаю! Зайдіть у програму GodTools, щоб бачити мій екран за посиланням: %@ 
+
+Якщо ви пізно отримали це повідомлення, посилання може бути застарілим. Спробуймо іншим разом.";
+"exit_tract_remote_share_session.message" = "Закінчити віддалений сеанс демонстрації?";
+"load_tool_remote_session.message" = "Розпочинається демонстрація екрану...";
+"onboardingTutorial.0.title" = "Допомога в будь-якій розмові";
+"onboardingTutorial.0.videoLink.title" = "Переглянути відео";
+"onboardingTutorial.1.title" = "Розмовляйте про Бога з будь-ким";
+"onboardingTutorial.1.message" = "GodTools допомагають вам проводити змістовні розмови про Бога.";
+"onboardingTutorial.2.title" = "Будьте готові до важливих моментів";
+"onboardingTutorial.2.message" = "Дізнайтесь, як зробити розмови про віру невід’ємною частиною вашого життя.";
+"onboardingTutorial.3.title" = "Допоможіть іншим прийти до Ісуса";
+"onboardingTutorial.3.message" = "GodTools навчить вас передавати Благу Вістку зрозумілими й простими словами.";
+
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "Тренування";
+
+/*
+ * This is an invitation for a user to open a tool
+ * Please keep to a 9 character limit, longer phrases may get cut off
+*/
+"open" = "Відкрити";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "Додати до улюбленого";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "Вилучити з улюбленого";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "Інструмент завантажується. Щоб не чекати в майбутньому, додайте його до улюбленого, щоб він був доступний офлайн.";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "Завантаження останніх перекладів для цього інструменту.";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "Вилучити з улюбленого?";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "Дійсно видалити %@ з улюбленого?";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "Запрошення до бога";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "Статті";
+"language_onboard" = "Понад 90 мов";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "Ви завантажили всі доступні інструменти.";
+
+/* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
+"my_tools" = "Улюблене";
+
+/* The user will click this toggle switch to go find a library of more offerings or "Tools". */
+"find_tools" = "Усі інструменти";
+
+"unavailable" = "Недоступно";
+
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "Пропустити";
+
+// Onboarding
+"add_new_tools" = "Додати інструмент";
+"set_your_languages" = "Встановіть мови";
+"okay" = "Добре";
+// Menu
+"menu_general" = "Основне";
+"menu_share" = "Переслати";
+"menu_legal" = "Юридичні документи";
+"language_settings" = "Налаштування мови";
+// Login
+"login" = "Увійти";
+"logout" = "Вийти";
+"create_account" = "Створити обліковий запис";
+"account_login" = "Увійти до облікового запису";
+
+// Tool Detail
+"about" = "Про програму";
+"help" = "Довідка";
+"contact_us" = "Контакт";
+"preview_mode_translators_only" = "Режим перегляду (тільки перекладачі)";
+"share_god_tools" = "Поширити програму GodTools";
+"share_a_story_with_us" = "Розкажіть нам історію";
+"terms_of_use" = "Умови користування";
+"privacy_policy" = "Політика конфіденційності";
+"copyright_info" = "Авторське право";
+"share_god_tools_share_sheet_text" = "Завантажте програму GodTools: https://godtoolsapp.com
+
+Також користуйтеся онлайн: https://knowgod.com/";
+
+// Add Tools
+"add_tools" = "Додати інструменти";
+
+"total_views" = "%d перегл.";
+"total_languages" = "%d мов(и)";
+
+// Language Settings
+"primary_language" = "Основна мова";
+"select_primary_language" = "Оберіть основну мову";
+"parallel_language" = "Додаткова мова";
+"select_parallel_language" = "Оберіть додаткову мову";
+"share_god_tools_native_language" = "Перешліть GodTools знайомим (програма на їх рідній мові)";
+"not_every_tool_is_available" = "Деякі інструменти недоступні на усіх мовах";
+
+// Settings
+"settings" = "Параметри";
+
+// Alert & Info Controllers
+"download_error" = "Не завантажено";
+"no_internet_title" = "Немає підключення до Інтернету";
+"no_internet" = "Перевірте підключення до Інтернету і повторіть спробу.";
+
+"the_tool_you_requested_is_loading" = "Ваш інструмент завантажується...";
+"loading" = "Завантажується...";
+
+// Actions
+"yes" = "Так";
+"no" = "Ні";
+
+// Tract - Sharing
+"tract_share_message" ="Відкрийте це посилання, щоб перейти до онлайн версії сторінки, що ми з вами переглядали сьогодні: %@. 
+
+Поспілкуємось!
+
+Програму можна завантажити тут: https://godtoolsapp.com";
+
+// Buttons
+"download" = "Завантажити";
+"dismiss" = "Закрити";
+"done" = "Готово";
+"remove" = "Видалити";
+"clear" = "Очистити";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Відкрити інструмент";
+
+// Alerts
+"error" = "Помилка";
+"OK" = "Добре";
+"cancel" = "Скасувати";
+"required_field_missing" = "\"%@\" є обов'язковим пунктом";
+
+"onboardingTutorial.getStartedButton.title" = "Розпочати";
+
+// About
+"general_about_1" = "З допомогою програми GodTools поширювати Божу вістку легко та зручно.";
+"general_about_2" = "Ви зможете впевнено розповісти комусь, як познайомитись із Богом через Ісуса — навіть, якщо ви цього ніколи ще не робили або та людина розмовляє іншої мовою.";
+"general_about_3" = "На ваш вибір є багато інструментів, які підійдуть до різних ситуацій та людей. Деякі інструменти недоступні на всіх мовах.";
+"general_about_4" = "Внизу сторінок інструментів приведені посилання на додаткові ресурси.";
+"general_about_5" = "Вам знадобиться інтернет-зв'язок, щоб завантажити інструменти та мови. Після завантаження їх можна використовувати без Інтернету.";
+"general_about_6" = "Ви никли питання, пропозиції чи прохання? Звертайтеся за адресою support@godtoolsapp.com";
+"general_about_7" = "Онлайн версію програми можна знайти на веб-сайті knowgod.com. Ви також можете розмістити інструменти на вашому веб-сайті!";
+"general_about_8" = "Відвідайте godtoolsapp.com за докладнішою інформацією.";
+"tutorial.continueButton.title.continue" = "Продовжити";
+"general_about_9" = "Вирішивши донести Божу вістку до інших, пам'ятайте, що любов — то є божий дар. Тому поширюйте її серед інших і уважно прислухайтеся і ви завжди знайдете порозуміння.";
+"general_about_10" = "«Нехай ваше слово завжди буде люб’язне, приправлене сіллю, щоб у розмові з будь-ким ви знали, як відповідати.» Колоссян 4:6";
+
+// Downloads
+"Download in progress" = "Завантажується...";
+
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
+"card_status1" = "Назад";
+"card_status2" = "Далі";
+
+// Language Name Strings
+"language_name_fa" = "Перська (фарсі)";
+
