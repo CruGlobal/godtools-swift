@@ -1,0 +1,109 @@
+/* This About refers to a specific tool in the app. */
+"toolDetails.about.title" = "Rreth";
+
+"toolSettings.languagesAvailable.title" = "Gjuhët";
+"share_link" = "Tregoju të tjerëve";
+
+/*
+ * This is an invitation for a user to open a tool
+ * Please keep to a 9 character limit, longer phrases may get cut off
+*/
+"open" = "Hape";
+"language_onboard" = "90+ Gjuhë";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "Ju keni shkarkuar të gjitha mjetet në dispozicion.";
+
+/* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
+"my_tools" = "Burimet e mia";
+
+/* The user will click this toggle switch to go find a library of more offerings or "Tools". */
+"find_tools" = "Gjej Burimet​";
+
+"unavailable" = "I padisponueshëm";
+
+// Onboarding
+"add_new_tools" = "Shto mjete të reja";
+"set_your_languages" = "Cakto gjuhën";
+"okay" = "Në rregull";
+// Menu
+"menu_general" = "E përgjithshme";
+"menu_share" = "Ndaj";
+"menu_legal" = "Ligjore";
+"language_settings" = "Kushtet e gjuhës";
+// Tool Detail
+"about" = "Rreth";
+"help" = "Ndihmë";
+"contact_us" = "Na kontakto";
+"preview_mode_translators_only" = "Pamje (Vetëm për përkthyesit)";
+"share_god_tools" = "Shpërndaj GodTools";
+"share_a_story_with_us" = "Na trego një histori";
+"terms_of_use" = "Kushtet e përdorimit";
+"privacy_policy" = "Politika e privatësisë";
+"copyright_info" = "Informacion për të drejtat e autorit";
+"share_god_tools_share_sheet_text" = "Këtu mund të  shkarkosh aplikacionin e GodTools: http://godtoolsapp.com
+";
+
+// Add Tools
+"add_tools" = "Shto mjete";
+
+"total_views" = "%d e shikuesve";
+"total_languages" = "%d e gjuhëve";
+
+// Language Settings
+"primary_language" = "Gjuha kryesore";
+"select_primary_language" = "Zgjidh një gjuhë kryesore";
+"parallel_language" = "Gjuha paralele";
+"select_parallel_language" = "Zgjidh një gjuhë paralele";
+"share_god_tools_native_language" = "Ndaj GodTools me dikë në gjuhën e tyre.";
+"not_every_tool_is_available" = "Jo çdo mjet është i disponueshëm në çdo gjuhë";
+
+// Settings
+"settings" = "Kushtet";
+
+// Alert & Info Controllers
+"download_error" = "Shkarkuar gabim";
+"the_tool_you_requested_is_loading" = "Mjeti që po kërkoni është  duke u ngarkuar";
+// Actions
+"yes" = "Po";
+"no" = "Jo";
+
+// Tract - Sharing
+"tract_share_message" ="Ky link do t`ju çojë në versionin e uebit të faqes ku ishim së fundi duke kërkuar bashkë sot:%@. Le të flasim më shumë!";
+
+// Buttons
+"download" = "Shkarko";
+"dismiss" = "Hiq";
+"done" = "E kryer";
+"remove" = "Fshij";
+"clear" = "E qartë";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Hape materialin";
+
+// Alerts
+"error" = "Gabim";
+"required_field_missing" = "\"%@\" është e detyrueshme";
+
+// About
+"general_about_1" = "GodTools të ndihmon të ndash besimin tënd në një mënyrë të lehtë dhe të qartë.  ";
+"general_about_2" = "Këto mjete të ndihmojnë që në mënyrë konfidente t`i shpegosh dikujt se si të fillojnë një marrëdhënie me Perëndinë përmes Jezus Krishtit,edhe nëse  nuk e ke ndarë  asnjëherë më parë besimin tënd apo nëse ata flasin një  gjuhë tjetër.";
+"general_about_3" = "Zgjidhni nga një shumëllojshmëri mjetesh bazuar në preferencën tuaj dhe audiencën tuaj. Jo të gjitha mjetet janë të disponueshme në çdo gjuhë.";
+"general_about_4" = "Linqe me burime të tjera përfshihen në fund të secilit mjet.";
+"general_about_5" = "Nevojitet lidhje online për të shkarkuar çdo mjet dhe/  ose gjuhë të re. Pasi të shkarkohen, ato mund të përdoren dhe ofline.";
+"general_about_6" = "Pyetje? Sygjerime? Kërkesa? Na kontakto te support@godtoolsapp.com";
+"general_about_7" = "Një version online i këtyre mjeteve mund të gjendet tek knowgod.com.Fute në sitin tënd.";
+"general_about_8" = "Vizito godtoolsapp.com për më shumë informacion.";
+"tutorial.continueButton.title.continue" = "vazhdo";
+"general_about_9" = "Ndërsa merr iniciativën të ndash besimin tënd,kujto që Perëndia është Ai që ndryshon zemrën.Trego dashuri ndaj cdo personi duke i dëgjuar që t`i kuptosh.";
+"general_about_10" = "\"Fjala juaj të jetë me hir,e ndrequr me kripë ,që të dini si duhet t`i përgjigjeni gjithsecilit.\"Kolosianëve 4:6";
+
+// Downloads
+"Download in progress" = "Shkarkoni në vazhdim";
+
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
+"card_status1" = "Prapa";
+"card_status2" = "Përpara";
+
+// Language Name Strings
+"language_name_fa" = "Persian (Farsi)";
+
