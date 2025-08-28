@@ -223,7 +223,59 @@ struct RepositorySyncTests {
             expectedResponseDataModelIds: [],
             expectedNumberOfChanges: 1,
             cachePolicy: .returnCacheDataElseFetch(requestPriority: .medium, observeChanges: false)
-        ),
+        )
+    ])
+    @MainActor func fetchingExternalDataObjectsWhenNotObservingDataChanges(argument: TestArgument) async {
+        
+        let repositorySync: RepositorySync<MockRepositorySyncDataModel, MockRepositorySyncExternalDataFetch, MockRepositorySyncRealmObject> = getRepositorySyncFromTestArgument(
+            argument: argument
+        )
+                
+        var cancellables: Set<AnyCancellable> = Set()
+                
+        var sinkCount: Int = 0
+        
+        var responseRef: RepositorySyncResponse<MockRepositorySyncDataModel>?
+        
+        await confirmation(expectedCount: argument.expectedNumberOfChanges) { confirmation in
+            
+            await withCheckedContinuation { continuation in
+                
+                let timeoutTask = Task {
+                    try await Task.sleep(nanoseconds: 2_000_000_000) // 2 seconds
+                    continuation.resume(returning: ())
+                }
+                
+                repositorySync
+                    .getObjectsPublisher(
+                        cachePolicy: argument.cachePolicy
+                    )
+                    .sink { (response: RepositorySyncResponse<MockRepositorySyncDataModel>) in
+                        
+                        confirmation()
+                        
+                        sinkCount += 1
+                        
+                        if sinkCount == 1 {
+                            
+                            responseRef = response
+                            
+                            timeoutTask.cancel()
+                            continuation.resume(returning: ())
+                        }
+                    }
+                    .store(in: &cancellables)
+            }
+        }
+        
+        cleanUpRepositorySyncFromTestArgument(argument: argument)
+        
+        let responseDataModelIds: [String] = sortResponseObjectsDataModelIds(response: responseRef)
+        
+        #expect(responseDataModelIds == argument.expectedResponseDataModelIds)
+    }
+    
+    @Test(arguments: [
         TestArgument(
             initialPersistedObjectsIds: ["0", "1"],
             externalDataModelIds: ["5", "6", "7", "8", "9"],
@@ -257,7 +309,7 @@ struct RepositorySyncTests {
             cachePolicy: .returnCacheDataAndFetch(requestPriority: .medium)
         )
     ])
-    @MainActor func fetchingExternalDataObjectsWhenNotObservingDataChanges(argument: TestArgument) async {
+    @MainActor func fetchingExternalDataObjectsWhenObservingDataChanges(argument: TestArgument) async {
         
         let repositorySync: RepositorySync<MockRepositorySyncDataModel, MockRepositorySyncExternalDataFetch, MockRepositorySyncRealmObject> = getRepositorySyncFromTestArgument(
             argument: argument
@@ -267,7 +319,7 @@ struct RepositorySyncTests {
                 
         var sinkCount: Int = 0
         
-        var cachedResponseRef: RepositorySyncResponse<MockRepositorySyncDataModel>? // Not recorded or tested if expected changes is 1. ~Levi
+        var cachedResponseRef: RepositorySyncResponse<MockRepositorySyncDataModel>?
         var responseRef: RepositorySyncResponse<MockRepositorySyncDataModel>?
         
         await confirmation(expectedCount: argument.expectedNumberOfChanges) { confirmation in
@@ -291,6 +343,7 @@ struct RepositorySyncTests {
                         
                         if argument.expectedNumberOfChanges == 1 {
                             
+                            cachedResponseRef = response
                             responseRef = response
                             
                             timeoutTask.cancel()
@@ -325,120 +378,6 @@ struct RepositorySyncTests {
         
         #expect(responseDataModelIds == argument.expectedResponseDataModelIds)
     }
-    
-    // MARK: - Object By Id Tests
-    
-    /*
-    
-    @Test("""
-        Test that sink is triggered when fetching an object where the object doesn't exist in the database and the object is not stored in the database when fetched externally.
-        """,
-          arguments: [
-            TestArgument(cachePolicy: .fetchIgnoringCacheData),
-            TestArgument(cachePolicy: .returnCacheDataDontFetch),
-            TestArgument(cachePolicy: .returnCacheDataElseFetch),
-            TestArgument(cachePolicy: .returnCacheDataAndFetch)
-          ]
-    )
-    @MainActor func testThatSinkIsTriggeredOnceWhenTheDatabaseIsEmptyAndNoExternalObjectIsStored(argument: TestArgument) async {
-        
-        var cancellables: Set<AnyCancellable> = Set()
-        
-        let realmDatabase: RealmDatabase = Self.getRealmDatabase(addObjects: [])
-        
-        let repositorySync = RepositorySync<MockRepositorySyncDataModel, MockRepositorySyncExternalDataFetch, MockRepositorySyncRealmObject>(
-            externalDataFetch: Self.getEmptyExternalDataFetch(),
-            realmDatabase: realmDatabase,
-            dataModelMapping: MockRepositorySyncMapping()
-        )
-        
-        var sinkCount: Int = 0
-        
-        await confirmation(expectedCount: 1) { confirmation in
-            
-            await withCheckedContinuation { continuation in
-                
-                let sleepingTask = Task {
-                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
-                    continuation.resume(returning: ())
-                }
-                
-                repositorySync
-                    .getObjectPublisher(id: "1", cachePolicy: argument.cachePolicy, requestPriority: .medium)
-                    .sink { response in
-                        
-                        sinkCount += 1
-                        
-                        confirmation()
-                        sleepingTask.cancel()
-                        continuation.resume(returning: ())
-                    }
-                    .store(in: &cancellables)
-            }
-        }
-        
-        #expect(sinkCount == 1)
-    }
-    
-    @Test("""
-        Test that sink is triggered twice, once for the initial call and once when the external object is stored in the database.
-        """,
-          arguments: [
-            TestArgument(cachePolicy: .fetchIgnoringCacheData),
-            TestArgument(cachePolicy: .returnCacheDataElseFetch),
-            TestArgument(cachePolicy: .returnCacheDataAndFetch)
-          ]
-    )
-    @MainActor func testThatSinkIsTriggeredTwiceWhenTheDatabaseIsEmptyAndAnExternalObjectIsStored(argument: TestArgument) async {
-        
-        // TODO: I need to inject the realm database file name so it's unique per argument being tested and then delete the realm file when the test completes. ~Levi
-        
-        var cancellables: Set<AnyCancellable> = Set()
-        
-        let realmDatabase: RealmDatabase = Self.getRealmDatabase(addObjects: [])
-        
-        let externalDataFetch = Self.getExternalDataFetch(
-            objects: [
-                MockRepositorySyncDataModel(id: "1", name: "Data Model 1")
-            ]
-        )
-        
-        let repositorySync = RepositorySync<MockRepositorySyncDataModel, MockRepositorySyncExternalDataFetch, MockRepositorySyncRealmObject>(
-            externalDataFetch: externalDataFetch,
-            realmDatabase: realmDatabase,
-            dataModelMapping: MockRepositorySyncMapping()
-        )
-        
-        var sinkCount: Int = 0
-        
-        await confirmation(expectedCount: 2) { confirmation in
-            
-            await withCheckedContinuation { continuation in
-                
-                let sleepingTask = Task {
-                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
-                    continuation.resume(returning: ())
-                }
-                
-                repositorySync
-                    .getObjectPublisher(id: "1", cachePolicy: argument.cachePolicy, requestPriority: .medium)
-                    .sink { response in
-                        
-                        sinkCount += 1
-                        
-                        confirmation()
-                        
-                        if sinkCount == 2 {
-                            sleepingTask.cancel()
-                            continuation.resume(returning: ())
-                        }
-                    }
-                    .store(in: &cancellables)
-            }
-        }
-        
-        #expect(sinkCount == 2)
-    }*/
 }
 
 extension RepositorySyncTests {
