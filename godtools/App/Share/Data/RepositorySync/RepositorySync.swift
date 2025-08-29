@@ -41,6 +41,13 @@ extension RepositorySync {
         return realm.objects(RealmObjectType.self)
     }
     
+    func getCachedObjectsToDataModels(realm: Realm) -> [DataModelType] {
+        let objects: [DataModelType] = getCachedResults(realm: realm).compactMap {
+            self.dataModelMapping.toDataModel(persistObject: $0)
+        }
+        return objects
+    }
+    
     func getCachedObjectsToDataModelsPublisher() -> AnyPublisher<[DataModelType], Never> {
         return realmDatabase
             .readObjectsPublisher { (results: Results<RealmObjectType>) in
@@ -70,6 +77,8 @@ extension RepositorySync {
     
     func getObjectsPublisher(cachePolicy: RepositorySyncCachePolicy) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
         
+        let realm: Realm = realmDatabase.openRealm()
+        
         switch cachePolicy {
             
         case .fetchIgnoringCacheData(let requestPriority, let observeChanges):
@@ -81,7 +90,7 @@ extension RepositorySync {
                 )
                 
                 return fetchCachedObjectsAndObserveChangesPublisher(
-                    realm: realmDatabase.openRealm()
+                    realm: realm
                 )
                 .eraseToAnyPublisher()
             }
@@ -104,7 +113,7 @@ extension RepositorySync {
             if observeChanges {
                
                 return fetchCachedObjectsAndObserveChangesPublisher(
-                    realm: realmDatabase.openRealm()
+                    realm: realm
                 )
                 .eraseToAnyPublisher()
             }
@@ -117,7 +126,7 @@ extension RepositorySync {
             
             if observeChanges {
                         
-                let numberOfRealmObjects: Int = getCachedResults(realm: realmDatabase.openRealm()).count
+                let numberOfRealmObjects: Int = getCachedResults(realm: realm).count
                 
                 if numberOfRealmObjects == 0 {
                     
@@ -127,31 +136,34 @@ extension RepositorySync {
                 }
                 
                 return fetchCachedObjectsAndObserveChangesPublisher(
-                    realm: realmDatabase.openRealm()
+                    realm: realm
                 )
                 .eraseToAnyPublisher()
             }
             else {
                 
-                return getCachedObjectsToDataModelsPublisher()
-                    .flatMap({ (dataModels: [DataModelType]) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> in
-                        
-                        guard !dataModels.isEmpty else {
-                            return self.fetchAndStoreObjectsFromExternalDataFetchPublisher(
-                                requestPriority: requestPriority
-                            )
-                            .eraseToAnyPublisher()
-                        }
-                        
-                        let response = RepositorySyncResponse<DataModelType>(
-                            objects: dataModels,
-                            errors: []
-                        )
-                        
-                        return Just(response)
-                            .eraseToAnyPublisher()
-                    })
-                    .eraseToAnyPublisher()
+                let cachedObjects: [DataModelType] = getCachedObjectsToDataModels(realm: realm)
+                
+                if cachedObjects.isEmpty {
+                    
+                    let response = RepositorySyncResponse<DataModelType>(
+                        objects: [],
+                        errors: []
+                    )
+                    
+                    return Just(response)
+                        .eraseToAnyPublisher()
+                }
+                else {
+                    
+                    let response = RepositorySyncResponse<DataModelType>(
+                        objects: cachedObjects,
+                        errors: []
+                    )
+                    
+                    return Just(response)
+                        .eraseToAnyPublisher()
+                }
             }
         
         case .returnCacheDataAndFetch(let requestPriority):
@@ -161,7 +173,7 @@ extension RepositorySync {
             )
             
             return fetchCachedObjectsAndObserveChangesPublisher(
-                realm: realmDatabase.openRealm()
+                realm: realm
             )
             .eraseToAnyPublisher()
         }
