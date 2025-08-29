@@ -12,14 +12,14 @@ import Combine
 import RequestOperation
 
 class MockRepositorySyncExternalDataFetch: RepositorySyncExternalDataFetchInterface {
-        
-    private static let delayRequestSeconds: TimeInterval = 1
-    
+            
     private let objects: [MockRepositorySyncDataModel]
+    private let delayRequestSeconds: TimeInterval
     
-    init(objects: [MockRepositorySyncDataModel]) {
+    init(objects: [MockRepositorySyncDataModel], delayRequestSeconds: TimeInterval) {
         
         self.objects = objects
+        self.delayRequestSeconds = delayRequestSeconds
     }
     
     func getObjectPublisher(id: String, requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<MockRepositorySyncDataModel>, Never> {
@@ -56,8 +56,10 @@ class MockRepositorySyncExternalDataFetch: RepositorySyncExternalDataFetchInterf
     
     private func delayPublisher() -> AnyPublisher<Void, Never> {
         
+        let delayRequestSeconds: TimeInterval = self.delayRequestSeconds
+        
         return Future { promise in
-            DispatchQueue.main.asyncAfter(deadline: .now() + Self.delayRequestSeconds) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + delayRequestSeconds) {
                 promise(.success(Void()))
             }
         }
