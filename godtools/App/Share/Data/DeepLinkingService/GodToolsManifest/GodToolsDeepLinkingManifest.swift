@@ -15,6 +15,7 @@ class GodToolsDeepLinkingManifest: DeepLinkingManifestInterface {
     private static let hostGodTools: String = "org.cru.godtools"
     private static let hostGodToolsApp: String = "godtoolsapp.com"
     private static let hostKnowGod: String = "knowgod.com"
+    private static let hostDynalinks: String = "godtools.dynalinks.app"
     
     let parserManifests: [DeepLinkingParserManifestInterface]
     
@@ -29,7 +30,7 @@ class GodToolsDeepLinkingManifest: DeepLinkingManifestInterface {
             ),
             DeepLinkingParserManifestUrl(
                 scheme: Self.schemeHttps,
-                hosts: [Self.hostGodToolsApp],
+                hosts: [Self.hostGodToolsApp, Self.hostDynalinks],
                 path: "deeplink/dashboard",
                 parserClass: DashboardPathDeepLinkParser.self
             ),
@@ -41,13 +42,13 @@ class GodToolsDeepLinkingManifest: DeepLinkingManifestInterface {
             ),
             DeepLinkingParserManifestUrl(
                 scheme: Self.schemeHttps,
-                hosts: [Self.hostGodToolsApp],
+                hosts: [Self.hostGodToolsApp, Self.hostDynalinks],
                 path: "deeplink/tool",
                 parserClass: ToolPathDeepLinkParser.self
             ),
             DeepLinkingParserManifestUrl(
                 scheme: Self.schemeHttps,
-                hosts: [Self.hostGodToolsApp],
+                hosts: [Self.hostGodToolsApp, Self.hostDynalinks],
                 path: "article/aem",
                 parserClass: ArticleAemPathDeepLinkParser.self
             ),
@@ -77,7 +78,7 @@ class GodToolsDeepLinkingManifest: DeepLinkingManifestInterface {
             ),
             DeepLinkingParserManifestUrl(
                 scheme: Self.schemeHttps,
-                hosts: [Self.hostGodToolsApp],
+                hosts: [Self.hostGodToolsApp, Self.hostDynalinks],
                 path: "lessons",
                 parserClass: GodToolsAppLessonsPathDeepLinkParser.self
             ),
@@ -89,13 +90,13 @@ class GodToolsDeepLinkingManifest: DeepLinkingManifestInterface {
             ),
             DeepLinkingParserManifestUrl(
                 scheme: Self.schemeHttps,
-                hosts: [Self.hostGodToolsApp],
+                hosts: [Self.hostGodToolsApp, Self.hostDynalinks],
                 path: "deeplink/settings/language",
                 parserClass: LanguageSettingsDeepLinkParser.self
             ),
             DeepLinkingParserManifestUrl(
                 scheme: Self.schemeGodTools,
-                hosts: [Self.hostGodTools],
+                hosts: [Self.hostGodTools, Self.hostDynalinks],
                 path: "ui_tests",
                 parserClass: UITestsDeepLinkParser.self
             )

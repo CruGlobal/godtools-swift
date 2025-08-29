@@ -42,6 +42,13 @@ class LaunchCountRepository: LaunchCountRepositoryInterface {
         cache.storeLaunchCount(launchCount: newLaunchCount)
     }
     
+    func getLaunchCount() -> Int {
+        
+        incrementLaunchCountForAppLaunchIfNeeded()
+        
+        return cache.getLaunchCountValue()
+    }
+    
     func getLaunchCountPublisher() -> AnyPublisher<Int, Never> {
         
         incrementLaunchCountForAppLaunchIfNeeded()

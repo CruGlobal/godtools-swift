@@ -22,7 +22,7 @@ class LoadingArticleViewModel: ObservableObject {
     
     let message: String
     
-    init(flowDelegate: FlowDelegate, aemUri: String, appLanguage: AppLanguageDomainModel, articleAemRepository: ArticleAemRepository, localizationServices: LocalizationServices) {
+    init(flowDelegate: FlowDelegate, aemUri: String, appLanguage: AppLanguageDomainModel, articleAemRepository: ArticleAemRepository, localizationServices: LocalizationServicesInterface) {
         
         self.flowDelegate = flowDelegate
         self.articleAemRepository = articleAemRepository

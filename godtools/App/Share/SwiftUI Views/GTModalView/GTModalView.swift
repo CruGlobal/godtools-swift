@@ -18,10 +18,12 @@ struct GTModalView<Content: View>: View {
     private let strokeColor: Color
     private let strokeLineWidth: CGFloat
     private let contentAnimationDuration: TimeInterval = 0.3
+    // NOTE: I noticed the content height would frequently change between what appeared to be the correct calculated height and then a smaller height. This flag will only ever set the contentHeight to the maximum calculated height ignoring the smaller calculated height. ~Levi
+    private let shouldLockContentHeightToMaxCalculatedHeight: Bool = true
     
     @State private var overlayOpacity: CGFloat = 0
     @State private var contentBottomOffsetY: CGFloat = 1000
-    @State private var contentHeight: CGFloat = 100
+    @State private var contentHeight: CGFloat = 0
     
     @Binding private var isHidden: Bool
     
@@ -67,7 +69,10 @@ struct GTModalView<Content: View>: View {
                                         
                                         let clampedContentHeight: CGFloat
                                         
-                                        if newContentHeight < minimumHeight {
+                                        if shouldLockContentHeightToMaxCalculatedHeight && newContentHeight < currentContentHeight {
+                                            clampedContentHeight = currentContentHeight
+                                        }
+                                        else if newContentHeight < minimumHeight {
                                             clampedContentHeight = minimumHeight
                                         }
                                         else if newContentHeight > maximumHeight {
@@ -77,10 +82,12 @@ struct GTModalView<Content: View>: View {
                                             clampedContentHeight = newContentHeight
                                         }
                                         
-                                        if currentContentHeight != clampedContentHeight {
+                                        let contentHeightDidChange: Bool = currentContentHeight != clampedContentHeight
+                                        
+                                        if contentHeightDidChange {
                                             
                                             contentHeight = clampedContentHeight
-                                            
+                                                                                        
                                             if isHidden {
                                                 contentBottomOffsetY = contentHeight
                                             }

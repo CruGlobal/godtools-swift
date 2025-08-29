@@ -1,0 +1,387 @@
+"optInNotification.notificationSettings" = "알림 설정";
+"lessons.swipeTutorial.title" = "밀어서 페이지를 바꾸세요";
+"lessons.swipeTutorial.buttonText" = "알았어";
+"optInNotification.title" = "팁과 격려를 받아보세요";
+"optInNotification.body" = "대화에 미리 대비해 두세요.\n지금 알림을 허용하세요.";
+"optInNotification.allowNotifications" = "알림 허용";
+"optInNotification.maybeLater" = "나중에";
+
+/* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
+"lessons.resumeLessonModal.title" = "진행 재개";
+
+"lessons.resumeLessonModal.subtitle" = "중단한 지점부터 계속하시겠습니까?";
+"lessons.resumeLessonModal.startOverButton" = "다시 시작";
+"lessons.resumeLessonModal.continueButton" = "계속";
+"lessons.lessonCompleted" = "완료";
+"lessons.completionProgress" = "@% 완료";
+"network_connection_lost" = "네트워크 연결이 끊어졌습니다.";
+"language_name_fil" = "필리핀어(타갈로그)";
+"lessons.filter.navBar.language" = "수업 언어";
+"lessons.languageFilter.title" = "수업 언어:";
+"language_name_fil-x-taglish" = "타글리쉬";
+"language_name_sid" = "시다마";
+"onboardingTutorial.chooseLanguageButton.title" = "언어 선택";
+"languageSettings.confirmAppLanguage.message" = "%@ 을(를) 앱 언어로 선택했습니다. 전체 GodTools 앱 언어가 변경됩니다. 계속하시겠나요?";
+"languageSettings.confirmAppLanguage.changeLanguageButton.title" = "언어 변경";
+"languageSettings.confirmAppLanguage.nevermindButton.title" = "아니요";
+"languageSettings.downloadableLanguages.title" = "다운로드 가능한 언어";
+"languageSettings.appInterface.title" = "앱 인터페이스 언어";
+"languageSettings.appInterface.message" = "전체 앱이 표시되기 원하는 언어로 설정합니다.";
+"languageSettings.appInterface.languagesAvailable" = "이용 가능 언어";
+"languageSettings.toolLanguagesAvailableOffline.title" = "오프라인으로 이용 가능한 도구 언어";
+"languageSettings.toolLanguagesAvailableOffline.message" = "와이파이나 모바일 데이터 없이도 이용하려면 해당 언어로 이용 가능한 모든 도구를 다운로드하세요. 도구 내 옵션 버튼으로 도구 언어를 설정하세요.";
+"languageSettings.toolLanguagesAvailableOffline.editDownloadedLanguagesButton.title" = "다운로드된 언어 편집";
+"allTools.filter.title" = "필터";
+"allTools.filter.anyCategory" = "모든 카테고리";
+"allTools.filter.anyLanguage" = "모든 언어";
+"allTools.filter.navBar.language" = "언어로 필터링";
+"allTools.filter.navBar.category" = "카테고리별로 필터링";
+"languageSettings.appLanguage.title" = "앱 언어";
+"authError.userAccountAlreadyExists.message" = "이미 사용자 계정이 존재합니다.";
+"authError.userAccountNotFound.message" = "사용자 계정을 찾을 수 없습니다.";
+"createAccount.title" = "계정 생성";
+"createAccount.subtitle" = "계정을 만들고 실화와 격려, 현실적인 팁들을 곁에 두세요.";
+"deleteAccountProgress.title" = "계정을 삭제하는 중...";
+"confirmDeleteAccount.title" = "계속하시겠습니까?";
+"confirmDeleteAccount.confirmButton.title" = "계정 삭제";
+"accountDeletedAlert.title" = "계정 삭제됨";
+"accountDeletedAlert.message" = "계정이 삭제되었습니다.";
+"deleteAccount.title" = "아직 떠나기엔 일러요";
+"deleteAccount.subtitle" = "계정을 삭제하면 즐겨찾는 도구 또는 계정 활동을 이용할 수 없게 됩니다.";
+"deleteAccount.confirmButton.title" = "계정 삭제";
+"deleteAccount.cancelButton.title" = "계정 유지";
+"signIn.title" = "로그인";
+"signIn.subtitle" = "계정에 로그인하여 실화와 격려, 현실적인 팁들을 곁에 두세요.";
+"signIn.google" = "Google로 로그인";
+"signIn.facebook" = "Facebook으로 로그인";
+"signIn.apple" = "Apple로 계속하기";
+"menu_getStarted" = "시작하기";
+"menu_support" = "지원";
+"menu_about" = "정보";
+"menu.sendFeedback" = "피드백 제출";
+"menu.reportABug" = "버그 보고";
+"menu.askAQuestion" = "질문하기";
+"menu.leaveAReview" = "리뷰 남기기";
+"account.badges.sectionTitle" = "내 배지";
+"account.activity.sectionTitle" = "내 활동";
+
+/* Just translate "Joined" - leave the %@ - this is the date they started using GodTools */
+"account.joinedOn" = "가입일: %@";
+
+"account.globalActivity.title" = "글로벌 활동";
+"toolDetails.conversationStarters.title" = "대화 시작 도구";
+
+/* A list of the main points of the tool will live behind a section called "Outline" */
+"toolDetails.outline.title" = "개요";
+
+"toolDetails.bibleReferences.title" = "참고한 성경";
+
+/* This About refers to a specific tool in the app. */
+"toolDetails.about.title" = "대하여";
+
+/* This means that the tool/resource is not available in the currently selected language. */
+"lessonCard.languageNotAvailable" = "%@ 에서 이용 불가";
+
+"menu.deleteAccount" = "계정 삭제";
+"alert.mailAppUnavailable.title" = "메일 앱 사용 불가";
+"alert.mailAppUnavailable.message" = "기본 메일 앱이 이 기기에서 설정되지 않았거나 사용할 수 없습니다. ";
+"tool_menu_item.tools" = "도구";
+"lessons.pageTitle" = "맞춤 수업";
+"lessons.pageSubtitle" = "관계를 형성하고 의미 있는 대화를 시작하기 위한 실용적인 아이디어입니다.";
+"toolSettings.languagesAvailable.title" = "이용 가능 언어";
+"toolDetails.versions.message" = "아래에서 이 도구의 다른 버전을 선택하세요. 각 버전에는 고유한 스타일과 내용이 있으므로 대화에 가장 적합한 스타일을 찾을 수 있습니다. 동일한 도구의 여러 버전을 즐겨찾기로 지정할 수 있습니다.";
+"favorites.noTools.title" = "표시할 즐겨찾는 도구 없음";
+"favorites.noTools.description" = "하트 아이콘을 눌러서 도구를 즐겨찾기로 지정하고 오프라인에서도 사용하세요.";
+"favorites.noTools.button" = "도구로 이동";
+"toolSettings.shareImagePreview.shareImageButton.title" = "이미지 공유";
+"favorites.pageTitle" = "GodTools에 오신 걸 환영합니다";
+"favorites.favoriteLessons.title" = "추천 수업";
+"favorites.favoriteTools.title" = "즐겨찾는 도구";
+"favorites.favoriteTools.viewAll" = "모두 보기";
+
+/* Please keep to a 9 character limit, longer phrases may get cut off */
+"favorites.favoriteLessons.details" = "설명";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
+"toolSettings.languagesList.deleteLanguage.title" = "없음";
+
+"toolSettings.chooseLanguage.toggleMessage" = "이 도구에서 두 개의 다른 언어를 전환합니다.";
+"toolDetails.versions.title" = "버전";
+"toolDetails.learnToShareToolButton.title" = "이 도구 공유 방법 배우기";
+"toolSettings.title" = "도구 옵션";
+"toolSettings.option.shareLink.title" = "링크 공유하기";
+"toolSettings.option.screenShare.title" = "화면 공유";
+"toolSettings.option.trainingTips.show.title" = "트레이닝 팁";
+"toolSettings.option.trainingTips.hide.title" = "팁 숨기기";
+"toolSettings.chooseLanguage.title" = "병행 언어";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "병행";
+"toolSettings.shareables.title" = "관련 그래픽";
+"allTools.spotlight.title" = "도구 스포트라이트";
+"allTools.spotlight.description" = "좋아할 수도 있는 도구를 소개합니다";
+"allTools.categories.title" = "카테고리";
+"training_tip_ask" = "요청";
+"training_tip_consider" = "고려";
+"training_tip_prepare" = "준비";
+"training_tip_quote" = "인용";
+"training_tip_tip" = "팁";
+"start_training" = "훈련 시작";
+"close" = "닫기";
+"tool_menu_item.lessons" = "수업";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.continueButton.title.closeTutorial" = "튜토리얼 닫기";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.tool.title" = "모든 도구";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.tool.message" = "각 도구는 대화의 각 단계(대화 전, 대화 중, 대화 후)를 위해 만들어졌습니다.";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.toolTip.title" = "도구 팁";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.toolTip.message" = "누군가 복음을 이해하고 예수님을 만나는 데 도움을 줄 때 GodTools 팁이 가이드가 되어줍니다.";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.screenShare.title" = "화면 공유";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.screenShare.message" = "도구를 사용하여 복음에 대해 이야기할 때 다른 사람이 같이 따라갈 수 있도록 이제 원격에서 화면을 공유할 수 있습니다.";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.lesson.title" = "수업";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.lesson.message" = "각 GodTools 수업에서는 하나님에 대해 실제적인 대화를 나누는 데 도움이 되는 내용을 배웁니다.";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.findTutorial.title" = "필요할 때마다 메뉴에서 이 튜토리얼을 찾으세요.";
+
+"onboardingTutorial.beginButton.title" = "시작";
+"onboardingTutorial.nextButton.title" = "다음";
+"tool_offline_favorite_message" = "하트 아이콘을 탭하여 즐겨찾기에 추가해서 오프라인에서도 도구를 사용하세요.";
+
+/* This is a category description of a tool that helps you start a conversation */
+"tool_category_conversation_starter" = "대화 시작";
+
+/* This phrase describes a category of tool that helps someone grow in their Christian faith */
+"tool_category_growth" = "그리스도인 성장";
+
+"share_link" = "링크 공유하기";
+"share_tool_menu.remote_share_tool" = "화면 공유";
+"share_tool_menu.send_tool" = "이 도구 보내기";
+"share_tool_screen_tutorial.share_your_screen.title" = "화면 공유";
+"share_tool_screen_tutorial.share_your_screen.message" = "이 옵션은 이 도구에 대한 링크를 친구에게 보냅니다. 링크가 열리면 화면 공유 세션이 시작됩니다.";
+"share_tool_screen_tutorial.mirrored_experience.title" = "미러 경험";
+"share_tool_screen_tutorial.mirrored_experience.message" = "휴대폰에서 도구를 스크롤하면, 친구의 화면도 같은 방식으로 반응합니다. 이렇게 하면 동시에 2개의 기기에서 도구를 사용할 수 있습니다.";
+"share_tool_screen_tutorial.get_started.title" = "시작하기";
+"share_tool_screen_tutorial.get_started.message" = "지금 한 명 이상에게 링크를 보내서 화면 공유 세션을 시작하세요.";
+"share_tool_remote_link_message" = "안녕하세요, 저와 함께 화면 공유를 통한 GodTools를 사용해 보세요. 링크: %@ 많은 시간이 지날 때까지 이 메시지를 받지 못하는 경우, 링크가 작동하지 않을 수도 있습니다. 다음에 다시 시도할 수 있습니다.";
+"exit_tract_remote_share_session.message" = "지금 원격 공유 세션에서 나갈까요?";
+"load_tool_remote_session.message" = "화면 공유 시작 중...";
+"learn_to_share_tool.learn_to_share.title" = "이 도구 공유 방법 배우기";
+"learn_to_share_tool.learn_to_share.message" = "자신 있게 이 도구를 다른 사람들에게 공유할 수 있도록 필요한 만큼 팁을 연습하세요.";
+"learn_to_share_tool.tips_light_the_way.title" = "길을 밝히는 팁";
+"learn_to_share_tool.tips_light_the_way.message" = "이 교육의 특정 화면에서는 다양한 아이콘이 표시됩니다. 각 아이콘을 눌러 화면의 내용을 이야기하는 데 도움이 되는 팁을 확인하세요. 아이콘이 없는 화면의 경우, 내용을 읽고 필요에 따라 논의하세요.";
+"learn_to_share_tool.light_up_the_tips.title" = "팁 환해지게 만들기";
+"learn_to_share_tool.light_up_the_tips.message" = "팁이 환해지면 해당 훈련을 완료한 것입니다. 자신 있게 도구를 설명할 수 있을 때까지 필요한 만큼 팁을 활용해 연습해 보세요.";
+"lesson_evaluation.title" = "리뷰";
+"lesson_evaluation.wasThisHelpful" = "수업이 유용했나요?";
+"lesson_evaluation.shareFaith" = "영적인 대화를 위해 얼마나 준비된 것 같나요?";
+"lesson_evaluation.sendButtonTitle" = "피드백 제출";
+"onboardingTutorial.0.title" = "모든 대화 준비";
+"onboardingTutorial.0.videoLink.title" = "동영상 보기";
+"onboardingTutorial.1.title" = "다른 사람과 신에 대해 이야기하기";
+"onboardingTutorial.1.message" = "GodTools는 신에 대한 의미 있는 대화를 할 수 있도록 도와줍니다.";
+"onboardingTutorial.2.title" = "중요한 순간을 준비하세요";
+"onboardingTutorial.2.message" = "신앙에 대한 대화를 자연스럽게 삶의 일부로 만드는 방법을 배우세요.";
+"onboardingTutorial.3.title" = "다른 사람에게 예수님을 발견하도록 도와주세요";
+"onboardingTutorial.3.message" = "GodTools는 명확하고 적절한 방식으로 복음을 전하기 위한 지침입니다.";
+
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "훈련";
+
+/*
+ * This is an invitation for a user to open a tool
+ * Please keep to a 9 character limit, longer phrases may get cut off
+*/
+"open" = "열기";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "즐겨찾기에 추가";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "즐겨찾기에서 제거";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "도구를 다운로드 중입니다. 나중에 기다리는 일을 피하려면, 오프라인에서도 사용할 수 있도록 이 도구를 즐겨찾기에 추가하세요.";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "이 도구의 최근 번역을 다운로드하고 있습니다.";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "즐겨찾기에서 제거할까요? ";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "정말로 즐겨찾기에서 %@을(를) 제거하시겠습니까? ";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "복음 초대";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "규약";
+
+"articles.downloadArticlesButton.title.retryDownload" = "다운로드 재시도";
+
+/* This is to let users know which version of the app is installed on their phone */
+"menu_version" = "버전";
+"language_onboard" = "90개 이상의 언어";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "모든 이용 가능한 도구를 다운로드했습니다.";
+
+/* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
+"my_tools" = "즐겨찾기";
+
+/* The user will click this toggle switch to go find a library of more offerings or "Tools". */
+"find_tools" = "모든 도구";
+
+"unavailable" = "사용 불가";
+
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "건너뛰기";
+
+// Onboarding
+"add_new_tools" = "새 도구 추가";
+"set_your_languages" = "언어 설정";
+"okay" = "확인";
+// Menu
+"menu_general" = "일반";
+"menu_account" = "계정";
+"menu_share" = "공유";
+"menu_legal" = "법률";
+"language_settings" = "언어 설정";
+"menu.tutorial" = "튜토리얼";
+"menu.my_account" = "내 계정";
+
+// Login
+"login" = "로그인";
+"logout" = "로그아웃";
+"create_account" = "계정 생성";
+"account_login" = "계정 로그인";
+
+// Tool Detail
+"about" = "정보";
+"help" = "자주 묻는 질문";
+"contact_us" = "연락처";
+"preview_mode_translators_only" = "미리보기 모드 (번역가 전용)";
+"share_god_tools" = "GodTools 공유";
+"share_a_story_with_us" = "이야기를 공유하세요";
+"terms_of_use" = "이용 약관";
+"privacy_policy" = "개인정보 보호정책";
+"copyright_info" = "저작권";
+"share_god_tools_share_sheet_text" = "GodTools 앱 다운로드: https://godtoolsapp.com
+
+온라인 버전은 https://knowgod.com/에서 찾을 수 있습니다";
+
+// Add Tools
+"add_tools" = "도구 추가";
+
+"total_views" = "%d 뷰";
+"total_languages" = "%d 언어";
+
+// Language Settings
+"primary_language" = "기본 언어";
+"select_primary_language" = "기본 언어 선택";
+"parallel_language" = "병행 언어";
+"select_parallel_language" = "병행 언어 선택";
+"share_god_tools_native_language" = "모국어로 GodTools를 공유하세요";
+"not_every_tool_is_available" = "모든 언어로 모든 도구를 이용할 수 있지는 않습니다";
+
+// Settings
+"settings" = "설정";
+
+// Alert & Info Controllers
+"download_error" = "다운로드 오류";
+"no_internet_title" = "인터넷 연결 없음";
+"no_internet" = "인터넷 연결을 확인하고 다시 시도하세요.";
+
+"the_tool_you_requested_is_loading" = "귀하가 요청한 툴을 로딩 중입니다...";
+"loading" = "불러오는 중...";
+
+// Actions
+"yes" = "예";
+"no" = "아니요";
+
+// Tract - Sharing
+"tract_share_message" ="이 링크가 오늘 같이 본 %@ 페이지의 웹 버전으로 이동시킵니다. 
+
+더 대화하세요!
+
+이 앱은 https://godtoolsapp.com에서 다운로드할 수 있습니다";
+
+// Buttons
+"download" = "다운로드";
+"dismiss" = "취소";
+"done" = "완료";
+"remove" = "제거";
+"clear" = "삭제";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "도구 열기";
+
+// Alerts
+"error" = "오류";
+"OK" = "확인";
+"cancel" = "취소";
+"required_field_missing" = "\"%@\"은(는) 필수 입력란입니다.";
+
+"onboardingTutorial.getStartedButton.title" = "시작하기";
+
+// About
+"general_about_1" = "GodTools가 쉽고 깨끗한 방식으로 신념을 공유할 수 있게 해줍니다.";
+// Tutorial
+"tutorial.tutorialItem.0.title" = "보기";
+"general_about_2" = "이러한 도구를 활용하여 한 번도 신념을 공유하지 않았거나 다른 언어로 이야기하더라도 예수 그리스도를 통해 신과의 관계를 시작할 수 있는 방법을 자신있게 설명할 수 있습니다.";
+"general_about_3" = "선호 사항 및 대상을 기준으로 다양한 도구를 선택하세요. 모든 도구를 모든 언어로 이용할 수 있는 것은 아닙니다.";
+"general_about_4" = "다른 리소스에 대한 링크가 각 도구 종료 시 포함됩니다.";
+"general_about_5" = "각 새로운 도구 또는 언어 다운로드에는 온라인 연결이 필요합니다. 다운로드가 끝나면 오프라인으로 사용할 수 있습니다.";
+"general_about_6" = "질문? 제안? 요청? support@godtoolsapp.com에 문의하세요";
+"general_about_7" = "이러한 도구의 온라인 버전은 knowgod.com에서 찾을 수 있습니다. 자신의 사이트에 임베드하세요!";
+"tutorial.tutorialItem.3.title" = "이 튜토리얼은 메뉴에서 다시 볼 수 있습니다";
+"general_about_8" = "자세한 정보는 godtoolsapp.com을 방문하세요.";
+"tutorial.continueButton.title.continue" = "계속";
+"general_about_9" = "신념을 공유하는 데 결단이 섰다면 오직 신만이 마음을 바꾸는 존재라는 걸 기억하세요. 이해를하며 서로를 사랑하세요.";
+"tutorial.continueButton.title.startUsingGodTools" = "GodTools 이용 시작하기";
+
+"general_about_10" = "\"여러분은 언제나, 소금으로 맛을 내는 것과 같이, 은혜가 넘치게 말을 하십시오.\" 골로새서 4:6";
+
+// OpenTutorial
+"openTutorial.showTutorialLabel.text" = "튜토리얼 보이기";
+// Downloads
+"Download in progress" = "다운로드 진행 중";
+
+"openTutorial.openTutorialButton.title" = "튜토리얼 열기";
+
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
+"card_status1" = "이전";
+// Account
+"account.navTitle" = "내 프로필";
+"card_status2" = "다음";
+
+"account.activity.title" = "활동";
+
+// Language Name Strings
+"language_name_fa" = "페르시아어";
+
+// Account Activity
+"accountActivity.globalAnalytics.header.title" = "글로벌 활동";
+"accountActivity.globalAnalytics.users.title" = "개별 사용자";
+"onboardingWelcome.titleLabel.tagline" = "내 믿음 공유 돕기";
+"accountActivity.globalAnalytics.gospelPresentation.title" = "복음 발표";
+"accountActivity.globalAnalytics.launches.title" = "세션";
+// OnboardingTutorial
+"onboardingTutorial.aboutAppItem.0.title" = "다른 사람과 공유하기";
+"accountActivity.globalAnalytics.countries.title" = "국가";
+
+"onboardingTutorial.showMoreButton.title" = "더 보기";

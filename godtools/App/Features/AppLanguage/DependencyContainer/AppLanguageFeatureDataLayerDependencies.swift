@@ -25,7 +25,7 @@ class AppLanguageFeatureDataLayerDependencies {
             realmDatabase: realmDatabase ?? coreDataLayer.getSharedRealmDatabase()
         )
         
-        let sync: AppLanguagesRepositorySyncInterface = sync ?? AppLanguagesRepositorySync(api: AppLanguagesApi(), cache: cache, userDefaultsCache: coreDataLayer.getSharedUserDefaultsCache())
+        let sync: AppLanguagesRepositorySyncInterface = sync ?? AppLanguagesRepositorySync(api: AppLanguagesApi(), cache: cache, userDefaultsCache: coreDataLayer.getUserDefaultsCache())
         
         return AppLanguagesRepository(
             cache: cache,

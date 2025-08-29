@@ -106,7 +106,7 @@ struct ToolDetailsView_Preview: PreviewProvider {
     
     static var previews: some View {
         
-        let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
+        let appDiContainer = AppDiContainer.createUITestsDiContainer()
                 
         let viewModel = ToolDetailsViewModel(
             flowDelegate: MockFlowDelegate(),

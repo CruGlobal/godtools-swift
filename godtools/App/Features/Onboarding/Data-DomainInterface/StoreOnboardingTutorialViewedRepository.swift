@@ -11,9 +11,9 @@ import Combine
 
 class StoreOnboardingTutorialViewedRepository: StoreOnboardingTutorialViewedRepositoryInterface {
     
-    private let onboardingTutorialViewedRepository: OnboardingTutorialViewedRepository
+    private let onboardingTutorialViewedRepository: OnboardingTutorialViewedRepositoryInterface
     
-    init(onboardingTutorialViewedRepository: OnboardingTutorialViewedRepository) {
+    init(onboardingTutorialViewedRepository: OnboardingTutorialViewedRepositoryInterface) {
         
         self.onboardingTutorialViewedRepository = onboardingTutorialViewedRepository
     }

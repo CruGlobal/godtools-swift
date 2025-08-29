@@ -11,5 +11,6 @@ import Combine
 
 protocol LaunchCountRepositoryInterface {
     
+    func getLaunchCount() -> Int
     func getLaunchCountPublisher() -> AnyPublisher<Int, Never>
 }

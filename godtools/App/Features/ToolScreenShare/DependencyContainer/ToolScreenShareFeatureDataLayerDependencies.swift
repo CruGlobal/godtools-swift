@@ -32,14 +32,14 @@ class ToolScreenShareFeatureDataLayerDependencies {
         // TODO: Shouldn't force unwrap url here. ~Levi
         let url: URL = URL(string: coreDataLayer.getAppConfig().getTractRemoteShareConnectionUrl())!
         
-        return coreDataLayer.getNewWebSocket(url: url)
+        return coreDataLayer.getWebSocket(url: url)
     }
     
     func getTractRemoteSharePublisher() -> TractRemoteSharePublisher {
         
         let webSocket: WebSocketInterface = getNewWebSocketForScreenShare()
         
-        let loggingEnabled: Bool = coreDataLayer.getAppBuild().isDebug
+        let loggingEnabled: Bool = coreDataLayer.getAppConfig().isDebug
         
         return TractRemoteSharePublisher(
             webSocket: webSocket,
@@ -52,7 +52,7 @@ class ToolScreenShareFeatureDataLayerDependencies {
         
         let webSocket: WebSocketInterface = getNewWebSocketForScreenShare()
         
-        let loggingEnabled: Bool = coreDataLayer.getAppBuild().isDebug
+        let loggingEnabled: Bool = coreDataLayer.getAppConfig().isDebug
         
         return TractRemoteShareSubscriber(
             webSocket: webSocket,

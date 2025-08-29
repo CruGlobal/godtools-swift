@@ -21,7 +21,7 @@ class LessonSwipeTutorialDataLayerDependencies {
     func getLessonSwipeTutorialViewedRepository() -> LessonSwipeTutorialViewedRepository {
         return LessonSwipeTutorialViewedRepository(
             cache: LessonSwipeTutorialViewedUserDefaultsCache(
-                sharedUserDefaultsCache: coreDataLayer.getSharedUserDefaultsCache()
+                userDefaultsCache: coreDataLayer.getUserDefaultsCache()
             )
         )
     }

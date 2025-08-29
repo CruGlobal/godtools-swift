@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+<key>toolDetails.toolVersion.numberOfLanguages</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@numberOfLanguages@</string>
+<key>numberOfLanguages</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>%d ভাষাগুলি</string>
+<key>other</key>
+<string>%d ভাষাগুলি</string>
+</dict>
+</dict>
+<key>lessons.filter.lessonsAvailable</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@lessonCount@</string>
+<key>lessonCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>%d পাঠসমূহ উপলভ্য</string>
+<key>other</key>
+<string>%d পাঠসমূহ উপলভ্য</string>
+</dict>
+</dict>
+<key>account.activity.toolOpens</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@toolCount@</string>
+<key>toolCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>সাধনী খুলে যায়</string>
+<key>other</key>
+<string>সাধনী খুলে যায়</string>
+</dict>
+</dict>
+<key>account.activity.lessonCompletions</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@lessonCount@</string>
+<key>lessonCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>পাঠ সম্পূর্ণ</string>
+<key>other</key>
+<string>পাঠ সম্পূর্ণ</string>
+</dict>
+</dict>
+<key>account.activity.screenShares</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@screenShareCount@</string>
+<key>screenShareCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>স্ক্রিন শেয়ারগুলি</string>
+<key>other</key>
+<string>স্ক্রিন শেয়ারগুলি</string>
+</dict>
+</dict>
+<key>account.activity.linksShared</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@linkShareCount@</string>
+<key>linkShareCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>লিঙ্ক শেয়ার</string>
+<key>other</key>
+<string>লিঙ্ক শেয়ার</string>
+</dict>
+</dict>
+<key>account.activity.languagesUsed</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@languagesUsedCount@</string>
+<key>languagesUsedCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>ব্যবহৃত ভাষাগুলি</string>
+<key>other</key>
+<string>ব্যবহৃত ভাষাগুলি</string>
+</dict>
+</dict>
+<key>account.activity.sessions</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@sessionCount@</string>
+<key>sessionCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>সেশনস</string>
+<key>other</key>
+<string>পাঠগুলি</string>
+</dict>
+</dict>
+<key>tools.filter.toolsAvailable</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@toolCount@</string>
+<key>toolCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>%d সাধনী উপলভ্য</string>
+<key>other</key>
+<string>%d সাধনীসমূহ উপলভ্য</string>
+</dict>
+</dict>
+<key>languageSettings.appLanguage.numberAvailable</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@appLanguageCount@</string>
+<key>appLanguageCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>%d ভাষাগুলি উপলব্ধ</string>
+<key>other</key>
+<string>%d ভাষাগুলি উপলব্ধ</string>
+</dict>
+</dict>
+<key>badges.imagesShared</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@imageCount@</string>
+<key>imageCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>1 চিত্রগুলি শেয়ার করেছি</string>
+<key>other</key>
+<string>%d চিত্রগুলি শেয়ার করেছি</string>
+</dict>
+</dict>
+<key>badges.articlesOpened</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@articlesCount@</string>
+<key>articlesCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>1 প্রবন্ধগুলি পড়ুন</string>
+<key>other</key>
+<string>%d প্রবন্ধগুলি পড়ুন</string>
+</dict>
+</dict>
+<key>badges.lessonsCompleted</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@lessonsCount@</string>
+<key>lessonsCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>1 পাঠগুলি সম্পূর্ণ করেছি</string>
+<key>other</key>
+<string>%d পাঠগুলি সম্পূর্ণ করেছি</string>
+</dict>
+</dict>
+<key>badges.toolsOpened</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@toolsCount@</string>
+<key>toolsCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>1 সাধনীসমূহ খুলেছি</string>
+<key>other</key>
+<string>%d সাধনীসমূহ খুলেছি</string>
+</dict>
+</dict>
+<key>badges.tipsCompleted</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@tipsCount@</string>
+<key>tipsCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>1 প্রশিক্ষণের পরামর্শ সম্পূর্ণ করেছি</string>
+<key>other</key>
+<string>%d প্রশিক্ষণের পরামর্শ সম্পূর্ণ করেছি</string>
+</dict>
+</dict>
+</dict>
+</plist>

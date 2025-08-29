@@ -109,7 +109,7 @@ struct AllToolsView_Preview: PreviewProvider {
     
     static func getToolsViewModel() -> ToolsViewModel {
         
-        let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
+        let appDiContainer = AppDiContainer.createUITestsDiContainer()
         
         let viewModel = ToolsViewModel(
             flowDelegate: MockFlowDelegate(),

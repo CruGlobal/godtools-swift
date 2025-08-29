@@ -11,16 +11,16 @@ import Combine
 
 class GetOnboardingTutorialInterfaceStringsUseCase {
     
-    private let getStringsRepositoryInterface: GetOnboardingTutorialInterfaceStringsRepositoryInterface
+    private let stringsRepository: GetOnboardingTutorialInterfaceStringsRepositoryInterface
     
-    init(getStringsRepositoryInterface: GetOnboardingTutorialInterfaceStringsRepositoryInterface) {
+    init(stringsRepository: GetOnboardingTutorialInterfaceStringsRepositoryInterface) {
         
-        self.getStringsRepositoryInterface = getStringsRepositoryInterface
+        self.stringsRepository = stringsRepository
     }
     
     func getStringsPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<OnboardingTutorialInterfaceStringsDomainModel, Never> {
         
-        return getStringsRepositoryInterface
+        return stringsRepository
             .getStringsPublisher(appLanguage: appLanguage)
             .eraseToAnyPublisher()
     }

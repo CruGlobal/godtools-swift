@@ -16,6 +16,7 @@ class AppFlow: NSObject, Flow {
     private let deepLinkingService: DeepLinkingService
     private let appMessaging: AppMessagingInterface
     private let appLaunchObserver: AppLaunchObserver = AppLaunchObserver()
+    private let launchCountRepository: LaunchCountRepositoryInterface
     private let dashboardFlow: DashboardFlow
     private let rootController: AppRootController = AppRootController(nibName: nil, bundle: nil)
     
@@ -49,6 +50,7 @@ class AppFlow: NSObject, Flow {
         self.rootView = AppRootView(appRootController: rootController)
         self.deepLinkingService = appDeepLinkingService
         self.appMessaging = appDiContainer.dataLayer.getAppMessaging()
+        self.launchCountRepository = appDiContainer.dataLayer.getLaunchCountRepository()
         self.dashboardFlow = DashboardFlow(appDiContainer: appDiContainer, sharedNavigationController: navigationController, rootController: rootController)
         
         super.init()
@@ -134,6 +136,8 @@ class AppFlow: NSObject, Flow {
                     }
                     
                     appFlow.cancellableForAppLaunchedFromTerminatedStateOptions = nil
+                    
+                    let launchCount: Int = appFlow.launchCountRepository.getLaunchCount()
                     
                     if let deepLink = appFlow.appLaunchedFromDeepLink {
                         
@@ -261,7 +265,7 @@ extension AppFlow {
             }
             .store(in: &cancellables)
         
-        let authenticateUser: AuthenticateUserInterface = appDiContainer.feature.account.dataLayer.getAuthenticateUserInterface()
+        let authenticateUser: AuthenticateUserInterface = appDiContainer.feature.account.domainInterfaceLayer.getAuthenticateUser()
         
         authenticateUser.renewAuthenticationPublisher()
             .receive(on: DispatchQueue.main)

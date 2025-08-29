@@ -7,38 +7,41 @@
 //
 
 import SwiftUI
-import FirebaseDynamicLinks
 
 struct GodToolsApp: App {
 
-    private static let appBuild: AppBuild = AppBuild(buildConfiguration: InfoPlist().getAppBuildConfiguration())
-    private static let appConfig: AppConfig = AppConfig(appBuild: appBuild)
-    private static let uiTestsLaunchEnvironment: UITestsLaunchEnvironment = UITestsLaunchEnvironment()
-    private static let realmDatabase: RealmDatabase = RealmDatabase(databaseConfiguration: RealmDatabaseProductionConfiguration())
+    private enum AppLaunchType {
+        case godtools
+        case uiTests
+    }
+    
     private static let appDeepLinkingService: DeepLinkingService = appDiContainer.dataLayer.getDeepLinkingService()
+    private static let appDiContainer = AppDiContainer(appConfig: appConfig)
+    private static let uiTestsLaunchEnvironment: UITestsLaunchEnvironment = UITestsLaunchEnvironment()
     
-    private static let appDiContainer = AppDiContainer(
-        appBuild: appBuild,
-        appConfig: appConfig,
-        realmDatabase: realmDatabase,
-        firebaseEnabled: firebaseEnabled,
-        urlSessionEnabled: urlSessionEnabled
-    )
+    private static let appConfig: AppConfigInterface = {
+        switch appLaunchType {
+        case .godtools:
+            return GodToolsAppConfig()
+        case .uiTests:
+            return UITestsAppConfig()
+        }
+    }()
     
-    private static var isUITests: Bool {
-        return uiTestsLaunchEnvironment.getIsUITests() ?? false
+    private static var appLaunchType: AppLaunchType {
+        let isUITests: Bool = uiTestsLaunchEnvironment.getIsUITests() ?? false
+        if isUITests {
+            return .uiTests
+        }
+        return .godtools
     }
 
-    private static var firebaseEnabled: Bool {
-        return !isUITests
-    }
-    
-    private static var urlSessionEnabled: Bool {
-        return true//!isUITests
-    }
-    
     private let appFlow: AppFlow
     private let toolShortcutLinksViewModel: ToolShortcutLinksViewModel
+    
+    static var isDebug: Bool {
+        return appConfig.isDebug
+    }
     
     @Environment(\.scenePhase) private var scenePhase
     
@@ -46,24 +49,26 @@ struct GodToolsApp: App {
 
     init() {
 
+        if Self.appConfig.firebaseEnabled {
+            Self.appDiContainer.dataLayer.getFirebaseConfiguration().configure()
+        }
+        
+        if Self.appConfig.buildConfig == .analyticsLogging {
+            Self.appDiContainer.dataLayer.getFirebaseDebugArguments().enable()
+        }
+        
         appFlow = AppFlow(
             appDiContainer: Self.appDiContainer,
             appDeepLinkingService: Self.appDeepLinkingService
         )
         
-        if Self.appBuild.configuration == .analyticsLogging {
-            Self.appDiContainer.getFirebaseDebugArguments().enable()
-        }
-
-        if Self.firebaseEnabled {
-            Self.appDiContainer.getFirebaseConfiguration().configure()
-        }
-
-        if Self.appBuild.configuration == .release {
+        if Self.appConfig.buildConfig == .release {
             GodToolsParserLogger.shared.start()
         }
-
-        Self.appDiContainer.dataLayer.getAnalytics().firebaseAnalytics.configure()
+        
+        if Self.appConfig.firebaseEnabled {
+            Self.appDiContainer.dataLayer.getAnalytics().firebaseAnalytics.configure()
+        }
 
         Self.processUITestsDeepLink()
         
@@ -119,7 +124,7 @@ struct GodToolsApp: App {
 
 extension GodToolsApp {
     
-    static func getAppConfig() -> AppConfig {
+    static func getAppConfig() -> AppConfigInterface {
         return appConfig
     }
 }
@@ -148,21 +153,6 @@ extension GodToolsApp {
             return false
         }
 
-        let firebaseDynamicLinkHandled: Bool = DynamicLinks.dynamicLinks().handleUniversalLink(url) { (dynamicLink: DynamicLink?, error: Error?) in
-
-            guard let firebaseDynamicLinkUrl = dynamicLink?.url else {
-                return
-            }
-
-            DispatchQueue.main.async {
-                _ = Self.appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: firebaseDynamicLinkUrl)))
-            }
-        }
-
-        if firebaseDynamicLinkHandled {
-            return true
-        }
-
         let deepLinkHandled: Bool = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
 
         if deepLinkHandled {
@@ -173,11 +163,6 @@ extension GodToolsApp {
     }
     
     static func openUrl(url: URL) -> Bool {
-        
-        if let firebaseDynamicLinkUrl = DynamicLinks.dynamicLinks().dynamicLink(fromCustomSchemeURL: url)?.url {
-            _ = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: firebaseDynamicLinkUrl)))
-            return true
-        }
                 
         let deepLinkedHandled: Bool = appDeepLinkingService.parseDeepLinkAndNotify(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
         

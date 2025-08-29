@@ -27,10 +27,9 @@ class ToolScreenShareTutorialViewModel: ObservableObject {
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     @Published private var interfaceStrings: ToolScreenShareInterfaceStringsDomainModel = ToolScreenShareInterfaceStringsDomainModel.emptyStrings
     
+    @Published private(set) var shareOptions: [ToolScreenShareTutorialShareOption] = []
     @Published private(set) var hidesSkipButton: Bool = false
     @Published private(set) var hidesContinueButton: Bool = false
-    @Published private(set) var hidesGenerateQRCodeButton: Bool = true
-    @Published private(set) var hidesShareLinkButton: Bool = true
     @Published private(set) var tutorialPages: [ToolScreenShareTutorialPageDomainModel] = Array()
     @Published private(set) var generateQRCodeButtonTitle: String = ""
     @Published private(set) var shareLinkButtonTitle: String = ""
@@ -107,9 +106,15 @@ class ToolScreenShareTutorialViewModel: ObservableObject {
             }
             
             weakSelf.hidesSkipButton = isOnLastPage
-            weakSelf.hidesGenerateQRCodeButton = !isOnLastPage
-            weakSelf.hidesShareLinkButton = !isOnLastPage
             weakSelf.hidesContinueButton = isOnLastPage
+            
+            if GodToolsApp.isDebug {
+                weakSelf.shareOptions = isOnLastPage ? [.qrCode, .shareLink] : []
+            }
+            else {
+                weakSelf.shareOptions = isOnLastPage ? [.shareLink] : []
+            }
+            
         }
         .store(in: &cancellables)
     }

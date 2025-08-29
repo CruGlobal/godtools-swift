@@ -13,6 +13,7 @@ struct AuthenticationProviderResponse {
     let accessToken: String?
     let appleSignInAuthorizationCode: String?
     let idToken: String?
+    let oidcToken: String?
     let profile: AuthenticationProviderProfile
     let providerType: AuthenticationProviderType
     let refreshToken: String?

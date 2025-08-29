@@ -8,7 +8,6 @@
 
 import UIKit
 import FacebookCore
-import FirebaseDynamicLinks
 
 class GodToolsSceneDelegate: UIResponder, UIWindowSceneDelegate {
     

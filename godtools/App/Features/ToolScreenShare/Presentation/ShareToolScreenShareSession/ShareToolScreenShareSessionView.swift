@@ -22,9 +22,11 @@ class ShareToolScreenShareSessionView {
             title: viewModel.qrCodeString
         )
         
+        let applicationActivities: [UIActivity]? = GodToolsApp.isDebug ? [shareQRCodeActivityItem] : nil
+        
         controller = UIActivityViewController(
             activityItems: [viewModel.shareMessage],
-            applicationActivities: [shareQRCodeActivityItem]
+            applicationActivities: applicationActivities
         )
         
         controller.completionWithItemsHandler = { (activityType: UIActivity.ActivityType?, serviceCompleted: Bool, returnedItems: [Any]?, activityError: Error?) in

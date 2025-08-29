@@ -16,7 +16,7 @@ class MobileContentAttachmentsApi {
     private let requestSender: RequestSender
     private let baseUrl: String
     
-    init(config: AppConfig, urlSessionPriority: URLSessionPriority, requestSender: RequestSender) {
+    init(config: AppConfigInterface, urlSessionPriority: URLSessionPriority, requestSender: RequestSender) {
                     
         self.urlSessionPriority = urlSessionPriority
         self.requestSender = requestSender

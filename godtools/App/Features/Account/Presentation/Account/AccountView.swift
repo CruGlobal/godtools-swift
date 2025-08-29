@@ -45,8 +45,8 @@ struct AccountView: View {
 struct AccountView_Preview: PreviewProvider {
     
     static func getAccountViewModel() -> AccountViewModel {
-        
-        let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
+
+        let appDiContainer = AppDiContainer.createUITestsDiContainer()
         
         return AccountViewModel(
             flowDelegate: MockFlowDelegate(),
