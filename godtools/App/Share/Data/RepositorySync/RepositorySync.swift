@@ -25,15 +25,9 @@ open class RepositorySync<DataModelType, ExternalDataFetchType: RepositorySyncEx
         self.realmDatabase = realmDatabase
         self.dataModelMapping = dataModelMapping
     }
-
-    private func mapExternalObjectsToDataModels(externalObjects: [ExternalDataFetchType.DataModel]) -> [DataModelType] {
-        return externalObjects.compactMap {
-            self.dataModelMapping.toDataModel(externalObject: $0)
-        }
-    }
 }
 
-// MARK: - Realm Fetching
+// MARK: - Cache
 
 extension RepositorySync {
     
@@ -41,31 +35,96 @@ extension RepositorySync {
         return realm.objects(RealmObjectType.self)
     }
     
-    func getCachedObjectsToDataModels(realm: Realm) -> [DataModelType] {
-        let objects: [DataModelType] = getCachedResults(realm: realm).compactMap {
+    func getCachedObjectsToDataModels() -> [DataModelType] {
+        let dataModels: [DataModelType] = getCachedResults(realm: realmDatabase.openRealm()).compactMap {
             self.dataModelMapping.toDataModel(persistObject: $0)
         }
-        return objects
+        return dataModels
     }
     
     func getCachedObjectsToDataModelsPublisher() -> AnyPublisher<[DataModelType], Never> {
-        return realmDatabase
-            .readObjectsPublisher { (results: Results<RealmObjectType>) in
-                let objects: [DataModelType] = results.compactMap {
-                    self.dataModelMapping.toDataModel(persistObject: $0)
-                }
-                return objects
-            }
+        let dataModels: [DataModelType] = getCachedObjectsToDataModels()
+        return Just(dataModels)
             .eraseToAnyPublisher()
     }
     
+    func getCachedObjectsToResponse() -> RepositorySyncResponse<DataModelType> {
+        let dataModels: [DataModelType] = getCachedResults(realm: realmDatabase.openRealm()).compactMap {
+            self.dataModelMapping.toDataModel(persistObject: $0)
+        }
+        return RepositorySyncResponse(
+            objects: dataModels,
+            errors: []
+        )
+    }
+    
     func getCachedObjectsToResponsePublisher() -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
-        return getCachedObjectsToDataModelsPublisher()
-            .map { (dataModels: [DataModelType]) in
-                return RepositorySyncResponse(
-                    objects: dataModels,
-                    errors: []
+        let response: RepositorySyncResponse<DataModelType> = getCachedObjectsToResponse()
+        return Just(response)
+            .eraseToAnyPublisher()
+    }
+    
+    private func fetchCachedObjectsAndObserveChangesPublisher(realm: Realm) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
+                
+        return realm
+            .objects(RealmObjectType.self)
+            .objectWillChange
+            .map { _ in
+                return self.getCachedObjectsToResponse()
+            }
+            .eraseToAnyPublisher()
+    }
+}
+
+// MARK: - External Data Fetch
+
+extension RepositorySync {
+    
+    private func makeSinkingfetchAndStoreObjectsFromExternalDataFetch(requestPriority: RequestPriority) {
+        
+        fetchAndStoreObjectsFromExternalDataFetchPublisher(
+            requestPriority: requestPriority
+        )
+        .sink { (response: RepositorySyncResponse<DataModelType>) in
+            
+        }
+        .store(in: &cancellables)
+    }
+    
+    private func fetchAndStoreObjectsFromExternalDataFetchPublisher(requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
+                
+        return externalDataFetch
+            .getObjectsPublisher(requestPriority: requestPriority)
+            .map { (getObjectsResponse: RepositorySyncResponse<ExternalDataFetchType.DataModel>) in
+                
+                let responseDataModels: [DataModelType] = getObjectsResponse.objects.compactMap {
+                    self.dataModelMapping.toDataModel(externalObject: $0)
+                }
+                
+                let realmObjects: [RealmObjectType] = responseDataModels.compactMap {
+                    self.dataModelMapping.toPersistObject(dataModel: $0)
+                }
+                
+                let realm: Realm = self.realmDatabase.openRealm()
+                let errors: [Error]
+                
+                do {
+                    try realm.write {
+                        realm.add(realmObjects, update: .all)
+                    }
+                    
+                    errors = Array()
+                }
+                catch let error {
+                    errors = [error]
+                }
+                
+                let response = RepositorySyncResponse(
+                    objects: responseDataModels,
+                    errors: errors
                 )
+                
+                return response
             }
             .eraseToAnyPublisher()
     }
@@ -99,12 +158,9 @@ extension RepositorySync {
                 return fetchAndStoreObjectsFromExternalDataFetchPublisher(
                     requestPriority: requestPriority
                 )
-                .flatMap({ (response: RepositorySyncResponse<DataModelType>) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> in
-                    
-                    return self.getCachedObjectsToResponsePublisher()
-                        .eraseToAnyPublisher()
-                })
-                
+                .map { _ in
+                    return self.getCachedObjectsToResponse()
+                }
                 .eraseToAnyPublisher()
             }
             
@@ -142,17 +198,14 @@ extension RepositorySync {
             }
             else {
                 
-                let cachedObjects: [DataModelType] = getCachedObjectsToDataModels(realm: realm)
+                let cachedObjects: [DataModelType] = getCachedObjectsToDataModels()
                 
                 if cachedObjects.isEmpty {
                     
-                    let response = RepositorySyncResponse<DataModelType>(
-                        objects: [],
-                        errors: []
+                    return fetchAndStoreObjectsFromExternalDataFetchPublisher(
+                        requestPriority: requestPriority
                     )
-                    
-                    return Just(response)
-                        .eraseToAnyPublisher()
+                    .eraseToAnyPublisher()
                 }
                 else {
                     
@@ -178,81 +231,17 @@ extension RepositorySync {
             .eraseToAnyPublisher()
         }
     }
-    
-    private func fetchCachedObjectsAndObserveChangesPublisher(realm: Realm) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
-        
-        return objectWillChangeWithPrependWhenEmpty(
-            realm: realm
-        )
-        .flatMap({ willChange -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> in
-            return self.getCachedObjectsToResponsePublisher()
-                .eraseToAnyPublisher()
-        })
-        .eraseToAnyPublisher()
-    }
-    
-    private func objectWillChangeWithPrependWhenEmpty(realm: Realm) -> AnyPublisher<Void, Never> {
-        return realm
-            .objects(RealmObjectType.self)
-            .objectWillChange
-            .eraseToAnyPublisher()
-    }
-    
-    private func makeSinkingfetchAndStoreObjectsFromExternalDataFetch(requestPriority: RequestPriority) {
-        
-        fetchAndStoreObjectsFromExternalDataFetchPublisher(
-            requestPriority: requestPriority
-        )
-        .sink { (response: RepositorySyncResponse<DataModelType>) in
-            
-        }
-        .store(in: &cancellables)
-    }
-    
-    private func fetchAndStoreObjectsFromExternalDataFetchPublisher(requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
-        
-        return externalDataFetch
-            .getObjectsPublisher(requestPriority: requestPriority)
-            .flatMap({ (response: RepositorySyncResponse<ExternalDataFetchType.DataModel>) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> in
-                
-                let responseDataModels: [DataModelType] = response.objects.compactMap {
-                    self.dataModelMapping.toDataModel(externalObject: $0)
-                }
-                                
-                return self.realmDatabase.writeObjectsPublisher { (realm: Realm) in
-                   
-                    let realmObjects: [RealmObjectType] = responseDataModels.compactMap {
-                        self.dataModelMapping.toPersistObject(dataModel: $0)
-                    }
-                                        
-                    return realmObjects
-                    
-                } mapInBackgroundClosure: { (realmObjects: [RealmObjectType]) in
-                    
-                    return responseDataModels
-                }
-                .map {
-                    RepositorySyncResponse(objects: $0, errors: [])
-                }
-                .catch({ (error: Error) in
-                    
-                    let response = RepositorySyncResponse(
-                        objects: responseDataModels,
-                        errors: [error]
-                    )
-                    
-                    return Just(response)
-                        .eraseToAnyPublisher()
-                })
-                .eraseToAnyPublisher()
-            })
-            .eraseToAnyPublisher()
-    }
 }
 
 // MARK: - Object By Id
 
 extension RepositorySync {
+    
+    private func mapExternalObjectsToDataModels(externalObjects: [ExternalDataFetchType.DataModel]) -> [DataModelType] {
+        return externalObjects.compactMap {
+            self.dataModelMapping.toDataModel(externalObject: $0)
+        }
+    }
     
     func getObjectPublisher(id: String, cachePolicy: RepositorySyncCachePolicy, requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
         

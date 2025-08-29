@@ -107,8 +107,39 @@ struct RepositorySyncTests {
         )
     }
     
-    // TODO: Can I have tests for observing changes on cache policy (returnCacheDataDontFetch).  This will require a secondary external data fetch. ~Levi
-    
+//    @Test(arguments: [
+//        TestArgument(
+//            initialPersistedObjectsIds: ["0", "1"],
+//            externalDataModelIds: ["6", "3", "4"],
+//            expectedResponseDataModelIds: ["0", "1", "2", "7", "9"]
+//        )/*,
+//        TestArgument(
+//            initialPersistedObjectsIds: [],
+//            externalDataModelIds: ["1", "2"],
+//            expectedResponseDataModelIds: ["2", "7", "9"]
+//        ),
+//        TestArgument(
+//            initialPersistedObjectsIds: ["2", "3"],
+//            externalDataModelIds: [],
+//            expectedResponseDataModelIds: ["2", "3", "7", "9"]
+//        ),
+//        TestArgument(
+//            initialPersistedObjectsIds: [],
+//            externalDataModelIds: [],
+//            expectedResponseDataModelIds: ["2", "7", "9"]
+//        )*/
+//    ])
+//    @MainActor func returnCacheDataDontFetchWillTriggerTwiceWhenObservingChanges(argument: TestArgument) async {
+//        
+//        await runTest(
+//            argument: argument,
+//            cachePolicy: .returnCacheDataDontFetch(observeChanges: true),
+//            expectedNumberOfChanges: 3,
+//            expectFirstTriggerIsCacheResponse: true,
+//            triggerSecondaryExternalDataFetchWithIds: ["9", "2", "7"]
+//        )
+//    }
+        
     // MARK: - Test Cache Policy (Return Cache Data Else Fetch)
     
     @Test(arguments: [
@@ -130,6 +161,76 @@ struct RepositorySyncTests {
             cachePolicy: .returnCacheDataElseFetch(requestPriority: .medium, observeChanges: false),
             expectedNumberOfChanges: 1,
             expectFirstTriggerIsCacheResponse: true
+        )
+    }
+    
+    @Test(arguments: [
+        TestArgument(
+            initialPersistedObjectsIds: [],
+            externalDataModelIds: ["5", "6", "7"],
+            expectedResponseDataModelIds: ["5", "6", "7"]
+        )
+    ])
+    @MainActor func returnCacheDataElseFetchIsTriggeredOnceWhenNoCacheDataExistsAndExternalDataIsFetchedAndNotObservingChanges(argument: TestArgument) async {
+        
+        await runTest(
+            argument: argument,
+            cachePolicy: .returnCacheDataElseFetch(requestPriority: .medium, observeChanges: false),
+            expectedNumberOfChanges: 1,
+            expectFirstTriggerIsCacheResponse: false
+        )
+    }
+    
+    @Test(arguments: [
+        TestArgument(
+            initialPersistedObjectsIds: [],
+            externalDataModelIds: ["5", "6", "7"],
+            expectedResponseDataModelIds: ["5", "6", "7"]
+        )
+    ])
+    @MainActor func returnCacheDataElseFetchIsTriggeredTwiceWhenNoCacheDataExistsAndExternalDataIsFetchedAndIsObservingChanges(argument: TestArgument) async {
+        
+        await runTest(
+            argument: argument,
+            cachePolicy: .returnCacheDataElseFetch(requestPriority: .medium, observeChanges: true),
+            expectedNumberOfChanges: 2,
+            expectFirstTriggerIsCacheResponse: true
+        )
+    }
+    
+    @Test(arguments: [
+        TestArgument(
+            initialPersistedObjectsIds: [],
+            externalDataModelIds: ["5", "6", "7"],
+            expectedResponseDataModelIds: ["5", "6", "7", "9"]
+        )
+    ])
+    @MainActor func returnCacheDataElseFetchIsTriggeredThreeTimesWhenCacheIsEmptyOnExternalDataFetchAndOnSecondaryExternalDataFetch(argument: TestArgument) async {
+        
+        await runTest(
+            argument: argument,
+            cachePolicy: .returnCacheDataElseFetch(requestPriority: .medium, observeChanges: true),
+            expectedNumberOfChanges: 3,
+            expectFirstTriggerIsCacheResponse: true,
+            triggerSecondaryExternalDataFetchWithIds: ["9", "7"]
+        )
+    }
+        
+    @Test(arguments: [
+        TestArgument(
+            initialPersistedObjectsIds: ["1", "2"],
+            externalDataModelIds: ["3", "5", "4"],
+            expectedResponseDataModelIds: ["1", "2", "7", "9"]
+        )
+    ])
+    @MainActor func returnCacheDataElseFetchIsTriggeredTwiceWhenCacheHasDataAndOnSecondaryExternalDataFetch(argument: TestArgument) async {
+        
+        await runTest(
+            argument: argument,
+            cachePolicy: .returnCacheDataElseFetch(requestPriority: .medium, observeChanges: true),
+            expectedNumberOfChanges: 2,
+            expectFirstTriggerIsCacheResponse: true,
+            triggerSecondaryExternalDataFetchWithIds: ["9", "7"]
         )
     }
     
@@ -206,17 +307,37 @@ extension RepositorySyncTests {
             externalDataModelIds: externalDataModelIds
         )
         
+        let triggersSecondaryExternalDataFetch: Bool = triggerSecondaryExternalDataFetchWithIds.count > 0
+        
         var cancellables: Set<AnyCancellable> = Set()
+        
+        if triggersSecondaryExternalDataFetch {
+            
+            let delaySeconds: TimeInterval = 1
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + delaySeconds) {
+
+                // TODO: See if I can trigger another external data fetch by fetching from mock external data and writing objects to the database. ~Levi
+                
+                let additionalRepositorySync: RepositorySync<MockRepositorySyncDataModel, MockRepositorySyncExternalDataFetch, MockRepositorySyncRealmObject> = getRepositorySync(
+                    realmFileName: realmFileName,
+                    initialPersistedObjectsIds: [],
+                    externalDataModelIds: triggerSecondaryExternalDataFetchWithIds
+                )
+                
+                additionalRepositorySync
+                    .getObjectsPublisher(cachePolicy: .fetchIgnoringCacheData(requestPriority: .medium, observeChanges: false))
+                    .sink { response in
+
+                    }
+                    .store(in: &cancellables)
+            }
+        }
         
         var sinkCount: Int = 0
         
         var cachedResponseRef: RepositorySyncResponse<MockRepositorySyncDataModel>?
         var responseRef: RepositorySyncResponse<MockRepositorySyncDataModel>?
-        
-        if triggerSecondaryExternalDataFetchWithIds.count > 0 {
-            
-            // TODO: See if I can trigger another external data fetch by fetching from mock external data and writing objects to the database. ~Levi
-        }
         
         await confirmation(expectedCount: expectedNumberOfChanges) { confirmation in
             
@@ -236,7 +357,7 @@ extension RepositorySyncTests {
                         confirmation()
                         
                         sinkCount += 1
-                        
+                                                
                         if expectFirstTriggerIsCacheResponse && sinkCount == 1 {
                             
                             cachedResponseRef = response
@@ -366,9 +487,7 @@ extension RepositorySyncTests {
         let realmDatabase: RealmDatabase = RealmDatabase(
             databaseConfiguration: Self.getRealmDatabaseConfiguration(fileName: fileName)
         )
-        
-        _ = realmDatabase.deleteAllObjects()
-        
+                
         if addObjects.count > 0 {
             
             let realm: Realm = realmDatabase.openRealm()
