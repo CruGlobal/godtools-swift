@@ -1,0 +1,26 @@
+//
+//  RepositorySyncDatabaseQuery.swift
+//  godtools
+//
+//  Created by Levi Eggert on 8/31/25.
+//  Copyright © 2025 Cru. All rights reserved.
+//
+
+import Foundation
+
+public class RepositorySyncDatabaseQuery {
+    
+    public struct SortByKeyPath {
+        let keyPath: String
+        let ascending: Bool
+    }
+    
+    public let filter: NSPredicate?
+    public let sortByKeyPath: SortByKeyPath?
+    
+    public init(filter: NSPredicate?, sortByKeyPath: SortByKeyPath?) {
+        
+        self.filter = filter
+        self.sortByKeyPath = sortByKeyPath
+    }
+}
