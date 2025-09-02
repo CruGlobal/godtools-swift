@@ -641,7 +641,6 @@
 				ta,
 				sr,
 				te,
-				"ru-143",
 				tpi,
 			);
 			mainGroup = 4F5732801EA69CF00082035C;
