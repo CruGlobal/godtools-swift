@@ -139,7 +139,7 @@ class AppFlow: NSObject, Flow {
                     
                     let launchCount: Int = appFlow.launchCountRepository.getLaunchCount()
                     
-                    if launchCount == 1 {
+                    if launchCount == 1, UIPasteboard.general.hasURLs {
                         
                         appFlow.navigate(step: .showDeferredDeepLinkModal)
                         

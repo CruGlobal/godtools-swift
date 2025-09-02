@@ -43,11 +43,7 @@ extension DeferredDeepLinkModalViewModel {
         flowDelegate?.navigate(step: .closeTappedFromDeferredDeepLinkModal)
     }
     
-    func pasteButtonTapped() {
-        
-    }
-    
-    func cancelButtonTapped() {
-        flowDelegate?.navigate(step: .cancelTappedFromDeferredDeepLinkModal)
+    func pasteButtonTapped(pastedString: String?) {
+        print("paste: \(pastedString)")
     }
 }

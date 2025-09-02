@@ -10,8 +10,8 @@ import SwiftUI
 
 struct DeferredDeepLinkModalView: View {
     
-    @ObservedObject private var viewModel: DeferredDeepLinkModalViewModel
-
+    @ObservedObject private var viewModel: DeferredDeepLinkModalViewModel 
+    
     init(viewModel: DeferredDeepLinkModalViewModel) {
         self.viewModel = viewModel
     }
@@ -44,13 +44,14 @@ struct DeferredDeepLinkModalView: View {
             Spacer()
             
             HStack {
-                GTBlueButton(title: "Paste", fontSize: 16, width: 150, height: 48) {
-                    viewModel.pasteButtonTapped()
-                }
                 
-                GTWhiteButton(title: "Cancel", fontSize: 16, width: 150, height: 48) {
-                    viewModel.closeButtonTapped()
-                }
+                PasteButton(payloadType: String.self, onPaste: { pastedItems in
+                    
+                    viewModel.pasteButtonTapped(pastedString: pastedItems.first)
+                })
+                .tint(ColorPalette.gtBlue.color)
+                .buttonBorderShape(.roundedRectangle(radius: 6))
+                .scaleEffect(1.1)
             }
             
             Spacer()
