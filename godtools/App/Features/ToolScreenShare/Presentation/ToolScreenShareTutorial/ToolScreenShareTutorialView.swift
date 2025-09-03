@@ -61,13 +61,16 @@ struct ToolScreenShareTutorialView: View {
                     .animation(.easeOut, value: viewModel.currentPage)
                 }
                 
+                let buttonHorizontalPadding: CGFloat = 30
+                let singleButtonWidth: CGFloat = geometry.size.width - (buttonHorizontalPadding * 2)
+                
                 if viewModel.shareOptions.count > 0 {
                     
+                    let isSingleButton: Bool = viewModel.shareOptions.count == 1
                     let buttonFontSize: CGFloat = 16
                     let buttonFont: Font = FontLibrary.sfProTextRegular.font(size: buttonFontSize)
-                    let horizontalPadding: CGFloat = 30
                     let numberOfButtons: CGFloat = CGFloat(viewModel.shareOptions.count)
-                    let buttonWidth: CGFloat = floor(geometry.size.width / numberOfButtons) - horizontalPadding
+                    let buttonWidth: CGFloat = isSingleButton ? singleButtonWidth : floor(geometry.size.width / numberOfButtons) - buttonHorizontalPadding
                     let titlePadding: CGFloat = 4
                     
                     HStack(alignment: .center, spacing: 12) {
@@ -108,12 +111,10 @@ struct ToolScreenShareTutorialView: View {
                 
                 if !viewModel.hidesContinueButton {
                     
-                    let horizontalPadding: CGFloat = 30
-                    
                     GTBlueButton(
                         title: viewModel.continueTitle,
                         font: FontLibrary.sfProTextRegular.font(size: 18),
-                        width: geometry.size.width - (horizontalPadding * 2),
+                        width: singleButtonWidth,
                         height: continueButtonHeight,
                         titleHorizontalPadding: nil,
                         titleVerticalPadding: nil,
