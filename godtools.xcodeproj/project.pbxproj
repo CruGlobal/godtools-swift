@@ -13,8 +13,8 @@
 		4581EAA32BFBE194008115FF /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4581EAA22BFBE194008115FF /* RealmSwift */; };
 		4581EAA52BFBE257008115FF /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4581EAA42BFBE257008115FF /* RealmSwift */; };
 		4581EAA72BFBE2B9008115FF /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 4581EAA22BFBE194008115FF /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		459C56D225FF954F00F15967 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		459C56D325FF954F00F15967 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		459C56D225FF954F00F15967 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		459C56D325FF954F00F15967 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
 		45A416062A9943D50030E2C7 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 45A416052A9943D50030E2C7 /* Lottie */; };
 		45A416082A9943D50030E2C7 /* RequestOperation in Frameworks */ = {isa = PBXBuildFile; productRef = 45A416072A9943D50030E2C7 /* RequestOperation */; };
 		45A4160C2A9943D50030E2C7 /* YouTubeiOSPlayerHelper in Frameworks */ = {isa = PBXBuildFile; productRef = 45A4160B2A9943D50030E2C7 /* YouTubeiOSPlayerHelper */; };
@@ -26,15 +26,15 @@
 		45AD217F2593ABC800A096A0 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 45AD217E2593ABC800A096A0 /* README.md */; };
 		45AF5BF82DBBF87E0059FF55 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 45AF5BF72DBBF87E0059FF55 /* FirebaseMessaging */; };
 		45B0F6A72DBBCC300011FF1D /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 45B0F6A62DBBCC300011FF1D /* FirebaseMessaging */; };
-		45B6480925E581660098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		45B6480A25E581660098BAF1 /* (null) in Resources */ = {isa = PBXBuildFile; };
-		45B6480B25E581660098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		45B6480C25E581660098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		45B6481625E58ECC0098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		45B6482025E58EE70098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		45B6482825E593110098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		45B6482925E593110098BAF1 /* (null) in Resources */ = {isa = PBXBuildFile; };
-		45B6482A25E593110098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		45B6480925E581660098BAF1 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		45B6480A25E581660098BAF1 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
+		45B6480B25E581660098BAF1 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		45B6480C25E581660098BAF1 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		45B6481625E58ECC0098BAF1 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		45B6482025E58EE70098BAF1 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		45B6482825E593110098BAF1 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		45B6482925E593110098BAF1 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
+		45B6482A25E593110098BAF1 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
 		45CF09702784B910007F13D3 /* RequestOperation in Frameworks */ = {isa = PBXBuildFile; productRef = 45CF096F2784B910007F13D3 /* RequestOperation */; };
 		45D40C682A5315B400E8E4AE /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 45D40C672A5315B400E8E4AE /* Starscream */; };
 		45D40C6B2A5315D500E8E4AE /* Fuzi in Frameworks */ = {isa = PBXBuildFile; productRef = 45D40C6A2A5315D500E8E4AE /* Fuzi */; };
@@ -251,6 +251,8 @@
 		};
 		45F7F2952E54984600F854AE /* TestPlans */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
 			path = TestPlans;
 			sourceTree = "<group>";
 		};
@@ -691,10 +693,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				D1838479257E86B3004F5674 /* container in Resources */,
-				45B6482925E593110098BAF1 /* (null) in Resources */,
+				45B6482925E593110098BAF1 /* BuildFile in Resources */,
 				45AD217F2593ABC800A096A0 /* README.md in Resources */,
 				4F0CCC1F1EE73E9D00AE4E45 /* Podfile in Resources */,
-				45B6480A25E581660098BAF1 /* (null) in Resources */,
+				45B6480A25E581660098BAF1 /* BuildFile in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -756,13 +758,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-godtoolsUITests/Pods-godtoolsUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-godtoolsUITests/Pods-godtoolsUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -855,13 +853,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-godtools/Pods-godtools-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-godtools/Pods-godtools-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -876,13 +870,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -910,15 +900,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				459C56D225FF954F00F15967 /* (null) in Sources */,
-				45B6481625E58ECC0098BAF1 /* (null) in Sources */,
-				45B6480B25E581660098BAF1 /* (null) in Sources */,
-				45B6482025E58EE70098BAF1 /* (null) in Sources */,
-				45B6480925E581660098BAF1 /* (null) in Sources */,
-				459C56D325FF954F00F15967 /* (null) in Sources */,
-				45B6482A25E593110098BAF1 /* (null) in Sources */,
-				45B6480C25E581660098BAF1 /* (null) in Sources */,
-				45B6482825E593110098BAF1 /* (null) in Sources */,
+				459C56D225FF954F00F15967 /* BuildFile in Sources */,
+				45B6481625E58ECC0098BAF1 /* BuildFile in Sources */,
+				45B6480B25E581660098BAF1 /* BuildFile in Sources */,
+				45B6482025E58EE70098BAF1 /* BuildFile in Sources */,
+				45B6480925E581660098BAF1 /* BuildFile in Sources */,
+				459C56D325FF954F00F15967 /* BuildFile in Sources */,
+				45B6482A25E593110098BAF1 /* BuildFile in Sources */,
+				45B6480C25E581660098BAF1 /* BuildFile in Sources */,
+				45B6482825E593110098BAF1 /* BuildFile in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
