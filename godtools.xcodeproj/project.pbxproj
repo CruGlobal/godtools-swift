@@ -2111,7 +2111,7 @@
 			repositoryURL = "https://github.com/CruGlobal/localization-services-ios";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.3.1;
+				minimumVersion = 0.3.2;
 			};
 		};
 		D4997E0C28D4CED800205B4C /* XCRemoteSwiftPackageReference "youtube-ios-player-helper" */ = {
