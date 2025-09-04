@@ -1,0 +1,216 @@
+/* This About refers to a specific tool in the app. */
+"toolDetails.about.title" = "Teave";
+
+/* This means that the tool/resource is not available in the currently selected language. */
+"lessonCard.languageNotAvailable" = "Ei ole saadaval: %@";
+
+"tool_menu_item.tools" = "Kõik tööriistad";
+"lessons.pageTitle" = "Sulle mõeldud koolitus";
+"lessons.pageSubtitle" = "Kasulik nõu, kuidas suhteid luua ja tähendusrikkaid vestlusi alustada.";
+"toolSettings.languagesAvailable.title" = "Saadaval keeled";
+"toolDetails.versions.message" = "Vali allpool tööriista erinev versioon. Igal versioonil on ainulaadne stiil ja sisu, et leiaksid oma vestluse jaoks sobivaima. Saad lemmikuks märkida tööriista mitu versiooni.";
+"favorites.noTools.title" = "Lemmiktööriistu pole";
+"favorites.noTools.description" = "Puuduta südameikooni, et tööriist lemmikuks märkida ja väljaspool võrku kättesaadavaks teha.";
+"favorites.noTools.button" = "Mine tööriistade juurde";
+"toolSettings.shareImagePreview.shareImageButton.title" = "Jaga pilti";
+"favorites.pageTitle" = "Tere tulemast rakendusse GodTools";
+"favorites.favoriteLessons.title" = "Soovitatud koolitus";
+"favorites.favoriteTools.title" = "Su lemmiktööriistad";
+"favorites.favoriteTools.viewAll" = "Kuva kõik";
+
+/* Please keep to a 9 character limit, longer phrases may get cut off */
+"favorites.favoriteLessons.details" = "Teave";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
+"toolSettings.languagesList.deleteLanguage.title" = "Mitte ühtki";
+
+"toolSettings.chooseLanguage.toggleMessage" = "Selles tööriistas saab kasutada kahte keelt";
+"toolDetails.versions.title" = "Versioonid";
+"toolDetails.learnToShareToolButton.title" = "Õpi seda tööriista jagama";
+"toolSettings.title" = "Tööriistade suvandid";
+"toolSettings.option.shareLink.title" = "Jaga linki";
+"toolSettings.option.screenShare.title" = "Jaga ekraani";
+"toolSettings.option.trainingTips.show.title" = "Koolitusnõu";
+"toolSettings.option.trainingTips.hide.title" = "Peida nõuanded";
+"toolSettings.chooseLanguage.title" = "Teine keel";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "Teine";
+"toolSettings.shareables.title" = "Seotud pildid";
+"allTools.spotlight.title" = "Esiletõstetud tööriistad";
+"allTools.spotlight.description" = "Siit leiad mõned tööriistad, mis sulle meeldida võiksid.";
+"allTools.categories.title" = "Liigid";
+"tool_menu_item.lessons" = "Koolitus";
+"tool_offline_favorite_message" = "Tee tööriist kättesaadavaks võrguühenduseta, puudutades südameikoonil, et lisada see lemmikute hulka.";
+
+/* This is a category description of a tool that helps you start a conversation */
+"tool_category_conversation_starter" = "Vestluse alustaja";
+
+/* This phrase describes a category of tool that helps someone grow in their Christian faith */
+"tool_category_growth" = "Areng kristlasena";
+
+"share_link" = "Jaga linki";
+"share_tool_menu.remote_share_tool" = "Jaga ekraani";
+"share_tool_menu.send_tool" = "Saada see tööriist";
+"share_tool_screen_tutorial.share_your_screen.title" = "Jaga ekraani";
+"share_tool_screen_tutorial.share_your_screen.message" = "Suvandi kasutamisel saadetakse see tööriist su sõbrale. Ekraanikuva jagamine algab lingi avamisel.";
+"share_tool_screen_tutorial.mirrored_experience.title" = "Peegeldatud kogemus";
+"share_tool_screen_tutorial.mirrored_experience.message" = "Kui kerid oma telefonis tööriista kuva, näeb seda ka su sõber. Nii saad tööriistaga tutvuda korraga 2 seadmel.";
+"share_tool_screen_tutorial.get_started.title" = "Alustamine";
+"share_tool_screen_tutorial.get_started.message" = "Saada link ühele või mitmele inimesele, et kohe ekraanikuva jagamist alustada.";
+"share_tool_remote_link_message" = "Hei! Jälgi mind rakenduses GoodTools, jagades minuga ekraanikuva. Kasuta seda linki: %@ 
+
+Kui saad selle sõnumi hiljem, et pruugi link töötada. Sel juhul võime mõni teine kord uuesti proovida.";
+"exit_tract_remote_share_session.message" = "Kas lõpetada ekraanikuva kaugjagamine kohe?";
+"load_tool_remote_session.message" = "Ekraanikuva jagamise alustamine...";
+
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "Ettevalmistus";
+
+/*
+ * This is an invitation for a user to open a tool
+ * Please keep to a 9 character limit, longer phrases may get cut off
+*/
+"open" = "Ava";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "Lisa lemmikutesse";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "Eemalda lemmikutest";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "Laadime praegu tööriista alla. Et sa tulevikus ootama ei peaks, on su lemmiktööriist kättesaadav võrguühenduseta. 
+";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "Laadime alla tööriista viimase versiooni.";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "Kas eemaldada lemmikutest? ";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "Kas soovid kindlasti üksuse %@ lemmikutest eemaldada? ";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "Evangeeliumi kutse";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "Artiklid";
+"language_onboard" = "90+ keelt";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "Sa oled alla laadinud kõik olemasolevad tööriistad.";
+
+/* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
+"my_tools" = "Minu tööriistad";
+
+/* The user will click this toggle switch to go find a library of more offerings or "Tools". */
+"find_tools" = "Leia tööriistu";
+
+"unavailable" = "Ei ole saadaval";
+
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "Jäta vahele";
+
+// Onboarding
+"add_new_tools" = "Lisa uusi tööriistu";
+"set_your_languages" = "Seadista oma keeled";
+"okay" = "Nõus";
+// Menu
+"menu_general" = "Üldised";
+"menu_share" = "Jagamine";
+"menu_legal" = "Juriidiline teave";
+"language_settings" = "Keeleseaded";
+// Login
+"login" = "Logi sisse";
+"logout" = "Logi välja";
+"create_account" = "Lisa konto";
+"account_login" = "Kontole sisselogimine";
+
+// Tool Detail
+"about" = "Teave";
+"help" = "Abi";
+"contact_us" = "Kontakt";
+"preview_mode_translators_only" = "Eelvaaterežiim (ainult tõlkijatele)";
+"share_god_tools" = "Jaga \"Jumala tööriistade\" rakendust";
+"share_a_story_with_us" = "Jaga meiega oma lugu";
+"terms_of_use" = "Kasutustingimused";
+"privacy_policy" = "Andmekaitsepõhimõtted";
+"copyright_info" = "Autoriõiguslik teave";
+"share_god_tools_share_sheet_text" = "Laadi \"Jumala tööriistade\" rakendus alla lehelt https://godtoolsapp.com
+
+Veebiversioon on saadaval lehel https://knowgod.com";
+
+// Add Tools
+"add_tools" = "Lisa tööriistu";
+
+"total_views" = "%d külastust";
+"total_languages" = "%d keelt";
+
+// Language Settings
+"primary_language" = "Põhikeel";
+"select_primary_language" = "Vali põhikeel";
+"parallel_language" = "Teine keel";
+"select_parallel_language" = "Vali teine keel";
+"share_god_tools_native_language" = "Jaga \"Jumala tööriistu\" kellegagi tema emakeeles";
+"not_every_tool_is_available" = "Kõik tööriistad ei ole kõigis keeltes saadaval";
+
+// Settings
+"settings" = "Seaded";
+
+// Alert & Info Controllers
+"download_error" = "Allalaadimisviga";
+"no_internet_title" = "Võrguühenduseta";
+"no_internet" = "Palun veenduge võrguühenduse olemasolus ja proovige uuesti.";
+
+"the_tool_you_requested_is_loading" = "Soovitud tööriista laadimine ...";
+"loading" = "Laadimine...";
+
+// Actions
+"yes" = "Jah";
+"no" = "Ei";
+
+// Tract - Sharing
+"tract_share_message" ="Link %@ viib sind täna viimati koos vaadatud lehe veebiversioonile. Räägime jälle!
+
+Rakenduse saab alla laadida lehelt godtoolsapp.com";
+
+// Buttons
+"download" = "Laadi alla";
+"dismiss" = "Jäta vahele";
+"done" = "Valmis";
+"remove" = "Eemalda";
+"clear" = "Kustuta";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Ava tööriist";
+
+// Alerts
+"error" = "Viga";
+"OK" = "Nõus";
+"cancel" = "Tühista";
+"required_field_missing" = "%@ on kohustuslik väli.";
+
+"onboardingTutorial.getStartedButton.title" = "Alustamine";
+
+// About
+"general_about_1" = "Jumala Tööriistad aitavad sul jagada oma usku lihtsalt ja selgelt.";
+"general_about_2" = "Need tööriistad aitavad sul kindlustundega selgitada kellelegi, mida tähendab olla jumalaga Jeesus Kristuse kaudu seotud - seda isegi siis, kui sul on temast erinev emakeel.";
+"general_about_3" = "Sul on võimalik valida oma eelistuste ja kuulajaskonna põhjal mitmeid erinevaid tööriistu. Mitte kõik tööriistad ei ole kõigis keeltes saadaval.";
+"general_about_4" = "Iga tööriista lõpus on lingid muudele vahenditele.";
+"general_about_5" = "Uue tööriista allalaadimiseks on vaja võrguühendust. Allalaaditud tööriistu saab kasutada võrguühenduseta.";
+"general_about_6" = "Küsimused? Soovitused? Taotlused? Võta meiega ühendust aadressil support@godtoolsapp.com";
+"general_about_7" = "Tööriistade veebiversioon on saadaval knowgod.com. Manusta see oma lehele!";
+"general_about_8" = "Lisateavet saad godtoolsapp.com-ist.";
+"tutorial.continueButton.title.continue" = "Jätka";
+"general_about_9" = "Kui jagad oma usku kellegagi, pea meeles, et inimese meelt muudab jumal. Näita oma armastust, kuulates inimesi, et mõistaksid neid.";
+"general_about_10" = "\"Teie kõne olgu alati armu sees, soolaga soolatud, et te teaksite, kuidas teil tuleb igaühele kosta.\" Koloslastele 4:6";
+
+// Downloads
+"Download in progress" = "Toimub allalaadimine";
+
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
+"card_status1" = "Tagasi";
+"card_status2" = "Edasi";
+
+// Language Name Strings
+"language_name_fa" = "Pärsia (farsi)";
+

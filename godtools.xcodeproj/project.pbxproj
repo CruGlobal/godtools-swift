@@ -13,8 +13,8 @@
 		4581EAA32BFBE194008115FF /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4581EAA22BFBE194008115FF /* RealmSwift */; };
 		4581EAA52BFBE257008115FF /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4581EAA42BFBE257008115FF /* RealmSwift */; };
 		4581EAA72BFBE2B9008115FF /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 4581EAA22BFBE194008115FF /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		459C56D225FF954F00F15967 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		459C56D325FF954F00F15967 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		459C56D225FF954F00F15967 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		459C56D325FF954F00F15967 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
 		45A416062A9943D50030E2C7 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 45A416052A9943D50030E2C7 /* Lottie */; };
 		45A416082A9943D50030E2C7 /* RequestOperation in Frameworks */ = {isa = PBXBuildFile; productRef = 45A416072A9943D50030E2C7 /* RequestOperation */; };
 		45A4160C2A9943D50030E2C7 /* YouTubeiOSPlayerHelper in Frameworks */ = {isa = PBXBuildFile; productRef = 45A4160B2A9943D50030E2C7 /* YouTubeiOSPlayerHelper */; };
@@ -26,15 +26,15 @@
 		45AD217F2593ABC800A096A0 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 45AD217E2593ABC800A096A0 /* README.md */; };
 		45AF5BF82DBBF87E0059FF55 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 45AF5BF72DBBF87E0059FF55 /* FirebaseMessaging */; };
 		45B0F6A72DBBCC300011FF1D /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 45B0F6A62DBBCC300011FF1D /* FirebaseMessaging */; };
-		45B6480925E581660098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		45B6480A25E581660098BAF1 /* (null) in Resources */ = {isa = PBXBuildFile; };
-		45B6480B25E581660098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		45B6480C25E581660098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		45B6481625E58ECC0098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		45B6482025E58EE70098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		45B6482825E593110098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		45B6482925E593110098BAF1 /* (null) in Resources */ = {isa = PBXBuildFile; };
-		45B6482A25E593110098BAF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		45B6480925E581660098BAF1 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		45B6480A25E581660098BAF1 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
+		45B6480B25E581660098BAF1 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		45B6480C25E581660098BAF1 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		45B6481625E58ECC0098BAF1 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		45B6482025E58EE70098BAF1 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		45B6482825E593110098BAF1 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		45B6482925E593110098BAF1 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
+		45B6482A25E593110098BAF1 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
 		45CF09702784B910007F13D3 /* RequestOperation in Frameworks */ = {isa = PBXBuildFile; productRef = 45CF096F2784B910007F13D3 /* RequestOperation */; };
 		45D40C682A5315B400E8E4AE /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 45D40C672A5315B400E8E4AE /* Starscream */; };
 		45D40C6B2A5315D500E8E4AE /* Fuzi in Frameworks */ = {isa = PBXBuildFile; productRef = 45D40C6A2A5315D500E8E4AE /* Fuzi */; };
@@ -45,7 +45,6 @@
 		45DF96512D386C1C00C6AE68 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 45DF96502D386C1C00C6AE68 /* FirebaseRemoteConfig */; };
 		45DF96532D386D3800C6AE68 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 45DF96522D386D3800C6AE68 /* FirebaseAnalytics */; };
 		45DF96552D386D4900C6AE68 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 45DF96542D386D4900C6AE68 /* FirebaseCrashlytics */; };
-		45DF96572D386D4D00C6AE68 /* FirebaseDynamicLinks in Frameworks */ = {isa = PBXBuildFile; productRef = 45DF96562D386D4D00C6AE68 /* FirebaseDynamicLinks */; };
 		45DF96592D386D5400C6AE68 /* FirebaseInAppMessaging-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 45DF96582D386D5400C6AE68 /* FirebaseInAppMessaging-Beta */; };
 		45DF965B2D386D5800C6AE68 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 45DF965A2D386D5800C6AE68 /* FirebaseRemoteConfig */; };
 		45E39EDC27457E0C006A59E4 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 45E39EDB27457E0C006A59E4 /* Lottie */; };
@@ -252,6 +251,8 @@
 		};
 		45F7F2952E54984600F854AE /* TestPlans */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
 			path = TestPlans;
 			sourceTree = "<group>";
 		};
@@ -292,7 +293,6 @@
 				45DF96552D386D4900C6AE68 /* FirebaseCrashlytics in Frameworks */,
 				45A4160E2A9943D50030E2C7 /* ZipArchive in Frameworks */,
 				1B1A4359D05325DC53708408 /* libPods-godtoolsUITests.a in Frameworks */,
-				45DF96572D386D4D00C6AE68 /* FirebaseDynamicLinks in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -452,7 +452,6 @@
 				452556432C383C3F00AA0046 /* RealmSwift */,
 				45DF96522D386D3800C6AE68 /* FirebaseAnalytics */,
 				45DF96542D386D4900C6AE68 /* FirebaseCrashlytics */,
-				45DF96562D386D4D00C6AE68 /* FirebaseDynamicLinks */,
 				45DF96582D386D5400C6AE68 /* FirebaseInAppMessaging-Beta */,
 				45DF965A2D386D5800C6AE68 /* FirebaseRemoteConfig */,
 				45AF5BF72DBBF87E0059FF55 /* FirebaseMessaging */,
@@ -579,8 +578,72 @@
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				no,
 				en,
+				es,
+				af,
+				am,
+				ar,
+				bn,
+				de,
+				fr,
+				ha,
+				hi,
+				ja,
+				ko,
+				id,
+				lv,
+				ne,
+				om,
+				ro,
+				ru,
+				sw,
+				vi,
+				"zh-Hans",
+				"zh-Hant",
+				ur,
+				pt,
+				"pt-PT",
+				az,
+				bg,
+				ckb,
+				cs,
+				da,
+				el,
+				et,
+				fa,
+				fi,
+				fil,
+				"fr-CA",
+				gu,
+				he,
+				hr,
+				hu,
+				it,
+				kk,
+				ky,
+				lo,
+				lt,
+				mg,
+				mk,
+				mn,
+				mr,
+				ms,
+				nl,
+				no,
+				pa,
+				pl,
+				ps,
+				uk,
+				tr,
+				th,
+				sk,
+				sl,
+				sq,
+				sv,
+				ta,
+				sr,
+				te,
+				tpi,
 			);
 			mainGroup = 4F5732801EA69CF00082035C;
 			packageReferences = (
@@ -630,10 +693,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				D1838479257E86B3004F5674 /* container in Resources */,
-				45B6482925E593110098BAF1 /* (null) in Resources */,
+				45B6482925E593110098BAF1 /* BuildFile in Resources */,
 				45AD217F2593ABC800A096A0 /* README.md in Resources */,
 				4F0CCC1F1EE73E9D00AE4E45 /* Podfile in Resources */,
-				45B6480A25E581660098BAF1 /* (null) in Resources */,
+				45B6480A25E581660098BAF1 /* BuildFile in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -695,13 +758,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-godtoolsUITests/Pods-godtoolsUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-godtoolsUITests/Pods-godtoolsUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -794,13 +853,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-godtools/Pods-godtools-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-godtools/Pods-godtools-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -815,13 +870,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -849,15 +900,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				459C56D225FF954F00F15967 /* (null) in Sources */,
-				45B6481625E58ECC0098BAF1 /* (null) in Sources */,
-				45B6480B25E581660098BAF1 /* (null) in Sources */,
-				45B6482025E58EE70098BAF1 /* (null) in Sources */,
-				45B6480925E581660098BAF1 /* (null) in Sources */,
-				459C56D325FF954F00F15967 /* (null) in Sources */,
-				45B6482A25E593110098BAF1 /* (null) in Sources */,
-				45B6480C25E581660098BAF1 /* (null) in Sources */,
-				45B6482825E593110098BAF1 /* (null) in Sources */,
+				459C56D225FF954F00F15967 /* BuildFile in Sources */,
+				45B6481625E58ECC0098BAF1 /* BuildFile in Sources */,
+				45B6480B25E581660098BAF1 /* BuildFile in Sources */,
+				45B6482025E58EE70098BAF1 /* BuildFile in Sources */,
+				45B6480925E581660098BAF1 /* BuildFile in Sources */,
+				459C56D325FF954F00F15967 /* BuildFile in Sources */,
+				45B6482A25E593110098BAF1 /* BuildFile in Sources */,
+				45B6480C25E581660098BAF1 /* BuildFile in Sources */,
+				45B6482825E593110098BAF1 /* BuildFile in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2173,11 +2224,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 45DF96472D386C1C00C6AE68 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseCrashlytics;
-		};
-		45DF96562D386D4D00C6AE68 /* FirebaseDynamicLinks */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 45DF96472D386C1C00C6AE68 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseDynamicLinks;
 		};
 		45DF96582D386D5400C6AE68 /* FirebaseInAppMessaging-Beta */ = {
 			isa = XCSwiftPackageProductDependency;

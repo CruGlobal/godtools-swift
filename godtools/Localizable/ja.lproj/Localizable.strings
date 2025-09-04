@@ -1,0 +1,387 @@
+"optInNotification.notificationSettings" = "通知設定";
+"lessons.swipeTutorial.title" = "スワイプでページを切り替えられます";
+"lessons.swipeTutorial.buttonText" = "了解";
+"optInNotification.title" = "実践的なお役立ち情報と励ましを手に入れよう";
+"optInNotification.body" = "会話への準備を整えましょう。\n通知を許可してください。";
+"optInNotification.allowNotifications" = "通知を許可する";
+"optInNotification.maybeLater" = "たぶん後で";
+
+/* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
+"lessons.resumeLessonModal.title" = "進捗を再開";
+
+"lessons.resumeLessonModal.subtitle" = "中断したところから再開しますか？";
+"lessons.resumeLessonModal.startOverButton" = "やり直す";
+"lessons.resumeLessonModal.continueButton" = "続行";
+"lessons.lessonCompleted" = "完了";
+"lessons.completionProgress" = "%@完了";
+"network_connection_lost" = "ネットワーク接続が失われました。";
+"language_name_fil" = "フィリピン（タガログ）語";
+"lessons.filter.navBar.language" = "レッスン言語";
+"lessons.languageFilter.title" = "レッスン:";
+"language_name_fil-x-taglish" = "タグリッシュ";
+"language_name_sid" = "シダマ語";
+"onboardingTutorial.chooseLanguageButton.title" = "言語を選択する";
+"languageSettings.confirmAppLanguage.message" = "%@ がアプリ言語として選択されました。これによって、GodToolsアプリ全体の言語が変更されます。よろしいですか？";
+"languageSettings.confirmAppLanguage.changeLanguageButton.title" = "言語を変更する";
+"languageSettings.confirmAppLanguage.nevermindButton.title" = "変更しない";
+"languageSettings.downloadableLanguages.title" = "ダウンロード可能な言語";
+"languageSettings.appInterface.title" = "アプリのインターフェース言語";
+"languageSettings.appInterface.message" = "アプリ全体を表示する言語を設定してください。";
+"languageSettings.appInterface.languagesAvailable" = "利用可能な言語";
+"languageSettings.toolLanguagesAvailableOffline.title" = "オフラインで使用可能なツール言語";
+"languageSettings.toolLanguagesAvailableOffline.message" = "すべてのツールを一つの言語でダウンロードしておくと、WiFiや携帯電話サービスが使えない場合でも、アプリを利用することができます。ツールの中のオプションボタンでツールの言語を設定してください。";
+"languageSettings.toolLanguagesAvailableOffline.editDownloadedLanguagesButton.title" = "ダウンロードされた言語を編集する";
+"allTools.filter.title" = "フィルター";
+"allTools.filter.anyCategory" = "全てのカテゴリー";
+"allTools.filter.anyLanguage" = "全ての言語";
+"allTools.filter.navBar.language" = "言語でフィルターをかける";
+"allTools.filter.navBar.category" = "カテゴリでフィルターをかける";
+"languageSettings.appLanguage.title" = "アプリ言語";
+"authError.userAccountAlreadyExists.message" = "ユーザアカウントは既に存在します。";
+"authError.userAccountNotFound.message" = "ユーザアカウントが見つかりません。";
+"createAccount.title" = "アカウント作成";
+"createAccount.subtitle" = "アカウントを作成すると、生の証しや、励まし、実践的なお役立ち情報を簡単に見ることができます。";
+"deleteAccountProgress.title" = "アカウントを削除中...";
+"confirmDeleteAccount.title" = "よろしいですか？";
+"confirmDeleteAccount.confirmButton.title" = "アカウントを削除する";
+"accountDeletedAlert.title" = "アカウントが削除されました";
+"accountDeletedAlert.message" = "あなたのアカウントが削除されました。";
+"deleteAccount.title" = "本当にこの操作を実行しますか。";
+"deleteAccount.subtitle" = "アカウントを削除すると、お気に入りのツールやアカウントのアクティビティにアクセスすることができなくなります。";
+"deleteAccount.confirmButton.title" = "アカウントを削除する";
+"deleteAccount.cancelButton.title" = "アカウントを維持する";
+"signIn.title" = "サインイン";
+"signIn.subtitle" = "アカウントにログインすると、生の証しや、励まし、実践的なお役立ち情報を簡単に見ることができます。";
+"signIn.google" = "Googleでサインイン";
+"signIn.facebook" = "Facebookでログイン";
+"signIn.apple" = "Appleで続ける";
+"menu_getStarted" = "開始";
+"menu_support" = "サポート";
+"menu_about" = "情報";
+"menu.sendFeedback" = "フィードバックを送信する";
+"menu.reportABug" = "バグを報告する";
+"menu.askAQuestion" = "質問する";
+"menu.leaveAReview" = "レビューを残す";
+"account.badges.sectionTitle" = "あなたのバッジ";
+"account.activity.sectionTitle" = "あなたのアクティビティ";
+
+/* Just translate "Joined" - leave the %@ - this is the date they started using GodTools */
+"account.joinedOn" = "参加した日：%@";
+
+"account.globalActivity.title" = "世界のアクティビティ";
+"toolDetails.conversationStarters.title" = "会話を切り出す話題";
+
+/* A list of the main points of the tool will live behind a section called "Outline" */
+"toolDetails.outline.title" = "アウトライン";
+
+"toolDetails.bibleReferences.title" = "聖書引用";
+
+/* This About refers to a specific tool in the app. */
+"toolDetails.about.title" = "概要";
+
+/* This means that the tool/resource is not available in the currently selected language. */
+"lessonCard.languageNotAvailable" = "%@ではご利用いただけません";
+
+"menu.deleteAccount" = "アカウントを削除する";
+"alert.mailAppUnavailable.title" = "メールアプリ利用不可";
+"alert.mailAppUnavailable.message" = "ネイティブメールアプリがこのデバイスに設定されていないか、利用できません。";
+"tool_menu_item.tools" = "てのツール";
+"lessons.pageTitle" = "あなた専用のレッスン";
+"lessons.pageSubtitle" = "信頼関係を築き、意義のある会話を始めるための実践的なアイデアです。";
+"toolSettings.languagesAvailable.title" = "利用可能な言語";
+"toolDetails.versions.message" = "本ツールの他バージョンを下からお選びいただけます。各バージョンによって、スタイルやコンテンツが異なりますので、あなたの会話に最も適したバージョンを見つけてください。同じツールの複数のバージョンをお気に入りに表示させることも可能です。";
+"favorites.noTools.title" = "表示できるお気に入りのツールはありません";
+"favorites.noTools.description" = "ハートアイコンをタップしてツールをお気に入りに追加し、オフラインでも使用できるようにしましょう。";
+"favorites.noTools.button" = "ツールに移動";
+"toolSettings.shareImagePreview.shareImageButton.title" = "画像をシェア";
+"favorites.pageTitle" = "GodToolsへようこそ";
+"favorites.favoriteLessons.title" = "注目のレッスン";
+"favorites.favoriteTools.title" = "お気に入りのツール";
+"favorites.favoriteTools.viewAll" = "すべて表示 ";
+
+/* Please keep to a 9 character limit, longer phrases may get cut off */
+"favorites.favoriteLessons.details" = "詳細";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
+"toolSettings.languagesList.deleteLanguage.title" = "なし";
+
+"toolSettings.chooseLanguage.toggleMessage" = "本ツール内で2つの言語を切り替えることができます。";
+"toolDetails.versions.title" = "バージョン";
+"toolDetails.learnToShareToolButton.title" = "このツールをシェアする方法を学ぶ";
+"toolSettings.title" = "ツールオプション";
+"toolSettings.option.shareLink.title" = "リンクをシェア";
+"toolSettings.option.screenShare.title" = "画面を共有する";
+"toolSettings.option.trainingTips.show.title" = "トレーニングのヒント";
+"toolSettings.option.trainingTips.hide.title" = "ヒントを非表示";
+"toolSettings.chooseLanguage.title" = "並列言語";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "並列";
+"toolSettings.shareables.title" = "関連する画像";
+"allTools.spotlight.title" = "注目のツール";
+"allTools.spotlight.description" = "あなたにおすすめのツールです";
+"allTools.categories.title" = "カテゴリー";
+"training_tip_ask" = "尋ねる";
+"training_tip_consider" = "考える";
+"training_tip_prepare" = "準備する";
+"training_tip_quote" = "引用";
+"training_tip_tip" = "ヒント";
+"start_training" = "トレーニングを開始";
+"close" = "終了";
+"tool_menu_item.lessons" = "レッスン";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.continueButton.title.closeTutorial" = "チュートリアルを終了";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.tool.title" = "てのツール";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.tool.message" = "それぞれのツールは、会話の前、途中、または後の異なるステージのために作られています。";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.toolTip.title" = "ツールのヒント";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.toolTip.message" = "GodToolsのヒントは、あなたが誰かに福音書を理解し、イエスと出会うのを助ける際にガイドとなります。";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.screenShare.title" = "画面共有";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.screenShare.message" = "これで画面をリモートで共有できるので、他の人が、あなたがツールを使って福音書について話スノをフォローできます。";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.lesson.title" = "レッスン";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.lesson.message" = "各GodToolsレッスンでは、神について本物の会話をするのに役立つことを学びます。";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.findTutorial.title" = "必要なときはいつでもメニューからこのチュートリアルを見つけられます。";
+
+"onboardingTutorial.beginButton.title" = "始める";
+"onboardingTutorial.nextButton.title" = "次";
+"tool_offline_favorite_message" = "ハートアイコンをタップすると、お気に入りに追加され、オフラインで利用できるようになります。";
+
+/* This is a category description of a tool that helps you start a conversation */
+"tool_category_conversation_starter" = "会話のきっかけ";
+
+/* This phrase describes a category of tool that helps someone grow in their Christian faith */
+"tool_category_growth" = "クリスチャンとしての成長";
+
+"share_link" = "リンクをシェア";
+"share_tool_menu.remote_share_tool" = "画面を共有する";
+"share_tool_menu.send_tool" = "ツールを送信する";
+"share_tool_screen_tutorial.share_your_screen.title" = "画面を共有する";
+"share_tool_screen_tutorial.share_your_screen.message" = "このオプションは、このツールへのリンクを友達に送信します。リンクが開かれると、画面共有セッションが開始します。";
+"share_tool_screen_tutorial.mirrored_experience.title" = "ミラーリング機能";
+"share_tool_screen_tutorial.mirrored_experience.message" = "お使いのスマートフォンでツールをスクロールすると、お友達の画面も同様に動作します。これにより、2つのデバイス上で同時にツールの使い方を見せることができます。";
+"share_tool_screen_tutorial.get_started.title" = "始める";
+"share_tool_screen_tutorial.get_started.message" = "リンクを1人またはそれ以上の人々に送信して、画面共有セッションを今すぐ開始しましょう。";
+"share_tool_remote_link_message" = "こんにちは。画面共有を通してGodToolsを一緒に見てみましょう。リンクはこちらです: %@ このメッセージが後から届いた場合、リンクが使用できなくなっている場合があります。その場合は、またの機会に試しましょう。";
+"exit_tract_remote_share_session.message" = "遠隔共有セッションを今すぐ終了しますか？";
+"load_tool_remote_session.message" = "「画面共有」を開始しています…";
+"learn_to_share_tool.learn_to_share.title" = "このツールを誰とでもシェアする方法を学ぶ";
+"learn_to_share_tool.learn_to_share.message" = "このツールを他の人とシェアする自信が持てるように、必要なだけたくさんのヒントを使って練習しましょう。";
+"learn_to_share_tool.tips_light_the_way.title" = "道を照らすためのヒント";
+"learn_to_share_tool.tips_light_the_way.message" = "このトレーニングの特定の画面では、さまざまなアイコンが表示されます。各アイコンを押すと、画面の内容について話すのに役立つヒントが表示されます。アイコンがない画面は、内容を読み進めて、必要に応じて話し合ってください。";
+"learn_to_share_tool.light_up_the_tips.title" = "ヒントを点灯";
+"learn_to_share_tool.light_up_the_tips.message" = "ヒントが点灯したら、そのトレーニングを完了したことになります。ツールを説明する自信がつくまで、必要なだけ多くのヒントを使って練習しましょう。";
+"lesson_evaluation.title" = "レビュー";
+"lesson_evaluation.wasThisHelpful" = "このレッスンは役に立ちましたか？";
+"lesson_evaluation.shareFaith" = "霊的会話を始める準備がどのくらいできていると思いますか？";
+"lesson_evaluation.sendButtonTitle" = "フィードバックを送信する";
+"onboardingTutorial.0.title" = "どのような会話にも対応できます";
+"onboardingTutorial.0.videoLink.title" = "動画を視聴";
+"onboardingTutorial.1.title" = "誰とでも神について話しましょう";
+"onboardingTutorial.1.message" = "GodToolsは神について意義ある会話をするのに役立ちます。";
+"onboardingTutorial.2.title" = "大切な瞬間のために準備しておきましょう";
+"onboardingTutorial.2.message" = "信仰についての会話をあなたの自然な生活の一部にする方法を学びましょう。";
+"onboardingTutorial.3.title" = "イエスとの出会い助けましょう";
+"onboardingTutorial.3.message" = "GodToolsはキリストの教えを分かりやすく身近な方法で伝えるためのガイドです。";
+
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "トレーニング";
+
+/*
+ * This is an invitation for a user to open a tool
+ * Please keep to a 9 character limit, longer phrases may get cut off
+*/
+"open" = "開く";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "お気に入りに追加";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "お気に入りから削除";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "ツールをダウンロード中です。今後待つのを避けるために、このツールをお気に入りに追加してオフラインで利用できるようにしましょう。";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "このツールの最新の翻訳をダウンロードしています";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "お気に入りからを削除しますか？";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "「お気に入り」から%@を削除して本当によろしいですか？　";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "ゴスペルへの招待";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "記事";
+
+"articles.downloadArticlesButton.title.retryDownload" = "ダウンロードを再試行";
+
+/* This is to let users know which version of the app is installed on their phone */
+"menu_version" = "バージョン";
+"language_onboard" = "90 種類以上の言語";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "利用可能なツールをすべてダウンロードしました。";
+
+/* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
+"my_tools" = "お気に入り";
+
+/* The user will click this toggle switch to go find a library of more offerings or "Tools". */
+"find_tools" = "すべてのツール";
+
+"unavailable" = "利用不可";
+
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "スキップ";
+
+// Onboarding
+"add_new_tools" = "新しいツールを追加";
+"set_your_languages" = "言語を設定";
+"okay" = "OK";
+// Menu
+"menu_general" = "一般";
+"menu_account" = "アカウント";
+"menu_share" = "シェア";
+"menu_legal" = "法定事項";
+"language_settings" = "言語設定";
+"menu.tutorial" = "チュートリアル";
+"menu.my_account" = "マイアカウント";
+
+// Login
+"login" = "ログイン";
+"logout" = "ログアウト";
+"create_account" = "アカウント作成";
+"account_login" = "アカウントログイン";
+
+// Tool Detail
+"about" = "情報";
+"help" = "よくある質問";
+"contact_us" = "お問い合わせ";
+"preview_mode_translators_only" = "プレビューモード（翻訳者限定）";
+"share_god_tools" = "GodToolsをシェア";
+"share_a_story_with_us" = "体験談を紹介";
+"terms_of_use" = "利用規約";
+"privacy_policy" = "プライバシーポリシー";
+"copyright_info" = "著作権情報";
+"share_god_tools_share_sheet_text" = "GodToolsをダウンロード: https://godtoolsapp.com
+
+オンライン版はこちらです: https://knowgod.com/";
+
+// Add Tools
+"add_tools" = "ツールを追加";
+
+"total_views" = "表示回数%d回";
+"total_languages" = "%d言語";
+
+// Language Settings
+"primary_language" = "第1言語";
+"select_primary_language" = "第1言語を選択";
+"parallel_language" = "並列言語";
+"select_parallel_language" = "並列言語を選択";
+"share_god_tools_native_language" = "シェア相手の母国語でGodToolsをシェア";
+"not_every_tool_is_available" = "全言語ですべてのツールが利用できるわけではありません";
+
+// Settings
+"settings" = "設定";
+
+// Alert & Info Controllers
+"download_error" = "ダウンロードエラー";
+"no_internet_title" = "インターネット接続がありません";
+"no_internet" = "インターネット接続を確認してからもう一度お試しください。";
+
+"the_tool_you_requested_is_loading" = "リクエストしたツールを読み込み中…";
+"loading" = "読み込み中...";
+
+// Actions
+"yes" = "はい";
+"no" = "いいえ";
+
+// Tract - Sharing
+"tract_share_message" ="このリンクは私たちが今日最後に見ていたウェブ版のページに移動します: %@。
+
+もっと話しましょう！
+
+アプリはこちらからダウンロードできます: https://godtoolsapp.com";
+
+// Buttons
+"download" = "ダウンロード";
+"dismiss" = "無視";
+"done" = "完了";
+"remove" = "削除";
+"clear" = "消去";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "ツールを開く";
+
+// Alerts
+"error" = "エラー";
+"OK" = "OK";
+"cancel" = "キャンセル";
+"required_field_missing" = "「%@」は必須記入欄です。";
+
+"onboardingTutorial.getStartedButton.title" = "始める";
+
+// About
+"general_about_1" = "GodToolsは、簡単で明確な方法で信仰をシェアすることができます。";
+// Tutorial
+"tutorial.tutorialItem.0.title" = "視聴";
+"general_about_2" = "これらのツールがあれば、これまで信仰をシェアシたことがない人でも、言語が異なる人でも、イエス・キリストを通じて神との関係をどのように始めることができるかを自信をもって他者に伝えることができるようになります。";
+"general_about_3" = "好みと相手に応じてさまざまなツールから選択ができます。全言語ですべてのツールが利用できるわけではありません。";
+"general_about_4" = "各ツールの最後に、他の資料へのリンクが含まれています。";
+"general_about_5" = "新しいツールおよび言語のダウンロードにはインターネット接続が必要です。一度ダウンロードすれば、オフラインでも利用できるようになります。";
+"general_about_6" = "質問、提案、リクエストは、support@godtoolsapp.comまでご連絡ください。";
+"general_about_7" = "これらのツールのオンライン版は、knowgod.comでも紹介しています。ご自分のサイトに埋め込んでお使いください。";
+"tutorial.tutorialItem.3.title" = "このチュートリアルはメニューで再度見ることができます";
+"general_about_8" = "詳しくは、godtoolsapp.comをご覧ください。";
+"tutorial.continueButton.title.continue" = "続行";
+"general_about_9" = "率先して信仰をシェアするために、神が心を変える存在であることを思い出してください。理解するために耳を傾け、一人一人を愛してください。";
+"tutorial.continueButton.title.startUsingGodTools" = "GodToolsを使い始める";
+
+"general_about_10" = "「あなたがたの会話が、良識に富み、善意にあふれるよう心がけなさい。そうすれば、相手の一人一人に適切な答えができます。 」コロサイ人への手紙4:6";
+
+// OpenTutorial
+"openTutorial.showTutorialLabel.text" = "チュートリアルを見せてください";
+// Downloads
+"Download in progress" = "ダウンロードが進行中です";
+
+"openTutorial.openTutorialButton.title" = "チュートリアルを開く";
+
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
+"card_status1" = "前";
+// Account
+"account.navTitle" = "マイプロフィール";
+"card_status2" = "次";
+
+"account.activity.title" = "アクティビティ";
+
+// Language Name Strings
+"language_name_fa" = "ペルシア語（ファールシー語）";
+
+// Account Activity
+"accountActivity.globalAnalytics.header.title" = "世界のアクティビティ";
+"accountActivity.globalAnalytics.users.title" = "一意のユーザ";
+"onboardingWelcome.titleLabel.tagline" = "信仰を分かち合うお手伝いをします";
+"accountActivity.globalAnalytics.gospelPresentation.title" = "福音の提示";
+"accountActivity.globalAnalytics.launches.title" = "セッション";
+// OnboardingTutorial
+"onboardingTutorial.aboutAppItem.0.title" = "他者と共有する";
+"accountActivity.globalAnalytics.countries.title" = "国";
+
+"onboardingTutorial.showMoreButton.title" = "もっと見せて";

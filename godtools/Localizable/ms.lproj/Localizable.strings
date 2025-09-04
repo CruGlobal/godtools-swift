@@ -1,0 +1,226 @@
+/* This About refers to a specific tool in the app. */
+"toolDetails.about.title" = "Perihal";
+
+/* This means that the tool/resource is not available in the currently selected language. */
+"lessonCard.languageNotAvailable" = "Tidak tersedia dalam %@";
+
+"tool_menu_item.tools" = "Alat";
+"lessons.pageTitle" = "Pengajaran disediakan khusus untuk anda";
+"lessons.pageSubtitle" = "Idea praktikal untuk membina hubungan dan memulakan perbualan yang bermakna.";
+"toolSettings.languagesAvailable.title" = "Bahasa tersedia";
+"toolDetails.versions.message" = "Pilih versi yang berbeza untuk alat ini di bawah. Setiap versi menampilkan gaya dan kandungan yang unik agar anda dapat menemui versi yang paling sesuai untuk perbualan anda. Anda boleh menjadikan alat yang sama dalam pelbagai versi sebagai kegemaran.";
+"favorites.noTools.title" = "Tiada alat kegemaran untuk dipaparkan";
+"favorites.noTools.description" = "Ketik ikon hati untuk menjadikan suatu alat kegemaran dan tersedia semasa luar talian.";
+"favorites.noTools.button" = "Pergi ke Alat";
+"toolSettings.shareImagePreview.shareImageButton.title" = "Kongsi imej";
+"favorites.pageTitle" = "Selamat datang ke GodTools";
+"favorites.favoriteLessons.title" = "Pengajaran ditampilkan";
+"favorites.favoriteTools.title" = "Alat kegemaran anda";
+"favorites.favoriteTools.viewAll" = "Lihat semua";
+
+/* Please keep to a 9 character limit, longer phrases may get cut off */
+"favorites.favoriteLessons.details" = "Butiran";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
+"toolSettings.languagesList.deleteLanguage.title" = "Tiada";
+
+"toolSettings.chooseLanguage.toggleMessage" = "Togol antara dua bahasa yang berbeza dalam alat ini.";
+"toolDetails.versions.title" = "Versi";
+"toolDetails.learnToShareToolButton.title" = "Belajar untuk berkongsi alat ini";
+"toolSettings.title" = "Pilihan Alat";
+"toolSettings.option.shareLink.title" = "Kongsi pautan";
+"toolSettings.option.screenShare.title" = "Kongsi paparan anda";
+"toolSettings.option.trainingTips.show.title" = "Tip latihan";
+"toolSettings.option.trainingTips.hide.title" = "Sorok petua";
+"toolSettings.chooseLanguage.title" = "Bahasa Selari";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "Selari";
+"toolSettings.shareables.title" = "Grafik berkaitan";
+"allTools.spotlight.title" = "Tumpuan Alat";
+"allTools.spotlight.description" = "Di sini adalah beberapa alat yang anda mungkin berminat";
+"allTools.categories.title" = "Kategori";
+"tool_menu_item.lessons" = "Pengajaran";
+"onboardingTutorial.beginButton.title" = "Bermula";
+"onboardingTutorial.nextButton.title" = "Seterusnya";
+"tool_offline_favorite_message" = "Menjadikan sesuatu alat tersedia semasa luar talian dengan mengetik pada ikon hati yang akan menambahkannya ke kegemaran anda.
+";
+
+/* This is a category description of a tool that helps you start a conversation */
+"tool_category_conversation_starter" = "Pemula Pembualan";
+
+/* This phrase describes a category of tool that helps someone grow in their Christian faith */
+"tool_category_growth" = "Kemajuan Kristian";
+
+"share_link" = "Kongsi pautan";
+"share_tool_menu.remote_share_tool" = "Kongsi paparan anda";
+"share_tool_menu.send_tool" = "Hantar alat ini";
+"share_tool_screen_tutorial.share_your_screen.title" = "Kongsi paparan anda";
+"share_tool_screen_tutorial.share_your_screen.message" = "Pilihan ini akan menghantar pautan ke alat ini kepada rakan. Apabila pautan tersebut dibuka, ia akan memulakan sesi perkongsian skrin.";
+"share_tool_screen_tutorial.mirrored_experience.title" = "Pengalaman dicerminkan";
+"share_tool_screen_tutorial.mirrored_experience.message" = "Apabila anda menatal alat pada telefon anda, skrin rakan anda akan bertindak balas dengan cara yang sama. Ini membolehkan anda menggunakan alat bersama pada 2 peranti secara serentak.";
+"share_tool_screen_tutorial.get_started.title" = "Bermula";
+"share_tool_screen_tutorial.get_started.message" = "Hantar pautan kepada seorang atau lebih untuk memulakan sesi perkongsian skrin sekarang.";
+"share_tool_remote_link_message" = "Hai, ikut saya dalam GodTools melalui perkongsian skrin. Ini pautannya: %@ 
+
+Jika selepas ini, anda tidak menerima mesej ini, pautan tersebut mungkin masih belum berfungsi. Kita boleh mencuba sekali lagi pada lain kali.";
+"exit_tract_remote_share_session.message" = "Keluar daripada sesi perkongsian jauh sekarang?";
+"load_tool_remote_session.message" = "Memulakan Perkongsian Skrin...";
+"onboardingTutorial.0.title" = "Bersedia untuk setiap perbualan";
+"onboardingTutorial.0.videoLink.title" = "Tonton Video";
+"onboardingTutorial.1.title" = "Berbincang mengenai Tuhan dengan semua orang";
+"onboardingTutorial.1.message" = "GodTools membantu anda terlibat dalam perbualan yang bermakna mengenai Tuhan.";
+"onboardingTutorial.2.title" = "Bersedia untuk detik penting";
+"onboardingTutorial.2.message" = "Pelajari cara untuk memulakan perbualan mengenai kepercayaan sebagai norma kehidupan.";
+"onboardingTutorial.3.title" = "Bantu orang lain menemui Jesus";
+"onboardingTutorial.3.message" = "GodTools ialah panduan anda untuk menyampaikan pendakwahan dengan cara yang jelas dan relevan.";
+
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "Latihan";
+
+/*
+ * This is an invitation for a user to open a tool
+ * Please keep to a 9 character limit, longer phrases may get cut off
+*/
+"open" = "Buka";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "Tambah ke Kegemaran";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "Buang daripada Kegemaran";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "Alat sedang dimuat turun. Bagi mengelak menunggu pada masa hadapan, jadikan alat ini kegemaran supaya ia akan tersedia semasa luar talian.";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "Memuat turun terjemahan terkini untuk alat ini.";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "Alih Keluar daripada Kegemaran?";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "Adakah anda pasti mahu mengalih keluar %@ daripada Kegemaran anda?";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "Jemputan Gospel";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "Makalah";
+"language_onboard" = "90+ Bahasa";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "Anda telah memuat turun semua alat yang tersedia.";
+
+/* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
+"my_tools" = "Kegemaran";
+
+/* The user will click this toggle switch to go find a library of more offerings or "Tools". */
+"find_tools" = "Semua Alat";
+
+"unavailable" = "Tidak tersedia";
+
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "Langkau";
+
+// Onboarding
+"add_new_tools" = "Tambah Alat Baharu";
+"set_your_languages" = "Tetapkan Bahasa Anda";
+"okay" = "Okey";
+// Menu
+"menu_general" = "Umum";
+"menu_share" = "Kongsi";
+"menu_legal" = "Sah";
+"language_settings" = "Tetapan Bahasa";
+// Login
+"login" = "Log masuk";
+"logout" = "Log keluar";
+"create_account" = "Cipta Akaun";
+"account_login" = "Log Masuk Akaun";
+
+// Tool Detail
+"about" = "Perihal";
+"help" = "Bantuan";
+"contact_us" = "Hubungi Kami";
+"preview_mode_translators_only" = "Mod Pratonton (Penterjemah Sahaja)";
+"share_god_tools" = "Kongsi Aplikasi GodTools";
+"share_a_story_with_us" = "Kongsikan sebuah Kisah Bersama Kami";
+"terms_of_use" = "Terma Penggunaan";
+"privacy_policy" = "Dasar Privasi";
+"copyright_info" = "Maklumat Hak Cipta";
+"share_god_tools_share_sheet_text" = "Muat turun aplikasi GodTools: https://godtoolsapp.com
+
+Versi dalam talian boleh ditemui di https://knowgod.com/";
+
+// Add Tools
+"add_tools" = "Tambah Alat";
+
+"total_views" = "%d melihat";
+"total_languages" = "%d bahasa";
+
+// Language Settings
+"primary_language" = "Bahasa Utama";
+"select_primary_language" = "Pilih Bahasa Utama";
+"parallel_language" = "Bahasa Selari";
+"select_parallel_language" = "Pilih Bahasa Selari";
+"share_god_tools_native_language" = "Kongsikan GodTools dengan seseorang dalam bahasa ibunda mereka";
+"not_every_tool_is_available" = "Tidak semua alat tersedia dalam setiap bahasa";
+
+// Settings
+"settings" = "Tetapan";
+
+// Alert & Info Controllers
+"download_error" = "Ralat Muat Turun";
+"no_internet_title" = "Tiada sambungan Internet";
+"no_internet" = "Sila semak sambungan Internet anda dan cuba lagi.";
+
+"the_tool_you_requested_is_loading" = "Alat yang anda minta sedang dimuatkan...";
+"loading" = "Memuat...";
+
+// Actions
+"yes" = "Ya";
+"no" = "Tidak";
+
+// Tract - Sharing
+"tract_share_message" ="Pautan ini akan membawa anda ke halaman versi web yang kali terakhir kita lihat bersama hari ini: %@. Ayuh bercakap lebih banyak!
+
+Aplikasi boleh dimuat turun daripada https://godtoolsapp.com";
+
+// Buttons
+"download" = "Muat Turun";
+"dismiss" = "Tolak";
+"done" = "Selesai";
+"remove" = "Alih Keluar";
+"clear" = "Kosongkan";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Buka Alat";
+
+// Alerts
+"error" = "Ralat";
+"OK" = "OK";
+"cancel" = "Batal";
+"required_field_missing" = "\"%@\" ialah medan yang diperlukan.";
+
+"onboardingTutorial.getStartedButton.title" = "Bermula";
+
+// About
+"general_about_1" = "GodTools membantu anda berkongsi kepercayaan anda dengan cara yang mudah dan jelas.";
+"general_about_2" = "Alat ini membantu anda untuk menjelaskan kepada seseorang dengan yakin tentang cara mereka boleh memulakan perhubungan dengan Tuhan melalui Jesus Christ, walaupun anda tidak pernah berkongsi kepercayaan anda sebelum ini atau mereka bercakap bahasa yang berbeza.";
+"general_about_3" = "Pilih daripada pelbagai alat berdasarkan keutamaan dan penonton anda. Tidak semua alat tersedia dalam setiap bahasa.";
+"general_about_4" = "Pautan ke sumber lain disertakan di hujung setiap alat.";
+"general_about_5" = "Sambungan dalam talian diperlukan untuk memuat turun setiap alat dan/atau bahasa baharu. Sebaik sahaja dimuat turun, ia boleh digunakan secara luar talian.";
+"general_about_6" = "Soalan? Cadangan? Permintaan? Hubungi kami di support@godtoolsapp.com";
+"general_about_7" = "Versi dalam talian alat ini boleh ditemui di knowgod.com. Benamkannya pada laman anda sendiri!";
+"general_about_8" = "Lawati godtoolsapp.com untuk maklumat lanjut.";
+"tutorial.continueButton.title.continue" = "Teruskan";
+"general_about_9" = "Apabila anda mengambil inisiatif untuk berkongsi kepercayaan anda, jangan lupa bahawa Tuhanlah yang mengubah hati. Sayang setiap orang dengan mendengar untuk memahami.";
+"general_about_10" = "\"Biarkan perbualan anda sentiasa penuh dengan rahmat, ditambah perisa, supaya anda tahu cara untuk menjawab semua orang.\" Colossians 4:6";
+
+// Downloads
+"Download in progress" = "Muat turun sedang berjalan";
+
+// Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
+"card_status1" = "Sblmnya";
+"card_status2" = "Seterusnya";
+
+// Language Name Strings
+"language_name_fa" = "Bahasa Parsi (Parsi)";
+
