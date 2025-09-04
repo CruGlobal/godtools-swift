@@ -196,9 +196,9 @@ class AppFlow: NSObject, Flow {
             let deferredDeepLinkModal = getDeferredDeepLinkModal()
             navigationController.present(deferredDeepLinkModal, animated: true)
             
-        case .pasteURLTappedFromDeferredDeepLinkModal(let deeplinkURL):
+        case .handleDeepLinkFromDeferredDeepLinkModal(let deepLink):
             
-            handleDeferredDeepLink(deeplinkURL: deeplinkURL)
+            navigate(step: .deepLink(deepLinkType: deepLink))
             navigationController.dismissPresented(animated: false, completion: nil)
                         
         case .closeTappedFromDeferredDeepLinkModal:
@@ -440,7 +440,9 @@ extension AppFlow {
     private func getDeferredDeepLinkModal() -> UIViewController {
         let viewModel = DeferredDeepLinkModalViewModel(
             flowDelegate: self,
-            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase()
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
+            deepLinkingService: deepLinkingService
         )
         
         let view = DeferredDeepLinkModalView(viewModel: viewModel)
@@ -453,35 +455,6 @@ extension AppFlow {
         hostingController.modalPresentationStyle = .fullScreen
         
         return hostingController
-    }
-    
-    private func handleDeferredDeepLink(deeplinkURL: URL) {
-        
-        let deepLinkingService = appDiContainer.dataLayer.getDeepLinkingService()
-        
-        guard let deepLink = deepLinkingService.parseDeepLink(
-            incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: deeplinkURL)))
-        else {
-            
-            assertionFailure()
-            dashboardFlow.navigateToDashboard()
-            navigationController.dismissPresented(animated: true, completion: nil)
-            
-            appDiContainer.dataLayer.getAnalytics().firebaseAnalytics.trackAction(
-                screenName: "",
-                siteSection: "",
-                siteSubSection: "",
-                appLanguage: nil,
-                contentLanguage: nil,
-                secondaryContentLanguage: nil,
-                actionName: "",
-                data: [:]
-            )
-            
-            return
-        }
-        
-        navigate(step: .deepLink(deepLinkType: deepLink))
     }
 }
 
