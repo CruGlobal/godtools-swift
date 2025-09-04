@@ -441,6 +441,7 @@ extension AppFlow {
         let viewModel = DeferredDeepLinkModalViewModel(
             flowDelegate: self,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            getDeferredDeepLinkModalInterfaceStringsUseCase: appDiContainer.feature.deferredDeepLink.domainLayer.getDeferredDeepLinkModalInterfaceStringsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
             deepLinkingService: deepLinkingService
         )

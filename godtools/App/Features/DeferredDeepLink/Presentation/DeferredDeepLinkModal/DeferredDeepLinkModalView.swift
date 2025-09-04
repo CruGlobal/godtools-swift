@@ -28,13 +28,13 @@ struct DeferredDeepLinkModalView: View {
             }
             .padding(.top, 32)
             
-            Text("It looks like you clicked a link for GodTools")
+            Text(viewModel.modalTitle)
                 .font(FontLibrary.sfProDisplayLight.font(size: 28))
                 .foregroundColor(ColorPalette.gtBlue.color)
                 .multilineTextAlignment(.center)
                 .padding(.top, 76)
             
-            Text("Please tap the paste button below.  This will allow us to take you to the content you requested in GodTools.")
+            Text(viewModel.modalMessage)
                 .multilineTextAlignment(.center)
                 .font(FontLibrary.sfProDisplayLight.font(size: 16))
                 .foregroundColor(ColorPalette.gtGrey.color)
