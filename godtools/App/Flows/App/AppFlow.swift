@@ -196,13 +196,13 @@ class AppFlow: NSObject, Flow {
             let deferredDeepLinkModal = getDeferredDeepLinkModal()
             navigationController.present(deferredDeepLinkModal, animated: true)
             
+        case .pasteURLTappedFromDeferredDeepLinkModal(let deeplinkURL):
+            
+            handleDeferredDeepLink(deeplinkURL: deeplinkURL)
+            navigationController.dismissPresented(animated: false, completion: nil)
+                        
         case .closeTappedFromDeferredDeepLinkModal:
             dashboardFlow.navigateToDashboard()
-            navigationController.dismissPresented(animated: true, completion: nil)
-            
-        case .cancelTappedFromDeferredDeepLinkModal:
-            dashboardFlow.navigateToDashboard()
-
             navigationController.dismissPresented(animated: true, completion: nil)
             
         case .showOnboardingTutorial(let animated):
@@ -453,6 +453,35 @@ extension AppFlow {
         hostingController.modalPresentationStyle = .fullScreen
         
         return hostingController
+    }
+    
+    private func handleDeferredDeepLink(deeplinkURL: URL) {
+        
+        let deepLinkingService = appDiContainer.dataLayer.getDeepLinkingService()
+        
+        guard let deepLink = deepLinkingService.parseDeepLink(
+            incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: deeplinkURL)))
+        else {
+            
+            assertionFailure()
+            dashboardFlow.navigateToDashboard()
+            navigationController.dismissPresented(animated: true, completion: nil)
+            
+            appDiContainer.dataLayer.getAnalytics().firebaseAnalytics.trackAction(
+                screenName: "",
+                siteSection: "",
+                siteSubSection: "",
+                appLanguage: nil,
+                contentLanguage: nil,
+                secondaryContentLanguage: nil,
+                actionName: "",
+                data: [:]
+            )
+            
+            return
+        }
+        
+        navigate(step: .deepLink(deepLinkType: deepLink))
     }
 }
 

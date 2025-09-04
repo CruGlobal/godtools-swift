@@ -44,6 +44,12 @@ extension DeferredDeepLinkModalViewModel {
     }
     
     func pasteButtonTapped(pastedString: String?) {
-        print("paste: \(pastedString)")
+        guard let pastedString = pastedString,
+              let url = URL(string: pastedString)
+        else {
+            return
+        }
+        
+        flowDelegate?.navigate(step: .pasteURLTappedFromDeferredDeepLinkModal(deeplinkURL: url))
     }
 }

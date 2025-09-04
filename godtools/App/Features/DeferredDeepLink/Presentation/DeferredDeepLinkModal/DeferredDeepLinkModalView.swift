@@ -10,7 +10,7 @@ import SwiftUI
 
 struct DeferredDeepLinkModalView: View {
     
-    @ObservedObject private var viewModel: DeferredDeepLinkModalViewModel 
+    @ObservedObject private var viewModel: DeferredDeepLinkModalViewModel
     
     init(viewModel: DeferredDeepLinkModalViewModel) {
         self.viewModel = viewModel
@@ -49,9 +49,9 @@ struct DeferredDeepLinkModalView: View {
                     
                     viewModel.pasteButtonTapped(pastedString: pastedItems.first)
                 })
+                .labelStyle(.titleAndIcon)
                 .tint(ColorPalette.gtBlue.color)
                 .buttonBorderShape(.roundedRectangle(radius: 6))
-                .scaleEffect(1.1)
             }
             
             Spacer()

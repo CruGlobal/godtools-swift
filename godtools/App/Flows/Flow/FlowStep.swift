@@ -24,6 +24,7 @@ enum FlowStep {
     
     // deferred deep link modal
     case closeTappedFromDeferredDeepLinkModal
+    case pasteURLTappedFromDeferredDeepLinkModal(deeplinkURL: URL)
     
     // onboarding
     case chooseAppLanguageTappedFromOnboardingTutorial
