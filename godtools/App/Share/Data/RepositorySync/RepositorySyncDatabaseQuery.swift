@@ -23,4 +23,12 @@ public class RepositorySyncDatabaseQuery {
         self.filter = filter
         self.sortByKeyPath = sortByKeyPath
     }
+    
+    public static func filter(filter: NSPredicate) -> RepositorySyncDatabaseQuery {
+        return RepositorySyncDatabaseQuery(filter: filter, sortByKeyPath: nil)
+    }
+    
+    public static func sort(byKeyPath: SortByKeyPath) -> RepositorySyncDatabaseQuery {
+        return RepositorySyncDatabaseQuery(filter: nil, sortByKeyPath: byKeyPath)
+    }
 }

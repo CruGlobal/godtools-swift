@@ -17,11 +17,13 @@ struct RepositorySyncTests {
     private static let runTestWaitFor: UInt64 = 3_000_000_000 // 3 seconds
     private static let mockExternalDataFetchDelayRequestForSeconds: TimeInterval = 1
     private static let triggerSecondaryExternalDataFetchWithDelayForSeconds: TimeInterval = 1
+    private static let namePrefix: String = "name_"
     
     struct TestArgument {
         let realmFileName: String = "RepositorySyncTests_" + UUID().uuidString
         let initialPersistedObjectsIds: [String]
         let externalDataModelIds: [String]
+        let expectedCachedResponseDataModelIds: [String]?
         let expectedResponseDataModelIds: [String]
     }
     
@@ -31,6 +33,7 @@ struct RepositorySyncTests {
         TestArgument(
             initialPersistedObjectsIds: ["0", "1"],
             externalDataModelIds: [],
+            expectedCachedResponseDataModelIds: ["0", "1"],
             expectedResponseDataModelIds: ["0", "1"]
         )
     ])
@@ -40,8 +43,7 @@ struct RepositorySyncTests {
             argument: argument,
             getObjectsType: .objects,
             cachePolicy: .returnCacheDataDontFetch(observeChanges: false),
-            expectedNumberOfChanges: 1,
-            expectFirstTriggerIsCacheResponse: true
+            expectedNumberOfChanges: 1
         )
     }
     
@@ -51,21 +53,25 @@ struct RepositorySyncTests {
         TestArgument(
             initialPersistedObjectsIds: ["0", "1"],
             externalDataModelIds: ["5", "6", "7", "8", "9"],
+            expectedCachedResponseDataModelIds: nil,
             expectedResponseDataModelIds: ["0", "1", "5", "6", "7", "8", "9"]
         ),
         TestArgument(
             initialPersistedObjectsIds: [],
             externalDataModelIds: ["1", "2"],
+            expectedCachedResponseDataModelIds: nil,
             expectedResponseDataModelIds: ["1", "2"]
         ),
         TestArgument(
             initialPersistedObjectsIds: ["2", "3"],
             externalDataModelIds: [],
+            expectedCachedResponseDataModelIds: nil,
             expectedResponseDataModelIds: ["2", "3"]
         ),
         TestArgument(
             initialPersistedObjectsIds: [],
             externalDataModelIds: [],
+            expectedCachedResponseDataModelIds: nil,
             expectedResponseDataModelIds: []
         )
     ])
@@ -75,8 +81,7 @@ struct RepositorySyncTests {
             argument: argument,
             getObjectsType: .objects,
             cachePolicy: .fetchIgnoringCacheData(requestPriority: .medium),
-            expectedNumberOfChanges: 1,
-            expectFirstTriggerIsCacheResponse: false
+            expectedNumberOfChanges: 1
         )
     }
     
@@ -86,26 +91,31 @@ struct RepositorySyncTests {
         TestArgument(
             initialPersistedObjectsIds: ["0", "1"],
             externalDataModelIds: ["5", "6", "7", "8", "9"],
+            expectedCachedResponseDataModelIds: nil,
             expectedResponseDataModelIds: ["1"]
         ),
         TestArgument(
             initialPersistedObjectsIds: [],
             externalDataModelIds: ["1", "2"],
+            expectedCachedResponseDataModelIds: nil,
             expectedResponseDataModelIds: ["1"]
         ),
         TestArgument(
             initialPersistedObjectsIds: ["1", "2", "3"],
             externalDataModelIds: [],
+            expectedCachedResponseDataModelIds: nil,
             expectedResponseDataModelIds: ["1"]
         ),
         TestArgument(
             initialPersistedObjectsIds: ["2", "3"],
             externalDataModelIds: [],
+            expectedCachedResponseDataModelIds: nil,
             expectedResponseDataModelIds: []
         ),
         TestArgument(
             initialPersistedObjectsIds: [],
             externalDataModelIds: [],
+            expectedCachedResponseDataModelIds: nil,
             expectedResponseDataModelIds: []
         )
     ])
@@ -115,8 +125,30 @@ struct RepositorySyncTests {
             argument: argument,
             getObjectsType: .object(id: "1"),
             cachePolicy: .fetchIgnoringCacheData(requestPriority: .medium),
+            expectedNumberOfChanges: 1
+        )
+    }
+    
+    // MARK: - Test Cache Policy (Ignoring Cache Data) - Objects With Query
+    
+    @Test(arguments: [
+        TestArgument(
+            initialPersistedObjectsIds: ["0", "1"],
+            externalDataModelIds: ["5", "6", "7", "8", "9"],
+            expectedCachedResponseDataModelIds: nil,
+            expectedResponseDataModelIds: ["5"]
+        )
+    ])
+    @MainActor func ignoreCacheDataWillFilter(argument: TestArgument) async {
+        
+        let filter = NSPredicate(format: "\(#keyPath(MockRepositorySyncRealmObject.name)) == %@", Self.namePrefix + "5")
+        
+        await runTest(
+            argument: argument,
+            getObjectsType: .objectsWithQuery(databaseQuery: RepositorySyncDatabaseQuery.filter(filter: filter)),
+            cachePolicy: .fetchIgnoringCacheData(requestPriority: .medium),
             expectedNumberOfChanges: 1,
-            expectFirstTriggerIsCacheResponse: false
+            loggingEnabled: false
         )
     }
     
@@ -126,21 +158,25 @@ struct RepositorySyncTests {
         TestArgument(
             initialPersistedObjectsIds: ["0", "1"],
             externalDataModelIds: ["5", "6", "7", "8", "9"],
+            expectedCachedResponseDataModelIds: ["0", "1"],
             expectedResponseDataModelIds: ["0", "1"]
         ),
         TestArgument(
             initialPersistedObjectsIds: [],
             externalDataModelIds: ["1", "2"],
+            expectedCachedResponseDataModelIds: [],
             expectedResponseDataModelIds: []
         ),
         TestArgument(
             initialPersistedObjectsIds: ["2", "3"],
             externalDataModelIds: [],
+            expectedCachedResponseDataModelIds: ["2", "3"],
             expectedResponseDataModelIds: ["2", "3"]
         ),
         TestArgument(
             initialPersistedObjectsIds: [],
             externalDataModelIds: [],
+            expectedCachedResponseDataModelIds: [],
             expectedResponseDataModelIds: []
         )
     ])
@@ -150,8 +186,7 @@ struct RepositorySyncTests {
             argument: argument,
             getObjectsType: .objects,
             cachePolicy: .returnCacheDataDontFetch(observeChanges: false),
-            expectedNumberOfChanges: 1,
-            expectFirstTriggerIsCacheResponse: true
+            expectedNumberOfChanges: 1
         )
     }
     
@@ -159,11 +194,13 @@ struct RepositorySyncTests {
         TestArgument(
             initialPersistedObjectsIds: ["0", "1", "2"],
             externalDataModelIds: ["5", "4"],
+            expectedCachedResponseDataModelIds: ["0", "1", "2"],
             expectedResponseDataModelIds: ["0", "1", "2", "8"]
         ),
         TestArgument(
             initialPersistedObjectsIds: [],
             externalDataModelIds: ["3", "2"],
+            expectedCachedResponseDataModelIds: [],
             expectedResponseDataModelIds: ["0", "1", "8"]
         )
     ])
@@ -174,7 +211,6 @@ struct RepositorySyncTests {
             getObjectsType: .objects,
             cachePolicy: .returnCacheDataDontFetch(observeChanges: true),
             expectedNumberOfChanges: 2,
-            expectFirstTriggerIsCacheResponse: true,
             triggerSecondaryExternalDataFetchWithIds: ["8", "1", "0"]
         )
     }
@@ -185,26 +221,31 @@ struct RepositorySyncTests {
         TestArgument(
             initialPersistedObjectsIds: ["0", "1"],
             externalDataModelIds: ["5", "6", "7", "8", "9"],
+            expectedCachedResponseDataModelIds: ["1"],
             expectedResponseDataModelIds: ["1"]
         ),
         TestArgument(
             initialPersistedObjectsIds: [],
             externalDataModelIds: ["1", "2"],
+            expectedCachedResponseDataModelIds: [],
             expectedResponseDataModelIds: []
         ),
         TestArgument(
             initialPersistedObjectsIds: ["1", "2", "3"],
             externalDataModelIds: [],
+            expectedCachedResponseDataModelIds: ["1"],
             expectedResponseDataModelIds: ["1"]
         ),
         TestArgument(
             initialPersistedObjectsIds: ["2", "3"],
             externalDataModelIds: [],
+            expectedCachedResponseDataModelIds: [],
             expectedResponseDataModelIds: []
         ),
         TestArgument(
             initialPersistedObjectsIds: [],
             externalDataModelIds: [],
+            expectedCachedResponseDataModelIds: [],
             expectedResponseDataModelIds: []
         )
     ])
@@ -214,8 +255,7 @@ struct RepositorySyncTests {
             argument: argument,
             getObjectsType: .object(id: "1"),
             cachePolicy: .returnCacheDataDontFetch(observeChanges: false),
-            expectedNumberOfChanges: 1,
-            expectFirstTriggerIsCacheResponse: true
+            expectedNumberOfChanges: 1
         )
     }
     
@@ -223,11 +263,13 @@ struct RepositorySyncTests {
         TestArgument(
             initialPersistedObjectsIds: ["0", "1", "2"],
             externalDataModelIds: ["5", "4"],
+            expectedCachedResponseDataModelIds: ["1"],
             expectedResponseDataModelIds: ["1"]
         ),
         TestArgument(
             initialPersistedObjectsIds: [],
             externalDataModelIds: ["3", "2"],
+            expectedCachedResponseDataModelIds: [],
             expectedResponseDataModelIds: ["1"]
         )
     ])
@@ -238,7 +280,6 @@ struct RepositorySyncTests {
             getObjectsType: .object(id: "1"),
             cachePolicy: .returnCacheDataDontFetch(observeChanges: true),
             expectedNumberOfChanges: 2,
-            expectFirstTriggerIsCacheResponse: true,
             triggerSecondaryExternalDataFetchWithIds: ["8", "1", "0"]
         )
     }
@@ -249,11 +290,13 @@ struct RepositorySyncTests {
         TestArgument(
             initialPersistedObjectsIds: ["0", "1"],
             externalDataModelIds: ["5", "6", "7", "8", "9"],
+            expectedCachedResponseDataModelIds: ["0", "1"],
             expectedResponseDataModelIds: ["0", "1"]
         ),
         TestArgument(
             initialPersistedObjectsIds: ["1", "2"],
             externalDataModelIds: [],
+            expectedCachedResponseDataModelIds: ["1", "2"],
             expectedResponseDataModelIds: ["1", "2"]
         )
     ])
@@ -263,8 +306,7 @@ struct RepositorySyncTests {
             argument: argument,
             getObjectsType: .objects,
             cachePolicy: .returnCacheDataElseFetch(requestPriority: .medium, observeChanges: false),
-            expectedNumberOfChanges: 1,
-            expectFirstTriggerIsCacheResponse: true
+            expectedNumberOfChanges: 1
         )
     }
     
@@ -272,6 +314,7 @@ struct RepositorySyncTests {
         TestArgument(
             initialPersistedObjectsIds: [],
             externalDataModelIds: ["5", "6", "7"],
+            expectedCachedResponseDataModelIds: nil,
             expectedResponseDataModelIds: ["5", "6", "7"]
         )
     ])
@@ -281,8 +324,7 @@ struct RepositorySyncTests {
             argument: argument,
             getObjectsType: .objects,
             cachePolicy: .returnCacheDataElseFetch(requestPriority: .medium, observeChanges: false),
-            expectedNumberOfChanges: 1,
-            expectFirstTriggerIsCacheResponse: false
+            expectedNumberOfChanges: 1
         )
     }
     
@@ -290,6 +332,7 @@ struct RepositorySyncTests {
         TestArgument(
             initialPersistedObjectsIds: [],
             externalDataModelIds: ["5", "6", "7"],
+            expectedCachedResponseDataModelIds: [],
             expectedResponseDataModelIds: ["5", "6", "7"]
         )
     ])
@@ -299,8 +342,7 @@ struct RepositorySyncTests {
             argument: argument,
             getObjectsType: .objects,
             cachePolicy: .returnCacheDataElseFetch(requestPriority: .medium, observeChanges: true),
-            expectedNumberOfChanges: 2,
-            expectFirstTriggerIsCacheResponse: true
+            expectedNumberOfChanges: 2
         )
     }
     
@@ -308,6 +350,7 @@ struct RepositorySyncTests {
         TestArgument(
             initialPersistedObjectsIds: [],
             externalDataModelIds: ["5", "6", "7"],
+            expectedCachedResponseDataModelIds: [],
             expectedResponseDataModelIds: ["5", "6", "7", "9"]
         )
     ])
@@ -318,7 +361,6 @@ struct RepositorySyncTests {
             getObjectsType: .objects,
             cachePolicy: .returnCacheDataElseFetch(requestPriority: .medium, observeChanges: true),
             expectedNumberOfChanges: 3,
-            expectFirstTriggerIsCacheResponse: true,
             triggerSecondaryExternalDataFetchWithIds: ["9", "7"]
         )
     }
@@ -327,6 +369,7 @@ struct RepositorySyncTests {
         TestArgument(
             initialPersistedObjectsIds: ["1", "2"],
             externalDataModelIds: ["3", "5", "4"],
+            expectedCachedResponseDataModelIds: ["1", "2"],
             expectedResponseDataModelIds: ["1", "2", "7", "9"]
         )
     ])
@@ -337,7 +380,6 @@ struct RepositorySyncTests {
             getObjectsType: .objects,
             cachePolicy: .returnCacheDataElseFetch(requestPriority: .medium, observeChanges: true),
             expectedNumberOfChanges: 2,
-            expectFirstTriggerIsCacheResponse: true,
             triggerSecondaryExternalDataFetchWithIds: ["9", "7"]
         )
     }
@@ -348,11 +390,13 @@ struct RepositorySyncTests {
         TestArgument(
             initialPersistedObjectsIds: ["0", "1"],
             externalDataModelIds: ["5", "6", "7", "8", "9"],
+            expectedCachedResponseDataModelIds: ["1"],
             expectedResponseDataModelIds: ["1"]
         ),
         TestArgument(
             initialPersistedObjectsIds: ["1", "2"],
             externalDataModelIds: [],
+            expectedCachedResponseDataModelIds: ["1"],
             expectedResponseDataModelIds: ["1"]
         )
     ])
@@ -362,8 +406,7 @@ struct RepositorySyncTests {
             argument: argument,
             getObjectsType: .object(id: "1"),
             cachePolicy: .returnCacheDataElseFetch(requestPriority: .medium, observeChanges: false),
-            expectedNumberOfChanges: 1,
-            expectFirstTriggerIsCacheResponse: true
+            expectedNumberOfChanges: 1
         )
     }
     
@@ -371,6 +414,7 @@ struct RepositorySyncTests {
         TestArgument(
             initialPersistedObjectsIds: [],
             externalDataModelIds: ["5", "6", "7"],
+            expectedCachedResponseDataModelIds: nil,
             expectedResponseDataModelIds: ["6"]
         )
     ])
@@ -380,8 +424,7 @@ struct RepositorySyncTests {
             argument: argument,
             getObjectsType: .object(id: "6"),
             cachePolicy: .returnCacheDataElseFetch(requestPriority: .medium, observeChanges: false),
-            expectedNumberOfChanges: 1,
-            expectFirstTriggerIsCacheResponse: false
+            expectedNumberOfChanges: 1
         )
     }
     
@@ -389,6 +432,7 @@ struct RepositorySyncTests {
         TestArgument(
             initialPersistedObjectsIds: [],
             externalDataModelIds: ["5", "6", "7"],
+            expectedCachedResponseDataModelIds: [],
             expectedResponseDataModelIds: ["7"]
         )
     ])
@@ -398,8 +442,7 @@ struct RepositorySyncTests {
             argument: argument,
             getObjectsType: .object(id: "7"),
             cachePolicy: .returnCacheDataElseFetch(requestPriority: .medium, observeChanges: true),
-            expectedNumberOfChanges: 2,
-            expectFirstTriggerIsCacheResponse: true
+            expectedNumberOfChanges: 2
         )
     }
     
@@ -407,6 +450,7 @@ struct RepositorySyncTests {
         TestArgument(
             initialPersistedObjectsIds: [],
             externalDataModelIds: ["5", "6", "7", "9"],
+            expectedCachedResponseDataModelIds: [],
             expectedResponseDataModelIds: ["9"]
         )
     ])
@@ -417,7 +461,6 @@ struct RepositorySyncTests {
             getObjectsType: .object(id: "9"),
             cachePolicy: .returnCacheDataElseFetch(requestPriority: .medium, observeChanges: true),
             expectedNumberOfChanges: 3,
-            expectFirstTriggerIsCacheResponse: true,
             triggerSecondaryExternalDataFetchWithIds: ["9", "7"]
         )
     }
@@ -426,6 +469,7 @@ struct RepositorySyncTests {
         TestArgument(
             initialPersistedObjectsIds: ["1", "2"],
             externalDataModelIds: ["3", "5", "4"],
+            expectedCachedResponseDataModelIds: ["1"],
             expectedResponseDataModelIds: ["1"]
         )
     ])
@@ -436,22 +480,23 @@ struct RepositorySyncTests {
             getObjectsType: .object(id: "1"),
             cachePolicy: .returnCacheDataElseFetch(requestPriority: .medium, observeChanges: true),
             expectedNumberOfChanges: 2,
-            expectFirstTriggerIsCacheResponse: true,
             triggerSecondaryExternalDataFetchWithIds: ["1", "7"]
         )
     }
     
-    // MARK: - Test Cache Policy (Cache Data And Fetch) - Objects
+    // MARK: - Test Cache Policy (Return Cache Data And Fetch) - Objects
     
     @Test(arguments: [
         TestArgument(
             initialPersistedObjectsIds: [],
             externalDataModelIds: [],
+            expectedCachedResponseDataModelIds: [],
             expectedResponseDataModelIds: []
         ),
         TestArgument(
             initialPersistedObjectsIds: ["0", "1"],
             externalDataModelIds: [],
+            expectedCachedResponseDataModelIds: ["0", "1"],
             expectedResponseDataModelIds: ["0", "1"]
         )
     ])
@@ -461,8 +506,7 @@ struct RepositorySyncTests {
             argument: argument,
             getObjectsType: .objects,
             cachePolicy: .returnCacheDataAndFetch(requestPriority: .medium),
-            expectedNumberOfChanges: 1,
-            expectFirstTriggerIsCacheResponse: true
+            expectedNumberOfChanges: 1
         )
     }
     
@@ -470,11 +514,13 @@ struct RepositorySyncTests {
         TestArgument(
             initialPersistedObjectsIds: ["0", "1"],
             externalDataModelIds: ["2"],
+            expectedCachedResponseDataModelIds: ["0", "1"],
             expectedResponseDataModelIds: ["0", "1", "2"]
         ),
         TestArgument(
             initialPersistedObjectsIds: [],
             externalDataModelIds: ["4", "5"],
+            expectedCachedResponseDataModelIds: [],
             expectedResponseDataModelIds: ["4", "5"]
         )
     ])
@@ -484,8 +530,7 @@ struct RepositorySyncTests {
             argument: argument,
             getObjectsType: .objects,
             cachePolicy: .returnCacheDataAndFetch(requestPriority: .medium),
-            expectedNumberOfChanges: 2,
-            expectFirstTriggerIsCacheResponse: true
+            expectedNumberOfChanges: 2
         )
     }
     
@@ -493,11 +538,13 @@ struct RepositorySyncTests {
         TestArgument(
             initialPersistedObjectsIds: ["0", "1"],
             externalDataModelIds: ["2"],
+            expectedCachedResponseDataModelIds: ["0", "1"],
             expectedResponseDataModelIds: ["0", "1", "2", "5", "9"]
         ),
         TestArgument(
             initialPersistedObjectsIds: [],
             externalDataModelIds: ["4", "5"],
+            expectedCachedResponseDataModelIds: [],
             expectedResponseDataModelIds: ["4", "5", "9"]
         )
     ])
@@ -508,17 +555,17 @@ struct RepositorySyncTests {
             getObjectsType: .objects,
             cachePolicy: .returnCacheDataAndFetch(requestPriority: .medium),
             expectedNumberOfChanges: 3,
-            expectFirstTriggerIsCacheResponse: true,
             triggerSecondaryExternalDataFetchWithIds: ["9", "5"]
         )
     }
     
-    // MARK: - Test Cache Policy (Cache Data And Fetch) - Object ID
+    // MARK: - Test Cache Policy (Return Cache Data And Fetch) - Object ID
     
     @Test(arguments: [
         TestArgument(
             initialPersistedObjectsIds: ["0", "1"],
             externalDataModelIds: ["3"],
+            expectedCachedResponseDataModelIds: [],
             expectedResponseDataModelIds: ["3"]
         )
     ])
@@ -528,8 +575,7 @@ struct RepositorySyncTests {
             argument: argument,
             getObjectsType: .object(id: "3"),
             cachePolicy: .returnCacheDataAndFetch(requestPriority: .medium),
-            expectedNumberOfChanges: 2,
-            expectFirstTriggerIsCacheResponse: true
+            expectedNumberOfChanges: 2
         )
     }
     
@@ -537,11 +583,13 @@ struct RepositorySyncTests {
         TestArgument(
             initialPersistedObjectsIds: ["0", "1"],
             externalDataModelIds: [],
+            expectedCachedResponseDataModelIds: [],
             expectedResponseDataModelIds: ["3"]
         ),
         TestArgument(
             initialPersistedObjectsIds: ["0", "1"],
             externalDataModelIds: ["5"],
+            expectedCachedResponseDataModelIds: [],
             expectedResponseDataModelIds: ["3"]
         )
     ])
@@ -552,8 +600,29 @@ struct RepositorySyncTests {
             getObjectsType: .object(id: "3"),
             cachePolicy: .returnCacheDataAndFetch(requestPriority: .medium),
             expectedNumberOfChanges: 2,
-            expectFirstTriggerIsCacheResponse: true,
-            triggerSecondaryExternalDataFetchWithIds: ["3"],
+            triggerSecondaryExternalDataFetchWithIds: ["3"]
+        )
+    }
+    
+    // MARK: - Test Cache Policy (Return Cache Data And Fetch) - Objects With Query
+    
+    @Test(arguments: [
+        TestArgument(
+            initialPersistedObjectsIds: ["0", "1", "5"],
+            externalDataModelIds: ["5", "6", "7", "8", "9"],
+            expectedCachedResponseDataModelIds: ["5"],
+            expectedResponseDataModelIds: ["5"]
+        )
+    ])
+    @MainActor func returnCacheDataAndFetchWillFilter(argument: TestArgument) async {
+        
+        let filter = NSPredicate(format: "\(#keyPath(MockRepositorySyncRealmObject.name)) == %@", Self.namePrefix + "5")
+        
+        await runTest(
+            argument: argument,
+            getObjectsType: .objectsWithQuery(databaseQuery: RepositorySyncDatabaseQuery.filter(filter: filter)),
+            cachePolicy: .returnCacheDataAndFetch(requestPriority: .medium),
+            expectedNumberOfChanges: 2,
             loggingEnabled: true
         )
     }
@@ -563,23 +632,23 @@ struct RepositorySyncTests {
 
 extension RepositorySyncTests {
     
-    @MainActor private func runTest(argument: TestArgument, getObjectsType: RepositorySyncGetObjectsType, cachePolicy: RepositorySyncCachePolicy, expectedNumberOfChanges: Int, expectFirstTriggerIsCacheResponse: Bool, triggerSecondaryExternalDataFetchWithIds: [String] = Array(), loggingEnabled: Bool = false) async {
+    @MainActor private func runTest(argument: TestArgument, getObjectsType: RepositorySyncGetObjectsType, cachePolicy: RepositorySyncCachePolicy, expectedNumberOfChanges: Int, triggerSecondaryExternalDataFetchWithIds: [String] = Array(), loggingEnabled: Bool = false) async {
         
         await runTest(
             realmFileName: argument.realmFileName,
             initialPersistedObjectsIds: argument.initialPersistedObjectsIds,
             externalDataModelIds: argument.externalDataModelIds,
+            expectedCachedResponseDataModelIds: argument.expectedCachedResponseDataModelIds,
             expectedResponseDataModelIds: argument.expectedResponseDataModelIds,
             getObjectsType: getObjectsType,
             cachePolicy: cachePolicy,
             expectedNumberOfChanges: expectedNumberOfChanges,
-            expectFirstTriggerIsCacheResponse: expectFirstTriggerIsCacheResponse,
             triggerSecondaryExternalDataFetchWithIds: triggerSecondaryExternalDataFetchWithIds,
             loggingEnabled: loggingEnabled
         )
     }
     
-    @MainActor private func runTest(realmFileName: String, initialPersistedObjectsIds: [String], externalDataModelIds: [String], expectedResponseDataModelIds: [String], getObjectsType: RepositorySyncGetObjectsType, cachePolicy: RepositorySyncCachePolicy, expectedNumberOfChanges: Int, expectFirstTriggerIsCacheResponse: Bool, triggerSecondaryExternalDataFetchWithIds: [String], loggingEnabled: Bool) async {
+    @MainActor private func runTest(realmFileName: String, initialPersistedObjectsIds: [String], externalDataModelIds: [String], expectedCachedResponseDataModelIds: [String]?, expectedResponseDataModelIds: [String], getObjectsType: RepositorySyncGetObjectsType, cachePolicy: RepositorySyncCachePolicy, expectedNumberOfChanges: Int, triggerSecondaryExternalDataFetchWithIds: [String], loggingEnabled: Bool) async {
         
         let repositorySync: RepositorySync<MockRepositorySyncDataModel, MockRepositorySyncExternalDataFetch, MockRepositorySyncRealmObject> = getRepositorySync(
             realmFileName: realmFileName,
@@ -648,12 +717,12 @@ extension RepositorySyncTests {
                             print("  RESPONSE: \(response.objects.map{$0.id})")
                         }
                                                 
-                        if expectFirstTriggerIsCacheResponse && sinkCount == 1 {
+                        if sinkCount == 1 && expectedCachedResponseDataModelIds != nil {
                             
                             cachedResponseRef = response
                             
                             if loggingEnabled {
-                                print("\n CACHE RECORDED: \(response.objects.map{$0.id})")
+                                print("\n CACHE RESPONSE RECORDED: \(response.objects.map{$0.id})")
                             }
                         }
                         
@@ -676,25 +745,10 @@ extension RepositorySyncTests {
         
         _ = Self.deleteRealmDatabaseFile(fileName: realmFileName)
         
-        if expectFirstTriggerIsCacheResponse {
+        if let expectedCachedResponseDataModelIds = expectedCachedResponseDataModelIds {
             
             let cachedResponseDataModelIds: [String] = sortResponseObjectsDataModelIds(response: cachedResponseRef)
-            let expectedCachedResponseDataModelIds: [String]
-            
-            switch getObjectsType {
-            
-            case .objects:
-                expectedCachedResponseDataModelIds = initialPersistedObjectsIds
-            
-            case .object(let id):
-                if let object = initialPersistedObjectsIds.first(where: {$0 == id}) {
-                    expectedCachedResponseDataModelIds = [object]
-                }
-                else {
-                    expectedCachedResponseDataModelIds = []
-                }
-            }
-            
+                        
             if loggingEnabled {
                 print("\n EXPECT")
                 print("  CACHE RESPONSE: \(cachedResponseDataModelIds)")
@@ -725,7 +779,7 @@ extension RepositorySyncTests {
         let initialObjects: [MockRepositorySyncRealmObject] = initialPersistedObjectsIds.map {
             let object = MockRepositorySyncRealmObject()
             object.id = $0
-            object.name = "name_" + $0
+            object.name = Self.namePrefix + $0
             return object
         }
         
@@ -751,7 +805,7 @@ extension RepositorySyncTests {
         let externalDataModels: [MockRepositorySyncDataModel] = externalDataModelIds.map {
             MockRepositorySyncDataModel(
                 id: $0,
-                name: "name_" + $0
+                name: Self.namePrefix + $0
             )
         }
         

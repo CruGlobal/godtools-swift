@@ -102,6 +102,11 @@ extension RepositorySync {
                 .getObjectsPublisher(requestPriority: requestPriority)
                 .eraseToAnyPublisher()
             
+        case .objectsWithQuery( _):
+            return externalDataFetch
+                .getObjectsPublisher(requestPriority: requestPriority)
+                .eraseToAnyPublisher()
+            
         case .object(let id):
             return externalDataFetch
                 .getObjectPublisher(id: id, requestPriority: requestPriority)
@@ -169,15 +174,18 @@ extension RepositorySync {
 
 extension RepositorySync {
     
-    private func getCachedDataModelsByGetObjectsType(getObjectsType: RepositorySyncGetObjectsType, databaseQuery: RepositorySyncDatabaseQuery?) -> [DataModelType] {
+    private func getCachedDataModelsByGetObjectsType(getObjectsType: RepositorySyncGetObjectsType) -> [DataModelType] {
         
         let dataModels: [DataModelType]
         
         switch getObjectsType {
         
         case .objects:
-            dataModels = getCachedObjectsToDataModels(databaseQuery: databaseQuery)
+            dataModels = getCachedObjectsToDataModels(databaseQuery: nil)
         
+        case .objectsWithQuery(let databaseQuery):
+            dataModels = getCachedObjectsToDataModels(databaseQuery: databaseQuery)
+            
         case .object(let id):
             if let dataModel = getCachedObjectToDataModel(primaryKey: id) {
                 dataModels = [dataModel]
@@ -190,11 +198,10 @@ extension RepositorySync {
         return dataModels
     }
     
-    private func getCachedDataModelsByGetObjectsTypeToResponse(getObjectsType: RepositorySyncGetObjectsType, databaseQuery: RepositorySyncDatabaseQuery?) -> RepositorySyncResponse<DataModelType> {
+    private func getCachedDataModelsByGetObjectsTypeToResponse(getObjectsType: RepositorySyncGetObjectsType) -> RepositorySyncResponse<DataModelType> {
         
         let dataModels: [DataModelType] = getCachedDataModelsByGetObjectsType(
-            getObjectsType: getObjectsType,
-            databaseQuery: databaseQuery
+            getObjectsType: getObjectsType
         )
         
         let response = RepositorySyncResponse<DataModelType>(
@@ -205,9 +212,9 @@ extension RepositorySync {
         return response
     }
     
-    private func getCachedDataModelsByGetObjectsTypeToResponsePublisher(getObjectsType: RepositorySyncGetObjectsType, databaseQuery: RepositorySyncDatabaseQuery?) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
+    private func getCachedDataModelsByGetObjectsTypeToResponsePublisher(getObjectsType: RepositorySyncGetObjectsType) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
         
-        return Just(getCachedDataModelsByGetObjectsTypeToResponse(getObjectsType: getObjectsType, databaseQuery: databaseQuery))
+        return Just(getCachedDataModelsByGetObjectsTypeToResponse(getObjectsType: getObjectsType))
             .eraseToAnyPublisher()
     }
     
@@ -219,7 +226,7 @@ extension RepositorySync {
         -
      */
     
-    func getObjectsPublisher(getObjectsType: RepositorySyncGetObjectsType, cachePolicy: RepositorySyncCachePolicy, databaseQuery: RepositorySyncDatabaseQuery? = nil, updatePolicy: Realm.UpdatePolicy = .modified) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
+    func getObjectsPublisher(getObjectsType: RepositorySyncGetObjectsType, cachePolicy: RepositorySyncCachePolicy, updatePolicy: Realm.UpdatePolicy = .modified) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
         
         let realm: Realm = realmDatabase.openRealm()
         
@@ -235,8 +242,7 @@ extension RepositorySync {
             .map { (response: RepositorySyncResponse<DataModelType>) in
             
                 let dataModels: [DataModelType] = self.getCachedDataModelsByGetObjectsType(
-                    getObjectsType: getObjectsType,
-                    databaseQuery: databaseQuery
+                    getObjectsType: getObjectsType
                 )
                 
                 return response.copy(objects: dataModels)
@@ -253,8 +259,7 @@ extension RepositorySync {
                 .map { (onChange: Void) in
                     
                     return self.getCachedDataModelsByGetObjectsTypeToResponse(
-                        getObjectsType: getObjectsType,
-                        databaseQuery: databaseQuery
+                        getObjectsType: getObjectsType
                     )
                 }
                 .eraseToAnyPublisher()
@@ -262,8 +267,7 @@ extension RepositorySync {
             else {
                
                 return getCachedDataModelsByGetObjectsTypeToResponsePublisher(
-                    getObjectsType: getObjectsType,
-                    databaseQuery: databaseQuery
+                    getObjectsType: getObjectsType
                 )
                 .eraseToAnyPublisher()
             }
@@ -272,7 +276,7 @@ extension RepositorySync {
             
             if observeChanges {
                         
-                let numberOfRealmObjects: Int = getCachedResults(realm: realm, databaseQuery: databaseQuery).count
+                let numberOfRealmObjects: Int = getCachedResults(realm: realm, databaseQuery: nil).count
                 
                 if numberOfRealmObjects == 0 {
                     
@@ -289,15 +293,14 @@ extension RepositorySync {
                 .map { (onChange: Void) in
                     
                     return self.getCachedDataModelsByGetObjectsTypeToResponse(
-                        getObjectsType: getObjectsType,
-                        databaseQuery: databaseQuery
+                        getObjectsType: getObjectsType
                     )
                 }
                 .eraseToAnyPublisher()
             }
             else {
                 
-                if getNumberOfCachedObjects(databaseQuery: databaseQuery) == 0 {
+                if getNumberOfCachedObjects() == 0 {
                     
                     return fetchAndStoreObjectsFromExternalDataFetchPublisher(
                         getObjectsType: getObjectsType,
@@ -307,8 +310,7 @@ extension RepositorySync {
                     .map { (response: RepositorySyncResponse<DataModelType>) in
                     
                         let dataModels: [DataModelType] = self.getCachedDataModelsByGetObjectsType(
-                            getObjectsType: getObjectsType,
-                            databaseQuery: databaseQuery
+                            getObjectsType: getObjectsType
                         )
                         
                         return response.copy(objects: dataModels)
@@ -318,8 +320,7 @@ extension RepositorySync {
                 else {
                     
                     return getCachedDataModelsByGetObjectsTypeToResponsePublisher(
-                        getObjectsType: getObjectsType,
-                        databaseQuery: databaseQuery
+                        getObjectsType: getObjectsType
                     )
                     .eraseToAnyPublisher()
                 }
@@ -339,8 +340,7 @@ extension RepositorySync {
             .map { (onChange: Void) in
                 
                 return self.getCachedDataModelsByGetObjectsTypeToResponse(
-                    getObjectsType: getObjectsType,
-                    databaseQuery: databaseQuery
+                    getObjectsType: getObjectsType
                 )
             }
             .eraseToAnyPublisher()
