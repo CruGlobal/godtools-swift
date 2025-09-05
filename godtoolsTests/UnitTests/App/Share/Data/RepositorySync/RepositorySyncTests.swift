@@ -690,7 +690,7 @@ extension RepositorySyncTests {
         let initialObjects: [MockRepositorySyncRealmObject] = initialPersistedObjectsIds.map {
             let object = MockRepositorySyncRealmObject()
             object.id = $0
-            object.name = "name" + $0
+            object.name = "name_" + $0
             return object
         }
         
@@ -716,7 +716,7 @@ extension RepositorySyncTests {
         let externalDataModels: [MockRepositorySyncDataModel] = externalDataModelIds.map {
             MockRepositorySyncDataModel(
                 id: $0,
-                name: "name " + $0
+                name: "name_" + $0
             )
         }
         
