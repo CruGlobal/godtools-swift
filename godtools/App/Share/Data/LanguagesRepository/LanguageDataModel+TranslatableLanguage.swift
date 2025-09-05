@@ -1,15 +1,14 @@
 //
-//  LanguageModel+TranslatableLanguage.swift
+//  LanguageDataModel+TranslatableLanguage.swift
 //  godtools
 //
-//  Created by Levi Eggert on 12/14/23.
-//  Copyright © 2023 Cru. All rights reserved.
+//  Created by Levi Eggert on 9/5/25.
+//  Copyright © 2025 Cru. All rights reserved.
 //
 
 import Foundation
 
-@available(*, deprecated) // TODO: GT-1887 Remove and use LanguageDataModel. ~Levi
-extension LanguageModel: TranslatableLanguage {
+extension LanguageDataModel: TranslatableLanguage {
     
     var localeId: BCP47LanguageIdentifier {
         return code

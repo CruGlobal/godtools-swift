@@ -56,7 +56,7 @@ class MobileContentLanguagesApi {
         )
     }
     
-    func getLanguage(requestPriority: RequestPriority, languageId: String) -> AnyPublisher<LanguageModel?, Error> {
+    private func getLanguage(requestPriority: RequestPriority, languageId: String) -> AnyPublisher<LanguageModel?, Error> {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
@@ -72,6 +72,7 @@ class MobileContentLanguagesApi {
             .eraseToAnyPublisher()
     }
     
+    @available(*, deprecated) // TODO: GT-1887 Make private. ~Levi
     func getLanguages(requestPriority: RequestPriority) -> AnyPublisher<[LanguageModel], Error> {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
