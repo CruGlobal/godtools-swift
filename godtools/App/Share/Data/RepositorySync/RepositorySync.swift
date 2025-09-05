@@ -31,7 +31,7 @@ open class RepositorySync<DataModelType, ExternalDataFetchType: RepositorySyncEx
 
 extension RepositorySync {
     
-    private func getNumberOfCachedObjects(filter: NSPredicate?) -> Int {
+    private func getNumberOfCachedObjects(filter: NSPredicate? = nil) -> Int {
         return getCachedResults(realm: realmDatabase.openRealm(), filter: filter).count
     }
     
