@@ -641,7 +641,6 @@
 				ta,
 				sr,
 				te,
-				"ru-143",
 				tpi,
 			);
 			mainGroup = 4F5732801EA69CF00082035C;
@@ -2112,7 +2111,7 @@
 			repositoryURL = "https://github.com/CruGlobal/localization-services-ios";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.3.1;
+				minimumVersion = 0.3.3;
 			};
 		};
 		D4997E0C28D4CED800205B4C /* XCRemoteSwiftPackageReference "youtube-ios-player-helper" */ = {
