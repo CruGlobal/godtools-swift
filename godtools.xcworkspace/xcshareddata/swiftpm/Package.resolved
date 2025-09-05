@@ -1,5 +1,5 @@
 {
-  "originHash" : "46c3e5d6b619464f81f8c9a21f423fede21a2c1aee05c005c799696c1132e668",
+  "originHash" : "cead3468ebe5f105483685ddeeb859912bdb043c6fe7ebfd781dfc1317b99cf3",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -245,15 +245,6 @@
       }
     },
     {
-      "identity" : "starscream",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/daltoniam/Starscream.git",
-      "state" : {
-        "revision" : "c6bfd1af48efcc9a9ad203665db12375ba6b145a",
-        "version" : "4.0.8"
-      }
-    },
-    {
       "identity" : "swift-protobuf",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-protobuf.git",
@@ -276,8 +267,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ZipArchive/ZipArchive.git",
       "state" : {
-        "revision" : "79d4dc9729096c6ad83dd3cee2b9f354d1b4ab7b",
-        "version" : "2.5.5"
+        "revision" : "df35718ea19a94e015b91dc4881dee028ce4cdba",
+        "version" : "2.6.0"
       }
     }
   ],
