@@ -28,10 +28,6 @@ class LanguagesRepository: RepositorySync<LanguageDataModel, MobileContentLangua
         )
     }
     
-    var numberOfLanguages: Int {
-        return cache.numberOfLanguages
-    }
-
     func getLanguagesChanged() -> AnyPublisher<Void, Never> {
         return cache.getLanguagesChanged()
     }

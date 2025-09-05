@@ -25,6 +25,18 @@ open class RepositorySync<DataModelType, ExternalDataFetchType: RepositorySyncEx
         self.realmDatabase = realmDatabase
         self.dataModelMapping = dataModelMapping
     }
+    
+    var numberOfCachedObjects: Int {
+        return getNumberOfCachedObjects()
+    }
+    
+    func getCachedObject(id: String) -> DataModelType? {
+        return getCachedObjectToDataModel(primaryKey: id)
+    }
+    
+    func getCachedObjects(filter: NSPredicate? = nil) -> [DataModelType] {
+        return getCachedObjectsToDataModels(filter: filter)
+    }
 }
 
 // MARK: - Cache
