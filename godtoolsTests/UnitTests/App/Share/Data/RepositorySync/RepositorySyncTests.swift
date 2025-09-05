@@ -113,7 +113,7 @@ struct RepositorySyncTests {
         
         await runTest(
             argument: argument,
-            getObjectsType: .objectId(id: "1"),
+            getObjectsType: .object(id: "1"),
             cachePolicy: .fetchIgnoringCacheData(requestPriority: .medium),
             expectedNumberOfChanges: 1,
             expectFirstTriggerIsCacheResponse: false
@@ -212,7 +212,7 @@ struct RepositorySyncTests {
         
         await runTest(
             argument: argument,
-            getObjectsType: .objectId(id: "1"),
+            getObjectsType: .object(id: "1"),
             cachePolicy: .returnCacheDataDontFetch(observeChanges: false),
             expectedNumberOfChanges: 1,
             expectFirstTriggerIsCacheResponse: true
@@ -235,7 +235,7 @@ struct RepositorySyncTests {
         
         await runTest(
             argument: argument,
-            getObjectsType: .objectId(id: "1"),
+            getObjectsType: .object(id: "1"),
             cachePolicy: .returnCacheDataDontFetch(observeChanges: true),
             expectedNumberOfChanges: 2,
             expectFirstTriggerIsCacheResponse: true,
@@ -360,7 +360,7 @@ struct RepositorySyncTests {
         
         await runTest(
             argument: argument,
-            getObjectsType: .objectId(id: "1"),
+            getObjectsType: .object(id: "1"),
             cachePolicy: .returnCacheDataElseFetch(requestPriority: .medium, observeChanges: false),
             expectedNumberOfChanges: 1,
             expectFirstTriggerIsCacheResponse: true
@@ -378,7 +378,7 @@ struct RepositorySyncTests {
         
         await runTest(
             argument: argument,
-            getObjectsType: .objectId(id: "6"),
+            getObjectsType: .object(id: "6"),
             cachePolicy: .returnCacheDataElseFetch(requestPriority: .medium, observeChanges: false),
             expectedNumberOfChanges: 1,
             expectFirstTriggerIsCacheResponse: false
@@ -396,7 +396,7 @@ struct RepositorySyncTests {
         
         await runTest(
             argument: argument,
-            getObjectsType: .objectId(id: "7"),
+            getObjectsType: .object(id: "7"),
             cachePolicy: .returnCacheDataElseFetch(requestPriority: .medium, observeChanges: true),
             expectedNumberOfChanges: 2,
             expectFirstTriggerIsCacheResponse: true
@@ -414,7 +414,7 @@ struct RepositorySyncTests {
         
         await runTest(
             argument: argument,
-            getObjectsType: .objectId(id: "9"),
+            getObjectsType: .object(id: "9"),
             cachePolicy: .returnCacheDataElseFetch(requestPriority: .medium, observeChanges: true),
             expectedNumberOfChanges: 3,
             expectFirstTriggerIsCacheResponse: true,
@@ -433,7 +433,7 @@ struct RepositorySyncTests {
         
         await runTest(
             argument: argument,
-            getObjectsType: .objectId(id: "1"),
+            getObjectsType: .object(id: "1"),
             cachePolicy: .returnCacheDataElseFetch(requestPriority: .medium, observeChanges: true),
             expectedNumberOfChanges: 2,
             expectFirstTriggerIsCacheResponse: true,
@@ -526,7 +526,7 @@ struct RepositorySyncTests {
         
         await runTest(
             argument: argument,
-            getObjectsType: .objectId(id: "3"),
+            getObjectsType: .object(id: "3"),
             cachePolicy: .returnCacheDataAndFetch(requestPriority: .medium),
             expectedNumberOfChanges: 2,
             expectFirstTriggerIsCacheResponse: true
@@ -549,7 +549,7 @@ struct RepositorySyncTests {
         
         await runTest(
             argument: argument,
-            getObjectsType: .objectId(id: "3"),
+            getObjectsType: .object(id: "3"),
             cachePolicy: .returnCacheDataAndFetch(requestPriority: .medium),
             expectedNumberOfChanges: 2,
             expectFirstTriggerIsCacheResponse: true,
@@ -682,9 +682,11 @@ extension RepositorySyncTests {
             let expectedCachedResponseDataModelIds: [String]
             
             switch getObjectsType {
+            
             case .objects:
                 expectedCachedResponseDataModelIds = initialPersistedObjectsIds
-            case .objectId(let id):
+            
+            case .object(let id):
                 if let object = initialPersistedObjectsIds.first(where: {$0 == id}) {
                     expectedCachedResponseDataModelIds = [object]
                 }

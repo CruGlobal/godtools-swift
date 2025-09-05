@@ -10,5 +10,5 @@ import Foundation
 
 public enum RepositorySyncGetObjectsType {
     case objects
-    case objectId(id: String)
+    case object(id: String)
 }

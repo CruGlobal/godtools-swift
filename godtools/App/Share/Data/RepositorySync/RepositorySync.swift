@@ -102,7 +102,7 @@ extension RepositorySync {
                 .getObjectsPublisher(requestPriority: requestPriority)
                 .eraseToAnyPublisher()
             
-        case .objectId(let id):
+        case .object(let id):
             return externalDataFetch
                 .getObjectPublisher(id: id, requestPriority: requestPriority)
                 .eraseToAnyPublisher()
@@ -178,7 +178,7 @@ extension RepositorySync {
         case .objects:
             dataModels = getCachedObjectsToDataModels(databaseQuery: databaseQuery)
         
-        case .objectId(let id):
+        case .object(let id):
             if let dataModel = getCachedObjectToDataModel(primaryKey: id) {
                 dataModels = [dataModel]
             }
