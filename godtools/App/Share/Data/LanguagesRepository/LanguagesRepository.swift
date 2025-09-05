@@ -11,15 +11,21 @@ import Combine
 import RealmSwift
 import RequestOperation
 
-class LanguagesRepository {
+class LanguagesRepository: RepositorySync<LanguageDataModel, MobileContentLanguagesApi, RealmLanguage> {
     
     private let api: MobileContentLanguagesApi
     private let cache: RealmLanguagesCache
     
-    required init(api: MobileContentLanguagesApi, cache: RealmLanguagesCache) {
+    init(api: MobileContentLanguagesApi, cache: RealmLanguagesCache, realmDatabase: RealmDatabase) {
         
         self.api = api
         self.cache = cache
+        
+        super.init(
+            externalDataFetch: api,
+            realmDatabase: realmDatabase,
+            dataModelMapping: LanguagesDataModelMapping()
+        )
     }
     
     var numberOfLanguages: Int {

@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class RealmLanguage: Object, LanguageModelType {
+class RealmLanguage: Object, IdentifiableRealmObject, LanguageDataModelInterface {
     
     @objc dynamic var code: String = ""
     @objc dynamic var directionString: String = ""
@@ -26,13 +26,19 @@ class RealmLanguage: Object, LanguageModelType {
     // (https://www.mongodb.com/docs/realm/sdk/swift/model-data/relationships/)
     let resource = LinkingObjects(fromType: RealmResource.self, property: "languages")
     
-    func mapFrom(model: LanguageModel) {
+    func mapFrom(interface: LanguageDataModelInterface) {
         
-        code = model.code
-        directionString = model.directionString
-        id = model.id
-        name = model.name
-        type = model.type
-        forceLanguageName = model.forceLanguageName
+        code = interface.code
+        directionString = interface.directionString
+        id = interface.id
+        name = interface.name
+        type = interface.type
+        forceLanguageName = interface.forceLanguageName
+    }
+    
+    static func from(interface: LanguageDataModelInterface) -> RealmLanguage {
+        let realmLanguage = RealmLanguage()
+        realmLanguage.mapFrom(interface: interface)
+        return realmLanguage
     }
 }
