@@ -38,6 +38,7 @@ class AppDiContainer {
         let accountDiContainer = AccountDiContainer(coreDataLayer: dataLayer, dataLayer: accountDataLayer, domainInterfaceLayer: AccountDomainInterfaceDependencies(coreDataLayer: dataLayer, dataLayer: accountDataLayer))
         let appLanguageDiContainer = AppLanguageFeatureDiContainer(coreDataLayer: dataLayer)
         let dashboardDiContainer = DashboardDiContainer(coreDataLayer: dataLayer)
+        let deferredDeepLinkDiContainer = DeferredDeepLinkDiContainer(coreDataLayer: dataLayer)
         let downloadToolProgressDiContainer = DownloadToolProgressFeatureDiContainer(coreDataLayer: dataLayer)
         let favoritesDiContainer = FavoritesDiContainer(coreDataLayer: dataLayer)
         let featuredLessonsDiContainer = FeaturedLessonsDiContainer(coreDataLayer: dataLayer)
@@ -68,6 +69,7 @@ class AppDiContainer {
             account: accountDiContainer,
             appLanguage: appLanguageDiContainer,
             dashboard: dashboardDiContainer,
+            deferredDeepLink: deferredDeepLinkDiContainer,
             downloadToolProgress: downloadToolProgressDiContainer,
             favorites: favoritesDiContainer,
             featuredLessons: featuredLessonsDiContainer,

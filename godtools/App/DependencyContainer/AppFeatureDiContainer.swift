@@ -13,6 +13,7 @@ class AppFeatureDiContainer {
     let account: AccountDiContainer
     let appLanguage: AppLanguageFeatureDiContainer
     let dashboard: DashboardDiContainer
+    let deferredDeepLink: DeferredDeepLinkDiContainer
     let downloadToolProgress: DownloadToolProgressFeatureDiContainer
     let favorites: FavoritesDiContainer
     let featuredLessons: FeaturedLessonsDiContainer
@@ -43,6 +44,7 @@ class AppFeatureDiContainer {
         account: AccountDiContainer,
         appLanguage: AppLanguageFeatureDiContainer,
         dashboard: DashboardDiContainer,
+        deferredDeepLink: DeferredDeepLinkDiContainer,
         downloadToolProgress: DownloadToolProgressFeatureDiContainer,
         favorites: FavoritesDiContainer,
         featuredLessons: FeaturedLessonsDiContainer,
@@ -73,6 +75,7 @@ class AppFeatureDiContainer {
         self.account = account
         self.appLanguage = appLanguage
         self.dashboard = dashboard
+        self.deferredDeepLink = deferredDeepLink
         self.downloadToolProgress = downloadToolProgress
         self.favorites = favorites
         self.featuredLessons = featuredLessons
