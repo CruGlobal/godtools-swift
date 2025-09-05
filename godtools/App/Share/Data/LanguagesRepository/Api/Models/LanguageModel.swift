@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct LanguageModel: LanguageModelType, Codable {
+struct LanguageModel: LanguageDataModelInterface, Codable {
     
     let code: BCP47LanguageIdentifier
     let directionString: String
@@ -53,7 +53,7 @@ struct LanguageModel: LanguageModelType, Codable {
         forceLanguageName = try attributesContainer?.decodeIfPresent(Bool.self, forKey: .forceLanguageName) ?? false
     }
     
-    init(model: LanguageModelType) {
+    init(model: LanguageDataModelInterface) {
         
         code = model.code
         directionString = model.directionString

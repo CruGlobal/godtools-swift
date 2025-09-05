@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-protocol IdentifiableRealmObject: Object {
+public protocol IdentifiableRealmObject: Object {
     
     var id: String { get set }
 }
