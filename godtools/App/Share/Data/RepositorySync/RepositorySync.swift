@@ -31,6 +31,10 @@ open class RepositorySync<DataModelType, ExternalDataFetchType: RepositorySyncEx
 
 extension RepositorySync {
     
+    private func getNumberOfCachedObjects(filter: NSPredicate?) -> Int {
+        return getCachedResults(realm: realmDatabase.openRealm(), filter: filter).count
+    }
+    
     private func getCachedResults(realm: Realm, filter: NSPredicate?) -> Results<RealmObjectType> {
         
         let results = realm.objects(RealmObjectType.self)
@@ -50,37 +54,27 @@ extension RepositorySync {
         return dataModels
     }
     
-    private func getCachedObjectsToDataModelsPublisher(filter: NSPredicate?) -> AnyPublisher<[DataModelType], Never> {
-        let dataModels: [DataModelType] = getCachedObjectsToDataModels(filter: filter)
-        return Just(dataModels)
-            .eraseToAnyPublisher()
-    }
-    
-    private func getCachedObjectsToResponse(filter: NSPredicate?) -> RepositorySyncResponse<DataModelType> {
-        let dataModels: [DataModelType] = getCachedResults(realm: realmDatabase.openRealm(), filter: filter).compactMap {
-            self.dataModelMapping.toDataModel(persistObject: $0)
-        }
-        return RepositorySyncResponse(
-            objects: dataModels,
-            errors: []
-        )
-    }
-    
-    private func getCachedObjectsToResponsePublisher(filter: NSPredicate?) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
-        let response: RepositorySyncResponse<DataModelType> = getCachedObjectsToResponse(filter: filter)
-        return Just(response)
-            .eraseToAnyPublisher()
-    }
-    
-    private func fetchCachedObjectsAndObserveChangesPublisher(realm: Realm, filter: NSPredicate?) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
+    private func observeRealmCollectionChangesPublisher(observeOnRealm: Realm) -> AnyPublisher<Void, Never> {
                 
-        return realm
+        return observeOnRealm
             .objects(RealmObjectType.self)
             .objectWillChange
             .map { _ in
-                return self.getCachedObjectsToResponse(filter: filter)
+                Void()
             }
             .eraseToAnyPublisher()
+    }
+    
+    private func getCachedObjectToDataModel(primaryKey: String) -> DataModelType? {
+        
+        let realm: Realm = realmDatabase.openRealm()
+        let realmObject: RealmObjectType? = realm.object(ofType: RealmObjectType.self, forPrimaryKey: primaryKey)
+        
+        guard let realmObject = realmObject, let dataModel = dataModelMapping.toDataModel(persistObject: realmObject) else {
+            return nil
+        }
+        
+        return dataModel
     }
 }
 
@@ -138,7 +132,7 @@ extension RepositorySync {
             self.dataModelMapping.toPersistObject(dataModel: $0)
         }
         
-        let realm: Realm = self.realmDatabase.openRealm()
+        let realm: Realm = realmDatabase.openRealm()
         let errors: [Error]
         
         do {
@@ -163,6 +157,48 @@ extension RepositorySync {
 
 extension RepositorySync {
     
+    private func getCachedDataModelsByGetObjectsType(getObjectsType: RepositorySyncGetObjectsType, filter: NSPredicate?) -> [DataModelType] {
+        
+        let dataModels: [DataModelType]
+        
+        switch getObjectsType {
+        
+        case .objects:
+            dataModels = getCachedObjectsToDataModels(filter: filter)
+        
+        case .objectId(let id):
+            if let dataModel = getCachedObjectToDataModel(primaryKey: id) {
+                dataModels = [dataModel]
+            }
+            else {
+                dataModels = []
+            }
+        }
+        
+        return dataModels
+    }
+    
+    private func getCachedDataModelsByGetObjectsTypeToResponse(getObjectsType: RepositorySyncGetObjectsType, filter: NSPredicate?) -> RepositorySyncResponse<DataModelType> {
+        
+        let dataModels: [DataModelType] = getCachedDataModelsByGetObjectsType(
+            getObjectsType: getObjectsType,
+            filter: filter
+        )
+        
+        let response = RepositorySyncResponse<DataModelType>(
+            objects: dataModels,
+            errors: []
+        )
+        
+        return response
+    }
+    
+    private func getCachedDataModelsByGetObjectsTypeToResponsePublisher(getObjectsType: RepositorySyncGetObjectsType, filter: NSPredicate?) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
+        
+        return Just(getCachedDataModelsByGetObjectsTypeToResponse(getObjectsType: getObjectsType, filter: filter))
+            .eraseToAnyPublisher()
+    }
+    
     // TODO: Questions, Unknowns, Etc.
     /*
         - Is there a better way to setup RepositorySyncMapping?  I couldn't get it to work with a protocol and associated types. Not sure I like the open class because there isn't an explicit way to force subclasses to override parent methods.
@@ -184,8 +220,14 @@ extension RepositorySync {
                 requestPriority: requestPriority,
                 updatePolicy: updatePolicy
             )
-            .map { _ in
-                return self.getCachedObjectsToResponse(filter: filter)
+            .map { (response: RepositorySyncResponse<DataModelType>) in
+            
+                let dataModels: [DataModelType] = self.getCachedDataModelsByGetObjectsType(
+                    getObjectsType: getObjectsType,
+                    filter: filter
+                )
+                
+                return response.copy(objects: dataModels)
             }
             .eraseToAnyPublisher()
             
@@ -193,15 +235,25 @@ extension RepositorySync {
             
             if observeChanges {
                
-                return fetchCachedObjectsAndObserveChangesPublisher(
-                    realm: realm,
-                    filter: filter
+                return observeRealmCollectionChangesPublisher(
+                    observeOnRealm: realm
                 )
+                .map { (onChange: Void) in
+                    
+                    return self.getCachedDataModelsByGetObjectsTypeToResponse(
+                        getObjectsType: getObjectsType,
+                        filter: filter
+                    )
+                }
                 .eraseToAnyPublisher()
             }
             else {
                
-                return getCachedObjectsToResponsePublisher(filter: filter)
+                return getCachedDataModelsByGetObjectsTypeToResponsePublisher(
+                    getObjectsType: getObjectsType,
+                    filter: filter
+                )
+                .eraseToAnyPublisher()
             }
         
         case .returnCacheDataElseFetch(let requestPriority, let observeChanges):
@@ -219,34 +271,45 @@ extension RepositorySync {
                     )
                 }
                 
-                return fetchCachedObjectsAndObserveChangesPublisher(
-                    realm: realm,
-                    filter: filter
+                return observeRealmCollectionChangesPublisher(
+                    observeOnRealm: realm
                 )
+                .map { (onChange: Void) in
+                    
+                    return self.getCachedDataModelsByGetObjectsTypeToResponse(
+                        getObjectsType: getObjectsType,
+                        filter: filter
+                    )
+                }
                 .eraseToAnyPublisher()
             }
             else {
                 
-                let cachedObjects: [DataModelType] = getCachedObjectsToDataModels(filter: filter)
-                
-                if cachedObjects.isEmpty {
+                if getNumberOfCachedObjects(filter: filter) == 0 {
                     
                     return fetchAndStoreObjectsFromExternalDataFetchPublisher(
                         getObjectsType: getObjectsType,
                         requestPriority: requestPriority,
                         updatePolicy: updatePolicy
                     )
+                    .map { (response: RepositorySyncResponse<DataModelType>) in
+                    
+                        let dataModels: [DataModelType] = self.getCachedDataModelsByGetObjectsType(
+                            getObjectsType: getObjectsType,
+                            filter: filter
+                        )
+                        
+                        return response.copy(objects: dataModels)
+                    }
                     .eraseToAnyPublisher()
                 }
                 else {
                     
-                    let response = RepositorySyncResponse<DataModelType>(
-                        objects: cachedObjects,
-                        errors: []
+                    return getCachedDataModelsByGetObjectsTypeToResponsePublisher(
+                        getObjectsType: getObjectsType,
+                        filter: filter
                     )
-                    
-                    return Just(response)
-                        .eraseToAnyPublisher()
+                    .eraseToAnyPublisher()
                 }
             }
         
@@ -258,10 +321,16 @@ extension RepositorySync {
                 updatePolicy: updatePolicy
             )
             
-            return fetchCachedObjectsAndObserveChangesPublisher(
-                realm: realm,
-                filter: filter
+            return observeRealmCollectionChangesPublisher(
+                observeOnRealm: realm
             )
+            .map { (onChange: Void) in
+                
+                return self.getCachedDataModelsByGetObjectsTypeToResponse(
+                    getObjectsType: getObjectsType,
+                    filter: filter
+                )
+            }
             .eraseToAnyPublisher()
         }
     }

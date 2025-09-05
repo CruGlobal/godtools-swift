@@ -18,4 +18,14 @@ public struct RepositorySyncResponse<DataModel> {
         self.objects = objects
         self.errors = errors
     }
+    
+    public func copy(objects: [DataModel]? = nil, errors: [Error]? = nil) -> RepositorySyncResponse<DataModel> {
+        
+        let copy: RepositorySyncResponse<DataModel> = RepositorySyncResponse(
+            objects: objects ?? self.objects,
+            errors: errors ?? self.errors
+        )
+        
+        return copy
+    }
 }
