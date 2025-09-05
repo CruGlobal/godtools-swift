@@ -12,14 +12,7 @@ import SocialAuthentication
 import LocalizationServices
 
 class AppDataLayerDependencies {
-    
-    enum WebSocketType {
-        case starscream
-        case urlSession
-    }
-    
-    private static let defaultWebSocketType: WebSocketType = .urlSession
-    
+        
     private let sharedAppConfig: AppConfigInterface
     private let sharedUrlSessionPriority: URLSessionPriority = URLSessionPriority()
     private let sharedRealmDatabase: RealmDatabase
@@ -480,12 +473,6 @@ class AppDataLayerDependencies {
     }
     
     func getWebSocket(url: URL) -> WebSocketInterface {
-        
-        switch Self.defaultWebSocketType {
-        case .starscream:
-            return StarscreamWebSocket(url: url)
-        case .urlSession:
-            return URLSessionWebSocket(url: url)
-        }
+        return URLSessionWebSocket(url: url)
     }
 }
