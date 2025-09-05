@@ -45,7 +45,7 @@ struct RepositorySyncTests {
         )
     }
     
-    // MARK: - Test Cache Policy (Ignoring Cache Data)
+    // MARK: - Test Cache Policy (Ignoring Cache Data) - Objects
     
     @Test(arguments: [
         TestArgument(
@@ -79,6 +79,8 @@ struct RepositorySyncTests {
             expectFirstTriggerIsCacheResponse: false
         )
     }
+    
+    // MARK: - Test Cache Policy (Ignoring Cache Data) - Object ID
     
     @Test(arguments: [
         TestArgument(
@@ -118,7 +120,7 @@ struct RepositorySyncTests {
         )
     }
     
-    // MARK: - Test Cache Policy (Return Cache Data Don't Fetch)
+    // MARK: - Test Cache Policy (Return Cache Data Don't Fetch) - Objects
     
     @Test(arguments: [
         TestArgument(
@@ -152,6 +154,32 @@ struct RepositorySyncTests {
             expectFirstTriggerIsCacheResponse: true
         )
     }
+    
+    @Test(arguments: [
+        TestArgument(
+            initialPersistedObjectsIds: ["0", "1", "2"],
+            externalDataModelIds: ["5", "4"],
+            expectedResponseDataModelIds: ["0", "1", "2", "8"]
+        ),
+        TestArgument(
+            initialPersistedObjectsIds: [],
+            externalDataModelIds: ["3", "2"],
+            expectedResponseDataModelIds: ["0", "1", "8"]
+        )
+    ])
+    @MainActor func returnCacheDataDontFetchWillTriggerTwiceWhenObservingChangesOnceForInitialCacheDataAndAgainForSecondaryExternalDataFetch(argument: TestArgument) async {
+        
+        await runTest(
+            argument: argument,
+            getObjectsType: .objects,
+            cachePolicy: .returnCacheDataDontFetch(observeChanges: true),
+            expectedNumberOfChanges: 2,
+            expectFirstTriggerIsCacheResponse: true,
+            triggerSecondaryExternalDataFetchWithIds: ["8", "1", "0"]
+        )
+    }
+    
+    // MARK: - Test Cache Policy (Return Cache Data Don't Fetch) - Object ID
     
     @Test(arguments: [
         TestArgument(
@@ -195,30 +223,6 @@ struct RepositorySyncTests {
         TestArgument(
             initialPersistedObjectsIds: ["0", "1", "2"],
             externalDataModelIds: ["5", "4"],
-            expectedResponseDataModelIds: ["0", "1", "2", "8"]
-        ),
-        TestArgument(
-            initialPersistedObjectsIds: [],
-            externalDataModelIds: ["3", "2"],
-            expectedResponseDataModelIds: ["0", "1", "8"]
-        )
-    ])
-    @MainActor func returnCacheDataDontFetchWillTriggerTwiceWhenObservingChangesOnceForInitialCacheDataAndAgainForSecondaryExternalDataFetch(argument: TestArgument) async {
-        
-        await runTest(
-            argument: argument,
-            getObjectsType: .objects,
-            cachePolicy: .returnCacheDataDontFetch(observeChanges: true),
-            expectedNumberOfChanges: 2,
-            expectFirstTriggerIsCacheResponse: true,
-            triggerSecondaryExternalDataFetchWithIds: ["8", "1", "0"]
-        )
-    }
-    
-    @Test(arguments: [
-        TestArgument(
-            initialPersistedObjectsIds: ["0", "1", "2"],
-            externalDataModelIds: ["5", "4"],
             expectedResponseDataModelIds: ["1"]
         ),
         TestArgument(
@@ -239,7 +243,7 @@ struct RepositorySyncTests {
         )
     }
         
-    // MARK: - Test Cache Policy (Return Cache Data Else Fetch)
+    // MARK: - Test Cache Policy (Return Cache Data Else Fetch) - Objects
     
     @Test(arguments: [
         TestArgument(
@@ -258,29 +262,6 @@ struct RepositorySyncTests {
         await runTest(
             argument: argument,
             getObjectsType: .objects,
-            cachePolicy: .returnCacheDataElseFetch(requestPriority: .medium, observeChanges: false),
-            expectedNumberOfChanges: 1,
-            expectFirstTriggerIsCacheResponse: true
-        )
-    }
-    
-    @Test(arguments: [
-        TestArgument(
-            initialPersistedObjectsIds: ["0", "1"],
-            externalDataModelIds: ["5", "6", "7", "8", "9"],
-            expectedResponseDataModelIds: ["1"]
-        ),
-        TestArgument(
-            initialPersistedObjectsIds: ["1", "2"],
-            externalDataModelIds: [],
-            expectedResponseDataModelIds: ["1"]
-        )
-    ])
-    @MainActor func returnCacheDataElseFetchIsTriggeredOnceWithSingleObjectWhenCacheDataAlreadyExists(argument: TestArgument) async {
-        
-        await runTest(
-            argument: argument,
-            getObjectsType: .objectId(id: "1"),
             cachePolicy: .returnCacheDataElseFetch(requestPriority: .medium, observeChanges: false),
             expectedNumberOfChanges: 1,
             expectFirstTriggerIsCacheResponse: true
@@ -309,24 +290,6 @@ struct RepositorySyncTests {
         TestArgument(
             initialPersistedObjectsIds: [],
             externalDataModelIds: ["5", "6", "7"],
-            expectedResponseDataModelIds: ["6"]
-        )
-    ])
-    @MainActor func returnCacheDataElseFetchIsTriggeredOnceWithSingleObjectWhenNoCacheDataExistsAndExternalDataIsFetchedAndNotObservingChanges(argument: TestArgument) async {
-        
-        await runTest(
-            argument: argument,
-            getObjectsType: .objectId(id: "6"),
-            cachePolicy: .returnCacheDataElseFetch(requestPriority: .medium, observeChanges: false),
-            expectedNumberOfChanges: 1,
-            expectFirstTriggerIsCacheResponse: false
-        )
-    }
-    
-    @Test(arguments: [
-        TestArgument(
-            initialPersistedObjectsIds: [],
-            externalDataModelIds: ["5", "6", "7"],
             expectedResponseDataModelIds: ["5", "6", "7"]
         )
     ])
@@ -335,24 +298,6 @@ struct RepositorySyncTests {
         await runTest(
             argument: argument,
             getObjectsType: .objects,
-            cachePolicy: .returnCacheDataElseFetch(requestPriority: .medium, observeChanges: true),
-            expectedNumberOfChanges: 2,
-            expectFirstTriggerIsCacheResponse: true
-        )
-    }
-    
-    @Test(arguments: [
-        TestArgument(
-            initialPersistedObjectsIds: [],
-            externalDataModelIds: ["5", "6", "7"],
-            expectedResponseDataModelIds: ["7"]
-        )
-    ])
-    @MainActor func returnCacheDataElseFetchIsTriggeredTwiceWithSingleObjectWhenNoCacheDataExistsAndExternalDataIsFetchedAndIsObservingChanges(argument: TestArgument) async {
-        
-        await runTest(
-            argument: argument,
-            getObjectsType: .objectId(id: "7"),
             cachePolicy: .returnCacheDataElseFetch(requestPriority: .medium, observeChanges: true),
             expectedNumberOfChanges: 2,
             expectFirstTriggerIsCacheResponse: true
@@ -380,25 +325,6 @@ struct RepositorySyncTests {
     
     @Test(arguments: [
         TestArgument(
-            initialPersistedObjectsIds: [],
-            externalDataModelIds: ["5", "6", "7", "9"],
-            expectedResponseDataModelIds: ["9"]
-        )
-    ])
-    @MainActor func returnCacheDataElseFetchIsTriggeredThreeTimesWithSingleObjectWhenCacheIsEmptyOnExternalDataFetchAndOnSecondaryExternalDataFetch(argument: TestArgument) async {
-        
-        await runTest(
-            argument: argument,
-            getObjectsType: .objectId(id: "9"),
-            cachePolicy: .returnCacheDataElseFetch(requestPriority: .medium, observeChanges: true),
-            expectedNumberOfChanges: 3,
-            expectFirstTriggerIsCacheResponse: true,
-            triggerSecondaryExternalDataFetchWithIds: ["9", "7"]
-        )
-    }
-        
-    @Test(arguments: [
-        TestArgument(
             initialPersistedObjectsIds: ["1", "2"],
             externalDataModelIds: ["3", "5", "4"],
             expectedResponseDataModelIds: ["1", "2", "7", "9"]
@@ -411,6 +337,86 @@ struct RepositorySyncTests {
             getObjectsType: .objects,
             cachePolicy: .returnCacheDataElseFetch(requestPriority: .medium, observeChanges: true),
             expectedNumberOfChanges: 2,
+            expectFirstTriggerIsCacheResponse: true,
+            triggerSecondaryExternalDataFetchWithIds: ["9", "7"]
+        )
+    }
+    
+    // MARK: - Test Cache Policy (Return Cache Data Else Fetch) - Object ID
+    
+    @Test(arguments: [
+        TestArgument(
+            initialPersistedObjectsIds: ["0", "1"],
+            externalDataModelIds: ["5", "6", "7", "8", "9"],
+            expectedResponseDataModelIds: ["1"]
+        ),
+        TestArgument(
+            initialPersistedObjectsIds: ["1", "2"],
+            externalDataModelIds: [],
+            expectedResponseDataModelIds: ["1"]
+        )
+    ])
+    @MainActor func returnCacheDataElseFetchIsTriggeredOnceWithSingleObjectWhenCacheDataAlreadyExists(argument: TestArgument) async {
+        
+        await runTest(
+            argument: argument,
+            getObjectsType: .objectId(id: "1"),
+            cachePolicy: .returnCacheDataElseFetch(requestPriority: .medium, observeChanges: false),
+            expectedNumberOfChanges: 1,
+            expectFirstTriggerIsCacheResponse: true
+        )
+    }
+    
+    @Test(arguments: [
+        TestArgument(
+            initialPersistedObjectsIds: [],
+            externalDataModelIds: ["5", "6", "7"],
+            expectedResponseDataModelIds: ["6"]
+        )
+    ])
+    @MainActor func returnCacheDataElseFetchIsTriggeredOnceWithSingleObjectWhenNoCacheDataExistsAndExternalDataIsFetchedAndNotObservingChanges(argument: TestArgument) async {
+        
+        await runTest(
+            argument: argument,
+            getObjectsType: .objectId(id: "6"),
+            cachePolicy: .returnCacheDataElseFetch(requestPriority: .medium, observeChanges: false),
+            expectedNumberOfChanges: 1,
+            expectFirstTriggerIsCacheResponse: false
+        )
+    }
+    
+    @Test(arguments: [
+        TestArgument(
+            initialPersistedObjectsIds: [],
+            externalDataModelIds: ["5", "6", "7"],
+            expectedResponseDataModelIds: ["7"]
+        )
+    ])
+    @MainActor func returnCacheDataElseFetchIsTriggeredTwiceWithSingleObjectWhenNoCacheDataExistsAndExternalDataIsFetchedAndIsObservingChanges(argument: TestArgument) async {
+        
+        await runTest(
+            argument: argument,
+            getObjectsType: .objectId(id: "7"),
+            cachePolicy: .returnCacheDataElseFetch(requestPriority: .medium, observeChanges: true),
+            expectedNumberOfChanges: 2,
+            expectFirstTriggerIsCacheResponse: true
+        )
+    }
+    
+    @Test(arguments: [
+        TestArgument(
+            initialPersistedObjectsIds: [],
+            externalDataModelIds: ["5", "6", "7", "9"],
+            expectedResponseDataModelIds: ["9"]
+        )
+    ])
+    @MainActor func returnCacheDataElseFetchIsTriggeredThreeTimesWithSingleObjectWhenCacheIsEmptyOnExternalDataFetchAndOnSecondaryExternalDataFetch(argument: TestArgument) async {
+        
+        await runTest(
+            argument: argument,
+            getObjectsType: .objectId(id: "9"),
+            cachePolicy: .returnCacheDataElseFetch(requestPriority: .medium, observeChanges: true),
+            expectedNumberOfChanges: 3,
             expectFirstTriggerIsCacheResponse: true,
             triggerSecondaryExternalDataFetchWithIds: ["9", "7"]
         )
@@ -435,7 +441,7 @@ struct RepositorySyncTests {
         )
     }
     
-    // MARK: - Test Cache Policy (Cache Data And Fetch)
+    // MARK: - Test Cache Policy (Cache Data And Fetch) - Objects
     
     @Test(arguments: [
         TestArgument(
@@ -486,24 +492,6 @@ struct RepositorySyncTests {
     @Test(arguments: [
         TestArgument(
             initialPersistedObjectsIds: ["0", "1"],
-            externalDataModelIds: ["3"],
-            expectedResponseDataModelIds: ["3"]
-        )
-    ])
-    @MainActor func returnCacheDataAndFetchWillTriggerTwiceWithSingleObjectWhenExternalDataExists(argument: TestArgument) async {
-        
-        await runTest(
-            argument: argument,
-            getObjectsType: .objectId(id: "3"),
-            cachePolicy: .returnCacheDataAndFetch(requestPriority: .medium),
-            expectedNumberOfChanges: 2,
-            expectFirstTriggerIsCacheResponse: true
-        )
-    }
-    
-    @Test(arguments: [
-        TestArgument(
-            initialPersistedObjectsIds: ["0", "1"],
             externalDataModelIds: ["2"],
             expectedResponseDataModelIds: ["0", "1", "2", "5", "9"]
         ),
@@ -522,6 +510,51 @@ struct RepositorySyncTests {
             expectedNumberOfChanges: 3,
             expectFirstTriggerIsCacheResponse: true,
             triggerSecondaryExternalDataFetchWithIds: ["9", "5"]
+        )
+    }
+    
+    // MARK: - Test Cache Policy (Cache Data And Fetch) - Object ID
+    
+    @Test(arguments: [
+        TestArgument(
+            initialPersistedObjectsIds: ["0", "1"],
+            externalDataModelIds: ["3"],
+            expectedResponseDataModelIds: ["3"]
+        )
+    ])
+    @MainActor func returnCacheDataAndFetchWillTriggerTwiceWithSingleObjectWhenExternalDataExists(argument: TestArgument) async {
+        
+        await runTest(
+            argument: argument,
+            getObjectsType: .objectId(id: "3"),
+            cachePolicy: .returnCacheDataAndFetch(requestPriority: .medium),
+            expectedNumberOfChanges: 2,
+            expectFirstTriggerIsCacheResponse: true
+        )
+    }
+    
+    @Test(arguments: [
+        TestArgument(
+            initialPersistedObjectsIds: ["0", "1"],
+            externalDataModelIds: [],
+            expectedResponseDataModelIds: ["3"]
+        ),
+        TestArgument(
+            initialPersistedObjectsIds: ["0", "1"],
+            externalDataModelIds: ["5"],
+            expectedResponseDataModelIds: ["3"]
+        )
+    ])
+    @MainActor func returnCacheDataAndFetchWillTriggerTwiceWithSingleObjectWhenAdditionalDataExists(argument: TestArgument) async {
+        
+        await runTest(
+            argument: argument,
+            getObjectsType: .objectId(id: "3"),
+            cachePolicy: .returnCacheDataAndFetch(requestPriority: .medium),
+            expectedNumberOfChanges: 2,
+            expectFirstTriggerIsCacheResponse: true,
+            triggerSecondaryExternalDataFetchWithIds: ["3"],
+            loggingEnabled: true
         )
     }
 }

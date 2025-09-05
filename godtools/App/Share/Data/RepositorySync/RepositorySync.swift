@@ -34,8 +34,8 @@ open class RepositorySync<DataModelType, ExternalDataFetchType: RepositorySyncEx
         return getCachedObjectToDataModel(primaryKey: id)
     }
     
-    func getCachedObjects(filter: NSPredicate? = nil) -> [DataModelType] {
-        return getCachedObjectsToDataModels(filter: filter)
+    func getCachedObjects(databaseQuery: RepositorySyncDatabaseQuery? = nil) -> [DataModelType] {
+        return getCachedObjectsToDataModels(databaseQuery: databaseQuery)
     }
 }
 
@@ -43,15 +43,15 @@ open class RepositorySync<DataModelType, ExternalDataFetchType: RepositorySyncEx
 
 extension RepositorySync {
     
-    private func getNumberOfCachedObjects(filter: NSPredicate? = nil) -> Int {
-        return getCachedResults(realm: realmDatabase.openRealm(), filter: filter).count
+    private func getNumberOfCachedObjects(databaseQuery: RepositorySyncDatabaseQuery? = nil) -> Int {
+        return getCachedResults(realm: realmDatabase.openRealm(), databaseQuery: databaseQuery).count
     }
     
-    private func getCachedResults(realm: Realm, filter: NSPredicate?) -> Results<RealmObjectType> {
+    private func getCachedResults(realm: Realm, databaseQuery: RepositorySyncDatabaseQuery?) -> Results<RealmObjectType> {
         
         let results = realm.objects(RealmObjectType.self)
         
-        if let filter = filter {
+        if let filter = databaseQuery?.filter {
             return results
                 .filter(filter)
         }
@@ -59,8 +59,8 @@ extension RepositorySync {
         return results
     }
     
-    private func getCachedObjectsToDataModels(filter: NSPredicate?) -> [DataModelType] {
-        let dataModels: [DataModelType] = getCachedResults(realm: realmDatabase.openRealm(), filter: filter).compactMap {
+    private func getCachedObjectsToDataModels(databaseQuery: RepositorySyncDatabaseQuery?) -> [DataModelType] {
+        let dataModels: [DataModelType] = getCachedResults(realm: realmDatabase.openRealm(), databaseQuery: databaseQuery).compactMap {
             self.dataModelMapping.toDataModel(persistObject: $0)
         }
         return dataModels
@@ -169,14 +169,14 @@ extension RepositorySync {
 
 extension RepositorySync {
     
-    private func getCachedDataModelsByGetObjectsType(getObjectsType: RepositorySyncGetObjectsType, filter: NSPredicate?) -> [DataModelType] {
+    private func getCachedDataModelsByGetObjectsType(getObjectsType: RepositorySyncGetObjectsType, databaseQuery: RepositorySyncDatabaseQuery?) -> [DataModelType] {
         
         let dataModels: [DataModelType]
         
         switch getObjectsType {
         
         case .objects:
-            dataModels = getCachedObjectsToDataModels(filter: filter)
+            dataModels = getCachedObjectsToDataModels(databaseQuery: databaseQuery)
         
         case .objectId(let id):
             if let dataModel = getCachedObjectToDataModel(primaryKey: id) {
@@ -190,11 +190,11 @@ extension RepositorySync {
         return dataModels
     }
     
-    private func getCachedDataModelsByGetObjectsTypeToResponse(getObjectsType: RepositorySyncGetObjectsType, filter: NSPredicate?) -> RepositorySyncResponse<DataModelType> {
+    private func getCachedDataModelsByGetObjectsTypeToResponse(getObjectsType: RepositorySyncGetObjectsType, databaseQuery: RepositorySyncDatabaseQuery?) -> RepositorySyncResponse<DataModelType> {
         
         let dataModels: [DataModelType] = getCachedDataModelsByGetObjectsType(
             getObjectsType: getObjectsType,
-            filter: filter
+            databaseQuery: databaseQuery
         )
         
         let response = RepositorySyncResponse<DataModelType>(
@@ -205,9 +205,9 @@ extension RepositorySync {
         return response
     }
     
-    private func getCachedDataModelsByGetObjectsTypeToResponsePublisher(getObjectsType: RepositorySyncGetObjectsType, filter: NSPredicate?) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
+    private func getCachedDataModelsByGetObjectsTypeToResponsePublisher(getObjectsType: RepositorySyncGetObjectsType, databaseQuery: RepositorySyncDatabaseQuery?) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
         
-        return Just(getCachedDataModelsByGetObjectsTypeToResponse(getObjectsType: getObjectsType, filter: filter))
+        return Just(getCachedDataModelsByGetObjectsTypeToResponse(getObjectsType: getObjectsType, databaseQuery: databaseQuery))
             .eraseToAnyPublisher()
     }
     
@@ -219,7 +219,7 @@ extension RepositorySync {
         -
      */
     
-    func getObjectsPublisher(getObjectsType: RepositorySyncGetObjectsType, cachePolicy: RepositorySyncCachePolicy, filter: NSPredicate? = nil, updatePolicy: Realm.UpdatePolicy = .modified) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
+    func getObjectsPublisher(getObjectsType: RepositorySyncGetObjectsType, cachePolicy: RepositorySyncCachePolicy, databaseQuery: RepositorySyncDatabaseQuery? = nil, updatePolicy: Realm.UpdatePolicy = .modified) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
         
         let realm: Realm = realmDatabase.openRealm()
         
@@ -236,7 +236,7 @@ extension RepositorySync {
             
                 let dataModels: [DataModelType] = self.getCachedDataModelsByGetObjectsType(
                     getObjectsType: getObjectsType,
-                    filter: filter
+                    databaseQuery: databaseQuery
                 )
                 
                 return response.copy(objects: dataModels)
@@ -254,7 +254,7 @@ extension RepositorySync {
                     
                     return self.getCachedDataModelsByGetObjectsTypeToResponse(
                         getObjectsType: getObjectsType,
-                        filter: filter
+                        databaseQuery: databaseQuery
                     )
                 }
                 .eraseToAnyPublisher()
@@ -263,7 +263,7 @@ extension RepositorySync {
                
                 return getCachedDataModelsByGetObjectsTypeToResponsePublisher(
                     getObjectsType: getObjectsType,
-                    filter: filter
+                    databaseQuery: databaseQuery
                 )
                 .eraseToAnyPublisher()
             }
@@ -272,7 +272,7 @@ extension RepositorySync {
             
             if observeChanges {
                         
-                let numberOfRealmObjects: Int = getCachedResults(realm: realm, filter: filter).count
+                let numberOfRealmObjects: Int = getCachedResults(realm: realm, databaseQuery: databaseQuery).count
                 
                 if numberOfRealmObjects == 0 {
                     
@@ -290,14 +290,14 @@ extension RepositorySync {
                     
                     return self.getCachedDataModelsByGetObjectsTypeToResponse(
                         getObjectsType: getObjectsType,
-                        filter: filter
+                        databaseQuery: databaseQuery
                     )
                 }
                 .eraseToAnyPublisher()
             }
             else {
                 
-                if getNumberOfCachedObjects(filter: filter) == 0 {
+                if getNumberOfCachedObjects(databaseQuery: databaseQuery) == 0 {
                     
                     return fetchAndStoreObjectsFromExternalDataFetchPublisher(
                         getObjectsType: getObjectsType,
@@ -308,7 +308,7 @@ extension RepositorySync {
                     
                         let dataModels: [DataModelType] = self.getCachedDataModelsByGetObjectsType(
                             getObjectsType: getObjectsType,
-                            filter: filter
+                            databaseQuery: databaseQuery
                         )
                         
                         return response.copy(objects: dataModels)
@@ -319,7 +319,7 @@ extension RepositorySync {
                     
                     return getCachedDataModelsByGetObjectsTypeToResponsePublisher(
                         getObjectsType: getObjectsType,
-                        filter: filter
+                        databaseQuery: databaseQuery
                     )
                     .eraseToAnyPublisher()
                 }
@@ -340,7 +340,7 @@ extension RepositorySync {
                 
                 return self.getCachedDataModelsByGetObjectsTypeToResponse(
                     getObjectsType: getObjectsType,
-                    filter: filter
+                    databaseQuery: databaseQuery
                 )
             }
             .eraseToAnyPublisher()
