@@ -22,7 +22,7 @@ class ArticlesViewModel: NSObject {
     private let downloadArticlesObservable: DownloadManifestArticlesObservable
     private let articleManifestAemRepository: ArticleManifestAemRepository
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
-    private let localizationServices: LocalizationServices
+    private let localizationServices: LocalizationServicesInterface
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
         
     private var cancellables: Set<AnyCancellable> = Set()
@@ -37,7 +37,7 @@ class ArticlesViewModel: NSObject {
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     @Published private var articleAemCacheObjects: [ArticleAemCacheObject] = Array()
     
-    init(flowDelegate: FlowDelegate, resource: ResourceModel, language: LanguageModel, category: GodToolsToolParser.Category, manifest: Manifest, downloadArticlesObservable: DownloadManifestArticlesObservable, articleManifestAemRepository: ArticleManifestAemRepository, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, localizationServices: LocalizationServices, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
+    init(flowDelegate: FlowDelegate, resource: ResourceModel, language: LanguageModel, category: GodToolsToolParser.Category, manifest: Manifest, downloadArticlesObservable: DownloadManifestArticlesObservable, articleManifestAemRepository: ArticleManifestAemRepository, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, localizationServices: LocalizationServicesInterface, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource

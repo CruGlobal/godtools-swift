@@ -14,12 +14,12 @@ import RequestOperation
 class ArticleManifestAemRepository: ArticleAemRepository {
     
     private let categoryArticlesCache: RealmCategoryArticlesCache
-    private let sharedUserDefaultsCache: SharedUserDefaultsCache
+    private let userDefaultsCache: UserDefaultsCacheInterface
         
-    init(downloader: ArticleAemDownloader, cache: ArticleAemCache, categoryArticlesCache: RealmCategoryArticlesCache, sharedUserDefaultsCache: SharedUserDefaultsCache) {
+    init(downloader: ArticleAemDownloader, cache: ArticleAemCache, categoryArticlesCache: RealmCategoryArticlesCache, userDefaultsCache: UserDefaultsCacheInterface) {
         
         self.categoryArticlesCache = categoryArticlesCache
-        self.sharedUserDefaultsCache = sharedUserDefaultsCache
+        self.userDefaultsCache = userDefaultsCache
         
         super.init(downloader: downloader, cache: cache)
     }
@@ -45,7 +45,7 @@ class ArticleManifestAemRepository: ArticleAemRepository {
         let syncInvalidator = SyncInvalidator(
             id: getSyncInvalidatorId(translationId: translationId),
             timeInterval: .days(day: 5),
-            userDefaultsCache: sharedUserDefaultsCache
+            userDefaultsCache: userDefaultsCache
         )
                 
         guard syncInvalidator.shouldSync || forceFetchFromRemote else {

@@ -17,7 +17,7 @@ class MobileContentAuthTokenAPI: MobileContentAuthTokenAPIInterface {
     private let requestSender: RequestSender
     private let baseURL: String
     
-    init(config: AppConfig, urlSessionPriority: URLSessionPriority, requestSender: RequestSender) {
+    init(config: AppConfigInterface, urlSessionPriority: URLSessionPriority, requestSender: RequestSender) {
         
         self.urlSessionPriority = urlSessionPriority
         self.requestSender = requestSender
@@ -45,10 +45,10 @@ class MobileContentAuthTokenAPI: MobileContentAuthTokenAPIInterface {
             
             attributes["apple_refresh_token"] = refreshToken
             attributes["create_user"] = nil // Will not provide create_user flag on apple refresh.
-                        
-        case .facebook(let accessToken):
             
-            attributes["facebook_access_token"] = accessToken
+        case .facebookLimitedLogin(let oidcToken):
+            
+            attributes["facebook_id_token"] = oidcToken
             
         case .google(let idToken):
             

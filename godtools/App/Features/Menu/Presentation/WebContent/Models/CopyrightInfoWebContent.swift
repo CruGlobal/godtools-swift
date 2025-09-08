@@ -16,7 +16,7 @@ struct CopyrightInfoWebContent: WebContentType {
     let analyticsScreenName: String = "Copyright Info"
     let analyticsSiteSection: String = "menu"
     
-    init(localizationServices: LocalizationServices) {
+    init(localizationServices: LocalizationServicesInterface) {
         
         navTitle = localizationServices.stringForSystemElseEnglish(key: "copyright_info")
     }

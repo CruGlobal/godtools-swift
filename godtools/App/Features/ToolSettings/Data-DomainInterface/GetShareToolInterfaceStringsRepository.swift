@@ -14,9 +14,9 @@ class GetShareToolInterfaceStringsRepository: GetShareToolInterfaceStringsReposi
     
     private let resourcesRepository: ResourcesRepository
     private let languagesRepository: LanguagesRepository
-    private let localizationServices: LocalizationServices
+    private let localizationServices: LocalizationServicesInterface
     
-    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, localizationServices: LocalizationServices) {
+    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, localizationServices: LocalizationServicesInterface) {
         
         self.resourcesRepository = resourcesRepository
         self.languagesRepository = languagesRepository

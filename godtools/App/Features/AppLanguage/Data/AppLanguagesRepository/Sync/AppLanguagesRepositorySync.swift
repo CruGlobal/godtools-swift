@@ -15,7 +15,7 @@ class AppLanguagesRepositorySync: AppLanguagesRepositorySyncInterface {
     private let cache: RealmAppLanguagesCache
     private let syncInvalidator: SyncInvalidator
     
-    init(api: AppLanguagesApi, cache: RealmAppLanguagesCache, userDefaultsCache: SharedUserDefaultsCache) {
+    init(api: AppLanguagesApi, cache: RealmAppLanguagesCache, userDefaultsCache: UserDefaultsCacheInterface) {
         
         self.api = api
         self.cache = cache

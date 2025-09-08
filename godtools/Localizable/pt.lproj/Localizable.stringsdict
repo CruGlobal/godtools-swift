@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+<key>toolDetails.toolVersion.numberOfLanguages</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@numberOfLanguages@</string>
+<key>numberOfLanguages</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>Idioma %d</string>
+<key>other</key>
+<string>Idiomas %d</string>
+</dict>
+</dict>
+<key>lessons.filter.lessonsAvailable</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@lessonCount@</string>
+<key>lessonCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>Sessões %d disponível</string>
+<key>other</key>
+<string>Sessōes %d disponível</string>
+</dict>
+</dict>
+<key>account.activity.toolOpens</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@toolCount@</string>
+<key>toolCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>Ferramenta abre</string>
+<key>other</key>
+<string>Ferramenta abres</string>
+</dict>
+</dict>
+<key>account.activity.lessonCompletions</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@lessonCount@</string>
+<key>lessonCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>Conclusões de liçõe</string>
+<key>other</key>
+<string>Conclusões de lições</string>
+</dict>
+</dict>
+<key>account.activity.screenShares</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@screenShareCount@</string>
+<key>screenShareCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>Compartilhamento de tela</string>
+<key>other</key>
+<string>Compartilhamentos de tela</string>
+</dict>
+</dict>
+<key>account.activity.linksShared</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@linkShareCount@</string>
+<key>linkShareCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>Link compartilhado</string>
+<key>other</key>
+<string>Links compartilhados</string>
+</dict>
+</dict>
+<key>account.activity.languagesUsed</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@languagesUsedCount@</string>
+<key>languagesUsedCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>Idioma usados</string>
+<key>other</key>
+<string>Idiomas usados</string>
+</dict>
+</dict>
+<key>account.activity.sessions</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@sessionCount@</string>
+<key>sessionCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>Sessõe</string>
+<key>other</key>
+<string>Sessões</string>
+</dict>
+</dict>
+<key>tools.filter.toolsAvailable</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@toolCount@</string>
+<key>toolCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>Ferramenta %d disponível</string>
+<key>other</key>
+<string>Ferramenta %d disponível</string>
+</dict>
+</dict>
+<key>languageSettings.appLanguage.numberAvailable</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@appLanguageCount@</string>
+<key>appLanguageCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>Idioma %d disponível</string>
+<key>other</key>
+<string>Idiomas %d disponível</string>
+</dict>
+</dict>
+<key>badges.imagesShared</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@imageCount@</string>
+<key>imageCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>Compartilhou 1 imagen</string>
+<key>other</key>
+<string>Compartilhou %d imagens</string>
+</dict>
+</dict>
+<key>badges.articlesOpened</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@articlesCount@</string>
+<key>articlesCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>%d artigo lidos</string>
+<key>other</key>
+<string>%d artigos lidos</string>
+</dict>
+</dict>
+<key>badges.lessonsCompleted</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@lessonsCount@</string>
+<key>lessonsCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>Concluiu 1 liçõe</string>
+<key>other</key>
+<string>Concluiu %d lições</string>
+</dict>
+</dict>
+<key>badges.toolsOpened</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@toolsCount@</string>
+<key>toolsCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>Abriu 1 ferramenta</string>
+<key>other</key>
+<string>Abriu %d ferramentas</string>
+</dict>
+</dict>
+<key>badges.tipsCompleted</key>
+<dict>
+<key>NSStringLocalizedFormatKey</key>
+<string>%#@tipsCount@</string>
+<key>tipsCount</key>
+<dict>
+<key>NSStringFormatSpecTypeKey</key>
+<string>NSStringPluralRuleType</string>
+<key>NSStringFormatValueTypeKey</key>
+<string>d</string>
+<key>one</key>
+<string>Concluiu 1 dica de treinamento</string>
+<key>other</key>
+<string>Concluiu %d dicas de treinamento</string>
+</dict>
+</dict>
+</dict>
+</plist>

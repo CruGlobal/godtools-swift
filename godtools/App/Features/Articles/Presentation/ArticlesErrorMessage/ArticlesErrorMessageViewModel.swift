@@ -15,7 +15,7 @@ class ArticlesErrorMessageViewModel {
     let message: String
     let downloadArticlesButtonTitle: String
     
-    init(appLanguage: AppLanguageDomainModel, localizationServices: LocalizationServices, message: String) {
+    init(appLanguage: AppLanguageDomainModel, localizationServices: LocalizationServicesInterface, message: String) {
         
         title = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.downloadError.key)
         self.message = message

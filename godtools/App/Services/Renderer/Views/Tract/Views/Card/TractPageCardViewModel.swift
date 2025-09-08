@@ -14,7 +14,7 @@ class TractPageCardViewModel: MobileContentViewModel {
     
     private let cardModel: TractPage.Card
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
-    private let localizationServices: LocalizationServices
+    private let localizationServices: LocalizationServicesInterface
     private let trainingTipsEnabled: Bool
     private let visibleAnalyticsEventsObjects: [MobileContentRendererAnalyticsEvent]
     private let numberOfVisbleCards: Int
@@ -25,7 +25,7 @@ class TractPageCardViewModel: MobileContentViewModel {
     let hidesNextButton: Bool
     let isHiddenCard: Bool
     
-    init(cardModel: TractPage.Card, renderedPageContext: MobileContentRenderedPageContext, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, mobileContentAnalytics: MobileContentRendererAnalytics, localizationServices: LocalizationServices, numberOfVisbleCards: Int, trainingTipsEnabled: Bool) {
+    init(cardModel: TractPage.Card, renderedPageContext: MobileContentRenderedPageContext, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, mobileContentAnalytics: MobileContentRendererAnalytics, localizationServices: LocalizationServicesInterface, numberOfVisbleCards: Int, trainingTipsEnabled: Bool) {
                         
         self.cardModel = cardModel
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
@@ -89,10 +89,10 @@ class TractPageCardViewModel: MobileContentViewModel {
     
     private func getTranslatedStringFromToolLanguageElseAppLanguage(localizedKey: String) -> String {
         
-        if let languageTranslation = localizationServices.stringsRepository.stringForLocale(localeIdentifier: renderedPageContext.language.localeId, key: localizedKey) {
+        if let languageTranslation = localizationServices.stringForLocale(localeIdentifier: renderedPageContext.language.localeId, key: localizedKey) {
             return languageTranslation
         }
-        else if let appLanguageTranslation = localizationServices.stringsRepository.stringForLocale(localeIdentifier: renderedPageContext.appLanguage, key: localizedKey) {
+        else if let appLanguageTranslation = localizationServices.stringForLocale(localeIdentifier: renderedPageContext.appLanguage, key: localizedKey) {
             return appLanguageTranslation
         }
         

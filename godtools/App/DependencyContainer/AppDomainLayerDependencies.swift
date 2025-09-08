@@ -19,19 +19,13 @@ class AppDomainLayerDependencies {
     
     func getAppUIDebuggingIsEnabledUseCase() -> GetAppUIDebuggingIsEnabledUseCase {
         return GetAppUIDebuggingIsEnabledUseCase(
-            appBuild: dataLayer.getAppBuild()
+            appConfig: dataLayer.getAppConfig()
         )
     }
     
     func getDisableOptInOnboardingBannerUseCase() -> DisableOptInOnboardingBannerUseCase {
         return DisableOptInOnboardingBannerUseCase(
             optInOnboardingBannerEnabledRepository: dataLayer.getOptInOnboardingBannerEnabledRepository()
-        )
-    }
-    
-    func getMenuInterfaceStringsUseCase() -> GetMenuInterfaceStringsUseCase {
-        return GetMenuInterfaceStringsUseCase(
-            getInterfaceStringsRepositoryInterface: dataLayer.getMenuInterfaceStringsRepositoryInterface()
         )
     }
     

@@ -108,7 +108,7 @@ struct OptInNotificationView_Preview: PreviewProvider {
 
     static func getOptInNotificationViewModel() -> OptInNotificationViewModel {
 
-        let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
+        let appDiContainer = AppDiContainer.createUITestsDiContainer()
 
         let viewModel = OptInNotificationViewModel(
             flowDelegate: MockFlowDelegate(),

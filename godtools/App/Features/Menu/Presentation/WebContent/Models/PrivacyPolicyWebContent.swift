@@ -16,7 +16,7 @@ struct PrivacyPolicyWebContent: WebContentType {
     let analyticsScreenName: String = "Privacy Policy"
     let analyticsSiteSection: String = "menu"
     
-    init(localizationServices: LocalizationServices) {
+    init(localizationServices: LocalizationServicesInterface) {
         
         navTitle = localizationServices.stringForSystemElseEnglish(key: "privacy_policy")
     }

@@ -12,9 +12,9 @@ import LocalizationServices
 
 class GetToolSettingsInterfaceStringsRepository: GetToolSettingsInterfaceStringsRepositoryInterface {
     
-    private let localizationServices: LocalizationServices
+    private let localizationServices: LocalizationServicesInterface
     
-    init(localizationServices: LocalizationServices) {
+    init(localizationServices: LocalizationServicesInterface) {
         
         self.localizationServices = localizationServices
     }

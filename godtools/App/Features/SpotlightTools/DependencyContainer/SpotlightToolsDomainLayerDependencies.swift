@@ -10,16 +10,16 @@ import Foundation
 
 class SpotlightToolsDomainLayerDependencies {
     
-    private let dataLayer: SpotlightToolsDataLayerDependencies
+    private let domainInterfaceLayer: SpotlightToolsDomainInterfaceDependencies
     
-    init(dataLayer: SpotlightToolsDataLayerDependencies) {
+    init(domainInterfaceLayer: SpotlightToolsDomainInterfaceDependencies) {
         
-        self.dataLayer = dataLayer
+        self.domainInterfaceLayer = domainInterfaceLayer
     }
     
     func getSpotlightToolsUseCase() -> GetSpotlightToolsUseCase {
         return GetSpotlightToolsUseCase(
-            getSpotlightToolsRepository: dataLayer.getSpotlightToolsRepository()
+            getSpotlightToolsRepository: domainInterfaceLayer.getSpotlightToolsRepository()
         )
     }
 }

@@ -17,32 +17,11 @@ class OnboardingDataLayerDependencies {
         self.coreDataLayer = coreDataLayer
     }
     
-    // MARK: - Data Layer Classes
-    
-    private func getOnboardingTutorialViewedRepository() -> OnboardingTutorialViewedRepository {
+    func getOnboardingTutorialViewedRepository() -> OnboardingTutorialViewedRepositoryInterface {
         return OnboardingTutorialViewedRepository(
-            cache: OnboardingTutorialViewedUserDefaultsCache(sharedUserDefaultsCache: coreDataLayer.getSharedUserDefaultsCache())
-        )
-    }
-    
-    // MARK: - Domain Interface
-    
-    func getOnboardingTutorialInterfaceStringsRepositoryInterface() -> GetOnboardingTutorialInterfaceStringsRepositoryInterface {
-        return GetOnboardingTutorialInterfaceStringsRepository(
-            localizationServices: coreDataLayer.getLocalizationServices()
-        )
-    }
-    
-    func getOnboardingTutorialIsAvailable() -> GetOnboardingTutorialIsAvailableInterface {
-        return GetOnboardingTutorialIsAvailable(
-            launchCountRepository: coreDataLayer.getSharedLaunchCountRepository(),
-            onboardingTutorialViewedRepository: getOnboardingTutorialViewedRepository()
-        )
-    }
-    
-    func getStoreOnboardingTutorialViewedRepositoryInterface() -> StoreOnboardingTutorialViewedRepositoryInterface {
-        return StoreOnboardingTutorialViewedRepository(
-            onboardingTutorialViewedRepository: getOnboardingTutorialViewedRepository()
+            cache: OnboardingTutorialViewedUserDefaultsCache(
+                userDefaultsCache: coreDataLayer.getUserDefaultsCache()
+            )
         )
     }
 }

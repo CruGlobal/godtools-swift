@@ -86,6 +86,19 @@ class MockLocalizationServices: LocalizationServicesInterface {
         )
     }
     
+    func stringForLocale(localeIdentifier: String?, key: String) -> String? {
+        
+        guard let localeIdentifier = localeIdentifier else {
+            return ""
+        }
+        
+        guard let localizedStrings = localizableStrings[localeIdentifier] else {
+            return ""
+        }
+        
+        return localizedStrings[key]
+    }
+    
     func stringForEnglish(key: String) -> String {
         
         return stringForLocaleElseEnglish(localeIdentifier: "en", key: key)

@@ -12,10 +12,10 @@ import LocalizationServices
 
 class GetConfirmAppLanguageInterfaceStringsRepository: GetConfirmAppLanguageInterfaceStringsRepositoryInterface {
     
-    private let localizationServices: LocalizationServices
+    private let localizationServices: LocalizationServicesInterface
     private let getTranslatedLanguageName: GetTranslatedLanguageName
     
-    init(localizationServices: LocalizationServices, getTranslatedLanguageName: GetTranslatedLanguageName) {
+    init(localizationServices: LocalizationServicesInterface, getTranslatedLanguageName: GetTranslatedLanguageName) {
         
         self.localizationServices = localizationServices
         self.getTranslatedLanguageName = getTranslatedLanguageName

@@ -96,7 +96,7 @@ struct LessonCardView_Previews: PreviewProvider {
     
     static var previews: some View {
         
-        let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
+        let appDiContainer = AppDiContainer.createUITestsDiContainer()
         
         let lessonListItem = LessonListItemDomainModel(
             analyticsToolName: "",
