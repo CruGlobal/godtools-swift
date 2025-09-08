@@ -28,7 +28,7 @@ class GetFeaturedLessonsRepository: GetFeaturedLessonsRepositoryInterface {
     
     func getFeaturedLessonsPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[FeaturedLessonDomainModel], Never> {
         
-        let appLanguageModel: LanguageDataModel? = languagesRepository.getLanguage(code: appLanguage)
+        let appLanguageModel: LanguageDataModel? = languagesRepository.getCachedLanguage(code: appLanguage)
         
         return Publishers.CombineLatest(
             resourcesRepository.getResourcesChangedPublisher(),

@@ -81,7 +81,7 @@ extension GetLessonsListRepository {
     
     private func getToolLanguageAvailability(appLanguage: AppLanguageDomainModel, filterLanguageModel: LanguageDataModel?, resource: ResourceModel) -> ToolLanguageAvailabilityDomainModel {
 
-        if let appLanguageModel = languagesRepository.getLanguage(code: appLanguage) {
+        if let appLanguageModel = languagesRepository.getCachedLanguage(code: appLanguage) {
             
             let language: LanguageDataModel
             

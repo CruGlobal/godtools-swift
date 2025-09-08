@@ -442,7 +442,7 @@ extension TractViewModel {
                 pagePositions: pagePositions
             )
         }
-        else if remoteLocaleExists && (remoteLocaleExistsInNavBarLanguages == false), let remoteLocale = remoteLocale, let remoteLanguage = languagesRepository.getLanguage(code: remoteLocale) {
+        else if remoteLocaleExists && (remoteLocaleExistsInNavBarLanguages == false), let remoteLocale = remoteLocale, let remoteLanguage = languagesRepository.getCachedLanguage(code: remoteLocale) {
             
             super.setRendererPrimaryLanguage(
                 primaryLanguageId: remoteLanguage.id,

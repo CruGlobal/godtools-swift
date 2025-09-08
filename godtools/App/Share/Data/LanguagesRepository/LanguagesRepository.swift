@@ -28,24 +28,27 @@ class LanguagesRepository: RepositorySync<LanguageDataModel, MobileContentLangua
         )
     }
     
-    func getLanguage(code: BCP47LanguageIdentifier) -> LanguageDataModel? {
-        return cache.getLanguage(code: code)
+    func getCachedLanguage(code: BCP47LanguageIdentifier) -> LanguageDataModel? {
+        return getCachedObjects(
+            databaseQuery: RepositorySyncDatabaseQuery.filter(
+                filter: NSPredicate(format: "\(#keyPath(RealmLanguage.code)) == [c] %@", code.lowercased())
+            )
+        ).first
     }
     
-    func getLanguages(ids: [String]) -> [LanguageDataModel] {
-        return cache.getLanguages(ids: ids)
+    func getCachedLanguages(languageCodes: [String]) -> [LanguageDataModel] {
+        return languageCodes.compactMap({ getCachedLanguage(code: $0) })
     }
     
-    func getLanguages(languageCodes: [BCP47LanguageIdentifier]) -> [LanguageDataModel] {
-        return cache.getLanguages(languageCodes: languageCodes)
-    }
-    
-    func getLanguages(realm: Realm? = nil) -> [LanguageDataModel] {
-        return cache.getLanguages(realm: realm)
-    }
-    
-    func getLanguagesPublisher() -> AnyPublisher<[LanguageDataModel], Never> {
-        return cache.getLanguagesPublisher()
+    func getCachedLanguages(ids: [String]) -> [LanguageDataModel] {
+        return getCachedObjects(
+            databaseQuery: RepositorySyncDatabaseQuery.filter(
+                filter: NSPredicate(format: "\(#keyPath(RealmLanguage.id)) IN %@", ids)
+            )
+        )
+        .map {
+            LanguageDataModel(interface: $0)
+        }
     }
     
     func syncLanguagesFromRemote(requestPriority: RequestPriority) -> AnyPublisher<RealmLanguagesCacheSyncResult, Error> {

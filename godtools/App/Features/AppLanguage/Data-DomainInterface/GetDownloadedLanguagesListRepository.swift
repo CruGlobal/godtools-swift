@@ -36,7 +36,7 @@ class GetDownloadedLanguagesListRepository: GetDownloadedLanguagesListRepository
             
             let downloadedLanguageIds = downloadedLanguageDataModels.map { $0.languageId }
             
-            return self.languagesRepository.getLanguages(ids: downloadedLanguageIds).map { language in
+            return self.languagesRepository.getCachedLanguages(ids: downloadedLanguageIds).map { language in
                 
                 let languageNameInOwnLanguage = self.getTranslatedLanguageName.getLanguageName(
                     language: language,
