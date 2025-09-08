@@ -26,15 +26,15 @@ open class RepositorySync<DataModelType, ExternalDataFetchType: RepositorySyncEx
         self.dataModelMapping = dataModelMapping
     }
     
-    var numberOfCachedObjects: Int {
+    public var numberOfCachedObjects: Int {
         return getNumberOfCachedObjects()
     }
     
-    func getCachedObject(id: String) -> DataModelType? {
+    public func getCachedObject(id: String) -> DataModelType? {
         return getCachedObjectToDataModel(primaryKey: id)
     }
     
-    func getCachedObjects(databaseQuery: RepositorySyncDatabaseQuery? = nil) -> [DataModelType] {
+    public func getCachedObjects(databaseQuery: RepositorySyncDatabaseQuery? = nil) -> [DataModelType] {
         return getCachedObjectsToDataModels(databaseQuery: databaseQuery)
     }
 }
@@ -226,7 +226,7 @@ extension RepositorySync {
         -
      */
     
-    func getObjectsPublisher(getObjectsType: RepositorySyncGetObjectsType, cachePolicy: RepositorySyncCachePolicy, updatePolicy: Realm.UpdatePolicy = .modified) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
+    public func getObjectsPublisher(getObjectsType: RepositorySyncGetObjectsType, cachePolicy: RepositorySyncCachePolicy, updatePolicy: Realm.UpdatePolicy = .modified) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
         
         let realm: Realm = realmDatabase.openRealm()
         
