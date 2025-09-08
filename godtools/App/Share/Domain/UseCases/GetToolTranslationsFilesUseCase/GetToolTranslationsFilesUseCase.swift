@@ -183,7 +183,7 @@ class GetToolTranslationsFilesUseCase {
         
         return languagesRepository
             .syncLanguagesFromRemote(requestPriority: Self.defaultRequestPriority)
-            .flatMap({ (languagesSynced: RealmLanguagesCacheSyncResult) -> AnyPublisher<Void, Error> in
+            .flatMap({ (languagesResponse: RepositorySyncResponse<LanguageDataModel>) -> AnyPublisher<Void, Error> in
                 
                 self.syncResourcesPublisher(resourceNeeded: resourceNeeded)
                     .eraseToAnyPublisher()

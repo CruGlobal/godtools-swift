@@ -140,7 +140,7 @@ class ToolDownloader {
         
         let downloadArticlesRequests: [AnyPublisher<Void, Error>] = translations.compactMap { (translation: TranslationModel) in
             
-            guard let languageCode = translation.language?.localeId else {
+            guard let languageCode = translation.language?.code else {
                 return nil
             }
             

@@ -192,10 +192,12 @@ class ResourcesRepository {
         
         return Publishers
             .CombineLatest(
-                languagesRepository.syncLanguagesFromRemote(requestPriority: requestPriority),
+                languagesRepository
+                    .syncLanguagesFromRemote(requestPriority: requestPriority)
+                    .setFailureType(to: Error.self),
                 api.getResourcesPlusLatestTranslationsAndAttachments(requestPriority: requestPriority)
             )
-            .flatMap({ (languagesSyncResult: RealmLanguagesCacheSyncResult, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> in
+            .flatMap({ (languagesResponse: RepositorySyncResponse<LanguageDataModel>, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> in
                 
                 return self.cache.syncResources(
                     resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments,

@@ -179,14 +179,8 @@ class AppDataLayerDependencies {
             requestSender: getRequestSender()
         )
         
-        let cache = RealmLanguagesCache(
-            realmDatabase: sharedRealmDatabase,
-            languagesSync: RealmLanguagesCacheSync(realmDatabase: sharedRealmDatabase)
-        )
-        
         return LanguagesRepository(
             api: api,
-            cache: cache,
             realmDatabase: sharedRealmDatabase
         )
     }
