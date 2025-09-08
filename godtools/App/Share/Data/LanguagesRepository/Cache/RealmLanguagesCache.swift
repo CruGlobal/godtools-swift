@@ -27,13 +27,6 @@ class RealmLanguagesCache {
             .count
     }
     
-    func getLanguagesChanged() -> AnyPublisher<Void, Never> {
-        return realmDatabase.openRealm()
-            .objects(RealmLanguage.self)
-            .objectWillChange
-            .eraseToAnyPublisher()
-    }
-    
     func getLanguage(id: String) -> LanguageDataModel? {
         
         guard let realmLanguage = realmDatabase.openRealm()
