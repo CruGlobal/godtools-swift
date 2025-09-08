@@ -53,7 +53,7 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
                 
                 let nameLanguageDirection: LanguageDirectionDomainModel
                 if let filterLanguageModel = filterLanguageModel {
-                    nameLanguageDirection = filterLanguageModel.getLanguageDirection()
+                    nameLanguageDirection = filterLanguageModel.languageDirectionDomainModel
                 } else {
                     nameLanguageDirection = .leftToRight
                 }

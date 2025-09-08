@@ -54,7 +54,7 @@ class GetFeaturedLessonsRepository: GetFeaturedLessonsRepositoryInterface {
                 let nameLanguageDirection: LanguageDirectionDomainModel
                 
                 if let filterLanguageModel = appLanguageModel {
-                    nameLanguageDirection = filterLanguageModel.getLanguageDirection()
+                    nameLanguageDirection = filterLanguageModel.languageDirectionDomainModel
                 } else {
                     nameLanguageDirection = .leftToRight
                 }

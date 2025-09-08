@@ -21,7 +21,7 @@ class TractPageCallToActionViewModel: MobileContentViewModel {
     }
     
     override var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
-        return UISemanticContentAttribute.from(languageDirection: renderedPageContext.primaryRendererLanguage.getLanguageDirection())
+        return UISemanticContentAttribute.from(languageDirection: renderedPageContext.primaryRendererLanguage.languageDirectionDomainModel)
     }
     
     var title: String? {

@@ -106,7 +106,7 @@ class MobileContentPageViewModel: MobileContentViewModel {
         return MobileContentBackgroundImageViewModel(
             backgroundImageModel: backgroundImageModel,
             manifestResourcesCache: renderedPageContext.resourcesCache,
-            languageDirection: renderedPageContext.language.getLanguageDirection()
+            languageDirection: renderedPageContext.language.languageDirectionDomainModel
         )
     }
     

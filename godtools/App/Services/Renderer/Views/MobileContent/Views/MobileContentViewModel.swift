@@ -54,7 +54,7 @@ class MobileContentViewModel: NSObject {
     }
     
     var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
-        return UISemanticContentAttribute.from(languageDirection: renderedPageContext.language.getLanguageDirection())
+        return UISemanticContentAttribute.from(languageDirection: renderedPageContext.language.languageDirectionDomainModel)
     }
     
     func viewDidAppear(visibleAnalyticsEvents: [MobileContentRendererAnalyticsEvent]) {

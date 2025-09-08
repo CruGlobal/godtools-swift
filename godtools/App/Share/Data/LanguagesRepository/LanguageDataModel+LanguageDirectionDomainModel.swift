@@ -8,7 +8,7 @@
 
 extension LanguageDataModel {
     
-    func getLanguageDirection() -> LanguageDirectionDomainModel {
+    var languageDirectionDomainModel: LanguageDirectionDomainModel {
         switch direction {
         case .leftToRight:
             return .leftToRight

@@ -207,7 +207,7 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
     }
     
     override var layoutDirection: UISemanticContentAttribute {
-        return UISemanticContentAttribute.from(languageDirection: renderer.value.languages.primaryLanguage.getLanguageDirection())
+        return UISemanticContentAttribute.from(languageDirection: renderer.value.languages.primaryLanguage.languageDirectionDomainModel)
     }
     
     func setRendererPrimaryLanguage(primaryLanguageId: String, parallelLanguageId: String?, selectedLanguageId: String?) {
