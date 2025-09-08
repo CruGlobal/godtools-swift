@@ -1,5 +1,5 @@
 //
-//  LanguageModel+TranslatableLanguage.swift
+//  LanguageCodable+TranslatableLanguage.swift
 //  godtools
 //
 //  Created by Levi Eggert on 12/14/23.
@@ -9,7 +9,7 @@
 import Foundation
 
 @available(*, deprecated) // TODO: GT-1887 Remove and use LanguageDataModel. ~Levi
-extension LanguageModel: TranslatableLanguage {
+extension LanguageCodable: TranslatableLanguage {
     
     var localeId: BCP47LanguageIdentifier {
         return code

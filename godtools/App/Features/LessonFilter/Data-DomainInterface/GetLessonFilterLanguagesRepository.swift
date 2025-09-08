@@ -69,7 +69,7 @@ extension GetLessonFilterLanguagesRepository {
     private func createLessonLanguageFilterDomainModelList(from languageIds: [String], translatedInAppLanguage: AppLanguageDomainModel) -> [LessonFilterLanguageDomainModel] {
         
         let languages: [LessonFilterLanguageDomainModel] = languagesRepository.getLanguages(ids: languageIds)
-            .compactMap { (languageModel: LanguageModel) in
+            .compactMap { (languageModel: LanguageDataModel) in
                 
                 let lessonsAvailableCount: Int = resourcesRepository.getAllLessonsCount(filterByLanguageId: languageModel.id)
                 
@@ -90,7 +90,7 @@ extension GetLessonFilterLanguagesRepository {
         return languages
     }
     
-    private func createLessonLanguageFilterDomainModel(with languageModel: LanguageModel, translatedInAppLanguage: AppLanguageDomainModel) -> LessonFilterLanguageDomainModel? {
+    private func createLessonLanguageFilterDomainModel(with languageModel: LanguageDataModel, translatedInAppLanguage: AppLanguageDomainModel) -> LessonFilterLanguageDomainModel? {
         
         let lessonsAvailableCount: Int = resourcesRepository.getAllLessonsCount(filterByLanguageId: languageModel.id)
 

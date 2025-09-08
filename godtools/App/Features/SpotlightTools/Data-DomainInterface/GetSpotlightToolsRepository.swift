@@ -32,7 +32,7 @@ class GetSpotlightToolsRepository: GetSpotlightToolsRepositoryInterface {
     
     func getSpotlightToolsPublisher(translatedInAppLanguage: AppLanguageDomainModel, languageIdForAvailabilityText: String?) -> AnyPublisher<[SpotlightToolListItemDomainModel], Never> {
         
-        let languageForAvailabilityTextModel: LanguageModel?
+        let languageForAvailabilityTextModel: LanguageDataModel?
         
         if let languageForAvailabilityTextId = languageIdForAvailabilityText {
             languageForAvailabilityTextModel = languagesRepository.getLanguage(id: languageForAvailabilityTextId)

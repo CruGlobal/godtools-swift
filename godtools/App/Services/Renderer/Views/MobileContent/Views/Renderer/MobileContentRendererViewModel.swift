@@ -31,7 +31,7 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
     private(set) var toolSettingsObserver: ToolSettingsObserver?
         
     @Published private(set) var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
-    @Published private(set) var languages: [LanguageModel] = Array()
+    @Published private(set) var languages: [LanguageDataModel] = Array()
     @Published private(set) var languageNames: [String] = Array()
     @Published private(set) var selectedLanguageIndex: Int
     
@@ -67,9 +67,9 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
             $appLanguage.dropFirst()
         )
         .receive(on: DispatchQueue.main)
-        .sink { [weak self] (languages: [LanguageModel], appLanguage: AppLanguageDomainModel) in
+        .sink { [weak self] (languages: [LanguageDataModel], appLanguage: AppLanguageDomainModel) in
             
-            self?.languageNames = languages.map({ (language: LanguageModel) in
+            self?.languageNames = languages.map({ (language: LanguageDataModel) in
                 getTranslatedLanguageName.getLanguageName(language: language, translatedInLanguage: appLanguage)
             })
         }
@@ -89,7 +89,7 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
         return renderer.value.resource
     }
     
-    func getSelectedLanguage() -> LanguageModel? {
+    func getSelectedLanguage() -> LanguageDataModel? {
         
         guard selectedLanguageIndex >= 0 && selectedLanguageIndex < languages.count else {
             return nil
@@ -207,7 +207,7 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
     }
     
     override var layoutDirection: UISemanticContentAttribute {
-        return UISemanticContentAttribute.from(languageDirection: LanguageDirectionDomainModel(languageModel: renderer.value.languages.primaryLanguage))
+        return UISemanticContentAttribute.from(languageDirection: renderer.value.languages.primaryLanguage.getLanguageDirection())
     }
     
     func setRendererPrimaryLanguage(primaryLanguageId: String, parallelLanguageId: String?, selectedLanguageId: String?) {
@@ -643,7 +643,7 @@ extension MobileContentRendererViewModel {
         for pageRenderer in renderer.value.pageRenderers {
             
             let resource: ResourceModel = pageRenderer.resource
-            let language: LanguageModel = pageRenderer.language
+            let language: LanguageDataModel = pageRenderer.language
             let currentTranslation: TranslationModel = pageRenderer.translation
             
             guard let latestTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageId: language.id) else {
@@ -679,7 +679,7 @@ extension MobileContentRendererViewModel {
                 for pageRenderer in currentRenderer.pageRenderers {
                     
                     let resource: ResourceModel = pageRenderer.resource
-                    let language: LanguageModel = pageRenderer.language
+                    let language: LanguageDataModel = pageRenderer.language
                     let currentTranslation: TranslationModel = pageRenderer.translation
                     
                     let updatedManifest: Manifest
@@ -729,7 +729,7 @@ extension MobileContentRendererViewModel {
         )
     }
     
-    private func countLanguageUsageIfLanguageChanged(updatedLanguage: LanguageModel) {
+    private func countLanguageUsageIfLanguageChanged(updatedLanguage: LanguageDataModel) {
         
         let updatedLocaleId = updatedLanguage.localeId
         let languageChanged: Bool = currentPageRenderer.value.language.localeId != updatedLocaleId

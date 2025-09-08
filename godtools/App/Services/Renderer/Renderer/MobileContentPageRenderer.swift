@@ -18,7 +18,7 @@ class MobileContentPageRenderer {
     let appLanguage: AppLanguageDomainModel
     let rendererLanguages: MobileContentRendererLanguages
     let manifest: Manifest
-    let language: LanguageModel
+    let language: LanguageDataModel
     let translation: TranslationModel
     let manifestResourcesCache: MobileContentRendererManifestResourcesCache
     let viewRenderer: MobileContentViewRenderer
@@ -80,7 +80,7 @@ class MobileContentPageRenderer {
     
     // MARK: - Page Renderering
     
-    private func getRenderedPageContext(pageModel: Page, page: Int, numberOfPages: Int, parentPageParams: MobileContentParentPageParams?, window: UIViewController, safeArea: UIEdgeInsets, manifest: Manifest, manifestResourcesCache: MobileContentRendererManifestResourcesCache, resource: ResourceModel, language: LanguageModel, translation: TranslationModel, viewRenderer: MobileContentViewRenderer, rendererLanguages: MobileContentRendererLanguages, sharedState: State, trainingTipsEnabled: Bool, userInfo: [String: Any]?) -> MobileContentRenderedPageContext {
+    private func getRenderedPageContext(pageModel: Page, page: Int, numberOfPages: Int, parentPageParams: MobileContentParentPageParams?, window: UIViewController, safeArea: UIEdgeInsets, manifest: Manifest, manifestResourcesCache: MobileContentRendererManifestResourcesCache, resource: ResourceModel, language: LanguageDataModel, translation: TranslationModel, viewRenderer: MobileContentViewRenderer, rendererLanguages: MobileContentRendererLanguages, sharedState: State, trainingTipsEnabled: Bool, userInfo: [String: Any]?) -> MobileContentRenderedPageContext {
         
         let renderedPageContext = MobileContentRenderedPageContext(
             pageModel: pageModel,

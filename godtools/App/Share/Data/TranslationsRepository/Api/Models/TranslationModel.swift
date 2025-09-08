@@ -23,7 +23,7 @@ struct TranslationModel: TranslationModelType, Codable {
     let version: Int
     
     let resource: ResourceModel?
-    let language: LanguageModel?
+    let language: LanguageCodable?
     
     enum RootKeys: String, CodingKey {
         case id = "id"
@@ -107,7 +107,7 @@ struct TranslationModel: TranslationModelType, Codable {
         resource = try resourceContainer?.decodeIfPresent(ResourceModel.self, forKey: .data)
                 
         // relationships - language
-        language = try languageContainer?.decodeIfPresent(LanguageModel.self, forKey: .data)
+        language = try languageContainer?.decodeIfPresent(LanguageCodable.self, forKey: .data)
     }
 }
 
@@ -117,7 +117,7 @@ extension TranslationModel {
         return resource
     }
     
-    func getLanguage() -> LanguageModel? {
+    func getLanguage() -> LanguageCodable? {
         return language
     }
 }

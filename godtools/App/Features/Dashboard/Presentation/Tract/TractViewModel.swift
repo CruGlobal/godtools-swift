@@ -130,14 +130,14 @@ class TractViewModel: MobileContentRendererViewModel {
         return resource.abbreviation
     }
         
-    private var parallelLanguage: LanguageModel? {
+    private var parallelLanguage: LanguageDataModel? {
         if renderer.value.pageRenderers.count > 1 {
             return renderer.value.pageRenderers[1].language
         }
         return nil
     }
     
-    private func getPageRenderer(language: LanguageModel) -> MobileContentPageRenderer? {
+    private func getPageRenderer(language: LanguageDataModel) -> MobileContentPageRenderer? {
         
         let languageLocaleId: String = language.localeId.lowercased()
         
@@ -164,10 +164,10 @@ class TractViewModel: MobileContentRendererViewModel {
             .store(in: &Self.backgroundCancellables)
     }
     
-    private func trackLanguageTapped(tappedLanguage: LanguageModel) {
+    private func trackLanguageTapped(tappedLanguage: LanguageDataModel) {
         
-        let primaryLanguage: LanguageModel = languages[0]
-        let parallelLanguage: LanguageModel? = languages[safe: 1]
+        let primaryLanguage: LanguageDataModel = languages[0]
+        let parallelLanguage: LanguageDataModel? = languages[safe: 1]
                 
         let trackTappedLanguageData: [String: Any] = [
             AnalyticsConstants.Keys.contentLanguageSecondary: parallelLanguage?.localeId ?? "",
@@ -281,7 +281,7 @@ extension TractViewModel {
     
     func languageTapped(index: Int, page: Int, pagePositions: TractPagePositions) {
                 
-        let tappedLanguage: LanguageModel = languages[index]
+        let tappedLanguage: LanguageDataModel = languages[index]
         
         if let pageRenderer = getPageRenderer(language: tappedLanguage) {
             setPageRenderer(pageRenderer: pageRenderer, navigationEvent: nil, pagePositions: pagePositions)
@@ -382,11 +382,11 @@ extension TractViewModel {
         
         let pagePositions: MobileContentViewPositionState? = TractPagePositions(cardPosition: cardPosition)
         
-        let navBarLanguages: [LanguageModel] = languages
-        let currentNavBarLanguage: LanguageModel = languages[selectedLanguageIndex]
+        let navBarLanguages: [LanguageDataModel] = languages
+        let currentNavBarLanguage: LanguageDataModel = languages[selectedLanguageIndex]
         
         let remoteLocale: String?
-        let remoteLocaleNavBarLanguage: LanguageModel?
+        let remoteLocaleNavBarLanguage: LanguageDataModel?
         let remoteLocaleNavBarLanguageIndex: Int?
         let remoteLocaleExists: Bool
         let remoteLocaleExistsInNavBarLanguages: Bool?

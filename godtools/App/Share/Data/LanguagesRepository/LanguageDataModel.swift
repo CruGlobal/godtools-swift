@@ -27,3 +27,21 @@ struct LanguageDataModel: LanguageDataModelInterface {
         self.forceLanguageName = interface.forceLanguageName
     }
 }
+
+extension LanguageDataModel: Equatable {
+    static func == (this: LanguageDataModel, that: LanguageDataModel) -> Bool {
+        return this.id == that.id
+    }
+}
+
+extension LanguageDataModel {
+    
+    enum LanguageDirection {
+        case leftToRight
+        case rightToLeft
+    }
+    
+    var direction: LanguageDataModel.LanguageDirection {
+        return directionString == "rtl" ? .rightToLeft : .leftToRight
+    }
+}

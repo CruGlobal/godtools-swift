@@ -34,7 +34,7 @@ class RealmLanguagesCache {
             .eraseToAnyPublisher()
     }
     
-    func getLanguage(id: String) -> LanguageModel? {
+    func getLanguage(id: String) -> LanguageDataModel? {
         
         guard let realmLanguage = realmDatabase.openRealm()
             .object(ofType: RealmLanguage.self, forPrimaryKey: id) else {
@@ -42,10 +42,10 @@ class RealmLanguagesCache {
             return nil
         }
         
-        return LanguageModel(model: realmLanguage)
+        return LanguageDataModel(interface: realmLanguage)
     }
     
-    func getLanguage(code: String) -> LanguageModel? {
+    func getLanguage(code: String) -> LanguageDataModel? {
                 
         guard let realmLanguage = realmDatabase.openRealm()
             .objects(RealmLanguage.self).filter(NSPredicate(format: "code".appending(" = [c] %@"), code.lowercased()))
@@ -54,43 +54,43 @@ class RealmLanguagesCache {
             return nil
         }
         
-        return LanguageModel(model: realmLanguage)
+        return LanguageDataModel(interface: realmLanguage)
     }
     
-    func getLanguages(ids: [String]) -> [LanguageModel] {
+    func getLanguages(ids: [String]) -> [LanguageDataModel] {
         
         return realmDatabase.openRealm()
             .objects(RealmLanguage.self)
             .filter("id IN %@", ids)
             .map {
-                LanguageModel(model: $0)
+                LanguageDataModel(interface: $0)
             }
     }
     
-    func getLanguages(languageCodes: [String]) -> [LanguageModel] {
+    func getLanguages(languageCodes: [String]) -> [LanguageDataModel] {
     
         return languageCodes.compactMap({ getLanguage(code: $0) })
     }
     
-    func getLanguages(realm: Realm? = nil) -> [LanguageModel] {
+    func getLanguages(realm: Realm? = nil) -> [LanguageDataModel] {
         
         let realmInstance: Realm = realm ?? realmDatabase.openRealm()
         
         return realmInstance.objects(RealmLanguage.self)
-            .map({LanguageModel(model: $0)})
+            .map({LanguageDataModel(interface: $0)})
     }
     
-    func getLanguagesPublisher() -> AnyPublisher<[LanguageModel], Never> {
+    func getLanguagesPublisher() -> AnyPublisher<[LanguageDataModel], Never> {
         
         return realmDatabase.readObjectsPublisher { (results: Results<RealmLanguage>) in
             results.map({
-                LanguageModel(model: $0)
+                LanguageDataModel(interface: $0)
             })
         }
         .eraseToAnyPublisher()
     }
         
-    func syncLanguages(languages: [LanguageModel]) -> AnyPublisher<RealmLanguagesCacheSyncResult, Error> {
+    func syncLanguages(languages: [LanguageCodable]) -> AnyPublisher<RealmLanguagesCacheSyncResult, Error> {
 
         return languagesSync.syncLanguages(languages: languages)
     }

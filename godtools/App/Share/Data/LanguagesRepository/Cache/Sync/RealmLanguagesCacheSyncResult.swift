@@ -10,5 +10,5 @@ import Foundation
 
 struct RealmLanguagesCacheSyncResult {
         
-    let languagesRemoved: [LanguageModel]
+    let languagesRemoved: [LanguageCodable]
 }

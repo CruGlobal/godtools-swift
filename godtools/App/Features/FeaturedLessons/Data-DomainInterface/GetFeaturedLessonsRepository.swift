@@ -28,7 +28,7 @@ class GetFeaturedLessonsRepository: GetFeaturedLessonsRepositoryInterface {
     
     func getFeaturedLessonsPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[FeaturedLessonDomainModel], Never> {
         
-        let appLanguageModel: LanguageModel? = languagesRepository.getLanguage(code: appLanguage)
+        let appLanguageModel: LanguageDataModel? = languagesRepository.getLanguage(code: appLanguage)
         
         return Publishers.CombineLatest(
             resourcesRepository.getResourcesChangedPublisher(),
@@ -52,8 +52,9 @@ class GetFeaturedLessonsRepository: GetFeaturedLessonsRepositoryInterface {
                 let lessonProgress = self.getLessonListItemProgressRepository.getLessonProgress(lesson: resource, appLanguage: appLanguage)
                 
                 let nameLanguageDirection: LanguageDirectionDomainModel
+                
                 if let filterLanguageModel = appLanguageModel {
-                    nameLanguageDirection = LanguageDirectionDomainModel(languageModel: filterLanguageModel)
+                    nameLanguageDirection = filterLanguageModel.getLanguageDirection()
                 } else {
                     nameLanguageDirection = .leftToRight
                 }

@@ -19,12 +19,12 @@ class LanguagesJsonFileCache {
         self.jsonServices = jsonServices
     }
     
-    func getLanguages() -> Result<[LanguageModel], Error> {
+    func getLanguages() -> Result<[LanguageCodable], Error> {
         
         return parseLanguagesJsonFromBundle(fileName: "languages")
     }
     
-    func parseLanguagesJsonFromBundle(fileName: String) -> Result<[LanguageModel], Error> {
+    func parseLanguagesJsonFromBundle(fileName: String) -> Result<[LanguageCodable], Error> {
         
         let result: Result<Data?, Error> = jsonServices.getJsonData(fileName: fileName)
         
@@ -37,7 +37,7 @@ class LanguagesJsonFileCache {
             }
             
             do {
-                let responseData: JsonApiResponseDataArray<LanguageModel> = try JSONDecoder().decode(JsonApiResponseDataArray<LanguageModel>.self, from: data)
+                let responseData: JsonApiResponseDataArray<LanguageCodable> = try JSONDecoder().decode(JsonApiResponseDataArray<LanguageCodable>.self, from: data)
                 return .success(responseData.dataArray)
             }
             catch let error {

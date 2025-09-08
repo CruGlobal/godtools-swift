@@ -19,7 +19,7 @@ class RealmLanguagesCacheSync {
         self.realmDatabase = realmDatabase
     }
     
-    func syncLanguages(languages: [LanguageModel]) -> AnyPublisher<RealmLanguagesCacheSyncResult, Error> {
+    func syncLanguages(languages: [LanguageCodable]) -> AnyPublisher<RealmLanguagesCacheSyncResult, Error> {
 
         return Future() { promise in
 
@@ -40,7 +40,7 @@ class RealmLanguagesCacheSync {
                     }
                 }
                                                 
-                let languagesRemoved: [LanguageModel] = existingLanguagesMinusNewlyAddedLanguages.map({LanguageModel(model: $0)})
+                let languagesRemoved: [LanguageCodable] = existingLanguagesMinusNewlyAddedLanguages.map({LanguageCodable(interface: $0)})
                                                 
                 do {
                     

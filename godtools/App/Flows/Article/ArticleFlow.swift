@@ -127,7 +127,7 @@ class ArticleFlow: Flow {
 
 extension ArticleFlow {
     
-    private func getArticles(resource: ResourceModel, language: LanguageModel, category: GodToolsToolParser.Category, manifest: Manifest) -> UIViewController {
+    private func getArticles(resource: ResourceModel, language: LanguageDataModel, category: GodToolsToolParser.Category, manifest: Manifest) -> UIViewController {
         
         let viewModel = ArticlesViewModel(
             flowDelegate: self,
