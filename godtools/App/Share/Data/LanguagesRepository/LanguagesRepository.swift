@@ -40,17 +40,6 @@ class LanguagesRepository: RepositorySync<LanguageDataModel, MobileContentLangua
         return languageCodes.compactMap({ getCachedLanguage(code: $0) })
     }
     
-    func getCachedLanguages(ids: [String]) -> [LanguageDataModel] {
-        return getCachedObjects(
-            databaseQuery: RepositorySyncDatabaseQuery.filter(
-                filter: NSPredicate(format: "\(#keyPath(RealmLanguage.id)) IN %@", ids)
-            )
-        )
-        .map {
-            LanguageDataModel(interface: $0)
-        }
-    }
-    
     func syncLanguagesFromRemote(requestPriority: RequestPriority) -> AnyPublisher<RealmLanguagesCacheSyncResult, Error> {
         
         return api.getLanguages(requestPriority: requestPriority)

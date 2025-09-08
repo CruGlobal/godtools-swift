@@ -48,7 +48,7 @@ class GetToolSettingsToolLanguagesListRepository: GetToolSettingsToolLanguagesLi
         }
                     
         let toolLanguages: [ToolSettingsToolLanguageDomainModel] = languagesRepository
-            .getCachedLanguages(ids: languageIds)
+            .getCachedObjects(ids: languageIds)
             .map { (language: LanguageDataModel) in
                                 
                 let languageName: String = getTranslatedLanguageName.getLanguageName(

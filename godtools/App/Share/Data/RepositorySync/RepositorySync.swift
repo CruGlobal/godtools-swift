@@ -34,6 +34,14 @@ open class RepositorySync<DataModelType, ExternalDataFetchType: RepositorySyncEx
         return getCachedObjectToDataModel(primaryKey: id)
     }
     
+    public func getCachedObjects(ids: [String]) -> [DataModelType] {
+        return getCachedObjects(
+            databaseQuery: RepositorySyncDatabaseQuery.filter(
+                filter: NSPredicate(format: "id IN %@", ids)
+            )
+        )
+    }
+    
     public func getCachedObjects(databaseQuery: RepositorySyncDatabaseQuery? = nil) -> [DataModelType] {
         return getCachedObjectsToDataModels(databaseQuery: databaseQuery)
     }
@@ -54,6 +62,11 @@ extension RepositorySync {
         if let filter = databaseQuery?.filter {
             return results
                 .filter(filter)
+        }
+        else if let filter = databaseQuery?.filter, let sortByKeyPath = databaseQuery?.sortByKeyPath {
+            return results
+                .filter(filter)
+                .sorted(byKeyPath: sortByKeyPath.keyPath, ascending: sortByKeyPath.ascending)
         }
         
         return results

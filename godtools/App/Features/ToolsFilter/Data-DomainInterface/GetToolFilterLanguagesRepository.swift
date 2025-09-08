@@ -82,7 +82,7 @@ extension GetToolFilterLanguagesRepository {
                 
         let anyLanguage = createAnyLanguageDomainModel(translatedInAppLanguage: translatedInAppLanguage, filteredByCategoryId: filteredByCategoryId)
         
-        let languages: [ToolFilterLanguageDomainModel] = languagesRepository.getCachedLanguages(ids: languageIds)
+        let languages: [ToolFilterLanguageDomainModel] = languagesRepository.getCachedObjects(ids: languageIds)
             .compactMap { languageModel in
                 
                 let toolsAvailableCount: Int = getToolsAvailableCount(for: languageModel.id, filteredByCategoryId: filteredByCategoryId)

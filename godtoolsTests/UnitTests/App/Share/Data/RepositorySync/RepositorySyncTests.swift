@@ -626,6 +626,30 @@ struct RepositorySyncTests {
             loggingEnabled: true
         )
     }
+    
+    // MARK: - Test Fetching Cached Objects
+    
+    @Test()
+    @MainActor func returnsObjectsByIds() async {
+        
+        let realmFileName: String = UUID().uuidString
+        
+        let repositorySync: RepositorySync<MockRepositorySyncDataModel, MockRepositorySyncExternalDataFetch, MockRepositorySyncRealmObject> = getRepositorySync(
+            realmFileName: realmFileName,
+            initialPersistedObjectsIds: ["5", "3", "2", "1", "4", "0", "6"],
+            externalDataModelIds: []
+        )
+        
+        let ids: [String] = ["0", "1", "2"]
+        let dataModels: [MockRepositorySyncDataModel] = repositorySync.getCachedObjects(ids: ids)
+        
+        _ = Self.deleteRealmDatabaseFile(fileName: realmFileName)
+        
+        #expect(ids.count == dataModels.count)
+        #expect(dataModels.count(where: {$0.id == "0"}) == 1)
+        #expect(dataModels.count(where: {$0.id == "1"}) == 1)
+        #expect(dataModels.count(where: {$0.id == "2"}) == 1)
+    }
 }
 
 // MARK: - Run Test
