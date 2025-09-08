@@ -27,7 +27,7 @@ class GetShareToolInterfaceStringsRepository: GetShareToolInterfaceStringsReposi
         
         let localizedShareToolMessage: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "tract_share_message")
         
-        guard let resource = resourcesRepository.getResource(id: toolId), let toolLanguage = languagesRepository.getLanguage(id: toolLanguageId) else {
+        guard let resource = resourcesRepository.getResource(id: toolId), let toolLanguage = languagesRepository.getCachedObject(id: toolLanguageId) else {
             
             return Just(ShareToolInterfaceStringsDomainModel(shareMessage: localizedShareToolMessage))
                 .eraseToAnyPublisher()

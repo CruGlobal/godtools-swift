@@ -41,7 +41,7 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
                 let filterLanguageModel: LanguageDataModel?
                 if let filterLanguageId = filterLessonsByLanguage?.languageId {
                     
-                    filterLanguageModel = self.languagesRepository.getLanguage(id: filterLanguageId)
+                    filterLanguageModel = self.languagesRepository.getCachedObject(id: filterLanguageId)
                 } else {
                     filterLanguageModel = nil
                 }

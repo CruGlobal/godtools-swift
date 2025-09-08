@@ -50,7 +50,7 @@ class GetToolFilterLanguagesRepository: GetToolFilterLanguagesRepositoryInterfac
     func getLanguageFilter(from languageId: String?, translatedInAppLanguage: AppLanguageDomainModel) -> ToolFilterLanguageDomainModel? {
         
         guard let languageId = languageId,
-            let language = languagesRepository.getLanguage(id: languageId)
+            let language = languagesRepository.getCachedObject(id: languageId)
         else {
             return nil
         }
@@ -66,7 +66,7 @@ extension GetToolFilterLanguagesRepository {
     private func getLanguageFilterPublisher(from languageId: String?, translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolFilterLanguageDomainModel?, Never> {
         
         guard let languageId = languageId,
-            let language = languagesRepository.getLanguage(id: languageId)
+            let language = languagesRepository.getCachedObject(id: languageId)
         else {
             return Just<ToolFilterLanguageDomainModel?>(nil)
                 .eraseToAnyPublisher()

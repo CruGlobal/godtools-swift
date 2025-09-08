@@ -27,17 +27,6 @@ class RealmLanguagesCache {
             .count
     }
     
-    func getLanguage(id: String) -> LanguageDataModel? {
-        
-        guard let realmLanguage = realmDatabase.openRealm()
-            .object(ofType: RealmLanguage.self, forPrimaryKey: id) else {
-            
-            return nil
-        }
-        
-        return LanguageDataModel(interface: realmLanguage)
-    }
-    
     func getLanguage(code: String) -> LanguageDataModel? {
                 
         guard let realmLanguage = realmDatabase.openRealm()
