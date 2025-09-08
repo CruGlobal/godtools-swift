@@ -13,11 +13,11 @@ import Combine
 struct SwiftUITimerTests {
     
     @Test("")
-    func timerStartPublisherRunsOnce() async {
+    @MainActor func timerStartPublisherRunsOnce() async {
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        let timer = SwiftUITimer(intervalSeconds: 0.05, repeats: false)
+        let timer = SwiftUITimer(intervalSeconds: 0.1, repeats: false)
         
         var sinkCount: Int = 0
         
@@ -50,11 +50,11 @@ struct SwiftUITimerTests {
     }
     
     @Test("")
-    func timerRunsOnce() async {
+    @MainActor func timerRunsOnce() async {
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        let timer = SwiftUITimer(intervalSeconds: 0.05, repeats: false)
+        let timer = SwiftUITimer(intervalSeconds: 0.1, repeats: false)
         
         var sinkCount: Int = 0
         
@@ -89,11 +89,11 @@ struct SwiftUITimerTests {
     }
     
     @Test("")
-    func timerRunsUntilStopped() async {
+    @MainActor func timerRunsUntilStopped() async {
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        let timer = SwiftUITimer(intervalSeconds: 0.05, repeats: true)
+        let timer = SwiftUITimer(intervalSeconds: 0.1, repeats: true)
         
         let maxTimerCount: Int = 3
         
