@@ -198,8 +198,9 @@ class AppFlow: NSObject, Flow {
             
         case .handleDeepLinkFromDeferredDeepLinkModal(let deepLink):
             
-            navigate(step: .deepLink(deepLinkType: deepLink))
-            navigationController.dismissPresented(animated: false, completion: nil)
+            navigationController.dismissPresented(animated: false) { [weak self] in
+                self?.navigate(step: .deepLink(deepLinkType: deepLink))
+            }
                         
         case .closeTappedFromDeferredDeepLinkModal:
             dashboardFlow.navigateToDashboard()
