@@ -24,7 +24,7 @@ class LanguagesJsonFileCache {
         return parseLanguagesJsonFromBundle(fileName: "languages")
     }
     
-    func parseLanguagesJsonFromBundle(fileName: String) -> Result<[LanguageCodable], Error> {
+    private func parseLanguagesJsonFromBundle(fileName: String) -> Result<[LanguageCodable], Error> {
         
         let result: Result<Data?, Error> = jsonServices.getJsonData(fileName: fileName)
         

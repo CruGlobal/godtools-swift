@@ -152,7 +152,7 @@ extension RepositorySync {
             .eraseToAnyPublisher()
     }
     
-    private func storeExternalDataFetchResponse(response: RepositorySyncResponse<ExternalDataFetchType.DataModel>, updatePolicy: Realm.UpdatePolicy) -> RepositorySyncResponse<DataModelType> {
+    public func storeExternalDataFetchResponse(response: RepositorySyncResponse<ExternalDataFetchType.DataModel>, updatePolicy: Realm.UpdatePolicy = .modified) -> RepositorySyncResponse<DataModelType> {
         
         let responseDataModels: [DataModelType] = response.objects.compactMap {
             self.dataModelMapping.toDataModel(externalObject: $0)

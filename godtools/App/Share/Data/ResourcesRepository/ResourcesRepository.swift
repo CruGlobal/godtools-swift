@@ -74,11 +74,8 @@ class ResourcesRepository {
         
         return api.getResourcePlusLatestTranslationsAndAttachmentsPublisher(id: resourceId, requestPriority: requestPriority)
             .flatMap({ (resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<Void, Error> in
-                
-                let languagesSyncResult = RealmLanguagesCacheSyncResult(languagesRemoved: [])
-                
+                                
                 return self.cache.syncResources(
-                    languagesSyncResult: languagesSyncResult,
                     resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments,
                     shouldRemoveDataThatNoLongerExists: false
                 )
@@ -94,11 +91,8 @@ class ResourcesRepository {
         
         return api.getResourcePlusLatestTranslationsAndAttachmentsPublisher(abbreviation: resourceAbbreviation, requestPriority: requestPriority)
             .flatMap({ (resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<Void, Error> in
-                
-                let languagesSyncResult = RealmLanguagesCacheSyncResult(languagesRemoved: [])
-                
+                                
                 return self.cache.syncResources(
-                    languagesSyncResult: languagesSyncResult,
                     resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments,
                     shouldRemoveDataThatNoLongerExists: false
                 )
@@ -152,13 +146,16 @@ class ResourcesRepository {
                 
         return Publishers
             .CombineLatest(
-                languagesRepository.syncLanguagesFromJsonFileCache(),
-                ResourcesJsonFileCache(jsonServices: JsonServices()).getResourcesPlusLatestTranslationsAndAttachments().publisher
+                languagesRepository
+                    .syncLanguagesFromJsonFileCache()
+                    .setFailureType(to: Error.self),
+                ResourcesJsonFileCache(jsonServices: JsonServices())
+                    .getResourcesPlusLatestTranslationsAndAttachments()
+                    .publisher
             )
-            .flatMap({ (languagesSyncResult: RealmLanguagesCacheSyncResult, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> in
+            .flatMap({ (languagesResponse: RepositorySyncResponse<LanguageDataModel>, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> in
                 
                 return self.cache.syncResources(
-                    languagesSyncResult: languagesSyncResult,
                     resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments,
                     shouldRemoveDataThatNoLongerExists: true
                 )
@@ -194,11 +191,13 @@ class ResourcesRepository {
         }
         
         return Publishers
-            .CombineLatest(languagesRepository.syncLanguagesFromRemote(requestPriority: requestPriority), api.getResourcesPlusLatestTranslationsAndAttachments(requestPriority: requestPriority))
+            .CombineLatest(
+                languagesRepository.syncLanguagesFromRemote(requestPriority: requestPriority),
+                api.getResourcesPlusLatestTranslationsAndAttachments(requestPriority: requestPriority)
+            )
             .flatMap({ (languagesSyncResult: RealmLanguagesCacheSyncResult, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> in
                 
                 return self.cache.syncResources(
-                    languagesSyncResult: languagesSyncResult,
                     resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments,
                     shouldRemoveDataThatNoLongerExists: true
                 )

@@ -41,23 +41,50 @@ class LanguagesRepository: RepositorySync<LanguageDataModel, MobileContentLangua
     }
     
     func syncLanguagesFromRemote(requestPriority: RequestPriority) -> AnyPublisher<RealmLanguagesCacheSyncResult, Error> {
+//        
+//        let response = RepositorySyncResponse<LanguageDataModel>(objects: [], errors: [])
+//        
+//        return Just(response)
+//            .eraseToAnyPublisher()
         
-        return api.getLanguages(requestPriority: requestPriority)
-            .flatMap({ languages -> AnyPublisher<RealmLanguagesCacheSyncResult, Error> in
-                
-                return self.cache.syncLanguages(languages: languages)
-                    .eraseToAnyPublisher()
-            })
+        return Just(RealmLanguagesCacheSyncResult(languagesRemoved: []))
+            .setFailureType(to: Error.self)
             .eraseToAnyPublisher()
+//        return api.getLanguages(requestPriority: requestPriority)
+//            .flatMap({ languages -> AnyPublisher<RealmLanguagesCacheSyncResult, Error> in
+//                
+//                return self.cache.syncLanguages(languages: languages)
+//                    .eraseToAnyPublisher()
+//            })
+//            .eraseToAnyPublisher()
     }
     
-    func syncLanguagesFromJsonFileCache() -> AnyPublisher<RealmLanguagesCacheSyncResult, Error> {
+    func syncLanguagesFromJsonFileCache() -> AnyPublisher<RepositorySyncResponse<LanguageDataModel>, Never> {
         
-        return LanguagesJsonFileCache(jsonServices: JsonServices()).getLanguages().publisher
-            .flatMap({ languages -> AnyPublisher<RealmLanguagesCacheSyncResult, Error> in
-                
-                return self.cache.syncLanguages(languages: languages)
-            })
-            .eraseToAnyPublisher()
+        return LanguagesJsonFileCache(
+            jsonServices: JsonServices()
+        )
+        .getLanguages()
+        .publisher
+        .flatMap { (languages: [LanguageCodable]) -> AnyPublisher<RepositorySyncResponse<LanguageDataModel>, Never> in
+            
+            let response: RepositorySyncResponse<LanguageDataModel> = super.storeExternalDataFetchResponse(
+                response: RepositorySyncResponse<LanguageCodable>(objects: languages, errors: [])
+            )
+                        
+            return Just(response)
+                .eraseToAnyPublisher()
+        }
+        .catch { (error: Error) in
+            
+            let response = RepositorySyncResponse<LanguageDataModel>(
+                objects: [],
+                errors: [error]
+            )
+            
+            return Just(response)
+                .eraseToAnyPublisher()
+        }
+        .eraseToAnyPublisher()
     }
 }
