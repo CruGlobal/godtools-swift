@@ -21,12 +21,6 @@ class RealmLanguagesCache {
         self.languagesSync = languagesSync
     }
     
-    var numberOfLanguages: Int {
-        return realmDatabase.openRealm()
-            .objects(RealmLanguage.self)
-            .count
-    }
-    
     func getLanguage(code: String) -> LanguageDataModel? {
                 
         guard let realmLanguage = realmDatabase.openRealm()
