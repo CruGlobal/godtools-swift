@@ -650,6 +650,82 @@ struct RepositorySyncTests {
         #expect(dataModels.count(where: {$0.id == "1"}) == 1)
         #expect(dataModels.count(where: {$0.id == "2"}) == 1)
     }
+    
+    // MARK: - Test Sync External Data Fetch Response
+    
+    @Test()
+    @MainActor func deletesObjectsNotFoundInExternalDataFetch() async {
+        
+        let realmFileName: String = UUID().uuidString
+        
+        let initialPersistedObjectsIds: [String] = ["5", "3", "2", "1", "4", "0", "6"]
+        let externalDataModelIds: [String] = ["2", "1", "6", "7"]
+        
+        let repositorySync: RepositorySync<MockRepositorySyncDataModel, MockRepositorySyncExternalDataFetch, MockRepositorySyncRealmObject> = getRepositorySync(
+            realmFileName: realmFileName,
+            initialPersistedObjectsIds: initialPersistedObjectsIds,
+            externalDataModelIds: externalDataModelIds
+        )
+        
+        let mockExternalDataFetch = Self.getMockRepositorySyncExternalDataFetch(
+            externalDataModelIds: externalDataModelIds,
+            delayRequestSeconds: 0.1
+        )
+        
+        let initialCachedObjectsIds: [String] = repositorySync.getCachedObjects().map { $0.id }
+        #expect(initialCachedObjectsIds.count == initialPersistedObjectsIds.count)
+        
+        var cancellables: Set<AnyCancellable> = Set()
+        
+        var sinkCount: Int = 0
+    
+        await confirmation(expectedCount: 1) { confirmation in
+            
+            await withCheckedContinuation { continuation in
+                
+                let timeoutTask = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
+                }
+                
+                mockExternalDataFetch
+                    .getObjectsPublisher(requestPriority: .high)
+                    .flatMap { (externalFetchResponse: RepositorySyncResponse<MockRepositorySyncDataModel>) in
+                                                
+                        let response = repositorySync.syncExternalDataFetchResponse(
+                            response: externalFetchResponse
+                        )
+                        
+                        return Just(response)
+                            .eraseToAnyPublisher()
+                    }
+                    .sink { (response: RepositorySyncResponse<MockRepositorySyncDataModel>) in
+                                                
+                        // Place inside a sink or other async closure:
+                        confirmation()
+                        
+                        sinkCount += 1
+                        
+                        if sinkCount == 1 {
+                            
+                            timeoutTask.cancel()
+                            continuation.resume(returning: ())
+                        }
+                    }
+                    .store(in: &cancellables)
+            }
+        }
+                
+        let cachedObjectsIds: [String] = repositorySync.getCachedObjects().map { $0.id }
+                
+        #expect(cachedObjectsIds.count == externalDataModelIds.count)
+        
+        for id in externalDataModelIds {
+            #expect(cachedObjectsIds.contains(id))
+        }
+        
+        _ = Self.deleteRealmDatabaseFile(fileName: realmFileName)
+    }
 }
 
 // MARK: - Run Test

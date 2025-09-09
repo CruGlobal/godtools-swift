@@ -11,6 +11,10 @@ import RealmSwift
 
 open class RepositorySyncMapping<DataModelType, ExternalFetchObjectType, RealmObjectType: Object> {
         
+    open func toDataModel(externalObject: ExternalFetchObjectType) -> DataModelType? {
+        return nil
+    }
+    
     open func toDataModel(persistObject: RealmObjectType) -> DataModelType? {
         return nil
     }

@@ -45,7 +45,7 @@ class LanguagesRepository: RepositorySync<LanguageDataModel, MobileContentLangua
         )
         .flatMap { (getObectsResponse: RepositorySyncResponse<LanguageCodable>) in
             
-            let response: RepositorySyncResponse<LanguageDataModel> = super.storeExternalDataFetchResponse(
+            let response: RepositorySyncResponse<LanguageDataModel> = super.syncExternalDataFetchResponse(
                 response: getObectsResponse
             )
             

@@ -10,6 +10,10 @@ import Foundation
 
 class LanguagesDataModelMapping: RepositorySyncMapping<LanguageDataModel, LanguageCodable, RealmLanguage> {
     
+    override func toDataModel(externalObject: LanguageCodable) -> LanguageDataModel? {
+        return LanguageDataModel(interface: externalObject)
+    }
+    
     override func toDataModel(persistObject: RealmLanguage) -> LanguageDataModel? {
         return LanguageDataModel(interface: persistObject)
     }
