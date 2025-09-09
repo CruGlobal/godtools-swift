@@ -11,11 +11,6 @@ import Foundation
 
 class MockRepositorySyncMapping: RepositorySyncMapping<MockRepositorySyncDataModel, MockRepositorySyncDataModel, MockRepositorySyncRealmObject> {
 
-    override func toDataModel(externalObject: MockRepositorySyncDataModel) -> MockRepositorySyncDataModel? {
-        
-        return externalObject
-    }
-    
     override func toDataModel(persistObject: MockRepositorySyncRealmObject) -> MockRepositorySyncDataModel? {
         
         return MockRepositorySyncDataModel(
@@ -24,12 +19,12 @@ class MockRepositorySyncMapping: RepositorySyncMapping<MockRepositorySyncDataMod
         )
     }
     
-    override func toPersistObject(dataModel: MockRepositorySyncDataModel) -> MockRepositorySyncRealmObject? {
+    override func toPersistObject(externalObject: MockRepositorySyncDataModel) -> MockRepositorySyncRealmObject? {
         
         let realmObject = MockRepositorySyncRealmObject()
         
-        realmObject.id = dataModel.id
-        realmObject.name = dataModel.name
+        realmObject.id = externalObject.id
+        realmObject.name = externalObject.name
         
         return realmObject
     }

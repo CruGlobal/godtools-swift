@@ -153,13 +153,13 @@ extension RepositorySync {
     }
     
     public func storeExternalDataFetchResponse(response: RepositorySyncResponse<ExternalDataFetchType.DataModel>, updatePolicy: Realm.UpdatePolicy = .modified) -> RepositorySyncResponse<DataModelType> {
-        
-        let responseDataModels: [DataModelType] = response.objects.compactMap {
-            self.dataModelMapping.toDataModel(externalObject: $0)
+                
+        let realmObjects: [RealmObjectType] = response.objects.compactMap {
+            self.dataModelMapping.toPersistObject(externalObject: $0)
         }
         
-        let realmObjects: [RealmObjectType] = responseDataModels.compactMap {
-            self.dataModelMapping.toPersistObject(dataModel: $0)
+        let responseDataModels: [DataModelType] = realmObjects.compactMap {
+            self.dataModelMapping.toDataModel(persistObject: $0)
         }
         
         let realm: Realm = realmDatabase.openRealm()
