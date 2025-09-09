@@ -388,31 +388,42 @@ extension TractViewModel {
         let remoteLocale: String?
         let remoteLocaleNavBarLanguage: LanguageModel?
         let remoteLocaleNavBarLanguageIndex: Int?
-        let remoteLocaleExists: Bool
+        let remoteLocaleEventExists: Bool
         let remoteLocaleExistsInNavBarLanguages: Bool?
-        
-        let remoteParallelLocale: String?
         
         if let remoteLocaleValue = attributes?.locale, !remoteLocaleValue.isEmpty {
             
             remoteLocale = remoteLocaleValue
             remoteLocaleNavBarLanguage = navBarLanguages.first(where: { $0.localeId.lowercased() == remoteLocaleValue.lowercased() })
-            remoteLocaleExists = true
+            remoteLocaleEventExists = true
             remoteLocaleExistsInNavBarLanguages = remoteLocaleNavBarLanguage != nil
         }
         else {
             
             remoteLocale = nil
             remoteLocaleNavBarLanguage = nil
-            remoteLocaleExists = false
+            remoteLocaleEventExists = false
             remoteLocaleExistsInNavBarLanguages = nil
         }
         
+        let remoteParallelLocale: String?
+        let remoteParallelLocaleNavBarLanguage: LanguageModel?
+        let remoteParallelLocaleEventExists: Bool
+        let remoteParallelLocaleExistsInNavBarLanguages: Bool
+        
         if let remoteParallelLocaleValue = attributes?.parallelLocale, !remoteParallelLocaleValue.isEmpty {
+            
             remoteParallelLocale = remoteParallelLocaleValue
+            remoteParallelLocaleNavBarLanguage = navBarLanguages.first(where: { $0.localeId.lowercased() == remoteParallelLocaleValue.lowercased() })
+            remoteParallelLocaleEventExists = true
+            remoteParallelLocaleExistsInNavBarLanguages = remoteParallelLocaleNavBarLanguage != nil
         }
         else {
+            
             remoteParallelLocale = nil
+            remoteParallelLocaleNavBarLanguage = nil
+            remoteParallelLocaleEventExists = false
+            remoteParallelLocaleExistsInNavBarLanguages = false
         }
         
         if let remoteLocaleNavBarLanguage = remoteLocaleNavBarLanguage {
@@ -422,7 +433,7 @@ extension TractViewModel {
             remoteLocaleNavBarLanguageIndex = nil
         }
         
-        let localeChangedAndExistsInNavBar: Bool = remoteLocaleExists && remoteLocaleExistsInNavBarLanguages == true && remoteLocaleNavBarLanguage?.id != currentNavBarLanguage.id
+        let localeChangedAndExistsInNavBar: Bool = remoteLocaleEventExists && remoteLocaleExistsInNavBarLanguages == true && remoteLocaleNavBarLanguage?.id != currentNavBarLanguage.id
         
         let reloadCollectionViewDataNeeded: Bool = localeChangedAndExistsInNavBar
         
@@ -451,7 +462,7 @@ extension TractViewModel {
                 pagePositions: pagePositions
             )
         }
-        else if remoteLocaleExists && (remoteLocaleExistsInNavBarLanguages == false), let remoteLocale = remoteLocale, let remoteLanguage = languagesRepository.getLanguage(code: remoteLocale) {
+        else if remoteLocaleEventExists && (remoteLocaleExistsInNavBarLanguages == false), let remoteLocale = remoteLocale, let remoteLanguage = languagesRepository.getLanguage(code: remoteLocale) {
             
             let parallelLanguageId: String?
             
