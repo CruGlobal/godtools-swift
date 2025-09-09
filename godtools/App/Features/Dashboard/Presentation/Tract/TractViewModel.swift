@@ -391,6 +391,8 @@ extension TractViewModel {
         let remoteLocaleExists: Bool
         let remoteLocaleExistsInNavBarLanguages: Bool?
         
+        let remoteParallelLocale: String?
+        
         if let remoteLocaleValue = attributes?.locale, !remoteLocaleValue.isEmpty {
             
             remoteLocale = remoteLocaleValue
@@ -404,6 +406,13 @@ extension TractViewModel {
             remoteLocaleNavBarLanguage = nil
             remoteLocaleExists = false
             remoteLocaleExistsInNavBarLanguages = nil
+        }
+        
+        if let remoteParallelLocaleValue = attributes?.parallelLocale, !remoteParallelLocaleValue.isEmpty {
+            remoteParallelLocale = remoteParallelLocaleValue
+        }
+        else {
+            remoteParallelLocale = nil
         }
         
         if let remoteLocaleNavBarLanguage = remoteLocaleNavBarLanguage {
@@ -444,9 +453,18 @@ extension TractViewModel {
         }
         else if remoteLocaleExists && (remoteLocaleExistsInNavBarLanguages == false), let remoteLocale = remoteLocale, let remoteLanguage = languagesRepository.getLanguage(code: remoteLocale) {
             
+            let parallelLanguageId: String?
+            
+            if let parallelLanguageCode = remoteParallelLocale {
+                parallelLanguageId = languagesRepository.getLanguage(code: parallelLanguageCode)?.id
+            }
+            else {
+                parallelLanguageId = nil
+            }
+            
             super.setRendererPrimaryLanguage(
                 primaryLanguageId: remoteLanguage.id,
-                parallelLanguageId: nil,
+                parallelLanguageId: parallelLanguageId,
                 selectedLanguageId: remoteLanguage.id
             )
         }
@@ -463,11 +481,13 @@ extension TractViewModel {
         }
         
         let localeId: String = languages[selectedLanguageIndex].localeId
+        let parallelLocaleId: String? = languages[safe: 1]?.localeId
                 
         let event = TractRemoteSharePublisherNavigationEvent(
             card: pagePositions.cardPosition,
             locale: localeId,
             page: page,
+            parallelLocale: parallelLocaleId,
             tool: resource.abbreviation
         )
         

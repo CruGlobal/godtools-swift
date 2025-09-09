@@ -114,7 +114,14 @@ class TractRemoteSharePublisher: NSObject {
     
     func sendNavigationEvent(event: TractRemoteSharePublisherNavigationEvent) {
                 
-        let navigationAttributes = TractRemoteShareNavigationEvent.Attributes(card: event.card, locale: event.locale, page: event.page, tool: event.tool)
+        let navigationAttributes = TractRemoteShareNavigationEvent.Attributes(
+            card: event.card,
+            locale: event.locale,
+            page: event.page,
+            parallelLocale: event.parallelLocale,
+            tool: event.tool
+        )
+       
         let navigationData = TractRemoteShareNavigationEvent.Data(attributes: navigationAttributes)
         let navigationMessage = TractRemoteShareNavigationEvent.Message(data: navigationData)
         
@@ -135,6 +142,7 @@ class TractRemoteSharePublisher: NSObject {
             print("  card: \(String(describing: event.card))")
             print("  locale: \(String(describing: event.locale))")
             print("  page: \(String(describing: event.page))")
+            print("  parallelLocale: \(String(describing: event.parallelLocale))")
             print("  tool: \(String(describing: event.tool))")
         }
     }

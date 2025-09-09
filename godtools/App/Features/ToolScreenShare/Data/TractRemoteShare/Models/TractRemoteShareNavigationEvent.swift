@@ -55,6 +55,7 @@ struct TractRemoteShareNavigationEvent: Codable {
         let card: Int?
         let locale: String?
         let page: Int?
+        let parallelLocale: String?
         let tool: String?
         
         enum RootKeys: String, CodingKey {
@@ -62,13 +63,14 @@ struct TractRemoteShareNavigationEvent: Codable {
             case card = "card"
             case locale = "locale"
             case page = "page"
+            case parallelLocale = "parallel_locale"
             case tool = "tool"
         }
     }
     
-    init(card: Int?, channel: String, channelId: String, locale: String?, page: Int?, tool: String?) {
+    init(card: Int?, channel: String, channelId: String, locale: String?, page: Int?, parallelLocale: String?, tool: String?) {
         
-        let attributes = TractRemoteShareNavigationEvent.Attributes(card: card, locale: locale, page: page, tool: tool)
+        let attributes = TractRemoteShareNavigationEvent.Attributes(card: card, locale: locale, page: page, parallelLocale: parallelLocale, tool: tool)
         let data = TractRemoteShareNavigationEvent.Data(attributes: attributes)
         
         self.message = TractRemoteShareNavigationEvent.Message(data: data)
