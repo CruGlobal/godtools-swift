@@ -139,7 +139,11 @@ class AppFlow: NSObject, Flow {
                     
                     let launchCount: Int = appFlow.launchCountRepository.getLaunchCount()
                     
-                    if let deepLink = appFlow.appLaunchedFromDeepLink {
+                    if launchCount == 1, UIPasteboard.general.hasURLs {
+                        
+                        appFlow.navigate(step: .showDeferredDeepLinkModal)
+                        
+                    } else if let deepLink = appFlow.appLaunchedFromDeepLink {
                         
                         appFlow.appLaunchedFromDeepLink = nil
                         appFlow.navigate(step: .deepLink(deepLinkType: deepLink))
@@ -186,6 +190,21 @@ class AppFlow: NSObject, Flow {
             
         case .deepLink(let deepLink):
             navigateToDeepLink(deepLink: deepLink)
+            
+        case .showDeferredDeepLinkModal:
+            
+            let deferredDeepLinkModal = getDeferredDeepLinkModal()
+            navigationController.present(deferredDeepLinkModal, animated: true)
+            
+        case .handleDeepLinkFromDeferredDeepLinkModal(let deepLink):
+            
+            navigationController.dismissPresented(animated: false) { [weak self] in
+                self?.navigate(step: .deepLink(deepLinkType: deepLink))
+            }
+                        
+        case .closeTappedFromDeferredDeepLinkModal:
+            dashboardFlow.navigateToDashboard()
+            navigationController.dismissPresented(animated: true, completion: nil)
             
         case .showOnboardingTutorial(let animated):
             navigateToOnboarding(animated: animated)
@@ -417,6 +436,27 @@ extension AppFlow {
                         
             navigateToOnboarding(animated: true)
         }
+    }
+    
+    private func getDeferredDeepLinkModal() -> UIViewController {
+        let viewModel = DeferredDeepLinkModalViewModel(
+            flowDelegate: self,
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            getDeferredDeepLinkModalInterfaceStringsUseCase: appDiContainer.feature.deferredDeepLink.domainLayer.getDeferredDeepLinkModalInterfaceStringsUseCase(),
+            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
+            deepLinkingService: deepLinkingService
+        )
+        
+        let view = DeferredDeepLinkModalView(viewModel: viewModel)
+        
+        let hostingController = AppHostingController<DeferredDeepLinkModalView>(
+            rootView: view,
+            navigationBar: nil
+        )
+        
+        hostingController.modalPresentationStyle = .fullScreen
+        
+        return hostingController
     }
 }
 
