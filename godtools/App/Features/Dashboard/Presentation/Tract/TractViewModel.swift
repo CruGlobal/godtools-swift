@@ -410,15 +410,15 @@ extension TractViewModel {
             )
         }
         else if selectedLocaleChanged || !navBarLanguagesAreTheSame,
-                let primaryLanguageCode = attributes?.primaryLocale,
-                let parallelLanguageCode = attributes?.parallelLocale,
-                let selectedLocale = remoteShareSelectedLocale,
-                let primaryLanguageId = languagesRepository.getLanguage(code: primaryLanguageCode)?.id {
-                        
+                let remoteShareSelectedLocale = remoteShareSelectedLocale,
+                let primaryLanguageId = getRemoteSharePrimaryLanguageId(remoteShareNavigationEvent: remoteShareNavigationEvent) {
+            
+            let parallelLanguageId: String? = getRemoteShareParallelLanguageId(remoteShareNavigationEvent: remoteShareNavigationEvent)
+            
             super.setRendererPrimaryLanguage(
                 primaryLanguageId: primaryLanguageId,
-                parallelLanguageId: languagesRepository.getLanguage(code: parallelLanguageCode)?.id,
-                selectedLanguageId: languagesRepository.getLanguage(code: selectedLocale)?.id
+                parallelLanguageId: parallelLanguageId,
+                selectedLanguageId: languagesRepository.getLanguage(code: remoteShareSelectedLocale)?.id
             )
         }
         else {
@@ -431,6 +431,31 @@ extension TractViewModel {
                 )
             )
         }
+    }
+    
+    private func getRemoteSharePrimaryLanguageId(remoteShareNavigationEvent: TractRemoteShareNavigationEvent) -> String? {
+        
+        let attributes = remoteShareNavigationEvent.message?.data?.attributes
+                
+        if let primaryLocale = attributes?.primaryLocale, !primaryLocale.isEmpty {
+            return languagesRepository.getLanguage(code: primaryLocale)?.id
+        }
+        else if let locale = attributes?.locale, !locale.isEmpty {
+            return languagesRepository.getLanguage(code: locale)?.id
+        }
+        
+        return nil
+    }
+    
+    private func getRemoteShareParallelLanguageId(remoteShareNavigationEvent: TractRemoteShareNavigationEvent) -> String? {
+        
+        let attributes = remoteShareNavigationEvent.message?.data?.attributes
+                
+        if let parallelLocale = attributes?.parallelLocale, !parallelLocale.isEmpty {
+            return languagesRepository.getLanguage(code: parallelLocale)?.id
+        }
+        
+        return nil
     }
     
     private func getRemoteShareNavBarLocales(remoteShareNavigationEvent: TractRemoteShareNavigationEvent) -> [String] {
