@@ -17,15 +17,8 @@ extension BCP47LanguageIdentifier: TranslatableLanguage {
     var languageCode: String {
             
         let locale = Locale(identifier: localeId)
-        let languageCode: String?
-        
-        if #available(iOS 16, *) {
-            languageCode = locale.language.languageCode?.identifier
-        }
-        else {
-            languageCode = locale.languageCode
-        }
-        
+        let languageCode: String? = locale.language.languageCode?.identifier
+
         return languageCode ?? localeId
     }
     
@@ -38,14 +31,7 @@ extension BCP47LanguageIdentifier: TranslatableLanguage {
         }
         
         let locale = Locale(identifier: localeId)
-        let regionCode: String?
-        
-        if #available(iOS 16, *) {
-            regionCode = locale.language.region?.identifier
-        }
-        else {
-            regionCode = locale.regionCode
-        }
+        let regionCode: String? = locale.language.region?.identifier
         
         guard let regionCode = regionCode else {
             return nil
@@ -71,14 +57,7 @@ extension BCP47LanguageIdentifier: TranslatableLanguage {
         }
         
         let locale = Locale(identifier: localeId)
-        let scriptCode: String?
-        
-        if #available(iOS 16, *) {
-            scriptCode = locale.language.script?.identifier
-        }
-        else {
-            scriptCode = locale.scriptCode
-        }
+        let scriptCode: String? = locale.language.script?.identifier
         
         guard let scriptCode = scriptCode else {
             return nil
