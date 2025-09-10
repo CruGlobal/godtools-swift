@@ -119,6 +119,7 @@ class TractRemoteSharePublisher: NSObject {
             locale: event.locale,
             page: event.page,
             parallelLocale: event.parallelLocale,
+            primaryLocale: event.primaryLocale,
             tool: event.tool
         )
        
@@ -143,6 +144,7 @@ class TractRemoteSharePublisher: NSObject {
             print("  locale: \(String(describing: event.locale))")
             print("  page: \(String(describing: event.page))")
             print("  parallelLocale: \(String(describing: event.parallelLocale))")
+            print("  primaryLocale: \(String(describing: event.primaryLocale))")
             print("  tool: \(String(describing: event.tool))")
         }
     }

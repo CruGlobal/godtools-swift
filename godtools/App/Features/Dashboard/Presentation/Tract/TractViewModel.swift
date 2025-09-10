@@ -86,7 +86,7 @@ class TractViewModel: MobileContentRendererViewModel {
             .sink { [weak self] (event: TractRemoteShareNavigationEvent) in
                 
                 let animated: Bool = !isFirstRemoteShareNavigationEvent
-                self?.handleDidReceiveRemoteShareNavigationEvent(navigationEvent: event, animated: animated)
+                self?.handleDidReceiveRemoteShareNavigationEvent(remoteShareNavigationEvent: event, animated: animated)
                 isFirstRemoteShareNavigationEvent = false
             }
             .store(in: &cancellables)
@@ -373,69 +373,89 @@ extension TractViewModel {
             .subscribe(channel: channel)
     }
     
-    private func handleDidReceiveRemoteShareNavigationEvent(navigationEvent: TractRemoteShareNavigationEvent, animated: Bool) {
+    private func handleDidReceiveRemoteShareNavigationEvent(remoteShareNavigationEvent: TractRemoteShareNavigationEvent, animated: Bool) {
         
-        let attributes = navigationEvent.message?.data?.attributes
+        let attributes = remoteShareNavigationEvent.message?.data?.attributes
+                
+        let remoteShareSelectedLocale: String? = attributes?.locale
+        
+        var remoteShareNavLocales: [String] = Array()
+        
+        if let primaryLocale = attributes?.primaryLocale, !primaryLocale.isEmpty {
+            remoteShareNavLocales.append(primaryLocale)
+        }
+        
+        if let parallelLocale = attributes?.parallelLocale, !parallelLocale.isEmpty {
+            remoteShareNavLocales.append(parallelLocale)
+        }
+        
+        let navBarSelectedLocale: String? = languages[safe: selectedLanguageIndex]?.code
+        let navBarLocales: [String] = languages.map { $0.code }
+        
+        let navBarLanguagesAreTheSame: Bool = navBarLocales.count == remoteShareNavLocales.count && navBarLocales == remoteShareNavLocales
+        let selectedLocaleChanged: Bool
+        
+        if let navBarSelectedLocale = navBarSelectedLocale, !navBarSelectedLocale.isEmpty, let remoteShareSelectedLocale = remoteShareSelectedLocale, !remoteShareSelectedLocale.isEmpty {
+            selectedLocaleChanged = navBarSelectedLocale != remoteShareSelectedLocale
+        }
+        else {
+            selectedLocaleChanged = false
+        }
+                       
+        if selectedLocaleChanged && navBarLanguagesAreTheSame,
+           let index = languages.firstIndex(where: { $0.code == remoteShareSelectedLocale }),
+           let selectedLocalePageRenderer = renderer.value.pageRenderers[safe: index] {
+            
+            super.setPageRenderer(
+                pageRenderer: selectedLocalePageRenderer,
+                navigationEvent: getPagesNavigationEventForRemoteShareNavigationEvent(
+                    remoteShareNavigationEvent: remoteShareNavigationEvent,
+                    animated: animated,
+                    reloadCollectionViewDataNeeded: true
+                ),
+                pagePositions: getPagePositionsForRemoteShareNavigationEvent(
+                    remoteShareNavigationEvent: remoteShareNavigationEvent
+                )
+            )
+        }
+        else if selectedLocaleChanged || !navBarLanguagesAreTheSame,
+                let primaryLanguageCode = attributes?.primaryLocale,
+                let parallelLanguageCode = attributes?.parallelLocale,
+                let selectedLocale = remoteShareSelectedLocale,
+                let primaryLanguageId = languagesRepository.getLanguage(code: primaryLanguageCode)?.id {
+                        
+            super.setRendererPrimaryLanguage(
+                primaryLanguageId: primaryLanguageId,
+                parallelLanguageId: languagesRepository.getLanguage(code: parallelLanguageCode)?.id,
+                selectedLanguageId: languagesRepository.getLanguage(code: selectedLocale)?.id
+            )
+        }
+        else {
+            
+            super.sendPageNavigationEvent(
+                navigationEvent: getPagesNavigationEventForRemoteShareNavigationEvent(
+                    remoteShareNavigationEvent: remoteShareNavigationEvent,
+                    animated: animated,
+                    reloadCollectionViewDataNeeded: false
+                )
+            )
+        }
+    }
+    
+    private func getPagePositionsForRemoteShareNavigationEvent(remoteShareNavigationEvent: TractRemoteShareNavigationEvent) -> TractPagePositions {
+        
+        let attributes = remoteShareNavigationEvent.message?.data?.attributes
+        
+        return TractPagePositions(
+            cardPosition: attributes?.card
+        )
+    }
+    
+    private func getPagesNavigationEventForRemoteShareNavigationEvent(remoteShareNavigationEvent: TractRemoteShareNavigationEvent, animated: Bool, reloadCollectionViewDataNeeded: Bool) -> MobileContentPagesNavigationEvent {
+        
+        let attributes = remoteShareNavigationEvent.message?.data?.attributes
         
         let page: Int? = attributes?.page
-        let cardPosition: Int? = attributes?.card
-        
-        let pagePositions: MobileContentViewPositionState? = TractPagePositions(cardPosition: cardPosition)
-        
-        let navBarLanguages: [LanguageModel] = languages
-        let currentNavBarLanguage: LanguageModel = languages[selectedLanguageIndex]
-        
-        let remoteLocale: String?
-        let remoteLocaleNavBarLanguage: LanguageModel?
-        let remoteLocaleNavBarLanguageIndex: Int?
-        let remoteLocaleEventExists: Bool
-        let remoteLocaleExistsInNavBarLanguages: Bool?
-        
-        if let remoteLocaleValue = attributes?.locale, !remoteLocaleValue.isEmpty {
-            
-            remoteLocale = remoteLocaleValue
-            remoteLocaleNavBarLanguage = navBarLanguages.first(where: { $0.localeId.lowercased() == remoteLocaleValue.lowercased() })
-            remoteLocaleEventExists = true
-            remoteLocaleExistsInNavBarLanguages = remoteLocaleNavBarLanguage != nil
-        }
-        else {
-            
-            remoteLocale = nil
-            remoteLocaleNavBarLanguage = nil
-            remoteLocaleEventExists = false
-            remoteLocaleExistsInNavBarLanguages = nil
-        }
-        
-        let remoteParallelLocale: String?
-        let remoteParallelLocaleNavBarLanguage: LanguageModel?
-        let remoteParallelLocaleEventExists: Bool
-        let remoteParallelLocaleExistsInNavBarLanguages: Bool
-        
-        if let remoteParallelLocaleValue = attributes?.parallelLocale, !remoteParallelLocaleValue.isEmpty {
-            
-            remoteParallelLocale = remoteParallelLocaleValue
-            remoteParallelLocaleNavBarLanguage = navBarLanguages.first(where: { $0.localeId.lowercased() == remoteParallelLocaleValue.lowercased() })
-            remoteParallelLocaleEventExists = true
-            remoteParallelLocaleExistsInNavBarLanguages = remoteParallelLocaleNavBarLanguage != nil
-        }
-        else {
-            
-            remoteParallelLocale = nil
-            remoteParallelLocaleNavBarLanguage = nil
-            remoteParallelLocaleEventExists = false
-            remoteParallelLocaleExistsInNavBarLanguages = false
-        }
-        
-        if let remoteLocaleNavBarLanguage = remoteLocaleNavBarLanguage {
-            remoteLocaleNavBarLanguageIndex = navBarLanguages.firstIndex(of: remoteLocaleNavBarLanguage)
-        }
-        else {
-            remoteLocaleNavBarLanguageIndex = nil
-        }
-        
-        let localeChangedAndExistsInNavBar: Bool = remoteLocaleEventExists && remoteLocaleExistsInNavBarLanguages == true && remoteLocaleNavBarLanguage?.id != currentNavBarLanguage.id
-        
-        let reloadCollectionViewDataNeeded: Bool = localeChangedAndExistsInNavBar
         
         let pageNavigation = PageNavigationCollectionViewNavigationModel(
             navigationDirection: nil,
@@ -446,43 +466,15 @@ extension TractViewModel {
             deletePages: nil
         )
         
-        let navigationEvent = MobileContentPagesNavigationEvent(
+        let pagesNavigationEvent = MobileContentPagesNavigationEvent(
             pageNavigation: pageNavigation,
             setPages: nil,
-            pagePositions: pagePositions,
+            pagePositions: getPagePositionsForRemoteShareNavigationEvent(remoteShareNavigationEvent: remoteShareNavigationEvent),
             parentPageParams: nil,
             pageSubIndex: nil
         )
-                
-        if localeChangedAndExistsInNavBar, let remoteLocaleNavBarLanguageIndex = remoteLocaleNavBarLanguageIndex {
-            
-            super.setPageRenderer(
-                pageRenderer: renderer.value.pageRenderers[remoteLocaleNavBarLanguageIndex],
-                navigationEvent: navigationEvent,
-                pagePositions: pagePositions
-            )
-        }
-        else if remoteLocaleEventExists && (remoteLocaleExistsInNavBarLanguages == false), let remoteLocale = remoteLocale, let remoteLanguage = languagesRepository.getLanguage(code: remoteLocale) {
-            
-            let parallelLanguageId: String?
-            
-            if let parallelLanguageCode = remoteParallelLocale {
-                parallelLanguageId = languagesRepository.getLanguage(code: parallelLanguageCode)?.id
-            }
-            else {
-                parallelLanguageId = nil
-            }
-            
-            super.setRendererPrimaryLanguage(
-                primaryLanguageId: remoteLanguage.id,
-                parallelLanguageId: parallelLanguageId,
-                selectedLanguageId: remoteLanguage.id
-            )
-        }
-        else {
-            
-            super.sendPageNavigationEvent(navigationEvent: navigationEvent)
-        }
+        
+        return pagesNavigationEvent
     }
     
     func sendRemoteShareNavigationEvent(page: Int, pagePositions: TractPagePositions) {
@@ -490,15 +482,13 @@ extension TractViewModel {
         guard tractRemoteSharePublisher.isSubscriberChannelCreatedForPublish else {
             return
         }
-        
-        let localeId: String = languages[selectedLanguageIndex].localeId
-        let parallelLocaleId: String? = languages[safe: 1]?.localeId
-                
+                        
         let event = TractRemoteSharePublisherNavigationEvent(
             card: pagePositions.cardPosition,
-            locale: localeId,
+            locale: languages[safe: selectedLanguageIndex]?.localeId,
             page: page,
-            parallelLocale: parallelLocaleId,
+            parallelLocale: languages[safe: 1]?.localeId,
+            primaryLocale: languages[safe: 0]?.localeId,
             tool: resource.abbreviation
         )
         
