@@ -27,7 +27,6 @@ class RealmLanguage: Object, IdentifiableRealmObject, LanguageDataModelInterface
     let resource = LinkingObjects(fromType: RealmResource.self, property: "languages")
     
     func mapFrom(interface: LanguageDataModelInterface) {
-        
         code = interface.code
         directionString = interface.directionString
         id = interface.id
@@ -36,7 +35,7 @@ class RealmLanguage: Object, IdentifiableRealmObject, LanguageDataModelInterface
         forceLanguageName = interface.forceLanguageName
     }
     
-    static func from(interface: LanguageDataModelInterface) -> RealmLanguage {
+    static func createNewFrom(interface: LanguageDataModelInterface) -> RealmLanguage {
         let realmLanguage = RealmLanguage()
         realmLanguage.mapFrom(interface: interface)
         return realmLanguage
