@@ -378,21 +378,12 @@ extension TractViewModel {
         let attributes = remoteShareNavigationEvent.message?.data?.attributes
                 
         let remoteShareSelectedLocale: String? = attributes?.locale
-        
-        var remoteShareNavLocales: [String] = Array()
-        
-        if let primaryLocale = attributes?.primaryLocale, !primaryLocale.isEmpty {
-            remoteShareNavLocales.append(primaryLocale)
-        }
-        
-        if let parallelLocale = attributes?.parallelLocale, !parallelLocale.isEmpty {
-            remoteShareNavLocales.append(parallelLocale)
-        }
+        let remoteShareNavBarLocales: [String] = getRemoteShareNavBarLocales(remoteShareNavigationEvent: remoteShareNavigationEvent)
         
         let navBarSelectedLocale: String? = languages[safe: selectedLanguageIndex]?.code
         let navBarLocales: [String] = languages.map { $0.code }
         
-        let navBarLanguagesAreTheSame: Bool = navBarLocales.count == remoteShareNavLocales.count && navBarLocales == remoteShareNavLocales
+        let navBarLanguagesAreTheSame: Bool = navBarLocales.count == remoteShareNavBarLocales.count && navBarLocales == remoteShareNavBarLocales
         let selectedLocaleChanged: Bool
         
         if let navBarSelectedLocale = navBarSelectedLocale, !navBarSelectedLocale.isEmpty, let remoteShareSelectedLocale = remoteShareSelectedLocale, !remoteShareSelectedLocale.isEmpty {
@@ -440,6 +431,31 @@ extension TractViewModel {
                 )
             )
         }
+    }
+    
+    private func getRemoteShareNavBarLocales(remoteShareNavigationEvent: TractRemoteShareNavigationEvent) -> [String] {
+        
+        let attributes = remoteShareNavigationEvent.message?.data?.attributes
+                        
+        let remoteShareNavLocales: [String]
+        
+        if let primaryLocale = attributes?.primaryLocale, !primaryLocale.isEmpty {
+            
+            if let parallelLocale = attributes?.parallelLocale, !parallelLocale.isEmpty {
+                remoteShareNavLocales = [primaryLocale, parallelLocale]
+            }
+            else {
+                remoteShareNavLocales = [primaryLocale]
+            }
+        }
+        else if let locale = attributes?.locale, !locale.isEmpty {
+            remoteShareNavLocales = [locale]
+        }
+        else {
+            remoteShareNavLocales = []
+        }
+        
+        return remoteShareNavLocales
     }
     
     private func getPagePositionsForRemoteShareNavigationEvent(remoteShareNavigationEvent: TractRemoteShareNavigationEvent) -> TractPagePositions {
