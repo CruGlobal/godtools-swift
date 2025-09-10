@@ -28,6 +28,20 @@ class MobileContentLanguagesApi {
         baseUrl = config.getMobileContentApiBaseUrl()
     }
     
+    private func getLanguageRequest(urlSession: URLSession, languageId: String) -> URLRequest {
+        
+        return requestBuilder.build(
+            parameters: RequestBuilderParameters(
+                urlSession: urlSession,
+                urlString: baseUrl + Path.languages + "/" + languageId,
+                method: .get,
+                headers: nil,
+                httpBody: nil,
+                queryItems: nil
+            )
+        )
+    }
+    
     private func getLanguagesRequest(urlSession: URLSession) -> URLRequest {
         
         return requestBuilder.build(
@@ -42,6 +56,23 @@ class MobileContentLanguagesApi {
         )
     }
     
+    private func getLanguage(requestPriority: RequestPriority, languageId: String) -> AnyPublisher<LanguageModel?, Error> {
+        
+        let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
+        
+        let urlRequest: URLRequest = getLanguageRequest(urlSession: urlSession, languageId: languageId)
+        
+        return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
+            .decodeRequestDataResponseForSuccessCodable()
+            .map { (response: RequestCodableResponse<JsonApiResponseDataObject<LanguageModel>, NoResponseCodable>) in
+                
+                let language: LanguageModel? = response.successCodable?.dataObject
+                return language
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    @available(*, deprecated) // TODO: GT-1887 Make private. ~Levi
     func getLanguages(requestPriority: RequestPriority) -> AnyPublisher<[LanguageModel], Error> {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
@@ -54,6 +85,46 @@ class MobileContentLanguagesApi {
                 
                 let languages: [LanguageModel] = response.successCodable?.dataArray ?? []
                 return languages
+            }
+            .eraseToAnyPublisher()
+    }
+}
+
+// MARK: - RepositorySyncExternalDataFetchInterface
+
+extension MobileContentLanguagesApi: RepositorySyncExternalDataFetchInterface {
+    
+    func getObjectPublisher(id: String, requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<LanguageModel>, Never> {
+        
+        return getLanguage(requestPriority: requestPriority, languageId: id)
+            .map { (language: LanguageModel?) in
+                
+                let objects: [LanguageModel]
+                
+                if let language = language {
+                    objects = [language]
+                } else {
+                    objects = []
+                }
+                
+                return RepositorySyncResponse(objects: objects, errors: [])
+            }
+            .catch { (error: Error) in
+                return Just(RepositorySyncResponse(objects: [], errors: [error]))
+                    .eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    func getObjectsPublisher(requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<LanguageModel>, Never> {
+        
+        return getLanguages(requestPriority: requestPriority)
+            .map { (languages: [LanguageModel]) in
+                return RepositorySyncResponse(objects: languages, errors: [])
+            }
+            .catch { (error: Error) in
+                return Just(RepositorySyncResponse(objects: [], errors: [error]))
+                    .eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
     }

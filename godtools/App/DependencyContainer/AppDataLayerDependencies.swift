@@ -186,7 +186,8 @@ class AppDataLayerDependencies {
         
         return LanguagesRepository(
             api: api,
-            cache: cache
+            cache: cache,
+            realmDatabase: sharedRealmDatabase
         )
     }
     

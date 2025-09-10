@@ -31,8 +31,7 @@ class RealmLanguagesCacheSync {
                 
                 for newLanguage in languages {
                     
-                    let realmLanguage: RealmLanguage = RealmLanguage()
-                    realmLanguage.mapFrom(model: newLanguage)
+                    let realmLanguage = RealmLanguage.from(interface: newLanguage)
                     newLanguagesToStore.append(realmLanguage)
                     
                     if let indexOfNewLanguage = existingLanguagesMinusNewlyAddedLanguages.firstIndex(where: { $0.id == newLanguage.id }) {
