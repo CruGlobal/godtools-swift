@@ -82,6 +82,7 @@ struct AnalyticsConstants {
     
     struct ActionNames {
         static let aboutToolOpened = "About Tool Open Button"
+        static let deeplinkError = "deeplink_error"
         static let lessonOpenTapped = "open_lesson"
         static let parallelLanguageToggled = "Parallel Language Toggled"
         static let shareIconEngaged = "Share Icon Engaged"

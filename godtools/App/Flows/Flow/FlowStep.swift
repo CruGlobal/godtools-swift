@@ -15,11 +15,16 @@ enum FlowStep {
     // app
     case appLaunched(state: AppLaunchState)
     case deepLink(deepLinkType: ParsedDeepLinkType)
+    case showDeferredDeepLinkModal
     case showOnboardingTutorial(animated: Bool)
     case onboardingFlowCompleted(onboardingFlowCompletedState: OnboardingFlowCompletedState?)
     case buttonWithUrlTappedFromAppMessage(url: URL)
     case menuTappedFromTools
     case openTutorialTappedFromTools
+    
+    // deferred deep link modal
+    case closeTappedFromDeferredDeepLinkModal
+    case handleDeepLinkFromDeferredDeepLinkModal(deepLinkType: ParsedDeepLinkType)
     
     // onboarding
     case chooseAppLanguageTappedFromOnboardingTutorial
