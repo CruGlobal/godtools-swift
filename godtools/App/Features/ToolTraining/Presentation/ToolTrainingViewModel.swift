@@ -67,7 +67,7 @@ class ToolTrainingViewModel: NSObject {
         return pageRenderer.resource
     }
     
-    private var language: LanguageModel {
+    private var language: LanguageDataModel {
         return pageRenderer.language
     }
     

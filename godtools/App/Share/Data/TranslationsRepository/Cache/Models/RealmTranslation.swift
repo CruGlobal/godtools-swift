@@ -54,12 +54,12 @@ class RealmTranslation: Object, TranslationModelType {
         return ResourceModel(model: realmResource)
     }
     
-    func getLanguage() -> LanguageModel? {
+    func getLanguage() -> LanguageCodable? {
         
         guard let realmLanguage = language else {
             return nil
         }
         
-        return LanguageModel(model: realmLanguage)
+        return LanguageCodable(interface: realmLanguage)
     }
 }

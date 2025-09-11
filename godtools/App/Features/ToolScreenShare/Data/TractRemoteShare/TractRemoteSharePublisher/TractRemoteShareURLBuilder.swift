@@ -24,7 +24,7 @@ class TractRemoteShareURLBuilder {
     func buildRemoteShareURL(toolId: String, primaryLanguageId: String, parallelLanguageId: String?, selectedLanguageId: String, page: Int?, subscriberChannelId: String) -> String? {
                 
         let resource: ResourceModel? = resourcesRepository.getResource(id: toolId)
-        let selectedLanguage: LanguageModel? = languagesRepository.getLanguage(id: selectedLanguageId)
+        let selectedLanguage: LanguageDataModel? = languagesRepository.getCachedObject(id: selectedLanguageId)
         
         var urlPath: String = ""
         
@@ -48,13 +48,13 @@ class TractRemoteShareURLBuilder {
         
         var queryItems: [URLQueryItem] = Array()
         
-        if let parallelLanguageId = parallelLanguageId, let parallelLanguage = languagesRepository.getLanguage(id: parallelLanguageId) {
+        if let parallelLanguageId = parallelLanguageId, let parallelLanguage = languagesRepository.getCachedObject(id: parallelLanguageId) {
             queryItems.append(URLQueryItem(name: "parallelLanguage", value: parallelLanguage.code))
         }
         
         queryItems.append(URLQueryItem(name: "icid", value: "gtshare"))
         
-        if let primaryLanguage = languagesRepository.getLanguage(id: primaryLanguageId) {
+        if let primaryLanguage = languagesRepository.getCachedObject(id: primaryLanguageId) {
             queryItems.append(URLQueryItem(name: "primaryLanguage", value: primaryLanguage.code))
         }
         

@@ -13,7 +13,7 @@ import GodToolsToolParser
 class DownloadManifestArticlesObservable: ObservableObject {
     
     private let translation: TranslationModel
-    private let language: LanguageModel
+    private let language: LanguageDataModel
     private let manifest: Manifest
     private let articleManifestAemRepository: ArticleManifestAemRepository
     
@@ -22,7 +22,7 @@ class DownloadManifestArticlesObservable: ObservableObject {
     @Published private(set) var articleAemRepositoryResult: ArticleAemRepositoryResult = ArticleAemRepositoryResult.emptyResult()
     @Published private(set) var isDownloading: Bool = false
     
-    init(translation: TranslationModel, language: LanguageModel, manifest: Manifest, articleManifestAemRepository: ArticleManifestAemRepository) {
+    init(translation: TranslationModel, language: LanguageDataModel, manifest: Manifest, articleManifestAemRepository: ArticleManifestAemRepository) {
         
         self.translation = translation
         self.language = language

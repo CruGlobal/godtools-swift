@@ -122,9 +122,7 @@ class PageNavigationCollectionView: UIView, NibBased {
             collectionView.isPagingEnabled = true
         }
         
-        if #available(iOS 16, *) {
-            collectionView.selfSizingInvalidation = .disabled
-        }
+        collectionView.selfSizingInvalidation = .disabled
     }
     
     override func layoutSubviews() {

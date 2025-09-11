@@ -26,7 +26,7 @@ class ToolLanguageDownloader {
     
     func downloadToolLanguagePublisher(languageId: String) -> AnyPublisher<ToolDownloaderDataModel, Error> {
         
-        guard let languageModel = languagesRepository.getLanguage(id: languageId) else {
+        guard let languageModel = languagesRepository.getCachedObject(id: languageId) else {
             
             let error: Error = NSError.errorWithDomain(domain: "ToolLanguageDownloader", code: -1, description: "Internal Error in ToolLanguageDownloader.  Failed to fetch language with language id: \(languageId)")
             

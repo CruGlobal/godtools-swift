@@ -33,12 +33,12 @@ class GetDownloadableLanguagesListRepository: GetDownloadableLanguagesListReposi
     func getDownloadableLanguagesPublisher(currentAppLanguage: AppLanguageDomainModel) -> AnyPublisher<[DownloadableLanguageListItemDomainModel], Never> {
         
         return Publishers.CombineLatest(
-            languagesRepository.getLanguagesChanged(),
+            languagesRepository.getObjectsPublisher(getObjectsType: .objects, cachePolicy: .returnCacheDataElseFetch(requestPriority: .high, observeChanges: true)),
             downloadedLanguagesRepository.getDownloadedLanguagesChangedPublisher()
         )
-        .map { _ in
+        .map { (languagesResponse: RepositorySyncResponse<LanguageDataModel>, downloadLanguagesChanged: Void) in
             
-            return self.languagesRepository.getLanguages()
+            return languagesResponse.objects
                 .compactMap { language in
                     
                     let numberToolsAvailable = self.getNumberToolsAvailable(for: language.code)

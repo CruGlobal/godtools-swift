@@ -1,14 +1,14 @@
 //
-//  LanguageModelType.swift
+//  LanguageDataModelInterface.swift
 //  godtools
 //
-//  Created by Levi Eggert on 6/10/20.
-//  Copyright © 2020 Cru. All rights reserved.
+//  Created by Levi Eggert on 9/5/25.
+//  Copyright © 2025 Cru. All rights reserved.
 //
 
 import Foundation
 
-protocol LanguageModelType {
+protocol LanguageDataModelInterface {
     
     var code: BCP47LanguageIdentifier { get }
     var directionString: String { get }

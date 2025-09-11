@@ -23,5 +23,5 @@ protocol TranslationModelType {
     var version: Int { get }
     
     func getResource() -> ResourceModel?
-    func getLanguage() -> LanguageModel?
+    func getLanguage() -> LanguageCodable?
 }

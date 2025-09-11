@@ -38,10 +38,10 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
             
             let lessonListItems: [LessonListItemDomainModel] = lessons.map { (resource: ResourceModel) in
                 
-                let filterLanguageModel: LanguageModel?
+                let filterLanguageModel: LanguageDataModel?
                 if let filterLanguageId = filterLessonsByLanguage?.languageId {
                     
-                    filterLanguageModel = self.languagesRepository.getLanguage(id: filterLanguageId)
+                    filterLanguageModel = self.languagesRepository.getCachedObject(id: filterLanguageId)
                 } else {
                     filterLanguageModel = nil
                 }
@@ -53,7 +53,7 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
                 
                 let nameLanguageDirection: LanguageDirectionDomainModel
                 if let filterLanguageModel = filterLanguageModel {
-                    nameLanguageDirection = LanguageDirectionDomainModel(languageModel: filterLanguageModel)
+                    nameLanguageDirection = filterLanguageModel.languageDirectionDomainModel
                 } else {
                     nameLanguageDirection = .leftToRight
                 }
@@ -79,11 +79,11 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
 
 extension GetLessonsListRepository {
     
-    private func getToolLanguageAvailability(appLanguage: AppLanguageDomainModel, filterLanguageModel: LanguageModel?, resource: ResourceModel) -> ToolLanguageAvailabilityDomainModel {
+    private func getToolLanguageAvailability(appLanguage: AppLanguageDomainModel, filterLanguageModel: LanguageDataModel?, resource: ResourceModel) -> ToolLanguageAvailabilityDomainModel {
 
-        if let appLanguageModel = languagesRepository.getLanguage(code: appLanguage) {
+        if let appLanguageModel = languagesRepository.getCachedLanguage(code: appLanguage) {
             
-            let language: LanguageModel
+            let language: LanguageDataModel
             
             if let filterLanguageModel = filterLanguageModel {
                 language = filterLanguageModel

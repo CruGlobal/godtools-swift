@@ -1,5 +1,5 @@
 //
-//  LanguageModel.swift
+//  LanguageCodable.swift
 //  godtools
 //
 //  Created by Levi Eggert on 6/10/20.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct LanguageModel: LanguageModelType, Codable {
+struct LanguageCodable: LanguageDataModelInterface, Codable {
     
     let code: BCP47LanguageIdentifier
     let directionString: String
@@ -53,30 +53,13 @@ struct LanguageModel: LanguageModelType, Codable {
         forceLanguageName = try attributesContainer?.decodeIfPresent(Bool.self, forKey: .forceLanguageName) ?? false
     }
     
-    init(model: LanguageModelType) {
+    init(interface: LanguageDataModelInterface) {
         
-        code = model.code
-        directionString = model.directionString
-        id = model.id
-        name = model.name
-        type = model.type
-        forceLanguageName = model.forceLanguageName
-    }
-}
-
-extension LanguageModel: Equatable {
-    static func == (this: LanguageModel, that: LanguageModel) -> Bool {
-        return this.id == that.id
-    }
-}
-
-extension LanguageModel {
-    enum Direction {
-        case leftToRight
-        case rightToLeft
-    }
-    
-    var direction: Direction {
-        return directionString == "rtl" ? .rightToLeft : .leftToRight
+        code = interface.code
+        directionString = interface.directionString
+        id = interface.id
+        name = interface.name
+        type = interface.type
+        forceLanguageName = interface.forceLanguageName
     }
 }

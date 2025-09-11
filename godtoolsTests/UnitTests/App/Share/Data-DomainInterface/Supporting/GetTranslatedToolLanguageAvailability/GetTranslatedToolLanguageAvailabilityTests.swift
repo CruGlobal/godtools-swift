@@ -49,7 +49,7 @@ struct GetTranslatedToolLanguageAvailabilityTests {
         let testsDiContainer: TestsDiContainer = Self.getTestsDiContainer()
         let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability = Self.getTranslatedToolLanguageAvailability(testsDiContainer: testsDiContainer)
         
-        let language: LanguageModel? = Self.queryLanguage(id: argument.availableInLanguageCode, testsDiContainer: testsDiContainer)
+        let language: LanguageDataModel? = Self.queryLanguage(id: argument.availableInLanguageCode, testsDiContainer: testsDiContainer)
         
         let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel = getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(
             toolId: Self.toolId,
@@ -96,7 +96,7 @@ struct GetTranslatedToolLanguageAvailabilityTests {
         let testsDiContainer: TestsDiContainer = Self.getTestsDiContainer()
         let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability = Self.getTranslatedToolLanguageAvailability(testsDiContainer: testsDiContainer)
         
-        let language: LanguageModel? = Self.queryLanguage(id: argument.availableInLanguageCode, testsDiContainer: testsDiContainer)
+        let language: LanguageDataModel? = Self.queryLanguage(id: argument.availableInLanguageCode, testsDiContainer: testsDiContainer)
         
         let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel = getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(
             toolId: Self.toolId,
@@ -297,8 +297,8 @@ extension GetTranslatedToolLanguageAvailabilityTests {
         return testsDiContainer.dataLayer.getResourcesRepository().getResource(id: id)
     }
     
-    private static func queryLanguage(id: String, testsDiContainer: TestsDiContainer) -> LanguageModel? {
-        return testsDiContainer.dataLayer.getLanguagesRepository().getLanguage(id: id)
+    private static func queryLanguage(id: String, testsDiContainer: TestsDiContainer) -> LanguageDataModel? {
+        return testsDiContainer.dataLayer.getLanguagesRepository().getCachedObject(id: id)
     }
     
     private static func getLocalizationServices() -> MockLocalizationServices {
