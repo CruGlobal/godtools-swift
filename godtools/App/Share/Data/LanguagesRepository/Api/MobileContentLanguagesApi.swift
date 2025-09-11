@@ -56,7 +56,7 @@ class MobileContentLanguagesApi {
         )
     }
     
-    private func getLanguage(requestPriority: RequestPriority, languageId: String) -> AnyPublisher<LanguageModel?, Error> {
+    private func getLanguage(requestPriority: RequestPriority, languageId: String) -> AnyPublisher<LanguageCodable?, Error> {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
@@ -64,16 +64,15 @@ class MobileContentLanguagesApi {
         
         return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
             .decodeRequestDataResponseForSuccessCodable()
-            .map { (response: RequestCodableResponse<JsonApiResponseDataObject<LanguageModel>, NoResponseCodable>) in
+            .map { (response: RequestCodableResponse<JsonApiResponseDataObject<LanguageCodable>, NoResponseCodable>) in
                 
-                let language: LanguageModel? = response.successCodable?.dataObject
+                let language: LanguageCodable? = response.successCodable?.dataObject
                 return language
             }
             .eraseToAnyPublisher()
     }
     
-    @available(*, deprecated) // TODO: GT-1887 Make private. ~Levi
-    func getLanguages(requestPriority: RequestPriority) -> AnyPublisher<[LanguageModel], Error> {
+    private func getLanguages(requestPriority: RequestPriority) -> AnyPublisher<[LanguageCodable], Error> {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
@@ -81,9 +80,9 @@ class MobileContentLanguagesApi {
         
         return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
             .decodeRequestDataResponseForSuccessCodable()
-            .map { (response: RequestCodableResponse<JsonApiResponseDataArray<LanguageModel>, NoResponseCodable>) in
+            .map { (response: RequestCodableResponse<JsonApiResponseDataArray<LanguageCodable>, NoResponseCodable>) in
                 
-                let languages: [LanguageModel] = response.successCodable?.dataArray ?? []
+                let languages: [LanguageCodable] = response.successCodable?.dataArray ?? []
                 return languages
             }
             .eraseToAnyPublisher()
@@ -94,12 +93,12 @@ class MobileContentLanguagesApi {
 
 extension MobileContentLanguagesApi: RepositorySyncExternalDataFetchInterface {
     
-    func getObjectPublisher(id: String, requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<LanguageModel>, Never> {
+    func getObjectPublisher(id: String, requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<LanguageCodable>, Never> {
         
         return getLanguage(requestPriority: requestPriority, languageId: id)
-            .map { (language: LanguageModel?) in
+            .map { (language: LanguageCodable?) in
                 
-                let objects: [LanguageModel]
+                let objects: [LanguageCodable]
                 
                 if let language = language {
                     objects = [language]
@@ -116,10 +115,10 @@ extension MobileContentLanguagesApi: RepositorySyncExternalDataFetchInterface {
             .eraseToAnyPublisher()
     }
     
-    func getObjectsPublisher(requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<LanguageModel>, Never> {
+    func getObjectsPublisher(requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<LanguageCodable>, Never> {
         
         return getLanguages(requestPriority: requestPriority)
-            .map { (languages: [LanguageModel]) in
+            .map { (languages: [LanguageCodable]) in
                 return RepositorySyncResponse(objects: languages, errors: [])
             }
             .catch { (error: Error) in

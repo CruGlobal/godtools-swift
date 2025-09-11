@@ -130,14 +130,14 @@ class TractViewModel: MobileContentRendererViewModel {
         return resource.abbreviation
     }
         
-    private var parallelLanguage: LanguageModel? {
+    private var parallelLanguage: LanguageDataModel? {
         if renderer.value.pageRenderers.count > 1 {
             return renderer.value.pageRenderers[1].language
         }
         return nil
     }
     
-    private func getPageRenderer(language: LanguageModel) -> MobileContentPageRenderer? {
+    private func getPageRenderer(language: LanguageDataModel) -> MobileContentPageRenderer? {
         
         let languageLocaleId: String = language.localeId.lowercased()
         
@@ -164,10 +164,10 @@ class TractViewModel: MobileContentRendererViewModel {
             .store(in: &Self.backgroundCancellables)
     }
     
-    private func trackLanguageTapped(tappedLanguage: LanguageModel) {
+    private func trackLanguageTapped(tappedLanguage: LanguageDataModel) {
         
-        let primaryLanguage: LanguageModel = languages[0]
-        let parallelLanguage: LanguageModel? = languages[safe: 1]
+        let primaryLanguage: LanguageDataModel = languages[0]
+        let parallelLanguage: LanguageDataModel? = languages[safe: 1]
                 
         let trackTappedLanguageData: [String: Any] = [
             AnalyticsConstants.Keys.contentLanguageSecondary: parallelLanguage?.localeId ?? "",
@@ -281,7 +281,7 @@ extension TractViewModel {
     
     func languageTapped(index: Int, page: Int, pagePositions: TractPagePositions) {
                 
-        let tappedLanguage: LanguageModel = languages[index]
+        let tappedLanguage: LanguageDataModel = languages[index]
         
         if let pageRenderer = getPageRenderer(language: tappedLanguage) {
             setPageRenderer(pageRenderer: pageRenderer, navigationEvent: nil, pagePositions: pagePositions)
@@ -418,7 +418,7 @@ extension TractViewModel {
             super.setRendererPrimaryLanguage(
                 primaryLanguageId: primaryLanguageId,
                 parallelLanguageId: parallelLanguageId,
-                selectedLanguageId: languagesRepository.getLanguage(code: remoteShareSelectedLocale)?.id
+                selectedLanguageId: languagesRepository.getCachedLanguage(code: remoteShareSelectedLocale)?.id
             )
         }
         else {
@@ -438,10 +438,10 @@ extension TractViewModel {
         let attributes = remoteShareNavigationEvent.message?.data?.attributes
                 
         if let primaryLocale = attributes?.primaryLocale, !primaryLocale.isEmpty {
-            return languagesRepository.getLanguage(code: primaryLocale)?.id
+            return languagesRepository.getCachedLanguage(code: primaryLocale)?.id
         }
         else if let locale = attributes?.locale, !locale.isEmpty {
-            return languagesRepository.getLanguage(code: locale)?.id
+            return languagesRepository.getCachedLanguage(code: locale)?.id
         }
         
         return nil
@@ -452,7 +452,7 @@ extension TractViewModel {
         let attributes = remoteShareNavigationEvent.message?.data?.attributes
                 
         if let parallelLocale = attributes?.parallelLocale, !parallelLocale.isEmpty {
-            return languagesRepository.getLanguage(code: parallelLocale)?.id
+            return languagesRepository.getCachedLanguage(code: parallelLocale)?.id
         }
         
         return nil

@@ -20,7 +20,7 @@ class MobileContentRenderedPageContext {
     let resourcesCache: MobileContentRendererManifestResourcesCache
     let resource: ResourceModel
     let appLanguage: AppLanguageDomainModel
-    let language: LanguageModel
+    let language: LanguageDataModel
     let translation: TranslationModel
     let viewRenderer: MobileContentViewRenderer
     let navigation: MobileContentRendererNavigation
@@ -33,7 +33,7 @@ class MobileContentRenderedPageContext {
     
     private weak var weakWindow: UIViewController?
     
-    init(pageModel: Page, page: Int, isLastPage: Bool, parentPageParams: MobileContentParentPageParams?, window: UIViewController, safeArea: UIEdgeInsets, manifest: Manifest, resourcesCache: MobileContentRendererManifestResourcesCache, resource: ResourceModel, appLanguage: AppLanguageDomainModel, language: LanguageModel, translation: TranslationModel, viewRenderer: MobileContentViewRenderer, navigation: MobileContentRendererNavigation, rendererLanguages: MobileContentRendererLanguages, rendererState: State, trainingTipsEnabled: Bool, pageViewDataCache: MobileContentPageViewDataCache, userInfo: [String: Any]?) {
+    init(pageModel: Page, page: Int, isLastPage: Bool, parentPageParams: MobileContentParentPageParams?, window: UIViewController, safeArea: UIEdgeInsets, manifest: Manifest, resourcesCache: MobileContentRendererManifestResourcesCache, resource: ResourceModel, appLanguage: AppLanguageDomainModel, language: LanguageDataModel, translation: TranslationModel, viewRenderer: MobileContentViewRenderer, navigation: MobileContentRendererNavigation, rendererLanguages: MobileContentRendererLanguages, rendererState: State, trainingTipsEnabled: Bool, pageViewDataCache: MobileContentPageViewDataCache, userInfo: [String: Any]?) {
         
         self.pageModel = pageModel
         self.page = page
@@ -71,7 +71,7 @@ class MobileContentRenderedPageContext {
         return window
     }
     
-    var primaryRendererLanguage: LanguageModel {
+    var primaryRendererLanguage: LanguageDataModel {
         return rendererLanguages.primaryLanguage
     }
 }

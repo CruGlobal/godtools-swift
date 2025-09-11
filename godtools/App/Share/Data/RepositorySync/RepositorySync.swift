@@ -26,15 +26,23 @@ open class RepositorySync<DataModelType, ExternalDataFetchType: RepositorySyncEx
         self.dataModelMapping = dataModelMapping
     }
     
-    var numberOfCachedObjects: Int {
+    public var numberOfCachedObjects: Int {
         return getNumberOfCachedObjects()
     }
     
-    func getCachedObject(id: String) -> DataModelType? {
+    public func getCachedObject(id: String) -> DataModelType? {
         return getCachedObjectToDataModel(primaryKey: id)
     }
     
-    func getCachedObjects(databaseQuery: RepositorySyncDatabaseQuery? = nil) -> [DataModelType] {
+    public func getCachedObjects(ids: [String]) -> [DataModelType] {
+        return getCachedObjects(
+            databaseQuery: RepositorySyncDatabaseQuery.filter(
+                filter: NSPredicate(format: "id IN %@", ids)
+            )
+        )
+    }
+    
+    public func getCachedObjects(databaseQuery: RepositorySyncDatabaseQuery? = nil) -> [DataModelType] {
         return getCachedObjectsToDataModels(databaseQuery: databaseQuery)
     }
 }
@@ -54,6 +62,11 @@ extension RepositorySync {
         if let filter = databaseQuery?.filter {
             return results
                 .filter(filter)
+        }
+        else if let filter = databaseQuery?.filter, let sortByKeyPath = databaseQuery?.sortByKeyPath {
+            return results
+                .filter(filter)
+                .sorted(byKeyPath: sortByKeyPath.keyPath, ascending: sortByKeyPath.ascending)
         }
         
         return results
@@ -139,22 +152,73 @@ extension RepositorySync {
             .eraseToAnyPublisher()
     }
     
-    private func storeExternalDataFetchResponse(response: RepositorySyncResponse<ExternalDataFetchType.DataModel>, updatePolicy: Realm.UpdatePolicy) -> RepositorySyncResponse<DataModelType> {
-        
-        let responseDataModels: [DataModelType] = response.objects.compactMap {
-            self.dataModelMapping.toDataModel(externalObject: $0)
-        }
-        
-        let realmObjects: [RealmObjectType] = responseDataModels.compactMap {
-            self.dataModelMapping.toPersistObject(dataModel: $0)
-        }
+    public func storeExternalDataFetchResponse(response: RepositorySyncResponse<ExternalDataFetchType.DataModel>, updatePolicy: Realm.UpdatePolicy = .modified) -> RepositorySyncResponse<DataModelType> {
         
         let realm: Realm = realmDatabase.openRealm()
+        
+        let objectsToAdd: [RealmObjectType] = response.objects.compactMap {
+            self.dataModelMapping.toPersistObject(externalObject: $0)
+        }
+        
+        let errors: [Error]
+        
+        do {
+            
+            try realm.write {
+                realm.add(objectsToAdd, update: updatePolicy)
+            }
+            
+            errors = Array()
+        }
+        catch let error {
+            errors = [error]
+        }
+        
+        return RepositorySyncResponse<DataModelType>(
+            objects: response.objects.compactMap { self.dataModelMapping.toDataModel(externalObject: $0) },
+            errors: errors
+        )
+    }
+    
+    public func syncExternalDataFetchResponse(response: RepositorySyncResponse<ExternalDataFetchType.DataModel>, updatePolicy: Realm.UpdatePolicy = .modified) -> RepositorySyncResponse<DataModelType> {
+
+        let shouldDeleteObjectsNotFoundInResponse: Bool = true
+        
+        let realm: Realm = realmDatabase.openRealm()
+
+        var responseDataModels: [DataModelType] = Array()
+        
+        var objectsToAdd: [RealmObjectType] = Array()
+        // store all objects in the collection
+        var objectsToRemove: [RealmObjectType] = Array(realm.objects(RealmObjectType.self))
+        
+        for externalObject in response.objects {
+
+            if let dataModel = dataModelMapping.toDataModel(externalObject: externalObject) {
+                responseDataModels.append(dataModel)
+            }
+            
+            if let realmObject = dataModelMapping.toPersistObject(externalObject: externalObject) {
+                
+                objectsToAdd.append(realmObject)
+                
+                // added realm object can be removed from this list so it won't be deleted from realm
+                if shouldDeleteObjectsNotFoundInResponse, let realmObjectIndex = objectsToRemove.firstIndex(where: { $0.id == realmObject.id }) {
+                    objectsToRemove.remove(at: realmObjectIndex)
+                }
+            }
+        }
+
         let errors: [Error]
         
         do {
             try realm.write {
-                realm.add(realmObjects, update: updatePolicy)
+                
+                realm.add(objectsToAdd, update: updatePolicy)
+               
+                if shouldDeleteObjectsNotFoundInResponse, objectsToRemove.count > 0 {
+                    realm.delete(objectsToRemove)
+                }
             }
             
             errors = Array()
@@ -226,7 +290,7 @@ extension RepositorySync {
         -
      */
     
-    func getObjectsPublisher(getObjectsType: RepositorySyncGetObjectsType, cachePolicy: RepositorySyncCachePolicy, updatePolicy: Realm.UpdatePolicy = .modified) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
+    public func getObjectsPublisher(getObjectsType: RepositorySyncGetObjectsType, cachePolicy: RepositorySyncCachePolicy, updatePolicy: Realm.UpdatePolicy = .modified) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
         
         let realm: Realm = realmDatabase.openRealm()
         

@@ -95,13 +95,13 @@ class GetToolTranslationsFilesUseCase {
                 
                 let languageManifets: [MobileContentRendererLanguageTranslationManifest] = translationManifests.compactMap({
                     
-                    guard let language = $0.translation.language else {
+                    guard let languageCodable = $0.translation.language else {
                         return nil
                     }
                     
                     return MobileContentRendererLanguageTranslationManifest(
                         manifest: $0.manifest,
-                        language: language,
+                        language: LanguageDataModel(interface: languageCodable),
                         translation: $0.translation
                     )
                 })
@@ -183,7 +183,7 @@ class GetToolTranslationsFilesUseCase {
         
         return languagesRepository
             .syncLanguagesFromRemote(requestPriority: Self.defaultRequestPriority)
-            .flatMap({ (languagesSynced: RealmLanguagesCacheSyncResult) -> AnyPublisher<Void, Error> in
+            .flatMap({ (languagesResponse: RepositorySyncResponse<LanguageDataModel>) -> AnyPublisher<Void, Error> in
                 
                 self.syncResourcesPublisher(resourceNeeded: resourceNeeded)
                     .eraseToAnyPublisher()

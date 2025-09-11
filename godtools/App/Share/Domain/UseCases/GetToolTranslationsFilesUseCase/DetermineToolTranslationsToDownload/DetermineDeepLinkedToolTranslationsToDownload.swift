@@ -87,7 +87,7 @@ class DetermineDeepLinkedToolTranslationsToDownload: DetermineToolTranslationsTo
     
     private func getSupportedLanguageIds(resource: ResourceModel, languageCodes: [String]) -> [String] {
         
-        let languages: [LanguageModel] = languagesRepository.getLanguages(languageCodes: languageCodes)
+        let languages: [LanguageDataModel] = languagesRepository.getCachedLanguages(languageCodes: languageCodes)
         let languageIds: [String] = languages.map({$0.id})
         let supportedLanguageIds: [String] = languageIds.filter({resource.supportsLanguage(languageId: $0)})
         

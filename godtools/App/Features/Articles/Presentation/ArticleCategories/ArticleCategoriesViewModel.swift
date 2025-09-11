@@ -15,7 +15,7 @@ class ArticleCategoriesViewModel {
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
     
     private let resource: ResourceModel
-    private let language: LanguageModel
+    private let language: LanguageDataModel
     private let manifest: Manifest
     private let downloadArticlesObservable: DownloadManifestArticlesObservable
     private let manifestResourcesCache: MobileContentRendererManifestResourcesCache
@@ -32,7 +32,7 @@ class ArticleCategoriesViewModel {
     let numberOfCategories: ObservableValue<Int> = ObservableValue(value: 0)
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
         
-    init(flowDelegate: FlowDelegate, resource: ResourceModel, language: LanguageModel, manifest: Manifest, downloadArticlesObservable: DownloadManifestArticlesObservable, manifestResourcesCache: MobileContentRendererManifestResourcesCache, incrementUserCounterUseCase: IncrementUserCounterUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(flowDelegate: FlowDelegate, resource: ResourceModel, language: LanguageDataModel, manifest: Manifest, downloadArticlesObservable: DownloadManifestArticlesObservable, manifestResourcesCache: MobileContentRendererManifestResourcesCache, incrementUserCounterUseCase: IncrementUserCounterUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
