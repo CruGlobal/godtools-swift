@@ -41,7 +41,7 @@ class GetToolsRepository: GetToolsRepositoryInterface {
         }
         
         return Publishers.CombineLatest(
-            resourcesRepository.getResourcesChangedPublisher().prepend(Void()),
+            resourcesRepository.observeDatabaseChangesPublisher().prepend(Void()),
             getToolListItemInterfaceStringsRepository.getStringsPublisher(translateInLanguage: translatedInAppLanguage)
         )
         .flatMap({ (resourcesChanged: Void, interfaceStrings: ToolListItemInterfaceStringsDomainModel) -> AnyPublisher<[ToolListItemDomainModel], Never> in

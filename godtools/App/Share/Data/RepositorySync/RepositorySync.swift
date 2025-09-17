@@ -30,6 +30,12 @@ open class RepositorySync<DataModelType, ExternalDataFetchType: RepositorySyncEx
         return getNumberOfCachedObjects()
     }
     
+    public func observeDatabaseChangesPublisher() -> AnyPublisher<Void, Never> {
+        return observeRealmCollectionChangesPublisher(
+            observeOnRealm: realmDatabase.openRealm()
+        )
+    }
+    
     public func getCachedObject(id: String) -> DataModelType? {
         return getCachedObjectToDataModel(primaryKey: id)
     }

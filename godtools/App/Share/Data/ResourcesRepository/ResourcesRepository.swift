@@ -35,12 +35,6 @@ class ResourcesRepository: RepositorySync<ResourceDataModel, MobileContentResour
         )
     }
     
-    func getResourcesChangedPublisher() -> AnyPublisher<Void, Never> {
-        return cache
-            .getResourcesChangedPublisher()
-            .eraseToAnyPublisher()
-    }
-    
     func getResource(abbreviation: String) -> ResourceDataModel? {
         
         let filter = NSPredicate(format: "\(#keyPath(RealmResource.abbreviation)) = '\(abbreviation)'")

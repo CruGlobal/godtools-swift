@@ -21,13 +21,6 @@ class RealmResourcesCache {
         self.resourcesSync = resourcesSync
     }
     
-    func getResourcesChangedPublisher() -> AnyPublisher<Void, Never> {
-        return realmDatabase.openRealm()
-            .objects(RealmResource.self)
-            .objectWillChange
-            .eraseToAnyPublisher()
-    }
-    
     func getResources(sorted: Bool = false) -> [ResourceDataModel] {
         
         var realmResources = realmDatabase.openRealm()
