@@ -21,6 +21,18 @@ class RealmResourcesCache {
         self.resourcesSync = resourcesSync
     }
     
+    func getResources(sorted: Bool = false) -> [ResourceDataModel] {
+            
+        var realmResources = realmDatabase.openRealm()
+            .objects(RealmResource.self)
+        
+        if sorted {
+            realmResources = realmResources.sorted(byKeyPath: #keyPath(RealmResource.attrDefaultOrder), ascending: true)
+        }
+        
+        return realmResources.map({ResourceDataModel(interface: $0)})
+    }
+    
     func syncResources(resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel, shouldRemoveDataThatNoLongerExists: Bool) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> {
         
         return resourcesSync.syncResources(

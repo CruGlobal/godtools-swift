@@ -293,8 +293,8 @@ extension GetTranslatedToolLanguageAvailabilityTests {
         )
     }
     
-    private static func queryResource(id: String, testsDiContainer: TestsDiContainer) -> ResourceModel? {
-        return testsDiContainer.dataLayer.getResourcesRepository().getResource(id: id)
+    private static func queryResource(id: String, testsDiContainer: TestsDiContainer) -> ResourceDataModel? {
+        return testsDiContainer.dataLayer.getResourcesRepository().getCachedObject(id: id)
     }
     
     private static func queryLanguage(id: String, testsDiContainer: TestsDiContainer) -> LanguageDataModel? {
