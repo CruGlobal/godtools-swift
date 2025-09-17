@@ -82,6 +82,12 @@ struct ResourceDataModel: ResourceDataModelInterface {
     }
 }
 
+extension ResourceDataModel: Equatable {
+    static func == (this: ResourceDataModel, that: ResourceDataModel) -> Bool {
+        return this.id == that.id
+    }
+}
+
 extension ResourceDataModel {
     
     var resourceTypeEnum: ResourceType {

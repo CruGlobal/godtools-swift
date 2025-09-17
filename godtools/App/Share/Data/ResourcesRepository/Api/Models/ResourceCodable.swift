@@ -172,9 +172,3 @@ struct ResourceCodable: ResourceDataModelInterface, Codable {
         return variantIds
     }
 }
-
-extension ResourceCodable: Equatable {
-    static func == (this: ResourceCodable, that: ResourceCodable) -> Bool {
-        return this.id == that.id
-    }
-}
