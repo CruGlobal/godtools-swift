@@ -13,5 +13,5 @@ struct MobileContentRendererLanguageTranslationManifest {
     
     let manifest: Manifest
     let language: LanguageDataModel
-    let translation: TranslationModel
+    let translation: TranslationDataModel
 }

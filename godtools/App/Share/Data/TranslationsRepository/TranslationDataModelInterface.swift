@@ -1,18 +1,20 @@
 //
-//  TranslationModelType.swift
+//  TranslationDataModelInterface.swift
 //  godtools
 //
-//  Created by Levi Eggert on 6/10/20.
-//  Copyright © 2020 Cru. All rights reserved.
+//  Created by Levi Eggert on 9/16/25.
+//  Copyright © 2025 Cru. All rights reserved.
 //
 
 import Foundation
 
-protocol TranslationModelType {
-        
+protocol TranslationDataModelInterface {
+    
     var id: String { get }
     var isPublished: Bool { get }
+    var languageDataModel: LanguageDataModel? { get }
     var manifestName: String { get }
+    var resourceDataModel: ResourceDataModel? { get }
     var toolDetailsBibleReferences: String { get }
     var toolDetailsConversationStarters: String { get }
     var toolDetailsOutline: String { get }
@@ -21,7 +23,4 @@ protocol TranslationModelType {
     var translatedTagline: String { get }
     var type: String { get }
     var version: Int { get }
-    
-    func getResource() -> ResourceModel?
-    func getLanguage() -> LanguageCodable?
 }

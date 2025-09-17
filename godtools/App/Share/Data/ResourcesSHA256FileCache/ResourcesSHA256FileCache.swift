@@ -47,7 +47,7 @@ class ResourcesSHA256FileCache {
         
     // MARK: - Attachment Files
     
-    func storeAttachmentFile(attachmentId: String, fileName: String, fileData: Data) -> AnyPublisher<FileCacheLocation, Error> {
+    func storeAttachmentFilePublisher(attachmentId: String, fileName: String, fileData: Data) -> AnyPublisher<FileCacheLocation, Error> {
         
         let fileCacheLocation: FileCacheLocation = FileCacheLocation(relativeUrlString: fileName)
         

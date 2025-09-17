@@ -31,7 +31,7 @@ class MobileContentCardCollectionPageViewModel: MobileContentPageViewModel {
     
     override var analyticsScreenName: String {
         
-        let resource: ResourceModel = renderedPageContext.resource
+        let resource: ResourceDataModel = renderedPageContext.resource
         let pageId: String = renderedPageContext.pageModel.id
         let separator: String = ":"
         
@@ -42,7 +42,7 @@ class MobileContentCardCollectionPageViewModel: MobileContentPageViewModel {
     
     private func getCardAnalyticsScreenName(card: Int) -> String {
         
-        let resource: ResourceModel = renderedPageContext.resource
+        let resource: ResourceDataModel = renderedPageContext.resource
         let pageId: String = renderedPageContext.pageModel.id
         let cardId: String = getCardId(card: card)
         let separator: String = ":"

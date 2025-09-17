@@ -38,8 +38,8 @@ class GetToolSettingsToolLanguagesListRepository: GetToolSettingsToolLanguagesLi
         
         let languageIds: [String]
         
-        if let resource = resourcesRepository.getResource(id: toolId) {
-            languageIds = resource.languageIds.filter({
+        if let resource = resourcesRepository.getCachedObject(id: toolId) {
+            languageIds = resource.getLanguageIds().filter({
                 !filterOutLanguageIds.contains($0)
             })
         }

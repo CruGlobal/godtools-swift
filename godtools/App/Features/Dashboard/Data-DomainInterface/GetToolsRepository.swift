@@ -46,7 +46,7 @@ class GetToolsRepository: GetToolsRepositoryInterface {
         )
         .flatMap({ (resourcesChanged: Void, interfaceStrings: ToolListItemInterfaceStringsDomainModel) -> AnyPublisher<[ToolListItemDomainModel], Never> in
         
-            let tools: [ResourceModel] = self.resourcesRepository.getAllToolsList(
+            let tools: [ResourceDataModel] = self.resourcesRepository.getAllToolsList(
                 filterByCategory: filterToolsByCategory?.id,
                 filterByLanguageId: filterToolsByLanguage?.id,
                 sortByDefaultOrder: true

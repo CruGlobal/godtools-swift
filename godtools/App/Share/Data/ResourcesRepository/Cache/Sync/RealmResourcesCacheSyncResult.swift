@@ -10,9 +10,9 @@ import Foundation
 
 struct RealmResourcesCacheSyncResult {
     
-    let resourcesRemoved: [ResourceModel]
-    let translationsRemoved: [TranslationModel]
-    let attachmentsRemoved: [AttachmentModel]
+    let resourcesRemoved: [ResourceDataModel]
+    let translationsRemoved: [TranslationDataModel]
+    let attachmentsRemoved: [AttachmentDataModel]
     let downloadedTranslationsRemoved: [DownloadedTranslationDataModel]
 }
 

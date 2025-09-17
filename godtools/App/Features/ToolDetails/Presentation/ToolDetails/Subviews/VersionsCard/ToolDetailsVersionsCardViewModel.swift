@@ -15,11 +15,9 @@ class ToolDetailsVersionsCardViewModel: ObservableObject {
     
     private let toolVersion: ToolVersionDomainModel
     private let attachmentsRepository: AttachmentsRepository
-    
-    private var getBannerImageCancellable: AnyCancellable?
-    
-    @Published var bannerImageData: OptionalImageData?
-    
+
+    let attachmentBanner: AttachmentBannerObservableObject
+        
     let isSelected: Bool
     let name: String
     let description: String
@@ -43,26 +41,9 @@ class ToolDetailsVersionsCardViewModel: ObservableObject {
         toolParallelLanguageName = toolVersion.toolParallelLanguageName
         toolParallelLanguageNameIsSupported = toolVersion.toolParallelLanguageNameIsSupported
         
-        downloadBannerImage()
-    }
-    
-    private func downloadBannerImage() {
-        
-        getBannerImageCancellable = nil
-        
-        let attachmentId: String = toolVersion.bannerImageId
-        
-        if let cachedImage = attachmentsRepository.getAttachmentImageFromCache(id: attachmentId) {
-            
-            bannerImageData = OptionalImageData(image: cachedImage, imageIdForAnimationChange: attachmentId)
-        }
-        else {
-            
-            getBannerImageCancellable = attachmentsRepository.getAttachmentImagePublisher(id: attachmentId, requestPriority: .medium)
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] (image: Image?) in
-                    self?.bannerImageData = OptionalImageData(image: image, imageIdForAnimationChange: attachmentId)
-                }
-        }
+        attachmentBanner = AttachmentBannerObservableObject(
+            attachmentId: toolVersion.bannerImageId,
+            attachmentsRepository: attachmentsRepository
+        )
     }
 }

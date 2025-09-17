@@ -36,7 +36,7 @@ class ToolLanguageDownloader {
                 
         let includeToolTypes: [ResourceType] = ResourceType.toolTypes + [.lesson]
         
-        let tools: [ResourceModel] = resourcesRepository.getCachedResourcesByFilter(
+        let tools: [ResourceDataModel] = resourcesRepository.getCachedResourcesByFilter(
             filter: ResourcesFilter(category: nil, languageModelCode: languageModel.code, resourceTypes: includeToolTypes)
         )
         

@@ -70,7 +70,7 @@ class TractPageCardViewModel: MobileContentViewModel {
     
     private var analyticsScreenName: String {
         
-        let resource: ResourceModel = renderedPageContext.resource
+        let resource: ResourceDataModel = renderedPageContext.resource
         let page: Int32 = renderedPageContext.pageModel.position
         let cardPosition: Int = Int(cardModel.position)
         

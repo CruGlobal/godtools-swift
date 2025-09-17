@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class RealmTranslation: Object, TranslationModelType {
+class RealmTranslation: Object, IdentifiableRealmObject, TranslationDataModelInterface {
     
     @objc dynamic var id: String = ""
     @objc dynamic var isPublished: Bool = false
@@ -29,37 +29,47 @@ class RealmTranslation: Object, TranslationModelType {
     override static func primaryKey() -> String? {
         return "id"
     }
+}
+
+extension RealmTranslation {
     
-    func mapFrom(model: TranslationModelType) {
+    func mapFrom(interface: TranslationDataModelInterface) {
         
-        id = model.id
-        isPublished = model.isPublished
-        manifestName = model.manifestName
-        toolDetailsBibleReferences = model.toolDetailsBibleReferences
-        toolDetailsConversationStarters = model.toolDetailsConversationStarters
-        toolDetailsOutline = model.toolDetailsOutline
-        translatedDescription = model.translatedDescription
-        translatedName = model.translatedName
-        translatedTagline = model.translatedTagline
-        type = model.type
-        version = model.version
+        id = interface.id
+        isPublished = interface.isPublished
+        manifestName = interface.manifestName
+        toolDetailsBibleReferences = interface.toolDetailsBibleReferences
+        toolDetailsConversationStarters = interface.toolDetailsConversationStarters
+        toolDetailsOutline = interface.toolDetailsOutline
+        translatedDescription = interface.translatedDescription
+        translatedName = interface.translatedName
+        translatedTagline = interface.translatedTagline
+        type = interface.type
+        version = interface.version
     }
     
-    func getResource() -> ResourceModel? {
+    static func createNewFrom(interface: TranslationDataModelInterface) -> RealmTranslation {
         
-        guard let realmResource = resource else {
+        let realmTranslation = RealmTranslation()
+        realmTranslation.mapFrom(interface: interface)
+        return realmTranslation
+    }
+    
+    var resourceDataModel: ResourceDataModel? {
+        
+        guard let resource = resource else {
             return nil
         }
         
-        return ResourceModel(model: realmResource)
+        return ResourceDataModel(interface: resource)
     }
     
-    func getLanguage() -> LanguageCodable? {
+    var languageDataModel: LanguageDataModel? {
         
-        guard let realmLanguage = language else {
+        guard let language = language else {
             return nil
         }
         
-        return LanguageCodable(interface: realmLanguage)
+        return LanguageDataModel(interface: language)
     }
 }

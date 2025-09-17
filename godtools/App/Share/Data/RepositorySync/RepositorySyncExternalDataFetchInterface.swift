@@ -17,3 +17,17 @@ public protocol RepositorySyncExternalDataFetchInterface {
     func getObjectPublisher(id: String, requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<DataModel>, Never>
     func getObjectsPublisher(requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<DataModel>, Never>
 }
+
+extension RepositorySyncExternalDataFetchInterface {
+    
+    func emptyResponsePublisher() -> AnyPublisher<RepositorySyncResponse<DataModel>, Never> {
+        
+        let emptyResponse = RepositorySyncResponse<DataModel>(
+            objects: [],
+            errors: []
+        )
+        
+        return Just(emptyResponse)
+            .eraseToAnyPublisher()
+    }
+}

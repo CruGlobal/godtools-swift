@@ -30,26 +30,26 @@ class ToolDownloader {
     
     func downloadToolsPublisher(tools: [DownloadToolDataModel], requestPriority: RequestPriority) -> AnyPublisher<ToolDownloaderDataModel, Error> {
             
-        var nonArticleTranslations: [TranslationModel] = Array()
-        var articleTranslations: [TranslationModel] = Array()
-        var allTranslations: [TranslationModel] = Array()
-        var attachments: [AttachmentModel] = Array()
+        var nonArticleTranslations: [TranslationDataModel] = Array()
+        var articleTranslations: [TranslationDataModel] = Array()
+        var allTranslations: [TranslationDataModel] = Array()
+        var attachments: [AttachmentDataModel] = Array()
         
         for tool in tools {
             
             let isArticle: Bool
             
-            if let resource = resourcesRepository.getResource(id: tool.toolId) {
+            if let resource = resourcesRepository.getCachedObject(id: tool.toolId) {
                 
-                if let resourceBanner = attachmentsRepository.getAttachmentModel(id: resource.attrBanner) {
+                if let resourceBanner = attachmentsRepository.getCachedAttachment(id: resource.attrBanner) {
                     attachments.append(resourceBanner)
                 }
                 
-                if let resourceBannerAbout = attachmentsRepository.getAttachmentModel(id: resource.attrBannerAbout) {
+                if let resourceBannerAbout = attachmentsRepository.getCachedAttachment(id: resource.attrBannerAbout) {
                     attachments.append(resourceBannerAbout)
                 }
                 
-                if let resourceAboutBannerAnimation = attachmentsRepository.getAttachmentModel(id: resource.attrAboutBannerAnimation) {
+                if let resourceAboutBannerAnimation = attachmentsRepository.getCachedAttachment(id: resource.attrAboutBannerAnimation) {
                     attachments.append(resourceAboutBannerAnimation)
                 }
                 
@@ -62,7 +62,7 @@ class ToolDownloader {
             
             for language in tool.languages {
                 
-                guard let translation = translationsRepository.getLatestTranslation(resourceId: tool.toolId, languageCode: language) else {
+                guard let translation = translationsRepository.getCachedLatestTranslation(resourceId: tool.toolId, languageCode: language) else {
                     continue
                 }
                 
@@ -109,9 +109,9 @@ class ToolDownloader {
             .eraseToAnyPublisher()
     }
     
-    private func getDownloadToolTranslationsPublishers(translations: [TranslationModel], requestPriority: RequestPriority) -> [AnyPublisher<Void, Error>] {
+    private func getDownloadToolTranslationsPublishers(translations: [TranslationDataModel], requestPriority: RequestPriority) -> [AnyPublisher<Void, Error>] {
             
-        let downloadTranslationsRequests: [AnyPublisher<Void, Error>] = translations.map { (translation: TranslationModel) in
+        let downloadTranslationsRequests: [AnyPublisher<Void, Error>] = translations.map { (translation: TranslationDataModel) in
             self.translationsRepository.downloadAndCacheTranslationFiles(translation: translation, requestPriority: requestPriority)
                 .map { _ in
                     return Void()
@@ -122,25 +122,26 @@ class ToolDownloader {
         return downloadTranslationsRequests
     }
     
-    private func getDownloadAttachmentsPublishers(attachments: [AttachmentModel], requestPriority: RequestPriority) -> [AnyPublisher<Void, Error>] {
+    private func getDownloadAttachmentsPublishers(attachments: [AttachmentDataModel], requestPriority: RequestPriority) -> [AnyPublisher<Void, Error>] {
         
         let downloadAttachmentsRequests: [AnyPublisher<Void, Error>] = attachments
-            .map { (attachment: AttachmentModel) in
-                self.attachmentsRepository.downloadAndCacheAttachmentIfNeeded(attachment: attachment, requestPriority: requestPriority)
+            .map { (attachment: AttachmentDataModel) in
+                self.attachmentsRepository.downloadAndCacheAttachmentDataIfNeededPublisher(attachment: attachment, requestPriority: requestPriority)
                     .map { _ in
                         return Void()
                     }
+                    .setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             }
         
         return downloadAttachmentsRequests
     }
     
-    private func getDownloadArticlesPublishers(translations: [TranslationModel], requestPriority: RequestPriority) -> [AnyPublisher<Void, Error>] {
+    private func getDownloadArticlesPublishers(translations: [TranslationDataModel], requestPriority: RequestPriority) -> [AnyPublisher<Void, Error>] {
         
-        let downloadArticlesRequests: [AnyPublisher<Void, Error>] = translations.compactMap { (translation: TranslationModel) in
+        let downloadArticlesRequests: [AnyPublisher<Void, Error>] = translations.compactMap { (translation: TranslationDataModel) in
             
-            guard let languageCode = translation.language?.code else {
+            guard let languageCode = translation.languageDataModel?.code else {
                 return nil
             }
             
