@@ -34,7 +34,7 @@ class GetToolTranslationsFilesUseCase {
         let manifestParserType: TranslationManifestParserType
         let includeRelatedFiles: Bool
         
-        var translationOrder: [TranslationModel] = Array()
+        var translationOrder: [TranslationDataModel] = Array()
         
         switch filter {
         case .downloadManifestAndRelatedFilesForRenderer:
@@ -62,7 +62,7 @@ class GetToolTranslationsFilesUseCase {
             })
             .flatMap({ (result: DetermineToolTranslationsToDownloadResult) -> AnyPublisher<[TranslationManifestFileDataModel], Error> in
                    
-                let translations: [TranslationModel] = result.translations
+                let translations: [TranslationDataModel] = result.translations
                 
                 translationOrder = result.translations
                 
@@ -78,14 +78,14 @@ class GetToolTranslationsFilesUseCase {
             })
             .flatMap({ (translationManifests: [TranslationManifestFileDataModel]) -> AnyPublisher<[TranslationManifestFileDataModel], Error> in
                     
-                let translations: [TranslationModel] = translationManifests.map({ $0.translation })
+                let translations: [TranslationDataModel] = translationManifests.map({ $0.translation })
                 
                 return self.translationsRepository.getTranslationManifestsFromCache(translations: translations, manifestParserType: manifestParserType, includeRelatedFiles: includeRelatedFiles)
                     .eraseToAnyPublisher()
             })
             .flatMap({ (translationManifests: [TranslationManifestFileDataModel]) -> AnyPublisher<ToolTranslationsDomainModel, Error> in
                 
-                guard let resource = translationManifests.first?.translation.resource else {
+                guard let resource = translationManifests.first?.translation.resourceDataModel else {
                     
                     let error = NSError.errorWithDescription(description: "Failed to get resource on translation model.")
                     
@@ -95,7 +95,7 @@ class GetToolTranslationsFilesUseCase {
                 
                 let languageManifets: [MobileContentRendererLanguageTranslationManifest] = translationManifests.compactMap({
                     
-                    guard let languageCodable = $0.translation.language else {
+                    guard let languageCodable = $0.translation.languageDataModel else {
                         return nil
                     }
                     
@@ -130,7 +130,7 @@ class GetToolTranslationsFilesUseCase {
         downloadStarted?()
     }
     
-    private func sortLanguageTranslationManifestsByTranslationOrder(translationOrder: [TranslationModel], languageTranslationManifests: [MobileContentRendererLanguageTranslationManifest]) -> [MobileContentRendererLanguageTranslationManifest] {
+    private func sortLanguageTranslationManifestsByTranslationOrder(translationOrder: [TranslationDataModel], languageTranslationManifests: [MobileContentRendererLanguageTranslationManifest]) -> [MobileContentRendererLanguageTranslationManifest] {
         
         var sortedLanguageTranslationManifests: [MobileContentRendererLanguageTranslationManifest] = Array()
         

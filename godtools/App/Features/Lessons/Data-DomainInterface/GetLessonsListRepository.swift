@@ -34,9 +34,9 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
         )
         .flatMap({ (resourcesDidChange: Void, lessonProgressDidChange: Void) -> AnyPublisher<[LessonListItemDomainModel], Never> in
             
-            let lessons: [ResourceModel] = self.resourcesRepository.getAllLessons(filterByLanguageId: filterLessonsByLanguage?.languageId, sorted: true)
+            let lessons: [ResourceDataModel] = self.resourcesRepository.getAllLessons(filterByLanguageId: filterLessonsByLanguage?.languageId, sorted: true)
             
-            let lessonListItems: [LessonListItemDomainModel] = lessons.map { (resource: ResourceModel) in
+            let lessonListItems: [LessonListItemDomainModel] = lessons.map { (resource: ResourceDataModel) in
                 
                 let filterLanguageModel: LanguageDataModel?
                 if let filterLanguageId = filterLessonsByLanguage?.languageId {
@@ -79,7 +79,7 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
 
 extension GetLessonsListRepository {
     
-    private func getToolLanguageAvailability(appLanguage: AppLanguageDomainModel, filterLanguageModel: LanguageDataModel?, resource: ResourceModel) -> ToolLanguageAvailabilityDomainModel {
+    private func getToolLanguageAvailability(appLanguage: AppLanguageDomainModel, filterLanguageModel: LanguageDataModel?, resource: ResourceDataModel) -> ToolLanguageAvailabilityDomainModel {
 
         if let appLanguageModel = languagesRepository.getCachedLanguage(code: appLanguage) {
             

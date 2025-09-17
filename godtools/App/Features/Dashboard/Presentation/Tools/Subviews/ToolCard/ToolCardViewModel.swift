@@ -58,17 +58,20 @@ class ToolCardViewModel: ObservableObject {
         
         let attachmentId: String = tool.bannerImageId
         
-        if let cachedImage = attachmentsRepository.getAttachmentImageFromCache(id: attachmentId) {
+        if let cachedAttachment = attachmentsRepository.getCachedAttachment(id: attachmentId),
+           let cachedImage = cachedAttachment.getImage() {
             
             bannerImageData = OptionalImageData(image: cachedImage, imageIdForAnimationChange: attachmentId)
         }
         else {
             
-            getBannerImageCancellable = attachmentsRepository.getAttachmentImagePublisher(id: attachmentId, requestPriority: .high)
+            getBannerImageCancellable = attachmentsRepository.getAttachmentFromCacheElseRemotePublisher(id: attachmentId, requestPriority: .high)
                 .receive(on: DispatchQueue.main)
-                .sink { [weak self] (image: Image?) in
-                    self?.bannerImageData = OptionalImageData(image: image, imageIdForAnimationChange: attachmentId)
-                }
+                .sink(receiveCompletion: { _ in
+                    
+                }, receiveValue: { [weak self] (attachment: AttachmentDataModel?) in
+                    self?.bannerImageData = OptionalImageData(image: attachment?.getImage(), imageIdForAnimationChange: attachmentId)
+                })
         }
     }
 }

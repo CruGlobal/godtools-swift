@@ -1,16 +1,17 @@
 //
-//  ResourceModel.swift
+//  ResourceCodable.swift
 //  godtools
 //
-//  Created by Levi Eggert on 6/10/20.
-//  Copyright © 2020 Cru. All rights reserved.
+//  Created by Levi Eggert on 9/16/25.
+//  Copyright © 2025 Cru. All rights reserved.
 //
 
 import Foundation
 
-struct ResourceModel: ResourceModelType, Codable, Identifiable {
+struct ResourceCodable: ResourceDataModelInterface, Codable {
     
     let abbreviation: String
+    let attachmentIds: [String]
     let attrAboutBannerAnimation: String
     let attrAboutOverviewVideoYoutube: String
     let attrBanner: String
@@ -22,6 +23,8 @@ struct ResourceModel: ResourceModelType, Codable, Identifiable {
     let defaultVariantId: String?
     let id: String
     let isHidden: Bool
+    let languageIds: [String]
+    let latestTranslationIds: [String]
     let manifest: String
     let metatoolId: String?
     let name: String
@@ -30,10 +33,6 @@ struct ResourceModel: ResourceModelType, Codable, Identifiable {
     let resourceType: String
     let totalViews: Int
     let type: String
-    
-    let latestTranslationIds: [String]
-    let attachmentIds: [String]
-    let languageIds: [String]
     let variantIds: [String]
     
     enum RootKeys: String, CodingKey {
@@ -72,35 +71,6 @@ struct ResourceModel: ResourceModelType, Codable, Identifiable {
     
     enum DataCodingKeys: String, CodingKey {
         case data = "data"
-    }
-    
-    init(model: ResourceModelType) {
-        
-        abbreviation = model.abbreviation
-        attrAboutBannerAnimation = model.attrAboutBannerAnimation
-        attrAboutOverviewVideoYoutube = model.attrAboutOverviewVideoYoutube
-        attrBanner = model.attrBanner
-        attrBannerAbout = model.attrBannerAbout
-        attrCategory = model.attrCategory
-        attrDefaultLocale = model.attrDefaultLocale
-        attrDefaultOrder = model.attrDefaultOrder
-        attrSpotlight = model.attrSpotlight
-        defaultVariantId = model.defaultVariantId
-        id = model.id
-        isHidden = model.isHidden
-        manifest = model.manifest
-        metatoolId = model.metatoolId
-        name = model.name
-        oneskyProjectId = model.oneskyProjectId
-        resourceDescription = model.resourceDescription
-        resourceType = model.resourceType
-        totalViews = model.totalViews
-        type = model.type
-        
-        latestTranslationIds = model.getLatestTranslationIds()
-        attachmentIds = model.getAttachmentIds()
-        languageIds = model.getLanguageIds()
-        variantIds = model.getVariantIds()
     }
     
     init(from decoder: Decoder) throws {
@@ -152,10 +122,10 @@ struct ResourceModel: ResourceModelType, Codable, Identifiable {
         totalViews = try attributesContainer?.decodeIfPresent(Int.self, forKey: .totalViews) ?? -1
                 
         // relationships
-        let latestTranslations: [TranslationModel] = try latestTranslationsContainer?.decodeIfPresent([TranslationModel].self, forKey: .data) ?? []
+        let latestTranslations: [TranslationCodable] = try latestTranslationsContainer?.decodeIfPresent([TranslationCodable].self, forKey: .data) ?? []
         latestTranslationIds = latestTranslations.map({$0.id})
         
-        let attachments: [AttachmentModel] = try attachmentsContainer?.decodeIfPresent([AttachmentModel].self, forKey: .data) ?? []
+        let attachments: [AttachmentCodable] = try attachmentsContainer?.decodeIfPresent([AttachmentCodable].self, forKey: .data) ?? []
         attachmentIds = attachments.map({$0.id})
         
         do {
@@ -185,31 +155,6 @@ struct ResourceModel: ResourceModelType, Codable, Identifiable {
         // set when initialized from a model.
         languageIds = Array()
     }
-}
-
-extension ResourceModel: Equatable {
-    static func == (this: ResourceModel, that: ResourceModel) -> Bool {
-        return this.id == that.id
-    }
-}
-
-extension ResourceModel {
-    
-    var resourceTypeEnum: ResourceType {
-        return ResourceType(rawValue: resourceType) ?? .unknown
-    }
-    
-    var isToolType: Bool {
-        return resourceTypeEnum.isToolType
-    }
-    
-    var isLessonType: Bool {
-        return resourceTypeEnum.isLessonType
-    }
-    
-    func getLatestTranslationIds() -> [String] {
-        return latestTranslationIds
-    }
     
     func getAttachmentIds() -> [String] {
         return attachmentIds
@@ -219,7 +164,17 @@ extension ResourceModel {
         return languageIds
     }
     
+    func getLatestTranslationIds() -> [String] {
+        return latestTranslationIds
+    }
+    
     func getVariantIds() -> [String] {
         return variantIds
+    }
+}
+
+extension ResourceCodable: Equatable {
+    static func == (this: ResourceCodable, that: ResourceCodable) -> Bool {
+        return this.id == that.id
     }
 }

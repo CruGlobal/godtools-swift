@@ -22,7 +22,7 @@ class GetToolDetailsMediaRepository: GetToolDetailsMediaRepositoryInterface {
     
     func getMediaPublisher(toolId: String) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> {
                 
-        guard let resource = resourcesRepository.getResource(id: toolId) else {
+        guard let resource = resourcesRepository.getCachedObject(id: toolId) else {
             return Just(.empty)
                 .eraseToAnyPublisher()
         }
@@ -50,16 +50,16 @@ class GetToolDetailsMediaRepository: GetToolDetailsMediaRepositoryInterface {
             .eraseToAnyPublisher()
     }
     
-    private func getAnimatedMediaElseImage(resource: ResourceModel) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> {
+    private func getAnimatedMediaElseImage(resource: ResourceDataModel) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> {
         
-        return attachmentsRepository.getAttachmentUrlPublisher(id: resource.attrAboutBannerAnimation, requestPriority: .high)
-            .flatMap({ url -> AnyPublisher<ToolDetailsMediaDomainModel, Never> in
+        return attachmentsRepository.getAttachmentFromCacheElseRemotePublisher(id: resource.attrAboutBannerAnimation, requestPriority: .high)
+            .flatMap({ (attachment: AttachmentDataModel?) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> in
                 
-                guard let url = url else {
+                guard let diskFileUrl = attachment?.storedAttachment?.diskFileUrl else {
                     return self.getImageMediaElseEmpty(resource: resource)
                 }
                 
-                let resource: AnimatedResource = .deviceFileManagerfilepathJsonFile(filepath: url.path)
+                let resource: AnimatedResource = .deviceFileManagerfilepathJsonFile(filepath: diskFileUrl.path)
                 let viewModel = AnimatedViewModel(animationDataResource: resource, autoPlay: true, loop: true)
                 
                 return Just(.animation(viewModel: viewModel))
@@ -69,12 +69,12 @@ class GetToolDetailsMediaRepository: GetToolDetailsMediaRepositoryInterface {
             .eraseToAnyPublisher()
     }
     
-    private func getImageMediaElseEmpty(resource: ResourceModel) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> {
+    private func getImageMediaElseEmpty(resource: ResourceDataModel) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> {
         
-        return attachmentsRepository.getAttachmentImagePublisher(id: resource.attrBannerAbout, requestPriority: .high)
-            .flatMap({ image -> AnyPublisher<ToolDetailsMediaDomainModel, Never> in
+        return attachmentsRepository.getAttachmentFromCacheElseRemotePublisher(id: resource.attrBannerAbout, requestPriority: .high)
+            .flatMap({ (attachment: AttachmentDataModel?) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> in
                 
-                guard let image = image else {
+                guard let image = attachment?.getImage() else {
                     return self.getEmptyMedia()
                 }
                 

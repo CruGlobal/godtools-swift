@@ -1,18 +1,20 @@
 //
-//  TranslationModel.swift
+//  TranslationCodable.swift
 //  godtools
 //
-//  Created by Levi Eggert on 6/10/20.
-//  Copyright © 2020 Cru. All rights reserved.
+//  Created by Levi Eggert on 9/16/25.
+//  Copyright © 2025 Cru. All rights reserved.
 //
 
 import Foundation
 
-struct TranslationModel: TranslationModelType, Codable {
+struct TranslationCodable: TranslationDataModelInterface, Codable {
     
     let id: String
     let isPublished: Bool
+    let language: LanguageCodable?
     let manifestName: String
+    let resource: ResourceCodable?
     let toolDetailsBibleReferences: String
     let toolDetailsConversationStarters: String
     let toolDetailsOutline: String
@@ -21,9 +23,6 @@ struct TranslationModel: TranslationModelType, Codable {
     let translatedTagline: String
     let type: String
     let version: Int
-    
-    let resource: ResourceModel?
-    let language: LanguageCodable?
     
     enum RootKeys: String, CodingKey {
         case id = "id"
@@ -51,23 +50,6 @@ struct TranslationModel: TranslationModelType, Codable {
     
     enum DataCodingKeys: String, CodingKey {
         case data = "data"
-    }
-    
-    init(model: TranslationModelType) {
-        
-        id = model.id
-        isPublished = model.isPublished
-        manifestName = model.manifestName
-        toolDetailsBibleReferences = model.toolDetailsBibleReferences
-        toolDetailsConversationStarters = model.toolDetailsConversationStarters
-        toolDetailsOutline = model.toolDetailsOutline
-        translatedDescription = model.translatedDescription
-        translatedName = model.translatedName
-        translatedTagline = model.translatedTagline
-        type = model.type
-        version = model.version
-        resource = model.getResource()
-        language = model.getLanguage()
     }
     
     init(from decoder: Decoder) throws {
@@ -104,20 +86,30 @@ struct TranslationModel: TranslationModelType, Codable {
         version = try attributesContainer?.decodeIfPresent(Int.self, forKey: .version) ?? -1
         
         // relationships - resource
-        resource = try resourceContainer?.decodeIfPresent(ResourceModel.self, forKey: .data)
+        resource = try resourceContainer?.decodeIfPresent(ResourceCodable.self, forKey: .data)
                 
         // relationships - language
         language = try languageContainer?.decodeIfPresent(LanguageCodable.self, forKey: .data)
     }
 }
 
-extension TranslationModel {
+extension TranslationCodable {
     
-    func getResource() -> ResourceModel? {
-        return resource
+    var resourceDataModel: ResourceDataModel? {
+        
+        guard let resource = resource else {
+            return nil
+        }
+        
+        return ResourceDataModel(interface: resource)
     }
     
-    func getLanguage() -> LanguageCodable? {
-        return language
+    var languageDataModel: LanguageDataModel? {
+        
+        guard let language = language else {
+            return nil
+        }
+        
+        return LanguageDataModel(interface: language)
     }
 }

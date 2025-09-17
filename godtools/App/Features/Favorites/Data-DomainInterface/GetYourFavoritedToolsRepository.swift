@@ -37,10 +37,10 @@ class GetYourFavoritedToolsRepository: GetYourFavoritedToolsRepositoryInterface 
           
             let numberOfFavoritedTools: Int = self.favoritedResourcesRepository.getNumberOfFavoritedResources()
             
-            let favoritedResources: [ResourceModel] = favoritedResourceModels
+            let favoritedResources: [ResourceDataModel] = favoritedResourceModels
                 .prefix(maxCount ?? numberOfFavoritedTools)
                 .compactMap({
-                    self.resourcesRepository.getResource(id: $0.id)
+                    self.resourcesRepository.getCachedObject(id: $0.id)
                 })
             
             let yourFavoritedTools: [YourFavoritedToolDomainModel] = favoritedResources

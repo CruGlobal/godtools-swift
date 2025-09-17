@@ -40,7 +40,7 @@ class MobileContentPageViewModel: MobileContentViewModel {
     
     var analyticsScreenName: String {
         
-        let resource: ResourceModel = renderedPageContext.resource
+        let resource: ResourceDataModel = renderedPageContext.resource
         let page: Int32 = renderedPageContext.pageModel.position
         
         return resource.abbreviation + "-" + String(page)
@@ -48,7 +48,7 @@ class MobileContentPageViewModel: MobileContentViewModel {
     
     var analyticsSiteSection: String {
         
-        let resource: ResourceModel = renderedPageContext.resource
+        let resource: ResourceDataModel = renderedPageContext.resource
  
         return resource.abbreviation
     }

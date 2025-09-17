@@ -78,3 +78,24 @@ class MobileContentTranslationsApi {
             .eraseToAnyPublisher()
     }
 }
+
+// MARK: - RepositorySyncExternalDataFetchInterface
+
+extension MobileContentTranslationsApi: RepositorySyncExternalDataFetchInterface {
+    
+    func getObjectPublisher(id: String, requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<TranslationCodable>, Never> {
+        
+        let response = RepositorySyncResponse<TranslationCodable>(objects: [], errors: [])
+        
+        return Just(response)
+            .eraseToAnyPublisher()
+    }
+    
+    func getObjectsPublisher(requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<TranslationCodable>, Never> {
+        
+        let response = RepositorySyncResponse<TranslationCodable>(objects: [], errors: [])
+        
+        return Just(response)
+            .eraseToAnyPublisher()
+    }
+}

@@ -1,15 +1,15 @@
 //
-//  ResourceModelType.swift
+//  ResourceDataModelInterface.swift
 //  godtools
 //
-//  Created by Levi Eggert on 6/10/20.
-//  Copyright © 2020 Cru. All rights reserved.
+//  Created by Levi Eggert on 9/16/25.
+//  Copyright © 2025 Cru. All rights reserved.
 //
 
 import Foundation
 
-protocol ResourceModelType {
-        
+protocol ResourceDataModelInterface {
+    
     var abbreviation: String { get }
     var attrAboutBannerAnimation: String { get }
     var attrAboutOverviewVideoYoutube: String { get }
@@ -30,9 +30,9 @@ protocol ResourceModelType {
     var resourceType: String { get }
     var totalViews: Int { get }
     var type: String { get }
-        
-    func getLatestTranslationIds() -> [String]
+    
     func getAttachmentIds() -> [String]
     func getLanguageIds() -> [String]
+    func getLatestTranslationIds() -> [String]
     func getVariantIds() -> [String]
 }

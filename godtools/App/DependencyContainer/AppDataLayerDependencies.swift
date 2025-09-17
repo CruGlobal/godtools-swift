@@ -99,7 +99,7 @@ class AppDataLayerDependencies {
                 urlSessionPriority: getSharedUrlSessionPriority(),
                 requestSender: getRequestSender()
             ),
-            cache: RealmAttachmentsCache(realmDatabase: sharedRealmDatabase),
+            realmDatabase: getSharedRealmDatabase(),
             resourcesFileCache: getResourcesFileCache(),
             bundle: AttachmentsBundleCache()
         )
@@ -277,6 +277,7 @@ class AppDataLayerDependencies {
         
         return ResourcesRepository(
             api: api,
+            realmDatabase: getSharedRealmDatabase(),
             cache: cache,
             attachmentsRepository: getAttachmentsRepository(),
             languagesRepository: getLanguagesRepository(),
@@ -388,7 +389,8 @@ class AppDataLayerDependencies {
                 urlSessionPriority: getSharedUrlSessionPriority(),
                 requestSender: getRequestSender()
             ),
-            cache: RealmTranslationsCache(realmDatabase: sharedRealmDatabase),
+            realmDatabase: getSharedRealmDatabase(),
+            cache: RealmTranslationsCache(realmDatabase: getSharedRealmDatabase()),
             resourcesFileCache: getResourcesFileCache(),
             trackDownloadedTranslationsRepository: getTrackDownloadedTranslationsRepository(),
             remoteConfigRepository: getRemoteConfigRepository()

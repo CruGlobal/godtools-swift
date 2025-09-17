@@ -34,7 +34,7 @@ struct TestPreview: View {
 #Preview {
     
     let appDiContainer = AppDiContainer.createUITestsDiContainer()
-    let resource: ResourceModel? = appDiContainer.dataLayer.getResourcesRepository().getResource(id: "1")
+    let resource: ResourceDataModel? = appDiContainer.dataLayer.getResourcesRepository().getCachedObject(id: "1")
     
     TestPreview(
         title: resource?.name ?? "no name"

@@ -240,7 +240,7 @@ extension ToolSettingsFlow {
         let viewModel = ShareToolViewModel(
             viewShareToolDomainModel: viewShareToolDomainModel,
             toolId: toolSettingsObserver.toolId,
-            toolAnalyticsAbbreviation: appDiContainer.dataLayer.getResourcesRepository().getResource(id: toolSettingsObserver.toolId)?.abbreviation ?? "",
+            toolAnalyticsAbbreviation: appDiContainer.dataLayer.getResourcesRepository().getCachedObject(id: toolSettingsObserver.toolId)?.abbreviation ?? "",
             pageNumber: toolSettingsObserver.pageNumber,
             incrementUserCounterUseCase: appDiContainer.feature.userActivity.domainLayer.getIncrementUserCounterUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),

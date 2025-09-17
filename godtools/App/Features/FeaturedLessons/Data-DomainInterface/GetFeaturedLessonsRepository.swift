@@ -36,9 +36,9 @@ class GetFeaturedLessonsRepository: GetFeaturedLessonsRepositoryInterface {
         )
         .flatMap({ (resourcesChanged: Void, lessonProgressDidChange: Void) -> AnyPublisher<[FeaturedLessonDomainModel], Never> in
             
-            let featuredLessonsDataModels: [ResourceModel] = self.resourcesRepository.getFeaturedLessons(sorted: true)
+            let featuredLessonsDataModels: [ResourceDataModel] = self.resourcesRepository.getFeaturedLessons(sorted: true)
             
-            let featuredLessons: [FeaturedLessonDomainModel] = featuredLessonsDataModels.map { (resource: ResourceModel) in
+            let featuredLessons: [FeaturedLessonDomainModel] = featuredLessonsDataModels.map { (resource: ResourceDataModel) in
 
                 let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel
                 

@@ -85,7 +85,7 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
         countLanguageUsage(localeId: currentPageRenderer.value.language.localeId)
     }
     
-    var resource: ResourceModel {
+    var resource: ResourceDataModel {
         return renderer.value.resource
     }
     
@@ -638,15 +638,15 @@ extension MobileContentRendererViewModel {
     
     private func updateTranslationsIfNeeded() {
         
-        var translationsNeededDownloading: [TranslationModel] = Array()
+        var translationsNeededDownloading: [TranslationDataModel] = Array()
                 
         for pageRenderer in renderer.value.pageRenderers {
             
-            let resource: ResourceModel = pageRenderer.resource
+            let resource: ResourceDataModel = pageRenderer.resource
             let language: LanguageDataModel = pageRenderer.language
-            let currentTranslation: TranslationModel = pageRenderer.translation
+            let currentTranslation: TranslationDataModel = pageRenderer.translation
             
-            guard let latestTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageId: language.id) else {
+            guard let latestTranslation = translationsRepository.getCachedLatestTranslation(resourceId: resource.id, languageId: language.id) else {
                 continue
             }
             
@@ -678,14 +678,14 @@ extension MobileContentRendererViewModel {
                                 
                 for pageRenderer in currentRenderer.pageRenderers {
                     
-                    let resource: ResourceModel = pageRenderer.resource
+                    let resource: ResourceDataModel = pageRenderer.resource
                     let language: LanguageDataModel = pageRenderer.language
-                    let currentTranslation: TranslationModel = pageRenderer.translation
+                    let currentTranslation: TranslationDataModel = pageRenderer.translation
                     
                     let updatedManifest: Manifest
-                    let updatedTranslation: TranslationModel
+                    let updatedTranslation: TranslationDataModel
                     
-                    if let latestTranslation = self?.translationsRepository.getLatestTranslation(resourceId: resource.id, languageId: language.id), latestTranslation.version > currentTranslation.version, let manifestFileDataModel = manifestFileDataModels.filter({$0.translation.id == latestTranslation.id}).first {
+                    if let latestTranslation = self?.translationsRepository.getCachedLatestTranslation(resourceId: resource.id, languageId: language.id), latestTranslation.version > currentTranslation.version, let manifestFileDataModel = manifestFileDataModels.filter({$0.translation.id == latestTranslation.id}).first {
                         
                         updatedManifest = manifestFileDataModel.manifest
                         updatedTranslation = manifestFileDataModel.translation

@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class RealmAttachment: Object, AttachmentModelType {
+class RealmAttachment: Object, IdentifiableRealmObject, AttachmentDataModelInterface {
     
     @objc dynamic var file: String = ""
     @objc dynamic var fileFilename: String = ""
@@ -25,22 +25,29 @@ class RealmAttachment: Object, AttachmentModelType {
         return "id"
     }
     
-    func mapFrom(model: AttachmentModel) {
+    func mapFrom(interface: AttachmentDataModelInterface) {
 
-        file = model.file
-        fileFilename = model.fileFilename
-        id = model.id
-        isZipped = model.isZipped
-        sha256 = model.sha256
-        type = model.type
+        file = interface.file
+        fileFilename = interface.fileFilename
+        id = interface.id
+        isZipped = interface.isZipped
+        sha256 = interface.sha256
+        type = interface.type
     }
     
-    func getResource() -> ResourceModel? {
+    static func createNewFrom(interface: AttachmentDataModelInterface) -> RealmAttachment {
+        
+        let realmAttachment = RealmAttachment()
+        realmAttachment.mapFrom(interface: interface)
+        return realmAttachment
+    }
+    
+    var resourceDataModel: ResourceDataModel? {
         
         guard let realmResource = resource else {
             return nil
         }
         
-        return ResourceModel(model: realmResource)
+        return ResourceDataModel(interface: realmResource)
     }
 }

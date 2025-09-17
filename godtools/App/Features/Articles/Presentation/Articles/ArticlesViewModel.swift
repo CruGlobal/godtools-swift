@@ -15,7 +15,7 @@ class ArticlesViewModel: NSObject {
         
     typealias AemUri = String
     
-    private let resource: ResourceModel
+    private let resource: ResourceDataModel
     private let language: LanguageDataModel
     private let category: GodToolsToolParser.Category
     private let manifest: Manifest
@@ -37,7 +37,7 @@ class ArticlesViewModel: NSObject {
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     @Published private var articleAemCacheObjects: [ArticleAemCacheObject] = Array()
     
-    init(flowDelegate: FlowDelegate, resource: ResourceModel, language: LanguageDataModel, category: GodToolsToolParser.Category, manifest: Manifest, downloadArticlesObservable: DownloadManifestArticlesObservable, articleManifestAemRepository: ArticleManifestAemRepository, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, localizationServices: LocalizationServicesInterface, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
+    init(flowDelegate: FlowDelegate, resource: ResourceDataModel, language: LanguageDataModel, category: GodToolsToolParser.Category, manifest: Manifest, downloadArticlesObservable: DownloadManifestArticlesObservable, articleManifestAemRepository: ArticleManifestAemRepository, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, localizationServices: LocalizationServicesInterface, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource

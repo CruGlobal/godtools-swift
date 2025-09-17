@@ -1,5 +1,5 @@
 //
-//  AttachmentModel.swift
+//  AttachmentCodable.swift
 //  godtools
 //
 //  Created by Levi Eggert on 6/10/20.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct AttachmentModel: AttachmentModelType, Decodable {
+struct AttachmentCodable: AttachmentDataModelInterface, Codable {
     
     let file: String
     let fileFilename: String
@@ -17,7 +17,7 @@ struct AttachmentModel: AttachmentModelType, Decodable {
     let sha256: String
     let type: String
     
-    let resource: ResourceModel?
+    let resource: ResourceCodable?
     
     enum RootKeys: String, CodingKey {
         case id = "id"
@@ -39,18 +39,6 @@ struct AttachmentModel: AttachmentModelType, Decodable {
     
     enum DataCodingKeys: String, CodingKey {
         case data = "data"
-    }
-    
-    init(model: AttachmentModelType) {
-        
-        file = model.file
-        fileFilename = model.fileFilename
-        id = model.id
-        isZipped = model.isZipped
-        sha256 = model.sha256
-        type = model.type
-        
-        resource = model.getResource()
     }
     
     init(from decoder: Decoder) throws {
@@ -80,13 +68,18 @@ struct AttachmentModel: AttachmentModelType, Decodable {
         sha256 = try attributesContainer?.decodeIfPresent(String.self, forKey: .sha256) ?? ""
                 
         // relationships - resource
-        resource = try resourceContainer?.decodeIfPresent(ResourceModel.self, forKey: .data)
+        resource = try resourceContainer?.decodeIfPresent(ResourceCodable.self, forKey: .data)
     }
 }
 
-extension AttachmentModel {
+extension AttachmentCodable {
     
-    func getResource() -> ResourceModel? {
-        return resource
+    var resourceDataModel: ResourceDataModel? {
+       
+        guard let resource = resource else {
+            return nil
+        }
+        
+        return ResourceDataModel(interface: resource)
     }
 }
