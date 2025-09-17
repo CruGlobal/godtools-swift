@@ -40,18 +40,10 @@ class MobileContentAttachmentsApi {
 extension MobileContentAttachmentsApi: RepositorySyncExternalDataFetchInterface {
     
     func getObjectPublisher(id: String, requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<AttachmentCodable>, Never> {
-        
-        let response = RepositorySyncResponse<AttachmentCodable>(objects: [], errors: [])
-        
-        return Just(response)
-            .eraseToAnyPublisher()
+        return emptyResponsePublisher()
     }
     
     func getObjectsPublisher(requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<AttachmentCodable>, Never> {
-        
-        let response = RepositorySyncResponse<AttachmentCodable>(objects: [], errors: [])
-        
-        return Just(response)
-            .eraseToAnyPublisher()
+        return emptyResponsePublisher()
     }
 }

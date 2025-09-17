@@ -14,7 +14,20 @@ public protocol RepositorySyncExternalDataFetchInterface {
     
     associatedtype DataModel
     
-    // TODO: GT-2742 Should these be optional instead? ~Levi
     func getObjectPublisher(id: String, requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<DataModel>, Never>
     func getObjectsPublisher(requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<DataModel>, Never>
+}
+
+extension RepositorySyncExternalDataFetchInterface {
+    
+    func emptyResponsePublisher() -> AnyPublisher<RepositorySyncResponse<DataModel>, Never> {
+        
+        let emptyResponse = RepositorySyncResponse<DataModel>(
+            objects: [],
+            errors: []
+        )
+        
+        return Just(emptyResponse)
+            .eraseToAnyPublisher()
+    }
 }
