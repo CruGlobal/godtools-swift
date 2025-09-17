@@ -13,18 +13,17 @@ class LessonCardViewModel: ObservableObject {
         
     private let lessonListItem: LessonListItemDomainModelInterface
     private let attachmentsRepository: AttachmentsRepository
+            
+    let attachmentBanner: AttachmentBannerObservableObject
     
-    private var getBannerImageCancellable: AnyCancellable?
-        
-    @Published var title: String = ""
-    @Published var titleLayoutDirection: LayoutDirection = .rightToLeft
-    @Published var appLanguageAvailability: String = ""
-    @Published var bannerImageData: OptionalImageData?
-    @Published var shouldShowLessonProgress: Bool = false
-    @Published var lessonProgress: Double = 0
-    @Published var completionString: String = ""
-    @Published var attachmentsDownloadProgressValue: Double = 0
-    @Published var translationDownloadProgressValue: Double = 0
+    @Published private(set) var title: String = ""
+    @Published private(set) var titleLayoutDirection: LayoutDirection = .rightToLeft
+    @Published private(set) var appLanguageAvailability: String = ""
+    @Published private(set) var shouldShowLessonProgress: Bool = false
+    @Published private(set) var lessonProgress: Double = 0
+    @Published private(set) var completionString: String = ""
+    @Published private(set) var attachmentsDownloadProgressValue: Double = 0
+    @Published private(set) var translationDownloadProgressValue: Double = 0
     
     init(lessonListItem: LessonListItemDomainModelInterface, attachmentsRepository: AttachmentsRepository) {
         
@@ -50,29 +49,9 @@ class LessonCardViewModel: ObservableObject {
             completionString = completeString
         }
         
-        downloadBannerImage()
-    }
-    
-    private func downloadBannerImage() {
-        
-        getBannerImageCancellable = nil
-        
-        let attachmentId: String = lessonListItem.bannerImageId
-        
-        if let cachedAttachment = attachmentsRepository.getCachedAttachment(id: attachmentId),
-           let cachedImage = cachedAttachment.getImage() {
-            
-            bannerImageData = OptionalImageData(image: cachedImage, imageIdForAnimationChange: attachmentId)
-        }
-        else {
-            
-            getBannerImageCancellable = attachmentsRepository.getAttachmentFromCacheElseRemotePublisher(id: attachmentId, requestPriority: .high)
-                .receive(on: DispatchQueue.main)
-                .sink(receiveCompletion: { _ in
-                    
-                }, receiveValue: { [weak self] (attachment: AttachmentDataModel?) in
-                    self?.bannerImageData = OptionalImageData(image: attachment?.getImage(), imageIdForAnimationChange: attachmentId)
-                })
-        }
+        attachmentBanner = AttachmentBannerObservableObject(
+            attachmentId: lessonListItem.bannerImageId,
+            attachmentsRepository: attachmentsRepository
+        )
     }
 }
