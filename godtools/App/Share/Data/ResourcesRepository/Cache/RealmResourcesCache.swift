@@ -21,32 +21,6 @@ class RealmResourcesCache {
         self.resourcesSync = resourcesSync
     }
     
-    func getResources(sorted: Bool = false) -> [ResourceDataModel] {
-        
-        var realmResources = realmDatabase.openRealm()
-            .objects(RealmResource.self)
-        
-        if sorted {
-            realmResources = realmResources.sorted(byKeyPath: #keyPath(RealmResource.attrDefaultOrder), ascending: true)
-        }
-        
-        return realmResources.map({ResourceDataModel(interface: $0)})
-    }
-    
-    func getResources(with metaToolIds: [String?]) -> [ResourceDataModel] {
-        return realmDatabase.openRealm()
-            .objects(RealmResource.self)
-            .filter(NSPredicate(format: "%K IN %@", #keyPath(RealmResource.metatoolId), metaToolIds))
-            .map { ResourceDataModel(interface: $0)}
-    }
-    
-    func getResources(with resourceType: ResourceType) -> [ResourceDataModel] {
-        return realmDatabase.openRealm()
-            .objects(RealmResource.self)
-            .where { $0.resourceType == resourceType.rawValue }
-            .map { ResourceDataModel(interface: $0) }
-    }
-    
     func syncResources(resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel, shouldRemoveDataThatNoLongerExists: Bool) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> {
         
         return resourcesSync.syncResources(
