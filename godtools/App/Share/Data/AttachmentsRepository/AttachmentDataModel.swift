@@ -7,8 +7,6 @@
 //
 
 import Foundation
-import SwiftUI
-import UIKit
 
 class AttachmentDataModel: AttachmentDataModelInterface {
         
@@ -31,23 +29,5 @@ class AttachmentDataModel: AttachmentDataModelInterface {
         sha256 = interface.sha256
         self.storedAttachment = storedAttachment
         type = interface.type
-    }
-    
-    func getImage() -> Image? {
-        
-        guard let uiImage = getUIImage() else {
-           return nil
-        }
-        
-        return Image(uiImage: uiImage)
-    }
-    
-    func getUIImage() -> UIImage? {
-        
-        guard let data = storedAttachment?.data else {
-            return nil
-        }
-        
-        return UIImage(data: data)
     }
 }

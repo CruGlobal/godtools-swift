@@ -96,13 +96,3 @@ extension ResourceDataModel {
         return resourceTypeEnum.isLessonType
     }
 }
-
-extension ResourceDataModel: LanguageSupportable {
-    
-    func supportsLanguage(languageId: String) -> Bool {
-        if !languageId.isEmpty {
-            return languageIds.contains(languageId)
-        }
-        return false
-    }
-}
