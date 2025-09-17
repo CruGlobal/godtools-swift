@@ -35,28 +35,13 @@ class ResourcesRepository: RepositorySync<ResourceDataModel, MobileContentResour
         )
     }
     
-    func getResourcesChangedPublisher() -> AnyPublisher<Void, Never> {
-        return cache
-            .getResourcesChangedPublisher()
-            .eraseToAnyPublisher()
-    }
-    
     func getResource(abbreviation: String) -> ResourceDataModel? {
-        
-        let filter = NSPredicate(format: "\(#keyPath(RealmResource.abbreviation)) = '\(abbreviation)'")
-        
         return getCachedObjects(
-            databaseQuery: RepositorySyncDatabaseQuery.filter(filter: filter)
+            databaseQuery: RepositorySyncDatabaseQuery.filter(
+                filter: NSPredicate(format: "\(#keyPath(RealmResource.abbreviation)) = '\(abbreviation)'")
+            )
         )
         .first
-    }
-    
-    func getResources(with metaToolIds: [String?]) -> [ResourceDataModel] {
-        return cache.getResources(with: metaToolIds)
-    }
-    
-    func getResources(with resourceType: ResourceType) -> [ResourceDataModel] {
-        return cache.getResources(with: resourceType)
     }
     
     func getCachedResourcesByFilter(filter: ResourcesFilter) -> [ResourceDataModel] {

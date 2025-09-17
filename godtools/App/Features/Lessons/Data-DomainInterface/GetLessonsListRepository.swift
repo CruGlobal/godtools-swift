@@ -29,7 +29,7 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
     func getLessonsListPublisher(appLanguage: AppLanguageDomainModel, filterLessonsByLanguage: LessonFilterLanguageDomainModel?) -> AnyPublisher<[LessonListItemDomainModel], Never> {
                 
         return Publishers.CombineLatest(
-            resourcesRepository.getResourcesChangedPublisher(),
+            resourcesRepository.observeDatabaseChangesPublisher(),
             getLessonListItemProgressRepository.getLessonListItemProgressChanged()
         )
         .flatMap({ (resourcesDidChange: Void, lessonProgressDidChange: Void) -> AnyPublisher<[LessonListItemDomainModel], Never> in
