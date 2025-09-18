@@ -1,3 +1,10 @@
+"deferredDeepLinkModal.title" = "It looks like you clicked a link for GodTools";
+"deferredDeepLinkModal.message" = "Please tap the paste button below.  This will allow us to take you to the content you requested in GodTools.";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "Close";
+"toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";
+"toolScreenShare.qrCode.title" = "QR Code";
+
 "optInNotification.notificationSettings" = "通知設定";
 "lessons.swipeTutorial.title" = "撥動即可換頁";
 "lessons.swipeTutorial.buttonText" = "知道了";
@@ -124,6 +131,7 @@
 "training_tip_prepare" = "準備";
 "training_tip_quote" = "金句";
 "training_tip_tip" = "提示";
+"articles.downloadingArticles.errorMessage.title" = "Error Downloading Articles";
 "start_training" = "開始訓練";
 "close" = "關閉";
 "tool_menu_item.lessons" = "課程";
@@ -260,6 +268,10 @@
 "add_new_tools" = "添加新工具";
 "set_your_languages" = "設定語言";
 "okay" = "好";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
+
 // Menu
 "menu_general" = "一般";
 "menu_account" = "帳號";
@@ -319,7 +331,7 @@
 "no" = "不好";
 
 // Tract - Sharing
-"tract_share_message" ="點擊此連結可看到我們今天談論內容的網路版本：%@。
+"tract_share_message" = "點擊此連結可看到我們今天談論內容的網路版本：%@。
 
 讓我們更深入討論吧！
 
@@ -409,3 +421,9 @@
 "onboardingTutorial.appUsageItem.3.message" = "共有超過 90 種語言可選";
 "onboardingTutorial.appUsageItem.4.message" = "引導他人成為教徒";
 "onboardingTutorial.showMoreButton.title" = "展示更多";
+
+"screenShareTutorial.generateQRCodeButton.title" = "Generate QR code";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "Close";
+"toolScreenShare.qrCode.title" = "QR Code";
+"toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";
