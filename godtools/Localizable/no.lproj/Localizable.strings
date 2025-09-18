@@ -3,7 +3,6 @@
 
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "Ikke tilgjengelig på %@";
-
 "tool_menu_item.tools" = "Verktøy";
 "lessons.pageTitle" = "Leksjoner lagd for deg";
 "lessons.pageSubtitle" = "Praktiske ideer for å bygge opp relasjoner og starte meningsfulle samtaler.";
@@ -39,6 +38,7 @@
 "allTools.spotlight.description" = "Her er noen verktøy vi tror du vil like";
 "allTools.categories.title" = "Kategorier";
 "tool_menu_item.lessons" = "Leksjoner";
+
 "onboardingTutorial.beginButton.title" = "Begynn";
 "onboardingTutorial.nextButton.title" = "Neste";
 "tool_offline_favorite_message" = "Gjør et verktøy tilgjengelig offline ved å trykke på hjerteikonet – det legges da i Favoritter.";
@@ -125,11 +125,13 @@ Hvis du ikke mottar denne meldingen før senere, kan det hende at lenken ikke vi
 "add_new_tools" = "Legg til nye verktøy";
 "set_your_languages" = "Angi språk";
 "okay" = "Ok";
+
 // Menu
 "menu_general" = "Generelt";
 "menu_share" = "Del";
 "menu_legal" = "Juridisk";
 "language_settings" = "Språkinnstillinger";
+
 // Login
 "login" = "Logg på";
 "logout" = "Logg av";
@@ -180,7 +182,7 @@ Du finner en nettversjon på https://knowgod.com/";
 "no" = "Nei";
 
 // Tract - Sharing
-"tract_share_message" ="Denne lenken tar deg til nettversjonen av siden vi så på sammen i dag: %@. 
+"tract_share_message" = "Denne lenken tar deg til nettversjonen av siden vi så på sammen i dag: %@. 
 
 La oss snakke mer!
 
@@ -214,8 +216,8 @@ Appen kan lastes ned på https://godtoolsapp.com";
 "general_about_8" = "Gå til godtoolsapp.com for mer informasjon.";
 "tutorial.continueButton.title.continue" = "Fortsett";
 "general_about_9" = "Når du tar initiativ til å dele troen din, må du huske at Gud er den eneste som endrer hjertet. Elsk alle ved å lytte og forstå.";
-"general_about_10" = "«La deres tale alltid være vennlig, men krydret med salt, så dere vet hvordan dere skal svare enhver.» Kolosserne 4:6";
 
+"general_about_10" = "«La deres tale alltid være vennlig, men krydret med salt, så dere vet hvordan dere skal svare enhver.» Kolosserne 4:6";
 // Downloads
 "Download in progress" = "Laster ned …";
 
@@ -225,4 +227,3 @@ Appen kan lastes ned på https://godtoolsapp.com";
 
 // Language Name Strings
 "language_name_fa" = "Persisk (farsi)";
-

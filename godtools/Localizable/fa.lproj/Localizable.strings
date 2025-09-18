@@ -3,7 +3,6 @@
 
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "به %@ در دسترس نیست";
-
 "tool_menu_item.tools" = "تمام ابزار";
 "lessons.pageTitle" = "درس‌های مناسب شما";
 "lessons.pageSubtitle" = "ایده‌های عملی برای ایجاد روابط و شروع گفت‌وگوهای معنادار.";
@@ -39,6 +38,7 @@
 "allTools.spotlight.description" = "ممکن است این ابزارها را بپسندید";
 "allTools.categories.title" = "دسته‌بندی‌ها";
 "tool_menu_item.lessons" = "درس‌ها";
+
 "onboardingTutorial.beginButton.title" = "شروع";
 "onboardingTutorial.nextButton.title" = "بعدی";
 "tool_offline_favorite_message" = "با ضربه زدن روی آیکون قلب، که ابزار را به موارد دلخواه اضافه می‌کند، آن را به صورت آفلاین در دسترس قرار دهید.";
@@ -123,6 +123,7 @@
 "add_new_tools" = "افزودن ابزار جدید";
 "set_your_languages" = "زبان خود را تنظیم کنید";
 "okay" = "تأیید";
+
 // Menu
 "menu_general" = "عمومی";
 "menu_account" = "حساب کاربری";
@@ -130,6 +131,7 @@
 "menu_legal" = "قانونی";
 "language_settings" = "تنظیمات زبان";
 "menu.tutorial" = "آموزش";
+
 // Login
 "login" = "ورود";
 "logout" = "خروج";
@@ -181,7 +183,7 @@ https://godtoolsapp.com
 "no" = "خیر";
 
 // Tract - Sharing
-"tract_share_message" ="این پیوند شما را به نسخه اینترنتی صفحه‌ای می‌برد که امروز آخرین بار آن را مشاهده می‌کردیم: %@. بیایید بیشتر صحبت کنیم!
+"tract_share_message" = "این پیوند شما را به نسخه اینترنتی صفحه‌ای می‌برد که امروز آخرین بار آن را مشاهده می‌کردیم: %@. بیایید بیشتر صحبت کنیم!
 
 می‌توان برنامه را از https://godtoolsapp.com دانلود کنید";
 

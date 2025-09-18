@@ -258,6 +258,7 @@ Kama hutapokea ujumbe huu hadi baadaye, kiungo kinaweza kukosa kufanya kazi. Tun
 "add_new_tools" = "Ongeza Vifaa Vipya";
 "set_your_languages" = "Weka Lugha Zako";
 "okay" = "Sawa";
+
 // Menu
 "menu_general" = "Kuu";
 "menu_account" = "Akaunti";
@@ -317,7 +318,7 @@ Toleo la mtandao linaweza kupatikana kwenye https://knowgod.com/";
 "no" = "La";
 
 // Tract - Sharing
-"tract_share_message" ="Kiungo hiki kitakupeleka kwenye toleo la wavuti la ukurasa tuliokuwa tukiangalia kwa pamoja leo: %@. 
+"tract_share_message" = "Kiungo hiki kitakupeleka kwenye toleo la wavuti la ukurasa tuliokuwa tukiangalia kwa pamoja leo: %@. 
 
 Hebu tuzungumze zaidi!
 
@@ -386,5 +387,4 @@ Programu inaweza kupakuliwa kwenye https://godtoolsapp.com";
 // OnboardingTutorial
 "onboardingTutorial.aboutAppItem.0.title" = "Shirikisha wengine";
 "accountActivity.globalAnalytics.countries.title" = "Nchi";
-
 "onboardingTutorial.showMoreButton.title" = "Onesha zaidi";

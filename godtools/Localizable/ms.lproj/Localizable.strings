@@ -3,7 +3,6 @@
 
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "Tidak tersedia dalam %@";
-
 "tool_menu_item.tools" = "Alat";
 "lessons.pageTitle" = "Pengajaran disediakan khusus untuk anda";
 "lessons.pageSubtitle" = "Idea praktikal untuk membina hubungan dan memulakan perbualan yang bermakna.";
@@ -39,6 +38,7 @@
 "allTools.spotlight.description" = "Di sini adalah beberapa alat yang anda mungkin berminat";
 "allTools.categories.title" = "Kategori";
 "tool_menu_item.lessons" = "Pengajaran";
+
 "onboardingTutorial.beginButton.title" = "Bermula";
 "onboardingTutorial.nextButton.title" = "Seterusnya";
 "tool_offline_favorite_message" = "Menjadikan sesuatu alat tersedia semasa luar talian dengan mengetik pada ikon hati yang akan menambahkannya ke kegemaran anda.
@@ -125,11 +125,13 @@ Jika selepas ini, anda tidak menerima mesej ini, pautan tersebut mungkin masih b
 "add_new_tools" = "Tambah Alat Baharu";
 "set_your_languages" = "Tetapkan Bahasa Anda";
 "okay" = "Okey";
+
 // Menu
 "menu_general" = "Umum";
 "menu_share" = "Kongsi";
 "menu_legal" = "Sah";
 "language_settings" = "Tetapan Bahasa";
+
 // Login
 "login" = "Log masuk";
 "logout" = "Log keluar";
@@ -180,7 +182,7 @@ Versi dalam talian boleh ditemui di https://knowgod.com/";
 "no" = "Tidak";
 
 // Tract - Sharing
-"tract_share_message" ="Pautan ini akan membawa anda ke halaman versi web yang kali terakhir kita lihat bersama hari ini: %@. Ayuh bercakap lebih banyak!
+"tract_share_message" = "Pautan ini akan membawa anda ke halaman versi web yang kali terakhir kita lihat bersama hari ini: %@. Ayuh bercakap lebih banyak!
 
 Aplikasi boleh dimuat turun daripada https://godtoolsapp.com";
 
@@ -195,7 +197,6 @@ Aplikasi boleh dimuat turun daripada https://godtoolsapp.com";
 
 // Alerts
 "error" = "Ralat";
-"OK" = "OK";
 "cancel" = "Batal";
 "required_field_missing" = "\"%@\" ialah medan yang diperlukan.";
 
@@ -212,8 +213,8 @@ Aplikasi boleh dimuat turun daripada https://godtoolsapp.com";
 "general_about_8" = "Lawati godtoolsapp.com untuk maklumat lanjut.";
 "tutorial.continueButton.title.continue" = "Teruskan";
 "general_about_9" = "Apabila anda mengambil inisiatif untuk berkongsi kepercayaan anda, jangan lupa bahawa Tuhanlah yang mengubah hati. Sayang setiap orang dengan mendengar untuk memahami.";
-"general_about_10" = "\"Biarkan perbualan anda sentiasa penuh dengan rahmat, ditambah perisa, supaya anda tahu cara untuk menjawab semua orang.\" Colossians 4:6";
 
+"general_about_10" = "\"Biarkan perbualan anda sentiasa penuh dengan rahmat, ditambah perisa, supaya anda tahu cara untuk menjawab semua orang.\" Colossians 4:6";
 // Downloads
 "Download in progress" = "Muat turun sedang berjalan";
 
@@ -223,4 +224,3 @@ Aplikasi boleh dimuat turun daripada https://godtoolsapp.com";
 
 // Language Name Strings
 "language_name_fa" = "Bahasa Parsi (Parsi)";
-

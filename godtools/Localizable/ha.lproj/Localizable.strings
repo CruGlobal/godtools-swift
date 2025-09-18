@@ -16,11 +16,8 @@
 "lessons.lessonCompleted" = "An kammala";
 "lessons.completionProgress" = "%@ Cikkake";
 "network_connection_lost" = "An rasa haɗin yanar gizon.";
-"language_name_fil" = "Filipino (Tagalog)";
 "lessons.filter.navBar.language" = "Harshen darasi";
 "lessons.languageFilter.title" = "Darussa a cikin:";
-"language_name_fil-x-taglish" = "Taglish";
-"language_name_sid" = "Sidama";
 "onboardingTutorial.chooseLanguageButton.title" = "Zabi Harshe";
 "languageSettings.confirmAppLanguage.message" = "Kun zaɓi %@ azaman yaren app ɗin ku. Wannan zai canza yaren dukan GodTools app. Kun tabbata?";
 "languageSettings.confirmAppLanguage.changeLanguageButton.title" = "Canza harshe";
@@ -239,6 +236,7 @@
 /* This is to let users know which version of the app is installed on their phone */
 "menu_version" = "Sigar
 ";
+
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "Waɗanda aka fi so";
 
@@ -247,7 +245,6 @@
 
 // Navigation Bar
 "navigationBar.navigationItem.skip" = "Ƙetare(Sallake)";
-
 "menu_account" = "Ajiya";
 "menu_share" = "Raba";
 "language_settings" = "Saitunan Harshe";
@@ -259,6 +256,7 @@
 "login" = "Shiga";
 "logout" = "Fita";
 "create_account" = "Ƙirƙiri Asusu";
+
 // Tool Detail
 "about" = "Game da";
 "share_god_tools" = "Raba GodTools";
@@ -270,8 +268,8 @@
 
 "total_views" = "%d Ra'ayoyi";
 "total_languages" = "%d Harsuna";
-
 "parallel_language" = "Layi daya";
+
 // Settings
 "settings" = "Saituna";
 
@@ -285,12 +283,11 @@
 "no" = "A'a";
 
 // Tract - Sharing
-"tract_share_message" ="Wannan hanyar haɗin zai kai ku zuwa sigar yanar gizo ta abin da muke magana akai a yau:  %@
+"tract_share_message" = "Wannan hanyar haɗin zai kai ku zuwa sigar yanar gizo ta abin da muke magana akai a yau:  %@
 
 Zaku  iya saukar da app din zuwa wayar ku daga https://godtoolsapp.com.
 
 Bari mu kara magana!";
-
 "dismiss" = "Sallama";
 "done" = "Ya yi";
 "clear" = "Share";
@@ -304,7 +301,6 @@ Bari mu kara magana!";
 "required_field_missing" = "\"%@\" filin da ake bukata.";
 
 "onboardingTutorial.getStartedButton.title" = "Fara";
-
 // Tutorial
 "tutorial.tutorialItem.0.title" = "Kala";
 "tutorial.tutorialItem.3.title" = "Ana samun wannan koyawa don sake gani a cikin menu";
@@ -338,5 +334,4 @@ Bari mu kara magana!";
 // OnboardingTutorial
 "onboardingTutorial.aboutAppItem.0.title" = "Raba da wasu";
 "accountActivity.globalAnalytics.countries.title" = "Kasashe";
-
 "onboardingTutorial.showMoreButton.title" = "Nuna mun karin";

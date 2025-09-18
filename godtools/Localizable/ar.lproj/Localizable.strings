@@ -18,8 +18,6 @@
 "language_name_fil" = "الفلبينية (تاجالوج)";
 "lessons.filter.navBar.language" = "لُغة الدرس";
 "lessons.languageFilter.title" = "دروس في:";
-"language_name_fil-x-taglish" = "Taglish";
-"language_name_sid" = "Sidama";
 "onboardingTutorial.chooseLanguageButton.title" = "اختر اللغة";
 "languageSettings.confirmAppLanguage.message" = "لقد حددت %@  كلغة تطبيقك. سيؤدي هذا إلى تغيير لغة تطبيق GodTools بالكامل. هل أنت متأكد؟";
 "languageSettings.confirmAppLanguage.changeLanguageButton.title" = "تغيير اللغة";
@@ -259,6 +257,7 @@
 "add_new_tools" = "إضافة مزيد من الأدوات";
 "set_your_languages" = "حدد لغاتك";
 "okay" = "حسناً";
+
 // Menu
 "menu_general" = "عام";
 "menu_account" = "حساب";
@@ -319,7 +318,7 @@ https://godtoolsapp.com
 "no" = "لا";
 
 // Tract - Sharing
-"tract_share_message" ="هذا الرابط سيأخذك إلى إصدار الويب عما كنا نتحدث عنه هذا اليوم: %@.
+"tract_share_message" = "هذا الرابط سيأخذك إلى إصدار الويب عما كنا نتحدث عنه هذا اليوم: %@.
 
 فلنتحدث أكثر! 
 
@@ -387,5 +386,4 @@ https://godtoolsapp.com
 // OnboardingTutorial
 "onboardingTutorial.aboutAppItem.0.title" = "المشاركة مع الآخرين";
 "accountActivity.globalAnalytics.countries.title" = "البلدان";
-
 "onboardingTutorial.showMoreButton.title" = "أعرض لي المزيد";

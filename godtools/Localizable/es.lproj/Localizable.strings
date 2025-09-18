@@ -15,10 +15,8 @@
 "lessons.lessonCompleted" = "Completado";
 "lessons.completionProgress" = "%@ completado";
 "network_connection_lost" = "Se perdió la conexión de red.";
-"language_name_fil" = "Filipino (Tagalog)";
 "lessons.filter.navBar.language" = "Idioma de la lección";
 "lessons.languageFilter.title" = "Lecciones en:";
-"language_name_fil-x-taglish" = "Taglish";
 "language_name_sid" = "Sidamo";
 "onboardingTutorial.chooseLanguageButton.title" = "Elegir idioma";
 "languageSettings.confirmAppLanguage.message" = "Has seleccionado %@ como idioma de tu aplicación. Esto cambiará el idioma de toda la aplicación GodTools. ¿Estás seguro?";
@@ -47,7 +45,6 @@
 "accountDeletedAlert.title" = "Cuenta eliminada";
 "accountDeletedAlert.message" = "Se ha eliminado tu cuenta";
 "deleteAccount.title" = "No te vayas tan pronto";
-"deleteAccount.subtitle" = "If you delete your account you won't be able to access your favorited tools or account activity.";
 "deleteAccount.confirmButton.title" = "Eliminar mi cuenta";
 "deleteAccount.cancelButton.title" = "Conservar mi cuenta";
 "signIn.title" = "Iniciar sesión";
@@ -262,13 +259,9 @@ Si no recibes este mensaje en un tiempo, puede que el enlace ya no funcione. Pod
 "add_new_tools" = "Agrega nuevas herramientas";
 "set_your_languages" = "Establece tus idiomas";
 "okay" = "Ok";
-// Menu
-"menu_general" = "General";
 "menu_account" = "Cuenta";
 "menu_share" = "Compartir";
-"menu_legal" = "Legal";
 "language_settings" = "Ajustes de idioma";
-"menu.tutorial" = "Tutorial";
 "menu.my_account" = "Mi cuenta";
 
 // Login
@@ -318,10 +311,9 @@ Puedes acceer a una versión online en https://knowgod.com/";
 
 // Actions
 "yes" = "Sí";
-"no" = "No";
 
 // Tract - Sharing
-"tract_share_message" ="Este enlace te llevará a una versión web de la página que la que hablábamos juntos hoy: %@.
+"tract_share_message" = "Este enlace te llevará a una versión web de la página que la que hablábamos juntos hoy: %@.
 
 ¡Conversemos más!
 
@@ -335,9 +327,6 @@ La aplicación se puede descargar en https://godtoolsapp.com";
 "clear" = "Borrar";
 /* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
 "toolinfo_opentool" = "Abrir herramienta";
-
-// Alerts
-"error" = "Error";
 "OK" = "Aceptar";
 "cancel" = "Cancelar";
 "required_field_missing" = "\"%@\" es un campo obligatorio.";
