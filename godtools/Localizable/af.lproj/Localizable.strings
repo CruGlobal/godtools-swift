@@ -15,7 +15,6 @@
 "lessons.lessonCompleted" = "Klaar";
 "lessons.completionProgress" = "%@ Klaar";
 "network_connection_lost" = "Die netwerkverbinding is verbreek.";
-"language_name_fil" = "Filipino (Tagalog)";
 "lessons.filter.navBar.language" = "Lestaal";
 "lessons.languageFilter.title" = "Lesse in:";
 "language_name_fil-x-taglish" = "Die netwerkverbinding was verbreek";
@@ -99,9 +98,6 @@
 "favorites.favoriteTools.title" = "Jou gunsteling hulpmiddel";
 "favorites.favoriteTools.viewAll" = "Sien almal";
 
-/* Please keep to a 9 character limit, longer phrases may get cut off */
-"favorites.favoriteLessons.details" = "Details";
-
 /* The meaning is "I don't want to set a second language".  Language is no language or None */
 "toolSettings.languagesList.deleteLanguage.title" = "Geen";
 
@@ -114,7 +110,6 @@
 "toolSettings.option.trainingTips.show.title" = "Opleidingswenke";
 "toolSettings.option.trainingTips.hide.title" = "Vesteek wenke";
 "toolSettings.chooseLanguage.title" = "Parallele taal";
-"toolSettings.chooseLanguage.noParallelLanguageTitle" = "Parallel";
 "toolSettings.shareables.title" = "Verwante simbole";
 "allTools.spotlight.title" = "Hulpmiddel in gebruik";
 "allTools.spotlight.description" = "Hier is van die hulpmiddels wat ons dink jy van sal hou";
@@ -157,8 +152,6 @@
 
 /* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.findTutorial.title" = "Vind hierdie handleiding in die menu wanneer jy dit nodig het.";
-
-"onboardingTutorial.beginButton.title" = "Begin";
 "onboardingTutorial.nextButton.title" = "Volgende";
 "tool_offline_favorite_message" = "Maak die hulpmiddel beskikbaar deur die hart-ikoon te tik wat dit tot jou gunstelinge sal byvoeg.";
 
@@ -258,6 +251,7 @@ As jy nie hierdie boodskap gou kry nie, mag dit wees omdat die skakel nog nie we
 "add_new_tools" = "Voeg nuwe hulpmiddels by";
 "set_your_languages" = "Stel jou Tale in";
 "okay" = "Oukei";
+
 // Menu
 "menu_general" = "Algemeen";
 "menu_account" = "Rekening";
@@ -317,7 +311,7 @@ https://knowgod.com/";
 "no" = "Nee";
 
 // Tract - Sharing
-"tract_share_message" ="Hierdie skakel sal jou na die webweergawe neem van die bladsy waarna ons vandag saam gekyk het: %@ 
+"tract_share_message" = "Hierdie skakel sal jou na die webweergawe neem van die bladsy waarna ons vandag saam gekyk het: %@ 
 
 Kom ons gesels nog!
 
@@ -386,5 +380,4 @@ https://godtoolsapp.com";
 // OnboardingTutorial
 "onboardingTutorial.aboutAppItem.0.title" = "Deel Met Ander";
 "accountActivity.globalAnalytics.countries.title" = "Lande";
-
 "onboardingTutorial.showMoreButton.title" = "Wys My Meer";

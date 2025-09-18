@@ -253,6 +253,7 @@
 
 // Onboarding
 "add_new_tools" = "አዲስ መሳሪያን ይጨምሩ";
+
 // Menu
 "menu_general" = "አጠቃላይ";
 "menu_account" = "መለያ";
@@ -266,6 +267,7 @@
 "login" = "ይግቡ";
 "logout" = "ይዉጡ";
 "create_account" = "ይመዝገቡ";
+
 // Tool Detail
 "about" = "ስለዚህ አፕሊኬሽን";
 "help" = "እገዛ";
@@ -299,12 +301,13 @@
 "no_internet" = "እባክዎ የበይነመረብ ግንኙነትዎን ያረጋግጡ እና እንደገና ይሞክሩ።";
 
 "the_tool_you_requested_is_loading" = "የጠየቁት መተግበርያ በሂደት ላይ ነዉ...";
+
 // Actions
 "yes" = "አዎ";
 "no" = "አይደለም";
 
 // Tract - Sharing
-"tract_share_message" ="ዛሬ ስንመለከተዉ የነበረዉ መተግብሪያ(App) በዚህ መስፈንጠሪያ በኩል ማግኘት ይችላሉ: %@ ይህን መተግበሪያ ዌብ ላይ ለመጠቀም መስፈንጠሪያ: https://godtoolsapp.com\n\n ተጨማሪ እንነጋገር !";
+"tract_share_message" = "ዛሬ ስንመለከተዉ የነበረዉ መተግብሪያ(App) በዚህ መስፈንጠሪያ በኩል ማግኘት ይችላሉ: %@ ይህን መተግበሪያ ዌብ ላይ ለመጠቀም መስፈንጠሪያ: https://godtoolsapp.com\n\n ተጨማሪ እንነጋገር !";
 
 // Buttons
 "download" = "ያዉርዱ";
@@ -368,5 +371,4 @@
 // OnboardingTutorial
 "onboardingTutorial.aboutAppItem.0.title" = "ለሌሎች ያካፍሉ";
 "accountActivity.globalAnalytics.countries.title" = "ሀገሮች";
-
 "onboardingTutorial.showMoreButton.title" = "ተጨማሪ አሳየኝ";

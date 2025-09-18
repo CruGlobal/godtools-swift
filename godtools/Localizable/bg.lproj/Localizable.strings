@@ -3,7 +3,6 @@
 
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "Няма версия на %@";
-
 "tool_menu_item.tools" = "инструменти";
 "lessons.pageTitle" = "Уроци, създадени за теб";
 "lessons.pageSubtitle" = "Практични идеи за изграждане на връзки и започване на смислени разговори.";
@@ -42,6 +41,7 @@
 "training_tip_consider" = "Обмисли";
 "close" = "Затвори";
 "tool_menu_item.lessons" = "Уроци";
+
 "onboardingTutorial.beginButton.title" = "Начало";
 "onboardingTutorial.nextButton.title" = "Напред";
 "tool_offline_favorite_message" = "Направете инструмента достъпен офлайн чрез докосване на иконката сърце, което ще го добави към Вашите любими.";
@@ -128,6 +128,7 @@
 "add_new_tools" = "Добавете нови средства";
 "set_your_languages" = "Настройте Вашите езици";
 "okay" = "ОК";
+
 // Menu
 "menu_general" = "Общи условия";
 "menu_account" = "Акаунт";
@@ -135,6 +136,7 @@
 "menu_legal" = "Правни условия";
 "language_settings" = "Езикови настройки";
 "menu.tutorial" = "Ръководство";
+
 // Login
 "login" = "Вписване";
 "logout" = "Изход";
@@ -185,7 +187,7 @@
 "no" = "Не";
 
 // Tract - Sharing
-"tract_share_message" ="Този линк ще Ви насочи към уеб версията на страницата, която гледахме заедно днес: %@. 
+"tract_share_message" = "Този линк ще Ви насочи към уеб версията на страницата, която гледахме заедно днес: %@. 
 
 Да поговорим още!
 
@@ -202,7 +204,6 @@
 
 // Alerts
 "error" = "Грешка";
-"OK" = "OK";
 "cancel" = "Отмяна";
 "required_field_missing" = "\"%@\" е задължително поле.";
 

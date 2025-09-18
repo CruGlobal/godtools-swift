@@ -261,6 +261,7 @@ Ja saņēmi šo ziņojumu novēloti, iespējams, ka saite vairs nedarbojas. Mēs
 "add_new_tools" = "Pievienot jaunus rīkus";
 "set_your_languages" = "Valodas izvēle";
 "okay" = "Labi";
+
 // Menu
 "menu_general" = "Vispārīgi";
 "menu_account" = "Konts";
@@ -320,7 +321,7 @@ Rīku tīmekļa versijas ir pieejamas: https://KnowGod.com/lv";
 "no" = "Nē";
 
 // Tract - Sharing
-"tract_share_message" ="Šī saite atvērs tīmekļa lapu par to, ko šodien apspriedām: %@. 
+"tract_share_message" = "Šī saite atvērs tīmekļa lapu par to, ko šodien apspriedām: %@. 
 
 Turpināsim sarunu!
 
@@ -337,7 +338,6 @@ Lietotni var lejupielādēt savā tālrunī šeit: https://ej.uz/GodTools";
 
 // Alerts
 "error" = "Kļūda";
-"OK" = "OK";
 "cancel" = "Atcelt";
 "required_field_missing" = "Lauks \"%@\" aizpildāms obligāti!";
 
