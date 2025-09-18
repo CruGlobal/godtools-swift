@@ -1,9 +1,97 @@
+"deferredDeepLinkModal.title" = "It looks like you clicked a link for GodTools";
+"deferredDeepLinkModal.message" = "Please tap the paste button below.  This will allow us to take you to the content you requested in GodTools.";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "Close";
+"toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";
+"toolScreenShare.qrCode.title" = "QR Code";
+
+"optInNotification.notificationSettings" = "Notification Settings";
+"lessons.swipeTutorial.title" = "Swipe to change pages";
+"lessons.swipeTutorial.buttonText" = "Got it";
+"optInNotification.title" = "Get Tips and Encouragement";
+"optInNotification.body" = "Stay equipped for conversations.\nAllow notifications today.";
+"optInNotification.allowNotifications" = "Allow Notifications";
+"optInNotification.maybeLater" = "Maybe Later";
+
+/* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
+"lessons.resumeLessonModal.title" = "Resume Progress?";
+
+"lessons.resumeLessonModal.subtitle" = "Would you like to pick up where you left off?";
+"lessons.resumeLessonModal.startOverButton" = "Start over";
+"lessons.resumeLessonModal.continueButton" = "Continue";
+"lessons.lessonCompleted" = "Completed";
+"lessons.completionProgress" = "%@ Complete";
+"network_connection_lost" = "The network connection was lost.";
+"language_name_fil" = "Filipino (Tagalog)";
+"lessons.filter.navBar.language" = "Lesson language";
+"lessons.languageFilter.title" = "Lessons in:";
+"language_name_fil-x-taglish" = "Taglish";
+"language_name_sid" = "Sidama";
+"onboardingTutorial.chooseLanguageButton.title" = "Choose language";
+"languageSettings.confirmAppLanguage.message" = "You have selected %@ as your app language. This will change the language of the whole GodTools app. Are you sure?";
+"languageSettings.confirmAppLanguage.changeLanguageButton.title" = "Change language";
+"languageSettings.confirmAppLanguage.nevermindButton.title" = "Nevermind";
+"languageSettings.downloadableLanguages.title" = "Downloadable languages";
+"languageSettings.appInterface.title" = "App interface language";
+"languageSettings.appInterface.message" = "Set the language you'd like the whole app to be displayed in.";
+"languageSettings.appInterface.languagesAvailable" = "Languages available";
+"languageSettings.toolLanguagesAvailableOffline.title" = "Tool languages available offline";
+"languageSettings.toolLanguagesAvailableOffline.message" = "Download all the tools in a language to make them available even if you're out of WiFi or cell service. Set the tool language via the options button within a tool.";
+"languageSettings.toolLanguagesAvailableOffline.editDownloadedLanguagesButton.title" = "Edit downloaded languages";
+"allTools.filter.title" = "Filter";
+"allTools.filter.anyCategory" = "Any category";
+"allTools.filter.anyLanguage" = "Any language";
+"allTools.filter.navBar.language" = "Filter by language";
+"allTools.filter.navBar.category" = "Filter by category";
+"languageSettings.appLanguage.title" = "App Language";
+"authError.userAccountAlreadyExists.message" = "User account already exists.";
+"authError.userAccountNotFound.message" = "User account not found.";
+"createAccount.title" = "Create account";
+"createAccount.subtitle" = "Create an account to have real stories, encouragement, and practical tips at your fingertips.";
+"deleteAccountProgress.title" = "Deleting account...";
+"confirmDeleteAccount.title" = "Are you sure?";
+"confirmDeleteAccount.confirmButton.title" = "Delete account";
+"accountDeletedAlert.title" = "Account Deleted";
+"accountDeletedAlert.message" = "Your account has been deleted.";
+"deleteAccount.title" = "Don't go so soon";
+"deleteAccount.subtitle" = "If you delete your account you won't be able to access your favorited tools or account activity.";
+"deleteAccount.confirmButton.title" = "Delete my account";
+"deleteAccount.cancelButton.title" = "Keep my account";
+"signIn.title" = "Sign in";
+"signIn.subtitle" = "Log in to your account to have real stories, encouragement, and practical tips at your fingertips.";
+"signIn.google" = "Sign in with Google";
+"signIn.facebook" = "Login with Facebook";
+"signIn.apple" = "Continue with Apple";
+"menu_getStarted" = "Get started";
+"menu_support" = "Support";
+"menu_about" = "About";
+"menu.sendFeedback" = "Send feedback";
+"menu.reportABug" = "Report a bug";
+"menu.askAQuestion" = "Ask a question";
+"menu.leaveAReview" = "Leave a review";
+"account.badges.sectionTitle" = "Your badges";
+"account.activity.sectionTitle" = "Your activity";
+
+/* Just translate "Joined" - leave the %@ - this is the date they started using GodTools */
+"account.joinedOn" = "Joined %@";
+
+"account.globalActivity.title" = "Global Activity";
+"toolDetails.conversationStarters.title" = "Conversation starters";
+
+/* A list of the main points of the tool will live behind a section called "Outline" */
+"toolDetails.outline.title" = "Outline";
+
+"toolDetails.bibleReferences.title" = "Bible references";
+
 /* This About refers to a specific tool in the app. */
 "toolDetails.about.title" = "Om";
 
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "Finns inte på %@";
 
+"menu.deleteAccount" = "Delete account";
+"alert.mailAppUnavailable.title" = "Mail App Unavailable";
+"alert.mailAppUnavailable.message" = "The native Mail app is either not configured or is unavailable on this device. ";
 "tool_menu_item.tools" = "Verktyg";
 "lessons.pageTitle" = "Lektioner anpassade efter dig";
 "lessons.pageSubtitle" = "Praktiska idéer för hur man bygger relationer och startar meningsfulla samtal.";
@@ -38,7 +126,48 @@
 "allTools.spotlight.title" = "Utvalda verktyg";
 "allTools.spotlight.description" = "Här är några alternativ som vi tror att du kommer att gilla";
 "allTools.categories.title" = "Kategorier";
+"training_tip_ask" = "Ask";
+"training_tip_consider" = "Consider";
+"training_tip_prepare" = "Prepare";
+"training_tip_quote" = "Quote";
+"training_tip_tip" = "Tip";
+"articles.downloadingArticles.errorMessage.title" = "Error Downloading Articles";
+"start_training" = "Start Training";
+"close" = "Close";
 "tool_menu_item.lessons" = "Lektioner";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.continueButton.title.closeTutorial" = "Close tutorial";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.tool.title" = "Tools";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.tool.message" = "Each tool is made for a different stage of conversation- before, during or after.";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.toolTip.title" = "Tool tips";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.toolTip.message" = "GodTools tips guide you as you help someone understand the gospel and encounter Jesus.";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.screenShare.title" = "Screen sharing";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.screenShare.message" = "You can now share your screen remotely so the other person can follow as you use a tool to discuss the gospel.";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.lesson.title" = "Lessons";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.lesson.message" = "In each GodTools lesson you learn something to help you have real conversations about God.";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.findTutorial.title" = "Find this tutorial in the menu whenever you need it.";
+
+"onboardingTutorial.beginButton.title" = "Begin";
+"onboardingTutorial.nextButton.title" = "Next";
 "tool_offline_favorite_message" = "Gör ett verktyg tillgängligt utan internetuppkoppling genom att trycka på hjärtikonen. Då läggs det till i dina favoriter.";
 
 /* This is a category description of a tool that helps you start a conversation */
@@ -47,6 +176,9 @@
 /* This phrase describes a category of tool that helps someone grow in their Christian faith */
 "tool_category_growth" = "Främjande av kristen tro";
 
+"share_link" = "Share link";
+"share_tool_menu.remote_share_tool" = "Share your screen";
+"share_tool_menu.send_tool" = "Send this tool";
 "share_tool_screen_tutorial.share_your_screen.title" = "Dela din skärm";
 "share_tool_screen_tutorial.share_your_screen.message" = "Om du använder detta alternativ skickas en länk till det här verktyget till en vän. När länken öppnas startas en skärmdelningssession.";
 "share_tool_screen_tutorial.mirrored_experience.title" = "Spegling";
@@ -58,6 +190,16 @@
 Om du får detta meddelande försent fungerar kanske inte länken. I så fall kan vi prova igen någon annan gång.";
 "exit_tract_remote_share_session.message" = "Vill du avsluta fjärrdelningssessionen nu?";
 "load_tool_remote_session.message" = "Startar skärmdelning…";
+"learn_to_share_tool.learn_to_share.title" = "Learn to share this tool with anyone";
+"learn_to_share_tool.learn_to_share.message" = "Practice using as many tips as you need to feel confident sharing this tool with others.";
+"learn_to_share_tool.tips_light_the_way.title" = "Tips to light the way";
+"learn_to_share_tool.tips_light_the_way.message" = "On select screens of this training, you’ll see a variety of icons. Press each icon to reveal a tip that will help you talk about the content of the screen. If a screen has no icon, then just read through the content and discuss as needed.";
+"learn_to_share_tool.light_up_the_tips.title" = "Light up the tips";
+"learn_to_share_tool.light_up_the_tips.message" = "When a tip lights up, you’ve completed that piece of training. Practice using as many tips as you need to feel confident explaining the tool";
+"lesson_evaluation.title" = "Review";
+"lesson_evaluation.wasThisHelpful" = "Was this lesson helpful for you?";
+"lesson_evaluation.shareFaith" = "How ready do you feel to start a spiritual conversation?";
+"lesson_evaluation.sendButtonTitle" = "Send feedback";
 "onboardingTutorial.0.title" = "Redo för alla samtal";
 "onboardingTutorial.0.videoLink.title" = "Titta på video";
 "onboardingTutorial.1.title" = "Prata om Gud med vem som helst";
@@ -82,16 +224,54 @@ Om du får detta meddelande försent fungerar kanske inte länken. I så fall ka
 /* A user will be selecting this option to remove the tool from their Favorites screen */
 "remove_from_favorites" = "Ta bort från \"Favoriter\"";
 
+/* This is a loading screen */
+"loading_unfavorited_tool" = "The tool is downloading. To avoid waiting in the future, favorite this tool so it will be available offline.";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "Downloading the most recent translation for this tool.";
+
 /* Adds a question mark */
 "remove_from_favorites_title" = "Ta bort från \"Favoriter\"";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "Are you sure you want to remove %@ from your Favorites? ";
 
 /* Gospel indicates the gospel of Jesus Christ */
 "tool_category_gospel" = "Inbjudan till gospel";
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "Artiklar";
+
+"articles.downloadArticlesButton.title.retryDownload" = "Retry Download";
+
+/* This is to let users know which version of the app is installed on their phone */
+"menu_version" = "Version";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
+"articles.loadingView.downloadingArticles" = "Downloading Articles ...";
+"language_onboard" = "90+ Languages";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "You have downloaded all available tools.";
+
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "Favoriter";
+
+/* The user will click this toggle switch to go find a library of more offerings or "Tools". */
+"find_tools" = "All Tools";
+
+"unavailable" = "Unavailable";
+
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "Skip";
+
+// Onboarding
+"add_new_tools" = "Add New Tools";
+"set_your_languages" = "Set Your Languages";
+"okay" = "Okay";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
 
 // Menu
 "menu_general" = "Allmänt";
@@ -99,19 +279,38 @@ Om du får detta meddelande försent fungerar kanske inte länken. I så fall ka
 "menu_share" = "Dela";
 "menu_legal" = "Juridisk information";
 "language_settings" = "Språkinställningar";
+"menu.tutorial" = "Tutorial";
+"menu.my_account" = "My Account";
+
+// Login
+"login" = "Login";
+"logout" = "Logout";
+"create_account" = "Create Account";
+"account_login" = "Account Login";
+
 // Tool Detail
 "about" = "Om";
+"help" = "Frequently Asked Questions";
 "contact_us" = "Kontakta oss";
+"preview_mode_translators_only" = "Preview Mode (Translators Only)";
 "share_god_tools" = "Dela appen GodTools";
 "share_a_story_with_us" = "Dela en berättelse med oss";
 "terms_of_use" = "Villkor";
 "privacy_policy" = "Sekretesspolicy";
 "copyright_info" = "Upphovsrätt";
+"share_god_tools_share_sheet_text" = "Download the GodTools app: https://godtoolsapp.com
+
+An online version can be found at https://knowgod.com/";
+
+// Add Tools
+"add_tools" = "Add Tools";
+
 "total_views" = "%d visningar";
 "total_languages" = "%d språk";
 
 // Language Settings
 "primary_language" = "Huvudspråk";
+"select_primary_language" = "Select a Primary Language";
 "parallel_language" = "Parallellt språk";
 "select_parallel_language" = "Välj ett parallellt språk";
 "share_god_tools_native_language" = "Dela GodTools med andra på deras modersmål.";
@@ -120,33 +319,108 @@ Om du får detta meddelande försent fungerar kanske inte länken. I så fall ka
 // Settings
 "settings" = "Inställningar";
 
+// Alert & Info Controllers
+"download_error" = "Download Error";
+"no_internet_title" = "No internet connection";
+"no_internet" = "Please check your internet connection and try again.";
+
+"the_tool_you_requested_is_loading" = "The tool you requested is loading...";
+"loading" = "Loading...";
+
 // Actions
 "yes" = "Ja";
-// Tract - Sharing
-"tract_share_message" ="Den här länken tar dig till en webbversion av det vi pratade om idag:  %@ Appen kan laddas ner från https://godtoolsapp.com. Vi tar och pratar mer!";
+"no" = "No";
 
+// Tract - Sharing
+"tract_share_message" = "Den här länken tar dig till en webbversion av det vi pratade om idag:  %@ Appen kan laddas ner från https://godtoolsapp.com. Vi tar och pratar mer!";
+
+// Buttons
+"download" = "Download";
 "dismiss" = "Avfärda";
 "done" = "Gjort";
+"remove" = "Remove";
+"clear" = "Clear";
 /* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
 "toolinfo_opentool" = "Öppna verktyg";
 
+// Alerts
+"error" = "Error";
+"OK" = "OK";
 "cancel" = "Avbryt";
+"required_field_missing" = "\"%@\" is a required field.";
+
+"onboardingTutorial.getStartedButton.title" = "Get started";
+
 // About
 "general_about_1" = "GodTools hjälper dig att dela med dig av din tro på ett enkelt och tydligt sätt.";
 // Tutorial
 "tutorial.tutorialItem.0.title" = "Titta på video";
 "general_about_2" = "Dessa verktyg hjälper dig att på ett självsäkert sätt förklara för andra hur de kan skapa en relation med Gud genom Jesus Kristus, även om du aldrig har delat med dig av din tro tidigare eller om de talar ett annat språk.";
+"tutorial.tutorialItem.0.message" = "See what GodTools offers in our demo video
+(Tap on the video to bring up settings for subtitles)";
+"general_about_3" = "Choose from a variety of tools based on your preference and your audience. Not all tools are available in every language.";
+"tutorial.tutorialItem.1.title" = "Prepare";
+"general_about_4" = "Links to other resources are included at the end of each tool.";
+"tutorial.tutorialItem.1.message" = "Get familiar with some of your tools. The \"Teach Me to Share\" tool is a good place to start.
+
+Press the About button on any tool for more info.";
 "general_about_5" = "En internetanslutning behövs för att kunna ladda ner varje nytt verktyg och/eller språk. När de har laddats ner kan de användas utan internetuppkoppling.";
+"tutorial.tutorialItem.2.title" = "Try";
 "general_about_6" = "Frågor? Förslag? Kontakta oss på support@godtoolsapp.com";
+"tutorial.tutorialItem.2.message" = "Everyone starts as a beginner. Try using a tool in a conversation and see what you learn.";
 "general_about_7" = "En webbversion av dessa verktyg finns på knowgod.com. Bädda in den på din egen webbplats!";
+"tutorial.tutorialItem.3.title" = "This tutorial is available to see again in the menu";
 "general_about_8" = "Gå till godtoolsapp.com för mer information.";
+"tutorial.continueButton.title.continue" = "Continue";
 "general_about_9" = "Kom ihåg att Gud är den som förändrar ditt hjärta när du tar initiativet att dela med dig av din tro. Älska varje person genom att lyssna efter förståelse.";
+"tutorial.continueButton.title.startUsingGodTools" = "Start Using GodTools";
+
 "general_about_10" = "\"Se till att ni alltid uttrycker er på ett vänligt sätt och kryddar era ord med salt. Då kommer ni alltid att veta hur ni ska svara andra.\" Kolosserbrevet 4:6";
+
+// OpenTutorial
+"openTutorial.showTutorialLabel.text" = "Show Me A Tutorial";
+// Downloads
+"Download in progress" = "Download in progress";
+
+"openTutorial.openTutorialButton.title" = "Open Tutorial";
 
 // Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "Tidigare";
+// Account
+"account.navTitle" = "My Profile";
 "card_status2" = "Nästa";
+
+"account.activity.title" = "Activity";
 
 // Language Name Strings
 "language_name_fa" = "Persiska (farsi)";
 
+// Account Activity
+"accountActivity.globalAnalytics.header.title" = "Global Activity";
+// OnboardingWelcome
+"onboardingWelcome.titleLabel.welcome" = "Welcome";
+"accountActivity.globalAnalytics.users.title" = "Unique\nUsers";
+"onboardingWelcome.titleLabel.tagline" = "Helping You Share Your Faith";
+"accountActivity.globalAnalytics.gospelPresentation.title" = "Gospel\nPresentations";
+"accountActivity.globalAnalytics.launches.title" = "Sessions";
+// OnboardingTutorial
+"onboardingTutorial.aboutAppItem.0.title" = "Share With Others";
+"accountActivity.globalAnalytics.countries.title" = "Countries";
+
+"onboardingTutorial.aboutAppItem.0.message" = "GodTools is built to guide your faith conversations";
+"onboardingTutorial.aboutAppItem.1.title" = "Choose Your Tools";
+"onboardingTutorial.aboutAppItem.1.message" = "GodTools helps you before, during, and after a spiritual conversation";
+"onboardingTutorial.aboutAppItem.2.title" = "Always Ready";
+"onboardingTutorial.aboutAppItem.2.message" = "GodTools is here to help and is ready when you are";
+"onboardingTutorial.appUsageItem.0.message" = "Prepare for any conversation";
+"onboardingTutorial.appUsageItem.1.message" = "Walk someone through the gospel";
+"onboardingTutorial.appUsageItem.2.message" = "View two languages side by side";
+"onboardingTutorial.appUsageItem.3.message" = "Choose from over 90 languages";
+"onboardingTutorial.appUsageItem.4.message" = "Help someone get started as a Christian";
+"onboardingTutorial.showMoreButton.title" = "Show Me More";
+
+"screenShareTutorial.generateQRCodeButton.title" = "Generate QR code";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "Close";
+"toolScreenShare.qrCode.title" = "QR Code";
+"toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";

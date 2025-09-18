@@ -1,3 +1,10 @@
+"deferredDeepLinkModal.title" = "It looks like you clicked a link for GodTools";
+"deferredDeepLinkModal.message" = "Please tap the paste button below.  This will allow us to take you to the content you requested in GodTools.";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "Close";
+"toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";
+"toolScreenShare.qrCode.title" = "QR Code";
+
 "optInNotification.notificationSettings" = "Saitunan sanarwa";
 "lessons.swipeTutorial.title" = "Shafa don canza shafuka";
 "lessons.swipeTutorial.buttonText" = "Na samu";
@@ -119,11 +126,13 @@
 "toolSettings.shareables.title" = "Hotuna masu alaƙa";
 "allTools.spotlight.title" = "Hasken kayan aiki";
 "allTools.spotlight.description" = "Ga wasu kayan aikin da muke tunanin za ku so";
+"allTools.categories.title" = "Categories";
 "training_tip_ask" = "Tambaya";
 "training_tip_consider" = "Yi la'akari da";
 "training_tip_prepare" = "Shirya";
 "training_tip_quote" = "Sa farashi";
 "training_tip_tip" = "Kuɗin hidima";
+"articles.downloadingArticles.errorMessage.title" = "Error Downloading Articles";
 "start_training" = "Fara horo";
 "close" = "Rufewa";
 "tool_menu_item.lessons" = "Darussan";
@@ -170,6 +179,7 @@
 
 "share_link" = "Raba hanyar haɗi";
 "share_tool_menu.remote_share_tool" = "Raba allon ku";
+"share_tool_menu.send_tool" = "Send this tool";
 "share_tool_screen_tutorial.share_your_screen.title" = "Raba allon ku";
 "share_tool_screen_tutorial.share_your_screen.message" = "Wannan zaɓin zai aika hanyar haɗi zuwa wannan kayan aikin ga aboki. Lokacin da aka buɗe hanyar haɗin yanar gizon zai fara zaman raba allo.";
 "share_tool_screen_tutorial.mirrored_experience.title" = "Gwanintar madubi";
@@ -239,17 +249,38 @@
 /* This is to let users know which version of the app is installed on their phone */
 "menu_version" = "Sigar
 ";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
+"articles.loadingView.downloadingArticles" = "Downloading Articles ...";
+"language_onboard" = "90+ Languages";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "You have downloaded all available tools.";
+
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "Waɗanda aka fi so";
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
 "find_tools" = "Duk kayan aiki";
 
+"unavailable" = "Unavailable";
+
 // Navigation Bar
 "navigationBar.navigationItem.skip" = "Ƙetare(Sallake)";
 
+// Onboarding
+"add_new_tools" = "Add New Tools";
+"set_your_languages" = "Set Your Languages";
+"okay" = "Okay";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
+
+// Menu
+"menu_general" = "General";
 "menu_account" = "Ajiya";
 "menu_share" = "Raba";
+"menu_legal" = "Legal";
 "language_settings" = "Saitunan Harshe";
 "menu.tutorial" = "Koyawa";
 "menu.my_account" = "Asusu na
@@ -259,8 +290,13 @@
 "login" = "Shiga";
 "logout" = "Fita";
 "create_account" = "Ƙirƙiri Asusu";
+"account_login" = "Account Login";
+
 // Tool Detail
 "about" = "Game da";
+"help" = "Frequently Asked Questions";
+"contact_us" = "Contact Us";
+"preview_mode_translators_only" = "Preview Mode (Translators Only)";
 "share_god_tools" = "Raba GodTools";
 "share_a_story_with_us" = "Raba labari tare da mu";
 "terms_of_use" = "Sharuɗɗan Amfani";
@@ -268,10 +304,20 @@
 "copyright_info" = "Haƙƙin mallaka";
 "share_god_tools_share_sheet_text" = "https://godtoolsapp.com";
 
+// Add Tools
+"add_tools" = "Add Tools";
+
 "total_views" = "%d Ra'ayoyi";
 "total_languages" = "%d Harsuna";
 
+// Language Settings
+"primary_language" = "Primary Language";
+"select_primary_language" = "Select a Primary Language";
 "parallel_language" = "Layi daya";
+"select_parallel_language" = "Select a Parallel Language";
+"share_god_tools_native_language" = "Share GodTools with someone in their native language";
+"not_every_tool_is_available" = "Not every tool is available in every language";
+
 // Settings
 "settings" = "Saituna";
 
@@ -280,19 +326,25 @@
 "no_internet_title" = "Babu haɗin intanet";
 "no_internet" = "Da fatan za a duba haɗin intanet ɗin ku kuma a sake gwadawa";
 
+"the_tool_you_requested_is_loading" = "The tool you requested is loading...";
+"loading" = "Loading...";
+
 // Actions
 "yes" = "\"I\" hakika";
 "no" = "A'a";
 
 // Tract - Sharing
-"tract_share_message" ="Wannan hanyar haɗin zai kai ku zuwa sigar yanar gizo ta abin da muke magana akai a yau:  %@
+"tract_share_message" = "Wannan hanyar haɗin zai kai ku zuwa sigar yanar gizo ta abin da muke magana akai a yau:  %@
 
 Zaku  iya saukar da app din zuwa wayar ku daga https://godtoolsapp.com.
 
 Bari mu kara magana!";
 
+// Buttons
+"download" = "Download";
 "dismiss" = "Sallama";
 "done" = "Ya yi";
+"remove" = "Remove";
 "clear" = "Share";
 /* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
 "toolinfo_opentool" = "Bude kayan aiki";
@@ -305,11 +357,31 @@ Bari mu kara magana!";
 
 "onboardingTutorial.getStartedButton.title" = "Fara";
 
+// About
+"general_about_1" = "GodTools helps you share your faith in an easy and clear way.";
 // Tutorial
 "tutorial.tutorialItem.0.title" = "Kala";
+"general_about_2" = "These tools help you confidently explain to someone how they can begin a relationship with God through Jesus Christ, even if you've never shared your faith before or they speak a different language.";
+"tutorial.tutorialItem.0.message" = "See what GodTools offers in our demo video
+(Tap on the video to bring up settings for subtitles)";
+"general_about_3" = "Choose from a variety of tools based on your preference and your audience. Not all tools are available in every language.";
+"tutorial.tutorialItem.1.title" = "Prepare";
+"general_about_4" = "Links to other resources are included at the end of each tool.";
+"tutorial.tutorialItem.1.message" = "Get familiar with some of your tools. The \"Teach Me to Share\" tool is a good place to start.
+
+Press the About button on any tool for more info.";
+"general_about_5" = "Online connection is needed to download each new tool and/or language. Once downloaded, they can be used offline.";
+"tutorial.tutorialItem.2.title" = "Try";
+"general_about_6" = "Questions? Suggestions? Requests? Contact us at support@godtoolsapp.com";
+"tutorial.tutorialItem.2.message" = "Everyone starts as a beginner. Try using a tool in a conversation and see what you learn.";
+"general_about_7" = "An online version of these tools can be found at knowgod.com. Embed it on your own site!";
 "tutorial.tutorialItem.3.title" = "Ana samun wannan koyawa don sake gani a cikin menu";
+"general_about_8" = "Visit godtoolsapp.com for more information.";
 "tutorial.continueButton.title.continue" = "Ci gaba";
+"general_about_9" = "As you take the initiative to share your faith, remember that God is the one who changes the heart. Love each person well by listening for understanding.";
 "tutorial.continueButton.title.startUsingGodTools" = "Fara Amfani da GodTools";
+
+"general_about_10" = "\"Let your conversation always be full of grace, seasoned with salt, so that you may know how to answer everyone.\" Colossians 4:6";
 
 // OpenTutorial
 "openTutorial.showTutorialLabel.text" = "Nuna min koyawa";
@@ -331,6 +403,8 @@ Bari mu kara magana!";
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "Ayyukan Duniya";
+// OnboardingWelcome
+"onboardingWelcome.titleLabel.welcome" = "Welcome";
 "accountActivity.globalAnalytics.users.title" = "Musamman Masu Amfani";
 "onboardingWelcome.titleLabel.tagline" = "Taimaka muku Raba Imaninku";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "Gabatarwar Bishara";
@@ -339,4 +413,20 @@ Bari mu kara magana!";
 "onboardingTutorial.aboutAppItem.0.title" = "Raba da wasu";
 "accountActivity.globalAnalytics.countries.title" = "Kasashe";
 
+"onboardingTutorial.aboutAppItem.0.message" = "GodTools is built to guide your faith conversations";
+"onboardingTutorial.aboutAppItem.1.title" = "Choose Your Tools";
+"onboardingTutorial.aboutAppItem.1.message" = "GodTools helps you before, during, and after a spiritual conversation";
+"onboardingTutorial.aboutAppItem.2.title" = "Always Ready";
+"onboardingTutorial.aboutAppItem.2.message" = "GodTools is here to help and is ready when you are";
+"onboardingTutorial.appUsageItem.0.message" = "Prepare for any conversation";
+"onboardingTutorial.appUsageItem.1.message" = "Walk someone through the gospel";
+"onboardingTutorial.appUsageItem.2.message" = "View two languages side by side";
+"onboardingTutorial.appUsageItem.3.message" = "Choose from over 90 languages";
+"onboardingTutorial.appUsageItem.4.message" = "Help someone get started as a Christian";
 "onboardingTutorial.showMoreButton.title" = "Nuna mun karin";
+
+"screenShareTutorial.generateQRCodeButton.title" = "Generate QR code";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "Close";
+"toolScreenShare.qrCode.title" = "QR Code";
+"toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";

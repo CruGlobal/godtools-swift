@@ -1,3 +1,10 @@
+"deferredDeepLinkModal.title" = "It looks like you clicked a link for GodTools";
+"deferredDeepLinkModal.message" = "Please tap the paste button below.  This will allow us to take you to the content you requested in GodTools.";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "Close";
+"toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";
+"toolScreenShare.qrCode.title" = "QR Code";
+
 "optInNotification.notificationSettings" = "Seetiingii yaadachiiftuuwwanii";
 "lessons.swipeTutorial.title" = "Fuula kan biraatti darbuuf gara bitaatti ykn mirgaatti skriinii kana buti";
 "lessons.swipeTutorial.buttonText" = "Naaf galeera";
@@ -118,11 +125,13 @@
 "toolSettings.shareables.title" = "Suurawwan wal fakkaatan";
 "allTools.spotlight.title" = "Barruuwwan filatamoo";
 "allTools.spotlight.description" = "Barruuwwan nuti ni jaallatta jennee yaadne";
+"allTools.categories.title" = "Categories";
 "training_tip_ask" = "Gaafadhu";
 "training_tip_consider" = "Ilaalcha keessa galchi";
 "training_tip_prepare" = "Qopheessi";
 "training_tip_quote" = "Caqasa";
 "training_tip_tip" = "Yaada gorsaa";
+"articles.downloadingArticles.errorMessage.title" = "Error Downloading Articles";
 "start_training" = "Leenjii eegali";
 "close" = "Cufi";
 "tool_menu_item.lessons" = "Barannoowwan";
@@ -237,14 +246,32 @@ Ergaan kun turee yoo si qaqqabe link'n kun hojjechuu dhiisuu mala. Garuu yeroo k
 
 /* This is to let users know which version of the app is installed on their phone */
 "menu_version" = "Vershinii";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
+"articles.loadingView.downloadingArticles" = "Downloading Articles ...";
+"language_onboard" = "90+ Languages";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "You have downloaded all available tools.";
+
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "Kan jaallataman";
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
 "find_tools" = "Barruuwwan hunda";
 
+"unavailable" = "Unavailable";
+
 // Navigation Bar
 "navigationBar.navigationItem.skip" = "Irra darbi";
+
+// Onboarding
+"add_new_tools" = "Add New Tools";
+"set_your_languages" = "Set Your Languages";
+"okay" = "Okay";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
 
 // Menu
 "menu_general" = "Waliigala";
@@ -259,10 +286,13 @@ Ergaan kun turee yoo si qaqqabe link'n kun hojjechuu dhiisuu mala. Garuu yeroo k
 "login" = "Seeni";
 "logout" = "Bahi";
 "create_account" = "Akkaawontii uumi";
+"account_login" = "Account Login";
+
 // Tool Detail
 "about" = "Waa'ee";
 "help" = "Gaaffiiwwan yeroo hedduu gaafataman";
 "contact_us" = "Nu qunnami";
+"preview_mode_translators_only" = "Preview Mode (Translators Only)";
 "share_god_tools" = "GodTools qoodi";
 "share_a_story_with_us" = "Seenaakee nuuf qoodi";
 "terms_of_use" = "Haala fayyadamaa";
@@ -271,6 +301,9 @@ Ergaan kun turee yoo si qaqqabe link'n kun hojjechuu dhiisuu mala. Garuu yeroo k
 "share_god_tools_share_sheet_text" = "App GodTools buufadhu: https://godtoolsapp.com
 
 Marsariitii https://knowgod.com/ irrattis argachuu ni dandeessa.";
+
+// Add Tools
+"add_tools" = "Add Tools";
 
 "total_views" = "Namoonni %d ilaalaniiru";
 "total_languages" = "Afaanota %d";
@@ -291,19 +324,25 @@ Marsariitii https://knowgod.com/ irrattis argachuu ni dandeessa.";
 "no_internet_title" = "Qunnamtiin interneetii hin jiru";
 "no_internet" = "Maaloo tajaajila interneetii qabaachuu kee mirkaneeffadhuutii, irra deebi'i yaali.";
 
+"the_tool_you_requested_is_loading" = "The tool you requested is loading...";
+"loading" = "Loading...";
+
 // Actions
 "yes" = "Eeyyee";
 "no" = "Lakki";
 
 // Tract - Sharing
-"tract_share_message" ="Liinkiin kun: %@ gara marsariitii wanta nuti sila haasa'aa turreetti si geessa.
+"tract_share_message" = "Liinkiin kun: %@ gara marsariitii wanta nuti sila haasa'aa turreetti si geessa.
 
 Kana caalaa irratti haa dubbannu!
 
 App isaa https://godtoolsapp.com irraa buufachuu ni dandeessa.";
 
+// Buttons
+"download" = "Download";
 "dismiss" = "Cufii dhisii";
 "done" = "Xumureera";
+"remove" = "Remove";
 "clear" = "Haqi";
 /* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
 "toolinfo_opentool" = "Barruu kana bani";
@@ -316,11 +355,31 @@ App isaa https://godtoolsapp.com irraa buufachuu ni dandeessa.";
 
 "onboardingTutorial.getStartedButton.title" = "Eegali";
 
+// About
+"general_about_1" = "GodTools helps you share your faith in an easy and clear way.";
 // Tutorial
 "tutorial.tutorialItem.0.title" = "Ilaali";
+"general_about_2" = "These tools help you confidently explain to someone how they can begin a relationship with God through Jesus Christ, even if you've never shared your faith before or they speak a different language.";
+"tutorial.tutorialItem.0.message" = "See what GodTools offers in our demo video
+(Tap on the video to bring up settings for subtitles)";
+"general_about_3" = "Choose from a variety of tools based on your preference and your audience. Not all tools are available in every language.";
+"tutorial.tutorialItem.1.title" = "Prepare";
+"general_about_4" = "Links to other resources are included at the end of each tool.";
+"tutorial.tutorialItem.1.message" = "Get familiar with some of your tools. The \"Teach Me to Share\" tool is a good place to start.
+
+Press the About button on any tool for more info.";
+"general_about_5" = "Online connection is needed to download each new tool and/or language. Once downloaded, they can be used offline.";
+"tutorial.tutorialItem.2.title" = "Try";
+"general_about_6" = "Questions? Suggestions? Requests? Contact us at support@godtoolsapp.com";
+"tutorial.tutorialItem.2.message" = "Everyone starts as a beginner. Try using a tool in a conversation and see what you learn.";
+"general_about_7" = "An online version of these tools can be found at knowgod.com. Embed it on your own site!";
 "tutorial.tutorialItem.3.title" = "Agarsiiftuu fayyadamaa kana irra deebitee ilaaluu yoo barbaadde meenuu keessatti ni argatta";
+"general_about_8" = "Visit godtoolsapp.com for more information.";
 "tutorial.continueButton.title.continue" = "Itti fufi";
+"general_about_9" = "As you take the initiative to share your faith, remember that God is the one who changes the heart. Love each person well by listening for understanding.";
 "tutorial.continueButton.title.startUsingGodTools" = "GodTools fayyadamuu eegali";
+
+"general_about_10" = "\"Let your conversation always be full of grace, seasoned with salt, so that you may know how to answer everyone.\" Colossians 4:6";
 
 // OpenTutorial
 "openTutorial.showTutorialLabel.text" = "Akkaataa fayyadamaa natti agarsiisi";
@@ -342,6 +401,8 @@ App isaa https://godtoolsapp.com irraa buufachuu ni dandeessa.";
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "Sochii addunyaalessaa";
+// OnboardingWelcome
+"onboardingWelcome.titleLabel.welcome" = "Welcome";
 "accountActivity.globalAnalytics.users.title" = "Fayyadamtoota, namoota adda addaa";
 "onboardingWelcome.titleLabel.tagline" = "Amantiikee dhugaa ba'uudhaaf gargaaraa sirrii";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "Ibsaawwan Wangeelaa";
@@ -350,4 +411,20 @@ App isaa https://godtoolsapp.com irraa buufachuu ni dandeessa.";
 "onboardingTutorial.aboutAppItem.0.title" = "Namoota biroof qoodi";
 "accountActivity.globalAnalytics.countries.title" = "Biyyoota";
 
+"onboardingTutorial.aboutAppItem.0.message" = "GodTools is built to guide your faith conversations";
+"onboardingTutorial.aboutAppItem.1.title" = "Choose Your Tools";
+"onboardingTutorial.aboutAppItem.1.message" = "GodTools helps you before, during, and after a spiritual conversation";
+"onboardingTutorial.aboutAppItem.2.title" = "Always Ready";
+"onboardingTutorial.aboutAppItem.2.message" = "GodTools is here to help and is ready when you are";
+"onboardingTutorial.appUsageItem.0.message" = "Prepare for any conversation";
+"onboardingTutorial.appUsageItem.1.message" = "Walk someone through the gospel";
+"onboardingTutorial.appUsageItem.2.message" = "View two languages side by side";
+"onboardingTutorial.appUsageItem.3.message" = "Choose from over 90 languages";
+"onboardingTutorial.appUsageItem.4.message" = "Help someone get started as a Christian";
 "onboardingTutorial.showMoreButton.title" = "Kana caalaa natti agarsiisi";
+
+"screenShareTutorial.generateQRCodeButton.title" = "Generate QR code";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "Close";
+"toolScreenShare.qrCode.title" = "QR Code";
+"toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";

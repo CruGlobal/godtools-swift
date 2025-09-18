@@ -84,48 +84,48 @@
 "toolDetails.bibleReferences.title" = "Bible references";
 
 /* This About refers to a specific tool in the app. */
-"toolDetails.about.title" = "Σχετικά";
+"toolDetails.about.title" = "О приложении";
 
 /* This means that the tool/resource is not available in the currently selected language. */
-"lessonCard.languageNotAvailable" = "Δεν είναι διαθέσιμο σε %@";
+"lessonCard.languageNotAvailable" = "Not available in %@";
 
 "menu.deleteAccount" = "Delete account";
 "alert.mailAppUnavailable.title" = "Mail App Unavailable";
 "alert.mailAppUnavailable.message" = "The native Mail app is either not configured or is unavailable on this device. ";
-"tool_menu_item.tools" = "Εργαλεία";
-"lessons.pageTitle" = "Κατηγορίες";
-"lessons.pageSubtitle" = "Πρακτικές ιδέες για να χτίσετε σχέσεις και να ξεκινήσετε ουσιαστικές συζητήσεις.";
-"toolSettings.languagesAvailable.title" = "Διαθέσιμες γλώσσες";
-"toolDetails.versions.message" = "Επιλέξτε μια διαφορετική έκδοση αυτού του εργαλείου παρακάτω. Κάθε έκδοση διαθέτει μοναδικό στυλ και περιεχόμενο, ώστε να μπορείτε να βρείτε αυτό που είναι καλύτερο για τη συνομιλία σας. Μπορείτε να προτιμήσετε πολλές εκδόσεις του ίδιου εργαλείου.";
-"favorites.noTools.title" = "Δεν υπάρχουν αγαπημένα εργαλεία για εμφάνιση";
-"favorites.noTools.description" = "Πατήστε στο εικονίδιο της καρδιάς για να προτιμήσετε ένα εργαλείο και να το κάνετε διαθέσιμο εκτός σύνδεσης.";
-"favorites.noTools.button" = "Μεταβείτε στα Εργαλεία";
-"toolSettings.shareImagePreview.shareImageButton.title" = "Κοινή χρήση εικόνας";
-"favorites.pageTitle" = "Καλώς ήλθατε στο GodTools";
-"favorites.favoriteLessons.title" = "Προτεινόμενο μάθημα";
-"favorites.favoriteTools.title" = "Τα αγαπημένα σας εργαλεία";
-"favorites.favoriteTools.viewAll" = "Προβολή όλων";
+"tool_menu_item.tools" = "Tools";
+"lessons.pageTitle" = "Lessons made for you";
+"lessons.pageSubtitle" = "Practical ideas to build relationships and start meaningful conversations.";
+"toolSettings.languagesAvailable.title" = "Languages available";
+"toolDetails.versions.message" = "Choose a different version of this tool below. Each version features unique style and content so you can find the one that is best for your conversation. You can favorite multiple versions of the same tool.";
+"favorites.noTools.title" = "No favorite tools to display";
+"favorites.noTools.description" = "Tap on the heart icon to favorite a tool and make it available offline.";
+"favorites.noTools.button" = "Go to Tools";
+"toolSettings.shareImagePreview.shareImageButton.title" = "Share image";
+"favorites.pageTitle" = "Welcome to GodTools";
+"favorites.favoriteLessons.title" = "Featured lesson";
+"favorites.favoriteTools.title" = "Your favorite tools";
+"favorites.favoriteTools.viewAll" = "View all";
 
 /* Please keep to a 9 character limit, longer phrases may get cut off */
-"favorites.favoriteLessons.details" = "Λεπτομέρειες";
+"favorites.favoriteLessons.details" = "Details";
 
 /* The meaning is "I don't want to set a second language".  Language is no language or None */
-"toolSettings.languagesList.deleteLanguage.title" = "Κανένα";
+"toolSettings.languagesList.deleteLanguage.title" = "None";
 
-"toolSettings.chooseLanguage.toggleMessage" = "Κάντε εναλλαγή μεταξύ δύο διαφορετικών γλωσσών σε αυτό το εργαλείο.";
-"toolDetails.versions.title" = "Εκδόσεις";
-"toolDetails.learnToShareToolButton.title" = "Μάθετε να μοιράζεστε αυτό το εργαλείο";
-"toolSettings.title" = "Επιλογές Εργαλείων";
-"toolSettings.option.shareLink.title" = "Μοιραστείτε έναν σύνδεσμο";
-"toolSettings.option.screenShare.title" = "Κοινοποίηση της οθόνης σας";
-"toolSettings.option.trainingTips.show.title" = "Συμβουλές εξάσκησης";
-"toolSettings.option.trainingTips.hide.title" = "Απόκρυψη συμβουλών";
-"toolSettings.chooseLanguage.title" = "Παράλληλη Γλώσσα";
-"toolSettings.chooseLanguage.noParallelLanguageTitle" = "Παράλληλη";
-"toolSettings.shareables.title" = "Συναφή γραφικά";
-"allTools.spotlight.title" = "Εργαλείο Spotlight";
-"allTools.spotlight.description" = "Ακολουθούν ορισμένα εργαλεία που πιστεύαμε ότι μπορεί να σας αρέσουν";
-"allTools.categories.title" = "Κατηγορίες";
+"toolSettings.chooseLanguage.toggleMessage" = "Toggle between the two different languages in this tool.";
+"toolDetails.versions.title" = "Versions";
+"toolDetails.learnToShareToolButton.title" = "Learn to share this tool";
+"toolSettings.title" = "Tool Options";
+"toolSettings.option.shareLink.title" = "Share link";
+"toolSettings.option.screenShare.title" = "Share screen";
+"toolSettings.option.trainingTips.show.title" = "Training tips";
+"toolSettings.option.trainingTips.hide.title" = "Hide tips";
+"toolSettings.chooseLanguage.title" = "Parallel Language";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "Parallel";
+"toolSettings.shareables.title" = "Related graphics";
+"allTools.spotlight.title" = "Tool Spotlight";
+"allTools.spotlight.description" = "Here are some tools we thought you might like";
+"allTools.categories.title" = "Categories";
 "training_tip_ask" = "Ask";
 "training_tip_consider" = "Consider";
 "training_tip_prepare" = "Prepare";
@@ -134,7 +134,7 @@
 "articles.downloadingArticles.errorMessage.title" = "Error Downloading Articles";
 "start_training" = "Start Training";
 "close" = "Close";
-"tool_menu_item.lessons" = "Μαθήματα";
+"tool_menu_item.lessons" = "Lessons";
 
 /* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.continueButton.title.closeTutorial" = "Close tutorial";
@@ -166,28 +166,30 @@
 /* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
 "tutorial.findTutorial.title" = "Find this tutorial in the menu whenever you need it.";
 
-"onboardingTutorial.beginButton.title" = "Αρχίστε";
-"onboardingTutorial.nextButton.title" = "Επόμενο";
-"tool_offline_favorite_message" = "Κάντε το εργαλείο διαθέσιμο offline πατώντας το εικονίδιο με την καρδιά που το προσθέτει στα αγαπημένα σας.";
+"onboardingTutorial.beginButton.title" = "Begin";
+"onboardingTutorial.nextButton.title" = "Next";
+"tool_offline_favorite_message" = "Make a tool available offline by tapping the heart icon, which adds it to your favorites.";
 
 /* This is a category description of a tool that helps you start a conversation */
-"tool_category_conversation_starter" = "Εκκίνηση Συζήτησης";
+"tool_category_conversation_starter" = "Conversation Starter";
 
 /* This phrase describes a category of tool that helps someone grow in their Christian faith */
-"tool_category_growth" = "Πνευματική Ανάπτυξη";
+"tool_category_growth" = "Christian Growth";
 
-"share_link" = "Μοιραστείτε έναν σύνδεσμο";
-"share_tool_menu.remote_share_tool" = "Κοινοποίηση της οθόνης σας";
-"share_tool_menu.send_tool" = "Αποσοτολή αυτού του εργαλείου";
-"share_tool_screen_tutorial.share_your_screen.title" = "Κοινοποίηση της οθόνης σας";
-"share_tool_screen_tutorial.share_your_screen.message" = "Αυτή η επιλογή θα στείλει έναν σύνδεσμο σε αυτό το εργαλείο σε έναν φίλο. Όταν ανοίξει ο σύνδεσμος, θα ξεκινήσει μια συνεδρία κοινής χρήσης οθόνης.";
-"share_tool_screen_tutorial.mirrored_experience.title" = "Εμπειρία καθρεφτίσματος";
-"share_tool_screen_tutorial.mirrored_experience.message" = "Καθώς μετακινείτε το εργαλείο στο τηλέφωνό σας, η οθόνη του φίλου σας θα ανταποκρίνεται με τον ίδιο τρόπο. Αυτό σας επιτρέπει να χρησιμοποιήσετε ένα εργαλείο μαζί σε 2 συσκευές ταυτόχρονα.";
-"share_tool_screen_tutorial.get_started.title" = "Αρχίστε";
-"share_tool_screen_tutorial.get_started.message" = "Στείλτε τον σύνδεσμο σε ένα ή περισσότερα άτομα για να ξεκινήσετε μια συνεδρία κοινής χρήσης οθόνης τώρα.";
-"share_tool_remote_link_message" = "Γεια, Ακολουθήστε με στο GodTools μέσω κοινής χρήσης οθόνης. Αυτός είναι ο σύνδεσμος: %@ Αν δεν λάβετε αυτό το μήνυμα αργότερα, ο σύνδεσμος ενδέχεται να μην λειτουργεί ακόμη. Μπορούμε να ξαναδοκιμάσουμε άλλη στιγμή.";
-"exit_tract_remote_share_session.message" = "Έξοδος από την απομακρυσμένη συνεδρία κοινής χρήσης τώρα;";
-"load_tool_remote_session.message" = "Έναρξη κοινής χρήσης οθόνης…";
+"share_link" = "Share link";
+"share_tool_menu.remote_share_tool" = "Share your screen";
+"share_tool_menu.send_tool" = "Send this tool";
+"share_tool_screen_tutorial.share_your_screen.title" = "Share your screen";
+"share_tool_screen_tutorial.share_your_screen.message" = "This option will send a link to this tool to a friend. When the link is opened it will start a screen sharing session.";
+"share_tool_screen_tutorial.mirrored_experience.title" = "Mirrored experience";
+"share_tool_screen_tutorial.mirrored_experience.message" = "As you scroll the tool on your phone, your friend's screen will respond in the same way. This allows you to walk through a tool together on 2 devices at the same time.";
+"share_tool_screen_tutorial.get_started.title" = "Get started";
+"share_tool_screen_tutorial.get_started.message" = "Send the link to one or more people to start a screen sharing session now.";
+"share_tool_remote_link_message" = "Hi, Follow along with me in GodTools via screen sharing. Here's the link: %@
+
+If you don't receive this message until later, the link may not still work. We can try again at another time.";
+"exit_tract_remote_share_session.message" = "Exit the remote share session now?";
+"load_tool_remote_session.message" = "Starting Screen Sharing...";
 "learn_to_share_tool.learn_to_share.title" = "Learn to share this tool with anyone";
 "learn_to_share_tool.learn_to_share.message" = "Practice using as many tips as you need to feel confident sharing this tool with others.";
 "learn_to_share_tool.tips_light_the_way.title" = "Tips to light the way";
@@ -198,48 +200,47 @@
 "lesson_evaluation.wasThisHelpful" = "Was this lesson helpful for you?";
 "lesson_evaluation.shareFaith" = "How ready do you feel to start a spiritual conversation?";
 "lesson_evaluation.sendButtonTitle" = "Send feedback";
-"onboardingTutorial.0.title" = "Έτοιμη για κάθε συζήτηση";
-"onboardingTutorial.0.videoLink.title" = "Παρακολουθήστε Βίντεο";
-"onboardingTutorial.1.title" = "Μιλήστε για τον Θεό με οποιονδήποτε";
-"onboardingTutorial.1.message" = "Τα Θεϊκά Εργαλεία σάς βοηθούν να κάνετε ουσιαστικές συζητήσεις για τον Θεό.";
-"onboardingTutorial.2.title" = "Προετοιμαστείτε για τις σημαντικές στιγμές";
-"onboardingTutorial.2.message" = "Μάθετε πώς να κάνετε τις συζητήσεις για την πίστη φυσικό μέρος της ζωής σας.";
-"onboardingTutorial.3.title" = "Βοηθήστε κάποιον να ανακαλύψει τον Ιησού";
-"onboardingTutorial.3.message" = "Τα Θεϊκά Εργαλεία είναι ο οδηγός σας για την επικοινωνία του Ευαγγελίου με σαφείς και σχετικούς τρόπους.";
+"onboardingTutorial.0.title" = "Ready for every conversation";
+"onboardingTutorial.0.videoLink.title" = "Watch video";
+"onboardingTutorial.1.title" = "Talk about God with anyone";
+"onboardingTutorial.1.message" = "GodTools helps you have meaningful conversations about God.";
+"onboardingTutorial.2.title" = "Prepare for the moments that matter";
+"onboardingTutorial.2.message" = "Learn how to make conversations about faith a natural part of your life.";
+"onboardingTutorial.3.title" = "Help someone discover Jesus";
+"onboardingTutorial.3.message" = "GodTools is your guide to communicating the gospel in clear and relevant ways.";
 
 /* This is a category. The content will include training of how to share your faith. */
-"tool_category_training" = "Εξάσκηση";
+"tool_category_training" = "Training";
 
 /*
  * This is an invitation for a user to open a tool
  * Please keep to a 9 character limit, longer phrases may get cut off
 */
-"open" = "Άνοιγμα";
+"open" = "Open";
 
 /* A user will be selecting a heart to indicated that it is one of their favorite tools. */
-"add_to_favorites" = "Προσθήκη στα Αγαπημένα";
+"add_to_favorites" = "Add to Favorites";
 
 /* A user will be selecting this option to remove the tool from their Favorites screen */
-"remove_from_favorites" = "Αφαίρεση από τα Αγαπημένα";
+"remove_from_favorites" = "Remove from Favorites";
 
 /* This is a loading screen */
-"loading_unfavorited_tool" = "Το εργαλείο πραγματοποιεί λήψη. Για να αποφύγετε την αναμονή στο μέλλον, βάλτε αυτό το εργαλείο στα αγαπημένα, ώστε να είναι διαθέσιμο offline.
-";
+"loading_unfavorited_tool" = "The tool is downloading. To avoid waiting in the future, favorite this tool so it will be available offline.";
 
 /* This is a loading screen */
-"loading_favorited_tool" = "Πραγματοποιείται λήψη της πιο πρόσφατης μετάφρασης γι' αυτό το εργαλείο.";
+"loading_favorited_tool" = "Downloading the most recent translation for this tool.";
 
 /* Adds a question mark */
-"remove_from_favorites_title" = "Αφαίρεση από τα Αγαπημένα?";
+"remove_from_favorites_title" = "Remove from Favorites? ";
 
 /* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
-"remove_from_favorites_message" = "Σίγουρα επιθυμείτε να αφαιρέσετε το %@ από τα Αγαπημένα σας; ";
+"remove_from_favorites_message" = "Are you sure you want to remove %@ from your Favorites? ";
 
 /* Gospel indicates the gospel of Jesus Christ */
-"tool_category_gospel" = "Πρόσκληση στο Ευαγγέλιο";
+"tool_category_gospel" = "Gospel Invitation";
 
 /* Describes a format of content - like a newspaper article. */
-"tool_category_articles" = "Άρθρα";
+"tool_category_articles" = "Articles";
 
 "articles.downloadArticlesButton.title.retryDownload" = "Retry Download";
 
@@ -248,155 +249,149 @@
 
 /* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "articles.loadingView.downloadingArticles" = "Downloading Articles ...";
-"language_onboard" = "90+ Γλώσσες";
+"language_onboard" = "Более 90 языков";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
-"no_more_tools" = "Κάνατε λήψη όλων των διαθέσιμων εργαλείων.";
+"no_more_tools" = "Все доступные инструменты загружены.";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
-"my_tools" = "Αγαπημένα";
+"my_tools" = "Мои инструменты";
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
-"find_tools" = "Όλα τα Εργαλεία";
+"find_tools" = "Другие";
 
-"unavailable" = "Μη διαθέσιμο";
+"unavailable" = "Недоступно";
 
 // Navigation Bar
-"navigationBar.navigationItem.skip" = "Παράλειψη";
+"navigationBar.navigationItem.skip" = "Skip";
 
 // Onboarding
-"add_new_tools" = "Προσθήκη Νέων Εργαλείων";
-"set_your_languages" = "Ορίστε τις γλώσσες σας";
-"okay" = "Εντάξει";
+"add_new_tools" = "Добавить новые инструменты";
+"set_your_languages" = "Настройте языки";
+"okay" = "Хорошо";
 "want_more_godtools?" = "Want more GodTools?";
 "click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
 "click_here" = "Click Here";
 
 // Menu
-"menu_general" = "Γενικά";
+"menu_general" = "Общие настройки";
 "menu_account" = "Account";
-"menu_share" = "Κοινοποίηση";
-"menu_legal" = "Νομικά";
-"language_settings" = "Ρυθμίσεις Γλώσσας";
+"menu_share" = "Поделиться";
+"menu_legal" = "Юридическая информация";
+"language_settings" = "Языковые настройки";
 "menu.tutorial" = "Tutorial";
 "menu.my_account" = "My Account";
 
 // Login
-"login" = "Σύνδεση";
-"logout" = "Αποσύνδεση";
-"create_account" = "Δημιουργία Λογαριασμού";
-"account_login" = "Σύνδεση στον Λογαριασμό";
+"login" = "Login";
+"logout" = "Logout";
+"create_account" = "Create Account";
+"account_login" = "Account Login";
 
 // Tool Detail
-"about" = "Σχετικά";
-"help" = "Βοήθεια";
-"contact_us" = "Επικοινωνήστε μαζί μας";
-"preview_mode_translators_only" = "Λειτουργία Προεπισκόπησης (Μόνο Μεταφραστές)";
-"share_god_tools" = "Κοινοποίηση Εφαρμογής Θεϊκών Εργαλείων";
-"share_a_story_with_us" = "Μοιραστείτε μια ιστορία μαζί μας";
-"terms_of_use" = "Όροι χρήσης";
-"privacy_policy" = "Πολιτική Απορρήτου";
-"copyright_info" = "Στοιχεία πνευματικών δικαιωμάτων";
-"share_god_tools_share_sheet_text" = "Kατεβάστε την εφαρμογή Θεϊκών Εργαλείων: https://godtoolsapp.com
-
-Βρείτε την online έκδοση στο https://knowgod.com/";
+"about" = "О приложении";
+"help" = "Справка";
+"contact_us" = "Связаться с нами";
+"preview_mode_translators_only" = "Режим предпросмотра (только для переводчиков)";
+"share_god_tools" = "Поделиться GodTools";
+"share_a_story_with_us" = "Поделиться с нами историей";
+"terms_of_use" = "Условия использования";
+"privacy_policy" = "Политика конфиденциальности";
+"copyright_info" = "Информация об авторском праве";
+"share_god_tools_share_sheet_text" = "Вы можете загрузить приложение GodTools здесь: http://godtoolsapp.com";
 
 // Add Tools
-"add_tools" = "Προσθέστε Εργαλεία";
+"add_tools" = "Добавить инструменты";
 
-"total_views" = "%d προβολές";
-"total_languages" = "%d γλώσσες";
+"total_views" = "Просмотры: %d";
+"total_languages" = "Языки: %d";
 
 // Language Settings
-"primary_language" = "Κύρια Γλώσσα";
-"select_primary_language" = "Επιλέξτε μία Κύρια Γλώσσα";
-"parallel_language" = "Παράλληλη Γλώσσα";
-"select_parallel_language" = "Επιλέξτε μία Παράλληλη Γλώσσα";
-"share_god_tools_native_language" = "Μοιραστείτε τα Θεϊκά Εργαλεία με κάποιον στη μητρική του γλώσσα";
-"not_every_tool_is_available" = "Δεν είναι διαθέσιμο κάθε εργαλείο σε κάθε γλώσσα";
+"primary_language" = "Основной язык";
+"select_primary_language" = "Выберите основной язык";
+"parallel_language" = "Параллельный язык";
+"select_parallel_language" = "Выбрать параллельный язык";
+"share_god_tools_native_language" = "Поделиться GodTools с кем-нибудь на его/ее родном языке";
+"not_every_tool_is_available" = "Не все инструменты доступны на всех языках";
 
 // Settings
-"settings" = "Ρυθμίσεις";
+"settings" = "Настройки";
 
 // Alert & Info Controllers
-"download_error" = "Σφάλμα Λήψης";
-"no_internet_title" = "Χωρίς σύνδεση στο διαδίκτυο";
-"no_internet" = "Ελέγξτε τη σύνδεσή σας στο διαδίκτυο και ξαναδοκιμάστε.";
+"download_error" = "Ошибка загрузки";
+"no_internet_title" = "No internet connection";
+"no_internet" = "Please check your internet connection and try again.";
 
-"the_tool_you_requested_is_loading" = "Το εργαλείο που ζητήσατε φορτώνει...";
-"loading" = "Φόρτωση...";
+"the_tool_you_requested_is_loading" = "Загрузка требуемого инструмента...";
+"loading" = "Loading...";
 
 // Actions
-"yes" = "Ναι";
-"no" = "Όχι";
+"yes" = "Да";
+"no" = "Нет";
 
 // Tract - Sharing
-"tract_share_message" = "Αυτός ο σύνδεσμος θα σας μεταφέρει στην δικτυακή έκδοση της σελίδας που κοιτούσαμε τελευταία μαζί: %@. 
-
-Ας μιλήσουμε περισσότερο!
-
-Μπορείτε να κατεβάσετε την εφαρμογή από τη διεύθυνση https://godtoolsapp.com";
+"tract_share_message" = "Ссылка переведет вас на веб-страницу, которую мы просматривали сегодня вместе: %@. Пообщаемся еще!";
 
 // Buttons
-"download" = "Λήψη";
-"dismiss" = "Απόρριψη";
-"done" = "Έγινε";
-"remove" = "Αφαίρεση";
-"clear" = "Καθαρισμός";
+"download" = "Загрузить";
+"dismiss" = "Скрыть";
+"done" = "Готово";
+"remove" = "Удалить";
+"clear" = "Очистить";
 /* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "Άνοιγμα Εργαλείου";
+"toolinfo_opentool" = "Open Tool";
 
 // Alerts
-"error" = "Σφάλμα";
-"OK" = "Εντάξει";
-"cancel" = "Ακύρωση";
-"required_field_missing" = "\"%@\" είναι απαιτούμενο πεδίο.";
+"error" = "Ошибка";
+"OK" = "OK";
+"cancel" = "Cancel";
+"required_field_missing" = "\"%@\" является обязательным полем.";
 
-"onboardingTutorial.getStartedButton.title" = "Αρχίστε";
+"onboardingTutorial.getStartedButton.title" = "Get started";
 
 // About
-"general_about_1" = "Τα Θεϊκά Εργαλεία σας βοηθούν να μοιράζεστε την πίστη σας με έναν εύκολο και ξεκάθαρο τρόπο.";
+"general_about_1" = "GodTools помогает вам делиться своей верой простым и понятным способом.";
 // Tutorial
 "tutorial.tutorialItem.0.title" = "Watch";
-"general_about_2" = "Αυτά τα εργαλεία σας βοηθούν να εξηγήσετε με σιγουριά σε κάποιον πώς μπορεί να ξεκινήσει μια σχέση με τον Θεό μέσω του Ιησού Χριστού, ακόμα κι αν δεν έχετε μοιραστεί ποτέ την πίστη σας πριν ή αυτός μιλάει διαφορετική γλώσσα.";
+"general_about_2" = "Эти инструменты помогут вам в доверительной манере объяснить людям, как они могут начать общение с Богом через Иисуса Христа, даже если вы раньше никогда не делились своей верой, а ваш собеседник разговаривает на другом языке.";
 "tutorial.tutorialItem.0.message" = "See what GodTools offers in our demo video
 (Tap on the video to bring up settings for subtitles)";
-"general_about_3" = "Διαλέξτε από μια ποικιλία εργαλείων που βασίζονται στην προτίμησή σας και το κοινό σας. Δεν είναι διαθέσιμα όλα τα εργαλεία σε όλες τις γλώσσες.";
+"general_about_3" = "Выбирайте инструмент из всего разнообразия на основе ваших предпочтений и аудитории. Не все инструменты доступны на всех языках.";
 "tutorial.tutorialItem.1.title" = "Prepare";
-"general_about_4" = "Οι σύνδεσμοι προς άλλους πόρους περιλαμβάνονται στο τέλος κάθε εργαλείου.";
+"general_about_4" = "Ссылки на другие ресурсы находятся в конце каждого инструмента.";
 "tutorial.tutorialItem.1.message" = "Get familiar with some of your tools. The \"Teach Me to Share\" tool is a good place to start.
 
 Press the About button on any tool for more info.";
-"general_about_5" = "Απαιτείται σύνδεση στο διαδίκτυο για τη λήψη κάθε νέου εργαλείου και/ή γλώσσας. Μετά τη λήψη τους, μπορούν να χρησιμοποιηθούν εκτός σύνδεσης.";
+"general_about_5" = "Для загрузки нового инструмента и/или языка требуется подключение к Интернету. После загрузки их можно будет использовать в автономном режиме.";
 "tutorial.tutorialItem.2.title" = "Try";
-"general_about_6" = "Απορίες; Προτάσεις; Αιτήματα; Επικοινωνήστε μαζί μας στο support@godtoolsapp.com";
+"general_about_6" = "Возникли вопросы, предложения или просьбы? Напишите нам по адресу: support@godtoolsapp.com";
 "tutorial.tutorialItem.2.message" = "Everyone starts as a beginner. Try using a tool in a conversation and see what you learn.";
-"general_about_7" = "Μπορείτε να βρείτε μια online έκδοση αυτών των εργαλείων στο knowgod.com. Ενσωματώστε το στον δικό σας ιστότοπο!";
+"general_about_7" = "Онлайн-версия этих инструментов находится по адресу knowgod.com. Встройте их на свой сайт!";
 "tutorial.tutorialItem.3.title" = "This tutorial is available to see again in the menu";
-"general_about_8" = "Επισκεφθείτε το godtoolsapp.com για περισσότερες πληροφορίες.";
-"tutorial.continueButton.title.continue" = "Συνέχεια";
-"general_about_9" = "Καθώς αναλαμβάνετε την πρωτοβουλία να μοιραστείτε την πίστη σας, θυμηθείτε ότι ο Θεός είναι αυτός που αλλάζει την καρδιά. Αγαπήστε το κάθε άτομο καλά ακούγοντας και κατανοώντας.";
+"general_about_8" = "Посетите godtoolsapp.com для получения более подробной информации.";
+"tutorial.continueButton.title.continue" = "Continue";
+"general_about_9" = "Когда вы проявляете инициативу и решаетесь поделиться верой, помните, что только Бог может менять сердца. Проявляйте любовь ко всем, слушая их и пытаясь понять.";
 "tutorial.continueButton.title.startUsingGodTools" = "Start Using GodTools";
 
-"general_about_10" = "\"Τα λόγια σας ας είναι πάντοτε γεμάτα χάρη, αρτυμένα με το αλατι της καλοσύνης και της διακρίσεως, ώστε να ξέρετε πώς πρέπει να αποκρίνεστε στον καθένα.\" Προς Κολοσσαείς 4:6";
+"general_about_10" = "«Слово ваше (да будет) всегда с благодатию, приправлено солью, дабы вы знали, как отвечать каждому». — К Колоссянам 4:6";
 
 // OpenTutorial
 "openTutorial.showTutorialLabel.text" = "Show Me A Tutorial";
 // Downloads
-"Download in progress" = "Λήψη σε εξέλιξη";
+"Download in progress" = "Выполняется загрузка";
 
 "openTutorial.openTutorialButton.title" = "Open Tutorial";
 
 // Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
-"card_status1" = "Προηγ";
+"card_status1" = "Назад";
 // Account
 "account.navTitle" = "My Profile";
-"card_status2" = "Επόμενο";
+"card_status2" = "Далее";
 
 "account.activity.title" = "Activity";
 
 // Language Name Strings
-"language_name_fa" = "Περσικά (Φαρσί)";
+"language_name_fa" = "Персидский (фарси)";
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "Global Activity";

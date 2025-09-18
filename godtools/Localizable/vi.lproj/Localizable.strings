@@ -1,3 +1,10 @@
+"deferredDeepLinkModal.title" = "It looks like you clicked a link for GodTools";
+"deferredDeepLinkModal.message" = "Please tap the paste button below.  This will allow us to take you to the content you requested in GodTools.";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "Close";
+"toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";
+"toolScreenShare.qrCode.title" = "QR Code";
+
 "optInNotification.notificationSettings" = "Cài đặt Thông báo";
 "lessons.swipeTutorial.title" = "Vuốt để chuyển trang";
 "lessons.swipeTutorial.buttonText" = "Hiểu rồi";
@@ -124,6 +131,7 @@
 "training_tip_prepare" = "Chuẩn bị";
 "training_tip_quote" = "Trích dẫn";
 "training_tip_tip" = "Lời gợi ý";
+"articles.downloadingArticles.errorMessage.title" = "Error Downloading Articles";
 "start_training" = "Bắt đầu";
 "close" = "Đóng";
 "tool_menu_item.lessons" = "Bài học";
@@ -259,6 +267,10 @@
 "add_new_tools" = "Thêm các Công cụ Mới";
 "set_your_languages" = "Thiết lập Ngôn ngữ của bạn";
 "okay" = "Ok";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
+
 // Menu
 "menu_general" = "Tổng quát";
 "menu_account" = "Tài khoản";
@@ -318,7 +330,7 @@ Một phiên bản trực tuyến có thể tìm thấy ở https://knowgod.com/
 "no" = "Không";
 
 // Tract - Sharing
-"tract_share_message" ="Liên kết này sẽ đưa bạn đến phiên bản web của những gì chúng ta đã thảo luận hôm nay: %@. 
+"tract_share_message" = "Liên kết này sẽ đưa bạn đến phiên bản web của những gì chúng ta đã thảo luận hôm nay: %@. 
 
 Hãy thảo luận thêm!
 
@@ -408,3 +420,9 @@ Nhấn nút \"Giới thiệu\" để biết thêm về công cụ.";
 "onboardingTutorial.appUsageItem.3.message" = "Chọn từ hơn 90 ngôn ngữ";
 "onboardingTutorial.appUsageItem.4.message" = "Trợ giúp ai đó bắt đầu với tư cách là Cơ đốc Nhân";
 "onboardingTutorial.showMoreButton.title" = "Cho tôi xem nhiều hơn";
+
+"screenShareTutorial.generateQRCodeButton.title" = "Generate QR code";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "Close";
+"toolScreenShare.qrCode.title" = "QR Code";
+"toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";
