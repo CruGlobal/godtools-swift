@@ -32,14 +32,14 @@ class SwiftDatabase {
         }
     }
     
-    private static var persistentModelTypes: any PersistentModel.Type {
-        return SwiftLanguage.self
-    }
-    
     private static func createContainer(configuration: SwiftDatabaseConfigurationInterface) throws -> ModelContainer {
         return try ModelContainer(
             for: Self.persistentModelTypes,
             configurations: configuration.modelConfiguration
         )
+    }
+    
+    private static var persistentModelTypes: any PersistentModel.Type {
+        return SwiftLanguage.self
     }
 }
