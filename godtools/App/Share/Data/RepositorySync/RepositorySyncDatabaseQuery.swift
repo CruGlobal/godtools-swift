@@ -10,11 +10,6 @@ import Foundation
 
 public class RepositorySyncDatabaseQuery {
     
-    public struct SortByKeyPath {
-        let keyPath: String
-        let ascending: Bool
-    }
-    
     public let filter: NSPredicate?
     public let sortByKeyPath: SortByKeyPath?
     
