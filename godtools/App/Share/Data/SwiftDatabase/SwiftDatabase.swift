@@ -17,18 +17,29 @@ class SwiftDatabase {
     init(configuration: SwiftDatabaseConfigurationInterface) {
                 
         do {
-            container = try ModelContainer(
-                for: Self.persistentTypes,
-                configurations: configuration.modelConfiguration
+            
+            container = try Self.createContainer(
+                configuration: configuration
             )
         }
         catch let error {
+            
             assertionFailure("\n SwiftData init container error: \(error.localizedDescription)")
-            container = try! ModelContainer(for: Self.persistentTypes, configurations: SwiftDatabaseInMemoryConfiguration().modelConfiguration)
+            
+            container = try! Self.createContainer(
+                configuration: SwiftDatabaseInMemoryConfiguration()
+            )
         }
     }
     
-    private static var persistentTypes: any PersistentModel.Type {
+    private static var persistentModelTypes: any PersistentModel.Type {
         return SwiftLanguage.self
+    }
+    
+    private static func createContainer(configuration: SwiftDatabaseConfigurationInterface) throws -> ModelContainer {
+        return try ModelContainer(
+            for: Self.persistentModelTypes,
+            configurations: configuration.modelConfiguration
+        )
     }
 }
