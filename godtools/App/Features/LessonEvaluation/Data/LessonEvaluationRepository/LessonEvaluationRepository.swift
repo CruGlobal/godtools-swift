@@ -22,7 +22,7 @@ class LessonEvaluationRepository {
         return cache.getLessonEvaluation(lessonId: lessonId)
     }
     
-    func storeLessonEvaluation(lesson: ResourceModel, lessonEvaluated: Bool) {
+    func storeLessonEvaluation(lesson: ResourceDataModel, lessonEvaluated: Bool) {
                 
         let cachedLessonIsEvaluated: Bool
         let numberOfAttempts: Int

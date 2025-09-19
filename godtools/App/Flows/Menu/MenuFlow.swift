@@ -253,7 +253,7 @@ class MenuFlow: Flow {
 
         case .didFinishAccountDeletionWithSuccessFromDeleteAccountProgress:
             
-            let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
+            let localizationServices: LocalizationServicesInterface = appDiContainer.dataLayer.getLocalizationServices()
             let appLanguage: AppLanguageDomainModel = self.appLanguage
             
             navigationController.dismissPresented(animated: true) {
@@ -273,7 +273,7 @@ class MenuFlow: Flow {
             }
             
         case .copyFirebaseDeviceTokenTappedFromMenu:
-            if appDiContainer.dataLayer.getAppBuild().isDebug {
+            if appDiContainer.dataLayer.getAppConfig().isDebug {
                 copyFirebaseDeviceTokenToClipboard()
             }
             
@@ -370,15 +370,15 @@ extension MenuFlow {
         let viewModel = MenuViewModel(
             flowDelegate: self,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            getMenuInterfaceStringsUseCase: appDiContainer.domainLayer.getMenuInterfaceStringsUseCase(),
+            getMenuInterfaceStringsUseCase: appDiContainer.feature.menu.domainLayer.getMenuInterfaceStringsUseCase(),
             getOptInOnboardingTutorialAvailableUseCase: appDiContainer.domainLayer.getOptInOnboardingTutorialAvailableUseCase(),
             disableOptInOnboardingBannerUseCase: appDiContainer.domainLayer.getDisableOptInOnboardingBannerUseCase(),
             getAccountCreationIsSupportedUseCase: appDiContainer.feature.account.domainLayer.getAccountCreationIsSupportedUseCase(),
             getUserIsAuthenticatedUseCase: appDiContainer.feature.account.domainLayer.getUserIsAuthenticatedUseCase(),
-            logOutUserUseCase: appDiContainer.domainLayer.getLogOutUserUseCase(),
+            logOutUserUseCase: appDiContainer.feature.account.domainLayer.getLogOutUserUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
-            appBuild: appDiContainer.dataLayer.getAppBuild()
+            appConfig: appDiContainer.dataLayer.getAppConfig()
         )
         
         let view = MenuView(viewModel: viewModel)
@@ -445,8 +445,7 @@ extension MenuFlow {
         let closeButton = AppCloseBarItem(
             color: .white,
             target: viewModel,
-            action: #selector(viewModel.closeTapped),
-            accessibilityIdentifier: nil
+            action: #selector(viewModel.closeTapped)
         )
         
         let hostingView = AppHostingController<SocialSignInView>(
@@ -492,7 +491,7 @@ extension MenuFlow {
     
     private func getAuthErrorAlertMessage(authError: AuthErrorDomainModel) -> AlertMessageType {
         
-        let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
+        let localizationServices: LocalizationServicesInterface = appDiContainer.dataLayer.getLocalizationServices()
         let appLanguageLocaleId = appLanguage.localeId
         
         let message: String
@@ -524,11 +523,11 @@ extension MenuFlow {
         let viewModel = AccountViewModel(
             flowDelegate: self,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            getUserAccountDetailsUseCase: appDiContainer.domainLayer.getUserAccountDetailsUseCase(),
-            getUserActivityUseCase: appDiContainer.domainLayer.getUserActivityUseCase(),
+            getUserAccountDetailsUseCase: appDiContainer.feature.account.domainLayer.getUserAccountDetailsUseCase(),
+            getUserActivityUseCase: appDiContainer.feature.userActivity.domainLayer.getUserActivityUseCase(),
             viewGlobalActivityThisWeekUseCase: appDiContainer.feature.globalActivity.domainLayer.getViewGlobalActivityThisWeekUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
-            viewAccountUseCase: appDiContainer.domainLayer.getViewAccountUseCase(),
+            viewAccountUseCase: appDiContainer.feature.account.domainLayer.getViewAccountUseCase(),
             getGlobalActivityEnabledUseCase: appDiContainer.feature.globalActivity.domainLayer.getGlobalActivityEnabledUseCase()
         )
         
@@ -574,8 +573,7 @@ extension MenuFlow {
         let closeButton = AppCloseBarItem(
             color: nil,
             target: viewModel,
-            action: #selector(viewModel.closeTapped),
-            accessibilityIdentifier: nil
+            action: #selector(viewModel.closeTapped)
         )
         
         let hostingView = AppHostingController<DeleteAccountView>(
@@ -605,7 +603,7 @@ extension MenuFlow {
     
     private func getConfirmDeleteAccountView() -> UIViewController {
         
-        let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
+        let localizationServices: LocalizationServicesInterface = appDiContainer.dataLayer.getLocalizationServices()
         
         let viewController = UIAlertController(
             title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.confirmDeleteAccountTitle.key),
@@ -711,7 +709,7 @@ extension MenuFlow {
     
     private func copyFirebaseDeviceTokenToClipboard() {
         
-        appDiContainer.dataLayer.getFirebaseMessaging()
+        appDiContainer.dataLayer.getSharedFirebaseMessaging()
             .getDeviceTokenPublisher()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in

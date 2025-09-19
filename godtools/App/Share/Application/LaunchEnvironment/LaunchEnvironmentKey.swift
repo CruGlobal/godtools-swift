@@ -2,18 +2,17 @@
 //  LaunchEnvironmentKey.swift
 //  godtools
 //
-//  Created by Levi Eggert on 8/25/23.
-//  Copyright © 2023 Cru. All rights reserved.
+//  Created by Levi Eggert on 8/5/25.
+//  Copyright © 2025 Cru. All rights reserved.
 //
 
 import Foundation
 
-enum LaunchEnvironmentKey: String {
+struct LaunchEnvironmentKey {
     
-    var value: String {
-        return rawValue
+    let value: String
+    
+    init(environmentName: String, key: String) {
+        value = "\(environmentName).\(key)"
     }
-    
-    case firebaseEnabled
-    case urlDeeplink
 }

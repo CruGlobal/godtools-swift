@@ -11,11 +11,15 @@ import SwiftUI
 
 struct OptInNotificationView: View {
     
+    private let modalHorizontalPadding: CGFloat = 20
+    private let buttonFontSize: CGFloat = 17
+    private let buttonHeight: CGFloat = 50
+    private let buttonHorizontalPadding: CGFloat = 20
     private let overlayTappedClosure: (() -> Void)?
     
-    @State private var isVisible: Bool = false
-    
     @ObservedObject private var viewModel: OptInNotificationViewModel
+    
+    @State private var modalIsHidden: Bool = true
 
     init(viewModel: OptInNotificationViewModel, overlayTappedClosure: (() -> Void)? = nil) {
        
@@ -25,111 +29,76 @@ struct OptInNotificationView: View {
 
     var body: some View {
         
-        GeometryReader { geometry in
-         
-            FullScreenOverlayView(tappedClosure: {
-                
-                setIsVisible(isVisible: false)
-                
-                overlayTappedClosure?()
-            })
-            .opacity(isVisible ? 1 : 0)
+        GTModalView(content: { geometry in
             
-            VStack(alignment: .leading, spacing: 0) {
+            VStack(alignment: .center, spacing: 0) {
                 
-                Spacer()
+                ImageCatalog.notificationGraphic
+                    .image
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 263, height: 140)
+                    .padding(.horizontal, 15)
+                    .overlay(
+                        Rectangle()
+                            .frame(height: 2)
+                            .padding(.horizontal, 5)
+                            .foregroundColor(ColorPalette.gtBlue.color),
+                        alignment: .bottom
+                    )
                 
-                VStack(alignment: .center, spacing: 0) {
-                    
-                    ImageCatalog.notificationGraphic
-                        .image
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 263, height: 140)
-                        .padding(.horizontal, 15)
-                        .overlay(
-                            Rectangle()
-                                .frame(height: 2)
-                                .padding(.horizontal, 5)
-                                .foregroundColor(ColorPalette.gtBlue.color),
-                            alignment: .bottom
-                        )
-                    
-                    Text(viewModel.title)
-                        .multilineTextAlignment(.center)
-                        .foregroundColor(ColorPalette.gtBlue.color)
-                        .font(FontLibrary.sfProTextBold.font(size: 30))
-                        .padding(.top, 20)
-                        .minimumScaleFactor(0.5)
-                        .lineLimit(2)
+                Text(viewModel.title)
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(ColorPalette.gtBlue.color)
+                    .font(FontLibrary.sfProTextBold.font(size: 30))
+                    .padding(.top, 20)
+                    .minimumScaleFactor(0.5)
+                    .lineLimit(2)
 
-                    Text(viewModel.body)
-                        .font(FontLibrary.sfProTextRegular.font(size: 17))
-                        .foregroundStyle(ColorPalette.gtGrey.color)
-                        .multilineTextAlignment(.center)
-                        .padding(.top, 13)
-
-                    Button(action: {
+                Text(viewModel.body)
+                    .font(FontLibrary.sfProTextRegular.font(size: 17))
+                    .foregroundStyle(ColorPalette.gtGrey.color)
+                    .multilineTextAlignment(.center)
+                    .padding(.top, 13)
+                
+                let buttonWidth: CGFloat = geometry.size.width - (modalHorizontalPadding * 2) - (buttonHorizontalPadding * 2)
+                
+                GTBlueButton(
+                    title: viewModel.notificationsActionTitle,
+                    fontSize: buttonFontSize,
+                    width: buttonWidth,
+                    height: buttonHeight,
+                    action: {
                         
-                        setIsVisible(isVisible: false)
+                        modalIsHidden = true
                         
                         viewModel.allowNotificationsTapped()
-
-                    }) {
-                        RoundedRectangle(cornerRadius: 5)
-                            .fill(ColorPalette.gtBlue.color)
                     }
-                    .frame(height: 45)
-                    .overlay(
-                        Text(viewModel.notificationsActionTitle)
-                            .foregroundColor(.white)
-                    )
-                    .padding(.top, 18)
-
-                    Button(action: {
+                )
+                .padding(.top, 18)
+                
+                GTWhiteButton(
+                    title: viewModel.maybeLaterActionTitle,
+                    fontSize: buttonFontSize,
+                    width: buttonWidth,
+                    height: buttonHeight,
+                    action: {
                         
-                        setIsVisible(isVisible: false)
+                        modalIsHidden = true
 
                         viewModel.maybeLaterTapped()
-
-                    }) {
-                        
-                        ZStack(alignment: .center) {
-                            RoundedRectangle(cornerRadius: 5)
-                                .fill(Color.white)
-                            
-                            Text(viewModel.maybeLaterActionTitle)
-                                .foregroundColor(ColorPalette.gtBlue.color)
-                        }
                     }
-                    .frame(height: 45)
-                    .padding(.top, 12)
-                    .padding(.bottom, 30)
-                    
-                }
-                .padding(.horizontal, 20)
-                .background(
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(ColorPalette.gtBlue.color, lineWidth: 8)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                .foregroundStyle(.white)
-                        )
                 )
-                .padding(.horizontal, 20)
-                .offset(y: !isVisible ? geometry.size.height * 0.75 : 0)
+                .padding(.top, 12)
+                
+                FixedVerticalSpacer(height: 30)
             }
-        }
-        .onAppear {
-            setIsVisible(isVisible: true)
-        }
-        .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
-    }
-    
-    private func setIsVisible(isVisible: Bool) {
-        withAnimation {
-            self.isVisible = isVisible
-        }
+            
+        }, isHidden: $modalIsHidden, overlayTappedClosure: {
+            
+            overlayTappedClosure?()
+            
+        }, backgroundHorizontalPadding: modalHorizontalPadding, strokeColor: ColorPalette.gtBlue.color, strokeLineWidth: 8)
     }
 }
 
@@ -139,7 +108,7 @@ struct OptInNotificationView_Preview: PreviewProvider {
 
     static func getOptInNotificationViewModel() -> OptInNotificationViewModel {
 
-        let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
+        let appDiContainer = AppDiContainer.createUITestsDiContainer()
 
         let viewModel = OptInNotificationViewModel(
             flowDelegate: MockFlowDelegate(),

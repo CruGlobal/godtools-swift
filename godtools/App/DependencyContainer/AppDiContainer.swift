@@ -10,33 +10,35 @@ import UIKit
 
 class AppDiContainer {
         
-    private let appBuild: AppBuild
-    private let realmDatabase: RealmDatabase
     private let failedFollowUpsCache: FailedFollowUpsCache
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
     
     let dataLayer: AppDataLayerDependencies
     let domainLayer: AppDomainLayerDependencies
     let feature: AppFeatureDiContainer
-        
-    init(appBuild: AppBuild, appConfig: AppConfig, infoPlist: InfoPlist, realmDatabase: RealmDatabase, firebaseEnabled: Bool) {
-               
-        self.appBuild = appBuild
-        self.realmDatabase = realmDatabase
-        
+    
+    init(appConfig: AppConfigInterface) {
+                       
         dataLayer = AppDataLayerDependencies(
-            appBuild: appBuild,
-            appConfig: appConfig,
-            infoPlist: infoPlist,
-            realmDatabase: realmDatabase,
-            firebaseEnabled: firebaseEnabled
+            appConfig: appConfig
         )
         
         domainLayer = AppDomainLayerDependencies(dataLayer: dataLayer)
+                
+        // feature data layer dependencies
+        let accountDataLayer = AccountDataLayerDependencies(coreDataLayer: dataLayer)
+        let onboardingDataLayer = OnboardingDataLayerDependencies(coreDataLayer: dataLayer)
+        let spotlightToolsDataLayer = SpotlightToolsDataLayerDependencies(coreDataLayer: dataLayer)
         
-        let accountDiContainer = AccountDiContainer(coreDataLayer: dataLayer)
+        // feature domain interface layer dependencies
+        let onboardingDomainInterfaceLayer = OnboardingDomainInterfaceDependencies(coreDataLayer: dataLayer, dataLayer: onboardingDataLayer)
+        let spotlightToolsDomainInterfaceLayer = SpotlightToolsDomainInterfaceDependencies(coreDataLayer: dataLayer, dataLayer: spotlightToolsDataLayer)
+        
+        // feature dependency containers
+        let accountDiContainer = AccountDiContainer(coreDataLayer: dataLayer, dataLayer: accountDataLayer, domainInterfaceLayer: AccountDomainInterfaceDependencies(coreDataLayer: dataLayer, dataLayer: accountDataLayer))
         let appLanguageDiContainer = AppLanguageFeatureDiContainer(coreDataLayer: dataLayer)
         let dashboardDiContainer = DashboardDiContainer(coreDataLayer: dataLayer)
+        let deferredDeepLinkDiContainer = DeferredDeepLinkDiContainer(coreDataLayer: dataLayer)
         let downloadToolProgressDiContainer = DownloadToolProgressFeatureDiContainer(coreDataLayer: dataLayer)
         let favoritesDiContainer = FavoritesDiContainer(coreDataLayer: dataLayer)
         let featuredLessonsDiContainer = FeaturedLessonsDiContainer(coreDataLayer: dataLayer)
@@ -47,12 +49,13 @@ class AppDiContainer {
         let lessonsDiContainer = LessonsFeatureDiContainer(coreDataLayer: dataLayer)
         let lessonProgressDiContainer = UserLessonProgressDiContainer(coreDataLayer: dataLayer)
         let lessonSwipeTutorialDiContainer = LessonSwipeTutorialDiContainer(coreDataLayer: dataLayer)
-        let onboardingDiContainer = OnboardingDiContainer(coreDataLayer: dataLayer)
-        let optInNotification = OptInNotificationDiContainer(coreDataLayer: dataLayer, getOnboardingTutorialIsAvailable: onboardingDiContainer.dataLayer.getOnboardingTutorialIsAvailable())
+        let menuDiContainer = MenuDiContainer(coreDataLayer: dataLayer)
+        let onboardingDiContainer = OnboardingDiContainer(coreDataLayer: dataLayer, dataLayer: onboardingDataLayer, domainInterfaceLayer: onboardingDomainInterfaceLayer)
+        let optInNotification = OptInNotificationDiContainer(coreDataLayer: dataLayer, getOnboardingTutorialIsAvailable: onboardingDomainInterfaceLayer.getOnboardingTutorialIsAvailable())
         let persistFavoritedToolLanguageSettingsDiContainer = PersistUserToolLanguageSettingsDiContainer(coreDataLayer: dataLayer)
         let shareablesDiContainer: ShareablesDiContainer = ShareablesDiContainer(coreDataLayer: dataLayer)
         let shareGodToolsDiContainer = ShareGodToolsDiContainer(coreDataLayer: dataLayer)
-        let spotlightToolsDiContainer = SpotlightToolsDiContainer(coreDataLayer: dataLayer)
+        let spotlightToolsDiContainer = SpotlightToolsDiContainer(coreDataLayer: dataLayer, dataLayer: spotlightToolsDataLayer, domainInterfaceLayer: spotlightToolsDomainInterfaceLayer)
         let toolDetailsDiContainer = ToolDetailsFeatureDiContainer(coreDataLayer: dataLayer)
         let toolScreenShareDiContainer = ToolScreenShareFeatureDiContainer(coreDataLayer: dataLayer)
         let toolScreenShareQRCodeDiContainer = ToolScreenShareQRCodeFeatureDiContainer(coreDataLayer: dataLayer)
@@ -66,6 +69,7 @@ class AppDiContainer {
             account: accountDiContainer,
             appLanguage: appLanguageDiContainer,
             dashboard: dashboardDiContainer,
+            deferredDeepLink: deferredDeepLinkDiContainer,
             downloadToolProgress: downloadToolProgressDiContainer,
             favorites: favoritesDiContainer,
             featuredLessons: featuredLessonsDiContainer,
@@ -76,6 +80,7 @@ class AppDiContainer {
             lessons: lessonsDiContainer, 
             lessonProgress: lessonProgressDiContainer,
             lessonSwipeTutorial: lessonSwipeTutorialDiContainer,
+            menu: menuDiContainer,
             onboarding: onboardingDiContainer,
             optInNotification: optInNotification,
             persistFavoritedToolLanguageSettings: persistFavoritedToolLanguageSettingsDiContainer,
@@ -92,23 +97,19 @@ class AppDiContainer {
             userActivity: userActivityDiContainer
         )
                                                                 
-        failedFollowUpsCache = FailedFollowUpsCache(realmDatabase: realmDatabase)
+        failedFollowUpsCache = FailedFollowUpsCache(realmDatabase: dataLayer.getSharedRealmDatabase())
+    }
+    
+    static func createUITestsDiContainer() -> AppDiContainer {
+        return AppDiContainer(appConfig: UITestsAppConfig())
     }
     
     func getCardJumpService() -> CardJumpService {
-        return CardJumpService(cardJumpCache: CardJumpUserDefaultsCache(sharedUserDefaultsCache: sharedUserDefaultsCache))
+        return CardJumpService(cardJumpCache: CardJumpUserDefaultsCache(userDefaultsCache: sharedUserDefaultsCache))
     }
     
     func getUrlOpener() -> UrlOpenerInterface {
         return OpenUrlWithSwiftUI() // TODO: GT-2466 Return OpenUrlWithUIKit() once supporting FBSDK 17.3+ ~Levi
-    }
-    
-    func getFirebaseConfiguration() -> FirebaseConfiguration {
-        return FirebaseConfiguration(config: dataLayer.getAppConfig())
-    }
-    
-    func getFirebaseDebugArguments() -> FirebaseDebugArguments {
-        return FirebaseDebugArguments()
     }
     
     func getMobileContentRenderer(type: MobileContentRendererPageViewFactoriesType, navigation: MobileContentRendererNavigation, appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel) -> MobileContentRenderer {
@@ -154,7 +155,7 @@ class AppDiContainer {
     
     private func getMobileContentRendererUserAnalytics() -> MobileContentRendererUserAnalytics {
         return MobileContentRendererUserAnalytics(
-            incrementUserCounterUseCase: domainLayer.getIncrementUserCounterUseCase()
+            incrementUserCounterUseCase: feature.userActivity.domainLayer.getIncrementUserCounterUseCase()
         )
     }
     

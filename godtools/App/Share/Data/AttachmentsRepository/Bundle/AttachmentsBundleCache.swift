@@ -7,8 +7,6 @@
 //
 
 import Foundation
-import SwiftUI
-import Combine
 
 class AttachmentsBundleCache {
     
@@ -16,9 +14,14 @@ class AttachmentsBundleCache {
         
     }
     
-    func getAttachmentData(attachment: AttachmentModel) -> Data? {
+    func getAttachmentData(attachment: AttachmentDataModel) -> Data? {
+        
+        return getAttachmentData(resource: attachment.sha256)
+    }
+    
+    func getAttachmentData(resource: String) -> Data? {
                                 
-        guard let filePath = Bundle.main.path(forResource: attachment.sha256, ofType: nil) else {
+        guard let filePath = Bundle.main.path(forResource: resource, ofType: nil) else {
             return nil
         }
         

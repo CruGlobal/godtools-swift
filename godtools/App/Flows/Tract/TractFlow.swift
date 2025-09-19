@@ -72,7 +72,7 @@ class TractFlow: ToolNavigationFlow, ToolSettingsNavigationFlow {
             
             if isScreenSharing {
                 
-                let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
+                let localizationServices: LocalizationServicesInterface = appDiContainer.dataLayer.getLocalizationServices()
                                 
                 let viewModel = AlertMessageViewModel(
                     title: nil,
@@ -176,7 +176,7 @@ extension TractFlow {
             initialPage: initialPage,
             initialPageSubIndex: initialPageSubIndex,
             trainingTipsEnabled: trainingTipsEnabled,
-            incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase(), 
+            incrementUserCounterUseCase: appDiContainer.feature.userActivity.domainLayer.getIncrementUserCounterUseCase(), 
             selectedLanguageIndex: selectedLanguageIndex,
             persistToolLanguageSettings: persistToolLanguageSettings
         )
@@ -209,7 +209,7 @@ extension TractFlow {
                 color: nil,
                 target: viewModel,
                 action: #selector(viewModel.toolSettingsTapped),
-                accessibilityIdentifier: nil
+                accessibilityIdentifier: AccessibilityStrings.Button.toolSettings.id
             ),
             hidesBarItemPublisher: nil
         )

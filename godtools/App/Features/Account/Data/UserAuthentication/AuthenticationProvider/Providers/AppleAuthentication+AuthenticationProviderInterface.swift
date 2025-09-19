@@ -19,19 +19,13 @@ extension AppleAuthentication: AuthenticationProviderInterface {
             return .failure(NSError.errorWithDescription(description: "Failed to get authorization code."))
         }
         
-        let name: String?
-        
-        if #available(iOS 15.0, *) {
-            name = appleAuthResponse.fullName?.formatted()
-        }
-        else {
-            name = nil
-        }
+        let name: String? = appleAuthResponse.fullName?.formatted()
         
         let response = AuthenticationProviderResponse(
             accessToken: nil,
             appleSignInAuthorizationCode: authCode,
             idToken: appleAuthResponse.identityToken,
+            oidcToken: nil,
             profile: AuthenticationProviderProfile(
                 email: appleAuthResponse.email,
                 familyName: appleAuthResponse.fullName?.familyName,

@@ -166,7 +166,7 @@ class DashboardFlow: Flow, ToolNavigationFlow {
             let primaryLanguage: AppLanguageDomainModel?
             let parallelLanguage: AppLanguageDomainModel?
             
-            if let toolResource = resourcesRepository.getResource(id: tool.dataModelId),
+            if let toolResource = resourcesRepository.getCachedObject(id: tool.dataModelId),
                toolResource.resourceTypeEnum == .article {
                 
                 parallelLanguage = nil
@@ -216,7 +216,7 @@ class DashboardFlow: Flow, ToolNavigationFlow {
         case .learnToShareToolTappedFromToolDetails(let toolId, let primaryLanguage, let parallelLanguage, let selectedLanguageIndex):
             navigateToLearnToShareTool(toolId: toolId, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, selectedLanguageIndex: selectedLanguageIndex, toolOpenedFrom: .learnToShare)
             
-        case .continueTappedFromLearnToShareTool(let toolId, let primaryLanguage, let parallelLanguage, let selectedLanguageIndex):
+        case .startTrainingTappedFromLearnToShareTool(let toolId, let primaryLanguage, let parallelLanguage, let selectedLanguageIndex):
             dismissLearnToShareToolFlow {
                 self.navigateToTool(toolDataModelId: toolId, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, selectedLanguageIndex: selectedLanguageIndex, trainingTipsEnabled: true, toolOpenedFrom: .learnToShare)
             }
@@ -374,7 +374,7 @@ extension DashboardFlow {
     
     private func configureNavBarForDashboard() {
         
-        AppDelegate.setWindowBackgroundColorForStatusBarColor(color: ColorPalette.gtBlue.uiColor)
+        GodToolsSceneDelegate.setWindowBackgroundColorForStatusBarColor(color: ColorPalette.gtBlue.uiColor)
                 
         navigationController.resetNavigationBarAppearance()
         
@@ -641,7 +641,7 @@ extension DashboardFlow {
         
         let languageIds: [String]
         
-        if let appLanguageModel = languagesRepository.getLanguage(code: appLanguage) {
+        if let appLanguageModel = languagesRepository.getCachedLanguage(code: appLanguage) {
             languageIds = [appLanguageModel.id]
         }
         else {
@@ -694,11 +694,11 @@ extension DashboardFlow {
         
         var languageIds: [String] = Array()
         
-        if let languageModel = languagesRepository.getLanguage(code: primaryLanguage) {
+        if let languageModel = languagesRepository.getCachedLanguage(code: primaryLanguage) {
             languageIds.append(languageModel.id)
         }
         
-        if let parallelLanguage = parallelLanguage, let languageModel = languagesRepository.getLanguage(code: parallelLanguage) {
+        if let parallelLanguage = parallelLanguage, let languageModel = languagesRepository.getCachedLanguage(code: parallelLanguage) {
             languageIds.append(languageModel.id)
         }
         
@@ -720,7 +720,7 @@ extension DashboardFlow {
         
         let openToolInLanguages: [String]
         
-        if languageIds.isEmpty, let englishLanguage = languagesRepository.getLanguage(code: LanguageCodeDomainModel.english.rawValue) {
+        if languageIds.isEmpty, let englishLanguage = languagesRepository.getCachedLanguage(code: LanguageCodeDomainModel.english.rawValue) {
             
             openToolInLanguages = [englishLanguage.id]
         }

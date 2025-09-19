@@ -25,7 +25,7 @@ class GetToolFilterCategoriesRepository: GetToolFilterCategoriesRepositoryInterf
     
     func getToolFilterCategoriesPublisher(translatedInAppLanguage: AppLanguageDomainModel, filteredByLanguageId: BCP47LanguageIdentifier?) -> AnyPublisher<[ToolFilterCategoryDomainModel], Never> {
         
-        return resourcesRepository.getResourcesChangedPublisher()
+        return resourcesRepository.observeDatabaseChangesPublisher()
             .flatMap { _ in
                 
                 let categoryIds = self.resourcesRepository

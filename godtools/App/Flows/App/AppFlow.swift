@@ -16,7 +16,9 @@ class AppFlow: NSObject, Flow {
     private let deepLinkingService: DeepLinkingService
     private let appMessaging: AppMessagingInterface
     private let appLaunchObserver: AppLaunchObserver = AppLaunchObserver()
+    private let launchCountRepository: LaunchCountRepositoryInterface
     private let dashboardFlow: DashboardFlow
+    private let rootController: AppRootController = AppRootController(nibName: nil, bundle: nil)
     
     private var onboardingFlow: OnboardingFlow?
     private var languageSettingsFlow: LanguageSettingsFlow?
@@ -30,8 +32,8 @@ class AppFlow: NSObject, Flow {
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
         
     let appDiContainer: AppDiContainer
-    let rootController: AppRootController = AppRootController(nibName: nil, bundle: nil)
     let navigationController: AppNavigationController
+    let rootView: AppRootView
             
     init(appDiContainer: AppDiContainer, appDeepLinkingService: DeepLinkingService) {
         
@@ -45,8 +47,10 @@ class AppFlow: NSObject, Flow {
         
         self.appDiContainer = appDiContainer
         self.navigationController = AppNavigationController(navigationBarAppearance: navigationBarAppearance)
+        self.rootView = AppRootView(appRootController: rootController)
         self.deepLinkingService = appDeepLinkingService
         self.appMessaging = appDiContainer.dataLayer.getAppMessaging()
+        self.launchCountRepository = appDiContainer.dataLayer.getLaunchCountRepository()
         self.dashboardFlow = DashboardFlow(appDiContainer: appDiContainer, sharedNavigationController: navigationController, rootController: rootController)
         
         super.init()
@@ -97,10 +101,6 @@ class AppFlow: NSObject, Flow {
         print("x deinit: \(type(of: self))")
     }
     
-    func getInitialView() -> UIViewController {
-        return rootController
-    }
-    
     func navigate(step: FlowStep) {
 
         switch step {
@@ -137,7 +137,13 @@ class AppFlow: NSObject, Flow {
                     
                     appFlow.cancellableForAppLaunchedFromTerminatedStateOptions = nil
                     
-                    if let deepLink = appFlow.appLaunchedFromDeepLink {
+                    let launchCount: Int = appFlow.launchCountRepository.getLaunchCount()
+                    
+                    if launchCount == 1, UIPasteboard.general.hasURLs {
+                        
+                        appFlow.navigate(step: .showDeferredDeepLinkModal)
+                        
+                    } else if let deepLink = appFlow.appLaunchedFromDeepLink {
                         
                         appFlow.appLaunchedFromDeepLink = nil
                         appFlow.navigate(step: .deepLink(deepLinkType: deepLink))
@@ -184,6 +190,21 @@ class AppFlow: NSObject, Flow {
             
         case .deepLink(let deepLink):
             navigateToDeepLink(deepLink: deepLink)
+            
+        case .showDeferredDeepLinkModal:
+            
+            let deferredDeepLinkModal = getDeferredDeepLinkModal()
+            navigationController.present(deferredDeepLinkModal, animated: true)
+            
+        case .handleDeepLinkFromDeferredDeepLinkModal(let deepLink):
+            
+            navigationController.dismissPresented(animated: false) { [weak self] in
+                self?.navigate(step: .deepLink(deepLinkType: deepLink))
+            }
+                        
+        case .closeTappedFromDeferredDeepLinkModal:
+            dashboardFlow.navigateToDashboard()
+            navigationController.dismissPresented(animated: true, completion: nil)
             
         case .showOnboardingTutorial(let animated):
             navigateToOnboarding(animated: animated)
@@ -263,7 +284,7 @@ extension AppFlow {
             }
             .store(in: &cancellables)
         
-        let authenticateUser: AuthenticateUserInterface = appDiContainer.feature.account.dataLayer.getAuthenticateUserInterface()
+        let authenticateUser: AuthenticateUserInterface = appDiContainer.feature.account.domainInterfaceLayer.getAuthenticateUser()
         
         authenticateUser.renewAuthenticationPublisher()
             .receive(on: DispatchQueue.main)
@@ -284,7 +305,7 @@ extension AppFlow {
     
     private func countAppSessionLaunch() {
         
-        let incrementUserCounterUseCase = appDiContainer.domainLayer.getIncrementUserCounterUseCase()
+        let incrementUserCounterUseCase = appDiContainer.feature.userActivity.domainLayer.getIncrementUserCounterUseCase()
         
         incrementUserCounterUseCase.incrementUserCounter(for: .sessionLaunch)
             .receive(on: DispatchQueue.main)
@@ -304,7 +325,7 @@ extension AppFlow {
         loadingView.addSubview(loadingImage)
         loadingImage.image = ImageCatalog.launchImage.uiImage
         loadingView.backgroundColor = .white
-        AppDelegate.getWindow()?.addSubview(loadingView)
+        GodToolsSceneDelegate.getWindow()?.addSubview(loadingView)
         
         return loadingView
     }
@@ -415,6 +436,27 @@ extension AppFlow {
                         
             navigateToOnboarding(animated: true)
         }
+    }
+    
+    private func getDeferredDeepLinkModal() -> UIViewController {
+        let viewModel = DeferredDeepLinkModalViewModel(
+            flowDelegate: self,
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            getDeferredDeepLinkModalInterfaceStringsUseCase: appDiContainer.feature.deferredDeepLink.domainLayer.getDeferredDeepLinkModalInterfaceStringsUseCase(),
+            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase(),
+            deepLinkingService: deepLinkingService
+        )
+        
+        let view = DeferredDeepLinkModalView(viewModel: viewModel)
+        
+        let hostingController = AppHostingController<DeferredDeepLinkModalView>(
+            rootView: view,
+            navigationBar: nil
+        )
+        
+        hostingController.modalPresentationStyle = .fullScreen
+        
+        return hostingController
     }
 }
 

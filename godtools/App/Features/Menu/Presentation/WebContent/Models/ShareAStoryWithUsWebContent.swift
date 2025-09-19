@@ -16,7 +16,7 @@ struct ShareAStoryWithUsWebContent: WebContentType {
     let analyticsScreenName: String = "Share Story"
     let analyticsSiteSection: String = "menu"
     
-    init(localizationServices: LocalizationServices) {
+    init(localizationServices: LocalizationServicesInterface) {
         
         navTitle = localizationServices.stringForSystemElseEnglish(key: "share_a_story_with_us")
     }

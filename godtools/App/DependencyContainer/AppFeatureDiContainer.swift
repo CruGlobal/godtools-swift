@@ -13,6 +13,7 @@ class AppFeatureDiContainer {
     let account: AccountDiContainer
     let appLanguage: AppLanguageFeatureDiContainer
     let dashboard: DashboardDiContainer
+    let deferredDeepLink: DeferredDeepLinkDiContainer
     let downloadToolProgress: DownloadToolProgressFeatureDiContainer
     let favorites: FavoritesDiContainer
     let featuredLessons: FeaturedLessonsDiContainer
@@ -23,6 +24,7 @@ class AppFeatureDiContainer {
     let lessons: LessonsFeatureDiContainer
     let lessonProgress: UserLessonProgressDiContainer
     let lessonSwipeTutorial: LessonSwipeTutorialDiContainer
+    let menu: MenuDiContainer
     let onboarding: OnboardingDiContainer
     let optInNotification: OptInNotificationDiContainer
     let persistFavoritedToolLanguageSettings: PersistUserToolLanguageSettingsDiContainer
@@ -42,6 +44,7 @@ class AppFeatureDiContainer {
         account: AccountDiContainer,
         appLanguage: AppLanguageFeatureDiContainer,
         dashboard: DashboardDiContainer,
+        deferredDeepLink: DeferredDeepLinkDiContainer,
         downloadToolProgress: DownloadToolProgressFeatureDiContainer,
         favorites: FavoritesDiContainer,
         featuredLessons: FeaturedLessonsDiContainer,
@@ -52,6 +55,7 @@ class AppFeatureDiContainer {
         lessons: LessonsFeatureDiContainer,
         lessonProgress: UserLessonProgressDiContainer,
         lessonSwipeTutorial: LessonSwipeTutorialDiContainer,
+        menu: MenuDiContainer,
         onboarding: OnboardingDiContainer,
         optInNotification: OptInNotificationDiContainer,
         persistFavoritedToolLanguageSettings: PersistUserToolLanguageSettingsDiContainer,
@@ -71,6 +75,7 @@ class AppFeatureDiContainer {
         self.account = account
         self.appLanguage = appLanguage
         self.dashboard = dashboard
+        self.deferredDeepLink = deferredDeepLink
         self.downloadToolProgress = downloadToolProgress
         self.favorites = favorites
         self.featuredLessons = featuredLessons
@@ -81,6 +86,7 @@ class AppFeatureDiContainer {
         self.lessons = lessons
         self.lessonProgress = lessonProgress
         self.lessonSwipeTutorial = lessonSwipeTutorial
+        self.menu = menu
         self.onboarding = onboarding
         self.optInNotification = optInNotification
         self.persistFavoritedToolLanguageSettings = persistFavoritedToolLanguageSettings

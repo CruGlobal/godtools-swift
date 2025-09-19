@@ -15,11 +15,16 @@ enum FlowStep {
     // app
     case appLaunched(state: AppLaunchState)
     case deepLink(deepLinkType: ParsedDeepLinkType)
+    case showDeferredDeepLinkModal
     case showOnboardingTutorial(animated: Bool)
     case onboardingFlowCompleted(onboardingFlowCompletedState: OnboardingFlowCompletedState?)
     case buttonWithUrlTappedFromAppMessage(url: URL)
     case menuTappedFromTools
     case openTutorialTappedFromTools
+    
+    // deferred deep link modal
+    case closeTappedFromDeferredDeepLinkModal
+    case handleDeepLinkFromDeferredDeepLinkModal(deepLinkType: ParsedDeepLinkType)
     
     // onboarding
     case chooseAppLanguageTappedFromOnboardingTutorial
@@ -81,7 +86,7 @@ enum FlowStep {
     
     // learnToShareTool
     case closeTappedFromLearnToShareTool(toolId: String, primaryLanguage: AppLanguageDomainModel, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?)
-    case continueTappedFromLearnToShareTool(toolId: String, primaryLanguage: AppLanguageDomainModel, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?)
+    case startTrainingTappedFromLearnToShareTool(toolId: String, primaryLanguage: AppLanguageDomainModel, parallelLanguage: AppLanguageDomainModel?, selectedLanguageIndex: Int?)
             
     // tool
     case homeTappedFromTool(isScreenSharing: Bool)
@@ -169,9 +174,9 @@ enum FlowStep {
     
     // article
     case backTappedFromArticleCategories
-    case articleCategoryTappedFromArticleCategories(resource: ResourceModel, language: LanguageModel, category: GodToolsToolParser.Category, manifest: Manifest)
+    case articleCategoryTappedFromArticleCategories(resource: ResourceDataModel, language: LanguageDataModel, category: GodToolsToolParser.Category, manifest: Manifest)
     case backTappedFromArticles
-    case articleTappedFromArticles(resource: ResourceModel, aemCacheObject: ArticleAemCacheObject)
+    case articleTappedFromArticles(resource: ResourceDataModel, aemCacheObject: ArticleAemCacheObject)
     case backTappedFromArticle
     case sharedTappedFromArticle(articleAemData: ArticleAemData)
     case articleFlowCompleted(state: ArticleFlowCompletedState)
@@ -206,10 +211,10 @@ enum FlowStep {
     
     // tool screen share
     case closeTappedFromToolScreenShareTutorial
-    case skipTappedFromToolScreenShareTutorial
+    case generateQRCodeTappedFromToolScreenShareTutorial
     case shareLinkTappedFromToolScreenShareTutorial
     case closeTappedFromCreatingToolScreenShareSession
-    case didCreateSessionFromCreatingToolScreenShareSession(result: Result<WebSocketChannel, TractRemoteSharePublisherError>)
+    case didCreateSessionFromCreatingToolScreenShareSession(result: Result<WebSocketChannel, TractRemoteSharePublisherError>, createSessionTrigger: ToolScreenShareFlowCreateSessionTrigger)
     case cancelTappedFromCreateToolScreenShareSessionTimeout
     case acceptTappedFromCreateToolScreenShareSessionTimeout
     case shareQRCodeTappedFromToolScreenShareSession(shareUrl: String)

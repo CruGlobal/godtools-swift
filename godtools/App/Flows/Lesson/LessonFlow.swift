@@ -18,7 +18,7 @@ class LessonFlow: ToolNavigationFlow, Flow {
     private let initialPageSubIndex: Int?
     
     private var cancellables: Set<AnyCancellable> = Set()
-    private var lesson: ResourceModel {
+    private var lesson: ResourceDataModel {
         return toolTranslations.tool
     }
     
@@ -257,7 +257,7 @@ extension LessonFlow {
             getTranslatedLanguageName: appDiContainer.dataLayer.getTranslatedLanguageName(),
             storeLessonProgressUseCase: appDiContainer.feature.lessonProgress.domainLayer.getStoreUserLessonProgressUseCase(),
             trainingTipsEnabled: trainingTipsEnabled,
-            incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase()
+            incrementUserCounterUseCase: appDiContainer.feature.userActivity.domainLayer.getIncrementUserCounterUseCase()
         )
         
         let view = LessonView(viewModel: viewModel, navigationBar: nil)

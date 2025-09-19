@@ -10,27 +10,40 @@ import Foundation
 
 class LaunchEnvironmentReader {
     
-    private let launchEnvironment: [String: String]
+    let launchEnvironment: [String: String]
+    let environmentName: String
     
-    init(launchEnvironment: [String: String]) {
+    init(launchEnvironment: [String: String], environmentName: String) {
         
         self.launchEnvironment = launchEnvironment
+        self.environmentName = environmentName
     }
     
-    static func createFromProcessInfo() -> LaunchEnvironmentReader {
-        return LaunchEnvironmentReader(launchEnvironment: ProcessInfo.processInfo.environment)
+    static func createFromProcessInfo(environmentName: String) -> LaunchEnvironmentReader {
+        return LaunchEnvironmentReader(
+            launchEnvironment: getProcessInfoEnvironment(),
+            environmentName: environmentName
+        )
     }
     
-    func getFirebaseEnabled() -> Bool? {
+    static func getProcessInfoEnvironment() -> [String: String] {
+        return ProcessInfo.processInfo.environment
+    }
+    
+    func getKeyValue(key: String) -> String {
+        return LaunchEnvironmentKey(environmentName: environmentName, key: key).value
+    }
+    
+    func getStringValue(key: String) -> String? {
+        return launchEnvironment[getKeyValue(key: key)]
+    }
+    
+    func getBoolValue(key: String) -> Bool? {
         
-        guard let stringBool = launchEnvironment[LaunchEnvironmentKey.firebaseEnabled.value] else {
+        guard let stringBool = launchEnvironment[getKeyValue(key: key)] else {
             return nil
         }
         
         return Bool(stringBool)
-    }
-    
-    func getUrlDeepLink() -> String? {
-        return launchEnvironment[LaunchEnvironmentKey.urlDeeplink.value]
     }
 }

@@ -11,5 +11,5 @@ import Foundation
 struct TranslationFilesDataModel {
     
     let files: [FileCacheLocation]
-    let translation: TranslationModel
+    let translation: TranslationDataModel
 }

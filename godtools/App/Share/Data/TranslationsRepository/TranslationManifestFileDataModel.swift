@@ -13,5 +13,5 @@ struct TranslationManifestFileDataModel {
     
     let manifest: Manifest
     let relatedFiles: [FileCacheLocation]
-    let translation: TranslationModel
+    let translation: TranslationDataModel
 }

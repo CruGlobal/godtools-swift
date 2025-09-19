@@ -11,7 +11,7 @@ import SwiftUI
 import Combine
 
 class ToolScreenShareFlow: Flow {
-
+    
     typealias ToolScreenShareSettingsObserver = ToolSettingsObserver & RemoteShareable
     
     private let toolSettingsObserver: ToolScreenShareSettingsObserver
@@ -95,15 +95,13 @@ class ToolScreenShareFlow: Flow {
     private func navigateToInitialView(toolScreenShareTutorialViewed: ToolScreenShareTutorialViewedDomainModel) {
         
         let toolScreenShareTutorialHasBeenViewed: Bool = toolScreenShareTutorialViewed.hasBeenViewed
-        let tractRemoteSharePublisher: TractRemoteSharePublisher = toolSettingsObserver.tractRemoteSharePublisher
         
-        if tractRemoteSharePublisher.webSocketIsConnected, let channel = tractRemoteSharePublisher.tractRemoteShareChannel {
-            navigate(step: .didCreateSessionFromCreatingToolScreenShareSession(result: .success(channel)))
-        }
-        else if toolScreenShareTutorialHasBeenViewed || (tractRemoteSharePublisher.webSocketIsConnected && tractRemoteSharePublisher.tractRemoteShareChannel != nil) {
-            presentCreatingToolScreenShareSession()
+        if toolScreenShareTutorialHasBeenViewed || toolSettingsObserver.tractRemoteSharePublisher.webSocketIsConnected {
+                        
+            presentToolScreenShareTutorial(showTutorialPages: .lastPageWithQRCodeOption)
         }
         else {
+            
             presentToolScreenShareTutorial()
         }
     }
@@ -113,17 +111,20 @@ class ToolScreenShareFlow: Flow {
         switch step {
             
         case .closeTappedFromToolScreenShareTutorial:
-            dismissToolScreenShareTutorial()
+            dismissToolScreenShareTutorial(animated: true) {
+                
+            }
             
-        case .skipTappedFromToolScreenShareTutorial:
+        case .generateQRCodeTappedFromToolScreenShareTutorial:
+            dismissToolScreenShareTutorial(animated: true) { [weak self] in
+                self?.presentCreatingToolScreenShareSession(createSessionTrigger: .generateQRCodeTappedFromScreenShareTutorial)
+            }
             
-            dismissToolScreenShareTutorial()
-            presentCreatingToolScreenShareSession()
             
         case .shareLinkTappedFromToolScreenShareTutorial:
-           
-            dismissToolScreenShareTutorial()
-            presentCreatingToolScreenShareSession()
+            dismissToolScreenShareTutorial(animated: true) { [weak self] in
+                self?.presentCreatingToolScreenShareSession(createSessionTrigger: .shareLinkTappedFromScreenShareTutorial)
+            }
             
         case .closeTappedFromCreatingToolScreenShareSession:
             dismissCreatingToolScreenShareSession()
@@ -138,7 +139,7 @@ class ToolScreenShareFlow: Flow {
             navigationController.dismiss(animated: true)
             completeFlow(state: .userSharedQRCode)
             
-        case .didCreateSessionFromCreatingToolScreenShareSession(let result):
+        case .didCreateSessionFromCreatingToolScreenShareSession(let result, let createSessionTrigger):
             
             dismissCreatingToolScreenShareSession()
                                     
@@ -162,10 +163,18 @@ class ToolScreenShareFlow: Flow {
                     
                     return
                 }
-                
-                let view = getShareToolScreenShareSessionView(domainModel: domainModel, shareUrl: remoteShareUrl)
-                
-                navigationController.present(view, animated: true, completion: nil)
+                                
+                switch createSessionTrigger {
+                    
+                case .generateQRCodeTappedFromScreenShareTutorial:
+                    presentQRCodeView(shareUrl: remoteShareUrl)
+                    
+                case .shareLinkTappedFromScreenShareTutorial:
+                    presentShareToolScreenShareSessionView(
+                        domainModel: domainModel,
+                        shareUrl: remoteShareUrl
+                    )
+                }
                 
             case .failure(let error):
                                 
@@ -200,45 +209,22 @@ class ToolScreenShareFlow: Flow {
         flowDelegate?.navigate(step: .toolScreenShareFlowCompleted(state: state))
     }
     
-    private func presentToolScreenShareTutorial() {
+    private func presentCreatingToolScreenShareSession(createSessionTrigger: ToolScreenShareFlowCreateSessionTrigger) {
         
-        guard toolScreenShareTutorialModal == nil else {
+        let tractRemoteSharePublisher: TractRemoteSharePublisher = toolSettingsObserver.tractRemoteSharePublisher
+        
+        if tractRemoteSharePublisher.webSocketIsConnected, let channel = tractRemoteSharePublisher.tractRemoteShareChannel {
+            navigate(step: .didCreateSessionFromCreatingToolScreenShareSession(result: .success(channel), createSessionTrigger: createSessionTrigger))
             return
         }
-        
-        let toolScreenShareTutorialView = getToolScreenShareTutorialView(toolId: toolSettingsObserver.toolId)
-        
-        let modal = ModalNavigationController.defaultModal(
-            rootView: toolScreenShareTutorialView,
-            statusBarStyle: .default
-        )
-        
-        navigationController.present(
-            modal,
-            animated: true,
-            completion: nil
-        )
-        
-        toolScreenShareTutorialModal = modal
-    }
-    
-    private func dismissToolScreenShareTutorial() {
-        
-        guard let modal = self.toolScreenShareTutorialModal else {
-            return
-        }
-        
-        modal.dismiss(animated: true)
-        toolScreenShareTutorialModal = nil
-    }
-    
-    private func presentCreatingToolScreenShareSession() {
         
         guard creatingToolScreenShareSessionModal == nil else {
             return
         }
         
-        let creatingToolScreenShareSessionView = getCreatingToolScreenShareSessionView()
+        let creatingToolScreenShareSessionView = getCreatingToolScreenShareSessionView(
+            createSessionTrigger: createSessionTrigger
+        )
         
         let modal = ModalNavigationController.defaultModal(
             rootView: creatingToolScreenShareSessionView,
@@ -260,6 +246,16 @@ class ToolScreenShareFlow: Flow {
         creatingToolScreenShareSessionModal = nil
     }
     
+    private func presentShareToolScreenShareSessionView(domainModel: ShareToolScreenShareSessionDomainModel, shareUrl: String) {
+        
+        let view = getShareToolScreenShareSessionView(
+            domainModel: domainModel,
+            shareUrl: shareUrl
+        )
+        
+        navigationController.present(view, animated: true, completion: nil)
+    }
+    
     private func presentQRCodeView(shareUrl: String) {
         
         let qrCodeView = getToolScreenShareQRCodeView(shareUrl: shareUrl)
@@ -268,13 +264,59 @@ class ToolScreenShareFlow: Flow {
     }
 }
 
+// MARK: - Tool Screen Share Tutorial View
+
 extension ToolScreenShareFlow {
     
-    private func getToolScreenShareTutorialView(toolId: String) -> UIViewController {
+    private func presentToolScreenShareTutorial(showTutorialPages: ShowToolScreenShareTutorialPages = .allPages) {
+        
+        guard toolScreenShareTutorialModal == nil else {
+            return
+        }
+        
+        let toolScreenShareTutorialView = getToolScreenShareTutorialView(
+            toolId: toolSettingsObserver.toolId,
+            showTutorialPages: showTutorialPages
+        )
+        
+        let modal = ModalNavigationController.defaultModal(
+            rootView: toolScreenShareTutorialView,
+            statusBarStyle: .default
+        )
+        
+        navigationController.present(
+            modal,
+            animated: true,
+            completion: nil
+        )
+        
+        toolScreenShareTutorialModal = modal
+    }
+    
+    private func dismissToolScreenShareTutorial(animated: Bool, completion: (() -> Void)?) {
+        
+        guard let modal = self.toolScreenShareTutorialModal else {
+            completion?()
+            return
+        }
+        
+        if animated {
+            modal.dismiss(animated: true, completion: completion)
+        }
+        else {
+            modal.dismiss(animated: false)
+            completion?()
+        }
+        
+        toolScreenShareTutorialModal = nil
+    }
+    
+    private func getToolScreenShareTutorialView(toolId: String, showTutorialPages: ShowToolScreenShareTutorialPages) -> UIViewController {
         
         let viewModel = ToolScreenShareTutorialViewModel(
             flowDelegate: self,
             toolId: toolId,
+            showTutorialPages: showTutorialPages,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             viewToolScreenShareTutorialUseCase: appDiContainer.feature.toolScreenShare.domainLayer.getViewToolScreenShareTutorialUseCase(),
             didViewToolScreenShareTutorialUseCase: appDiContainer.feature.toolScreenShare.domainLayer.getDidViewToolScreenShareTutorialUseCase()
@@ -285,8 +327,7 @@ extension ToolScreenShareFlow {
         let closeButton = AppCloseBarItem(
             color: ColorPalette.gtBlue.uiColor,
             target: viewModel,
-            action: #selector(viewModel.closeTapped),
-            accessibilityIdentifier: nil
+            action: #selector(viewModel.closeTapped)
         )
         
         let skipButton = AppSkipBarItem(
@@ -294,7 +335,7 @@ extension ToolScreenShareFlow {
             localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             target: viewModel,
             action: #selector(viewModel.skipTapped),
-            accessibilityIdentifier: nil,
+            accessibilityIdentifier: AccessibilityStrings.Button.skip.id,
             hidesBarItemPublisher: viewModel.$hidesSkipButton.eraseToAnyPublisher()
         )
         
@@ -312,16 +353,22 @@ extension ToolScreenShareFlow {
         
         return hostingView
     }
+}
+
+// MARK: - Create Tool Screen Share Session View
+
+extension ToolScreenShareFlow {
     
-    private func getCreatingToolScreenShareSessionView() -> UIViewController {
+    private func getCreatingToolScreenShareSessionView(createSessionTrigger: ToolScreenShareFlowCreateSessionTrigger) -> UIViewController {
         
         let viewModel = CreatingToolScreenShareSessionViewModel(
             flowDelegate: self,
             toolId: toolSettingsObserver.toolId,
+            createSessionTrigger: createSessionTrigger,
             getCurrentAppLanguage: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             viewCreatingToolScreenShareSessionUseCase: appDiContainer.feature.toolScreenShare.domainLayer.getViewCreatingToolScreenShareSessionUseCase(),
             tractRemoteSharePublisher: toolSettingsObserver.tractRemoteSharePublisher,
-            incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase()
+            incrementUserCounterUseCase: appDiContainer.feature.userActivity.domainLayer.getIncrementUserCounterUseCase()
         )
         
         let view = CreatingToolScreenShareSessionView(
@@ -331,8 +378,7 @@ extension ToolScreenShareFlow {
         let closeButton = AppCloseBarItem(
             color: ColorPalette.gtBlue.uiColor,
             target: viewModel,
-            action: #selector(viewModel.closeTapped),
-            accessibilityIdentifier: nil
+            action: #selector(viewModel.closeTapped)
         )
         
         let navigationBar = AppNavigationBar(
@@ -349,6 +395,11 @@ extension ToolScreenShareFlow {
         
         return hostingView
     }
+}
+
+// MARK: - Create Screen Share Session Timed Out View
+
+extension ToolScreenShareFlow {
     
     private func getCreatingToolScreenShareSessionTimedOutView(domainModel: CreatingToolScreenShareSessionTimedOutDomainModel) -> UIViewController {
         
@@ -361,6 +412,11 @@ extension ToolScreenShareFlow {
         
         return view.controller
     }
+}
+
+// MARK: - Share Tool Screen Share Session View
+
+extension ToolScreenShareFlow {
     
     private func getShareToolScreenShareSessionView(domainModel: ShareToolScreenShareSessionDomainModel, shareUrl: String) -> UIViewController {
         
@@ -382,6 +438,11 @@ extension ToolScreenShareFlow {
         
         return view.controller
     }
+}
+
+// MARK: - Tool Screen Share QR Code View
+
+extension ToolScreenShareFlow {
     
     private func getToolScreenShareQRCodeView(shareUrl: String) -> UIViewController {
         
@@ -396,12 +457,14 @@ extension ToolScreenShareFlow {
         
         let hostingView = AppHostingController<ToolScreenShareQRCodeView>(
             rootView: view,
-            navigationBar: nil
+            navigationBar: nil,
+            animateInAnimatedTransitioning: NoAnimationTransition(transition: .transitionIn),
+            animateOutAnimatedTransitioning: NoAnimationTransition(transition: .transitionOut)
         )
-        
-        hostingView.view.backgroundColor = .clear
-        hostingView.modalPresentationStyle = .overFullScreen
 
+        hostingView.view.backgroundColor = .clear
+        hostingView.modalPresentationStyle = .overCurrentContext
+        
         return hostingView
     }
 }

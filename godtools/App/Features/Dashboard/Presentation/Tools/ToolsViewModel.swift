@@ -233,17 +233,18 @@ extension ToolsViewModel {
     }
     
     func getSpotlightToolViewModel(spotlightTool: SpotlightToolListItemDomainModel) -> ToolCardViewModel {
-        return getToolViewModel(tool: spotlightTool)
+        return getToolViewModel(tool: spotlightTool, accessibility: .spotlightTool)
     }
     
     func getToolItemViewModel(tool: ToolListItemDomainModel) -> ToolCardViewModel {
-        return getToolViewModel(tool: tool)
+        return getToolViewModel(tool: tool, accessibility: .tool)
     }
     
-    private func getToolViewModel(tool: ToolListItemDomainModelInterface) -> ToolCardViewModel {
+    private func getToolViewModel(tool: ToolListItemDomainModelInterface, accessibility: AccessibilityStrings.Button) -> ToolCardViewModel {
         
         return ToolCardViewModel(
             tool: tool,
+            accessibility: accessibility,
             getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
             attachmentsRepository: attachmentsRepository
         )

@@ -32,21 +32,21 @@ class GetSpotlightToolsRepository: GetSpotlightToolsRepositoryInterface {
     
     func getSpotlightToolsPublisher(translatedInAppLanguage: AppLanguageDomainModel, languageIdForAvailabilityText: String?) -> AnyPublisher<[SpotlightToolListItemDomainModel], Never> {
         
-        let languageForAvailabilityTextModel: LanguageModel?
+        let languageForAvailabilityTextModel: LanguageDataModel?
         
         if let languageForAvailabilityTextId = languageIdForAvailabilityText {
-            languageForAvailabilityTextModel = languagesRepository.getLanguage(id: languageForAvailabilityTextId)
+            languageForAvailabilityTextModel = languagesRepository.getCachedObject(id: languageForAvailabilityTextId)
         } else {
             languageForAvailabilityTextModel = nil
         }
         
         return Publishers.CombineLatest(
-            resourcesRepository.getResourcesChangedPublisher(),
+            resourcesRepository.observeDatabaseChangesPublisher(),
             getToolListItemInterfaceStringsRepository.getStringsPublisher(translateInLanguage: translatedInAppLanguage)
         )
         .flatMap({ (resourcesChanged: Void, interfaceStrings: ToolListItemInterfaceStringsDomainModel) -> AnyPublisher<[SpotlightToolListItemDomainModel], Never> in
         
-            let spotlightToolResources: [ResourceModel] = self.resourcesRepository.getSpotlightTools(sortByDefaultOrder: true)
+            let spotlightToolResources: [ResourceDataModel] = self.resourcesRepository.getSpotlightTools(sortByDefaultOrder: true)
 
             let spotlightTools: [SpotlightToolListItemDomainModel] = spotlightToolResources
                 .map({

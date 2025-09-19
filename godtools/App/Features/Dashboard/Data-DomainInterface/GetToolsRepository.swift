@@ -32,21 +32,21 @@ class GetToolsRepository: GetToolsRepositoryInterface {
     
     func getToolsPublisher(translatedInAppLanguage: AppLanguageDomainModel, languageIdForAvailabilityText: String?, filterToolsByCategory: ToolFilterCategoryDomainModel?, filterToolsByLanguage: ToolFilterLanguageDomainModel?) -> AnyPublisher<[ToolListItemDomainModel], Never> {
         
-        let languageForAvailabilityTextModel: LanguageModel? 
+        let languageForAvailabilityTextModel: LanguageDataModel? 
         
         if let languageForAvailabilityTextId = languageIdForAvailabilityText {
-            languageForAvailabilityTextModel = languagesRepository.getLanguage(id: languageForAvailabilityTextId)
+            languageForAvailabilityTextModel = languagesRepository.getCachedObject(id: languageForAvailabilityTextId)
         } else {
             languageForAvailabilityTextModel = nil
         }
         
         return Publishers.CombineLatest(
-            resourcesRepository.getResourcesChangedPublisher().prepend(Void()),
+            resourcesRepository.observeDatabaseChangesPublisher().prepend(Void()),
             getToolListItemInterfaceStringsRepository.getStringsPublisher(translateInLanguage: translatedInAppLanguage)
         )
         .flatMap({ (resourcesChanged: Void, interfaceStrings: ToolListItemInterfaceStringsDomainModel) -> AnyPublisher<[ToolListItemDomainModel], Never> in
         
-            let tools: [ResourceModel] = self.resourcesRepository.getAllToolsList(
+            let tools: [ResourceDataModel] = self.resourcesRepository.getAllToolsList(
                 filterByCategory: filterToolsByCategory?.id,
                 filterByLanguageId: filterToolsByLanguage?.id,
                 sortByDefaultOrder: true

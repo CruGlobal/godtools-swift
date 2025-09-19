@@ -67,7 +67,7 @@ class ArticleDeepLinkFlow: Flow {
             
         case .didFailToDownloadArticleFromLoadingArticle(let alertMessage):
             
-            let localizationServices: LocalizationServices = appDiContainer.dataLayer.getLocalizationServices()
+            let localizationServices: LocalizationServicesInterface = appDiContainer.dataLayer.getLocalizationServices()
             let appLanguage: AppLanguageDomainModel = self.appLanguage
             
             navigationController.dismiss(animated: true) { [weak self] in
@@ -128,7 +128,7 @@ extension ArticleDeepLinkFlow {
             flowDelegate: self,
             flowType: .deeplink,
             aemCacheObject: aemCacheObject,
-            incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase(),
+            incrementUserCounterUseCase: appDiContainer.feature.userActivity.domainLayer.getIncrementUserCounterUseCase(),
             getAppUIDebuggingIsEnabledUseCase: appDiContainer.domainLayer.getAppUIDebuggingIsEnabledUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase()
         )

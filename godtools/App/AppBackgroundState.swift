@@ -51,7 +51,7 @@ class AppBackgroundState {
                 
         syncInitialFavoritedTools(
             resourcesRepository: appDiContainer.dataLayer.getResourcesRepository(),
-            launchCountRepository: appDiContainer.dataLayer.getSharedLaunchCountRepository(),
+            launchCountRepository: appDiContainer.dataLayer.getLaunchCountRepository(),
             storeInitialFavoritedToolsUseCase: appDiContainer.feature.dashboard.domainLayer.getStoreInitialFavoritedToolsUseCase()
         )
         
@@ -78,10 +78,10 @@ class AppBackgroundState {
             .store(in: &cancellables)
     }
     
-    private func syncInitialFavoritedTools(resourcesRepository: ResourcesRepository, launchCountRepository: LaunchCountRepository, storeInitialFavoritedToolsUseCase: StoreInitialFavoritedToolsUseCase) {
+    private func syncInitialFavoritedTools(resourcesRepository: ResourcesRepository, launchCountRepository: LaunchCountRepositoryInterface, storeInitialFavoritedToolsUseCase: StoreInitialFavoritedToolsUseCase) {
         
         Publishers.CombineLatest(
-            resourcesRepository.getResourcesChangedPublisher().prepend(Void()),
+            resourcesRepository.observeDatabaseChangesPublisher().prepend(Void()),
             launchCountRepository.getLaunchCountPublisher()
         )
         .flatMap { (resourcesChanged: Void, launchCount: Int) -> AnyPublisher<Void, Never> in

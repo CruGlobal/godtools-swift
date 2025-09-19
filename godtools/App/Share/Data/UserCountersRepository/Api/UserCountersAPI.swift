@@ -10,14 +10,14 @@ import Foundation
 import RequestOperation
 import Combine
 
-class UserCountersAPI: UserCountersAPIType {
+class UserCountersAPI: UserCountersApiInterface {
     
     private let authSession: MobileContentApiAuthSession
     private let baseURL: String
     private let urlSessionPriority: URLSessionPriority
     private let requestBuilder: RequestBuilder = RequestBuilder()
     
-    init(config: AppConfig, urlSessionPriority: URLSessionPriority, mobileContentApiAuthSession: MobileContentApiAuthSession) {
+    init(config: AppConfigInterface, urlSessionPriority: URLSessionPriority, mobileContentApiAuthSession: MobileContentApiAuthSession) {
         
         self.baseURL = config.getMobileContentApiBaseUrl()
         self.urlSessionPriority = urlSessionPriority

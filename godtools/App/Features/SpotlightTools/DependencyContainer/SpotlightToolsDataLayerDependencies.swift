@@ -16,20 +16,4 @@ class SpotlightToolsDataLayerDependencies {
         
         self.coreDataLayer = coreDataLayer
     }
-    
-    // MARK: - Data Layer Classes
-    
-    // MARK: - Domain Interface
-    
-    func getSpotlightToolsRepository() -> GetSpotlightToolsRepositoryInterface {
-        return GetSpotlightToolsRepository(
-            resourcesRepository: coreDataLayer.getResourcesRepository(),
-            favoritedResourcesRepository: coreDataLayer.getFavoritedResourcesRepository(),
-            languagesRepository: coreDataLayer.getLanguagesRepository(),
-            getTranslatedToolName: coreDataLayer.getTranslatedToolName(),
-            getTranslatedToolCategory: coreDataLayer.getTranslatedToolCategory(),
-            getToolListItemInterfaceStringsRepository: coreDataLayer.getToolListItemInterfaceStringsRepository(),
-            getTranslatedToolLanguageAvailability: coreDataLayer.getTranslatedToolLanguageAvailability()
-        )
-    }
 }

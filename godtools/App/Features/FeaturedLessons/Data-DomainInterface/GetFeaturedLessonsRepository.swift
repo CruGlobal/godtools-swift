@@ -28,17 +28,17 @@ class GetFeaturedLessonsRepository: GetFeaturedLessonsRepositoryInterface {
     
     func getFeaturedLessonsPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[FeaturedLessonDomainModel], Never> {
         
-        let appLanguageModel: LanguageModel? = languagesRepository.getLanguage(code: appLanguage)
+        let appLanguageModel: LanguageDataModel? = languagesRepository.getCachedLanguage(code: appLanguage)
         
         return Publishers.CombineLatest(
-            resourcesRepository.getResourcesChangedPublisher(),
+            resourcesRepository.observeDatabaseChangesPublisher(),
             getLessonListItemProgressRepository.getLessonListItemProgressChanged()
         )
         .flatMap({ (resourcesChanged: Void, lessonProgressDidChange: Void) -> AnyPublisher<[FeaturedLessonDomainModel], Never> in
             
-            let featuredLessonsDataModels: [ResourceModel] = self.resourcesRepository.getFeaturedLessons(sorted: true)
+            let featuredLessonsDataModels: [ResourceDataModel] = self.resourcesRepository.getFeaturedLessons(sorted: true)
             
-            let featuredLessons: [FeaturedLessonDomainModel] = featuredLessonsDataModels.map { (resource: ResourceModel) in
+            let featuredLessons: [FeaturedLessonDomainModel] = featuredLessonsDataModels.map { (resource: ResourceDataModel) in
 
                 let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel
                 
@@ -52,8 +52,9 @@ class GetFeaturedLessonsRepository: GetFeaturedLessonsRepositoryInterface {
                 let lessonProgress = self.getLessonListItemProgressRepository.getLessonProgress(lesson: resource, appLanguage: appLanguage)
                 
                 let nameLanguageDirection: LanguageDirectionDomainModel
+                
                 if let filterLanguageModel = appLanguageModel {
-                    nameLanguageDirection = LanguageDirectionDomainModel(languageModel: filterLanguageModel)
+                    nameLanguageDirection = filterLanguageModel.languageDirectionDomainModel
                 } else {
                     nameLanguageDirection = .leftToRight
                 }

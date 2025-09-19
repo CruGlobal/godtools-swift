@@ -13,5 +13,7 @@ struct TractRemoteSharePublisherNavigationEvent {
     let card: Int?
     let locale: String?
     let page: Int?
+    let parallelLocale: String?
+    let primaryLocale: String?
     let tool: String?
 }

@@ -11,10 +11,12 @@ import LocalizationServices
 
 class GetTranslatedToolCategory {
     
-    private let localizationServices: LocalizationServices
+    static let localizedKeyPrefix: String = "tool_category_"
+    
+    private let localizationServices: LocalizationServicesInterface
     private let resourcesRepository: ResourcesRepository
     
-    init(localizationServices: LocalizationServices, resourcesRepository: ResourcesRepository) {
+    init(localizationServices: LocalizationServicesInterface, resourcesRepository: ResourcesRepository) {
         
         self.localizationServices = localizationServices
         self.resourcesRepository = resourcesRepository
@@ -22,20 +24,20 @@ class GetTranslatedToolCategory {
     
     func getTranslatedCategory(toolId: String, translateInLanguage: BCP47LanguageIdentifier) -> String {
         
-        guard let resource = resourcesRepository.getResource(id: toolId) else {
+        guard let resource = resourcesRepository.getCachedObject(id: toolId) else {
             return ""
         }
         
         return getTranslatedCategory(resource: resource, translateInLanguage: translateInLanguage)
     }
     
-    func getTranslatedCategory(resource: ResourceModel, translateInLanguage: BCP47LanguageIdentifier) -> String {
+    func getTranslatedCategory(resource: ResourceDataModel, translateInLanguage: BCP47LanguageIdentifier) -> String {
         
         let localeId = translateInLanguage.localeId
 
         let category: String = localizationServices.stringForLocaleElseEnglish(
             localeIdentifier: localeId,
-            key: "tool_category_\(resource.attrCategory)"
+            key: "\(Self.localizedKeyPrefix)\(resource.attrCategory)"
         )
         
         return category

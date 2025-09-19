@@ -72,7 +72,6 @@ struct ToolsView: View {
                                     layout: .landscape,
                                     showsCategory: true,
                                     navButtonTitleHorizontalPadding: nil,
-                                    accessibility: .tool,
                                     favoriteTappedClosure: {
                                         
                                         viewModel.toolFavoriteTapped(tool: tool)
@@ -110,7 +109,7 @@ struct AllToolsView_Preview: PreviewProvider {
     
     static func getToolsViewModel() -> ToolsViewModel {
         
-        let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
+        let appDiContainer = AppDiContainer.createUITestsDiContainer()
         
         let viewModel = ToolsViewModel(
             flowDelegate: MockFlowDelegate(),

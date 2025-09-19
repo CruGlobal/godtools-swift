@@ -47,7 +47,7 @@ class ArticleFlow: Flow {
             manifest: languageTranslationManifest.manifest,
             downloadArticlesObservable: downloadArticlesObservable,
             manifestResourcesCache: appDiContainer.getMobileContentRendererManifestResourcesCache(),
-            incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase(),
+            incrementUserCounterUseCase: appDiContainer.feature.userActivity.domainLayer.getIncrementUserCounterUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
         )
@@ -127,7 +127,7 @@ class ArticleFlow: Flow {
 
 extension ArticleFlow {
     
-    private func getArticles(resource: ResourceModel, language: LanguageModel, category: GodToolsToolParser.Category, manifest: Manifest) -> UIViewController {
+    private func getArticles(resource: ResourceDataModel, language: LanguageDataModel, category: GodToolsToolParser.Category, manifest: Manifest) -> UIViewController {
         
         let viewModel = ArticlesViewModel(
             flowDelegate: self,
@@ -161,13 +161,13 @@ extension ArticleFlow {
         return view
     }
     
-    private func getArticle(resource: ResourceModel, aemCacheObject: ArticleAemCacheObject) -> UIViewController {
+    private func getArticle(resource: ResourceDataModel, aemCacheObject: ArticleAemCacheObject) -> UIViewController {
         
         let viewModel = ArticleWebViewModel(
             flowDelegate: self,
             flowType: .tool(resource: resource),
             aemCacheObject: aemCacheObject,
-            incrementUserCounterUseCase: appDiContainer.domainLayer.getIncrementUserCounterUseCase(),
+            incrementUserCounterUseCase: appDiContainer.feature.userActivity.domainLayer.getIncrementUserCounterUseCase(),
             getAppUIDebuggingIsEnabledUseCase: appDiContainer.domainLayer.getAppUIDebuggingIsEnabledUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase()
         )
@@ -219,8 +219,7 @@ extension ArticleFlow {
         let closeButton = AppCloseBarItem(
             color: nil,
             target: viewModel,
-            action: #selector(viewModel.closeTapped),
-            accessibilityIdentifier: nil
+            action: #selector(viewModel.closeTapped)
         )
         
         let hostingView = AppHostingController<ArticleDebugView>(

@@ -17,14 +17,14 @@ class LessonFeedbackAnalytics {
     private static let valueHelpfulYes: String = "yes"
     private static let valueHelpfulNo: String = "no"
     
-    private let firebaseAnalytics: FirebaseAnalytics
+    private let firebaseAnalytics: FirebaseAnalyticsInterface
     
-    required init(firebaseAnalytics: FirebaseAnalytics) {
+    required init(firebaseAnalytics: FirebaseAnalyticsInterface) {
         
         self.firebaseAnalytics = firebaseAnalytics
     }
     
-    func trackLessonFeedback(lesson: ResourceModel, feedback: TrackLessonFeedbackDomainModel) {
+    func trackLessonFeedback(lesson: ResourceDataModel, feedback: TrackLessonFeedbackDomainModel) {
             
         var data: [String: String] = Dictionary()
         

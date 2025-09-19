@@ -10,17 +10,17 @@ import Foundation
 import FirebaseAnalytics
 import FirebaseCore
 
-class FirebaseAnalytics {
+class FirebaseAnalytics: FirebaseAnalyticsInterface {
     
-    private let appBuild: AppBuild
+    private let isDebug: Bool
     private let loggingEnabled: Bool
     
     private var previousTrackedScreenName: String = ""
     private var isConfigured: Bool = false
     
-    init(appBuild: AppBuild, loggingEnabled: Bool) {
+    init(isDebug: Bool, loggingEnabled: Bool) {
         
-        self.appBuild = appBuild
+        self.isDebug = isDebug
         self.loggingEnabled = loggingEnabled
     }
     
@@ -38,7 +38,7 @@ class FirebaseAnalytics {
                      
         setUserProperty(
             key: AnalyticsConstants.Keys.debug,
-            value: appBuild.isDebug ? AnalyticsConstants.Values.debugIsTrue : AnalyticsConstants.Values.debugIsFalse
+            value: isDebug ? AnalyticsConstants.Values.debugIsTrue : AnalyticsConstants.Values.debugIsFalse
         )
         
         log(method: "configure()", label: nil, labelValue: nil, data: nil)

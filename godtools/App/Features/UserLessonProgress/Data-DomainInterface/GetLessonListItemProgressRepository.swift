@@ -15,10 +15,10 @@ class GetLessonListItemProgressRepository {
     
     private let lessonProgressRepository: UserLessonProgressRepository
     private let userCountersRepository: UserCountersRepository
-    private let localizationServices: LocalizationServices
+    private let localizationServices: LocalizationServicesInterface
     private let getTranslatedPercentage: GetTranslatedPercentage
     
-    init(lessonProgressRepository: UserLessonProgressRepository, userCountersRepository: UserCountersRepository, localizationServices: LocalizationServices, getTranslatedPercentage: GetTranslatedPercentage) {
+    init(lessonProgressRepository: UserLessonProgressRepository, userCountersRepository: UserCountersRepository, localizationServices: LocalizationServicesInterface, getTranslatedPercentage: GetTranslatedPercentage) {
         self.lessonProgressRepository = lessonProgressRepository
         self.userCountersRepository = userCountersRepository
         self.localizationServices = localizationServices
@@ -29,7 +29,7 @@ class GetLessonListItemProgressRepository {
         return lessonProgressRepository.getLessonProgressChangedPublisher()
     }
     
-    func getLessonProgress(lesson: ResourceModel, appLanguage: AppLanguageDomainModel) -> LessonListItemProgressDomainModel {
+    func getLessonProgress(lesson: ResourceDataModel, appLanguage: AppLanguageDomainModel) -> LessonListItemProgressDomainModel {
         
         let lessonId = lesson.id
         let lessonCompletionUserCounterId = UserCounterNames.shared.LESSON_COMPLETION(tool: lesson.abbreviation)

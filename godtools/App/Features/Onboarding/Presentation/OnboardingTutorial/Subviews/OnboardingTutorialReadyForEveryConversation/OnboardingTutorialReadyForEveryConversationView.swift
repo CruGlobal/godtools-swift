@@ -11,18 +11,18 @@ import SwiftUI
 struct OnboardingTutorialReadyForEveryConversationView: View {
     
     private let logoAspectRatio: CGSize = CGSize(width: 221, height: 131)
-    private let screenAccessibility: AccessibilityStrings.Screen
+    private let screenAccessibilityId: String
     
     @ObservedObject private var viewModel: OnboardingTutorialReadyForEveryConversationViewModel
     
     let geometry: GeometryProxy
     let watchVideoTappedClosure: (() -> Void)
     
-    init(viewModel: OnboardingTutorialReadyForEveryConversationViewModel, geometry: GeometryProxy, screenAccessibility: AccessibilityStrings.Screen, watchVideoTappedClosure: @escaping (() -> Void)) {
+    init(viewModel: OnboardingTutorialReadyForEveryConversationViewModel, geometry: GeometryProxy, screenAccessibilityId: String, watchVideoTappedClosure: @escaping (() -> Void)) {
         
         self.viewModel = viewModel
         self.geometry = geometry
-        self.screenAccessibility = screenAccessibility
+        self.screenAccessibilityId = screenAccessibilityId
         self.watchVideoTappedClosure = watchVideoTappedClosure
     }
     
@@ -32,7 +32,7 @@ struct OnboardingTutorialReadyForEveryConversationView: View {
             
             Spacer()
             
-            AccessibilityScreenElementView(screenAccessibility: screenAccessibility)
+            AccessibilityScreenElementView(id: screenAccessibilityId)
             
             let logoWidth: CGFloat = geometry.size.width * 0.7
             let logoHeight: CGFloat = (logoWidth / logoAspectRatio.width) * logoAspectRatio.height

@@ -13,7 +13,7 @@ class DownloadArticlesErrorViewModel {
     
     let message: String
     
-    init(appLanguage: AppLanguageDomainModel, localizationServices: LocalizationServices, error: ArticleAemDownloaderError) {
+    init(appLanguage: AppLanguageDomainModel, localizationServices: LocalizationServicesInterface, error: ArticleAemDownloaderError) {
             
         let notConnectedToNetworkMessage: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: appLanguage, key: LocalizableStringKeys.noInternet.key)
         let cancelledError: String = "The request was cancelled"

@@ -37,7 +37,7 @@ struct LessonCardView: View {
             VStack(alignment: .leading, spacing: 0) {
                 
                 OptionalImage(
-                    imageData: viewModel.bannerImageData,
+                    imageData: viewModel.attachmentBanner.bannerImageData,
                     imageSize: .aspectRatio(width: cardWidth, aspectRatio: bannerImageAspectRatio),
                     contentMode: .fill,
                     placeholderColor: ColorPalette.gtLightestGrey.color
@@ -96,7 +96,7 @@ struct LessonCardView_Previews: PreviewProvider {
     
     static var previews: some View {
         
-        let appDiContainer: AppDiContainer = SwiftUIPreviewDiContainer().getAppDiContainer()
+        let appDiContainer = AppDiContainer.createUITestsDiContainer()
         
         let lessonListItem = LessonListItemDomainModel(
             analyticsToolName: "",

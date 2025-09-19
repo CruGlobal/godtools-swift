@@ -22,7 +22,7 @@ class CancelLessonEvaluationRepository: CancelLessonEvaluationRepositoryInterfac
     
     func cancelPublisher(lessonId: String) -> AnyPublisher<Void, Never> {
         
-        guard let lessonResource = resourcesRepository.getResource(id: lessonId) else {
+        guard let lessonResource = resourcesRepository.getCachedObject(id: lessonId) else {
             return Just(Void())
                 .eraseToAnyPublisher()
         }

@@ -8,11 +8,10 @@
 
 import Foundation
 import XCTest
-@testable import godtools
 
 class OnboardingFlowTests: BaseFlowTests {
         
-    private func launchApp(appLanguageCode: String? = nil) {
+    private func launchAppToOnboardingTutorial(appLanguageCode: String? = nil) {
         
         let languageCode: String = appLanguageCode ?? LanguageCodeDomainModel.english.value
                 
@@ -22,32 +21,23 @@ class OnboardingFlowTests: BaseFlowTests {
         )
     }
     
-    private func getNextTutorialPageButton(app: XCUIApplication) -> XCUIElement {
-        return app.queryButton(buttonAccessibility: .nextOnboardingTutorial)
+    func testAppLaunchedToOnboardingTutorial() {
+        
+        launchAppToOnboardingTutorial()
     }
-    
-    private func getSkipTutorialButton(app: XCUIApplication) -> XCUIElement {
-        return app.queryButton(buttonAccessibility: .skipOnboardingTutorial)
-    }
-    
-    // MARK: - Tests
     
     func testNavigationToChooseAppLanguage() {
               
-        launchApp()
+        launchAppToOnboardingTutorial()
         
-        let chooseAppLanguageButton = app.queryButton(buttonAccessibility: AccessibilityStrings.Button.chooseAppLanguage)
-        
-        XCTAssertTrue(chooseAppLanguageButton.exists)
-        
-        chooseAppLanguageButton.tap()
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .chooseAppLanguage)
         
         assertIfScreenDoesNotExist(screenAccessibility: .appLanguages)
     }
     
     func testNavigationToWatchOnboardingVideoTutorialAndNavigationBackToOnboardingTutorial() {
               
-        launchApp()
+        launchAppToOnboardingTutorial()
         
         navigateToWatchOnboardingVideoTutorial(app: app)
         
@@ -56,67 +46,34 @@ class OnboardingFlowTests: BaseFlowTests {
     
     private func navigateToWatchOnboardingVideoTutorial(app: XCUIApplication) {
                 
-        let watchVideoButton = app.queryButton(buttonAccessibility: .watchOnboardingTutorialVideo)
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .watchOnboardingTutorialVideo)
         
-        XCTAssertTrue(watchVideoButton.exists)
-        
-        watchVideoButton.tap()
-        
-        // Adding waitForExistence I believe helped with the fact this view is presented with an animation. ~Levi
         assertIfScreenDoesNotExist(screenAccessibility: .watchOnboardingTutorialVideo)
     }
     
     private func navigateBackToOnboardingTutorialFromWatchOnboardingTutorialVideo(app: XCUIApplication) {
         
-        let closeVideoButton = app.queryButton(buttonAccessibility: .closeOnboardingTutorialVideo)
-        
-        XCTAssertTrue(closeVideoButton.exists)
-        
-        closeVideoButton.tap()
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .close)
         
         super.assertIfInitialScreenDoesntExist()
     }
     
     func testNavigationThroughTutorialPagesUsingNextTutorialPageButton() {
         
-        launchApp(appLanguageCode: LanguageCodeDomainModel.english.value)
+        launchAppToOnboardingTutorial(appLanguageCode: LanguageCodeDomainModel.english.value)
         
-        let nextTutorialPageButton = getNextTutorialPageButton(app: app)
+        tapWhileExists(buttonAccessibility: .continueForward)
         
-        XCTAssertTrue(nextTutorialPageButton.exists)
-        
-        assertIfScreenDoesNotExist(screenAccessibility: .onboardingTutorialPage1)
-        
-        nextTutorialPageButton.tap()
-        
-        assertIfScreenDoesNotExist(screenAccessibility: .onboardingTutorialPage2)
-        
-        nextTutorialPageButton.tap()
-        
-        assertIfScreenDoesNotExist(screenAccessibility: .onboardingTutorialPage3)
-        
-        nextTutorialPageButton.tap()
-        
-        assertIfScreenDoesNotExist(screenAccessibility: .onboardingTutorialPage4)
+        assertIfButtonDoesNotExist(buttonAccessibility: .getStarted)
     }
     
     func testSkippingOnboardingNavigatesToDashboardFavorites() {
      
-        launchApp()
+        launchAppToOnboardingTutorial()
         
-        let nextTutorialPageButton = getNextTutorialPageButton(app: app)
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .continueForward)
         
-        XCTAssertTrue(nextTutorialPageButton.exists)
-        
-        assertIfScreenDoesNotExist(screenAccessibility: .onboardingTutorialPage1)
-        
-        nextTutorialPageButton.tap()
-        
-        let skipTutorialButton = getSkipTutorialButton(app: app)
-        
-        XCTAssertTrue(skipTutorialButton.exists)
-        
-        skipTutorialButton.tap()
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .skip)
         
         assertIfScreenDoesNotExist(screenAccessibility: .dashboardFavorites)
     }

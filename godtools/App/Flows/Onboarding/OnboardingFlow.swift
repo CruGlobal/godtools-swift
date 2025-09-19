@@ -103,7 +103,7 @@ class OnboardingFlow: Flow, ChooseAppLanguageNavigationFlow {
             videoEndedStep: .videoEndedOnOnboardingTutorial
         )
         
-        presentVideoModal(viewModel: viewModel, screenAccessibility: .watchOnboardingTutorialVideo, closeVideoButtonAccessibility: .closeOnboardingTutorialVideo)
+        presentVideoModal(viewModel: viewModel, screenAccessibility: .watchOnboardingTutorialVideo)
     }
     
     private func completeOnboardingFlow(onboardingFlowCompletedState: OnboardingFlowCompletedState?) {
@@ -135,7 +135,7 @@ extension OnboardingFlow {
             localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             target: viewModel,
             action: #selector(viewModel.skipTapped),
-            accessibilityIdentifier: AccessibilityStrings.Button.skipOnboardingTutorial.id,
+            accessibilityIdentifier: AccessibilityStrings.Button.skip.id,
             hidesBarItemPublisher: viewModel.$hidesSkipButton.eraseToAnyPublisher()
         )
         

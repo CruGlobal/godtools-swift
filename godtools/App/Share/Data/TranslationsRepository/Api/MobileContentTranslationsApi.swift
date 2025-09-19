@@ -13,13 +13,14 @@ import Combine
 class MobileContentTranslationsApi {
     
     private let requestBuilder: RequestBuilder = RequestBuilder()
-    private let requestSender: RequestSender = RequestSender()
     private let urlSessionPriority: URLSessionPriority
+    private let requestSender: RequestSender
     private let baseUrl: String
     
-    required init(config: AppConfig, urlSessionPriority: URLSessionPriority) {
+    init(config: AppConfigInterface, urlSessionPriority: URLSessionPriority, requestSender: RequestSender) {
                     
         self.urlSessionPriority = urlSessionPriority
+        self.requestSender = requestSender
         baseUrl = config.getMobileContentApiBaseUrl()
     }
     
@@ -75,5 +76,18 @@ class MobileContentTranslationsApi {
         return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
             .validate()
             .eraseToAnyPublisher()
+    }
+}
+
+// MARK: - RepositorySyncExternalDataFetchInterface
+
+extension MobileContentTranslationsApi: RepositorySyncExternalDataFetchInterface {
+    
+    func getObjectPublisher(id: String, requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<TranslationCodable>, Never> {
+        return emptyResponsePublisher()
+    }
+    
+    func getObjectsPublisher(requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<TranslationCodable>, Never> {
+        return emptyResponsePublisher()
     }
 }

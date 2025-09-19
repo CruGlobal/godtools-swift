@@ -14,14 +14,14 @@ class MobileContentRendererEventAnalyticsTracking {
     private static let actionContentEvent: String = "content_event"
     private static let paramEventId: String = "event_id"
     
-    private let firebaseAnalytics: FirebaseAnalytics
+    private let firebaseAnalytics: FirebaseAnalyticsInterface
     
-    init(firebaseAnalytics: FirebaseAnalytics) {
+    init(firebaseAnalytics: FirebaseAnalyticsInterface) {
         
         self.firebaseAnalytics = firebaseAnalytics
     }
     
-    func trackContentEvent(eventId: EventId, resource: ResourceModel, appLanguage: String?, languages: MobileContentRendererLanguages) {
+    func trackContentEvent(eventId: EventId, resource: ResourceDataModel, appLanguage: String?, languages: MobileContentRendererLanguages) {
         
         let data: [String: Any] = [
             MobileContentRendererEventAnalyticsTracking.paramEventId: eventId.description()

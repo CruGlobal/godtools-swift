@@ -12,13 +12,14 @@ import RequestOperation
 
 class MobileContentAttachmentsApi {
     
-    private let requestSender: RequestSender = RequestSender()
     private let urlSessionPriority: URLSessionPriority
+    private let requestSender: RequestSender
     private let baseUrl: String
     
-    init(config: AppConfig, urlSessionPriority: URLSessionPriority) {
+    init(config: AppConfigInterface, urlSessionPriority: URLSessionPriority, requestSender: RequestSender) {
                     
         self.urlSessionPriority = urlSessionPriority
+        self.requestSender = requestSender
         baseUrl = config.getMobileContentApiBaseUrl()
     }
     
@@ -31,5 +32,18 @@ class MobileContentAttachmentsApi {
         return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
             .validate()
             .eraseToAnyPublisher()
+    }
+}
+
+// MARK: - RepositorySyncExternalDataFetchInterface
+
+extension MobileContentAttachmentsApi: RepositorySyncExternalDataFetchInterface {
+    
+    func getObjectPublisher(id: String, requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<AttachmentCodable>, Never> {
+        return emptyResponsePublisher()
+    }
+    
+    func getObjectsPublisher(requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<AttachmentCodable>, Never> {
+        return emptyResponsePublisher()
     }
 }

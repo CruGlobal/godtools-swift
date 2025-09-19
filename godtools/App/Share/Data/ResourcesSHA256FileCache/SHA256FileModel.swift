@@ -11,13 +11,13 @@ import Foundation
 struct SHA256FileModel: SHA256FileModelType {
     
     let sha256WithPathExtension: String
-    let attachments: [AttachmentModel]
-    let translations: [TranslationModel]
+    let attachments: [AttachmentDataModel]
+    let translations: [TranslationDataModel]
     
     init(realmSHA256File: RealmSHA256File) {
         
         sha256WithPathExtension = realmSHA256File.sha256WithPathExtension
-        attachments = Array(realmSHA256File.attachments).map({AttachmentModel(model: $0)})
-        translations = Array(realmSHA256File.translations).map({TranslationModel(model: $0)})
+        attachments = Array(realmSHA256File.attachments).map({AttachmentDataModel(interface: $0, storedAttachment: nil)})
+        translations = Array(realmSHA256File.translations).map({TranslationDataModel(interface: $0)})
     }
 }

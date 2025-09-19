@@ -16,44 +16,18 @@ class AccountDataLayerDependencies {
         
         self.coreDataLayer = coreDataLayer
     }
-    
-    // MARK: - Data Layer Classes
-    
-    // MARK: - Domain Interface
-    
-    func getAuthenticateUserInterface() -> AuthenticateUserInterface {
-        return AuthenticateUser(
-            userAuthentication: coreDataLayer.getUserAuthentication()
-        )
-    }
-    
-    func getDeleteAccountInterfaceStringsRepository() -> GetDeleteAccountInterfaceStringsRepositoryInterface {
-        return GetDeleteAccountInterfaceStringsRepository(
-            localizationServices: coreDataLayer.getLocalizationServices()
-        )
-    }
-    
-    func getDeleteAccountProgressInterfaceStringsRepository() -> GetDeleteAccountProgressInterfaceStringsInterface {
-        return GetDeleteAccountProgressInterfaceStringsRepository(
-            localizationServices: coreDataLayer.getLocalizationServices()
-        )
-    }
-    
-    func getDeleteUserDetails() -> DeleteUserDetailsInterface {
-        return DeleteUserDetails(
-            userDetailsRepository: coreDataLayer.getUserDetailsRepository()
-        )
-    }
-    
-    func getSocialCreateAccountInterfaceStringsRepositoryInterface() -> GetSocialCreateAccountInterfaceStringsRepositoryInterface {
-        return GetSocialCreateAccountInterfaceStringsRepository(
-            localizationServices: coreDataLayer.getLocalizationServices()
-        )
-    }
-    
-    func getSocialSignInInterfaceStringsRepositoryInterface() -> GetSocialSignInInterfaceStringsRepositoryInterface {
-        return GetSocialSignInInterfaceStringsRepository(
-            localizationServices: coreDataLayer.getLocalizationServices()
+        
+    func getUserDetailsRepository() -> UserDetailsRepository {
+        return UserDetailsRepository(
+            api: UserDetailsAPI(
+                config: coreDataLayer.getAppConfig(),
+                urlSessionPriority: coreDataLayer.getSharedUrlSessionPriority(),
+                mobileContentApiAuthSession: coreDataLayer.getMobileContentApiAuthSession()
+            ),
+            cache: RealmUserDetailsCache(
+                realmDatabase: coreDataLayer.getSharedRealmDatabase(),
+                authTokenRepository: coreDataLayer.getMobileContentAuthTokenRepository()
+            )
         )
     }
 }
