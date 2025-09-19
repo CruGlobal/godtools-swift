@@ -8,7 +8,7 @@
 
 import Foundation
 
-class TranslationsDataModelMapping: RepositorySyncMapping<TranslationDataModel, TranslationCodable, RealmTranslation> {
+class TranslationsDataModelMapping: RealmRepositorySyncMapping<TranslationDataModel, TranslationCodable, RealmTranslation> {
     
     override func toDataModel(externalObject: TranslationCodable) -> TranslationDataModel? {
         return TranslationDataModel(interface: externalObject)
@@ -18,7 +18,7 @@ class TranslationsDataModelMapping: RepositorySyncMapping<TranslationDataModel, 
         return TranslationDataModel(interface: persistObject)
     }
     
-    override func toPersistObject(externalObject: TranslationCodable) -> RealmTranslation? {
+    override func toRealmObject(externalObject: TranslationCodable) -> RealmTranslation? {
         return RealmTranslation.createNewFrom(interface: externalObject)
     }
 }

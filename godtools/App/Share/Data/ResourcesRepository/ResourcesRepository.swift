@@ -10,7 +10,7 @@ import Foundation
 import Combine
 import RequestOperation
 
-class ResourcesRepository: RepositorySync<ResourceDataModel, MobileContentResourcesApi, RealmResource> {
+class ResourcesRepository: RealmRepositorySync<ResourceDataModel, MobileContentResourcesApi, RealmResource> {
             
     private static let syncInvalidatorIdForResourcesPlustLatestTranslationsAndAttachments: String = "resourcesPlusLatestTranslationAttachments.syncInvalidator.id"
     

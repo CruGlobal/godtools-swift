@@ -10,8 +10,9 @@ import Foundation
 import Combine
 import RealmSwift
 import RequestOperation
+import SwiftData
 
-class LanguagesRepository: RepositorySync<LanguageDataModel, MobileContentLanguagesApi, RealmLanguage> {
+class LanguagesRepository: RealmRepositorySync<LanguageDataModel, MobileContentLanguagesApi, RealmLanguage> {
     
     private let api: MobileContentLanguagesApi
     

@@ -11,7 +11,7 @@ import Combine
 import GodToolsToolParser
 import RequestOperation
 
-class TranslationsRepository: RepositorySync<TranslationDataModel, MobileContentTranslationsApi, RealmTranslation> {
+class TranslationsRepository: RealmRepositorySync<TranslationDataModel, MobileContentTranslationsApi, RealmTranslation> {
         
     private let infoPlist: InfoPlist
     private let api: MobileContentTranslationsApi
