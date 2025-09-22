@@ -13,11 +13,12 @@ import SwiftData
 @Model
 class SwiftEmailSignUp: IdentifiableSwiftDataObject {
     
-    @Attribute(.unique) var email: String = ""
     var firstName: String?
-    @Attribute(.unique) var id: String = ""
     var isRegistered: Bool = false
     var lastName: String?
+    
+    @Attribute(.unique) var email: String = ""
+    @Attribute(.unique) var id: String = ""
     
     init() {
         

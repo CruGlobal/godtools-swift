@@ -1,5 +1,5 @@
 //
-//  SwiftUserAppLanguage.swift
+//  SwiftFollowUp.swift
 //  godtools
 //
 //  Created by Levi Eggert on 9/22/25.
@@ -11,9 +11,12 @@ import SwiftData
 
 @available(iOS 17, *)
 @Model
-class SwiftUserAppLanguage: IdentifiableSwiftDataObject {
+class SwiftFollowUp: IdentifiableSwiftDataObject {
     
-    var languageId: BCP47LanguageIdentifier = ""
+    var email: String = ""
+    var destinationId: Int = -1
+    var languageId: Int = -1
+    var name: String = ""
     
     @Attribute(.unique) var id: String = ""
     

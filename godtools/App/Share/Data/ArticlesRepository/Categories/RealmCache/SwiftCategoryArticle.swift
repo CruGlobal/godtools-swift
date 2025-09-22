@@ -16,8 +16,9 @@ class SwiftCategoryArticle: IdentifiableSwiftDataObject {
     var aemTag: String = ""
     var aemUris: [String] = Array()
     var categoryId: String = ""
-    @Attribute(.unique) var id: String = ""
     var languageCode: String = ""
+    
+    @Attribute(.unique) var id: String = ""
     @Attribute(.unique) var uuid: String = ""
     
     init() {

@@ -15,10 +15,11 @@ class SwiftArticleJrcContent: IdentifiableSwiftDataObject {
     
     var aemUri: String = ""
     var canonical: String?
-    @Attribute(.unique) var id: String = ""
     var tags: [String] = Array()
     var title: String?
     var uuid: String?
+    
+    @Attribute(.unique) var id: String = ""
     
     init() {
         

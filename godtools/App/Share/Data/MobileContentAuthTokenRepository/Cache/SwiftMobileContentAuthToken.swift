@@ -1,5 +1,5 @@
 //
-//  SwiftUserAppLanguage.swift
+//  SwiftMobileContentAuthToken.swift
 //  godtools
 //
 //  Created by Levi Eggert on 9/22/25.
@@ -11,11 +11,12 @@ import SwiftData
 
 @available(iOS 17, *)
 @Model
-class SwiftUserAppLanguage: IdentifiableSwiftDataObject {
+class SwiftMobileContentAuthToken: IdentifiableSwiftDataObject {
     
-    var languageId: BCP47LanguageIdentifier = ""
+    var expirationDate: Date?
     
     @Attribute(.unique) var id: String = ""
+    @Attribute(.unique) var userId: String = ""
     
     init() {
         

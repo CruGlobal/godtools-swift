@@ -1,5 +1,5 @@
 //
-//  SwiftAppLanguage.swift
+//  SwiftDownloadedTranslation.swift
 //  godtools
 //
 //  Created by Levi Eggert on 9/22/25.
@@ -11,14 +11,15 @@ import SwiftData
 
 @available(iOS 17, *)
 @Model
-class SwiftAppLanguage: IdentifiableSwiftDataObject {
+class SwiftDownloadedTranslation: IdentifiableSwiftDataObject {
     
-    var languageCode: String = ""
-    var languageDirection: SwiftAppLanguageDirection = SwiftAppLanguageDirection.leftToRight
     var languageId: String = ""
-    var languageScriptCode: String?
+    var manifestAndRelatedFilesPersistedToDevice: Bool = false
+    var resourceId: String = ""
+    var version: Int = -1
     
     @Attribute(.unique) var id: String = ""
+    @Attribute(.unique) var translationId: String = ""
     
     init() {
         

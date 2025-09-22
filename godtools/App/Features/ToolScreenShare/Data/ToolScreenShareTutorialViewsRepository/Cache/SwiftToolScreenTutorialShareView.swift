@@ -13,8 +13,9 @@ import SwiftData
 @Model
 class SwiftToolScreenTutorialShareView: IdentifiableSwiftDataObject {
     
-    @Attribute(.unique) var id: String = ""
     var numberOfViews: Int = 0
+    
+    @Attribute(.unique) var id: String = ""
     
     init() {
         

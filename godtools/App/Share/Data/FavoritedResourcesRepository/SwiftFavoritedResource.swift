@@ -1,5 +1,5 @@
 //
-//  SwiftUserAppLanguage.swift
+//  SwiftFavoritedResource.swift
 //  godtools
 //
 //  Created by Levi Eggert on 9/22/25.
@@ -11,11 +11,13 @@ import SwiftData
 
 @available(iOS 17, *)
 @Model
-class SwiftUserAppLanguage: IdentifiableSwiftDataObject {
+class SwiftFavoritedResource: IdentifiableSwiftDataObject {
     
-    var languageId: BCP47LanguageIdentifier = ""
+    var createdAt: Date = Date()
+    var position: Int = 0
     
     @Attribute(.unique) var id: String = ""
+    @Attribute(.unique) var resourceId: String = ""
     
     init() {
         

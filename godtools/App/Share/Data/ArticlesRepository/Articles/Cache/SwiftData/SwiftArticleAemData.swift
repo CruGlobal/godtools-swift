@@ -13,12 +13,13 @@ import SwiftData
 @Model
 class SwiftArticleAemData: IdentifiableSwiftDataObject {
     
-    @Attribute(.unique) var aemUri: String = ""
     var articleJcrContent: RealmArticleJcrContent?
-    @Attribute(.unique) var id: String = ""
     var webUrl: String = ""
     var webArchiveFilename: String = ""
     var updatedAt: Date = Date()
+    
+    @Attribute(.unique) var aemUri: String = ""
+    @Attribute(.unique) var id: String = ""
     
     init() {
         

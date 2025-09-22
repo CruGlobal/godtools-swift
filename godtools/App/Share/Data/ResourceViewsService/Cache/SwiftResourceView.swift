@@ -1,5 +1,5 @@
 //
-//  SwiftUserAppLanguage.swift
+//  SwiftResourceView.swift
 //  godtools
 //
 //  Created by Levi Eggert on 9/22/25.
@@ -11,11 +11,12 @@ import SwiftData
 
 @available(iOS 17, *)
 @Model
-class SwiftUserAppLanguage: IdentifiableSwiftDataObject {
+class SwiftResourceView: IdentifiableSwiftDataObject {
     
-    var languageId: BCP47LanguageIdentifier = ""
+    var quantity: Int = 0
     
     @Attribute(.unique) var id: String = ""
+    @Attribute(.unique) var resourceId: String = ""
     
     init() {
         

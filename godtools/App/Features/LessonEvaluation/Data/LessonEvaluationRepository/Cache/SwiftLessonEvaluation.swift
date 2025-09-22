@@ -13,12 +13,13 @@ import SwiftData
 @Model
 class SwiftLessonEvaluation: IdentifiableSwiftDataObject {
     
-    @Attribute(.unique) var id: String = ""
     var lastEvaluationAttempt: Date = Date()
     var lessonAbbreviation: String = ""
     var lessonEvaluated: Bool = false
-    @Attribute(.unique) var lessonId: String = ""
     var numberOfEvaluationAttempts: Int = 0
+    
+    @Attribute(.unique) var id: String = ""
+    @Attribute(.unique) var lessonId: String = ""
     
     init() {
         
