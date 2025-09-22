@@ -29,7 +29,7 @@ class GetLessonFilterLanguagesRepository: GetLessonFilterLanguagesRepositoryInte
     func getLessonFilterLanguagesPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<[LessonFilterLanguageDomainModel], Never> {
         
         return resourcesRepository
-            .observeDatabaseChangesPublisher()
+            .observeCollectionChangesPublisher()
             .flatMap { _ in
                 
                 let languageIds = self.resourcesRepository.getAllLessonLanguageIds()
