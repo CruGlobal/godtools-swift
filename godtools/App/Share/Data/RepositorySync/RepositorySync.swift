@@ -337,6 +337,10 @@ extension RepositorySync {
         for object in objectsToRemove {
             context.delete(object)
         }
+        
+        guard context.hasChanges else {
+            return
+        }
                 
         do {
             try context.save()
