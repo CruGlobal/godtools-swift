@@ -10,7 +10,7 @@ import Foundation
 import Combine
 import RequestOperation
 
-class ResourcesRepository: RepositorySync<ResourceDataModel, MobileContentResourcesApi, RealmResource> {
+class ResourcesRepository: RealmRepositorySync<ResourceDataModel, MobileContentResourcesApi, RealmResource> {
             
     private static let syncInvalidatorIdForResourcesPlustLatestTranslationsAndAttachments: String = "resourcesPlusLatestTranslationAttachments.syncInvalidator.id"
     
@@ -37,7 +37,7 @@ class ResourcesRepository: RepositorySync<ResourceDataModel, MobileContentResour
     
     func getResource(abbreviation: String) -> ResourceDataModel? {
         return getCachedObjects(
-            databaseQuery: RepositorySyncDatabaseQuery.filter(
+            databaseQuery: RealmRepositorySyncDatabaseQuery.filter(
                 filter: NSPredicate(format: "\(#keyPath(RealmResource.abbreviation)) = '\(abbreviation)'")
             )
         )

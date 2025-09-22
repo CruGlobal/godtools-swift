@@ -14,12 +14,15 @@ class SwiftDatabase {
     
     private let container: ModelContainer
     
-    init(configuration: SwiftDatabaseConfigurationInterface) {
+    let configName: String
+    
+    init(configuration: SwiftDatabaseConfigurationInterface, modelTypes: SwiftDatabaseModelTypesInterface) {
                 
         do {
             
             container = try Self.createContainer(
-                configuration: configuration
+                configuration: configuration,
+                modelTypes: modelTypes
             )
         }
         catch let error {
@@ -27,19 +30,39 @@ class SwiftDatabase {
             assertionFailure("\n SwiftData init container error: \(error.localizedDescription)")
             
             container = try! Self.createContainer(
-                configuration: SwiftDatabaseInMemoryConfiguration()
+                configuration: SwiftDatabaseInMemoryConfiguration(),
+                modelTypes: modelTypes
             )
         }
+        
+        configName = configuration.modelConfiguration.name
     }
     
-    private static func createContainer(configuration: SwiftDatabaseConfigurationInterface) throws -> ModelContainer {
+    private static func createContainer(configuration: SwiftDatabaseConfigurationInterface, modelTypes: SwiftDatabaseModelTypesInterface) throws -> ModelContainer {
         return try ModelContainer(
-            for: Self.persistentModelTypes,
+            for: modelTypes.getModelTypes(),
             configurations: configuration.modelConfiguration
         )
     }
     
-    private static var persistentModelTypes: any PersistentModel.Type {
-        return SwiftLanguage.self
+    func openContext() -> ModelContext {
+        let context = ModelContext(container)
+        context.autosaveEnabled = false
+        return context
+    }
+    
+    func deleteAllData() {
+        
+        if #available(iOS 18, *) {
+            do {
+                try container.erase()
+            }
+            catch let error {
+                assertionFailure(error.localizedDescription)
+            }
+        }
+        else {
+            container.deleteAllData()
+        }
     }
 }

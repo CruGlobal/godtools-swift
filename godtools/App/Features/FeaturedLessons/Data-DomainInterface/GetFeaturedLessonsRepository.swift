@@ -31,7 +31,7 @@ class GetFeaturedLessonsRepository: GetFeaturedLessonsRepositoryInterface {
         let appLanguageModel: LanguageDataModel? = languagesRepository.getCachedLanguage(code: appLanguage)
         
         return Publishers.CombineLatest(
-            resourcesRepository.observeDatabaseChangesPublisher(),
+            resourcesRepository.observeCollectionChangesPublisher(),
             getLessonListItemProgressRepository.getLessonListItemProgressChanged()
         )
         .flatMap({ (resourcesChanged: Void, lessonProgressDidChange: Void) -> AnyPublisher<[FeaturedLessonDomainModel], Never> in

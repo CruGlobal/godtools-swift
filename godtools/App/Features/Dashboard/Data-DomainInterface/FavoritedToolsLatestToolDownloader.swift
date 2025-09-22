@@ -25,7 +25,7 @@ class FavoritedToolsLatestToolDownloader: FavoritedToolsLatestToolDownloaderInte
     func downloadLatestToolsPublisher(inLanguages: [BCP47LanguageIdentifier]) -> AnyPublisher<Void, Never> {
         
         return Publishers.CombineLatest(
-            resourcesRepository.observeDatabaseChangesPublisher(),
+            resourcesRepository.observeCollectionChangesPublisher(),
             favoritedResourcesRepository.getFavoritedResourcesSortedByPositionPublisher()
         )
         .flatMap({ (resourcesChanged: Void, favoritedTools: [FavoritedResourceDataModel]) -> AnyPublisher<[FavoritedResourceDataModel], Never> in

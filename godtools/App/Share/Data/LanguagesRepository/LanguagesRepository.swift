@@ -10,8 +10,9 @@ import Foundation
 import Combine
 import RealmSwift
 import RequestOperation
+import SwiftData
 
-class LanguagesRepository: RepositorySync<LanguageDataModel, MobileContentLanguagesApi, RealmLanguage> {
+class LanguagesRepository: RealmRepositorySync<LanguageDataModel, MobileContentLanguagesApi, RealmLanguage> {
     
     private let api: MobileContentLanguagesApi
     
@@ -28,7 +29,7 @@ class LanguagesRepository: RepositorySync<LanguageDataModel, MobileContentLangua
     
     func getCachedLanguage(code: BCP47LanguageIdentifier) -> LanguageDataModel? {
         return getCachedObjects(
-            databaseQuery: RepositorySyncDatabaseQuery.filter(
+            databaseQuery: RealmRepositorySyncDatabaseQuery.filter(
                 filter: NSPredicate(format: "\(#keyPath(RealmLanguage.code)) == [c] %@", code.lowercased())
             )
         ).first

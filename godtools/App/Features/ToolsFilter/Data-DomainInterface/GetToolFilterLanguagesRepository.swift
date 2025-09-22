@@ -29,7 +29,7 @@ class GetToolFilterLanguagesRepository: GetToolFilterLanguagesRepositoryInterfac
     
     func getToolFilterLanguagesPublisher(translatedInAppLanguage: AppLanguageDomainModel, filteredByCategoryId: String?) -> AnyPublisher<[ToolFilterLanguageDomainModel], Never> {
         
-        return resourcesRepository.observeDatabaseChangesPublisher()
+        return resourcesRepository.observeCollectionChangesPublisher()
             .flatMap { _ in
                 
                 let languageIds = self.resourcesRepository

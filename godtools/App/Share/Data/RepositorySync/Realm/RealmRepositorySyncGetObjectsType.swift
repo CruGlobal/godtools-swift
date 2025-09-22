@@ -8,9 +8,8 @@
 
 import Foundation
 
-@available(iOS 17, *)
-public enum RepositorySyncGetObjectsType<T: IdentifiableSwiftDataObject> {
+public enum RealmRepositorySyncGetObjectsType {
     case allObjects
-    case objectsWithQuery(databaseQuery: RepositorySyncDatabaseQuery<T>?)
+    case objectsWithQuery(databaseQuery: RealmRepositorySyncDatabaseQuery?)
     case object(id: String)
 }

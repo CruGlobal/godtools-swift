@@ -8,7 +8,7 @@
 
 import Foundation
 
-class AttachmentsDataModelMapping: RepositorySyncMapping<AttachmentDataModel, AttachmentCodable, RealmAttachment> {
+class AttachmentsDataModelMapping: RealmRepositorySyncMapping<AttachmentDataModel, AttachmentCodable, RealmAttachment> {
     
     override func toDataModel(externalObject: AttachmentCodable) -> AttachmentDataModel? {
         return AttachmentDataModel(interface: externalObject, storedAttachment: nil)

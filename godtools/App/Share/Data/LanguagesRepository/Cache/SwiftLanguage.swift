@@ -11,7 +11,7 @@ import SwiftData
 
 @available(iOS 17, *)
 @Model
-class SwiftLanguage: LanguageDataModelInterface {
+class SwiftLanguage: IdentifiableSwiftDataObject, LanguageDataModelInterface {
     
     var code: BCP47LanguageIdentifier = ""
     var directionString: String = ""

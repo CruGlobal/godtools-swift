@@ -8,7 +8,7 @@
 
 import Foundation
 
-class LanguagesDataModelMapping: RepositorySyncMapping<LanguageDataModel, LanguageCodable, RealmLanguage> {
+class LanguagesDataModelMapping: RealmRepositorySyncMapping<LanguageDataModel, LanguageCodable, RealmLanguage> {
     
     override func toDataModel(externalObject: LanguageCodable) -> LanguageDataModel? {
         return LanguageDataModel(interface: externalObject)

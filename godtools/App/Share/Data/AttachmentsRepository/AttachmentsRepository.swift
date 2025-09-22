@@ -10,7 +10,7 @@ import Foundation
 import Combine
 import RequestOperation
 
-class AttachmentsRepository: RepositorySync<AttachmentDataModel, MobileContentAttachmentsApi, RealmAttachment> {
+class AttachmentsRepository: RealmRepositorySync<AttachmentDataModel, MobileContentAttachmentsApi, RealmAttachment> {
     
     private let api: MobileContentAttachmentsApi
     private let resourcesFileCache: ResourcesSHA256FileCache

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ResourcesDataModelMapping: RepositorySyncMapping<ResourceDataModel, ResourceCodable, RealmResource> {
+class ResourcesDataModelMapping: RealmRepositorySyncMapping<ResourceDataModel, ResourceCodable, RealmResource> {
     
     override func toDataModel(externalObject: ResourceCodable) -> ResourceDataModel? {
         return ResourceDataModel(interface: externalObject)

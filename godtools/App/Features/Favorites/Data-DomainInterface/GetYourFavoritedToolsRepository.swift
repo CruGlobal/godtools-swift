@@ -29,7 +29,7 @@ class GetYourFavoritedToolsRepository: GetYourFavoritedToolsRepositoryInterface 
     func getToolsPublisher(translateInLanguage: AppLanguageDomainModel, maxCount: Int?) -> AnyPublisher<[YourFavoritedToolDomainModel], Never> {
         
         return Publishers.CombineLatest3(
-            resourcesRepository.observeDatabaseChangesPublisher(),
+            resourcesRepository.observeCollectionChangesPublisher(),
             getToolListItemInterfaceStringsRepository.getStringsPublisher(translateInLanguage: translateInLanguage),
             favoritedResourcesRepository.getFavoritedResourcesSortedByPositionPublisher()
         )
