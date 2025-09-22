@@ -8,18 +8,19 @@
 
 import Foundation
 
-public class RepositorySyncDatabaseQuery {
+@available(iOS 17, *)
+public class RepositorySyncDatabaseQuery<T: IdentifiableSwiftDataObject> {
     
-    public let filter: NSPredicate?
+    public let filter: Predicate<T>?
     public let sortByKeyPath: SortByKeyPath?
     
-    public init(filter: NSPredicate?, sortByKeyPath: SortByKeyPath?) {
+    public init(filter: Predicate<T>?, sortByKeyPath: SortByKeyPath?) {
         
         self.filter = filter
         self.sortByKeyPath = sortByKeyPath
     }
     
-    public static func filter(filter: NSPredicate) -> RepositorySyncDatabaseQuery {
+    public static func filter(filter: Predicate<T>) -> RepositorySyncDatabaseQuery {
         return RepositorySyncDatabaseQuery(filter: filter, sortByKeyPath: nil)
     }
     

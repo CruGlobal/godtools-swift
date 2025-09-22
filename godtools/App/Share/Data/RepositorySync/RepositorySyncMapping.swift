@@ -7,19 +7,20 @@
 //
 
 import Foundation
-import RealmSwift
+import SwiftData
 
-open class RepositorySyncMapping<DataModelType, ExternalFetchObjectType, RealmObjectType: Object> {
+@available(iOS 17, *)
+open class RepositorySyncMapping<DataModelType, ExternalFetchObjectType, SwiftDataObjectType: IdentifiableSwiftDataObject> {
         
     open func toDataModel(externalObject: ExternalFetchObjectType) -> DataModelType? {
         return nil
     }
     
-    open func toDataModel(persistObject: RealmObjectType) -> DataModelType? {
+    open func toDataModel(persistObject: SwiftDataObjectType) -> DataModelType? {
         return nil
     }
     
-    open func toPersistObject(externalObject: ExternalFetchObjectType) -> RealmObjectType? {
+    open func toPersistObject(externalObject: ExternalFetchObjectType) -> SwiftDataObjectType? {
         return nil
     }
 }

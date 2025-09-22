@@ -37,7 +37,7 @@ class ResourcesRepository: RealmRepositorySync<ResourceDataModel, MobileContentR
     
     func getResource(abbreviation: String) -> ResourceDataModel? {
         return getCachedObjects(
-            databaseQuery: RepositorySyncDatabaseQuery.filter(
+            databaseQuery: RealmRepositorySyncDatabaseQuery.filter(
                 filter: NSPredicate(format: "\(#keyPath(RealmResource.abbreviation)) = '\(abbreviation)'")
             )
         )

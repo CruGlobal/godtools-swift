@@ -145,7 +145,7 @@ struct RealmRepositorySyncTests {
         
         await runTest(
             argument: argument,
-            getObjectsType: .objectsWithQuery(databaseQuery: RepositorySyncDatabaseQuery.filter(filter: filter)),
+            getObjectsType: .objectsWithQuery(databaseQuery: RealmRepositorySyncDatabaseQuery.filter(filter: filter)),
             cachePolicy: .fetchIgnoringCacheData(requestPriority: .medium),
             expectedNumberOfChanges: 1,
             loggingEnabled: false
@@ -620,7 +620,7 @@ struct RealmRepositorySyncTests {
         
         await runTest(
             argument: argument,
-            getObjectsType: .objectsWithQuery(databaseQuery: RepositorySyncDatabaseQuery.filter(filter: filter)),
+            getObjectsType: .objectsWithQuery(databaseQuery: RealmRepositorySyncDatabaseQuery.filter(filter: filter)),
             cachePolicy: .returnCacheDataAndFetch(requestPriority: .medium),
             expectedNumberOfChanges: 2,
             loggingEnabled: true
@@ -732,7 +732,7 @@ struct RealmRepositorySyncTests {
 
 extension RealmRepositorySyncTests {
     
-    @MainActor private func runTest(argument: TestArgument, getObjectsType: RepositorySyncGetObjectsType, cachePolicy: RepositorySyncCachePolicy, expectedNumberOfChanges: Int, triggerSecondaryExternalDataFetchWithIds: [String] = Array(), loggingEnabled: Bool = false) async {
+    @MainActor private func runTest(argument: TestArgument, getObjectsType: RealmRepositorySyncGetObjectsType, cachePolicy: RepositorySyncCachePolicy, expectedNumberOfChanges: Int, triggerSecondaryExternalDataFetchWithIds: [String] = Array(), loggingEnabled: Bool = false) async {
         
         await runTest(
             realmFileName: argument.realmFileName,
@@ -748,7 +748,7 @@ extension RealmRepositorySyncTests {
         )
     }
     
-    @MainActor private func runTest(realmFileName: String, initialPersistedObjectsIds: [String], externalDataModelIds: [String], expectedCachedResponseDataModelIds: [String]?, expectedResponseDataModelIds: [String], getObjectsType: RepositorySyncGetObjectsType, cachePolicy: RepositorySyncCachePolicy, expectedNumberOfChanges: Int, triggerSecondaryExternalDataFetchWithIds: [String], loggingEnabled: Bool) async {
+    @MainActor private func runTest(realmFileName: String, initialPersistedObjectsIds: [String], externalDataModelIds: [String], expectedCachedResponseDataModelIds: [String]?, expectedResponseDataModelIds: [String], getObjectsType: RealmRepositorySyncGetObjectsType, cachePolicy: RepositorySyncCachePolicy, expectedNumberOfChanges: Int, triggerSecondaryExternalDataFetchWithIds: [String], loggingEnabled: Bool) async {
         
         let repositorySync: RealmRepositorySync<MockRepositorySyncDataModel, MockRepositorySyncExternalDataFetch, MockRepositorySyncRealmObject> = getRepositorySync(
             realmFileName: realmFileName,
@@ -765,6 +765,10 @@ extension RealmRepositorySyncTests {
             DispatchQueue.main.asyncAfter(deadline: .now() + Self.triggerSecondaryExternalDataFetchWithDelayForSeconds) {
 
                 // TODO: See if I can trigger another external data fetch by fetching from mock external data and writing objects to the database. ~Levi
+                
+                if loggingEnabled {
+                    print("\n PERFORMING SECONDARY EXTERNAL DATA FETCH")
+                }
                 
                 let additionalRepositorySync: RealmRepositorySync<MockRepositorySyncDataModel, MockRepositorySyncExternalDataFetch, MockRepositorySyncRealmObject> = getRepositorySync(
                     realmFileName: realmFileName,

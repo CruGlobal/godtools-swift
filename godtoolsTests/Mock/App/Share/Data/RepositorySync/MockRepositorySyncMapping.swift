@@ -2,21 +2,22 @@
 //  MockRepositorySyncMapping.swift
 //  godtools
 //
-//  Created by Levi Eggert on 7/30/25.
+//  Created by Levi Eggert on 9/19/25.
 //  Copyright © 2025 Cru. All rights reserved.
 //
 
 import Foundation
 @testable import godtools
 
-class MockRepositorySyncMapping: RepositorySyncMapping<MockRepositorySyncDataModel, MockRepositorySyncDataModel, MockRepositorySyncRealmObject> {
+@available(iOS 17, *)
+class MockRepositorySyncMapping: RepositorySyncMapping<MockRepositorySyncDataModel, MockRepositorySyncDataModel, MockRepositorySyncSwiftDataObject> {
 
     override func toDataModel(externalObject: MockRepositorySyncDataModel) -> MockRepositorySyncDataModel? {
         
         return externalObject
     }
     
-    override func toDataModel(persistObject: MockRepositorySyncRealmObject) -> MockRepositorySyncDataModel? {
+    override func toDataModel(persistObject: MockRepositorySyncSwiftDataObject) -> MockRepositorySyncDataModel? {
         
         return MockRepositorySyncDataModel(
             id: persistObject.id,
@@ -24,13 +25,13 @@ class MockRepositorySyncMapping: RepositorySyncMapping<MockRepositorySyncDataMod
         )
     }
     
-    override func toPersistObject(externalObject: MockRepositorySyncDataModel) -> MockRepositorySyncRealmObject? {
+    override func toPersistObject(externalObject: MockRepositorySyncDataModel) -> MockRepositorySyncSwiftDataObject? {
         
-        let realmObject = MockRepositorySyncRealmObject()
+        let object = MockRepositorySyncSwiftDataObject()
         
-        realmObject.id = externalObject.id
-        realmObject.name = externalObject.name
+        object.id = externalObject.id
+        object.name = externalObject.name
         
-        return realmObject
+        return object
     }
 }

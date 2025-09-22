@@ -10,7 +10,7 @@ import Testing
 @testable import godtools
 import Foundation
 import Combine
-import RealmSwift
+import SwiftData
 
 struct RepositorySyncTests {
     
@@ -20,15 +20,16 @@ struct RepositorySyncTests {
     private static let namePrefix: String = "name_"
     
     struct TestArgument {
-        let realmFileName: String = "RepositorySyncTests_" + UUID().uuidString
+        let swiftDatabaseName: String = "RepositorySyncTests_" + UUID().uuidString
         let initialPersistedObjectsIds: [String]
         let externalDataModelIds: [String]
         let expectedCachedResponseDataModelIds: [String]?
         let expectedResponseDataModelIds: [String]
     }
-    
+
     // MARK: - Template
     
+    @available(iOS, introduced: 17.0)
     @Test(arguments: [
         TestArgument(
             initialPersistedObjectsIds: ["0", "1"],
@@ -49,6 +50,7 @@ struct RepositorySyncTests {
     
     // MARK: - Test Cache Policy (Ignoring Cache Data) - Objects
     
+    @available(iOS, introduced: 17.0)
     @Test(arguments: [
         TestArgument(
             initialPersistedObjectsIds: ["0", "1"],
@@ -87,6 +89,7 @@ struct RepositorySyncTests {
     
     // MARK: - Test Cache Policy (Ignoring Cache Data) - Object ID
     
+    @available(iOS, introduced: 17.0)
     @Test(arguments: [
         TestArgument(
             initialPersistedObjectsIds: ["0", "1"],
@@ -131,6 +134,7 @@ struct RepositorySyncTests {
     
     // MARK: - Test Cache Policy (Ignoring Cache Data) - Objects With Query
     
+    @available(iOS, introduced: 17.0)
     @Test(arguments: [
         TestArgument(
             initialPersistedObjectsIds: ["0", "1"],
@@ -141,7 +145,9 @@ struct RepositorySyncTests {
     ])
     @MainActor func ignoreCacheDataWillFilter(argument: TestArgument) async {
         
-        let filter = NSPredicate(format: "\(#keyPath(MockRepositorySyncRealmObject.name)) == %@", Self.namePrefix + "5")
+        let filter = #Predicate<MockRepositorySyncSwiftDataObject> { object in
+            object.name == "name_5"
+        }
         
         await runTest(
             argument: argument,
@@ -154,6 +160,7 @@ struct RepositorySyncTests {
     
     // MARK: - Test Cache Policy (Return Cache Data Don't Fetch) - Objects
     
+    @available(iOS, introduced: 17.0)
     @Test(arguments: [
         TestArgument(
             initialPersistedObjectsIds: ["0", "1"],
@@ -190,6 +197,7 @@ struct RepositorySyncTests {
         )
     }
     
+    @available(iOS, introduced: 17.0)
     @Test(arguments: [
         TestArgument(
             initialPersistedObjectsIds: ["0", "1", "2"],
@@ -217,6 +225,7 @@ struct RepositorySyncTests {
     
     // MARK: - Test Cache Policy (Return Cache Data Don't Fetch) - Object ID
     
+    @available(iOS, introduced: 17.0)
     @Test(arguments: [
         TestArgument(
             initialPersistedObjectsIds: ["0", "1"],
@@ -259,6 +268,7 @@ struct RepositorySyncTests {
         )
     }
     
+    @available(iOS, introduced: 17.0)
     @Test(arguments: [
         TestArgument(
             initialPersistedObjectsIds: ["0", "1", "2"],
@@ -283,9 +293,10 @@ struct RepositorySyncTests {
             triggerSecondaryExternalDataFetchWithIds: ["8", "1", "0"]
         )
     }
-        
+    
     // MARK: - Test Cache Policy (Return Cache Data Else Fetch) - Objects
     
+    @available(iOS, introduced: 17.0)
     @Test(arguments: [
         TestArgument(
             initialPersistedObjectsIds: ["0", "1"],
@@ -310,6 +321,7 @@ struct RepositorySyncTests {
         )
     }
     
+    @available(iOS, introduced: 17.0)
     @Test(arguments: [
         TestArgument(
             initialPersistedObjectsIds: [],
@@ -328,6 +340,7 @@ struct RepositorySyncTests {
         )
     }
     
+    @available(iOS, introduced: 17.0)
     @Test(arguments: [
         TestArgument(
             initialPersistedObjectsIds: [],
@@ -346,6 +359,7 @@ struct RepositorySyncTests {
         )
     }
     
+    @available(iOS, introduced: 17.0)
     @Test(arguments: [
         TestArgument(
             initialPersistedObjectsIds: [],
@@ -365,6 +379,7 @@ struct RepositorySyncTests {
         )
     }
     
+    @available(iOS, introduced: 17.0)
     @Test(arguments: [
         TestArgument(
             initialPersistedObjectsIds: ["1", "2"],
@@ -386,6 +401,7 @@ struct RepositorySyncTests {
     
     // MARK: - Test Cache Policy (Return Cache Data Else Fetch) - Object ID
     
+    @available(iOS, introduced: 17.0)
     @Test(arguments: [
         TestArgument(
             initialPersistedObjectsIds: ["0", "1"],
@@ -410,6 +426,7 @@ struct RepositorySyncTests {
         )
     }
     
+    @available(iOS, introduced: 17.0)
     @Test(arguments: [
         TestArgument(
             initialPersistedObjectsIds: [],
@@ -428,6 +445,7 @@ struct RepositorySyncTests {
         )
     }
     
+    @available(iOS, introduced: 17.0)
     @Test(arguments: [
         TestArgument(
             initialPersistedObjectsIds: [],
@@ -446,6 +464,7 @@ struct RepositorySyncTests {
         )
     }
     
+    @available(iOS, introduced: 17.0)
     @Test(arguments: [
         TestArgument(
             initialPersistedObjectsIds: [],
@@ -465,6 +484,7 @@ struct RepositorySyncTests {
         )
     }
     
+    @available(iOS, introduced: 17.0)
     @Test(arguments: [
         TestArgument(
             initialPersistedObjectsIds: ["1", "2"],
@@ -486,6 +506,7 @@ struct RepositorySyncTests {
     
     // MARK: - Test Cache Policy (Return Cache Data And Fetch) - Objects
     
+    @available(iOS, introduced: 17.0)
     @Test(arguments: [
         TestArgument(
             initialPersistedObjectsIds: [],
@@ -510,6 +531,7 @@ struct RepositorySyncTests {
         )
     }
     
+    @available(iOS, introduced: 17.0)
     @Test(arguments: [
         TestArgument(
             initialPersistedObjectsIds: ["0", "1"],
@@ -534,6 +556,7 @@ struct RepositorySyncTests {
         )
     }
     
+    @available(iOS, introduced: 17.0)
     @Test(arguments: [
         TestArgument(
             initialPersistedObjectsIds: ["0", "1"],
@@ -561,6 +584,7 @@ struct RepositorySyncTests {
     
     // MARK: - Test Cache Policy (Return Cache Data And Fetch) - Object ID
     
+    @available(iOS, introduced: 17.0)
     @Test(arguments: [
         TestArgument(
             initialPersistedObjectsIds: ["0", "1"],
@@ -579,6 +603,7 @@ struct RepositorySyncTests {
         )
     }
     
+    @available(iOS, introduced: 17.0)
     @Test(arguments: [
         TestArgument(
             initialPersistedObjectsIds: ["0", "1"],
@@ -606,6 +631,7 @@ struct RepositorySyncTests {
     
     // MARK: - Test Cache Policy (Return Cache Data And Fetch) - Objects With Query
     
+    @available(iOS, introduced: 17.0)
     @Test(arguments: [
         TestArgument(
             initialPersistedObjectsIds: ["0", "1", "5"],
@@ -616,26 +642,28 @@ struct RepositorySyncTests {
     ])
     @MainActor func returnCacheDataAndFetchWillFilter(argument: TestArgument) async {
         
-        let filter = NSPredicate(format: "\(#keyPath(MockRepositorySyncRealmObject.name)) == %@", Self.namePrefix + "5")
+        let filter = #Predicate<MockRepositorySyncSwiftDataObject> { object in
+            object.name == "name_5"
+        }
         
         await runTest(
             argument: argument,
             getObjectsType: .objectsWithQuery(databaseQuery: RepositorySyncDatabaseQuery.filter(filter: filter)),
             cachePolicy: .returnCacheDataAndFetch(requestPriority: .medium),
-            expectedNumberOfChanges: 2,
-            loggingEnabled: true
+            expectedNumberOfChanges: 2
         )
     }
     
     // MARK: - Test Fetching Cached Objects
     
+    @available(iOS, introduced: 17.0)
     @Test()
     @MainActor func returnsObjectsByIds() async {
         
-        let realmFileName: String = UUID().uuidString
+        let swiftDatabaseName: String = UUID().uuidString
         
-        let repositorySync: RepositorySync<MockRepositorySyncDataModel, MockRepositorySyncExternalDataFetch, MockRepositorySyncRealmObject> = getRepositorySync(
-            realmFileName: realmFileName,
+        let repositorySync: RepositorySync<MockRepositorySyncDataModel, MockRepositorySyncExternalDataFetch, MockRepositorySyncSwiftDataObject> = getRepositorySync(
+            swiftDatabaseName: swiftDatabaseName,
             initialPersistedObjectsIds: ["5", "3", "2", "1", "4", "0", "6"],
             externalDataModelIds: []
         )
@@ -643,7 +671,7 @@ struct RepositorySyncTests {
         let ids: [String] = ["0", "1", "2"]
         let dataModels: [MockRepositorySyncDataModel] = repositorySync.getCachedObjects(ids: ids)
         
-        _ = Self.deleteRealmDatabaseFile(fileName: realmFileName)
+        Self.deleteSwiftDatabase(name: swiftDatabaseName)
         
         #expect(ids.count == dataModels.count)
         #expect(dataModels.count(where: {$0.id == "0"}) == 1)
@@ -653,16 +681,17 @@ struct RepositorySyncTests {
     
     // MARK: - Test Sync External Data Fetch Response
     
+    @available(iOS, introduced: 17.0)
     @Test()
     @MainActor func deletesObjectsNotFoundInExternalDataFetch() async {
         
-        let realmFileName: String = UUID().uuidString
+        let swiftDatabaseName: String = UUID().uuidString
         
         let initialPersistedObjectsIds: [String] = ["5", "3", "2", "1", "4", "0", "6"]
         let externalDataModelIds: [String] = ["2", "1", "6", "7"]
         
-        let repositorySync: RepositorySync<MockRepositorySyncDataModel, MockRepositorySyncExternalDataFetch, MockRepositorySyncRealmObject> = getRepositorySync(
-            realmFileName: realmFileName,
+        let repositorySync: RepositorySync<MockRepositorySyncDataModel, MockRepositorySyncExternalDataFetch, MockRepositorySyncSwiftDataObject> = getRepositorySync(
+            swiftDatabaseName: swiftDatabaseName,
             initialPersistedObjectsIds: initialPersistedObjectsIds,
             externalDataModelIds: externalDataModelIds
         )
@@ -724,18 +753,113 @@ struct RepositorySyncTests {
             #expect(cachedObjectsIds.contains(id))
         }
         
-        _ = Self.deleteRealmDatabaseFile(fileName: realmFileName)
+        Self.deleteSwiftDatabase(name: swiftDatabaseName)
+    }
+    
+    // MARK: - Fetching From Cache
+    
+    @available(iOS, introduced: 17.0)
+    @Test()
+    @MainActor func returnsCorrectNumberOfCachedObjects() async {
+        
+        let swiftDatabaseName: String = UUID().uuidString
+        
+        let initialPersistedObjectsIds: [String] = ["5", "3", "2", "1", "4", "0", "6"]
+                    
+        let repositorySync: RepositorySync<MockRepositorySyncDataModel, MockRepositorySyncExternalDataFetch, MockRepositorySyncSwiftDataObject> = getRepositorySync(
+            swiftDatabaseName: swiftDatabaseName,
+            initialPersistedObjectsIds: initialPersistedObjectsIds,
+            externalDataModelIds: []
+        )
+        
+        let count: Int = repositorySync.numberOfCachedObjects
+        
+        Self.deleteSwiftDatabase(name: swiftDatabaseName)
+        
+        #expect(count == initialPersistedObjectsIds.count)
+    }
+    
+    @available(iOS, introduced: 17.0)
+    @Test()
+    @MainActor func fetchesCachedObjectById() async {
+        
+        let swiftDatabaseName: String = UUID().uuidString
+        
+        let initialPersistedObjectsIds: [String] = ["5", "3", "2", "1", "4", "0", "6"]
+                    
+        let repositorySync: RepositorySync<MockRepositorySyncDataModel, MockRepositorySyncExternalDataFetch, MockRepositorySyncSwiftDataObject> = getRepositorySync(
+            swiftDatabaseName: swiftDatabaseName,
+            initialPersistedObjectsIds: initialPersistedObjectsIds,
+            externalDataModelIds: []
+        )
+        
+        let objectIdToFetch: String = "0"
+        
+        let dataModel: MockRepositorySyncDataModel? = repositorySync.getCachedObject(id: objectIdToFetch)
+        
+        Self.deleteSwiftDatabase(name: swiftDatabaseName)
+        
+        #expect(dataModel?.id == objectIdToFetch)
+    }
+    
+    @available(iOS, introduced: 17.0)
+    @Test()
+    @MainActor func fetchesAllCachedObjects() async {
+        
+        let swiftDatabaseName: String = UUID().uuidString
+        
+        let initialPersistedObjectsIds: [String] = ["5", "3", "2", "1", "4", "0", "6"]
+                    
+        let repositorySync: RepositorySync<MockRepositorySyncDataModel, MockRepositorySyncExternalDataFetch, MockRepositorySyncSwiftDataObject> = getRepositorySync(
+            swiftDatabaseName: swiftDatabaseName,
+            initialPersistedObjectsIds: initialPersistedObjectsIds,
+            externalDataModelIds: []
+        )
+        
+        let dataModels: [MockRepositorySyncDataModel] = repositorySync.getCachedObjects()
+        
+        let sortedDataModelIds: [String] = sortDataModelIds(dataModels: dataModels)
+                    
+        Self.deleteSwiftDatabase(name: swiftDatabaseName)
+        
+        #expect(sortedDataModelIds == ["0", "1", "2", "3", "4", "5", "6"])
+    }
+    
+    @available(iOS, introduced: 17.0)
+    @Test()
+    @MainActor func fetchesCachedObjectsByIds() async {
+        
+        let swiftDatabaseName: String = UUID().uuidString
+        
+        let initialPersistedObjectsIds: [String] = ["5", "3", "2", "1", "4", "0", "6"]
+                    
+        let repositorySync: RepositorySync<MockRepositorySyncDataModel, MockRepositorySyncExternalDataFetch, MockRepositorySyncSwiftDataObject> = getRepositorySync(
+            swiftDatabaseName: swiftDatabaseName,
+            initialPersistedObjectsIds: initialPersistedObjectsIds,
+            externalDataModelIds: []
+        )
+        
+        let sortedObjectIdsToFetch: [String] = ["0", "2", "4", "6"]
+        
+        let dataModels: [MockRepositorySyncDataModel] = repositorySync.getCachedObjects(ids: sortedObjectIdsToFetch)
+        
+        let sortedDataModelIds: [String] = sortDataModelIds(dataModels: dataModels)
+                    
+        Self.deleteSwiftDatabase(name: swiftDatabaseName)
+        
+        #expect(sortedDataModelIds == sortedObjectIdsToFetch)
     }
 }
 
 // MARK: - Run Test
 
+@available(iOS 17, *)
 extension RepositorySyncTests {
     
-    @MainActor private func runTest(argument: TestArgument, getObjectsType: RepositorySyncGetObjectsType, cachePolicy: RepositorySyncCachePolicy, expectedNumberOfChanges: Int, triggerSecondaryExternalDataFetchWithIds: [String] = Array(), loggingEnabled: Bool = false) async {
+    @MainActor private func runTest(argument: TestArgument, getObjectsType: RepositorySyncGetObjectsType<MockRepositorySyncSwiftDataObject>, cachePolicy: RepositorySyncCachePolicy, expectedNumberOfChanges: Int, triggerSecondaryExternalDataFetchWithIds: [String] = Array(), loggingEnabled: Bool = false) async {
         
         await runTest(
-            realmFileName: argument.realmFileName,
+            swiftDatabaseName: argument.swiftDatabaseName,
             initialPersistedObjectsIds: argument.initialPersistedObjectsIds,
             externalDataModelIds: argument.externalDataModelIds,
             expectedCachedResponseDataModelIds: argument.expectedCachedResponseDataModelIds,
@@ -748,10 +872,10 @@ extension RepositorySyncTests {
         )
     }
     
-    @MainActor private func runTest(realmFileName: String, initialPersistedObjectsIds: [String], externalDataModelIds: [String], expectedCachedResponseDataModelIds: [String]?, expectedResponseDataModelIds: [String], getObjectsType: RepositorySyncGetObjectsType, cachePolicy: RepositorySyncCachePolicy, expectedNumberOfChanges: Int, triggerSecondaryExternalDataFetchWithIds: [String], loggingEnabled: Bool) async {
+    @MainActor private func runTest(swiftDatabaseName: String, initialPersistedObjectsIds: [String], externalDataModelIds: [String], expectedCachedResponseDataModelIds: [String]?, expectedResponseDataModelIds: [String], getObjectsType: RepositorySyncGetObjectsType<MockRepositorySyncSwiftDataObject>, cachePolicy: RepositorySyncCachePolicy, expectedNumberOfChanges: Int, triggerSecondaryExternalDataFetchWithIds: [String], loggingEnabled: Bool) async {
         
-        let repositorySync: RepositorySync<MockRepositorySyncDataModel, MockRepositorySyncExternalDataFetch, MockRepositorySyncRealmObject> = getRepositorySync(
-            realmFileName: realmFileName,
+        let repositorySync: RepositorySync<MockRepositorySyncDataModel, MockRepositorySyncExternalDataFetch, MockRepositorySyncSwiftDataObject> = getRepositorySync(
+            swiftDatabaseName: swiftDatabaseName,
             initialPersistedObjectsIds: initialPersistedObjectsIds,
             externalDataModelIds: externalDataModelIds
         )
@@ -766,8 +890,12 @@ extension RepositorySyncTests {
 
                 // TODO: See if I can trigger another external data fetch by fetching from mock external data and writing objects to the database. ~Levi
                 
-                let additionalRepositorySync: RepositorySync<MockRepositorySyncDataModel, MockRepositorySyncExternalDataFetch, MockRepositorySyncRealmObject> = getRepositorySync(
-                    realmFileName: realmFileName,
+                if loggingEnabled {
+                    print("\n PERFORMING SECONDARY EXTERNAL DATA FETCH")
+                }
+                
+                let additionalRepositorySync: RepositorySync<MockRepositorySyncDataModel, MockRepositorySyncExternalDataFetch, MockRepositorySyncSwiftDataObject> = getRepositorySync(
+                    swiftDatabaseName: swiftDatabaseName,
                     initialPersistedObjectsIds: [],
                     externalDataModelIds: triggerSecondaryExternalDataFetchWithIds
                 )
@@ -843,7 +971,7 @@ extension RepositorySyncTests {
             }
         }
         
-        _ = Self.deleteRealmDatabaseFile(fileName: realmFileName)
+        Self.deleteSwiftDatabase(name: swiftDatabaseName)
         
         if let expectedCachedResponseDataModelIds = expectedCachedResponseDataModelIds {
             
@@ -872,19 +1000,20 @@ extension RepositorySyncTests {
 
 // MARK: - Get Repository Sync
 
+@available(iOS 17, *)
 extension RepositorySyncTests {
     
-    private func getRepositorySync(realmFileName: String, initialPersistedObjectsIds: [String], externalDataModelIds: [String]) -> RepositorySync<MockRepositorySyncDataModel, MockRepositorySyncExternalDataFetch, MockRepositorySyncRealmObject> {
+    private func getRepositorySync(swiftDatabaseName: String, initialPersistedObjectsIds: [String], externalDataModelIds: [String]) -> RepositorySync<MockRepositorySyncDataModel, MockRepositorySyncExternalDataFetch, MockRepositorySyncSwiftDataObject> {
      
-        let initialObjects: [MockRepositorySyncRealmObject] = initialPersistedObjectsIds.map {
-            let object = MockRepositorySyncRealmObject()
+        let initialObjects: [MockRepositorySyncSwiftDataObject] = initialPersistedObjectsIds.map {
+            let object = MockRepositorySyncSwiftDataObject()
             object.id = $0
             object.name = Self.namePrefix + $0
             return object
         }
         
-        let realmDatabase: RealmDatabase = Self.getRealmDatabase(
-            fileName: realmFileName,
+        let swiftDatabase: SwiftDatabase = Self.getSwiftDatabase(
+            name: swiftDatabaseName,
             addObjects: initialObjects
         )
         
@@ -893,9 +1022,9 @@ extension RepositorySyncTests {
             delayRequestSeconds: Self.mockExternalDataFetchDelayRequestForSeconds
         )
         
-        return RepositorySync<MockRepositorySyncDataModel, MockRepositorySyncExternalDataFetch, MockRepositorySyncRealmObject>(
+        return RepositorySync<MockRepositorySyncDataModel, MockRepositorySyncExternalDataFetch, MockRepositorySyncSwiftDataObject>(
             externalDataFetch: externalDataFetch,
-            realmDatabase: realmDatabase,
+            swiftDatabase: swiftDatabase,
             dataModelMapping: MockRepositorySyncMapping()
         )
     }
@@ -920,67 +1049,71 @@ extension RepositorySyncTests {
 
 // MARK: - Sorting Response Object Ids
 
+@available(iOS 17, *)
 extension RepositorySyncTests {
     
     private func sortResponseObjectsDataModelIds(response: RepositorySyncResponse<MockRepositorySyncDataModel>?) -> [String] {
         
         let responseObjects: [MockRepositorySyncDataModel] = response?.objects ?? Array()
-        let sortedResponseObjects: [MockRepositorySyncDataModel] = responseObjects.sorted {
+        
+        return sortDataModelIds(dataModels: responseObjects)
+    }
+    
+    private func sortDataModelIds(dataModels: [MockRepositorySyncDataModel]) -> [String] {
+        
+        let sortedDataModels: [MockRepositorySyncDataModel] = dataModels.sorted {
             $0.id < $1.id
         }
         
-        return sortedResponseObjects.map { $0.id }
+        return sortedDataModels.map { $0.id }
     }
 }
 
 // MARK: - Realm Database
 
+@available(iOS 17, *)
 extension RepositorySyncTests {
     
-    private static func getRealmDatabaseConfiguration(fileName: String) -> RealmDatabaseConfiguration {
-        return RealmDatabaseConfiguration(
-            cacheType: .disk(
-                fileName: fileName,
-                migrationBlock: {migration,oldSchemaVersion in }),
-            schemaVersion: 1
-        )
+    private static func getSwiftDatabaseConfiguration(name: String) -> SwiftDatabaseConfiguration {
+        
+        return SwiftDatabaseConfiguration(modelConfiguration: ModelConfiguration(
+            name,
+            schema: nil,
+            isStoredInMemoryOnly: false,
+            allowsSave: true,
+            groupContainer: .none,
+            cloudKitDatabase: .none
+        ))
     }
     
-    private static func deleteRealmDatabaseFile(fileName: String) -> Error? {
+    private static func deleteSwiftDatabase(name: String) {
         
-        let databaseConfiguration: RealmDatabaseConfiguration = Self.getRealmDatabaseConfiguration(
-            fileName: fileName
+        SwiftDatabase(
+            configuration: getSwiftDatabaseConfiguration(name: name),
+            modelTypes: MockRepositorySyncSwiftDataModelTypes()
+        ).deleteAllData()
+    }
+
+    private static func getSwiftDatabase(name: String, addObjects: [any IdentifiableSwiftDataObject]) -> SwiftDatabase {
+        
+        let swiftDatabase: SwiftDatabase = SwiftDatabase(
+            configuration: Self.getSwiftDatabaseConfiguration(name: name),
+            modelTypes: MockRepositorySyncSwiftDataModelTypes()
         )
+        
+        let context: ModelContext = swiftDatabase.openContext()
+        
+        for object in addObjects {
+            context.insert(object)
+        }
         
         do {
-            _ = try Realm.deleteFiles(for: databaseConfiguration.getRealmConfig())
-            return nil
+            try context.save()
         }
         catch let error {
-            return error
-        }
-    }
-    
-    private static func getRealmDatabase(fileName: String, addObjects: [Object]) -> RealmDatabase {
-        
-        let realmDatabase: RealmDatabase = RealmDatabase(
-            databaseConfiguration: Self.getRealmDatabaseConfiguration(fileName: fileName)
-        )
-                
-        if addObjects.count > 0 {
-            
-            let realm: Realm = realmDatabase.openRealm()
-            
-            do {
-                try realm.write {
-                    realm.add(addObjects, update: .all)
-                }
-            }
-            catch let error {
-                assertionFailure(error.localizedDescription)
-            }
+            assertionFailure(error.localizedDescription)
         }
 
-        return realmDatabase
+        return swiftDatabase
     }
 }

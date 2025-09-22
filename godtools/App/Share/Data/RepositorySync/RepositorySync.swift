@@ -9,31 +9,42 @@
 import Foundation
 import Combine
 import RequestOperation
-import RealmSwift
+import SwiftData
 
-open class RepositorySync<DataModelType, ExternalDataFetchType: RepositorySyncExternalDataFetchInterface, RealmObjectType: IdentifiableRealmObject> {
+@available(iOS 17, *)
+open class RepositorySync<DataModelType, ExternalDataFetchType: RepositorySyncExternalDataFetchInterface, SwiftDataObjectType: IdentifiableSwiftDataObject> {
           
     private let externalDataFetch: ExternalDataFetchType
-    private let realmDatabase: RealmDatabase
-    private let dataModelMapping: RepositorySyncMapping<DataModelType, ExternalDataFetchType.DataModel, RealmObjectType>
+    private let swiftDatabase: SwiftDatabase
+    private let dataModelMapping: RepositorySyncMapping<DataModelType, ExternalDataFetchType.DataModel, SwiftDataObjectType>
+    private let userInfoKeyPrependNotification: String = "RepositorySync.notificationKey.prepend"
+    private let userInfoKeyEntityName: String = "RepositorySync.notificationKey.entityName"
+    private let entityName: String
     
     private var cancellables: Set<AnyCancellable> = Set()
     
-    init(externalDataFetch: ExternalDataFetchType, realmDatabase: RealmDatabase, dataModelMapping: RepositorySyncMapping<DataModelType, ExternalDataFetchType.DataModel, RealmObjectType>) {
+    init(externalDataFetch: ExternalDataFetchType, swiftDatabase: SwiftDatabase, dataModelMapping: RepositorySyncMapping<DataModelType, ExternalDataFetchType.DataModel, SwiftDataObjectType>) {
         
         self.externalDataFetch = externalDataFetch
-        self.realmDatabase = realmDatabase
+        self.swiftDatabase = swiftDatabase
         self.dataModelMapping = dataModelMapping
+        
+        if #available(iOS 18.0, *) {
+            entityName = Schema.entityName(for: SwiftDataObjectType.self)
+        }
+        else {
+            // TODO: Can remove once supporting iOS 18 and up. ~Levi
+            entityName = SwiftDataObjectType.entityName
+        }
     }
     
     public var numberOfCachedObjects: Int {
         return getNumberOfCachedObjects()
     }
     
-    public func observeDatabaseChangesPublisher() -> AnyPublisher<Void, Never> {
-        return observeRealmCollectionChangesPublisher(
-            observeOnRealm: realmDatabase.openRealm()
-        )
+    public func observeCollectionChangesPublisher() -> AnyPublisher<Void, Never> {
+        return observeSwiftDataCollectionChangesPublisher()
+            .eraseToAnyPublisher()
     }
     
     public func getCachedObject(id: String) -> DataModelType? {
@@ -41,79 +52,179 @@ open class RepositorySync<DataModelType, ExternalDataFetchType: RepositorySyncEx
     }
     
     public func getCachedObjects(ids: [String]) -> [DataModelType] {
+        
+        let predicate = #Predicate<SwiftDataObjectType> { object in
+            ids.contains(object.id)
+        }
+        
         return getCachedObjects(
-            databaseQuery: RepositorySyncDatabaseQuery.filter(
-                filter: NSPredicate(format: "id IN %@", ids)
-            )
+            databaseQuery: RepositorySyncDatabaseQuery.filter(filter: predicate)
         )
     }
     
-    public func getCachedObjects(databaseQuery: RepositorySyncDatabaseQuery? = nil) -> [DataModelType] {
+    public func getCachedObjects(databaseQuery: RepositorySyncDatabaseQuery<SwiftDataObjectType>? = nil) -> [DataModelType] {
         return getCachedObjectsToDataModels(databaseQuery: databaseQuery)
     }
 }
 
 // MARK: - Cache
 
+@available(iOS 17, *)
 extension RepositorySync {
     
-    private func getNumberOfCachedObjects(databaseQuery: RepositorySyncDatabaseQuery? = nil) -> Int {
-        return getCachedResults(realm: realmDatabase.openRealm(), databaseQuery: databaseQuery).count
+    private func getFetchDescriptor(databaseQuery: RepositorySyncDatabaseQuery<SwiftDataObjectType>?) -> FetchDescriptor<SwiftDataObjectType> {
+        return FetchDescriptor<SwiftDataObjectType>(predicate: databaseQuery?.filter)
     }
     
-    private func getCachedResults(realm: Realm, databaseQuery: RepositorySyncDatabaseQuery?) -> Results<RealmObjectType> {
-        
-        let results = realm.objects(RealmObjectType.self)
-        
-        if let filter = databaseQuery?.filter {
-            return results
-                .filter(filter)
+    private func getNumberOfCachedObjects(databaseQuery: RepositorySyncDatabaseQuery<SwiftDataObjectType>? = nil) -> Int {
+       
+        do {
+            return try swiftDatabase
+                .openContext()
+                .fetchCount(
+                    getFetchDescriptor(databaseQuery: databaseQuery)
+                )
         }
-        else if let filter = databaseQuery?.filter, let sortByKeyPath = databaseQuery?.sortByKeyPath {
-            return results
-                .filter(filter)
-                .sorted(byKeyPath: sortByKeyPath.keyPath, ascending: sortByKeyPath.ascending)
+        catch let error {
+            assertionFailure(error.localizedDescription)
+            return 0
         }
-        
-        return results
     }
     
-    private func getCachedObjectsToDataModels(databaseQuery: RepositorySyncDatabaseQuery?) -> [DataModelType] {
-        let dataModels: [DataModelType] = getCachedResults(realm: realmDatabase.openRealm(), databaseQuery: databaseQuery).compactMap {
-            self.dataModelMapping.toDataModel(persistObject: $0)
+    private func getCachedSwiftDataObjects(context: ModelContext, databaseQuery: RepositorySyncDatabaseQuery<SwiftDataObjectType>?) -> [SwiftDataObjectType] {
+        
+        let objects: [SwiftDataObjectType]
+        
+        do {
+            objects = try context.fetch(getFetchDescriptor(databaseQuery: databaseQuery))
         }
+        catch let error {
+            assertionFailure(error.localizedDescription)
+            objects = Array()
+        }
+        
+        return objects
+    }
+    
+    private func getCachedObjectsToDataModels(databaseQuery: RepositorySyncDatabaseQuery<SwiftDataObjectType>?) -> [DataModelType] {
+        
+        let objects: [SwiftDataObjectType] = getCachedSwiftDataObjects(
+            context: swiftDatabase.openContext(),
+            databaseQuery: databaseQuery
+        )
+        
+        let dataModels: [DataModelType] = objects.compactMap { object in
+            self.dataModelMapping.toDataModel(persistObject: object)
+        }
+        
         return dataModels
-    }
-    
-    private func observeRealmCollectionChangesPublisher(observeOnRealm: Realm) -> AnyPublisher<Void, Never> {
-                
-        return observeOnRealm
-            .objects(RealmObjectType.self)
-            .objectWillChange
-            .map { _ in
-                Void()
-            }
-            .eraseToAnyPublisher()
     }
     
     private func getCachedObjectToDataModel(primaryKey: String) -> DataModelType? {
         
-        let realm: Realm = realmDatabase.openRealm()
-        let realmObject: RealmObjectType? = realm.object(ofType: RealmObjectType.self, forPrimaryKey: primaryKey)
+        let idPredicate = #Predicate<SwiftDataObjectType> { object in
+            object.id == primaryKey
+        }
         
-        guard let realmObject = realmObject, let dataModel = dataModelMapping.toDataModel(persistObject: realmObject) else {
+        return getCachedObjectsToDataModels(
+            databaseQuery: RepositorySyncDatabaseQuery(filter: idPredicate, sortByKeyPath: nil)
+        )
+        .first
+    }
+    
+    private func observeSwiftDataCollectionChangesPublisher() -> AnyPublisher<Void, Never> {
+                
+        let swiftDatabaseRef: SwiftDatabase = self.swiftDatabase
+        let swiftDatabaseEntityNameRef: String = self.entityName
+        let userInfoKeyPrependNotification: String = self.userInfoKeyPrependNotification
+        let userInfoKeyEntityName: String = self.userInfoKeyEntityName
+        
+        // NOTE: Prepends a notification on first observation in order to trigger changes on first observation.
+        let prependNotification = Notification(
+            name: ModelContext.didSave,
+            object: swiftDatabaseRef.openContext(),
+            userInfo: [
+                userInfoKeyPrependNotification: true,
+                userInfoKeyEntityName: swiftDatabaseEntityNameRef
+            ]
+        )
+        
+        return NotificationCenter
+            .default
+            .publisher(for: ModelContext.didSave)
+            .prepend(prependNotification)
+            .compactMap { (notification: Notification) in
+                                                
+                let swiftDatabaseConfigName: String = swiftDatabaseRef.configName
+                let fromContextConfigurations: Set<ModelConfiguration> = (notification.object as? ModelContext)?.container.configurations ?? Set<ModelConfiguration>()
+                let fromConfigNames: [String] = fromContextConfigurations.map { $0.name }
+                let isSameContainer: Bool = fromConfigNames.contains(swiftDatabaseConfigName)
+                
+                let userInfo: [AnyHashable: Any] = notification.userInfo ?? Dictionary()
+                let isPrepend: Bool = userInfo[userInfoKeyPrependNotification] as? Bool ?? false
+                let prependEntityNameMatchesSwiftDatabaseEntityName: Bool = swiftDatabaseEntityNameRef == userInfo[userInfoKeyEntityName] as? String
+                
+                if isPrepend && prependEntityNameMatchesSwiftDatabaseEntityName && isSameContainer {
+                    
+                    return Void()
+                }
+                else if isSameContainer,
+                        let changedEntityNamesSet = Self.getNotificationChangedEntityNames(notification: notification),
+                        changedEntityNamesSet.contains(swiftDatabaseEntityNameRef) {
+                    
+                    return Void()
+                }
+                
+                return nil
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    private static func getNotificationChangedEntityNames(notification: Notification) -> Set<String>? {
+        
+        let userInfo: [AnyHashable: Any]? = notification.userInfo
+        
+        guard let userInfo = userInfo else {
             return nil
         }
         
-        return dataModel
+        let insertedIds = userInfo[
+            ModelContext.NotificationKey.insertedIdentifiers.rawValue
+        ] as? [PersistentIdentifier]
+        ?? Array()
+        
+        let deletedIds = userInfo[
+            ModelContext.NotificationKey.deletedIdentifiers.rawValue
+        ] as? [PersistentIdentifier]
+        ?? Array()
+        
+        let updatedIds = userInfo[
+            ModelContext.NotificationKey.updatedIdentifiers.rawValue
+        ] as? [PersistentIdentifier]
+        ?? Array()
+        
+        let allIds: [PersistentIdentifier] = insertedIds + deletedIds + updatedIds
+        
+        guard allIds.count > 0 else {
+            return nil
+        }
+        
+        let entityNames: [String] = allIds.map {
+            $0.entityName
+        }
+        
+        let changedEntityNamesSet: Set<String> = Set(entityNames)
+        
+        return changedEntityNamesSet
     }
 }
 
 // MARK: - External Data Fetch
 
+@available(iOS 17, *)
 extension RepositorySync {
     
-    private func fetchExternalObjects(getObjectsType: RepositorySyncGetObjectsType, requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<ExternalDataFetchType.DataModel>, Never>  {
+    private func fetchExternalObjects(getObjectsType: RepositorySyncGetObjectsType<SwiftDataObjectType>, requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<ExternalDataFetchType.DataModel>, Never>  {
         
         switch getObjectsType {
         case .objects:
@@ -133,12 +244,11 @@ extension RepositorySync {
         }
     }
     
-    private func makeSinkingfetchAndStoreObjectsFromExternalDataFetch(getObjectsType: RepositorySyncGetObjectsType, requestPriority: RequestPriority, updatePolicy: Realm.UpdatePolicy) {
+    private func makeSinkingfetchAndStoreObjectsFromExternalDataFetch(getObjectsType: RepositorySyncGetObjectsType<SwiftDataObjectType>, requestPriority: RequestPriority) {
         
         fetchAndStoreObjectsFromExternalDataFetchPublisher(
             getObjectsType: getObjectsType,
-            requestPriority: requestPriority,
-            updatePolicy: updatePolicy
+            requestPriority: requestPriority
         )
         .sink { (response: RepositorySyncResponse<DataModelType>) in
             
@@ -146,57 +256,48 @@ extension RepositorySync {
         .store(in: &cancellables)
     }
     
-    private func fetchAndStoreObjectsFromExternalDataFetchPublisher(getObjectsType: RepositorySyncGetObjectsType, requestPriority: RequestPriority, updatePolicy: Realm.UpdatePolicy) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
+    private func fetchAndStoreObjectsFromExternalDataFetchPublisher(getObjectsType: RepositorySyncGetObjectsType<SwiftDataObjectType>, requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
                 
         return fetchExternalObjects(getObjectsType: getObjectsType, requestPriority: requestPriority)
             .map { (getObjectsResponse: RepositorySyncResponse<ExternalDataFetchType.DataModel>) in
                 return self.storeExternalDataFetchResponse(
-                    response: getObjectsResponse,
-                    updatePolicy: updatePolicy
+                    response: getObjectsResponse
                 )
             }
             .eraseToAnyPublisher()
     }
     
-    public func storeExternalDataFetchResponse(response: RepositorySyncResponse<ExternalDataFetchType.DataModel>, updatePolicy: Realm.UpdatePolicy = .modified) -> RepositorySyncResponse<DataModelType> {
+    public func storeExternalDataFetchResponse(response: RepositorySyncResponse<ExternalDataFetchType.DataModel>) -> RepositorySyncResponse<DataModelType> {
         
-        let realm: Realm = realmDatabase.openRealm()
+        let context: ModelContext = swiftDatabase.openContext()
         
-        let objectsToAdd: [RealmObjectType] = response.objects.compactMap {
+        let objectsToAdd: [SwiftDataObjectType] = response.objects.compactMap {
             self.dataModelMapping.toPersistObject(externalObject: $0)
         }
         
-        let errors: [Error]
-        
-        do {
-            
-            try realm.write {
-                realm.add(objectsToAdd, update: updatePolicy)
-            }
-            
-            errors = Array()
-        }
-        catch let error {
-            errors = [error]
-        }
+        updateObjectsInSwiftDatabase(
+            context: context,
+            objectsToAdd: objectsToAdd,
+            objectsToRemove: []
+        )
         
         return RepositorySyncResponse<DataModelType>(
             objects: response.objects.compactMap { self.dataModelMapping.toDataModel(externalObject: $0) },
-            errors: errors
+            errors: []
         )
     }
     
-    public func syncExternalDataFetchResponse(response: RepositorySyncResponse<ExternalDataFetchType.DataModel>, updatePolicy: Realm.UpdatePolicy = .modified) -> RepositorySyncResponse<DataModelType> {
+    public func syncExternalDataFetchResponse(response: RepositorySyncResponse<ExternalDataFetchType.DataModel>) -> RepositorySyncResponse<DataModelType> {
 
         let shouldDeleteObjectsNotFoundInResponse: Bool = true
         
-        let realm: Realm = realmDatabase.openRealm()
-
+        let context: ModelContext = swiftDatabase.openContext()
+        
         var responseDataModels: [DataModelType] = Array()
         
-        var objectsToAdd: [RealmObjectType] = Array()
+        var objectsToAdd: [any PersistentModel] = Array()
         // store all objects in the collection
-        var objectsToRemove: [RealmObjectType] = Array(realm.objects(RealmObjectType.self))
+        var objectsToRemove: [SwiftDataObjectType] = getCachedSwiftDataObjects(context: context, databaseQuery: nil)
         
         for externalObject in response.objects {
 
@@ -204,47 +305,54 @@ extension RepositorySync {
                 responseDataModels.append(dataModel)
             }
             
-            if let realmObject = dataModelMapping.toPersistObject(externalObject: externalObject) {
+            if let swiftDataObject = dataModelMapping.toPersistObject(externalObject: externalObject) {
                 
-                objectsToAdd.append(realmObject)
+                objectsToAdd.append(swiftDataObject)
                 
-                // added realm object can be removed from this list so it won't be deleted from realm
-                if shouldDeleteObjectsNotFoundInResponse, let realmObjectIndex = objectsToRemove.firstIndex(where: { $0.id == realmObject.id }) {
-                    objectsToRemove.remove(at: realmObjectIndex)
+                // added swift data object can be removed from this list so it won't be deleted from swift data
+                if shouldDeleteObjectsNotFoundInResponse, let index = objectsToRemove.firstIndex(where: { $0.id == swiftDataObject.id }) {
+                    objectsToRemove.remove(at: index)
                 }
             }
         }
+        
+        updateObjectsInSwiftDatabase(
+            context: context,
+            objectsToAdd: objectsToAdd,
+            objectsToRemove: objectsToRemove
+        )
 
-        let errors: [Error]
-        
-        do {
-            try realm.write {
-                
-                realm.add(objectsToAdd, update: updatePolicy)
-               
-                if shouldDeleteObjectsNotFoundInResponse, objectsToRemove.count > 0 {
-                    realm.delete(objectsToRemove)
-                }
-            }
-            
-            errors = Array()
-        }
-        catch let error {
-            errors = [error]
-        }
-        
         return RepositorySyncResponse<DataModelType>(
             objects: responseDataModels,
-            errors: errors
+            errors: []
         )
+    }
+    
+    private func updateObjectsInSwiftDatabase(context: ModelContext, objectsToAdd: [any PersistentModel], objectsToRemove: [any PersistentModel]) {
+        
+        for object in objectsToAdd {
+            context.insert(object)
+        }
+        
+        for object in objectsToRemove {
+            context.delete(object)
+        }
+                
+        do {
+            try context.save()
+        }
+        catch let error {
+            assertionFailure("Failed to save SwiftData context with error: \(error.localizedDescription)")
+        }
     }
 }
 
 // MARK: - Get Objects
 
+@available(iOS 17, *)
 extension RepositorySync {
     
-    private func getCachedDataModelsByGetObjectsType(getObjectsType: RepositorySyncGetObjectsType) -> [DataModelType] {
+    private func getCachedDataModelsByGetObjectsType(getObjectsType: RepositorySyncGetObjectsType<SwiftDataObjectType>) -> [DataModelType] {
         
         let dataModels: [DataModelType]
         
@@ -268,7 +376,7 @@ extension RepositorySync {
         return dataModels
     }
     
-    private func getCachedDataModelsByGetObjectsTypeToResponse(getObjectsType: RepositorySyncGetObjectsType) -> RepositorySyncResponse<DataModelType> {
+    private func getCachedDataModelsByGetObjectsTypeToResponse(getObjectsType: RepositorySyncGetObjectsType<SwiftDataObjectType>) -> RepositorySyncResponse<DataModelType> {
         
         let dataModels: [DataModelType] = getCachedDataModelsByGetObjectsType(
             getObjectsType: getObjectsType
@@ -282,7 +390,7 @@ extension RepositorySync {
         return response
     }
     
-    private func getCachedDataModelsByGetObjectsTypeToResponsePublisher(getObjectsType: RepositorySyncGetObjectsType) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
+    private func getCachedDataModelsByGetObjectsTypeToResponsePublisher(getObjectsType: RepositorySyncGetObjectsType<SwiftDataObjectType>) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
         
         return Just(getCachedDataModelsByGetObjectsTypeToResponse(getObjectsType: getObjectsType))
             .eraseToAnyPublisher()
@@ -296,18 +404,15 @@ extension RepositorySync {
         -
      */
     
-    public func getObjectsPublisher(getObjectsType: RepositorySyncGetObjectsType, cachePolicy: RepositorySyncCachePolicy, updatePolicy: Realm.UpdatePolicy = .modified) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
-        
-        let realm: Realm = realmDatabase.openRealm()
-        
+    public func getObjectsPublisher(getObjectsType: RepositorySyncGetObjectsType<SwiftDataObjectType>, cachePolicy: RepositorySyncCachePolicy) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
+                
         switch cachePolicy {
             
         case .fetchIgnoringCacheData(let requestPriority):
             
             return fetchAndStoreObjectsFromExternalDataFetchPublisher(
                 getObjectsType: getObjectsType,
-                requestPriority: requestPriority,
-                updatePolicy: updatePolicy
+                requestPriority: requestPriority
             )
             .map { (response: RepositorySyncResponse<DataModelType>) in
             
@@ -323,9 +428,7 @@ extension RepositorySync {
             
             if observeChanges {
                
-                return observeRealmCollectionChangesPublisher(
-                    observeOnRealm: realm
-                )
+                return observeSwiftDataCollectionChangesPublisher()
                 .map { (onChange: Void) in
                     
                     return self.getCachedDataModelsByGetObjectsTypeToResponse(
@@ -346,20 +449,17 @@ extension RepositorySync {
             
             if observeChanges {
                         
-                let numberOfRealmObjects: Int = getCachedResults(realm: realm, databaseQuery: nil).count
+                let numberOfCachedObjects: Int = getNumberOfCachedObjects()
                 
-                if numberOfRealmObjects == 0 {
+                if numberOfCachedObjects == 0 {
                     
                     makeSinkingfetchAndStoreObjectsFromExternalDataFetch(
                         getObjectsType: getObjectsType,
-                        requestPriority: requestPriority,
-                        updatePolicy: updatePolicy
+                        requestPriority: requestPriority
                     )
                 }
                 
-                return observeRealmCollectionChangesPublisher(
-                    observeOnRealm: realm
-                )
+                return observeSwiftDataCollectionChangesPublisher()
                 .map { (onChange: Void) in
                     
                     return self.getCachedDataModelsByGetObjectsTypeToResponse(
@@ -374,8 +474,7 @@ extension RepositorySync {
                     
                     return fetchAndStoreObjectsFromExternalDataFetchPublisher(
                         getObjectsType: getObjectsType,
-                        requestPriority: requestPriority,
-                        updatePolicy: updatePolicy
+                        requestPriority: requestPriority
                     )
                     .map { (response: RepositorySyncResponse<DataModelType>) in
                     
@@ -400,13 +499,10 @@ extension RepositorySync {
             
             makeSinkingfetchAndStoreObjectsFromExternalDataFetch(
                 getObjectsType: getObjectsType,
-                requestPriority: requestPriority,
-                updatePolicy: updatePolicy
+                requestPriority: requestPriority
             )
             
-            return observeRealmCollectionChangesPublisher(
-                observeOnRealm: realm
-            )
+            return observeSwiftDataCollectionChangesPublisher()
             .map { (onChange: Void) in
                 
                 return self.getCachedDataModelsByGetObjectsTypeToResponse(
