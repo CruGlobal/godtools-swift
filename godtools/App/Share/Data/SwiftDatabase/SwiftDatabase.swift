@@ -39,8 +39,10 @@ class SwiftDatabase {
     }
     
     private static func createContainer(configuration: SwiftDatabaseConfigurationInterface, modelTypes: SwiftDatabaseModelTypesInterface) throws -> ModelContainer {
+        
         return try ModelContainer(
-            for: modelTypes.getModelTypes(),
+            for: Schema(modelTypes.getModelTypes()),
+            migrationPlan: nil,
             configurations: configuration.modelConfiguration
         )
     }
