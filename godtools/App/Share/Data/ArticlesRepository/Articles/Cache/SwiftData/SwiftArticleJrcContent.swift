@@ -15,7 +15,7 @@ class SwiftArticleJrcContent: IdentifiableSwiftDataObject {
     
     var aemUri: String = ""
     var canonical: String?
-    var tags: [String] = Array()
+    var tags: [String] = Array<String>()
     var title: String?
     var uuid: String?
     

@@ -13,13 +13,14 @@ import SwiftData
 @Model
 class SwiftArticleAemData: IdentifiableSwiftDataObject {
     
-    var articleJcrContent: RealmArticleJcrContent?
     var webUrl: String = ""
     var webArchiveFilename: String = ""
     var updatedAt: Date = Date()
     
     @Attribute(.unique) var aemUri: String = ""
     @Attribute(.unique) var id: String = ""
+    
+    @Relationship(deleteRule: .nullify) var articleJcrContent: SwiftArticleJrcContent?
     
     init() {
         

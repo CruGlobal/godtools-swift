@@ -14,7 +14,7 @@ import SwiftData
 class SwiftCategoryArticle: IdentifiableSwiftDataObject {
     
     var aemTag: String = ""
-    var aemUris: [String] = Array()
+    var aemUris: [String] = Array<String>()
     var categoryId: String = ""
     var languageCode: String = ""
     

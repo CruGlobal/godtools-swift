@@ -15,7 +15,7 @@ import SwiftData
 class SwiftResource: IdentifiableSwiftDataObject {
     
     var abbreviation: String = ""
-    var attachmentIds: [String] = Array()
+    var attachmentIds: [String] = Array<String>()
     var attrAboutBannerAnimation: String = ""
     var attrAboutOverviewVideoYoutube: String = ""
     var attrBanner: String = ""
@@ -27,8 +27,8 @@ class SwiftResource: IdentifiableSwiftDataObject {
     var defaultVariantId: String?
     var isHidden: Bool = false
     var isVariant: Bool = false
-    var languageIds: [String] = Array()
-    var latestTranslationIds: [String] = Array()
+    var languageIds: [String] = Array<String>()
+    var latestTranslationIds: [String] = Array<String>()
     var manifest: String = ""
     var metatoolId: String?
     var name: String = ""
@@ -37,15 +37,15 @@ class SwiftResource: IdentifiableSwiftDataObject {
     var resourceType: String = ""
     var totalViews: Int = -1
     var type: String = ""
-    var variantIds: [String] = Array()
+    var variantIds: [String] = Array<String>()
     
     @Attribute(.unique) var id: String = ""
 
     @Relationship(deleteRule: .nullify) var defaultVariant: SwiftResource?
     @Relationship(deleteRule: .nullify) var metatool: SwiftResource?
-    @Relationship(deleteRule: .cascade) var languages: [SwiftLanguage] = Array()
-    @Relationship(deleteRule: .cascade) var latestTranslations: [SwiftTranslation] = Array()
-    @Relationship(deleteRule: .cascade) var variants: [SwiftResource] = Array()
+    @Relationship(deleteRule: .cascade) var languages: [SwiftLanguage] = Array<SwiftLanguage>()
+    @Relationship(deleteRule: .cascade) var latestTranslations: [SwiftTranslation] = Array<SwiftTranslation>()
+    @Relationship(deleteRule: .cascade) var variants: [SwiftResource] = Array<SwiftResource>()
         
     init() {
         
