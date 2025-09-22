@@ -42,7 +42,7 @@ struct RepositorySyncTests {
         
         await runTest(
             argument: argument,
-            getObjectsType: .objects,
+            getObjectsType: .allObjects,
             cachePolicy: .returnCacheDataDontFetch(observeChanges: false),
             expectedNumberOfChanges: 1
         )
@@ -81,7 +81,7 @@ struct RepositorySyncTests {
         
         await runTest(
             argument: argument,
-            getObjectsType: .objects,
+            getObjectsType: .allObjects,
             cachePolicy: .fetchIgnoringCacheData(requestPriority: .medium),
             expectedNumberOfChanges: 1
         )
@@ -191,7 +191,7 @@ struct RepositorySyncTests {
         
         await runTest(
             argument: argument,
-            getObjectsType: .objects,
+            getObjectsType: .allObjects,
             cachePolicy: .returnCacheDataDontFetch(observeChanges: false),
             expectedNumberOfChanges: 1
         )
@@ -216,7 +216,7 @@ struct RepositorySyncTests {
         
         await runTest(
             argument: argument,
-            getObjectsType: .objects,
+            getObjectsType: .allObjects,
             cachePolicy: .returnCacheDataDontFetch(observeChanges: true),
             expectedNumberOfChanges: 2,
             triggerSecondaryExternalDataFetchWithIds: ["8", "1", "0"]
@@ -315,7 +315,7 @@ struct RepositorySyncTests {
         
         await runTest(
             argument: argument,
-            getObjectsType: .objects,
+            getObjectsType: .allObjects,
             cachePolicy: .returnCacheDataElseFetch(requestPriority: .medium, observeChanges: false),
             expectedNumberOfChanges: 1
         )
@@ -334,7 +334,7 @@ struct RepositorySyncTests {
         
         await runTest(
             argument: argument,
-            getObjectsType: .objects,
+            getObjectsType: .allObjects,
             cachePolicy: .returnCacheDataElseFetch(requestPriority: .medium, observeChanges: false),
             expectedNumberOfChanges: 1
         )
@@ -353,7 +353,7 @@ struct RepositorySyncTests {
         
         await runTest(
             argument: argument,
-            getObjectsType: .objects,
+            getObjectsType: .allObjects,
             cachePolicy: .returnCacheDataElseFetch(requestPriority: .medium, observeChanges: true),
             expectedNumberOfChanges: 2
         )
@@ -372,7 +372,7 @@ struct RepositorySyncTests {
         
         await runTest(
             argument: argument,
-            getObjectsType: .objects,
+            getObjectsType: .allObjects,
             cachePolicy: .returnCacheDataElseFetch(requestPriority: .medium, observeChanges: true),
             expectedNumberOfChanges: 3,
             triggerSecondaryExternalDataFetchWithIds: ["9", "7"]
@@ -392,7 +392,7 @@ struct RepositorySyncTests {
         
         await runTest(
             argument: argument,
-            getObjectsType: .objects,
+            getObjectsType: .allObjects,
             cachePolicy: .returnCacheDataElseFetch(requestPriority: .medium, observeChanges: true),
             expectedNumberOfChanges: 2,
             triggerSecondaryExternalDataFetchWithIds: ["9", "7"]
@@ -525,7 +525,7 @@ struct RepositorySyncTests {
         
         await runTest(
             argument: argument,
-            getObjectsType: .objects,
+            getObjectsType: .allObjects,
             cachePolicy: .returnCacheDataAndFetch(requestPriority: .medium),
             expectedNumberOfChanges: 1
         )
@@ -550,7 +550,7 @@ struct RepositorySyncTests {
         
         await runTest(
             argument: argument,
-            getObjectsType: .objects,
+            getObjectsType: .allObjects,
             cachePolicy: .returnCacheDataAndFetch(requestPriority: .medium),
             expectedNumberOfChanges: 2
         )
@@ -575,7 +575,7 @@ struct RepositorySyncTests {
         
         await runTest(
             argument: argument,
-            getObjectsType: .objects,
+            getObjectsType: .allObjects,
             cachePolicy: .returnCacheDataAndFetch(requestPriority: .medium),
             expectedNumberOfChanges: 3,
             triggerSecondaryExternalDataFetchWithIds: ["9", "5"]
@@ -901,7 +901,7 @@ extension RepositorySyncTests {
                 )
                 
                 additionalRepositorySync
-                    .getObjectsPublisher(getObjectsType: .objects, cachePolicy: .fetchIgnoringCacheData(requestPriority: .medium))
+                    .getObjectsPublisher(getObjectsType: .allObjects, cachePolicy: .fetchIgnoringCacheData(requestPriority: .medium))
                     .sink { response in
                         if loggingEnabled {
                             print("\n DID SINK SECONDARY DATA FETCH: \(response.objects.map{$0.id})")

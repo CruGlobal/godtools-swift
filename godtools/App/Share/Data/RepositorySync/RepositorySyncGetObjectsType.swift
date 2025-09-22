@@ -10,7 +10,7 @@ import Foundation
 
 @available(iOS 17, *)
 public enum RepositorySyncGetObjectsType<T: IdentifiableSwiftDataObject> {
-    case objects
+    case allObjects
     case objectsWithQuery(databaseQuery: RepositorySyncDatabaseQuery<T>?)
     case object(id: String)
 }

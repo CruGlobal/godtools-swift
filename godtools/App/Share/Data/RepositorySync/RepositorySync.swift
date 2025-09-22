@@ -227,7 +227,7 @@ extension RepositorySync {
     private func fetchExternalObjects(getObjectsType: RepositorySyncGetObjectsType<SwiftDataObjectType>, requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<ExternalDataFetchType.DataModel>, Never>  {
         
         switch getObjectsType {
-        case .objects:
+        case .allObjects:
             return externalDataFetch
                 .getObjectsPublisher(requestPriority: requestPriority)
                 .eraseToAnyPublisher()
@@ -358,7 +358,7 @@ extension RepositorySync {
         
         switch getObjectsType {
         
-        case .objects:
+        case .allObjects:
             dataModels = getCachedObjectsToDataModels(databaseQuery: nil)
         
         case .objectsWithQuery(let databaseQuery):

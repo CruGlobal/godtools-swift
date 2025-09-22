@@ -9,7 +9,7 @@
 import Foundation
 
 public enum RealmRepositorySyncGetObjectsType {
-    case objects
+    case allObjects
     case objectsWithQuery(databaseQuery: RealmRepositorySyncDatabaseQuery?)
     case object(id: String)
 }

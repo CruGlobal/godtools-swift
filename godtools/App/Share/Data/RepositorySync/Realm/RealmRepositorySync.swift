@@ -116,7 +116,7 @@ extension RealmRepositorySync {
     private func fetchExternalObjects(getObjectsType: RealmRepositorySyncGetObjectsType, requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<ExternalDataFetchType.DataModel>, Never>  {
         
         switch getObjectsType {
-        case .objects:
+        case .allObjects:
             return externalDataFetch
                 .getObjectsPublisher(requestPriority: requestPriority)
                 .eraseToAnyPublisher()
@@ -250,7 +250,7 @@ extension RealmRepositorySync {
         
         switch getObjectsType {
         
-        case .objects:
+        case .allObjects:
             dataModels = getCachedObjectsToDataModels(databaseQuery: nil)
         
         case .objectsWithQuery(let databaseQuery):
