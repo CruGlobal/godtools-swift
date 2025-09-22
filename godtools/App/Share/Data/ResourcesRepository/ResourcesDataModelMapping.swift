@@ -18,7 +18,7 @@ class ResourcesDataModelMapping: RealmRepositorySyncMapping<ResourceDataModel, R
         return ResourceDataModel(interface: persistObject)
     }
     
-    override func toRealmObject(externalObject: ResourceCodable) -> RealmResource? {
+    override func toPersistObject(externalObject: ResourceCodable) -> RealmResource? {
         return RealmResource.createNewFrom(interface: externalObject)
     }
 }

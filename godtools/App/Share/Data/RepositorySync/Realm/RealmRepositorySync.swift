@@ -163,7 +163,7 @@ extension RealmRepositorySync {
         let realm: Realm = realmDatabase.openRealm()
         
         let objectsToAdd: [RealmObjectType] = response.objects.compactMap {
-            self.dataModelMapping.toRealmObject(externalObject: $0)
+            self.dataModelMapping.toPersistObject(externalObject: $0)
         }
         
         let errors: [Error]
@@ -204,7 +204,7 @@ extension RealmRepositorySync {
                 responseDataModels.append(dataModel)
             }
             
-            if let realmObject = dataModelMapping.toRealmObject(externalObject: externalObject) {
+            if let realmObject = dataModelMapping.toPersistObject(externalObject: externalObject) {
                 
                 objectsToAdd.append(realmObject)
                 

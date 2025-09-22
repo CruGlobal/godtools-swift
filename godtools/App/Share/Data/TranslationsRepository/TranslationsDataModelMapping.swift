@@ -18,7 +18,7 @@ class TranslationsDataModelMapping: RealmRepositorySyncMapping<TranslationDataMo
         return TranslationDataModel(interface: persistObject)
     }
     
-    override func toRealmObject(externalObject: TranslationCodable) -> RealmTranslation? {
+    override func toPersistObject(externalObject: TranslationCodable) -> RealmTranslation? {
         return RealmTranslation.createNewFrom(interface: externalObject)
     }
 }

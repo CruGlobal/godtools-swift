@@ -24,7 +24,7 @@ class MockRealmRepositorySyncMapping: RealmRepositorySyncMapping<MockRepositoryS
         )
     }
     
-    override func toRealmObject(externalObject: MockRepositorySyncDataModel) -> MockRepositorySyncRealmObject? {
+    override func toPersistObject(externalObject: MockRepositorySyncDataModel) -> MockRepositorySyncRealmObject? {
         
         let realmObject = MockRepositorySyncRealmObject()
         

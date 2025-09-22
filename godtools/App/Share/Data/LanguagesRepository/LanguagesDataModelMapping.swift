@@ -18,7 +18,7 @@ class LanguagesDataModelMapping: RealmRepositorySyncMapping<LanguageDataModel, L
         return LanguageDataModel(interface: persistObject)
     }
     
-    override func toRealmObject(externalObject: LanguageCodable) -> RealmLanguage? {
+    override func toPersistObject(externalObject: LanguageCodable) -> RealmLanguage? {
         return RealmLanguage.createNewFrom(interface: externalObject)
     }
 }

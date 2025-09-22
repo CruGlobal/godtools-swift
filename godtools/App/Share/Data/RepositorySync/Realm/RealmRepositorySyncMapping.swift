@@ -19,7 +19,7 @@ open class RealmRepositorySyncMapping<DataModelType, ExternalFetchObjectType, Re
         return nil
     }
     
-    open func toRealmObject(externalObject: ExternalFetchObjectType) -> RealmObjectType? {
+    open func toPersistObject(externalObject: ExternalFetchObjectType) -> RealmObjectType? {
         return nil
     }
 }

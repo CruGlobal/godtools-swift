@@ -18,7 +18,7 @@ class AttachmentsDataModelMapping: RealmRepositorySyncMapping<AttachmentDataMode
         return AttachmentDataModel(interface: persistObject, storedAttachment: nil)
     }
     
-    override func toRealmObject(externalObject: AttachmentCodable) -> RealmAttachment? {
+    override func toPersistObject(externalObject: AttachmentCodable) -> RealmAttachment? {
         return RealmAttachment.createNewFrom(interface: externalObject)
     }
 }
