@@ -53,12 +53,12 @@ open class RepositorySync<DataModelType, ExternalDataFetchType: RepositorySyncEx
     
     public func getCachedObjects(ids: [String]) -> [DataModelType] {
         
-        let predicate = #Predicate<SwiftDataObjectType> { object in
+        let filter = #Predicate<SwiftDataObjectType> { object in
             ids.contains(object.id)
         }
         
         return getCachedObjects(
-            databaseQuery: RepositorySyncDatabaseQuery.filter(filter: predicate)
+            databaseQuery: RepositorySyncDatabaseQuery.filter(filter: filter)
         )
     }
     
@@ -73,7 +73,7 @@ open class RepositorySync<DataModelType, ExternalDataFetchType: RepositorySyncEx
 extension RepositorySync {
     
     private func getFetchDescriptor(databaseQuery: RepositorySyncDatabaseQuery<SwiftDataObjectType>?) -> FetchDescriptor<SwiftDataObjectType> {
-        return FetchDescriptor<SwiftDataObjectType>(predicate: databaseQuery?.filter)
+        return databaseQuery?.fetchDescriptor ?? FetchDescriptor<SwiftDataObjectType>()
     }
     
     private func getNumberOfCachedObjects(databaseQuery: RepositorySyncDatabaseQuery<SwiftDataObjectType>? = nil) -> Int {
@@ -127,7 +127,7 @@ extension RepositorySync {
         }
         
         return getCachedObjectsToDataModels(
-            databaseQuery: RepositorySyncDatabaseQuery(filter: idPredicate, sortByKeyPath: nil)
+            databaseQuery: RepositorySyncDatabaseQuery.filter(filter: idPredicate)
         )
         .first
     }
