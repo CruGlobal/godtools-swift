@@ -29,7 +29,7 @@ class LanguagesRepository: RealmRepositorySync<LanguageDataModel, MobileContentL
     
     func getCachedLanguage(code: BCP47LanguageIdentifier) -> LanguageDataModel? {
         return getCachedObjects(
-            databaseQuery: RealmRepositorySyncDatabaseQuery.filter(
+            databaseQuery: RealmDatabaseQuery.filter(
                 filter: NSPredicate(format: "\(#keyPath(RealmLanguage.code)) == [c] %@", code.lowercased())
             )
         ).first

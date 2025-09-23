@@ -42,13 +42,13 @@ open class RealmRepositorySync<DataModelType, ExternalDataFetchType: RepositoryS
     
     public func getCachedObjects(ids: [String]) -> [DataModelType] {
         return getCachedObjects(
-            databaseQuery: RealmRepositorySyncDatabaseQuery.filter(
+            databaseQuery: RealmDatabaseQuery.filter(
                 filter: NSPredicate(format: "id IN %@", ids)
             )
         )
     }
     
-    public func getCachedObjects(databaseQuery: RealmRepositorySyncDatabaseQuery? = nil) -> [DataModelType] {
+    public func getCachedObjects(databaseQuery: RealmDatabaseQuery? = nil) -> [DataModelType] {
         return getCachedObjectsToDataModels(databaseQuery: databaseQuery)
     }
 }
@@ -57,11 +57,11 @@ open class RealmRepositorySync<DataModelType, ExternalDataFetchType: RepositoryS
 
 extension RealmRepositorySync {
     
-    private func getNumberOfCachedObjects(databaseQuery: RealmRepositorySyncDatabaseQuery? = nil) -> Int {
+    private func getNumberOfCachedObjects(databaseQuery: RealmDatabaseQuery? = nil) -> Int {
         return getCachedResults(realm: realmDatabase.openRealm(), databaseQuery: databaseQuery).count
     }
     
-    private func getCachedResults(realm: Realm, databaseQuery: RealmRepositorySyncDatabaseQuery?) -> Results<RealmObjectType> {
+    private func getCachedResults(realm: Realm, databaseQuery: RealmDatabaseQuery?) -> Results<RealmObjectType> {
         
         let results = realm.objects(RealmObjectType.self)
         
@@ -78,7 +78,7 @@ extension RealmRepositorySync {
         return results
     }
     
-    private func getCachedObjectsToDataModels(databaseQuery: RealmRepositorySyncDatabaseQuery?) -> [DataModelType] {
+    private func getCachedObjectsToDataModels(databaseQuery: RealmDatabaseQuery?) -> [DataModelType] {
         let dataModels: [DataModelType] = getCachedResults(realm: realmDatabase.openRealm(), databaseQuery: databaseQuery).compactMap {
             self.dataModelMapping.toDataModel(persistObject: $0)
         }

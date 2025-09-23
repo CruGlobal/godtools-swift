@@ -8,9 +8,8 @@
 
 import Foundation
 
-@available(iOS 17, *)
-public enum RepositorySyncGetObjectsType<T: IdentifiableSwiftDataObject> {
+public enum RepositorySyncGetObjectsType<PersistenceQueryType> {
     case allObjects
-    case objectsWithQuery(databaseQuery: RepositorySyncDatabaseQuery<T>?)
+    case objectsWithQuery(query: PersistenceQueryType?)
     case object(id: String)
 }

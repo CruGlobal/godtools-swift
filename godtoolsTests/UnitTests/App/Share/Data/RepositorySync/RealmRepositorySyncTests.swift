@@ -145,7 +145,7 @@ struct RealmRepositorySyncTests {
         
         await runTest(
             argument: argument,
-            getObjectsType: .objectsWithQuery(databaseQuery: RealmRepositorySyncDatabaseQuery.filter(filter: filter)),
+            getObjectsType: .objectsWithQuery(databaseQuery: RealmDatabaseQuery.filter(filter: filter)),
             cachePolicy: .fetchIgnoringCacheData(requestPriority: .medium),
             expectedNumberOfChanges: 1,
             loggingEnabled: false
@@ -620,7 +620,7 @@ struct RealmRepositorySyncTests {
         
         await runTest(
             argument: argument,
-            getObjectsType: .objectsWithQuery(databaseQuery: RealmRepositorySyncDatabaseQuery.filter(filter: filter)),
+            getObjectsType: .objectsWithQuery(databaseQuery: RealmDatabaseQuery.filter(filter: filter)),
             cachePolicy: .returnCacheDataAndFetch(requestPriority: .medium),
             expectedNumberOfChanges: 2,
             loggingEnabled: true

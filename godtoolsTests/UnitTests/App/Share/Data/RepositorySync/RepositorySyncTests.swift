@@ -20,6 +20,380 @@ struct RepositorySyncTests {
     private static let namePrefix: String = "name_"
     
     struct TestArgument {
+        let realmFileName: String = "RepositorySyncTests_realm_" + UUID().uuidString
+        let swiftDatabaseName: String = "RepositorySyncTests_swift_" + UUID().uuidString
+        let initialPersistedObjectsIds: [String]
+        let externalDataModelIds: [String]
+        let expectedCachedResponseDataModelIds: [String]?
+        let expectedResponseDataModelIds: [String]
+    }
+    
+    // MARK: - Test Cache Policy (Return Cache Data Don't Fetch) - Objects
+    
+    @Test(arguments: [
+        TestArgument(
+            initialPersistedObjectsIds: ["0", "1"],
+            externalDataModelIds: ["5", "6", "7", "8", "9"],
+            expectedCachedResponseDataModelIds: ["0", "1"],
+            expectedResponseDataModelIds: ["0", "1"]
+        ),
+        TestArgument(
+            initialPersistedObjectsIds: [],
+            externalDataModelIds: ["1", "2"],
+            expectedCachedResponseDataModelIds: [],
+            expectedResponseDataModelIds: []
+        ),
+        TestArgument(
+            initialPersistedObjectsIds: ["2", "3"],
+            externalDataModelIds: [],
+            expectedCachedResponseDataModelIds: ["2", "3"],
+            expectedResponseDataModelIds: ["2", "3"]
+        ),
+        TestArgument(
+            initialPersistedObjectsIds: [],
+            externalDataModelIds: [],
+            expectedCachedResponseDataModelIds: [],
+            expectedResponseDataModelIds: []
+        )
+    ])
+    @MainActor func returnCacheDataDontFetchWillTriggerOnceWhenCacheDataAlreadyExists(argument: TestArgument) async {
+        
+        await runRealmTest(
+            argument: argument,
+            getObjectsType: .allObjects,
+            cachePolicy: .returnCacheDataDontFetch(observeChanges: false),
+            expectedNumberOfChanges: 1
+        )
+        
+        if #available(iOS 17, *) {
+            
+            await runSwiftTest(
+                argument: argument,
+                getObjectsType: .allObjects,
+                cachePolicy: .returnCacheDataDontFetch(observeChanges: false),
+                expectedNumberOfChanges: 1
+            )
+        }
+    }
+    
+    // MARK: - Run Realm Test
+    
+    @MainActor private func runRealmTest(argument: TestArgument, getObjectsType: RepositorySyncGetObjectsType<RealmDatabaseQuery>, cachePolicy: RepositorySyncCachePolicy, expectedNumberOfChanges: Int, triggerSecondaryExternalDataFetchWithIds: [String] = Array(), loggingEnabled: Bool = false) async {
+        
+        await runRealmTest(
+            realmFileName: argument.realmFileName,
+            initialPersistedObjectsIds: argument.initialPersistedObjectsIds,
+            externalDataModelIds: argument.externalDataModelIds,
+            expectedCachedResponseDataModelIds: argument.expectedCachedResponseDataModelIds,
+            expectedResponseDataModelIds: argument.expectedResponseDataModelIds,
+            getObjectsType: getObjectsType,
+            cachePolicy: cachePolicy,
+            expectedNumberOfChanges: expectedNumberOfChanges,
+            triggerSecondaryExternalDataFetchWithIds: triggerSecondaryExternalDataFetchWithIds,
+            loggingEnabled: loggingEnabled
+        )
+    }
+    
+    @MainActor private func runRealmTest(realmFileName: String, initialPersistedObjectsIds: [String], externalDataModelIds: [String], expectedCachedResponseDataModelIds: [String]?, expectedResponseDataModelIds: [String], getObjectsType: RepositorySyncGetObjectsType<RealmDatabaseQuery>, cachePolicy: RepositorySyncCachePolicy, expectedNumberOfChanges: Int, triggerSecondaryExternalDataFetchWithIds: [String], loggingEnabled: Bool) async {
+        
+        if loggingEnabled {
+            print("\n *** RUNNING REALM TEST *** \n")
+        }
+        let persistence = RealmRepositorySyncPersistenceTests.getPersistence(
+            realmFileName: realmFileName,
+            addObjectsByIds: initialPersistedObjectsIds
+        )
+        
+        let repositorySync = RepositorySync<MockRepositorySyncDataModel, RealmDatabaseQuery>(
+            persistence: persistence
+        )
+        
+        let triggersSecondaryExternalDataFetch: Bool = triggerSecondaryExternalDataFetchWithIds.count > 0
+        
+        var cancellables: Set<AnyCancellable> = Set()
+        
+        if triggersSecondaryExternalDataFetch {
+                        
+            DispatchQueue.main.asyncAfter(deadline: .now() + Self.triggerSecondaryExternalDataFetchWithDelayForSeconds) {
+
+                // TODO: See if I can trigger another external data fetch by fetching from mock external data and writing objects to the database. ~Levi
+                
+                if loggingEnabled {
+                    print("\n PERFORMING SECONDARY EXTERNAL DATA FETCH")
+                }
+                
+                let persistence = RealmRepositorySyncPersistenceTests.getPersistence(
+                    realmFileName: realmFileName,
+                    addObjectsByIds: []
+                )
+                
+                let additionalRepositorySync = RepositorySync<MockRepositorySyncDataModel, RealmDatabaseQuery>(
+                    persistence: persistence
+                )
+                
+                additionalRepositorySync
+                    .getObjectsPublisher(getObjectsType: .allObjects, cachePolicy: .fetchIgnoringCacheData(requestPriority: .medium))
+                    .sink { response in
+                        if loggingEnabled {
+                            print("\n DID SINK SECONDARY DATA FETCH: \(response.objects.map{$0.id})")
+                        }
+                    }
+                    .store(in: &cancellables)
+            }
+        }
+        
+        var sinkCount: Int = 0
+        
+        var cachedResponseRef: RepositorySyncResponse<MockRepositorySyncDataModel>?
+        var responseRef: RepositorySyncResponse<MockRepositorySyncDataModel>?
+        
+        await confirmation(expectedCount: expectedNumberOfChanges) { confirmation in
+            
+            await withCheckedContinuation { continuation in
+                
+                let timeoutTask = Task {
+                    try await Task.sleep(nanoseconds: Self.runTestWaitFor)
+                    if loggingEnabled {
+                        print("\n TIMEOUT")
+                    }
+                    continuation.resume(returning: ())
+                }
+                
+                repositorySync
+                    .getObjectsPublisher(
+                        getObjectsType: getObjectsType,
+                        cachePolicy: cachePolicy
+                    )
+                    .sink { (response: RepositorySyncResponse<MockRepositorySyncDataModel>) in
+                        
+                        confirmation()
+                        
+                        sinkCount += 1
+                        
+                        if loggingEnabled {
+                            print("\n DID SINK")
+                            print("  COUNT: \(sinkCount)")
+                            print("  RESPONSE: \(response.objects.map{$0.id})")
+                        }
+                                                
+                        if sinkCount == 1 && expectedCachedResponseDataModelIds != nil {
+                            
+                            cachedResponseRef = response
+                            
+                            if loggingEnabled {
+                                print("\n CACHE RESPONSE RECORDED: \(response.objects.map{$0.id})")
+                            }
+                        }
+                        
+                        if sinkCount == expectedNumberOfChanges {
+                            
+                            responseRef = response
+                            
+                            if loggingEnabled {
+                                print("\n RESPONSE RECORDED: \(response.objects.map{$0.id})")
+                                print("\n SINK COMPLETE")
+                            }
+                            
+                            timeoutTask.cancel()
+                            continuation.resume(returning: ())
+                        }
+                    }
+                    .store(in: &cancellables)
+            }
+        }
+        
+        RealmRepositorySyncPersistenceTests.deleteRealmDatabaseFile(fileName: realmFileName)
+                
+        if let expectedCachedResponseDataModelIds = expectedCachedResponseDataModelIds {
+            
+            let cachedResponseDataModelIds: [String] = MockRepositorySyncDataModel.sortDataModelIds(dataModels: cachedResponseRef?.objects ?? [])
+                        
+            if loggingEnabled {
+                print("\n EXPECT")
+                print("  CACHE RESPONSE: \(cachedResponseDataModelIds)")
+                print("  TO EQUAL: \(expectedCachedResponseDataModelIds)")
+            }
+            
+            #expect(cachedResponseDataModelIds == expectedCachedResponseDataModelIds)
+        }
+        
+        let responseDataModelIds: [String] = MockRepositorySyncDataModel.sortDataModelIds(dataModels: responseRef?.objects ?? [])
+        
+        if loggingEnabled {
+            print("\n EXPECT")
+            print("  RESPONSE: \(responseDataModelIds)")
+            print("  TO EQUAL: \(expectedResponseDataModelIds)")
+        }
+        
+        #expect(responseDataModelIds == expectedResponseDataModelIds)
+    }
+    
+    // MARK: - Run Swift Test
+    
+    @available(iOS 17, *)
+    @MainActor private func runSwiftTest(argument: TestArgument, getObjectsType: RepositorySyncGetObjectsType<SwiftDatabaseQuery<MockRepositorySyncSwiftDataObject>>, cachePolicy: RepositorySyncCachePolicy, expectedNumberOfChanges: Int, triggerSecondaryExternalDataFetchWithIds: [String] = Array(), loggingEnabled: Bool = false) async {
+        
+        await runSwiftTest(
+            swiftDatabaseName: argument.swiftDatabaseName,
+            initialPersistedObjectsIds: argument.initialPersistedObjectsIds,
+            externalDataModelIds: argument.externalDataModelIds,
+            expectedCachedResponseDataModelIds: argument.expectedCachedResponseDataModelIds,
+            expectedResponseDataModelIds: argument.expectedResponseDataModelIds,
+            getObjectsType: getObjectsType,
+            cachePolicy: cachePolicy,
+            expectedNumberOfChanges: expectedNumberOfChanges,
+            triggerSecondaryExternalDataFetchWithIds: triggerSecondaryExternalDataFetchWithIds,
+            loggingEnabled: loggingEnabled
+        )
+    }
+    
+    @available(iOS 17, *)
+    @MainActor private func runSwiftTest(swiftDatabaseName: String, initialPersistedObjectsIds: [String], externalDataModelIds: [String], expectedCachedResponseDataModelIds: [String]?, expectedResponseDataModelIds: [String], getObjectsType: RepositorySyncGetObjectsType<SwiftDatabaseQuery<MockRepositorySyncSwiftDataObject>>, cachePolicy: RepositorySyncCachePolicy, expectedNumberOfChanges: Int, triggerSecondaryExternalDataFetchWithIds: [String], loggingEnabled: Bool) async {
+        
+        if loggingEnabled {
+            print("\n *** RUNNING SWIFT TEST *** \n")
+        }
+        
+        let persistence = SwiftRepositorySyncPersistenceTests.getPersistence(
+            swiftDatabaseName: swiftDatabaseName,
+            addObjectsByIds: initialPersistedObjectsIds
+        )
+        
+        let repositorySync = RepositorySync<MockRepositorySyncDataModel, SwiftDatabaseQuery>(
+            persistence: persistence
+        )
+        
+        let triggersSecondaryExternalDataFetch: Bool = triggerSecondaryExternalDataFetchWithIds.count > 0
+        
+        var cancellables: Set<AnyCancellable> = Set()
+        
+        if triggersSecondaryExternalDataFetch {
+                        
+            DispatchQueue.main.asyncAfter(deadline: .now() + Self.triggerSecondaryExternalDataFetchWithDelayForSeconds) {
+
+                // TODO: See if I can trigger another external data fetch by fetching from mock external data and writing objects to the database. ~Levi
+                
+                if loggingEnabled {
+                    print("\n PERFORMING SECONDARY EXTERNAL DATA FETCH")
+                }
+                
+                let persistence = SwiftRepositorySyncPersistenceTests.getPersistence(
+                    swiftDatabaseName: swiftDatabaseName,
+                    addObjectsByIds: []
+                )
+                
+                let additionalRepositorySync = RepositorySync<MockRepositorySyncDataModel, SwiftDatabaseQuery>(
+                    persistence: persistence
+                )
+                
+                additionalRepositorySync
+                    .getObjectsPublisher(getObjectsType: .allObjects, cachePolicy: .fetchIgnoringCacheData(requestPriority: .medium))
+                    .sink { response in
+                        if loggingEnabled {
+                            print("\n DID SINK SECONDARY DATA FETCH: \(response.objects.map{$0.id})")
+                        }
+                    }
+                    .store(in: &cancellables)
+            }
+        }
+        
+        var sinkCount: Int = 0
+        
+        var cachedResponseRef: RepositorySyncResponse<MockRepositorySyncDataModel>?
+        var responseRef: RepositorySyncResponse<MockRepositorySyncDataModel>?
+        
+        await confirmation(expectedCount: expectedNumberOfChanges) { confirmation in
+            
+            await withCheckedContinuation { continuation in
+                
+                let timeoutTask = Task {
+                    try await Task.sleep(nanoseconds: Self.runTestWaitFor)
+                    if loggingEnabled {
+                        print("\n TIMEOUT")
+                    }
+                    continuation.resume(returning: ())
+                }
+                
+                repositorySync
+                    .getObjectsPublisher(
+                        getObjectsType: getObjectsType,
+                        cachePolicy: cachePolicy
+                    )
+                    .sink { (response: RepositorySyncResponse<MockRepositorySyncDataModel>) in
+                        
+                        confirmation()
+                        
+                        sinkCount += 1
+                        
+                        if loggingEnabled {
+                            print("\n DID SINK")
+                            print("  COUNT: \(sinkCount)")
+                            print("  RESPONSE: \(response.objects.map{$0.id})")
+                        }
+                                                
+                        if sinkCount == 1 && expectedCachedResponseDataModelIds != nil {
+                            
+                            cachedResponseRef = response
+                            
+                            if loggingEnabled {
+                                print("\n CACHE RESPONSE RECORDED: \(response.objects.map{$0.id})")
+                            }
+                        }
+                        
+                        if sinkCount == expectedNumberOfChanges {
+                            
+                            responseRef = response
+                            
+                            if loggingEnabled {
+                                print("\n RESPONSE RECORDED: \(response.objects.map{$0.id})")
+                                print("\n SINK COMPLETE")
+                            }
+                            
+                            timeoutTask.cancel()
+                            continuation.resume(returning: ())
+                        }
+                    }
+                    .store(in: &cancellables)
+            }
+        }
+        
+        SwiftRepositorySyncPersistenceTests.deleteSwiftDatabase(name: swiftDatabaseName)
+                
+        if let expectedCachedResponseDataModelIds = expectedCachedResponseDataModelIds {
+            
+            let cachedResponseDataModelIds: [String] = MockRepositorySyncDataModel.sortDataModelIds(dataModels: cachedResponseRef?.objects ?? [])
+                        
+            if loggingEnabled {
+                print("\n EXPECT")
+                print("  CACHE RESPONSE: \(cachedResponseDataModelIds)")
+                print("  TO EQUAL: \(expectedCachedResponseDataModelIds)")
+            }
+            
+            #expect(cachedResponseDataModelIds == expectedCachedResponseDataModelIds)
+        }
+        
+        let responseDataModelIds: [String] = MockRepositorySyncDataModel.sortDataModelIds(dataModels: responseRef?.objects ?? [])
+        
+        if loggingEnabled {
+            print("\n EXPECT")
+            print("  RESPONSE: \(responseDataModelIds)")
+            print("  TO EQUAL: \(expectedResponseDataModelIds)")
+        }
+        
+        #expect(responseDataModelIds == expectedResponseDataModelIds)
+    }
+}
+
+
+/*
+struct RepositorySyncTests {
+    
+    private static let runTestWaitFor: UInt64 = 3_000_000_000 // 3 seconds
+    private static let mockExternalDataFetchDelayRequestForSeconds: TimeInterval = 1
+    private static let triggerSecondaryExternalDataFetchWithDelayForSeconds: TimeInterval = 1
+    private static let namePrefix: String = "name_"
+    
+    struct TestArgument {
         let swiftDatabaseName: String = "RepositorySyncTests_" + UUID().uuidString
         let initialPersistedObjectsIds: [String]
         let externalDataModelIds: [String]
@@ -1148,3 +1522,4 @@ extension RepositorySyncTests {
         return swiftDatabase
     }
 }
+*/
