@@ -17,7 +17,7 @@ class MockRepositorySyncSwiftDataModelTypes: SwiftDatabaseModelTypesInterface {
         
     }
     
-    func getModelTypes() -> any PersistentModel.Type {
-        return MockRepositorySyncSwiftDataObject.self
+    func getModelTypes() -> [any PersistentModel.Type] {
+        return [MockRepositorySyncSwiftDataObject.self]
     }
 }

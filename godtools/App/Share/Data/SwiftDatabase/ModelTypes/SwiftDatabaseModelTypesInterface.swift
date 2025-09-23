@@ -12,5 +12,5 @@ import SwiftData
 @available(iOS 17, *)
 protocol SwiftDatabaseModelTypesInterface {
     
-    func getModelTypes() -> any PersistentModel.Type
+    func getModelTypes() -> [any PersistentModel.Type]
 }
