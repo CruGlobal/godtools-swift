@@ -83,10 +83,8 @@ extension RealmRepositorySyncPersistence {
     }
     
     func getObjects(ids: [String]) -> [DataModelType] {
-        
-        let filter = NSPredicate(format: "id IN %@", ids)
-        
-        let query = RealmDatabaseQuery.filter(filter: filter)
+                
+        let query = RealmDatabaseQuery.filter(filter: getObjectsByIdsFilter(ids: ids))
         
         return getObjects(query: query)
     }
@@ -94,6 +92,10 @@ extension RealmRepositorySyncPersistence {
     private func getNumberObjects(query: RealmDatabaseQuery?) -> Int {
         
         return getPersistedObjects(realm: realmDatabase.openRealm(), query: query).count
+    }
+    
+    private func getObjectsByIdsFilter(ids: [String]) -> NSPredicate {
+        return NSPredicate(format: "id IN %@", ids)
     }
     
     private func getPersistedObjects(realm: Realm, query: RealmDatabaseQuery?) -> Results<PersistObjectType> {
@@ -118,6 +120,73 @@ extension RealmRepositorySyncPersistence {
 
 extension RealmRepositorySyncPersistence {
     
+    func writeObjects(externalObjects: [ExternalObjectType], deleteObjectsNotFoundInExternalObjects: Bool) -> [DataModelType] {
+                
+        let realm: Realm = realmDatabase.openRealm()
+        
+        var dataModels: [DataModelType] = Array()
+        
+        var objectsToAdd: [PersistObjectType] = Array()
+        
+        var objectsToRemove: [PersistObjectType]
+        
+        if deleteObjectsNotFoundInExternalObjects {
+            // store all objects in the collection
+            objectsToRemove = Array(getPersistedObjects(realm: realm, query: nil))
+        }
+        else {
+            objectsToRemove = Array()
+        }
+        
+        for externalObject in externalObjects {
+
+            if let dataModel = dataModelMapping.toDataModel(externalObject: externalObject) {
+                dataModels.append(dataModel)
+            }
+            
+            if let swiftDataObject = dataModelMapping.toPersistObject(externalObject: externalObject) {
+                
+                objectsToAdd.append(swiftDataObject)
+                
+                // added swift data object can be removed from this list so it won't be deleted from swift data
+                if deleteObjectsNotFoundInExternalObjects, let index = objectsToRemove.firstIndex(where: { $0.id == swiftDataObject.id }) {
+                    objectsToRemove.remove(at: index)
+                }
+            }
+        }
+        
+        _ = updateObjectsInRealm(
+            realm: realm,
+            objectsToAdd: objectsToAdd,
+            objectsToRemove: objectsToRemove
+        )
+        
+        return dataModels
+    }
+    
+    private func updateObjectsInRealm(realm: Realm, objectsToAdd: [PersistObjectType], objectsToRemove: [PersistObjectType]) -> [Error] {
+        
+        let errors: [Error]
+        
+        do {
+            
+            try realm.write {
+                
+                realm.add(objectsToAdd, update: .modified)
+               
+                if objectsToRemove.count > 0 {
+                    realm.delete(objectsToRemove)
+                }
+            }
+            
+            errors = Array()
+        }
+        catch let error {
+            errors = [error]
+        }
+        
+        return errors
+    }
 }
 
 // MARK: - Delete

@@ -170,11 +170,7 @@ extension SwiftRepositorySyncPersistence {
     
     func getObjects(ids: [String]) -> [DataModelType] {
         
-        let filter = #Predicate<PersistObjectType> { object in
-            ids.contains(object.id)
-        }
-        
-        let query = SwiftDatabaseQuery.filter(filter: filter)
+        let query = SwiftDatabaseQuery.filter(filter: getObjectsByIdsFilter(ids: ids))
         
         return getObjects(query: query)
     }
@@ -199,6 +195,13 @@ extension SwiftRepositorySyncPersistence {
         return query?.fetchDescriptor ?? FetchDescriptor<PersistObjectType>()
     }
     
+    private func getObjectsByIdsFilter(ids: [String]) -> Predicate<PersistObjectType> {
+        let filter = #Predicate<PersistObjectType> { object in
+            ids.contains(object.id)
+        }
+        return filter
+    }
+    
     private func getPersistedObjects(context: ModelContext, query: SwiftDatabaseQuery<PersistObjectType>?) -> [PersistObjectType] {
         
         let objects: [PersistObjectType]
@@ -220,6 +223,72 @@ extension SwiftRepositorySyncPersistence {
 @available(iOS 17, *)
 extension SwiftRepositorySyncPersistence {
     
+    func writeObjects(externalObjects: [ExternalObjectType], deleteObjectsNotFoundInExternalObjects: Bool = false) -> [DataModelType] {
+                
+        let context: ModelContext = swiftDatabase.openContext()
+        
+        var dataModels: [DataModelType] = Array()
+        
+        var objectsToAdd: [PersistObjectType] = Array()
+        
+        // store all objects in the collection
+        var objectsToRemove: [PersistObjectType]
+        
+        if deleteObjectsNotFoundInExternalObjects {
+            // store all objects in the collection
+            objectsToRemove = getPersistedObjects(context: context, query: nil)
+        }
+        else {
+            objectsToRemove = Array()
+        }
+        
+        for externalObject in externalObjects {
+
+            if let dataModel = dataModelMapping.toDataModel(externalObject: externalObject) {
+                dataModels.append(dataModel)
+            }
+            
+            if let swiftDataObject = dataModelMapping.toPersistObject(externalObject: externalObject) {
+                
+                objectsToAdd.append(swiftDataObject)
+                
+                // added swift data object can be removed from this list so it won't be deleted from swift data
+                if deleteObjectsNotFoundInExternalObjects, let index = objectsToRemove.firstIndex(where: { $0.id == swiftDataObject.id }) {
+                    objectsToRemove.remove(at: index)
+                }
+            }
+        }
+        
+        updateObjectsInSwiftDatabase(
+            context: context,
+            objectsToAdd: objectsToAdd,
+            objectsToRemove: objectsToRemove
+        )
+        
+        return dataModels
+    }
+    
+    private func updateObjectsInSwiftDatabase(context: ModelContext, objectsToAdd: [PersistObjectType], objectsToRemove: [PersistObjectType]) {
+        
+        for object in objectsToAdd {
+            context.insert(object)
+        }
+        
+        for object in objectsToRemove {
+            context.delete(object)
+        }
+        
+        guard context.hasChanges else {
+            return
+        }
+                
+        do {
+            try context.save()
+        }
+        catch let error {
+            assertionFailure("Failed to save SwiftData context with error: \(error.localizedDescription)")
+        }
+    }
 }
 
 // MARK: - Delete

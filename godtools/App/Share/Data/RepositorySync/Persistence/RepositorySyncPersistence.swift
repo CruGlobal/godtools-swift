@@ -9,15 +9,17 @@
 import Foundation
 import Combine
 
-public protocol RepositorySyncPersistence<DataModelType, QueryType> {
+public protocol RepositorySyncPersistence<DataModelType, QueryType, ExternalObjectType> {
     
     associatedtype DataModelType
     associatedtype QueryType
+    associatedtype ExternalObjectType
     
     func observeCollectionChangesPublisher() -> AnyPublisher<Void, Never>
     func getCount() -> Int
     func getObject(id: String) -> DataModelType?
     func getObjects(query: QueryType?) -> [DataModelType]
     func getObjects(ids: [String]) -> [DataModelType]
+    func writeObjects(externalObjects: [ExternalObjectType], deleteObjectsNotFoundInExternalObjects: Bool) -> [DataModelType]
     func deleteAllObjects()
 }

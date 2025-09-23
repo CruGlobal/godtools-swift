@@ -104,7 +104,12 @@ struct RepositorySyncTests {
             addObjectsByIds: initialPersistedObjectsIds
         )
         
-        let repositorySync = RepositorySync<MockRepositorySyncDataModel, RealmDatabaseQuery>(
+        let externalDataFetch = Self.getExternalDataFetch(
+            externalDataModelIds: externalDataModelIds
+        )
+        
+        let repositorySync = RepositorySync<MockRepositorySyncDataModel, MockRepositorySyncExternalDataFetch, RealmDatabaseQuery>(
+            externalDataFetch: externalDataFetch,
             persistence: persistence
         )
         
@@ -127,7 +132,12 @@ struct RepositorySyncTests {
                     addObjectsByIds: []
                 )
                 
-                let additionalRepositorySync = RepositorySync<MockRepositorySyncDataModel, RealmDatabaseQuery>(
+                let externalDataFetch = Self.getExternalDataFetch(
+                    externalDataModelIds: triggerSecondaryExternalDataFetchWithIds
+                )
+                
+                let additionalRepositorySync = RepositorySync<MockRepositorySyncDataModel, MockRepositorySyncExternalDataFetch, RealmDatabaseQuery>(
+                    externalDataFetch: externalDataFetch,
                     persistence: persistence
                 )
                 
@@ -259,7 +269,12 @@ struct RepositorySyncTests {
             addObjectsByIds: initialPersistedObjectsIds
         )
         
-        let repositorySync = RepositorySync<MockRepositorySyncDataModel, SwiftDatabaseQuery>(
+        let externalDataFetch = Self.getExternalDataFetch(
+            externalDataModelIds: externalDataModelIds
+        )
+        
+        let repositorySync = RepositorySync<MockRepositorySyncDataModel, MockRepositorySyncExternalDataFetch, SwiftDatabaseQuery>(
+            externalDataFetch: externalDataFetch,
             persistence: persistence
         )
         
@@ -282,7 +297,12 @@ struct RepositorySyncTests {
                     addObjectsByIds: []
                 )
                 
-                let additionalRepositorySync = RepositorySync<MockRepositorySyncDataModel, SwiftDatabaseQuery>(
+                let externalDataFetch = Self.getExternalDataFetch(
+                    externalDataModelIds: triggerSecondaryExternalDataFetchWithIds
+                )
+                
+                let additionalRepositorySync = RepositorySync<MockRepositorySyncDataModel, MockRepositorySyncExternalDataFetch, SwiftDatabaseQuery>(
+                    externalDataFetch: externalDataFetch,
                     persistence: persistence
                 )
                 
@@ -381,6 +401,26 @@ struct RepositorySyncTests {
         }
         
         #expect(responseDataModelIds == expectedResponseDataModelIds)
+    }
+}
+
+extension RepositorySyncTests {
+    
+    private static func getExternalDataFetch(externalDataModelIds: [String]) -> MockRepositorySyncExternalDataFetch {
+        
+        let externalDataModels: [MockRepositorySyncDataModel] = externalDataModelIds.map {
+            MockRepositorySyncDataModel(
+                id: $0,
+                name: "name_" + $0
+            )
+        }
+        
+        let externalDataFetch = MockRepositorySyncExternalDataFetch(
+            objects: externalDataModels,
+            delayRequestSeconds: Self.mockExternalDataFetchDelayRequestForSeconds
+        )
+        
+        return externalDataFetch
     }
 }
 

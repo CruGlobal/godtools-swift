@@ -8,15 +8,84 @@
 
 import Foundation
 import Combine
+import RequestOperation
 
-class RepositorySync<DataModelType, PersistenceQueryType> {
+class RepositorySync<DataModelType, ExternalDataFetchType: RepositorySyncExternalDataFetchInterface, PersistenceQueryType> {
     
-    let persistence: any RepositorySyncPersistence<DataModelType, PersistenceQueryType>
+    private let externalDataFetch: ExternalDataFetchType
     
-    init(persistence: any RepositorySyncPersistence<DataModelType, PersistenceQueryType>) {
+    let persistence: any RepositorySyncPersistence<DataModelType, PersistenceQueryType, ExternalDataFetchType.DataModel>
+    
+    private var cancellables: Set<AnyCancellable> = Set()
+    
+    init(externalDataFetch: ExternalDataFetchType, persistence: any RepositorySyncPersistence<DataModelType, PersistenceQueryType, ExternalDataFetchType.DataModel>) {
         
+        self.externalDataFetch = externalDataFetch
         self.persistence = persistence
     }
+}
+
+// MARK: - External Data Fetch
+
+extension RepositorySync {
+    
+    private func fetchExternalObjects(getObjectsType: RepositorySyncGetObjectsType<PersistenceQueryType>, requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<ExternalDataFetchType.DataModel>, Never>  {
+        
+        switch getObjectsType {
+        case .allObjects:
+            return externalDataFetch
+                .getObjectsPublisher(requestPriority: requestPriority)
+                .eraseToAnyPublisher()
+            
+        case .objectsWithQuery( _):
+            return externalDataFetch
+                .getObjectsPublisher(requestPriority: requestPriority)
+                .eraseToAnyPublisher()
+            
+        case .object(let id):
+            return externalDataFetch
+                .getObjectPublisher(id: id, requestPriority: requestPriority)
+                .eraseToAnyPublisher()
+        }
+    }
+    
+    private func makeSinkingfetchAndStoreObjectsFromExternalDataFetch(getObjectsType: RepositorySyncGetObjectsType<PersistenceQueryType>, requestPriority: RequestPriority) {
+        
+        fetchAndStoreObjectsFromExternalDataFetchPublisher(
+            getObjectsType: getObjectsType,
+            requestPriority: requestPriority
+        )
+        .sink { (response: RepositorySyncResponse<DataModelType>) in
+            
+        }
+        .store(in: &cancellables)
+    }
+    
+    private func fetchAndStoreObjectsFromExternalDataFetchPublisher(getObjectsType: RepositorySyncGetObjectsType<PersistenceQueryType>, requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
+                
+        return fetchExternalObjects(getObjectsType: getObjectsType, requestPriority: requestPriority)
+            .map { (getObjectsResponse: RepositorySyncResponse<ExternalDataFetchType.DataModel>) in
+                return self.storeExternalObjectsToPersistence(
+                    externalObjects: getObjectsResponse.objects
+                )
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    public func storeExternalObjectsToPersistence(externalObjects: [ExternalDataFetchType.DataModel]) -> RepositorySyncResponse<DataModelType> {
+        
+        let dataModels: [DataModelType] = persistence.writeObjects(
+            externalObjects: externalObjects,
+            deleteObjectsNotFoundInExternalObjects: false
+        )
+        
+        return RepositorySyncResponse<DataModelType>(objects: dataModels, errors: [])
+    }
+}
+
+// MARK: - Get Objects
+
+extension RepositorySync {
     
     private func getCachedDataModelsByGetObjectsType(getObjectsType: RepositorySyncGetObjectsType<PersistenceQueryType>) -> [DataModelType] {
         
@@ -82,11 +151,11 @@ class RepositorySync<DataModelType, PersistenceQueryType> {
 //                requestPriority: requestPriority
 //            )
 //            .map { (response: RepositorySyncResponse<DataModelType>) in
-//            
+//
 //                let dataModels: [DataModelType] = self.getCachedDataModelsByGetObjectsType(
 //                    getObjectsType: getObjectsType
 //                )
-//                
+//
 //                return response.copy(objects: dataModels)
 //            }
 //            .eraseToAnyPublisher()
@@ -117,20 +186,20 @@ class RepositorySync<DataModelType, PersistenceQueryType> {
             return Just(RepositorySyncResponse(objects: [], errors: [])).eraseToAnyPublisher() // TODO: Implmement. ~Levi
             
 //            if observeChanges {
-//                        
+//
 //                let numberOfCachedObjects: Int = getNumberOfCachedObjects()
-//                
+//
 //                if numberOfCachedObjects == 0 {
-//                    
+//
 //                    makeSinkingfetchAndStoreObjectsFromExternalDataFetch(
 //                        getObjectsType: getObjectsType,
 //                        requestPriority: requestPriority
 //                    )
 //                }
-//                
+//
 //                return observeSwiftDataCollectionChangesPublisher()
 //                .map { (onChange: Void) in
-//                    
+//
 //                    return self.getCachedDataModelsByGetObjectsTypeToResponse(
 //                        getObjectsType: getObjectsType
 //                    )
@@ -138,25 +207,25 @@ class RepositorySync<DataModelType, PersistenceQueryType> {
 //                .eraseToAnyPublisher()
 //            }
 //            else {
-//                
+//
 //                if getNumberOfCachedObjects() == 0 {
-//                    
+//
 //                    return fetchAndStoreObjectsFromExternalDataFetchPublisher(
 //                        getObjectsType: getObjectsType,
 //                        requestPriority: requestPriority
 //                    )
 //                    .map { (response: RepositorySyncResponse<DataModelType>) in
-//                    
+//
 //                        let dataModels: [DataModelType] = self.getCachedDataModelsByGetObjectsType(
 //                            getObjectsType: getObjectsType
 //                        )
-//                        
+//
 //                        return response.copy(objects: dataModels)
 //                    }
 //                    .eraseToAnyPublisher()
 //                }
 //                else {
-//                    
+//
 //                    return getCachedDataModelsByGetObjectsTypeToResponsePublisher(
 //                        getObjectsType: getObjectsType
 //                    )
@@ -171,10 +240,10 @@ class RepositorySync<DataModelType, PersistenceQueryType> {
 //                getObjectsType: getObjectsType,
 //                requestPriority: requestPriority
 //            )
-//            
+//
 //            return observeSwiftDataCollectionChangesPublisher()
 //            .map { (onChange: Void) in
-//                
+//
 //                return self.getCachedDataModelsByGetObjectsTypeToResponse(
 //                    getObjectsType: getObjectsType
 //                )
