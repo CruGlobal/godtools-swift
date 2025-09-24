@@ -13,6 +13,13 @@ import SwiftData
 
 struct SwiftRepositorySyncPersistenceTests {
     
+    struct TestArgument {
+        let swiftDatabaseName: String = "RepositorySyncTests_swift_" + UUID().uuidString
+        let initialPersistedObjectsIds: [String]
+        let externalObjectIds: [String]
+        let expectedDataModelIds: [String]
+    }
+    
     // MARK: - Read Tests
     
     @available(iOS, introduced: 17.0)
@@ -28,7 +35,7 @@ struct SwiftRepositorySyncPersistenceTests {
             addObjectsByIds: initialPersistedObjectsIds
         )
         
-        let count: Int = persistence.getCount()
+        let count: Int = persistence.getObjectCount()
         
         Self.deleteSwiftDatabase(name: swiftDatabaseName)
         
@@ -101,6 +108,99 @@ struct SwiftRepositorySyncPersistenceTests {
         #expect(dataModels.count(where: {$0.id == "0"}) == 1)
         #expect(dataModels.count(where: {$0.id == "1"}) == 1)
         #expect(dataModels.count(where: {$0.id == "2"}) == 1)
+    }
+    
+    // MARK: - Write Tests
+    
+    @available(iOS, introduced: 17.0)
+    @Test(arguments: [
+        TestArgument(
+            initialPersistedObjectsIds: ["5", "3", "2", "1", "4", "0", "6"],
+            externalObjectIds: ["1", "0", "9", "8"],
+            expectedDataModelIds: ["0", "1", "2", "3", "4", "5", "6", "8", "9"]
+        ),
+        TestArgument(
+            initialPersistedObjectsIds: [],
+            externalObjectIds: ["3", "2", "1", "8", "9"],
+            expectedDataModelIds: ["1", "2", "3", "8", "9"]
+        ),
+        TestArgument(
+            initialPersistedObjectsIds: ["5", "3", "2", "1", "4", "0", "6"],
+            externalObjectIds: ["2", "1"],
+            expectedDataModelIds: ["0", "1", "2", "3", "4", "5", "6"]
+        )
+        ,
+        TestArgument(
+            initialPersistedObjectsIds: ["5", "3", "2", "1", "4", "0", "6"],
+            externalObjectIds: [],
+            expectedDataModelIds: ["0", "1", "2", "3", "4", "5", "6"]
+        )
+    ])
+    @MainActor func writesExternalObjects(argument: TestArgument) async {
+                
+        let persistence = Self.getPersistence(
+            swiftDatabaseName: argument.swiftDatabaseName,
+            addObjectsByIds: argument.initialPersistedObjectsIds
+        )
+        
+        let externalObjects: [MockRepositorySyncDataModel] = MockRepositorySyncDataModel.getDataModelsFromIds(ids: argument.externalObjectIds)
+        
+        let writtenObjects: [MockRepositorySyncDataModel] = persistence.writeObjects(
+            externalObjects: externalObjects,
+            deleteObjectsNotFoundInExternalObjects: false
+        )
+                
+        #expect(writtenObjects.count == externalObjects.count)
+        #expect(argument.externalObjectIds.sorted { $0 < $1 } == MockRepositorySyncDataModel.sortDataModelIds(dataModels: writtenObjects))
+        #expect(argument.expectedDataModelIds == MockRepositorySyncDataModel.sortDataModelIds(dataModels: persistence.getObjects()))
+        
+        Self.deleteSwiftDatabase(name: argument.swiftDatabaseName)
+    }
+    
+    @available(iOS, introduced: 17.0)
+    @Test(arguments: [
+        TestArgument(
+            initialPersistedObjectsIds: ["5", "3", "2", "1", "4", "0", "6"],
+            externalObjectIds: ["1", "0", "9", "8"],
+            expectedDataModelIds: ["0", "1", "8", "9"]
+        ),
+        TestArgument(
+            initialPersistedObjectsIds: [],
+            externalObjectIds: ["3", "2", "1", "8", "9"],
+            expectedDataModelIds: ["1", "2", "3", "8", "9"]
+        ),
+        TestArgument(
+            initialPersistedObjectsIds: ["5", "3", "2", "1", "4", "0", "6"],
+            externalObjectIds: ["2", "1"],
+            expectedDataModelIds: ["1", "2"]
+        )
+        ,
+        TestArgument(
+            initialPersistedObjectsIds: ["5", "3", "2", "1", "4", "0", "6"],
+            externalObjectIds: [],
+            expectedDataModelIds: []
+        )
+    ])
+    @MainActor func writesExternalObjectsAndDeletesNonExistingExternalObjects(argument: TestArgument) async {
+                
+        let persistence = Self.getPersistence(
+            swiftDatabaseName: argument.swiftDatabaseName,
+            addObjectsByIds: argument.initialPersistedObjectsIds
+        )
+        
+        let externalObjects: [MockRepositorySyncDataModel] = MockRepositorySyncDataModel.getDataModelsFromIds(ids: argument.externalObjectIds)
+        
+        let writtenObjects: [MockRepositorySyncDataModel] = persistence.writeObjects(
+            externalObjects: externalObjects,
+            deleteObjectsNotFoundInExternalObjects: true
+        )
+                
+        #expect(writtenObjects.count == externalObjects.count)
+        #expect(persistence.getObjectCount() == writtenObjects.count)
+        #expect(argument.expectedDataModelIds == MockRepositorySyncDataModel.sortDataModelIds(dataModels: writtenObjects))
+        #expect(argument.expectedDataModelIds == MockRepositorySyncDataModel.sortDataModelIds(dataModels: persistence.getObjects()))
+        
+        Self.deleteSwiftDatabase(name: argument.swiftDatabaseName)
     }
     
     // MARK: - Delete Tests

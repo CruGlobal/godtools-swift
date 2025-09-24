@@ -49,7 +49,7 @@ extension RealmRepositorySyncPersistence {
 
 extension RealmRepositorySyncPersistence {
     
-    func getCount() -> Int {
+    func getObjectCount() -> Int {
         
         getNumberObjects(query: nil)
     }

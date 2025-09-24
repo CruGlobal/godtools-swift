@@ -136,7 +136,7 @@ extension SwiftRepositorySyncPersistence {
 @available(iOS 17, *)
 extension SwiftRepositorySyncPersistence {
     
-    func getCount() -> Int {
+    func getObjectCount() -> Int {
         
         return getNumberOfObjects(query: nil)
     }
