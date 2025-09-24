@@ -295,18 +295,22 @@ extension RealmRepositorySyncPersistenceTests {
     
     static func deleteRealmDatabaseFile(fileName: String) {
         
-        DispatchQueue.main.async {
-            
-            let databaseConfiguration: RealmDatabaseConfiguration = Self.getRealmDatabaseConfiguration(
-                fileName: fileName
-            )
-            
-            do {
-                _ = try Realm.deleteFiles(for: databaseConfiguration.getRealmConfig())
-            }
-            catch let error {
-                assertionFailure(error.localizedDescription)
-            }
+        let realmDatabase = Self.getRealmDatabase(fileName: fileName, addObjects: [])
+        
+        _ = realmDatabase.deleteAllObjects()
+        
+        // TODO: This is erroring out when trying to delete realm files due to an open realm instance.  However, no realms are open and in memory at this point. ~Levi
+        // Similar issue: (https://github.com/realm/realm-dart/issues/1783)
+        /*
+        let databaseConfiguration: RealmDatabaseConfiguration = Self.getRealmDatabaseConfiguration(
+            fileName: fileName
+        )
+        
+        do {
+            _ = try Realm.deleteFiles(for: databaseConfiguration.getRealmConfig())
         }
+        catch let error {
+            assertionFailure(error.localizedDescription)
+        }*/
     }
 }
