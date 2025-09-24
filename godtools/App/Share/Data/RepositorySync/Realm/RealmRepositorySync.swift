@@ -113,7 +113,7 @@ extension RealmRepositorySync {
 
 extension RealmRepositorySync {
     
-    private func fetchExternalObjects(getObjectsType: RealmRepositorySyncGetObjectsType, requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<ExternalDataFetchType.DataModel>, Never>  {
+    private func fetchExternalObjects(getObjectsType: RepositorySyncGetObjectsType, requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<ExternalDataFetchType.DataModel>, Never>  {
         
         switch getObjectsType {
         case .allObjects:
@@ -128,7 +128,7 @@ extension RealmRepositorySync {
         }
     }
     
-    private func makeSinkingfetchAndStoreObjectsFromExternalDataFetch(getObjectsType: RealmRepositorySyncGetObjectsType, requestPriority: RequestPriority, updatePolicy: Realm.UpdatePolicy) {
+    private func makeSinkingfetchAndStoreObjectsFromExternalDataFetch(getObjectsType: RepositorySyncGetObjectsType, requestPriority: RequestPriority, updatePolicy: Realm.UpdatePolicy) {
         
         fetchAndStoreObjectsFromExternalDataFetchPublisher(
             getObjectsType: getObjectsType,
@@ -141,7 +141,7 @@ extension RealmRepositorySync {
         .store(in: &cancellables)
     }
     
-    private func fetchAndStoreObjectsFromExternalDataFetchPublisher(getObjectsType: RealmRepositorySyncGetObjectsType, requestPriority: RequestPriority, updatePolicy: Realm.UpdatePolicy) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
+    private func fetchAndStoreObjectsFromExternalDataFetchPublisher(getObjectsType: RepositorySyncGetObjectsType, requestPriority: RequestPriority, updatePolicy: Realm.UpdatePolicy) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
                 
         return fetchExternalObjects(getObjectsType: getObjectsType, requestPriority: requestPriority)
             .map { (getObjectsResponse: RepositorySyncResponse<ExternalDataFetchType.DataModel>) in
@@ -239,7 +239,7 @@ extension RealmRepositorySync {
 
 extension RealmRepositorySync {
     
-    private func getCachedDataModelsByGetObjectsType(getObjectsType: RealmRepositorySyncGetObjectsType) -> [DataModelType] {
+    private func getCachedDataModelsByGetObjectsType(getObjectsType: RepositorySyncGetObjectsType) -> [DataModelType] {
         
         let dataModels: [DataModelType]
         
@@ -260,7 +260,7 @@ extension RealmRepositorySync {
         return dataModels
     }
     
-    private func getCachedDataModelsByGetObjectsTypeToResponse(getObjectsType: RealmRepositorySyncGetObjectsType) -> RepositorySyncResponse<DataModelType> {
+    private func getCachedDataModelsByGetObjectsTypeToResponse(getObjectsType: RepositorySyncGetObjectsType) -> RepositorySyncResponse<DataModelType> {
         
         let dataModels: [DataModelType] = getCachedDataModelsByGetObjectsType(
             getObjectsType: getObjectsType
@@ -274,7 +274,7 @@ extension RealmRepositorySync {
         return response
     }
     
-    private func getCachedDataModelsByGetObjectsTypeToResponsePublisher(getObjectsType: RealmRepositorySyncGetObjectsType) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
+    private func getCachedDataModelsByGetObjectsTypeToResponsePublisher(getObjectsType: RepositorySyncGetObjectsType) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
         
         return Just(getCachedDataModelsByGetObjectsTypeToResponse(getObjectsType: getObjectsType))
             .eraseToAnyPublisher()
@@ -288,7 +288,7 @@ extension RealmRepositorySync {
         -
      */
     
-    public func getObjectsPublisher(getObjectsType: RealmRepositorySyncGetObjectsType, cachePolicy: RepositorySyncCachePolicy, updatePolicy: Realm.UpdatePolicy = .modified) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
+    public func getObjectsPublisher(getObjectsType: RepositorySyncGetObjectsType, cachePolicy: RepositorySyncCachePolicy, updatePolicy: Realm.UpdatePolicy = .modified) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
         
         let realm: Realm = realmDatabase.openRealm()
         
