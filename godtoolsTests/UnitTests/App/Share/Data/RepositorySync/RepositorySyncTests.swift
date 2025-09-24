@@ -229,8 +229,7 @@ struct RepositorySyncTests {
             getObjectsType: .allObjects,
             cachePolicy: .returnCacheDataDontFetch(observeChanges: true),
             expectedNumberOfChanges: 2,
-            triggerSecondaryExternalDataFetchWithIds: ["8", "1", "0"],
-            loggingEnabled: true
+            triggerSecondaryExternalDataFetchWithIds: ["8", "1", "0"]
         )
         
         if #available(iOS 17, *) {
