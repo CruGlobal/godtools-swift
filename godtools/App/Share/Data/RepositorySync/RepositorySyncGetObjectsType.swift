@@ -8,8 +8,7 @@
 
 import Foundation
 
-public enum RepositorySyncGetObjectsType<PersistenceQueryType> {
+public enum RepositorySyncGetObjectsType {
     case allObjects
-    case objectsWithQuery(query: PersistenceQueryType?)
     case object(id: String)
 }

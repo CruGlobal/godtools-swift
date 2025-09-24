@@ -160,46 +160,6 @@ struct RepositorySyncTests {
         }
     }
     
-    // MARK: - Test Cache Policy (Ignoring Cache Data) - Objects With Query
-    
-    @Test(arguments: [
-        TestArgument(
-            initialPersistedObjectsIds: ["0", "1"],
-            externalDataModelIds: ["5", "6", "7", "8", "9"],
-            expectedCachedResponseDataModelIds: nil,
-            expectedResponseDataModelIds: ["5"]
-        )
-    ])
-    @MainActor func ignoreCacheDataWillFilter(argument: TestArgument) async {
-        
-        let filter = NSPredicate(format: "\(#keyPath(MockRepositorySyncRealmObject.name)) == %@", "\(Self.namePrefix)5")
-        
-        await runRealmTest(
-            argument: argument,
-            getObjectsType: .objectsWithQuery(query: RealmDatabaseQuery.filter(filter: filter)),
-            cachePolicy: .fetchIgnoringCacheData(requestPriority: .medium),
-            expectedNumberOfChanges: 1,
-            loggingEnabled: false
-        )
-        
-        if #available(iOS 17, *) {
-            
-            let nameToMatch: String = Self.namePrefix + "5"
-            
-            let filter = #Predicate<MockRepositorySyncSwiftDataObject> { object in
-                object.name == nameToMatch
-            }
-            
-            await runSwiftTest(
-                argument: argument,
-                getObjectsType: .objectsWithQuery(query: SwiftDatabaseQuery.filter(filter: filter)),
-                cachePolicy: .fetchIgnoringCacheData(requestPriority: .medium),
-                expectedNumberOfChanges: 1,
-                loggingEnabled: false
-            )
-        }
-    }
-    
     // MARK: - Test Cache Policy (Return Cache Data Don't Fetch) - Objects
     
     @Test(arguments: [
@@ -851,47 +811,9 @@ struct RepositorySyncTests {
         }
     }
     
-    // MARK: - Test Cache Policy (Return Cache Data And Fetch) - Objects With Query
-    
-    @Test(arguments: [
-        TestArgument(
-            initialPersistedObjectsIds: ["0", "1", "5"],
-            externalDataModelIds: ["5", "6", "7", "8", "9"],
-            expectedCachedResponseDataModelIds: ["5"],
-            expectedResponseDataModelIds: ["5"]
-        )
-    ])
-    @MainActor func returnCacheDataAndFetchWillFilter(argument: TestArgument) async {
-        
-        let filter = NSPredicate(format: "\(#keyPath(MockRepositorySyncRealmObject.name)) == %@", "\(Self.namePrefix)5")
-        
-        await runRealmTest(
-            argument: argument,
-            getObjectsType: .objectsWithQuery(query: RealmDatabaseQuery.filter(filter: filter)),
-            cachePolicy: .returnCacheDataAndFetch(requestPriority: .medium),
-            expectedNumberOfChanges: 2
-        )
-        
-        if #available(iOS 17, *) {
-            
-            let nameToMatch: String = Self.namePrefix + "5"
-            
-            let filter = #Predicate<MockRepositorySyncSwiftDataObject> { object in
-                object.name == nameToMatch
-            }
-            
-            await runSwiftTest(
-                argument: argument,
-                getObjectsType: .objectsWithQuery(query: SwiftDatabaseQuery.filter(filter: filter)),
-                cachePolicy: .returnCacheDataAndFetch(requestPriority: .medium),
-                expectedNumberOfChanges: 2
-            )
-        }
-    }
-    
     // MARK: - Run Realm Test
     
-    @MainActor private func runRealmTest(argument: TestArgument, getObjectsType: RepositorySyncGetObjectsType<RealmDatabaseQuery>, cachePolicy: RepositorySyncCachePolicy, expectedNumberOfChanges: Int, triggerSecondaryExternalDataFetchWithIds: [String] = Array(), loggingEnabled: Bool = false) async {
+    @MainActor private func runRealmTest(argument: TestArgument, getObjectsType: RepositorySyncGetObjectsType, cachePolicy: RepositorySyncCachePolicy, expectedNumberOfChanges: Int, triggerSecondaryExternalDataFetchWithIds: [String] = Array(), loggingEnabled: Bool = false) async {
         
         await runRealmTest(
             realmFileName: argument.realmFileName,
@@ -907,7 +829,7 @@ struct RepositorySyncTests {
         )
     }
     
-    @MainActor private func runRealmTest(realmFileName: String, initialPersistedObjectsIds: [String], externalDataModelIds: [String], expectedCachedResponseDataModelIds: [String]?, expectedResponseDataModelIds: [String], getObjectsType: RepositorySyncGetObjectsType<RealmDatabaseQuery>, cachePolicy: RepositorySyncCachePolicy, expectedNumberOfChanges: Int, triggerSecondaryExternalDataFetchWithIds: [String], loggingEnabled: Bool) async {
+    @MainActor private func runRealmTest(realmFileName: String, initialPersistedObjectsIds: [String], externalDataModelIds: [String], expectedCachedResponseDataModelIds: [String]?, expectedResponseDataModelIds: [String], getObjectsType: RepositorySyncGetObjectsType, cachePolicy: RepositorySyncCachePolicy, expectedNumberOfChanges: Int, triggerSecondaryExternalDataFetchWithIds: [String], loggingEnabled: Bool) async {
         
         if loggingEnabled {
             print("\n *** RUNNING REALM TEST *** \n")
@@ -1054,7 +976,7 @@ struct RepositorySyncTests {
     // MARK: - Run Swift Test
     
     @available(iOS 17, *)
-    @MainActor private func runSwiftTest(argument: TestArgument, getObjectsType: RepositorySyncGetObjectsType<SwiftDatabaseQuery<MockRepositorySyncSwiftDataObject>>, cachePolicy: RepositorySyncCachePolicy, expectedNumberOfChanges: Int, triggerSecondaryExternalDataFetchWithIds: [String] = Array(), loggingEnabled: Bool = false) async {
+    @MainActor private func runSwiftTest(argument: TestArgument, getObjectsType: RepositorySyncGetObjectsType, cachePolicy: RepositorySyncCachePolicy, expectedNumberOfChanges: Int, triggerSecondaryExternalDataFetchWithIds: [String] = Array(), loggingEnabled: Bool = false) async {
         
         await runSwiftTest(
             swiftDatabaseName: argument.swiftDatabaseName,
@@ -1071,7 +993,7 @@ struct RepositorySyncTests {
     }
     
     @available(iOS 17, *)
-    @MainActor private func runSwiftTest(swiftDatabaseName: String, initialPersistedObjectsIds: [String], externalDataModelIds: [String], expectedCachedResponseDataModelIds: [String]?, expectedResponseDataModelIds: [String], getObjectsType: RepositorySyncGetObjectsType<SwiftDatabaseQuery<MockRepositorySyncSwiftDataObject>>, cachePolicy: RepositorySyncCachePolicy, expectedNumberOfChanges: Int, triggerSecondaryExternalDataFetchWithIds: [String], loggingEnabled: Bool) async {
+    @MainActor private func runSwiftTest(swiftDatabaseName: String, initialPersistedObjectsIds: [String], externalDataModelIds: [String], expectedCachedResponseDataModelIds: [String]?, expectedResponseDataModelIds: [String], getObjectsType: RepositorySyncGetObjectsType, cachePolicy: RepositorySyncCachePolicy, expectedNumberOfChanges: Int, triggerSecondaryExternalDataFetchWithIds: [String], loggingEnabled: Bool) async {
         
         if loggingEnabled {
             print("\n *** RUNNING SWIFT TEST *** \n")

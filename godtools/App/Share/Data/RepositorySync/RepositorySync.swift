@@ -29,15 +29,10 @@ class RepositorySync<DataModelType, ExternalDataFetchType: RepositorySyncExterna
 
 extension RepositorySync {
     
-    private func fetchExternalObjects(getObjectsType: RepositorySyncGetObjectsType<PersistenceQueryType>, requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<ExternalDataFetchType.DataModel>, Never>  {
+    private func fetchExternalObjects(getObjectsType: RepositorySyncGetObjectsType, requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<ExternalDataFetchType.DataModel>, Never>  {
         
         switch getObjectsType {
         case .allObjects:
-            return externalDataFetch
-                .getObjectsPublisher(requestPriority: requestPriority)
-                .eraseToAnyPublisher()
-            
-        case .objectsWithQuery( _):
             return externalDataFetch
                 .getObjectsPublisher(requestPriority: requestPriority)
                 .eraseToAnyPublisher()
@@ -49,7 +44,7 @@ extension RepositorySync {
         }
     }
     
-    private func makeSinkingfetchAndStoreObjectsFromExternalDataFetch(getObjectsType: RepositorySyncGetObjectsType<PersistenceQueryType>, requestPriority: RequestPriority) {
+    private func makeSinkingfetchAndStoreObjectsFromExternalDataFetch(getObjectsType: RepositorySyncGetObjectsType, requestPriority: RequestPriority) {
         
         fetchAndStoreObjectsFromExternalDataFetchPublisher(
             getObjectsType: getObjectsType,
@@ -61,7 +56,7 @@ extension RepositorySync {
         .store(in: &cancellables)
     }
     
-    private func fetchAndStoreObjectsFromExternalDataFetchPublisher(getObjectsType: RepositorySyncGetObjectsType<PersistenceQueryType>, requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
+    private func fetchAndStoreObjectsFromExternalDataFetchPublisher(getObjectsType: RepositorySyncGetObjectsType, requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
                 
         return fetchExternalObjects(getObjectsType: getObjectsType, requestPriority: requestPriority)
             .map { (getObjectsResponse: RepositorySyncResponse<ExternalDataFetchType.DataModel>) in
@@ -87,7 +82,7 @@ extension RepositorySync {
 
 extension RepositorySync {
     
-    private func getCachedDataModelsByGetObjectsType(getObjectsType: RepositorySyncGetObjectsType<PersistenceQueryType>) -> [DataModelType] {
+    private func getCachedDataModelsByGetObjectsType(getObjectsType: RepositorySyncGetObjectsType) -> [DataModelType] {
         
         let dataModels: [DataModelType]
         
@@ -95,9 +90,6 @@ extension RepositorySync {
         
         case .allObjects:
             dataModels = persistence.getObjects(query: nil)
-        
-        case .objectsWithQuery(let query):
-            dataModels = persistence.getObjects(query: query)
             
         case .object(let id):
             if let dataModel = persistence.getObject(id: id) {
@@ -111,7 +103,7 @@ extension RepositorySync {
         return dataModels
     }
     
-    private func getCachedDataModelsByGetObjectsTypeToResponse(getObjectsType: RepositorySyncGetObjectsType<PersistenceQueryType>) -> RepositorySyncResponse<DataModelType> {
+    private func getCachedDataModelsByGetObjectsTypeToResponse(getObjectsType: RepositorySyncGetObjectsType) -> RepositorySyncResponse<DataModelType> {
         
         let dataModels: [DataModelType] = getCachedDataModelsByGetObjectsType(
             getObjectsType: getObjectsType
@@ -125,7 +117,7 @@ extension RepositorySync {
         return response
     }
     
-    private func getCachedDataModelsByGetObjectsTypeToResponsePublisher(getObjectsType: RepositorySyncGetObjectsType<PersistenceQueryType>) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
+    private func getCachedDataModelsByGetObjectsTypeToResponsePublisher(getObjectsType: RepositorySyncGetObjectsType) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
         
         return Just(getCachedDataModelsByGetObjectsTypeToResponse(getObjectsType: getObjectsType))
             .eraseToAnyPublisher()
@@ -136,7 +128,7 @@ extension RepositorySync {
         - How do we handle more complex external data fetching?  For instance, a url request could contain query parameters and http body. Do we force that on subclasses of repository sync?  Do we provide methods for subclasses to hook into for observing, pushing data models for syncing, etc?
      */
     
-    public func getObjectsPublisher(getObjectsType: RepositorySyncGetObjectsType<PersistenceQueryType>, cachePolicy: RepositorySyncCachePolicy) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
+    public func getObjectsPublisher(getObjectsType: RepositorySyncGetObjectsType, cachePolicy: RepositorySyncCachePolicy) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {
                 
         switch cachePolicy {
             

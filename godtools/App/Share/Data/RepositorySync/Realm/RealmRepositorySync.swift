@@ -121,11 +121,6 @@ extension RealmRepositorySync {
                 .getObjectsPublisher(requestPriority: requestPriority)
                 .eraseToAnyPublisher()
             
-        case .objectsWithQuery( _):
-            return externalDataFetch
-                .getObjectsPublisher(requestPriority: requestPriority)
-                .eraseToAnyPublisher()
-            
         case .object(let id):
             return externalDataFetch
                 .getObjectPublisher(id: id, requestPriority: requestPriority)
@@ -252,9 +247,6 @@ extension RealmRepositorySync {
         
         case .allObjects:
             dataModels = getCachedObjectsToDataModels(databaseQuery: nil)
-        
-        case .objectsWithQuery(let databaseQuery):
-            dataModels = getCachedObjectsToDataModels(databaseQuery: databaseQuery)
             
         case .object(let id):
             if let dataModel = getCachedObjectToDataModel(primaryKey: id) {
