@@ -298,7 +298,7 @@ extension GetTranslatedToolLanguageAvailabilityTests {
     }
     
     private static func queryLanguage(id: String, testsDiContainer: TestsDiContainer) -> LanguageDataModel? {
-        return testsDiContainer.dataLayer.getLanguagesRepository().getCachedObject(id: id)
+        return testsDiContainer.dataLayer.getLanguagesRepository().persistence.getObject(id: id)
     }
     
     private static func getLocalizationServices() -> MockLocalizationServices {
