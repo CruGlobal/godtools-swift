@@ -10,11 +10,12 @@ import Foundation
 import Combine
 import RequestOperation
 
-class ResourcesRepository: RealmRepositorySync<ResourceDataModel, MobileContentResourcesApi, RealmResource> {
+class ResourcesRepository: RepositorySync<ResourceDataModel, MobileContentResourcesApi> {
             
     private static let syncInvalidatorIdForResourcesPlustLatestTranslationsAndAttachments: String = "resourcesPlusLatestTranslationAttachments.syncInvalidator.id"
     
     private let api: MobileContentResourcesApi
+    private let realmPersistence: RealmRepositorySyncPersistence<ResourceDataModel, ResourceCodable, RealmResource>
     private let cache: RealmResourcesCache
     private let attachmentsRepository: AttachmentsRepository
     private let languagesRepository: LanguagesRepository
@@ -28,16 +29,22 @@ class ResourcesRepository: RealmRepositorySync<ResourceDataModel, MobileContentR
         self.languagesRepository = languagesRepository
         self.userDefaultsCache = userDefaultsCache
         
+        let realmPersistence = RealmRepositorySyncPersistence<ResourceDataModel, ResourceCodable, RealmResource>(
+            realmDatabase: realmDatabase,
+            dataModelMapping: RealmResourceDataModelMapping()
+        )
+        
+        self.realmPersistence = realmPersistence
+        
         super.init(
             externalDataFetch: api,
-            realmDatabase: realmDatabase,
-            dataModelMapping: ResourcesDataModelMapping()
+            persistence: realmPersistence
         )
     }
     
     func getResource(abbreviation: String) -> ResourceDataModel? {
-        return getCachedObjects(
-            databaseQuery: RealmDatabaseQuery.filter(
+        return realmPersistence.getObjects(
+            query: RealmDatabaseQuery.filter(
                 filter: NSPredicate(format: "\(#keyPath(RealmResource.abbreviation)) = '\(abbreviation)'")
             )
         )
@@ -156,7 +163,7 @@ class ResourcesRepository: RealmRepositorySync<ResourceDataModel, MobileContentR
     }
     
     private func getResourcesHaveBeenSynced() -> Bool {
-        return languagesRepository.persistence.getObjectCount() > 0 && numberOfCachedObjects > 0
+        return languagesRepository.persistence.getObjectCount() > 0 && persistence.getObjectCount() > 0
     }
     
     private func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote(requestPriority: RequestPriority, forceFetchFromRemote: Bool) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> {

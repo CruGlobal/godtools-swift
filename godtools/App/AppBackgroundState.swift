@@ -81,7 +81,7 @@ class AppBackgroundState {
     private func syncInitialFavoritedTools(resourcesRepository: ResourcesRepository, launchCountRepository: LaunchCountRepositoryInterface, storeInitialFavoritedToolsUseCase: StoreInitialFavoritedToolsUseCase) {
         
         Publishers.CombineLatest(
-            resourcesRepository.observeCollectionChangesPublisher().prepend(Void()),
+            resourcesRepository.persistence.observeCollectionChangesPublisher().prepend(Void()),
             launchCountRepository.getLaunchCountPublisher()
         )
         .flatMap { (resourcesChanged: Void, launchCount: Int) -> AnyPublisher<Void, Never> in

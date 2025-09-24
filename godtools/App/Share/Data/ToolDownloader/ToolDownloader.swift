@@ -39,7 +39,7 @@ class ToolDownloader {
             
             let isArticle: Bool
             
-            if let resource = resourcesRepository.getCachedObject(id: tool.toolId) {
+            if let resource = resourcesRepository.persistence.getObject(id: tool.toolId) {
                 
                 if let resourceBanner = attachmentsRepository.getCachedAttachment(id: resource.attrBanner) {
                     attachments.append(resourceBanner)

@@ -41,7 +41,7 @@ class GetSpotlightToolsRepository: GetSpotlightToolsRepositoryInterface {
         }
         
         return Publishers.CombineLatest(
-            resourcesRepository.observeCollectionChangesPublisher(),
+            resourcesRepository.persistence.observeCollectionChangesPublisher(),
             getToolListItemInterfaceStringsRepository.getStringsPublisher(translateInLanguage: translatedInAppLanguage)
         )
         .flatMap({ (resourcesChanged: Void, interfaceStrings: ToolListItemInterfaceStringsDomainModel) -> AnyPublisher<[SpotlightToolListItemDomainModel], Never> in

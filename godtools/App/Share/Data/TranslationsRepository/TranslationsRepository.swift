@@ -11,10 +11,11 @@ import Combine
 import GodToolsToolParser
 import RequestOperation
 
-class TranslationsRepository: RealmRepositorySync<TranslationDataModel, MobileContentTranslationsApi, RealmTranslation> {
+class TranslationsRepository: RepositorySync<TranslationDataModel, MobileContentTranslationsApi> {
         
     private let infoPlist: InfoPlist
     private let api: MobileContentTranslationsApi
+    private let realmPersistence: RealmRepositorySyncPersistence<TranslationDataModel, TranslationCodable, RealmTranslation>
     private let cache: RealmTranslationsCache
     private let resourcesFileCache: ResourcesSHA256FileCache
     private let trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository
@@ -29,10 +30,16 @@ class TranslationsRepository: RealmRepositorySync<TranslationDataModel, MobileCo
         self.trackDownloadedTranslationsRepository = trackDownloadedTranslationsRepository
         self.remoteConfigRepository = remoteConfigRepository
         
+        let realmPersistence = RealmRepositorySyncPersistence<TranslationDataModel, TranslationCodable, RealmTranslation>(
+            realmDatabase: realmDatabase,
+            dataModelMapping: RealmTranslationDataModelMapping()
+        )
+        
+        self.realmPersistence = realmPersistence
+        
         super.init(
             externalDataFetch: api,
-            realmDatabase: realmDatabase,
-            dataModelMapping: TranslationsDataModelMapping()
+            persistence: realmPersistence
         )
     }
 }
@@ -251,7 +258,7 @@ extension TranslationsRepository {
                 
                 if shouldFallbackToLatestDownloadedTranslation, let resourceId = translation.resourceDataModel?.id, let languageId = translation.languageDataModel?.id, let latestTrackedDownloadedTranslation = self.trackDownloadedTranslationsRepository.getLatestDownloadedTranslation(resourceId: resourceId, languageId: languageId) {
                     
-                    latestDownloadedTranslation = self.getCachedObject(id: latestTrackedDownloadedTranslation.translationId)
+                    latestDownloadedTranslation = self.persistence.getObject(id: latestTrackedDownloadedTranslation.translationId)
                 }
                 else {
                     latestDownloadedTranslation = nil

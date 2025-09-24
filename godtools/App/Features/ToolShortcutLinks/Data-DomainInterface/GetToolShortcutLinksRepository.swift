@@ -32,7 +32,7 @@ class GetToolShortcutLinksRepository: GetToolShortcutLinksRepositoryInterface {
                     .prefix(self.maxNumberOfToolShortcutLinks)
                     .compactMap({ (favoritedResource: FavoritedResourceDataModel) in
                     
-                        guard let resource = self.resourcesRepository.getCachedObject(id: favoritedResource.id) else {
+                        guard let resource = self.resourcesRepository.persistence.getObject(id: favoritedResource.id) else {
                             return nil
                         }
                                             

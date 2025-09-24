@@ -23,7 +23,7 @@ class TractRemoteShareURLBuilder {
     
     func buildRemoteShareURL(toolId: String, primaryLanguageId: String, parallelLanguageId: String?, selectedLanguageId: String, page: Int?, subscriberChannelId: String) -> String? {
                 
-        let resource: ResourceDataModel? = resourcesRepository.getCachedObject(id: toolId)
+        let resource: ResourceDataModel? = resourcesRepository.persistence.getObject(id: toolId)
         let selectedLanguage: LanguageDataModel? = languagesRepository.persistence.getObject(id: selectedLanguageId)
         
         var urlPath: String = ""

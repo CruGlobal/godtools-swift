@@ -1,5 +1,5 @@
 //
-//  TranslationsDataModelMapping.swift
+//  RealmTranslationDataModelMapping.swift
 //  godtools
 //
 //  Created by Levi Eggert on 9/16/25.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class TranslationsDataModelMapping: RepositorySyncMapping {
+class RealmTranslationDataModelMapping: RepositorySyncMapping {
     
     func toDataModel(externalObject: TranslationCodable) -> TranslationDataModel? {
         return TranslationDataModel(interface: externalObject)

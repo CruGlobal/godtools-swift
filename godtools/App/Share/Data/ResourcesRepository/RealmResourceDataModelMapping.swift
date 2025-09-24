@@ -1,5 +1,5 @@
 //
-//  ResourcesDataModelMapping.swift
+//  RealmResourceDataModelMapping.swift
 //  godtools
 //
 //  Created by Levi Eggert on 9/16/25.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ResourcesDataModelMapping: RepositorySyncMapping {
+class RealmResourceDataModelMapping: RepositorySyncMapping {
     
     func toDataModel(externalObject: ResourceCodable) -> ResourceDataModel? {
         return ResourceDataModel(interface: externalObject)

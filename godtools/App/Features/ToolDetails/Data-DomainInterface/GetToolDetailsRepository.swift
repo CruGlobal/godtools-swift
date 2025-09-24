@@ -44,7 +44,7 @@ class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
             versionsDescription: ""
         )
         
-        guard let toolDataModel = resourcesRepository.getCachedObject(id: toolId) else {
+        guard let toolDataModel = resourcesRepository.persistence.getObject(id: toolId) else {
             return Just(noToolDomainModel)
                 .eraseToAnyPublisher()
         }
