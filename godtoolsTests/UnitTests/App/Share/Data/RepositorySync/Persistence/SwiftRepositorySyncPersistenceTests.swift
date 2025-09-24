@@ -244,7 +244,7 @@ extension SwiftRepositorySyncPersistenceTests {
         )
     }
     
-    static func getDataModelMapping() -> RepositorySyncMapping<MockRepositorySyncDataModel, MockRepositorySyncDataModel, MockRepositorySyncSwiftDataObject> {
+    static func getDataModelMapping() -> any RepositorySyncMapping<MockRepositorySyncDataModel, MockRepositorySyncDataModel, MockRepositorySyncSwiftDataObject> {
         
         return MockRepositorySyncMapping()
     }

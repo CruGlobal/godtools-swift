@@ -133,9 +133,7 @@ extension RepositorySync {
     
     // TODO: Questions, Unknowns, Etc.
     /*
-        - Is there a better way to setup RepositorySyncMapping?  I couldn't get it to work with a protocol and associated types. Not sure I like the open class because there isn't an explicit way to force subclasses to override parent methods.
         - How do we handle more complex external data fetching?  For instance, a url request could contain query parameters and http body. Do we force that on subclasses of repository sync?  Do we provide methods for subclasses to hook into for observing, pushing data models for syncing, etc?
-        -
      */
     
     public func getObjectsPublisher(getObjectsType: RepositorySyncGetObjectsType<PersistenceQueryType>, cachePolicy: RepositorySyncCachePolicy) -> AnyPublisher<RepositorySyncResponse<DataModelType>, Never> {

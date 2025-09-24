@@ -8,20 +8,20 @@
 
 import Foundation
 
-public struct RepositorySyncResponse<DataModel> {
+public struct RepositorySyncResponse<DataModelType> {
     
-    public let objects: [DataModel]
+    public let objects: [DataModelType]
     public let errors: [Error]
     
-    public init(objects: [DataModel], errors: [Error]) {
+    public init(objects: [DataModelType], errors: [Error]) {
         
         self.objects = objects
         self.errors = errors
     }
     
-    public func copy(objects: [DataModel]? = nil, errors: [Error]? = nil) -> RepositorySyncResponse<DataModel> {
+    public func copy(objects: [DataModelType]? = nil, errors: [Error]? = nil) -> RepositorySyncResponse<DataModelType> {
         
-        let copy: RepositorySyncResponse<DataModel> = RepositorySyncResponse(
+        let copy: RepositorySyncResponse<DataModelType> = RepositorySyncResponse(
             objects: objects ?? self.objects,
             errors: errors ?? self.errors
         )

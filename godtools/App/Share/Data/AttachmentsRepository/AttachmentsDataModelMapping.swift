@@ -8,17 +8,21 @@
 
 import Foundation
 
-class AttachmentsDataModelMapping: RealmRepositorySyncMapping<AttachmentDataModel, AttachmentCodable, RealmAttachment> {
+class AttachmentsDataModelMapping: RepositorySyncMapping {
     
-    override func toDataModel(externalObject: AttachmentCodable) -> AttachmentDataModel? {
+    init() {
+        
+    }
+    
+    func toDataModel(externalObject: AttachmentCodable) -> AttachmentDataModel? {
         return AttachmentDataModel(interface: externalObject, storedAttachment: nil)
     }
     
-    override func toDataModel(persistObject: RealmAttachment) -> AttachmentDataModel? {
+    func toDataModel(persistObject: RealmAttachment) -> AttachmentDataModel? {
         return AttachmentDataModel(interface: persistObject, storedAttachment: nil)
     }
     
-    override func toPersistObject(externalObject: AttachmentCodable) -> RealmAttachment? {
+    func toPersistObject(externalObject: AttachmentCodable) -> RealmAttachment? {
         return RealmAttachment.createNewFrom(interface: externalObject)
     }
 }

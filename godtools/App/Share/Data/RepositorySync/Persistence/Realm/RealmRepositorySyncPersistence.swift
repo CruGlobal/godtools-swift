@@ -13,9 +13,9 @@ import Combine
 class RealmRepositorySyncPersistence<DataModelType, ExternalObjectType, PersistObjectType: IdentifiableRealmObject>: RepositorySyncPersistence {
     
     private let realmDatabase: RealmDatabase
-    private let dataModelMapping: RealmRepositorySyncMapping<DataModelType, ExternalObjectType, PersistObjectType>
+    private let dataModelMapping: any RepositorySyncMapping<DataModelType, ExternalObjectType, PersistObjectType>
     
-    init(realmDatabase: RealmDatabase, dataModelMapping: RealmRepositorySyncMapping<DataModelType, ExternalObjectType, PersistObjectType>) {
+    init(realmDatabase: RealmDatabase, dataModelMapping: any RepositorySyncMapping<DataModelType, ExternalObjectType, PersistObjectType>) {
         
         self.realmDatabase = realmDatabase
         self.dataModelMapping = dataModelMapping

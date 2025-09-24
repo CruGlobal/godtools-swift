@@ -238,7 +238,7 @@ extension RealmRepositorySyncPersistenceTests {
         )
     }
     
-    static func getDataModelMapping() -> RealmRepositorySyncMapping<MockRepositorySyncDataModel, MockRepositorySyncDataModel, MockRepositorySyncRealmObject> {
+    static func getDataModelMapping() -> any RepositorySyncMapping<MockRepositorySyncDataModel, MockRepositorySyncDataModel, MockRepositorySyncRealmObject> {
         
         return MockRealmRepositorySyncMapping()
     }

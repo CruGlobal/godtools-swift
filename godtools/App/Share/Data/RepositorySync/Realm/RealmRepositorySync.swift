@@ -15,11 +15,11 @@ open class RealmRepositorySync<DataModelType, ExternalDataFetchType: RepositoryS
           
     private let externalDataFetch: ExternalDataFetchType
     private let realmDatabase: RealmDatabase
-    private let dataModelMapping: RealmRepositorySyncMapping<DataModelType, ExternalDataFetchType.DataModel, RealmObjectType>
+    private let dataModelMapping: any RepositorySyncMapping<DataModelType, ExternalDataFetchType.DataModel, RealmObjectType>
     
     private var cancellables: Set<AnyCancellable> = Set()
     
-    init(externalDataFetch: ExternalDataFetchType, realmDatabase: RealmDatabase, dataModelMapping: RealmRepositorySyncMapping<DataModelType, ExternalDataFetchType.DataModel, RealmObjectType>) {
+    init(externalDataFetch: ExternalDataFetchType, realmDatabase: RealmDatabase, dataModelMapping: any RepositorySyncMapping<DataModelType, ExternalDataFetchType.DataModel, RealmObjectType>) {
         
         self.externalDataFetch = externalDataFetch
         self.realmDatabase = realmDatabase
