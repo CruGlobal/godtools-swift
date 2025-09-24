@@ -66,6 +66,11 @@ extension RealmRepositorySyncPersistence {
         return dataModel
     }
     
+    func getObjects() -> [DataModelType] {
+        
+        return getObjects(query: nil)
+    }
+    
     func getObjects(query: RealmDatabaseQuery? = nil) -> [DataModelType] {
         
         let realm: Realm = realmDatabase.openRealm()

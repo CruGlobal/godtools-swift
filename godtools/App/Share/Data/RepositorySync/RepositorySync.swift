@@ -10,15 +10,15 @@ import Foundation
 import Combine
 import RequestOperation
 
-class RepositorySync<DataModelType, ExternalDataFetchType: RepositorySyncExternalDataFetchInterface, PersistenceQueryType> {
+class RepositorySync<DataModelType, ExternalDataFetchType: RepositorySyncExternalDataFetchInterface> {
     
     private let externalDataFetch: ExternalDataFetchType
     
-    let persistence: any RepositorySyncPersistence<DataModelType, PersistenceQueryType, ExternalDataFetchType.DataModel>
+    let persistence: any RepositorySyncPersistence<DataModelType, ExternalDataFetchType.DataModel>
     
     private var cancellables: Set<AnyCancellable> = Set()
     
-    init(externalDataFetch: ExternalDataFetchType, persistence: any RepositorySyncPersistence<DataModelType, PersistenceQueryType, ExternalDataFetchType.DataModel>) {
+    init(externalDataFetch: ExternalDataFetchType, persistence: any RepositorySyncPersistence<DataModelType, ExternalDataFetchType.DataModel>) {
         
         self.externalDataFetch = externalDataFetch
         self.persistence = persistence
@@ -89,7 +89,7 @@ extension RepositorySync {
         switch getObjectsType {
         
         case .allObjects:
-            dataModels = persistence.getObjects(query: nil)
+            dataModels = persistence.getObjects()
             
         case .object(let id):
             if let dataModel = persistence.getObject(id: id) {

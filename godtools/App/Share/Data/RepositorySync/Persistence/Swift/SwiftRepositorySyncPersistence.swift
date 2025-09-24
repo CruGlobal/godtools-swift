@@ -152,6 +152,11 @@ extension SwiftRepositorySyncPersistence {
         return getObjects(query: query).first
     }
     
+    func getObjects() -> [DataModelType] {
+        
+        return getObjects(query: nil)
+    }
+    
     func getObjects(query: SwiftDatabaseQuery<PersistObjectType>? = nil) -> [DataModelType] {
         
         let context: ModelContext = swiftDatabase.openContext()
