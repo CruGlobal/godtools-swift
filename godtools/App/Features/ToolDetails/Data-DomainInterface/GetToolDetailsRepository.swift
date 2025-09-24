@@ -180,7 +180,7 @@ class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
             return false
         }
         
-        guard let languageModel = languagesRepository.getCachedLanguage(code: language) else {
+        guard let languageModel = languagesRepository.cache.getCachedLanguage(code: language) else {
             return false
         }
         

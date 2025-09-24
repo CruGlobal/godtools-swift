@@ -45,7 +45,7 @@ class GetLessonFilterLanguagesRepository: GetLessonFilterLanguagesRepositoryInte
     func getLessonLanguageFilterFromLanguageCode(languageCode: String?, translatedInAppLanguage: AppLanguageDomainModel) -> LessonFilterLanguageDomainModel? {
         
         guard let languageCode = languageCode,
-              let language = languagesRepository.getCachedLanguage(code: languageCode)
+              let language = languagesRepository.cache.getCachedLanguage(code: languageCode)
         else {
             return nil
         }

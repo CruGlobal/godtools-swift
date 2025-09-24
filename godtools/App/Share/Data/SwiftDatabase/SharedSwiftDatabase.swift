@@ -12,12 +12,18 @@ import Foundation
 @available(iOS 17, *)
 class SharedSwiftDatabase {
     
+    private static let swiftDatabaseEnabled: Bool = false
+    
     static let shared: SharedSwiftDatabase = SharedSwiftDatabase()
     
-    let swiftDatabase: SwiftDatabase = SwiftDatabase(
+    private let sharedSwiftDatabase: SwiftDatabase = SwiftDatabase(
         configuration: SwiftDatabaseProductionConfiguration(),
         modelTypes: GodToolsSwiftDataModelTypes()
     )
+    
+    var swiftDatabase: SwiftDatabase? {
+        Self.swiftDatabaseEnabled ? sharedSwiftDatabase : nil
+    }
     
     private init() {
         
