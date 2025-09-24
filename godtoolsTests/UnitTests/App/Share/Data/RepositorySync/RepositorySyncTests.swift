@@ -842,7 +842,7 @@ struct RepositorySyncTests {
             externalDataModelIds: externalDataModelIds
         )
         
-        let repositorySync = RepositorySync<MockRepositorySyncDataModel, MockRepositorySyncExternalDataFetch, RealmDatabaseQuery>(
+        let repositorySync = RepositorySync<MockRepositorySyncDataModel, MockRepositorySyncExternalDataFetch>(
             externalDataFetch: externalDataFetch,
             persistence: persistence
         )
@@ -870,7 +870,7 @@ struct RepositorySyncTests {
                     externalDataModelIds: triggerSecondaryExternalDataFetchWithIds
                 )
                 
-                let additionalRepositorySync = RepositorySync<MockRepositorySyncDataModel, MockRepositorySyncExternalDataFetch, RealmDatabaseQuery>(
+                let additionalRepositorySync = RepositorySync<MockRepositorySyncDataModel, MockRepositorySyncExternalDataFetch>(
                     externalDataFetch: externalDataFetch,
                     persistence: persistence
                 )
@@ -1007,7 +1007,7 @@ struct RepositorySyncTests {
             externalDataModelIds: externalDataModelIds
         )
         
-        let repositorySync = RepositorySync<MockRepositorySyncDataModel, MockRepositorySyncExternalDataFetch, SwiftDatabaseQuery>(
+        let repositorySync = RepositorySync<MockRepositorySyncDataModel, MockRepositorySyncExternalDataFetch>(
             externalDataFetch: externalDataFetch,
             persistence: persistence
         )
@@ -1035,7 +1035,7 @@ struct RepositorySyncTests {
                     externalDataModelIds: triggerSecondaryExternalDataFetchWithIds
                 )
                 
-                let additionalRepositorySync = RepositorySync<MockRepositorySyncDataModel, MockRepositorySyncExternalDataFetch, SwiftDatabaseQuery>(
+                let additionalRepositorySync = RepositorySync<MockRepositorySyncDataModel, MockRepositorySyncExternalDataFetch>(
                     externalDataFetch: externalDataFetch,
                     persistence: persistence
                 )
