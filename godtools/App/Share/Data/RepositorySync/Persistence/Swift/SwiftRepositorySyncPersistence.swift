@@ -14,12 +14,12 @@ import Combine
 class SwiftRepositorySyncPersistence<DataModelType, ExternalObjectType, PersistObjectType: IdentifiableSwiftDataObject>: RepositorySyncPersistence {
     
     private let swiftDatabase: SwiftDatabase
-    private let dataModelMapping: RepositorySyncMapping<DataModelType, ExternalObjectType, PersistObjectType>
+    private let dataModelMapping: any RepositorySyncMapping<DataModelType, ExternalObjectType, PersistObjectType>
     private let userInfoKeyPrependNotification: String = "RepositorySync.notificationKey.prepend"
     private let userInfoKeyEntityName: String = "RepositorySync.notificationKey.entityName"
     private let entityName: String
     
-    init(swiftDatabase: SwiftDatabase, dataModelMapping: RepositorySyncMapping<DataModelType, ExternalObjectType, PersistObjectType>) {
+    init(swiftDatabase: SwiftDatabase, dataModelMapping: any RepositorySyncMapping<DataModelType, ExternalObjectType, PersistObjectType>) {
         
         self.swiftDatabase = swiftDatabase
         self.dataModelMapping = dataModelMapping
