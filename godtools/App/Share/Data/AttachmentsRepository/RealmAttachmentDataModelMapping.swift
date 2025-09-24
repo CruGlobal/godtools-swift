@@ -1,5 +1,5 @@
 //
-//  AttachmentsDataModelMapping.swift
+//  RealmAttachmentDataModelMapping.swift
 //  godtools
 //
 //  Created by Levi Eggert on 9/16/25.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class AttachmentsDataModelMapping: RepositorySyncMapping {
+class RealmAttachmentDataModelMapping: RepositorySyncMapping {
     
     init() {
         
