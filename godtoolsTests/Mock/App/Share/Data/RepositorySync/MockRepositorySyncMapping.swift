@@ -10,14 +10,14 @@ import Foundation
 @testable import godtools
 
 @available(iOS 17, *)
-class MockRepositorySyncMapping: RepositorySyncMapping<MockRepositorySyncDataModel, MockRepositorySyncDataModel, MockRepositorySyncSwiftDataObject> {
+class MockRepositorySyncMapping: RepositorySyncMapping {
 
-    override func toDataModel(externalObject: MockRepositorySyncDataModel) -> MockRepositorySyncDataModel? {
+    func toDataModel(externalObject: MockRepositorySyncDataModel) -> MockRepositorySyncDataModel? {
         
         return externalObject
     }
     
-    override func toDataModel(persistObject: MockRepositorySyncSwiftDataObject) -> MockRepositorySyncDataModel? {
+    func toDataModel(persistObject: MockRepositorySyncSwiftDataObject) -> MockRepositorySyncDataModel? {
         
         return MockRepositorySyncDataModel(
             id: persistObject.id,
@@ -25,7 +25,7 @@ class MockRepositorySyncMapping: RepositorySyncMapping<MockRepositorySyncDataMod
         )
     }
     
-    override func toPersistObject(externalObject: MockRepositorySyncDataModel) -> MockRepositorySyncSwiftDataObject? {
+    func toPersistObject(externalObject: MockRepositorySyncDataModel) -> MockRepositorySyncSwiftDataObject? {
         
         let object = MockRepositorySyncSwiftDataObject()
         

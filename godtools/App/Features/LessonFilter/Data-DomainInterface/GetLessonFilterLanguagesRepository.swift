@@ -29,6 +29,7 @@ class GetLessonFilterLanguagesRepository: GetLessonFilterLanguagesRepositoryInte
     func getLessonFilterLanguagesPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<[LessonFilterLanguageDomainModel], Never> {
         
         return resourcesRepository
+            .persistence
             .observeCollectionChangesPublisher()
             .flatMap { _ in
                 
@@ -55,7 +56,7 @@ class GetLessonFilterLanguagesRepository: GetLessonFilterLanguagesRepositoryInte
     func getLessonLanguageFilterFromLanguageId(languageId: String?, translatedInAppLanguage: AppLanguageDomainModel) -> LessonFilterLanguageDomainModel? {
         
         guard let languageId = languageId,
-              let language = languagesRepository.getCachedObject(id: languageId)
+              let language = languagesRepository.persistence.getObject(id: languageId)
         else {
             return nil
         }
@@ -68,7 +69,7 @@ extension GetLessonFilterLanguagesRepository {
     
     private func createLessonLanguageFilterDomainModelList(from languageIds: [String], translatedInAppLanguage: AppLanguageDomainModel) -> [LessonFilterLanguageDomainModel] {
         
-        let languages: [LessonFilterLanguageDomainModel] = languagesRepository.getCachedObjects(ids: languageIds)
+        let languages: [LessonFilterLanguageDomainModel] = languagesRepository.persistence.getObjects(ids: languageIds)
             .compactMap { (languageModel: LanguageDataModel) in
                 
                 let lessonsAvailableCount: Int = resourcesRepository.getAllLessonsCount(filterByLanguageId: languageModel.id)

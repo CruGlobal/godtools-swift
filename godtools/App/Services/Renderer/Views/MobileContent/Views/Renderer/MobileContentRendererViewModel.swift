@@ -75,7 +75,9 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
         }
         .store(in: &cancellables)
               
-        resourcesRepository.observeCollectionChangesPublisher()
+        resourcesRepository
+            .persistence
+            .observeCollectionChangesPublisher()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.updateTranslationsIfNeeded()

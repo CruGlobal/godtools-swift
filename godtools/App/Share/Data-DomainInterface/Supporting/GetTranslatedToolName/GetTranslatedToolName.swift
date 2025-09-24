@@ -21,7 +21,7 @@ class GetTranslatedToolName {
     
     func getToolName(toolId: String, translateInLanguage: BCP47LanguageIdentifier) -> String {
         
-        guard let resource = resourcesRepository.getCachedObject(id: toolId) else {
+        guard let resource = resourcesRepository.persistence.getObject(id: toolId) else {
             return ""
         }
         

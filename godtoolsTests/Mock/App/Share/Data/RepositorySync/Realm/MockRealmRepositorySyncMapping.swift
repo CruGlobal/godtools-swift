@@ -9,14 +9,14 @@
 import Foundation
 @testable import godtools
 
-class MockRealmRepositorySyncMapping: RealmRepositorySyncMapping<MockRepositorySyncDataModel, MockRepositorySyncDataModel, MockRepositorySyncRealmObject> {
+class MockRealmRepositorySyncMapping: RepositorySyncMapping {
 
-    override func toDataModel(externalObject: MockRepositorySyncDataModel) -> MockRepositorySyncDataModel? {
+    func toDataModel(externalObject: MockRepositorySyncDataModel) -> MockRepositorySyncDataModel? {
         
         return externalObject
     }
     
-    override func toDataModel(persistObject: MockRepositorySyncRealmObject) -> MockRepositorySyncDataModel? {
+    func toDataModel(persistObject: MockRepositorySyncRealmObject) -> MockRepositorySyncDataModel? {
         
         return MockRepositorySyncDataModel(
             id: persistObject.id,
@@ -24,7 +24,7 @@ class MockRealmRepositorySyncMapping: RealmRepositorySyncMapping<MockRepositoryS
         )
     }
     
-    override func toPersistObject(externalObject: MockRepositorySyncDataModel) -> MockRepositorySyncRealmObject? {
+    func toPersistObject(externalObject: MockRepositorySyncDataModel) -> MockRepositorySyncRealmObject? {
         
         let realmObject = MockRepositorySyncRealmObject()
         

@@ -7,20 +7,14 @@
 //
 
 import Foundation
-import SwiftData
 
-@available(iOS 17, *)
-open class RepositorySyncMapping<DataModelType, ExternalFetchObjectType, SwiftDataObjectType: IdentifiableSwiftDataObject> {
+protocol RepositorySyncMapping<DataModelType, ExternalObjectType, PersistObjectType> {
         
-    open func toDataModel(externalObject: ExternalFetchObjectType) -> DataModelType? {
-        return nil
-    }
+    associatedtype DataModelType
+    associatedtype ExternalObjectType
+    associatedtype PersistObjectType
     
-    open func toDataModel(persistObject: SwiftDataObjectType) -> DataModelType? {
-        return nil
-    }
-    
-    open func toPersistObject(externalObject: ExternalFetchObjectType) -> SwiftDataObjectType? {
-        return nil
-    }
+    func toDataModel(externalObject: ExternalObjectType) -> DataModelType?
+    func toDataModel(persistObject: PersistObjectType) -> DataModelType?
+    func toPersistObject(externalObject: ExternalObjectType) -> PersistObjectType?
 }

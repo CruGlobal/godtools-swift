@@ -35,13 +35,13 @@ class GetToolsRepository: GetToolsRepositoryInterface {
         let languageForAvailabilityTextModel: LanguageDataModel? 
         
         if let languageForAvailabilityTextId = languageIdForAvailabilityText {
-            languageForAvailabilityTextModel = languagesRepository.getCachedObject(id: languageForAvailabilityTextId)
+            languageForAvailabilityTextModel = languagesRepository.persistence.getObject(id: languageForAvailabilityTextId)
         } else {
             languageForAvailabilityTextModel = nil
         }
         
         return Publishers.CombineLatest(
-            resourcesRepository.observeCollectionChangesPublisher().prepend(Void()),
+            resourcesRepository.persistence.observeCollectionChangesPublisher().prepend(Void()),
             getToolListItemInterfaceStringsRepository.getStringsPublisher(translateInLanguage: translatedInAppLanguage)
         )
         .flatMap({ (resourcesChanged: Void, interfaceStrings: ToolListItemInterfaceStringsDomainModel) -> AnyPublisher<[ToolListItemDomainModel], Never> in

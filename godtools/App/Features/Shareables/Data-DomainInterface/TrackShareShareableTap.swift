@@ -22,7 +22,7 @@ class TrackShareShareableTap: TrackShareShareableTapInterface {
     
     func trackShareShareableTapPublisher(toolId: String, shareableId: String) -> AnyPublisher<Void, Never> {
         
-        let resource: ResourceDataModel? = resourcesRepository.getCachedObject(id: toolId)
+        let resource: ResourceDataModel? = resourcesRepository.persistence.getObject(id: toolId)
         
         let action = TrackActionModel(
             screenName: "",

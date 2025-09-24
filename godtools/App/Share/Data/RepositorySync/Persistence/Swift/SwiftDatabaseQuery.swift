@@ -1,5 +1,5 @@
 //
-//  RepositorySyncDatabaseQuery.swift
+//  SwiftDatabaseQuery.swift
 //  godtools
 //
 //  Created by Levi Eggert on 8/31/25.
@@ -10,7 +10,7 @@ import Foundation
 import SwiftData
 
 @available(iOS 17, *)
-public class RepositorySyncDatabaseQuery<T: IdentifiableSwiftDataObject> {
+public class SwiftDatabaseQuery<T: IdentifiableSwiftDataObject> {
     
     public let fetchDescriptor: FetchDescriptor<T>
     
@@ -22,11 +22,11 @@ public class RepositorySyncDatabaseQuery<T: IdentifiableSwiftDataObject> {
         self.fetchDescriptor = fetchDescriptor
     }
     
-    public static func filter(filter: Predicate<T>) -> RepositorySyncDatabaseQuery {
-        return RepositorySyncDatabaseQuery(filter: filter, sortBy: nil)
+    public static func filter(filter: Predicate<T>) -> SwiftDatabaseQuery {
+        return SwiftDatabaseQuery(filter: filter, sortBy: nil)
     }
     
-    public static func sort(sortBy: [SortDescriptor<T>]) -> RepositorySyncDatabaseQuery {
-        return RepositorySyncDatabaseQuery(filter: nil, sortBy: sortBy)
+    public static func sort(sortBy: [SortDescriptor<T>]) -> SwiftDatabaseQuery {
+        return SwiftDatabaseQuery(filter: nil, sortBy: sortBy)
     }
 }
