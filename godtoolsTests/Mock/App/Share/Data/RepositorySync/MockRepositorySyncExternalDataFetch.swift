@@ -59,7 +59,7 @@ class MockRepositorySyncExternalDataFetch: RepositorySyncExternalDataFetchInterf
         let delayRequestSeconds: TimeInterval = self.delayRequestSeconds
         
         return Future { promise in
-            DispatchQueue.global().asyncAfter(deadline: .now() + delayRequestSeconds) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + delayRequestSeconds) {
                 promise(.success(Void()))
             }
         }
