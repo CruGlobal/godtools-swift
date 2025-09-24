@@ -8,33 +8,22 @@
 
 import Foundation
 
-class LanguagesCache {
+class LanguagesCache: SwiftElseRealmPersistence<LanguageDataModel, LanguageCodable, RealmLanguage> {
     
     private let realmDatabase: RealmDatabase
     
     init(realmDatabase: RealmDatabase) {
         
         self.realmDatabase = realmDatabase
-    }
-    
-    // MARK: - Persistence
-    
-    func getPersistence() -> any RepositorySyncPersistence<LanguageDataModel, LanguageCodable> {
         
-        if #available(iOS 17, *), let swiftPersistence = getSwiftPersistence() {
-            return swiftPersistence
-        }
-        else {
-            return getRealmPersistence()
-        }
+        super.init(
+            realmDatabase: realmDatabase,
+            realmDataModelMapping: RealmLanguageDataModelMapping()
+        )
     }
     
     @available(iOS 17, *)
-    private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<LanguageDataModel, LanguageCodable, SwiftLanguage>? {
-        
-        guard let swiftDatabase = SharedSwiftDatabase.shared.swiftDatabase else {
-            return nil
-        }
+    override func getSwiftPersistence(swiftDatabase: SwiftDatabase) -> SwiftRepositorySyncPersistence<LanguageDataModel, LanguageCodable, SwiftLanguage>? {
         
         return SwiftRepositorySyncPersistence(
             swiftDatabase: swiftDatabase,
@@ -42,18 +31,11 @@ class LanguagesCache {
         )
     }
     
-    private func getRealmPersistence() -> RealmRepositorySyncPersistence<LanguageDataModel, LanguageCodable, RealmLanguage> {
-        return RealmRepositorySyncPersistence(
-            realmDatabase: realmDatabase,
-            dataModelMapping: RealmLanguageDataModelMapping()
-        )
-    }
-    
     // MARK: - Query
     
     func getCachedLanguage(code: BCP47LanguageIdentifier) -> LanguageDataModel? {
         
-        if #available(iOS 17, *), let swiftPersistence = getSwiftPersistence() {
+        if #available(iOS 17, *), let swiftPersistence = super.getSwiftPersistence() {
             
             let filter = #Predicate<SwiftLanguage> { object in
                 object.code.localizedStandardContains(code)
@@ -65,7 +47,7 @@ class LanguagesCache {
             
             let filter = NSPredicate(format: "\(#keyPath(RealmLanguage.code)) == [c] %@", code.lowercased())
             
-            return getRealmPersistence().getObjects(query: RealmDatabaseQuery.filter(filter: filter)).first
+            return super.getRealmPersistence().getObjects(query: RealmDatabaseQuery.filter(filter: filter)).first
         }
     }
     
