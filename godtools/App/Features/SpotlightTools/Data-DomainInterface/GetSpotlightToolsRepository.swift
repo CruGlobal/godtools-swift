@@ -35,7 +35,7 @@ class GetSpotlightToolsRepository: GetSpotlightToolsRepositoryInterface {
         let languageForAvailabilityTextModel: LanguageDataModel?
         
         if let languageForAvailabilityTextId = languageIdForAvailabilityText {
-            languageForAvailabilityTextModel = languagesRepository.getCachedObject(id: languageForAvailabilityTextId)
+            languageForAvailabilityTextModel = languagesRepository.persistence.getObject(id: languageForAvailabilityTextId)
         } else {
             languageForAvailabilityTextModel = nil
         }

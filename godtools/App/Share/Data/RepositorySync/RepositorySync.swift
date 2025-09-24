@@ -72,11 +72,11 @@ extension RepositorySync {
             .eraseToAnyPublisher()
     }
     
-    public func storeExternalObjectsToPersistence(externalObjects: [ExternalDataFetchType.DataModel]) -> RepositorySyncResponse<DataModelType> {
+    public func storeExternalObjectsToPersistence(externalObjects: [ExternalDataFetchType.DataModel], deleteObjectsNotFoundInExternalObjects: Bool = false) -> RepositorySyncResponse<DataModelType> {
         
         let dataModels: [DataModelType] = persistence.writeObjects(
             externalObjects: externalObjects,
-            deleteObjectsNotFoundInExternalObjects: false
+            deleteObjectsNotFoundInExternalObjects: deleteObjectsNotFoundInExternalObjects
         )
         
         return RepositorySyncResponse<DataModelType>(objects: dataModels, errors: [])

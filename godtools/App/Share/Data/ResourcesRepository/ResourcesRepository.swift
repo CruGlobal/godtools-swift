@@ -156,7 +156,7 @@ class ResourcesRepository: RealmRepositorySync<ResourceDataModel, MobileContentR
     }
     
     private func getResourcesHaveBeenSynced() -> Bool {
-        return languagesRepository.numberOfCachedObjects > 0 && numberOfCachedObjects > 0
+        return languagesRepository.persistence.getObjectCount() > 0 && numberOfCachedObjects > 0
     }
     
     private func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote(requestPriority: RequestPriority, forceFetchFromRemote: Bool) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> {

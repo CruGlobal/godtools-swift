@@ -12,7 +12,7 @@ import RealmSwift
 import RequestOperation
 import SwiftData
 
-class LanguagesRepository: RealmRepositorySync<LanguageDataModel, MobileContentLanguagesApi, RealmLanguage> {
+class LanguagesRepository: RepositorySync<LanguageDataModel, MobileContentLanguagesApi, RealmDatabaseQuery> {
     
     private let api: MobileContentLanguagesApi
     
@@ -20,19 +20,22 @@ class LanguagesRepository: RealmRepositorySync<LanguageDataModel, MobileContentL
         
         self.api = api
         
-        super.init(
-            externalDataFetch: api,
+        let persistence = RealmRepositorySyncPersistence(
             realmDatabase: realmDatabase,
             dataModelMapping: LanguagesDataModelMapping()
+        )
+        
+        super.init(
+            externalDataFetch: api,
+            persistence: persistence
         )
     }
     
     func getCachedLanguage(code: BCP47LanguageIdentifier) -> LanguageDataModel? {
-        return getCachedObjects(
-            databaseQuery: RealmDatabaseQuery.filter(
-                filter: NSPredicate(format: "\(#keyPath(RealmLanguage.code)) == [c] %@", code.lowercased())
-            )
-        ).first
+        
+        let filter = NSPredicate(format: "\(#keyPath(RealmLanguage.code)) == [c] %@", code.lowercased())
+        
+        return persistence.getObjects(query: RealmDatabaseQuery.filter(filter: filter)).first
     }
     
     func getCachedLanguages(languageCodes: [String]) -> [LanguageDataModel] {
@@ -46,8 +49,9 @@ class LanguagesRepository: RealmRepositorySync<LanguageDataModel, MobileContentL
         )
         .flatMap { (getObectsResponse: RepositorySyncResponse<LanguageCodable>) in
             
-            let response: RepositorySyncResponse<LanguageDataModel> = super.syncExternalDataFetchResponse(
-                response: getObectsResponse
+            let response: RepositorySyncResponse<LanguageDataModel> = super.storeExternalObjectsToPersistence(
+                externalObjects: getObectsResponse.objects,
+                deleteObjectsNotFoundInExternalObjects: true
             )
             
             return Just(response)
@@ -65,10 +69,11 @@ class LanguagesRepository: RealmRepositorySync<LanguageDataModel, MobileContentL
         .publisher
         .flatMap { (languages: [LanguageCodable]) -> AnyPublisher<RepositorySyncResponse<LanguageDataModel>, Never> in
             
-            let response: RepositorySyncResponse<LanguageDataModel> = super.storeExternalDataFetchResponse(
-                response: RepositorySyncResponse<LanguageCodable>(objects: languages, errors: [])
+            let response: RepositorySyncResponse<LanguageDataModel> = super.storeExternalObjectsToPersistence(
+                externalObjects: languages,
+                deleteObjectsNotFoundInExternalObjects: false
             )
-                        
+                    
             return Just(response)
                 .eraseToAnyPublisher()
         }

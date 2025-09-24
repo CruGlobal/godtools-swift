@@ -69,7 +69,7 @@ class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
             toolDataModel.totalViews
         )
         
-        let languagesDataModels: [LanguageDataModel] = languagesRepository.getCachedObjects(ids: toolDataModel.getLanguageIds())
+        let languagesDataModels: [LanguageDataModel] = languagesRepository.persistence.getObjects(ids: toolDataModel.getLanguageIds())
         
         let languageNamesTranslatedInToolLanguage: [String] = languagesDataModels.map { (languageDataModel: LanguageDataModel) in
             self.getTranslatedLanguageName.getLanguageName(language: languageDataModel, translatedInLanguage: translateInLanguage)
