@@ -1,3 +1,6 @@
+"deferredDeepLinkModal.title" = "Se pare că ai dat clic pe un link pentru GodTools";
+"deferredDeepLinkModal.message" = "Atingeți butonul de mai jos pentru a vă putea direcționa către conținutul solicitat.";
+
 "optInNotification.notificationSettings" = "Setarea Notificărilor";
 "lessons.swipeTutorial.title" = "Glisează pentru a schimba paginile";
 "lessons.swipeTutorial.buttonText" = "Am înțeles";
@@ -18,8 +21,6 @@
 "language_name_fil" = "Filipineză (Tagalog)";
 "lessons.filter.navBar.language" = "Limba lecției";
 "lessons.languageFilter.title" = "Lecțiile în:";
-"language_name_fil-x-taglish" = "Taglish";
-"language_name_sid" = "Sidama";
 "onboardingTutorial.chooseLanguageButton.title" = "Alege limba";
 "languageSettings.confirmAppLanguage.message" = "Ați selectat %@ ca limbă a aplicației. Acest lucru va schimba limba întregii aplicații GodTools. Esti sigur?";
 "languageSettings.confirmAppLanguage.changeLanguageButton.title" = "Schimbă limba";
@@ -259,13 +260,10 @@ Dacă ai primit acest mesaj prea târziu, este posibil ca linkul să nu funcțio
 "add_new_tools" = "Adaugă instrumente noi";
 "set_your_languages" = "Setează limba";
 "okay" = "Ok";
-// Menu
-"menu_general" = "General";
 "menu_account" = "Cont";
 "menu_share" = "Distribuie";
 "menu_legal" = "Juridic";
 "language_settings" = "Setări de limbă";
-"menu.tutorial" = "Tutorial";
 "menu.my_account" = "Contul meu";
 
 // Login
@@ -318,7 +316,7 @@ Găsești versiunea online aici https://knowgod.com/";
 "no" = "Nu";
 
 // Tract - Sharing
-"tract_share_message" ="Link-ul te va conduce la versiunea web a paginii pe care am vizionat-o împreună azi: %@. 
+"tract_share_message" = "Link-ul te va conduce la versiunea web a paginii pe care am vizionat-o împreună azi: %@. 
 
 Să discutăm mai multe!
 
@@ -335,7 +333,6 @@ Aplicația poate fi descărcată de pe https://godtoolsapp.com";
 
 // Alerts
 "error" = "Eroare";
-"OK" = "OK";
 "cancel" = "Anulează";
 "required_field_missing" = "\"%@\" este un câmp obligatoriu.";
 
@@ -386,5 +383,4 @@ Aplicația poate fi descărcată de pe https://godtoolsapp.com";
 // OnboardingTutorial
 "onboardingTutorial.aboutAppItem.0.title" = "Distribuie cu ceilalți";
 "accountActivity.globalAnalytics.countries.title" = "Țări";
-
 "onboardingTutorial.showMoreButton.title" = "Arată-mi mai mult";

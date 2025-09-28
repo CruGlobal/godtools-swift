@@ -1,3 +1,6 @@
+"deferredDeepLinkModal.title" = "您似乎點擊了 GodTools 的鏈接";
+"deferredDeepLinkModal.message" = "點擊下面的按鈕，我們就可以帶您到您要求的內容。";
+
 "optInNotification.notificationSettings" = "通知設定";
 "lessons.swipeTutorial.title" = "撥動即可換頁";
 "lessons.swipeTutorial.buttonText" = "知道了";
@@ -260,6 +263,7 @@
 "add_new_tools" = "添加新工具";
 "set_your_languages" = "設定語言";
 "okay" = "好";
+
 // Menu
 "menu_general" = "一般";
 "menu_account" = "帳號";
@@ -319,7 +323,7 @@
 "no" = "不好";
 
 // Tract - Sharing
-"tract_share_message" ="點擊此連結可看到我們今天談論內容的網路版本：%@。
+"tract_share_message" = "點擊此連結可看到我們今天談論內容的網路版本：%@。
 
 讓我們更深入討論吧！
 

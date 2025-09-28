@@ -1,6 +1,5 @@
 /* This About refers to a specific tool in the app. */
 "toolDetails.about.title" = "વિશે";
-
 "training_tip_ask" = "પુછવું";
 "training_tip_consider" = "ધ્યાનમાં લો";
 "training_tip_prepare" = "તૈયાર કરો";
@@ -72,6 +71,7 @@
 "add_new_tools" = "નવા સાધનો/ટુલ્સ ઉમેરો";
 "set_your_languages" = "તમારી ભાષા સ્થાપિત કરો";
 "okay" = "બરાબર";
+
 // Menu
 "menu_general" = "સામાન્ય";
 "menu_account" = "ખાતું";
@@ -79,10 +79,12 @@
 "menu_legal" = "કાનૂની";
 "language_settings" = "ભાષા સુયોજન";
 "menu.tutorial" = "ટ્યુટોરિયલ";
+
 // Login
 "login" = "લોગ ઇન કરો";
 "logout" = "લૉગ આઉટ";
 "create_account" = "ખાતું બનાવો";
+
 // Tool Detail
 "about" = "વિશે/આશરે";
 "help" = "મદદ વારંવાર પૂછાતા પ્રશ્નો";
@@ -114,13 +116,15 @@ http://godtoolsapp.com";
 
 // Alert & Info Controllers
 "download_error" = "ડાઉનલોડમાં ભૂલ થઈ";
+
 "the_tool_you_requested_is_loading" = "જે સાધન/ટુલ તમે માંગો છો તે લોડ થઈ રહ્યું છે...";
+
 // Actions
 "yes" = "હા";
 "no" = "ના";
 
 // Tract - Sharing
-"tract_share_message" ="આ લીંક તમને વેબ વર્ઝનના એ પાન પર લઇ જશે જે આજે આપણે સાથે જોઈ રહ્યા હતા. %@ ચાલો આગળ વાત કરીએ.";
+"tract_share_message" = "આ લીંક તમને વેબ વર્ઝનના એ પાન પર લઇ જશે જે આજે આપણે સાથે જોઈ રહ્યા હતા. %@ ચાલો આગળ વાત કરીએ.";
 
 // Buttons
 "download" = "ડાઉનલોડ";

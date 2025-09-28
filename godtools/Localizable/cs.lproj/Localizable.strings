@@ -3,7 +3,6 @@
 
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "Není dostupné v %@";
-
 "tool_menu_item.tools" = "Nástroje";
 "lessons.pageTitle" = "Lekce na míru";
 "lessons.pageSubtitle" = "Praktické nápady na budování vztahů a zahájení smysluplných rozhovorů.";
@@ -38,6 +37,7 @@
 "allTools.spotlight.description" = "Tady jsou nějaké nástroje, o kterých jsme si mysleli, že by vás mohly zaujmout";
 "allTools.categories.title" = "Kategorie";
 "tool_menu_item.lessons" = "Lekce";
+
 "onboardingTutorial.beginButton.title" = "Začněte";
 "onboardingTutorial.nextButton.title" = "Další";
 "tool_offline_favorite_message" = "Klepnutím na ikonu srdíčka přidáte nástroj do svých oblíbených a budete jej mít k dispozici offline.";
@@ -122,11 +122,13 @@
 "add_new_tools" = "Přidat nové nástroje";
 "set_your_languages" = "Nastavení jazyků";
 "okay" = "OK";
+
 // Menu
 "menu_general" = "Obecné";
 "menu_share" = "Sdílet";
 "menu_legal" = "Pravidla užívání a ochrany soukromí";
 "language_settings" = "Jazyková nastavení";
+
 // Login
 "login" = "Přihlášení";
 "logout" = "Odhlášení";
@@ -176,7 +178,7 @@ On-line verzi naleznete na https://knowgod.com/";
 "no" = "Ne";
 
 // Tract - Sharing
-"tract_share_message" ="Tento odkaz vás přivede na webovou verzi stránky, na kterou jsme se dnes již spolu dívali: %@ 
+"tract_share_message" = "Tento odkaz vás přivede na webovou verzi stránky, na kterou jsme se dnes již spolu dívali: %@ 
 
 Pojďme si o tom ještě povykládat!
 
@@ -193,7 +195,6 @@ Aplikaci si můžete stáhnout z https://godtoolsapp.com";
 
 // Alerts
 "error" = "Chyba";
-"OK" = "OK";
 "cancel" = "Zrušit";
 "required_field_missing" = "\"%@\" je povinné pole.";
 
@@ -210,8 +211,8 @@ Aplikaci si můžete stáhnout z https://godtoolsapp.com";
 "general_about_8" = "Více informací naleznete na stránce godtoolsapp.com.";
 "tutorial.continueButton.title.continue" = "Pokračovat";
 "general_about_9" = "Při chopení se iniciativy o sdílení vaší víry si pamatujte, že Bůh je ten, kdo mění srdce. Miluj všechny posloucháním, které vede k porozumění.";
-"general_about_10" = "„Vaše slova ať jsou vždy vlídná a ochucená solí, ať víte, jak máte mluvit s každým člověkem.“ Koloským 4:6";
 
+"general_about_10" = "„Vaše slova ať jsou vždy vlídná a ochucená solí, ať víte, jak máte mluvit s každým člověkem.“ Koloským 4:6";
 // Downloads
 "Download in progress" = "Probíhá stahování";
 
@@ -221,4 +222,3 @@ Aplikaci si můžete stáhnout z https://godtoolsapp.com";
 
 // Language Name Strings
 "language_name_fa" = "Perština (fársí)";
-

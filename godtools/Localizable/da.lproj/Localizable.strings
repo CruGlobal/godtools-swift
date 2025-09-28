@@ -3,7 +3,6 @@
 
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "Ikke tilgængelig i %@";
-
 "tool_menu_item.tools" = "Værktøjer";
 "lessons.pageTitle" = "Lektioner lavet til dig";
 "lessons.pageSubtitle" = "Praktiske ideer til at opbygge relationer og starte meningsfulde samtaler.";
@@ -33,12 +32,12 @@
 "toolSettings.option.trainingTips.show.title" = "Træningstip";
 "toolSettings.option.trainingTips.hide.title" = "Skjul tip";
 "toolSettings.chooseLanguage.title" = "Parallelt sprog";
-"toolSettings.chooseLanguage.noParallelLanguageTitle" = "Parallel";
 "toolSettings.shareables.title" = "Relateret grafik";
 "allTools.spotlight.title" = "Fremhævede værktøjer";
 "allTools.spotlight.description" = "Her er nogle værktøjer, vi troede, du kunne lide";
 "allTools.categories.title" = "Kategorier";
 "tool_menu_item.lessons" = "Lektioner";
+
 "onboardingTutorial.beginButton.title" = "Begynd";
 "onboardingTutorial.nextButton.title" = "Næste";
 "tool_offline_favorite_message" = "Gør et værktøj tilgængeligt offline ved at trykke på hjerteikonet, som tilføjer det til dine favoritter.";
@@ -125,11 +124,13 @@ Hvis du først modtager denne besked senere, virker linket muligvis ikke. Vi kan
 "add_new_tools" = "Tilføj nye værktøjer";
 "set_your_languages" = "Angiv dine sprog";
 "okay" = "OK";
+
 // Menu
 "menu_general" = "Generelt";
 "menu_share" = "Del";
 "menu_legal" = "Juridisk";
 "language_settings" = "Sprogindstillinger";
+
 // Login
 "login" = "Log på";
 "logout" = "Log af";
@@ -180,7 +181,7 @@ Du kan finde en onlineversion på https://knowgod.com/";
 "no" = "Nej";
 
 // Tract - Sharing
-"tract_share_message" ="Med dette link kommer du til webversionen af den side, som vi så på sammen i dag: %@. 
+"tract_share_message" = "Med dette link kommer du til webversionen af den side, som vi så på sammen i dag: %@. 
 
 Lad os tale noget mere sammen!
 
@@ -197,7 +198,6 @@ Appen kan downloades fra https://godtoolsapp.com";
 
 // Alerts
 "error" = "Fejl";
-"OK" = "OK";
 "cancel" = "Annuller";
 "required_field_missing" = "\"%@\" er et påkrævet felt.";
 
@@ -214,8 +214,8 @@ Appen kan downloades fra https://godtoolsapp.com";
 "general_about_8" = "Besøg godtoolsapp.com for at få flere oplysninger.";
 "tutorial.continueButton.title.continue" = "Fortsæt";
 "general_about_9" = "Når du tager initiativ til at dele din tro, skal du huske, at Gud er den, som ændrer hjertet. Elsk alle personer ved at lytte og forstå dem.";
-"general_about_10" = "\"Eders Tale være altid med Ynde, krydret med Salt, saa I vide, hvorledes I bør svare enhver især.\" Kolossenserne 4:6";
 
+"general_about_10" = "\"Eders Tale være altid med Ynde, krydret med Salt, saa I vide, hvorledes I bør svare enhver især.\" Kolossenserne 4:6";
 // Downloads
 "Download in progress" = "Download i gang";
 
@@ -225,4 +225,3 @@ Appen kan downloades fra https://godtoolsapp.com";
 
 // Language Name Strings
 "language_name_fa" = "Persisk (Farsi)";
-

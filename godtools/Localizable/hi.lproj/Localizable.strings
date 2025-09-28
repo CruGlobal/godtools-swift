@@ -1,3 +1,6 @@
+"deferredDeepLinkModal.title" = "ऐसा लगता है कि आपने GodTools के लिंक पर क्लिक किया है";
+"deferredDeepLinkModal.message" = "नीचे दिए गए बटन पर टैप करें ताकि हम आपको आपके द्वारा अनुरोधित सामग्री तक ले जा सकें।";
+
 "optInNotification.notificationSettings" = "नोटिफिकेशन सेटिंग्स";
 "lessons.swipeTutorial.title" = "पृष्ठ बदलने के लिए स्वाइप करें";
 "lessons.swipeTutorial.buttonText" = "समझ गया";
@@ -259,6 +262,7 @@
 "add_new_tools" = "नए टूल जोड़ें";
 "set_your_languages" = "अपनी भाषा निर्धारित करें";
 "okay" = "ठीक";
+
 // Menu
 "menu_general" = "सामान्य";
 "menu_account" = "खाता";
@@ -318,7 +322,7 @@
 "no" = "नहीं";
 
 // Tract - Sharing
-"tract_share_message" ="यह लिंक आपको हमारे आज के विषय के वेब संस्करण पर ले जाएगी: %@
+"tract_share_message" = "यह लिंक आपको हमारे आज के विषय के वेब संस्करण पर ले जाएगी: %@
 
 चलो और बात करते हैं!
 

@@ -3,7 +3,6 @@
 
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "Није доступно у %@";
-
 "tool_menu_item.tools" = "Aлатке";
 "lessons.pageTitle" = "Лекције направљене за вас";
 "lessons.pageSubtitle" = "Практичне идеје за изградњу односа и почетак смислених разговора.";
@@ -39,6 +38,7 @@
 "allTools.spotlight.description" = "Ево неких алата који би вам се могли свидети";
 "allTools.categories.title" = "Категорије";
 "tool_menu_item.lessons" = "Лекције";
+
 "onboardingTutorial.beginButton.title" = "Почни";
 "onboardingTutorial.nextButton.title" = "Следеће";
 "tool_offline_favorite_message" = "Омогући да алатка буде доступна ван мреже тако што ћете додирнути иконицу срце која ће је додати у омиљене.";
@@ -125,11 +125,13 @@
 "add_new_tools" = "Додај нове алатке";
 "set_your_languages" = "Подесите своје језике";
 "okay" = "У реду";
+
 // Menu
 "menu_general" = "Опште";
 "menu_share" = "Подели";
 "menu_legal" = "Правно";
 "language_settings" = "Подешавање језика";
+
 // Login
 "login" = "Пријава";
 "logout" = "Одјава";
@@ -178,7 +180,7 @@
 "no" = "Не";
 
 // Tract - Sharing
-"tract_share_message" ="Ова веза ће вас одвести на веб верзију странице коју смо последњи пут гледали заједно данас: %@. 
+"tract_share_message" = "Ова веза ће вас одвести на веб верзију странице коју смо последњи пут гледали заједно данас: %@. 
 
 Хајде да разговарамо више!
 
@@ -212,8 +214,8 @@
 "general_about_8" = "Посетите godtoolsapp.com за више информација.";
 "tutorial.continueButton.title.continue" = "Настави";
 "general_about_9" = "Чим предузмете иницијативу да поделите своју веру, сетите се да је Бог онај који мења срце. Волите сваку особу тако што ћете је слушати да бисте је разумели.";
-"general_about_10" = "„Реч ваша да бива свагда у благодати, сољу зачињена, да знате како вам свакоме треба одговарати.“ Колошани 4, 6";
 
+"general_about_10" = "„Реч ваша да бива свагда у благодати, сољу зачињена, да знате како вам свакоме треба одговарати.“ Колошани 4, 6";
 // Downloads
 "Download in progress" = "Преузимање је у току";
 
@@ -223,4 +225,3 @@
 
 // Language Name Strings
 "language_name_fa" = "Персијски (фарси)";
-

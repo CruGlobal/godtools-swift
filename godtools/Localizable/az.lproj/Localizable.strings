@@ -1,6 +1,5 @@
 /* This About refers to a specific tool in the app. */
 "toolDetails.about.title" = "Haqqında";
-
 "toolSettings.languagesAvailable.title" = "Mövcud dillər";
 "toolDetails.versions.message" = "Bu alətin fərqli versiyasını aşağıdan seçin. Söhbətinizə ən uyğun olanını seçə bilməyiniz üçün hər versiyanın özünəməxsus stili və məzmunu var. Sİz eyni alətin bir neçə versiyasını sevimliləriniz arasına əlavə edə bilərsiniz.";
 "favorites.noTools.title" = "Göstərməyə sevimli alət yoxdur";
@@ -116,11 +115,13 @@ Son anadək bu mesajı almasanız, daha sonra keçid işləməyə bilər. Başqa
 "add_new_tools" = "Yeni alətlər əlavə edin";
 "set_your_languages" = "Dillərinizi təyin edin";
 "okay" = "Yaxşı";
+
 // Menu
 "menu_general" = "Ümumi";
 "menu_share" = "Paylaş";
 "menu_legal" = "Hüquqi";
 "language_settings" = "Dil parametrləri";
+
 // Login
 "login" = "Daxil ol";
 "logout" = "Çıx";
@@ -169,7 +170,7 @@ https://godtoolsapp.com";
 "no" = "Xeyr";
 
 // Tract - Sharing
-"tract_share_message" ="Bu link sizi dünən birlikdə baxdığımız səhifənin veb versiyasına aparacaq: %@ Gəlin daha çox danışaq!
+"tract_share_message" = "Bu link sizi dünən birlikdə baxdığımız səhifənin veb versiyasına aparacaq: %@ Gəlin daha çox danışaq!
 
 Tətbiqi buradan yükləyə bilərsiniz: 
 https://godtoolsapp.com";
@@ -185,7 +186,6 @@ https://godtoolsapp.com";
 
 // Alerts
 "error" = "Xəta";
-"OK" = "OK";
 "cancel" = "Ləğv et";
 "required_field_missing" = "\"%@\" tələb olunan sahədir.";
 
@@ -202,9 +202,9 @@ https://godtoolsapp.com";
 "general_about_8" = "Daha ətraflı məlumat üçün godtoolsapp.com səhifəsini ziyarət edin.";
 "tutorial.continueButton.title.continue" = "Davam et";
 "general_about_9" = "İnancınızı paylaşmaq təşəbbüsü götürdükdə yadda saxlayın ki, Allah ürəkləri dəyişəndir. Hər kəsi sevin və anlamaq üçün dinləyin.";
+
 "general_about_10" = "\"Qoyun söhbətiniz hər zaman zərif, duzlu olsun ki, hamıya nə cavab verəcəyinizi biləsiniz.\"
 Colossians 4.6";
-
 // Downloads
 "Download in progress" = "Yüklənmə davam edir";
 
@@ -214,4 +214,3 @@ Colossians 4.6";
 
 // Language Name Strings
 "language_name_fa" = "Fars dili";
-

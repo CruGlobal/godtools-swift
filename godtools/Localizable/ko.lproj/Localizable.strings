@@ -1,3 +1,6 @@
+"deferredDeepLinkModal.title" = "GodTools에 대한 링크를 클릭한 것 같습니다.";
+"deferredDeepLinkModal.message" = "아래 버튼을 탭하면 요청하신 콘텐츠로 이동하실 수 있습니다.";
+
 "optInNotification.notificationSettings" = "알림 설정";
 "lessons.swipeTutorial.title" = "밀어서 페이지를 바꾸세요";
 "lessons.swipeTutorial.buttonText" = "알았어";
@@ -256,6 +259,7 @@
 "add_new_tools" = "새 도구 추가";
 "set_your_languages" = "언어 설정";
 "okay" = "확인";
+
 // Menu
 "menu_general" = "일반";
 "menu_account" = "계정";
@@ -315,7 +319,7 @@
 "no" = "아니요";
 
 // Tract - Sharing
-"tract_share_message" ="이 링크가 오늘 같이 본 %@ 페이지의 웹 버전으로 이동시킵니다. 
+"tract_share_message" = "이 링크가 오늘 같이 본 %@ 페이지의 웹 버전으로 이동시킵니다. 
 
 더 대화하세요!
 
@@ -383,5 +387,4 @@
 // OnboardingTutorial
 "onboardingTutorial.aboutAppItem.0.title" = "다른 사람과 공유하기";
 "accountActivity.globalAnalytics.countries.title" = "국가";
-
 "onboardingTutorial.showMoreButton.title" = "더 보기";

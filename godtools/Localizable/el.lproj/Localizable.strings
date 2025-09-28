@@ -3,7 +3,6 @@
 
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "Δεν είναι διαθέσιμο σε %@";
-
 "tool_menu_item.tools" = "Εργαλεία";
 "lessons.pageTitle" = "Κατηγορίες";
 "lessons.pageSubtitle" = "Πρακτικές ιδέες για να χτίσετε σχέσεις και να ξεκινήσετε ουσιαστικές συζητήσεις.";
@@ -39,6 +38,7 @@
 "allTools.spotlight.description" = "Ακολουθούν ορισμένα εργαλεία που πιστεύαμε ότι μπορεί να σας αρέσουν";
 "allTools.categories.title" = "Κατηγορίες";
 "tool_menu_item.lessons" = "Μαθήματα";
+
 "onboardingTutorial.beginButton.title" = "Αρχίστε";
 "onboardingTutorial.nextButton.title" = "Επόμενο";
 "tool_offline_favorite_message" = "Κάντε το εργαλείο διαθέσιμο offline πατώντας το εικονίδιο με την καρδιά που το προσθέτει στα αγαπημένα σας.";
@@ -123,11 +123,13 @@
 "add_new_tools" = "Προσθήκη Νέων Εργαλείων";
 "set_your_languages" = "Ορίστε τις γλώσσες σας";
 "okay" = "Εντάξει";
+
 // Menu
 "menu_general" = "Γενικά";
 "menu_share" = "Κοινοποίηση";
 "menu_legal" = "Νομικά";
 "language_settings" = "Ρυθμίσεις Γλώσσας";
+
 // Login
 "login" = "Σύνδεση";
 "logout" = "Αποσύνδεση";
@@ -178,7 +180,7 @@
 "no" = "Όχι";
 
 // Tract - Sharing
-"tract_share_message" ="Αυτός ο σύνδεσμος θα σας μεταφέρει στην δικτυακή έκδοση της σελίδας που κοιτούσαμε τελευταία μαζί: %@. 
+"tract_share_message" = "Αυτός ο σύνδεσμος θα σας μεταφέρει στην δικτυακή έκδοση της σελίδας που κοιτούσαμε τελευταία μαζί: %@. 
 
 Ας μιλήσουμε περισσότερο!
 
@@ -212,8 +214,8 @@
 "general_about_8" = "Επισκεφθείτε το godtoolsapp.com για περισσότερες πληροφορίες.";
 "tutorial.continueButton.title.continue" = "Συνέχεια";
 "general_about_9" = "Καθώς αναλαμβάνετε την πρωτοβουλία να μοιραστείτε την πίστη σας, θυμηθείτε ότι ο Θεός είναι αυτός που αλλάζει την καρδιά. Αγαπήστε το κάθε άτομο καλά ακούγοντας και κατανοώντας.";
-"general_about_10" = "\"Τα λόγια σας ας είναι πάντοτε γεμάτα χάρη, αρτυμένα με το αλατι της καλοσύνης και της διακρίσεως, ώστε να ξέρετε πώς πρέπει να αποκρίνεστε στον καθένα.\" Προς Κολοσσαείς 4:6";
 
+"general_about_10" = "\"Τα λόγια σας ας είναι πάντοτε γεμάτα χάρη, αρτυμένα με το αλατι της καλοσύνης και της διακρίσεως, ώστε να ξέρετε πώς πρέπει να αποκρίνεστε στον καθένα.\" Προς Κολοσσαείς 4:6";
 // Downloads
 "Download in progress" = "Λήψη σε εξέλιξη";
 
@@ -223,4 +225,3 @@
 
 // Language Name Strings
 "language_name_fa" = "Περσικά (Φαρσί)";
-

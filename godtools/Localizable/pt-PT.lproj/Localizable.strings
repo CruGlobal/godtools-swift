@@ -3,7 +3,6 @@
 
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "Não disponível em %@";
-
 "tool_menu_item.tools" = "Ferramentas";
 "lessons.pageTitle" = "Sessões feitas para ti";
 "lessons.pageSubtitle" = "Ideias práticas para construir relações e iniciar conversas profundas.";
@@ -39,6 +38,7 @@
 "allTools.spotlight.description" = "Pensamos que vais gostar destas ferramentas";
 "allTools.categories.title" = "Categorias";
 "tool_menu_item.lessons" = "Sessões";
+
 "onboardingTutorial.beginButton.title" = "Começar";
 "onboardingTutorial.nextButton.title" = "Seguinte";
 "tool_offline_favorite_message" = "Para ficares com uma ferramenta disponível offline, toca no ícone de coração para a adicionares aos teus favoritos.";
@@ -123,11 +123,13 @@
 "add_new_tools" = "Adicionar novas ferramentas";
 "set_your_languages" = "Definir os idiomas";
 "okay" = "OK";
+
 // Menu
 "menu_general" = "Geral";
 "menu_share" = "Partilhar";
 "menu_legal" = "Aviso legal";
 "language_settings" = "Definições de idioma";
+
 // Login
 "login" = "Iniciar sessão";
 "logout" = "Sair";
@@ -178,7 +180,7 @@ Podes encontrar uma versão online em https://knowgod.com/";
 "no" = "Não";
 
 // Tract - Sharing
-"tract_share_message" ="Esta ligação irá direcionar-te para a versão Web da última página que estávamos a ver juntos hoje: %@. Vamos falar mais!
+"tract_share_message" = "Esta ligação irá direcionar-te para a versão Web da última página que estávamos a ver juntos hoje: %@. Vamos falar mais!
 
 Podes transferir a aplicação em https://godtoolsapp.com";
 
@@ -193,7 +195,6 @@ Podes transferir a aplicação em https://godtoolsapp.com";
 
 // Alerts
 "error" = "Erro";
-"OK" = "OK";
 "cancel" = "Cancelar";
 "required_field_missing" = "\"%@\" é um campo obrigatório.";
 
@@ -210,8 +211,8 @@ Podes transferir a aplicação em https://godtoolsapp.com";
 "general_about_8" = "Visita godtoolsapp.com para obteres mais informações.";
 "tutorial.continueButton.title.continue" = "Continuar";
 "general_about_9" = "Quando tomas a iniciativa de partilhar a tua fé, lembra-te de que Deus é quem muda o coração. Ama cada pessoa ouvindo-a atentamente para a compreenderes.";
-"general_about_10" = "\"Que a vossa palavra seja sempre amável, temperada de sal, para que saibais responder a cada um como deveis.\" Colossenses 4:6";
 
+"general_about_10" = "\"Que a vossa palavra seja sempre amável, temperada de sal, para que saibais responder a cada um como deveis.\" Colossenses 4:6";
 // Downloads
 "Download in progress" = "Transferência em curso";
 
@@ -221,4 +222,3 @@ Podes transferir a aplicação em https://godtoolsapp.com";
 
 // Language Name Strings
 "language_name_fa" = "Persa (parse)";
-
