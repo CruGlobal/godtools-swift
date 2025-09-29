@@ -1,3 +1,10 @@
+"deferredDeepLinkModal.title" = "您似乎点击了 GodTools 的链接";
+"deferredDeepLinkModal.message" = "Please tap the paste button below.  This will allow us to take you to the content you requested in GodTools.";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "Close";
+"toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";
+"toolScreenShare.qrCode.title" = "QR Code";
+
 "optInNotification.notificationSettings" = "通知设置";
 "lessons.swipeTutorial.title" = "滑动切换页面";
 "lessons.swipeTutorial.buttonText" = "明白了";
@@ -124,6 +131,7 @@
 "training_tip_prepare" = "准备";
 "training_tip_quote" = "引用";
 "training_tip_tip" = "提示";
+"articles.downloadingArticles.errorMessage.title" = "Error Downloading Articles";
 "start_training" = "开始培训";
 "close" = "关闭";
 "tool_menu_item.lessons" = "课程 ";
@@ -259,6 +267,10 @@
 "add_new_tools" = "添加新工具";
 "set_your_languages" = "设置您的语言";
 "okay" = "确定";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
+
 // Menu
 "menu_general" = "通用";
 "menu_account" = "账户";
@@ -318,7 +330,7 @@
 "no" = "否";
 
 // Tract - Sharing
-"tract_share_message" ="点击这个链接，您就会看到我们今天谈论内容的网页版：%@。让我们畅谈吧！
+"tract_share_message" = "点击这个链接，您就会看到我们今天谈论内容的网页版：%@。让我们畅谈吧！
 
 应用下载地址： https://godtoolsapp.com";
 
@@ -407,3 +419,9 @@
 "onboardingTutorial.appUsageItem.3.message" = "超过90种语言可供选择";
 "onboardingTutorial.appUsageItem.4.message" = "帮助他人成为基督徒";
 "onboardingTutorial.showMoreButton.title" = "显示更多";
+
+"screenShareTutorial.generateQRCodeButton.title" = "Generate QR code";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "Close";
+"toolScreenShare.qrCode.title" = "QR Code";
+"toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";

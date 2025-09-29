@@ -1,3 +1,10 @@
+"deferredDeepLinkModal.title" = "ایسا لگتا ہے کہ آپ نے GodTools کے لیے کسی لنک پر کلک کیا ہے۔";
+"deferredDeepLinkModal.message" = "Please tap the paste button below.  This will allow us to take you to the content you requested in GodTools.";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "Close";
+"toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";
+"toolScreenShare.qrCode.title" = "QR Code";
+
 "optInNotification.notificationSettings" = "نوٹیفکیشن سیٹنگز";
 "lessons.swipeTutorial.title" = "صفحات بدلنے کے لیے سوائپ کریں";
 "lessons.swipeTutorial.buttonText" = "سمجھ گیا";
@@ -124,6 +131,7 @@
 "training_tip_prepare" = "تیار کریں";
 "training_tip_quote" = "حوالہ دیں";
 "training_tip_tip" = "مشورہ";
+"articles.downloadingArticles.errorMessage.title" = "Error Downloading Articles";
 "start_training" = "مشق شروع کریں";
 "close" = "ہوگیا / کر لیا";
 "tool_menu_item.lessons" = "اسباق";
@@ -236,6 +244,9 @@
 
 /* This is to let users know which version of the app is installed on their phone */
 "menu_version" = "ورزن";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
+"articles.loadingView.downloadingArticles" = "Downloading Articles ...";
 "language_onboard" = "90+ زبانیں";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -256,6 +267,10 @@
 "add_new_tools" = "نئے ٹُولز ایڈ کریں";
 "set_your_languages" = "زبانیں منتخب کریں";
 "okay" = "اوکے";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
+
 // Menu
 "menu_general" = "جنرل";
 "menu_account" = "اکاؤنٹ";
@@ -275,6 +290,7 @@
 "about" = "ہمارے متعلق";
 "help" = "مدد";
 "contact_us" = "ہم سے رابطہ کریں";
+"preview_mode_translators_only" = "Preview Mode (Translators Only)";
 "share_god_tools" = "گاڈ ٹُولز ایپ شیئر کریں";
 "share_a_story_with_us" = "ہمارے ساتھ اسٹوری شیئر کریں";
 "terms_of_use" = "استعمال کرنے کی شرائط";
@@ -316,7 +332,7 @@ https://knowgod.com";
 "no" = "نہیں";
 
 // Tract - Sharing
-"tract_share_message" ="یہ لنک آپ کو اس پیج کے ویب ورژن میں لےجائے گا جس کو آج ہم سب مل کر دیکھ رہے تھے: %@۔ آئیے کچھ اور چیزوں پر بات کریں!
+"tract_share_message" = "یہ لنک آپ کو اس پیج کے ویب ورژن میں لےجائے گا جس کو آج ہم سب مل کر دیکھ رہے تھے: %@۔ آئیے کچھ اور چیزوں پر بات کریں!
 
 ایپ یہاں سے ڈاؤنلوڈ کی جا سکتی ہے
 https://godtoolsapp.com";
@@ -343,10 +359,18 @@ https://godtoolsapp.com";
 // Tutorial
 "tutorial.tutorialItem.0.title" = "دیکھیں";
 "general_about_2" = "یہ ٹولس آپ کی مدد کرتا ہے بھروسہ کے ساتھ سمجھانے کے لئے  کسی کو بھی کہ وہ کس طرح خداکے ساتھ یسوع مسیح کے وسیلہ سے ایک رشتہ کی شروعات کی جا سکتی ہے۔ اس کے باوجود بھی کہ آپ نے اس سے پہلے کبھی کسی سے اپنا ایمان نہ بانٹا ہو یا وہ لوگ ایک فرق زبان بولتے ہوں۔";
+"tutorial.tutorialItem.0.message" = "See what GodTools offers in our demo video
+(Tap on the video to bring up settings for subtitles)";
 "general_about_3" = "آپ اپنے ترجیح اور سامعین کی بنا پر مختلف قسم  کے اوزار کا چناؤ کریں۔ ہر کسی زبان میں تمام اوزار کا چناؤ کریں۔ ہر کسی زبان میں تمام اوزار دستیاب نہیں ہیں۔";
+"tutorial.tutorialItem.1.title" = "Prepare";
 "general_about_4" = "دیگر ذرائع کے لئے لنک ہر ایک اوزار کے آخر میں شامل کئے گئے ہیں۔";
+"tutorial.tutorialItem.1.message" = "Get familiar with some of your tools. The \"Teach Me to Share\" tool is a good place to start.
+
+Press the About button on any tool for more info.";
 "general_about_5" = "ہر ایک نئے اوزار اور / یا زبان کے لئے آن لائن کا سلسلہ / تعلق ڈاؤن لوڈ کرنے کی ضرورت ہے۔ ایک بار جب ڈاؤن لوڈ ہو چکا تو انہیں کبھی بھی آف لائن میں استعمال کیا جا سکتاہے۔";
+"tutorial.tutorialItem.2.title" = "Try";
 "general_about_6" = "سوالات؟ صلاح مشورے ؟ درخواستیں؟  support@godtoolsapp.com میں ہمارے  ساتھ رابطہ قائم کریں۔";
+"tutorial.tutorialItem.2.message" = "Everyone starts as a beginner. Try using a tool in a conversation and see what you learn.";
 "general_about_7" = "ان اوزاروں کے آن لائن ورژن knowgod.com میں بھی دیکھی جا سکتی ہیں۔ آپ اپنے خوو کے سائٹ پر اسے مضبوطی سے جما دیں!";
 "tutorial.tutorialItem.3.title" = "اس کو دوبارہ دیکھنے کے لئیے یہ ٹیوٹوریل فہرست  میں موجود ہے";
 "general_about_8" = "مزید معلومات کے لئے godtoolsapp.com کا استعمال کریں۔";
@@ -376,6 +400,8 @@ https://godtoolsapp.com";
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "عالمگیر سرگرمی";
+// OnboardingWelcome
+"onboardingWelcome.titleLabel.welcome" = "Welcome";
 "accountActivity.globalAnalytics.users.title" = "منفرد صارفین";
 "onboardingWelcome.titleLabel.tagline" = "آپ کے ایمان کو ساجھا کرنے میں مددگار";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "انجیل کی پیشکشیں";
@@ -384,4 +410,20 @@ https://godtoolsapp.com";
 "onboardingTutorial.aboutAppItem.0.title" = "دوسروں کے ساتھ ساجھا کریں";
 "accountActivity.globalAnalytics.countries.title" = "ممالک";
 
+"onboardingTutorial.aboutAppItem.0.message" = "GodTools is built to guide your faith conversations";
+"onboardingTutorial.aboutAppItem.1.title" = "Choose Your Tools";
+"onboardingTutorial.aboutAppItem.1.message" = "GodTools helps you before, during, and after a spiritual conversation";
+"onboardingTutorial.aboutAppItem.2.title" = "Always Ready";
+"onboardingTutorial.aboutAppItem.2.message" = "GodTools is here to help and is ready when you are";
+"onboardingTutorial.appUsageItem.0.message" = "Prepare for any conversation";
+"onboardingTutorial.appUsageItem.1.message" = "Walk someone through the gospel";
+"onboardingTutorial.appUsageItem.2.message" = "View two languages side by side";
+"onboardingTutorial.appUsageItem.3.message" = "Choose from over 90 languages";
+"onboardingTutorial.appUsageItem.4.message" = "Help someone get started as a Christian";
 "onboardingTutorial.showMoreButton.title" = "مزید دکھائیے ";
+
+"screenShareTutorial.generateQRCodeButton.title" = "Generate QR code";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "Close";
+"toolScreenShare.qrCode.title" = "QR Code";
+"toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";

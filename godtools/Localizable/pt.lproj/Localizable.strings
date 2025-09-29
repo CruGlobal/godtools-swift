@@ -1,3 +1,10 @@
+"deferredDeepLinkModal.title" = "Parece que você clicou em um link para GodTools";
+"deferredDeepLinkModal.message" = "Please tap the paste button below.  This will allow us to take you to the content you requested in GodTools.";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "Close";
+"toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";
+"toolScreenShare.qrCode.title" = "QR Code";
+
 "optInNotification.notificationSettings" = "Configurações de notificações";
 "lessons.swipeTutorial.title" = "Deslize para trocar de páginas";
 "lessons.swipeTutorial.buttonText" = "Entendi";
@@ -124,6 +131,7 @@
 "training_tip_prepare" = "Prepare-se";
 "training_tip_quote" = "Citação";
 "training_tip_tip" = "Dica";
+"articles.downloadingArticles.errorMessage.title" = "Error Downloading Articles";
 "start_training" = "Iniciar Treinamento";
 "close" = "Concluído";
 "tool_menu_item.lessons" = "Sessões";
@@ -261,6 +269,10 @@ Se você receber esta mensagem demasiado tarde, a ligação poderá não estar a
 "add_new_tools" = "Adicionar novas ferramentas";
 "set_your_languages" = "Definir os idiomas";
 "okay" = "OK";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
+
 // Menu
 "menu_general" = "Geral";
 "menu_account" = "Conta";
@@ -320,7 +332,7 @@ Pode encontrar uma versão online em https://knowgod.com/";
 "no" = "Não";
 
 // Tract - Sharing
-"tract_share_message" ="Esta ligação irá direcioná-lo para uma versão Web do que estávamos a falar hoje: %@.
+"tract_share_message" = "Esta ligação irá direcioná-lo para uma versão Web do que estávamos a falar hoje: %@.
 
 Vamos falar mais!
 
@@ -410,3 +422,9 @@ Prima o botão de informações em qualquer ferramenta para obter mais informaç
 "onboardingTutorial.appUsageItem.3.message" = "Escolha entre mais de 90 idiomas";
 "onboardingTutorial.appUsageItem.4.message" = "Ajude alguém a começar como cristão";
 "onboardingTutorial.showMoreButton.title" = "Mostrar mais";
+
+"screenShareTutorial.generateQRCodeButton.title" = "Generate QR code";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "Close";
+"toolScreenShare.qrCode.title" = "QR Code";
+"toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";

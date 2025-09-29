@@ -1,3 +1,10 @@
+"deferredDeepLinkModal.title" = "يبدو أنك قمت بالنقر على رابط لـ GodTools";
+"deferredDeepLinkModal.message" = "Please tap the paste button below.  This will allow us to take you to the content you requested in GodTools.";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "Close";
+"toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";
+"toolScreenShare.qrCode.title" = "QR Code";
+
 "optInNotification.notificationSettings" = "إعدادات الإشعارات";
 "lessons.swipeTutorial.title" = "اسحب لتغيير الصفحات";
 "lessons.swipeTutorial.buttonText" = "فهمت";
@@ -124,6 +131,7 @@
 "training_tip_prepare" = "حضر";
 "training_tip_quote" = "إقتباس";
 "training_tip_tip" = "فكرة عملية";
+"articles.downloadingArticles.errorMessage.title" = "Error Downloading Articles";
 "start_training" = "ابدأ التدريب";
 "close" = "إغلاق";
 "tool_menu_item.lessons" = "الدروس";
@@ -239,6 +247,9 @@
 
 /* This is to let users know which version of the app is installed on their phone */
 "menu_version" = "إصدار";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
+"articles.loadingView.downloadingArticles" = "Downloading Articles ...";
 "language_onboard" = "أكثر من 90 لغة";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -259,6 +270,10 @@
 "add_new_tools" = "إضافة مزيد من الأدوات";
 "set_your_languages" = "حدد لغاتك";
 "okay" = "حسناً";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
+
 // Menu
 "menu_general" = "عام";
 "menu_account" = "حساب";
@@ -319,7 +334,7 @@ https://godtoolsapp.com
 "no" = "لا";
 
 // Tract - Sharing
-"tract_share_message" ="هذا الرابط سيأخذك إلى إصدار الويب عما كنا نتحدث عنه هذا اليوم: %@.
+"tract_share_message" = "هذا الرابط سيأخذك إلى إصدار الويب عما كنا نتحدث عنه هذا اليوم: %@.
 
 فلنتحدث أكثر! 
 
@@ -347,10 +362,18 @@ https://godtoolsapp.com
 // Tutorial
 "tutorial.tutorialItem.0.title" = "مشاهدة";
 "general_about_2" = "هذه الأدوات تساعدك على الشرح لشخص ما كيفية بدئ علاقة مع الرب بيسوع المسيح، حتى و لو لم تشارك إيمانك من قبل أو كانوا يتحدثون لغة مختلفة.";
+"tutorial.tutorialItem.0.message" = "See what GodTools offers in our demo video
+(Tap on the video to bring up settings for subtitles)";
 "general_about_3" = "اختر من عدة أدوات استناداً على تفضيلاتك و جمهورك. ليست كل الأدوات متوفرة في كل لغة.";
+"tutorial.tutorialItem.1.title" = "Prepare";
 "general_about_4" = "الروابط للمصادر الأخرى يتم إدراجها في نهاية كل أداة.";
+"tutorial.tutorialItem.1.message" = "Get familiar with some of your tools. The \"Teach Me to Share\" tool is a good place to start.
+
+Press the About button on any tool for more info.";
 "general_about_5" = "الاتصال بالشبكة ضروري لتحميل كل أداة و/ أو لغة جديدة. بمجرد تحميلها، يمكن استعمالها خارج الشبكة.";
+"tutorial.tutorialItem.2.title" = "Try";
 "general_about_6" = "ألديك أسئلة؟ اقتراحات؟ طلبات؟ اتصل بنا على support@godtoolsapp.com";
+"tutorial.tutorialItem.2.message" = "Everyone starts as a beginner. Try using a tool in a conversation and see what you learn.";
 "general_about_7" = "إصدار عبر الشبكة لهذه الأدوات يمكن إيجاده على knowgod.com. أدرجه على موقعك الخاص!";
 "tutorial.tutorialItem.3.title" = "هذا البرنامج التعليمي متاح كي ليُرى مجددا في القائمة";
 "general_about_8" = "زر موقع godtoolsapp.com لمزيد من المعلومات.";
@@ -380,6 +403,8 @@ https://godtoolsapp.com
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "النشاط العالمي";
+// OnboardingWelcome
+"onboardingWelcome.titleLabel.welcome" = "Welcome";
 "accountActivity.globalAnalytics.users.title" = "المستخدمون\nالفريدون";
 "onboardingWelcome.titleLabel.tagline" = "يُساعدك على مشاركة إيمانك";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "الإنجيل\nالعروض التقديمية";
@@ -388,4 +413,20 @@ https://godtoolsapp.com
 "onboardingTutorial.aboutAppItem.0.title" = "المشاركة مع الآخرين";
 "accountActivity.globalAnalytics.countries.title" = "البلدان";
 
+"onboardingTutorial.aboutAppItem.0.message" = "GodTools is built to guide your faith conversations";
+"onboardingTutorial.aboutAppItem.1.title" = "Choose Your Tools";
+"onboardingTutorial.aboutAppItem.1.message" = "GodTools helps you before, during, and after a spiritual conversation";
+"onboardingTutorial.aboutAppItem.2.title" = "Always Ready";
+"onboardingTutorial.aboutAppItem.2.message" = "GodTools is here to help and is ready when you are";
+"onboardingTutorial.appUsageItem.0.message" = "Prepare for any conversation";
+"onboardingTutorial.appUsageItem.1.message" = "Walk someone through the gospel";
+"onboardingTutorial.appUsageItem.2.message" = "View two languages side by side";
+"onboardingTutorial.appUsageItem.3.message" = "Choose from over 90 languages";
+"onboardingTutorial.appUsageItem.4.message" = "Help someone get started as a Christian";
 "onboardingTutorial.showMoreButton.title" = "أعرض لي المزيد";
+
+"screenShareTutorial.generateQRCodeButton.title" = "Generate QR code";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "Close";
+"toolScreenShare.qrCode.title" = "QR Code";
+"toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";

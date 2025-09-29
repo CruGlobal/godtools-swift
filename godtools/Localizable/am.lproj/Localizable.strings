@@ -1,3 +1,10 @@
+"deferredDeepLinkModal.title" = "ለGodTools አገናኝ ጠቅ ያደረጉ ይመስላል";
+"deferredDeepLinkModal.message" = "Please tap the paste button below.  This will allow us to take you to the content you requested in GodTools.";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "Close";
+"toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";
+"toolScreenShare.qrCode.title" = "QR Code";
+
 "optInNotification.notificationSettings" = "የማሳወቂያ ቅንብሮች";
 "lessons.swipeTutorial.title" = "ገፆችን ለመቀየር ያንሸራቱ";
 "lessons.swipeTutorial.buttonText" = "ገባኝ";
@@ -118,11 +125,13 @@
 "toolSettings.shareables.title" = "ተዛማጅ ግራፊክስ";
 "allTools.spotlight.title" = "የተመረጡ ቡክሌቶች";
 "allTools.spotlight.description" = "ሊወዷቸው ይችላሉ ብለን ያሰብናቸውን ቡክሌቶች ከታች ያገኛሉ።";
+"allTools.categories.title" = "Categories";
 "training_tip_ask" = "ይጠይቁ";
 "training_tip_consider" = "አስቡበት";
 "training_tip_prepare" = "ያዘጋጁ";
 "training_tip_quote" = "ጥቅስ";
 "training_tip_tip" = "ጠቃሚ ምክር";
+"articles.downloadingArticles.errorMessage.title" = "Error Downloading Articles";
 "start_training" = "ስልጠናውን ይጀምሩ";
 "close" = "ይዝጉ";
 "tool_menu_item.lessons" = "ትምህርቶች";
@@ -237,6 +246,9 @@
 
 /* This is to let users know which version of the app is installed on their phone */
 "menu_version" = "ሥሪት";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
+"articles.loadingView.downloadingArticles" = "Downloading Articles ...";
 "language_onboard" = "ከ 90 በላይ ቋንቋዎች";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -248,11 +260,19 @@
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
 "find_tools" = "ሁሉም ቡክሌቶች";
 
+"unavailable" = "Unavailable";
+
 // Navigation Bar
 "navigationBar.navigationItem.skip" = "ይለፉ";
 
 // Onboarding
 "add_new_tools" = "አዲስ መሳሪያን ይጨምሩ";
+"set_your_languages" = "Set Your Languages";
+"okay" = "Okay";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
+
 // Menu
 "menu_general" = "አጠቃላይ";
 "menu_account" = "መለያ";
@@ -266,10 +286,13 @@
 "login" = "ይግቡ";
 "logout" = "ይዉጡ";
 "create_account" = "ይመዝገቡ";
+"account_login" = "Account Login";
+
 // Tool Detail
 "about" = "ስለዚህ አፕሊኬሽን";
 "help" = "እገዛ";
 "contact_us" = "አግኙን";
+"preview_mode_translators_only" = "Preview Mode (Translators Only)";
 "share_god_tools" = "GodTools መተግበሪያን አጋራ";
 "share_a_story_with_us" = "ታሪክ አካፍሉን";
 "terms_of_use" = "የአጠቃቀም ውል";
@@ -278,6 +301,9 @@
 "share_god_tools_share_sheet_text" = "የ GodTools መተግበሪያን ያውርዱ: https://godtoolsapp.com \n\n ሁሉንም 
 
 የመተግበሪያውን ይዘት ይህን መስፈንጠሪያ በመንካት ማግኘት ይቻላል https://knowgod.com/";
+
+// Add Tools
+"add_tools" = "Add Tools";
 
 "total_views" = "%d ታይቷል";
 "total_languages" = "%d ቋንቋዎች";
@@ -299,12 +325,14 @@
 "no_internet" = "እባክዎ የበይነመረብ ግንኙነትዎን ያረጋግጡ እና እንደገና ይሞክሩ።";
 
 "the_tool_you_requested_is_loading" = "የጠየቁት መተግበርያ በሂደት ላይ ነዉ...";
+"loading" = "Loading...";
+
 // Actions
 "yes" = "አዎ";
 "no" = "አይደለም";
 
 // Tract - Sharing
-"tract_share_message" ="ዛሬ ስንመለከተዉ የነበረዉ መተግብሪያ(App) በዚህ መስፈንጠሪያ በኩል ማግኘት ይችላሉ: %@ ይህን መተግበሪያ ዌብ ላይ ለመጠቀም መስፈንጠሪያ: https://godtoolsapp.com\n\n ተጨማሪ እንነጋገር !";
+"tract_share_message" = "ዛሬ ስንመለከተዉ የነበረዉ መተግብሪያ(App) በዚህ መስፈንጠሪያ በኩል ማግኘት ይችላሉ: %@ ይህን መተግበሪያ ዌብ ላይ ለመጠቀም መስፈንጠሪያ: https://godtoolsapp.com\n\n ተጨማሪ እንነጋገር !";
 
 // Buttons
 "download" = "ያዉርዱ";
@@ -328,10 +356,18 @@
 // Tutorial
 "tutorial.tutorialItem.0.title" = "ይመልከቱ";
 "general_about_2" = "ይህ መተግበርያ ሰዎች ከእግዚአብሔር ጋር በልጁ በኢየሱስ ክርስቶስ በኩል ግንኙነት እንዲኖራቸዉ በድፍረት እንዲያግዙ ይረዳዎታል። ከዚህ በፊት እምነትዎን አካፍለዉ የማያዉቁ ቢሆኑ እና የሌላ ቋንቋ ተናጋሪ ሰዉ ቢገጥምዎ ይህ መተግበርያ በደንብ ያግዛዎታል።";
+"tutorial.tutorialItem.0.message" = "See what GodTools offers in our demo video
+(Tap on the video to bring up settings for subtitles)";
 "general_about_3" = "ከብዙ አይነት መተግበሪያ(መሳሪያ) የሚሆኖትን ለተመልካቹም የሚመቸዉን ይምረጡ።";
+"tutorial.tutorialItem.1.title" = "Prepare";
 "general_about_4" = "ከሁሉም መተግበሪያ(መሳሪያ) መጨረሻ ላይ ወደ ምንጩ የሚወስድ ጠቋሚ (ሊንክ) ይገኛል።";
+"tutorial.tutorialItem.1.message" = "Get familiar with some of your tools. The \"Teach Me to Share\" tool is a good place to start.
+
+Press the About button on any tool for more info.";
 "general_about_5" = "አዳዲስ መተግበሪያዎችን(አገልግሎቶችን) እና ቋንቋን አንዴ ለማዉረድ ኢንተርኔት ኮኔክሽን ያስፈልጋል። አንድ ጊዜ ከወረደ በዃላ ግን እንደዚዉ ይሰራል።";
+"tutorial.tutorialItem.2.title" = "Try";
 "general_about_6" = "ጥያቄዎች? ጥቆማዎች? በዚህ አድራሻ አግኙን support@godtoolsapp.com";
+"tutorial.tutorialItem.2.message" = "Everyone starts as a beginner. Try using a tool in a conversation and see what you learn.";
 "general_about_7" = "እዚህ ላይ ያሉትን አገልግሎቶችን ኦንላይን knowgod.com ላይ ማግኘት ይችላሉ። የራስዎም ሳይት ላይ መጠቀም ይችላሉ።";
 "tutorial.tutorialItem.3.title" = "ይህ አጋዥ ስልጠና በማውጫው ውስጥ እንደገና ለማየት ይገኛል።";
 "general_about_8" = "ለተጨማሪ መረጃ godtoolsapp.com ይመልከቱ";
@@ -361,6 +397,8 @@
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "ዓለም አቀፋዊ እንቅስቃሴ";
+// OnboardingWelcome
+"onboardingWelcome.titleLabel.welcome" = "Welcome";
 "accountActivity.globalAnalytics.users.title" = "ልዩ ተጠቃሚዎች";
 "onboardingWelcome.titleLabel.tagline" = "እምነትዎን እንዲያካፍሉ መርዳት";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "የወንጌል ግብዣዎች";
@@ -369,4 +407,20 @@
 "onboardingTutorial.aboutAppItem.0.title" = "ለሌሎች ያካፍሉ";
 "accountActivity.globalAnalytics.countries.title" = "ሀገሮች";
 
+"onboardingTutorial.aboutAppItem.0.message" = "GodTools is built to guide your faith conversations";
+"onboardingTutorial.aboutAppItem.1.title" = "Choose Your Tools";
+"onboardingTutorial.aboutAppItem.1.message" = "GodTools helps you before, during, and after a spiritual conversation";
+"onboardingTutorial.aboutAppItem.2.title" = "Always Ready";
+"onboardingTutorial.aboutAppItem.2.message" = "GodTools is here to help and is ready when you are";
+"onboardingTutorial.appUsageItem.0.message" = "Prepare for any conversation";
+"onboardingTutorial.appUsageItem.1.message" = "Walk someone through the gospel";
+"onboardingTutorial.appUsageItem.2.message" = "View two languages side by side";
+"onboardingTutorial.appUsageItem.3.message" = "Choose from over 90 languages";
+"onboardingTutorial.appUsageItem.4.message" = "Help someone get started as a Christian";
 "onboardingTutorial.showMoreButton.title" = "ተጨማሪ አሳየኝ";
+
+"screenShareTutorial.generateQRCodeButton.title" = "Generate QR code";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "Close";
+"toolScreenShare.qrCode.title" = "QR Code";
+"toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";

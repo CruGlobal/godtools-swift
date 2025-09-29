@@ -1,3 +1,10 @@
+"deferredDeepLinkModal.title" = "तपाईंले GodTools को लिङ्कमा क्लिक गर्नुभएको जस्तो देखिन्छ।";
+"deferredDeepLinkModal.message" = "Please tap the paste button below.  This will allow us to take you to the content you requested in GodTools.";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "Close";
+"toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";
+"toolScreenShare.qrCode.title" = "QR Code";
+
 "optInNotification.notificationSettings" = "सूचना सेटिङहरु";
 "lessons.swipeTutorial.title" = "पृष्ठहरू परिवर्तन गर्न स्वाइप गर्नुहोस्";
 "lessons.swipeTutorial.buttonText" = "बुझेँ";
@@ -118,11 +125,13 @@
 "toolSettings.shareables.title" = "सम्बन्धित ग्राफिक्स";
 "allTools.spotlight.title" = "उपकरण स्पटलाइट";
 "allTools.spotlight.description" = "यहाँ केहि उपकरणहरु छन् जुन हामीले तपाईलाई मन पर्न सक्छ";
+"allTools.categories.title" = "Categories";
 "training_tip_ask" = "सोध्नुहोस्";
 "training_tip_consider" = "सोच्नुहोस्";
 "training_tip_prepare" = "तयारी हुनुहोस्";
 "training_tip_quote" = "भनाई";
 "training_tip_tip" = "सुझाव";
+"articles.downloadingArticles.errorMessage.title" = "Error Downloading Articles";
 "start_training" = "तालिम सुरु गर्नुहोस्";
 "close" = "सम्पन्न";
 "tool_menu_item.lessons" = "पाठहरु";
@@ -235,6 +244,9 @@
 
 /* This is to let users know which version of the app is installed on their phone */
 "menu_version" = "संस्करण";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
+"articles.loadingView.downloadingArticles" = "Downloading Articles ...";
 "language_onboard" = "90+ भाषाहरु";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -246,11 +258,19 @@
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
 "find_tools" = "सबै उपकरणहरु ";
 
+"unavailable" = "Unavailable";
+
 // Navigation Bar
 "navigationBar.navigationItem.skip" = "छोड्नुहोस्";
 
 // Onboarding
 "add_new_tools" = "नयाँ टुल्सलाई जोड्नुहोस्";
+"set_your_languages" = "Set Your Languages";
+"okay" = "Okay";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
+
 // Menu
 "menu_general" = "सामान्य";
 "menu_account" = "खाता";
@@ -264,16 +284,22 @@
 "login" = "भित्र  आउनुहोस";
 "logout" = "बाहिर निक्ल्नुहोस";
 "create_account" = "एकाउन्ट खोल्नुहोस";
+"account_login" = "Account Login";
+
 // Tool Detail
 "about" = "को  बारेमा";
 "help" = "सहायता";
 "contact_us" = "सम्पर्क गर्नुहोस";
+"preview_mode_translators_only" = "Preview Mode (Translators Only)";
 "share_god_tools" = "GodTools ऐपलाई  साझा गरिदिनुहोस";
 "share_a_story_with_us" = "हामीहरु मध्य आफ्नो  कथा साझा गर्नुहोस";
 "terms_of_use" = "उपयोगको शर्तहरु";
 "privacy_policy" = "गोपनीय नीति";
 "copyright_info" = "प्रतिलिपि अधिकार जानकारी";
 "share_god_tools_share_sheet_text" = "GodTools एप डाउनलोड गर्नुहोस् : https://godtoolsapp.com \n\n अनलाइन संस्करणमा पनि पाउन सकिन्छ : https://knowgod.com/";
+
+// Add Tools
+"add_tools" = "Add Tools";
 
 "total_views" = "%d ले हेर्यो";
 "total_languages" = "%d भाषा";
@@ -294,17 +320,23 @@
 "no_internet_title" = "इन्टरनेट जडान छैन";
 "no_internet" = "कृपया आफ्नो इन्टरनेट जडान जाँच गर्नुहोस् र फेरि प्रयास गर्नुहोस्।";
 
+"the_tool_you_requested_is_loading" = "The tool you requested is loading...";
+"loading" = "Loading...";
+
 // Actions
 "yes" = "हजुर";
 "no" = "भएन";
 
 // Tract - Sharing
-"tract_share_message" ="यो लिङ्कले तपाईलाई आज हामीले के कुरा गरिरहेका थियौं भन्ने वेब संस्करणमा लैजान्छ: %@ 
+"tract_share_message" = "यो लिङ्कले तपाईलाई आज हामीले के कुरा गरिरहेका थियौं भन्ने वेब संस्करणमा लैजान्छ: %@ 
 
 https://godtoolsapp.com \n\n बाट डाउनलोड गर्न सकिन्छ । थप जानकारीको लागि !";
 
+// Buttons
+"download" = "Download";
 "dismiss" = "खारेज गर्नुहोस्";
 "done" = "सम्पन्न";
+"remove" = "Remove";
 "clear" = "स्पष्ट";
 /* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
 "toolinfo_opentool" = "खोल्नुहोस्";
@@ -322,10 +354,18 @@ https://godtoolsapp.com \n\n बाट डाउनलोड गर्न सक
 // Tutorial
 "tutorial.tutorialItem.0.title" = "हेर";
 "general_about_2" = "यो टूल्सले तपाइलाई आत्माविश्वासको साथ यो थाहा गर्न मदत गर्दछ कि कसरी येशू ख्रीष्टद्वारा परमेश्वरसाथ सम्बन्धलाई आरम्भ गर्न सक्छ,चाहे तपाइले कहिल्यै पनि आफ्नो विश्वास साझा न गरेको होस् वा एक अर्कोसँग अलग भाषा बोल्नुभएको होस् ।";
+"tutorial.tutorialItem.0.message" = "See what GodTools offers in our demo video
+(Tap on the video to bring up settings for subtitles)";
 "general_about_3" = "आफ्नो प्राथमिकता र आफ्नो दर्शकको आधारमा विभिन्न टुल्स मध्य। प्रत्येक भाषामध्य सबै टुल्स उपलब्ध छैन ।";
+"tutorial.tutorialItem.1.title" = "Prepare";
 "general_about_4" = "प्रत्येक टुल्सको अन्तमा अन्य संसाधनहरुको सम्पर्क सम्मिलित हुन्छ";
+"tutorial.tutorialItem.1.message" = "Get familiar with some of your tools. The \"Teach Me to Share\" tool is a good place to start.
+
+Press the About button on any tool for more info.";
 "general_about_5" = "प्रेत्येक नयाँ टुल वा भाषालाई डाउनलोड गर्नको लागि ऑनलाइन कनेक्शनको आवश्यकता हुन्छ। एकबार डाउनलोड भएपछि, यसलाई ऑफ़लाइन उपयोग गर्न सकिन्छ ।";
+"tutorial.tutorialItem.2.title" = "Try";
 "general_about_6" = "प्रश्न? सुझाव? अनुरोध? को लागि  Support@godtoolsapp.com मा हामीलाई  सम्पर्क गर्नुहोस";
+"tutorial.tutorialItem.2.message" = "Everyone starts as a beginner. Try using a tool in a conversation and see what you learn.";
 "general_about_7" = "यस टुल्सको ऑनलाइन संस्करण knowgod.com मा जन्नुहोस ।यसलाई आफ्नो साइटको साथमा जोडी दिनुहोस !";
 "tutorial.tutorialItem.3.title" = "तिमी मेनुबाट फेरि यो ट्युटोरियल हेर्न सक्छौ";
 "general_about_8" = "अझै  जानकारीको लागि  godtoolsapp.com मा जानुहोस।";
@@ -355,6 +395,8 @@ https://godtoolsapp.com \n\n बाट डाउनलोड गर्न सक
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "विश्वव्यापी गतिविधि";
+// OnboardingWelcome
+"onboardingWelcome.titleLabel.welcome" = "Welcome";
 "accountActivity.globalAnalytics.users.title" = "विशेष \nप्रयोगकर्ताहरू";
 "onboardingWelcome.titleLabel.tagline" = "तपाईलाई आफ्नो विश्वास साझा गर्न सहयोग गर्दै";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "सुसमाचार प्रस्तुतीकरण";
@@ -363,4 +405,20 @@ https://godtoolsapp.com \n\n बाट डाउनलोड गर्न सक
 "onboardingTutorial.aboutAppItem.0.title" = "अरूहरूसँग साझा गर्नुहोस";
 "accountActivity.globalAnalytics.countries.title" = "देशहरु";
 
+"onboardingTutorial.aboutAppItem.0.message" = "GodTools is built to guide your faith conversations";
+"onboardingTutorial.aboutAppItem.1.title" = "Choose Your Tools";
+"onboardingTutorial.aboutAppItem.1.message" = "GodTools helps you before, during, and after a spiritual conversation";
+"onboardingTutorial.aboutAppItem.2.title" = "Always Ready";
+"onboardingTutorial.aboutAppItem.2.message" = "GodTools is here to help and is ready when you are";
+"onboardingTutorial.appUsageItem.0.message" = "Prepare for any conversation";
+"onboardingTutorial.appUsageItem.1.message" = "Walk someone through the gospel";
+"onboardingTutorial.appUsageItem.2.message" = "View two languages side by side";
+"onboardingTutorial.appUsageItem.3.message" = "Choose from over 90 languages";
+"onboardingTutorial.appUsageItem.4.message" = "Help someone get started as a Christian";
 "onboardingTutorial.showMoreButton.title" = "मलाई थप देखाउनुहोस्";
+
+"screenShareTutorial.generateQRCodeButton.title" = "Generate QR code";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "Close";
+"toolScreenShare.qrCode.title" = "QR Code";
+"toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";

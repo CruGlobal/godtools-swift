@@ -1,3 +1,10 @@
+"deferredDeepLinkModal.title" = "মনে হচ্ছে আপনি GodTools-এর জন্য একটি লিঙ্কে ক্লিক করেছেন।";
+"deferredDeepLinkModal.message" = "Please tap the paste button below.  This will allow us to take you to the content you requested in GodTools.";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "Close";
+"toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";
+"toolScreenShare.qrCode.title" = "QR Code";
+
 "optInNotification.notificationSettings" = "নোটিফিকেশন সেটিংস";
 "lessons.swipeTutorial.title" = "পেজ পরিবর্তন করতে সোয়াইপ করুন";
 "lessons.swipeTutorial.buttonText" = "বুঝেছি";
@@ -124,6 +131,7 @@
 "training_tip_prepare" = "প্রস্তুত করুন";
 "training_tip_quote" = "উদ্ধৃত করুন";
 "training_tip_tip" = "টিপ";
+"articles.downloadingArticles.errorMessage.title" = "Error Downloading Articles";
 "start_training" = "প্রশিক্ষণ শুরু করুন";
 "close" = "বন্ধ করুন";
 "tool_menu_item.lessons" = "পাঠসমূহ";
@@ -238,6 +246,9 @@
 
 /* This is to let users know which version of the app is installed on their phone */
 "menu_version" = "সংস্করণ";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
+"articles.loadingView.downloadingArticles" = "Downloading Articles ...";
 "language_onboard" = "90 + ভাষা";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -258,6 +269,10 @@
 "add_new_tools" = "নতুন সরঞ্জাম যোগ করুন";
 "set_your_languages" = "আপনার ভাষা সেট করুন";
 "okay" = "ঠিক আছে";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
+
 // Menu
 "menu_general" = "সাধারণ";
 "menu_account" = "পরিমাণ";
@@ -271,6 +286,8 @@
 "login" = "লগইন করুন";
 "logout" = "লগ আউট করুন";
 "create_account" = "একাউন্ট খুলুন";
+"account_login" = "Account Login";
+
 // Tool Detail
 "about" = "বিষয়ে";
 "help" = "সাহায্য করুন বারবার জিজ্ঞাসিত প্রশ্নগুলো";
@@ -307,12 +324,14 @@ http://godtoolsapp.com";
 "no_internet" = "অনুগ্রহ করে আপনার ইন্টারনেট সংযোগ পরীক্ষা করুন এবং আবার চেষ্টা করুন";
 
 "the_tool_you_requested_is_loading" = "আপনি যা সরঞ্জাম খুজচ্ছেন সেটি লোড হচ্ছে";
+"loading" = "Loading...";
+
 // Actions
 "yes" = "হ্যা";
 "no" = "না";
 
 // Tract - Sharing
-"tract_share_message" ="এই লিঙ্কটি আপনাকে পৃষ্ঠাটির ওয়েব সংস্করণে নিয়ে যাবে যা আমরা আজ একসাথে অন্তিমে দেখছিলাম: %@. 
+"tract_share_message" = "এই লিঙ্কটি আপনাকে পৃষ্ঠাটির ওয়েব সংস্করণে নিয়ে যাবে যা আমরা আজ একসাথে অন্তিমে দেখছিলাম: %@. 
 আসুন আমরা আরো আলোচনা করি!";
 
 // Buttons
@@ -337,6 +356,8 @@ http://godtoolsapp.com";
 // Tutorial
 "tutorial.tutorialItem.0.title" = "দেখুন";
 "general_about_2" = "এই সরঞ্জামগুলি ঈশ্বরের সাথে যীশু খ্রিষ্টের মাধ্যমে সম্পর্ক কি করে সুরু করতে হয় তা আত্মবিশ্বাসীভাবে কারো কাছে ব্যাখ্যা করতে সহায়তা করে, যদিও আপনি কোনদিন আপনার আস্থা কারো কাছে বলেননি বা তারা যদি কোনো অন্য ভাষা বলে থাকে.";
+"tutorial.tutorialItem.0.message" = "See what GodTools offers in our demo video
+(Tap on the video to bring up settings for subtitles)";
 "general_about_3" = "আপনার পছন্দ এবং আপনার শ্রোতাদের উপর ভিত্তি করে বিভিন্ন টুলগুলি থেকে বেছে  নিন। সমস্ত টুলস প্রতিটি ভাষায় সহজলভ্য  নয়।";
 "tutorial.tutorialItem.1.title" = "প্রস্তুত করুন";
 "general_about_4" = "প্রতিটি টুলের শেষে অন্যান্য উৎসের লিঙ্ক অন্তর্ভুক্ত করা আছে।";
@@ -396,3 +417,9 @@ knowgod.com. আপনার নিজের সাইটে স্থাপ  �
 "onboardingTutorial.appUsageItem.3.message" = "90 টি ভাষার অধিক থেকে পছন্দ করুন";
 "onboardingTutorial.appUsageItem.4.message" = "একজন খ্রীষ্টান হিসাবে শুরু করতে কাউকে সাহায্য করুন";
 "onboardingTutorial.showMoreButton.title" = "আমাকে আরও দেখান";
+
+"screenShareTutorial.generateQRCodeButton.title" = "Generate QR code";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "Close";
+"toolScreenShare.qrCode.title" = "QR Code";
+"toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";
