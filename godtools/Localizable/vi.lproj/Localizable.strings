@@ -1,3 +1,5 @@
+"deferredDeepLinkModal.title" = "Có vẻ như bạn đã nhấp vào liên kết đến GodTools";
+
 "optInNotification.notificationSettings" = "Cài đặt Thông báo";
 "lessons.swipeTutorial.title" = "Vuốt để chuyển trang";
 "lessons.swipeTutorial.buttonText" = "Hiểu rồi";
@@ -18,8 +20,6 @@
 "language_name_fil" = "Tiếng Philippines (Tagalog)";
 "lessons.filter.navBar.language" = "Ngôn ngữ bài học";
 "lessons.languageFilter.title" = "Bài học bằng:";
-"language_name_fil-x-taglish" = "Taglish";
-"language_name_sid" = "Sidama";
 "onboardingTutorial.chooseLanguageButton.title" = "Chọn ngôn ngữ";
 "languageSettings.confirmAppLanguage.message" = "Bạn đã lựa chọn %@ làm ngôn ngữ ứng dụng. Toàn bộ ứng dụng GodTools sẽ được thay đổi sang ngôn ngữ này. Bạn có chắc chắn?";
 "languageSettings.confirmAppLanguage.changeLanguageButton.title" = "Thay đổi ngôn ngữ";
@@ -259,6 +259,7 @@
 "add_new_tools" = "Thêm các Công cụ Mới";
 "set_your_languages" = "Thiết lập Ngôn ngữ của bạn";
 "okay" = "Ok";
+
 // Menu
 "menu_general" = "Tổng quát";
 "menu_account" = "Tài khoản";
@@ -318,7 +319,7 @@ Một phiên bản trực tuyến có thể tìm thấy ở https://knowgod.com/
 "no" = "Không";
 
 // Tract - Sharing
-"tract_share_message" ="Liên kết này sẽ đưa bạn đến phiên bản web của những gì chúng ta đã thảo luận hôm nay: %@. 
+"tract_share_message" = "Liên kết này sẽ đưa bạn đến phiên bản web của những gì chúng ta đã thảo luận hôm nay: %@. 
 
 Hãy thảo luận thêm!
 
@@ -335,7 +336,6 @@ Có thể tải xuống ứng dụng từ https://godtoolsapp.com";
 
 // Alerts
 "error" = "Lỗi";
-"OK" = "OK";
 "cancel" = "Hủy";
 "required_field_missing" = "\"%@\" là một trường bắt buộc.";
 

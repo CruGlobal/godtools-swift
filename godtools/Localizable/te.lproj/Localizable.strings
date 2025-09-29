@@ -3,7 +3,6 @@
 
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "%@ లో అందుబాటులో లేదు";
-
 "tool_menu_item.tools" = "పరికరాలు";
 "lessons.pageTitle" = "మీ కోసం పాఠాలు రూపొందించబడ్డాయి";
 "lessons.pageSubtitle" = "సంబంధాలను ఏర్పరచుకోవడానికి మరియు అర్థవంతమైన సంభాషణలను ప్రారంభించడానికి ఆచరణాత్మక ఆలోచనలు.";
@@ -45,6 +44,7 @@
 "training_tip_tip" = "చిట్కా";
 "close" = "దగ్గరగా";
 "tool_menu_item.lessons" = "పాఠాలు";
+
 "onboardingTutorial.beginButton.title" = "ప్రారంభించండి";
 "onboardingTutorial.nextButton.title" = "తదుపరి";
 "tool_offline_favorite_message" = "మీ ఇష్టమైన వాటికి జోడించే హృదయ ఐకాన్‌ను తట్టడం ద్వారా ఒక సాధనాన్ని ఆఫ్‌లైన్‌లో అందుబాటులో ఉంచండి.";
@@ -131,6 +131,7 @@
 "add_new_tools" = "క్రొత్త పరికరాలను జోడించండి";
 "set_your_languages" = "క్రొత్త భాషలను నియమించండి ";
 "okay" = "సరే";
+
 // Menu
 "menu_general" = "సాధారణం";
 "menu_account" = "ఖాతా";
@@ -138,6 +139,7 @@
 "menu_legal" = "చట్టపరమైన";
 "language_settings" = "భాష సెట్టింగ్స్";
 "menu.tutorial" = "ట్యుటోరియల్";
+
 // Login
 "login" = "లాగిన్";
 "logout" = "లాగౌట్";
@@ -188,7 +190,7 @@
 "no" = "కాదు";
 
 // Tract - Sharing
-"tract_share_message" ="ఈ లింక్ మిమ్మల్ని ఈ రోజు మనం కలిసి చూసిన పేజీ యొక్క వెబ్ వెర్షన్ లోకి తీసుకువెళ్తుంది: %@. 
+"tract_share_message" = "ఈ లింక్ మిమ్మల్ని ఈ రోజు మనం కలిసి చూసిన పేజీ యొక్క వెబ్ వెర్షన్ లోకి తీసుకువెళ్తుంది: %@. 
 
 మరింత మాట్లాడదాము! 
 

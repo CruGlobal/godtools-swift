@@ -1,3 +1,5 @@
+"deferredDeepLinkModal.title" = "Es sieht so aus, als hätten Sie auf einen Link für GodTools geklickt";
+
 "optInNotification.notificationSettings" = "Benachrichtigungseinstellungen";
 "lessons.swipeTutorial.title" = "Wische, um die Seite zu wechseln.";
 "lessons.swipeTutorial.buttonText" = "Alles klar";
@@ -31,7 +33,6 @@
 "languageSettings.toolLanguagesAvailableOffline.title" = "Offline verfügbare Sprachen des Tools";
 "languageSettings.toolLanguagesAvailableOffline.message" = "Lade alle Tools in einer Sprache herunter, damit sie auch dann verfügbar sind, wenn du kein WLAN und keinen Mobilfunk hast. Stelle die Tool-Sprache in der Schaltfläche „Optionen“ innerhalb eines Tools ein.";
 "languageSettings.toolLanguagesAvailableOffline.editDownloadedLanguagesButton.title" = "Heruntergeladene Sprachen bearbeiten";
-"allTools.filter.title" = "Filter";
 "allTools.filter.anyCategory" = "Beliebige Kategorie";
 "allTools.filter.anyLanguage" = "Beliebige Sprache";
 "allTools.filter.navBar.language" = "Nach sprache filtern";
@@ -71,9 +72,6 @@
 "account.globalActivity.title" = "Globale Aktivität";
 "toolDetails.conversationStarters.title" = "Gesprächsstarter";
 
-/* A list of the main points of the tool will live behind a section called "Outline" */
-"toolDetails.outline.title" = "Outline";
-
 "toolDetails.bibleReferences.title" = "Bibelstellen";
 
 /* This About refers to a specific tool in the app. */
@@ -85,7 +83,6 @@
 "menu.deleteAccount" = "Konto löschen";
 "alert.mailAppUnavailable.title" = "Mail-App nicht verfügbar";
 "alert.mailAppUnavailable.message" = "Die native Mail-App ist entweder nicht konfiguriert oder auf diesem Gerät nicht verfügbar. ";
-"tool_menu_item.tools" = "Tools";
 "lessons.pageTitle" = "Für dich gemachte Lektionen";
 "lessons.pageSubtitle" = "Praktische Ideen zum Aufbau von Beziehungen und zum Beginn bedeutungsvoller Unterhaltungen.";
 "toolSettings.languagesAvailable.title" = "Verfügbare sprachen";
@@ -99,9 +96,6 @@
 "favorites.favoriteTools.title" = "Deine Lieblings-Tools";
 "favorites.favoriteTools.viewAll" = "Alle ansehen";
 
-/* Please keep to a 9 character limit, longer phrases may get cut off */
-"favorites.favoriteLessons.details" = "Details";
-
 /* The meaning is "I don't want to set a second language".  Language is no language or None */
 "toolSettings.languagesList.deleteLanguage.title" = "Keine";
 
@@ -114,7 +108,6 @@
 "toolSettings.option.trainingTips.show.title" = "Training-Tipps";
 "toolSettings.option.trainingTips.hide.title" = "Tipps ausblenden";
 "toolSettings.chooseLanguage.title" = "Zweite Sprache";
-"toolSettings.chooseLanguage.noParallelLanguageTitle" = "Parallel";
 "toolSettings.shareables.title" = "Verwandte Grafiken";
 "allTools.spotlight.title" = "Tool-Highlights";
 "allTools.spotlight.description" = "Hier sind einige Tools, die dir gefallen könnten.";
@@ -199,9 +192,6 @@
 "onboardingTutorial.3.title" = "Hilf jemandem, zu Jesus zu finden";
 "onboardingTutorial.3.message" = "GodTools ist dein Leitfaden, um das Evangelium auf klare und relevante Weise zu kommunizieren.";
 
-/* This is a category. The content will include training of how to share your faith. */
-"tool_category_training" = "Training";
-
 /*
  * This is an invitation for a user to open a tool
  * Please keep to a 9 character limit, longer phrases may get cut off
@@ -234,9 +224,6 @@
 
 "articles.downloadArticlesButton.title.retryDownload" = "Download wiederholen";
 
-/* This is to let users know which version of the app is installed on their phone */
-"menu_version" = "Version";
-
 /* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "articles.loadingView.downloadingArticles" = "Artikel werden heruntergeladen...";
 "language_onboard" = "Über 90 Sprachen";
@@ -258,14 +245,13 @@
 // Onboarding
 "add_new_tools" = "Neue Tools hinzufügen";
 "set_your_languages" = "Sprache wählen";
-"okay" = "Okay";
+
 // Menu
 "menu_general" = "Allgemein";
 "menu_account" = "Konto";
 "menu_share" = "Teilen";
 "menu_legal" = "Rechtliche Hinweise";
 "language_settings" = "Spracheinstellungen";
-"menu.tutorial" = "Tutorial";
 "menu.my_account" = "Mein Konto";
 
 // Login
@@ -318,7 +304,7 @@ Eine Online-Version findest du unter https://knowgod.com/";
 "no" = "Nein";
 
 // Tract - Sharing
-"tract_share_message" ="Dieser Link bringt dich zu einer Web-Version des Themas, das wir heute besprochen haben: %@. 
+"tract_share_message" = "Dieser Link bringt dich zu einer Web-Version des Themas, das wir heute besprochen haben: %@. 
 
 Lass uns weiter im Gespräch bleiben!
 
@@ -335,7 +321,6 @@ Die App ist als Download erhältlich unter: https://godtoolsapp.com";
 
 // Alerts
 "error" = "Fehler";
-"OK" = "OK";
 "cancel" = "Abbrechen";
 "required_field_missing" = "\"%@\" ist ein Pflichtfeld.";
 
@@ -388,7 +373,6 @@ Für weitere Infos drücke den Info-Button bei einem Tool.";
 "accountActivity.globalAnalytics.header.title" = "Weltweite Aktivitäten";
 // OnboardingWelcome
 "onboardingWelcome.titleLabel.welcome" = "Herzlich willkommen!";
-"accountActivity.globalAnalytics.users.title" = "Unique\nUsers";
 "onboardingWelcome.titleLabel.tagline" = "Teile leichter deinen Glauben";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "Evangeliums-\nPräsentationen";
 "accountActivity.globalAnalytics.launches.title" = "Sitzungen";

@@ -3,7 +3,6 @@
 
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "%@ मध्ये उपलब्ध नाही";
-
 "tool_menu_item.tools" = "सर्व टूल्स";
 "lessons.pageTitle" = "तुमच्यासाठी तयार केलेले पाठ";
 "lessons.pageSubtitle" = "संबंध निर्माण आणि अर्थयुक्त संवादे सुरू करण्यास व्यावहारिक कल्पना.";
@@ -14,6 +13,7 @@
 "training_tip_quote" = "अवतरण";
 "training_tip_tip" = "टीप";
 "close" = "बंद";
+
 "onboardingTutorial.beginButton.title" = "सुरू करा";
 "onboardingTutorial.nextButton.title" = "यापुढील";
 "tool_offline_favorite_message" = "साधनाला आपल्या पसंतीत जोडणाऱ्या 'ह्रदय' चिन्हावर टॅप करून ते साधन ऑफलाइन उपलब्ध करा.";
@@ -101,6 +101,7 @@
 "set_your_languages" = "आपली भाषा सेट करा";
 "okay" = "ठीक आहे
 ";
+
 // Menu
 "menu_general" = "टिप्पणे
 मेनू
@@ -111,6 +112,7 @@
 "menu_legal" = "कायदेशीर";
 "language_settings" = "भाषेच्या मांडण्या";
 "menu.tutorial" = "प्रशिक्षण";
+
 // Login
 "login" = "लाॅगिन";
 "logout" = "लाॅग-आऊट";
@@ -176,7 +178,7 @@
 "no" = "नाही";
 
 // Tract - Sharing
-"tract_share_message" ="हे लिंक तुम्हाला वेब आवृत्तीकडे नेईल ज्यावर आपण आज बोल होतो: %@ \n\n app इथून डाऊनलोड करा: https://godtoolsapp.com \n\n आपण आणखी बोलू या!";
+"tract_share_message" = "हे लिंक तुम्हाला वेब आवृत्तीकडे नेईल ज्यावर आपण आज बोल होतो: %@ \n\n app इथून डाऊनलोड करा: https://godtoolsapp.com \n\n आपण आणखी बोलू या!";
 
 // Buttons
 "download" = "टीपा

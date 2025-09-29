@@ -3,7 +3,6 @@
 
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "Не доступно %@";
-
 "tool_menu_item.tools" = "Інструменти";
 "lessons.pageTitle" = "Уроки, створені для вас";
 "lessons.pageSubtitle" = "Практичні ідеї для побудови відносин і початку змістовних розмов.";
@@ -39,6 +38,7 @@
 "allTools.spotlight.description" = "Вам можуть сподобатися ці інструменти";
 "allTools.categories.title" = "Категорії";
 "tool_menu_item.lessons" = "Уроки";
+
 "onboardingTutorial.beginButton.title" = "Почати";
 "onboardingTutorial.nextButton.title" = "Далі";
 "tool_offline_favorite_message" = "Інструмент буде доступним у режимі офлайн, якщо торкнутись значка серця. Його буде додано до улюбленого.";
@@ -124,11 +124,13 @@
 "add_new_tools" = "Додати інструмент";
 "set_your_languages" = "Встановіть мови";
 "okay" = "Добре";
+
 // Menu
 "menu_general" = "Основне";
 "menu_share" = "Переслати";
 "menu_legal" = "Юридичні документи";
 "language_settings" = "Налаштування мови";
+
 // Login
 "login" = "Увійти";
 "logout" = "Вийти";
@@ -179,7 +181,7 @@
 "no" = "Ні";
 
 // Tract - Sharing
-"tract_share_message" ="Відкрийте це посилання, щоб перейти до онлайн версії сторінки, що ми з вами переглядали сьогодні: %@. 
+"tract_share_message" = "Відкрийте це посилання, щоб перейти до онлайн версії сторінки, що ми з вами переглядали сьогодні: %@. 
 
 Поспілкуємось!
 
@@ -213,8 +215,8 @@
 "general_about_8" = "Відвідайте godtoolsapp.com за докладнішою інформацією.";
 "tutorial.continueButton.title.continue" = "Продовжити";
 "general_about_9" = "Вирішивши донести Божу вістку до інших, пам'ятайте, що любов — то є божий дар. Тому поширюйте її серед інших і уважно прислухайтеся і ви завжди знайдете порозуміння.";
-"general_about_10" = "«Нехай ваше слово завжди буде люб’язне, приправлене сіллю, щоб у розмові з будь-ким ви знали, як відповідати.» Колоссян 4:6";
 
+"general_about_10" = "«Нехай ваше слово завжди буде люб’язне, приправлене сіллю, щоб у розмові з будь-ким ви знали, як відповідати.» Колоссян 4:6";
 // Downloads
 "Download in progress" = "Завантажується...";
 
@@ -224,4 +226,3 @@
 
 // Language Name Strings
 "language_name_fa" = "Перська (фарсі)";
-

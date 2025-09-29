@@ -3,7 +3,6 @@
 
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "Nėra %@";
-
 "tool_menu_item.tools" = "Įrankiai";
 "lessons.pageTitle" = "Jums paruoštos pamokos";
 "lessons.pageSubtitle" = "Praktinės idėjos, kaip užmegzti santykius ir pradėti prasmingus pokalbius.";
@@ -39,6 +38,7 @@
 "allTools.spotlight.description" = "Čia pateikiami kai kurie įrankiai, kurie mūsų manymu, jums gali patikti.";
 "allTools.categories.title" = "Kategorijos";
 "tool_menu_item.lessons" = "Pamokos";
+
 "onboardingTutorial.beginButton.title" = "Pradėti";
 "onboardingTutorial.nextButton.title" = "Kitas";
 "tool_offline_favorite_message" = "Įrankį galima naudoti atsijungus, paspaudus širdelės piktogramą, kuri prideda ją prie mėgstamiausių.";
@@ -124,11 +124,13 @@ Jei negausite šio pranešimo kurį laiką, nuoroda gali nebeveikti. Galime paba
 "add_new_tools" = "Pridėti naujus įrankius";
 "set_your_languages" = "Nustatyti savo kalbas";
 "okay" = "Gerai";
+
 // Menu
 "menu_general" = "Bendra";
 "menu_share" = "Dalytis";
 "menu_legal" = "Teisė";
 "language_settings" = "Kalbos nustatymai";
+
 // Login
 "login" = "Prisijungti";
 "logout" = "Atsijungti";
@@ -178,7 +180,7 @@ Internetinę versiją galima rasti adresu https://knowgod.com/";
 "no" = "Ne";
 
 // Tract - Sharing
-"tract_share_message" ="Ši nuoroda nukreips jus į puslapio, kurį šiandien paskutinį kartą peržiūrėjome kartu, žiniatinklio versiją: %@. 
+"tract_share_message" = "Ši nuoroda nukreips jus į puslapio, kurį šiandien paskutinį kartą peržiūrėjome kartu, žiniatinklio versiją: %@. 
 
 Pakalbėkime daugiau!
 
@@ -212,8 +214,8 @@ Programėlę galima atsisiųsti adresu https://godtoolsapp.com";
 "general_about_8" = "Jei norite daugiau informacijos, apsilankykite godtoolsapp.com.";
 "tutorial.continueButton.title.continue" = "Tęsti";
 "general_about_9" = "Imdamiesi iniciatyvos pasidalyti savo tikėjimu, nepamirškite, kad tai Dievas keičia širdį. Suteikite kiekvienam asmeniui meilės išklausydami ir suprasdami.";
-"general_about_10" = "„Jūsų kalba visada tebūna maloni, druska pasūdyta, kad žinotumėte, kaip turite kiekvienam atsakyti.“ Kolosiečiams 4:6";
 
+"general_about_10" = "„Jūsų kalba visada tebūna maloni, druska pasūdyta, kad žinotumėte, kaip turite kiekvienam atsakyti.“ Kolosiečiams 4:6";
 // Downloads
 "Download in progress" = "Atsisiunčiama";
 
@@ -223,4 +225,3 @@ Programėlę galima atsisiųsti adresu https://godtoolsapp.com";
 
 // Language Name Strings
 "language_name_fa" = "Persų (Farsi)";
-
