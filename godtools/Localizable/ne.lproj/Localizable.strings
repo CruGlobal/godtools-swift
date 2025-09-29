@@ -1,3 +1,5 @@
+"deferredDeepLinkModal.title" = "तपाईंले GodTools को लिङ्कमा क्लिक गर्नुभएको जस्तो देखिन्छ।";
+
 "optInNotification.notificationSettings" = "सूचना सेटिङहरु";
 "lessons.swipeTutorial.title" = "पृष्ठहरू परिवर्तन गर्न स्वाइप गर्नुहोस्";
 "lessons.swipeTutorial.buttonText" = "बुझेँ";
@@ -251,6 +253,7 @@
 
 // Onboarding
 "add_new_tools" = "नयाँ टुल्सलाई जोड्नुहोस्";
+
 // Menu
 "menu_general" = "सामान्य";
 "menu_account" = "खाता";
@@ -264,6 +267,7 @@
 "login" = "भित्र  आउनुहोस";
 "logout" = "बाहिर निक्ल्नुहोस";
 "create_account" = "एकाउन्ट खोल्नुहोस";
+
 // Tool Detail
 "about" = "को  बारेमा";
 "help" = "सहायता";
@@ -299,10 +303,9 @@
 "no" = "भएन";
 
 // Tract - Sharing
-"tract_share_message" ="यो लिङ्कले तपाईलाई आज हामीले के कुरा गरिरहेका थियौं भन्ने वेब संस्करणमा लैजान्छ: %@ 
+"tract_share_message" = "यो लिङ्कले तपाईलाई आज हामीले के कुरा गरिरहेका थियौं भन्ने वेब संस्करणमा लैजान्छ: %@ 
 
 https://godtoolsapp.com \n\n बाट डाउनलोड गर्न सकिन्छ । थप जानकारीको लागि !";
-
 "dismiss" = "खारेज गर्नुहोस्";
 "done" = "सम्पन्न";
 "clear" = "स्पष्ट";
@@ -362,5 +365,4 @@ https://godtoolsapp.com \n\n बाट डाउनलोड गर्न सक
 // OnboardingTutorial
 "onboardingTutorial.aboutAppItem.0.title" = "अरूहरूसँग साझा गर्नुहोस";
 "accountActivity.globalAnalytics.countries.title" = "देशहरु";
-
 "onboardingTutorial.showMoreButton.title" = "मलाई थप देखाउनुहोस्";

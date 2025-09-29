@@ -1,3 +1,5 @@
+"deferredDeepLinkModal.title" = "GodToolsへのリンクをクリックしたようです";
+
 "optInNotification.notificationSettings" = "通知設定";
 "lessons.swipeTutorial.title" = "スワイプでページを切り替えられます";
 "lessons.swipeTutorial.buttonText" = "了解";
@@ -256,6 +258,7 @@
 "add_new_tools" = "新しいツールを追加";
 "set_your_languages" = "言語を設定";
 "okay" = "OK";
+
 // Menu
 "menu_general" = "一般";
 "menu_account" = "アカウント";
@@ -315,7 +318,7 @@
 "no" = "いいえ";
 
 // Tract - Sharing
-"tract_share_message" ="このリンクは私たちが今日最後に見ていたウェブ版のページに移動します: %@。
+"tract_share_message" = "このリンクは私たちが今日最後に見ていたウェブ版のページに移動します: %@。
 
 もっと話しましょう！
 
@@ -332,7 +335,6 @@
 
 // Alerts
 "error" = "エラー";
-"OK" = "OK";
 "cancel" = "キャンセル";
 "required_field_missing" = "「%@」は必須記入欄です。";
 
@@ -383,5 +385,4 @@
 // OnboardingTutorial
 "onboardingTutorial.aboutAppItem.0.title" = "他者と共有する";
 "accountActivity.globalAnalytics.countries.title" = "国";
-
 "onboardingTutorial.showMoreButton.title" = "もっと見せて";

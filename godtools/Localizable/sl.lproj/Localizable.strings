@@ -3,7 +3,6 @@
 
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "Ni na voljo v %@";
-
 "tool_menu_item.tools" = "Orodja";
 "lessons.pageTitle" = "Lekcije, narejene za vas";
 "lessons.pageSubtitle" = "Praktične ideje za vzpostavljanje odnosov in začenjanje pomembnih pogovorov.";
@@ -39,6 +38,7 @@
 "allTools.spotlight.description" = "Tukaj je nekaj orodij, ki bi vam lahko bila všeč";
 "allTools.categories.title" = "Kategorije";
 "tool_menu_item.lessons" = "Lekcije";
+
 "onboardingTutorial.beginButton.title" = "Začni";
 "onboardingTutorial.nextButton.title" = "Naprej";
 "tool_offline_favorite_message" = "Če želite, da bo orodje na voljo brez povezave, se dotaknite ikone srca in jo dodajte med priljubljene.";
@@ -124,11 +124,13 @@
 "add_new_tools" = "Dodaj nova orodja";
 "set_your_languages" = "Izberi jezike";
 "okay" = "V redu";
+
 // Menu
 "menu_general" = "Splošno";
 "menu_share" = "Deli";
 "menu_legal" = "Zakonito";
 "language_settings" = "Jezikovne nastavitve";
+
 // Login
 "login" = "Prijava";
 "logout" = "Odjava";
@@ -179,7 +181,7 @@ Spletna različica je na voljo na https://knowgod.com/";
 "no" = "Ne";
 
 // Tract - Sharing
-"tract_share_message" ="S klikom te povezave se bo odprla spletna različica, ki sva si jo danes nazadnje ogledala skupaj: %@. 
+"tract_share_message" = "S klikom te povezave se bo odprla spletna različica, ki sva si jo danes nazadnje ogledala skupaj: %@. 
 
 Pogovoriva se več o tem!
 
@@ -213,8 +215,8 @@ Aplikacijo lahko preneseš na https://godtoolsapp.com";
 "general_about_8" = "Obišči godtoolsapp.com za več informacij.";
 "tutorial.continueButton.title.continue" = "Nadaljuj";
 "general_about_9" = "Pri prevzemanju pobude za deljenje svoje vere ne pozabi, da je le Bog tisti, ki spreminja srca ljudi. Izrazi skrb za vsako osebo s poslušanjem z namenom razumevanja.";
-"general_about_10" = "»Vaše govorjenje naj bo zmeraj ljubeznivo, začinjeno s soljo, da boste vedeli, kako morate odgovarjati komur koli.« Pismo Kološanom 4,6";
 
+"general_about_10" = "»Vaše govorjenje naj bo zmeraj ljubeznivo, začinjeno s soljo, da boste vedeli, kako morate odgovarjati komur koli.« Pismo Kološanom 4,6";
 // Downloads
 "Download in progress" = "Poteka prenos";
 
@@ -224,4 +226,3 @@ Aplikacijo lahko preneseš na https://godtoolsapp.com";
 
 // Language Name Strings
 "language_name_fa" = "Perzijščina (farsi)";
-

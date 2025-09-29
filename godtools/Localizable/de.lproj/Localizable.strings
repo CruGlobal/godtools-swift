@@ -1,3 +1,5 @@
+"deferredDeepLinkModal.title" = "Es sieht so aus, als hätten Sie auf einen Link für GodTools geklickt";
+
 "optInNotification.notificationSettings" = "Benachrichtigungseinstellungen";
 "lessons.swipeTutorial.title" = "Wische, um die Seite zu wechseln.";
 "lessons.swipeTutorial.buttonText" = "Alles klar";
@@ -70,9 +72,6 @@
 
 "account.globalActivity.title" = "Globale Aktivität";
 "toolDetails.conversationStarters.title" = "Gesprächsstarter";
-
-/* A list of the main points of the tool will live behind a section called "Outline" */
-"toolDetails.outline.title" = "Outline";
 
 "toolDetails.bibleReferences.title" = "Bibelstellen";
 
@@ -199,9 +198,6 @@
 "onboardingTutorial.3.title" = "Hilf jemandem, zu Jesus zu finden";
 "onboardingTutorial.3.message" = "GodTools ist dein Leitfaden, um das Evangelium auf klare und relevante Weise zu kommunizieren.";
 
-/* This is a category. The content will include training of how to share your faith. */
-"tool_category_training" = "Training";
-
 /*
  * This is an invitation for a user to open a tool
  * Please keep to a 9 character limit, longer phrases may get cut off
@@ -259,13 +255,13 @@
 "add_new_tools" = "Neue Tools hinzufügen";
 "set_your_languages" = "Sprache wählen";
 "okay" = "Okay";
+
 // Menu
 "menu_general" = "Allgemein";
 "menu_account" = "Konto";
 "menu_share" = "Teilen";
 "menu_legal" = "Rechtliche Hinweise";
 "language_settings" = "Spracheinstellungen";
-"menu.tutorial" = "Tutorial";
 "menu.my_account" = "Mein Konto";
 
 // Login
@@ -318,7 +314,7 @@ Eine Online-Version findest du unter https://knowgod.com/";
 "no" = "Nein";
 
 // Tract - Sharing
-"tract_share_message" ="Dieser Link bringt dich zu einer Web-Version des Themas, das wir heute besprochen haben: %@. 
+"tract_share_message" = "Dieser Link bringt dich zu einer Web-Version des Themas, das wir heute besprochen haben: %@. 
 
 Lass uns weiter im Gespräch bleiben!
 
@@ -335,7 +331,6 @@ Die App ist als Download erhältlich unter: https://godtoolsapp.com";
 
 // Alerts
 "error" = "Fehler";
-"OK" = "OK";
 "cancel" = "Abbrechen";
 "required_field_missing" = "\"%@\" ist ein Pflichtfeld.";
 
@@ -388,7 +383,6 @@ Für weitere Infos drücke den Info-Button bei einem Tool.";
 "accountActivity.globalAnalytics.header.title" = "Weltweite Aktivitäten";
 // OnboardingWelcome
 "onboardingWelcome.titleLabel.welcome" = "Herzlich willkommen!";
-"accountActivity.globalAnalytics.users.title" = "Unique\nUsers";
 "onboardingWelcome.titleLabel.tagline" = "Teile leichter deinen Glauben";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "Evangeliums-\nPräsentationen";
 "accountActivity.globalAnalytics.launches.title" = "Sitzungen";

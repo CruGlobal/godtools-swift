@@ -1,246 +1,246 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict>
-<key>toolDetails.toolVersion.numberOfLanguages</key>
-<dict>
-<key>NSStringLocalizedFormatKey</key>
-<string>%#@numberOfLanguages@</string>
-<key>numberOfLanguages</key>
-<dict>
-<key>NSStringFormatSpecTypeKey</key>
-<string>NSStringPluralRuleType</string>
-<key>NSStringFormatValueTypeKey</key>
-<string>d</string>
-<key>one</key>
-<string>Lugha %d</string>
-<key>other</key>
-<string>Lugha %d</string>
-</dict>
-</dict>
-<key>lessons.filter.lessonsAvailable</key>
-<dict>
-<key>NSStringLocalizedFormatKey</key>
-<string>%#@lessonCount@</string>
-<key>lessonCount</key>
-<dict>
-<key>NSStringFormatSpecTypeKey</key>
-<string>NSStringPluralRuleType</string>
-<key>NSStringFormatValueTypeKey</key>
-<string>d</string>
-<key>one</key>
-<string>%d Masomo vinavyopatikana</string>
-<key>other</key>
-<string>%d Masomo vinavyopatikana</string>
-</dict>
-</dict>
-<key>account.activity.toolOpens</key>
-<dict>
-<key>NSStringLocalizedFormatKey</key>
-<string>%#@toolCount@</string>
-<key>toolCount</key>
-<dict>
-<key>NSStringFormatSpecTypeKey</key>
-<string>NSStringPluralRuleType</string>
-<key>NSStringFormatValueTypeKey</key>
-<string>d</string>
-<key>one</key>
-<string>Zana imefunguliwa</string>
-<key>other</key>
-<string>Zana inafunguka</string>
-</dict>
-</dict>
-<key>account.activity.lessonCompletions</key>
-<dict>
-<key>NSStringLocalizedFormatKey</key>
-<string>%#@lessonCount@</string>
-<key>lessonCount</key>
-<dict>
-<key>NSStringFormatSpecTypeKey</key>
-<string>NSStringPluralRuleType</string>
-<key>NSStringFormatValueTypeKey</key>
-<string>d</string>
-<key>one</key>
-<string>Ukamilishaji wa somo</string>
-<key>other</key>
-<string>Ukamilishaji wa masomo</string>
-</dict>
-</dict>
-<key>account.activity.screenShares</key>
-<dict>
-<key>NSStringLocalizedFormatKey</key>
-<string>%#@screenShareCount@</string>
-<key>screenShareCount</key>
-<dict>
-<key>NSStringFormatSpecTypeKey</key>
-<string>NSStringPluralRuleType</string>
-<key>NSStringFormatValueTypeKey</key>
-<string>d</string>
-<key>one</key>
-<string>Shirikisha skrini</string>
-<key>other</key>
-<string>Skrini inashirikisha</string>
-</dict>
-</dict>
-<key>account.activity.linksShared</key>
-<dict>
-<key>NSStringLocalizedFormatKey</key>
-<string>%#@linkShareCount@</string>
-<key>linkShareCount</key>
-<dict>
-<key>NSStringFormatSpecTypeKey</key>
-<string>NSStringPluralRuleType</string>
-<key>NSStringFormatValueTypeKey</key>
-<string>d</string>
-<key>one</key>
-<string>Kiungo kimeshirikishwa</string>
-<key>other</key>
-<string>Viungo vilivyoshirikishwa</string>
-</dict>
-</dict>
-<key>account.activity.languagesUsed</key>
-<dict>
-<key>NSStringLocalizedFormatKey</key>
-<string>%#@languagesUsedCount@</string>
-<key>languagesUsedCount</key>
-<dict>
-<key>NSStringFormatSpecTypeKey</key>
-<string>NSStringPluralRuleType</string>
-<key>NSStringFormatValueTypeKey</key>
-<string>d</string>
-<key>one</key>
-<string>Lugha inayotumika</string>
-<key>other</key>
-<string>Lugha zinazopatikana</string>
-</dict>
-</dict>
-<key>account.activity.sessions</key>
-<dict>
-<key>NSStringLocalizedFormatKey</key>
-<string>%#@sessionCount@</string>
-<key>sessionCount</key>
-<dict>
-<key>NSStringFormatSpecTypeKey</key>
-<string>NSStringPluralRuleType</string>
-<key>NSStringFormatValueTypeKey</key>
-<string>d</string>
-<key>one</key>
-<string>Kipindi</string>
-<key>other</key>
-<string>Vipindi</string>
-</dict>
-</dict>
-<key>tools.filter.toolsAvailable</key>
-<dict>
-<key>NSStringLocalizedFormatKey</key>
-<string>%#@toolCount@</string>
-<key>toolCount</key>
-<dict>
-<key>NSStringFormatSpecTypeKey</key>
-<string>NSStringPluralRuleType</string>
-<key>NSStringFormatValueTypeKey</key>
-<string>d</string>
-<key>one</key>
-<string>%d Vifaa vinavyopatikana</string>
-<key>other</key>
-<string>%d Vifaa vinavyopatikana</string>
-</dict>
-</dict>
-<key>languageSettings.appLanguage.numberAvailable</key>
-<dict>
-<key>NSStringLocalizedFormatKey</key>
-<string>%#@appLanguageCount@</string>
-<key>appLanguageCount</key>
-<dict>
-<key>NSStringFormatSpecTypeKey</key>
-<string>NSStringPluralRuleType</string>
-<key>NSStringFormatValueTypeKey</key>
-<string>d</string>
-<key>one</key>
-<string>%d Lugha zinazopatikana</string>
-<key>other</key>
-<string>%d Lugha zinazopatikana</string>
-</dict>
-</dict>
-<key>badges.imagesShared</key>
-<dict>
-<key>NSStringLocalizedFormatKey</key>
-<string>%#@imageCount@</string>
-<key>imageCount</key>
-<dict>
-<key>NSStringFormatSpecTypeKey</key>
-<string>NSStringPluralRuleType</string>
-<key>NSStringFormatValueTypeKey</key>
-<string>d</string>
-<key>one</key>
-<string>Picha 1 zilizoshirikishwa</string>
-<key>other</key>
-<string>Picha %d zilizoshirikishwa</string>
-</dict>
-</dict>
-<key>badges.articlesOpened</key>
-<dict>
-<key>NSStringLocalizedFormatKey</key>
-<string>%#@articlesCount@</string>
-<key>articlesCount</key>
-<dict>
-<key>NSStringFormatSpecTypeKey</key>
-<string>NSStringPluralRuleType</string>
-<key>NSStringFormatValueTypeKey</key>
-<string>d</string>
-<key>one</key>
-<string>Vifungu %d vilivyofunguliwa</string>
-<key>other</key>
-<string>Vifungu %d vilivyofunguliwa</string>
-</dict>
-</dict>
-<key>badges.lessonsCompleted</key>
-<dict>
-<key>NSStringLocalizedFormatKey</key>
-<string>%#@lessonsCount@</string>
-<key>lessonsCount</key>
-<dict>
-<key>NSStringFormatSpecTypeKey</key>
-<string>NSStringPluralRuleType</string>
-<key>NSStringFormatValueTypeKey</key>
-<string>d</string>
-<key>one</key>
-<string>Masomo %d yaliyokamilishwa</string>
-<key>other</key>
-<string>Masomo %d yaliyokamilishwa</string>
-</dict>
-</dict>
-<key>badges.toolsOpened</key>
-<dict>
-<key>NSStringLocalizedFormatKey</key>
-<string>%#@toolsCount@</string>
-<key>toolsCount</key>
-<dict>
-<key>NSStringFormatSpecTypeKey</key>
-<string>NSStringPluralRuleType</string>
-<key>NSStringFormatValueTypeKey</key>
-<string>d</string>
-<key>one</key>
-<string>Zana %d zilizofunguliwa</string>
-<key>other</key>
-<string>Zana %d zilizofunguliwa</string>
-</dict>
-</dict>
-<key>badges.tipsCompleted</key>
-<dict>
-<key>NSStringLocalizedFormatKey</key>
-<string>%#@tipsCount@</string>
-<key>tipsCount</key>
-<dict>
-<key>NSStringFormatSpecTypeKey</key>
-<string>NSStringPluralRuleType</string>
-<key>NSStringFormatValueTypeKey</key>
-<string>d</string>
-<key>one</key>
-<string>Miongozo ya mafunzo %d iliyokamilishwa</string>
-<key>other</key>
-<string>Miongozo ya mafunzo %d iliyokamilishwa</string>
-</dict>
-</dict>
-</dict>
+  <dict>
+    <key>toolDetails.toolVersion.numberOfLanguages</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@numberOfLanguages@</string>
+      <key>numberOfLanguages</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Lugha %d</string>
+        <key>other</key>
+        <string>Lugha %d</string>
+      </dict>
+    </dict>
+    <key>lessons.filter.lessonsAvailable</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@lessonCount@</string>
+      <key>lessonCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d Masomo vinavyopatikana</string>
+        <key>other</key>
+        <string>%d Masomo vinavyopatikana</string>
+      </dict>
+    </dict>
+    <key>account.activity.toolOpens</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@toolCount@</string>
+      <key>toolCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Zana imefunguliwa</string>
+        <key>other</key>
+        <string>Zana inafunguka</string>
+      </dict>
+    </dict>
+    <key>account.activity.lessonCompletions</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@lessonCount@</string>
+      <key>lessonCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Ukamilishaji wa somo</string>
+        <key>other</key>
+        <string>Ukamilishaji wa masomo</string>
+      </dict>
+    </dict>
+    <key>account.activity.screenShares</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@screenShareCount@</string>
+      <key>screenShareCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Shirikisha skrini</string>
+        <key>other</key>
+        <string>Skrini inashirikisha</string>
+      </dict>
+    </dict>
+    <key>account.activity.linksShared</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@linkShareCount@</string>
+      <key>linkShareCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Kiungo kimeshirikishwa</string>
+        <key>other</key>
+        <string>Viungo vilivyoshirikishwa</string>
+      </dict>
+    </dict>
+    <key>account.activity.languagesUsed</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@languagesUsedCount@</string>
+      <key>languagesUsedCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Lugha inayotumika</string>
+        <key>other</key>
+        <string>Lugha zinazopatikana</string>
+      </dict>
+    </dict>
+    <key>account.activity.sessions</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@sessionCount@</string>
+      <key>sessionCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Kipindi</string>
+        <key>other</key>
+        <string>Vipindi</string>
+      </dict>
+    </dict>
+    <key>tools.filter.toolsAvailable</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@toolCount@</string>
+      <key>toolCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d Vifaa vinavyopatikana</string>
+        <key>other</key>
+        <string>%d Vifaa vinavyopatikana</string>
+      </dict>
+    </dict>
+    <key>languageSettings.appLanguage.numberAvailable</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@appLanguageCount@</string>
+      <key>appLanguageCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d Lugha zinazopatikana</string>
+        <key>other</key>
+        <string>%d Lugha zinazopatikana</string>
+      </dict>
+    </dict>
+    <key>badges.imagesShared</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@imageCount@</string>
+      <key>imageCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Picha 1 zilizoshirikishwa</string>
+        <key>other</key>
+        <string>Picha %d zilizoshirikishwa</string>
+      </dict>
+    </dict>
+    <key>badges.articlesOpened</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@articlesCount@</string>
+      <key>articlesCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Vifungu %d vilivyofunguliwa</string>
+        <key>other</key>
+        <string>Vifungu %d vilivyofunguliwa</string>
+      </dict>
+    </dict>
+    <key>badges.lessonsCompleted</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@lessonsCount@</string>
+      <key>lessonsCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Masomo %d yaliyokamilishwa</string>
+        <key>other</key>
+        <string>Masomo %d yaliyokamilishwa</string>
+      </dict>
+    </dict>
+    <key>badges.toolsOpened</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@toolsCount@</string>
+      <key>toolsCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Zana %d zilizofunguliwa</string>
+        <key>other</key>
+        <string>Zana %d zilizofunguliwa</string>
+      </dict>
+    </dict>
+    <key>badges.tipsCompleted</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@tipsCount@</string>
+      <key>tipsCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Miongozo ya mafunzo %d iliyokamilishwa</string>
+        <key>other</key>
+        <string>Miongozo ya mafunzo %d iliyokamilishwa</string>
+      </dict>
+    </dict>
+  </dict>
 </plist>
