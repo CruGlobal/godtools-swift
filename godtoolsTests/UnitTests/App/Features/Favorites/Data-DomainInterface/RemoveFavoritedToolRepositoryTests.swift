@@ -6,53 +6,50 @@
 //  Copyright © 2025 Cru. All rights reserved.
 //
 
+import Testing
 import Foundation
 @testable import godtools
 import Combine
-import Quick
-import Nimble
 
-class RemoveFavoritedToolRepositoryTests: QuickSpec {
+struct RemoveFavoritedToolRepositoryTests {
     
-    override class func spec() {
+    @Test(
+        """
+        Given: User is viewing all their favorite tools.
+        When: a user unfavorites tool B
+        Then: Tools C, D, and E should update to positions 1, 2, and 3. Tool A should remain unchanged.
+        """
+    )
+    @MainActor func testRemoveFavoritedTool() async {
         
         var cancellables: Set<AnyCancellable> = Set()
+                    
+        let realmDatabase = getConfiguredRealmDatabase()
+        let removeFavoritedToolRepository = RemoveFavoritedToolRepository(favoritedResourcesRepository: FavoritedResourcesRepository(cache: RealmFavoritedResourcesCache(realmDatabase: realmDatabase)))
         
-        describe("User is viewing all their favorite tools.") {
-            
-            context("When a user unfavorites tool B") {
-                it("Tools C, D, and E should update to positions 1, 2, and 3. Tool A should remain unchanged.") {
+        var remainingResources: [FavoritedResourceDataModel] = Array()
                     
-                    let realmDatabase = getConfiguredRealmDatabase()
-                    let removeFavoritedToolRepository = RemoveFavoritedToolRepository(favoritedResourcesRepository: FavoritedResourcesRepository(cache: RealmFavoritedResourcesCache(realmDatabase: realmDatabase)))
+        await confirmation(expectedCount: 1) { confirmation in
+            removeFavoritedToolRepository.removeToolPublisher(toolId: "B")
+                .sink(receiveValue: { _ in
                     
-                    var remainingResources: [FavoritedResourceDataModel] = Array()
-                    
-                    waitUntil{ done in
-                        removeFavoritedToolRepository.removeToolPublisher(toolId: "B")
-                            .sink(receiveValue: { _ in
-                                
-                                remainingResources = realmDatabase.openRealm().objects(RealmFavoritedResource.self).map {
-                                    FavoritedResourceDataModel(id: $0.resourceId, createdAt: $0.createdAt, position: $0.position)
-                                }
-                                
-                                done()
-                            })
-                            .store(in: &cancellables)
+                    remainingResources = realmDatabase.openRealm().objects(RealmFavoritedResource.self).map {
+                        FavoritedResourceDataModel(id: $0.resourceId, createdAt: $0.createdAt, position: $0.position)
                     }
                     
-                    expect(remainingResources.first(where: { $0.id == "A" })?.position).to(equal(0))
-                    expect(remainingResources.first(where: { $0.id == "B" })).to(beNil())
-                    expect(remainingResources.first(where: { $0.id == "C" })?.position).to(equal(1))
-                    expect(remainingResources.first(where: { $0.id == "D" })?.position).to(equal(2))
-                    expect(remainingResources.first(where: { $0.id == "E" })?.position).to(equal(3))
-                }
-            }
-            
+                    confirmation()
+                })
+                .store(in: &cancellables)
         }
+        
+        #expect(remainingResources.first(where: { $0.id == "A" })?.position == 0)
+        #expect(remainingResources.first(where: { $0.id == "B" }) == nil)
+        #expect(remainingResources.first(where: { $0.id == "C" })?.position == 1)
+        #expect(remainingResources.first(where: { $0.id == "D" })?.position == 2)
+        #expect(remainingResources.first(where: { $0.id == "E" })?.position == 3)
     }
     
-    private class func getConfiguredRealmDatabase() -> RealmDatabase {
+    private func getConfiguredRealmDatabase() -> RealmDatabase {
         let favoriteResourceA = RealmFavoritedResource()
         favoriteResourceA.resourceId = "A"
         favoriteResourceA.position = 0
