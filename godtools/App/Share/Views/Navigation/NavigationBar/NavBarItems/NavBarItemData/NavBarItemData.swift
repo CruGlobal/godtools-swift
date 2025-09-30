@@ -59,6 +59,7 @@ class NavBarItemData {
         if #available(iOS 26, *) {
             // This disables the liquid glass effect on UINavigation Button Items. ~Levi
             buttonItem.hidesSharedBackground = true
+            buttonItem.sharesBackground = false
         }
         
         return buttonItem
