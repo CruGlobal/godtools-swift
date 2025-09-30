@@ -115,9 +115,7 @@ class PageNavigationCollectionView: UIView, NibBased {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.contentInset = .zero
         
-        if #available(iOS 26, *) {
-            collectionView.topEdgeEffect.isHidden = true
-        }
+        collectionView.disableScrollEdgeEffect()
         
         switch layoutType {
         case .centeredRevealingPreviousAndNextPage( _):

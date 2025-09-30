@@ -1459,6 +1459,7 @@
 		45EB9B8229F16CF200CA74A8 /* Error+Code.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EB9B6929F16CF200CA74A8 /* Error+Code.swift */; };
 		45EB9B8329F16CF200CA74A8 /* Color+RGB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EB9B6C29F16CF200CA74A8 /* Color+RGB.swift */; };
 		45EB9B8429F16CF200CA74A8 /* Image+OptionalUIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EB9B6E29F16CF200CA74A8 /* Image+OptionalUIImage.swift */; };
+		45EC12002E8C88A900D1E730 /* UIScrollView+DisableScrollEdgeEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EC11FF2E8C88A000D1E730 /* UIScrollView+DisableScrollEdgeEffect.swift */; };
 		45EC429B272C87430052F2AA /* PassthroughValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EC429A272C87430052F2AA /* PassthroughValue.swift */; };
 		45EC5CF228CA2A4A0000AA2E /* ResourceModel+LanguageSupportable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EC5CF128CA2A4A0000AA2E /* ResourceModel+LanguageSupportable.swift */; };
 		45ED11422DAD52500028EF44 /* UIFont+Traits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ED11412DAD52470028EF44 /* UIFont+Traits.swift */; };
@@ -3229,6 +3230,7 @@
 		45EB9B6929F16CF200CA74A8 /* Error+Code.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Error+Code.swift"; sourceTree = "<group>"; };
 		45EB9B6C29F16CF200CA74A8 /* Color+RGB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Color+RGB.swift"; sourceTree = "<group>"; };
 		45EB9B6E29F16CF200CA74A8 /* Image+OptionalUIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Image+OptionalUIImage.swift"; sourceTree = "<group>"; };
+		45EC11FF2E8C88A000D1E730 /* UIScrollView+DisableScrollEdgeEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+DisableScrollEdgeEffect.swift"; sourceTree = "<group>"; };
 		45EC429A272C87430052F2AA /* PassthroughValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassthroughValue.swift; sourceTree = "<group>"; };
 		45EC5CF128CA2A4A0000AA2E /* ResourceModel+LanguageSupportable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ResourceModel+LanguageSupportable.swift"; sourceTree = "<group>"; };
 		45ED11412DAD52470028EF44 /* UIFont+Traits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Traits.swift"; sourceTree = "<group>"; };
@@ -8902,6 +8904,7 @@
 		45AD18B025938A4E00A096A0 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				45EC11FF2E8C88A000D1E730 /* UIScrollView+DisableScrollEdgeEffect.swift */,
 				8F53BCAF2DCE9714003153A0 /* ColormathColor.swift */,
 				45FB1CC0295F4184002BACD9 /* LayoutDirection+LanguageDirectionDomainModel.swift */,
 				45FB1CBF295F4184002BACD9 /* UISemanticContentAttribute+LanguageDirectionDomainModel.swift */,
@@ -13983,6 +13986,7 @@
 				4502BD42279F3B72000C544A /* MobileContentFlowItemViewModel.swift in Sources */,
 				459A668C289B0E3A00DACBF8 /* GetToolTranslationsFilesFilter.swift in Sources */,
 				45369AD32AFA7FA500BD10F0 /* ToolScreenShareInterfaceStringsDomainModel.swift in Sources */,
+				45EC12002E8C88A900D1E730 /* UIScrollView+DisableScrollEdgeEffect.swift in Sources */,
 				45CCF6922B2269010017EDFE /* ToolSettingsOptionView.swift in Sources */,
 				45FE82382ACE5BFE00930C39 /* AppViewController.swift in Sources */,
 				45EE6C3C2DAFFA6A00DBD25D /* ShouldPromptForOptInNotification.swift in Sources */,
