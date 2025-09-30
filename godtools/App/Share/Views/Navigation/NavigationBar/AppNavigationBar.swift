@@ -186,6 +186,9 @@ extension AppNavigationBar {
         
         navigationBar.standardAppearance = appearance
         navigationBar.scrollEdgeAppearance = appearance
+        
+        navigationBar.compactAppearance = appearance
+        navigationBar.compactScrollEdgeAppearance = appearance
     }
 }
 
