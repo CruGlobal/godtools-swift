@@ -8,10 +8,12 @@
 files: [
   {
     "source": "godtools/Localizable/en.lproj/Localizable.strings",
-    "translation": "godtools/Localizable/%osx_code%/%original_file_name%"
+    "translation": "godtools/Localizable/%osx_code%/%original_file_name%",
+    "update_option": "update_as_unapproved"
   },
   {
     "source": "godtools/Localizable/en.lproj/Localizable.stringsdict",
-    "translation": "godtools/Localizable/%osx_code%/%original_file_name%"
+    "translation": "godtools/Localizable/%osx_code%/%original_file_name%",
+    "update_option": "update_as_unapproved"
   }
 ]
