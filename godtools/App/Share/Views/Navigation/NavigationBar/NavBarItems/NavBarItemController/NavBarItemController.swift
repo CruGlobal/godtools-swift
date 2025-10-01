@@ -24,18 +24,20 @@ class NavBarItemController {
     
     private weak var delegate: NavBarItemControllerDelegate?
     
+    let navBarAppearance: AppNavigationBarAppearance?
     let navBarItem: NavBarItem
     let itemBarPosition: BarButtonItemBarPosition
     let itemIndex: Int
     
-    init(delegate: NavBarItemControllerDelegate, navBarItem: NavBarItem, itemBarPosition: BarButtonItemBarPosition, itemIndex: Int) {
+    init(delegate: NavBarItemControllerDelegate, navBarAppearance: AppNavigationBarAppearance?, navBarItem: NavBarItem, itemBarPosition: BarButtonItemBarPosition, itemIndex: Int) {
         
         self.delegate = delegate
+        self.navBarAppearance = navBarAppearance
         self.navBarItem = navBarItem
         self.itemBarPosition = itemBarPosition
         self.itemIndex = itemIndex
         
-        let newBarButtonItem: UIBarButtonItem = navBarItem.itemData.getNewBarButtonItem()
+        let newBarButtonItem: UIBarButtonItem = navBarItem.itemData.getNewBarButtonItem(navBarAppearance: navBarAppearance)
         
         self.hidesBarItemPublisher = navBarItem.hidesBarItemPublisher
         self.barButtonItem = newBarButtonItem
@@ -55,7 +57,7 @@ class NavBarItemController {
         }
     }
     
-    static func newNavBarItemController(controllerType: NavBarItemControllerType, delegate: NavBarItemControllerDelegate, navBarItem: NavBarItem, itemBarPosition: BarButtonItemBarPosition, itemIndex: Int) -> NavBarItemController {
+    static func newNavBarItemController(controllerType: NavBarItemControllerType, delegate: NavBarItemControllerDelegate, navBarAppearance: AppNavigationBarAppearance?, navBarItem: NavBarItem, itemBarPosition: BarButtonItemBarPosition, itemIndex: Int) -> NavBarItemController {
         
         let navBarItemController: NavBarItemController?
         
@@ -67,6 +69,7 @@ class NavBarItemController {
                 
                 navBarItemController = AppInterfaceStringNavBarItemController(
                     delegate: delegate,
+                    navBarAppearance: navBarAppearance,
                     navBarItem: interfaceStringBarItem,
                     itemBarPosition: itemBarPosition,
                     itemIndex: itemIndex,
@@ -87,6 +90,7 @@ class NavBarItemController {
                 
                 navBarItemController = AppLayoutDirectionNavBarItemController(
                     delegate: delegate,
+                    navBarAppearance: navBarAppearance,
                     navBarItem: layoutDirectionBasedNavBarItem,
                     itemBarPosition: itemBarPosition,
                     itemIndex: itemIndex,
@@ -110,6 +114,7 @@ class NavBarItemController {
         
         return NavBarItemController(
             delegate: delegate,
+            navBarAppearance: navBarAppearance,
             navBarItem: navBarItem,
             itemBarPosition: itemBarPosition,
             itemIndex: itemIndex
