@@ -42,9 +42,9 @@ class MenuFlow: Flow {
         navigationController = AppNavigationController(navigationBarAppearance: navigationBarAppearance)
         navigationController.setNavigationBarHidden(false, animated: false)
         
-        let view: UIViewController = getMenuView()
+        let menuView: UIViewController = getMenuView()
         
-        navigationController.setViewControllers([view], animated: false)
+        navigationController.setViewControllers([menuView], animated: false)
         
         appDiContainer.feature.appLanguage.domainLayer
             .getCurrentAppLanguageUseCase()

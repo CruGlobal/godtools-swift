@@ -27,12 +27,15 @@ class NavBarItemData {
         self.accessibilityIdentifier = accessibilityIdentifier
     }
     
-    func getNewBarButtonItem() -> UIBarButtonItem {
+    func getNewBarButtonItem(navBarAppearance: AppNavigationBarAppearance?) -> UIBarButtonItem {
         
-        return getNewBarButtonItem(contentType: contentType)
+        return getNewBarButtonItem(
+            contentType: contentType,
+            navBarAppearance: navBarAppearance
+        )
     }
     
-    func getNewBarButtonItem(contentType: NavBarItemContentType) -> UIBarButtonItem {
+    func getNewBarButtonItem(contentType: NavBarItemContentType, navBarAppearance: AppNavigationBarAppearance?) -> UIBarButtonItem {
         
         let buttonItem: UIBarButtonItem
         
@@ -50,6 +53,9 @@ class NavBarItemData {
         
         if let color = self.color {
             buttonItem.tintColor = color
+        }
+        else if let navBarControlColor = navBarAppearance?.controlColor {
+            buttonItem.tintColor = navBarControlColor
         }
         
         if let accessibilityIdentifier = self.accessibilityIdentifier {
