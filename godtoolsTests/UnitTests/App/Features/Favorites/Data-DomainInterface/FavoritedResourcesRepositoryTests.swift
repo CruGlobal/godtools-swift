@@ -30,7 +30,7 @@ struct FavoritedResourcesRepositoryTests {
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        let realmDatabase = Self.getConfiguredRealmDatabase(with: argument.resourcesInRealmIdsAtPositions)
+        let realmDatabase = getConfiguredRealmDatabase(with: argument.resourcesInRealmIdsAtPositions)
         let favoritedResourcesRepository = FavoritedResourcesRepository(cache: RealmFavoritedResourcesCache(realmDatabase: realmDatabase))
         
         var favoritedResources: [FavoritedResourceDataModel] = Array()
@@ -77,7 +77,7 @@ struct FavoritedResourcesRepositoryTests {
     @MainActor func testDeleteFavoritedResource(argument: DeleteTestArgument) async {
         var cancellables: Set<AnyCancellable> = Set()
         
-        let realmDatabase = Self.getConfiguredRealmDatabase(with: argument.resourcesInRealmIdsAtPositions)
+        let realmDatabase = getConfiguredRealmDatabase(with: argument.resourcesInRealmIdsAtPositions)
         let favoritedResourcesRepository = FavoritedResourcesRepository(cache: RealmFavoritedResourcesCache(realmDatabase: realmDatabase))
         
         var remainingResources: [FavoritedResourceDataModel] = Array()
@@ -128,7 +128,7 @@ struct FavoritedResourcesRepositoryTests {
     @MainActor func testReorderFavoritedResources(argument: ReorderTestArgument) async {
         var cancellables: Set<AnyCancellable> = Set()
         
-        let realmDatabase = Self.getConfiguredRealmDatabase(with: argument.resourcesInRealmIdsAtPositions)
+        let realmDatabase = getConfiguredRealmDatabase(with: argument.resourcesInRealmIdsAtPositions)
         let favoritedResourcesRepository = FavoritedResourcesRepository(cache: RealmFavoritedResourcesCache(realmDatabase: realmDatabase))
         
         var favoritedResources: [FavoritedResourceDataModel] = Array()
@@ -162,7 +162,7 @@ struct FavoritedResourcesRepositoryTests {
 
 extension FavoritedResourcesRepositoryTests {
     
-    private static func getConfiguredRealmDatabase(with resources: [String: Int]) -> RealmDatabase {
+    private func getConfiguredRealmDatabase(with resources: [String: Int]) -> RealmDatabase {
         
         var resourceObjects = [RealmFavoritedResource]()
         

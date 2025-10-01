@@ -6,132 +6,79 @@
 //  Copyright © 2025 Cru. All rights reserved.
 //
 
+import Testing
 import Foundation
 @testable import godtools
 import Combine
-import Quick
-import Nimble
 
-class ReorderFavoritedToolRepositoryTests: QuickSpec {
+struct ReorderFavoritedToolRepositoryTests {
 
-    override class func spec() {
+    struct TestArgument {
+        let resourcesInRealmIdsAtPositions: [String: Int]
+        let resourceIdToReorder: String
+        let originalPosition: Int
+        let newPosition: Int
+        let expectedUpdatedIdsAtPositions: [String: Int]
+    }
+
+    @Test(
+       """
+       Given: User is viewing all their favorite tools.
+       When: A user drags a tool up or down in the list
+       Then: The tool's position should update, and surrounding tool positionsitio
+       """,
+       arguments: [
+        TestArgument(resourcesInRealmIdsAtPositions: ["A": 0, "B": 1, "C": 2, "D": 3, "E": 4], resourceIdToReorder: "C", originalPosition: 2, newPosition: 0, expectedUpdatedIdsAtPositions: ["C": 0, "A": 1, "B": 2, "D": 3, "E": 4]),
+        TestArgument(resourcesInRealmIdsAtPositions: ["A": 0, "B": 1, "C": 2, "D": 3, "E": 4], resourceIdToReorder: "A", originalPosition: 0, newPosition: 4, expectedUpdatedIdsAtPositions: ["B": 0, "C": 1, "D": 2, "E": 3, "A": 4]),
+        TestArgument(resourcesInRealmIdsAtPositions: ["A": 0, "B": 1, "C": 2, "D": 3, "E": 4], resourceIdToReorder: "E", originalPosition: 4, newPosition: 2, expectedUpdatedIdsAtPositions: ["A": 0, "B": 1, "E": 2, "C": 3, "D": 4])
+       ]
+    )
+    @MainActor func testReorderFavorites(argument: TestArgument) async {
         
         var cancellables: Set<AnyCancellable> = Set()
+             
+        let realmDatabase = getConfiguredRealmDatabase(with: argument.resourcesInRealmIdsAtPositions)
+        let favoritedResourcesRepo = FavoritedResourcesRepository(
+            cache: RealmFavoritedResourcesCache(realmDatabase: realmDatabase)
+        )
+        let reorderFavoriteToolsRepository = ReorderFavoritedToolRepository(favoritedResourcesRepository: favoritedResourcesRepo)
         
-        describe("User is viewing all their favorite tools.") {
+        var favoritedResources: [ReorderFavoritedToolDomainModel] = Array()
+        
+        await confirmation(expectedCount: 1) { confirmation in
             
-            context("When the user drags tool C to the top") {
-                it("The tool C position should update to 0, tools A and B should update to 1 and 2, but D and E shouldn't change.") {
+            reorderFavoriteToolsRepository.reorderFavoritedToolPubilsher(toolId: "C", originalPosition: 2, newPosition: 0)
+                .sink { _ in
                     
-                    let reorderFavoriteToolsRepository = ReorderFavoritedToolRepository(
-                        favoritedResourcesRepository: FavoritedResourcesRepository(cache: RealmFavoritedResourcesCache(realmDatabase: getConfiguredRealmDatabase())))
+                } receiveValue: { _ in
                     
-                    var favoritedResources: [ReorderFavoritedToolDomainModel] = Array()
-                    
-                    waitUntil { done in
-                        
-                        reorderFavoriteToolsRepository.reorderFavoritedToolPubilsher(toolId: "C", originalPosition: 2, newPosition: 0)
-                            .sink { _ in
-                                
-                            } receiveValue: { favorites in
-                                
-                                favoritedResources = favorites
-                                done()
-                            }
-                            .store(in: &cancellables)
+                    favoritedResources = realmDatabase.openRealm().objects(RealmFavoritedResource.self).map {
+                        ReorderFavoritedToolDomainModel(dataModelId: $0.resourceId, position: $0.position)
                     }
                     
-                    expect(favoritedResources.count).to(equal(3))
-                    
-                    expect(favoritedResources.first(where: { $0.id == "C" })?.position).to(equal(0))
-                    expect(favoritedResources.first(where: { $0.id == "A" })?.position).to(equal(1))
-                    expect(favoritedResources.first(where: { $0.id == "B" })?.position).to(equal(2))
+                    confirmation()
                 }
-            }
+                .store(in: &cancellables)
+        }
+        
+        for (expectedId, expectedPosition) in argument.expectedUpdatedIdsAtPositions {
             
-            context("When the user drags tool A to the bottom") {
-                it("The tool A position should update to 4 and B, C, D, E should update to 0, 1, 2, 3.") {
-                    
-                    let reorderFavoriteToolsRepository = ReorderFavoritedToolRepository(
-                        favoritedResourcesRepository: FavoritedResourcesRepository(cache: RealmFavoritedResourcesCache(realmDatabase: getConfiguredRealmDatabase())))
-                    
-                    var favoritedResources: [ReorderFavoritedToolDomainModel] = Array()
-                    
-                    waitUntil { done in
-                        
-                        reorderFavoriteToolsRepository.reorderFavoritedToolPubilsher(toolId: "A", originalPosition: 0, newPosition: 4)
-                            .sink { _ in
-                                
-                            } receiveValue: { favorites in
-                                
-                                favoritedResources = favorites
-                                done()
-                            }
-                            .store(in: &cancellables)
-                    }
-                    
-                    expect(favoritedResources.count).to(equal(5))
-
-                    expect(favoritedResources.first(where: { $0.id == "A" })?.position).to(equal(4))
-                    expect(favoritedResources.first(where: { $0.id == "B" })?.position).to(equal(0))
-                    expect(favoritedResources.first(where: { $0.id == "C" })?.position).to(equal(1))
-                    expect(favoritedResources.first(where: { $0.id == "D" })?.position).to(equal(2))
-                    expect(favoritedResources.first(where: { $0.id == "E" })?.position).to(equal(3))
-                }
-            }
-            
-            context("When the user drags tool E to the third position") {
-                it("The tool E position should update to 2. A and B should remain unchanged. C and D should update to 3, 4.") {
-                    
-                    let reorderFavoriteToolsRepository = ReorderFavoritedToolRepository(
-                        favoritedResourcesRepository: FavoritedResourcesRepository(cache: RealmFavoritedResourcesCache(realmDatabase: getConfiguredRealmDatabase())))
-                    
-                    var favoritedResources: [ReorderFavoritedToolDomainModel] = Array()
-                    
-                    waitUntil { done in
-                        
-                        reorderFavoriteToolsRepository.reorderFavoritedToolPubilsher(toolId: "E", originalPosition: 4, newPosition: 2)
-                            .sink { _ in
-                                
-                            } receiveValue: { favorites in
-                                
-                                favoritedResources = favorites
-                                done()
-                            }
-                            .store(in: &cancellables)
-                    }
-                    
-                    expect(favoritedResources.count).to(equal(3))
-
-                    expect(favoritedResources.first(where: { $0.id == "E" })?.position).to(equal(2))
-                    expect(favoritedResources.first(where: { $0.id == "C" })?.position).to(equal(3))
-                    expect(favoritedResources.first(where: { $0.id == "D" })?.position).to(equal(4))
-                }
-            }
+            let actualPosition = favoritedResources.first(where: { $0.id == expectedId })?.position
+            #expect(
+                actualPosition == expectedPosition,
+                "Expected position for resource \(expectedId) to be \(expectedPosition), but was \(actualPosition ?? -1)"
+            )
         }
     }
     
-    private class func getConfiguredRealmDatabase() -> RealmDatabase {
-        let favoriteResourceA = RealmFavoritedResource()
-        favoriteResourceA.resourceId = "A"
-        favoriteResourceA.position = 0
+    private func getConfiguredRealmDatabase(with resources: [String: Int]) -> RealmDatabase {
+        var resourceObjects = [RealmFavoritedResource]()
         
-        let favoriteResourceB = RealmFavoritedResource()
-        favoriteResourceB.resourceId = "B"
-        favoriteResourceB.position = 1
+        for (resourceId, resourcePosition) in resources {
+            let resource = RealmFavoritedResource(createdAt: Date(), resourceId: resourceId, position: resourcePosition)
+            resourceObjects.append(resource)
+        }
         
-        let favoriteResourceC = RealmFavoritedResource()
-        favoriteResourceC.resourceId = "C"
-        favoriteResourceC.position = 2
-        
-        let favoriteResourceD = RealmFavoritedResource()
-        favoriteResourceD.resourceId = "D"
-        favoriteResourceD.position = 3
-        
-        let favoriteResourceE = RealmFavoritedResource()
-        favoriteResourceE.resourceId = "E"
-        favoriteResourceE.position = 4
-        
-        return TestsInMemoryRealmDatabase(addObjectsToDatabase: [favoriteResourceA, favoriteResourceB, favoriteResourceC, favoriteResourceD, favoriteResourceE] )
+        return TestsInMemoryRealmDatabase(addObjectsToDatabase: resourceObjects)
     }
 }

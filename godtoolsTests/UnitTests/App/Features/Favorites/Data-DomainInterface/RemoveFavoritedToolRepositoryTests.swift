@@ -21,8 +21,8 @@ struct RemoveFavoritedToolRepositoryTests {
     @Test(
         """
         Given: User is viewing all their favorite tools.
-        When: a user unfavorites tool B
-        Then: Tools C, D, and E should update to positions 1, 2, and 3. Tool A should remain unchanged.
+        When: A user unfavorites a tool
+        Then: The tool should be removed from the repo, and tools listed after should be moved up one position.
         """,
         arguments: [
             TestArgument(resourcesInRealmIdsAtPositions: ["A": 0, "B": 1, "C": 2, "D": 3, "E": 4], resourceIdToDelete: "A", expectedUpdatedIdsAtPositions: ["B": 0, "C": 1, "D": 2, "E": 3]),
