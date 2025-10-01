@@ -25,7 +25,7 @@ struct ReorderFavoritedToolRepositoryTests {
        """
        Given: User is viewing all their favorite tools.
        When: A user drags a tool up or down in the list
-       Then: The tool's position should update, and surrounding tool positionsitio
+       Then: The tool's position should update, and surrounding tool positions should update accordingly.
        """,
        arguments: [
         TestArgument(resourcesInRealmIdsAtPositions: ["A": 0, "B": 1, "C": 2, "D": 3, "E": 4], resourceIdToReorder: "C", originalPosition: 2, newPosition: 0, expectedUpdatedIdsAtPositions: ["C": 0, "A": 1, "B": 2, "D": 3, "E": 4]),
@@ -47,7 +47,7 @@ struct ReorderFavoritedToolRepositoryTests {
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            reorderFavoriteToolsRepository.reorderFavoritedToolPubilsher(toolId: "C", originalPosition: 2, newPosition: 0)
+            reorderFavoriteToolsRepository.reorderFavoritedToolPubilsher(toolId: argument.resourceIdToReorder, originalPosition: argument.originalPosition, newPosition: argument.newPosition)
                 .sink { _ in
                     
                 } receiveValue: { _ in
