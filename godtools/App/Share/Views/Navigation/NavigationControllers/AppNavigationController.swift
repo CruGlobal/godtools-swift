@@ -12,11 +12,12 @@ import Combine
 
 class AppNavigationController: UINavigationController {
     
-    private let navigationBarAppearance: AppNavigationBarAppearance?
     private let hidesNavigationBar: Bool
     
     private var layoutDirectionPublisher: AnyPublisher<UISemanticContentAttribute, Never>
     private var cancellables: Set<AnyCancellable> = Set()
+    
+    let navigationBarAppearance: AppNavigationBarAppearance?
     
     init(hidesNavigationBar: Bool = false, navigationBarAppearance: AppNavigationBarAppearance?, layoutDirectionPublisher: AnyPublisher<UISemanticContentAttribute, Never>? = nil) {
         
