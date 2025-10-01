@@ -16,13 +16,14 @@ class SwiftDatabase {
     
     let configName: String
     
-    init(configuration: SwiftDatabaseConfigurationInterface, modelTypes: SwiftDatabaseModelTypesInterface) {
+    init(configuration: SwiftDatabaseConfigurationInterface, modelTypes: SwiftDatabaseModelTypesInterface, migration: SwiftDatabaseMigrationPlanInterface) {
                 
         do {
             
             container = try Self.createContainer(
                 configuration: configuration,
-                modelTypes: modelTypes
+                modelTypes: modelTypes,
+                migration: migration
             )
         }
         catch let error {
@@ -31,18 +32,19 @@ class SwiftDatabase {
             
             container = try! Self.createContainer(
                 configuration: SwiftDatabaseInMemoryConfiguration(),
-                modelTypes: modelTypes
+                modelTypes: modelTypes,
+                migration: migration
             )
         }
         
         configName = configuration.modelConfiguration.name
     }
     
-    private static func createContainer(configuration: SwiftDatabaseConfigurationInterface, modelTypes: SwiftDatabaseModelTypesInterface) throws -> ModelContainer {
+    private static func createContainer(configuration: SwiftDatabaseConfigurationInterface, modelTypes: SwiftDatabaseModelTypesInterface, migration: SwiftDatabaseMigrationPlanInterface) throws -> ModelContainer {
         
         return try ModelContainer(
             for: Schema(modelTypes.getModelTypes()),
-            migrationPlan: nil,
+            migrationPlan: migration.migrationPlan,
             configurations: configuration.modelConfiguration
         )
     }

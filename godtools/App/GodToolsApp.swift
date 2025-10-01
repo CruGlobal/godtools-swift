@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct GodToolsApp: App {
 
@@ -86,6 +87,68 @@ struct GodToolsApp: App {
             .ignoresSafeArea()
             .onOpenURL { (url: URL) in
                 _ = Self.openUrl(url: url)
+            }
+            .onAppear {
+                print("\n GodToolsApp Did Appear !!!")
+                
+                if #available(iOS 17, *) {
+                        
+                    guard let swiftDatabase = SharedSwiftDatabase.shared.swiftDatabase else {
+                        return
+                    }
+                    
+                    let context: ModelContext = swiftDatabase.openContext()
+                    
+                    let existingObjects: [TestMigrationModel]
+                    
+                    do {
+                        
+                        existingObjects = try context.fetch(
+                            FetchDescriptor<TestMigrationModelSchemaV2.TestMigrationModel>()
+                        )
+                    }
+                    catch let error {
+                        assertionFailure(error.localizedDescription)
+                        existingObjects = Array()
+                    }
+
+                    if existingObjects.isEmpty {
+                        
+                        print("   existing objects is empty...")
+                        
+//                        for index in 0 ..< 4 {
+//                            
+//                            let object = TestMigrationModel()
+//                            object.id = "\(index)"
+//                            object.name = "name_\(index)"
+//                            
+//                            let email: String
+//                            
+//                            if index == 0 || index == 1 {
+//                                email = "email_0"
+//                            }
+//                            else {
+//                                email = "email_\(index)"
+//                            }
+//                            
+//                            object.email = email
+//                            
+//                            context.insert(object)
+//                        }
+//                        
+//                        do {
+//                            try context.save()
+//                        }
+//                        catch let error {
+//                            assertionFailure("Failed to save SwiftData context with error: \(error.localizedDescription)")
+//                        }
+                    }
+                    else {
+                        
+                        print("  has existing objects with ids: \(existingObjects.map {$0.id}) and emails: \(existingObjects.map {$0.email})")
+                    }
+                    
+                }
             }
         }
         .onChange(of: scenePhase) { (phase: ScenePhase) in

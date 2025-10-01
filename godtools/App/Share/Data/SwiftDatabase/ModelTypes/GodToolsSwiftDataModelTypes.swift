@@ -14,6 +14,8 @@ class GodToolsSwiftDataModelTypes: SwiftDatabaseModelTypesInterface {
     
     func getModelTypes() -> [any PersistentModel.Type] {
         return [
+            TestMigrationModel.self,
+            TestMigrationModelSchemaV1.TestMigrationModel.self,
             SwiftAppLanguage.self,
             SwiftUserAppLanguage.self,
             SwiftGlobalAnalytics.self,
