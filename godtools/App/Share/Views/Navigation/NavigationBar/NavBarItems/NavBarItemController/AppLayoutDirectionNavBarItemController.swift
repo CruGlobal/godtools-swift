@@ -17,13 +17,14 @@ class AppLayoutDirectionNavBarItemController: NavBarItemController {
     private var currentSemanticContentAttribute: UISemanticContentAttribute?
     private var cancellables: Set<AnyCancellable> = Set()
     
-    init(delegate: NavBarItemControllerDelegate, navBarItem: AppLayoutDirectionBasedBarItem, itemBarPosition: BarButtonItemBarPosition, itemIndex: Int, layoutDirectionPublisher: AnyPublisher<UISemanticContentAttribute, Never>? = nil) {
+    init(delegate: NavBarItemControllerDelegate, navBarAppearance: AppNavigationBarAppearance?, navBarItem: AppLayoutDirectionBasedBarItem, itemBarPosition: BarButtonItemBarPosition, itemIndex: Int, layoutDirectionPublisher: AnyPublisher<UISemanticContentAttribute, Never>? = nil) {
         
         self.layoutDirectionBasedBarItem = navBarItem
         self.layoutDirectionPublisher = layoutDirectionPublisher ?? ApplicationLayout.shared.semanticContentAttributePublisher
         
         super.init(
             delegate: delegate,
+            navBarAppearance: navBarAppearance,
             navBarItem: navBarItem,
             itemBarPosition: itemBarPosition,
             itemIndex: itemIndex
@@ -56,7 +57,7 @@ class AppLayoutDirectionNavBarItemController: NavBarItemController {
             image = layoutDirectionBasedBarItem.leftToRightImage
         }
         
-        let newBarButtonItem: UIBarButtonItem = navBarItem.itemData.getNewBarButtonItem(contentType: .image(value: image))
+        let newBarButtonItem: UIBarButtonItem = navBarItem.itemData.getNewBarButtonItem(contentType: .image(value: image), navBarAppearance: navBarAppearance)
         
         return newBarButtonItem
     }
