@@ -17,10 +17,10 @@ class NavBarItemData {
     let action: Selector?
     let accessibilityIdentifier: String?
     
-    init(contentType: NavBarItemContentType, style: UIBarButtonItem.Style?, color: UIColor?, target: AnyObject?, action: Selector?, accessibilityIdentifier: String?) {
+    init(contentType: NavBarItemContentType, color: UIColor?, target: AnyObject?, action: Selector?, accessibilityIdentifier: String?, style: UIBarButtonItem.Style = .plain) {
         
         self.contentType = contentType
-        self.style = style ?? .plain
+        self.style = style // NOTE: I noticed in iOS 26 when Style is (done) the UIBarButtonItem tintColor is not applied. ~Levi
         self.color = color
         self.target = target
         self.action = action

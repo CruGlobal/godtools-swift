@@ -16,7 +16,6 @@ class AppBackBarItem: AppLayoutDirectionBasedBarItem {
         super.init(
             leftToRightImage: ImageCatalog.navBack.uiImage,
             rightToLeftImage: ImageCatalog.navBackFlipped.uiImage,
-            style: .plain,
             color: nil,
             target: target,
             action: action,

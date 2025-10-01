@@ -205,7 +205,6 @@ extension TractFlow {
             controllerType: .base,
             itemData: NavBarItemData(
                 contentType: .image(value: ImageCatalog.navToolSettings.uiImage),
-                style: .plain,
                 color: nil,
                 target: viewModel,
                 action: #selector(viewModel.toolSettingsTapped),

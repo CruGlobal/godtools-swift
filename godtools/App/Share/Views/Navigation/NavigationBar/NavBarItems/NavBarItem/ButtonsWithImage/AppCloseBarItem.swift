@@ -17,7 +17,6 @@ class AppCloseBarItem: NavBarItem {
             controllerType: .base,
             itemData: NavBarItemData(
                 contentType: .image(value: ImageCatalog.navClose.uiImage),
-                style: nil,
                 color: color,
                 target: target,
                 action: action,

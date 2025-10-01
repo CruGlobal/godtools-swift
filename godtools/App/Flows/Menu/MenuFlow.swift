@@ -387,7 +387,6 @@ extension MenuFlow {
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             localizedStringKey: "done",
-            style: .done,
             color: nil,
             target: viewModel,
             action: #selector(viewModel.doneTapped),
