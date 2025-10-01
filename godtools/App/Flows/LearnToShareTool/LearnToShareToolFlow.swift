@@ -25,7 +25,13 @@ class LearnToShareToolFlow: Flow {
     
     init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, toolId: String, toolPrimaryLanguage: AppLanguageDomainModel, toolParallelLanguage: AppLanguageDomainModel?, toolSelectedLanguageIndex: Int?) {
         
-        let navigationBarAppearance = AppNavigationBarAppearance(backgroundColor: .clear, controlColor: ColorPalette.gtBlue.uiColor, titleFont: nil, titleColor: nil, isTranslucent: true)
+        let navigationBarAppearance = AppNavigationBarAppearance(
+            backgroundColor: .clear,
+            controlColor: ColorPalette.gtBlue.uiColor,
+            titleFont: nil,
+            titleColor: nil,
+            isTranslucent: true
+        )
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer

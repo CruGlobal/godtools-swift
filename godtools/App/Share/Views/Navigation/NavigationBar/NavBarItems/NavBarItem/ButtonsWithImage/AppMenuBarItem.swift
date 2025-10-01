@@ -17,7 +17,6 @@ class AppMenuBarItem: NavBarItem {
             controllerType: .base,
             itemData: NavBarItemData(
                 contentType: .image(value: ImageCatalog.navMenu.uiImage),
-                style: .plain,
                 color: color,
                 target: target,
                 action: action,

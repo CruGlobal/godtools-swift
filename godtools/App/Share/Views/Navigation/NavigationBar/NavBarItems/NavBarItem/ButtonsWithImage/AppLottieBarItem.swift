@@ -29,7 +29,6 @@ class AppLottieBarItem: NavBarItem {
             controllerType: .base,
             itemData: NavBarItemData(
                 contentType: .custom(value: animationView),
-                style: nil,
                 color: color,
                 target: target,
                 action: action,

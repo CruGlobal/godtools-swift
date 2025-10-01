@@ -17,7 +17,6 @@ class AppShareBarItem: NavBarItem {
             controllerType: .base,
             itemData: NavBarItemData(
                 contentType: .image(value: ImageCatalog.navShare.uiImage),
-                style: nil,
                 color: color,
                 target: target,
                 action: action,
