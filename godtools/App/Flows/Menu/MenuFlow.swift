@@ -42,9 +42,9 @@ class MenuFlow: Flow {
         navigationController = AppNavigationController(navigationBarAppearance: navigationBarAppearance)
         navigationController.setNavigationBarHidden(false, animated: false)
         
-        let view: UIViewController = getMenuView()
+        let menuView: UIViewController = getMenuView()
         
-        navigationController.setViewControllers([view], animated: false)
+        navigationController.setViewControllers([menuView], animated: false)
         
         appDiContainer.feature.appLanguage.domainLayer
             .getCurrentAppLanguageUseCase()
@@ -387,7 +387,6 @@ extension MenuFlow {
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             localizedStringKey: "done",
-            style: .done,
             color: nil,
             target: viewModel,
             action: #selector(viewModel.doneTapped),

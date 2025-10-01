@@ -11,7 +11,7 @@ import Combine
 
 class AppNavigationBar {
     
-    private let appearance: AppNavigationBarAppearance?
+    private let navBarAppearance: AppNavigationBarAppearance?
     private let backButton: AppBackBarItem?
     private let leadingItems: [NavBarItem]
     private let trailingItems: [NavBarItem]
@@ -31,7 +31,7 @@ class AppNavigationBar {
     
     init(appearance: AppNavigationBarAppearance?, backButton: AppBackBarItem?, leadingItems: [NavBarItem], trailingItems: [NavBarItem], titleView: UIView? = nil, title: String? = nil, layoutDirectionPublisher: AnyPublisher<UISemanticContentAttribute, Never>? = nil) {
         
-        self.appearance = appearance
+        self.navBarAppearance = appearance
         self.backButton = backButton
         self.leadingItems = leadingItems
         self.trailingItems = trailingItems
@@ -42,7 +42,7 @@ class AppNavigationBar {
         self.layoutDirectionPublisher = layoutDirectionPublisher ?? ApplicationLayout.shared.semanticContentAttributePublisher
     }
     
-    private static func getItemControllers(delegate: NavBarItemControllerDelegate, items: [NavBarItem], barPosition: BarButtonItemBarPosition) -> [NavBarItemController] {
+    private static func getItemControllers(delegate: NavBarItemControllerDelegate, navBarAppearance: AppNavigationBarAppearance?, items: [NavBarItem], barPosition: BarButtonItemBarPosition) -> [NavBarItemController] {
         
         var itemControllers: [NavBarItemController] = Array()
         
@@ -53,6 +53,7 @@ class AppNavigationBar {
             let controller = NavBarItemController.newNavBarItemController(
                 controllerType: navBarItem.controllerType,
                 delegate: delegate,
+                navBarAppearance: navBarAppearance,
                 navBarItem: navBarItem,
                 itemBarPosition: barPosition,
                 itemIndex: index
@@ -132,10 +133,31 @@ extension AppNavigationBar: NavBarItemControllerDelegate {
 // MARK: - Appearance
 
 extension AppNavigationBar {
+        
+    private func getNearestNavBarAppearance() -> AppNavigationBarAppearance? {
+        
+        if let navBarAppearance = self.navBarAppearance {
+            return navBarAppearance
+        }
+        
+        var parent: UIViewController? = viewController
+        
+        while let appNavigationController = parent?.navigationController as? AppNavigationController {
+            
+            if let navBarAppearance = appNavigationController.navigationBarAppearance {
+                return navBarAppearance
+            }
+            else {
+                parent = appNavigationController
+            }
+        }
+        
+        return nil
+    }
     
     func reconfigureAppearance() {
         
-        guard let appearance = self.appearance else {
+        guard let appearance = navBarAppearance else {
             return
         }
         
@@ -186,6 +208,9 @@ extension AppNavigationBar {
         
         navigationBar.standardAppearance = appearance
         navigationBar.scrollEdgeAppearance = appearance
+        
+        navigationBar.compactAppearance = appearance
+        navigationBar.compactScrollEdgeAppearance = appearance
     }
 }
 
@@ -241,14 +266,18 @@ extension AppNavigationBar {
             leadingItemsWithBackButton.insert(backButton, at: 0)
         }
         
+        let navBarAppearance: AppNavigationBarAppearance? = getNearestNavBarAppearance()
+        
         leadingItemControllers = AppNavigationBar.getItemControllers(
             delegate: self,
+            navBarAppearance: navBarAppearance,
             items: leadingItemsWithBackButton,
             barPosition: .leading
         )
         
         trailingItemControllers = AppNavigationBar.getItemControllers(
             delegate: self,
+            navBarAppearance: navBarAppearance,
             items: trailingItems,
             barPosition: .trailing
         )
