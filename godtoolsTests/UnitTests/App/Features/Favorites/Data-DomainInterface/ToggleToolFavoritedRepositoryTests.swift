@@ -3,68 +3,76 @@
 //  godtoolsTests
 //
 //  Created by Rachael Skeath on 3/28/25.
-//  Copyright © 2025 Cru. All rights reserved.
+//  Copyright © 2025 Cru. All rights reserved.ogg
 //
 
+import Testing
 import Foundation
 @testable import godtools
 import Combine
-import Quick
-import Nimble
 
-class ToggleToolFavoritedRepositoryTests: QuickSpec {
+struct ToggleToolFavoritedRepositoryTests {
     
-    override class func spec() {
+    struct TestArgument {
+        let resourcesInRealmIdsAtPositions: [String: Int]
+        let resourceIdToToggle: String
+        let expectedUpdatedIdsAtPositions: [String: Int]
+    }
+    
+    @Test(
+       """
+       Given: A user has any amount of tools favorited
+       When: A user toggles the favorite icon on a single tool
+       Then: If the tool is favorited, the tool should be removed from the favorites list.  If not favorited, the tool should be added to favorites at position 0.  Any existing favorite tool positions should update accordingly.
+       """,
+       arguments: [
+        TestArgument(resourcesInRealmIdsAtPositions: ["A": 0, "B": 1], resourceIdToToggle: "C", expectedUpdatedIdsAtPositions: ["C": 0, "A": 1, "B": 2]),
+        TestArgument(resourcesInRealmIdsAtPositions: [:], resourceIdToToggle: "A", expectedUpdatedIdsAtPositions: ["A": 0]),
+        TestArgument(resourcesInRealmIdsAtPositions: ["A": 0, "B": 1, "C": 2], resourceIdToToggle: "A", expectedUpdatedIdsAtPositions: ["B": 0, "C": 1]),
+        TestArgument(resourcesInRealmIdsAtPositions: ["A": 0], resourceIdToToggle: "A", expectedUpdatedIdsAtPositions: [:])
+       ]
+    )
+    @MainActor func testToggleToolFavorited(argument: TestArgument) async {
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        describe("User has only tools A and B favorited.") {
-            
-            context("When a user favorites tool C") {
-                it("Tool C should get added to favorites at position 0.  Positions of tools A and B should update to 1 and 2 respectively") {
+        let realmDatabase = getConfiguredRealmDatabase(with: argument.resourcesInRealmIdsAtPositions)
+        let toggleToolFavoritedRepository = ToggleToolFavoritedRepository(favoritedResourcesRepository: FavoritedResourcesRepository(cache: RealmFavoritedResourcesCache(realmDatabase: realmDatabase)))
+        
+        var favoritedResources: [FavoritedResourceDataModel] = Array()
+        
+        await confirmation(expectedCount: 1) { confirmation in
+            toggleToolFavoritedRepository.toggleFavoritedPublisher(toolId: argument.resourceIdToToggle)
+                .sink { _ in
                     
-                    let realmDatabase = getConfiguredRealmDatabase()
-                    let toggleToolFavoritedRepository = ToggleToolFavoritedRepository(favoritedResourcesRepository: FavoritedResourcesRepository(cache: RealmFavoritedResourcesCache(realmDatabase: realmDatabase)))
-                    
-                    var favoritedResources: [FavoritedResourceDataModel] = Array()
-                    
-                    waitUntil{ done in
-                        toggleToolFavoritedRepository.toggleFavoritedPublisher(toolId: "C")
-                            .sink { _ in
-                                
-                                favoritedResources = realmDatabase.openRealm().objects(RealmFavoritedResource.self).map {
-                                    FavoritedResourceDataModel(id: $0.resourceId, createdAt: $0.createdAt, position: $0.position)
-                                }
-                                
-                                done()
-                            }
-                            .store(in: &cancellables)
+                    favoritedResources = realmDatabase.openRealm().objects(RealmFavoritedResource.self).map {
+                        FavoritedResourceDataModel(id: $0.resourceId, createdAt: $0.createdAt, position: $0.position)
                     }
                     
-                    expect(favoritedResources.first(where: { $0.id == "C" })?.position).to(equal(0))
-                    expect(favoritedResources.first(where: { $0.id == "A" })?.position).to(equal(1))
-                    expect(favoritedResources.first(where: { $0.id == "B" })?.position).to(equal(2))
+                    confirmation()
                 }
-            }
+                .store(in: &cancellables)
+        }
+        
+        for (expectedId, expectedPosition) in argument.expectedUpdatedIdsAtPositions {
             
+            let actualPosition = favoritedResources.first(where: { $0.id == expectedId })?.position
+            #expect(
+                actualPosition == expectedPosition,
+                "Expected position for resource \(expectedId) to be \(expectedPosition), but was \(actualPosition ?? -1)"
+            )
         }
     }
     
-    private class func getConfiguredRealmDatabase() -> RealmDatabase {
-        let favoriteResourceA = RealmFavoritedResource()
-        favoriteResourceA.resourceId = "A"
-        favoriteResourceA.position = 0
+    private func getConfiguredRealmDatabase(with resources: [String: Int]) -> RealmDatabase {
+        var resourceObjects = [RealmFavoritedResource]()
         
-        let favoriteResourceB = RealmFavoritedResource()
-        favoriteResourceB.resourceId = "B"
-        favoriteResourceB.position = 1
+        for (resourceId, resourcePosition) in resources {
+            let resource = RealmFavoritedResource(createdAt: Date(), resourceId: resourceId, position: resourcePosition)
+            resourceObjects.append(resource)
+        }
         
-        return Self.getConfiguredRealmDatabase(includeFavoritedTools: [favoriteResourceA, favoriteResourceB])
-    }
-    
-    private class func getConfiguredRealmDatabase(includeFavoritedTools: [RealmFavoritedResource]) -> RealmDatabase {
-    
-        return TestsInMemoryRealmDatabase(addObjectsToDatabase: includeFavoritedTools)
+        return TestsInMemoryRealmDatabase(addObjectsToDatabase: resourceObjects)
     }
 }
 
