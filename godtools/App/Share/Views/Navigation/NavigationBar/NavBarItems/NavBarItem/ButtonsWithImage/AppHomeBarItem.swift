@@ -17,7 +17,6 @@ class AppHomeBarItem: NavBarItem {
             controllerType: .base,
             itemData: NavBarItemData(
                 contentType: .image(value: ImageCatalog.navHome.uiImage),
-                style: nil,
                 color: color,
                 target: target,
                 action: action,
