@@ -1,3 +1,5 @@
+"deferredDeepLinkModal.title" = "Parece que você clicou em um link para GodTools";
+
 "optInNotification.notificationSettings" = "Configurações de notificações";
 "lessons.swipeTutorial.title" = "Deslize para trocar de páginas";
 "lessons.swipeTutorial.buttonText" = "Entendi";
@@ -15,11 +17,8 @@
 "lessons.lessonCompleted" = "Concluído";
 "lessons.completionProgress" = "%@ concluído";
 "network_connection_lost" = "A conexão de rede foi perdida.";
-"language_name_fil" = "Filipino (Tagalog)";
 "lessons.filter.navBar.language" = "Idioma da lição";
 "lessons.languageFilter.title" = "Lições em:";
-"language_name_fil-x-taglish" = "Taglish";
-"language_name_sid" = "Sidama";
 "onboardingTutorial.chooseLanguageButton.title" = "Selecionar idioma";
 "languageSettings.confirmAppLanguage.message" = "Você selecionou %@ como o idioma do seu aplicativo. Isto altera o idioma de todo o aplicativo GodTools. Tem certeza de que quer fazer isto?";
 "languageSettings.confirmAppLanguage.changeLanguageButton.title" = "Alterar idioma";
@@ -261,13 +260,13 @@ Se você receber esta mensagem demasiado tarde, a ligação poderá não estar a
 "add_new_tools" = "Adicionar novas ferramentas";
 "set_your_languages" = "Definir os idiomas";
 "okay" = "OK";
+
 // Menu
 "menu_general" = "Geral";
 "menu_account" = "Conta";
 "menu_share" = "Partilhar";
 "menu_legal" = "Aviso legal";
 "language_settings" = "Definições de idioma";
-"menu.tutorial" = "Tutorial";
 "menu.my_account" = "A minha conta";
 
 // Login
@@ -320,7 +319,7 @@ Pode encontrar uma versão online em https://knowgod.com/";
 "no" = "Não";
 
 // Tract - Sharing
-"tract_share_message" ="Esta ligação irá direcioná-lo para uma versão Web do que estávamos a falar hoje: %@.
+"tract_share_message" = "Esta ligação irá direcioná-lo para uma versão Web do que estávamos a falar hoje: %@.
 
 Vamos falar mais!
 
@@ -337,7 +336,6 @@ Pode baixar o aplicativo em https://godtoolsapp.com";
 
 // Alerts
 "error" = "Erro";
-"OK" = "OK";
 "cancel" = "Cancelar";
 "required_field_missing" = "\"%@\" é um campo obrigatório.";
 

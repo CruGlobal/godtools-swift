@@ -1,3 +1,5 @@
+"deferredDeepLinkModal.title" = "Sepertinya Anda mengklik tautan untuk GodTools";
+
 "optInNotification.notificationSettings" = "Pengaturan Notifikasi";
 "lessons.swipeTutorial.title" = "Geser untuk mengganti halaman";
 "lessons.swipeTutorial.buttonText" = "Mengerti";
@@ -19,7 +21,6 @@
 "lessons.filter.navBar.language" = "Bahasa pelajaran";
 "lessons.languageFilter.title" = "Pelajaran dalam bahasa:";
 "language_name_fil-x-taglish" = "Bahasa Taglish";
-"language_name_sid" = "Sidama";
 "onboardingTutorial.chooseLanguageButton.title" = "Pilih bahasa";
 "languageSettings.confirmAppLanguage.message" = "Saudara telah memilih %@ sebagai bahasa aplikasi Saudara. Ini akan mengubah bahasa seluruh aplikasi GodTools. Apa Saudara yakin?";
 "languageSettings.confirmAppLanguage.changeLanguageButton.title" = "Mengubah bahasa";
@@ -31,7 +32,6 @@
 "languageSettings.toolLanguagesAvailableOffline.title" = "Bahasa alat tersedia secara offline";
 "languageSettings.toolLanguagesAvailableOffline.message" = "Unduh semua alat dalam satu bahasa agar dapat dibuka meskipun Saudara tidak terhubung WiFi atau layanan seluler. Atur bahasa alat melalui tombol opsi di dalam alat.";
 "languageSettings.toolLanguagesAvailableOffline.editDownloadedLanguagesButton.title" = "Edit bahasa yang telah diunduh";
-"allTools.filter.title" = "Filter";
 "allTools.filter.anyCategory" = "Kategori apa pun";
 "allTools.filter.anyLanguage" = "Bahasa apapun";
 "allTools.filter.navBar.language" = "Filter berdasarkan bahasa";
@@ -262,13 +262,13 @@ Jika Anda tidak menerima pesan ini hingga nanti, tautannya mungkin masih belum b
 "add_new_tools" = "Tambah Sarana Baru";
 "set_your_languages" = "Tetapkan Bahasa Saudara";
 "okay" = "Oke";
+
 // Menu
 "menu_general" = "Umum";
 "menu_account" = "Akun";
 "menu_share" = "Berbagi";
 "menu_legal" = "Resmi";
 "language_settings" = "Pengaturan bahasa";
-"menu.tutorial" = "Tutorial";
 "menu.my_account" = "Akun saya";
 
 // Login
@@ -320,7 +320,7 @@ Versi online dapat ditemukan di https://knowgod.com/id";
 "no" = "Tidak";
 
 // Tract - Sharing
-"tract_share_message" ="Tautan ini akan membawa Anda ke halaman versi web terakhir yang dilihat hari ini: %@. 
+"tract_share_message" = "Tautan ini akan membawa Anda ke halaman versi web terakhir yang dilihat hari ini: %@. 
 
 Mari kita bicarakan lebih lanjut!
 

@@ -1,3 +1,5 @@
+"deferredDeepLinkModal.title" = "ایسا لگتا ہے کہ آپ نے GodTools کے لیے کسی لنک پر کلک کیا ہے۔";
+
 "optInNotification.notificationSettings" = "نوٹیفکیشن سیٹنگز";
 "lessons.swipeTutorial.title" = "صفحات بدلنے کے لیے سوائپ کریں";
 "lessons.swipeTutorial.buttonText" = "سمجھ گیا";
@@ -18,8 +20,6 @@
 "language_name_fil" = "فلپائینی(تاگالوگ)";
 "lessons.filter.navBar.language" = "سبق کی زبان";
 "lessons.languageFilter.title" = "اسباق در:";
-"language_name_fil-x-taglish" = "Taglish";
-"language_name_sid" = "Sidama";
 "onboardingTutorial.chooseLanguageButton.title" = "زبان منتخب کریں";
 "languageSettings.confirmAppLanguage.message" = "کو ا؛پنی اَیپ زبان%@ آپ نے کے طور پر منتخب کِیا ۔ یہ گاڈ ٹولزکی ساری زبان کو بدل دے گی ۔ کیا آپ چاہتے ہیں ؟";
 "languageSettings.confirmAppLanguage.changeLanguageButton.title" = "زبان تبدیل کریں";
@@ -256,6 +256,7 @@
 "add_new_tools" = "نئے ٹُولز ایڈ کریں";
 "set_your_languages" = "زبانیں منتخب کریں";
 "okay" = "اوکے";
+
 // Menu
 "menu_general" = "جنرل";
 "menu_account" = "اکاؤنٹ";
@@ -316,7 +317,7 @@ https://knowgod.com";
 "no" = "نہیں";
 
 // Tract - Sharing
-"tract_share_message" ="یہ لنک آپ کو اس پیج کے ویب ورژن میں لےجائے گا جس کو آج ہم سب مل کر دیکھ رہے تھے: %@۔ آئیے کچھ اور چیزوں پر بات کریں!
+"tract_share_message" = "یہ لنک آپ کو اس پیج کے ویب ورژن میں لےجائے گا جس کو آج ہم سب مل کر دیکھ رہے تھے: %@۔ آئیے کچھ اور چیزوں پر بات کریں!
 
 ایپ یہاں سے ڈاؤنلوڈ کی جا سکتی ہے
 https://godtoolsapp.com";
@@ -383,5 +384,4 @@ https://godtoolsapp.com";
 // OnboardingTutorial
 "onboardingTutorial.aboutAppItem.0.title" = "دوسروں کے ساتھ ساجھا کریں";
 "accountActivity.globalAnalytics.countries.title" = "ممالک";
-
 "onboardingTutorial.showMoreButton.title" = "مزید دکھائیے ";

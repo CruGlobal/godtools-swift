@@ -3,7 +3,6 @@
 
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "Nem elérhető itt: %@";
-
 "tool_menu_item.tools" = "Eszköz";
 "lessons.pageTitle" = "Neked szóló szentleckék";
 "lessons.pageSubtitle" = "Gyakorlati ötletek a kapcsolatépítéshez és az értelmes beszélgetések megkezdéséhez.";
@@ -39,6 +38,7 @@
 "allTools.spotlight.description" = "Íme néhány eszköz, amelyről úgy gondoltuk, hogy tetszeni fog";
 "allTools.categories.title" = "Kategóriák";
 "tool_menu_item.lessons" = "Szentleckék";
+
 "onboardingTutorial.beginButton.title" = "Kezdés";
 "onboardingTutorial.nextButton.title" = "Következő";
 "tool_offline_favorite_message" = "Offline elérhetővé teheted az eszközt a szív ikonra kattintva, amivel hozzáadod a kedvenceidhez.";
@@ -123,11 +123,13 @@
 "add_new_tools" = "Új eszközök hozzáadása";
 "set_your_languages" = "A nyelvek beállítása";
 "okay" = "OK";
+
 // Menu
 "menu_general" = "Általános";
 "menu_share" = "Megosztás";
 "menu_legal" = "Jogi információk";
 "language_settings" = "Nyelvbeállítások";
+
 // Login
 "login" = "Bejelentkezés";
 "logout" = "Kijelentkezés";
@@ -178,7 +180,7 @@ A https://knowgod.com/ címen egy online verzió található";
 "no" = "Nem";
 
 // Tract - Sharing
-"tract_share_message" ="A hivatkozás elvezet az oldal webes verziójára, amelyet ma együtt néztünk: %@. 
+"tract_share_message" = "A hivatkozás elvezet az oldal webes verziójára, amelyet ma együtt néztünk: %@. 
 
 Beszélgessünk még!
 
@@ -195,7 +197,6 @@ Az alkalmazás a https://godtoolsapp.com címről tölthető le";
 
 // Alerts
 "error" = "Hiba";
-"OK" = "OK";
 "cancel" = "Mégse";
 "required_field_missing" = "A \"%@\" kötelező mező.";
 
@@ -212,8 +213,8 @@ Az alkalmazás a https://godtoolsapp.com címről tölthető le";
 "general_about_8" = "További információk a godtoolsapp.com címen.";
 "tutorial.continueButton.title.continue" = "Folytasd";
 "general_about_9" = "Ha magadhoz ragadod a kezdeményezést, és megosztod hitedet, ne feledd, hogy Isten az, aki az emberek szívét megváltoztatja. Szeress mindenkit, hallgasd meg és értsd meg őket.";
-"general_about_10" = "„Beszédetek legyen mindig szíves, sóval ízes, akkor majd helyesen meg tudtok felelni mindenkinek.” Kolosszeieknek írt levél 4:6";
 
+"general_about_10" = "„Beszédetek legyen mindig szíves, sóval ízes, akkor majd helyesen meg tudtok felelni mindenkinek.” Kolosszeieknek írt levél 4:6";
 // Downloads
 "Download in progress" = "Letöltés folyamatban";
 
@@ -223,4 +224,3 @@ Az alkalmazás a https://godtoolsapp.com címről tölthető le";
 
 // Language Name Strings
 "language_name_fa" = "Perzsa (fárszi)";
-

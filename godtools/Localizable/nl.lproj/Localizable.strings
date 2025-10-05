@@ -3,7 +3,6 @@
 
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "Niet beschikbaar in het %@";
-
 "tool_menu_item.tools" = "Hulpmiddelen";
 "lessons.pageTitle" = "Speciaal voor jou";
 "lessons.pageSubtitle" = "Praktische ideeën om relaties te ontwikkelen en zinvolle gesprekken te voeren.";
@@ -33,7 +32,6 @@
 "toolSettings.option.trainingTips.show.title" = "Trainingstips";
 "toolSettings.option.trainingTips.hide.title" = "Tips verbergen";
 "toolSettings.chooseLanguage.title" = "Parallelle Taal";
-"toolSettings.chooseLanguage.noParallelLanguageTitle" = "Parallel";
 "toolSettings.shareables.title" = "Relevante afbeeldingen";
 "allTools.spotlight.title" = "Uitgelicht";
 "allTools.spotlight.description" = "Hier zijn wat tools die vast zullen bevallen";
@@ -73,9 +71,6 @@
 "onboardingTutorial.2.message" = "Leer hoe je gesprekken over het geloof op natuurlijke wijze in je leven kunt integreren.";
 "onboardingTutorial.3.title" = "Help iemand anders Jezus te leren kennen";
 "onboardingTutorial.3.message" = "GodTools helpen je het evangelie op een duidelijke en relevante manier te verspreiden.";
-
-/* This is a category. The content will include training of how to share your faith. */
-"tool_category_training" = "Training";
 
 /*
  * This is an invitation for a user to open a tool
@@ -127,11 +122,13 @@
 "add_new_tools" = "Voeg nieuwe hulpmiddelen toe";
 "set_your_languages" = "Stel je talen in";
 "okay" = "Oke";
+
 // Menu
 "menu_general" = "Algemeen";
 "menu_share" = "Delen";
 "menu_legal" = "Legaal";
 "language_settings" = "Taal Instellingen";
+
 // Login
 "login" = "Inloggen";
 "logout" = "Uitloggen";
@@ -182,14 +179,11 @@ Een onlineversie is te vinden op https://knowgod.com/";
 "no" = "Nee";
 
 // Tract - Sharing
-"tract_share_message" ="Deze link brengt je naar de webversie van de laatste pagina die we vandaag samen hebben bekeken: %@. 
+"tract_share_message" = "Deze link brengt je naar de webversie van de laatste pagina die we vandaag samen hebben bekeken: %@. 
 
 Laten we verder praten!
 
 De app is te downloaden vanaf https://godtoolsapp.com";
-
-// Buttons
-"download" = "Download";
 "dismiss" = "Verbergen";
 "done" = "Klaar";
 "remove" = "Verwijderen";
@@ -199,7 +193,6 @@ De app is te downloaden vanaf https://godtoolsapp.com";
 
 // Alerts
 "error" = "Fout";
-"OK" = "OK";
 "cancel" = "Annuleren";
 "required_field_missing" = "\"%@\" Is een verplicht veld.";
 
@@ -216,8 +209,8 @@ De app is te downloaden vanaf https://godtoolsapp.com";
 "general_about_8" = "Bezoek godtoolsapp.com voor meer informatie.";
 "tutorial.continueButton.title.continue" = "doorgaan";
 "general_about_9" = "Terwijl je het initiatief neemt om je geloof te delen, is het belangrijk om te onthouden dat God degene is die het hart verandert. Hou van elke persoon door met begrip naar ze te luisteren.";
-"general_about_10" = "\"Laat uw woord altijd in genade zijn, met een snuifje zout, en weet hoe gij aan een ieder moet antwoorden.\" Kolossenzen 4:6";
 
+"general_about_10" = "\"Laat uw woord altijd in genade zijn, met een snuifje zout, en weet hoe gij aan een ieder moet antwoorden.\" Kolossenzen 4:6";
 // Downloads
 "Download in progress" = "Bezig met downloaden";
 
@@ -227,4 +220,3 @@ De app is te downloaden vanaf https://godtoolsapp.com";
 
 // Language Name Strings
 "language_name_fa" = "Perzisch (Farsi)";
-
