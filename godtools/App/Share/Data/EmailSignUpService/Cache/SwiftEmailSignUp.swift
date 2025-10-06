@@ -10,17 +10,23 @@ import Foundation
 import SwiftData
 
 @available(iOS 17, *)
-@Model
-class SwiftEmailSignUp: IdentifiableSwiftDataObject {
-    
-    var firstName: String?
-    var isRegistered: Bool = false
-    var lastName: String?
-    
-    @Attribute(.unique) var email: String = ""
-    @Attribute(.unique) var id: String = ""
-    
-    init() {
+typealias SwiftEmailSignUp = SwiftEmailSignUpV1.SwiftEmailSignUp
+
+@available(iOS 17, *)
+enum SwiftEmailSignUpV1 {
+ 
+    @Model
+    class SwiftEmailSignUp: IdentifiableSwiftDataObject {
         
+        var firstName: String?
+        var isRegistered: Bool = false
+        var lastName: String?
+        
+        @Attribute(.unique) var email: String = ""
+        @Attribute(.unique) var id: String = ""
+        
+        init() {
+            
+        }
     }
 }

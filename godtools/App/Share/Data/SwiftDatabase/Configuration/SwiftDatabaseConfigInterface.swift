@@ -1,5 +1,5 @@
 //
-//  SwiftDatabaseConfigurationInterface.swift
+//  SwiftDatabaseConfigInterface.swift
 //  godtools
 //
 //  Created by Levi Eggert on 9/19/25.
@@ -10,7 +10,7 @@ import Foundation
 import SwiftData
 
 @available(iOS 17, *)
-protocol SwiftDatabaseConfigurationInterface {
+protocol SwiftDatabaseConfigInterface {
     
     var modelConfiguration: ModelConfiguration { get }
 }

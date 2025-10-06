@@ -10,15 +10,21 @@ import Foundation
 import SwiftData
 
 @available(iOS 17, *)
-@Model
-class SwiftResourceView: IdentifiableSwiftDataObject {
-    
-    var quantity: Int = 0
-    
-    @Attribute(.unique) var id: String = ""
-    @Attribute(.unique) var resourceId: String = ""
-    
-    init() {
+typealias SwiftResourceView = SwiftResourceViewV1.SwiftResourceView
+
+@available(iOS 17, *)
+enum SwiftResourceViewV1 {
+ 
+    @Model
+    class SwiftResourceView: IdentifiableSwiftDataObject {
         
+        var quantity: Int = 0
+        
+        @Attribute(.unique) var id: String = ""
+        @Attribute(.unique) var resourceId: String = ""
+        
+        init() {
+            
+        }
     }
 }

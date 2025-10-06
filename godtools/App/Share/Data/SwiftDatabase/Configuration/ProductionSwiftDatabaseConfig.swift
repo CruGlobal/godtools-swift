@@ -1,8 +1,8 @@
 //
-//  SwiftDatabaseProductionConfiguration.swift
+//  ProductionSwiftDatabaseConfig.swift
 //  godtools
 //
-//  Created by Levi Eggert on 9/19/25.
+//  Created by Levi Eggert on 10/6/25.
 //  Copyright © 2025 Cru. All rights reserved.
 //
 
@@ -10,13 +10,11 @@ import Foundation
 import SwiftData
 
 @available(iOS 17, *)
-class SwiftDatabaseProductionConfiguration: SwiftDatabaseConfigurationInterface {
+struct ProductionSwiftDatabaseConfig: SwiftDatabaseConfigInterface {
     
-    let modelConfiguration: ModelConfiguration
-    
-    init() {
+    var modelConfiguration: ModelConfiguration {
         
-        modelConfiguration = ModelConfiguration(
+        return ModelConfiguration(
             "godtools_swiftdata_production",
             schema: nil,
             isStoredInMemoryOnly: false,

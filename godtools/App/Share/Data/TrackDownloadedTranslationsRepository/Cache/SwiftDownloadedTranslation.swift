@@ -10,18 +10,24 @@ import Foundation
 import SwiftData
 
 @available(iOS 17, *)
-@Model
-class SwiftDownloadedTranslation: IdentifiableSwiftDataObject {
-    
-    var languageId: String = ""
-    var manifestAndRelatedFilesPersistedToDevice: Bool = false
-    var resourceId: String = ""
-    var version: Int = -1
-    
-    @Attribute(.unique) var id: String = ""
-    @Attribute(.unique) var translationId: String = ""
-    
-    init() {
+typealias SwiftDownloadedTranslation = SwiftDownloadedTranslationV1.SwiftDownloadedTranslation
+
+@available(iOS 17, *)
+enum SwiftDownloadedTranslationV1 {
+ 
+    @Model
+    class SwiftDownloadedTranslation: IdentifiableSwiftDataObject {
         
+        var languageId: String = ""
+        var manifestAndRelatedFilesPersistedToDevice: Bool = false
+        var resourceId: String = ""
+        var version: Int = -1
+        
+        @Attribute(.unique) var id: String = ""
+        @Attribute(.unique) var translationId: String = ""
+        
+        init() {
+            
+        }
     }
 }

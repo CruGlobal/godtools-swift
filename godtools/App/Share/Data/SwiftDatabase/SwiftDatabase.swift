@@ -16,13 +16,14 @@ class SwiftDatabase {
     
     let configName: String
     
-    init(configuration: SwiftDatabaseConfigurationInterface, modelTypes: SwiftDatabaseModelTypesInterface) {
+    init(config: SwiftDatabaseConfigInterface, schema: Schema, migrationPlan: (any SchemaMigrationPlan.Type)?) {
                 
         do {
             
             container = try Self.createContainer(
-                configuration: configuration,
-                modelTypes: modelTypes
+                config: config,
+                schema: schema,
+                migrationPlan: migrationPlan
             )
         }
         catch let error {
@@ -30,20 +31,21 @@ class SwiftDatabase {
             assertionFailure("\n SwiftData init container error: \(error.localizedDescription)")
             
             container = try! Self.createContainer(
-                configuration: SwiftDatabaseInMemoryConfiguration(),
-                modelTypes: modelTypes
+                config: InMemorySwiftDatabaseConfig(),
+                schema: Schema(versionedSchema: LatestProductionSwiftDataSchema.self),
+                migrationPlan: nil
             )
         }
         
-        configName = configuration.modelConfiguration.name
+        configName = config.modelConfiguration.name
     }
     
-    private static func createContainer(configuration: SwiftDatabaseConfigurationInterface, modelTypes: SwiftDatabaseModelTypesInterface) throws -> ModelContainer {
+    private static func createContainer(config: SwiftDatabaseConfigInterface, schema: Schema, migrationPlan: (any SchemaMigrationPlan.Type)?) throws -> ModelContainer {
         
         return try ModelContainer(
-            for: Schema(modelTypes.getModelTypes()),
-            migrationPlan: nil,
-            configurations: configuration.modelConfiguration
+            for: schema,
+            migrationPlan: migrationPlan,
+            configurations: config.modelConfiguration
         )
     }
     

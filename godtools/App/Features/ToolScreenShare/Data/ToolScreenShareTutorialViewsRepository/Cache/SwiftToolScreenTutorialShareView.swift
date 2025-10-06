@@ -10,14 +10,20 @@ import Foundation
 import SwiftData
 
 @available(iOS 17, *)
-@Model
-class SwiftToolScreenTutorialShareView: IdentifiableSwiftDataObject {
-    
-    var numberOfViews: Int = 0
-    
-    @Attribute(.unique) var id: String = ""
-    
-    init() {
+typealias SwiftToolScreenTutorialShareView = SwiftToolScreenTutorialShareViewV1.SwiftToolScreenTutorialShareView
+
+@available(iOS 17, *)
+enum SwiftToolScreenTutorialShareViewV1 {
+ 
+    @Model
+    class SwiftToolScreenTutorialShareView: IdentifiableSwiftDataObject {
         
+        var numberOfViews: Int = 0
+        
+        @Attribute(.unique) var id: String = ""
+        
+        init() {
+            
+        }
     }
 }

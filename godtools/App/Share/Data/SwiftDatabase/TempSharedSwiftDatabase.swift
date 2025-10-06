@@ -1,5 +1,5 @@
 //
-//  SharedSwiftDatabase.swift
+//  TempSharedSwiftDatabase.swift
 //  godtools
 //
 //  Created by Levi Eggert on 9/19/25.
@@ -7,18 +7,20 @@
 //
 
 import Foundation
+import SwiftData
 
 // TODO: GT-2753 Can be removed and moved to AppDataLayerDependencies once RealmSwift is removed and supporting iOS 17 and up. ~Levi
 @available(iOS 17, *)
-class SharedSwiftDatabase {
+class TempSharedSwiftDatabase {
     
     private static let swiftDatabaseEnabled: Bool = false
     
-    static let shared: SharedSwiftDatabase = SharedSwiftDatabase()
+    static let shared: TempSharedSwiftDatabase = TempSharedSwiftDatabase()
     
     private let sharedSwiftDatabase: SwiftDatabase = SwiftDatabase(
-        configuration: SwiftDatabaseProductionConfiguration(),
-        modelTypes: GodToolsSwiftDataModelTypes()
+        config: ProductionSwiftDatabaseConfig(),
+        schema: Schema(versionedSchema: LatestProductionSwiftDataSchema.self),
+        migrationPlan: nil
     )
     
     var swiftDatabase: SwiftDatabase? {
