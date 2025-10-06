@@ -10,16 +10,10 @@ import Foundation
 import SwiftData
 
 @available(iOS 17, *)
-typealias TestMigrationModel = TestMigrationModelSchemaV2.TestMigrationModel
+typealias TestMigrationModel = TestMigrationModelV2.TestMigrationModel
 
 @available(iOS 17, *)
-enum TestMigrationModelSchemaV2: VersionedSchema {
- 
-    static var versionIdentifier = Schema.Version(2, 0, 0)
-
-    static var models: [any PersistentModel.Type] {
-        [TestMigrationModel.self]
-    }
+enum TestMigrationModelV2 {
     
     @Model
     class TestMigrationModel {
@@ -36,13 +30,7 @@ enum TestMigrationModelSchemaV2: VersionedSchema {
 }
 
 @available(iOS 17, *)
-enum TestMigrationModelSchemaV1: VersionedSchema {
- 
-    static var versionIdentifier = Schema.Version(1, 0, 0)
-
-    static var models: [any PersistentModel.Type] {
-        [TestMigrationModel.self]
-    }
+enum TestMigrationModelV1 {
     
     @Model
     class TestMigrationModel {

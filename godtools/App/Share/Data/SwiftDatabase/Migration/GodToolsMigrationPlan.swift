@@ -12,7 +12,7 @@ import SwiftData
 class GodToolsMigrationPlan: SchemaMigrationPlan, SwiftDatabaseMigrationPlanInterface {
     
     static var schemas: [any VersionedSchema.Type] {
-        return [TestMigrationModelSchemaV1.self, TestMigrationModelSchemaV2.self]
+        return [GodToolsSchemaV1.self, GodToolsSchemaV2.self]
     }
     
     static var stages: [MigrationStage] {
@@ -22,36 +22,63 @@ class GodToolsMigrationPlan: SchemaMigrationPlan, SwiftDatabaseMigrationPlanInte
     var migrationPlan: (any SchemaMigrationPlan.Type)? {
         return GodToolsMigrationPlan.self
     }
+        
+    private static var v2Objects: [TestMigrationModelV2.TestMigrationModel] = Array()
     
     private static let migrateTestMigrationModelV1ToV2 = MigrationStage.custom(
-        fromVersion: TestMigrationModelSchemaV1.self,
-        toVersion: TestMigrationModelSchemaV2.self,
+        fromVersion: GodToolsSchemaV1.self,
+        toVersion: GodToolsSchemaV2.self,
         willMigrate: { (context: ModelContext) in
             
             print("\n ***** Running GodToolsMigrationPlan *****")
             
-            let existingObjects: [TestMigrationModel]
+            let version1Objects: [TestMigrationModelV1.TestMigrationModel]
             
             do {
-                existingObjects = try context.fetch(
-                    FetchDescriptor<TestMigrationModel>()
+                version1Objects = try context.fetch(
+                    FetchDescriptor<TestMigrationModelV1.TestMigrationModel>()
                 )
             }
             catch let error {
                 assertionFailure(error.localizedDescription)
-                existingObjects = Array()
+                version1Objects = Array()
             }
-                        
-            for object in existingObjects {
+            
+            print("  has existing objects with ids: \(version1Objects.map {$0.id}) and emails: \(version1Objects.map {$0.email})")
+                   
+            var version2Objects: [TestMigrationModelV2.TestMigrationModel] = Array()
+            var emailsAdded: Set<String> = Set()
+            
+            print("  adding v2 objects")
+            
+            for v1Object in version1Objects {
                 
-                let id: String = object.id
-                let email: String = "email_\(id)"
+                guard !emailsAdded.contains(v1Object.email) else {
+                    continue
+                }
                 
-                object.email = email
+                emailsAdded.insert(v1Object.email)
                 
-                context.insert(object)
+                let v2Object = TestMigrationModelV2.TestMigrationModel()
+                
+                v2Object.email = v1Object.email
+                v2Object.id = v1Object.id
+                v2Object.name = v1Object.name
+                                
+                v2Objects.append(v2Object)
             }
+            
+            print("  created v2 objects with ids: \(version2Objects.map {$0.id}) and emails: \(version2Objects.map {$0.email})")
 
+            
+            print("deleting v1 objects...")
+            
+            for v1Object in version1Objects {
+                context.delete(v1Object)
+            }
+            
+            print("saving database")
+            
             do {
                 try context.save()
             }
@@ -59,7 +86,28 @@ class GodToolsMigrationPlan: SchemaMigrationPlan, SwiftDatabaseMigrationPlanInte
                 assertionFailure("Failed to save SwiftData context with error: \(error.localizedDescription)")
             }
             
+            print("Finished Will Migrate")
         },
-        didMigrate: nil
+        didMigrate: { (context: ModelContext) in
+            
+            print("adding v2 objects to context...")
+            
+            for v2Object in v2Objects {
+                
+                context.insert(v2Object)
+            }
+            
+            
+            print("saving database")
+            
+            do {
+                try context.save()
+            }
+            catch let error {
+                assertionFailure("Failed to save SwiftData context with error: \(error.localizedDescription)")
+            }
+            
+            print("Finished Did Migrate")
+        }
     )
 }

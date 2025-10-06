@@ -93,9 +93,13 @@ struct GodToolsApp: App {
                 
                 if #available(iOS 17, *) {
                         
+                    print("  attempt to get shared swift database")
+                    
                     guard let swiftDatabase = SharedSwiftDatabase.shared.swiftDatabase else {
                         return
                     }
+                    
+                    print("  swiftDatabase openContext")
                     
                     let context: ModelContext = swiftDatabase.openContext()
                     
@@ -104,7 +108,7 @@ struct GodToolsApp: App {
                     do {
                         
                         existingObjects = try context.fetch(
-                            FetchDescriptor<TestMigrationModelSchemaV2.TestMigrationModel>()
+                            FetchDescriptor<TestMigrationModel>()
                         )
                     }
                     catch let error {
@@ -116,32 +120,32 @@ struct GodToolsApp: App {
                         
                         print("   existing objects is empty...")
                         
-//                        for index in 0 ..< 4 {
-//                            
-//                            let object = TestMigrationModel()
-//                            object.id = "\(index)"
-//                            object.name = "name_\(index)"
-//                            
-//                            let email: String
-//                            
-//                            if index == 0 || index == 1 {
-//                                email = "email_0"
-//                            }
-//                            else {
-//                                email = "email_\(index)"
-//                            }
-//                            
-//                            object.email = email
-//                            
-//                            context.insert(object)
-//                        }
-//                        
-//                        do {
-//                            try context.save()
-//                        }
-//                        catch let error {
-//                            assertionFailure("Failed to save SwiftData context with error: \(error.localizedDescription)")
-//                        }
+                        for index in 0 ..< 4 {
+                            
+                            let object = TestMigrationModel()
+                            object.id = "\(index)"
+                            object.name = "name_\(index)"
+                            
+                            let email: String
+                            
+                            if index == 0 || index == 1 {
+                                email = "email_0"
+                            }
+                            else {
+                                email = "email_\(index)"
+                            }
+                            
+                            object.email = email
+                            
+                            context.insert(object)
+                        }
+                        
+                        do {
+                            try context.save()
+                        }
+                        catch let error {
+                            assertionFailure("Failed to save SwiftData context with error: \(error.localizedDescription)")
+                        }
                     }
                     else {
                         

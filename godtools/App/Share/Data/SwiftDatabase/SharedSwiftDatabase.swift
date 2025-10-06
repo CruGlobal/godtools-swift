@@ -18,7 +18,6 @@ class SharedSwiftDatabase {
     
     private let sharedSwiftDatabase: SwiftDatabase = SwiftDatabase(
         configuration: SwiftDatabaseProductionConfiguration(),
-        modelTypes: GodToolsSwiftDataModelTypes(),
         migration: GodToolsMigrationPlan()
     )
     

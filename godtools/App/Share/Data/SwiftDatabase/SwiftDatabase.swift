@@ -16,13 +16,12 @@ class SwiftDatabase {
     
     let configName: String
     
-    init(configuration: SwiftDatabaseConfigurationInterface, modelTypes: SwiftDatabaseModelTypesInterface, migration: SwiftDatabaseMigrationPlanInterface) {
+    init(configuration: SwiftDatabaseConfigurationInterface, migration: SwiftDatabaseMigrationPlanInterface) {
                 
         do {
             
             container = try Self.createContainer(
                 configuration: configuration,
-                modelTypes: modelTypes,
                 migration: migration
             )
         }
@@ -32,7 +31,6 @@ class SwiftDatabase {
             
             container = try! Self.createContainer(
                 configuration: SwiftDatabaseInMemoryConfiguration(),
-                modelTypes: modelTypes,
                 migration: migration
             )
         }
@@ -40,10 +38,10 @@ class SwiftDatabase {
         configName = configuration.modelConfiguration.name
     }
     
-    private static func createContainer(configuration: SwiftDatabaseConfigurationInterface, modelTypes: SwiftDatabaseModelTypesInterface, migration: SwiftDatabaseMigrationPlanInterface) throws -> ModelContainer {
+    private static func createContainer(configuration: SwiftDatabaseConfigurationInterface, migration: SwiftDatabaseMigrationPlanInterface) throws -> ModelContainer {
         
         return try ModelContainer(
-            for: Schema(modelTypes.getModelTypes()),
+            for: Schema(versionedSchema: GodToolsSchemaV2.self),
             migrationPlan: migration.migrationPlan,
             configurations: configuration.modelConfiguration
         )
