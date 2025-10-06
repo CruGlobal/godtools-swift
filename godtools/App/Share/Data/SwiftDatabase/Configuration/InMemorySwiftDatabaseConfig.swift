@@ -1,5 +1,5 @@
 //
-//  SwiftDatabaseInMemoryConfiguration.swift
+//  InMemorySwiftDatabaseConfig.swift
 //  godtools
 //
 //  Created by Levi Eggert on 9/19/25.
@@ -10,13 +10,11 @@ import Foundation
 import SwiftData
 
 @available(iOS 17, *)
-class SwiftDatabaseInMemoryConfiguration: SwiftDatabaseConfigurationInterface {
+struct InMemorySwiftDatabaseConfig: SwiftDatabaseConfigInterface {
     
-    let modelConfiguration: ModelConfiguration
-    
-    init() {
+    var modelConfiguration: ModelConfiguration {
         
-        modelConfiguration = ModelConfiguration(
+        return ModelConfiguration(
             "godtools_swiftdata_in_memory",
             schema: nil,
             isStoredInMemoryOnly: true,

@@ -1,8 +1,8 @@
 //
-//  GodToolsSwiftDataModelTypes.swift
+//  ProductionSwiftDataSchemaV1.swift
 //  godtools
 //
-//  Created by Levi Eggert on 9/20/25.
+//  Created by Levi Eggert on 10/6/25.
 //  Copyright © 2025 Cru. All rights reserved.
 //
 
@@ -10,11 +10,13 @@ import Foundation
 import SwiftData
 
 @available(iOS 17, *)
-class GodToolsSwiftDataModelTypes: SwiftDatabaseModelTypesInterface {
+enum ProductionSwiftDataSchemaV1: VersionedSchema {
     
-    func getModelTypes() -> [any PersistentModel.Type] {
+    static let versionIdentifier = Schema.Version(1, 0, 0)
+        
+    static var models: [any PersistentModel.Type] {
         return [
-            SwiftAppLanguage.self,
+            SwiftAppLanguageV1.SwiftAppLanguage.self,
             SwiftUserAppLanguage.self,
             SwiftGlobalAnalytics.self,
             SwiftLessonEvaluation.self,
