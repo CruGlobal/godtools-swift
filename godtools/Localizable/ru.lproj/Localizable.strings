@@ -1,3 +1,10 @@
+"deferredDeepLinkModal.title" = "Похоже, вы нажали ссылку на GodTools.";
+"deferredDeepLinkModal.message" = "Tap the button below so we can take you to the content you requested.";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "Close";
+"toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";
+"toolScreenShare.qrCode.title" = "QR Code";
+
 "optInNotification.notificationSettings" = "Настройки уведомлений";
 "lessons.swipeTutorial.title" = "Проведите по экрану, чтобы листать страницы";
 "lessons.swipeTutorial.buttonText" = "Понятно";
@@ -124,6 +131,7 @@
 "training_tip_prepare" = "Подготовьтесь";
 "training_tip_quote" = "Цитата";
 "training_tip_tip" = "Подсказка";
+"articles.downloadingArticles.errorMessage.title" = "Error Downloading Articles";
 "start_training" = "Начать обучение";
 "close" = "Закрыть";
 "tool_menu_item.lessons" = "Уроки";
@@ -262,6 +270,10 @@
 "add_new_tools" = "Добавить новые инструменты";
 "set_your_languages" = "Настройте языки";
 "okay" = "Хорошо";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
+
 // Menu
 "menu_general" = "Общие настройки";
 "menu_account" = "Учетная запись";
@@ -321,7 +333,7 @@
 "no" = "Нет";
 
 // Tract - Sharing
-"tract_share_message" ="Ссылка переведет вас на веб-страницу с информацией, которую мы обсуждали сегодня: %@. 
+"tract_share_message" = "Ссылка переведет вас на веб-страницу с информацией, которую мы обсуждали сегодня: %@. 
 
 Приглашаем вас к общению!
 
@@ -409,3 +421,9 @@
 "onboardingTutorial.appUsageItem.3.message" = "Выберите свой язык из 90+ представленных в приложении";
 "onboardingTutorial.appUsageItem.4.message" = "Помогите другим в их духовном росте";
 "onboardingTutorial.showMoreButton.title" = "Покажите еще";
+
+"screenShareTutorial.generateQRCodeButton.title" = "Generate QR code";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "Close";
+"toolScreenShare.qrCode.title" = "QR Code";
+"toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";

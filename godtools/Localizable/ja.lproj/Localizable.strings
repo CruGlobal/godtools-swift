@@ -1,3 +1,10 @@
+"deferredDeepLinkModal.title" = "GodToolsへのリンクをクリックしたようです";
+"deferredDeepLinkModal.message" = "Tap the button below so we can take you to the content you requested.";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "Close";
+"toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";
+"toolScreenShare.qrCode.title" = "QR Code";
+
 "optInNotification.notificationSettings" = "通知設定";
 "lessons.swipeTutorial.title" = "スワイプでページを切り替えられます";
 "lessons.swipeTutorial.buttonText" = "了解";
@@ -124,6 +131,7 @@
 "training_tip_prepare" = "準備する";
 "training_tip_quote" = "引用";
 "training_tip_tip" = "ヒント";
+"articles.downloadingArticles.errorMessage.title" = "Error Downloading Articles";
 "start_training" = "トレーニングを開始";
 "close" = "終了";
 "tool_menu_item.lessons" = "レッスン";
@@ -236,6 +244,9 @@
 
 /* This is to let users know which version of the app is installed on their phone */
 "menu_version" = "バージョン";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
+"articles.loadingView.downloadingArticles" = "Downloading Articles ...";
 "language_onboard" = "90 種類以上の言語";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -256,6 +267,10 @@
 "add_new_tools" = "新しいツールを追加";
 "set_your_languages" = "言語を設定";
 "okay" = "OK";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
+
 // Menu
 "menu_general" = "一般";
 "menu_account" = "アカウント";
@@ -315,7 +330,7 @@
 "no" = "いいえ";
 
 // Tract - Sharing
-"tract_share_message" ="このリンクは私たちが今日最後に見ていたウェブ版のページに移動します: %@。
+"tract_share_message" = "このリンクは私たちが今日最後に見ていたウェブ版のページに移動します: %@。
 
 もっと話しましょう！
 
@@ -343,10 +358,18 @@
 // Tutorial
 "tutorial.tutorialItem.0.title" = "視聴";
 "general_about_2" = "これらのツールがあれば、これまで信仰をシェアシたことがない人でも、言語が異なる人でも、イエス・キリストを通じて神との関係をどのように始めることができるかを自信をもって他者に伝えることができるようになります。";
+"tutorial.tutorialItem.0.message" = "See what GodTools offers in our demo video
+(Tap on the video to bring up settings for subtitles)";
 "general_about_3" = "好みと相手に応じてさまざまなツールから選択ができます。全言語ですべてのツールが利用できるわけではありません。";
+"tutorial.tutorialItem.1.title" = "Prepare";
 "general_about_4" = "各ツールの最後に、他の資料へのリンクが含まれています。";
+"tutorial.tutorialItem.1.message" = "Get familiar with some of your tools. The \"Teach Me to Share\" tool is a good place to start.
+
+Press the About button on any tool for more info.";
 "general_about_5" = "新しいツールおよび言語のダウンロードにはインターネット接続が必要です。一度ダウンロードすれば、オフラインでも利用できるようになります。";
+"tutorial.tutorialItem.2.title" = "Try";
 "general_about_6" = "質問、提案、リクエストは、support@godtoolsapp.comまでご連絡ください。";
+"tutorial.tutorialItem.2.message" = "Everyone starts as a beginner. Try using a tool in a conversation and see what you learn.";
 "general_about_7" = "これらのツールのオンライン版は、knowgod.comでも紹介しています。ご自分のサイトに埋め込んでお使いください。";
 "tutorial.tutorialItem.3.title" = "このチュートリアルはメニューで再度見ることができます";
 "general_about_8" = "詳しくは、godtoolsapp.comをご覧ください。";
@@ -376,6 +399,8 @@
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "世界のアクティビティ";
+// OnboardingWelcome
+"onboardingWelcome.titleLabel.welcome" = "Welcome";
 "accountActivity.globalAnalytics.users.title" = "一意のユーザ";
 "onboardingWelcome.titleLabel.tagline" = "信仰を分かち合うお手伝いをします";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "福音の提示";
@@ -384,4 +409,20 @@
 "onboardingTutorial.aboutAppItem.0.title" = "他者と共有する";
 "accountActivity.globalAnalytics.countries.title" = "国";
 
+"onboardingTutorial.aboutAppItem.0.message" = "GodTools is built to guide your faith conversations";
+"onboardingTutorial.aboutAppItem.1.title" = "Choose Your Tools";
+"onboardingTutorial.aboutAppItem.1.message" = "GodTools helps you before, during, and after a spiritual conversation";
+"onboardingTutorial.aboutAppItem.2.title" = "Always Ready";
+"onboardingTutorial.aboutAppItem.2.message" = "GodTools is here to help and is ready when you are";
+"onboardingTutorial.appUsageItem.0.message" = "Prepare for any conversation";
+"onboardingTutorial.appUsageItem.1.message" = "Walk someone through the gospel";
+"onboardingTutorial.appUsageItem.2.message" = "View two languages side by side";
+"onboardingTutorial.appUsageItem.3.message" = "Choose from over 90 languages";
+"onboardingTutorial.appUsageItem.4.message" = "Help someone get started as a Christian";
 "onboardingTutorial.showMoreButton.title" = "もっと見せて";
+
+"screenShareTutorial.generateQRCodeButton.title" = "Generate QR code";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "Close";
+"toolScreenShare.qrCode.title" = "QR Code";
+"toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";

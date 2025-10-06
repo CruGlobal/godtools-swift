@@ -1,3 +1,10 @@
+"deferredDeepLinkModal.title" = "Sepertinya Anda mengklik tautan untuk GodTools";
+"deferredDeepLinkModal.message" = "Tap the button below so we can take you to the content you requested.";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "Close";
+"toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";
+"toolScreenShare.qrCode.title" = "QR Code";
+
 "optInNotification.notificationSettings" = "Pengaturan Notifikasi";
 "lessons.swipeTutorial.title" = "Geser untuk mengganti halaman";
 "lessons.swipeTutorial.buttonText" = "Mengerti";
@@ -124,6 +131,7 @@
 "training_tip_prepare" = "Persiapan";
 "training_tip_quote" = "Kutip";
 "training_tip_tip" = "Saran";
+"articles.downloadingArticles.errorMessage.title" = "Error Downloading Articles";
 "start_training" = "Mulai Latihan";
 "close" = "Selesai";
 "tool_menu_item.lessons" = "Pelajaran";
@@ -262,6 +270,10 @@ Jika Anda tidak menerima pesan ini hingga nanti, tautannya mungkin masih belum b
 "add_new_tools" = "Tambah Sarana Baru";
 "set_your_languages" = "Tetapkan Bahasa Saudara";
 "okay" = "Oke";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
+
 // Menu
 "menu_general" = "Umum";
 "menu_account" = "Akun";
@@ -320,7 +332,7 @@ Versi online dapat ditemukan di https://knowgod.com/id";
 "no" = "Tidak";
 
 // Tract - Sharing
-"tract_share_message" ="Tautan ini akan membawa Anda ke halaman versi web terakhir yang dilihat hari ini: %@. 
+"tract_share_message" = "Tautan ini akan membawa Anda ke halaman versi web terakhir yang dilihat hari ini: %@. 
 
 Mari kita bicarakan lebih lanjut!
 
@@ -408,3 +420,9 @@ Kolose 4:6";
 "onboardingTutorial.appUsageItem.3.message" = "Pilih dari lebih dari 90 bahasa";
 "onboardingTutorial.appUsageItem.4.message" = "Membantu seseorang memulai sebagai seorang Kristen";
 "onboardingTutorial.showMoreButton.title" = "Lebih";
+
+"screenShareTutorial.generateQRCodeButton.title" = "Generate QR code";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "Close";
+"toolScreenShare.qrCode.title" = "QR Code";
+"toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";

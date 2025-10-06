@@ -1,12 +1,173 @@
+"deferredDeepLinkModal.title" = "It looks like you clicked a link for GodTools";
+"deferredDeepLinkModal.message" = "Tap the button below so we can take you to the content you requested.";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "Close";
+"toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";
+"toolScreenShare.qrCode.title" = "QR Code";
+
+"optInNotification.notificationSettings" = "Notification Settings";
+"lessons.swipeTutorial.title" = "Swipe to change pages";
+"lessons.swipeTutorial.buttonText" = "Got it";
+"optInNotification.title" = "Get Tips and Encouragement";
+"optInNotification.body" = "Stay equipped for conversations.\nAllow notifications today.";
+"optInNotification.allowNotifications" = "Allow Notifications";
+"optInNotification.maybeLater" = "Maybe Later";
+
+/* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
+"lessons.resumeLessonModal.title" = "Resume Progress?";
+
+"lessons.resumeLessonModal.subtitle" = "Would you like to pick up where you left off?";
+"lessons.resumeLessonModal.startOverButton" = "Start over";
+"lessons.resumeLessonModal.continueButton" = "Continue";
+"lessons.lessonCompleted" = "Completed";
+"lessons.completionProgress" = "%@ Complete";
+"network_connection_lost" = "The network connection was lost.";
+"language_name_fil" = "Filipino (Tagalog)";
+"lessons.filter.navBar.language" = "Lesson language";
+"lessons.languageFilter.title" = "Lessons in:";
+"language_name_fil-x-taglish" = "Taglish";
+"language_name_sid" = "Sidama";
+"onboardingTutorial.chooseLanguageButton.title" = "Choose language";
+"languageSettings.confirmAppLanguage.message" = "You have selected %@ as your app language. This will change the language of the whole GodTools app. Are you sure?";
+"languageSettings.confirmAppLanguage.changeLanguageButton.title" = "Change language";
+"languageSettings.confirmAppLanguage.nevermindButton.title" = "Nevermind";
+"languageSettings.downloadableLanguages.title" = "Downloadable languages";
+"languageSettings.appInterface.title" = "App interface language";
+"languageSettings.appInterface.message" = "Set the language you'd like the whole app to be displayed in.";
+"languageSettings.appInterface.languagesAvailable" = "Languages available";
+"languageSettings.toolLanguagesAvailableOffline.title" = "Tool languages available offline";
+"languageSettings.toolLanguagesAvailableOffline.message" = "Download all the tools in a language to make them available even if you're out of WiFi or cell service. Set the tool language via the options button within a tool.";
+"languageSettings.toolLanguagesAvailableOffline.editDownloadedLanguagesButton.title" = "Edit downloaded languages";
+"allTools.filter.title" = "Filter";
+"allTools.filter.anyCategory" = "Any category";
+"allTools.filter.anyLanguage" = "Any language";
+"allTools.filter.navBar.language" = "Filter by language";
+"allTools.filter.navBar.category" = "Filter by category";
+"languageSettings.appLanguage.title" = "App Language";
+"authError.userAccountAlreadyExists.message" = "User account already exists.";
+"authError.userAccountNotFound.message" = "User account not found.";
+"createAccount.title" = "Create account";
+"createAccount.subtitle" = "Create an account to have real stories, encouragement, and practical tips at your fingertips.";
+"deleteAccountProgress.title" = "Deleting account...";
+"confirmDeleteAccount.title" = "Are you sure?";
+"confirmDeleteAccount.confirmButton.title" = "Delete account";
+"accountDeletedAlert.title" = "Account Deleted";
+"accountDeletedAlert.message" = "Your account has been deleted.";
+"deleteAccount.title" = "Don't go so soon";
+"deleteAccount.subtitle" = "If you delete your account you won't be able to access your favorited tools or account activity.";
+"deleteAccount.confirmButton.title" = "Delete my account";
+"deleteAccount.cancelButton.title" = "Keep my account";
+"signIn.title" = "Sign in";
+"signIn.subtitle" = "Log in to your account to have real stories, encouragement, and practical tips at your fingertips.";
+"signIn.google" = "Sign in with Google";
+"signIn.facebook" = "Login with Facebook";
+"signIn.apple" = "Continue with Apple";
+"menu_getStarted" = "Get started";
+"menu_support" = "Support";
+"menu_about" = "About";
+"menu.sendFeedback" = "Send feedback";
+"menu.reportABug" = "Report a bug";
+"menu.askAQuestion" = "Ask a question";
+"menu.leaveAReview" = "Leave a review";
+"account.badges.sectionTitle" = "Your badges";
+"account.activity.sectionTitle" = "Your activity";
+
+/* Just translate "Joined" - leave the %@ - this is the date they started using GodTools */
+"account.joinedOn" = "Joined %@";
+
+"account.globalActivity.title" = "Global Activity";
+"toolDetails.conversationStarters.title" = "Conversation starters";
+
+/* A list of the main points of the tool will live behind a section called "Outline" */
+"toolDetails.outline.title" = "Outline";
+
+"toolDetails.bibleReferences.title" = "Bible references";
+
 /* This About refers to a specific tool in the app. */
 "toolDetails.about.title" = "பற்றி";
 
+/* This means that the tool/resource is not available in the currently selected language. */
+"lessonCard.languageNotAvailable" = "Not available in %@";
+
+"menu.deleteAccount" = "Delete account";
+"alert.mailAppUnavailable.title" = "Mail App Unavailable";
+"alert.mailAppUnavailable.message" = "The native Mail app is either not configured or is unavailable on this device. ";
+"tool_menu_item.tools" = "Tools";
+"lessons.pageTitle" = "Lessons made for you";
+"lessons.pageSubtitle" = "Practical ideas to build relationships and start meaningful conversations.";
+"toolSettings.languagesAvailable.title" = "Languages available";
+"toolDetails.versions.message" = "Choose a different version of this tool below. Each version features unique style and content so you can find the one that is best for your conversation. You can favorite multiple versions of the same tool.";
+"favorites.noTools.title" = "No favorite tools to display";
+"favorites.noTools.description" = "Tap on the heart icon to favorite a tool and make it available offline.";
+"favorites.noTools.button" = "Go to Tools";
+"toolSettings.shareImagePreview.shareImageButton.title" = "Share image";
+"favorites.pageTitle" = "Welcome to GodTools";
+"favorites.favoriteLessons.title" = "Featured lesson";
+"favorites.favoriteTools.title" = "Your favorite tools";
+"favorites.favoriteTools.viewAll" = "View all";
+
+/* Please keep to a 9 character limit, longer phrases may get cut off */
+"favorites.favoriteLessons.details" = "Details";
+
+/* The meaning is "I don't want to set a second language".  Language is no language or None */
+"toolSettings.languagesList.deleteLanguage.title" = "None";
+
+"toolSettings.chooseLanguage.toggleMessage" = "Toggle between the two different languages in this tool.";
+"toolDetails.versions.title" = "Versions";
+"toolDetails.learnToShareToolButton.title" = "Learn to share this tool";
+"toolSettings.title" = "Tool Options";
+"toolSettings.option.shareLink.title" = "Share link";
+"toolSettings.option.screenShare.title" = "Share screen";
+"toolSettings.option.trainingTips.show.title" = "Training tips";
+"toolSettings.option.trainingTips.hide.title" = "Hide tips";
+"toolSettings.chooseLanguage.title" = "Parallel Language";
+"toolSettings.chooseLanguage.noParallelLanguageTitle" = "Parallel";
+"toolSettings.shareables.title" = "Related graphics";
+"allTools.spotlight.title" = "Tool Spotlight";
+"allTools.spotlight.description" = "Here are some tools we thought you might like";
+"allTools.categories.title" = "Categories";
 "training_tip_ask" = "கேளுங்கள்";
 "training_tip_consider" = "கவனியுங்கள்";
 "training_tip_prepare" = "தயார்";
 "training_tip_quote" = "மேற்கோள்";
 "training_tip_tip" = "உதவிக்குறிப்பு";
+"articles.downloadingArticles.errorMessage.title" = "Error Downloading Articles";
+"start_training" = "Start Training";
 "close" = "நெருக்கமான";
+"tool_menu_item.lessons" = "Lessons";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.continueButton.title.closeTutorial" = "Close tutorial";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.tool.title" = "Tools";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.tool.message" = "Each tool is made for a different stage of conversation- before, during or after.";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.toolTip.title" = "Tool tips";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.toolTip.message" = "GodTools tips guide you as you help someone understand the gospel and encounter Jesus.";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.screenShare.title" = "Screen sharing";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.screenShare.message" = "You can now share your screen remotely so the other person can follow as you use a tool to discuss the gospel.";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.lesson.title" = "Lessons";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.lesson.message" = "In each GodTools lesson you learn something to help you have real conversations about God.";
+
+/* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */
+"tutorial.findTutorial.title" = "Find this tutorial in the menu whenever you need it.";
+
+"onboardingTutorial.beginButton.title" = "Begin";
+"onboardingTutorial.nextButton.title" = "Next";
 "tool_offline_favorite_message" = "உங்கள் விருப்பங்களில் சேர்க்கும் இதய ஐகானைத் தட்டுவதன் மூலம் ஒரு கருவியை ஆஃப்லைனில் கிடைக்கும்.";
 
 /* This is a category description of a tool that helps you start a conversation */
@@ -15,6 +176,7 @@
 /* This phrase describes a category of tool that helps someone grow in their Christian faith */
 "tool_category_growth" = "கிறிஸ்தவ வளர்ச்சி";
 
+"share_link" = "Share link";
 "share_tool_menu.remote_share_tool" = "உங்கள் திரையைப் பகிரவும்";
 "share_tool_menu.send_tool" = "இந்த கருவியை அனுப்பவும்";
 "share_tool_screen_tutorial.share_your_screen.title" = "உங்கள் திரையைப் பகிரவும்";
@@ -26,6 +188,24 @@
 "share_tool_remote_link_message" = "ஹாய், திரை பகிர்வு வழியாக GodTools என்னுடன் பின்தொடரவும். இங்கே இணைப்பு: %@ இந்தச் செய்தியை நீங்கள் பின்னர் பெறவில்லை எனில், இணைப்பு இன்னும் இயங்காது. மற்றொரு நேரத்தில் மீண்டும் முயற்சி செய்யலாம்.";
 "exit_tract_remote_share_session.message" = "தொலை பகிர்வு அமர்விலிருந்து இப்போது வெளியேற வேண்டுமா?";
 "load_tool_remote_session.message" = "திரை பகிர்வைத் தொடங்குகிறது…";
+"learn_to_share_tool.learn_to_share.title" = "Learn to share this tool with anyone";
+"learn_to_share_tool.learn_to_share.message" = "Practice using as many tips as you need to feel confident sharing this tool with others.";
+"learn_to_share_tool.tips_light_the_way.title" = "Tips to light the way";
+"learn_to_share_tool.tips_light_the_way.message" = "On select screens of this training, you’ll see a variety of icons. Press each icon to reveal a tip that will help you talk about the content of the screen. If a screen has no icon, then just read through the content and discuss as needed.";
+"learn_to_share_tool.light_up_the_tips.title" = "Light up the tips";
+"learn_to_share_tool.light_up_the_tips.message" = "When a tip lights up, you’ve completed that piece of training. Practice using as many tips as you need to feel confident explaining the tool";
+"lesson_evaluation.title" = "Review";
+"lesson_evaluation.wasThisHelpful" = "Was this lesson helpful for you?";
+"lesson_evaluation.shareFaith" = "How ready do you feel to start a spiritual conversation?";
+"lesson_evaluation.sendButtonTitle" = "Send feedback";
+"onboardingTutorial.0.title" = "Ready for every conversation";
+"onboardingTutorial.0.videoLink.title" = "Watch video";
+"onboardingTutorial.1.title" = "Talk about God with anyone";
+"onboardingTutorial.1.message" = "GodTools helps you have meaningful conversations about God.";
+"onboardingTutorial.2.title" = "Prepare for the moments that matter";
+"onboardingTutorial.2.message" = "Learn how to make conversations about faith a natural part of your life.";
+"onboardingTutorial.3.title" = "Help someone discover Jesus";
+"onboardingTutorial.3.message" = "GodTools is your guide to communicating the gospel in clear and relevant ways.";
 
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "பயிற்சி";
@@ -42,12 +222,35 @@
 /* A user will be selecting this option to remove the tool from their Favorites screen */
 "remove_from_favorites" = "பிடித்தவற்றிலிருந்து அகற்று";
 
+/* This is a loading screen */
+"loading_unfavorited_tool" = "The tool is downloading. To avoid waiting in the future, favorite this tool so it will be available offline.";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "Downloading the most recent translation for this tool.";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "Remove from Favorites? ";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "Are you sure you want to remove %@ from your Favorites? ";
+
 /* Gospel indicates the gospel of Jesus Christ */
 "tool_category_gospel" = "நற்செய்தி அழைப்பு";
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "கட்டுரைகள்";
+
+"articles.downloadArticlesButton.title.retryDownload" = "Retry Download";
+
+/* This is to let users know which version of the app is installed on their phone */
+"menu_version" = "Version";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
+"articles.loadingView.downloadingArticles" = "Downloading Articles ...";
 "language_onboard" = "90+ மொழிகளை";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "You have downloaded all available tools.";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "பிடித்தவை";
@@ -64,6 +267,10 @@
 "add_new_tools" = "புதிய உபகரணங்களை சேர்க்கவும்";
 "set_your_languages" = "உங்கள் மொழிகளை அமைக்கவும்";
 "okay" = "சரி";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
+
 // Menu
 "menu_general" = "பொதுவான";
 "menu_account" = "கணக்கு";
@@ -71,10 +278,14 @@
 "menu_legal" = "சட்டம் சம்பந்தப்பட்ட";
 "language_settings" = "மொழி அமைப்புகள்";
 "menu.tutorial" = "பயிற்சி";
+"menu.my_account" = "My Account";
+
 // Login
 "login" = "உள்நுழைய";
 "logout" = "வெளியேறு";
 "create_account" = "உங்கள் கணக்கை துவங்குங்கள்";
+"account_login" = "Account Login";
+
 // Tool Detail
 "about" = "பற்றி";
 "help" = "அடிக்கடி கேட்கப்படும் கேள்விகள்";
@@ -86,6 +297,9 @@
 "privacy_policy" = "இரகசியகாப்பு கொள்கை";
 "copyright_info" = "பதிப்புரிமை தகவல்";
 "share_god_tools_share_sheet_text" = "இங்கே நீங்கள் காட்-டூல்ஸ் செயலியை பதிவிறக்கம் செய்திடலாம்   http://godtoolsapp.com                            ";
+
+// Add Tools
+"add_tools" = "Add Tools";
 
 "total_views" = "%d காட்சிகள்";
 "total_languages" = "%d மொழிகள்";
@@ -103,12 +317,18 @@
 
 // Alert & Info Controllers
 "download_error" = "பதிவிறக்க பிழை";
+"no_internet_title" = "No internet connection";
+"no_internet" = "Please check your internet connection and try again.";
+
+"the_tool_you_requested_is_loading" = "The tool you requested is loading...";
+"loading" = "Loading...";
+
 // Actions
 "yes" = "ஆம்";
 "no" = "இல்லை";
 
 // Tract - Sharing
-"tract_share_message" ="இந்த இணைப்பானது இன்றைக்கு நாம்  கவனித்த பக்கத்தின் வலைதள பதிவுக்கு உங்களை கொண்டுசெல்லும்%@.  இதனைக் குறித்து  கூடுதலாய் கவனிப்போம்";
+"tract_share_message" = "இந்த இணைப்பானது இன்றைக்கு நாம்  கவனித்த பக்கத்தின் வலைதள பதிவுக்கு உங்களை கொண்டுசெல்லும்%@.  இதனைக் குறித்து  கூடுதலாய் கவனிப்போம்";
 
 // Buttons
 "download" = "பதிவிறக்கம் செய்க";
@@ -116,30 +336,88 @@
 "done" = "முடிந்தது";
 "remove" = "அகற்று";
 "clear" = "தெளிவாக்கு";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Open Tool";
+
+// Alerts
+"error" = "Error";
+"OK" = "OK";
 "cancel" = "ரத்துசெய்";
+"required_field_missing" = "\"%@\" is a required field.";
+
 "onboardingTutorial.getStartedButton.title" = "தொடங்கவும்";
 
 // About
 "general_about_1" = "காட்டூல்ஸ் உங்களுடைய நம்பிக்கையை  எளிய் முறையில் தெளிவாக பகிர்ந்துகொள்ள உதவுகிறது";
+// Tutorial
+"tutorial.tutorialItem.0.title" = "Watch";
 "general_about_2" = "இதற்கு முன்பாக உங்கள் நம்பிக்கையை வேறு ஒருவருடன், குறிப்பாய் வேறு மொழி பேசும் ஒருவருடன் பகிர்ந்திடவே இல்லை என்றாலும், இந்த உபகரணத்தை பயன்படுத்தி ஒருவர் இ யேசு கிறிஸ்துவின் மூலமாக  தேவனோடு உறவை எப்படி   
  ஏற்படுத்திடலாம்   என்பதை தைரியமாக விளக்கலாம்";
+"tutorial.tutorialItem.0.message" = "See what GodTools offers in our demo video
+(Tap on the video to bring up settings for subtitles)";
 "general_about_3" = "உங்களுடைய விருப்பதேர்வு மற்றும் உங்களுடைய நேயர்களை மனதில்கொண்டு பல்வேறு உபகரணங்களிலிருந்து ஒன்றை தெரிந்தெடுங்கள்";
+"tutorial.tutorialItem.1.title" = "Prepare";
 "general_about_4" = "மற்ற ஆதாரங்களின் இணைப்புகள் ஒவ்வொரு உபகரணத்தின் முடிவிலும் சேர்க்கப்பட்டுள்ளது";
+"tutorial.tutorialItem.1.message" = "Get familiar with some of your tools. The \"Teach Me to Share\" tool is a good place to start.
+
+Press the About button on any tool for more info.";
 "general_about_5" = "ஒவ்வொரு புதிய உபகரணம் மற்றும்/அல்லது மொழியினை பதிவிறக்கம் செய்ய இணைய இணைப்பு அவசியம்.  பதிவிறக்கம் செய்தவுடன், அவைகளை இணைய இணைப்பின்றி பயன்படுத்திடலாம்";
+"tutorial.tutorialItem.2.title" = "Try";
 "general_about_6" = "கேள்விகள்? ஆலோசனைகள்? வேண்டுகோள்கள்? support@godtoolsapp.com தொடர்புகொள்ளுங்கள்";
+"tutorial.tutorialItem.2.message" = "Everyone starts as a beginner. Try using a tool in a conversation and see what you learn.";
 "general_about_7" = "இந்த உபகரணங்களின் இணைய பதிவினை knowgod.com இணையதளத்தில் கண்டுபிடிக்கலாம்.  அதனை உங்களுடைய சொந்த வலைதளத்தில் கிடத்துக";
+"tutorial.tutorialItem.3.title" = "This tutorial is available to see again in the menu";
 "general_about_8" = "கூடுதலான தகவலுக்கு godtoolsapp.com வருகை தாருங்கள்";
 "tutorial.continueButton.title.continue" = "தொடரவும்";
 "general_about_9" = "உங்களுடைய நம்பிக்கையை பகிர்ந்துகொள்ள முயற்சி எடுக்கின்ற இந்த வேளையிலே, இருதயங்களை மாற்றக்கூடியவர் கர்த்தர் ஒருவரே என்பதை நினைவில்கொள்ளுங்கள்.  ஒருவரை புரிந்துகொள்ளும்படிக்கு  அவருடைய காரியத்தை நன்றாக கேட்டு உங்கள் அன்பை வெளிப்படுத்துங்கள்.";
+"tutorial.continueButton.title.startUsingGodTools" = "Start Using GodTools";
+
 "general_about_10" = "\"அவனவனுக்கு இன்னின்னபடி உத்தரவு சொல்லவேண்டுமென்று நீங்கள் அறியும்படிக்கு, உங்கள் வசனம் எப்பொழுதும் கிருபை பொருந்தினதாயும் உப்பால் சாரமேறினதாயுமிருப்பதாக\"  கொலோசெயர் 4:6";
 
+// OpenTutorial
+"openTutorial.showTutorialLabel.text" = "Show Me A Tutorial";
 // Downloads
 "Download in progress" = "பதிவிறக்கம் செயலில் உள்ளது";
 
+"openTutorial.openTutorialButton.title" = "Open Tutorial";
+
 // Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "முந்தைய";
+// Account
+"account.navTitle" = "My Profile";
 "card_status2" = "அடுத்த";
+
+"account.activity.title" = "Activity";
 
 // Language Name Strings
 "language_name_fa" = "பாரசீக (ஃபார்ஸி)";
 
+// Account Activity
+"accountActivity.globalAnalytics.header.title" = "Global Activity";
+// OnboardingWelcome
+"onboardingWelcome.titleLabel.welcome" = "Welcome";
+"accountActivity.globalAnalytics.users.title" = "Unique\nUsers";
+"onboardingWelcome.titleLabel.tagline" = "Helping You Share Your Faith";
+"accountActivity.globalAnalytics.gospelPresentation.title" = "Gospel\nPresentations";
+"accountActivity.globalAnalytics.launches.title" = "Sessions";
+// OnboardingTutorial
+"onboardingTutorial.aboutAppItem.0.title" = "Share With Others";
+"accountActivity.globalAnalytics.countries.title" = "Countries";
+
+"onboardingTutorial.aboutAppItem.0.message" = "GodTools is built to guide your faith conversations";
+"onboardingTutorial.aboutAppItem.1.title" = "Choose Your Tools";
+"onboardingTutorial.aboutAppItem.1.message" = "GodTools helps you before, during, and after a spiritual conversation";
+"onboardingTutorial.aboutAppItem.2.title" = "Always Ready";
+"onboardingTutorial.aboutAppItem.2.message" = "GodTools is here to help and is ready when you are";
+"onboardingTutorial.appUsageItem.0.message" = "Prepare for any conversation";
+"onboardingTutorial.appUsageItem.1.message" = "Walk someone through the gospel";
+"onboardingTutorial.appUsageItem.2.message" = "View two languages side by side";
+"onboardingTutorial.appUsageItem.3.message" = "Choose from over 90 languages";
+"onboardingTutorial.appUsageItem.4.message" = "Help someone get started as a Christian";
+"onboardingTutorial.showMoreButton.title" = "Show Me More";
+
+"screenShareTutorial.generateQRCodeButton.title" = "Generate QR code";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "Close";
+"toolScreenShare.qrCode.title" = "QR Code";
+"toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";

@@ -1,246 +1,246 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict>
-<key>toolDetails.toolVersion.numberOfLanguages</key>
-<dict>
-<key>NSStringLocalizedFormatKey</key>
-<string>%#@numberOfLanguages@</string>
-<key>numberOfLanguages</key>
-<dict>
-<key>NSStringFormatSpecTypeKey</key>
-<string>NSStringPluralRuleType</string>
-<key>NSStringFormatValueTypeKey</key>
-<string>d</string>
-<key>one</key>
-<string>%d भाषा</string>
-<key>other</key>
-<string>%d भाषाहरु</string>
-</dict>
-</dict>
-<key>lessons.filter.lessonsAvailable</key>
-<dict>
-<key>NSStringLocalizedFormatKey</key>
-<string>%#@lessonCount@</string>
-<key>lessonCount</key>
-<dict>
-<key>NSStringFormatSpecTypeKey</key>
-<string>NSStringPluralRuleType</string>
-<key>NSStringFormatValueTypeKey</key>
-<string>d</string>
-<key>one</key>
-<string>%d पाठहरु  छन्</string>
-<key>other</key>
-<string>%d पाठहरु  छन्</string>
-</dict>
-</dict>
-<key>account.activity.toolOpens</key>
-<dict>
-<key>NSStringLocalizedFormatKey</key>
-<string>%#@toolCount@</string>
-<key>toolCount</key>
-<dict>
-<key>NSStringFormatSpecTypeKey</key>
-<string>NSStringPluralRuleType</string>
-<key>NSStringFormatValueTypeKey</key>
-<string>d</string>
-<key>one</key>
-<string>उपकरण खोल्नुहोस्</string>
-<key>other</key>
-<string>उपकरण खोल्नुहोस्</string>
-</dict>
-</dict>
-<key>account.activity.lessonCompletions</key>
-<dict>
-<key>NSStringLocalizedFormatKey</key>
-<string>%#@lessonCount@</string>
-<key>lessonCount</key>
-<dict>
-<key>NSStringFormatSpecTypeKey</key>
-<string>NSStringPluralRuleType</string>
-<key>NSStringFormatValueTypeKey</key>
-<string>d</string>
-<key>one</key>
-<string>पाठ पुरा भएको</string>
-<key>other</key>
-<string>पाठ पुरा भएको</string>
-</dict>
-</dict>
-<key>account.activity.screenShares</key>
-<dict>
-<key>NSStringLocalizedFormatKey</key>
-<string>%#@screenShareCount@</string>
-<key>screenShareCount</key>
-<dict>
-<key>NSStringFormatSpecTypeKey</key>
-<string>NSStringPluralRuleType</string>
-<key>NSStringFormatValueTypeKey</key>
-<string>d</string>
-<key>one</key>
-<string>स्क्रिन साझा गर्नुहोस्</string>
-<key>other</key>
-<string>स्क्रिन साझा गर्नुहोस्</string>
-</dict>
-</dict>
-<key>account.activity.linksShared</key>
-<dict>
-<key>NSStringLocalizedFormatKey</key>
-<string>%#@linkShareCount@</string>
-<key>linkShareCount</key>
-<dict>
-<key>NSStringFormatSpecTypeKey</key>
-<string>NSStringPluralRuleType</string>
-<key>NSStringFormatValueTypeKey</key>
-<string>d</string>
-<key>one</key>
-<string>लिङ्क साझा गर्नुहोस्</string>
-<key>other</key>
-<string>लिङ्क साझा गर्नुहोस्</string>
-</dict>
-</dict>
-<key>account.activity.languagesUsed</key>
-<dict>
-<key>NSStringLocalizedFormatKey</key>
-<string>%#@languagesUsedCount@</string>
-<key>languagesUsedCount</key>
-<dict>
-<key>NSStringFormatSpecTypeKey</key>
-<string>NSStringPluralRuleType</string>
-<key>NSStringFormatValueTypeKey</key>
-<string>d</string>
-<key>one</key>
-<string>भाषा प्रयोग भएको</string>
-<key>other</key>
-<string>भाषा प्रयोग भएको</string>
-</dict>
-</dict>
-<key>account.activity.sessions</key>
-<dict>
-<key>NSStringLocalizedFormatKey</key>
-<string>%#@sessionCount@</string>
-<key>sessionCount</key>
-<dict>
-<key>NSStringFormatSpecTypeKey</key>
-<string>NSStringPluralRuleType</string>
-<key>NSStringFormatValueTypeKey</key>
-<string>d</string>
-<key>one</key>
-<string>पाठहरू </string>
-<key>other</key>
-<string>पाठहरू </string>
-</dict>
-</dict>
-<key>tools.filter.toolsAvailable</key>
-<dict>
-<key>NSStringLocalizedFormatKey</key>
-<string>%#@toolCount@</string>
-<key>toolCount</key>
-<dict>
-<key>NSStringFormatSpecTypeKey</key>
-<string>NSStringPluralRuleType</string>
-<key>NSStringFormatValueTypeKey</key>
-<string>d</string>
-<key>one</key>
-<string>%d टूलहरू उपलब्ध छन्</string>
-<key>other</key>
-<string>%d टूलहरू उपलब्ध छन्</string>
-</dict>
-</dict>
-<key>languageSettings.appLanguage.numberAvailable</key>
-<dict>
-<key>NSStringLocalizedFormatKey</key>
-<string>%#@appLanguageCount@</string>
-<key>appLanguageCount</key>
-<dict>
-<key>NSStringFormatSpecTypeKey</key>
-<string>NSStringPluralRuleType</string>
-<key>NSStringFormatValueTypeKey</key>
-<string>d</string>
-<key>one</key>
-<string>%d  भाषाहरू उपलब्ध छन्</string>
-<key>other</key>
-<string>%d भाषाहरू उपलब्ध छन्</string>
-</dict>
-</dict>
-<key>badges.imagesShared</key>
-<dict>
-<key>NSStringLocalizedFormatKey</key>
-<string>%#@imageCount@</string>
-<key>imageCount</key>
-<dict>
-<key>NSStringFormatSpecTypeKey</key>
-<string>NSStringPluralRuleType</string>
-<key>NSStringFormatValueTypeKey</key>
-<string>d</string>
-<key>one</key>
-<string>1 तस्बिरहरू साझा गरियो</string>
-<key>other</key>
-<string>%d तस्बिरहरू साझा गरियो</string>
-</dict>
-</dict>
-<key>badges.articlesOpened</key>
-<dict>
-<key>NSStringLocalizedFormatKey</key>
-<string>%#@articlesCount@</string>
-<key>articlesCount</key>
-<dict>
-<key>NSStringFormatSpecTypeKey</key>
-<string>NSStringPluralRuleType</string>
-<key>NSStringFormatValueTypeKey</key>
-<string>d</string>
-<key>one</key>
-<string>एक लेख पढ्नुहोस्</string>
-<key>other</key>
-<string>%d लेखहरू पढ्नुहोस्</string>
-</dict>
-</dict>
-<key>badges.lessonsCompleted</key>
-<dict>
-<key>NSStringLocalizedFormatKey</key>
-<string>%#@lessonsCount@</string>
-<key>lessonsCount</key>
-<dict>
-<key>NSStringFormatSpecTypeKey</key>
-<string>NSStringPluralRuleType</string>
-<key>NSStringFormatValueTypeKey</key>
-<string>d</string>
-<key>one</key>
-<string>1 पुरा भएको पाठहरु </string>
-<key>other</key>
-<string>%d पुरा भएको पाठहरु</string>
-</dict>
-</dict>
-<key>badges.toolsOpened</key>
-<dict>
-<key>NSStringLocalizedFormatKey</key>
-<string>%#@toolsCount@</string>
-<key>toolsCount</key>
-<dict>
-<key>NSStringFormatSpecTypeKey</key>
-<string>NSStringPluralRuleType</string>
-<key>NSStringFormatValueTypeKey</key>
-<string>d</string>
-<key>one</key>
-<string>1 उपकरणहरू खोलियो</string>
-<key>other</key>
-<string>%d उपकरणहरू खोलियो</string>
-</dict>
-</dict>
-<key>badges.tipsCompleted</key>
-<dict>
-<key>NSStringLocalizedFormatKey</key>
-<string>%#@tipsCount@</string>
-<key>tipsCount</key>
-<dict>
-<key>NSStringFormatSpecTypeKey</key>
-<string>NSStringPluralRuleType</string>
-<key>NSStringFormatValueTypeKey</key>
-<string>d</string>
-<key>one</key>
-<string>1 तालिम सुझावहरू पूरा गरियो</string>
-<key>other</key>
-<string>%d तालिम सुझावहरू पूरा गरियो</string>
-</dict>
-</dict>
-</dict>
+  <dict>
+    <key>toolDetails.toolVersion.numberOfLanguages</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@numberOfLanguages@</string>
+      <key>numberOfLanguages</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d भाषा</string>
+        <key>other</key>
+        <string>%d भाषाहरु</string>
+      </dict>
+    </dict>
+    <key>lessons.filter.lessonsAvailable</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@lessonCount@</string>
+      <key>lessonCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d पाठहरु  छन्</string>
+        <key>other</key>
+        <string>%d पाठहरु  छन्</string>
+      </dict>
+    </dict>
+    <key>account.activity.toolOpens</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@toolCount@</string>
+      <key>toolCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>उपकरण खोल्नुहोस्</string>
+        <key>other</key>
+        <string>उपकरण खोल्नुहोस्</string>
+      </dict>
+    </dict>
+    <key>account.activity.lessonCompletions</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@lessonCount@</string>
+      <key>lessonCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>पाठ पुरा भएको</string>
+        <key>other</key>
+        <string>पाठ पुरा भएको</string>
+      </dict>
+    </dict>
+    <key>account.activity.screenShares</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@screenShareCount@</string>
+      <key>screenShareCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>स्क्रिन साझा गर्नुहोस्</string>
+        <key>other</key>
+        <string>स्क्रिन साझा गर्नुहोस्</string>
+      </dict>
+    </dict>
+    <key>account.activity.linksShared</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@linkShareCount@</string>
+      <key>linkShareCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>लिङ्क साझा गर्नुहोस्</string>
+        <key>other</key>
+        <string>लिङ्क साझा गर्नुहोस्</string>
+      </dict>
+    </dict>
+    <key>account.activity.languagesUsed</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@languagesUsedCount@</string>
+      <key>languagesUsedCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>भाषा प्रयोग भएको</string>
+        <key>other</key>
+        <string>भाषा प्रयोग भएको</string>
+      </dict>
+    </dict>
+    <key>account.activity.sessions</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@sessionCount@</string>
+      <key>sessionCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>पाठहरू </string>
+        <key>other</key>
+        <string>पाठहरू </string>
+      </dict>
+    </dict>
+    <key>tools.filter.toolsAvailable</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@toolCount@</string>
+      <key>toolCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d टूलहरू उपलब्ध छन्</string>
+        <key>other</key>
+        <string>%d टूलहरू उपलब्ध छन्</string>
+      </dict>
+    </dict>
+    <key>languageSettings.appLanguage.numberAvailable</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@appLanguageCount@</string>
+      <key>appLanguageCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d  भाषाहरू उपलब्ध छन्</string>
+        <key>other</key>
+        <string>%d भाषाहरू उपलब्ध छन्</string>
+      </dict>
+    </dict>
+    <key>badges.imagesShared</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@imageCount@</string>
+      <key>imageCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>1 तस्बिरहरू साझा गरियो</string>
+        <key>other</key>
+        <string>%d तस्बिरहरू साझा गरियो</string>
+      </dict>
+    </dict>
+    <key>badges.articlesOpened</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@articlesCount@</string>
+      <key>articlesCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>एक लेख पढ्नुहोस्</string>
+        <key>other</key>
+        <string>%d लेखहरू पढ्नुहोस्</string>
+      </dict>
+    </dict>
+    <key>badges.lessonsCompleted</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@lessonsCount@</string>
+      <key>lessonsCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>1 पुरा भएको पाठहरु </string>
+        <key>other</key>
+        <string>%d पुरा भएको पाठहरु</string>
+      </dict>
+    </dict>
+    <key>badges.toolsOpened</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@toolsCount@</string>
+      <key>toolsCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>1 उपकरणहरू खोलियो</string>
+        <key>other</key>
+        <string>%d उपकरणहरू खोलियो</string>
+      </dict>
+    </dict>
+    <key>badges.tipsCompleted</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@tipsCount@</string>
+      <key>tipsCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>1 तालिम सुझावहरू पूरा गरियो</string>
+        <key>other</key>
+        <string>%d तालिम सुझावहरू पूरा गरियो</string>
+      </dict>
+    </dict>
+  </dict>
 </plist>

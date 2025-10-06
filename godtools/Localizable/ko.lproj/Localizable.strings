@@ -1,3 +1,10 @@
+"deferredDeepLinkModal.title" = "GodTools에 대한 링크를 클릭한 것 같습니다.";
+"deferredDeepLinkModal.message" = "Tap the button below so we can take you to the content you requested.";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "Close";
+"toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";
+"toolScreenShare.qrCode.title" = "QR Code";
+
 "optInNotification.notificationSettings" = "알림 설정";
 "lessons.swipeTutorial.title" = "밀어서 페이지를 바꾸세요";
 "lessons.swipeTutorial.buttonText" = "알았어";
@@ -124,6 +131,7 @@
 "training_tip_prepare" = "준비";
 "training_tip_quote" = "인용";
 "training_tip_tip" = "팁";
+"articles.downloadingArticles.errorMessage.title" = "Error Downloading Articles";
 "start_training" = "훈련 시작";
 "close" = "닫기";
 "tool_menu_item.lessons" = "수업";
@@ -236,6 +244,9 @@
 
 /* This is to let users know which version of the app is installed on their phone */
 "menu_version" = "버전";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
+"articles.loadingView.downloadingArticles" = "Downloading Articles ...";
 "language_onboard" = "90개 이상의 언어";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -256,6 +267,10 @@
 "add_new_tools" = "새 도구 추가";
 "set_your_languages" = "언어 설정";
 "okay" = "확인";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
+
 // Menu
 "menu_general" = "일반";
 "menu_account" = "계정";
@@ -315,7 +330,7 @@
 "no" = "아니요";
 
 // Tract - Sharing
-"tract_share_message" ="이 링크가 오늘 같이 본 %@ 페이지의 웹 버전으로 이동시킵니다. 
+"tract_share_message" = "이 링크가 오늘 같이 본 %@ 페이지의 웹 버전으로 이동시킵니다. 
 
 더 대화하세요!
 
@@ -343,10 +358,18 @@
 // Tutorial
 "tutorial.tutorialItem.0.title" = "보기";
 "general_about_2" = "이러한 도구를 활용하여 한 번도 신념을 공유하지 않았거나 다른 언어로 이야기하더라도 예수 그리스도를 통해 신과의 관계를 시작할 수 있는 방법을 자신있게 설명할 수 있습니다.";
+"tutorial.tutorialItem.0.message" = "See what GodTools offers in our demo video
+(Tap on the video to bring up settings for subtitles)";
 "general_about_3" = "선호 사항 및 대상을 기준으로 다양한 도구를 선택하세요. 모든 도구를 모든 언어로 이용할 수 있는 것은 아닙니다.";
+"tutorial.tutorialItem.1.title" = "Prepare";
 "general_about_4" = "다른 리소스에 대한 링크가 각 도구 종료 시 포함됩니다.";
+"tutorial.tutorialItem.1.message" = "Get familiar with some of your tools. The \"Teach Me to Share\" tool is a good place to start.
+
+Press the About button on any tool for more info.";
 "general_about_5" = "각 새로운 도구 또는 언어 다운로드에는 온라인 연결이 필요합니다. 다운로드가 끝나면 오프라인으로 사용할 수 있습니다.";
+"tutorial.tutorialItem.2.title" = "Try";
 "general_about_6" = "질문? 제안? 요청? support@godtoolsapp.com에 문의하세요";
+"tutorial.tutorialItem.2.message" = "Everyone starts as a beginner. Try using a tool in a conversation and see what you learn.";
 "general_about_7" = "이러한 도구의 온라인 버전은 knowgod.com에서 찾을 수 있습니다. 자신의 사이트에 임베드하세요!";
 "tutorial.tutorialItem.3.title" = "이 튜토리얼은 메뉴에서 다시 볼 수 있습니다";
 "general_about_8" = "자세한 정보는 godtoolsapp.com을 방문하세요.";
@@ -376,6 +399,8 @@
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "글로벌 활동";
+// OnboardingWelcome
+"onboardingWelcome.titleLabel.welcome" = "Welcome";
 "accountActivity.globalAnalytics.users.title" = "개별 사용자";
 "onboardingWelcome.titleLabel.tagline" = "내 믿음 공유 돕기";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "복음 발표";
@@ -384,4 +409,20 @@
 "onboardingTutorial.aboutAppItem.0.title" = "다른 사람과 공유하기";
 "accountActivity.globalAnalytics.countries.title" = "국가";
 
+"onboardingTutorial.aboutAppItem.0.message" = "GodTools is built to guide your faith conversations";
+"onboardingTutorial.aboutAppItem.1.title" = "Choose Your Tools";
+"onboardingTutorial.aboutAppItem.1.message" = "GodTools helps you before, during, and after a spiritual conversation";
+"onboardingTutorial.aboutAppItem.2.title" = "Always Ready";
+"onboardingTutorial.aboutAppItem.2.message" = "GodTools is here to help and is ready when you are";
+"onboardingTutorial.appUsageItem.0.message" = "Prepare for any conversation";
+"onboardingTutorial.appUsageItem.1.message" = "Walk someone through the gospel";
+"onboardingTutorial.appUsageItem.2.message" = "View two languages side by side";
+"onboardingTutorial.appUsageItem.3.message" = "Choose from over 90 languages";
+"onboardingTutorial.appUsageItem.4.message" = "Help someone get started as a Christian";
 "onboardingTutorial.showMoreButton.title" = "더 보기";
+
+"screenShareTutorial.generateQRCodeButton.title" = "Generate QR code";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "Close";
+"toolScreenShare.qrCode.title" = "QR Code";
+"toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";

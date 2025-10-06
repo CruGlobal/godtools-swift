@@ -1,3 +1,10 @@
+"deferredDeepLinkModal.title" = "Izskatās, ka jūs noklikšķinājāt uz saites, kas ved uz GodTools.";
+"deferredDeepLinkModal.message" = "Tap the button below so we can take you to the content you requested.";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "Close";
+"toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";
+"toolScreenShare.qrCode.title" = "QR Code";
+
 "optInNotification.notificationSettings" = "Paziņojumu iestatījumi";
 "lessons.swipeTutorial.title" = "Velc, lai apskatītu citas lapas";
 "lessons.swipeTutorial.buttonText" = "Sapratu";
@@ -124,6 +131,7 @@
 "training_tip_prepare" = "Sagatavojies";
 "training_tip_quote" = "Citāts";
 "training_tip_tip" = "Padoms";
+"articles.downloadingArticles.errorMessage.title" = "Error Downloading Articles";
 "start_training" = "Sākt apmācību";
 "close" = "Aizvērt";
 "tool_menu_item.lessons" = "Nodarbības";
@@ -261,6 +269,10 @@ Ja saņēmi šo ziņojumu novēloti, iespējams, ka saite vairs nedarbojas. Mēs
 "add_new_tools" = "Pievienot jaunus rīkus";
 "set_your_languages" = "Valodas izvēle";
 "okay" = "Labi";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
+
 // Menu
 "menu_general" = "Vispārīgi";
 "menu_account" = "Konts";
@@ -320,7 +332,7 @@ Rīku tīmekļa versijas ir pieejamas: https://KnowGod.com/lv";
 "no" = "Nē";
 
 // Tract - Sharing
-"tract_share_message" ="Šī saite atvērs tīmekļa lapu par to, ko šodien apspriedām: %@. 
+"tract_share_message" = "Šī saite atvērs tīmekļa lapu par to, ko šodien apspriedām: %@. 
 
 Turpināsim sarunu!
 
@@ -390,6 +402,8 @@ Lai iegūtu vairāk informācijas, nospied pogu \"Apraksts\".";
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "Globālā aktivitāte";
+// OnboardingWelcome
+"onboardingWelcome.titleLabel.welcome" = "Welcome";
 "accountActivity.globalAnalytics.users.title" = "Unikālie\nlietotāji";
 "onboardingWelcome.titleLabel.tagline" = "Tava iespēja parunāt par Jēzu";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "Labās vēsts\nprezentācijas";
@@ -409,3 +423,9 @@ Lai iegūtu vairāk informācijas, nospied pogu \"Apraksts\".";
 "onboardingTutorial.appUsageItem.3.message" = "Izvēlies no 90+ valodām";
 "onboardingTutorial.appUsageItem.4.message" = "Palīdzi jaunajam kristietim augt ticībā";
 "onboardingTutorial.showMoreButton.title" = "Vairāk";
+
+"screenShareTutorial.generateQRCodeButton.title" = "Generate QR code";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "Close";
+"toolScreenShare.qrCode.title" = "QR Code";
+"toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";

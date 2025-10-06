@@ -1,3 +1,10 @@
+"deferredDeepLinkModal.title" = "Es sieht so aus, als hätten Sie auf einen Link für GodTools geklickt";
+"deferredDeepLinkModal.message" = "Tap the button below so we can take you to the content you requested.";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "Close";
+"toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";
+"toolScreenShare.qrCode.title" = "QR Code";
+
 "optInNotification.notificationSettings" = "Benachrichtigungseinstellungen";
 "lessons.swipeTutorial.title" = "Wische, um die Seite zu wechseln.";
 "lessons.swipeTutorial.buttonText" = "Alles klar";
@@ -124,6 +131,7 @@
 "training_tip_prepare" = "Vorbereiten";
 "training_tip_quote" = "Zitieren";
 "training_tip_tip" = "Tipp";
+"articles.downloadingArticles.errorMessage.title" = "Error Downloading Articles";
 "start_training" = "Training starten";
 "close" = "Schließen";
 "tool_menu_item.lessons" = "Lektionen";
@@ -259,6 +267,10 @@
 "add_new_tools" = "Neue Tools hinzufügen";
 "set_your_languages" = "Sprache wählen";
 "okay" = "Okay";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
+
 // Menu
 "menu_general" = "Allgemein";
 "menu_account" = "Konto";
@@ -318,7 +330,7 @@ Eine Online-Version findest du unter https://knowgod.com/";
 "no" = "Nein";
 
 // Tract - Sharing
-"tract_share_message" ="Dieser Link bringt dich zu einer Web-Version des Themas, das wir heute besprochen haben: %@. 
+"tract_share_message" = "Dieser Link bringt dich zu einer Web-Version des Themas, das wir heute besprochen haben: %@. 
 
 Lass uns weiter im Gespräch bleiben!
 
@@ -407,3 +419,9 @@ Für weitere Infos drücke den Info-Button bei einem Tool.";
 "onboardingTutorial.appUsageItem.3.message" = "Wähle aus über 90 Sprachen aus.";
 "onboardingTutorial.appUsageItem.4.message" = "Hilf einem Menschen, Christ zu werden.";
 "onboardingTutorial.showMoreButton.title" = "Mehr anzeigen";
+
+"screenShareTutorial.generateQRCodeButton.title" = "Generate QR code";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "Close";
+"toolScreenShare.qrCode.title" = "QR Code";
+"toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";
