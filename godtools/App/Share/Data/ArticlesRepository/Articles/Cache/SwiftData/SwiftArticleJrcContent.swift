@@ -10,18 +10,24 @@ import Foundation
 import SwiftData
 
 @available(iOS 17, *)
-@Model
-class SwiftArticleJrcContent: IdentifiableSwiftDataObject {
-    
-    var aemUri: String = ""
-    var canonical: String?
-    var tags: [String] = Array<String>()
-    var title: String?
-    var uuid: String?
-    
-    @Attribute(.unique) var id: String = ""
-    
-    init() {
+typealias SwiftArticleJrcContent = SwiftArticleJrcContentV1.SwiftArticleJrcContent
+
+@available(iOS 17, *)
+enum SwiftArticleJrcContentV1 {
+ 
+    @Model
+    class SwiftArticleJrcContent: IdentifiableSwiftDataObject {
         
+        var aemUri: String = ""
+        var canonical: String?
+        var tags: [String] = Array<String>()
+        var title: String?
+        var uuid: String?
+        
+        @Attribute(.unique) var id: String = ""
+        
+        init() {
+            
+        }
     }
 }

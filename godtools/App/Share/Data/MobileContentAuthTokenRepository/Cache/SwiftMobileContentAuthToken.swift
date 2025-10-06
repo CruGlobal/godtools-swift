@@ -10,15 +10,21 @@ import Foundation
 import SwiftData
 
 @available(iOS 17, *)
-@Model
-class SwiftMobileContentAuthToken: IdentifiableSwiftDataObject {
-    
-    var expirationDate: Date?
-    
-    @Attribute(.unique) var id: String = ""
-    @Attribute(.unique) var userId: String = ""
-    
-    init() {
+typealias SwiftMobileContentAuthToken = SwiftMobileContentAuthTokenV1.SwiftMobileContentAuthToken
+
+@available(iOS 17, *)
+enum SwiftMobileContentAuthTokenV1 {
+ 
+    @Model
+    class SwiftMobileContentAuthToken: IdentifiableSwiftDataObject {
         
+        var expirationDate: Date?
+        
+        @Attribute(.unique) var id: String = ""
+        @Attribute(.unique) var userId: String = ""
+        
+        init() {
+            
+        }
     }
 }

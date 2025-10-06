@@ -10,16 +10,22 @@ import Foundation
 import SwiftData
 
 @available(iOS 17, *)
-@Model
-class SwiftFavoritedResource: IdentifiableSwiftDataObject {
-    
-    var createdAt: Date = Date()
-    var position: Int = 0
-    
-    @Attribute(.unique) var id: String = ""
-    @Attribute(.unique) var resourceId: String = ""
-    
-    init() {
+typealias SwiftFavoritedResource = SwiftFavoritedResourceV1.SwiftFavoritedResource
+
+@available(iOS 17, *)
+enum SwiftFavoritedResourceV1 {
+
+    @Model
+    class SwiftFavoritedResource: IdentifiableSwiftDataObject {
         
+        var createdAt: Date = Date()
+        var position: Int = 0
+        
+        @Attribute(.unique) var id: String = ""
+        @Attribute(.unique) var resourceId: String = ""
+        
+        init() {
+            
+        }
     }
 }
