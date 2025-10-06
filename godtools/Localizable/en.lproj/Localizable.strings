@@ -1,5 +1,5 @@
 "deferredDeepLinkModal.title" = "It looks like you clicked a link for GodTools";
-"deferredDeepLinkModal.message" = "Please tap the paste button below.  This will allow us to take you to the content you requested in GodTools.";
+"deferredDeepLinkModal.message" = "Tap the button below so we can take you to the content you requested.";
 
 "toolScreenShare.qrCode.closeButtonTitle" = "Close";
 "toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";
