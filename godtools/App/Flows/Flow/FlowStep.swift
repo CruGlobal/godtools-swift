@@ -113,6 +113,8 @@ enum FlowStep {
     case doneTappedFromMenu
     case tutorialTappedFromMenu
     case languageSettingsTappedFromMenu
+    case localizationSettingsTappedFromMenu
+    case backTappedFromLocalizationSettings
     case loginTappedFromMenu
     case createAccountTappedFromMenu
     case activityTappedFromMenu

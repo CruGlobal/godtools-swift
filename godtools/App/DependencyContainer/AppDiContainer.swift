@@ -53,6 +53,7 @@ class AppDiContainer {
         let onboardingDiContainer = OnboardingDiContainer(coreDataLayer: dataLayer, dataLayer: onboardingDataLayer, domainInterfaceLayer: onboardingDomainInterfaceLayer)
         let optInNotification = OptInNotificationDiContainer(coreDataLayer: dataLayer, getOnboardingTutorialIsAvailable: onboardingDomainInterfaceLayer.getOnboardingTutorialIsAvailable())
         let persistFavoritedToolLanguageSettingsDiContainer = PersistUserToolLanguageSettingsDiContainer(coreDataLayer: dataLayer)
+        let personalizedToolsDiContainer: PersonalizedToolsDiContainer = PersonalizedToolsDiContainer(coreDataLayer: dataLayer)
         let shareablesDiContainer: ShareablesDiContainer = ShareablesDiContainer(coreDataLayer: dataLayer)
         let shareGodToolsDiContainer = ShareGodToolsDiContainer(coreDataLayer: dataLayer)
         let spotlightToolsDiContainer = SpotlightToolsDiContainer(coreDataLayer: dataLayer, dataLayer: spotlightToolsDataLayer, domainInterfaceLayer: spotlightToolsDomainInterfaceLayer)
@@ -84,6 +85,7 @@ class AppDiContainer {
             onboarding: onboardingDiContainer,
             optInNotification: optInNotification,
             persistFavoritedToolLanguageSettings: persistFavoritedToolLanguageSettingsDiContainer,
+            personalizedTools: personalizedToolsDiContainer,
             shareables: shareablesDiContainer,
             shareGodTools: shareGodToolsDiContainer,
             spotlightTools: spotlightToolsDiContainer,
