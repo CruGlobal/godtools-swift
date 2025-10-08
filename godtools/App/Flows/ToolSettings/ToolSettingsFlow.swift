@@ -51,7 +51,7 @@ class ToolSettingsFlow: Flow {
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
                
-                appDiContainer.feature.toolSettings.domainLayer
+                appDiContainer.feature.shareTool.domainLayer
                     .getViewShareToolUseCase()
                     .viewPublisher(
                         toolId: toolSettingsObserver.toolId,

@@ -10,32 +10,26 @@ import Foundation
 
 class ToolSettingsDomainLayerDependencies {
     
-    private let dataLayer: ToolSettingsDataLayerDependencies
+    private let domainInterfaceLayer: ToolSettingsDomainInterfaceDependencies
     
-    init(dataLayer: ToolSettingsDataLayerDependencies) {
+    init(domainInterfaceLayer: ToolSettingsDomainInterfaceDependencies) {
         
-        self.dataLayer = dataLayer
-    }
-    
-    func getViewShareToolUseCase() -> ViewShareToolUseCase {
-        return ViewShareToolUseCase(
-            getInterfaceStringsRepository: dataLayer.getShareToolInterfaceStringsRepositoryInterface()
-        )
+        self.domainInterfaceLayer = domainInterfaceLayer
     }
     
     func getViewToolSettingsToolLanguagesListUseCase() -> ViewToolSettingsToolLanguagesListUseCase {
         return ViewToolSettingsToolLanguagesListUseCase(
-            getInterfaceStringsRepository: dataLayer.getToolSettingsToolLanguagesListInterfaceStringsRepositoryInterface(),
-            getToolLanguagesRepository: dataLayer.getToolSettingsToolLanguagesListRepositoryInterface()
+            getInterfaceStringsRepository: domainInterfaceLayer.getToolSettingsToolLanguagesListInterfaceStringsRepositoryInterface(),
+            getToolLanguagesRepository: domainInterfaceLayer.getToolSettingsToolLanguagesListRepositoryInterface()
         )
     }
     
     func getViewToolSettingsUseCase() -> ViewToolSettingsUseCase {
         return ViewToolSettingsUseCase(
-            getInterfaceStringsRepository: dataLayer.getToolSettingsInterfaceStringsRepositoryInterface(),
-            getToolHasTipsRepository: dataLayer.getToolSettingsToolHasTipsRepositoryInterface(),
-            getPrimaryLanguageRepository: dataLayer.getToolSettingsPrimaryLanguageRepositoryInterface(),
-            getParallelLanguageRepository: dataLayer.getToolSettingsParallelLanguageRepositoryInterface()
+            getInterfaceStringsRepository: domainInterfaceLayer.getToolSettingsInterfaceStringsRepositoryInterface(),
+            getToolHasTipsRepository: domainInterfaceLayer.getToolSettingsToolHasTipsRepositoryInterface(),
+            getPrimaryLanguageRepository: domainInterfaceLayer.getToolSettingsPrimaryLanguageRepositoryInterface(),
+            getParallelLanguageRepository: domainInterfaceLayer.getToolSettingsParallelLanguageRepositoryInterface()
         )
     }
 }
