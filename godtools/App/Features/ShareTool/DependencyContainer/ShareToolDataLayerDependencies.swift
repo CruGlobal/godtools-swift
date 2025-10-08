@@ -1,14 +1,14 @@
 //
-//  ToolSettingsDataLayerDependencies.swift
+//  ShareToolDataLayerDependencies.swift
 //  godtools
 //
-//  Created by Levi Eggert on 12/7/23.
-//  Copyright © 2023 Cru. All rights reserved.
+//  Created by Levi Eggert on 10/8/25.
+//  Copyright © 2025 Cru. All rights reserved.
 //
 
 import Foundation
 
-class ToolSettingsDataLayerDependencies {
+class ShareToolDataLayerDependencies {
     
     private let coreDataLayer: AppDataLayerDependencies
     

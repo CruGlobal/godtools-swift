@@ -56,6 +56,7 @@ class AppDiContainer {
         let personalizedToolsDiContainer: PersonalizedToolsDiContainer = PersonalizedToolsDiContainer(coreDataLayer: dataLayer)
         let shareablesDiContainer: ShareablesDiContainer = ShareablesDiContainer(coreDataLayer: dataLayer)
         let shareGodToolsDiContainer = ShareGodToolsDiContainer(coreDataLayer: dataLayer)
+        let shareToolDiContainer = ShareToolDiContainer(coreDataLayer: dataLayer)
         let spotlightToolsDiContainer = SpotlightToolsDiContainer(coreDataLayer: dataLayer, dataLayer: spotlightToolsDataLayer, domainInterfaceLayer: spotlightToolsDomainInterfaceLayer)
         let toolDetailsDiContainer = ToolDetailsFeatureDiContainer(coreDataLayer: dataLayer)
         let toolScreenShareDiContainer = ToolScreenShareFeatureDiContainer(coreDataLayer: dataLayer)
@@ -88,6 +89,7 @@ class AppDiContainer {
             personalizedTools: personalizedToolsDiContainer,
             shareables: shareablesDiContainer,
             shareGodTools: shareGodToolsDiContainer,
+            shareTool: shareToolDiContainer,
             spotlightTools: spotlightToolsDiContainer,
             toolDetails: toolDetailsDiContainer,
             toolScreenShare: toolScreenShareDiContainer,
