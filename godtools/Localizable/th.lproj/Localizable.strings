@@ -3,7 +3,6 @@
 
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "ไม่พร้อมใช้งานได้ใน %@";
-
 "tool_menu_item.tools" = "เครื่องมือ";
 "lessons.pageTitle" = "บทเรียนที่สร้างมาเพื่อคุณ";
 "lessons.pageSubtitle" = "แนวคิดเชิงปฏิบัติเพื่อสร้างความสัมพันธ์และเริ่มต้นบทสนทนาที่มีความหมาย";
@@ -17,6 +16,7 @@
 "favorites.favoriteLessons.title" = "บทเรียนแนะนำ";
 "favorites.favoriteTools.title" = "เครื่องมือโปรดของคุณ";
 "favorites.favoriteTools.viewAll" = "ดูทั้งหมด";
+
 "toolSettings.chooseLanguage.toggleMessage" = "สลับไปมาระหว่างสองภาษาในเครื่องมือนี้";
 "toolDetails.versions.title" = "เวอร์ชัน";
 "toolDetails.learnToShareToolButton.title" = "เรียนรู้ที่จะแชร์เครื่องมือนี้";
@@ -30,8 +30,8 @@
 "toolSettings.shareables.title" = "กราฟิกที่เกี่ยวข้อง";
 "allTools.spotlight.title" = "เครื่องมือโดดเด่น";
 "allTools.spotlight.description" = "นี่คือเครื่องมือที่เราคิดว่าคุณอาจชอบ";
-"allTools.categories.title" = "หมวดหมู่";
 "tool_menu_item.lessons" = "บทเรียน";
+
 "onboardingTutorial.beginButton.title" = "เริ่มต้น";
 "onboardingTutorial.nextButton.title" = "ต่อไป";
 "tool_offline_favorite_message" = "ทำให้เครื่องมือพร้อมใช้งานแบบออฟไลน์โดยแตะที่ไอคอนรูปหัวใจเพื่อเพิ่มไว้ในรายการโปรดของคุณ";
@@ -108,31 +108,27 @@
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
 "find_tools" = "เครื่องมือทั้งหมด";
 
-"unavailable" = "ใช้ไม่ได้";
-
 // Navigation Bar
 "navigationBar.navigationItem.skip" = "ข้าม";
 
 // Onboarding
 "add_new_tools" = "เพิ่มเครื่องมือใหม่";
-"set_your_languages" = "ตั้งค่าภาษา";
-"okay" = "โอเค";
+
 // Menu
 "menu_general" = "ทั่วไป";
 "menu_share" = "แชร์";
 "menu_legal" = "กฎหมาย";
 "language_settings" = "การตั้งค่าภาษา";
+
 // Login
 "login" = "เข้าสู่ระบบ";
 "logout" = "ออกจากระบบ";
 "create_account" = "ลงทะเบียน";
-"account_login" = "เข้าสู่บัญชี";
 
 // Tool Detail
 "about" = "เกี่ยวกับ";
 "help" = "ช่วยเหลือ";
 "contact_us" = "ติดต่อเรา";
-"preview_mode_translators_only" = "โหมดพรีวิว (นักแปลเท่านั้น)";
 "share_god_tools" = "แชร์แอป GodTools";
 "share_a_story_with_us" = "แชร์เรื่องราวกับเรา";
 "terms_of_use" = "เงื่อนไขการใช้งาน";
@@ -141,9 +137,6 @@
 "share_god_tools_share_sheet_text" = "ดาวน์โหลดแอป GodTools ได้จาก https://godtoolsapp.com
 
 สามารถดูเวอร์ชั่นออนไลน์ได้ที่ https://knowgod.com/";
-
-// Add Tools
-"add_tools" = "เพิ่มเครื่องมือ";
 
 "total_views" = "ดู %d ครั้ง";
 "total_languages" = "%d ภาษา";
@@ -165,14 +158,13 @@
 "no_internet" = "โปรดตรวจสอบการเชื่อมต่ออินเทอร์เน็ต แล้วลองอีกครั้ง";
 
 "the_tool_you_requested_is_loading" = "กำลังโหลดเครื่องมือที่คุณร้องขอ…";
-"loading" = "กำลังโหลด...";
 
 // Actions
 "yes" = "ใช่";
 "no" = "ไม่";
 
 // Tract - Sharing
-"tract_share_message" ="ลิงก์นี้จะนำคุณไปยังหน้าเพจที่เราดูด้วยกันวันนี้: %@. มาคุยกันอีก!
+"tract_share_message" = "ลิงก์นี้จะนำคุณไปยังหน้าเพจที่เราดูด้วยกันวันนี้: %@. มาคุยกันอีก!
 
 สามารถดาวน์โหลดแอปได้ที่ https://godtoolsapp.com";
 
@@ -204,8 +196,8 @@
 "general_about_8" = "ดูข้อมูลเพิ่มเติมได้ที่ godtoolsapp.com";
 "tutorial.continueButton.title.continue" = "ต่อไป";
 "general_about_9" = "ในการเผยแผ่ศรัทธาที่คุณมีต่อพระผู้เป็นเจ้า โปรดระลึกว่าพระองค์เป็นผู้เปลี่ยนแปลงจิตใจ ขอให้เปิดใจฟังอย่างเข้าอกเข้าใจ";
-"general_about_10" = "\"จงให้ถ้อยคำของท่านทั้งหลายประกอบด้วยเมตตาคุณเสมอ ปรุงด้วยเกลือให้มีรส เพื่อท่านจะได้รู้ว่าควรจะตอบแต่ละคนอย่างไร\" โคโลสี 4:6";
 
+"general_about_10" = "\"จงให้ถ้อยคำของท่านทั้งหลายประกอบด้วยเมตตาคุณเสมอ ปรุงด้วยเกลือให้มีรส เพื่อท่านจะได้รู้ว่าควรจะตอบแต่ละคนอย่างไร\" โคโลสี 4:6";
 // Downloads
 "Download in progress" = "อยู่ระหว่างการดาวน์โหลด";
 
@@ -215,4 +207,3 @@
 
 // Language Name Strings
 "language_name_fa" = "เปอร์เซีย (ฟาร์ซี)";
-

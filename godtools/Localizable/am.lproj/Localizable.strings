@@ -1,3 +1,10 @@
+"deferredDeepLinkModal.title" = "ለGodTools አገናኝ ጠቅ ያደረጉ ይመስላል";
+"deferredDeepLinkModal.message" = "ወደ ጠየቁት ይዘት እንድንወስድዎት ከዚህ በታች ያለውን ቁልፍ ነካ ያድርጉ።";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "ይዝጉ";
+"toolScreenShare.qrCode.description" = "ይህንን የQR ኮድ በስልኮ በመቃኘት ከእኔ ጋር ይጓዙ";
+"toolScreenShare.qrCode.title" = "QR ኮድ";
+
 "optInNotification.notificationSettings" = "የማሳወቂያ ቅንብሮች";
 "lessons.swipeTutorial.title" = "ገፆችን ለመቀየር ያንሸራቱ";
 "lessons.swipeTutorial.buttonText" = "ገባኝ";
@@ -9,7 +16,7 @@
 /* The meaning for this is "Pick up where you left off" or "Continue from your previous spot". */
 "lessons.resumeLessonModal.title" = "ካቆሙበት ለመቀጠል";
 
-"lessons.resumeLessonModal.subtitle" = "ከየት መቀጠል ይፈልጋሉ ?";
+"lessons.resumeLessonModal.subtitle" = "ከየት መቀጠል ይፈልጋሉ?";
 "lessons.resumeLessonModal.startOverButton" = "ከመጀመሪያው";
 "lessons.resumeLessonModal.continueButton" = "ካቆምኩበት";
 "lessons.lessonCompleted" = "አጠናቀዋል";
@@ -253,6 +260,7 @@
 
 // Onboarding
 "add_new_tools" = "አዲስ መሳሪያን ይጨምሩ";
+
 // Menu
 "menu_general" = "አጠቃላይ";
 "menu_account" = "መለያ";
@@ -266,6 +274,7 @@
 "login" = "ይግቡ";
 "logout" = "ይዉጡ";
 "create_account" = "ይመዝገቡ";
+
 // Tool Detail
 "about" = "ስለዚህ አፕሊኬሽን";
 "help" = "እገዛ";
@@ -299,12 +308,13 @@
 "no_internet" = "እባክዎ የበይነመረብ ግንኙነትዎን ያረጋግጡ እና እንደገና ይሞክሩ።";
 
 "the_tool_you_requested_is_loading" = "የጠየቁት መተግበርያ በሂደት ላይ ነዉ...";
+
 // Actions
 "yes" = "አዎ";
 "no" = "አይደለም";
 
 // Tract - Sharing
-"tract_share_message" ="ዛሬ ስንመለከተዉ የነበረዉ መተግብሪያ(App) በዚህ መስፈንጠሪያ በኩል ማግኘት ይችላሉ: %@ ይህን መተግበሪያ ዌብ ላይ ለመጠቀም መስፈንጠሪያ: https://godtoolsapp.com\n\n ተጨማሪ እንነጋገር !";
+"tract_share_message" = "ዛሬ ስንመለከተዉ የነበረዉ መተግብሪያ(App) በዚህ መስፈንጠሪያ በኩል ማግኘት ይችላሉ: %@ ይህን መተግበሪያ ዌብ ላይ ለመጠቀም መስፈንጠሪያ: https://godtoolsapp.com\n\n ተጨማሪ እንነጋገር !";
 
 // Buttons
 "download" = "ያዉርዱ";
@@ -328,10 +338,18 @@
 // Tutorial
 "tutorial.tutorialItem.0.title" = "ይመልከቱ";
 "general_about_2" = "ይህ መተግበርያ ሰዎች ከእግዚአብሔር ጋር በልጁ በኢየሱስ ክርስቶስ በኩል ግንኙነት እንዲኖራቸዉ በድፍረት እንዲያግዙ ይረዳዎታል። ከዚህ በፊት እምነትዎን አካፍለዉ የማያዉቁ ቢሆኑ እና የሌላ ቋንቋ ተናጋሪ ሰዉ ቢገጥምዎ ይህ መተግበርያ በደንብ ያግዛዎታል።";
+"tutorial.tutorialItem.0.message" = "በዚህ ቪዲዮ ውስጥ GodTools የሚያቀርበውን ይመልከቱ
+(የግርጌ ጽሑፎች ቅንብሮችን ለማምጣት ቪዲዮውን ይንኩ)";
 "general_about_3" = "ከብዙ አይነት መተግበሪያ(መሳሪያ) የሚሆኖትን ለተመልካቹም የሚመቸዉን ይምረጡ።";
+"tutorial.tutorialItem.1.title" = "አዘጋጅ";
 "general_about_4" = "ከሁሉም መተግበሪያ(መሳሪያ) መጨረሻ ላይ ወደ ምንጩ የሚወስድ ጠቋሚ (ሊንክ) ይገኛል።";
+"tutorial.tutorialItem.1.message" = "ከአንዳንድ ቡክሌቶች ጋር ይተዋወቁ። ለመጀመር የ \"ማካፈል አስተምረኝ\" ቡክሌት ጥሩ መነሻ ነው።
+
+ለበለጠ መረጃ በማንኛውም መሳሪያ ላይ ስለ / About የሚለውን ቁልፍ ይጫኑ።";
 "general_about_5" = "አዳዲስ መተግበሪያዎችን(አገልግሎቶችን) እና ቋንቋን አንዴ ለማዉረድ ኢንተርኔት ኮኔክሽን ያስፈልጋል። አንድ ጊዜ ከወረደ በዃላ ግን እንደዚዉ ይሰራል።";
+"tutorial.tutorialItem.2.title" = "ይሞክሩ";
 "general_about_6" = "ጥያቄዎች? ጥቆማዎች? በዚህ አድራሻ አግኙን support@godtoolsapp.com";
+"tutorial.tutorialItem.2.message" = "ሁሉም ሰው እንደ ጀማሪ ይጀምራል! በውይይት ውስጥ ቡክሌቶቹን ለመጠቀም ይሞክሩ እና የተማሩትን ይመልከቱ።";
 "general_about_7" = "እዚህ ላይ ያሉትን አገልግሎቶችን ኦንላይን knowgod.com ላይ ማግኘት ይችላሉ። የራስዎም ሳይት ላይ መጠቀም ይችላሉ።";
 "tutorial.tutorialItem.3.title" = "ይህ አጋዥ ስልጠና በማውጫው ውስጥ እንደገና ለማየት ይገኛል።";
 "general_about_8" = "ለተጨማሪ መረጃ godtoolsapp.com ይመልከቱ";
@@ -365,8 +383,11 @@
 "onboardingWelcome.titleLabel.tagline" = "እምነትዎን እንዲያካፍሉ መርዳት";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "የወንጌል ግብዣዎች";
 "accountActivity.globalAnalytics.launches.title" = "ክፍለ ጊዜዎች";
-// OnboardingTutorial
-"onboardingTutorial.aboutAppItem.0.title" = "ለሌሎች ያካፍሉ";
 "accountActivity.globalAnalytics.countries.title" = "ሀገሮች";
-
 "onboardingTutorial.showMoreButton.title" = "ተጨማሪ አሳየኝ";
+
+"screenShareTutorial.generateQRCodeButton.title" = "የQR ኮድ ይፍጠሩ";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "ይዝጉ";
+"toolScreenShare.qrCode.title" = "QR ኮድ";
+"toolScreenShare.qrCode.description" = "ይህንን የQR ኮድ በስልኮ በመቃኘት ከእኔ ጋር ይጓዙ";

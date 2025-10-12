@@ -1,3 +1,6 @@
+"deferredDeepLinkModal.title" = "您似乎点击了 GodTools 的链接";
+"deferredDeepLinkModal.message" = "点击下面的按钮，我们就可以带您到您请求的内容。";
+
 "optInNotification.notificationSettings" = "通知设置";
 "lessons.swipeTutorial.title" = "滑动切换页面";
 "lessons.swipeTutorial.buttonText" = "明白了";
@@ -118,7 +121,6 @@
 "toolSettings.shareables.title" = "相关图片";
 "allTools.spotlight.title" = "热门工具";
 "allTools.spotlight.description" = "这是我们觉得你可能喜欢的一些工具";
-"allTools.categories.title" = "分类";
 "training_tip_ask" = "提问";
 "training_tip_consider" = "考虑";
 "training_tip_prepare" = "准备";
@@ -236,9 +238,6 @@
 
 /* This is to let users know which version of the app is installed on their phone */
 "menu_version" = "版本";
-
-/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
-"articles.loadingView.downloadingArticles" = "文章下载中...";
 "language_onboard" = "超过 90 种语言";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -250,15 +249,12 @@
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
 "find_tools" = "所有工具";
 
-"unavailable" = "不可用";
-
 // Navigation Bar
 "navigationBar.navigationItem.skip" = "跳过";
 
 // Onboarding
 "add_new_tools" = "添加新工具";
-"set_your_languages" = "设置您的语言";
-"okay" = "确定";
+
 // Menu
 "menu_general" = "通用";
 "menu_account" = "账户";
@@ -272,13 +268,11 @@
 "login" = "登录";
 "logout" = "退出登陆";
 "create_account" = "创建账户";
-"account_login" = "账户登录";
 
 // Tool Detail
 "about" = "关于";
 "help" = "常见问题";
 "contact_us" = "联系我们";
-"preview_mode_translators_only" = "预览模式（仅限译员）";
 "share_god_tools" = "分享GodTools";
 "share_a_story_with_us" = "与我们分享故事";
 "terms_of_use" = "使用条款";
@@ -287,9 +281,6 @@
 "share_god_tools_share_sheet_text" = "下载GodTools应用：https://godtoolsapp.com
 
 网页版地址：https://knowgod.com/";
-
-// Add Tools
-"add_tools" = "添加工具";
 
 "total_views" = "%d次浏览";
 "total_languages" = "%d种语言";
@@ -311,14 +302,13 @@
 "no_internet" = "请检查你的互联网连接，然后重试。";
 
 "the_tool_you_requested_is_loading" = "正在加载您要使用的工具...";
-"loading" = "正在加载...";
 
 // Actions
 "yes" = "是";
 "no" = "否";
 
 // Tract - Sharing
-"tract_share_message" ="点击这个链接，您就会看到我们今天谈论内容的网页版：%@。让我们畅谈吧！
+"tract_share_message" = "点击这个链接，您就会看到我们今天谈论内容的网页版：%@。让我们畅谈吧！
 
 应用下载地址： https://godtoolsapp.com";
 
@@ -386,24 +376,9 @@
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "全球活动";
-// OnboardingWelcome
-"onboardingWelcome.titleLabel.welcome" = "欢迎";
 "accountActivity.globalAnalytics.users.title" = "独一\n用户";
 "onboardingWelcome.titleLabel.tagline" = "帮助你分享自己的信仰";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "分享\n福音";
 "accountActivity.globalAnalytics.launches.title" = "会话";
-// OnboardingTutorial
-"onboardingTutorial.aboutAppItem.0.title" = "与他人分享";
 "accountActivity.globalAnalytics.countries.title" = "国家/地区";
-
-"onboardingTutorial.aboutAppItem.0.message" = "GodTools旨在引导你进行属灵对话";
-"onboardingTutorial.aboutAppItem.1.title" = "选择你的工具";
-"onboardingTutorial.aboutAppItem.1.message" = "GodTools在属灵对话之前、之中和之后为你提供帮助";
-"onboardingTutorial.aboutAppItem.2.title" = "时刻做好准备";
-"onboardingTutorial.aboutAppItem.2.message" = "GodTools竭诚为你提供帮助，随时准备就绪";
-"onboardingTutorial.appUsageItem.0.message" = "为任何对话做好准备";
-"onboardingTutorial.appUsageItem.1.message" = "向某人传播福音";
-"onboardingTutorial.appUsageItem.2.message" = "平行查看两种语言";
-"onboardingTutorial.appUsageItem.3.message" = "超过90种语言可供选择";
-"onboardingTutorial.appUsageItem.4.message" = "帮助他人成为基督徒";
 "onboardingTutorial.showMoreButton.title" = "显示更多";

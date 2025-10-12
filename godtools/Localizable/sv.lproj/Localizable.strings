@@ -3,7 +3,6 @@
 
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "Finns inte på %@";
-
 "tool_menu_item.tools" = "Verktyg";
 "lessons.pageTitle" = "Lektioner anpassade efter dig";
 "lessons.pageSubtitle" = "Praktiska idéer för hur man bygger relationer och startar meningsfulla samtal.";
@@ -37,7 +36,6 @@
 "toolSettings.shareables.title" = "Relevant grafiskt material";
 "allTools.spotlight.title" = "Utvalda verktyg";
 "allTools.spotlight.description" = "Här är några alternativ som vi tror att du kommer att gilla";
-"allTools.categories.title" = "Kategorier";
 "tool_menu_item.lessons" = "Lektioner";
 "tool_offline_favorite_message" = "Gör ett verktyg tillgängligt utan internetuppkoppling genom att trycka på hjärtikonen. Då läggs det till i dina favoriter.";
 
@@ -46,7 +44,6 @@
 
 /* This phrase describes a category of tool that helps someone grow in their Christian faith */
 "tool_category_growth" = "Främjande av kristen tro";
-
 "share_tool_screen_tutorial.share_your_screen.title" = "Dela din skärm";
 "share_tool_screen_tutorial.share_your_screen.message" = "Om du använder detta alternativ skickas en länk till det här verktyget till en vän. När länken öppnas startas en skärmdelningssession.";
 "share_tool_screen_tutorial.mirrored_experience.title" = "Spegling";
@@ -90,6 +87,7 @@ Om du får detta meddelande försent fungerar kanske inte länken. I så fall ka
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "Artiklar";
+
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "Favoriter";
 
@@ -99,6 +97,7 @@ Om du får detta meddelande försent fungerar kanske inte länken. I så fall ka
 "menu_share" = "Dela";
 "menu_legal" = "Juridisk information";
 "language_settings" = "Språkinställningar";
+
 // Tool Detail
 "about" = "Om";
 "contact_us" = "Kontakta oss";
@@ -107,6 +106,7 @@ Om du får detta meddelande försent fungerar kanske inte länken. I så fall ka
 "terms_of_use" = "Villkor";
 "privacy_policy" = "Sekretesspolicy";
 "copyright_info" = "Upphovsrätt";
+
 "total_views" = "%d visningar";
 "total_languages" = "%d språk";
 
@@ -122,15 +122,15 @@ Om du får detta meddelande försent fungerar kanske inte länken. I så fall ka
 
 // Actions
 "yes" = "Ja";
-// Tract - Sharing
-"tract_share_message" ="Den här länken tar dig till en webbversion av det vi pratade om idag:  %@ Appen kan laddas ner från https://godtoolsapp.com. Vi tar och pratar mer!";
 
+// Tract - Sharing
+"tract_share_message" = "Den här länken tar dig till en webbversion av det vi pratade om idag:  %@ Appen kan laddas ner från https://godtoolsapp.com. Vi tar och pratar mer!";
 "dismiss" = "Avfärda";
 "done" = "Gjort";
 /* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
 "toolinfo_opentool" = "Öppna verktyg";
-
 "cancel" = "Avbryt";
+
 // About
 "general_about_1" = "GodTools hjälper dig att dela med dig av din tro på ett enkelt och tydligt sätt.";
 // Tutorial
@@ -141,6 +141,7 @@ Om du får detta meddelande försent fungerar kanske inte länken. I så fall ka
 "general_about_7" = "En webbversion av dessa verktyg finns på knowgod.com. Bädda in den på din egen webbplats!";
 "general_about_8" = "Gå till godtoolsapp.com för mer information.";
 "general_about_9" = "Kom ihåg att Gud är den som förändrar ditt hjärta när du tar initiativet att dela med dig av din tro. Älska varje person genom att lyssna efter förståelse.";
+
 "general_about_10" = "\"Se till att ni alltid uttrycker er på ett vänligt sätt och kryddar era ord med salt. Då kommer ni alltid att veta hur ni ska svara andra.\" Kolosserbrevet 4:6";
 
 // Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
@@ -149,4 +150,3 @@ Om du får detta meddelande försent fungerar kanske inte länken. I så fall ka
 
 // Language Name Strings
 "language_name_fa" = "Persiska (farsi)";
-

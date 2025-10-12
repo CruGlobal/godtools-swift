@@ -3,7 +3,6 @@
 
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "Não disponível em %@";
-
 "tool_menu_item.tools" = "Ferramentas";
 "lessons.pageTitle" = "Sessões feitas para ti";
 "lessons.pageSubtitle" = "Ideias práticas para construir relações e iniciar conversas profundas.";
@@ -37,8 +36,8 @@
 "toolSettings.shareables.title" = "Gráficos relacionados";
 "allTools.spotlight.title" = "Destaque de ferramentas";
 "allTools.spotlight.description" = "Pensamos que vais gostar destas ferramentas";
-"allTools.categories.title" = "Categorias";
 "tool_menu_item.lessons" = "Sessões";
+
 "onboardingTutorial.beginButton.title" = "Começar";
 "onboardingTutorial.nextButton.title" = "Seguinte";
 "tool_offline_favorite_message" = "Para ficares com uma ferramenta disponível offline, toca no ícone de coração para a adicionares aos teus favoritos.";
@@ -114,31 +113,27 @@
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
 "find_tools" = "Todas as ferramentas";
 
-"unavailable" = "Indisponível";
-
 // Navigation Bar
 "navigationBar.navigationItem.skip" = "Ignorar";
 
 // Onboarding
 "add_new_tools" = "Adicionar novas ferramentas";
-"set_your_languages" = "Definir os idiomas";
-"okay" = "OK";
+
 // Menu
 "menu_general" = "Geral";
 "menu_share" = "Partilhar";
 "menu_legal" = "Aviso legal";
 "language_settings" = "Definições de idioma";
+
 // Login
 "login" = "Iniciar sessão";
 "logout" = "Sair";
 "create_account" = "Criar conta";
-"account_login" = "Iniciar sessão na conta";
 
 // Tool Detail
 "about" = "Sobre";
 "help" = "Ajuda";
 "contact_us" = "Contactar-nos";
-"preview_mode_translators_only" = "Modo de pré-visualização (apenas para tradutores)";
 "share_god_tools" = "Partilhar a aplicação GodTools";
 "share_a_story_with_us" = "Partilhar uma história connosco";
 "terms_of_use" = "Termos de Utilização";
@@ -147,9 +142,6 @@
 "share_god_tools_share_sheet_text" = "Transfere a aplicação GodTools: https://godtoolsapp.com
 
 Podes encontrar uma versão online em https://knowgod.com/";
-
-// Add Tools
-"add_tools" = "Adicionar ferramentas";
 
 "total_views" = "%d visualizações";
 "total_languages" = "%d idiomas";
@@ -171,14 +163,13 @@ Podes encontrar uma versão online em https://knowgod.com/";
 "no_internet" = "Verifica a tua ligação à Internet e tenta novamente.";
 
 "the_tool_you_requested_is_loading" = "A ferramenta que solicitaste está a carregar...";
-"loading" = "A carregar...";
 
 // Actions
 "yes" = "Sim";
 "no" = "Não";
 
 // Tract - Sharing
-"tract_share_message" ="Esta ligação irá direcionar-te para a versão Web da última página que estávamos a ver juntos hoje: %@. Vamos falar mais!
+"tract_share_message" = "Esta ligação irá direcionar-te para a versão Web da última página que estávamos a ver juntos hoje: %@. Vamos falar mais!
 
 Podes transferir a aplicação em https://godtoolsapp.com";
 
@@ -193,7 +184,6 @@ Podes transferir a aplicação em https://godtoolsapp.com";
 
 // Alerts
 "error" = "Erro";
-"OK" = "OK";
 "cancel" = "Cancelar";
 "required_field_missing" = "\"%@\" é um campo obrigatório.";
 
@@ -210,8 +200,8 @@ Podes transferir a aplicação em https://godtoolsapp.com";
 "general_about_8" = "Visita godtoolsapp.com para obteres mais informações.";
 "tutorial.continueButton.title.continue" = "Continuar";
 "general_about_9" = "Quando tomas a iniciativa de partilhar a tua fé, lembra-te de que Deus é quem muda o coração. Ama cada pessoa ouvindo-a atentamente para a compreenderes.";
-"general_about_10" = "\"Que a vossa palavra seja sempre amável, temperada de sal, para que saibais responder a cada um como deveis.\" Colossenses 4:6";
 
+"general_about_10" = "\"Que a vossa palavra seja sempre amável, temperada de sal, para que saibais responder a cada um como deveis.\" Colossenses 4:6";
 // Downloads
 "Download in progress" = "Transferência em curso";
 
@@ -221,4 +211,3 @@ Podes transferir a aplicação em https://godtoolsapp.com";
 
 // Language Name Strings
 "language_name_fa" = "Persa (parse)";
-

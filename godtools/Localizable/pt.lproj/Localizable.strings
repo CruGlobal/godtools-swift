@@ -1,3 +1,6 @@
+"deferredDeepLinkModal.title" = "Parece que você clicou em um link para GodTools";
+"deferredDeepLinkModal.message" = "Toque no botão abaixo para que possamos levá-lo ao conteúdo solicitado.";
+
 "optInNotification.notificationSettings" = "Configurações de notificações";
 "lessons.swipeTutorial.title" = "Deslize para trocar de páginas";
 "lessons.swipeTutorial.buttonText" = "Entendi";
@@ -15,11 +18,8 @@
 "lessons.lessonCompleted" = "Concluído";
 "lessons.completionProgress" = "%@ concluído";
 "network_connection_lost" = "A conexão de rede foi perdida.";
-"language_name_fil" = "Filipino (Tagalog)";
 "lessons.filter.navBar.language" = "Idioma da lição";
 "lessons.languageFilter.title" = "Lições em:";
-"language_name_fil-x-taglish" = "Taglish";
-"language_name_sid" = "Sidama";
 "onboardingTutorial.chooseLanguageButton.title" = "Selecionar idioma";
 "languageSettings.confirmAppLanguage.message" = "Você selecionou %@ como o idioma do seu aplicativo. Isto altera o idioma de todo o aplicativo GodTools. Tem certeza de que quer fazer isto?";
 "languageSettings.confirmAppLanguage.changeLanguageButton.title" = "Alterar idioma";
@@ -118,7 +118,6 @@
 "toolSettings.shareables.title" = "Gráficos relacionados";
 "allTools.spotlight.title" = "Destaque de ferramentas";
 "allTools.spotlight.description" = "Pensamos que você vai gostar dessas ferramentas";
-"allTools.categories.title" = "Categorias";
 "training_tip_ask" = "Perguntar";
 "training_tip_consider" = "Considere isso";
 "training_tip_prepare" = "Prepare-se";
@@ -238,9 +237,6 @@ Se você receber esta mensagem demasiado tarde, a ligação poderá não estar a
 
 /* This is to let users know which version of the app is installed on their phone */
 "menu_version" = "Versão";
-
-/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
-"articles.loadingView.downloadingArticles" = "A baixar artigos...";
 "language_onboard" = "Mais de 90 idiomas";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -252,35 +248,29 @@ Se você receber esta mensagem demasiado tarde, a ligação poderá não estar a
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
 "find_tools" = "Todas as ferramentas";
 
-"unavailable" = "Indisponível";
-
 // Navigation Bar
 "navigationBar.navigationItem.skip" = "Ignorar";
 
 // Onboarding
 "add_new_tools" = "Adicionar novas ferramentas";
-"set_your_languages" = "Definir os idiomas";
-"okay" = "OK";
+
 // Menu
 "menu_general" = "Geral";
 "menu_account" = "Conta";
 "menu_share" = "Partilhar";
 "menu_legal" = "Aviso legal";
 "language_settings" = "Definições de idioma";
-"menu.tutorial" = "Tutorial";
 "menu.my_account" = "A minha conta";
 
 // Login
 "login" = "Iniciar sessão";
 "logout" = "Sair";
 "create_account" = "Criar conta";
-"account_login" = "Iniciar sessão na conta";
 
 // Tool Detail
 "about" = "Sobre";
 "help" = "Perguntas frequentes";
 "contact_us" = "Contactar-nos";
-"preview_mode_translators_only" = "Modo de pré-visualização (apenas para tradutores)";
 "share_god_tools" = "Partilhar o GodTools";
 "share_a_story_with_us" = "Partilhar uma história connosco";
 "terms_of_use" = "Termos de utilização";
@@ -289,9 +279,6 @@ Se você receber esta mensagem demasiado tarde, a ligação poderá não estar a
 "share_god_tools_share_sheet_text" = "Baixe o aplicativo GodTools: https://godtoolsapp.com
 
 Pode encontrar uma versão online em https://knowgod.com/";
-
-// Add Tools
-"add_tools" = "Adicionar ferramentas";
 
 "total_views" = "%d visualizações";
 "total_languages" = "%d idiomas";
@@ -313,14 +300,13 @@ Pode encontrar uma versão online em https://knowgod.com/";
 "no_internet" = "Verifique sua ligação à Internet e tente novamente.";
 
 "the_tool_you_requested_is_loading" = "A ferramenta que solicitou está carregando...";
-"loading" = "Carregando...";
 
 // Actions
 "yes" = "Sim";
 "no" = "Não";
 
 // Tract - Sharing
-"tract_share_message" ="Esta ligação irá direcioná-lo para uma versão Web do que estávamos a falar hoje: %@.
+"tract_share_message" = "Esta ligação irá direcioná-lo para uma versão Web do que estávamos a falar hoje: %@.
 
 Vamos falar mais!
 
@@ -337,7 +323,6 @@ Pode baixar o aplicativo em https://godtoolsapp.com";
 
 // Alerts
 "error" = "Erro";
-"OK" = "OK";
 "cancel" = "Cancelar";
 "required_field_missing" = "\"%@\" é um campo obrigatório.";
 
@@ -389,24 +374,9 @@ Prima o botão de informações em qualquer ferramenta para obter mais informaç
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "Atividade global";
-// OnboardingWelcome
-"onboardingWelcome.titleLabel.welcome" = "Boas-vindas";
 "accountActivity.globalAnalytics.users.title" = "Utilizadores\núnicos";
 "onboardingWelcome.titleLabel.tagline" = "Ajudando você a compartilhar a sua fé";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "Apresentações do\nevangelho";
 "accountActivity.globalAnalytics.launches.title" = "Sessões";
-// OnboardingTutorial
-"onboardingTutorial.aboutAppItem.0.title" = "Compartilhe com outras pessoas";
 "accountActivity.globalAnalytics.countries.title" = "Países";
-
-"onboardingTutorial.aboutAppItem.0.message" = "O GodTools foi criado para guiar as suas conversas sobre a fé";
-"onboardingTutorial.aboutAppItem.1.title" = "Escolha as suas ferramentas";
-"onboardingTutorial.aboutAppItem.1.message" = "O GodTools ajuda antes, durante e depois de uma conversa espiritual";
-"onboardingTutorial.aboutAppItem.2.title" = "Sempre pronto";
-"onboardingTutorial.aboutAppItem.2.message" = "O GodTools está aqui para ajudar e está pronto quando também estiver";
-"onboardingTutorial.appUsageItem.0.message" = "Prepare-se para qualquer conversa";
-"onboardingTutorial.appUsageItem.1.message" = "Explique o evangelho a outra pessoa";
-"onboardingTutorial.appUsageItem.2.message" = "Veja dois idiomas lado a lado";
-"onboardingTutorial.appUsageItem.3.message" = "Escolha entre mais de 90 idiomas";
-"onboardingTutorial.appUsageItem.4.message" = "Ajude alguém a começar como cristão";
 "onboardingTutorial.showMoreButton.title" = "Mostrar mais";
