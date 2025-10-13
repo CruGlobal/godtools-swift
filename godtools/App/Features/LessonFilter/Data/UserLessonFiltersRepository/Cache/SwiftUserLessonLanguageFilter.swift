@@ -18,8 +18,8 @@ enum SwiftUserLessonLanguageFilterV1 {
     @Model
     class SwiftUserLessonLanguageFilter: IdentifiableSwiftDataObject {
         
-        @objc dynamic var createdAt: Date = Date()
-        @objc dynamic var languageId: String = ""
+        var createdAt: Date = Date()
+        var languageId: String = ""
         
         @Attribute(.unique) var id: String = ""
         @Attribute(.unique) var filterId: String = ""

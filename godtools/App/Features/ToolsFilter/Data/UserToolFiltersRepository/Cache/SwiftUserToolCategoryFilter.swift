@@ -20,8 +20,8 @@ enum SwiftUserToolCategoryFilterV1 {
         
         static let filterId = "userToolCategoryFilter"
         
-        @objc dynamic var createdAt: Date = Date()
-        @objc dynamic var categoryId: String = ""
+        var createdAt: Date = Date()
+        var categoryId: String = ""
         
         @Attribute(.unique) var id: String = ""
         @Attribute(.unique) var filterId: String = SwiftUserToolCategoryFilter.filterId
