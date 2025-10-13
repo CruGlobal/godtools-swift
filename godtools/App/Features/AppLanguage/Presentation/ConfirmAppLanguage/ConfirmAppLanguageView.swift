@@ -88,15 +88,9 @@ struct ConfirmAppLanguageView: View {
     
     @ViewBuilder func attributedMessageView(attributedString: NSAttributedString, fontSize: CGFloat) -> some View {
         
-        Group {
-            if #available(iOS 15, *) {
-                Text(AttributedString(attributedString))
-            } else {
-                Text(attributedString.string)
-            }
-        }
-        .font(FontLibrary.sfProTextRegular.font(size: fontSize))
-        .foregroundColor(ColorPalette.gtGrey.color)
+        Text(AttributedString(attributedString))
+            .font(FontLibrary.sfProTextRegular.font(size: fontSize))
+            .foregroundColor(ColorPalette.gtGrey.color)
     }
     
     private func getAttributedMessageString(highlightStringDomainModel: ConfirmAppLanguageHighlightStringDomainModel) -> NSAttributedString {
