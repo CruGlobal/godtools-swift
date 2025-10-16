@@ -3,7 +3,6 @@
 
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "Ei ole saadaval: %@";
-
 "tool_menu_item.tools" = "Kõik tööriistad";
 "lessons.pageTitle" = "Sulle mõeldud koolitus";
 "lessons.pageSubtitle" = "Kasulik nõu, kuidas suhteid luua ja tähendusrikkaid vestlusi alustada.";
@@ -37,7 +36,6 @@
 "toolSettings.shareables.title" = "Seotud pildid";
 "allTools.spotlight.title" = "Esiletõstetud tööriistad";
 "allTools.spotlight.description" = "Siit leiad mõned tööriistad, mis sulle meeldida võiksid.";
-"allTools.categories.title" = "Liigid";
 "tool_menu_item.lessons" = "Koolitus";
 "tool_offline_favorite_message" = "Tee tööriist kättesaadavaks võrguühenduseta, puudutades südameikoonil, et lisada see lemmikute hulka.";
 
@@ -106,31 +104,27 @@ Kui saad selle sõnumi hiljem, et pruugi link töötada. Sel juhul võime mõni 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
 "find_tools" = "Leia tööriistu";
 
-"unavailable" = "Ei ole saadaval";
-
 // Navigation Bar
 "navigationBar.navigationItem.skip" = "Jäta vahele";
 
 // Onboarding
 "add_new_tools" = "Lisa uusi tööriistu";
-"set_your_languages" = "Seadista oma keeled";
-"okay" = "Nõus";
+
 // Menu
 "menu_general" = "Üldised";
 "menu_share" = "Jagamine";
 "menu_legal" = "Juriidiline teave";
 "language_settings" = "Keeleseaded";
+
 // Login
 "login" = "Logi sisse";
 "logout" = "Logi välja";
 "create_account" = "Lisa konto";
-"account_login" = "Kontole sisselogimine";
 
 // Tool Detail
 "about" = "Teave";
 "help" = "Abi";
 "contact_us" = "Kontakt";
-"preview_mode_translators_only" = "Eelvaaterežiim (ainult tõlkijatele)";
 "share_god_tools" = "Jaga \"Jumala tööriistade\" rakendust";
 "share_a_story_with_us" = "Jaga meiega oma lugu";
 "terms_of_use" = "Kasutustingimused";
@@ -139,9 +133,6 @@ Kui saad selle sõnumi hiljem, et pruugi link töötada. Sel juhul võime mõni 
 "share_god_tools_share_sheet_text" = "Laadi \"Jumala tööriistade\" rakendus alla lehelt https://godtoolsapp.com
 
 Veebiversioon on saadaval lehel https://knowgod.com";
-
-// Add Tools
-"add_tools" = "Lisa tööriistu";
 
 "total_views" = "%d külastust";
 "total_languages" = "%d keelt";
@@ -163,14 +154,13 @@ Veebiversioon on saadaval lehel https://knowgod.com";
 "no_internet" = "Palun veenduge võrguühenduse olemasolus ja proovige uuesti.";
 
 "the_tool_you_requested_is_loading" = "Soovitud tööriista laadimine ...";
-"loading" = "Laadimine...";
 
 // Actions
 "yes" = "Jah";
 "no" = "Ei";
 
 // Tract - Sharing
-"tract_share_message" ="Link %@ viib sind täna viimati koos vaadatud lehe veebiversioonile. Räägime jälle!
+"tract_share_message" = "Link %@ viib sind täna viimati koos vaadatud lehe veebiversioonile. Räägime jälle!
 
 Rakenduse saab alla laadida lehelt godtoolsapp.com";
 
@@ -202,8 +192,8 @@ Rakenduse saab alla laadida lehelt godtoolsapp.com";
 "general_about_8" = "Lisateavet saad godtoolsapp.com-ist.";
 "tutorial.continueButton.title.continue" = "Jätka";
 "general_about_9" = "Kui jagad oma usku kellegagi, pea meeles, et inimese meelt muudab jumal. Näita oma armastust, kuulates inimesi, et mõistaksid neid.";
-"general_about_10" = "\"Teie kõne olgu alati armu sees, soolaga soolatud, et te teaksite, kuidas teil tuleb igaühele kosta.\" Koloslastele 4:6";
 
+"general_about_10" = "\"Teie kõne olgu alati armu sees, soolaga soolatud, et te teaksite, kuidas teil tuleb igaühele kosta.\" Koloslastele 4:6";
 // Downloads
 "Download in progress" = "Toimub allalaadimine";
 
@@ -213,4 +203,3 @@ Rakenduse saab alla laadida lehelt godtoolsapp.com";
 
 // Language Name Strings
 "language_name_fa" = "Pärsia (farsi)";
-

@@ -3,7 +3,6 @@
 
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "Niedostępne po %@";
-
 "tool_menu_item.tools" = "Narzędzia";
 "lessons.pageTitle" = "Lekcje idealne dla Ciebie";
 "lessons.pageSubtitle" = "Praktyczne pomysły na budowanie relacji i rozpoczynanie wartościowych rozmów.";
@@ -37,8 +36,8 @@
 "toolSettings.shareables.title" = "Powiązane obrazy";
 "allTools.spotlight.title" = "Wybrane narzędzia";
 "allTools.spotlight.description" = "Oto kilka narzędzi, które mogą Ci się spodobać";
-"allTools.categories.title" = "Kategorie";
 "tool_menu_item.lessons" = "Lekcje";
+
 "onboardingTutorial.beginButton.title" = "Zacznij";
 "onboardingTutorial.nextButton.title" = "Następny";
 "tool_offline_favorite_message" = "Stukając w ikonę serca, dodasz narzędzie do ulubionych i sprawisz, że będzie dostępne offline.";
@@ -114,31 +113,27 @@
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
 "find_tools" = "Wszystkie narzędzia";
 
-"unavailable" = "Niedostępne";
-
 // Navigation Bar
 "navigationBar.navigationItem.skip" = "Pomiń";
 
 // Onboarding
 "add_new_tools" = "Dodaj Nowe Narzędzia";
-"set_your_languages" = "Ustaw języki";
-"okay" = "Okej";
+
 // Menu
 "menu_general" = "Ogólne";
 "menu_share" = "Udostępnij";
 "menu_legal" = "Prawne";
 "language_settings" = "Ustawienia języka";
+
 // Login
 "login" = "Zaloguj";
 "logout" = "Wyloguj";
 "create_account" = "Utwórz konto";
-"account_login" = "Zaloguj się na konto";
 
 // Tool Detail
 "about" = "O aplikacji";
 "help" = "Pomoc";
 "contact_us" = "Kontakt";
-"preview_mode_translators_only" = "Tryb podglądu (tylko dla tłumaczy)";
 "share_god_tools" = "Udostępnij Aplikację GodTools";
 "share_a_story_with_us" = "Podziel się z nami swoją historią";
 "terms_of_use" = "Warunki użytkowania";
@@ -148,9 +143,6 @@
 https://godtoolsapp.com
 
 Wersję online można znaleźć na https://knowgod.com/";
-
-// Add Tools
-"add_tools" = "Dodaj Narzędzia";
 
 "total_views" = "%d wizyt";
 "total_languages" = "%d języków";
@@ -172,14 +164,13 @@ Wersję online można znaleźć na https://knowgod.com/";
 "no_internet" = "Sprawdź swoje połączenie internetowe i spróbuj ponownie.";
 
 "the_tool_you_requested_is_loading" = "Trwa wczytywanie żądanego narzędzia...";
-"loading" = "Ładowanie...";
 
 // Actions
 "yes" = "Tak";
 "no" = "Nie";
 
 // Tract - Sharing
-"tract_share_message" ="Ten link kieruje do webowej wersji strony, którą razem ostatnio omawialiśmy:%@. 
+"tract_share_message" = "Ten link kieruje do webowej wersji strony, którą razem ostatnio omawialiśmy:%@. 
 
 Bądźmy w kontakcie!
 
@@ -213,9 +204,9 @@ Możesz pobrać tę aplikację z https://godtoolsapp.com";
 "general_about_8" = "Więcej informacji znajdziesz na stronie godtoolsapp.com.";
 "tutorial.continueButton.title.continue" = "kontynuować";
 "general_about_9" = "Wraz z tym jak podejmujesz inicjatywę dzielenia się własną wiarą, pamiętaj, że Bóg jest siłą zdolna odmieniać serca. Wyrażaj miłość do każdego człowieka wysłuchując go ze zrozumieniem.";
+
 "general_about_10" = "\"Mowa wasza, zawsze miła, niech będzie zaprawiona solą, tak byście wiedzieli, jak należy każdemu odpowiadać.\"
 List do Kolosan 4, 6";
-
 // Downloads
 "Download in progress" = "Pobieranie w toku";
 
@@ -225,4 +216,3 @@ List do Kolosan 4, 6";
 
 // Language Name Strings
 "language_name_fa" = "Perski (Farsi)";
-

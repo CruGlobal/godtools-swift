@@ -1,3 +1,8 @@
+"deferredDeepLinkModal.title" = "يبدو أنك قمت بالنقر على رابط لـ GodTools";
+"deferredDeepLinkModal.message" = "اضغط على الزر أدناه حتى نتمكن من نقلك إلى المحتوى الذي طلبته.";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "إغلاق";
+
 "optInNotification.notificationSettings" = "إعدادات الإشعارات";
 "lessons.swipeTutorial.title" = "اسحب لتغيير الصفحات";
 "lessons.swipeTutorial.buttonText" = "فهمت";
@@ -18,8 +23,6 @@
 "language_name_fil" = "الفلبينية (تاجالوج)";
 "lessons.filter.navBar.language" = "لُغة الدرس";
 "lessons.languageFilter.title" = "دروس في:";
-"language_name_fil-x-taglish" = "Taglish";
-"language_name_sid" = "Sidama";
 "onboardingTutorial.chooseLanguageButton.title" = "اختر اللغة";
 "languageSettings.confirmAppLanguage.message" = "لقد حددت %@  كلغة تطبيقك. سيؤدي هذا إلى تغيير لغة تطبيق GodTools بالكامل. هل أنت متأكد؟";
 "languageSettings.confirmAppLanguage.changeLanguageButton.title" = "تغيير اللغة";
@@ -118,7 +121,6 @@
 "toolSettings.shareables.title" = "الرسومات ذات الصلة";
 "allTools.spotlight.title" = "تسليط الضوء على الأداة";
 "allTools.spotlight.description" = "إليك بعض الأدوات التي نعتقد أنها قد تنال إعجابك";
-"allTools.categories.title" = "الفئات";
 "training_tip_ask" = "إسأل";
 "training_tip_consider" = "فكر فيه";
 "training_tip_prepare" = "حضر";
@@ -250,15 +252,12 @@
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
 "find_tools" = "كل الأدوات";
 
-"unavailable" = "غير متوفر";
-
 // Navigation Bar
 "navigationBar.navigationItem.skip" = "تجاوز";
 
 // Onboarding
 "add_new_tools" = "إضافة مزيد من الأدوات";
-"set_your_languages" = "حدد لغاتك";
-"okay" = "حسناً";
+
 // Menu
 "menu_general" = "عام";
 "menu_account" = "حساب";
@@ -272,13 +271,11 @@
 "login" = "تسجيل الدخول";
 "logout" = "تسجيل الخروج";
 "create_account" = "إنشاء حساب";
-"account_login" = "دخول الحساب";
 
 // Tool Detail
 "about" = "حول";
 "help" = "الأسئلة المتكررة";
 "contact_us" = "اتصل بنا";
-"preview_mode_translators_only" = "وضع المعاينة (المترجمون فقط)";
 "share_god_tools" = "شارك تطبيق GodTools";
 "share_a_story_with_us" = "شارك قصة معنا";
 "terms_of_use" = "شروط الاستخدام";
@@ -288,9 +285,6 @@
 https://godtoolsapp.com
 
 يمكن العثور على إصدار الإنترنت على https://knowgod.com/";
-
-// Add Tools
-"add_tools" = "إضافة أدوات";
 
 "total_views" = "%d مشاهدات";
 "total_languages" = "%d لغات";
@@ -312,14 +306,13 @@ https://godtoolsapp.com
 "no_internet" = "يرجى التأكد من اتصالك بالانترنت وإعادة المحاولة.";
 
 "the_tool_you_requested_is_loading" = "جاري تحميل الأداة التي طلبتها...";
-"loading" = "جارٍ التحميل...";
 
 // Actions
 "yes" = "نعم";
 "no" = "لا";
 
 // Tract - Sharing
-"tract_share_message" ="هذا الرابط سيأخذك إلى إصدار الويب عما كنا نتحدث عنه هذا اليوم: %@.
+"tract_share_message" = "هذا الرابط سيأخذك إلى إصدار الويب عما كنا نتحدث عنه هذا اليوم: %@.
 
 فلنتحدث أكثر! 
 
@@ -384,8 +377,5 @@ https://godtoolsapp.com
 "onboardingWelcome.titleLabel.tagline" = "يُساعدك على مشاركة إيمانك";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "الإنجيل\nالعروض التقديمية";
 "accountActivity.globalAnalytics.launches.title" = "الجلسات";
-// OnboardingTutorial
-"onboardingTutorial.aboutAppItem.0.title" = "المشاركة مع الآخرين";
 "accountActivity.globalAnalytics.countries.title" = "البلدان";
-
 "onboardingTutorial.showMoreButton.title" = "أعرض لي المزيد";
