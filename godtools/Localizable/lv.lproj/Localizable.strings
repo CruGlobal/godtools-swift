@@ -1,3 +1,6 @@
+"deferredDeepLinkModal.title" = "Izskatās, ka jūs noklikšķinājāt uz saites, kas ved uz GodTools.";
+"deferredDeepLinkModal.message" = "Pieskarieties tālāk redzamajai pogai, lai mēs varētu jūs novirzīt uz pieprasīto saturu.";
+
 "optInNotification.notificationSettings" = "Paziņojumu iestatījumi";
 "lessons.swipeTutorial.title" = "Velc, lai apskatītu citas lapas";
 "lessons.swipeTutorial.buttonText" = "Sapratu";
@@ -118,7 +121,6 @@
 "toolSettings.shareables.title" = "Saistītie attēli";
 "allTools.spotlight.title" = "Izmēģini rīku";
 "allTools.spotlight.description" = "Lūk, daži rīki, kas tev varētu patikt";
-"allTools.categories.title" = "Kategorijas";
 "training_tip_ask" = "Jautā";
 "training_tip_consider" = "Ņem vērā";
 "training_tip_prepare" = "Sagatavojies";
@@ -238,9 +240,6 @@ Ja saņēmi šo ziņojumu novēloti, iespējams, ka saite vairs nedarbojas. Mēs
 
 /* This is to let users know which version of the app is installed on their phone */
 "menu_version" = "Versija";
-
-/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
-"articles.loadingView.downloadingArticles" = "Notiek lejupielāde ...";
 "language_onboard" = "90+ valodas";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -252,15 +251,12 @@ Ja saņēmi šo ziņojumu novēloti, iespējams, ka saite vairs nedarbojas. Mēs
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
 "find_tools" = "Visi rīki";
 
-"unavailable" = "Nav pieejams";
-
 // Navigation Bar
 "navigationBar.navigationItem.skip" = "Izlaist";
 
 // Onboarding
 "add_new_tools" = "Pievienot jaunus rīkus";
-"set_your_languages" = "Valodas izvēle";
-"okay" = "Labi";
+
 // Menu
 "menu_general" = "Vispārīgi";
 "menu_account" = "Konts";
@@ -274,13 +270,11 @@ Ja saņēmi šo ziņojumu novēloti, iespējams, ka saite vairs nedarbojas. Mēs
 "login" = "Pierakstīties";
 "logout" = "Izrakstīties";
 "create_account" = "Reģistrēt kontu";
-"account_login" = "Pieteikšanās kontā";
 
 // Tool Detail
 "about" = "Par rīku";
 "help" = "Biežāk uzdotie jautājumi";
 "contact_us" = "Sazinies ar mums";
-"preview_mode_translators_only" = "Priekšskata režīms (tikai tulkiem)";
 "share_god_tools" = "Kopīgo 'GodTools' lietotni";
 "share_a_story_with_us" = "Pastāsti savu liecību";
 "terms_of_use" = "Lietošanas noteikumi";
@@ -289,9 +283,6 @@ Ja saņēmi šo ziņojumu novēloti, iespējams, ka saite vairs nedarbojas. Mēs
 "share_god_tools_share_sheet_text" = "Lejupielādē 'GodTools' lietotni savā tālrunī: https://ej.uz/GodTools
 
 Rīku tīmekļa versijas ir pieejamas: https://KnowGod.com/lv";
-
-// Add Tools
-"add_tools" = "Pievienot rīkus";
 
 "total_views" = "%d skatījumi";
 "total_languages" = "%d valodas";
@@ -313,14 +304,13 @@ Rīku tīmekļa versijas ir pieejamas: https://KnowGod.com/lv";
 "no_internet" = "Lūdzu, pārbaudi savienojumu ar internetu un mēģini vēlreiz.";
 
 "the_tool_you_requested_is_loading" = "Tavs pieprasītais rīks tiek ielādēts…";
-"loading" = "Ielādē...";
 
 // Actions
 "yes" = "Jā";
 "no" = "Nē";
 
 // Tract - Sharing
-"tract_share_message" ="Šī saite atvērs tīmekļa lapu par to, ko šodien apspriedām: %@. 
+"tract_share_message" = "Šī saite atvērs tīmekļa lapu par to, ko šodien apspriedām: %@. 
 
 Turpināsim sarunu!
 
@@ -337,7 +327,6 @@ Lietotni var lejupielādēt savā tālrunī šeit: https://ej.uz/GodTools";
 
 // Alerts
 "error" = "Kļūda";
-"OK" = "OK";
 "cancel" = "Atcelt";
 "required_field_missing" = "Lauks \"%@\" aizpildāms obligāti!";
 
@@ -394,18 +383,5 @@ Lai iegūtu vairāk informācijas, nospied pogu \"Apraksts\".";
 "onboardingWelcome.titleLabel.tagline" = "Tava iespēja parunāt par Jēzu";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "Labās vēsts\nprezentācijas";
 "accountActivity.globalAnalytics.launches.title" = "Sesijas";
-// OnboardingTutorial
-"onboardingTutorial.aboutAppItem.0.title" = "Runā par Dievu ar citiem";
 "accountActivity.globalAnalytics.countries.title" = "Valstis";
-
-"onboardingTutorial.aboutAppItem.0.message" = "'GodTools' palīdz veidot jēgpilnas sarunas par Dievu.";
-"onboardingTutorial.aboutAppItem.1.title" = "Izvēlies savus rīkus";
-"onboardingTutorial.aboutAppItem.1.message" = "'GodTools' rīki palīdz pirms sarunas, sarunas laikā vai pēc sarunas.";
-"onboardingTutorial.aboutAppItem.2.title" = "Esi gatavs!";
-"onboardingTutorial.aboutAppItem.2.message" = "'GodTools' tev palīdzēs sarunās.";
-"onboardingTutorial.appUsageItem.0.message" = "Sagatavojies katrai sarunai";
-"onboardingTutorial.appUsageItem.1.message" = "Izskaidro Labo vēsti";
-"onboardingTutorial.appUsageItem.2.message" = "Izmanto iespēju lietot 2 valodas paralēli";
-"onboardingTutorial.appUsageItem.3.message" = "Izvēlies no 90+ valodām";
-"onboardingTutorial.appUsageItem.4.message" = "Palīdzi jaunajam kristietim augt ticībā";
 "onboardingTutorial.showMoreButton.title" = "Vairāk";
