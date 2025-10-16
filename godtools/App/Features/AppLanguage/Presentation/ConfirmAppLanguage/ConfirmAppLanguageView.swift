@@ -95,8 +95,7 @@ struct ConfirmAppLanguageView: View {
     
     private func getAttributedMessageString(highlightStringDomainModel: ConfirmAppLanguageHighlightStringDomainModel) -> AttributedString {
         
-        let formatString = String(format: highlightStringDomainModel.formatString, highlightStringDomainModel.highlightText)
-        var attributedString = AttributedString(formatString)
+        var attributedString = AttributedString(highlightStringDomainModel.fullText)
         
         guard let range = attributedString.range(of: highlightStringDomainModel.highlightText) else { return attributedString }
         attributedString[range].foregroundColor = ColorPalette.gtBlue.color

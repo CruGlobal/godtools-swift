@@ -10,10 +10,10 @@ import Foundation
 
 struct ConfirmAppLanguageHighlightStringDomainModel {
     
+    let fullText: String
     let highlightText: String
-    let formatString: String
     
     static func emptyStrings() -> ConfirmAppLanguageHighlightStringDomainModel {
-        return ConfirmAppLanguageHighlightStringDomainModel(highlightText: "", formatString: "")
+        return ConfirmAppLanguageHighlightStringDomainModel(fullText: "", highlightText: "")
     }
 }

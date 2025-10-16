@@ -41,6 +41,8 @@ class GetConfirmAppLanguageInterfaceStringsRepository: GetConfirmAppLanguageInte
         let formatString = localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "languageSettings.confirmAppLanguage.message")
         let languageName = getTranslatedLanguageName.getLanguageName(language: selectedLanguage, translatedInLanguage: localeId)
         
-        return ConfirmAppLanguageHighlightStringDomainModel(highlightText: languageName, formatString: formatString)
+        let fullText = String(format: formatString, languageName)
+        
+        return ConfirmAppLanguageHighlightStringDomainModel(fullText: fullText, highlightText: languageName)
     }
 }
