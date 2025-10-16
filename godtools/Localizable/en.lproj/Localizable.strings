@@ -424,7 +424,3 @@ Press the About button on any tool for more info.";
 "onboardingTutorial.showMoreButton.title" = "Show Me More";
 
 "screenShareTutorial.generateQRCodeButton.title" = "Generate QR code";
-
-"toolScreenShare.qrCode.closeButtonTitle" = "Close";
-"toolScreenShare.qrCode.title" = "QR Code";
-"toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";
