@@ -8,7 +8,6 @@
 
 import Foundation
 @testable import godtools
-import LocalizationServices
 
 class MockLocalizationServices: LocalizationServicesInterface {
     

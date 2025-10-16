@@ -8,7 +8,6 @@
 
 import Combine
 import Foundation
-import LocalizationServices
 
 class GetOptInNotificationInterfaceStringsRepository: GetOptInNotificationInterfaceStringsRepositoryInterface {
     

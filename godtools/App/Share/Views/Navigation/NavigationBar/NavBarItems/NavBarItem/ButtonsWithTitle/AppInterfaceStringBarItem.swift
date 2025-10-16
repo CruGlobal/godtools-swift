@@ -8,7 +8,6 @@
 
 import UIKit
 import Combine
-import LocalizationServices
 
 class AppInterfaceStringBarItem: NavBarItem {
     
