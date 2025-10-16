@@ -1,3 +1,10 @@
+"deferredDeepLinkModal.title" = "Похоже, вы нажали ссылку на GodTools.";
+"deferredDeepLinkModal.message" = "Нажмите кнопку ниже, чтобы мы могли перенаправить вас к запрошенному вами контенту.";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "Close";
+"toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";
+"toolScreenShare.qrCode.title" = "QR Code";
+
 "optInNotification.notificationSettings" = "Настройки уведомлений";
 "lessons.swipeTutorial.title" = "Проведите по экрану, чтобы листать страницы";
 "lessons.swipeTutorial.buttonText" = "Понятно";
@@ -118,12 +125,13 @@
 "toolSettings.shareables.title" = "Связанные изображения";
 "allTools.spotlight.title" = "Обзор инструментов";
 "allTools.spotlight.description" = "Вам могут понравиться эти инструменты";
-"allTools.categories.title" = "Категории";
+"allTools.categories.title" = "Categories";
 "training_tip_ask" = "Задать вопрос";
 "training_tip_consider" = "Подумайте";
 "training_tip_prepare" = "Подготовьтесь";
 "training_tip_quote" = "Цитата";
 "training_tip_tip" = "Подсказка";
+"articles.downloadingArticles.errorMessage.title" = "Error Downloading Articles";
 "start_training" = "Начать обучение";
 "close" = "Закрыть";
 "tool_menu_item.lessons" = "Уроки";
@@ -241,7 +249,7 @@
 "menu_version" = "Версия";
 
 /* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
-"articles.loadingView.downloadingArticles" = "Загружаем статьи...";
+"articles.loadingView.downloadingArticles" = "Downloading Articles ...";
 "language_onboard" = "Более 90 языков";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -253,15 +261,19 @@
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
 "find_tools" = "Все инструменты";
 
-"unavailable" = "Недоступно";
+"unavailable" = "Unavailable";
 
 // Navigation Bar
 "navigationBar.navigationItem.skip" = "Пропустить";
 
 // Onboarding
 "add_new_tools" = "Добавить новые инструменты";
-"set_your_languages" = "Настройте языки";
-"okay" = "Хорошо";
+"set_your_languages" = "Set Your Languages";
+"okay" = "Okay";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
+
 // Menu
 "menu_general" = "Общие настройки";
 "menu_account" = "Учетная запись";
@@ -275,13 +287,13 @@
 "login" = "Войти";
 "logout" = "Выйти";
 "create_account" = "Создать учетную запись";
-"account_login" = "Имя пользователя";
+"account_login" = "Account Login";
 
 // Tool Detail
 "about" = "О приложении";
 "help" = "Частые вопросы";
 "contact_us" = "Связаться с нами";
-"preview_mode_translators_only" = "Режим предпросмотра (только для переводчиков)";
+"preview_mode_translators_only" = "Preview Mode (Translators Only)";
 "share_god_tools" = "Поделиться GodTools";
 "share_a_story_with_us" = "Поделиться с нами историей";
 "terms_of_use" = "Условия использования";
@@ -292,7 +304,7 @@
 Онлайн-версию можно открыть по ссылке https://knowgod.com/";
 
 // Add Tools
-"add_tools" = "Добавить инструменты";
+"add_tools" = "Add Tools";
 
 "total_views" = "Просмотры: %d";
 "total_languages" = "Языки: %d";
@@ -314,14 +326,14 @@
 "no_internet" = "Проверьте подключение к сети и попробуйте еще раз.";
 
 "the_tool_you_requested_is_loading" = "Загрузка требуемого инструмента...";
-"loading" = "Загрузка...";
+"loading" = "Loading...";
 
 // Actions
 "yes" = "Да";
 "no" = "Нет";
 
 // Tract - Sharing
-"tract_share_message" ="Ссылка переведет вас на веб-страницу с информацией, которую мы обсуждали сегодня: %@. 
+"tract_share_message" = "Ссылка переведет вас на веб-страницу с информацией, которую мы обсуждали сегодня: %@. 
 
 Приглашаем вас к общению!
 
@@ -389,23 +401,25 @@
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "Глобальная активность";
 // OnboardingWelcome
-"onboardingWelcome.titleLabel.welcome" = "Добро пожаловать";
+"onboardingWelcome.titleLabel.welcome" = "Welcome";
 "accountActivity.globalAnalytics.users.title" = "Уникальные\nПользователи";
 "onboardingWelcome.titleLabel.tagline" = "Помогая вам говорить с другими о своей вере";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "Презентации\nПроповедей";
 "accountActivity.globalAnalytics.launches.title" = "Сеансы";
 // OnboardingTutorial
-"onboardingTutorial.aboutAppItem.0.title" = "Поделитесь в другими";
+"onboardingTutorial.aboutAppItem.0.title" = "Share With Others";
 "accountActivity.globalAnalytics.countries.title" = "Страны";
 
-"onboardingTutorial.aboutAppItem.0.message" = "GodTools создан для того, чтобы помочь вам говорить с другими о своей вере";
-"onboardingTutorial.aboutAppItem.1.title" = "Выберите свои инструменты";
-"onboardingTutorial.aboutAppItem.1.message" = "GodTools поможет вам во время разговора с человеком о Боге, до и после";
-"onboardingTutorial.aboutAppItem.2.title" = "Всегда в доступе и готово помочь";
-"onboardingTutorial.aboutAppItem.2.message" = "Приложение GodTools готово помочь в любой момент, когда готовы вы";
-"onboardingTutorial.appUsageItem.0.message" = "Подготовьтесь к любому разговору";
-"onboardingTutorial.appUsageItem.1.message" = "Расскажите кому-то Евангелие";
-"onboardingTutorial.appUsageItem.2.message" = "Выбрать два параллельных языка для просмотра";
-"onboardingTutorial.appUsageItem.3.message" = "Выберите свой язык из 90+ представленных в приложении";
-"onboardingTutorial.appUsageItem.4.message" = "Помогите другим в их духовном росте";
+"onboardingTutorial.aboutAppItem.0.message" = "GodTools is built to guide your faith conversations";
+"onboardingTutorial.aboutAppItem.1.title" = "Choose Your Tools";
+"onboardingTutorial.aboutAppItem.1.message" = "GodTools helps you before, during, and after a spiritual conversation";
+"onboardingTutorial.aboutAppItem.2.title" = "Always Ready";
+"onboardingTutorial.aboutAppItem.2.message" = "GodTools is here to help and is ready when you are";
+"onboardingTutorial.appUsageItem.0.message" = "Prepare for any conversation";
+"onboardingTutorial.appUsageItem.1.message" = "Walk someone through the gospel";
+"onboardingTutorial.appUsageItem.2.message" = "View two languages side by side";
+"onboardingTutorial.appUsageItem.3.message" = "Choose from over 90 languages";
+"onboardingTutorial.appUsageItem.4.message" = "Help someone get started as a Christian";
 "onboardingTutorial.showMoreButton.title" = "Покажите еще";
+
+"screenShareTutorial.generateQRCodeButton.title" = "Generate QR code";

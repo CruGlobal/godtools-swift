@@ -1,3 +1,10 @@
+"deferredDeepLinkModal.title" = "Có vẻ như bạn đã nhấp vào liên kết đến GodTools";
+"deferredDeepLinkModal.message" = "Nhấn vào nút bên dưới để chúng tôi có thể chuyển bạn đến nội dung bạn yêu cầu.";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "Close";
+"toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";
+"toolScreenShare.qrCode.title" = "QR Code";
+
 "optInNotification.notificationSettings" = "Cài đặt Thông báo";
 "lessons.swipeTutorial.title" = "Vuốt để chuyển trang";
 "lessons.swipeTutorial.buttonText" = "Hiểu rồi";
@@ -118,12 +125,13 @@
 "toolSettings.shareables.title" = "Hình ảnh tương ứng";
 "allTools.spotlight.title" = "Nổi bật công cụ";
 "allTools.spotlight.description" = "Có lẽ bạn sẽ thích một số công cụ này";
-"allTools.categories.title" = "Các mục";
+"allTools.categories.title" = "Categories";
 "training_tip_ask" = "Hỏi";
 "training_tip_consider" = "Xem xét";
 "training_tip_prepare" = "Chuẩn bị";
 "training_tip_quote" = "Trích dẫn";
 "training_tip_tip" = "Lời gợi ý";
+"articles.downloadingArticles.errorMessage.title" = "Error Downloading Articles";
 "start_training" = "Bắt đầu";
 "close" = "Đóng";
 "tool_menu_item.lessons" = "Bài học";
@@ -238,7 +246,7 @@
 "menu_version" = "Phiên bản";
 
 /* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
-"articles.loadingView.downloadingArticles" = "Đang tải bài viết...";
+"articles.loadingView.downloadingArticles" = "Downloading Articles ...";
 "language_onboard" = "Hơn 90 Ngôn ngữ";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -250,15 +258,19 @@
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
 "find_tools" = "Tất cả Công cụ";
 
-"unavailable" = "Không sẵn có";
+"unavailable" = "Unavailable";
 
 // Navigation Bar
 "navigationBar.navigationItem.skip" = "Bỏ qua ";
 
 // Onboarding
 "add_new_tools" = "Thêm các Công cụ Mới";
-"set_your_languages" = "Thiết lập Ngôn ngữ của bạn";
-"okay" = "Ok";
+"set_your_languages" = "Set Your Languages";
+"okay" = "Okay";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
+
 // Menu
 "menu_general" = "Tổng quát";
 "menu_account" = "Tài khoản";
@@ -272,13 +284,13 @@
 "login" = "Đăng nhập";
 "logout" = "Đăng xuất";
 "create_account" = "Tạo Tài khoản";
-"account_login" = "Đăng nhập Tài khoản";
+"account_login" = "Account Login";
 
 // Tool Detail
 "about" = "Giới thiệu";
 "help" = "Câu hỏi thường gặp";
 "contact_us" = "Liên hệ";
-"preview_mode_translators_only" = "Chế độ Xem trước (chỉ dành cho phiên dịch viên)";
+"preview_mode_translators_only" = "Preview Mode (Translators Only)";
 "share_god_tools" = "Chia sẻ ứng dụng GodTools";
 "share_a_story_with_us" = "Chia sẻ câu chuyện với chúng tôi";
 "terms_of_use" = "Điều khoản sử dụng";
@@ -289,7 +301,7 @@
 Một phiên bản trực tuyến có thể tìm thấy ở https://knowgod.com/";
 
 // Add Tools
-"add_tools" = "Thêm Công cụ";
+"add_tools" = "Add Tools";
 
 "total_views" = "%d lượt xem";
 "total_languages" = "%d ngôn ngữ";
@@ -311,14 +323,14 @@ Một phiên bản trực tuyến có thể tìm thấy ở https://knowgod.com/
 "no_internet" = "Vui lòng kiểm tra kết nối internet của bạn và thử lại.";
 
 "the_tool_you_requested_is_loading" = "Công cụ bạn yêu cầu đang tải...";
-"loading" = "Đang tải...";
+"loading" = "Loading...";
 
 // Actions
 "yes" = "Có";
 "no" = "Không";
 
 // Tract - Sharing
-"tract_share_message" ="Liên kết này sẽ đưa bạn đến phiên bản web của những gì chúng ta đã thảo luận hôm nay: %@. 
+"tract_share_message" = "Liên kết này sẽ đưa bạn đến phiên bản web của những gì chúng ta đã thảo luận hôm nay: %@. 
 
 Hãy thảo luận thêm!
 
@@ -388,23 +400,25 @@ Nhấn nút \"Giới thiệu\" để biết thêm về công cụ.";
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "Hoạt động toàn cầu";
 // OnboardingWelcome
-"onboardingWelcome.titleLabel.welcome" = "Chào mừng ";
+"onboardingWelcome.titleLabel.welcome" = "Welcome";
 "accountActivity.globalAnalytics.users.title" = "Người dùng\nduy nhất";
 "onboardingWelcome.titleLabel.tagline" = "Giúp bạn chia sẻ đức tin của mình";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "Trình bày\nPhúc Âm";
 "accountActivity.globalAnalytics.launches.title" = "Phần";
 // OnboardingTutorial
-"onboardingTutorial.aboutAppItem.0.title" = "Chia sẻ với người khác";
+"onboardingTutorial.aboutAppItem.0.title" = "Share With Others";
 "accountActivity.globalAnalytics.countries.title" = "Quốc gia";
 
-"onboardingTutorial.aboutAppItem.0.message" = "GodTools được xây dựng để dẫn dắt các cuộc trò chuyện về đức tin của bạn";
-"onboardingTutorial.aboutAppItem.1.title" = "Chọn công cụ của bạn";
-"onboardingTutorial.aboutAppItem.1.message" = "GodTools trợ giúp bạn trước, trong và sau một cuộc trò chuyện về tâm linh";
-"onboardingTutorial.aboutAppItem.2.title" = "Luôn sẵn sàng ";
-"onboardingTutorial.aboutAppItem.2.message" = "GodTools luôn đồng hành để trợ giúp và sẵn sàng khi bạn";
-"onboardingTutorial.appUsageItem.0.message" = "Chuẩn bị cho bất kỳ cuộc trò chuyện nào";
-"onboardingTutorial.appUsageItem.1.message" = "Hướng dẫn về Kinh Phúc âm";
-"onboardingTutorial.appUsageItem.2.message" = "Xem hai ngôn ngữ cạnh nhau";
-"onboardingTutorial.appUsageItem.3.message" = "Chọn từ hơn 90 ngôn ngữ";
-"onboardingTutorial.appUsageItem.4.message" = "Trợ giúp ai đó bắt đầu với tư cách là Cơ đốc Nhân";
+"onboardingTutorial.aboutAppItem.0.message" = "GodTools is built to guide your faith conversations";
+"onboardingTutorial.aboutAppItem.1.title" = "Choose Your Tools";
+"onboardingTutorial.aboutAppItem.1.message" = "GodTools helps you before, during, and after a spiritual conversation";
+"onboardingTutorial.aboutAppItem.2.title" = "Always Ready";
+"onboardingTutorial.aboutAppItem.2.message" = "GodTools is here to help and is ready when you are";
+"onboardingTutorial.appUsageItem.0.message" = "Prepare for any conversation";
+"onboardingTutorial.appUsageItem.1.message" = "Walk someone through the gospel";
+"onboardingTutorial.appUsageItem.2.message" = "View two languages side by side";
+"onboardingTutorial.appUsageItem.3.message" = "Choose from over 90 languages";
+"onboardingTutorial.appUsageItem.4.message" = "Help someone get started as a Christian";
 "onboardingTutorial.showMoreButton.title" = "Cho tôi xem nhiều hơn";
+
+"screenShareTutorial.generateQRCodeButton.title" = "Generate QR code";

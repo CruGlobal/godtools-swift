@@ -1,3 +1,10 @@
+"deferredDeepLinkModal.title" = "ऐसा लगता है कि आपने GodTools के लिंक पर क्लिक किया है";
+"deferredDeepLinkModal.message" = "नीचे दिए गए बटन पर टैप करें ताकि हम आपको आपके द्वारा अनुरोधित सामग्री तक ले जा सकें।";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "Close";
+"toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";
+"toolScreenShare.qrCode.title" = "QR Code";
+
 "optInNotification.notificationSettings" = "नोटिफिकेशन सेटिंग्स";
 "lessons.swipeTutorial.title" = "पृष्ठ बदलने के लिए स्वाइप करें";
 "lessons.swipeTutorial.buttonText" = "समझ गया";
@@ -118,12 +125,13 @@
 "toolSettings.shareables.title" = "संबंधित ग्राफिक्स";
 "allTools.spotlight.title" = "टूल स्पॉटलाइट";
 "allTools.spotlight.description" = "ये कुछ टूल्स हैं जो आपको पसंद आ सकते हैं";
-"allTools.categories.title" = "श्रेणियाँ";
+"allTools.categories.title" = "Categories";
 "training_tip_ask" = "पूछें";
 "training_tip_consider" = "विचार करें";
 "training_tip_prepare" = "तैयारी करें";
 "training_tip_quote" = "हवाला";
 "training_tip_tip" = "टिप";
+"articles.downloadingArticles.errorMessage.title" = "Error Downloading Articles";
 "start_training" = "प्रशिक्षण शुरू करें";
 "close" = "बन्द करें";
 "tool_menu_item.lessons" = "अध्याय";
@@ -238,7 +246,7 @@
 "menu_version" = "संस्करण";
 
 /* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
-"articles.loadingView.downloadingArticles" = "लेख डाउनलोड कर रहे…";
+"articles.loadingView.downloadingArticles" = "Downloading Articles ...";
 "language_onboard" = "90+ भाषाएँ";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -250,15 +258,19 @@
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
 "find_tools" = "सभी टूल्स";
 
-"unavailable" = "अनुपलब्ध";
+"unavailable" = "Unavailable";
 
 // Navigation Bar
 "navigationBar.navigationItem.skip" = "छोड़ें";
 
 // Onboarding
 "add_new_tools" = "नए टूल जोड़ें";
-"set_your_languages" = "अपनी भाषा निर्धारित करें";
-"okay" = "ठीक";
+"set_your_languages" = "Set Your Languages";
+"okay" = "Okay";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
+
 // Menu
 "menu_general" = "सामान्य";
 "menu_account" = "खाता";
@@ -272,13 +284,13 @@
 "login" = "लॉग-इन";
 "logout" = "लॉग-आउट";
 "create_account" = "खाता बनाएं";
-"account_login" = "खाते में लॉग-इन";
+"account_login" = "Account Login";
 
 // Tool Detail
 "about" = "परिचय";
 "help" = "अक्सर पूछे जाने वाले प्रश्न";
 "contact_us" = "हमसे संपर्क करें";
-"preview_mode_translators_only" = "प्रीव्यू मोड (केवल अनुवादक)";
+"preview_mode_translators_only" = "Preview Mode (Translators Only)";
 "share_god_tools" = "GodTools शेयर करें";
 "share_a_story_with_us" = "हमसे कोई कहानी शेयर करें";
 "terms_of_use" = "उपयोग की शर्तें";
@@ -289,7 +301,7 @@
 ऑनलाइन संस्करण यहां देखा जा सकता है: https://knowgod.com";
 
 // Add Tools
-"add_tools" = "टूल्स जोड़ें";
+"add_tools" = "Add Tools";
 
 "total_views" = "%d दृश्य";
 "total_languages" = "%d भाषाएं";
@@ -311,14 +323,14 @@
 "no_internet" = "कृपया अपना इंटरनेट कनेक्शन जांचें और पुनः प्रयास करें।";
 
 "the_tool_you_requested_is_loading" = "अनुरोधित टूल लोड हो रहा है ...";
-"loading" = "लोड हो रहा है...";
+"loading" = "Loading...";
 
 // Actions
 "yes" = "हां";
 "no" = "नहीं";
 
 // Tract - Sharing
-"tract_share_message" ="यह लिंक आपको हमारे आज के विषय के वेब संस्करण पर ले जाएगी: %@
+"tract_share_message" = "यह लिंक आपको हमारे आज के विषय के वेब संस्करण पर ले जाएगी: %@
 
 चलो और बात करते हैं!
 
@@ -387,23 +399,25 @@
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "वैश्विक गतिविधि";
 // OnboardingWelcome
-"onboardingWelcome.titleLabel.welcome" = "स्वागतम";
+"onboardingWelcome.titleLabel.welcome" = "Welcome";
 "accountActivity.globalAnalytics.users.title" = "खास\nउपयोगकर्ता";
 "onboardingWelcome.titleLabel.tagline" = "आपके विश्वास को शेयर करने में सहायक";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "इंजील\nप्रस्तुतिकरण";
 "accountActivity.globalAnalytics.launches.title" = "सत्र";
 // OnboardingTutorial
-"onboardingTutorial.aboutAppItem.0.title" = "अन्यों से शेयर करें";
+"onboardingTutorial.aboutAppItem.0.title" = "Share With Others";
 "accountActivity.globalAnalytics.countries.title" = "देश";
 
-"onboardingTutorial.aboutAppItem.0.message" = "GodTools को आपके विश्वास वार्तालापों में मदद के लिए बनाया गया है";
-"onboardingTutorial.aboutAppItem.1.title" = "अपने टूल चुनें";
-"onboardingTutorial.aboutAppItem.1.message" = "GodTools आपको आध्यात्मिक वार्तालाप से पहले, उसेक दौरान और उसके बाद मदद करता है";
-"onboardingTutorial.aboutAppItem.2.title" = "हमेशा तैयार";
-"onboardingTutorial.aboutAppItem.2.message" = "GodTools आपकी मदद के लिए है और आपके साथ ही तैयार है";
-"onboardingTutorial.appUsageItem.0.message" = "किसी भी वार्तालाप की तैयारी करें";
-"onboardingTutorial.appUsageItem.1.message" = "किसी को इंजील के बारे में विस्तार से बताएं";
-"onboardingTutorial.appUsageItem.2.message" = "दो भाषाएं एक साथ देखें";
-"onboardingTutorial.appUsageItem.3.message" = "90 से अधिक भाषाओं में से चुनें";
-"onboardingTutorial.appUsageItem.4.message" = "किसी को मसीही के रूप में आरम्भ करने में मदद करें।";
+"onboardingTutorial.aboutAppItem.0.message" = "GodTools is built to guide your faith conversations";
+"onboardingTutorial.aboutAppItem.1.title" = "Choose Your Tools";
+"onboardingTutorial.aboutAppItem.1.message" = "GodTools helps you before, during, and after a spiritual conversation";
+"onboardingTutorial.aboutAppItem.2.title" = "Always Ready";
+"onboardingTutorial.aboutAppItem.2.message" = "GodTools is here to help and is ready when you are";
+"onboardingTutorial.appUsageItem.0.message" = "Prepare for any conversation";
+"onboardingTutorial.appUsageItem.1.message" = "Walk someone through the gospel";
+"onboardingTutorial.appUsageItem.2.message" = "View two languages side by side";
+"onboardingTutorial.appUsageItem.3.message" = "Choose from over 90 languages";
+"onboardingTutorial.appUsageItem.4.message" = "Help someone get started as a Christian";
 "onboardingTutorial.showMoreButton.title" = "अधिक दिखाएं";
+
+"screenShareTutorial.generateQRCodeButton.title" = "Generate QR code";

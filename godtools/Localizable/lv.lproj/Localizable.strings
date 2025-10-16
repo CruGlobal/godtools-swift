@@ -1,3 +1,10 @@
+"deferredDeepLinkModal.title" = "Izskatās, ka jūs noklikšķinājāt uz saites, kas ved uz GodTools.";
+"deferredDeepLinkModal.message" = "Pieskarieties tālāk redzamajai pogai, lai mēs varētu jūs novirzīt uz pieprasīto saturu.";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "Close";
+"toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";
+"toolScreenShare.qrCode.title" = "QR Code";
+
 "optInNotification.notificationSettings" = "Paziņojumu iestatījumi";
 "lessons.swipeTutorial.title" = "Velc, lai apskatītu citas lapas";
 "lessons.swipeTutorial.buttonText" = "Sapratu";
@@ -118,12 +125,13 @@
 "toolSettings.shareables.title" = "Saistītie attēli";
 "allTools.spotlight.title" = "Izmēģini rīku";
 "allTools.spotlight.description" = "Lūk, daži rīki, kas tev varētu patikt";
-"allTools.categories.title" = "Kategorijas";
+"allTools.categories.title" = "Categories";
 "training_tip_ask" = "Jautā";
 "training_tip_consider" = "Ņem vērā";
 "training_tip_prepare" = "Sagatavojies";
 "training_tip_quote" = "Citāts";
 "training_tip_tip" = "Padoms";
+"articles.downloadingArticles.errorMessage.title" = "Error Downloading Articles";
 "start_training" = "Sākt apmācību";
 "close" = "Aizvērt";
 "tool_menu_item.lessons" = "Nodarbības";
@@ -240,7 +248,7 @@ Ja saņēmi šo ziņojumu novēloti, iespējams, ka saite vairs nedarbojas. Mēs
 "menu_version" = "Versija";
 
 /* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
-"articles.loadingView.downloadingArticles" = "Notiek lejupielāde ...";
+"articles.loadingView.downloadingArticles" = "Downloading Articles ...";
 "language_onboard" = "90+ valodas";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -252,15 +260,19 @@ Ja saņēmi šo ziņojumu novēloti, iespējams, ka saite vairs nedarbojas. Mēs
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
 "find_tools" = "Visi rīki";
 
-"unavailable" = "Nav pieejams";
+"unavailable" = "Unavailable";
 
 // Navigation Bar
 "navigationBar.navigationItem.skip" = "Izlaist";
 
 // Onboarding
 "add_new_tools" = "Pievienot jaunus rīkus";
-"set_your_languages" = "Valodas izvēle";
-"okay" = "Labi";
+"set_your_languages" = "Set Your Languages";
+"okay" = "Okay";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
+
 // Menu
 "menu_general" = "Vispārīgi";
 "menu_account" = "Konts";
@@ -274,13 +286,13 @@ Ja saņēmi šo ziņojumu novēloti, iespējams, ka saite vairs nedarbojas. Mēs
 "login" = "Pierakstīties";
 "logout" = "Izrakstīties";
 "create_account" = "Reģistrēt kontu";
-"account_login" = "Pieteikšanās kontā";
+"account_login" = "Account Login";
 
 // Tool Detail
 "about" = "Par rīku";
 "help" = "Biežāk uzdotie jautājumi";
 "contact_us" = "Sazinies ar mums";
-"preview_mode_translators_only" = "Priekšskata režīms (tikai tulkiem)";
+"preview_mode_translators_only" = "Preview Mode (Translators Only)";
 "share_god_tools" = "Kopīgo 'GodTools' lietotni";
 "share_a_story_with_us" = "Pastāsti savu liecību";
 "terms_of_use" = "Lietošanas noteikumi";
@@ -291,7 +303,7 @@ Ja saņēmi šo ziņojumu novēloti, iespējams, ka saite vairs nedarbojas. Mēs
 Rīku tīmekļa versijas ir pieejamas: https://KnowGod.com/lv";
 
 // Add Tools
-"add_tools" = "Pievienot rīkus";
+"add_tools" = "Add Tools";
 
 "total_views" = "%d skatījumi";
 "total_languages" = "%d valodas";
@@ -313,14 +325,14 @@ Rīku tīmekļa versijas ir pieejamas: https://KnowGod.com/lv";
 "no_internet" = "Lūdzu, pārbaudi savienojumu ar internetu un mēģini vēlreiz.";
 
 "the_tool_you_requested_is_loading" = "Tavs pieprasītais rīks tiek ielādēts…";
-"loading" = "Ielādē...";
+"loading" = "Loading...";
 
 // Actions
 "yes" = "Jā";
 "no" = "Nē";
 
 // Tract - Sharing
-"tract_share_message" ="Šī saite atvērs tīmekļa lapu par to, ko šodien apspriedām: %@. 
+"tract_share_message" = "Šī saite atvērs tīmekļa lapu par to, ko šodien apspriedām: %@. 
 
 Turpināsim sarunu!
 
@@ -390,22 +402,26 @@ Lai iegūtu vairāk informācijas, nospied pogu \"Apraksts\".";
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "Globālā aktivitāte";
+// OnboardingWelcome
+"onboardingWelcome.titleLabel.welcome" = "Welcome";
 "accountActivity.globalAnalytics.users.title" = "Unikālie\nlietotāji";
 "onboardingWelcome.titleLabel.tagline" = "Tava iespēja parunāt par Jēzu";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "Labās vēsts\nprezentācijas";
 "accountActivity.globalAnalytics.launches.title" = "Sesijas";
 // OnboardingTutorial
-"onboardingTutorial.aboutAppItem.0.title" = "Runā par Dievu ar citiem";
+"onboardingTutorial.aboutAppItem.0.title" = "Share With Others";
 "accountActivity.globalAnalytics.countries.title" = "Valstis";
 
-"onboardingTutorial.aboutAppItem.0.message" = "'GodTools' palīdz veidot jēgpilnas sarunas par Dievu.";
-"onboardingTutorial.aboutAppItem.1.title" = "Izvēlies savus rīkus";
-"onboardingTutorial.aboutAppItem.1.message" = "'GodTools' rīki palīdz pirms sarunas, sarunas laikā vai pēc sarunas.";
-"onboardingTutorial.aboutAppItem.2.title" = "Esi gatavs!";
-"onboardingTutorial.aboutAppItem.2.message" = "'GodTools' tev palīdzēs sarunās.";
-"onboardingTutorial.appUsageItem.0.message" = "Sagatavojies katrai sarunai";
-"onboardingTutorial.appUsageItem.1.message" = "Izskaidro Labo vēsti";
-"onboardingTutorial.appUsageItem.2.message" = "Izmanto iespēju lietot 2 valodas paralēli";
-"onboardingTutorial.appUsageItem.3.message" = "Izvēlies no 90+ valodām";
-"onboardingTutorial.appUsageItem.4.message" = "Palīdzi jaunajam kristietim augt ticībā";
+"onboardingTutorial.aboutAppItem.0.message" = "GodTools is built to guide your faith conversations";
+"onboardingTutorial.aboutAppItem.1.title" = "Choose Your Tools";
+"onboardingTutorial.aboutAppItem.1.message" = "GodTools helps you before, during, and after a spiritual conversation";
+"onboardingTutorial.aboutAppItem.2.title" = "Always Ready";
+"onboardingTutorial.aboutAppItem.2.message" = "GodTools is here to help and is ready when you are";
+"onboardingTutorial.appUsageItem.0.message" = "Prepare for any conversation";
+"onboardingTutorial.appUsageItem.1.message" = "Walk someone through the gospel";
+"onboardingTutorial.appUsageItem.2.message" = "View two languages side by side";
+"onboardingTutorial.appUsageItem.3.message" = "Choose from over 90 languages";
+"onboardingTutorial.appUsageItem.4.message" = "Help someone get started as a Christian";
 "onboardingTutorial.showMoreButton.title" = "Vairāk";
+
+"screenShareTutorial.generateQRCodeButton.title" = "Generate QR code";

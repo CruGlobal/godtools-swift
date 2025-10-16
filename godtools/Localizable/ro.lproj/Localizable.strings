@@ -1,3 +1,10 @@
+"deferredDeepLinkModal.title" = "Se pare că ai dat clic pe un link pentru GodTools";
+"deferredDeepLinkModal.message" = "Atingeți butonul de mai jos pentru a vă putea direcționa către conținutul solicitat.";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "Close";
+"toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";
+"toolScreenShare.qrCode.title" = "QR Code";
+
 "optInNotification.notificationSettings" = "Setarea Notificărilor";
 "lessons.swipeTutorial.title" = "Glisează pentru a schimba paginile";
 "lessons.swipeTutorial.buttonText" = "Am înțeles";
@@ -118,12 +125,13 @@
 "toolSettings.shareables.title" = "Grafice asociate";
 "allTools.spotlight.title" = "Instrumentele Recomandate";
 "allTools.spotlight.description" = "Iată câteva instrumente care credem că îți vor plăcea";
-"allTools.categories.title" = "Categorii";
+"allTools.categories.title" = "Categories";
 "training_tip_ask" = "Întreabă";
 "training_tip_consider" = "Gândește";
 "training_tip_prepare" = "Pregătește-te";
 "training_tip_quote" = "Citat";
 "training_tip_tip" = "Recomandări";
+"articles.downloadingArticles.errorMessage.title" = "Error Downloading Articles";
 "start_training" = "Începe Antrenarea";
 "close" = "Închide";
 "tool_menu_item.lessons" = "Lecții";
@@ -239,6 +247,9 @@ Dacă ai primit acest mesaj prea târziu, este posibil ca linkul să nu funcțio
 
 /* This is to let users know which version of the app is installed on their phone */
 "menu_version" = "Versiune";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
+"articles.loadingView.downloadingArticles" = "Downloading Articles ...";
 "language_onboard" = "Peste 90 de limbi";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -250,15 +261,19 @@ Dacă ai primit acest mesaj prea târziu, este posibil ca linkul să nu funcțio
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
 "find_tools" = "Toate instrumentele";
 
-"unavailable" = "Indisponibil";
+"unavailable" = "Unavailable";
 
 // Navigation Bar
 "navigationBar.navigationItem.skip" = "Omite";
 
 // Onboarding
 "add_new_tools" = "Adaugă instrumente noi";
-"set_your_languages" = "Setează limba";
-"okay" = "Ok";
+"set_your_languages" = "Set Your Languages";
+"okay" = "Okay";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
+
 // Menu
 "menu_general" = "General";
 "menu_account" = "Cont";
@@ -272,13 +287,13 @@ Dacă ai primit acest mesaj prea târziu, este posibil ca linkul să nu funcțio
 "login" = "Conectare";
 "logout" = "Deconectare";
 "create_account" = "Creează cont";
-"account_login" = "Conectare la cont";
+"account_login" = "Account Login";
 
 // Tool Detail
 "about" = "Despre noi";
 "help" = "Ajutor";
 "contact_us" = "Contactează-ne";
-"preview_mode_translators_only" = "Mod previzualizare (doar traducători)";
+"preview_mode_translators_only" = "Preview Mode (Translators Only)";
 "share_god_tools" = "Distribuie aplicația GodTools";
 "share_a_story_with_us" = "Împărtășește o experiență cu noi";
 "terms_of_use" = "Condiții de utilizare";
@@ -289,7 +304,7 @@ Dacă ai primit acest mesaj prea târziu, este posibil ca linkul să nu funcțio
 Găsești versiunea online aici https://knowgod.com/";
 
 // Add Tools
-"add_tools" = "Adaugă instrumente";
+"add_tools" = "Add Tools";
 
 "total_views" = "%d vizualizări";
 "total_languages" = "%d limbi";
@@ -311,14 +326,14 @@ Găsești versiunea online aici https://knowgod.com/";
 "no_internet" = "Verificați conexiunea la internet și încercați din nou.";
 
 "the_tool_you_requested_is_loading" = "Instrumentul solicitat se încarcă...";
-"loading" = "Se încarcă...";
+"loading" = "Loading...";
 
 // Actions
 "yes" = "Da";
 "no" = "Nu";
 
 // Tract - Sharing
-"tract_share_message" ="Link-ul te va conduce la versiunea web a paginii pe care am vizionat-o împreună azi: %@. 
+"tract_share_message" = "Link-ul te va conduce la versiunea web a paginii pe care am vizionat-o împreună azi: %@. 
 
 Să discutăm mai multe!
 
@@ -346,10 +361,18 @@ Aplicația poate fi descărcată de pe https://godtoolsapp.com";
 // Tutorial
 "tutorial.tutorialItem.0.title" = "Privește";
 "general_about_2" = "Aceste instrumente te ajută să explici celorlalți cum pot pune bazele unei relații cu Dumnezeu prin Iisus Hristos, chiar dacă nu ți-ai împărtășit credința până acum sau persoanele vorbesc o altă limbă.";
+"tutorial.tutorialItem.0.message" = "See what GodTools offers in our demo video
+(Tap on the video to bring up settings for subtitles)";
 "general_about_3" = "Alege din varietatea de instrumente pe baza preferințelor tale și a audienței. Nu toate instrumentele sunt disponibile în toate limbile.";
+"tutorial.tutorialItem.1.title" = "Prepare";
 "general_about_4" = "La sfârșitul fiecărui instrument sunt incluse link-uri către alte resurse.";
+"tutorial.tutorialItem.1.message" = "Get familiar with some of your tools. The \"Teach Me to Share\" tool is a good place to start.
+
+Press the About button on any tool for more info.";
 "general_about_5" = "Este nevoie de conexiune online pentru a descărca fiecare instrument și/sau limbă nouă. După descărcare, acestea pot fi folosite offline.";
+"tutorial.tutorialItem.2.title" = "Try";
 "general_about_6" = "Întrebări? Sugestii? Solicitări? Contactați-ne la support@godtoolsapp.com";
+"tutorial.tutorialItem.2.message" = "Everyone starts as a beginner. Try using a tool in a conversation and see what you learn.";
 "general_about_7" = "Puteți găsi versiunea online a instrumentelor pe knowgod.com. Implementați-o pe site-ul vostru!";
 "tutorial.tutorialItem.3.title" = "Acest tutorial este iarăși disponibil în meniu";
 "general_about_8" = "Vizitați godtoolsapp.com pentru mai multe informații.";
@@ -379,12 +402,26 @@ Aplicația poate fi descărcată de pe https://godtoolsapp.com";
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "Activitate Globală";
+// OnboardingWelcome
+"onboardingWelcome.titleLabel.welcome" = "Welcome";
 "accountActivity.globalAnalytics.users.title" = "Utilizatori\nUnici";
 "onboardingWelcome.titleLabel.tagline" = "Te ajutăm să-ți împărtășești credința";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "Prezentări ale\nEvangheliei";
 "accountActivity.globalAnalytics.launches.title" = "Sesiuni";
 // OnboardingTutorial
-"onboardingTutorial.aboutAppItem.0.title" = "Distribuie cu ceilalți";
+"onboardingTutorial.aboutAppItem.0.title" = "Share With Others";
 "accountActivity.globalAnalytics.countries.title" = "Țări";
 
+"onboardingTutorial.aboutAppItem.0.message" = "GodTools is built to guide your faith conversations";
+"onboardingTutorial.aboutAppItem.1.title" = "Choose Your Tools";
+"onboardingTutorial.aboutAppItem.1.message" = "GodTools helps you before, during, and after a spiritual conversation";
+"onboardingTutorial.aboutAppItem.2.title" = "Always Ready";
+"onboardingTutorial.aboutAppItem.2.message" = "GodTools is here to help and is ready when you are";
+"onboardingTutorial.appUsageItem.0.message" = "Prepare for any conversation";
+"onboardingTutorial.appUsageItem.1.message" = "Walk someone through the gospel";
+"onboardingTutorial.appUsageItem.2.message" = "View two languages side by side";
+"onboardingTutorial.appUsageItem.3.message" = "Choose from over 90 languages";
+"onboardingTutorial.appUsageItem.4.message" = "Help someone get started as a Christian";
 "onboardingTutorial.showMoreButton.title" = "Arată-mi mai mult";
+
+"screenShareTutorial.generateQRCodeButton.title" = "Generate QR code";
