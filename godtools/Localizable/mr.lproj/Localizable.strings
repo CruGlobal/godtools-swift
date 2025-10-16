@@ -3,7 +3,6 @@
 
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "%@ मध्ये उपलब्ध नाही";
-
 "tool_menu_item.tools" = "सर्व टूल्स";
 "lessons.pageTitle" = "तुमच्यासाठी तयार केलेले पाठ";
 "lessons.pageSubtitle" = "संबंध निर्माण आणि अर्थयुक्त संवादे सुरू करण्यास व्यावहारिक कल्पना.";
@@ -14,6 +13,7 @@
 "training_tip_quote" = "अवतरण";
 "training_tip_tip" = "टीप";
 "close" = "बंद";
+
 "onboardingTutorial.beginButton.title" = "सुरू करा";
 "onboardingTutorial.nextButton.title" = "यापुढील";
 "tool_offline_favorite_message" = "साधनाला आपल्या पसंतीत जोडणाऱ्या 'ह्रदय' चिन्हावर टॅप करून ते साधन ऑफलाइन उपलब्ध करा.";
@@ -89,8 +89,6 @@
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
 "find_tools" = "सर्व साधने";
 
-"unavailable" = "अनुपलब्ध";
-
 // Navigation Bar
 "navigationBar.navigationItem.skip" = "सोडा";
 
@@ -98,9 +96,7 @@
 "add_new_tools" = "टीपा
 आॅनबोर्डिंग
 नवीन साधने जोडा";
-"set_your_languages" = "आपली भाषा सेट करा";
-"okay" = "ठीक आहे
-";
+
 // Menu
 "menu_general" = "टिप्पणे
 मेनू
@@ -111,18 +107,17 @@
 "menu_legal" = "कायदेशीर";
 "language_settings" = "भाषेच्या मांडण्या";
 "menu.tutorial" = "प्रशिक्षण";
+
 // Login
 "login" = "लाॅगिन";
 "logout" = "लाॅग-आऊट";
 "create_account" = "नवीन अकाउंट तयार करा";
-"account_login" = "अकाउंटमध्ये लॉगिन";
 
 // Tool Detail
 "about" = "विषयी
 ";
 "help" = "वारंवार विचारले जाणारे प्रश्न";
 "contact_us" = "आमच्याशी संपर्क करा";
-"preview_mode_translators_only" = "प्रीव्ह्यू मोड (फक्त भाषांतरकारांसाठी)";
 "share_god_tools" = "गॉडटूल्स ऍपविषयी सांगा";
 "share_a_story_with_us" = "आम्हाला गोष्ट सांगा";
 "terms_of_use" = "उपयोग करण्याच्या अटी
@@ -132,12 +127,6 @@
 "share_god_tools_share_sheet_text" = "गाॅडटूल्स ऍप डाऊनलोड करा: https://godtoolsapp.com
 
 याची ऑनलाइन आवृत्ती येथे पाहा: https://knowgod.com";
-
-// Add Tools
-"add_tools" = "टीपा
-साधने जोडा
-साधने जोडा
-";
 
 "total_views" = "
 %d मते";
@@ -167,7 +156,6 @@
 "no_internet" = "कृपया इंटरनेट कनेक्शन तपासून परत प्रयास करा";
 
 "the_tool_you_requested_is_loading" = "आपण विनंती केलेले साधन लोड होत आहे";
-"loading" = "लोड करीत आहे..";
 
 // Actions
 "yes" = "टीपा
@@ -176,7 +164,7 @@
 "no" = "नाही";
 
 // Tract - Sharing
-"tract_share_message" ="हे लिंक तुम्हाला वेब आवृत्तीकडे नेईल ज्यावर आपण आज बोल होतो: %@ \n\n app इथून डाऊनलोड करा: https://godtoolsapp.com \n\n आपण आणखी बोलू या!";
+"tract_share_message" = "हे लिंक तुम्हाला वेब आवृत्तीकडे नेईल ज्यावर आपण आज बोल होतो: %@ \n\n app इथून डाऊनलोड करा: https://godtoolsapp.com \n\n आपण आणखी बोलू या!";
 
 // Buttons
 "download" = "टीपा
@@ -246,24 +234,9 @@
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "जागतिक क्रियाकलाप";
-// OnboardingWelcome
-"onboardingWelcome.titleLabel.welcome" = "स्वागत आहे";
 "accountActivity.globalAnalytics.users.title" = "अनन्य वापरकर्ते";
 "onboardingWelcome.titleLabel.tagline" = "आपला विश्वास पसरवण्यात आपल्या मदतीसाठी";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "सुवार्ता सादरीकरण";
 "accountActivity.globalAnalytics.launches.title" = "सत्रे";
-// OnboardingTutorial
-"onboardingTutorial.aboutAppItem.0.title" = "इतरांस सांगा";
 "accountActivity.globalAnalytics.countries.title" = "देश";
-
-"onboardingTutorial.aboutAppItem.0.message" = "GodTools आपल्या विश्वासात संभाषणांचे मार्गदर्शन करण्यासाठी तयार केले गेले आहेत";
-"onboardingTutorial.aboutAppItem.1.title" = "आपले टूल्स निवडा";
-"onboardingTutorial.aboutAppItem.1.message" = "GodTools आपल्याला आत्मिक संभाषणापूर्वी, दरम्यान आणि नंतर मदत करतात";
-"onboardingTutorial.aboutAppItem.2.title" = "सदैव तयार";
-"onboardingTutorial.aboutAppItem.2.message" = "GodTools मदत करण्यासाठी येथे आहेत आणि आपण सज्ज असता तेव्हा ते सज्ज असते";
-"onboardingTutorial.appUsageItem.0.message" = "कोणत्याही संभाषणाची तयारी करा";
-"onboardingTutorial.appUsageItem.1.message" = "एखाद्याला सुवार्ता सांगा";
-"onboardingTutorial.appUsageItem.2.message" = "दोन भाषा आजूबाजूला पाहा";
-"onboardingTutorial.appUsageItem.3.message" = "90 पेक्षा जास्त भाषांमधून निवडा";
-"onboardingTutorial.appUsageItem.4.message" = "एखाद्याला ख्रिस्ती म्हणून प्रारंभ करण्यास मदत करा";
 "onboardingTutorial.showMoreButton.title" = "मला आणखी दाखवा";

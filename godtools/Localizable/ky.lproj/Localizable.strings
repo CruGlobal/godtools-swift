@@ -3,7 +3,6 @@
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
 "find_tools" = "Аспаптарды табуу";
-
 // Downloads
 "Download in progress" = "Жүктөө аткарылууда";
 
@@ -13,4 +12,3 @@
 
 // Language Name Strings
 "language_name_fa" = "Парсча (Farsi)";
-

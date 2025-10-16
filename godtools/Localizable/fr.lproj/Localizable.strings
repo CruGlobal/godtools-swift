@@ -1,3 +1,6 @@
+"deferredDeepLinkModal.title" = "Il semble que vous ayez cliqué sur un lien pour GodTools";
+"deferredDeepLinkModal.message" = "Appuyez sur le bouton ci-dessous pour que nous puissions vous amener au contenu que vous avez demandé.";
+
 "optInNotification.notificationSettings" = "Paramètres de notification";
 "lessons.swipeTutorial.title" = "Glissez pour changer de pages";
 "lessons.swipeTutorial.buttonText" = "Bien compris";
@@ -18,8 +21,6 @@
 "language_name_fil" = "Philippine (Tagalog)";
 "lessons.filter.navBar.language" = "Langue de la leçon";
 "lessons.languageFilter.title" = "Leçons en :";
-"language_name_fil-x-taglish" = "Taglish";
-"language_name_sid" = "Sidama";
 "onboardingTutorial.chooseLanguageButton.title" = "Choisir la langue";
 "languageSettings.confirmAppLanguage.message" = "Vous avez choisi %@ comme langue de l'application. Ceci changera la langue de toute l'application GodTools. Êtes-vous sûr?";
 "languageSettings.confirmAppLanguage.changeLanguageButton.title" = "Changer de langue";
@@ -106,7 +107,6 @@
 "toolSettings.languagesList.deleteLanguage.title" = "Aucun";
 
 "toolSettings.chooseLanguage.toggleMessage" = "Cet outil permet de basculer entre deux langues différentes.";
-"toolDetails.versions.title" = "Versions";
 "toolDetails.learnToShareToolButton.title" = "Apprendre à partager cet outil";
 "toolSettings.title" = "Options de l'outil";
 "toolSettings.option.shareLink.title" = "Partager lien";
@@ -118,7 +118,6 @@
 "toolSettings.shareables.title" = "Graphiques connexes";
 "allTools.spotlight.title" = "Pleins feux sur les outils";
 "allTools.spotlight.description" = "Voici quelques outils qui pourraient vous intéresser";
-"allTools.categories.title" = "Catégories";
 "training_tip_ask" = "Demandez";
 "training_tip_consider" = "Considérez";
 "training_tip_prepare" = "Préparez";
@@ -229,16 +228,7 @@
 /* Gospel indicates the gospel of Jesus Christ */
 "tool_category_gospel" = "Invitation à Évangile";
 
-/* Describes a format of content - like a newspaper article. */
-"tool_category_articles" = "Articles";
-
 "articles.downloadArticlesButton.title.retryDownload" = "Nouvelle tentative de téléchargement";
-
-/* This is to let users know which version of the app is installed on their phone */
-"menu_version" = "Version";
-
-/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
-"articles.loadingView.downloadingArticles" = "Téléchargement des articles...";
 "language_onboard" = "Plus de 90 langues";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -250,15 +240,12 @@
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
 "find_tools" = "Tous les outils";
 
-"unavailable" = "Non disponible";
-
 // Navigation Bar
 "navigationBar.navigationItem.skip" = "Passer";
 
 // Onboarding
 "add_new_tools" = "Ajouter de Nouveaux Outils";
-"set_your_languages" = "Définissez vos langues";
-"okay" = "Ok";
+
 // Menu
 "menu_general" = "Général";
 "menu_account" = "Compte";
@@ -272,13 +259,11 @@
 "login" = "Connexion";
 "logout" = "Déconnexion";
 "create_account" = "Créer un compte";
-"account_login" = "Connexion au compte";
 
 // Tool Detail
 "about" = "À propos";
 "help" = "Foire aux questions";
 "contact_us" = "Nous contacter";
-"preview_mode_translators_only" = "Mode aperçu (traducteurs uniquement)";
 "share_god_tools" = "Partager GodTools";
 "share_a_story_with_us" = "Partager une histoire avec nous";
 "terms_of_use" = "Conditions d'utilisation";
@@ -287,9 +272,6 @@
 "share_god_tools_share_sheet_text" = "Téléchargez l'application GodTools : https://godtoolsapp.com 
 
 Une version en ligne est disponible sur https://knowgod.com";
-
-// Add Tools
-"add_tools" = "Ajouter des outils";
 
 "total_views" = "%d vues";
 "total_languages" = "%d langues";
@@ -311,14 +293,13 @@ Une version en ligne est disponible sur https://knowgod.com";
 "no_internet" = "Veuillez vérifier votre connexion Internet et réessayer.";
 
 "the_tool_you_requested_is_loading" = "L'outil demandé est en cours de chargement...";
-"loading" = "Chargement...";
 
 // Actions
 "yes" = "Oui";
 "no" = "Non";
 
 // Tract - Sharing
-"tract_share_message" ="Ce lien vous redirigera vers une version web de ce dont nous parlions aujourd'hui : %@. 
+"tract_share_message" = "Ce lien vous redirigera vers une version web de ce dont nous parlions aujourd'hui : %@. 
 
 Continuons la discussion !
 
@@ -335,7 +316,6 @@ L'application est téléchargeable depuis https://godtoolsapp.com";
 
 // Alerts
 "error" = "Erreur";
-"OK" = "OK";
 "cancel" = "Annuler";
 "required_field_missing" = "\"%@\" est un champ obligatoire.";
 
@@ -385,24 +365,8 @@ Colossiens 4:6";
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "Activité globale";
-// OnboardingWelcome
-"onboardingWelcome.titleLabel.welcome" = "Bienvenue";
 "accountActivity.globalAnalytics.users.title" = "Utilisateurs\nuniques";
 "onboardingWelcome.titleLabel.tagline" = "Vous aider à partager votre foi";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "Présentations\nde l'Évangile";
-"accountActivity.globalAnalytics.launches.title" = "Sessions";
-// OnboardingTutorial
-"onboardingTutorial.aboutAppItem.0.title" = "Partager avec d'autres";
 "accountActivity.globalAnalytics.countries.title" = "Pays";
-
-"onboardingTutorial.aboutAppItem.0.message" = "GodTools est conçu pour orienter vos conversations sur la foi";
-"onboardingTutorial.aboutAppItem.1.title" = "Choisissez vos outils";
-"onboardingTutorial.aboutAppItem.1.message" = "GodTools vous aide avant, pendant et après une conversation spirituelle";
-"onboardingTutorial.aboutAppItem.2.title" = "Toujours prêt";
-"onboardingTutorial.aboutAppItem.2.message" = "GodTools est là pour vous aider et est prêt lorsque vous l'êtes";
-"onboardingTutorial.appUsageItem.0.message" = "Préparez-vous à n'importe quelle conversation";
-"onboardingTutorial.appUsageItem.1.message" = "Accompagnez quelqu'un pendant sa découverte de l'Évangile";
-"onboardingTutorial.appUsageItem.2.message" = "Afficher deux langues côte à côte";
-"onboardingTutorial.appUsageItem.3.message" = "Choisissez parmi plus de 90 langues";
-"onboardingTutorial.appUsageItem.4.message" = "Aidez quelqu'un à faire ses premiers pas en tant que Chrétien";
 "onboardingTutorial.showMoreButton.title" = "Me montrer plus";

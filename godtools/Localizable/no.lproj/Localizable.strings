@@ -3,7 +3,6 @@
 
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "Ikke tilgjengelig på %@";
-
 "tool_menu_item.tools" = "Verktøy";
 "lessons.pageTitle" = "Leksjoner lagd for deg";
 "lessons.pageSubtitle" = "Praktiske ideer for å bygge opp relasjoner og starte meningsfulle samtaler.";
@@ -37,8 +36,8 @@
 "toolSettings.shareables.title" = "Relaterte grafikker";
 "allTools.spotlight.title" = "Framhevede verktøy";
 "allTools.spotlight.description" = "Her er noen verktøy vi tror du vil like";
-"allTools.categories.title" = "Kategorier";
 "tool_menu_item.lessons" = "Leksjoner";
+
 "onboardingTutorial.beginButton.title" = "Begynn";
 "onboardingTutorial.nextButton.title" = "Neste";
 "tool_offline_favorite_message" = "Gjør et verktøy tilgjengelig offline ved å trykke på hjerteikonet – det legges da i Favoritter.";
@@ -116,31 +115,27 @@ Hvis du ikke mottar denne meldingen før senere, kan det hende at lenken ikke vi
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
 "find_tools" = "Alle verktøy";
 
-"unavailable" = "Utilgjengelig";
-
 // Navigation Bar
 "navigationBar.navigationItem.skip" = "Hopp over";
 
 // Onboarding
 "add_new_tools" = "Legg til nye verktøy";
-"set_your_languages" = "Angi språk";
-"okay" = "Ok";
+
 // Menu
 "menu_general" = "Generelt";
 "menu_share" = "Del";
 "menu_legal" = "Juridisk";
 "language_settings" = "Språkinnstillinger";
+
 // Login
 "login" = "Logg på";
 "logout" = "Logg av";
 "create_account" = "Opprett konto";
-"account_login" = "Logg på konto";
 
 // Tool Detail
 "about" = "Om";
 "help" = "Hjelp";
 "contact_us" = "Kontakt oss";
-"preview_mode_translators_only" = "Forhåndsvisning (kun oversettere)";
 "share_god_tools" = "Del GodTools-appen";
 "share_a_story_with_us" = "Del en historie med oss";
 "terms_of_use" = "Betingelser for bruk";
@@ -149,9 +144,6 @@ Hvis du ikke mottar denne meldingen før senere, kan det hende at lenken ikke vi
 "share_god_tools_share_sheet_text" = "Last ned GodTools-appen: https://godtoolsapp.com
 
 Du finner en nettversjon på https://knowgod.com/";
-
-// Add Tools
-"add_tools" = "Legg til verktøy";
 
 "total_views" = "%d visninger";
 "total_languages" = "%d språk";
@@ -173,14 +165,13 @@ Du finner en nettversjon på https://knowgod.com/";
 "no_internet" = "Sjekk internettilkoblingen og prøv igjen.";
 
 "the_tool_you_requested_is_loading" = "Verktøyet du forespurte lastes inn …";
-"loading" = "Laster inn …";
 
 // Actions
 "yes" = "Ja";
 "no" = "Nei";
 
 // Tract - Sharing
-"tract_share_message" ="Denne lenken tar deg til nettversjonen av siden vi så på sammen i dag: %@. 
+"tract_share_message" = "Denne lenken tar deg til nettversjonen av siden vi så på sammen i dag: %@. 
 
 La oss snakke mer!
 
@@ -214,8 +205,8 @@ Appen kan lastes ned på https://godtoolsapp.com";
 "general_about_8" = "Gå til godtoolsapp.com for mer informasjon.";
 "tutorial.continueButton.title.continue" = "Fortsett";
 "general_about_9" = "Når du tar initiativ til å dele troen din, må du huske at Gud er den eneste som endrer hjertet. Elsk alle ved å lytte og forstå.";
-"general_about_10" = "«La deres tale alltid være vennlig, men krydret med salt, så dere vet hvordan dere skal svare enhver.» Kolosserne 4:6";
 
+"general_about_10" = "«La deres tale alltid være vennlig, men krydret med salt, så dere vet hvordan dere skal svare enhver.» Kolosserne 4:6";
 // Downloads
 "Download in progress" = "Laster ned …";
 
@@ -225,4 +216,3 @@ Appen kan lastes ned på https://godtoolsapp.com";
 
 // Language Name Strings
 "language_name_fa" = "Persisk (farsi)";
-
