@@ -2036,7 +2036,7 @@
 			repositoryURL = "https://github.com/CruGlobal/request-operation-ios.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 1.12.2;
+				minimumVersion = 1.12.3;
 			};
 		};
 		45D40C692A5315D500E8E4AE /* XCRemoteSwiftPackageReference "Fuzi" */ = {
@@ -2052,7 +2052,7 @@
 			repositoryURL = "https://github.com/CruGlobal/social-authentication-ios.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.6.2;
+				minimumVersion = 0.6.3;
 			};
 		};
 		45DF96472D386C1C00C6AE68 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
