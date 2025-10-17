@@ -91,7 +91,7 @@
 
 "menu.deleteAccount" = "Delete account";
 "alert.mailAppUnavailable.title" = "Mail App Unavailable";
-"alert.mailAppUnavailable.message" = "The native Mail app is either not configured or is unavailable on this device. ";
+"alert.mailAppUnavailable.message" = "The native Mail app is either not configured or is unavailable on this device.";
 "tool_menu_item.tools" = "Tools";
 "lessons.pageTitle" = "Lessons made for you";
 "lessons.pageSubtitle" = "Practical ideas to build relationships and start meaningful conversations.";
@@ -231,10 +231,10 @@ If you don't receive this message until later, the link may not still work. We c
 "loading_favorited_tool" = "Downloading the most recent translation for this tool.";
 
 /* Adds a question mark */
-"remove_from_favorites_title" = "Remove from Favorites? ";
+"remove_from_favorites_title" = "Remove from Favorites?";
 
 /* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
-"remove_from_favorites_message" = "Are you sure you want to remove %@ from your Favorites? ";
+"remove_from_favorites_message" = "Are you sure you want to remove %@ from your Favorites?";
 
 /* Gospel indicates the gospel of Jesus Christ */
 "tool_category_gospel" = "Gospel Invitation";
@@ -332,7 +332,7 @@ An online version can be found at https://knowgod.com/";
 "no" = "No";
 
 // Tract - Sharing
-"tract_share_message" ="This link will take you to a web version of what we were talking about today: %@. 
+"tract_share_message" ="This link will take you to a web version of what we were talking about today: %@.
 
 Let's talk more!
 
