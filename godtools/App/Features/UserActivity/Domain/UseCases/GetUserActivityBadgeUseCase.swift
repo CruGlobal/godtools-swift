@@ -9,7 +9,6 @@
 import Foundation
 import GodToolsToolParser
 import SwiftUI
-import LocalizationServices
 
 class GetUserActivityBadgeUseCase {
     

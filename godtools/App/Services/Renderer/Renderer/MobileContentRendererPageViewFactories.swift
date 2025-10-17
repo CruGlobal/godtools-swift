@@ -8,7 +8,6 @@
 
 import Foundation
 import GodToolsToolParser
-import LocalizationServices
 
 class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
         

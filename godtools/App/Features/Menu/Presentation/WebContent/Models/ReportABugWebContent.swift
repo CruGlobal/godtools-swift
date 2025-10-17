@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import LocalizationServices
 
 struct ReportABugWebContent: WebContentType {
     
