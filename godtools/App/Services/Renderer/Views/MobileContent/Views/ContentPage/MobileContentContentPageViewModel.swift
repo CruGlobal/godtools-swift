@@ -22,7 +22,7 @@ class MobileContentContentPageViewModel: MobileContentPageViewModel {
     
     override var analyticsScreenName: String {
         
-        let resource: ResourceModel = renderedPageContext.resource
+        let resource: ResourceDataModel = renderedPageContext.resource
         let pageId: String = renderedPageContext.pageModel.id
         let separator: String = ":"
         

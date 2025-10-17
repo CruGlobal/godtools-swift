@@ -38,11 +38,11 @@ class RealmResourcesCacheTests: XCTestCase {
     
     func testFilteringResourcesByCategory() {
                 
-        let gospelTracts: [ResourceModel] = realmResourcesCache.getResourcesByFilter(
+        let gospelTracts: [ResourceDataModel] = realmResourcesCache.getResourcesByFilter(
             filter: ResourcesFilter(category: "gospel", resourceTypes: ResourceType.toolTypes)
         )
         
-        let conversationStarters: [ResourceModel] = realmResourcesCache.getResourcesByFilter(
+        let conversationStarters: [ResourceDataModel] = realmResourcesCache.getResourcesByFilter(
             filter: ResourcesFilter(category: "conversation_starter", resourceTypes: ResourceType.toolTypes)
         )
                         

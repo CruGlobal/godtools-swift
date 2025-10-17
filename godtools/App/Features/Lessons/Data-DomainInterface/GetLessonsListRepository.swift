@@ -29,19 +29,19 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
     func getLessonsListPublisher(appLanguage: AppLanguageDomainModel, filterLessonsByLanguage: LessonFilterLanguageDomainModel?) -> AnyPublisher<[LessonListItemDomainModel], Never> {
                 
         return Publishers.CombineLatest(
-            resourcesRepository.getResourcesChangedPublisher(),
+            resourcesRepository.persistence.observeCollectionChangesPublisher(),
             getLessonListItemProgressRepository.getLessonListItemProgressChanged()
         )
         .flatMap({ (resourcesDidChange: Void, lessonProgressDidChange: Void) -> AnyPublisher<[LessonListItemDomainModel], Never> in
             
-            let lessons: [ResourceModel] = self.resourcesRepository.getAllLessons(filterByLanguageId: filterLessonsByLanguage?.languageId, sorted: true)
+            let lessons: [ResourceDataModel] = self.resourcesRepository.getAllLessons(filterByLanguageId: filterLessonsByLanguage?.languageId, sorted: true)
             
-            let lessonListItems: [LessonListItemDomainModel] = lessons.map { (resource: ResourceModel) in
+            let lessonListItems: [LessonListItemDomainModel] = lessons.map { (resource: ResourceDataModel) in
                 
-                let filterLanguageModel: LanguageModel?
+                let filterLanguageModel: LanguageDataModel?
                 if let filterLanguageId = filterLessonsByLanguage?.languageId {
                     
-                    filterLanguageModel = self.languagesRepository.getLanguage(id: filterLanguageId)
+                    filterLanguageModel = self.languagesRepository.persistence.getObject(id: filterLanguageId)
                 } else {
                     filterLanguageModel = nil
                 }
@@ -53,7 +53,7 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
                 
                 let nameLanguageDirection: LanguageDirectionDomainModel
                 if let filterLanguageModel = filterLanguageModel {
-                    nameLanguageDirection = LanguageDirectionDomainModel(languageModel: filterLanguageModel)
+                    nameLanguageDirection = filterLanguageModel.languageDirectionDomainModel
                 } else {
                     nameLanguageDirection = .leftToRight
                 }
@@ -79,11 +79,11 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
 
 extension GetLessonsListRepository {
     
-    private func getToolLanguageAvailability(appLanguage: AppLanguageDomainModel, filterLanguageModel: LanguageModel?, resource: ResourceModel) -> ToolLanguageAvailabilityDomainModel {
+    private func getToolLanguageAvailability(appLanguage: AppLanguageDomainModel, filterLanguageModel: LanguageDataModel?, resource: ResourceDataModel) -> ToolLanguageAvailabilityDomainModel {
 
-        if let appLanguageModel = languagesRepository.getLanguage(code: appLanguage) {
+        if let appLanguageModel = languagesRepository.cache.getCachedLanguage(code: appLanguage) {
             
-            let language: LanguageModel
+            let language: LanguageDataModel
             
             if let filterLanguageModel = filterLanguageModel {
                 language = filterLanguageModel

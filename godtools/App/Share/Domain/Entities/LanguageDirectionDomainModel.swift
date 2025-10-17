@@ -12,13 +12,4 @@ enum LanguageDirectionDomainModel {
     
     case leftToRight
     case rightToLeft
-    
-    init(languageModel: LanguageModel) {
-        switch languageModel.direction {
-        case .leftToRight:
-            self = .leftToRight
-        case .rightToLeft:
-            self = .rightToLeft
-        }
-    }
 }

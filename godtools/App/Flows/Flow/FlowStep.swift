@@ -113,6 +113,8 @@ enum FlowStep {
     case doneTappedFromMenu
     case tutorialTappedFromMenu
     case languageSettingsTappedFromMenu
+    case localizationSettingsTappedFromMenu
+    case backTappedFromLocalizationSettings
     case loginTappedFromMenu
     case createAccountTappedFromMenu
     case activityTappedFromMenu
@@ -174,9 +176,9 @@ enum FlowStep {
     
     // article
     case backTappedFromArticleCategories
-    case articleCategoryTappedFromArticleCategories(resource: ResourceModel, language: LanguageModel, category: GodToolsToolParser.Category, manifest: Manifest)
+    case articleCategoryTappedFromArticleCategories(resource: ResourceDataModel, language: LanguageDataModel, category: GodToolsToolParser.Category, manifest: Manifest)
     case backTappedFromArticles
-    case articleTappedFromArticles(resource: ResourceModel, aemCacheObject: ArticleAemCacheObject)
+    case articleTappedFromArticles(resource: ResourceDataModel, aemCacheObject: ArticleAemCacheObject)
     case backTappedFromArticle
     case sharedTappedFromArticle(articleAemData: ArticleAemData)
     case articleFlowCompleted(state: ArticleFlowCompletedState)
