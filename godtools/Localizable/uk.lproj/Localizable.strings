@@ -3,7 +3,6 @@
 
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "Не доступно %@";
-
 "tool_menu_item.tools" = "Інструменти";
 "lessons.pageTitle" = "Уроки, створені для вас";
 "lessons.pageSubtitle" = "Практичні ідеї для побудови відносин і початку змістовних розмов.";
@@ -37,8 +36,8 @@
 "toolSettings.shareables.title" = "Пов'язані зображення";
 "allTools.spotlight.title" = "Огляд інструментів";
 "allTools.spotlight.description" = "Вам можуть сподобатися ці інструменти";
-"allTools.categories.title" = "Категорії";
 "tool_menu_item.lessons" = "Уроки";
+
 "onboardingTutorial.beginButton.title" = "Почати";
 "onboardingTutorial.nextButton.title" = "Далі";
 "tool_offline_favorite_message" = "Інструмент буде доступним у режимі офлайн, якщо торкнутись значка серця. Його буде додано до улюбленого.";
@@ -115,31 +114,27 @@
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
 "find_tools" = "Усі інструменти";
 
-"unavailable" = "Недоступно";
-
 // Navigation Bar
 "navigationBar.navigationItem.skip" = "Пропустити";
 
 // Onboarding
 "add_new_tools" = "Додати інструмент";
-"set_your_languages" = "Встановіть мови";
-"okay" = "Добре";
+
 // Menu
 "menu_general" = "Основне";
 "menu_share" = "Переслати";
 "menu_legal" = "Юридичні документи";
 "language_settings" = "Налаштування мови";
+
 // Login
 "login" = "Увійти";
 "logout" = "Вийти";
 "create_account" = "Створити обліковий запис";
-"account_login" = "Увійти до облікового запису";
 
 // Tool Detail
 "about" = "Про програму";
 "help" = "Довідка";
 "contact_us" = "Контакт";
-"preview_mode_translators_only" = "Режим перегляду (тільки перекладачі)";
 "share_god_tools" = "Поширити програму GodTools";
 "share_a_story_with_us" = "Розкажіть нам історію";
 "terms_of_use" = "Умови користування";
@@ -148,9 +143,6 @@
 "share_god_tools_share_sheet_text" = "Завантажте програму GodTools: https://godtoolsapp.com
 
 Також користуйтеся онлайн: https://knowgod.com/";
-
-// Add Tools
-"add_tools" = "Додати інструменти";
 
 "total_views" = "%d перегл.";
 "total_languages" = "%d мов(и)";
@@ -172,14 +164,13 @@
 "no_internet" = "Перевірте підключення до Інтернету і повторіть спробу.";
 
 "the_tool_you_requested_is_loading" = "Ваш інструмент завантажується...";
-"loading" = "Завантажується...";
 
 // Actions
 "yes" = "Так";
 "no" = "Ні";
 
 // Tract - Sharing
-"tract_share_message" ="Відкрийте це посилання, щоб перейти до онлайн версії сторінки, що ми з вами переглядали сьогодні: %@. 
+"tract_share_message" = "Відкрийте це посилання, щоб перейти до онлайн версії сторінки, що ми з вами переглядали сьогодні: %@. 
 
 Поспілкуємось!
 
@@ -213,8 +204,8 @@
 "general_about_8" = "Відвідайте godtoolsapp.com за докладнішою інформацією.";
 "tutorial.continueButton.title.continue" = "Продовжити";
 "general_about_9" = "Вирішивши донести Божу вістку до інших, пам'ятайте, що любов — то є божий дар. Тому поширюйте її серед інших і уважно прислухайтеся і ви завжди знайдете порозуміння.";
-"general_about_10" = "«Нехай ваше слово завжди буде люб’язне, приправлене сіллю, щоб у розмові з будь-ким ви знали, як відповідати.» Колоссян 4:6";
 
+"general_about_10" = "«Нехай ваше слово завжди буде люб’язне, приправлене сіллю, щоб у розмові з будь-ким ви знали, як відповідати.» Колоссян 4:6";
 // Downloads
 "Download in progress" = "Завантажується...";
 
@@ -224,4 +215,3 @@
 
 // Language Name Strings
 "language_name_fa" = "Перська (фарсі)";
-

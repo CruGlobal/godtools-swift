@@ -8,7 +8,6 @@
 
 import Foundation
 import Combine
-import LocalizationServices
 
 class GetDownloadableLanguagesInterfaceStringsRepository: GetDownloadableLanguagesInterfaceStringsRepositoryInterface {
     

@@ -8,7 +8,6 @@
 
 import Foundation
 import GodToolsToolParser
-import LocalizationServices
 import Combine
 
 class TractPageFormViewModel: MobileContentFormViewModel {
