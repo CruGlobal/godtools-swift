@@ -3,7 +3,6 @@
 
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "Nije dosutpno u %@";
-
 "tool_menu_item.tools" = "Alati";
 "lessons.pageTitle" = "Lekcije osmišljene baš za vas";
 "lessons.pageSubtitle" = "Praktične ideje kako izgraditi odnos i započeti smislene razgovore.";
@@ -37,8 +36,8 @@
 "toolSettings.shareables.title" = "POvezane grafike";
 "allTools.spotlight.title" = "Naglašavanje alata";
 "allTools.spotlight.description" = "Evo neki od alata koji bi vam se mogli sviđati";
-"allTools.categories.title" = "Kategorije";
 "tool_menu_item.lessons" = "Lekcije";
+
 "onboardingTutorial.beginButton.title" = "Započni";
 "onboardingTutorial.nextButton.title" = "Dalje";
 "tool_offline_favorite_message" = "Alat može biti raspoloživ i izvan mreže ako dodirnete ikonu srca, čime ga dodajete u svoje omiljene.";
@@ -116,31 +115,27 @@ Ako ovu poruku pročitate kasnije, veza možda više neće vrijediti. Možemo po
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
 "find_tools" = "Svi alati";
 
-"unavailable" = "Nedostupno";
-
 // Navigation Bar
 "navigationBar.navigationItem.skip" = "Preskoči";
 
 // Onboarding
 "add_new_tools" = "Dodajte novi alat";
-"set_your_languages" = "Odredite svoje jezike";
-"okay" = "U redu";
+
 // Menu
 "menu_general" = "Općenito";
 "menu_share" = "Podijeli";
 "menu_legal" = "Pravno";
 "language_settings" = "Postavke jezika";
+
 // Login
 "login" = "Prijava";
 "logout" = "Odjava";
 "create_account" = "Napravite račun";
-"account_login" = "Prijava u račun";
 
 // Tool Detail
 "about" = "O nama";
 "help" = "Pomoć";
 "contact_us" = "Kontaktirajte nas";
-"preview_mode_translators_only" = "Način pretpregleda (samo prevoditelji)";
 "share_god_tools" = "Podijelite aplikaciju GodTools";
 "share_a_story_with_us" = "Podijelite svoju priču s nama";
 "terms_of_use" = "Uvjeti upotrebe";
@@ -149,9 +144,6 @@ Ako ovu poruku pročitate kasnije, veza možda više neće vrijediti. Možemo po
 "share_god_tools_share_sheet_text" = "Preuzmite aplikaciju GodTools na adresi: https://godtoolsapp.com
 
 Online verziju možete pronaći na adresi: https://knowgod.com/";
-
-// Add Tools
-"add_tools" = "Dodajte alate";
 
 "total_views" = "%d pregleda";
 "total_languages" = "%d jezika";
@@ -173,14 +165,13 @@ Online verziju možete pronaći na adresi: https://knowgod.com/";
 "no_internet" = "Provjerite svoju internetsku vezu i pokušajte ponovno.";
 
 "the_tool_you_requested_is_loading" = "Alat koji ste tražili se učitava...";
-"loading" = "Učitaavnje...";
 
 // Actions
 "yes" = "Da";
 "no" = "Ne";
 
 // Tract - Sharing
-"tract_share_message" ="Ova poveznica vodi do web verzije stranice koju smo zadnju danas gledali zajedno: %@. 
+"tract_share_message" = "Ova poveznica vodi do web verzije stranice koju smo zadnju danas gledali zajedno: %@. 
 
 Razgovarajmo više o tome!
 
@@ -214,8 +205,8 @@ Aplikaciju je moguće preuzeti na adresi: http://godtoolsapp.com";
 "general_about_8" = "Posjetite godtoolsapp.com za više informacija.";
 "tutorial.continueButton.title.continue" = "Nastavi";
 "general_about_9" = "Kada poduzmete inicijativu dijeljenja svoje vjere, zapamtite da je Bog taj koji mijenja srce. Ljubite svaku osobu slušajući kako biste razumijeli.";
-"general_about_10" = "\"Neka vaš razgovor uvijek bude pun milosti, začinjen solju kako biste mogli odgovoriti svima.\" Kološanima 4:6";
 
+"general_about_10" = "\"Neka vaš razgovor uvijek bude pun milosti, začinjen solju kako biste mogli odgovoriti svima.\" Kološanima 4:6";
 // Downloads
 "Download in progress" = "Preuzimanje u tijeku";
 
@@ -225,4 +216,3 @@ Aplikaciju je moguće preuzeti na adresi: http://godtoolsapp.com";
 
 // Language Name Strings
 "language_name_fa" = "Perzijski (farsi)";
-

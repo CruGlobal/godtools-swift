@@ -3,7 +3,6 @@
 
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "Nedostupné v jazyku %@";
-
 "tool_menu_item.tools" = "Nástroje";
 "lessons.pageTitle" = "Lekcie vytvorené pre vás";
 "lessons.pageSubtitle" = "Praktické nápady, ako rozvíjať vzťahy a viesť zmysluplné konverzácie.";
@@ -37,8 +36,8 @@
 "toolSettings.shareables.title" = "Súvisiaca grafika";
 "allTools.spotlight.title" = "Výber nástrojov";
 "allTools.spotlight.description" = "Tu nájdete niektoré nástroje, o ktorých sa domnievame, že by sa vám mohli páčiť";
-"allTools.categories.title" = "Kategórie";
 "tool_menu_item.lessons" = "Lekcie";
+
 "onboardingTutorial.beginButton.title" = "Začať";
 "onboardingTutorial.nextButton.title" = "Ďalej";
 "tool_offline_favorite_message" = "Ak chceš, aby bol nástroj dostupný offline, ťukni na ikonku srdca, ktorým ho pridáš medzi obľúbené.";
@@ -108,31 +107,27 @@ Ak ti táto správa do určitého času nepríde, odkaz možno ešte nefunguje. 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
 "find_tools" = "Všetky nástroje";
 
-"unavailable" = "Nedostupné";
-
 // Navigation Bar
 "navigationBar.navigationItem.skip" = "Preskočiť";
 
 // Onboarding
 "add_new_tools" = "Pridať nové nástroje";
-"set_your_languages" = "Nastavte si jazyky";
-"okay" = "OK";
+
 // Menu
 "menu_general" = "Všeobecné";
 "menu_share" = "Zdieľanie";
 "menu_legal" = "Právne informácie";
 "language_settings" = "Nastavenia jazyka";
+
 // Login
 "login" = "Prihlásiť sa";
 "logout" = "Odhlásiť sa";
 "create_account" = "Vytvoriť účet";
-"account_login" = "Prihlásenie do účtu";
 
 // Tool Detail
 "about" = "Informácie";
 "help" = "Pomoc";
 "contact_us" = "Kontaktujte nás";
-"preview_mode_translators_only" = "Režim ukážky (iba prekladatelia)";
 "share_god_tools" = "Zdieľať aplikáciu GodTools";
 "share_a_story_with_us" = "Podeľte sa s nami o príbeh";
 "terms_of_use" = "Zmluvné podmienky";
@@ -141,9 +136,6 @@ Ak ti táto správa do určitého času nepríde, odkaz možno ešte nefunguje. 
 "share_god_tools_share_sheet_text" = "Stiahnite si aplikáciu GodTools: https://godtoolsapp.com
 
 Online verzia je k dispozícii na https://knowgod.com/";
-
-// Add Tools
-"add_tools" = "Pridať nástroje";
 
 "total_views" = "Zobrazenia: %d";
 "total_languages" = "Jazyky: %d";
@@ -165,14 +157,13 @@ Online verzia je k dispozícii na https://knowgod.com/";
 "no_internet" = "Skontrolujte si internetové pripojenie a skúste to znova.";
 
 "the_tool_you_requested_is_loading" = "Nástroj, o ktorý ste požiadali, sa načítava…";
-"loading" = "Načítava sa...";
 
 // Actions
 "yes" = "Áno";
 "no" = "Nie";
 
 // Tract - Sharing
-"tract_share_message" ="Tento odkaz vás nasmeruje na webovú verziu stránky, na ktorú sme sa naposledy dnes pozerali spolu: %@. Pohovorme si viac!
+"tract_share_message" = "Tento odkaz vás nasmeruje na webovú verziu stránky, na ktorú sme sa naposledy dnes pozerali spolu: %@. Pohovorme si viac!
 
 Aplikácia sa dá stiahnuť na https://godtoolsapp.com";
 
@@ -187,7 +178,6 @@ Aplikácia sa dá stiahnuť na https://godtoolsapp.com";
 
 // Alerts
 "error" = "Chyba";
-"OK" = "OK";
 "cancel" = "Zrušiť";
 "required_field_missing" = "%@ je povinné pole.";
 
@@ -204,8 +194,8 @@ Aplikácia sa dá stiahnuť na https://godtoolsapp.com";
 "general_about_8" = "Ďalšie informácie nájdete na godtoolsapp.com.";
 "tutorial.continueButton.title.continue" = "Pokračovať";
 "general_about_9" = "Keď prevezmete iniciatívu a začnete sa deliť o svoju vieru, nezabúdajte, že boh je ten, kto mení srdcia. Milujte všetkých ľudí a vnímajte porozumenie.";
-"general_about_10" = "„Nech je vaša reč vždy ľúbezná, okorenená soľou, aby ste vedeli, ako by ste mali každému odpovedať.“ List Kolosanom 4:6";
 
+"general_about_10" = "„Nech je vaša reč vždy ľúbezná, okorenená soľou, aby ste vedeli, ako by ste mali každému odpovedať.“ List Kolosanom 4:6";
 // Downloads
 "Download in progress" = "Prebieha sťahovanie";
 
@@ -215,4 +205,3 @@ Aplikácia sa dá stiahnuť na https://godtoolsapp.com";
 
 // Language Name Strings
 "language_name_fa" = "Perzština (fársí)";
-
