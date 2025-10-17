@@ -10,6 +10,6 @@ import Foundation
 
 protocol DetermineToolTranslationsToDownloadInterface {
     
-    func getResource() -> ResourceModel?
+    func getResource() -> ResourceDataModel?
     func determineToolTranslationsToDownload() -> Result<DetermineToolTranslationsToDownloadResult, DetermineToolTranslationsToDownloadError>
 }

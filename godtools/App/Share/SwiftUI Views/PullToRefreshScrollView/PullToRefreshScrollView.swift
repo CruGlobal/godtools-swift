@@ -23,22 +23,11 @@ struct PullToRefreshScrollView<Content: View>: View {
     
     var body: some View {
     
-        // NOTE: Pull to refresh is supported only in iOS 15+
-        
-        if #available(iOS 15.0, *) {
-    
-            ScrollView(.vertical, showsIndicators: showsIndicators) {
-                content()
-            }
-            .refreshable {
-                refreshHandler()
-            }
+        ScrollView(.vertical, showsIndicators: showsIndicators) {
+            content()
         }
-        else {
-            
-            ScrollView(.vertical, showsIndicators: showsIndicators) {
-                content()
-            }
+        .refreshable {
+            refreshHandler()
         }
     }
 }

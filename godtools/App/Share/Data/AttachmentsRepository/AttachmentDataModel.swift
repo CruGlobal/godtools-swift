@@ -7,11 +7,27 @@
 //
 
 import Foundation
-import SwiftUI
 
-struct AttachmentDataModel {
+class AttachmentDataModel: AttachmentDataModelInterface {
+        
+    let file: String
+    let fileFilename: String
+    let id: String
+    let isZipped: Bool
+    let resourceDataModel: ResourceDataModel?
+    let sha256: String
+    let storedAttachment: StoredAttachmentDataModel?
+    let type: String
     
-    let attachmentModel: AttachmentModel
-    let data: Data
-    let fileCacheLocation: FileCacheLocation
+    init(interface: AttachmentDataModelInterface, storedAttachment: StoredAttachmentDataModel?) {
+        
+        file = interface.file
+        fileFilename = interface.fileFilename
+        id = interface.id
+        isZipped = interface.isZipped
+        resourceDataModel = interface.resourceDataModel
+        sha256 = interface.sha256
+        self.storedAttachment = storedAttachment
+        type = interface.type
+    }
 }

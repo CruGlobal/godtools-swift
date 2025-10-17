@@ -26,7 +26,16 @@ class MobileContentRendererManifestResourcesCache {
         
         return FileCacheLocation(relativeUrlString: localName)
     }
-    
+
+    func getRootDirectory() -> URL? {
+        switch resourcesFileCache.getRootDirectory() {
+        case .success(let dir):
+            return dir
+        case .failure( _):
+            return nil
+        }
+    }
+
     func getFile(resource: Resource) -> Result<URL, Error> {
         
         guard let location = getSHA256FileLocation(resource: resource) else {

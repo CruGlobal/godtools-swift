@@ -29,7 +29,7 @@ class GetYourFavoritedToolsRepository: GetYourFavoritedToolsRepositoryInterface 
     func getToolsPublisher(translateInLanguage: AppLanguageDomainModel, maxCount: Int?) -> AnyPublisher<[YourFavoritedToolDomainModel], Never> {
         
         return Publishers.CombineLatest3(
-            resourcesRepository.getResourcesChangedPublisher(),
+            resourcesRepository.persistence.observeCollectionChangesPublisher(),
             getToolListItemInterfaceStringsRepository.getStringsPublisher(translateInLanguage: translateInLanguage),
             favoritedResourcesRepository.getFavoritedResourcesSortedByPositionPublisher()
         )
@@ -37,10 +37,10 @@ class GetYourFavoritedToolsRepository: GetYourFavoritedToolsRepositoryInterface 
           
             let numberOfFavoritedTools: Int = self.favoritedResourcesRepository.getNumberOfFavoritedResources()
             
-            let favoritedResources: [ResourceModel] = favoritedResourceModels
+            let favoritedResources: [ResourceDataModel] = favoritedResourceModels
                 .prefix(maxCount ?? numberOfFavoritedTools)
                 .compactMap({
-                    self.resourcesRepository.getResource(id: $0.id)
+                    self.resourcesRepository.persistence.getObject(id: $0.id)
                 })
             
             let yourFavoritedTools: [YourFavoritedToolDomainModel] = favoritedResources

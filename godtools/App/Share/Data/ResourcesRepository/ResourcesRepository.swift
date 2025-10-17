@@ -10,61 +10,53 @@ import Foundation
 import Combine
 import RequestOperation
 
-class ResourcesRepository {
+class ResourcesRepository: RepositorySync<ResourceDataModel, MobileContentResourcesApi> {
             
     private static let syncInvalidatorIdForResourcesPlustLatestTranslationsAndAttachments: String = "resourcesPlusLatestTranslationAttachments.syncInvalidator.id"
     
     private let api: MobileContentResourcesApi
+    private let realmPersistence: RealmRepositorySyncPersistence<ResourceDataModel, ResourceCodable, RealmResource>
     private let cache: RealmResourcesCache
     private let attachmentsRepository: AttachmentsRepository
     private let languagesRepository: LanguagesRepository
     private let userDefaultsCache: UserDefaultsCacheInterface
     
-    init(api: MobileContentResourcesApi, cache: RealmResourcesCache, attachmentsRepository: AttachmentsRepository, languagesRepository: LanguagesRepository, userDefaultsCache: UserDefaultsCacheInterface) {
+    init(api: MobileContentResourcesApi, realmDatabase: RealmDatabase, cache: RealmResourcesCache, attachmentsRepository: AttachmentsRepository, languagesRepository: LanguagesRepository, userDefaultsCache: UserDefaultsCacheInterface) {
         
         self.api = api
         self.cache = cache
         self.attachmentsRepository = attachmentsRepository
         self.languagesRepository = languagesRepository
         self.userDefaultsCache = userDefaultsCache
+        
+        let realmPersistence = RealmRepositorySyncPersistence<ResourceDataModel, ResourceCodable, RealmResource>(
+            realmDatabase: realmDatabase,
+            dataModelMapping: RealmResourceDataModelMapping()
+        )
+        
+        self.realmPersistence = realmPersistence
+        
+        super.init(
+            externalDataFetch: api,
+            persistence: realmPersistence
+        )
     }
     
-    var numberOfResources: Int {
-        return cache.numberOfResources
+    func getResource(abbreviation: String) -> ResourceDataModel? {
+        return realmPersistence.getObjects(
+            query: RealmDatabaseQuery.filter(
+                filter: NSPredicate(format: "\(#keyPath(RealmResource.abbreviation)) = '\(abbreviation)'")
+            )
+        )
+        .first
     }
     
-    func getResourcesChangedPublisher() -> AnyPublisher<Void, Never> {
-        return cache
-            .getResourcesChangedPublisher()
-            .eraseToAnyPublisher()
-    }
-    
-    func getResource(id: String) -> ResourceModel? {
-        return cache.getResource(id: id)
-    }
-    
-    func getResource(abbreviation: String) -> ResourceModel? {
-        return cache.getResource(abbreviation: abbreviation)
-    }
-    
-    func getResources(ids: [String]) -> [ResourceModel] {
-        return cache.getResources(ids: ids)
-    }
-    
-    func getResources(with metaToolIds: [String?]) -> [ResourceModel] {
-        return cache.getResources(with: metaToolIds)
-    }
-    
-    func getResources(with resourceType: ResourceType) -> [ResourceModel] {
-        return cache.getResources(with: resourceType)
-    }
-    
-    func getCachedResourcesByFilter(filter: ResourcesFilter) -> [ResourceModel] {
+    func getCachedResourcesByFilter(filter: ResourcesFilter) -> [ResourceDataModel] {
         
         return cache.getResourcesByFilter(filter: filter)
     }
     
-    func getCachedResourcesByFilterPublisher(filter: ResourcesFilter) -> AnyPublisher<[ResourceModel], Never> {
+    func getCachedResourcesByFilterPublisher(filter: ResourcesFilter) -> AnyPublisher<[ResourceDataModel], Never> {
         
         return cache.getResourcesByFilterPublisher(filter: filter)
             .eraseToAnyPublisher()
@@ -74,11 +66,8 @@ class ResourcesRepository {
         
         return api.getResourcePlusLatestTranslationsAndAttachmentsPublisher(id: resourceId, requestPriority: requestPriority)
             .flatMap({ (resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<Void, Error> in
-                
-                let languagesSyncResult = RealmLanguagesCacheSyncResult(languagesRemoved: [])
-                
+                                
                 return self.cache.syncResources(
-                    languagesSyncResult: languagesSyncResult,
                     resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments,
                     shouldRemoveDataThatNoLongerExists: false
                 )
@@ -94,11 +83,8 @@ class ResourcesRepository {
         
         return api.getResourcePlusLatestTranslationsAndAttachmentsPublisher(abbreviation: resourceAbbreviation, requestPriority: requestPriority)
             .flatMap({ (resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<Void, Error> in
-                
-                let languagesSyncResult = RealmLanguagesCacheSyncResult(languagesRemoved: [])
-                
+                                
                 return self.cache.syncResources(
-                    languagesSyncResult: languagesSyncResult,
                     resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments,
                     shouldRemoveDataThatNoLongerExists: false
                 )
@@ -152,13 +138,16 @@ class ResourcesRepository {
                 
         return Publishers
             .CombineLatest(
-                languagesRepository.syncLanguagesFromJsonFileCache(),
-                ResourcesJsonFileCache(jsonServices: JsonServices()).getResourcesPlusLatestTranslationsAndAttachments().publisher
+                languagesRepository
+                    .syncLanguagesFromJsonFileCache()
+                    .setFailureType(to: Error.self),
+                ResourcesJsonFileCache(jsonServices: JsonServices())
+                    .getResourcesPlusLatestTranslationsAndAttachments()
+                    .publisher
             )
-            .flatMap({ (languagesSyncResult: RealmLanguagesCacheSyncResult, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> in
+            .flatMap({ (languagesResponse: RepositorySyncResponse<LanguageDataModel>, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> in
                 
                 return self.cache.syncResources(
-                    languagesSyncResult: languagesSyncResult,
                     resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments,
                     shouldRemoveDataThatNoLongerExists: true
                 )
@@ -174,7 +163,7 @@ class ResourcesRepository {
     }
     
     private func getResourcesHaveBeenSynced() -> Bool {
-        return languagesRepository.numberOfLanguages > 0 && cache.numberOfResources > 0
+        return languagesRepository.persistence.getObjectCount() > 0 && persistence.getObjectCount() > 0
     }
     
     private func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote(requestPriority: RequestPriority, forceFetchFromRemote: Bool) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> {
@@ -194,11 +183,15 @@ class ResourcesRepository {
         }
         
         return Publishers
-            .CombineLatest(languagesRepository.syncLanguagesFromRemote(requestPriority: requestPriority), api.getResourcesPlusLatestTranslationsAndAttachments(requestPriority: requestPriority))
-            .flatMap({ (languagesSyncResult: RealmLanguagesCacheSyncResult, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> in
+            .CombineLatest(
+                languagesRepository
+                    .syncLanguagesFromRemote(requestPriority: requestPriority)
+                    .setFailureType(to: Error.self),
+                api.getResourcesPlusLatestTranslationsAndAttachments(requestPriority: requestPriority)
+            )
+            .flatMap({ (languagesResponse: RepositorySyncResponse<LanguageDataModel>, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> in
                 
                 return self.cache.syncResources(
-                    languagesSyncResult: languagesSyncResult,
                     resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments,
                     shouldRemoveDataThatNoLongerExists: true
                 )
@@ -216,7 +209,7 @@ class ResourcesRepository {
 
 extension ResourcesRepository {
     
-    func getSpotlightTools(sortByDefaultOrder: Bool = false) -> [ResourceModel] {
+    func getSpotlightTools(sortByDefaultOrder: Bool = false) -> [ResourceDataModel] {
         return cache.getSpotlightTools(sortByDefaultOrder: sortByDefaultOrder)
     }
 }
@@ -225,7 +218,7 @@ extension ResourcesRepository {
 
 extension ResourcesRepository {
     
-    func getAllToolsList(filterByCategory: String?, filterByLanguageId: String?, sortByDefaultOrder: Bool) -> [ResourceModel] {
+    func getAllToolsList(filterByCategory: String?, filterByLanguageId: String?, sortByDefaultOrder: Bool) -> [ResourceDataModel] {
         
         return cache.getAllToolsList(
             filterByCategory: filterByCategory,
@@ -254,7 +247,7 @@ extension ResourcesRepository {
 
 extension ResourcesRepository {
     
-    func getAllLessons(filterByLanguageId: String? = nil, sorted: Bool) -> [ResourceModel] {
+    func getAllLessons(filterByLanguageId: String? = nil, sorted: Bool) -> [ResourceDataModel] {
         return cache.getAllLessons(
             filterByLanguageId: filterByLanguageId,
             sorted: sorted
@@ -265,7 +258,7 @@ extension ResourcesRepository {
         return cache.getAllLessonsCount(filterByLanguageId: filterByLanguageId)
     }
     
-    func getFeaturedLessons(sorted: Bool) -> [ResourceModel] {
+    func getFeaturedLessons(sorted: Bool) -> [ResourceDataModel] {
         return cache.getFeaturedLessons(sorted: sorted)
     }
     
@@ -278,7 +271,7 @@ extension ResourcesRepository {
 
 extension ResourcesRepository {
     
-    func getResourceVariants(resourceId: String) -> [ResourceModel] {
+    func getResourceVariants(resourceId: String) -> [ResourceDataModel] {
         
         return cache.getResourceVariants(resourceId: resourceId)
     }

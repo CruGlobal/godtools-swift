@@ -38,8 +38,8 @@ class GetToolSettingsToolLanguagesListRepository: GetToolSettingsToolLanguagesLi
         
         let languageIds: [String]
         
-        if let resource = resourcesRepository.getResource(id: toolId) {
-            languageIds = resource.languageIds.filter({
+        if let resource = resourcesRepository.persistence.getObject(id: toolId) {
+            languageIds = resource.getLanguageIds().filter({
                 !filterOutLanguageIds.contains($0)
             })
         }
@@ -48,8 +48,9 @@ class GetToolSettingsToolLanguagesListRepository: GetToolSettingsToolLanguagesLi
         }
                     
         let toolLanguages: [ToolSettingsToolLanguageDomainModel] = languagesRepository
-            .getLanguages(ids: languageIds)
-            .map { (language: LanguageModel) in
+            .persistence
+            .getObjects(ids: languageIds)
+            .map { (language: LanguageDataModel) in
                                 
                 let languageName: String = getTranslatedLanguageName.getLanguageName(
                     language: language,

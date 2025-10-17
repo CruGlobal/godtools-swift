@@ -10,10 +10,10 @@ import Foundation
 
 class DismissToolEvent {
     
-    let resource: ResourceModel
+    let resource: ResourceDataModel
     let highestPageNumberViewed: Int
     
-    init(resource: ResourceModel, highestPageNumberViewed: Int) {
+    init(resource: ResourceDataModel, highestPageNumberViewed: Int) {
         
         self.resource = resource
         self.highestPageNumberViewed = highestPageNumberViewed

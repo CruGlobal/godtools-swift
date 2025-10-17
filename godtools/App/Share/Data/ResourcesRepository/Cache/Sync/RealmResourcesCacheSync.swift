@@ -25,7 +25,7 @@ class RealmResourcesCacheSync {
         self.trackDownloadedTranslationsRepository = trackDownloadedTranslationsRepository
     }
     
-    func syncResources(languagesSyncResult: RealmLanguagesCacheSyncResult, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel, shouldRemoveDataThatNoLongerExists: Bool) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> {
+    func syncResources(resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel, shouldRemoveDataThatNoLongerExists: Bool) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> {
              
         return Future() { promise in
 
@@ -51,8 +51,7 @@ class RealmResourcesCacheSync {
                     
                     for newResource in resourcesPlusLatestTranslationsAndAttachments.resources {
                         
-                        let realmResource = RealmResource()
-                        realmResource.mapFrom(model: newResource)
+                        let realmResource = RealmResource.createNewFrom(interface: newResource)
                         realmResourcesDictionary[realmResource.id] = realmResource
                         
                         newRealmObjectsToStore.append(realmResource)
@@ -83,8 +82,7 @@ class RealmResourcesCacheSync {
                     
                     for newTranslation in resourcesPlusLatestTranslationsAndAttachments.translations {
                         
-                        let realmTranslation = RealmTranslation()
-                        realmTranslation.mapFrom(model: newTranslation)
+                        let realmTranslation = RealmTranslation.createNewFrom(interface: newTranslation)
                         
                         if let resourceId = newTranslation.resource?.id {
                             realmTranslation.resource = realmResourcesDictionary[resourceId]
@@ -124,8 +122,7 @@ class RealmResourcesCacheSync {
                     
                     for newAttachment in resourcesPlusLatestTranslationsAndAttachments.attachments {
                         
-                        let realmAttachment = RealmAttachment()
-                        realmAttachment.mapFrom(model: newAttachment)
+                        let realmAttachment = RealmAttachment.createNewFrom(interface: newAttachment)
                         
                         if let resourceId = newAttachment.resource?.id {
                             realmAttachment.resource = realmResourcesDictionary[resourceId]
@@ -206,9 +203,9 @@ class RealmResourcesCacheSync {
                 let translationIdsToRemove: [String] = existingTranslationsMinusNewlyAddedTranslations.map({$0.id})
                 let downloadedTranslationsToRemove: [RealmDownloadedTranslation] = Array(realm.objects(RealmDownloadedTranslation.self).filter("\(#keyPath(RealmDownloadedTranslation.translationId)) IN %@", translationIdsToRemove))
 
-                let resourcesRemoved: [ResourceModel] = existingResourcesMinusNewlyAddedResources.map({ResourceModel(model: $0)})
-                let translationsRemoved: [TranslationModel] = existingTranslationsMinusNewlyAddedTranslations.map({TranslationModel(model: $0)})
-                let attachmentsRemoved: [AttachmentModel] = existingAttachmentsMinusNewlyAddedAttachments.map({AttachmentModel(model: $0)})
+                let resourcesRemoved: [ResourceDataModel] = existingResourcesMinusNewlyAddedResources.map({ResourceDataModel(interface: $0)})
+                let translationsRemoved: [TranslationDataModel] = existingTranslationsMinusNewlyAddedTranslations.map({TranslationDataModel(interface: $0)})
+                let attachmentsRemoved: [AttachmentDataModel] = existingAttachmentsMinusNewlyAddedAttachments.map({AttachmentDataModel(interface: $0, storedAttachment: nil)})
                 let downloadedTranslationsRemoved: [DownloadedTranslationDataModel] = downloadedTranslationsToRemove.map({DownloadedTranslationDataModel(model: $0)})
                 
                 // delete realm objects that no longer exist
@@ -227,7 +224,6 @@ class RealmResourcesCacheSync {
                     }
                     
                     let syncResult = RealmResourcesCacheSyncResult(
-                        languagesSyncResult: languagesSyncResult,
                         resourcesRemoved: resourcesRemoved,
                         translationsRemoved: translationsRemoved,
                         attachmentsRemoved: attachmentsRemoved,
