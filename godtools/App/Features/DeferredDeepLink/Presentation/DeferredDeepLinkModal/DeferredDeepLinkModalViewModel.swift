@@ -67,27 +67,31 @@ extension DeferredDeepLinkModalViewModel {
     }
     
     func pasteButtonTapped(pastedString: String?) {
-        guard let pastedString = pastedString,
-              let url = URL(string: pastedString),
-              let deepLink = deepLinkingService.parseDeepLink(
-                incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
-        else {
+        
+        DispatchQueue.main.async { [weak self] in
             
-            assertionFailure()
-            trackActionAnalyticsUseCase.trackAction(
-                screenName: "Deferred DeepLink",
-                actionName: AnalyticsConstants.ActionNames.deeplinkError,
-                siteSection: "",
-                siteSubSection: "",
-                appLanguage: nil,
-                contentLanguage: nil,
-                contentLanguageSecondary: nil,
-                url: nil,
-                data: nil)
-  
-            return
-        }
+            guard let pastedString = pastedString,
+                  let url = URL(string: pastedString),
+                  let deepLink = self?.deepLinkingService.parseDeepLink(
+                    incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
+            else {
                 
-        flowDelegate?.navigate(step: .handleDeepLinkFromDeferredDeepLinkModal(deepLinkType: deepLink))
+                assertionFailure()
+                self?.trackActionAnalyticsUseCase.trackAction(
+                    screenName: "Deferred DeepLink",
+                    actionName: AnalyticsConstants.ActionNames.deeplinkError,
+                    siteSection: "",
+                    siteSubSection: "",
+                    appLanguage: nil,
+                    contentLanguage: nil,
+                    contentLanguageSecondary: nil,
+                    url: nil,
+                    data: nil)
+                
+                return
+            }
+            
+            self?.flowDelegate?.navigate(step: .handleDeepLinkFromDeferredDeepLinkModal(deepLinkType: deepLink))
+        }
     }
 }
