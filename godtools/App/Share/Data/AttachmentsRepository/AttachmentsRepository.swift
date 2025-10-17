@@ -10,9 +10,10 @@ import Foundation
 import Combine
 import RequestOperation
 
-class AttachmentsRepository: RepositorySync<AttachmentDataModel, MobileContentAttachmentsApi, RealmAttachment> {
+class AttachmentsRepository: RepositorySync<AttachmentDataModel, MobileContentAttachmentsApi> {
     
     private let api: MobileContentAttachmentsApi
+    private let realmPersistence: RealmRepositorySyncPersistence<AttachmentDataModel, AttachmentCodable, RealmAttachment>
     private let resourcesFileCache: ResourcesSHA256FileCache
     private let bundle: AttachmentsBundleCache
     
@@ -22,10 +23,16 @@ class AttachmentsRepository: RepositorySync<AttachmentDataModel, MobileContentAt
         self.resourcesFileCache = resourcesFileCache
         self.bundle = bundle
         
+        let realmPersistence = RealmRepositorySyncPersistence<AttachmentDataModel, AttachmentCodable, RealmAttachment>(
+            realmDatabase: realmDatabase,
+            dataModelMapping: RealmAttachmentDataModelMapping()
+        )
+        
+        self.realmPersistence = realmPersistence
+        
         super.init(
             externalDataFetch: api,
-            realmDatabase: realmDatabase,
-            dataModelMapping: AttachmentsDataModelMapping()
+            persistence: realmPersistence
         )
     }
 }
@@ -36,7 +43,7 @@ extension AttachmentsRepository {
     
     func getCachedAttachment(id: String) -> AttachmentDataModel? {
         
-        guard let cachedAttachment = getCachedObject(id: id) else {
+        guard let cachedAttachment = persistence.getObject(id: id) else {
             return nil
         }
         

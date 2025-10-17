@@ -8,7 +8,6 @@
 
 import Foundation
 import Combine
-import LocalizationServices
 
 class GetToolFilterLanguagesRepository: GetToolFilterLanguagesRepositoryInterface {
     
@@ -29,7 +28,9 @@ class GetToolFilterLanguagesRepository: GetToolFilterLanguagesRepositoryInterfac
     
     func getToolFilterLanguagesPublisher(translatedInAppLanguage: AppLanguageDomainModel, filteredByCategoryId: String?) -> AnyPublisher<[ToolFilterLanguageDomainModel], Never> {
         
-        return resourcesRepository.observeDatabaseChangesPublisher()
+        return resourcesRepository
+            .persistence
+            .observeCollectionChangesPublisher()
             .flatMap { _ in
                 
                 let languageIds = self.resourcesRepository
@@ -50,7 +51,7 @@ class GetToolFilterLanguagesRepository: GetToolFilterLanguagesRepositoryInterfac
     func getLanguageFilter(from languageId: String?, translatedInAppLanguage: AppLanguageDomainModel) -> ToolFilterLanguageDomainModel? {
         
         guard let languageId = languageId,
-            let language = languagesRepository.getCachedObject(id: languageId)
+            let language = languagesRepository.persistence.getObject(id: languageId)
         else {
             return nil
         }
@@ -66,7 +67,7 @@ extension GetToolFilterLanguagesRepository {
     private func getLanguageFilterPublisher(from languageId: String?, translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolFilterLanguageDomainModel?, Never> {
         
         guard let languageId = languageId,
-            let language = languagesRepository.getCachedObject(id: languageId)
+            let language = languagesRepository.persistence.getObject(id: languageId)
         else {
             return Just<ToolFilterLanguageDomainModel?>(nil)
                 .eraseToAnyPublisher()
@@ -82,7 +83,7 @@ extension GetToolFilterLanguagesRepository {
                 
         let anyLanguage = createAnyLanguageDomainModel(translatedInAppLanguage: translatedInAppLanguage, filteredByCategoryId: filteredByCategoryId)
         
-        let languages: [ToolFilterLanguageDomainModel] = languagesRepository.getCachedObjects(ids: languageIds)
+        let languages: [ToolFilterLanguageDomainModel] = languagesRepository.persistence.getObjects(ids: languageIds)
             .compactMap { languageModel in
                 
                 let toolsAvailableCount: Int = getToolsAvailableCount(for: languageModel.id, filteredByCategoryId: filteredByCategoryId)

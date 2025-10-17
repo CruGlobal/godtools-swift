@@ -404,6 +404,8 @@ extension LegacyMobileContentStackView {
             newScrollView.translatesAutoresizingMaskIntoConstraints = false
             newScrollView.constrainEdgesToView(view: self)
             
+            newScrollView.disableScrollEdgeEffect()
+            
             contentViewParent = newScrollView
             
             self.scrollView = newScrollView

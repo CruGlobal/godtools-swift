@@ -8,7 +8,6 @@
 
 import Foundation
 import Combine
-import LocalizationServices
 
 class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
     
@@ -44,7 +43,7 @@ class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
             versionsDescription: ""
         )
         
-        guard let toolDataModel = resourcesRepository.getCachedObject(id: toolId) else {
+        guard let toolDataModel = resourcesRepository.persistence.getObject(id: toolId) else {
             return Just(noToolDomainModel)
                 .eraseToAnyPublisher()
         }
@@ -69,7 +68,7 @@ class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
             toolDataModel.totalViews
         )
         
-        let languagesDataModels: [LanguageDataModel] = languagesRepository.getCachedObjects(ids: toolDataModel.getLanguageIds())
+        let languagesDataModels: [LanguageDataModel] = languagesRepository.persistence.getObjects(ids: toolDataModel.getLanguageIds())
         
         let languageNamesTranslatedInToolLanguage: [String] = languagesDataModels.map { (languageDataModel: LanguageDataModel) in
             self.getTranslatedLanguageName.getLanguageName(language: languageDataModel, translatedInLanguage: translateInLanguage)
@@ -180,7 +179,7 @@ class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
             return false
         }
         
-        guard let languageModel = languagesRepository.getCachedLanguage(code: language) else {
+        guard let languageModel = languagesRepository.cache.getCachedLanguage(code: language) else {
             return false
         }
         

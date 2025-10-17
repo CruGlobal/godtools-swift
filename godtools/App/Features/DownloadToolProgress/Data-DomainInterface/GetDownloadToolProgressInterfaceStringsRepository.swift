@@ -8,7 +8,6 @@
 
 import Foundation
 import Combine
-import LocalizationServices
 
 class GetDownloadToolProgressInterfaceStringsRepository: GetDownloadToolProgressInterfaceStringsRepositoryInterface {
     
@@ -29,7 +28,7 @@ class GetDownloadToolProgressInterfaceStringsRepository: GetDownloadToolProgress
         
         let resource: ResourceDataModel?
         
-        if let toolId = toolId, let resourceModel = resourcesRepository.getCachedObject(id: toolId) {
+        if let toolId = toolId, let resourceModel = resourcesRepository.persistence.getObject(id: toolId) {
             resource = resourceModel
         }
         else {

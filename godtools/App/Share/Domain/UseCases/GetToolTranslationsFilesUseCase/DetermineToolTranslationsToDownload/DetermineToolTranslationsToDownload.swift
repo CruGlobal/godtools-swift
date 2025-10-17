@@ -24,7 +24,7 @@ class DetermineToolTranslationsToDownload: DetermineToolTranslationsToDownloadIn
     }
     
     func getResource() -> ResourceDataModel? {
-        return resourcesRepository.getCachedObject(id: resourceId)
+        return resourcesRepository.persistence.getObject(id: resourceId)
     }
     
     func determineToolTranslationsToDownload() -> Result<DetermineToolTranslationsToDownloadResult, DetermineToolTranslationsToDownloadError> {

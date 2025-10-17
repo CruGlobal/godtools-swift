@@ -178,10 +178,10 @@ class AppDataLayerDependencies {
             urlSessionPriority: getSharedUrlSessionPriority(),
             requestSender: getRequestSender()
         )
-        
+                
         return LanguagesRepository(
             api: api,
-            realmDatabase: sharedRealmDatabase
+            cache: LanguagesCache(realmDatabase: sharedRealmDatabase)
         )
     }
     

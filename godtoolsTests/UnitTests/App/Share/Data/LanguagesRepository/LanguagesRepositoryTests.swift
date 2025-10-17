@@ -17,7 +17,7 @@ struct LanguagesRepositoryTests {
         
         let languagesRepository: LanguagesRepository = getLanguagesRepository()
         
-        let language: LanguageDataModel? = languagesRepository.getCachedLanguage(code: LanguageCodeDomainModel.arabic.rawValue)
+        let language: LanguageDataModel? = languagesRepository.cache.getCachedLanguage(code: LanguageCodeDomainModel.arabic.rawValue)
         
         #expect(language?.code == LanguageCodeDomainModel.arabic.rawValue)
     }
@@ -27,7 +27,7 @@ struct LanguagesRepositoryTests {
         
         let languagesRepository: LanguagesRepository = getLanguagesRepository()
         
-        let languages: [LanguageDataModel] = languagesRepository.getCachedLanguages(
+        let languages: [LanguageDataModel] = languagesRepository.cache.getCachedLanguages(
             languageCodes: [
                 LanguageCodeDomainModel.arabic.rawValue,
                 LanguageCodeDomainModel.czech.rawValue,

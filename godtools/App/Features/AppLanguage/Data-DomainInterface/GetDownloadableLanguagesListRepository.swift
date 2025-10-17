@@ -8,7 +8,6 @@
 
 import Foundation
 import Combine
-import LocalizationServices
 
 class GetDownloadableLanguagesListRepository: GetDownloadableLanguagesListRepositoryInterface {
     
@@ -33,7 +32,7 @@ class GetDownloadableLanguagesListRepository: GetDownloadableLanguagesListReposi
     func getDownloadableLanguagesPublisher(currentAppLanguage: AppLanguageDomainModel) -> AnyPublisher<[DownloadableLanguageListItemDomainModel], Never> {
         
         return Publishers.CombineLatest(
-            languagesRepository.getObjectsPublisher(getObjectsType: .objects, cachePolicy: .returnCacheDataElseFetch(requestPriority: .high, observeChanges: true)),
+            languagesRepository.getObjectsPublisher(getObjectsType: .allObjects, cachePolicy: .returnCacheDataElseFetch(requestPriority: .high, observeChanges: true)),
             downloadedLanguagesRepository.getDownloadedLanguagesChangedPublisher()
         )
         .map { (languagesResponse: RepositorySyncResponse<LanguageDataModel>, downloadLanguagesChanged: Void) in

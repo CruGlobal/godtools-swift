@@ -24,7 +24,7 @@ class EvaluateLessonRepository: EvaluateLessonRepositoryInterface {
     
     func evaluateLessonPublisher(lessonId: String, feedback: TrackLessonFeedbackDomainModel) -> AnyPublisher<Void, Never> {
         
-        guard let lessonResource = resourcesRepository.getCachedObject(id: lessonId) else {
+        guard let lessonResource = resourcesRepository.persistence.getObject(id: lessonId) else {
             return Just(Void())
                 .eraseToAnyPublisher()
         }

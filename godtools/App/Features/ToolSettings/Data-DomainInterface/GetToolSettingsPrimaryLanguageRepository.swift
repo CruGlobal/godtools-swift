@@ -22,7 +22,7 @@ class GetToolSettingsPrimaryLanguageRepository: GetToolSettingsPrimaryLanguageRe
     
     func getLanguagePublisher(primaryLanguageId: String, translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolSettingsToolLanguageDomainModel?, Never> {
         
-        guard let language = languagesRepository.getCachedObject(id: primaryLanguageId) else {
+        guard let language = languagesRepository.persistence.getObject(id: primaryLanguageId) else {
             return Just(nil)
                 .eraseToAnyPublisher()
         }

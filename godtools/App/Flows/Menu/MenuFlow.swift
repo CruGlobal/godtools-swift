@@ -10,7 +10,6 @@ import UIKit
 import MessageUI
 import SwiftUI
 import Combine
-import LocalizationServices
 
 class MenuFlow: Flow {
     
@@ -42,9 +41,9 @@ class MenuFlow: Flow {
         navigationController = AppNavigationController(navigationBarAppearance: navigationBarAppearance)
         navigationController.setNavigationBarHidden(false, animated: false)
         
-        let view: UIViewController = getMenuView()
+        let menuView: UIViewController = getMenuView()
         
-        navigationController.setViewControllers([view], animated: false)
+        navigationController.setViewControllers([menuView], animated: false)
         
         appDiContainer.feature.appLanguage.domainLayer
             .getCurrentAppLanguageUseCase()
@@ -85,6 +84,13 @@ class MenuFlow: Flow {
             
         case .languageSettingsFlowCompleted( _):
             closeLanguageSettings()
+            
+        case .localizationSettingsTappedFromMenu:
+            navigateToLocalizationSettings()
+            
+        case .backTappedFromLocalizationSettings:
+            // TODO: GT-2733 implement in collections work. ~Levi
+            break
             
         case .tutorialTappedFromMenu:
             navigateToTutorial()
@@ -332,6 +338,23 @@ extension MenuFlow {
     }
 }
 
+// MARK: - Localization Settings
+
+extension MenuFlow {
+    
+    private func navigateToLocalizationSettings() {
+        
+        // TODO: GT-2733 implement in collections work. ~Levi
+    }
+    
+    private func getLocalizationSettingsView() -> UIViewController {
+        
+        // TODO: GT-2733 implement in collections work. ~Levi
+        
+        return UIViewController()
+    }
+}
+
 // MARK: - Tutorial
 
 extension MenuFlow {
@@ -387,7 +410,6 @@ extension MenuFlow {
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             localizationServices: appDiContainer.dataLayer.getLocalizationServices(),
             localizedStringKey: "done",
-            style: .done,
             color: nil,
             target: viewModel,
             action: #selector(viewModel.doneTapped),

@@ -8,7 +8,6 @@
 
 import UIKit
 import Combine
-import LocalizationServices
 
 class AppInterfaceStringNavBarItemController: NavBarItemController {
         
@@ -19,7 +18,7 @@ class AppInterfaceStringNavBarItemController: NavBarItemController {
     private var currentInterfaceString: String?
     private var cancellables: Set<AnyCancellable> = Set()
     
-    init(delegate: NavBarItemControllerDelegate, navBarItem: AppInterfaceStringBarItem, itemBarPosition: BarButtonItemBarPosition, itemIndex: Int, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, localizationServices: LocalizationServicesInterface) {
+    init(delegate: NavBarItemControllerDelegate, navBarAppearance: AppNavigationBarAppearance?, navBarItem: AppInterfaceStringBarItem, itemBarPosition: BarButtonItemBarPosition, itemIndex: Int, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, localizationServices: LocalizationServicesInterface) {
                
         self.interfaceStringBarItem = navBarItem
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
@@ -27,6 +26,7 @@ class AppInterfaceStringNavBarItemController: NavBarItemController {
         
         super.init(
             delegate: delegate,
+            navBarAppearance: navBarAppearance,
             navBarItem: navBarItem,
             itemBarPosition: itemBarPosition,
             itemIndex: itemIndex
@@ -51,7 +51,7 @@ class AppInterfaceStringNavBarItemController: NavBarItemController {
                 
                 let shouldRedraw: Bool = self?.currentInterfaceString != interfaceString
                 
-                if shouldRedraw, let newBarButtonItem = self?.interfaceStringBarItem.itemData.getNewBarButtonItem(contentType: .title(value: interfaceString)) {
+                if shouldRedraw, let newBarButtonItem = self?.interfaceStringBarItem.itemData.getNewBarButtonItem(contentType: .title(value: interfaceString), navBarAppearance: navBarAppearance) {
                     
                     self?.reDrawBarButtonItem(barButtonItem: newBarButtonItem)
                 }

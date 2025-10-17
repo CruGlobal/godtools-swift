@@ -3,7 +3,6 @@
 
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "לא זמין ב- %@";
-
 "tool_menu_item.tools" = "כל הכלים";
 "lessons.pageTitle" = "שיעורים שנבנו בשבילך";
 "lessons.pageSubtitle" = "רעיונות מעשיים לבניית מערכות יחסים ולהתחיל שיחות משמעותיות.";
@@ -37,8 +36,8 @@
 "toolSettings.shareables.title" = "גרפיקה מקושרת";
 "allTools.spotlight.title" = "הדגשת כלי";
 "allTools.spotlight.description" = "הנה כמה כלים שחשבנו שאולי תאהב";
-"allTools.categories.title" = "קטגוריות";
 "tool_menu_item.lessons" = "שיעורים";
+
 "onboardingTutorial.beginButton.title" = "התחלה";
 "onboardingTutorial.nextButton.title" = "הבא";
 "tool_offline_favorite_message" = "הפוך כלי לזמין במצב לא מקוון על ידי הקשה על סמל הלב שמוסיף אותו למועדפים שלך.";
@@ -113,25 +112,22 @@
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
 "find_tools" = "כל הכלים";
 
-"unavailable" = "לא זמין";
-
 // Navigation Bar
 "navigationBar.navigationItem.skip" = "דלג";
 
 // Onboarding
 "add_new_tools" = "הוסיפו כלים חדשים";
-"set_your_languages" = "הגדירו את השפה שלכם";
-"okay" = "בסדר";
+
 // Menu
 "menu_general" = "כללי";
 "menu_share" = "שתף";
 "menu_legal" = "חוקיות";
 "language_settings" = "הגדרות שפה";
+
 // Login
 "login" = "כניסה";
 "logout" = "יציאה";
 "create_account" = "יצירת חשבון";
-"account_login" = "כניסת חשבון";
 
 // Tool Detail
 "about" = "אודות";
@@ -145,9 +141,6 @@
 "share_god_tools_share_sheet_text" = "הורידו את אפליקציית GodTools כאן: https://godtoolsapp.com
 
 ניתן למצוא כאן https://knowgod.com/ גרסה מקוונת";
-
-// Add Tools
-"add_tools" = "הוסף כלים";
 
 "total_views" = "%d צפיות";
 "total_languages" = "%d שפות";
@@ -169,14 +162,13 @@
 "no_internet" = "אנא בדקו את חיבור האינטרנט שלם ונסו שוב.";
 
 "the_tool_you_requested_is_loading" = "הכלי שביקשת נטען...";
-"loading" = "טוען...";
 
 // Actions
 "yes" = "כן";
 "no" = "לא";
 
 // Tract - Sharing
-"tract_share_message" ="קישור זה יעביר אתכם לגרסת הדפדפן של של הדף האחרון שהסתכלנו עליו ביחד: %@. בואו נדבר יותר! 
+"tract_share_message" = "קישור זה יעביר אתכם לגרסת הדפדפן של של הדף האחרון שהסתכלנו עליו ביחד: %@. בואו נדבר יותר! 
 
 ניתן להוריד אפליקציה זו דרך https://godtoolsapp.com";
 
@@ -209,9 +201,9 @@ support@godtoolsapp.com";
 "general_about_8" = "בקרו באתר godtoolsapp.com בשביל עוד מידע.";
 "tutorial.continueButton.title.continue" = "המשך";
 "general_about_9" = "כאשר אתה לוקח את היוזמה לחלוק את האמונה שלך, זכור כי אלוהים הוא אשר משנה את הלב. אהוב כל אדם טוב על ידי הקשבה להבנה.";
+
 "general_about_10" = "\"יהיו נא דבריכם מלווים תמיד בחן ומתבלים במלח, באפן שתדעו איך להשיב לכל שואל.\"
 קולוסים 4:6";
-
 // Downloads
 "Download in progress" = "ההורדה בתהליך";
 
@@ -221,4 +213,3 @@ support@godtoolsapp.com";
 
 // Language Name Strings
 "language_name_fa" = "פרסית (פרסית)";
-

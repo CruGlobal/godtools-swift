@@ -19,3 +19,13 @@ class RealmFavoritedResource: Object {
         return "resourceId"
     }
 }
+
+extension RealmFavoritedResource {
+    convenience init(createdAt: Date, resourceId: String, position: Int) {
+        self.init()
+        self.createdAt = createdAt
+        self.resourceId = resourceId
+        self.position = position
+    }
+}
+

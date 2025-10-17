@@ -29,7 +29,7 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
     func getLessonsListPublisher(appLanguage: AppLanguageDomainModel, filterLessonsByLanguage: LessonFilterLanguageDomainModel?) -> AnyPublisher<[LessonListItemDomainModel], Never> {
                 
         return Publishers.CombineLatest(
-            resourcesRepository.observeDatabaseChangesPublisher(),
+            resourcesRepository.persistence.observeCollectionChangesPublisher(),
             getLessonListItemProgressRepository.getLessonListItemProgressChanged()
         )
         .flatMap({ (resourcesDidChange: Void, lessonProgressDidChange: Void) -> AnyPublisher<[LessonListItemDomainModel], Never> in
@@ -41,7 +41,7 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
                 let filterLanguageModel: LanguageDataModel?
                 if let filterLanguageId = filterLessonsByLanguage?.languageId {
                     
-                    filterLanguageModel = self.languagesRepository.getCachedObject(id: filterLanguageId)
+                    filterLanguageModel = self.languagesRepository.persistence.getObject(id: filterLanguageId)
                 } else {
                     filterLanguageModel = nil
                 }
@@ -81,7 +81,7 @@ extension GetLessonsListRepository {
     
     private func getToolLanguageAvailability(appLanguage: AppLanguageDomainModel, filterLanguageModel: LanguageDataModel?, resource: ResourceDataModel) -> ToolLanguageAvailabilityDomainModel {
 
-        if let appLanguageModel = languagesRepository.getCachedLanguage(code: appLanguage) {
+        if let appLanguageModel = languagesRepository.cache.getCachedLanguage(code: appLanguage) {
             
             let language: LanguageDataModel
             

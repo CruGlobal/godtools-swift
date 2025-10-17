@@ -52,14 +52,4 @@ struct LanguageCodable: LanguageDataModelInterface, Codable {
         name = try attributesContainer?.decodeIfPresent(String.self, forKey: .name) ?? ""
         forceLanguageName = try attributesContainer?.decodeIfPresent(Bool.self, forKey: .forceLanguageName) ?? false
     }
-    
-    init(interface: LanguageDataModelInterface) {
-        
-        code = interface.code
-        directionString = interface.directionString
-        id = interface.id
-        name = interface.name
-        type = interface.type
-        forceLanguageName = interface.forceLanguageName
-    }
 }

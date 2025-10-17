@@ -9,7 +9,6 @@
 import Foundation
 
 public enum RepositorySyncGetObjectsType {
-    case objects
-    case objectsWithQuery(databaseQuery: RepositorySyncDatabaseQuery?)
+    case allObjects
     case object(id: String)
 }

@@ -86,27 +86,20 @@ struct ConfirmAppLanguageView: View {
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
     }
     
-    @ViewBuilder func attributedMessageView(attributedString: NSAttributedString, fontSize: CGFloat) -> some View {
+    @ViewBuilder func attributedMessageView(attributedString: AttributedString, fontSize: CGFloat) -> some View {
         
-        Group {
-            if #available(iOS 15, *) {
-                Text(AttributedString(attributedString))
-            } else {
-                Text(attributedString.string)
-            }
-        }
-        .font(FontLibrary.sfProTextRegular.font(size: fontSize))
-        .foregroundColor(ColorPalette.gtGrey.color)
+        Text(attributedString)
+            .font(FontLibrary.sfProTextRegular.font(size: fontSize))
+            .foregroundColor(ColorPalette.gtGrey.color)
     }
     
-    private func getAttributedMessageString(highlightStringDomainModel: ConfirmAppLanguageHighlightStringDomainModel) -> NSAttributedString {
+    private func getAttributedMessageString(highlightStringDomainModel: ConfirmAppLanguageHighlightStringDomainModel) -> AttributedString {
         
-        let formatStringAttributed = NSAttributedString(string: highlightStringDomainModel.formatString)
-        let highlightTextAttributed = NSAttributedString(
-            string: highlightStringDomainModel.highlightText,
-            attributes: [NSAttributedString.Key.foregroundColor: ColorPalette.gtBlue.uiColor]
-        )
+        var attributedString = AttributedString(highlightStringDomainModel.fullText)
         
-        return NSAttributedString(format: formatStringAttributed, args: highlightTextAttributed)
+        guard let range = attributedString.range(of: highlightStringDomainModel.highlightText) else { return attributedString }
+        attributedString[range].foregroundColor = ColorPalette.gtBlue.color
+        
+        return attributedString
     }
 }
