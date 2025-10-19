@@ -244,6 +244,8 @@
 
 /* This is to let users know which version of the app is installed on their phone */
 "menu_version" = "ሥሪት";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "ከ 90 በላይ ቋንቋዎች";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -379,10 +381,12 @@
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "ዓለም አቀፋዊ እንቅስቃሴ";
+// OnboardingWelcome
 "accountActivity.globalAnalytics.users.title" = "ልዩ ተጠቃሚዎች";
 "onboardingWelcome.titleLabel.tagline" = "እምነትዎን እንዲያካፍሉ መርዳት";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "የወንጌል ግብዣዎች";
 "accountActivity.globalAnalytics.launches.title" = "ክፍለ ጊዜዎች";
+// OnboardingTutorial
 "accountActivity.globalAnalytics.countries.title" = "ሀገሮች";
 "onboardingTutorial.showMoreButton.title" = "ተጨማሪ አሳየኝ";
 

@@ -237,6 +237,8 @@ Se você receber esta mensagem demasiado tarde, a ligação poderá não estar a
 
 /* This is to let users know which version of the app is installed on their phone */
 "menu_version" = "Versão";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "Mais de 90 idiomas";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -374,9 +376,11 @@ Prima o botão de informações em qualquer ferramenta para obter mais informaç
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "Atividade global";
+// OnboardingWelcome
 "accountActivity.globalAnalytics.users.title" = "Utilizadores\núnicos";
 "onboardingWelcome.titleLabel.tagline" = "Ajudando você a compartilhar a sua fé";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "Apresentações do\nevangelho";
 "accountActivity.globalAnalytics.launches.title" = "Sessões";
+// OnboardingTutorial
 "accountActivity.globalAnalytics.countries.title" = "Países";
 "onboardingTutorial.showMoreButton.title" = "Mostrar mais";

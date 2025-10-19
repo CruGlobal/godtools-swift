@@ -242,6 +242,8 @@ As jy nie hierdie boodskap gou kry nie, mag dit wees omdat die skakel nog nie we
 
 /* This is to let users know which version of the app is installed on their phone */
 "menu_version" = "Weergawe";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "90+ Tale";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -376,9 +378,11 @@ https://godtoolsapp.com";
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "Globale Aktiwiteit";
+// OnboardingWelcome
 "accountActivity.globalAnalytics.users.title" = "Unieke\nGebruikers";
 "onboardingWelcome.titleLabel.tagline" = "Help Jou Om Jou Geloof Te Deel";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "Evangelie\nAanbiedings";
 "accountActivity.globalAnalytics.launches.title" = "Sessies";
+// OnboardingTutorial
 "accountActivity.globalAnalytics.countries.title" = "Lande";
 "onboardingTutorial.showMoreButton.title" = "Wys My Meer";

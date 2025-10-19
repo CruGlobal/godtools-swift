@@ -242,6 +242,8 @@
 
 /* This is to let users know which version of the app is installed on their phone */
 "menu_version" = "সংস্করণ";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "90 + ভাষা";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -374,9 +376,11 @@ knowgod.com. আপনার নিজের সাইটে স্থাপ  �
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "বৈশ্বিক ক্রিয়া কলাপ";
+// OnboardingWelcome
 "accountActivity.globalAnalytics.users.title" = "অনন্য ইউজার";
 "onboardingWelcome.titleLabel.tagline" = "আপনার বিশ্বাস শেয়ার করতে সাহায্য করা";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "সুসমাচার উপস্থাপন";
 "accountActivity.globalAnalytics.launches.title" = "সেশনস";
+// OnboardingTutorial
 "accountActivity.globalAnalytics.countries.title" = "দেশ সমূহ";
 "onboardingTutorial.showMoreButton.title" = "আমাকে আরও দেখান";
