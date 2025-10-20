@@ -1,0 +1,66 @@
+name: Build Library
+
+on:
+  workflow_call:
+
+jobs:
+
+  current_version:
+    name: Store Current Version
+    runs-on: ubuntu-latest
+    if: (github.event_name == 'push' && github.ref == 'refs/heads/main')
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set Version Output
+        id: version
+        run: grep version VERSION | sed "s/'//g" | sed 's/ //g' >> $GITHUB_OUTPUT
+
+  print_current_version:
+    name: Print Current Version
+    runs-on: ubuntu-latest
+    if: (github.event_name == 'push' && github.ref == 'refs/heads/main')
+    needs: [ current_version ]
+    steps:
+      - name: Print Current Version
+        env:
+          VERSION: ${{ needs.current_version.outputs.version }}
+        run: |
+          printf '%s\n' "$VERSION"
+
+  check_version:
+    name: Verify Version Is Not Released
+    runs-on: ubuntu-latest
+    if: (github.event_name == 'push' && github.ref == 'refs/heads/main')
+    needs: [ current_version ]
+    outputs:
+      tag: ${{ steps.tag_name.outputs.tag }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Generate Tag Name
+        id: tag_name
+        run: echo tag=$TAG_NAME >> $GITHUB_OUTPUT
+        env:
+          TAG_NAME: ${{ needs.current_version.outputs.version }}
+      - name: Check if version was already released
+        run: "! git ls-remote -t --exit-code origin $TAG_NAME"
+        env:
+          TAG_NAME: ${{ steps.tag_name.outputs.tag }}
+
+  tag_version:
+    name: Tag Version
+    runs-on: ubuntu-latest
+    if: (github.event_name == 'push' && github.ref == 'refs/heads/main')
+    needs: [ check_version, current_version ]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Create Tag
+        env:
+          TAG_NAME: ${{ needs.current_version.outputs.version }}
+        run: |
+          git tag $TAG_NAME
+          git push origin $TAG_NAME
