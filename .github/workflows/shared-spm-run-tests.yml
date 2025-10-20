@@ -10,10 +10,6 @@ on:
       codecov_token:
         required: true
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
   run_tests_and_code_coverage:
     name: Run Tests and Code Coverage
