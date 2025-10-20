@@ -67,31 +67,27 @@ extension DeferredDeepLinkModalViewModel {
     }
     
     func pasteButtonTapped(pastedString: String?) {
-        
-        DispatchQueue.main.async { [weak self] in
+        guard let pastedString = pastedString,
+              let url = URL(string: pastedString),
+              let deepLink = deepLinkingService.parseDeepLink(
+                incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
+        else {
             
-            guard let pastedString = pastedString,
-                  let url = URL(string: pastedString),
-                  let deepLink = self?.deepLinkingService.parseDeepLink(
-                    incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
-            else {
-                
-                assertionFailure()
-                self?.trackActionAnalyticsUseCase.trackAction(
-                    screenName: "Deferred DeepLink",
-                    actionName: AnalyticsConstants.ActionNames.deeplinkError,
-                    siteSection: "",
-                    siteSubSection: "",
-                    appLanguage: nil,
-                    contentLanguage: nil,
-                    contentLanguageSecondary: nil,
-                    url: nil,
-                    data: nil)
-                
-                return
-            }
-            
-            self?.flowDelegate?.navigate(step: .handleDeepLinkFromDeferredDeepLinkModal(deepLinkType: deepLink))
+            assertionFailure()
+            trackActionAnalyticsUseCase.trackAction(
+                screenName: "Deferred DeepLink",
+                actionName: AnalyticsConstants.ActionNames.deeplinkError,
+                siteSection: "",
+                siteSubSection: "",
+                appLanguage: nil,
+                contentLanguage: nil,
+                contentLanguageSecondary: nil,
+                url: nil,
+                data: nil)
+  
+            return
         }
+                
+        flowDelegate?.navigate(step: .handleDeepLinkFromDeferredDeepLinkModal(deepLinkType: deepLink))
     }
 }
