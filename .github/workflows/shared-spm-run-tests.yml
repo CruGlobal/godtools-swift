@@ -28,7 +28,7 @@ jobs:
       - name: Run Tests
         run: xcodebuild test -scheme ${{ inputs.xcodebuild-test-scheme }} -destination "OS=26.0,name=iPhone 17"
       - name: Upload Xcode Code Coverage Report to CodeCov
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           fail_ci_if_error: true
           token: ${{ secrets.codecov_token }}
