@@ -236,6 +236,8 @@
 
 /* This is to let users know which version of the app is installed on their phone */
 "menu_version" = "ورزن";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "90+ زبانیں";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -368,9 +370,11 @@ https://godtoolsapp.com";
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "عالمگیر سرگرمی";
+// OnboardingWelcome
 "accountActivity.globalAnalytics.users.title" = "منفرد صارفین";
 "onboardingWelcome.titleLabel.tagline" = "آپ کے ایمان کو ساجھا کرنے میں مددگار";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "انجیل کی پیشکشیں";
 "accountActivity.globalAnalytics.launches.title" = "سیشنز";
+// OnboardingTutorial
 "accountActivity.globalAnalytics.countries.title" = "ممالک";
 "onboardingTutorial.showMoreButton.title" = "مزید دکھائیے ";

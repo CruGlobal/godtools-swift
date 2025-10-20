@@ -239,6 +239,8 @@ Jika Anda tidak menerima pesan ini hingga nanti, tautannya mungkin masih belum b
 
 /* This is to let users know which version of the app is installed on their phone */
 "menu_version" = "Versi";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "90+ Bahasa";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -374,9 +376,11 @@ Kolose 4:6";
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "Aktifitas Global";
+// OnboardingWelcome
 "accountActivity.globalAnalytics.users.title" = "Pengguna unik";
 "onboardingWelcome.titleLabel.tagline" = "Membantu Saudara Membagikan Iman Saudara";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "Presentasi Injil";
 "accountActivity.globalAnalytics.launches.title" = "Sesi-Sesi";
+// OnboardingTutorial
 "accountActivity.globalAnalytics.countries.title" = "Negara-negara";
 "onboardingTutorial.showMoreButton.title" = "Lebih";

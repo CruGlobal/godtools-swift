@@ -240,6 +240,8 @@ Ja saņēmi šo ziņojumu novēloti, iespējams, ka saite vairs nedarbojas. Mēs
 
 /* This is to let users know which version of the app is installed on their phone */
 "menu_version" = "Versija";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "90+ valodas";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -379,9 +381,11 @@ Lai iegūtu vairāk informācijas, nospied pogu \"Apraksts\".";
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "Globālā aktivitāte";
+// OnboardingWelcome
 "accountActivity.globalAnalytics.users.title" = "Unikālie\nlietotāji";
 "onboardingWelcome.titleLabel.tagline" = "Tava iespēja parunāt par Jēzu";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "Labās vēsts\nprezentācijas";
 "accountActivity.globalAnalytics.launches.title" = "Sesijas";
+// OnboardingTutorial
 "accountActivity.globalAnalytics.countries.title" = "Valstis";
 "onboardingTutorial.showMoreButton.title" = "Vairāk";

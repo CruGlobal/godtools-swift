@@ -238,6 +238,8 @@
 
 /* This is to let users know which version of the app is installed on their phone */
 "menu_version" = "版本";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "超过 90 种语言";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -376,9 +378,11 @@
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "全球活动";
+// OnboardingWelcome
 "accountActivity.globalAnalytics.users.title" = "独一\n用户";
 "onboardingWelcome.titleLabel.tagline" = "帮助你分享自己的信仰";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "分享\n福音";
 "accountActivity.globalAnalytics.launches.title" = "会话";
+// OnboardingTutorial
 "accountActivity.globalAnalytics.countries.title" = "国家/地区";
 "onboardingTutorial.showMoreButton.title" = "显示更多";

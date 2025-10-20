@@ -236,6 +236,8 @@
 
 /* This is to let users know which version of the app is installed on their phone */
 "menu_version" = "Phiên bản";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "Hơn 90 Ngôn ngữ";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -374,9 +376,11 @@ Nhấn nút \"Giới thiệu\" để biết thêm về công cụ.";
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "Hoạt động toàn cầu";
+// OnboardingWelcome
 "accountActivity.globalAnalytics.users.title" = "Người dùng\nduy nhất";
 "onboardingWelcome.titleLabel.tagline" = "Giúp bạn chia sẻ đức tin của mình";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "Trình bày\nPhúc Âm";
 "accountActivity.globalAnalytics.launches.title" = "Phần";
+// OnboardingTutorial
 "accountActivity.globalAnalytics.countries.title" = "Quốc gia";
 "onboardingTutorial.showMoreButton.title" = "Cho tôi xem nhiều hơn";

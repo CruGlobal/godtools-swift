@@ -110,6 +110,8 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "వస్తువులు";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "90+ భాషలు";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -244,8 +246,10 @@
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "ప్రపంచ కార్యాచరణ";
+// OnboardingWelcome
 "accountActivity.globalAnalytics.users.title" = "ప్రత్యేక వినియోగదారులు";
 "onboardingWelcome.titleLabel.tagline" = "మీ విశ్వాసాన్ని పంచుకోవడానికి మీకు సహాయం చేస్తుంది";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "సువార్త ప్రదర్శనలు";
 "accountActivity.globalAnalytics.launches.title" = "సమావేశములు";
+// OnboardingTutorial
 "accountActivity.globalAnalytics.countries.title" = "దేశాలు";

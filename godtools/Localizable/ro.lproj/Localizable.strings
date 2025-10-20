@@ -239,6 +239,8 @@ Dacă ai primit acest mesaj prea târziu, este posibil ca linkul să nu funcțio
 
 /* This is to let users know which version of the app is installed on their phone */
 "menu_version" = "Versiune";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "Peste 90 de limbi";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -365,9 +367,11 @@ Aplicația poate fi descărcată de pe https://godtoolsapp.com";
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "Activitate Globală";
+// OnboardingWelcome
 "accountActivity.globalAnalytics.users.title" = "Utilizatori\nUnici";
 "onboardingWelcome.titleLabel.tagline" = "Te ajutăm să-ți împărtășești credința";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "Prezentări ale\nEvangheliei";
 "accountActivity.globalAnalytics.launches.title" = "Sesiuni";
+// OnboardingTutorial
 "accountActivity.globalAnalytics.countries.title" = "Țări";
 "onboardingTutorial.showMoreButton.title" = "Arată-mi mai mult";

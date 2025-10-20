@@ -330,9 +330,11 @@ Bari mu kara magana!";
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "Ayyukan Duniya";
+// OnboardingWelcome
 "accountActivity.globalAnalytics.users.title" = "Musamman Masu Amfani";
 "onboardingWelcome.titleLabel.tagline" = "Taimaka muku Raba Imaninku";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "Gabatarwar Bishara";
 "accountActivity.globalAnalytics.launches.title" = "Zama";
+// OnboardingTutorial
 "accountActivity.globalAnalytics.countries.title" = "Kasashe";
 "onboardingTutorial.showMoreButton.title" = "Nuna mun karin";
