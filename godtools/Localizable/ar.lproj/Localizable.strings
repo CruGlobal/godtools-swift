@@ -241,6 +241,8 @@
 
 /* This is to let users know which version of the app is installed on their phone */
 "menu_version" = "إصدار";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "أكثر من 90 لغة";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -373,9 +375,11 @@ https://godtoolsapp.com
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "النشاط العالمي";
+// OnboardingWelcome
 "accountActivity.globalAnalytics.users.title" = "المستخدمون\nالفريدون";
 "onboardingWelcome.titleLabel.tagline" = "يُساعدك على مشاركة إيمانك";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "الإنجيل\nالعروض التقديمية";
 "accountActivity.globalAnalytics.launches.title" = "الجلسات";
+// OnboardingTutorial
 "accountActivity.globalAnalytics.countries.title" = "البلدان";
 "onboardingTutorial.showMoreButton.title" = "أعرض لي المزيد";

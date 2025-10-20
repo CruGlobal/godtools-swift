@@ -51,6 +51,8 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "લે્ખો";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "90 થી વધુ ભાષાઓ";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -177,9 +179,11 @@ http://godtoolsapp.com";
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "વૈશ્વિક પ્રવૃત્તિ";
+// OnboardingWelcome
 "accountActivity.globalAnalytics.users.title" = "અનન્ય વપરાશકર્તાઓ";
 "onboardingWelcome.titleLabel.tagline" = "તમને તમારો વિશ્વાસ વહેંચવામાં મદદ કરશે";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "સુવાર્તા પ્રસ્તુતિઓ";
 "accountActivity.globalAnalytics.launches.title" = "સત્રો";
+// OnboardingTutorial
 "accountActivity.globalAnalytics.countries.title" = "દેશો";
 "onboardingTutorial.showMoreButton.title" = "મને વધુ બતાવો";

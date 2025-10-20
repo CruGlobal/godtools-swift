@@ -104,6 +104,8 @@ Hvis du ikke mottar denne meldingen før senere, kan det hende at lenken ikke vi
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "Artikler";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "Over 90 språk";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */

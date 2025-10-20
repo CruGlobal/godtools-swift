@@ -104,6 +104,8 @@ Ako ovu poruku pročitate kasnije, veza možda više neće vrijediti. Možemo po
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "Članci";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "Više od 90 jezika";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */

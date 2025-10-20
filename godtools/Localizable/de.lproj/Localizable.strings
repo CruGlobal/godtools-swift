@@ -232,6 +232,8 @@
 
 /* This is to let users know which version of the app is installed on their phone */
 "menu_version" = "Version";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "Über 90 Sprachen";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -371,5 +373,6 @@ Für weitere Infos drücke den Info-Button bei einem Tool.";
 "onboardingWelcome.titleLabel.tagline" = "Teile leichter deinen Glauben";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "Evangeliums-\nPräsentationen";
 "accountActivity.globalAnalytics.launches.title" = "Sitzungen";
+// OnboardingTutorial
 "accountActivity.globalAnalytics.countries.title" = "Länder";
 "onboardingTutorial.showMoreButton.title" = "Mehr anzeigen";

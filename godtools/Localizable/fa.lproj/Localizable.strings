@@ -102,6 +102,8 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "مقاله‌ها";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "90+ زبان";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -236,9 +238,11 @@ https://godtoolsapp.com
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "فعالیت جهانی";
+// OnboardingWelcome
 "accountActivity.globalAnalytics.users.title" = "کاربران بی نظیر";
 "onboardingWelcome.titleLabel.tagline" = "کمک برای به اشتراک گذاشتن ایمان مسیحی";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "ارائه انجیل";
 "accountActivity.globalAnalytics.launches.title" = "جلسات";
+// OnboardingTutorial
 "accountActivity.globalAnalytics.countries.title" = "کشورها";
 "onboardingTutorial.showMoreButton.title" = "موارد بیشتری را نشان بده";
