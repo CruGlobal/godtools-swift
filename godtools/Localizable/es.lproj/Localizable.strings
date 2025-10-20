@@ -238,6 +238,8 @@ Si no recibes este mensaje en un tiempo, puede que el enlace ya no funcione. Pod
 
 /* This is to let users know which version of the app is installed on their phone */
 "menu_version" = "Versión";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "Más de 90 idiomas";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -367,9 +369,11 @@ La aplicación se puede descargar en https://godtoolsapp.com";
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "Actividad global";
+// OnboardingWelcome
 "accountActivity.globalAnalytics.users.title" = "Único\nUsuarios";
 "onboardingWelcome.titleLabel.tagline" = "Te ayudamos a compartir tu fe";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "Evangelio\nPresentaciones";
 "accountActivity.globalAnalytics.launches.title" = "Sesiones";
+// OnboardingTutorial
 "accountActivity.globalAnalytics.countries.title" = "Países";
 "onboardingTutorial.showMoreButton.title" = "Mostrarme más";

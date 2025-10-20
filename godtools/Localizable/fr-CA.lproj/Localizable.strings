@@ -100,6 +100,8 @@ Si vous recevez ce message plus tard, le lien pourrait ne pas fonctionner. Nous 
 
 /* Gospel indicates the gospel of Jesus Christ */
 "tool_category_gospel" = "Invitation à l'évangile";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "Plus de 90 langues";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */

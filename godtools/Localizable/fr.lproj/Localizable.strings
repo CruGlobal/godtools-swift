@@ -229,6 +229,8 @@
 "tool_category_gospel" = "Invitation à Évangile";
 
 "articles.downloadArticlesButton.title.retryDownload" = "Nouvelle tentative de téléchargement";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "Plus de 90 langues";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -365,8 +367,10 @@ Colossiens 4:6";
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "Activité globale";
+// OnboardingWelcome
 "accountActivity.globalAnalytics.users.title" = "Utilisateurs\nuniques";
 "onboardingWelcome.titleLabel.tagline" = "Vous aider à partager votre foi";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "Présentations\nde l'Évangile";
+// OnboardingTutorial
 "accountActivity.globalAnalytics.countries.title" = "Pays";
 "onboardingTutorial.showMoreButton.title" = "Me montrer plus";

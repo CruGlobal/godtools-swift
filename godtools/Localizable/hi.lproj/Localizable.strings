@@ -238,6 +238,8 @@
 
 /* This is to let users know which version of the app is installed on their phone */
 "menu_version" = "संस्करण";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "90+ भाषाएँ";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -376,9 +378,11 @@
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "वैश्विक गतिविधि";
+// OnboardingWelcome
 "accountActivity.globalAnalytics.users.title" = "खास\nउपयोगकर्ता";
 "onboardingWelcome.titleLabel.tagline" = "आपके विश्वास को शेयर करने में सहायक";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "इंजील\nप्रस्तुतिकरण";
 "accountActivity.globalAnalytics.launches.title" = "सत्र";
+// OnboardingTutorial
 "accountActivity.globalAnalytics.countries.title" = "देश";
 "onboardingTutorial.showMoreButton.title" = "अधिक दिखाएं";

@@ -238,6 +238,8 @@
 
 /* This is to let users know which version of the app is installed on their phone */
 "menu_version" = "バージョン";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "90 種類以上の言語";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -368,9 +370,11 @@
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "世界のアクティビティ";
+// OnboardingWelcome
 "accountActivity.globalAnalytics.users.title" = "一意のユーザ";
 "onboardingWelcome.titleLabel.tagline" = "信仰を分かち合うお手伝いをします";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "福音の提示";
 "accountActivity.globalAnalytics.launches.title" = "セッション";
+// OnboardingTutorial
 "accountActivity.globalAnalytics.countries.title" = "国";
 "onboardingTutorial.showMoreButton.title" = "もっと見せて";

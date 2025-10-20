@@ -9,6 +9,8 @@
  * Please keep to a 9 character limit, longer phrases may get cut off
 */
 "open" = "Hape";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "90+ Gjuhë";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
