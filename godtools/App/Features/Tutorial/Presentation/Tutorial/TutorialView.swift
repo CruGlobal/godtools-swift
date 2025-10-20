@@ -10,9 +10,10 @@ import SwiftUI
 
 struct TutorialView: View {
     
+    private static let continueButtonHorizontalPadding: CGFloat = 50
+    private static let continueButtonHeight: CGFloat = 50
+    
     private let pageControlAttributes: PageControlAttributesType = GTPageControlAttributes()
-    private let continueButtonHorizontalPadding: CGFloat = 50
-    private let continueButtonHeight: CGFloat = 50
     
     @ObservedObject private var viewModel: TutorialViewModel
     
@@ -62,7 +63,7 @@ struct TutorialView: View {
                     .animation(.easeOut, value: viewModel.currentPage)
                 }
                 
-                GTBlueButton(title: viewModel.continueTitle, font: FontLibrary.sfProTextRegular.font(size: 18), width: geometry.size.width - (continueButtonHorizontalPadding * 2), height: continueButtonHeight) {
+                GTBlueButton(title: viewModel.continueTitle, font: FontLibrary.sfProTextRegular.font(size: 18), width: Self.getContinueButtonWidth(geometry: geometry), height: Self.getContinueButtonHeight()) {
                     
                     viewModel.continueTapped()
                 }
@@ -79,6 +80,14 @@ struct TutorialView: View {
             }
             .frame(maxWidth: .infinity)
         }
+    }
+    
+    static func getContinueButtonWidth(geometry: GeometryProxy) -> CGFloat {
+        return geometry.size.width - (continueButtonHorizontalPadding * 2)
+    }
+    
+    static func getContinueButtonHeight() -> CGFloat {
+        return Self.continueButtonHeight
     }
     
     private func getTutorialItemView(index: Int, geometry: GeometryProxy) -> TutorialItemView {
