@@ -10,7 +10,7 @@ import Foundation
 
 struct ToolDownloaderDataModel {
     
-    let attachments: [AttachmentModel]
+    let attachments: [AttachmentDataModel]
     let progress: Double
-    let translations: [TranslationModel]
+    let translations: [TranslationDataModel]
 }

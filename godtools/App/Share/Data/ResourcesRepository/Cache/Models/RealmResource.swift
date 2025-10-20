@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class RealmResource: Object, ResourceModelType {
+class RealmResource: Object, IdentifiableRealmObject, ResourceDataModelInterface {
     
     @objc dynamic var abbreviation: String = ""
     @objc dynamic var attrAboutBannerAnimation: String = ""
@@ -49,37 +49,44 @@ class RealmResource: Object, ResourceModelType {
         return "id"
     }
     
-    func mapFrom(model: ResourceModel) {
+    func mapFrom(interface: ResourceDataModelInterface) {
                 
-        abbreviation = model.abbreviation
-        attrAboutBannerAnimation = model.attrAboutBannerAnimation
-        attrAboutOverviewVideoYoutube = model.attrAboutOverviewVideoYoutube
-        attrBanner = model.attrBanner
-        attrBannerAbout = model.attrBannerAbout
-        attrCategory = model.attrCategory
-        attrDefaultLocale = model.attrDefaultLocale
-        attrDefaultOrder = model.attrDefaultOrder
-        attrSpotlight = model.attrSpotlight
-        defaultVariantId = model.defaultVariantId
-        id = model.id
-        isHidden = model.isHidden
-        manifest = model.manifest
-        metatoolId = model.metatoolId
-        name = model.name
-        oneskyProjectId = model.oneskyProjectId
-        resourceDescription = model.resourceDescription
-        resourceType = model.resourceType
-        totalViews = model.totalViews
-        type = model.type
+        abbreviation = interface.abbreviation
+        attrAboutBannerAnimation = interface.attrAboutBannerAnimation
+        attrAboutOverviewVideoYoutube = interface.attrAboutOverviewVideoYoutube
+        attrBanner = interface.attrBanner
+        attrBannerAbout = interface.attrBannerAbout
+        attrCategory = interface.attrCategory
+        attrDefaultLocale = interface.attrDefaultLocale
+        attrDefaultOrder = interface.attrDefaultOrder
+        attrSpotlight = interface.attrSpotlight
+        defaultVariantId = interface.defaultVariantId
+        id = interface.id
+        isHidden = interface.isHidden
+        manifest = interface.manifest
+        metatoolId = interface.metatoolId
+        name = interface.name
+        oneskyProjectId = interface.oneskyProjectId
+        resourceDescription = interface.resourceDescription
+        resourceType = interface.resourceType
+        totalViews = interface.totalViews
+        type = interface.type
         
         latestTranslationIds.removeAll()
-        latestTranslationIds.append(objectsIn: model.getLatestTranslationIds())
+        latestTranslationIds.append(objectsIn: interface.getLatestTranslationIds())
         
         attachmentIds.removeAll()
-        attachmentIds.append(objectsIn: model.getAttachmentIds())
+        attachmentIds.append(objectsIn: interface.getAttachmentIds())
         
         variantIds.removeAll()
-        variantIds.append(objectsIn: model.getVariantIds())
+        variantIds.append(objectsIn: interface.getVariantIds())
+    }
+    
+    static func createNewFrom(interface: ResourceDataModelInterface) -> RealmResource {
+        
+        let realmResource = RealmResource()
+        realmResource.mapFrom(interface: interface)
+        return realmResource
     }
 }
 

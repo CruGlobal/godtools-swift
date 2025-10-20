@@ -10,5 +10,5 @@ import Foundation
 
 struct DetermineToolTranslationsToDownloadResult {
     
-    let translations: [TranslationModel]
+    let translations: [TranslationDataModel]
 }

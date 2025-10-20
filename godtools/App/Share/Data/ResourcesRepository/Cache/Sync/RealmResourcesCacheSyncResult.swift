@@ -10,10 +10,9 @@ import Foundation
 
 struct RealmResourcesCacheSyncResult {
     
-    let languagesSyncResult: RealmLanguagesCacheSyncResult
-    let resourcesRemoved: [ResourceModel]
-    let translationsRemoved: [TranslationModel]
-    let attachmentsRemoved: [AttachmentModel]
+    let resourcesRemoved: [ResourceDataModel]
+    let translationsRemoved: [TranslationDataModel]
+    let attachmentsRemoved: [AttachmentDataModel]
     let downloadedTranslationsRemoved: [DownloadedTranslationDataModel]
 }
 
@@ -21,7 +20,6 @@ extension RealmResourcesCacheSyncResult {
     
     static func emptyResult() -> RealmResourcesCacheSyncResult {
         return RealmResourcesCacheSyncResult(
-            languagesSyncResult: RealmLanguagesCacheSyncResult(languagesRemoved: []),
             resourcesRemoved: [],
             translationsRemoved: [],
             attachmentsRemoved: [],

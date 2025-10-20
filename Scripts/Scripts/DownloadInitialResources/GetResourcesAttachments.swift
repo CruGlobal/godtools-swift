@@ -11,11 +11,11 @@ import Combine
 
 class GetResourcesAttachments {
     
-    static func getResourceAttachments(resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<[AttachmentModel], Never> {
+    static func getResourceAttachments(resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<[AttachmentCodable], Never> {
         
         let attachmentIds: [String] = resourcesPlusLatestTranslationsAndAttachments.resources.map({$0.attrBanner})
                 
-        let attachments: [AttachmentModel] = resourcesPlusLatestTranslationsAndAttachments.attachments.filter({attachmentIds.contains($0.id)})
+        let attachments: [AttachmentCodable] = resourcesPlusLatestTranslationsAndAttachments.attachments.filter({attachmentIds.contains($0.id)})
         
         return Just(attachments)
             .eraseToAnyPublisher()

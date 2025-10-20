@@ -10,9 +10,9 @@ import Foundation
 
 struct ResourcesPlusLatestTranslationsAndAttachmentsModel: Codable {
     
-    let resources: [ResourceModel]
-    let attachments: [AttachmentModel]
-    let translations: [TranslationModel]
+    let resources: [ResourceCodable]
+    let attachments: [AttachmentCodable]
+    let translations: [TranslationCodable]
     
     enum RootKeys: String, CodingKey {
         case data = "data"
@@ -27,7 +27,7 @@ struct ResourcesPlusLatestTranslationsAndAttachmentsModel: Codable {
         return ResourcesPlusLatestTranslationsAndAttachmentsModel(resources: [], attachments: [], translations: [])
     }
     
-    init(resources: [ResourceModel], attachments: [AttachmentModel], translations: [TranslationModel]) {
+    init(resources: [ResourceCodable], attachments: [AttachmentCodable], translations: [TranslationCodable]) {
         self.resources = resources
         self.attachments = attachments
         self.translations = translations
@@ -42,8 +42,8 @@ struct ResourcesPlusLatestTranslationsAndAttachmentsModel: Codable {
         var includedUnkeyedContainer: UnkeyedDecodingContainer = try container.nestedUnkeyedContainer(forKey: .included)
         var includedDecoder: UnkeyedDecodingContainer = try container.nestedUnkeyedContainer(forKey: .included)
         
-        var attachments: [AttachmentModel] = Array()
-        var translations: [TranslationModel] = Array()
+        var attachments: [AttachmentCodable] = Array()
+        var translations: [TranslationCodable] = Array()
         
         while !includedUnkeyedContainer.isAtEnd {
             
@@ -51,13 +51,13 @@ struct ResourcesPlusLatestTranslationsAndAttachmentsModel: Codable {
             let type: String? = try container.decode(String.self, forKey: .type)
                         
             if type == "attachment" {
-                let attachment: AttachmentModel? = try includedDecoder.decode(AttachmentModel.self)
+                let attachment: AttachmentCodable? = try includedDecoder.decode(AttachmentCodable.self)
                 if let attachment = attachment {
                     attachments.append(attachment)
                 }
             }
             else if type == "translation" {
-                let translation: TranslationModel? = try includedDecoder.decode(TranslationModel.self)
+                let translation: TranslationCodable? = try includedDecoder.decode(TranslationCodable.self)
                 if let translation = translation {
                     translations.append(translation)
                 }
@@ -68,10 +68,10 @@ struct ResourcesPlusLatestTranslationsAndAttachmentsModel: Codable {
         self.translations = translations
     }
     
-    private static func decodeResources(container: KeyedDecodingContainer<ResourcesPlusLatestTranslationsAndAttachmentsModel.RootKeys>) -> [ResourceModel] {
+    private static func decodeResources(container: KeyedDecodingContainer<ResourcesPlusLatestTranslationsAndAttachmentsModel.RootKeys>) -> [ResourceCodable] {
                 
         do {
-            let resources: [ResourceModel] = try container.decode([ResourceModel].self, forKey: .data)
+            let resources: [ResourceCodable] = try container.decode([ResourceCodable].self, forKey: .data)
             return resources
         }
         catch _ {
@@ -80,8 +80,8 @@ struct ResourcesPlusLatestTranslationsAndAttachmentsModel: Codable {
         
         do {
             
-            let resourceObject: ScriptJsonApiResponseDataObject<ResourceModel> = try container.decode(ScriptJsonApiResponseDataObject<ResourceModel>.self, forKey: .data)
-            let resource: ResourceModel = resourceObject.dataObject
+            let resourceObject: ScriptJsonApiResponseDataObject<ResourceCodable> = try container.decode(ScriptJsonApiResponseDataObject<ResourceCodable>.self, forKey: .data)
+            let resource: ResourceCodable = resourceObject.dataObject
             
             return [resource]
         }

@@ -23,14 +23,14 @@ class GetTranslatedToolCategory {
     
     func getTranslatedCategory(toolId: String, translateInLanguage: BCP47LanguageIdentifier) -> String {
         
-        guard let resource = resourcesRepository.getResource(id: toolId) else {
+        guard let resource = resourcesRepository.persistence.getObject(id: toolId) else {
             return ""
         }
         
         return getTranslatedCategory(resource: resource, translateInLanguage: translateInLanguage)
     }
     
-    func getTranslatedCategory(resource: ResourceModel, translateInLanguage: BCP47LanguageIdentifier) -> String {
+    func getTranslatedCategory(resource: ResourceDataModel, translateInLanguage: BCP47LanguageIdentifier) -> String {
         
         let localeId = translateInLanguage.localeId
 
