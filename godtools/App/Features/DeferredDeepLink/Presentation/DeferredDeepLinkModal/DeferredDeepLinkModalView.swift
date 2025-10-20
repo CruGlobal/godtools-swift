@@ -46,8 +46,9 @@ struct DeferredDeepLinkModalView: View {
             HStack {
                 
                 PasteButton(payloadType: String.self, onPaste: { pastedItems in
-                    
-                    viewModel.pasteButtonTapped(pastedString: pastedItems.first)
+                    DispatchQueue.main.async {
+                        viewModel.pasteButtonTapped(pastedString: pastedItems.first)
+                    }
                 })
                 .labelStyle(.titleAndIcon)
                 .tint(ColorPalette.gtBlue.color)
