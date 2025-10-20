@@ -241,6 +241,8 @@
 
 /* This is to let users know which version of the app is installed on their phone */
 "menu_version" = "Версия";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "Более 90 языков";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -378,9 +380,11 @@
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "Глобальная активность";
+// OnboardingWelcome
 "accountActivity.globalAnalytics.users.title" = "Уникальные\nПользователи";
 "onboardingWelcome.titleLabel.tagline" = "Помогая вам говорить с другими о своей вере";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "Презентации\nПроповедей";
 "accountActivity.globalAnalytics.launches.title" = "Сеансы";
+// OnboardingTutorial
 "accountActivity.globalAnalytics.countries.title" = "Страны";
 "onboardingTutorial.showMoreButton.title" = "Покажите еще";

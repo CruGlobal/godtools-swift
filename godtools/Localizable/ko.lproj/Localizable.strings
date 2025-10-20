@@ -238,6 +238,8 @@
 
 /* This is to let users know which version of the app is installed on their phone */
 "menu_version" = "버전";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "90개 이상의 언어";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -369,9 +371,11 @@
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "글로벌 활동";
+// OnboardingWelcome
 "accountActivity.globalAnalytics.users.title" = "개별 사용자";
 "onboardingWelcome.titleLabel.tagline" = "내 믿음 공유 돕기";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "복음 발표";
 "accountActivity.globalAnalytics.launches.title" = "세션";
+// OnboardingTutorial
 "accountActivity.globalAnalytics.countries.title" = "국가";
 "onboardingTutorial.showMoreButton.title" = "더 보기";

@@ -104,6 +104,8 @@ Jika selepas ini, anda tidak menerima mesej ini, pautan tersebut mungkin masih b
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "Makalah";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "90+ Bahasa";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */

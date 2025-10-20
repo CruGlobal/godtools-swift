@@ -240,6 +240,8 @@ Kama hutapokea ujumbe huu hadi baadaye, kiungo kinaweza kukosa kufanya kazi. Tun
 
 /* This is to let users know which version of the app is installed on their phone */
 "menu_version" = "Toleo";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "Zaidi ya lugha tisini";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -372,9 +374,11 @@ Programu inaweza kupakuliwa kwenye https://godtoolsapp.com";
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "Shughuli za kiulimwengu";
+// OnboardingWelcome
 "accountActivity.globalAnalytics.users.title" = "Watumiaji \nMaalumu";
 "onboardingWelcome.titleLabel.tagline" = "Kukusaidia kushirikisha imani yako";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "Mawasilisho ya Injili";
 "accountActivity.globalAnalytics.launches.title" = "Vipindi";
+// OnboardingTutorial
 "accountActivity.globalAnalytics.countries.title" = "Nchi";
 "onboardingTutorial.showMoreButton.title" = "Onesha zaidi";

@@ -78,6 +78,8 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "लेख";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "90 पेक्षा जास्त भाषा";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -234,9 +236,11 @@
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "जागतिक क्रियाकलाप";
+// OnboardingWelcome
 "accountActivity.globalAnalytics.users.title" = "अनन्य वापरकर्ते";
 "onboardingWelcome.titleLabel.tagline" = "आपला विश्वास पसरवण्यात आपल्या मदतीसाठी";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "सुवार्ता सादरीकरण";
 "accountActivity.globalAnalytics.launches.title" = "सत्रे";
+// OnboardingTutorial
 "accountActivity.globalAnalytics.countries.title" = "देश";
 "onboardingTutorial.showMoreButton.title" = "मला आणखी दाखवा";

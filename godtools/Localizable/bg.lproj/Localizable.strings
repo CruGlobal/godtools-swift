@@ -107,6 +107,8 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "Статии";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "90+ Езика";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -240,9 +242,11 @@
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "Глобална активност";
+// OnboardingWelcome
 "accountActivity.globalAnalytics.users.title" = "Уникални потребители";
 "onboardingWelcome.titleLabel.tagline" = "Помагайки ви да споделяте вярата си";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "Презентации на Евангелието";
 "accountActivity.globalAnalytics.launches.title" = "Сесии";
+// OnboardingTutorial
 "accountActivity.globalAnalytics.countries.title" = "Държави";
 "onboardingTutorial.showMoreButton.title" = "Покажете повече";

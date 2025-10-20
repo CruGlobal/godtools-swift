@@ -238,6 +238,8 @@
 
 /* This is to let users know which version of the app is installed on their phone */
 "menu_version" = "संस्करण";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "90+ भाषाहरु";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -359,9 +361,11 @@ https://godtoolsapp.com \n\n बाट डाउनलोड गर्न सक
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "विश्वव्यापी गतिविधि";
+// OnboardingWelcome
 "accountActivity.globalAnalytics.users.title" = "विशेष \nप्रयोगकर्ताहरू";
 "onboardingWelcome.titleLabel.tagline" = "तपाईलाई आफ्नो विश्वास साझा गर्न सहयोग गर्दै";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "सुसमाचार प्रस्तुतीकरण";
 "accountActivity.globalAnalytics.launches.title" = "पाठहरू";
+// OnboardingTutorial
 "accountActivity.globalAnalytics.countries.title" = "देशहरु";
 "onboardingTutorial.showMoreButton.title" = "मलाई थप देखाउनुहोस्";
