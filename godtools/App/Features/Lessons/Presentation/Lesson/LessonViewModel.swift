@@ -86,6 +86,11 @@ extension LessonViewModel {
         updateUserLessonCompletionProgress(page: page)
     }
     
+    func shareTapped() {
+        
+        flowDelegate?.navigate(step: .shareLessonTappedFromLesson(lessonId: resource.id))
+    }
+    
     func closeTapped() {
                 
         flowDelegate?.navigate(step: .closeTappedFromLesson(lessonId: resource.id, highestPageNumberViewed: highestPageNumberViewed))
