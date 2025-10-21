@@ -87,7 +87,7 @@ class LessonView: MobileContentRendererView {
 
 extension LessonView: LessonProgressViewDelegate {
     func shareLessonTapped() {
-        // TODO
+        viewModel.shareTapped()
     }
     
     func lessonProgressViewCloseTapped(progressView: LessonProgressView) {
