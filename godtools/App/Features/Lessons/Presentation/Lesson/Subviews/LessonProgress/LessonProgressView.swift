@@ -68,11 +68,12 @@ class LessonProgressView: UIView {
         addSubview(progressView)
         addSubview(closeButton)
         
-        let shareImage = UIImage(systemName: "square.and.arrow.up")?.withTintColor(ColorPalette.gtBlue.uiColor, renderingMode: .alwaysOriginal)
+        let shareImageConfig = UIImage.SymbolConfiguration(pointSize: 19, weight: .medium)
+        let shareImage = UIImage(systemName: "square.and.arrow.up", withConfiguration: shareImageConfig)?.withTintColor(ColorPalette.gtBlue.uiColor, renderingMode: .alwaysOriginal)
         shareButton.setImage(shareImage, for: .normal)
         _ = shareButton.addWidthConstraint(constant: 50)
         _ = shareButton.addHeightConstraint(constant: 50)
-        shareButton.constrainCenterVerticallyInView(view: self)
+        shareButton.constrainCenterVerticallyInView(view: self, constant: -2)
         shareButton.constrainLeftToView(view: self, constant: 10)
         
         closeButton.setImage(ImageCatalog.navClose.uiImage, for: .normal)
@@ -83,7 +84,6 @@ class LessonProgressView: UIView {
         
         _ = progressView.addHeightConstraint(constant: 12)
         progressView.constrainCenterVerticallyInView(view: self)
-//        progressView.constrainLeftToView(view: self, constant: 70)
         
         let progressViewLeftToShareButton: NSLayoutConstraint = NSLayoutConstraint(
             item: progressView,
