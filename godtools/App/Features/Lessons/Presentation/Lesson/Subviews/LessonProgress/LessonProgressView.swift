@@ -11,11 +11,13 @@ import SwiftUI
 
 protocol LessonProgressViewDelegate: AnyObject {
     
+    func shareLessonTapped()
     func lessonProgressViewCloseTapped(progressView: LessonProgressView)
 }
 
 class LessonProgressView: UIView {
     
+    private let shareButton: UIButton = UIButton(type: .custom)
     private let progressView: DownloadProgressView = DownloadProgressView(frame: .zero)
     private let closeButton: UIButton = UIButton(type: .custom)
     
@@ -35,6 +37,7 @@ class LessonProgressView: UIView {
         
         setupLayout()
         
+        shareButton.addTarget(self, action: #selector(handleShareTapped), for: .touchUpInside)
         closeButton.addTarget(self, action: #selector(handleCloseTapped), for: .touchUpInside)
         
         let scaleX: CGFloat = layoutDirection == .forceRightToLeft ? -1.0 : 1.0
@@ -57,12 +60,22 @@ class LessonProgressView: UIView {
     
     private func addChildViews() {
         
+        shareButton.translatesAutoresizingMaskIntoConstraints = false
         progressView.translatesAutoresizingMaskIntoConstraints = false
         closeButton.translatesAutoresizingMaskIntoConstraints = false
         
+        addSubview(shareButton)
         addSubview(progressView)
         addSubview(closeButton)
-                
+        
+        let shareImageConfig = UIImage.SymbolConfiguration(pointSize: 19, weight: .medium)
+        let shareImage = UIImage(systemName: "square.and.arrow.up", withConfiguration: shareImageConfig)?.withTintColor(ColorPalette.gtBlue.uiColor, renderingMode: .alwaysOriginal)
+        shareButton.setImage(shareImage, for: .normal)
+        _ = shareButton.addWidthConstraint(constant: 50)
+        _ = shareButton.addHeightConstraint(constant: 50)
+        shareButton.constrainCenterVerticallyInView(view: self, constant: -2)
+        shareButton.constrainLeftToView(view: self, constant: 10)
+        
         closeButton.setImage(ImageCatalog.navClose.uiImage, for: .normal)
         _ = closeButton.addWidthConstraint(constant: 50)
         _ = closeButton.addHeightConstraint(constant: 50)
@@ -71,7 +84,16 @@ class LessonProgressView: UIView {
         
         _ = progressView.addHeightConstraint(constant: 12)
         progressView.constrainCenterVerticallyInView(view: self)
-        progressView.constrainLeftToView(view: self, constant: 70)
+        
+        let progressViewLeftToShareButton: NSLayoutConstraint = NSLayoutConstraint(
+            item: progressView,
+            attribute: .left,
+            relatedBy: .equal,
+            toItem: shareButton,
+            attribute: .right,
+            multiplier: 1,
+            constant: 10
+        )
         
         let progressViewRightToCloseButton: NSLayoutConstraint = NSLayoutConstraint(
             item: progressView,
@@ -83,7 +105,11 @@ class LessonProgressView: UIView {
             constant: -10
         )
         
-        addConstraint(progressViewRightToCloseButton)
+        addConstraints([progressViewLeftToShareButton, progressViewRightToCloseButton])
+    }
+    
+    @objc func handleShareTapped() {
+        delegate?.shareLessonTapped()
     }
     
     @objc func handleCloseTapped() {

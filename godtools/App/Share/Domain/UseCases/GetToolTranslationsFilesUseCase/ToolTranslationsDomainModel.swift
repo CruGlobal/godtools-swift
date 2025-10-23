@@ -10,6 +10,6 @@ import Foundation
 
 struct ToolTranslationsDomainModel {
     
-    let tool: ResourceModel
+    let tool: ResourceDataModel
     let languageTranslationManifests: [MobileContentRendererLanguageTranslationManifest]
 }

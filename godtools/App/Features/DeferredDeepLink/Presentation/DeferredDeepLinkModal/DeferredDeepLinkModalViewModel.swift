@@ -73,7 +73,6 @@ extension DeferredDeepLinkModalViewModel {
                 incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
         else {
             
-            assertionFailure()
             trackActionAnalyticsUseCase.trackAction(
                 screenName: "Deferred DeepLink",
                 actionName: AnalyticsConstants.ActionNames.deeplinkError,

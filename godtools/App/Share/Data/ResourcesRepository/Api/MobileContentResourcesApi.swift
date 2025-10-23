@@ -118,3 +118,16 @@ class MobileContentResourcesApi {
             .eraseToAnyPublisher()
     }
 }
+
+// MARK: - RepositorySyncExternalDataFetchInterface
+
+extension MobileContentResourcesApi: RepositorySyncExternalDataFetchInterface {
+    
+    func getObjectPublisher(id: String, requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<ResourceCodable>, Never> {
+        return emptyResponsePublisher()
+    }
+    
+    func getObjectsPublisher(requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<ResourceCodable>, Never> {
+        return emptyResponsePublisher()
+    }
+}
