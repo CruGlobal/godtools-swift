@@ -197,8 +197,8 @@ class MobileContentView: UIView {
     
     func sendEventsToAllViews(eventIds: [EventId], rendererState: State) {
             
-        var eventIds: [EventId] = eventIds.flatMap({$0.resolve(state: rendererState)})
-                
+        var eventIds: [EventId] = eventIds.flatMap({$0.resolve(ctx: rendererState)})
+                        
         walkUpHierarchyAndSendEventsToEachAncestor(view: self, eventIds: &eventIds)
                 
         recurseChildrenAndSendEventsFromView(view: getRootView(), eventIds: &eventIds, eventTrigger: .recursivelyFromRootView)
