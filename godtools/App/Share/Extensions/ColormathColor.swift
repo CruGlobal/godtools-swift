@@ -6,7 +6,7 @@
 //  Copyright © 2025 Cru. All rights reserved.
 //
 
-import GodToolsToolParser
+import GodToolsShared
 import UIKit
 
 extension ColormathColor {

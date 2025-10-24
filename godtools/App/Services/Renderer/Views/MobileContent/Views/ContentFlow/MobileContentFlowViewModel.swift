@@ -7,13 +7,13 @@
 //
 
 import Foundation
-import GodToolsToolParser
+import GodToolsShared
 
 class MobileContentFlowViewModel: MobileContentViewModel {
     
-    private let contentFlow: GodToolsToolParser.Flow
+    private let contentFlow: GodToolsShared.Flow
     
-    init(contentFlow: GodToolsToolParser.Flow, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
+    init(contentFlow: GodToolsShared.Flow, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
         
         self.contentFlow = contentFlow
         

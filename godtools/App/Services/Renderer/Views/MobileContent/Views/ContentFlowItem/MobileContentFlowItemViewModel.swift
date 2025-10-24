@@ -7,17 +7,17 @@
 //
 
 import UIKit
-import GodToolsToolParser
+import GodToolsShared
 
 class MobileContentFlowItemViewModel: MobileContentViewModel {
     
-    private let flowItem: GodToolsToolParser.Flow.Item
+    private let flowItem: GodToolsShared.Flow.Item
     
     private var visibilityFlowWatcher: FlowWatcher?
     
     let visibilityState: ObservableValue<MobileContentViewVisibilityState>
     
-    init(flowItem: GodToolsToolParser.Flow.Item, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
+    init(flowItem: GodToolsShared.Flow.Item, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
         
         self.flowItem = flowItem
         
