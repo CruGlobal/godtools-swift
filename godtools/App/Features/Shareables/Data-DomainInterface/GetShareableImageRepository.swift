@@ -9,7 +9,7 @@
 import Foundation
 import SwiftUI
 import Combine
-import GodToolsToolParser
+import GodToolsShared
 
 class GetShareableImageRepository: GetShareableImageRepositoryInterface {
     

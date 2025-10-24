@@ -8,7 +8,7 @@
 
 import Foundation
 import Combine
-import GodToolsToolParser
+import GodToolsShared
 
 class GetUserActivityUseCase {
     

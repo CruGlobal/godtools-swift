@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import GodToolsToolParser
+import GodToolsShared
 import Combine
 
 class ToolTrainingViewModel: NSObject {

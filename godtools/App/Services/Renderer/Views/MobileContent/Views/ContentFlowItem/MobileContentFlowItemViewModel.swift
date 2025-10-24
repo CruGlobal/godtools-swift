@@ -7,26 +7,26 @@
 //
 
 import UIKit
-import GodToolsToolParser
+import GodToolsShared
 
 class MobileContentFlowItemViewModel: MobileContentViewModel {
     
-    private let flowItem: GodToolsToolParser.Flow.Item
+    private let flowItem: GodToolsShared.Flow.Item
     
     private var visibilityFlowWatcher: FlowWatcher?
     
     let visibilityState: ObservableValue<MobileContentViewVisibilityState>
     
-    init(flowItem: GodToolsToolParser.Flow.Item, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
+    init(flowItem: GodToolsShared.Flow.Item, renderedPageContext: MobileContentRenderedPageContext, mobileContentAnalytics: MobileContentRendererAnalytics) {
         
         self.flowItem = flowItem
         
         let visibility: MobileContentViewVisibilityState
         
-        if flowItem.isGone(state: renderedPageContext.rendererState) {
+        if flowItem.isGone(ctx: renderedPageContext.rendererState) {
             visibility = .gone
         }
-        else if flowItem.isInvisible(state: renderedPageContext.rendererState) {
+        else if flowItem.isInvisible(ctx: renderedPageContext.rendererState) {
             visibility = .hidden
         }
         else {
@@ -37,7 +37,7 @@ class MobileContentFlowItemViewModel: MobileContentViewModel {
         
         super.init(baseModel: flowItem, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
         
-        visibilityFlowWatcher = flowItem.watchVisibility(state: renderedPageContext.rendererState, block: { [weak self] (invisible: KotlinBoolean, gone: KotlinBoolean) in
+        visibilityFlowWatcher = flowItem.watchVisibility(ctx: renderedPageContext.rendererState, block: { [weak self] (invisible: KotlinBoolean, gone: KotlinBoolean) in
             
             let visibilityStateValue: MobileContentViewVisibilityState
             

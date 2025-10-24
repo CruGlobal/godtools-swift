@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import GodToolsToolParser
+import GodToolsShared
 
 class MobileContentParagraphViewModel: MobileContentViewModel {
     
@@ -23,7 +23,7 @@ class MobileContentParagraphViewModel: MobileContentViewModel {
         
         super.init(baseModel: paragraphModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
                 
-        visibilityFlowWatcher = paragraphModel.watchVisibility(state: renderedPageContext.rendererState) { [weak self] (invisible: KotlinBoolean, gone: KotlinBoolean) in
+        visibilityFlowWatcher = paragraphModel.watchVisibility(ctx: renderedPageContext.rendererState) { [weak self] (invisible: KotlinBoolean, gone: KotlinBoolean) in
                 
             let visibilityStateValue: MobileContentViewVisibilityState
             

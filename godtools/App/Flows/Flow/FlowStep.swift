@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import GodToolsToolParser
+import GodToolsShared
 import Combine
 
 enum FlowStep {
@@ -177,7 +177,7 @@ enum FlowStep {
     
     // article
     case backTappedFromArticleCategories
-    case articleCategoryTappedFromArticleCategories(resource: ResourceDataModel, language: LanguageDataModel, category: GodToolsToolParser.Category, manifest: Manifest)
+    case articleCategoryTappedFromArticleCategories(resource: ResourceDataModel, language: LanguageDataModel, category: GodToolsShared.Category, manifest: Manifest)
     case backTappedFromArticles
     case articleTappedFromArticles(resource: ResourceDataModel, aemCacheObject: ArticleAemCacheObject)
     case backTappedFromArticle

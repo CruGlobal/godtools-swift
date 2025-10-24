@@ -7,14 +7,14 @@
 //
 
 import UIKit
-import GodToolsToolParser
+import GodToolsShared
 
 class ArticleCategoryCellViewModel {
     
     let articleImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
     let title: ObservableValue<String?> = ObservableValue(value: "")
     
-    init(category: GodToolsToolParser.Category, manifestResourcesCache: MobileContentRendererManifestResourcesCache) {
+    init(category: GodToolsShared.Category, manifestResourcesCache: MobileContentRendererManifestResourcesCache) {
         
         title.accept(value: category.label?.text ?? "")
         

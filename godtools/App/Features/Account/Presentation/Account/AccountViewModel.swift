@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 import SwiftUI
-import GodToolsToolParser
+import GodToolsShared
 
 class AccountViewModel: ObservableObject {
     

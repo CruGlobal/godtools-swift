@@ -7,7 +7,7 @@
 //
 
 import XCTest
-import GodToolsToolParser
+import GodToolsShared
 @testable import godtools
 
 class MobileContentBackgroundImageRendererTests: XCTestCase {

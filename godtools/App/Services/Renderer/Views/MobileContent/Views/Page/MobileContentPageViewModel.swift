@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import GodToolsToolParser
+import GodToolsShared
 import SwiftUI
 
 class MobileContentPageViewModel: MobileContentViewModel {
