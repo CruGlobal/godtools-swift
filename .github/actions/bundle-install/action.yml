@@ -1,4 +1,4 @@
-name: Bundle Install
+name: 'Bundle Install'
 description: 'Selects Xcode version and runs bundle install.'
 runs:
   using: "composite"
