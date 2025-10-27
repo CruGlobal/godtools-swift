@@ -279,12 +279,20 @@ extension SwiftRepositorySyncPersistenceTests {
         ))
     }
     
+    private static func getSwiftDatabase(name: String) -> SwiftDatabase {
+        
+        let swiftDatabase = SwiftDatabase(
+            config: getSwiftDatabaseConfiguration(name: name),
+            schema: Schema(versionedSchema: MockSwiftDataSchemaV1.self),
+            migrationPlan: nil
+        )
+        
+        return swiftDatabase
+    }
+    
     static func getSwiftDatabase(name: String, addObjects: [any IdentifiableSwiftDataObject]) -> SwiftDatabase {
         
-        let swiftDatabase: SwiftDatabase = SwiftDatabase(
-            configuration: getSwiftDatabaseConfiguration(name: name),
-            modelTypes: MockRepositorySyncSwiftDataModelTypes()
-        )
+        let swiftDatabase: SwiftDatabase = Self.getSwiftDatabase(name: name)
         
         let context: ModelContext = swiftDatabase.openContext()
         
@@ -304,9 +312,8 @@ extension SwiftRepositorySyncPersistenceTests {
     
     static func deleteSwiftDatabase(name: String) {
         
-        SwiftDatabase(
-            configuration: getSwiftDatabaseConfiguration(name: name),
-            modelTypes: MockRepositorySyncSwiftDataModelTypes()
-        ).deleteAllData()
+        let swiftDatabase: SwiftDatabase = Self.getSwiftDatabase(name: name)
+        
+        swiftDatabase.deleteAllData()
     }
 }
