@@ -230,7 +230,6 @@ GEM
 
 PLATFORMS
   arm64-darwin-24
-  ruby
 
 DEPENDENCIES
   fastlane (= 2.227.2)
@@ -238,4 +237,4 @@ DEPENDENCIES
   xcode-install (~> 2.8)
 
 BUNDLED WITH
-   2.6.9
+   2.3.9
