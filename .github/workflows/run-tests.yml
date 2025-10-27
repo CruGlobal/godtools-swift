@@ -22,6 +22,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
+
+      - name: Bundle Install
+        run: bundle install
         
       # - Run all tests and build single xcresult.
       - name: Run Tests and Generate Code Coverage Report (.xcresult)
