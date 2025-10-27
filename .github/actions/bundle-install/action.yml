@@ -12,4 +12,5 @@ runs:
       with:
         bundler-cache: true
     - name: Bundle Install
+      shell: bash
       run: bundle install
