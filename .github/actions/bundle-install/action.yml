@@ -12,4 +12,4 @@ runs:
       with:
         bundler-cache: true
     - name: Bundle Install
-        run: bundle install
+      run: bundle install
