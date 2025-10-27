@@ -230,6 +230,9 @@ GEM
 
 PLATFORMS
   arm64-darwin-24
+  universal-darwin-22
+  x86_64-darwin-20
+  x86_64-linux
 
 DEPENDENCIES
   fastlane (= 2.227.2)
