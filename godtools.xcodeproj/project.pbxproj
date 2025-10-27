@@ -607,7 +607,7 @@
 				4581EAA12BFBE194008115FF /* XCRemoteSwiftPackageReference "realm-swift" */,
 				45F6718F2C3343ED0017C8C2 /* XCRemoteSwiftPackageReference "localization-services-ios" */,
 				45DF96472D386C1C00C6AE68 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				4593DEFC2EABFD45004E1C8D /* XCRemoteSwiftPackageReference "godtools-shared-spm-godtools-shared-swift" */,
+				4593DEFC2EABFD45004E1C8D /* XCRemoteSwiftPackageReference "godtools-shared-swift" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 4F57328A1EA69CF00082035C /* Products */;
@@ -1847,12 +1847,12 @@
 				minimumVersion = 20.0.3;
 			};
 		};
-		4593DEFC2EABFD45004E1C8D /* XCRemoteSwiftPackageReference "godtools-shared-spm-godtools-shared-swift" */ = {
+		4593DEFC2EABFD45004E1C8D /* XCRemoteSwiftPackageReference "godtools-shared-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/CruGlobal/godtools-shared-spm-godtools-shared-swift.git";
+			repositoryURL = "https://github.com/CruGlobal/godtools-shared-swift.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.0.3;
+				minimumVersion = 0.0.4;
 			};
 		};
 		45CF096E2784B910007F13D3 /* XCRemoteSwiftPackageReference "request-operation-ios" */ = {
@@ -1955,17 +1955,17 @@
 		};
 		4593DEFD2EABFD45004E1C8D /* GodToolsShared */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4593DEFC2EABFD45004E1C8D /* XCRemoteSwiftPackageReference "godtools-shared-spm-godtools-shared-swift" */;
+			package = 4593DEFC2EABFD45004E1C8D /* XCRemoteSwiftPackageReference "godtools-shared-swift" */;
 			productName = GodToolsShared;
 		};
 		4593DEFF2EABFD93004E1C8D /* GodToolsShared */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4593DEFC2EABFD45004E1C8D /* XCRemoteSwiftPackageReference "godtools-shared-spm-godtools-shared-swift" */;
+			package = 4593DEFC2EABFD45004E1C8D /* XCRemoteSwiftPackageReference "godtools-shared-swift" */;
 			productName = GodToolsShared;
 		};
 		4593DF012EABFD9C004E1C8D /* GodToolsShared */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4593DEFC2EABFD45004E1C8D /* XCRemoteSwiftPackageReference "godtools-shared-spm-godtools-shared-swift" */;
+			package = 4593DEFC2EABFD45004E1C8D /* XCRemoteSwiftPackageReference "godtools-shared-swift" */;
 			productName = GodToolsShared;
 		};
 		45A416052A9943D50030E2C7 /* Lottie */ = {
