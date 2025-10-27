@@ -23,8 +23,8 @@ class DetermineToolTranslationsToDownload: DetermineToolTranslationsToDownloadIn
         self.translationsRepository = translationsRepository
     }
     
-    func getResource() -> ResourceModel? {
-        return resourcesRepository.getResource(id: resourceId)
+    func getResource() -> ResourceDataModel? {
+        return resourcesRepository.persistence.getObject(id: resourceId)
     }
     
     func determineToolTranslationsToDownload() -> Result<DetermineToolTranslationsToDownloadResult, DetermineToolTranslationsToDownloadError> {
@@ -35,18 +35,18 @@ class DetermineToolTranslationsToDownload: DetermineToolTranslationsToDownloadIn
         
         let supportedLanguageIds: [String] = languageIds.filter({resource.supportsLanguage(languageId: $0)})
                 
-        var translations: [TranslationModel] = Array()
+        var translations: [TranslationDataModel] = Array()
                 
         for languageId in supportedLanguageIds {
             
-            guard let translation = translationsRepository.getLatestTranslation(resourceId: resourceId, languageId: languageId) else {
+            guard let translation = translationsRepository.getCachedLatestTranslation(resourceId: resourceId, languageId: languageId) else {
                 return .failure(.failedToFetchResourceFromCache(resourceNeeded: .id(value: resourceId)))
             }
             
             translations.append(translation)
         }
         
-        if translations.isEmpty, let defaultTranslation = translationsRepository.getLatestTranslation(resourceId: resourceId, languageCode: resource.attrDefaultLocale) {
+        if translations.isEmpty, let defaultTranslation = translationsRepository.getCachedLatestTranslation(resourceId: resourceId, languageCode: resource.attrDefaultLocale) {
             
             translations = [defaultTranslation]
         }

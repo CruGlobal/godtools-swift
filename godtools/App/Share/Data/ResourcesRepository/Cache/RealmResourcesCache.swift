@@ -21,53 +21,8 @@ class RealmResourcesCache {
         self.resourcesSync = resourcesSync
     }
     
-    var numberOfResources: Int {
-        return realmDatabase.openRealm().objects(RealmResource.self).count
-    }
-    
-    func getResourcesChangedPublisher() -> AnyPublisher<Void, Never> {
-        return realmDatabase.openRealm()
-            .objects(RealmResource.self)
-            .objectWillChange
-            .eraseToAnyPublisher()
-    }
-    
-    func getResource(id: String) -> ResourceModel? {
-        
-        guard let realmResource = realmDatabase.openRealm()
-            .object(ofType: RealmResource.self, forPrimaryKey: id) else {
+    func getResources(sorted: Bool = false) -> [ResourceDataModel] {
             
-            return nil
-        }
-        
-        return ResourceModel(model: realmResource)
-    }
-    
-    func getResource(abbreviation: String) -> ResourceModel? {
-        
-        guard let realmResource = realmDatabase.openRealm()
-            .objects(RealmResource.self)
-            .filter("\(#keyPath(RealmResource.abbreviation)) = '\(abbreviation)'")
-            .first else {
-            
-            return nil
-        }
-        
-        return ResourceModel(model: realmResource)
-    }
-    
-    func getResources(ids: [String]) -> [ResourceModel] {
-        
-        return realmDatabase.openRealm()
-            .objects(RealmResource.self)
-            .filter("\(#keyPath(RealmResource.id)) IN %@", ids)
-            .map {
-                ResourceModel(model: $0)
-            }
-    }
-    
-    func getResources(sorted: Bool = false) -> [ResourceModel] {
-        
         var realmResources = realmDatabase.openRealm()
             .objects(RealmResource.self)
         
@@ -75,27 +30,12 @@ class RealmResourcesCache {
             realmResources = realmResources.sorted(byKeyPath: #keyPath(RealmResource.attrDefaultOrder), ascending: true)
         }
         
-        return realmResources.map({ResourceModel(model: $0)})
+        return realmResources.map({ResourceDataModel(interface: $0)})
     }
     
-    func getResources(with metaToolIds: [String?]) -> [ResourceModel] {
-        return realmDatabase.openRealm()
-            .objects(RealmResource.self)
-            .filter(NSPredicate(format: "%K IN %@", #keyPath(RealmResource.metatoolId), metaToolIds))
-            .map { ResourceModel(model: $0)}
-    }
-    
-    func getResources(with resourceType: ResourceType) -> [ResourceModel] {
-        return realmDatabase.openRealm()
-            .objects(RealmResource.self)
-            .where { $0.resourceType == resourceType.rawValue }
-            .map { ResourceModel(model: $0) }
-    }
-    
-    func syncResources(languagesSyncResult: RealmLanguagesCacheSyncResult, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel, shouldRemoveDataThatNoLongerExists: Bool) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> {
+    func syncResources(resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel, shouldRemoveDataThatNoLongerExists: Bool) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> {
         
         return resourcesSync.syncResources(
-            languagesSyncResult: languagesSyncResult,
             resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments,
             shouldRemoveDataThatNoLongerExists: shouldRemoveDataThatNoLongerExists
         )
@@ -106,24 +46,24 @@ class RealmResourcesCache {
 
 extension RealmResourcesCache {
     
-    func getResourcesByFilter(filter: ResourcesFilter) -> [ResourceModel] {
+    func getResourcesByFilter(filter: ResourcesFilter) -> [ResourceDataModel] {
         
         return getFilteredRealmResources(realm: realmDatabase.openRealm(), filter: filter)
             .map {
-                ResourceModel(model: $0)
+                ResourceDataModel(interface: $0)
             }
     }
     
-    func getResourcesByFilterPublisher(filter: ResourcesFilter) -> AnyPublisher<[ResourceModel], Never> {
+    func getResourcesByFilterPublisher(filter: ResourcesFilter) -> AnyPublisher<[ResourceDataModel], Never> {
         
         return Future() { promise in
             
             self.realmDatabase.background { realm in
                 
-                let resources: [ResourceModel] = self
+                let resources: [ResourceDataModel] = self
                     .getFilteredRealmResources(realm: realm, filter: filter)
                     .map {
-                        ResourceModel(model: $0)
+                        ResourceDataModel(interface: $0)
                     }
                 
                 return promise(.success(resources))
@@ -174,7 +114,7 @@ extension RealmResourcesCache {
 
 extension RealmResourcesCache {
     
-    func getSpotlightTools(sortByDefaultOrder: Bool) -> [ResourceModel] {
+    func getSpotlightTools(sortByDefaultOrder: Bool) -> [ResourceDataModel] {
         
         let realm: Realm = realmDatabase.openRealm()
         
@@ -203,7 +143,7 @@ extension RealmResourcesCache {
         
         return spotlightToolsResults
             .map {
-                ResourceModel(model: $0)
+                ResourceDataModel(interface: $0)
             }
     }
 }
@@ -256,11 +196,11 @@ extension RealmResourcesCache {
         return allToolsListResults
     }
     
-    func getAllToolsList(filterByCategory: String?, filterByLanguageId: String?, sortByDefaultOrder: Bool) -> [ResourceModel] {
+    func getAllToolsList(filterByCategory: String?, filterByLanguageId: String?, sortByDefaultOrder: Bool) -> [ResourceDataModel] {
                  
         return getAllToolsListResults(filterByCategory: filterByCategory, filterByLanguageId: filterByLanguageId, sortByDefaultOrder: sortByDefaultOrder)
             .map {
-                ResourceModel(model: $0)
+                ResourceDataModel(interface: $0)
             }
     }
     
@@ -325,11 +265,11 @@ extension RealmResourcesCache {
         return allLessons
     }
     
-    func getAllLessons(filterByLanguageId: String? = nil, additionalAttributeFilters: [NSPredicate]? = nil, sorted: Bool) -> [ResourceModel] {
+    func getAllLessons(filterByLanguageId: String? = nil, additionalAttributeFilters: [NSPredicate]? = nil, sorted: Bool) -> [ResourceDataModel] {
         
         return getAllLessonsResults(filterByLanguageId: filterByLanguageId, additionalAttributeFilters: additionalAttributeFilters, sorted: sorted)
             .map {
-                ResourceModel(model: $0)
+                ResourceDataModel(interface: $0)
             }
     }
     
@@ -349,7 +289,7 @@ extension RealmResourcesCache {
         return Array(uniqueLanguageIds)
     }
     
-    func getFeaturedLessons(sorted: Bool) -> [ResourceModel] {
+    func getFeaturedLessons(sorted: Bool) -> [ResourceDataModel] {
         
         let filterIsSpotlight = NSPredicate(format: "\(#keyPath(RealmResource.attrSpotlight)) == %@", NSNumber(value: true))
         
@@ -361,7 +301,7 @@ extension RealmResourcesCache {
 
 extension RealmResourcesCache {
     
-    func getResourceVariants(resourceId: String) -> [ResourceModel] {
+    func getResourceVariants(resourceId: String) -> [ResourceDataModel] {
         
         let filterByMetaToolId = NSPredicate(format: "\(#keyPath(RealmResource.metatoolId).appending(" = [c] %@"))", resourceId)
         let filterIsNotHidden = NSPredicate(format: "\(#keyPath(RealmResource.isHidden)) == %@", NSNumber(value: false))
@@ -370,7 +310,7 @@ extension RealmResourcesCache {
         let realm: Realm = realmDatabase.openRealm()
         
         return realm.objects(RealmResource.self).filter(filterPredicate).map {
-            ResourceModel(model: $0)
+            ResourceDataModel(interface: $0)
         }
     }
 }

@@ -62,11 +62,11 @@ class ToolTrainingViewModel: NSObject {
         print("x deinit: \(type(of: self))")
     }
 
-    private var resource: ResourceModel {
+    private var resource: ResourceDataModel {
         return pageRenderer.resource
     }
     
-    private var language: LanguageModel {
+    private var language: LanguageDataModel {
         return pageRenderer.language
     }
     

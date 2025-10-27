@@ -32,7 +32,7 @@ class GetToolShortcutLinksRepository: GetToolShortcutLinksRepositoryInterface {
                     .prefix(self.maxNumberOfToolShortcutLinks)
                     .compactMap({ (favoritedResource: FavoritedResourceDataModel) in
                     
-                        guard let resource = self.resourcesRepository.getResource(id: favoritedResource.id) else {
+                        guard let resource = self.resourcesRepository.persistence.getObject(id: favoritedResource.id) else {
                             return nil
                         }
                                             
@@ -48,20 +48,20 @@ class GetToolShortcutLinksRepository: GetToolShortcutLinksRepositoryInterface {
             .eraseToAnyPublisher()
     }
     
-    private func getToolUrlDeepLink(resource: ResourceModel, appLanguage: AppLanguageDomainModel) -> String {
+    private func getToolUrlDeepLink(resource: ResourceDataModel, appLanguage: AppLanguageDomainModel) -> String {
         
         return "godtools://knowgod.com/" + appLanguage + "/" + resource.abbreviation + "/0"
     }
     
-    private func getToolName(resource: ResourceModel, appLanguage: AppLanguageDomainModel) -> String {
+    private func getToolName(resource: ResourceDataModel, appLanguage: AppLanguageDomainModel) -> String {
         
-        let toolTranslation: TranslationModel?
+        let toolTranslation: TranslationDataModel?
         
-        if let appLanguageTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageCode: appLanguage) {
+        if let appLanguageTranslation = translationsRepository.getCachedLatestTranslation(resourceId: resource.id, languageCode: appLanguage) {
             
             toolTranslation = appLanguageTranslation
         }
-        else if let englishTranslation = translationsRepository.getLatestTranslation(resourceId: resource.id, languageCode: LanguageCodeDomainModel.english.value) {
+        else if let englishTranslation = translationsRepository.getCachedLatestTranslation(resourceId: resource.id, languageCode: LanguageCodeDomainModel.english.value) {
             
             toolTranslation = englishTranslation
         }

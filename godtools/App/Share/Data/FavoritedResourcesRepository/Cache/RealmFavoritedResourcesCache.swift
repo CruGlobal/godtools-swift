@@ -149,6 +149,9 @@ class RealmFavoritedResourcesCache {
     func reorderFavoritedResourcePublisher(id: String, originalPosition: Int, newPosition: Int) -> AnyPublisher<[FavoritedResourceDataModel], Error> {
         
         return realmDatabase.writeObjectsPublisher { realm in
+            
+            guard realm.object(ofType: RealmFavoritedResource.self, forPrimaryKey: id)?.position == originalPosition else { return [] }
+            
             var resourcesToUpdate: [RealmFavoritedResource] = []
             
             if newPosition - originalPosition > 0 {

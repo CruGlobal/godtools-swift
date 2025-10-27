@@ -11,5 +11,5 @@ import Foundation
 enum ArticleWebViewModelFlowType {
     
     case deeplink
-    case tool(resource: ResourceModel)
+    case tool(resource: ResourceDataModel)
 }

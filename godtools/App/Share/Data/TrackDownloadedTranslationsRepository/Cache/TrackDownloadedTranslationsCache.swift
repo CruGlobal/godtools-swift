@@ -40,13 +40,13 @@ class TrackDownloadedTranslationsCache {
         return getDownloadedTranslationsSortedByLatestVersion(resourceId: resourceId, languageId: languageId).first
     }
     
-    func trackTranslationDownloaded(translation: TranslationModel) -> AnyPublisher<[DownloadedTranslationDataModel], Error> {
+    func trackTranslationDownloaded(translation: TranslationDataModel) -> AnyPublisher<[DownloadedTranslationDataModel], Error> {
         
         return realmDatabase.writeObjectsPublisher { (realm: Realm) -> [RealmDownloadedTranslation] in
         
             let downloadedTranslation: RealmDownloadedTranslation = RealmDownloadedTranslation()
             
-            guard let languageId = translation.language?.id, !languageId.isEmpty, let resourceId = translation.resource?.id, !resourceId.isEmpty else {
+            guard let languageId = translation.languageDataModel?.id, !languageId.isEmpty, let resourceId = translation.resourceDataModel?.id, !resourceId.isEmpty else {
                 
                 return []
             }

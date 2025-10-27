@@ -138,7 +138,7 @@ extension UIView {
         view.addConstraint(centerHorizontally)
     }
     
-    func constrainCenterVerticallyInView(view: UIView) {
+    func constrainCenterVerticallyInView(view: UIView, constant: CGFloat = 0) {
         
         let centerVertically: NSLayoutConstraint = NSLayoutConstraint(
             item: self,
@@ -147,7 +147,7 @@ extension UIView {
             toItem: view,
             attribute: .centerY,
             multiplier: 1,
-            constant: 0
+            constant: constant
         )
         
         view.addConstraint(centerVertically)

@@ -772,15 +772,15 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Scripts/Scripts/DownloadInitialResources/DownloadInitialResourcesScript.swift",
-				"$(SRCROOT)/godtools/App/Share/Data/ResourcesRepository/Api/Models/ResourceModel.swift",
-				"$(SRCROOT)/godtools/App/Share/Data/ResourcesRepository/Api/Models/ResourceModelType.swift",
+				"$(SRCROOT)/godtools/App/Share/Data/ResourcesRepository/Api/Models/ResourceCodable.swift",
+				"$(SRCROOT)/godtools/App/Share/Data/ResourcesRepository/ResourceDataModelInterface.swift",
 				"$(SRCROOT)/godtools/App/Share/Data/ResourcesRepository/Api/Models/ResourceType.swift",
-				"$(SRCROOT)/godtools/App/Share/Data/TranslationsRepository/Api/Models/TranslationModel.swift",
-				"$(SRCROOT)/godtools/App/Share/Data/TranslationsRepository/Api/Models/TranslationModelType.swift",
-				"$(SRCROOT)/godtools/App/Share/Data/AttachmentsRepository/Api/Models/AttachmentModel.swift",
-				"$(SRCROOT)/godtools/App/Share/Data/AttachmentsRepository/Api/Models/AttachmentModelType.swift",
-				"$(SRCROOT)/godtools/App/Share/Data/LanguagesRepository/Api/Models/LanguageModel.swift",
-				"$(SRCROOT)/godtools/App/Share/Data/LanguagesRepository/Api/Models/LanguageModelType.swift",
+				"$(SRCROOT)/godtools/App/Share/Data/TranslationsRepository/Api/Models/TranslationCodable.swift",
+				"$(SRCROOT)/godtools/App/Share/Data/TranslationsRepository/TranslationDataModelInterface.swift",
+				"$(SRCROOT)/godtools/App/Share/Data/AttachmentsRepository/Api/Models/AttachmentCodable.swift",
+				"$(SRCROOT)/godtools/App/Share/Data/AttachmentsRepository/AttachmentDataModelInterface.swift",
+				"$(SRCROOT)/godtools/App/Share/Data/LanguagesRepository/Api/Models/LanguageCodable.swift",
+				"$(SRCROOT)/godtools/App/Share/Data/LanguagesRepository/LanguageDataModelInterface.swift",
 				"$(SRCROOT)/godtools/App/Share/Data/ResourcesRepository/Api/Models/ResourcesPlusLatestTranslationsAndAttachmentsModel.swift",
 				"$(SRCROOT)/godtools/App/Share/Common/SharedAppleExtensions/Foundation/Error/NSError+WithDescription.swift",
 				"$(SRCROOT)/Scripts/Scripts/DownloadInitialResources/GetResourcesAndLanguagesData.swift",
@@ -789,6 +789,9 @@
 				"$(SRCROOT)/Scripts/Scripts/DownloadInitialResources/RequestOperation/Codable/JsonApi/ScriptJsonApiResponseBaseData.swift",
 				"$(SRCROOT)/Scripts/Scripts/DownloadInitialResources/RequestOperation/Codable/JsonApi/ScriptJsonApiResponseDataArray.swift",
 				"$(SRCROOT)/Scripts/Scripts/DownloadInitialResources/RequestOperation/Codable/JsonApi/ScriptJsonApiResponseDataObject.swift",
+				"$(SRCROOT)/godtools/App/Share/Data/ResourcesRepository/ResourceDataModel.swift",
+				"$(SRCROOT)/godtools/App/Share/Data/TranslationsRepository/TranslationDataModel.swift",
+				"$(SRCROOT)/godtools/App/Share/Data/LanguagesRepository/LanguageDataModel.swift",
 			);
 			name = "Download Initial Resources";
 			outputFileListPaths = (
@@ -797,7 +800,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "xcrun --sdk macosx swiftc -parse-as-library $SCRIPT_INPUT_FILE_0 $SCRIPT_INPUT_FILE_1 $SCRIPT_INPUT_FILE_2 $SCRIPT_INPUT_FILE_3 $SCRIPT_INPUT_FILE_4 $SCRIPT_INPUT_FILE_5 $SCRIPT_INPUT_FILE_6 $SCRIPT_INPUT_FILE_7 $SCRIPT_INPUT_FILE_8 $SCRIPT_INPUT_FILE_9 $SCRIPT_INPUT_FILE_10 $SCRIPT_INPUT_FILE_11 $SCRIPT_INPUT_FILE_12 $SCRIPT_INPUT_FILE_13 $SCRIPT_INPUT_FILE_14 $SCRIPT_INPUT_FILE_15 $SCRIPT_INPUT_FILE_16 $SCRIPT_INPUT_FILE_17 \\\n  -o DownloadInitialResourcesScript\n  \n./DownloadInitialResourcesScript\n";
+			shellScript = "xcrun --sdk macosx swiftc -parse-as-library $SCRIPT_INPUT_FILE_0 $SCRIPT_INPUT_FILE_1 $SCRIPT_INPUT_FILE_2 $SCRIPT_INPUT_FILE_3 $SCRIPT_INPUT_FILE_4 $SCRIPT_INPUT_FILE_5 $SCRIPT_INPUT_FILE_6 $SCRIPT_INPUT_FILE_7 $SCRIPT_INPUT_FILE_8 $SCRIPT_INPUT_FILE_9 $SCRIPT_INPUT_FILE_10 $SCRIPT_INPUT_FILE_11 $SCRIPT_INPUT_FILE_12 $SCRIPT_INPUT_FILE_13 $SCRIPT_INPUT_FILE_14 $SCRIPT_INPUT_FILE_15 $SCRIPT_INPUT_FILE_16 $SCRIPT_INPUT_FILE_17 $SCRIPT_INPUT_FILE_18 $SCRIPT_INPUT_FILE_19 $SCRIPT_INPUT_FILE_20 \\\n  -o DownloadInitialResourcesScript\n  \n./DownloadInitialResourcesScript\n";
 		};
 		45AD220F2593C66B00A096A0 /* Run Crashlytics */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2025,7 +2028,7 @@
 			repositoryURL = "https://github.com/realm/realm-swift.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 20.0.0;
+				minimumVersion = 20.0.3;
 			};
 		};
 		45CF096E2784B910007F13D3 /* XCRemoteSwiftPackageReference "request-operation-ios" */ = {
