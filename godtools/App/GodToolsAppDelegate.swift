@@ -76,7 +76,7 @@ extension GodToolsAppDelegate: UNUserNotificationCenterDelegate {
         
         FirebaseMessaging.shared.didReceiveMessage(userInfo: userInfo)
         
-        completionHandler([.banner, .sound])
+        completionHandler([.list])
     }
     
     // Asks the delegate to process the user’s response to a delivered notification.
@@ -88,6 +88,17 @@ extension GodToolsAppDelegate: UNUserNotificationCenterDelegate {
         let userInfo: [AnyHashable: Any] = response.notification.request.content.userInfo
         
         FirebaseMessaging.shared.didReceiveMessage(userInfo: userInfo)
+        
+        if let deepLinkUrlString = userInfo["deeplink"] as? String, let deepLinkUrl = URL(string: deepLinkUrlString) {
+            
+            let incomingDeepLink = IncomingDeepLinkType.url(incomingUrl: IncomingDeepLinkUrl(url: deepLinkUrl))
+            
+            _ = GodToolsApp
+                .getDeepLinkingService()
+                .parseDeepLinkAndNotify(
+                    incomingDeepLink: incomingDeepLink
+                )
+        }
         
         completionHandler()
     }
