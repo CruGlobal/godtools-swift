@@ -1852,7 +1852,7 @@
 			repositoryURL = "https://github.com/CruGlobal/godtools-shared-swift.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.0.4;
+				minimumVersion = 1.2.0;
 			};
 		};
 		45CF096E2784B910007F13D3 /* XCRemoteSwiftPackageReference "request-operation-ios" */ = {
