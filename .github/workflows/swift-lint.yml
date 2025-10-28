@@ -24,8 +24,8 @@ jobs:
       - name: Install SwiftLint
         run: brew install swiftlint
 
-      - name: Pod Install
-        uses: ./.github/actions/pod-install
+      - name: Bundle Install
+        uses: ./.github/actions/bundle-install
 
       - name: Swift Lint
         run: bundle exec fastlane cru_shared_lane_swift_lint config_file:./.swiftlint.yml raise_if_swiftlint_error:true

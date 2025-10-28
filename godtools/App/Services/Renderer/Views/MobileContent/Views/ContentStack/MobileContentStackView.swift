@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import GodToolsToolParser
+import GodToolsShared
 
 class MobileContentStackView: MobileContentView {
     
