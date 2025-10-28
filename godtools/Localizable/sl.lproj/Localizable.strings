@@ -3,7 +3,6 @@
 
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "Ni na voljo v %@";
-
 "tool_menu_item.tools" = "Orodja";
 "lessons.pageTitle" = "Lekcije, narejene za vas";
 "lessons.pageSubtitle" = "Praktične ideje za vzpostavljanje odnosov in začenjanje pomembnih pogovorov.";
@@ -37,8 +36,8 @@
 "toolSettings.shareables.title" = "Povezane grafike";
 "allTools.spotlight.title" = "Izpostavljena orodja";
 "allTools.spotlight.description" = "Tukaj je nekaj orodij, ki bi vam lahko bila všeč";
-"allTools.categories.title" = "Kategorije";
 "tool_menu_item.lessons" = "Lekcije";
+
 "onboardingTutorial.beginButton.title" = "Začni";
 "onboardingTutorial.nextButton.title" = "Naprej";
 "tool_offline_favorite_message" = "Če želite, da bo orodje na voljo brez povezave, se dotaknite ikone srca in jo dodajte med priljubljene.";
@@ -104,6 +103,8 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "Članki";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "Več kot 90 jezikov";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -115,31 +116,27 @@
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
 "find_tools" = "Dodaj orodje";
 
-"unavailable" = "Ni na voljo";
-
 // Navigation Bar
 "navigationBar.navigationItem.skip" = "Preskoči";
 
 // Onboarding
 "add_new_tools" = "Dodaj nova orodja";
-"set_your_languages" = "Izberi jezike";
-"okay" = "V redu";
+
 // Menu
 "menu_general" = "Splošno";
 "menu_share" = "Deli";
 "menu_legal" = "Zakonito";
 "language_settings" = "Jezikovne nastavitve";
+
 // Login
 "login" = "Prijava";
 "logout" = "Odjava";
 "create_account" = "Ustvari račun";
-"account_login" = "Prijava v račun";
 
 // Tool Detail
 "about" = "O aplikaciji";
 "help" = "Pomoč";
 "contact_us" = "Vprašaj nas";
-"preview_mode_translators_only" = "Predogled (samo za prevajalce)";
 "share_god_tools" = "Deli aplikacijo GodTools";
 "share_a_story_with_us" = "Deli zgodbo z nami";
 "terms_of_use" = "Pogoji uporabe";
@@ -148,9 +145,6 @@
 "share_god_tools_share_sheet_text" = "Prenesite aplikacijo GodTools tukaj: https://godtoolsapp.com
 
 Spletna različica je na voljo na https://knowgod.com/";
-
-// Add Tools
-"add_tools" = "Dodaj orodja";
 
 "total_views" = "%d ogledov";
 "total_languages" = "%d jezikov";
@@ -172,14 +166,13 @@ Spletna različica je na voljo na https://knowgod.com/";
 "no_internet" = "Preverite internetno povezavo in poskusite znova.";
 
 "the_tool_you_requested_is_loading" = "Zahtevano orodje se nalaga...";
-"loading" = "Nalaganje ...";
 
 // Actions
 "yes" = "Ja";
 "no" = "Ne";
 
 // Tract - Sharing
-"tract_share_message" ="S klikom te povezave se bo odprla spletna različica, ki sva si jo danes nazadnje ogledala skupaj: %@. 
+"tract_share_message" = "S klikom te povezave se bo odprla spletna različica, ki sva si jo danes nazadnje ogledala skupaj: %@. 
 
 Pogovoriva se več o tem!
 
@@ -213,8 +206,8 @@ Aplikacijo lahko preneseš na https://godtoolsapp.com";
 "general_about_8" = "Obišči godtoolsapp.com za več informacij.";
 "tutorial.continueButton.title.continue" = "Nadaljuj";
 "general_about_9" = "Pri prevzemanju pobude za deljenje svoje vere ne pozabi, da je le Bog tisti, ki spreminja srca ljudi. Izrazi skrb za vsako osebo s poslušanjem z namenom razumevanja.";
-"general_about_10" = "»Vaše govorjenje naj bo zmeraj ljubeznivo, začinjeno s soljo, da boste vedeli, kako morate odgovarjati komur koli.« Pismo Kološanom 4,6";
 
+"general_about_10" = "»Vaše govorjenje naj bo zmeraj ljubeznivo, začinjeno s soljo, da boste vedeli, kako morate odgovarjati komur koli.« Pismo Kološanom 4,6";
 // Downloads
 "Download in progress" = "Poteka prenos";
 
@@ -224,4 +217,3 @@ Aplikacijo lahko preneseš na https://godtoolsapp.com";
 
 // Language Name Strings
 "language_name_fa" = "Perzijščina (farsi)";
-

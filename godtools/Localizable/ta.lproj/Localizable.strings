@@ -1,6 +1,5 @@
 /* This About refers to a specific tool in the app. */
 "toolDetails.about.title" = "பற்றி";
-
 "training_tip_ask" = "கேளுங்கள்";
 "training_tip_consider" = "கவனியுங்கள்";
 "training_tip_prepare" = "தயார்";
@@ -14,7 +13,6 @@
 
 /* This phrase describes a category of tool that helps someone grow in their Christian faith */
 "tool_category_growth" = "கிறிஸ்தவ வளர்ச்சி";
-
 "share_tool_menu.remote_share_tool" = "உங்கள் திரையைப் பகிரவும்";
 "share_tool_menu.send_tool" = "இந்த கருவியை அனுப்பவும்";
 "share_tool_screen_tutorial.share_your_screen.title" = "உங்கள் திரையைப் பகிரவும்";
@@ -47,6 +45,8 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "கட்டுரைகள்";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "90+ மொழிகளை";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
@@ -55,15 +55,12 @@
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
 "find_tools" = "அனைத்து கருவிகள்";
 
-"unavailable" = "தொகுப்பில் இல்லை";
-
 // Navigation Bar
 "navigationBar.navigationItem.skip" = "தவிர்";
 
 // Onboarding
 "add_new_tools" = "புதிய உபகரணங்களை சேர்க்கவும்";
-"set_your_languages" = "உங்கள் மொழிகளை அமைக்கவும்";
-"okay" = "சரி";
+
 // Menu
 "menu_general" = "பொதுவான";
 "menu_account" = "கணக்கு";
@@ -71,15 +68,16 @@
 "menu_legal" = "சட்டம் சம்பந்தப்பட்ட";
 "language_settings" = "மொழி அமைப்புகள்";
 "menu.tutorial" = "பயிற்சி";
+
 // Login
 "login" = "உள்நுழைய";
 "logout" = "வெளியேறு";
 "create_account" = "உங்கள் கணக்கை துவங்குங்கள்";
+
 // Tool Detail
 "about" = "பற்றி";
 "help" = "அடிக்கடி கேட்கப்படும் கேள்விகள்";
 "contact_us" = "எங்களை தொடர்புகொள்ள";
-"preview_mode_translators_only" = "முற்காட்சி முகடு (மொழிபெயர்ப்பார்களுக்கு மட்டும்)";
 "share_god_tools" = "GodTools செயலியை பகிரவும்";
 "share_a_story_with_us" = "ஒரு நிகழ்வை பகிர்ந்துகொள்ளுங்கள்";
 "terms_of_use" = "உபயோக விதிமுறைகள்";
@@ -103,12 +101,13 @@
 
 // Alert & Info Controllers
 "download_error" = "பதிவிறக்க பிழை";
+
 // Actions
 "yes" = "ஆம்";
 "no" = "இல்லை";
 
 // Tract - Sharing
-"tract_share_message" ="இந்த இணைப்பானது இன்றைக்கு நாம்  கவனித்த பக்கத்தின் வலைதள பதிவுக்கு உங்களை கொண்டுசெல்லும்%@.  இதனைக் குறித்து  கூடுதலாய் கவனிப்போம்";
+"tract_share_message" = "இந்த இணைப்பானது இன்றைக்கு நாம்  கவனித்த பக்கத்தின் வலைதள பதிவுக்கு உங்களை கொண்டுசெல்லும்%@.  இதனைக் குறித்து  கூடுதலாய் கவனிப்போம்";
 
 // Buttons
 "download" = "பதிவிறக்கம் செய்க";
@@ -117,6 +116,7 @@
 "remove" = "அகற்று";
 "clear" = "தெளிவாக்கு";
 "cancel" = "ரத்துசெய்";
+
 "onboardingTutorial.getStartedButton.title" = "தொடங்கவும்";
 
 // About
@@ -131,8 +131,8 @@
 "general_about_8" = "கூடுதலான தகவலுக்கு godtoolsapp.com வருகை தாருங்கள்";
 "tutorial.continueButton.title.continue" = "தொடரவும்";
 "general_about_9" = "உங்களுடைய நம்பிக்கையை பகிர்ந்துகொள்ள முயற்சி எடுக்கின்ற இந்த வேளையிலே, இருதயங்களை மாற்றக்கூடியவர் கர்த்தர் ஒருவரே என்பதை நினைவில்கொள்ளுங்கள்.  ஒருவரை புரிந்துகொள்ளும்படிக்கு  அவருடைய காரியத்தை நன்றாக கேட்டு உங்கள் அன்பை வெளிப்படுத்துங்கள்.";
-"general_about_10" = "\"அவனவனுக்கு இன்னின்னபடி உத்தரவு சொல்லவேண்டுமென்று நீங்கள் அறியும்படிக்கு, உங்கள் வசனம் எப்பொழுதும் கிருபை பொருந்தினதாயும் உப்பால் சாரமேறினதாயுமிருப்பதாக\"  கொலோசெயர் 4:6";
 
+"general_about_10" = "\"அவனவனுக்கு இன்னின்னபடி உத்தரவு சொல்லவேண்டுமென்று நீங்கள் அறியும்படிக்கு, உங்கள் வசனம் எப்பொழுதும் கிருபை பொருந்தினதாயும் உப்பால் சாரமேறினதாயுமிருப்பதாக\"  கொலோசெயர் 4:6";
 // Downloads
 "Download in progress" = "பதிவிறக்கம் செயலில் உள்ளது";
 
@@ -142,4 +142,3 @@
 
 // Language Name Strings
 "language_name_fa" = "பாரசீக (ஃபார்ஸி)";
-

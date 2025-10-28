@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import GodToolsToolParser
+import GodToolsShared
 import SwiftUI
 import Combine
 
@@ -127,7 +127,7 @@ class ArticleFlow: Flow {
 
 extension ArticleFlow {
     
-    private func getArticles(resource: ResourceModel, language: LanguageModel, category: GodToolsToolParser.Category, manifest: Manifest) -> UIViewController {
+    private func getArticles(resource: ResourceDataModel, language: LanguageDataModel, category: GodToolsShared.Category, manifest: Manifest) -> UIViewController {
         
         let viewModel = ArticlesViewModel(
             flowDelegate: self,
@@ -161,7 +161,7 @@ extension ArticleFlow {
         return view
     }
     
-    private func getArticle(resource: ResourceModel, aemCacheObject: ArticleAemCacheObject) -> UIViewController {
+    private func getArticle(resource: ResourceDataModel, aemCacheObject: ArticleAemCacheObject) -> UIViewController {
         
         let viewModel = ArticleWebViewModel(
             flowDelegate: self,

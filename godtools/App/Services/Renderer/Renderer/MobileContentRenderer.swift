@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import GodToolsToolParser
+import GodToolsShared
 
 class MobileContentRenderer {
             
@@ -16,7 +16,7 @@ class MobileContentRenderer {
     private let manifestResourcesCache: MobileContentRendererManifestResourcesCache
     
     let navigation: MobileContentRendererNavigation
-    let resource: ResourceModel
+    let resource: ResourceDataModel
     let appLanguage: AppLanguageDomainModel
     let languages: MobileContentRendererLanguages
     let pageRenderers: [MobileContentPageRenderer]
@@ -24,7 +24,7 @@ class MobileContentRenderer {
     init(navigation: MobileContentRendererNavigation, appLanguage: AppLanguageDomainModel, toolTranslations: ToolTranslationsDomainModel, pageViewFactories: MobileContentRendererPageViewFactories, manifestResourcesCache: MobileContentRendererManifestResourcesCache) {
         
         let sharedState: State = State()
-        let resource: ResourceModel = toolTranslations.tool
+        let resource: ResourceDataModel = toolTranslations.tool
         let languages = MobileContentRendererLanguages(toolTranslations: toolTranslations)
         
         var pageRenderers: [MobileContentPageRenderer] = Array()

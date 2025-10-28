@@ -1,5 +1,5 @@
 "deferredDeepLinkModal.title" = "It looks like you clicked a link for GodTools";
-"deferredDeepLinkModal.message" = "Please tap the paste button below.  This will allow us to take you to the content you requested in GodTools.";
+"deferredDeepLinkModal.message" = "Tap the button below so we can take you to the content you requested.";
 
 "toolScreenShare.qrCode.closeButtonTitle" = "Close";
 "toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";
@@ -91,7 +91,7 @@
 
 "menu.deleteAccount" = "Delete account";
 "alert.mailAppUnavailable.title" = "Mail App Unavailable";
-"alert.mailAppUnavailable.message" = "The native Mail app is either not configured or is unavailable on this device. ";
+"alert.mailAppUnavailable.message" = "The native Mail app is either not configured or is unavailable on this device.";
 "tool_menu_item.tools" = "Tools";
 "lessons.pageTitle" = "Lessons made for you";
 "lessons.pageSubtitle" = "Practical ideas to build relationships and start meaningful conversations.";
@@ -125,13 +125,11 @@
 "toolSettings.shareables.title" = "Related graphics";
 "allTools.spotlight.title" = "Tool Spotlight";
 "allTools.spotlight.description" = "Here are some tools we thought you might like";
-"allTools.categories.title" = "Categories";
 "training_tip_ask" = "Ask";
 "training_tip_consider" = "Consider";
 "training_tip_prepare" = "Prepare";
 "training_tip_quote" = "Quote";
 "training_tip_tip" = "Tip";
-"articles.downloadingArticles.errorMessage.title" = "Error Downloading Articles";
 "start_training" = "Start Training";
 "close" = "Close";
 "tool_menu_item.lessons" = "Lessons";
@@ -231,10 +229,10 @@ If you don't receive this message until later, the link may not still work. We c
 "loading_favorited_tool" = "Downloading the most recent translation for this tool.";
 
 /* Adds a question mark */
-"remove_from_favorites_title" = "Remove from Favorites? ";
+"remove_from_favorites_title" = "Remove from Favorites?";
 
 /* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
-"remove_from_favorites_message" = "Are you sure you want to remove %@ from your Favorites? ";
+"remove_from_favorites_message" = "Are you sure you want to remove %@ from your Favorites?";
 
 /* Gospel indicates the gospel of Jesus Christ */
 "tool_category_gospel" = "Gospel Invitation";
@@ -248,7 +246,6 @@ If you don't receive this message until later, the link may not still work. We c
 "menu_version" = "Version";
 
 /* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
-"articles.loadingView.downloadingArticles" = "Downloading Articles ...";
 "language_onboard" = "90+ Languages";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -260,18 +257,11 @@ If you don't receive this message until later, the link may not still work. We c
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
 "find_tools" = "All Tools";
 
-"unavailable" = "Unavailable";
-
 // Navigation Bar
 "navigationBar.navigationItem.skip" = "Skip";
 
 // Onboarding
 "add_new_tools" = "Add New Tools";
-"set_your_languages" = "Set Your Languages";
-"okay" = "Okay";
-"want_more_godtools?" = "Want more GodTools?";
-"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
-"click_here" = "Click Here";
 
 // Menu
 "menu_general" = "General";
@@ -286,13 +276,11 @@ If you don't receive this message until later, the link may not still work. We c
 "login" = "Login";
 "logout" = "Logout";
 "create_account" = "Create Account";
-"account_login" = "Account Login";
 
 // Tool Detail
 "about" = "About";
 "help" = "Frequently Asked Questions";
 "contact_us" = "Contact Us";
-"preview_mode_translators_only" = "Preview Mode (Translators Only)";
 "share_god_tools" = "Share GodTools";
 "share_a_story_with_us" = "Share a story with us";
 "terms_of_use" = "Terms of use";
@@ -301,9 +289,6 @@ If you don't receive this message until later, the link may not still work. We c
 "share_god_tools_share_sheet_text" = "Download the GodTools app: https://godtoolsapp.com
 
 An online version can be found at https://knowgod.com/";
-
-// Add Tools
-"add_tools" = "Add Tools";
 
 "total_views" = "%d views";
 "total_languages" = "%d languages";
@@ -325,14 +310,13 @@ An online version can be found at https://knowgod.com/";
 "no_internet" = "Please check your internet connection and try again.";
 
 "the_tool_you_requested_is_loading" = "The tool you requested is loading...";
-"loading" = "Loading...";
 
 // Actions
 "yes" = "Yes";
 "no" = "No";
 
 // Tract - Sharing
-"tract_share_message" ="This link will take you to a web version of what we were talking about today: %@. 
+"tract_share_message" ="This link will take you to a web version of what we were talking about today: %@.
 
 Let's talk more!
 
@@ -402,29 +386,12 @@ Press the About button on any tool for more info.";
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "Global Activity";
 // OnboardingWelcome
-"onboardingWelcome.titleLabel.welcome" = "Welcome";
 "accountActivity.globalAnalytics.users.title" = "Unique\nUsers";
 "onboardingWelcome.titleLabel.tagline" = "Helping You Share Your Faith";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "Gospel\nPresentations";
 "accountActivity.globalAnalytics.launches.title" = "Sessions";
 // OnboardingTutorial
-"onboardingTutorial.aboutAppItem.0.title" = "Share With Others";
 "accountActivity.globalAnalytics.countries.title" = "Countries";
-
-"onboardingTutorial.aboutAppItem.0.message" = "GodTools is built to guide your faith conversations";
-"onboardingTutorial.aboutAppItem.1.title" = "Choose Your Tools";
-"onboardingTutorial.aboutAppItem.1.message" = "GodTools helps you before, during, and after a spiritual conversation";
-"onboardingTutorial.aboutAppItem.2.title" = "Always Ready";
-"onboardingTutorial.aboutAppItem.2.message" = "GodTools is here to help and is ready when you are";
-"onboardingTutorial.appUsageItem.0.message" = "Prepare for any conversation";
-"onboardingTutorial.appUsageItem.1.message" = "Walk someone through the gospel";
-"onboardingTutorial.appUsageItem.2.message" = "View two languages side by side";
-"onboardingTutorial.appUsageItem.3.message" = "Choose from over 90 languages";
-"onboardingTutorial.appUsageItem.4.message" = "Help someone get started as a Christian";
 "onboardingTutorial.showMoreButton.title" = "Show Me More";
 
 "screenShareTutorial.generateQRCodeButton.title" = "Generate QR code";
-
-"toolScreenShare.qrCode.closeButtonTitle" = "Close";
-"toolScreenShare.qrCode.title" = "QR Code";
-"toolScreenShare.qrCode.description" = "Scan this QR code to join along with me";

@@ -44,7 +44,7 @@ class ToolLanguageDownloader {
     
     func downloadToolLanguagePublisher(languageId: String) -> AnyPublisher<ToolDownloaderDataModel, Error> {
         
-        guard let languageModel = languagesRepository.getLanguage(id: languageId) else {
+        guard let languageModel = languagesRepository.persistence.getObject(id: languageId) else {
             
             let error: Error = NSError.errorWithDomain(
                 domain: "ToolLanguageDownloader",
@@ -70,7 +70,7 @@ class ToolLanguageDownloader {
         
         let includeToolTypes: [ResourceType] = ResourceType.toolTypes + [.lesson]
         
-        let tools: [ResourceModel] = resourcesRepository.getCachedResourcesByFilter(
+        let tools: [ResourceDataModel] = resourcesRepository.getCachedResourcesByFilter(
             filter: ResourcesFilter(category: nil, languageModelCode: languageModel.code, resourceTypes: includeToolTypes)
         )
         

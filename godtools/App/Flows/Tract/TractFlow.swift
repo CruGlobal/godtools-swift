@@ -7,9 +7,8 @@
 //
 
 import UIKit
-import GodToolsToolParser
+import GodToolsShared
 import Combine
-import LocalizationServices
 
 class TractFlow: ToolNavigationFlow, ToolSettingsNavigationFlow {
         
@@ -205,7 +204,6 @@ extension TractFlow {
             controllerType: .base,
             itemData: NavBarItemData(
                 contentType: .image(value: ImageCatalog.navToolSettings.uiImage),
-                style: .plain,
                 color: nil,
                 target: viewModel,
                 action: #selector(viewModel.toolSettingsTapped),

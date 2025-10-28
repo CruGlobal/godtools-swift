@@ -3,7 +3,6 @@
 
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "Hindi available sa %@";
-
 "tool_menu_item.tools" = "Lahat ng Tool";
 "lessons.pageTitle" = "Mga lesson na ginawa para sa iyo";
 "lessons.pageSubtitle" = "Mga praktikal na ideya para bumuo ng mga relasyon at magsimula ng mga makabuluhang pag-uusap.";
@@ -33,12 +32,10 @@
 "toolSettings.option.trainingTips.show.title" = "Mga payo sa training";
 "toolSettings.option.trainingTips.hide.title" = "Itago ang mga tip";
 "toolSettings.chooseLanguage.title" = "Parallel na Wika";
-"toolSettings.chooseLanguage.noParallelLanguageTitle" = "Parallel";
 "toolSettings.shareables.title" = "Mga nauugnay na graphics";
-"allTools.spotlight.title" = "Tool Spotlight";
 "allTools.spotlight.description" = "Narito ang ilang tool na sa tingin namin ay baka magustuhan mo";
-"allTools.categories.title" = "Mga Kategorya";
 "tool_menu_item.lessons" = "Mga Lesson";
+
 "onboardingTutorial.beginButton.title" = "Magsimula";
 "onboardingTutorial.nextButton.title" = "Susunod";
 "tool_offline_favorite_message" = "Gawing available offline ang isang tool sa pamamagitan ng pag-tap sa pusong icon na magdaragdag dito sa mga paborito mo.";
@@ -104,6 +101,8 @@ Kung hindi mo matatanggap ang mensaheng ito hanggang sa mamaya, maaaring hindi p
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "Mga Artikulo";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "90+ na Wika";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -115,31 +114,27 @@ Kung hindi mo matatanggap ang mensaheng ito hanggang sa mamaya, maaaring hindi p
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
 "find_tools" = "Lahat ng Tool";
 
-"unavailable" = "Hindi available";
-
 // Navigation Bar
 "navigationBar.navigationItem.skip" = "Laktawan";
 
 // Onboarding
 "add_new_tools" = "Magdagdag ng Mga Bagong Tool";
-"set_your_languages" = "I-set ang Iyong Mga Wika";
-"okay" = "Okay";
+
 // Menu
 "menu_general" = "Pangkalahatan";
 "menu_share" = "Pagbabahagi";
 "menu_legal" = "Ayon sa Batas";
 "language_settings" = "Mga Setting ng Wika";
+
 // Login
 "login" = "Mag-log in";
 "logout" = "Mag-log out";
 "create_account" = "Gumawa ng Account";
-"account_login" = "Pag-log in ng Account";
 
 // Tool Detail
 "about" = "Tungkol dito";
 "help" = "Tulong";
 "contact_us" = "Kontakin Kami";
-"preview_mode_translators_only" = "Preview Mode (Mga Tagapagsalin-wika Lang)";
 "share_god_tools" = "Ibahagi ang GodTools App";
 "share_a_story_with_us" = "Magbahagi ng Kuwento Sa Amin";
 "terms_of_use" = "Mga Tuntunin ng Paggamit";
@@ -148,9 +143,6 @@ Kung hindi mo matatanggap ang mensaheng ito hanggang sa mamaya, maaaring hindi p
 "share_god_tools_share_sheet_text" = "I-download ang GodTools app: https://godtoolsapp.com
 
 Makikita ang online na bersyon sa https://knowgod.com/";
-
-// Add Tools
-"add_tools" = "Magdagdag ng Mga Tool";
 
 "total_views" = "%d (na) pagtingin";
 "total_languages" = "%d (na) wika";
@@ -172,14 +164,13 @@ Makikita ang online na bersyon sa https://knowgod.com/";
 "no_internet" = "Pakitignan ang iyong koneksyon sa internet at subukan muli.";
 
 "the_tool_you_requested_is_loading" = "Naglo-load ang hiniling mong tool…";
-"loading" = "Nilo-load...";
 
 // Actions
 "yes" = "Oo";
 "no" = "Hindi";
 
 // Tract - Sharing
-"tract_share_message" ="Dadalhin ka ng link na ito sa web na bersyon ng page na huli nating tiningnan ngayong araw: %@. 
+"tract_share_message" = "Dadalhin ka ng link na ito sa web na bersyon ng page na huli nating tiningnan ngayong araw: %@. 
 
 Mag-usap pa tayo!
 
@@ -193,10 +184,6 @@ Maaaring ma-download ang app mula sa https://godtoolsapp.com";
 "clear" = "I-clear";
 /* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
 "toolinfo_opentool" = "Buksan ang Tool";
-
-// Alerts
-"error" = "Error";
-"OK" = "OK";
 "cancel" = "I-cancel";
 "required_field_missing" = "Ang \"%@\" ay kinakailangang field.";
 
@@ -213,15 +200,11 @@ Maaaring ma-download ang app mula sa https://godtoolsapp.com";
 "general_about_8" = "Pumunta sa godtoolsapp.com para sa karagdagang impormasyon.";
 "tutorial.continueButton.title.continue" = "Magpatuloy";
 "general_about_9" = "Habang ginagawa mo ang inisiyatiba para ibahagi ang iyong pananalampalataya, tandaan na ang Diyos ang siyang nagbabago sa puso. Mahaling mabuti ang bawat tao sa pamamagitan ng pakikinig para magkaunawaan.";
-"general_about_10" = "\"Hayaang maging puno ng grasya ang iyong pag-uusap, na binudburan ng asin, para malaman mo kung paano sasagutin ang lahat.\" Taga-Colosas 4:6";
 
+"general_about_10" = "\"Hayaang maging puno ng grasya ang iyong pag-uusap, na binudburan ng asin, para malaman mo kung paano sasagutin ang lahat.\" Taga-Colosas 4:6";
 // Downloads
 "Download in progress" = "Kasalukuyang dina-download";
 
 // Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "Nauna";
 "card_status2" = "Susunod";
-
-// Language Name Strings
-"language_name_fa" = "Persian (Farsi)";
-

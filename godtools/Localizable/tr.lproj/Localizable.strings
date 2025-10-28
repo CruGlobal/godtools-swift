@@ -3,7 +3,6 @@
 
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "%@ dili seçeneği yok";
-
 "tool_menu_item.tools" = "Araçlar";
 "lessons.pageTitle" = "Senin için hazırlanmış dersler";
 "lessons.pageSubtitle" = "İlişkiler kurmak ve anlamlı konuşmalar başlatmak için pratik fikirler.";
@@ -34,8 +33,8 @@
 "toolSettings.shareables.title" = "İlgili grafikler";
 "allTools.spotlight.title" = "Aracın Öne Çıkanları";
 "allTools.spotlight.description" = "İşte beğenebileceğini düşündüğümüz bazı araçlar";
-"allTools.categories.title" = "Kategoriler";
 "tool_menu_item.lessons" = "Dersler";
+
 "onboardingTutorial.beginButton.title" = "Başla";
 "onboardingTutorial.nextButton.title" = "Sonraki";
 "tool_offline_favorite_message" = "Kalp simgesine dokunup favorilerine ekleyerek bir aracı çevrim dışı kullanılabilir hâle getir.";
@@ -100,6 +99,8 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "Makaleler";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "90'i Aşkın Dil";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -111,31 +112,27 @@
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
 "find_tools" = "Tüm Araçlar";
 
-"unavailable" = "Mevcut Değil";
-
 // Navigation Bar
 "navigationBar.navigationItem.skip" = "atla";
 
 // Onboarding
 "add_new_tools" = "Yeni Araçlar Ekle";
-"set_your_languages" = "Dillerinizi Ayarlayın";
-"okay" = "Tamam";
+
 // Menu
 "menu_general" = "Genel";
 "menu_share" = "Paylaş";
 "menu_legal" = "Yasal";
 "language_settings" = "Dil Ayarları";
+
 // Login
 "login" = "Oturum Aç";
 "logout" = "Oturumu Kapat";
 "create_account" = "Hesap Oluştur";
-"account_login" = "Hesapta Oturum Açma";
 
 // Tool Detail
 "about" = "Hakkında";
 "help" = "Yardım";
 "contact_us" = "Bize Ulaşın";
-"preview_mode_translators_only" = "Ön İzleme Modu (Yalnızca Çevirmenler)";
 "share_god_tools" = "GodTools Uygulamasını Paylaş";
 "share_a_story_with_us" = "Bizimle bir Hikâye Paylaşın";
 "terms_of_use" = "Kullanım Koşulları";
@@ -144,9 +141,6 @@
 "share_god_tools_share_sheet_text" = "GodTools uygulamasını indirin: https://godtoolsapp.com
 
 Çevrim içi bir sürüm https://knowgod.com/ adresinde bulunabilir";
-
-// Add Tools
-"add_tools" = "Araçlar Ekle";
 
 "total_views" = "%d görüntüleme";
 "total_languages" = "%d dil";
@@ -168,14 +162,13 @@
 "no_internet" = "Lütfen internet bağlantınızı kontrol edip yeniden deneyin.";
 
 "the_tool_you_requested_is_loading" = "Talep ettiğiniz araç yükleniyor...";
-"loading" = "Yükleniyor";
 
 // Actions
 "yes" = "Evet";
 "no" = "Hayır";
 
 // Tract - Sharing
-"tract_share_message" ="Bu bağlantı, sizi bugün en son birlikte baktığımız sayfanın web sürümüne götürecek: %@. 
+"tract_share_message" = "Bu bağlantı, sizi bugün en son birlikte baktığımız sayfanın web sürümüne götürecek: %@. 
 
 Daha çok konuşalım!
 
@@ -209,8 +202,8 @@ Uygulama http://godtoolsapp.com adresinden indirilebilir";
 "general_about_8" = "Daha fazla bilgi için godtoolsapp.com adresini ziyaret edin.";
 "tutorial.continueButton.title.continue" = "devam";
 "general_about_9" = "İnancınızı paylaşma inisiyatifi alırken, Tanrı'nın kalbi değiştiren olduğunu aklınızda bulundurun. Anlamak için dinleyerek, her kişiyi güzelce sevin.";
-"general_about_10" = "\"Sözünüz tuzla terbiye edilmiş gibi, her zaman lütufkâr olsun. Böylece herkese nasıl karşılık vermek gerektiğini bileceksiniz.\" Koloseliler 4:6";
 
+"general_about_10" = "\"Sözünüz tuzla terbiye edilmiş gibi, her zaman lütufkâr olsun. Böylece herkese nasıl karşılık vermek gerektiğini bileceksiniz.\" Koloseliler 4:6";
 // Downloads
 "Download in progress" = "İndirme sürüyor";
 
@@ -220,4 +213,3 @@ Uygulama http://godtoolsapp.com adresinden indirilebilir";
 
 // Language Name Strings
 "language_name_fa" = "Persçe (Farsça)";
-

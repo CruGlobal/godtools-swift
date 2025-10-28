@@ -1,3 +1,6 @@
+"deferredDeepLinkModal.title" = "ایسا لگتا ہے کہ آپ نے GodTools کے لیے کسی لنک پر کلک کیا ہے۔";
+"deferredDeepLinkModal.message" = "نیچے دیئے گئے بٹن کو تھپتھپائیں تاکہ ہم آپ کو آپ کے درخواست کردہ مواد تک لے جا سکیں۔";
+
 "optInNotification.notificationSettings" = "نوٹیفکیشن سیٹنگز";
 "lessons.swipeTutorial.title" = "صفحات بدلنے کے لیے سوائپ کریں";
 "lessons.swipeTutorial.buttonText" = "سمجھ گیا";
@@ -18,8 +21,6 @@
 "language_name_fil" = "فلپائینی(تاگالوگ)";
 "lessons.filter.navBar.language" = "سبق کی زبان";
 "lessons.languageFilter.title" = "اسباق در:";
-"language_name_fil-x-taglish" = "Taglish";
-"language_name_sid" = "Sidama";
 "onboardingTutorial.chooseLanguageButton.title" = "زبان منتخب کریں";
 "languageSettings.confirmAppLanguage.message" = "کو ا؛پنی اَیپ زبان%@ آپ نے کے طور پر منتخب کِیا ۔ یہ گاڈ ٹولزکی ساری زبان کو بدل دے گی ۔ کیا آپ چاہتے ہیں ؟";
 "languageSettings.confirmAppLanguage.changeLanguageButton.title" = "زبان تبدیل کریں";
@@ -118,7 +119,6 @@
 "toolSettings.shareables.title" = "متعلقہ گرافکس";
 "allTools.spotlight.title" = "ٹول سپاٹ لائٹ";
 "allTools.spotlight.description" = "یہاں کچھ ٹولز ہیں ہم نے سوچا کہ شاید آپ پسند کریًر";
-"allTools.categories.title" = "زمرے";
 "training_tip_ask" = "پوچھیں";
 "training_tip_consider" = "غور کریں";
 "training_tip_prepare" = "تیار کریں";
@@ -236,6 +236,8 @@
 
 /* This is to let users know which version of the app is installed on their phone */
 "menu_version" = "ورزن";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "90+ زبانیں";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -247,15 +249,12 @@
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
 "find_tools" = "تمام ٹولز";
 
-"unavailable" = "غیر دستیاب";
-
 // Navigation Bar
 "navigationBar.navigationItem.skip" = "چھوڑیں";
 
 // Onboarding
 "add_new_tools" = "نئے ٹُولز ایڈ کریں";
-"set_your_languages" = "زبانیں منتخب کریں";
-"okay" = "اوکے";
+
 // Menu
 "menu_general" = "جنرل";
 "menu_account" = "اکاؤنٹ";
@@ -269,7 +268,6 @@
 "login" = "لاگ اِن کریں";
 "logout" = "لاگ آؤٹ کریں";
 "create_account" = "اکاؤنٹ بنائیں";
-"account_login" = "اکاؤنٹ لاگ اِن";
 
 // Tool Detail
 "about" = "ہمارے متعلق";
@@ -285,9 +283,6 @@ https://godtoolsapp.com
 
 ایک آن لائن ورژن اس لِنک پر ملاحظہ فرمائیں 
 https://knowgod.com";
-
-// Add Tools
-"add_tools" = "ٹُولز ایڈ کریں";
 
 "total_views" = "%d وِیُوز";
 "total_languages" = "%d زبانیں";
@@ -309,14 +304,13 @@ https://knowgod.com";
 "no_internet" = "براہِ کرم اپنا انٹرنیٹ کنیکشن چیک کریں اور دوبارہ کوشش کریں۔";
 
 "the_tool_you_requested_is_loading" = "جس ازار کی آپ نے درخواست کی ہے وہ لوڈ ہو رہاہے۔";
-"loading" = "لوڈ ہو رہا ہے۔۔۔";
 
 // Actions
 "yes" = "جی ہاں";
 "no" = "نہیں";
 
 // Tract - Sharing
-"tract_share_message" ="یہ لنک آپ کو اس پیج کے ویب ورژن میں لےجائے گا جس کو آج ہم سب مل کر دیکھ رہے تھے: %@۔ آئیے کچھ اور چیزوں پر بات کریں!
+"tract_share_message" = "یہ لنک آپ کو اس پیج کے ویب ورژن میں لےجائے گا جس کو آج ہم سب مل کر دیکھ رہے تھے: %@۔ آئیے کچھ اور چیزوں پر بات کریں!
 
 ایپ یہاں سے ڈاؤنلوڈ کی جا سکتی ہے
 https://godtoolsapp.com";
@@ -376,12 +370,11 @@ https://godtoolsapp.com";
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "عالمگیر سرگرمی";
+// OnboardingWelcome
 "accountActivity.globalAnalytics.users.title" = "منفرد صارفین";
 "onboardingWelcome.titleLabel.tagline" = "آپ کے ایمان کو ساجھا کرنے میں مددگار";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "انجیل کی پیشکشیں";
 "accountActivity.globalAnalytics.launches.title" = "سیشنز";
 // OnboardingTutorial
-"onboardingTutorial.aboutAppItem.0.title" = "دوسروں کے ساتھ ساجھا کریں";
 "accountActivity.globalAnalytics.countries.title" = "ممالک";
-
 "onboardingTutorial.showMoreButton.title" = "مزید دکھائیے ";

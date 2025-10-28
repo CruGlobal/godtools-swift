@@ -1,3 +1,6 @@
+"deferredDeepLinkModal.title" = "Sepertinya Anda mengklik tautan untuk GodTools";
+"deferredDeepLinkModal.message" = "Ketuk tombol di bawah ini agar kami dapat mengarahkan Anda ke konten yang Anda minta.";
+
 "optInNotification.notificationSettings" = "Pengaturan Notifikasi";
 "lessons.swipeTutorial.title" = "Geser untuk mengganti halaman";
 "lessons.swipeTutorial.buttonText" = "Mengerti";
@@ -19,7 +22,6 @@
 "lessons.filter.navBar.language" = "Bahasa pelajaran";
 "lessons.languageFilter.title" = "Pelajaran dalam bahasa:";
 "language_name_fil-x-taglish" = "Bahasa Taglish";
-"language_name_sid" = "Sidama";
 "onboardingTutorial.chooseLanguageButton.title" = "Pilih bahasa";
 "languageSettings.confirmAppLanguage.message" = "Saudara telah memilih %@ sebagai bahasa aplikasi Saudara. Ini akan mengubah bahasa seluruh aplikasi GodTools. Apa Saudara yakin?";
 "languageSettings.confirmAppLanguage.changeLanguageButton.title" = "Mengubah bahasa";
@@ -31,7 +33,6 @@
 "languageSettings.toolLanguagesAvailableOffline.title" = "Bahasa alat tersedia secara offline";
 "languageSettings.toolLanguagesAvailableOffline.message" = "Unduh semua alat dalam satu bahasa agar dapat dibuka meskipun Saudara tidak terhubung WiFi atau layanan seluler. Atur bahasa alat melalui tombol opsi di dalam alat.";
 "languageSettings.toolLanguagesAvailableOffline.editDownloadedLanguagesButton.title" = "Edit bahasa yang telah diunduh";
-"allTools.filter.title" = "Filter";
 "allTools.filter.anyCategory" = "Kategori apa pun";
 "allTools.filter.anyLanguage" = "Bahasa apapun";
 "allTools.filter.navBar.language" = "Filter berdasarkan bahasa";
@@ -118,7 +119,6 @@
 "toolSettings.shareables.title" = "Grafis yang berhubungan";
 "allTools.spotlight.title" = "Spotlight Sarana";
 "allTools.spotlight.description" = "Ini beberapa sarama yang mungkin Anda suka";
-"allTools.categories.title" = "Kategori";
 "training_tip_ask" = "Tanya";
 "training_tip_consider" = "Pertimbangkan";
 "training_tip_prepare" = "Persiapan";
@@ -241,7 +241,6 @@ Jika Anda tidak menerima pesan ini hingga nanti, tautannya mungkin masih belum b
 "menu_version" = "Versi";
 
 /* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
-"articles.loadingView.downloadingArticles" = "Unduh Artikel";
 "language_onboard" = "90+ Bahasa";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -253,35 +252,29 @@ Jika Anda tidak menerima pesan ini hingga nanti, tautannya mungkin masih belum b
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
 "find_tools" = "Semua Sarana";
 
-"unavailable" = "Tidak tersedia";
-
 // Navigation Bar
 "navigationBar.navigationItem.skip" = "Lewati";
 
 // Onboarding
 "add_new_tools" = "Tambah Sarana Baru";
-"set_your_languages" = "Tetapkan Bahasa Saudara";
-"okay" = "Oke";
+
 // Menu
 "menu_general" = "Umum";
 "menu_account" = "Akun";
 "menu_share" = "Berbagi";
 "menu_legal" = "Resmi";
 "language_settings" = "Pengaturan bahasa";
-"menu.tutorial" = "Tutorial";
 "menu.my_account" = "Akun saya";
 
 // Login
 "login" = "Masuk";
 "logout" = "Keluar";
 "create_account" = "Buat Akun";
-"account_login" = "Akun Masuk";
 
 // Tool Detail
 "about" = "Tentang";
 "help" = "Tanya Jawab Umum";
 "contact_us" = "Hubungi Kami";
-"preview_mode_translators_only" = "Mode Pratinjau (Hanya Penerjemah)";
 "share_god_tools" = "Berbagi GodTools";
 "share_a_story_with_us" = "Berbagi cerita dengan kami";
 "terms_of_use" = "Syarat penggunaan";
@@ -289,9 +282,6 @@ Jika Anda tidak menerima pesan ini hingga nanti, tautannya mungkin masih belum b
 "copyright_info" = "Info hak cipta";
 "share_god_tools_share_sheet_text" = "Unduh apliaksi GodTools: https://godtoolsapp.com/id/
 Versi online dapat ditemukan di https://knowgod.com/id";
-
-// Add Tools
-"add_tools" = "Tambah Alat";
 
 "total_views" = "Dilihat %d";
 "total_languages" = "%d Bahasa";
@@ -313,14 +303,13 @@ Versi online dapat ditemukan di https://knowgod.com/id";
 "no_internet" = "Silakan periksa koneksi internet dan coba lagi.";
 
 "the_tool_you_requested_is_loading" = "Alat yang Anda minta sedang dimuat....";
-"loading" = "Memuat...";
 
 // Actions
 "yes" = "Iya";
 "no" = "Tidak";
 
 // Tract - Sharing
-"tract_share_message" ="Tautan ini akan membawa Anda ke halaman versi web terakhir yang dilihat hari ini: %@. 
+"tract_share_message" = "Tautan ini akan membawa Anda ke halaman versi web terakhir yang dilihat hari ini: %@. 
 
 Mari kita bicarakan lebih lanjut!
 
@@ -388,23 +377,10 @@ Kolose 4:6";
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "Aktifitas Global";
 // OnboardingWelcome
-"onboardingWelcome.titleLabel.welcome" = "Selamat Datang";
 "accountActivity.globalAnalytics.users.title" = "Pengguna unik";
 "onboardingWelcome.titleLabel.tagline" = "Membantu Saudara Membagikan Iman Saudara";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "Presentasi Injil";
 "accountActivity.globalAnalytics.launches.title" = "Sesi-Sesi";
 // OnboardingTutorial
-"onboardingTutorial.aboutAppItem.0.title" = "Bagikan Dengan Orang Lain";
 "accountActivity.globalAnalytics.countries.title" = "Negara-negara";
-
-"onboardingTutorial.aboutAppItem.0.message" = "GodTools dibangun untuk memandu percakapan iman Saudara";
-"onboardingTutorial.aboutAppItem.1.title" = "Pilih Sarana Saudara";
-"onboardingTutorial.aboutAppItem.1.message" = "GodTools membantu Saudara sebelum, selama, dan setelah percakapan rohani";
-"onboardingTutorial.aboutAppItem.2.title" = "Selalu Siap";
-"onboardingTutorial.aboutAppItem.2.message" = "GodTools ada di sini untuk membantu dan siap saat Saudara siap";
-"onboardingTutorial.appUsageItem.0.message" = "Persiapkan untuk percakapan apa pun";
-"onboardingTutorial.appUsageItem.1.message" = "Membimbing seseorang melalui Injil";
-"onboardingTutorial.appUsageItem.2.message" = "Lihat dua bahasa secara berdampingan";
-"onboardingTutorial.appUsageItem.3.message" = "Pilih dari lebih dari 90 bahasa";
-"onboardingTutorial.appUsageItem.4.message" = "Membantu seseorang memulai sebagai seorang Kristen";
 "onboardingTutorial.showMoreButton.title" = "Lebih";

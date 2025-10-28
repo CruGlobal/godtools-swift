@@ -1,3 +1,6 @@
+"deferredDeepLinkModal.title" = "GodToolsへのリンクをクリックしたようです";
+"deferredDeepLinkModal.message" = "下のボタンをタップすると、要求したコンテンツに移動できます。";
+
 "optInNotification.notificationSettings" = "通知設定";
 "lessons.swipeTutorial.title" = "スワイプでページを切り替えられます";
 "lessons.swipeTutorial.buttonText" = "了解";
@@ -118,7 +121,6 @@
 "toolSettings.shareables.title" = "関連する画像";
 "allTools.spotlight.title" = "注目のツール";
 "allTools.spotlight.description" = "あなたにおすすめのツールです";
-"allTools.categories.title" = "カテゴリー";
 "training_tip_ask" = "尋ねる";
 "training_tip_consider" = "考える";
 "training_tip_prepare" = "準備する";
@@ -236,6 +238,8 @@
 
 /* This is to let users know which version of the app is installed on their phone */
 "menu_version" = "バージョン";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "90 種類以上の言語";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -247,15 +251,12 @@
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
 "find_tools" = "すべてのツール";
 
-"unavailable" = "利用不可";
-
 // Navigation Bar
 "navigationBar.navigationItem.skip" = "スキップ";
 
 // Onboarding
 "add_new_tools" = "新しいツールを追加";
-"set_your_languages" = "言語を設定";
-"okay" = "OK";
+
 // Menu
 "menu_general" = "一般";
 "menu_account" = "アカウント";
@@ -269,13 +270,11 @@
 "login" = "ログイン";
 "logout" = "ログアウト";
 "create_account" = "アカウント作成";
-"account_login" = "アカウントログイン";
 
 // Tool Detail
 "about" = "情報";
 "help" = "よくある質問";
 "contact_us" = "お問い合わせ";
-"preview_mode_translators_only" = "プレビューモード（翻訳者限定）";
 "share_god_tools" = "GodToolsをシェア";
 "share_a_story_with_us" = "体験談を紹介";
 "terms_of_use" = "利用規約";
@@ -284,9 +283,6 @@
 "share_god_tools_share_sheet_text" = "GodToolsをダウンロード: https://godtoolsapp.com
 
 オンライン版はこちらです: https://knowgod.com/";
-
-// Add Tools
-"add_tools" = "ツールを追加";
 
 "total_views" = "表示回数%d回";
 "total_languages" = "%d言語";
@@ -308,14 +304,13 @@
 "no_internet" = "インターネット接続を確認してからもう一度お試しください。";
 
 "the_tool_you_requested_is_loading" = "リクエストしたツールを読み込み中…";
-"loading" = "読み込み中...";
 
 // Actions
 "yes" = "はい";
 "no" = "いいえ";
 
 // Tract - Sharing
-"tract_share_message" ="このリンクは私たちが今日最後に見ていたウェブ版のページに移動します: %@。
+"tract_share_message" = "このリンクは私たちが今日最後に見ていたウェブ版のページに移動します: %@。
 
 もっと話しましょう！
 
@@ -332,7 +327,6 @@
 
 // Alerts
 "error" = "エラー";
-"OK" = "OK";
 "cancel" = "キャンセル";
 "required_field_missing" = "「%@」は必須記入欄です。";
 
@@ -376,12 +370,11 @@
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "世界のアクティビティ";
+// OnboardingWelcome
 "accountActivity.globalAnalytics.users.title" = "一意のユーザ";
 "onboardingWelcome.titleLabel.tagline" = "信仰を分かち合うお手伝いをします";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "福音の提示";
 "accountActivity.globalAnalytics.launches.title" = "セッション";
 // OnboardingTutorial
-"onboardingTutorial.aboutAppItem.0.title" = "他者と共有する";
 "accountActivity.globalAnalytics.countries.title" = "国";
-
 "onboardingTutorial.showMoreButton.title" = "もっと見せて";

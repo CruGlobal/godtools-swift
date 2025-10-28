@@ -118,7 +118,7 @@ extension DownloadInitialResourcesScript {
             .eraseToAnyPublisher()
     }
     
-    private static func downloadAttachmentAndSaveToBundle(attachment: AttachmentModel) -> AnyPublisher<Bool, Error> {
+    private static func downloadAttachmentAndSaveToBundle(attachment: AttachmentCodable) -> AnyPublisher<Bool, Error> {
         
         return getTemporaryAssetsFileUrl()
             .flatMap({ temporaryAssetsUrl -> AnyPublisher<(URL, Data), Error> in
@@ -166,7 +166,7 @@ extension DownloadInitialResourcesScript {
             .eraseToAnyPublisher()
     }
     
-    private static func getAttachmentFile(attachment: AttachmentModel) -> AnyPublisher<Data, Error> {
+    private static func getAttachmentFile(attachment: AttachmentCodable) -> AnyPublisher<Data, Error> {
         
         guard let url = URL(string: attachment.file) else {
 

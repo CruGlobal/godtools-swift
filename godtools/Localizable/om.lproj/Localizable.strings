@@ -1,3 +1,6 @@
+"deferredDeepLinkModal.title" = "Liinkii GodTools cuqaaste fakkaata";
+"deferredDeepLinkModal.message" = "Qabiyyee isin gaafatteetti isin geessuuf button armaan gadii tuquun.";
+
 "optInNotification.notificationSettings" = "Seetiingii yaadachiiftuuwwanii";
 "lessons.swipeTutorial.title" = "Fuula kan biraatti darbuuf gara bitaatti ykn mirgaatti skriinii kana buti";
 "lessons.swipeTutorial.buttonText" = "Naaf galeera";
@@ -15,11 +18,8 @@
 "lessons.lessonCompleted" = "Xumurteetta";
 "lessons.completionProgress" = "%@ Xumurameera";
 "network_connection_lost" = "Tajaajilli interneetii kee addaan citeera.";
-"language_name_fil" = "Filipino (Tagalog)";
 "lessons.filter.navBar.language" = "Afaan Barannoo kanaa";
 "lessons.languageFilter.title" = "Barannoowwaan afaan:";
-"language_name_fil-x-taglish" = "Taglish";
-"language_name_sid" = "Sidama";
 "onboardingTutorial.chooseLanguageButton.title" = "Qooqa filadhu";
 "languageSettings.confirmAppLanguage.message" = "Afaan %@ akka afaan app kanaa ta'uuf filatteetta. Kunis afaan guutummaa app GodTools jijjira. Akkas akka ta'u ni barbaaddaa?";
 "languageSettings.confirmAppLanguage.changeLanguageButton.title" = "Qooqa jijjiiri";
@@ -237,6 +237,7 @@ Ergaan kun turee yoo si qaqqabe link'n kun hojjechuu dhiisuu mala. Garuu yeroo k
 
 /* This is to let users know which version of the app is installed on their phone */
 "menu_version" = "Vershinii";
+
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "Kan jaallataman";
 
@@ -259,6 +260,7 @@ Ergaan kun turee yoo si qaqqabe link'n kun hojjechuu dhiisuu mala. Garuu yeroo k
 "login" = "Seeni";
 "logout" = "Bahi";
 "create_account" = "Akkaawontii uumi";
+
 // Tool Detail
 "about" = "Waa'ee";
 "help" = "Gaaffiiwwan yeroo hedduu gaafataman";
@@ -266,7 +268,6 @@ Ergaan kun turee yoo si qaqqabe link'n kun hojjechuu dhiisuu mala. Garuu yeroo k
 "share_god_tools" = "GodTools qoodi";
 "share_a_story_with_us" = "Seenaakee nuuf qoodi";
 "terms_of_use" = "Haala fayyadamaa";
-"privacy_policy" = "Privacy policy";
 "copyright_info" = "Odeeffannoo mirga waraabbii";
 "share_god_tools_share_sheet_text" = "App GodTools buufadhu: https://godtoolsapp.com
 
@@ -296,12 +297,11 @@ Marsariitii https://knowgod.com/ irrattis argachuu ni dandeessa.";
 "no" = "Lakki";
 
 // Tract - Sharing
-"tract_share_message" ="Liinkiin kun: %@ gara marsariitii wanta nuti sila haasa'aa turreetti si geessa.
+"tract_share_message" = "Liinkiin kun: %@ gara marsariitii wanta nuti sila haasa'aa turreetti si geessa.
 
 Kana caalaa irratti haa dubbannu!
 
 App isaa https://godtoolsapp.com irraa buufachuu ni dandeessa.";
-
 "dismiss" = "Cufii dhisii";
 "done" = "Xumureera";
 "clear" = "Haqi";
@@ -315,7 +315,6 @@ App isaa https://godtoolsapp.com irraa buufachuu ni dandeessa.";
 "required_field_missing" = "\"%@\" galchuun dirqama.";
 
 "onboardingTutorial.getStartedButton.title" = "Eegali";
-
 // Tutorial
 "tutorial.tutorialItem.0.title" = "Ilaali";
 "tutorial.tutorialItem.3.title" = "Agarsiiftuu fayyadamaa kana irra deebitee ilaaluu yoo barbaadde meenuu keessatti ni argatta";
@@ -337,17 +336,13 @@ App isaa https://godtoolsapp.com irraa buufachuu ni dandeessa.";
 
 "account.activity.title" = "Sochiiwwan";
 
-// Language Name Strings
-"language_name_fa" = "Persian (Farsi)";
-
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "Sochii addunyaalessaa";
+// OnboardingWelcome
 "accountActivity.globalAnalytics.users.title" = "Fayyadamtoota, namoota adda addaa";
 "onboardingWelcome.titleLabel.tagline" = "Amantiikee dhugaa ba'uudhaaf gargaaraa sirrii";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "Ibsaawwan Wangeelaa";
 "accountActivity.globalAnalytics.launches.title" = "Yeroo fayyadamaa";
 // OnboardingTutorial
-"onboardingTutorial.aboutAppItem.0.title" = "Namoota biroof qoodi";
 "accountActivity.globalAnalytics.countries.title" = "Biyyoota";
-
 "onboardingTutorial.showMoreButton.title" = "Kana caalaa natti agarsiisi";

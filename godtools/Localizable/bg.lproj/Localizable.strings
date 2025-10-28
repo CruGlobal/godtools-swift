@@ -3,7 +3,6 @@
 
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "Няма версия на %@";
-
 "tool_menu_item.tools" = "инструменти";
 "lessons.pageTitle" = "Уроци, създадени за теб";
 "lessons.pageSubtitle" = "Практични идеи за изграждане на връзки и започване на смислени разговори.";
@@ -37,11 +36,11 @@
 "toolSettings.shareables.title" = "Свързани изображения";
 "allTools.spotlight.title" = "Осветяване на приложения";
 "allTools.spotlight.description" = "Ето някои приложения, които мислим, че ще ви харесат";
-"allTools.categories.title" = "Категории";
 "training_tip_ask" = "Задай въпрос";
 "training_tip_consider" = "Обмисли";
 "close" = "Затвори";
 "tool_menu_item.lessons" = "Уроци";
+
 "onboardingTutorial.beginButton.title" = "Начало";
 "onboardingTutorial.nextButton.title" = "Напред";
 "tool_offline_favorite_message" = "Направете инструмента достъпен офлайн чрез докосване на иконката сърце, което ще го добави към Вашите любими.";
@@ -108,6 +107,8 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "Статии";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "90+ Езика";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -119,15 +120,12 @@
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
 "find_tools" = "Всички инструменти";
 
-"unavailable" = "Не е наличен";
-
 // Navigation Bar
 "navigationBar.navigationItem.skip" = "Пропуснете";
 
 // Onboarding
 "add_new_tools" = "Добавете нови средства";
-"set_your_languages" = "Настройте Вашите езици";
-"okay" = "ОК";
+
 // Menu
 "menu_general" = "Общи условия";
 "menu_account" = "Акаунт";
@@ -135,17 +133,16 @@
 "menu_legal" = "Правни условия";
 "language_settings" = "Езикови настройки";
 "menu.tutorial" = "Ръководство";
+
 // Login
 "login" = "Вписване";
 "logout" = "Изход";
 "create_account" = "Създаване на акаунт";
-"account_login" = "Вписване в акаунт";
 
 // Tool Detail
 "about" = "Относно";
 "help" = "Помощ";
 "contact_us" = "Свържете се с нас";
-"preview_mode_translators_only" = "Режим на предварителен изглед (Само преводачи)";
 "share_god_tools" = "Споделете приложението GodTools";
 "share_a_story_with_us" = "Споделете една история с нас";
 "terms_of_use" = "Условия за употреба";
@@ -154,9 +151,6 @@
 "share_god_tools_share_sheet_text" = "Изтеглете приложението GodTools: https://godtoolsapp.com
 
 Онлайн версия може да бъде намерена на https://knowgod.com/";
-
-// Add Tools
-"add_tools" = "Добавете инструменти";
 
 "total_views" = "%d прегледи";
 "total_languages" = "%d езици";
@@ -178,14 +172,13 @@
 "no_internet" = "Моля, проверете връзката с интернет и опитайте отново.";
 
 "the_tool_you_requested_is_loading" = "Изискваният от Вас инструмент се зарежда";
-"loading" = "Зареждане...";
 
 // Actions
 "yes" = "Да";
 "no" = "Не";
 
 // Tract - Sharing
-"tract_share_message" ="Този линк ще Ви насочи към уеб версията на страницата, която гледахме заедно днес: %@. 
+"tract_share_message" = "Този линк ще Ви насочи към уеб версията на страницата, която гледахме заедно днес: %@. 
 
 Да поговорим още!
 
@@ -202,7 +195,6 @@
 
 // Alerts
 "error" = "Грешка";
-"OK" = "OK";
 "cancel" = "Отмяна";
 "required_field_missing" = "\"%@\" е задължително поле.";
 
@@ -251,23 +243,10 @@
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "Глобална активност";
 // OnboardingWelcome
-"onboardingWelcome.titleLabel.welcome" = "Добре дошли";
 "accountActivity.globalAnalytics.users.title" = "Уникални потребители";
 "onboardingWelcome.titleLabel.tagline" = "Помагайки ви да споделяте вярата си";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "Презентации на Евангелието";
 "accountActivity.globalAnalytics.launches.title" = "Сесии";
 // OnboardingTutorial
-"onboardingTutorial.aboutAppItem.0.title" = "Споделете с други";
 "accountActivity.globalAnalytics.countries.title" = "Държави";
-
-"onboardingTutorial.aboutAppItem.0.message" = "GodTools е създаден, за да ви помогне във вашите духовни разговори";
-"onboardingTutorial.aboutAppItem.1.title" = "Изберете вашите инструменти";
-"onboardingTutorial.aboutAppItem.1.message" = "GodTools ви помага преди, по време на, и след духовен разговор";
-"onboardingTutorial.aboutAppItem.2.title" = "Винаги готов";
-"onboardingTutorial.aboutAppItem.2.message" = "GodTools е тук, за да ви помогне и е готов, когато и вие сте";
-"onboardingTutorial.appUsageItem.0.message" = "Подгответе се за всеки разговор";
-"onboardingTutorial.appUsageItem.1.message" = "Преминете през Евангелието с някого";
-"onboardingTutorial.appUsageItem.2.message" = "Вижте два езика един до друг";
-"onboardingTutorial.appUsageItem.3.message" = "Изберете от над 90 езика";
-"onboardingTutorial.appUsageItem.4.message" = "Помогнете на някого да израсне като християнин";
 "onboardingTutorial.showMoreButton.title" = "Покажете повече";

@@ -10,8 +10,9 @@ import SwiftUI
 
 struct ToolScreenShareTutorialView: View {
     
+    private static let continueButtonHeight: CGFloat = TutorialView.getContinueButtonHeight()
+    
     private let pageControlAttributes: PageControlAttributesType = GTPageControlAttributes()
-    private let continueButtonHeight: CGFloat = 50
     
     @ObservedObject private var viewModel: ToolScreenShareTutorialViewModel
     
@@ -62,7 +63,7 @@ struct ToolScreenShareTutorialView: View {
                 }
                 
                 let buttonHorizontalPadding: CGFloat = 30
-                let singleButtonWidth: CGFloat = geometry.size.width - (buttonHorizontalPadding * 2)
+                let singleButtonWidth: CGFloat = TutorialView.getContinueButtonWidth(geometry: geometry)
                 
                 if viewModel.shareOptions.count > 0 {
                     
@@ -81,7 +82,7 @@ struct ToolScreenShareTutorialView: View {
                                 title: viewModel.generateQRCodeButtonTitle,
                                 font: buttonFont,
                                 width: buttonWidth,
-                                height: continueButtonHeight,
+                                height: Self.continueButtonHeight,
                                 titleHorizontalPadding: titlePadding,
                                 titleVerticalPadding: titlePadding,
                                 accessibility: .generateQRCode
@@ -97,7 +98,7 @@ struct ToolScreenShareTutorialView: View {
                                 title: viewModel.shareLinkButtonTitle,
                                 font: buttonFont,
                                 width: buttonWidth,
-                                height: continueButtonHeight,
+                                height: Self.continueButtonHeight,
                                 titleHorizontalPadding: titlePadding,
                                 titleVerticalPadding: titlePadding,
                                 accessibility: .shareLink
@@ -115,7 +116,7 @@ struct ToolScreenShareTutorialView: View {
                         title: viewModel.continueTitle,
                         font: FontLibrary.sfProTextRegular.font(size: 18),
                         width: singleButtonWidth,
-                        height: continueButtonHeight,
+                        height: Self.continueButtonHeight,
                         titleHorizontalPadding: nil,
                         titleVerticalPadding: nil,
                         accessibility: .continueForward

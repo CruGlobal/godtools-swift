@@ -115,6 +115,8 @@ class PageNavigationCollectionView: UIView, NibBased {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.contentInset = .zero
         
+        collectionView.disableScrollEdgeEffect()
+        
         switch layoutType {
         case .centeredRevealingPreviousAndNextPage( _):
             collectionView.isPagingEnabled = false
@@ -122,9 +124,7 @@ class PageNavigationCollectionView: UIView, NibBased {
             collectionView.isPagingEnabled = true
         }
         
-        if #available(iOS 16, *) {
-            collectionView.selfSizingInvalidation = .disabled
-        }
+        collectionView.selfSizingInvalidation = .disabled
     }
     
     override func layoutSubviews() {

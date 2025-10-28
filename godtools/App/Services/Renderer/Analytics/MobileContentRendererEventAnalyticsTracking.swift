@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import GodToolsToolParser
+import GodToolsShared
 
 class MobileContentRendererEventAnalyticsTracking {
     
@@ -21,7 +21,7 @@ class MobileContentRendererEventAnalyticsTracking {
         self.firebaseAnalytics = firebaseAnalytics
     }
     
-    func trackContentEvent(eventId: EventId, resource: ResourceModel, appLanguage: String?, languages: MobileContentRendererLanguages) {
+    func trackContentEvent(eventId: EventId, resource: ResourceDataModel, appLanguage: String?, languages: MobileContentRendererLanguages) {
         
         let data: [String: Any] = [
             MobileContentRendererEventAnalyticsTracking.paramEventId: eventId.description()

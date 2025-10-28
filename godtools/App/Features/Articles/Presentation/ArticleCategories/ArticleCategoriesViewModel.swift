@@ -7,22 +7,22 @@
 //
 
 import Foundation
-import GodToolsToolParser
+import GodToolsShared
 import Combine
 
 class ArticleCategoriesViewModel {
         
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
     
-    private let resource: ResourceModel
-    private let language: LanguageModel
+    private let resource: ResourceDataModel
+    private let language: LanguageDataModel
     private let manifest: Manifest
     private let downloadArticlesObservable: DownloadManifestArticlesObservable
     private let manifestResourcesCache: MobileContentRendererManifestResourcesCache
     private let incrementUserCounterUseCase: IncrementUserCounterUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
-    private let categories: [GodToolsToolParser.Category]
+    private let categories: [GodToolsShared.Category]
     
     private var cancellables: Set<AnyCancellable> = Set()
     private var pageViewCount: Int = 0
@@ -32,7 +32,7 @@ class ArticleCategoriesViewModel {
     let numberOfCategories: ObservableValue<Int> = ObservableValue(value: 0)
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
         
-    init(flowDelegate: FlowDelegate, resource: ResourceModel, language: LanguageModel, manifest: Manifest, downloadArticlesObservable: DownloadManifestArticlesObservable, manifestResourcesCache: MobileContentRendererManifestResourcesCache, incrementUserCounterUseCase: IncrementUserCounterUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
+    init(flowDelegate: FlowDelegate, resource: ResourceDataModel, language: LanguageDataModel, manifest: Manifest, downloadArticlesObservable: DownloadManifestArticlesObservable, manifestResourcesCache: MobileContentRendererManifestResourcesCache, incrementUserCounterUseCase: IncrementUserCounterUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -110,7 +110,7 @@ extension ArticleCategoriesViewModel {
     
     func categoryWillAppear(index: Int) -> ArticleCategoryCellViewModel {
         
-        let category: GodToolsToolParser.Category = categories[index]
+        let category: GodToolsShared.Category = categories[index]
         
         return ArticleCategoryCellViewModel(
             category: category,
@@ -120,7 +120,7 @@ extension ArticleCategoriesViewModel {
     
     func categoryTapped(index: Int) {
         
-        let category: GodToolsToolParser.Category = categories[index]
+        let category: GodToolsShared.Category = categories[index]
         
         flowDelegate?.navigate(step: .articleCategoryTappedFromArticleCategories(resource: resource, language: language, category: category, manifest: manifest))
     }

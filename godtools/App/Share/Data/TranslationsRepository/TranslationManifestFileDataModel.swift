@@ -7,11 +7,11 @@
 //
 
 import Foundation
-import GodToolsToolParser
+import GodToolsShared
 
 struct TranslationManifestFileDataModel {
     
     let manifest: Manifest
     let relatedFiles: [FileCacheLocation]
-    let translation: TranslationModel
+    let translation: TranslationDataModel
 }

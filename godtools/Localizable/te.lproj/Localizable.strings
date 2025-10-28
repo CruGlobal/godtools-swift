@@ -3,7 +3,6 @@
 
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "%@ లో అందుబాటులో లేదు";
-
 "tool_menu_item.tools" = "పరికరాలు";
 "lessons.pageTitle" = "మీ కోసం పాఠాలు రూపొందించబడ్డాయి";
 "lessons.pageSubtitle" = "సంబంధాలను ఏర్పరచుకోవడానికి మరియు అర్థవంతమైన సంభాషణలను ప్రారంభించడానికి ఆచరణాత్మక ఆలోచనలు.";
@@ -37,7 +36,6 @@
 "toolSettings.shareables.title" = "సంబంధిత గ్రాఫిక్స్";
 "allTools.spotlight.title" = "సాధనం స్పాట్‌లైట్";
 "allTools.spotlight.description" = "మీరు ఇష్టపడతారని మేము భావించిన కొన్ని సాధనాలు ఇక్కడ ఉన్నాయి";
-"allTools.categories.title" = "వర్గాలు";
 "training_tip_ask" = "అడగండి";
 "training_tip_consider" = "పరిగణించండి";
 "training_tip_prepare" = "సిద్ధం";
@@ -45,6 +43,7 @@
 "training_tip_tip" = "చిట్కా";
 "close" = "దగ్గరగా";
 "tool_menu_item.lessons" = "పాఠాలు";
+
 "onboardingTutorial.beginButton.title" = "ప్రారంభించండి";
 "onboardingTutorial.nextButton.title" = "తదుపరి";
 "tool_offline_favorite_message" = "మీ ఇష్టమైన వాటికి జోడించే హృదయ ఐకాన్‌ను తట్టడం ద్వారా ఒక సాధనాన్ని ఆఫ్‌లైన్‌లో అందుబాటులో ఉంచండి.";
@@ -111,6 +110,8 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "వస్తువులు";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "90+ భాషలు";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -122,15 +123,12 @@
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
 "find_tools" = "అన్ని పరికరాలు";
 
-"unavailable" = "అందుబాటులో లేదు";
-
 // Navigation Bar
 "navigationBar.navigationItem.skip" = "దాటవేయి";
 
 // Onboarding
 "add_new_tools" = "క్రొత్త పరికరాలను జోడించండి";
-"set_your_languages" = "క్రొత్త భాషలను నియమించండి ";
-"okay" = "సరే";
+
 // Menu
 "menu_general" = "సాధారణం";
 "menu_account" = "ఖాతా";
@@ -138,17 +136,16 @@
 "menu_legal" = "చట్టపరమైన";
 "language_settings" = "భాష సెట్టింగ్స్";
 "menu.tutorial" = "ట్యుటోరియల్";
+
 // Login
 "login" = "లాగిన్";
 "logout" = "లాగౌట్";
 "create_account" = "ఖాతాను సృష్టించు";
-"account_login" = "ఖాతా లాగిన్";
 
 // Tool Detail
 "about" = "గూర్చి";
 "help" = "తరచుగా అడగబడే ప్రశ్నలు";
 "contact_us" = "సంప్రదించండి";
-"preview_mode_translators_only" = "ప్రివ్యూ మోడ్ (అనువాదకులకు మాత్రమే)";
 "share_god_tools" = "GodTools ఆప్ షేర్ చెయ్యండి";
 "share_a_story_with_us" = "మాతో మీ అనుభవాలను పంచుకోండి";
 "terms_of_use" = "ఉపయోగించు షరతులు ";
@@ -157,9 +154,6 @@
 "share_god_tools_share_sheet_text" = "GodTools ఆప్‌ను డౌన్లోడ్ చేసుకోండి: http://godtoolsapp.com
 
 ఆన్‌లైన్ వర్షన్  https://knowgod.com/ వద్ద కనుగొనవచ్చు";
-
-// Add Tools
-"add_tools" = "టూల్స్ జోడించండి";
 
 "total_views" = "%d వ్యూస్";
 "total_languages" = "%d భాషలు";
@@ -181,14 +175,13 @@
 "no_internet" = "దయచేసి మీ ఇంటర్నెట్ కనెక్షన్ సరిచూడండి మరియు మళ్ళీ ప్రయత్నించండి.";
 
 "the_tool_you_requested_is_loading" = "మీ అభ్యర్థించిన పరికరము లోడ్ అవుతున్నది…";
-"loading" = "లోడ్‌చేస్తున్నా...";
 
 // Actions
 "yes" = "అవును";
 "no" = "కాదు";
 
 // Tract - Sharing
-"tract_share_message" ="ఈ లింక్ మిమ్మల్ని ఈ రోజు మనం కలిసి చూసిన పేజీ యొక్క వెబ్ వెర్షన్ లోకి తీసుకువెళ్తుంది: %@. 
+"tract_share_message" = "ఈ లింక్ మిమ్మల్ని ఈ రోజు మనం కలిసి చూసిన పేజీ యొక్క వెబ్ వెర్షన్ లోకి తీసుకువెళ్తుంది: %@. 
 
 మరింత మాట్లాడదాము! 
 
@@ -254,22 +247,9 @@
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "ప్రపంచ కార్యాచరణ";
 // OnboardingWelcome
-"onboardingWelcome.titleLabel.welcome" = "స్వాగతం";
 "accountActivity.globalAnalytics.users.title" = "ప్రత్యేక వినియోగదారులు";
 "onboardingWelcome.titleLabel.tagline" = "మీ విశ్వాసాన్ని పంచుకోవడానికి మీకు సహాయం చేస్తుంది";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "సువార్త ప్రదర్శనలు";
 "accountActivity.globalAnalytics.launches.title" = "సమావేశములు";
 // OnboardingTutorial
-"onboardingTutorial.aboutAppItem.0.title" = "ఇతరులతో పంచుకోండి";
 "accountActivity.globalAnalytics.countries.title" = "దేశాలు";
-
-"onboardingTutorial.aboutAppItem.0.message" = "మీ విశ్వాస సంభాషణలకు మార్గనిర్దేశం చేయడానికి GodTools నిర్మించబడ్డాయి";
-"onboardingTutorial.aboutAppItem.1.title" = "మీ సాధనాలను ఎంచుకోండి";
-"onboardingTutorial.aboutAppItem.1.message" = "ఆధ్యాత్మిక సంభాషణకు ముందు, సమయంలో మరియు తర్వాత GodTools మీకు సహాయం చేస్తుంది";
-"onboardingTutorial.aboutAppItem.2.title" = "ఎల్లప్పుడూ సిద్ధం";
-"onboardingTutorial.aboutAppItem.2.message" = "GodTools సహాయం కోసం ఇక్కడ ఉంది మరియు మీరు ఉన్నప్పుడు సిద్ధంగా ఉంది";
-"onboardingTutorial.appUsageItem.0.message" = "ఏదైనా సంభాషణ కోసం సిద్ధం చేయండి";
-"onboardingTutorial.appUsageItem.1.message" = "సువార్త ద్వారా ఎవరైనా నడవండి";
-"onboardingTutorial.appUsageItem.2.message" = "రెండు భాషలను పక్కపక్కనే చూడండి";
-"onboardingTutorial.appUsageItem.3.message" = "90 కి పైగా భాషల నుండి ఎంచుకోండి";
-"onboardingTutorial.appUsageItem.4.message" = "క్రైస్తవుడిగా ప్రారంభించడానికి ఎవరైనా సహాయం చేయండి";

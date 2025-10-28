@@ -7,8 +7,7 @@
 //
 
 import Foundation
-import GodToolsToolParser
-import LocalizationServices
+import GodToolsShared
 
 class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
         

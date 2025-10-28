@@ -17,7 +17,6 @@ class AppLanguageSettingsBarItem: NavBarItem {
             controllerType: .base,
             itemData: NavBarItemData(
                 contentType: .image(value: ImageCatalog.navLanguage.uiImage),
-                style: .plain,
                 color: color,
                 target: target,
                 action: action,

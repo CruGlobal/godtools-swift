@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import GodToolsToolParser
+import GodToolsShared
 
 class MobileContentStackView: MobileContentView {
         
@@ -403,6 +403,8 @@ extension MobileContentStackView {
             addSubview(newScrollView)
             newScrollView.translatesAutoresizingMaskIntoConstraints = false
             newScrollView.constrainEdgesToView(view: self)
+            
+            newScrollView.disableScrollEdgeEffect()
             
             contentViewParent = newScrollView
             

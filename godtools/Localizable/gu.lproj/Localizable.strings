@@ -1,6 +1,5 @@
 /* This About refers to a specific tool in the app. */
 "toolDetails.about.title" = "વિશે";
-
 "training_tip_ask" = "પુછવું";
 "training_tip_consider" = "ધ્યાનમાં લો";
 "training_tip_prepare" = "તૈયાર કરો";
@@ -52,6 +51,8 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "લે્ખો";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "90 થી વધુ ભાષાઓ";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -63,15 +64,12 @@
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
 "find_tools" = "બધા ટુલ્સ";
 
-"unavailable" = "અપ્રાપ્ય";
-
 // Navigation Bar
 "navigationBar.navigationItem.skip" = "અવગણો";
 
 // Onboarding
 "add_new_tools" = "નવા સાધનો/ટુલ્સ ઉમેરો";
-"set_your_languages" = "તમારી ભાષા સ્થાપિત કરો";
-"okay" = "બરાબર";
+
 // Menu
 "menu_general" = "સામાન્ય";
 "menu_account" = "ખાતું";
@@ -79,10 +77,12 @@
 "menu_legal" = "કાનૂની";
 "language_settings" = "ભાષા સુયોજન";
 "menu.tutorial" = "ટ્યુટોરિયલ";
+
 // Login
 "login" = "લોગ ઇન કરો";
 "logout" = "લૉગ આઉટ";
 "create_account" = "ખાતું બનાવો";
+
 // Tool Detail
 "about" = "વિશે/આશરે";
 "help" = "મદદ વારંવાર પૂછાતા પ્રશ્નો";
@@ -94,9 +94,6 @@
 "copyright_info" = "કોપીરાઈટ માહિતી";
 "share_god_tools_share_sheet_text" = "'ગોડટુલ્સ' એપ અહિયાં ડાઉનલોડ કરી શકાશે:
 http://godtoolsapp.com";
-
-// Add Tools
-"add_tools" = "સાધનો/ટુલ્સ ઉમેરો";
 
 "total_views" = "%d જોઈ રહ્યાં છે";
 "total_languages" = "%d ભાષાઓ";
@@ -114,13 +111,15 @@ http://godtoolsapp.com";
 
 // Alert & Info Controllers
 "download_error" = "ડાઉનલોડમાં ભૂલ થઈ";
+
 "the_tool_you_requested_is_loading" = "જે સાધન/ટુલ તમે માંગો છો તે લોડ થઈ રહ્યું છે...";
+
 // Actions
 "yes" = "હા";
 "no" = "ના";
 
 // Tract - Sharing
-"tract_share_message" ="આ લીંક તમને વેબ વર્ઝનના એ પાન પર લઇ જશે જે આજે આપણે સાથે જોઈ રહ્યા હતા. %@ ચાલો આગળ વાત કરીએ.";
+"tract_share_message" = "આ લીંક તમને વેબ વર્ઝનના એ પાન પર લઇ જશે જે આજે આપણે સાથે જોઈ રહ્યા હતા. %@ ચાલો આગળ વાત કરીએ.";
 
 // Buttons
 "download" = "ડાઉનલોડ";
@@ -181,23 +180,10 @@ http://godtoolsapp.com";
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "વૈશ્વિક પ્રવૃત્તિ";
 // OnboardingWelcome
-"onboardingWelcome.titleLabel.welcome" = "સ્વાગત છે";
 "accountActivity.globalAnalytics.users.title" = "અનન્ય વપરાશકર્તાઓ";
 "onboardingWelcome.titleLabel.tagline" = "તમને તમારો વિશ્વાસ વહેંચવામાં મદદ કરશે";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "સુવાર્તા પ્રસ્તુતિઓ";
 "accountActivity.globalAnalytics.launches.title" = "સત્રો";
 // OnboardingTutorial
-"onboardingTutorial.aboutAppItem.0.title" = "અન્ય લોકો સાથે શેર કરો";
 "accountActivity.globalAnalytics.countries.title" = "દેશો";
-
-"onboardingTutorial.aboutAppItem.0.message" = "GodTools તમારા વિશ્વાસ વાર્તાલાપને માર્ગદર્શન આપવા માટે બનાવવામાં આવ્યું છે";
-"onboardingTutorial.aboutAppItem.1.title" = "તમારા ટુલ્સ પસંદ કરો";
-"onboardingTutorial.aboutAppItem.1.message" = "GodTools આધ્યાત્મિક વાતચીત પહેલાં, દરમ્યાન અને પછી તમને મદદ કરે છે";
-"onboardingTutorial.aboutAppItem.2.title" = "હંમેશા તૈયાર";
-"onboardingTutorial.aboutAppItem.2.message" = "GodTools અહીં તમને મદદ કરવા માટે  છે અને જ્યારે તમને જરુર તે હોય  ત્યારે તૈયાર છે";
-"onboardingTutorial.appUsageItem.0.message" = "કોઈપણ વાતચીત માટે તૈયાર થાવ";
-"onboardingTutorial.appUsageItem.1.message" = "સુવાર્તા સમજાવતાં કોઈની સાથે વ્યવહાર કરો";
-"onboardingTutorial.appUsageItem.2.message" = "એક સાથે બે ભાષાઓ જુઓ";
-"onboardingTutorial.appUsageItem.3.message" = "90 થી વધુ ભાષાઓમાંથી પસંદ કરો";
-"onboardingTutorial.appUsageItem.4.message" = "કોઈને ખ્રિસ્તી તરીકે પ્રારંભ કરવામાં સહાય કરો";
 "onboardingTutorial.showMoreButton.title" = "મને વધુ બતાવો";

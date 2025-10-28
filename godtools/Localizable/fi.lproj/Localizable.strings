@@ -3,7 +3,6 @@
 
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "Ei kielellä: %@";
-
 "tool_menu_item.tools" = "Työkalut";
 "lessons.pageTitle" = "Sinulle tehdyt oppitunnit";
 "lessons.pageSubtitle" = "Käteviä ideoita kanssakäymisen luontiin ja merkityksellisten keskustelujen aloittamiseen.";
@@ -37,7 +36,6 @@
 "toolSettings.shareables.title" = "Vastaavat grafiikat";
 "allTools.spotlight.title" = "Työkalujen valokeila";
 "allTools.spotlight.description" = "Tässä on työkaluja, joista saattaisit pitää";
-"allTools.categories.title" = "Kategoriat";
 "tool_menu_item.lessons" = "Oppitunnit";
 "tool_offline_favorite_message" = "Ota työkalu käyttöön offline-tilassa sydänkuvaketta napauttamalla, jolloin se lisätään suosikkeihisi.";
 
@@ -101,6 +99,8 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "Artikkelit";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "90+ kieltä";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -117,6 +117,7 @@
 
 // Onboarding
 "add_new_tools" = "Lisää uusia työkaluja";
+
 // Menu
 "menu_general" = "Yleistä";
 "menu_account" = "Tili";
@@ -124,10 +125,12 @@
 "menu_legal" = "Juridiset";
 "language_settings" = "Kieliasetukset";
 "menu.tutorial" = "Opastus";
+
 // Login
 "login" = "Kirjaudu sisään";
 "logout" = "Kirjaudu ulos";
 "create_account" = "Luo tili";
+
 // Tool Detail
 "about" = "Info";
 "help" = "Usein kysytyt kysymykset";
@@ -137,6 +140,7 @@
 "terms_of_use" = "Käyttöehdot";
 "privacy_policy" = "Tietosuojakäytäntö";
 "copyright_info" = "Tekijänoikeudet";
+
 "total_views" = "%d tarkastelua";
 "total_languages" = "%d kieltä";
 
@@ -148,10 +152,12 @@
 "not_every_tool_is_available" = "Kaikki työkalut eivät ole saatavissa joka kielellä.";
 
 "the_tool_you_requested_is_loading" = "Haluamaasi työkalua ladataan…";
+
 // Actions
 "yes" = "Kyllä";
+
 // Tract - Sharing
-"tract_share_message" ="Tämä linkki siirtää sinut tämänpäiväisen puheenaiheemme verkkoversioon: %@ \n\n Sovelluksen voi ladata osoitteesta https://godtoolsapp.com \n\n Jutellaan asiasta lisää!";
+"tract_share_message" = "Tämä linkki siirtää sinut tämänpäiväisen puheenaiheemme verkkoversioon: %@ \n\n Sovelluksen voi ladata osoitteesta https://godtoolsapp.com \n\n Jutellaan asiasta lisää!";
 
 // Buttons
 "download" = "Lataa";
@@ -160,8 +166,8 @@
 "remove" = "Poista";
 /* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
 "toolinfo_opentool" = "Avaa työkalu";
-
 "cancel" = "Peruuta";
+
 "onboardingTutorial.getStartedButton.title" = "Aloittaminen";
 
 // About
@@ -172,6 +178,7 @@
 "general_about_5" = "Internetyhteys vaaditaan jokaisen uuden työkalun ja/tai kielen lataamiseen. Ladattuasi ne voit käyttää niitä myös offline-tilassa.";
 "general_about_6" = "Kysymyksiä? Ehdotuksia? Pyyntöjä? Ota yhteyttä meihin englanniksi support@godtoolsapp.com";
 "tutorial.continueButton.title.continue" = "Jatka";
+
 "general_about_10" = "\"Puhukaa aina ystävällisesti, kuitenkin sananne suolalla höystäen. Teidän on tiedettävä, miten kullekin vastaatte.\" Kolossalaiskirje 4:6";
 
 // Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
@@ -180,4 +187,3 @@
 
 // Language Name Strings
 "language_name_fa" = "persia (farsi)";
-

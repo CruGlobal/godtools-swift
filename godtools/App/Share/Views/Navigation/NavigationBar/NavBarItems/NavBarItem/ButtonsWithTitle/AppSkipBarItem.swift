@@ -8,7 +8,6 @@
 
 import Foundation
 import Combine
-import LocalizationServices
 
 class AppSkipBarItem: AppInterfaceStringBarItem {
     
@@ -18,7 +17,6 @@ class AppSkipBarItem: AppInterfaceStringBarItem {
             getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase,
             localizationServices: localizationServices,
             localizedStringKey: "navigationBar.navigationItem.skip",
-            style: .plain,
             color: ColorPalette.gtBlue.uiColor,
             target: target,
             action: action,

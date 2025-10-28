@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import GodToolsToolParser
+import GodToolsShared
 import Combine
 
 class ChooseYourOwnAdventureFlow: ToolNavigationFlow, ToolSettingsNavigationFlow {
@@ -131,7 +131,6 @@ extension ChooseYourOwnAdventureFlow {
             controllerType: .base,
             itemData: NavBarItemData(
                 contentType: .image(value: ImageCatalog.navToolSettings.uiImage),
-                style: .plain,
                 color: nil,
                 target: viewModel,
                 action: #selector(viewModel.toolSettingsTapped),

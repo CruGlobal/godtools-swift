@@ -1,7 +1,7 @@
 /* This About refers to a specific tool in the app. */
 "toolDetails.about.title" = "Rreth";
-
 "toolSettings.languagesAvailable.title" = "Gjuhët";
+
 "share_link" = "Tregoju të tjerëve";
 
 /*
@@ -9,6 +9,8 @@
  * Please keep to a 9 character limit, longer phrases may get cut off
 */
 "open" = "Hape";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "90+ Gjuhë";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -20,22 +22,19 @@
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
 "find_tools" = "Gjej Burimet​";
 
-"unavailable" = "I padisponueshëm";
-
 // Onboarding
 "add_new_tools" = "Shto mjete të reja";
-"set_your_languages" = "Cakto gjuhën";
-"okay" = "Në rregull";
+
 // Menu
 "menu_general" = "E përgjithshme";
 "menu_share" = "Ndaj";
 "menu_legal" = "Ligjore";
 "language_settings" = "Kushtet e gjuhës";
+
 // Tool Detail
 "about" = "Rreth";
 "help" = "Ndihmë";
 "contact_us" = "Na kontakto";
-"preview_mode_translators_only" = "Pamje (Vetëm për përkthyesit)";
 "share_god_tools" = "Shpërndaj GodTools";
 "share_a_story_with_us" = "Na trego një histori";
 "terms_of_use" = "Kushtet e përdorimit";
@@ -43,9 +42,6 @@
 "copyright_info" = "Informacion për të drejtat e autorit";
 "share_god_tools_share_sheet_text" = "Këtu mund të  shkarkosh aplikacionin e GodTools: http://godtoolsapp.com
 ";
-
-// Add Tools
-"add_tools" = "Shto mjete";
 
 "total_views" = "%d e shikuesve";
 "total_languages" = "%d e gjuhëve";
@@ -63,13 +59,15 @@
 
 // Alert & Info Controllers
 "download_error" = "Shkarkuar gabim";
+
 "the_tool_you_requested_is_loading" = "Mjeti që po kërkoni është  duke u ngarkuar";
+
 // Actions
 "yes" = "Po";
 "no" = "Jo";
 
 // Tract - Sharing
-"tract_share_message" ="Ky link do t`ju çojë në versionin e uebit të faqes ku ishim së fundi duke kërkuar bashkë sot:%@. Le të flasim më shumë!";
+"tract_share_message" = "Ky link do t`ju çojë në versionin e uebit të faqes ku ishim së fundi duke kërkuar bashkë sot:%@. Le të flasim më shumë!";
 
 // Buttons
 "download" = "Shkarko";
@@ -95,15 +93,11 @@
 "general_about_8" = "Vizito godtoolsapp.com për më shumë informacion.";
 "tutorial.continueButton.title.continue" = "vazhdo";
 "general_about_9" = "Ndërsa merr iniciativën të ndash besimin tënd,kujto që Perëndia është Ai që ndryshon zemrën.Trego dashuri ndaj cdo personi duke i dëgjuar që t`i kuptosh.";
-"general_about_10" = "\"Fjala juaj të jetë me hir,e ndrequr me kripë ,që të dini si duhet t`i përgjigjeni gjithsecilit.\"Kolosianëve 4:6";
 
+"general_about_10" = "\"Fjala juaj të jetë me hir,e ndrequr me kripë ,që të dini si duhet t`i përgjigjeni gjithsecilit.\"Kolosianëve 4:6";
 // Downloads
 "Download in progress" = "Shkarkoni në vazhdim";
 
 // Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "Prapa";
 "card_status2" = "Përpara";
-
-// Language Name Strings
-"language_name_fa" = "Persian (Farsi)";
-

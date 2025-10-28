@@ -3,7 +3,6 @@
 
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "Nem elérhető itt: %@";
-
 "tool_menu_item.tools" = "Eszköz";
 "lessons.pageTitle" = "Neked szóló szentleckék";
 "lessons.pageSubtitle" = "Gyakorlati ötletek a kapcsolatépítéshez és az értelmes beszélgetések megkezdéséhez.";
@@ -37,8 +36,8 @@
 "toolSettings.shareables.title" = "Kapcsolódó grafika";
 "allTools.spotlight.title" = "Eszköz reflektorfényben";
 "allTools.spotlight.description" = "Íme néhány eszköz, amelyről úgy gondoltuk, hogy tetszeni fog";
-"allTools.categories.title" = "Kategóriák";
 "tool_menu_item.lessons" = "Szentleckék";
+
 "onboardingTutorial.beginButton.title" = "Kezdés";
 "onboardingTutorial.nextButton.title" = "Következő";
 "tool_offline_favorite_message" = "Offline elérhetővé teheted az eszközt a szív ikonra kattintva, amivel hozzáadod a kedvenceidhez.";
@@ -103,6 +102,8 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "Cikkek";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "90+ nyelv";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -114,31 +115,27 @@
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
 "find_tools" = "Minden eszköz";
 
-"unavailable" = "Nem elérhető";
-
 // Navigation Bar
 "navigationBar.navigationItem.skip" = "Átugrás";
 
 // Onboarding
 "add_new_tools" = "Új eszközök hozzáadása";
-"set_your_languages" = "A nyelvek beállítása";
-"okay" = "OK";
+
 // Menu
 "menu_general" = "Általános";
 "menu_share" = "Megosztás";
 "menu_legal" = "Jogi információk";
 "language_settings" = "Nyelvbeállítások";
+
 // Login
 "login" = "Bejelentkezés";
 "logout" = "Kijelentkezés";
 "create_account" = "Fiók létrehozása";
-"account_login" = "Bejelentkezés a fiókba";
 
 // Tool Detail
 "about" = "Névjegy";
 "help" = "Súgó";
 "contact_us" = "Kapcsolatfelvétel";
-"preview_mode_translators_only" = "Előnézet mód (csak fordítóknak)";
 "share_god_tools" = "GodTools alkalmazás megosztása";
 "share_a_story_with_us" = "Ossz meg velünk egy történetet";
 "terms_of_use" = "Használati feltételek";
@@ -147,9 +144,6 @@
 "share_god_tools_share_sheet_text" = "Töltsd le a GodTools alkalmazást: https://godtoolsapp.com
 
 A https://knowgod.com/ címen egy online verzió található";
-
-// Add Tools
-"add_tools" = "Eszközök hozzáadása";
 
 "total_views" = "%d nézet";
 "total_languages" = "%d nyelv";
@@ -171,14 +165,13 @@ A https://knowgod.com/ címen egy online verzió található";
 "no_internet" = "Ellenőrizze az internetkapcsolatot, majd próbálja újra";
 
 "the_tool_you_requested_is_loading" = "A kért eszköz betöltése folyamatban...";
-"loading" = "Betöltés...";
 
 // Actions
 "yes" = "Igen";
 "no" = "Nem";
 
 // Tract - Sharing
-"tract_share_message" ="A hivatkozás elvezet az oldal webes verziójára, amelyet ma együtt néztünk: %@. 
+"tract_share_message" = "A hivatkozás elvezet az oldal webes verziójára, amelyet ma együtt néztünk: %@. 
 
 Beszélgessünk még!
 
@@ -195,7 +188,6 @@ Az alkalmazás a https://godtoolsapp.com címről tölthető le";
 
 // Alerts
 "error" = "Hiba";
-"OK" = "OK";
 "cancel" = "Mégse";
 "required_field_missing" = "A \"%@\" kötelező mező.";
 
@@ -212,8 +204,8 @@ Az alkalmazás a https://godtoolsapp.com címről tölthető le";
 "general_about_8" = "További információk a godtoolsapp.com címen.";
 "tutorial.continueButton.title.continue" = "Folytasd";
 "general_about_9" = "Ha magadhoz ragadod a kezdeményezést, és megosztod hitedet, ne feledd, hogy Isten az, aki az emberek szívét megváltoztatja. Szeress mindenkit, hallgasd meg és értsd meg őket.";
-"general_about_10" = "„Beszédetek legyen mindig szíves, sóval ízes, akkor majd helyesen meg tudtok felelni mindenkinek.” Kolosszeieknek írt levél 4:6";
 
+"general_about_10" = "„Beszédetek legyen mindig szíves, sóval ízes, akkor majd helyesen meg tudtok felelni mindenkinek.” Kolosszeieknek írt levél 4:6";
 // Downloads
 "Download in progress" = "Letöltés folyamatban";
 
@@ -223,4 +215,3 @@ Az alkalmazás a https://godtoolsapp.com címről tölthető le";
 
 // Language Name Strings
 "language_name_fa" = "Perzsa (fárszi)";
-

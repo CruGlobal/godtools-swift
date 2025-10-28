@@ -17,7 +17,6 @@ class AppDebugBarItem: NavBarItem {
             controllerType: .base,
             itemData: NavBarItemData(
                 contentType: .image(value: ImageCatalog.navDebug.uiImage),
-                style: nil,
                 color: color,
                 target: target,
                 action: action,

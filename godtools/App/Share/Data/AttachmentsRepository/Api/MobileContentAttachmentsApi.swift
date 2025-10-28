@@ -34,3 +34,16 @@ class MobileContentAttachmentsApi {
             .eraseToAnyPublisher()
     }
 }
+
+// MARK: - RepositorySyncExternalDataFetchInterface
+
+extension MobileContentAttachmentsApi: RepositorySyncExternalDataFetchInterface {
+    
+    func getObjectPublisher(id: String, requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<AttachmentCodable>, Never> {
+        return emptyResponsePublisher()
+    }
+    
+    func getObjectsPublisher(requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<AttachmentCodable>, Never> {
+        return emptyResponsePublisher()
+    }
+}

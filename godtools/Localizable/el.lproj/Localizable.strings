@@ -3,7 +3,6 @@
 
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "Δεν είναι διαθέσιμο σε %@";
-
 "tool_menu_item.tools" = "Εργαλεία";
 "lessons.pageTitle" = "Κατηγορίες";
 "lessons.pageSubtitle" = "Πρακτικές ιδέες για να χτίσετε σχέσεις και να ξεκινήσετε ουσιαστικές συζητήσεις.";
@@ -37,8 +36,8 @@
 "toolSettings.shareables.title" = "Συναφή γραφικά";
 "allTools.spotlight.title" = "Εργαλείο Spotlight";
 "allTools.spotlight.description" = "Ακολουθούν ορισμένα εργαλεία που πιστεύαμε ότι μπορεί να σας αρέσουν";
-"allTools.categories.title" = "Κατηγορίες";
 "tool_menu_item.lessons" = "Μαθήματα";
+
 "onboardingTutorial.beginButton.title" = "Αρχίστε";
 "onboardingTutorial.nextButton.title" = "Επόμενο";
 "tool_offline_favorite_message" = "Κάντε το εργαλείο διαθέσιμο offline πατώντας το εικονίδιο με την καρδιά που το προσθέτει στα αγαπημένα σας.";
@@ -103,6 +102,8 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "Άρθρα";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "90+ Γλώσσες";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -114,31 +115,27 @@
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
 "find_tools" = "Όλα τα Εργαλεία";
 
-"unavailable" = "Μη διαθέσιμο";
-
 // Navigation Bar
 "navigationBar.navigationItem.skip" = "Παράλειψη";
 
 // Onboarding
 "add_new_tools" = "Προσθήκη Νέων Εργαλείων";
-"set_your_languages" = "Ορίστε τις γλώσσες σας";
-"okay" = "Εντάξει";
+
 // Menu
 "menu_general" = "Γενικά";
 "menu_share" = "Κοινοποίηση";
 "menu_legal" = "Νομικά";
 "language_settings" = "Ρυθμίσεις Γλώσσας";
+
 // Login
 "login" = "Σύνδεση";
 "logout" = "Αποσύνδεση";
 "create_account" = "Δημιουργία Λογαριασμού";
-"account_login" = "Σύνδεση στον Λογαριασμό";
 
 // Tool Detail
 "about" = "Σχετικά";
 "help" = "Βοήθεια";
 "contact_us" = "Επικοινωνήστε μαζί μας";
-"preview_mode_translators_only" = "Λειτουργία Προεπισκόπησης (Μόνο Μεταφραστές)";
 "share_god_tools" = "Κοινοποίηση Εφαρμογής Θεϊκών Εργαλείων";
 "share_a_story_with_us" = "Μοιραστείτε μια ιστορία μαζί μας";
 "terms_of_use" = "Όροι χρήσης";
@@ -147,9 +144,6 @@
 "share_god_tools_share_sheet_text" = "Kατεβάστε την εφαρμογή Θεϊκών Εργαλείων: https://godtoolsapp.com
 
 Βρείτε την online έκδοση στο https://knowgod.com/";
-
-// Add Tools
-"add_tools" = "Προσθέστε Εργαλεία";
 
 "total_views" = "%d προβολές";
 "total_languages" = "%d γλώσσες";
@@ -171,14 +165,13 @@
 "no_internet" = "Ελέγξτε τη σύνδεσή σας στο διαδίκτυο και ξαναδοκιμάστε.";
 
 "the_tool_you_requested_is_loading" = "Το εργαλείο που ζητήσατε φορτώνει...";
-"loading" = "Φόρτωση...";
 
 // Actions
 "yes" = "Ναι";
 "no" = "Όχι";
 
 // Tract - Sharing
-"tract_share_message" ="Αυτός ο σύνδεσμος θα σας μεταφέρει στην δικτυακή έκδοση της σελίδας που κοιτούσαμε τελευταία μαζί: %@. 
+"tract_share_message" = "Αυτός ο σύνδεσμος θα σας μεταφέρει στην δικτυακή έκδοση της σελίδας που κοιτούσαμε τελευταία μαζί: %@. 
 
 Ας μιλήσουμε περισσότερο!
 
@@ -212,8 +205,8 @@
 "general_about_8" = "Επισκεφθείτε το godtoolsapp.com για περισσότερες πληροφορίες.";
 "tutorial.continueButton.title.continue" = "Συνέχεια";
 "general_about_9" = "Καθώς αναλαμβάνετε την πρωτοβουλία να μοιραστείτε την πίστη σας, θυμηθείτε ότι ο Θεός είναι αυτός που αλλάζει την καρδιά. Αγαπήστε το κάθε άτομο καλά ακούγοντας και κατανοώντας.";
-"general_about_10" = "\"Τα λόγια σας ας είναι πάντοτε γεμάτα χάρη, αρτυμένα με το αλατι της καλοσύνης και της διακρίσεως, ώστε να ξέρετε πώς πρέπει να αποκρίνεστε στον καθένα.\" Προς Κολοσσαείς 4:6";
 
+"general_about_10" = "\"Τα λόγια σας ας είναι πάντοτε γεμάτα χάρη, αρτυμένα με το αλατι της καλοσύνης και της διακρίσεως, ώστε να ξέρετε πώς πρέπει να αποκρίνεστε στον καθένα.\" Προς Κολοσσαείς 4:6";
 // Downloads
 "Download in progress" = "Λήψη σε εξέλιξη";
 
@@ -223,4 +216,3 @@
 
 // Language Name Strings
 "language_name_fa" = "Περσικά (Φαρσί)";
-

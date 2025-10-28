@@ -1,0 +1,32 @@
+name: Run Tests
+
+on:
+  workflow_call:
+    inputs:
+      xcodebuild-test-scheme:
+        required: true
+        type: string
+    secrets:
+      codecov_token:
+        required: true
+
+jobs:
+  run_tests_and_code_coverage:
+    name: Run Tests and Code Coverage
+    runs-on: macos-15
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+      - name: Select Xcode Version
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '26.0.1'
+      - name: Run Tests
+        run: xcodebuild test -scheme ${{ inputs.xcodebuild-test-scheme }} -destination "OS=26.0,name=iPhone 17"
+      - name: Upload Xcode Code Coverage Report to CodeCov
+        uses: codecov/codecov-action@v4
+        with:
+          fail_ci_if_error: true
+          token: ${{ secrets.codecov_token }}
+          verbose: true
+          xcode: true
