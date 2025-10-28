@@ -31,6 +31,8 @@ struct OptInNotificationView: View {
         
         GTModalView(content: { geometry in
             
+            let contentWidth: CGFloat = geometry.size.width - (modalHorizontalPadding * 2)
+            
             VStack(alignment: .center, spacing: 0) {
                 
                 ImageCatalog.notificationGraphic
@@ -48,6 +50,7 @@ struct OptInNotificationView: View {
                     )
                 
                 Text(viewModel.title)
+                    .frame(width: contentWidth)
                     .multilineTextAlignment(.center)
                     .foregroundColor(ColorPalette.gtBlue.color)
                     .font(FontLibrary.sfProTextBold.font(size: 30))
@@ -56,6 +59,7 @@ struct OptInNotificationView: View {
                     .lineLimit(2)
 
                 Text(viewModel.body)
+                    .frame(width: contentWidth)
                     .font(FontLibrary.sfProTextRegular.font(size: 17))
                     .foregroundStyle(ColorPalette.gtGrey.color)
                     .multilineTextAlignment(.center)
