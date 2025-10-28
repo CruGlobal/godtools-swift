@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import GodToolsToolParser
+import GodToolsShared
 
 class MobileContentButtonViewModel: MobileContentViewModel {
     
@@ -83,7 +83,7 @@ class MobileContentButtonViewModel: MobileContentViewModel {
         
         super.init(baseModel: buttonModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)
         
-        visibilityFlowWatcher = buttonModel.watchVisibility(state: renderedPageContext.rendererState, block: { [weak self] (invisible: KotlinBoolean, gone: KotlinBoolean) in
+        visibilityFlowWatcher = buttonModel.watchVisibility(ctx: renderedPageContext.rendererState, block: { [weak self] (invisible: KotlinBoolean, gone: KotlinBoolean) in
             
             let visibilityStateValue: MobileContentViewVisibilityState
             

@@ -8,8 +8,8 @@
 
 class MobileContentRendererLanguages {
     
-    let languages: [LanguageModel]
-    let primaryLanguage: LanguageModel
+    let languages: [LanguageDataModel]
+    let primaryLanguage: LanguageDataModel
     
     init(toolTranslations: ToolTranslationsDomainModel) {
         
@@ -20,7 +20,7 @@ class MobileContentRendererLanguages {
         primaryLanguage = toolTranslations.languageTranslationManifests[0].language
     }
     
-    var parallelLanguage: LanguageModel? {
+    var parallelLanguage: LanguageDataModel? {
         return languages[safe: 1]
     }
 }

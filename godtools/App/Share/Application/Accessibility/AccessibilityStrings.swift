@@ -77,6 +77,7 @@ class AccessibilityStrings {
         case generateQRCode = "Generate QR Code"
         case getStarted = "Get Started"
         case languageSettings = "Language Settings"
+        case localizationSettings = "Localization Settings"
         case learnToShare = "Learn To Share"
         case leaveAReview = "Leave A Review"
         case lessonsLanguageFilter = "Lessons Language Filter"

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import GodToolsToolParser
+import GodToolsShared
 import Combine
 
 class LessonFlow: ToolNavigationFlow, Flow {
@@ -18,7 +18,7 @@ class LessonFlow: ToolNavigationFlow, Flow {
     private let initialPageSubIndex: Int?
     
     private var cancellables: Set<AnyCancellable> = Set()
-    private var lesson: ResourceModel {
+    private var lesson: ResourceDataModel {
         return toolTranslations.tool
     }
     

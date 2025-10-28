@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import GodToolsToolParser
+import GodToolsShared
 import Combine
 
 class GetLessonListItemProgressRepository {
@@ -28,7 +28,7 @@ class GetLessonListItemProgressRepository {
         return lessonProgressRepository.getLessonProgressChangedPublisher()
     }
     
-    func getLessonProgress(lesson: ResourceModel, appLanguage: AppLanguageDomainModel) -> LessonListItemProgressDomainModel {
+    func getLessonProgress(lesson: ResourceDataModel, appLanguage: AppLanguageDomainModel) -> LessonListItemProgressDomainModel {
         
         let lessonId = lesson.id
         let lessonCompletionUserCounterId = UserCounterNames.shared.LESSON_COMPLETION(tool: lesson.abbreviation)

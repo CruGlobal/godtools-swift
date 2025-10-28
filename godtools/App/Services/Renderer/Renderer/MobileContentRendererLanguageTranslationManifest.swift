@@ -7,11 +7,11 @@
 //
 
 import Foundation
-import GodToolsToolParser
+import GodToolsShared
 
 struct MobileContentRendererLanguageTranslationManifest {
     
     let manifest: Manifest
-    let language: LanguageModel
-    let translation: TranslationModel
+    let language: LanguageDataModel
+    let translation: TranslationDataModel
 }

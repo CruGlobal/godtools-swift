@@ -1,0 +1,12 @@
+name: 'Bundle Install'
+description: 'Selects Xcode version and runs bundle install.'
+runs:
+  using: "composite"
+  steps:
+    - name: Select Xcode Version
+      uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: '26.0.1'
+    - name: Bundle Install
+      shell: bash
+      run: bundle install

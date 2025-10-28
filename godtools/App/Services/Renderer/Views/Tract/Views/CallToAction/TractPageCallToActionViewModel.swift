@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import GodToolsToolParser
+import GodToolsShared
 
 class TractPageCallToActionViewModel: MobileContentViewModel {
     
@@ -21,7 +21,7 @@ class TractPageCallToActionViewModel: MobileContentViewModel {
     }
     
     override var languageDirectionSemanticContentAttribute: UISemanticContentAttribute {
-        return UISemanticContentAttribute.from(languageDirection: LanguageDirectionDomainModel(languageModel: renderedPageContext.primaryRendererLanguage))
+        return UISemanticContentAttribute.from(languageDirection: renderedPageContext.primaryRendererLanguage.languageDirectionDomainModel)
     }
     
     var title: String? {

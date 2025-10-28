@@ -8,7 +8,7 @@
 
 import Foundation
 import RealmSwift
-import GodToolsToolParser
+import GodToolsShared
 import Combine
 
 class RealmCategoryArticlesCache {

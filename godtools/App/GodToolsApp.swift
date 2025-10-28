@@ -127,6 +127,10 @@ extension GodToolsApp {
     static func getAppConfig() -> AppConfigInterface {
         return appConfig
     }
+    
+    static func getDeepLinkingService() -> DeepLinkingService {
+        return appDeepLinkingService
+    }
 }
 
 // MARK: - Reload Shortcut Items

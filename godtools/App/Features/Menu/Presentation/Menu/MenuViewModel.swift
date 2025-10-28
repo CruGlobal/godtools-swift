@@ -28,33 +28,33 @@ class MenuViewModel: ObservableObject {
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     
     @Published private(set) var hidesDebugSection: Bool = true
-    
-    @Published var navTitle: String = ""
-    @Published var getStartedSectionTitle: String = ""
-    @Published var accountSectionTitle: String = ""
-    @Published var supportSectionTitle: String = ""
-    @Published var shareSectionTitle: String = ""
-    @Published var aboutSectionTitle: String = ""
-    @Published var versionSectionTitle: String = ""
-    @Published var tutorialOptionTitle: String = ""
-    @Published var languageSettingsOptionTitle: String = ""
-    @Published var loginOptionTitle: String = ""
-    @Published var createAccountOptionTitle: String = ""
-    @Published var activityOptionTitle: String = ""
-    @Published var logoutOptionTitle: String = ""
-    @Published var deleteAccountOptionTitle: String = ""
-    @Published var sendFeedbackOptionTitle: String = ""
-    @Published var reportABugOptionTitle: String = ""
-    @Published var askAQuestionOptionTitle: String = ""
-    @Published var leaveAReviewOptionTitle: String = ""
-    @Published var shareAStoryWithUsOptionTitle: String = ""
-    @Published var shareGodToolsOptionTitle: String = ""
-    @Published var termsOfUseOptionTitle: String = ""
-    @Published var privacyPolicyOptionTitle: String = ""
-    @Published var copyrightInfoOptionTitle: String = ""
-    @Published var appVersion: String = ""
-    @Published var accountSectionVisibility: MenuAccountSectionVisibility = .hidden
-    @Published var showsTutorialOption: Bool = false
+    @Published private(set) var navTitle: String = ""
+    @Published private(set) var getStartedSectionTitle: String = ""
+    @Published private(set) var accountSectionTitle: String = ""
+    @Published private(set) var supportSectionTitle: String = ""
+    @Published private(set) var shareSectionTitle: String = ""
+    @Published private(set) var aboutSectionTitle: String = ""
+    @Published private(set) var versionSectionTitle: String = ""
+    @Published private(set) var tutorialOptionTitle: String = ""
+    @Published private(set) var languageSettingsOptionTitle: String = ""
+    @Published private(set) var localizationSettingsOptionTitle: String = ""
+    @Published private(set) var loginOptionTitle: String = ""
+    @Published private(set) var createAccountOptionTitle: String = ""
+    @Published private(set) var activityOptionTitle: String = ""
+    @Published private(set) var logoutOptionTitle: String = ""
+    @Published private(set) var deleteAccountOptionTitle: String = ""
+    @Published private(set) var sendFeedbackOptionTitle: String = ""
+    @Published private(set) var reportABugOptionTitle: String = ""
+    @Published private(set) var askAQuestionOptionTitle: String = ""
+    @Published private(set) var leaveAReviewOptionTitle: String = ""
+    @Published private(set) var shareAStoryWithUsOptionTitle: String = ""
+    @Published private(set) var shareGodToolsOptionTitle: String = ""
+    @Published private(set) var termsOfUseOptionTitle: String = ""
+    @Published private(set) var privacyPolicyOptionTitle: String = ""
+    @Published private(set) var copyrightInfoOptionTitle: String = ""
+    @Published private(set) var appVersion: String = ""
+    @Published private(set) var accountSectionVisibility: MenuAccountSectionVisibility = .hidden
+    @Published private(set) var showsTutorialOption: Bool = false
     
     init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getMenuInterfaceStringsUseCase: GetMenuInterfaceStringsUseCase, getOptInOnboardingTutorialAvailableUseCase: GetOptInOnboardingTutorialAvailableUseCase, disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase, getAccountCreationIsSupportedUseCase: GetAccountCreationIsSupportedUseCase, getUserIsAuthenticatedUseCase: GetUserIsAuthenticatedUseCase, logOutUserUseCase: LogOutUserUseCase, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase, trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase, appConfig: AppConfigInterface) {
         
@@ -95,6 +95,7 @@ class MenuViewModel: ObservableObject {
                 self?.versionSectionTitle = interfaceStrings.versionTitle
                 self?.tutorialOptionTitle = interfaceStrings.tutorialOptionTitle
                 self?.languageSettingsOptionTitle = interfaceStrings.languageSettingsOptionTitle
+                self?.localizationSettingsOptionTitle = "FPO Localization Settings" // TODO: GT-2733 implement in collections work. ~Levi
                 self?.loginOptionTitle = interfaceStrings.loginOptionTitle
                 self?.createAccountOptionTitle = interfaceStrings.createAccountOptionTitle
                 self?.activityOptionTitle = interfaceStrings.activityOptionTitle
@@ -201,6 +202,10 @@ extension MenuViewModel {
     
     func languageSettingsTapped() {
         flowDelegate?.navigate(step: .languageSettingsTappedFromMenu)
+    }
+    
+    func localizationSettingsTapped() {
+        flowDelegate?.navigate(step: .localizationSettingsTappedFromMenu)
     }
     
     func loginTapped() {

@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import GodToolsToolParser
+import GodToolsShared
 
 protocol ToolNavigationFlow: Flow {
         
@@ -20,7 +20,7 @@ protocol ToolNavigationFlow: Flow {
 
 extension ToolNavigationFlow {
         
-    func navigateToToolFromToolDeepLink(appLanguage: AppLanguageDomainModel, toolDeepLink: ToolDeepLink, didCompleteToolNavigation: ((_ resource: ResourceModel) -> Void)?) {
+    func navigateToToolFromToolDeepLink(appLanguage: AppLanguageDomainModel, toolDeepLink: ToolDeepLink, didCompleteToolNavigation: ((_ resource: ResourceDataModel) -> Void)?) {
         
         let determineDeepLinkedToolTranslationsToDownload = DetermineDeepLinkedToolTranslationsToDownload(
             toolDeepLink: toolDeepLink,

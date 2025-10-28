@@ -31,6 +31,8 @@ struct OptInNotificationView: View {
         
         GTModalView(content: { geometry in
             
+            let contentWidth: CGFloat = geometry.size.width - (modalHorizontalPadding * 2)
+            
             VStack(alignment: .center, spacing: 0) {
                 
                 ImageCatalog.notificationGraphic
@@ -47,19 +49,25 @@ struct OptInNotificationView: View {
                         alignment: .bottom
                     )
                 
-                Text(viewModel.title)
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(ColorPalette.gtBlue.color)
-                    .font(FontLibrary.sfProTextBold.font(size: 30))
-                    .padding(.top, 20)
-                    .minimumScaleFactor(0.5)
-                    .lineLimit(2)
+                VStack(alignment: .center, spacing: 0) {
+                    
+                    Text(viewModel.title)
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(ColorPalette.gtBlue.color)
+                        .font(FontLibrary.sfProTextBold.font(size: 30))
+                        .padding(.top, 20)
+                        .minimumScaleFactor(0.5)
+                        .lineLimit(2)
 
-                Text(viewModel.body)
-                    .font(FontLibrary.sfProTextRegular.font(size: 17))
-                    .foregroundStyle(ColorPalette.gtGrey.color)
-                    .multilineTextAlignment(.center)
-                    .padding(.top, 13)
+                    Text(viewModel.body)
+                        .font(FontLibrary.sfProTextRegular.font(size: 17))
+                        .foregroundStyle(ColorPalette.gtGrey.color)
+                        .multilineTextAlignment(.center)
+                        .padding(.top, 13)
+                }
+                .frame(width: contentWidth)
+                
+                
                 
                 let buttonWidth: CGFloat = geometry.size.width - (modalHorizontalPadding * 2) - (buttonHorizontalPadding * 2)
                 

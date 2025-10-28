@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import GodToolsToolParser
+import GodToolsShared
 
 class MobileContentRenderedPageContext {
     
@@ -18,10 +18,10 @@ class MobileContentRenderedPageContext {
     let safeArea: UIEdgeInsets
     let manifest: Manifest
     let resourcesCache: MobileContentRendererManifestResourcesCache
-    let resource: ResourceModel
+    let resource: ResourceDataModel
     let appLanguage: AppLanguageDomainModel
-    let language: LanguageModel
-    let translation: TranslationModel
+    let language: LanguageDataModel
+    let translation: TranslationDataModel
     let viewRenderer: MobileContentViewRenderer
     let navigation: MobileContentRendererNavigation
     let primaryLanguageLayoutDirection: ApplicationLayoutDirection
@@ -33,7 +33,7 @@ class MobileContentRenderedPageContext {
     
     private weak var weakWindow: UIViewController?
     
-    init(pageModel: Page, page: Int, isLastPage: Bool, parentPageParams: MobileContentParentPageParams?, window: UIViewController, safeArea: UIEdgeInsets, manifest: Manifest, resourcesCache: MobileContentRendererManifestResourcesCache, resource: ResourceModel, appLanguage: AppLanguageDomainModel, language: LanguageModel, translation: TranslationModel, viewRenderer: MobileContentViewRenderer, navigation: MobileContentRendererNavigation, rendererLanguages: MobileContentRendererLanguages, rendererState: State, trainingTipsEnabled: Bool, pageViewDataCache: MobileContentPageViewDataCache, userInfo: [String: Any]?) {
+    init(pageModel: Page, page: Int, isLastPage: Bool, parentPageParams: MobileContentParentPageParams?, window: UIViewController, safeArea: UIEdgeInsets, manifest: Manifest, resourcesCache: MobileContentRendererManifestResourcesCache, resource: ResourceDataModel, appLanguage: AppLanguageDomainModel, language: LanguageDataModel, translation: TranslationDataModel, viewRenderer: MobileContentViewRenderer, navigation: MobileContentRendererNavigation, rendererLanguages: MobileContentRendererLanguages, rendererState: State, trainingTipsEnabled: Bool, pageViewDataCache: MobileContentPageViewDataCache, userInfo: [String: Any]?) {
         
         self.pageModel = pageModel
         self.page = page
@@ -71,7 +71,7 @@ class MobileContentRenderedPageContext {
         return window
     }
     
-    var primaryRendererLanguage: LanguageModel {
+    var primaryRendererLanguage: LanguageDataModel {
         return rendererLanguages.primaryLanguage
     }
 }

@@ -8,11 +8,11 @@
 
 import Foundation
 
-extension Array where Element == ResourceModel {
+extension Array where Element == ResourceDataModel {
     
-    typealias ResourceFilter = (ResourceModel) -> Bool
+    typealias ResourceFilter = (ResourceDataModel) -> Bool
     
-    func filterForToolTypes(andFilteredBy additionalFilter: ResourceFilter? = nil) -> [ResourceModel] {
+    func filterForToolTypes(andFilteredBy additionalFilter: ResourceFilter? = nil) -> [ResourceDataModel] {
         return self.filter { resource in
             
             if let additionalFilter = additionalFilter, additionalFilter(resource) == false {
@@ -23,7 +23,7 @@ extension Array where Element == ResourceModel {
         }
     }
     
-    func filterForLessonTypes(andFilteredBy additionalFilter: ResourceFilter? = nil) -> [ResourceModel] {
+    func filterForLessonTypes(andFilteredBy additionalFilter: ResourceFilter? = nil) -> [ResourceDataModel] {
         return self.filter { resource in
             
             if let additionalFilter = additionalFilter, additionalFilter(resource) == false {
