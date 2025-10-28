@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-import GodToolsToolParser
+import GodToolsShared
 
 class MobileContentPageCollectionViewModel: MobileContentPageViewModel {
     

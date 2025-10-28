@@ -3,7 +3,6 @@
 
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "به %@ در دسترس نیست";
-
 "tool_menu_item.tools" = "تمام ابزار";
 "lessons.pageTitle" = "درس‌های مناسب شما";
 "lessons.pageSubtitle" = "ایده‌های عملی برای ایجاد روابط و شروع گفت‌وگوهای معنادار.";
@@ -37,8 +36,8 @@
 "toolSettings.shareables.title" = "گرافیک‌های مرتبط";
 "allTools.spotlight.title" = "ویژگی‌های مهم ابزار";
 "allTools.spotlight.description" = "ممکن است این ابزارها را بپسندید";
-"allTools.categories.title" = "دسته‌بندی‌ها";
 "tool_menu_item.lessons" = "درس‌ها";
+
 "onboardingTutorial.beginButton.title" = "شروع";
 "onboardingTutorial.nextButton.title" = "بعدی";
 "tool_offline_favorite_message" = "با ضربه زدن روی آیکون قلب، که ابزار را به موارد دلخواه اضافه می‌کند، آن را به صورت آفلاین در دسترس قرار دهید.";
@@ -103,6 +102,8 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "مقاله‌ها";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "90+ زبان";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -114,15 +115,12 @@
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
 "find_tools" = "تمام ابزار";
 
-"unavailable" = "خارج از دسترس";
-
 // Navigation Bar
 "navigationBar.navigationItem.skip" = "ردکردن";
 
 // Onboarding
 "add_new_tools" = "افزودن ابزار جدید";
-"set_your_languages" = "زبان خود را تنظیم کنید";
-"okay" = "تأیید";
+
 // Menu
 "menu_general" = "عمومی";
 "menu_account" = "حساب کاربری";
@@ -130,17 +128,16 @@
 "menu_legal" = "قانونی";
 "language_settings" = "تنظیمات زبان";
 "menu.tutorial" = "آموزش";
+
 // Login
 "login" = "ورود";
 "logout" = "خروج";
 "create_account" = "ایجاد حساب";
-"account_login" = "ورود به حساب";
 
 // Tool Detail
 "about" = "درباره";
 "help" = "سؤالات متداول";
 "contact_us" = "تماس با ما";
-"preview_mode_translators_only" = "حالت پیش‌نمایش (فقط مترجمان)";
 "share_god_tools" = "اشتراک‌گذاری برنامه GodTools";
 "share_a_story_with_us" = "یک داستان با ما به اشتراک بگذارید";
 "terms_of_use" = "شرایط استفاده";
@@ -150,9 +147,6 @@
 https://godtoolsapp.com
 
 می‌توانید نسخه آنلاین را در https://knowgod.com/ بیابید";
-
-// Add Tools
-"add_tools" = "افزدون ابزار";
 
 "total_views" = "%d مشاهده";
 "total_languages" = "%d زبان";
@@ -174,14 +168,13 @@ https://godtoolsapp.com
 "no_internet" = "لطفا اتصال اینترنتی خود را بررسی و دوباره امتحان کنید.";
 
 "the_tool_you_requested_is_loading" = "ابزاری که درخواست کردید در حال بارگیری است...";
-"loading" = "در حال بارگیری...";
 
 // Actions
 "yes" = "بله";
 "no" = "خیر";
 
 // Tract - Sharing
-"tract_share_message" ="این پیوند شما را به نسخه اینترنتی صفحه‌ای می‌برد که امروز آخرین بار آن را مشاهده می‌کردیم: %@. بیایید بیشتر صحبت کنیم!
+"tract_share_message" = "این پیوند شما را به نسخه اینترنتی صفحه‌ای می‌برد که امروز آخرین بار آن را مشاهده می‌کردیم: %@. بیایید بیشتر صحبت کنیم!
 
 می‌توان برنامه را از https://godtoolsapp.com دانلود کنید";
 
@@ -246,23 +239,10 @@ https://godtoolsapp.com
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "فعالیت جهانی";
 // OnboardingWelcome
-"onboardingWelcome.titleLabel.welcome" = "خوش آمدید";
 "accountActivity.globalAnalytics.users.title" = "کاربران بی نظیر";
 "onboardingWelcome.titleLabel.tagline" = "کمک برای به اشتراک گذاشتن ایمان مسیحی";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "ارائه انجیل";
 "accountActivity.globalAnalytics.launches.title" = "جلسات";
 // OnboardingTutorial
-"onboardingTutorial.aboutAppItem.0.title" = "با دیگران به اشتراک بگذارید";
 "accountActivity.globalAnalytics.countries.title" = "کشورها";
-
-"onboardingTutorial.aboutAppItem.0.message" = "این برنامه برای کمک به اشتراک گذاری ایمان شما طراحی شده است";
-"onboardingTutorial.aboutAppItem.1.title" = "انتخاب ابزار";
-"onboardingTutorial.aboutAppItem.1.message" = "God tools یاری دهنده شما برای آغاز و پایان یک گفتگوی روحانی می باشد";
-"onboardingTutorial.aboutAppItem.2.title" = "همیشه آماده است";
-"onboardingTutorial.aboutAppItem.2.message" = "God tools هر زمان که شما آماده باشید، آماده کمک به شماست";
-"onboardingTutorial.appUsageItem.0.message" = "برای هر گفتگویی آماده شوید";
-"onboardingTutorial.appUsageItem.1.message" = "هم قذم شدم با شخصی برای اعلام مژده نجات";
-"onboardingTutorial.appUsageItem.2.message" = "دو زبان را کنار هم اجرا کنید";
-"onboardingTutorial.appUsageItem.3.message" = "از بین بیش از 90 زبان انتخاب کنید";
-"onboardingTutorial.appUsageItem.4.message" = "کمک کردن به دیگران برای شروع به عنوان یک مسیحی";
 "onboardingTutorial.showMoreButton.title" = "موارد بیشتری را نشان بده";

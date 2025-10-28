@@ -24,7 +24,7 @@ open class SwiftElseRealmPersistence<DataModelType, ExternalObjectType, RealmObj
     func getPersistence() -> any RepositorySyncPersistence<DataModelType, ExternalObjectType> {
         
         if #available(iOS 17, *),
-           let swiftDatabase = SharedSwiftDatabase.shared.swiftDatabase,
+           let swiftDatabase = TempSharedSwiftDatabase.shared.swiftDatabase,
            let swiftPersistence = getSwiftPersistence(swiftDatabase: swiftDatabase) {
             
             return swiftPersistence
@@ -41,7 +41,7 @@ open class SwiftElseRealmPersistence<DataModelType, ExternalObjectType, RealmObj
     @available(iOS 17, *)
     func getSwiftPersistence() -> SwiftRepositorySyncPersistence<DataModelType, ExternalObjectType, SwiftLanguage>? {
         
-        guard let swiftDatabase = SharedSwiftDatabase.shared.swiftDatabase else {
+        guard let swiftDatabase = TempSharedSwiftDatabase.shared.swiftDatabase else {
             return nil
         }
         

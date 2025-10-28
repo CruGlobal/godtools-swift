@@ -1,3 +1,8 @@
+"deferredDeepLinkModal.title" = "Dit lyk asof jy op 'n skakel vir GodTools geklik het.";
+"deferredDeepLinkModal.message" = "Tik die knoppie hieronder sodat ons jou na die inhoud kan neem wat jy versoek het.";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "Maak toe";
+
 "optInNotification.notificationSettings" = "Kennisgewing Instellings";
 "lessons.swipeTutorial.title" = "Swiep om bladsye te verander";
 "lessons.swipeTutorial.buttonText" = "Het dit";
@@ -15,11 +20,11 @@
 "lessons.lessonCompleted" = "Klaar";
 "lessons.completionProgress" = "%@ Klaar";
 "network_connection_lost" = "Die netwerkverbinding is verbreek.";
-"language_name_fil" = "Filipino (Tagalog)";
+"language_name_fil" = "Filippyns (Tagalog)";
 "lessons.filter.navBar.language" = "Lestaal";
 "lessons.languageFilter.title" = "Lesse in:";
 "language_name_fil-x-taglish" = "Die netwerkverbinding was verbreek";
-"language_name_sid" = " Netwerkverbinding is verbreek";
+"language_name_sid" = "Sidama";
 "onboardingTutorial.chooseLanguageButton.title" = "Kies taal";
 "languageSettings.confirmAppLanguage.message" = "Jy het %@ as jou app-taal gekies. Dit sal die taal van die hele GodTools-app verander. Is jy seker?";
 "languageSettings.confirmAppLanguage.changeLanguageButton.title" = "Verander taal";
@@ -118,7 +123,6 @@
 "toolSettings.shareables.title" = "Verwante simbole";
 "allTools.spotlight.title" = "Hulpmiddel in gebruik";
 "allTools.spotlight.description" = "Hier is van die hulpmiddels wat ons dink jy van sal hou";
-"allTools.categories.title" = "Kategorieë";
 "training_tip_ask" = "Vra";
 "training_tip_consider" = "Oorweeg";
 "training_tip_prepare" = "Berei voor";
@@ -238,6 +242,8 @@ As jy nie hierdie boodskap gou kry nie, mag dit wees omdat die skakel nog nie we
 
 /* This is to let users know which version of the app is installed on their phone */
 "menu_version" = "Weergawe";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "90+ Tale";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -249,15 +255,12 @@ As jy nie hierdie boodskap gou kry nie, mag dit wees omdat die skakel nog nie we
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
 "find_tools" = "Alle hulpmiddels";
 
-"unavailable" = "Nie beskikbaar";
-
 // Navigation Bar
 "navigationBar.navigationItem.skip" = "Slaan oor";
 
 // Onboarding
 "add_new_tools" = "Voeg nuwe hulpmiddels by";
-"set_your_languages" = "Stel jou Tale in";
-"okay" = "Oukei";
+
 // Menu
 "menu_general" = "Algemeen";
 "menu_account" = "Rekening";
@@ -271,7 +274,6 @@ As jy nie hierdie boodskap gou kry nie, mag dit wees omdat die skakel nog nie we
 "login" = "Meld aan";
 "logout" = "Teken uit";
 "create_account" = "Skep rekening";
-"account_login" = "Rekening aanmelding";
 
 // Tool Detail
 "about" = "Aangaande";
@@ -286,9 +288,6 @@ As jy nie hierdie boodskap gou kry nie, mag dit wees omdat die skakel nog nie we
 http://godtoolsapp.com
 'n Aanlynweergawe kan gevind word by
 https://knowgod.com/";
-
-// Add Tools
-"add_tools" = "Voeg hulpmiddels by";
 
 "total_views" = "%d kyke";
 "total_languages" = "%d tale";
@@ -310,14 +309,13 @@ https://knowgod.com/";
 "no_internet" = "Kontroleer asseblief u internetverbinding en probeer weer.";
 
 "the_tool_you_requested_is_loading" = "Die hulpmiddel wat jy aangevra het is besig om te laai...";
-"loading" = "Besig om te laai...";
 
 // Actions
 "yes" = "Ja";
 "no" = "Nee";
 
 // Tract - Sharing
-"tract_share_message" ="Hierdie skakel sal jou na die webweergawe neem van die bladsy waarna ons vandag saam gekyk het: %@ 
+"tract_share_message" = "Hierdie skakel sal jou na die webweergawe neem van die bladsy waarna ons vandag saam gekyk het: %@ 
 
 Kom ons gesels nog!
 
@@ -347,6 +345,7 @@ https://godtoolsapp.com";
 "tutorial.tutorialItem.0.title" = "Kyk";
 "general_about_2" = "Hierdie hulpmiddele help jou om met selfvertroue aan iemand te verduidelik hoe hulle 'n verhouding met God kan hê deur Jesus Christus, selfs as jy nog nooit voorheen jou geloof gedeel het nie of hulle dalk 'n ander taal praat.";
 "general_about_3" = "Kies van 'n verskeidenheid hulpmiddele gebaseer op jou voorkeur en jou gehoor. Nie alle hulpmiddele is in elke taal bekikbaar nie.";
+"tutorial.tutorialItem.1.title" = "Berei voor";
 "general_about_4" = "Skakels na ander hulpbronne is ingesluit aan die einde van elke hulpmiddel.";
 "general_about_5" = "Jy moet aanlyn verbind wees om elke nuwe hulpmiddel en/of taal af te laai. As hulle klaar afgelaai is, kan hulle van lyn af gebruik word.";
 "general_about_6" = "Vrae? Aanbevelings? Versoeke? Kontak ons by support@godtoolsapp.com";
@@ -379,12 +378,11 @@ https://godtoolsapp.com";
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "Globale Aktiwiteit";
+// OnboardingWelcome
 "accountActivity.globalAnalytics.users.title" = "Unieke\nGebruikers";
 "onboardingWelcome.titleLabel.tagline" = "Help Jou Om Jou Geloof Te Deel";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "Evangelie\nAanbiedings";
 "accountActivity.globalAnalytics.launches.title" = "Sessies";
 // OnboardingTutorial
-"onboardingTutorial.aboutAppItem.0.title" = "Deel Met Ander";
 "accountActivity.globalAnalytics.countries.title" = "Lande";
-
 "onboardingTutorial.showMoreButton.title" = "Wys My Meer";

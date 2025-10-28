@@ -10,19 +10,25 @@ import Foundation
 import SwiftData
 
 @available(iOS 17, *)
-@Model
-class SwiftArticleAemData: IdentifiableSwiftDataObject {
-    
-    var webUrl: String = ""
-    var webArchiveFilename: String = ""
-    var updatedAt: Date = Date()
-    
-    @Attribute(.unique) var aemUri: String = ""
-    @Attribute(.unique) var id: String = ""
-    
-    @Relationship(deleteRule: .nullify) var articleJcrContent: SwiftArticleJrcContent?
-    
-    init() {
+typealias SwiftArticleAemData = SwiftArticleAemDataV1.SwiftArticleAemData
+
+@available(iOS 17, *)
+enum SwiftArticleAemDataV1 {
+
+    @Model
+    class SwiftArticleAemData: IdentifiableSwiftDataObject {
         
+        var webUrl: String = ""
+        var webArchiveFilename: String = ""
+        var updatedAt: Date = Date()
+        
+        @Attribute(.unique) var aemUri: String = ""
+        @Attribute(.unique) var id: String = ""
+        
+        @Relationship(deleteRule: .nullify) var articleJcrContent: SwiftArticleJrcContent?
+        
+        init() {
+            
+        }
     }
 }

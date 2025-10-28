@@ -3,7 +3,6 @@
 
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "%@ ਵਿੱਚ ਉਪਲਬਧ ਨਹੀਂ ਹੈ";
-
 "tool_menu_item.tools" = "ਟੂਲ";
 "lessons.pageTitle" = "ਤੁਹਾਡੇ ਲਈ ਬਣਾਏ ਗਏ ਸਬਕ";
 "lessons.pageSubtitle" = "ਰਿਸ਼ਤੇ ਬਣਾਉਣ ਅਤੇ ਅਰਥਪੂਰਨ ਗੱਲਬਾਤ ਸ਼ੁਰੂ ਕਰਨ ਲਈ ਵਿਹਾਰਕ ਵਿਚਾਰ।";
@@ -37,8 +36,8 @@
 "toolSettings.shareables.title" = "ਸੰਬੰਧਿਤ ਗਰਾਫਿਕਸ";
 "allTools.spotlight.title" = "ਟੂਲ ਸਪੌਟਲਾਈਟ";
 "allTools.spotlight.description" = "ਇੱਥੇ ਕੁਝ ਟੂਲ ਹਨ ਜੋ ਅਸੀਂ ਸੋਚਿਆ ਕਿ ਸ਼ਾਇਦ ਤੁਹਾਨੂੰ ਪਸੰਦ ਆਉਣ";
-"allTools.categories.title" = "ਸ਼੍ਰੇਣੀਆਂ";
 "tool_menu_item.lessons" = "ਸਬਕ";
+
 "onboardingTutorial.beginButton.title" = "ਅਰੰਭ ਕਰੋ";
 "onboardingTutorial.nextButton.title" = "ਅਗਲਾ";
 "tool_offline_favorite_message" = "ਦਿਲ ਦੇ ਆਈਕਨ ਨੂੰ ਟੈਪ ਕਰਕੇ ਇੱਕ ਟੂਲ ਨੂੰ ਆਫਲਾਈਨ ਉਪਲੱਬਧ ਕਰੋ ਜੋ ਇਸਨੂੰ ਤੁਹਾਡੇ ਮਨਪਸੰਦ ਵਿੱਚ ਜੋੜਦਾ ਹੈ।";
@@ -105,6 +104,8 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "ਲੇਖ";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "90+ ਭਾਸ਼ਾਵਾਂ";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -116,40 +117,33 @@
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
 "find_tools" = "ਸਾਰੇ ਟੂਲ";
 
-"unavailable" = "ਅਣਉਪਲਬਧ";
-
 // Navigation Bar
 "navigationBar.navigationItem.skip" = "ਛੱਡੋ";
 
 // Onboarding
 "add_new_tools" = "ਨਵੇਂ ਟੂਲ ਨੂੰ ਜੋੜੋ";
-"set_your_languages" = "ਆਪਣੀ ਭਾਸ਼ਾ ਦੀ ਚੋਣ ਕਰੋ";
-"okay" = "ਠੀਕ ਹੈ";
+
 // Menu
 "menu_general" = "ਆਮ ਗੱਲਾਂ";
 "menu_share" = "ਦੱਸੋ";
 "menu_legal" = "ਕਾਨੂੰਨੀ";
 "language_settings" = "ਭਾਸ਼ਾ ਦੀ ਚੋਂਣ ਕਰੋ";
+
 // Login
 "login" = "ਲਾਗਿਨ";
 "logout" = "ਲਾੱਗ ਆਊਟ";
 "create_account" = "ਖਾਤਾ ਬਣਾਉ";
-"account_login" = "ਖਾਤਾ ਲੌਗਇਨ ਕਰੋ";
 
 // Tool Detail
 "about" = "ਇਸਦੇ ਬਾਰੇ";
 "help" = "ਮਦਦ";
 "contact_us" = "ਸਾਡੇ ਨਾਲ ਸੰਪਰਕ ਕਰੋ";
-"preview_mode_translators_only" = "ਝਲਕੀ ਰੂਪ (ਕੇਵਲ ਅਨੁਵਾਦਕਾਂ ਲਈ)";
 "share_god_tools" = "ਗੋਡਟੂਲਸ ਐਪ ਨੂੰ ਸਾਂਝਾ ਕਰੋ";
 "share_a_story_with_us" = "ਸਾਨੂੰ ਆਪਣੀ ਕਹਾਣੀ ਦੱਸੋ";
 "terms_of_use" = "ਵਰਤੋ ਦੀਆਂ ਸ਼ਰਤਾਂ";
 "privacy_policy" = "ਗੋਪਨੀਯ ਨੀਤੀ";
 "copyright_info" = "ਕਾਪੀਰਾਈਟ ਸੂਚਨਾ";
 "share_god_tools_share_sheet_text" = "ਗੋਡਟੂਲ ਐਪ ਨੂੰ ਡਾਉਨਲੋਡ ਕਰੋ: https://godtoolsapp.com";
-
-// Add Tools
-"add_tools" = "ਟੂਲ ਨੂੰ ਜੋੜੋ";
 
 "total_views" = "%d ਨੇ ਵੇਖਿਆ";
 "total_languages" = "%d ਭਾਸ਼ਾਵਾਂ";
@@ -171,14 +165,13 @@
 "no_internet" = "ਕਿਰਪਾ ਕਰਕੇ ਆਪਣੇ ਇੰਟਰਨੈਟ ਕਨੈਕਸ਼ਨ ਦੀ ਜਾਂਚ ਕਰੋ ਅਤੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।";
 
 "the_tool_you_requested_is_loading" = "ਬੇਨਤੀ ਕੀਤੇ ਜਾਣ ਵਾਲਾ ਟੂਲ ਲੋ਼ਡ ਹੋ ਰਿਹਾ ਹੈ";
-"loading" = "ਲੋਡ ਹੋ ਰਿਹਾ ਹੈ ...";
 
 // Actions
 "yes" = "ਹਾਂ";
 "no" = "ਨਹੀਂ";
 
 // Tract - Sharing
-"tract_share_message" ="ਇਹ ਲਿੰਕ ਤੁਹਾਨੂੰ ਉਹ ਸਫ਼ੇ ਦੇ ਵੈਬਸਾਈਟ ਅਨੁਵਾਦ 'ਤੇ ਲੈ ਜਾਵੇਗਾ ਜਿਸ ਨੂੰ ਅਸੀਂ ਅੱਜ ਆਖਰ ਵਿੱਚ ਇਕੱਠੇ ਦੇਖ ਰਹੇ ਸਾਂ : %@.
+"tract_share_message" = "ਇਹ ਲਿੰਕ ਤੁਹਾਨੂੰ ਉਹ ਸਫ਼ੇ ਦੇ ਵੈਬਸਾਈਟ ਅਨੁਵਾਦ 'ਤੇ ਲੈ ਜਾਵੇਗਾ ਜਿਸ ਨੂੰ ਅਸੀਂ ਅੱਜ ਆਖਰ ਵਿੱਚ ਇਕੱਠੇ ਦੇਖ ਰਹੇ ਸਾਂ : %@.
 
  ਆਓ ਹੋਰ ਗੱਲ ਕਰੀਏ!
 
@@ -212,8 +205,8 @@
 "general_about_8" = "ਹੋਰ ਵਧੇਰੇ ਜਾਣਕਾਰੀ ਲਈ godtoolsapp.com ਨੂੰ ਵੇਖੋ।";
 "tutorial.continueButton.title.continue" = "ਜਾਰੀ ਰੱਖੋ";
 "general_about_9" = "ਜਦੋਂ ਤੁਸੀਂ ਆਪਣੇ ਵਿਸ਼ਵਾਸ ਸਾਂਝਿਆਂ ਕਰਨ ਲਈ ਪਹਿਲ ਕਰਦੇ ਹੋ, ਤਾਂ ਯਾਦ ਰੱਖੋ ਕਿ ਪਰਮੇਸ਼ੁਰ ਹੀ ਹੈ ਜਿਹੜਾ ਦਿਲ ਨੂੰ ਬਦਲਦਾ ਹੈ। ਹਰੇਕ ਵਿਅਕਤੀ ਨੂੰ ਚੰਗੀ ਤਰ੍ਹਾਂ ਸੁਣ ਕੇ ਸਮਝਦੇ ਹੋ ਏ ਪਿਆਰ ਕਰੋ।";
-"general_about_10" = "“ਤੁਹਾਡੀ ਗੱਲ ਬਾਤ ਸਦਾ ਕਿਰਪਾਮਈ ਅਤੇ ਸਲੂਣੀ ਹੋਵੇ ਤਾਂ ਜੋ ਤੁਸੀ ਜਾਣੋ ਭਈ ਹਰੋਕ ਨੂੰ ਕਿਵੇਂ ਉੱਤਰ ਦੇਣਾ ਚਾਹੀਦਾ ਹੈ।” (ਕੁਲੁੱਸੀਆਂ 4:6)";
 
+"general_about_10" = "“ਤੁਹਾਡੀ ਗੱਲ ਬਾਤ ਸਦਾ ਕਿਰਪਾਮਈ ਅਤੇ ਸਲੂਣੀ ਹੋਵੇ ਤਾਂ ਜੋ ਤੁਸੀ ਜਾਣੋ ਭਈ ਹਰੋਕ ਨੂੰ ਕਿਵੇਂ ਉੱਤਰ ਦੇਣਾ ਚਾਹੀਦਾ ਹੈ।” (ਕੁਲੁੱਸੀਆਂ 4:6)";
 // Downloads
 "Download in progress" = "ਡਾਊਨਲੋਡ ਜਾਰੀ ਹੈ";
 
@@ -223,4 +216,3 @@
 
 // Language Name Strings
 "language_name_fa" = "ਫ਼ਾਰਸੀ (ਫਾਰਸੀ)";
-

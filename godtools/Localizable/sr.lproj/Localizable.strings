@@ -3,7 +3,6 @@
 
 /* This means that the tool/resource is not available in the currently selected language. */
 "lessonCard.languageNotAvailable" = "Није доступно у %@";
-
 "tool_menu_item.tools" = "Aлатке";
 "lessons.pageTitle" = "Лекције направљене за вас";
 "lessons.pageSubtitle" = "Практичне идеје за изградњу односа и почетак смислених разговора.";
@@ -37,8 +36,8 @@
 "toolSettings.shareables.title" = "Повезане графике";
 "allTools.spotlight.title" = "Издвојени алат";
 "allTools.spotlight.description" = "Ево неких алата који би вам се могли свидети";
-"allTools.categories.title" = "Категорије";
 "tool_menu_item.lessons" = "Лекције";
+
 "onboardingTutorial.beginButton.title" = "Почни";
 "onboardingTutorial.nextButton.title" = "Следеће";
 "tool_offline_favorite_message" = "Омогући да алатка буде доступна ван мреже тако што ћете додирнути иконицу срце која ће је додати у омиљене.";
@@ -105,6 +104,8 @@
 
 /* Describes a format of content - like a newspaper article. */
 "tool_category_articles" = "Чланци";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
 "language_onboard" = "Перко 90 језика";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -116,40 +117,33 @@
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
 "find_tools" = "Све алатке";
 
-"unavailable" = "Недоступно";
-
 // Navigation Bar
 "navigationBar.navigationItem.skip" = "Прескочи";
 
 // Onboarding
 "add_new_tools" = "Додај нове алатке";
-"set_your_languages" = "Подесите своје језике";
-"okay" = "У реду";
+
 // Menu
 "menu_general" = "Опште";
 "menu_share" = "Подели";
 "menu_legal" = "Правно";
 "language_settings" = "Подешавање језика";
+
 // Login
 "login" = "Пријава";
 "logout" = "Одјава";
 "create_account" = "Креирајте налог";
-"account_login" = "Пријава у налог";
 
 // Tool Detail
 "about" = "О";
 "help" = "Помоћ";
 "contact_us" = "Контактирајте нас";
-"preview_mode_translators_only" = "Режим прегледа (само за преводиоце)";
 "share_god_tools" = "Поделите апликацију GodTools";
 "share_a_story_with_us" = "Поделите причу са нама";
 "terms_of_use" = "Услови коришћења";
 "privacy_policy" = "Политика приватности";
 "copyright_info" = "Информације о ауторском праву";
 "share_god_tools_share_sheet_text" = "Преузмите апликацију GodTools: https://godtoolsapp.com";
-
-// Add Tools
-"add_tools" = "Додај алатке";
 
 "total_views" = "%d прегледа";
 "total_languages" = "%d језика";
@@ -171,14 +165,13 @@
 "no_internet" = "Проверите везу са интернетом и покушајте поново.";
 
 "the_tool_you_requested_is_loading" = "Алатка коју сте тражили се учитава…";
-"loading" = "Учитавање...";
 
 // Actions
 "yes" = "Да";
 "no" = "Не";
 
 // Tract - Sharing
-"tract_share_message" ="Ова веза ће вас одвести на веб верзију странице коју смо последњи пут гледали заједно данас: %@. 
+"tract_share_message" = "Ова веза ће вас одвести на веб верзију странице коју смо последњи пут гледали заједно данас: %@. 
 
 Хајде да разговарамо више!
 
@@ -212,8 +205,8 @@
 "general_about_8" = "Посетите godtoolsapp.com за више информација.";
 "tutorial.continueButton.title.continue" = "Настави";
 "general_about_9" = "Чим предузмете иницијативу да поделите своју веру, сетите се да је Бог онај који мења срце. Волите сваку особу тако што ћете је слушати да бисте је разумели.";
-"general_about_10" = "„Реч ваша да бива свагда у благодати, сољу зачињена, да знате како вам свакоме треба одговарати.“ Колошани 4, 6";
 
+"general_about_10" = "„Реч ваша да бива свагда у благодати, сољу зачињена, да знате како вам свакоме треба одговарати.“ Колошани 4, 6";
 // Downloads
 "Download in progress" = "Преузимање је у току";
 
@@ -223,4 +216,3 @@
 
 // Language Name Strings
 "language_name_fa" = "Персијски (фарси)";
-

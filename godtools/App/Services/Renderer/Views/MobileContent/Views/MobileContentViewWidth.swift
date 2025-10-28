@@ -7,19 +7,19 @@
 //
 
 import UIKit
-import GodToolsToolParser
+import GodToolsShared
 
 enum MobileContentViewWidth {
     
     case percentageOfContainer(value: CGFloat)
     case points(value: CGFloat)
     
-    init(dimension: GodToolsToolParser.Dimension) {
+    init(dimension: GodToolsShared.Dimension) {
         
-        if let percent = dimension as? GodToolsToolParser.Dimension.Percent {
+        if let percent = dimension as? GodToolsShared.Dimension.Percent {
             self = .percentageOfContainer(value: CGFloat(percent.value))
         }
-        else if let pixels = dimension as? GodToolsToolParser.Dimension.Pixels {
+        else if let pixels = dimension as? GodToolsShared.Dimension.Pixels {
             self = .points(value: CGFloat(pixels.value))
         }
         else {

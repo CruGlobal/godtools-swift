@@ -1,3 +1,6 @@
+"deferredDeepLinkModal.title" = "Parece que hiciste clic en un enlace para GodTools";
+"deferredDeepLinkModal.message" = "Toque el botón a continuación para que podamos llevarlo al contenido que solicitó.";
+
 "optInNotification.notificationSettings" = "Ajustes de notificaciones";
 "lessons.swipeTutorial.title" = "Desliza para cambiar páginas";
 "lessons.swipeTutorial.buttonText" = "Entendido";
@@ -15,10 +18,8 @@
 "lessons.lessonCompleted" = "Completado";
 "lessons.completionProgress" = "%@ completado";
 "network_connection_lost" = "Se perdió la conexión de red.";
-"language_name_fil" = "Filipino (Tagalog)";
 "lessons.filter.navBar.language" = "Idioma de la lección";
 "lessons.languageFilter.title" = "Lecciones en:";
-"language_name_fil-x-taglish" = "Taglish";
 "language_name_sid" = "Sidamo";
 "onboardingTutorial.chooseLanguageButton.title" = "Elegir idioma";
 "languageSettings.confirmAppLanguage.message" = "Has seleccionado %@ como idioma de tu aplicación. Esto cambiará el idioma de toda la aplicación GodTools. ¿Estás seguro?";
@@ -47,7 +48,6 @@
 "accountDeletedAlert.title" = "Cuenta eliminada";
 "accountDeletedAlert.message" = "Se ha eliminado tu cuenta";
 "deleteAccount.title" = "No te vayas tan pronto";
-"deleteAccount.subtitle" = "If you delete your account you won't be able to access your favorited tools or account activity.";
 "deleteAccount.confirmButton.title" = "Eliminar mi cuenta";
 "deleteAccount.cancelButton.title" = "Conservar mi cuenta";
 "signIn.title" = "Iniciar sesión";
@@ -118,7 +118,6 @@
 "toolSettings.shareables.title" = "Gráficos relacionados";
 "allTools.spotlight.title" = "Herramientas destacadas";
 "allTools.spotlight.description" = "Estas son algunas herramientas que pensamos que podrían gustarle";
-"allTools.categories.title" = "Categorías";
 "training_tip_ask" = "Pregunta";
 "training_tip_consider" = "Considera";
 "training_tip_prepare" = "Prepara";
@@ -241,7 +240,6 @@ Si no recibes este mensaje en un tiempo, puede que el enlace ya no funcione. Pod
 "menu_version" = "Versión";
 
 /* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
-"articles.loadingView.downloadingArticles" = "Descargando artículos...";
 "language_onboard" = "Más de 90 idiomas";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -253,35 +251,25 @@ Si no recibes este mensaje en un tiempo, puede que el enlace ya no funcione. Pod
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
 "find_tools" = "Todas las herramientas";
 
-"unavailable" = "No disponible";
-
 // Navigation Bar
 "navigationBar.navigationItem.skip" = "Omitir";
 
 // Onboarding
 "add_new_tools" = "Agrega nuevas herramientas";
-"set_your_languages" = "Establece tus idiomas";
-"okay" = "Ok";
-// Menu
-"menu_general" = "General";
 "menu_account" = "Cuenta";
 "menu_share" = "Compartir";
-"menu_legal" = "Legal";
 "language_settings" = "Ajustes de idioma";
-"menu.tutorial" = "Tutorial";
 "menu.my_account" = "Mi cuenta";
 
 // Login
 "login" = "Iniciar sesión";
 "logout" = "Cerrar sesión";
 "create_account" = "Crear cuenta";
-"account_login" = "Inicio de sesión de cuenta";
 
 // Tool Detail
 "about" = "Acerca de";
 "help" = "Preguntas frecuentes";
 "contact_us" = "Cóntactanos";
-"preview_mode_translators_only" = "Modo vista previa (solo traductores)";
 "share_god_tools" = "Comparte GodTools";
 "share_a_story_with_us" = "Comparte una historia con nosotros";
 "terms_of_use" = "Términos de uso";
@@ -290,9 +278,6 @@ Si no recibes este mensaje en un tiempo, puede que el enlace ya no funcione. Pod
 "share_god_tools_share_sheet_text" = "Descarga la aplicación GodTools: https://godtoolsapp.com
 
 Puedes acceer a una versión online en https://knowgod.com/";
-
-// Add Tools
-"add_tools" = "Agrega herramientas";
 
 "total_views" = "%d vistas";
 "total_languages" = "%d idiomas";
@@ -314,14 +299,12 @@ Puedes acceer a una versión online en https://knowgod.com/";
 "no_internet" = "Comprueba tu conexión a internet y vuelve a intentarlo.";
 
 "the_tool_you_requested_is_loading" = "Se está cargando la herramienta que has solicitado...";
-"loading" = "Cargando...";
 
 // Actions
 "yes" = "Sí";
-"no" = "No";
 
 // Tract - Sharing
-"tract_share_message" ="Este enlace te llevará a una versión web de la página que la que hablábamos juntos hoy: %@.
+"tract_share_message" = "Este enlace te llevará a una versión web de la página que la que hablábamos juntos hoy: %@.
 
 ¡Conversemos más!
 
@@ -335,9 +318,6 @@ La aplicación se puede descargar en https://godtoolsapp.com";
 "clear" = "Borrar";
 /* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
 "toolinfo_opentool" = "Abrir herramienta";
-
-// Alerts
-"error" = "Error";
 "OK" = "Aceptar";
 "cancel" = "Cancelar";
 "required_field_missing" = "\"%@\" es un campo obligatorio.";
@@ -390,23 +370,10 @@ La aplicación se puede descargar en https://godtoolsapp.com";
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "Actividad global";
 // OnboardingWelcome
-"onboardingWelcome.titleLabel.welcome" = "Bienvenido";
 "accountActivity.globalAnalytics.users.title" = "Único\nUsuarios";
 "onboardingWelcome.titleLabel.tagline" = "Te ayudamos a compartir tu fe";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "Evangelio\nPresentaciones";
 "accountActivity.globalAnalytics.launches.title" = "Sesiones";
 // OnboardingTutorial
-"onboardingTutorial.aboutAppItem.0.title" = "Compartir con otros";
 "accountActivity.globalAnalytics.countries.title" = "Países";
-
-"onboardingTutorial.aboutAppItem.0.message" = "GodTools está diseñada para orientar tus conversaciones sobre fe.";
-"onboardingTutorial.aboutAppItem.1.title" = "Elige tus herramientas";
-"onboardingTutorial.aboutAppItem.1.message" = "GodTools te ayuda antes, durante y después de una conversación espiritual.";
-"onboardingTutorial.aboutAppItem.2.title" = "Siempre dispuesta";
-"onboardingTutorial.aboutAppItem.2.message" = "GodTools está para ayudarte y dispuesta cuando tú lo estés.";
-"onboardingTutorial.appUsageItem.0.message" = "Prepárate para cualquier conversación";
-"onboardingTutorial.appUsageItem.1.message" = "Orienta a los demás por el evangelio";
-"onboardingTutorial.appUsageItem.2.message" = "Muestra dos idiomas en paralelo";
-"onboardingTutorial.appUsageItem.3.message" = "Elige ente más de 90 idiomas";
-"onboardingTutorial.appUsageItem.4.message" = "Ayuda a los demás a iniciarse en el cristianismo";
 "onboardingTutorial.showMoreButton.title" = "Mostrarme más";

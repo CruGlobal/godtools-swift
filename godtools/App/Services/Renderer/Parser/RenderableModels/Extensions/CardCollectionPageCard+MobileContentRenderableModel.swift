@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import GodToolsToolParser
+import GodToolsShared
 import UIKit
 
 extension CardCollectionPage.Card: MobileContentRenderableModel {

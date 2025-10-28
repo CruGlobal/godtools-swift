@@ -10,7 +10,6 @@ import UIKit
 import MessageUI
 import SwiftUI
 import Combine
-import LocalizationServices
 
 class MenuFlow: Flow {
     
@@ -85,6 +84,13 @@ class MenuFlow: Flow {
             
         case .languageSettingsFlowCompleted( _):
             closeLanguageSettings()
+            
+        case .localizationSettingsTappedFromMenu:
+            navigateToLocalizationSettings()
+            
+        case .backTappedFromLocalizationSettings:
+            // TODO: GT-2733 implement in collections work. ~Levi
+            break
             
         case .tutorialTappedFromMenu:
             navigateToTutorial()
@@ -329,6 +335,23 @@ extension MenuFlow {
         navigationController.popViewController(animated: true)
         
         self.languageSettingsFlow = nil
+    }
+}
+
+// MARK: - Localization Settings
+
+extension MenuFlow {
+    
+    private func navigateToLocalizationSettings() {
+        
+        // TODO: GT-2733 implement in collections work. ~Levi
+    }
+    
+    private func getLocalizationSettingsView() -> UIViewController {
+        
+        // TODO: GT-2733 implement in collections work. ~Levi
+        
+        return UIViewController()
     }
 }
 

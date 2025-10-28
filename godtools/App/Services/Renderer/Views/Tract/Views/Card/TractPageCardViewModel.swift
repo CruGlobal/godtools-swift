@@ -7,8 +7,7 @@
 //
 
 import UIKit
-import GodToolsToolParser
-import LocalizationServices
+import GodToolsShared
 
 class TractPageCardViewModel: MobileContentViewModel {
     
@@ -89,14 +88,13 @@ class TractPageCardViewModel: MobileContentViewModel {
     
     private func getTranslatedStringFromToolLanguageElseAppLanguage(localizedKey: String) -> String {
         
-        if let languageTranslation = localizationServices.stringForLocale(localeIdentifier: renderedPageContext.language.localeId, key: localizedKey) {
-            return languageTranslation
-        }
-        else if let appLanguageTranslation = localizationServices.stringForLocale(localeIdentifier: renderedPageContext.appLanguage, key: localizedKey) {
-            return appLanguageTranslation
-        }
-        
-        return localizationServices.stringForEnglish(key: localizedKey)
+        return localizationServices.stringForFirstLocaleElseEnglish(
+            localeIdentifiers: [
+                renderedPageContext.language.localeId,
+                renderedPageContext.appLanguage
+            ],
+            key: localizedKey
+        )
     }
     
     var title: String? {

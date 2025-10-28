@@ -10,18 +10,24 @@ import Foundation
 import SwiftData
 
 @available(iOS 17, *)
-@Model
-class SwiftLessonEvaluation: IdentifiableSwiftDataObject {
-    
-    var lastEvaluationAttempt: Date = Date()
-    var lessonAbbreviation: String = ""
-    var lessonEvaluated: Bool = false
-    var numberOfEvaluationAttempts: Int = 0
-    
-    @Attribute(.unique) var id: String = ""
-    @Attribute(.unique) var lessonId: String = ""
-    
-    init() {
+typealias SwiftLessonEvaluation = SwiftLessonEvaluationV1.SwiftLessonEvaluation
+
+@available(iOS 17, *)
+enum SwiftLessonEvaluationV1 {
+ 
+    @Model
+    class SwiftLessonEvaluation: IdentifiableSwiftDataObject {
         
+        var lastEvaluationAttempt: Date = Date()
+        var lessonAbbreviation: String = ""
+        var lessonEvaluated: Bool = false
+        var numberOfEvaluationAttempts: Int = 0
+        
+        @Attribute(.unique) var id: String = ""
+        @Attribute(.unique) var lessonId: String = ""
+        
+        init() {
+            
+        }
     }
 }

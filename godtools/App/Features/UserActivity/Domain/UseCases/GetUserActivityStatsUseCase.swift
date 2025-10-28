@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import GodToolsToolParser
+import GodToolsShared
 import SwiftUI
-import LocalizationServices
 
 class GetUserActivityStatsUseCase {
     

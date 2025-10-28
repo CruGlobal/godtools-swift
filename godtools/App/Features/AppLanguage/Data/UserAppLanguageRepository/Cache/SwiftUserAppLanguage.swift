@@ -10,14 +10,21 @@ import Foundation
 import SwiftData
 
 @available(iOS 17, *)
-@Model
-class SwiftUserAppLanguage: IdentifiableSwiftDataObject {
-    
-    var languageId: BCP47LanguageIdentifier = ""
-    
-    @Attribute(.unique) var id: String = ""
-    
-    init() {
+typealias SwiftUserAppLanguage = SwiftUserAppLanguageV1.SwiftUserAppLanguage
+
+@available(iOS 17, *)
+enum SwiftUserAppLanguageV1 {
+ 
+    @available(iOS 17, *)
+    @Model
+    class SwiftUserAppLanguage: IdentifiableSwiftDataObject {
         
+        var languageId: BCP47LanguageIdentifier = ""
+        
+        @Attribute(.unique) var id: String = ""
+        
+        init() {
+            
+        }
     }
 }

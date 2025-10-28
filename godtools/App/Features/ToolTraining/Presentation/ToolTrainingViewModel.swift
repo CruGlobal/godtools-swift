@@ -7,9 +7,8 @@
 //
 
 import UIKit
-import GodToolsToolParser
+import GodToolsShared
 import Combine
-import LocalizationServices
 
 class ToolTrainingViewModel: NSObject {
     
