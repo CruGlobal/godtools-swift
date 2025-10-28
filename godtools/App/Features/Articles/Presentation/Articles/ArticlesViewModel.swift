@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import GodToolsToolParser
+import GodToolsShared
 import Combine
 
 class ArticlesViewModel: NSObject {
@@ -16,7 +16,7 @@ class ArticlesViewModel: NSObject {
     
     private let resource: ResourceDataModel
     private let language: LanguageDataModel
-    private let category: GodToolsToolParser.Category
+    private let category: GodToolsShared.Category
     private let manifest: Manifest
     private let downloadArticlesObservable: DownloadManifestArticlesObservable
     private let articleManifestAemRepository: ArticleManifestAemRepository
@@ -36,7 +36,7 @@ class ArticlesViewModel: NSObject {
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     @Published private var articleAemCacheObjects: [ArticleAemCacheObject] = Array()
     
-    init(flowDelegate: FlowDelegate, resource: ResourceDataModel, language: LanguageDataModel, category: GodToolsToolParser.Category, manifest: Manifest, downloadArticlesObservable: DownloadManifestArticlesObservable, articleManifestAemRepository: ArticleManifestAemRepository, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, localizationServices: LocalizationServicesInterface, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
+    init(flowDelegate: FlowDelegate, resource: ResourceDataModel, language: LanguageDataModel, category: GodToolsShared.Category, manifest: Manifest, downloadArticlesObservable: DownloadManifestArticlesObservable, articleManifestAemRepository: ArticleManifestAemRepository, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, localizationServices: LocalizationServicesInterface, trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource

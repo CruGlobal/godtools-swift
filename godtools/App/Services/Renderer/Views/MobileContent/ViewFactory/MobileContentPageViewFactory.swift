@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import GodToolsToolParser
+import GodToolsShared
 import SwiftUI
 
 class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
@@ -35,7 +35,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let textModel = renderableModel as? GodToolsToolParser.Text {
+        else if let textModel = renderableModel as? GodToolsShared.Text {
                        
             return getContentText(
                 textModel: textModel,
@@ -44,7 +44,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 additionalLabelAttributes: nil
             )
         }
-        else if let imageModel = renderableModel as? GodToolsToolParser.Image {
+        else if let imageModel = renderableModel as? GodToolsShared.Image {
             
             let viewModel = MobileContentImageViewModel(
                 imageModel: imageModel,
@@ -56,7 +56,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view            
         }
-        else if let buttonModel = renderableModel as? GodToolsToolParser.Button {
+        else if let buttonModel = renderableModel as? GodToolsShared.Button {
                         
             let viewModel = MobileContentButtonViewModel(
                 buttonModel: buttonModel,
@@ -80,7 +80,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let linkModel = renderableModel as? GodToolsToolParser.Link {
+        else if let linkModel = renderableModel as? GodToolsShared.Link {
                         
             let viewModel = MobileContentLinkViewModel(
                 linkModel: linkModel,
@@ -156,7 +156,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
                 scrollIsEnabled: contentModel.scrollIsEnabled
             )
         }
-        else if let animationModel = renderableModel as? GodToolsToolParser.Animation {
+        else if let animationModel = renderableModel as? GodToolsShared.Animation {
             
             let viewModel = MobileContentAnimationViewModel(
                 animationModel: animationModel,
@@ -216,7 +216,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let formModel = renderableModel as? GodToolsToolParser.Form {
+        else if let formModel = renderableModel as? GodToolsShared.Form {
             
             let viewModel = MobileContentFormViewModel(
                 formModel: formModel,
@@ -228,7 +228,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let spacerModel = renderableModel as? GodToolsToolParser.Spacer {
+        else if let spacerModel = renderableModel as? GodToolsShared.Spacer {
                 
             let viewModel = MobileContentSpacerViewModel(
                 spacerModel: spacerModel,
@@ -252,7 +252,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let contentFlow = renderableModel as? GodToolsToolParser.Flow {
+        else if let contentFlow = renderableModel as? GodToolsShared.Flow {
             
             let viewModel = MobileContentFlowViewModel(
                 contentFlow: contentFlow,
@@ -264,7 +264,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
             
             return view
         }
-        else if let contentFlowItem = renderableModel as? GodToolsToolParser.Flow.Item {
+        else if let contentFlowItem = renderableModel as? GodToolsShared.Flow.Item {
             
             let viewModel = MobileContentFlowItemViewModel(
                 flowItem: contentFlowItem,
@@ -341,7 +341,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         return nil
     }
     
-    func getContentText(textModel: GodToolsToolParser.Text, renderedPageContext: MobileContentRenderedPageContext, viewType: MobileContentTextView.ViewType?, additionalLabelAttributes: MobileContentTextLabelAttributes?) -> MobileContentTextView {
+    func getContentText(textModel: GodToolsShared.Text, renderedPageContext: MobileContentRenderedPageContext, viewType: MobileContentTextView.ViewType?, additionalLabelAttributes: MobileContentTextLabelAttributes?) -> MobileContentTextView {
         
         let viewModel = MobileContentTextViewModel(
             textModel: textModel,
