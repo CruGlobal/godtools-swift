@@ -15,25 +15,59 @@ class ToolLanguageDownloader {
     private let languagesRepository: LanguagesRepository
     private let toolDownloader: ToolDownloader
     private let downloadedLanguagesRepository: DownloadedLanguagesRepository
+    private let cache: RealmToolLanguageDownloaderCache
     
-    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, toolDownloader: ToolDownloader, downloadedLanguagesRepository: DownloadedLanguagesRepository) {
+    init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, toolDownloader: ToolDownloader, downloadedLanguagesRepository: DownloadedLanguagesRepository, cache: RealmToolLanguageDownloaderCache) {
      
         self.resourcesRepository = resourcesRepository
         self.languagesRepository = languagesRepository
         self.toolDownloader = toolDownloader
         self.downloadedLanguagesRepository = downloadedLanguagesRepository
+        self.cache = cache
+    }
+    
+    func observeToolLanguageDownloadPublisher(languageId: String) -> AnyPublisher<ToolLanguageDownload, Never> {
+        
+        let realmObjectToObserve: RealmToolLanguageDownload = cache.getToolLanguageDownloadElseNew(
+            languageId: languageId
+        )
+                
+        return Publishers.RealmObjectPublisher(realmObject: realmObjectToObserve)
+            .map { change in
+
+                return ToolLanguageDownload(
+                    realmToolLanguageDownload: realmObjectToObserve
+                )
+            }
+            .eraseToAnyPublisher()
     }
     
     func downloadToolLanguagePublisher(languageId: String) -> AnyPublisher<ToolDownloaderDataModel, Error> {
         
         guard let languageModel = languagesRepository.persistence.getObject(id: languageId) else {
             
-            let error: Error = NSError.errorWithDomain(domain: "ToolLanguageDownloader", code: -1, description: "Internal Error in ToolLanguageDownloader.  Failed to fetch language with language id: \(languageId)")
+            let error: Error = NSError.errorWithDomain(
+                domain: "ToolLanguageDownloader",
+                code: -1,
+                description: "Internal Error in ToolLanguageDownloader.  Failed to fetch language with language id: \(languageId)"
+            )
             
             return Fail(error: error)
                 .eraseToAnyPublisher()
         }
+        
+        let cache: RealmToolLanguageDownloaderCache = self.cache
+        
+        let dataModel = ToolLanguageDownload(
+            languageId: languageId,
+            downloadErrorDescription: nil,
+            downloadErrorHttpStatusCode: nil,
+            downloadProgress: 0,
+            downloadStartedAt: Date()
+        )
                 
+        cache.storeToolLanguageDownload(dataModel: dataModel)
+        
         let includeToolTypes: [ResourceType] = ResourceType.toolTypes + [.lesson]
         
         let tools: [ResourceDataModel] = resourcesRepository.getCachedResourcesByFilter(
@@ -45,6 +79,26 @@ class ToolLanguageDownloader {
         })
                 
         return toolDownloader.downloadToolsPublisher(tools: downloadTools, requestPriority: .low)
+            .flatMap({ (dataModel: ToolDownloaderDataModel) -> AnyPublisher<ToolLanguageDownload?, Error> in
+                
+                return cache.updateDownloadProgressPublisher(
+                    languageId: languageId,
+                    downloadProgress: dataModel.progress
+                )
+                .map {
+                    $0.first
+                }
+                .eraseToAnyPublisher()
+            })
+            .map { (download: ToolLanguageDownload?) in
+                
+                if let download = download {
+                    return ToolDownloaderDataModel(attachments: [], progress: download.downloadProgress, translations: [])
+                }
+                else {
+                    return ToolDownloaderDataModel(attachments: [], progress: 0, translations: [])
+                }
+            }
             .eraseToAnyPublisher()
     }
     
