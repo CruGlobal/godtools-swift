@@ -49,8 +49,6 @@
 		45DF965B2D386D5800C6AE68 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 45DF965A2D386D5800C6AE68 /* FirebaseRemoteConfig */; };
 		45E39EDC27457E0C006A59E4 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 45E39EDB27457E0C006A59E4 /* Lottie */; };
 		45E7D4C42977430A008C7503 /* ZipArchive in Frameworks */ = {isa = PBXBuildFile; productRef = 45E7D4C32977430A008C7503 /* ZipArchive */; };
-		45F486EF2B76D501004E0E27 /* Quick in Frameworks */ = {isa = PBXBuildFile; productRef = 45F486EE2B76D501004E0E27 /* Quick */; };
-		45F486F22B76D513004E0E27 /* Nimble in Frameworks */ = {isa = PBXBuildFile; productRef = 45F486F12B76D513004E0E27 /* Nimble */; };
 		45F671912C3344010017C8C2 /* LocalizationServices in Frameworks */ = {isa = PBXBuildFile; productRef = 45F671902C3344010017C8C2 /* LocalizationServices */; };
 		45F671932C33440E0017C8C2 /* LocalizationServices in Frameworks */ = {isa = PBXBuildFile; productRef = 45F671922C33440E0017C8C2 /* LocalizationServices */; };
 		4F2500621F0C1E8D00364FBC /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F2500611F0C1E8D00364FBC /* AdSupport.framework */; };
@@ -303,8 +301,6 @@
 				45F671932C33440E0017C8C2 /* LocalizationServices in Frameworks */,
 				4593DF002EABFD93004E1C8D /* GodToolsShared in Frameworks */,
 				4581EAA52BFBE257008115FF /* RealmSwift in Frameworks */,
-				45F486F22B76D513004E0E27 /* Nimble in Frameworks */,
-				45F486EF2B76D501004E0E27 /* Quick in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -470,8 +466,6 @@
 			);
 			name = godtoolsTests;
 			packageProductDependencies = (
-				45F486EE2B76D501004E0E27 /* Quick */,
-				45F486F12B76D513004E0E27 /* Nimble */,
 				4581EAA42BFBE257008115FF /* RealmSwift */,
 				45F671922C33440E0017C8C2 /* LocalizationServices */,
 				4593DEFF2EABFD93004E1C8D /* GodToolsShared */,
@@ -602,8 +596,6 @@
 				45E7D4C22977430A008C7503 /* XCRemoteSwiftPackageReference "ZipArchive" */,
 				45D48C8429F81324004E92B1 /* XCRemoteSwiftPackageReference "social-authentication-ios" */,
 				45D40C692A5315D500E8E4AE /* XCRemoteSwiftPackageReference "Fuzi" */,
-				45F486ED2B76D500004E0E27 /* XCRemoteSwiftPackageReference "Quick" */,
-				45F486F02B76D512004E0E27 /* XCRemoteSwiftPackageReference "Nimble" */,
 				4581EAA12BFBE194008115FF /* XCRemoteSwiftPackageReference "realm-swift" */,
 				45F6718F2C3343ED0017C8C2 /* XCRemoteSwiftPackageReference "localization-services-ios" */,
 				45DF96472D386C1C00C6AE68 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
@@ -1903,22 +1895,6 @@
 				minimumVersion = 2.6.0;
 			};
 		};
-		45F486ED2B76D500004E0E27 /* XCRemoteSwiftPackageReference "Quick" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Quick/Quick.git";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 7.5.0;
-			};
-		};
-		45F486F02B76D512004E0E27 /* XCRemoteSwiftPackageReference "Nimble" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Quick/Nimble.git";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 13.3.0;
-			};
-		};
 		45F6718F2C3343ED0017C8C2 /* XCRemoteSwiftPackageReference "localization-services-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/CruGlobal/localization-services-ios";
@@ -2072,16 +2048,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 45E7D4C22977430A008C7503 /* XCRemoteSwiftPackageReference "ZipArchive" */;
 			productName = ZipArchive;
-		};
-		45F486EE2B76D501004E0E27 /* Quick */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 45F486ED2B76D500004E0E27 /* XCRemoteSwiftPackageReference "Quick" */;
-			productName = Quick;
-		};
-		45F486F12B76D513004E0E27 /* Nimble */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 45F486F02B76D512004E0E27 /* XCRemoteSwiftPackageReference "Nimble" */;
-			productName = Nimble;
 		};
 		45F671902C3344010017C8C2 /* LocalizationServices */ = {
 			isa = XCSwiftPackageProductDependency;
