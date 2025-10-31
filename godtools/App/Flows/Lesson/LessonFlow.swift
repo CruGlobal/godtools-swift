@@ -10,8 +10,8 @@ import UIKit
 import GodToolsToolParser
 import Combine
 
-class LessonFlow: ToolNavigationFlow, Flow {
-
+class LessonFlow: ToolNavigationFlow, Flow, ResourceSharer {
+    
     private let toolTranslations: ToolTranslationsDomainModel
     private let appLanguage: AppLanguageDomainModel
     private let trainingTipsEnabled: Bool
@@ -21,7 +21,8 @@ class LessonFlow: ToolNavigationFlow, Flow {
     private var lesson: ResourceDataModel {
         return toolTranslations.tool
     }
-    
+    private var viewShareToolDomainModelObserver: ViewShareToolDomainModelObserver? = nil
+        
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
@@ -119,6 +120,40 @@ class LessonFlow: ToolNavigationFlow, Flow {
         case .continueTappedFromResumeLessonModal:
             navigateToLesson(isNavigatingFromResumeLessonModal: true, initialPage: userLessonProgressPage, initialPageSubIndex: initialPageSubIndex, animated: false)
             navigationController.dismissPresented(animated: true, completion: nil)
+            
+            
+        case .shareLessonTappedFromLesson(let pageNumber):
+             
+            // TODO: - determine if the tool language ID is right
+            self.viewShareToolDomainModelObserver = ViewShareToolDomainModelObserver(
+                getViewShareToolUseCase: appDiContainer.feature.shareTool.domainLayer.getViewShareToolUseCase(),
+                appLanguage: appLanguage,
+                toolId: lesson.id,
+                toolLanguageId: appLanguage,
+                pageNumber: pageNumber)
+            
+            viewShareToolDomainModelObserver?.$viewShareToolDomainModel
+                .dropFirst()
+                .first()
+                .sink { [weak self] viewShareToolDomainModel in
+                
+                guard let self = self else { return }
+                
+                guard let domainModel = viewShareToolDomainModel else { return }
+                
+                let shareToolView = getShareResourceView(
+                    viewShareToolDomainModel: domainModel,
+                    toolId: self.lesson.id,
+                    toolAnalyticsAbbreviation: self.lesson.abbreviation,
+                    pageNumber: pageNumber)
+                
+                DispatchQueue.main.async {
+                    
+                    self.navigationController.present(shareToolView, animated: true)
+                }
+            }
+            .store(in: &cancellables)
+
             
         case .closeTappedFromLesson(let lessonId, let highestPageNumberViewed):
             closeTool(lessonId: lessonId, highestPageNumberViewed: highestPageNumberViewed)

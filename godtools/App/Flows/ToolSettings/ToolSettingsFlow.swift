@@ -10,7 +10,7 @@ import UIKit
 import SwiftUI
 import Combine
 
-class ToolSettingsFlow: Flow {
+class ToolSettingsFlow: Flow, ResourceSharer {
     
     private let toolSettingsObserver: ToolSettingsObserver
     private let toolSettingsDidCloseClosure: (() -> Void)?
@@ -96,7 +96,12 @@ class ToolSettingsFlow: Flow {
                 return
             }
             
-            navigationController.present(getShareToolView(viewShareToolDomainModel: domainModel), animated: true, completion: nil)
+            navigationController.present(getShareResourceView(
+                viewShareToolDomainModel: domainModel,
+                toolId: toolSettingsObserver.toolId,
+                toolAnalyticsAbbreviation: appDiContainer.dataLayer.getResourcesRepository().persistence.getObject(id: toolSettingsObserver.toolId)?.abbreviation ?? "",
+                pageNumber: toolSettingsObserver.pageNumber
+            ), animated: true, completion: nil)
                     
         case .screenShareTappedFromToolSettings:
             presentToolScreenShareFlow()
@@ -228,28 +233,6 @@ extension ToolSettingsFlow {
         hostingView.modalPresentationStyle = .overCurrentContext
         
         return hostingView
-    }
-}
-
-// MARK: - Share Tool View
-
-extension ToolSettingsFlow {
-    
-    private func getShareToolView(viewShareToolDomainModel: ViewShareToolDomainModel) -> UIViewController {
-                
-        let viewModel = ShareToolViewModel(
-            viewShareToolDomainModel: viewShareToolDomainModel,
-            toolId: toolSettingsObserver.toolId,
-            toolAnalyticsAbbreviation: appDiContainer.dataLayer.getResourcesRepository().persistence.getObject(id: toolSettingsObserver.toolId)?.abbreviation ?? "",
-            pageNumber: toolSettingsObserver.pageNumber,
-            incrementUserCounterUseCase: appDiContainer.feature.userActivity.domainLayer.getIncrementUserCounterUseCase(),
-            trackScreenViewAnalyticsUseCase: appDiContainer.domainLayer.getTrackScreenViewAnalyticsUseCase(),
-            trackActionAnalyticsUseCase: appDiContainer.domainLayer.getTrackActionAnalyticsUseCase()
-        )
-        
-        let view = ShareToolView(viewModel: viewModel)
-        
-        return view.controller
     }
 }
 

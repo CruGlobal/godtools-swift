@@ -88,7 +88,7 @@ extension LessonViewModel {
     
     func shareTapped() {
         
-        flowDelegate?.navigate(step: .shareLessonTappedFromLesson(lessonId: resource.id))
+        flowDelegate?.navigate(step: .shareLessonTappedFromLesson(pageNumber: currentPageNumber))
     }
     
     func closeTapped() {
