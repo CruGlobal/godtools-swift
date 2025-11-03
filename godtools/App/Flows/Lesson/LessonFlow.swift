@@ -21,7 +21,6 @@ class LessonFlow: ToolNavigationFlow, Flow, ResourceSharer {
     private var lesson: ResourceDataModel {
         return toolTranslations.tool
     }
-    private var viewShareToolDomainModelObserver: ViewShareToolDomainModelObserver? = nil
         
     private weak var flowDelegate: FlowDelegate?
     
@@ -125,34 +124,29 @@ class LessonFlow: ToolNavigationFlow, Flow, ResourceSharer {
         case .shareLessonTappedFromLesson(let pageNumber):
              
             // TODO: - determine if the tool language ID is right
-            self.viewShareToolDomainModelObserver = ViewShareToolDomainModelObserver(
-                getViewShareToolUseCase: appDiContainer.feature.shareTool.domainLayer.getViewShareToolUseCase(),
-                appLanguage: appLanguage,
+            let getViewShareToolUseCase = appDiContainer.feature.shareTool.domainLayer.getViewShareToolUseCase()
+            
+            getViewShareToolUseCase.viewPublisher(
                 toolId: lesson.id,
                 toolLanguageId: appLanguage,
+                pageNumber: pageNumber,
+                appLanguage: appLanguage
+            )
+            .first()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] viewShareToolDomainModel in
+            
+            guard let self = self else { return }
+                        
+            let shareToolView = getShareResourceView(
+                viewShareToolDomainModel: viewShareToolDomainModel,
+                toolId: self.lesson.id,
+                toolAnalyticsAbbreviation: self.lesson.abbreviation,
                 pageNumber: pageNumber)
             
-            viewShareToolDomainModelObserver?.$viewShareToolDomainModel
-                .dropFirst()
-                .first()
-                .sink { [weak self] viewShareToolDomainModel in
-                
-                guard let self = self else { return }
-                
-                guard let domainModel = viewShareToolDomainModel else { return }
-                
-                let shareToolView = getShareResourceView(
-                    viewShareToolDomainModel: domainModel,
-                    toolId: self.lesson.id,
-                    toolAnalyticsAbbreviation: self.lesson.abbreviation,
-                    pageNumber: pageNumber)
-                
-                DispatchQueue.main.async {
-                    
-                    self.navigationController.present(shareToolView, animated: true)
-                }
-            }
-            .store(in: &cancellables)
+            self.navigationController.present(shareToolView, animated: true)
+        }
+        .store(in: &cancellables)
 
             
         case .closeTappedFromLesson(let lessonId, let highestPageNumberViewed):
