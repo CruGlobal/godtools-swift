@@ -21,7 +21,7 @@ class LessonFlow: ToolNavigationFlow, Flow, ResourceSharer {
     private var lesson: ResourceDataModel {
         return toolTranslations.tool
     }
-        
+    
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
@@ -123,7 +123,6 @@ class LessonFlow: ToolNavigationFlow, Flow, ResourceSharer {
             
         case .shareLessonTappedFromLesson(let pageNumber, let languageId):
              
-            // TODO: - determine if the tool language ID is right
             let getViewShareToolUseCase = appDiContainer.feature.shareTool.domainLayer.getViewShareToolUseCase()
             
             getViewShareToolUseCase.viewPublisher(
@@ -136,18 +135,17 @@ class LessonFlow: ToolNavigationFlow, Flow, ResourceSharer {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] viewShareToolDomainModel in
             
-            guard let self = self else { return }
-                        
-            let shareToolView = getShareResourceView(
-                viewShareToolDomainModel: viewShareToolDomainModel,
-                toolId: self.lesson.id,
-                toolAnalyticsAbbreviation: self.lesson.abbreviation,
-                pageNumber: pageNumber)
-            
-            self.navigationController.present(shareToolView, animated: true)
-        }
-        .store(in: &cancellables)
-
+                guard let self = self else { return }
+                            
+                let shareToolView = getShareResourceView(
+                    viewShareToolDomainModel: viewShareToolDomainModel,
+                    toolId: self.lesson.id,
+                    toolAnalyticsAbbreviation: self.lesson.abbreviation,
+                    pageNumber: pageNumber)
+                
+                self.navigationController.present(shareToolView, animated: true)
+            }
+            .store(in: &cancellables)
             
         case .closeTappedFromLesson(let lessonId, let highestPageNumberViewed):
             closeTool(lessonId: lessonId, highestPageNumberViewed: highestPageNumberViewed)
