@@ -121,14 +121,14 @@ class LessonFlow: ToolNavigationFlow, Flow, ResourceSharer {
             navigationController.dismissPresented(animated: true, completion: nil)
             
             
-        case .shareLessonTappedFromLesson(let pageNumber):
+        case .shareLessonTappedFromLesson(let pageNumber, let languageId):
              
             // TODO: - determine if the tool language ID is right
             let getViewShareToolUseCase = appDiContainer.feature.shareTool.domainLayer.getViewShareToolUseCase()
             
             getViewShareToolUseCase.viewPublisher(
                 toolId: lesson.id,
-                toolLanguageId: appLanguage,
+                toolLanguageId: languageId,
                 pageNumber: pageNumber,
                 appLanguage: appLanguage
             )
