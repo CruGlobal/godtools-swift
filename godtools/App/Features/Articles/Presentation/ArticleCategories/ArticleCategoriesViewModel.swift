@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import GodToolsToolParser
+import GodToolsShared
 import Combine
 
 class ArticleCategoriesViewModel {
@@ -22,7 +22,7 @@ class ArticleCategoriesViewModel {
     private let incrementUserCounterUseCase: IncrementUserCounterUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
-    private let categories: [GodToolsToolParser.Category]
+    private let categories: [GodToolsShared.Category]
     
     private var cancellables: Set<AnyCancellable> = Set()
     private var pageViewCount: Int = 0
@@ -110,7 +110,7 @@ extension ArticleCategoriesViewModel {
     
     func categoryWillAppear(index: Int) -> ArticleCategoryCellViewModel {
         
-        let category: GodToolsToolParser.Category = categories[index]
+        let category: GodToolsShared.Category = categories[index]
         
         return ArticleCategoryCellViewModel(
             category: category,
@@ -120,7 +120,7 @@ extension ArticleCategoriesViewModel {
     
     func categoryTapped(index: Int) {
         
-        let category: GodToolsToolParser.Category = categories[index]
+        let category: GodToolsShared.Category = categories[index]
         
         flowDelegate?.navigate(step: .articleCategoryTappedFromArticleCategories(resource: resource, language: language, category: category, manifest: manifest))
     }

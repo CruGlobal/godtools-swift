@@ -7,9 +7,9 @@
 //
 
 import Foundation
-import GodToolsToolParser
+import GodToolsShared
 
-extension GodToolsToolParser.Flow: MobileContentRenderableModel {
+extension GodToolsShared.Flow: MobileContentRenderableModel {
     
     func getRenderableChildModels() -> [AnyObject] {
         

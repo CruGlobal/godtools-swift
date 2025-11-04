@@ -1,6 +1,8 @@
 "deferredDeepLinkModal.title" = "您似乎点击了 GodTools 的链接";
 "deferredDeepLinkModal.message" = "点击下面的按钮，我们就可以带您到您请求的内容。";
 
+"toolScreenShare.qrCode.closeButtonTitle" = "关闭";
+
 "optInNotification.notificationSettings" = "通知设置";
 "lessons.swipeTutorial.title" = "滑动切换页面";
 "lessons.swipeTutorial.buttonText" = "明白了";

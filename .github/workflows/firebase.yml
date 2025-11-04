@@ -26,10 +26,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
-        
-      - name: Pod Install
-        uses: ./.github/actions/pod-install
 
+      - name: Bundle Install
+        uses: ./.github/actions/bundle-install
+        
       - name: Add Firebase Service Account Key
         env:
           FIREBASE_SERVICE_ACCOUNT_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
@@ -61,7 +61,7 @@ jobs:
 
       - name: Archive Fastlane Gym Logs
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: fastlane-gym-logs
           path: "/Users/runner/Library/Logs/gym/godtools-*/**"
