@@ -10,7 +10,7 @@ import UIKit
 import GodToolsShared
 import Combine
 
-class LessonFlow: ToolNavigationFlow, Flow, ResourceSharer {
+class LessonFlow: ToolNavigationFlow, Flow, ToolSharer {
     
     private let toolTranslations: ToolTranslationsDomainModel
     private let appLanguage: AppLanguageDomainModel
@@ -137,7 +137,7 @@ class LessonFlow: ToolNavigationFlow, Flow, ResourceSharer {
             
                 guard let self = self else { return }
                             
-                let shareToolView = getShareResourceView(
+                let shareToolView = getShareToolView(
                     viewShareToolDomainModel: viewShareToolDomainModel,
                     toolId: self.lesson.id,
                     toolAnalyticsAbbreviation: self.lesson.abbreviation,

@@ -10,7 +10,7 @@ import UIKit
 import SwiftUI
 import Combine
 
-class ToolSettingsFlow: Flow, ResourceSharer {
+class ToolSettingsFlow: Flow, ToolSharer {
     
     private let toolSettingsObserver: ToolSettingsObserver
     private let toolSettingsDidCloseClosure: (() -> Void)?
@@ -96,7 +96,7 @@ class ToolSettingsFlow: Flow, ResourceSharer {
                 return
             }
             
-            navigationController.present(getShareResourceView(
+            navigationController.present(getShareToolView(
                 viewShareToolDomainModel: domainModel,
                 toolId: toolSettingsObserver.toolId,
                 toolAnalyticsAbbreviation: appDiContainer.dataLayer.getResourcesRepository().persistence.getObject(id: toolSettingsObserver.toolId)?.abbreviation ?? "",

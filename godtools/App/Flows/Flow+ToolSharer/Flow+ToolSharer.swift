@@ -1,5 +1,5 @@
 //
-//  ResourceSharer.swift
+//  ToolSharer.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 10/22/25.
@@ -8,11 +8,11 @@
 
 import UIKit
 
-protocol ResourceSharer { }
+protocol ToolSharer { }
 
-extension Flow where Self: ResourceSharer {
+extension Flow where Self: ToolSharer {
     
-    func getShareResourceView(viewShareToolDomainModel: ViewShareToolDomainModel, toolId: String, toolAnalyticsAbbreviation: String, pageNumber: Int) -> UIViewController {
+    func getShareToolView(viewShareToolDomainModel: ViewShareToolDomainModel, toolId: String, toolAnalyticsAbbreviation: String, pageNumber: Int) -> UIViewController {
                 
         let viewModel = ShareToolViewModel(
             viewShareToolDomainModel: viewShareToolDomainModel,
