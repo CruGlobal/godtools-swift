@@ -17,7 +17,7 @@ typealias SwiftResource = SwiftResourceV1.SwiftResource
 enum SwiftResourceV1 {
  
     @Model
-    class SwiftResource: IdentifiableSwiftDataObject {
+    class SwiftResource: IdentifiableSwiftDataObject, ResourceDataModelInterface {
         
         var abbreviation: String = ""
         var attachmentIds: [String] = Array<String>()
@@ -54,6 +54,35 @@ enum SwiftResourceV1 {
             
         init() {
             
+        }
+        
+        func mapFrom(interface: ResourceDataModelInterface) {
+            abbreviation = interface.abbreviation
+            attrAboutBannerAnimation = interface.attrAboutBannerAnimation
+            attrAboutOverviewVideoYoutube = interface.attrAboutOverviewVideoYoutube
+            attrBanner = interface.attrBanner
+            attrBannerAbout = interface.attrBannerAbout
+            attrCategory = interface.attrCategory
+            attrDefaultLocale = interface.attrDefaultLocale
+            attrDefaultOrder = interface.attrDefaultOrder
+            attrSpotlight = interface.attrSpotlight
+            defaultVariantId = interface.defaultVariantId
+            id = interface.id
+            isHidden = interface.isHidden
+            manifest = interface.manifest
+            metatoolId = interface.metatoolId
+            name = interface.name
+            oneskyProjectId = interface.oneskyProjectId
+            resourceDescription = interface.resourceDescription
+            resourceType = interface.resourceType
+            totalViews = interface.totalViews
+            type = interface.type
+        }
+        
+        static func createNewFrom(interface: ResourceDataModelInterface) -> SwiftResource {
+            let resource = SwiftResource()
+            resource.mapFrom(interface: interface)
+            return resource
         }
         
         func getAttachmentIds() -> [String] {
