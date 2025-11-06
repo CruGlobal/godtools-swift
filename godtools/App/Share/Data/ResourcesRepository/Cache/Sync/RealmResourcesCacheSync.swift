@@ -25,7 +25,7 @@ class RealmResourcesCacheSync {
         self.trackDownloadedTranslationsRepository = trackDownloadedTranslationsRepository
     }
     
-    func syncResources(resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel, shouldRemoveDataThatNoLongerExists: Bool) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> {
+    func syncResources(resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel, shouldRemoveDataThatNoLongerExists: Bool) -> AnyPublisher<ResourcesCacheSyncResult, Error> {
              
         return Future() { promise in
 
@@ -223,7 +223,7 @@ class RealmResourcesCacheSync {
                         realm.delete(realmObjectsToRemove)
                     }
                     
-                    let syncResult = RealmResourcesCacheSyncResult(
+                    let syncResult = ResourcesCacheSyncResult(
                         resourcesRemoved: resourcesRemoved,
                         translationsRemoved: translationsRemoved,
                         attachmentsRemoved: attachmentsRemoved,

@@ -96,7 +96,7 @@ class ResourcesRepository: RepositorySync<ResourceDataModel, MobileContentResour
             .eraseToAnyPublisher()
     }
     
-    func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsPublisher(requestPriority: RequestPriority, forceFetchFromRemote: Bool) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> {
+    func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsPublisher(requestPriority: RequestPriority, forceFetchFromRemote: Bool) -> AnyPublisher<ResourcesCacheSyncResult, Error> {
         
         let resourcesHaveBeenSynced: Bool = getResourcesHaveBeenSynced()
         
@@ -104,7 +104,7 @@ class ResourcesRepository: RepositorySync<ResourceDataModel, MobileContentResour
             
             return syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFile()
                 .map{ _ in
-                    return RealmResourcesCacheSyncResult.emptyResult()
+                    return ResourcesCacheSyncResult.emptyResult()
                 }
                 .catch { _ in
                     return self.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote(
@@ -125,7 +125,7 @@ class ResourcesRepository: RepositorySync<ResourceDataModel, MobileContentResour
         }
     }
     
-    func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFile() -> AnyPublisher<RealmResourcesCacheSyncResult?, Error> {
+    func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFile() -> AnyPublisher<ResourcesCacheSyncResult?, Error> {
                 
         let resourcesHaveBeenSynced: Bool = getResourcesHaveBeenSynced()
         
@@ -145,7 +145,7 @@ class ResourcesRepository: RepositorySync<ResourceDataModel, MobileContentResour
                     .getResourcesPlusLatestTranslationsAndAttachments()
                     .publisher
             )
-            .flatMap({ (languagesResponse: RepositorySyncResponse<LanguageDataModel>, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> in
+            .flatMap({ (languagesResponse: RepositorySyncResponse<LanguageDataModel>, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<ResourcesCacheSyncResult, Error> in
                 
                 return self.cache.syncResources(
                     resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments,
@@ -153,7 +153,7 @@ class ResourcesRepository: RepositorySync<ResourceDataModel, MobileContentResour
                 )
                 .eraseToAnyPublisher()
             })
-            .flatMap({ resourcesCacheResult -> AnyPublisher<RealmResourcesCacheSyncResult?, Error> in
+            .flatMap({ resourcesCacheResult -> AnyPublisher<ResourcesCacheSyncResult?, Error> in
                 
                 return Just(resourcesCacheResult)
                     .setFailureType(to: Error.self)
@@ -166,7 +166,7 @@ class ResourcesRepository: RepositorySync<ResourceDataModel, MobileContentResour
         return languagesRepository.persistence.getObjectCount() > 0 && persistence.getObjectCount() > 0
     }
     
-    private func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote(requestPriority: RequestPriority, forceFetchFromRemote: Bool) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> {
+    private func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote(requestPriority: RequestPriority, forceFetchFromRemote: Bool) -> AnyPublisher<ResourcesCacheSyncResult, Error> {
         
         let syncInvalidator = SyncInvalidator(
             id: Self.syncInvalidatorIdForResourcesPlustLatestTranslationsAndAttachments,
@@ -177,7 +177,7 @@ class ResourcesRepository: RepositorySync<ResourceDataModel, MobileContentResour
         let shouldFetchFromRemote: Bool = forceFetchFromRemote || syncInvalidator.shouldSync
 
         guard shouldFetchFromRemote else {
-            return Just(RealmResourcesCacheSyncResult.emptyResult())
+            return Just(ResourcesCacheSyncResult.emptyResult())
                 .setFailureType(to: Error.self)
                 .eraseToAnyPublisher()
         }
@@ -189,13 +189,13 @@ class ResourcesRepository: RepositorySync<ResourceDataModel, MobileContentResour
                     .setFailureType(to: Error.self),
                 api.getResourcesPlusLatestTranslationsAndAttachments(requestPriority: requestPriority)
             )
-            .flatMap({ (languagesResponse: RepositorySyncResponse<LanguageDataModel>, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> in
+            .flatMap({ (languagesResponse: RepositorySyncResponse<LanguageDataModel>, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<ResourcesCacheSyncResult, Error> in
                 
                 return self.cache.syncResources(
                     resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments,
                     shouldRemoveDataThatNoLongerExists: true
                 )
-                .map { (cacheResult: RealmResourcesCacheSyncResult) in
+                .map { (cacheResult: ResourcesCacheSyncResult) in
                     syncInvalidator.didSync()
                     return cacheResult
                 }
