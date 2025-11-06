@@ -270,7 +270,7 @@ class AppDataLayerDependencies {
             requestSender: getRequestSender()
         )
         
-        let cache = RealmResourcesCache(
+        let cache = ResourcesCache(
             realmDatabase: sharedRealmDatabase,
             resourcesSync: sync
         )

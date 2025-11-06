@@ -16,12 +16,12 @@ class ResourcesRepository: RepositorySync<ResourceDataModel, MobileContentResour
     
     private let api: MobileContentResourcesApi
     private let realmPersistence: RealmRepositorySyncPersistence<ResourceDataModel, ResourceCodable, RealmResource>
-    private let cache: RealmResourcesCache
+    private let cache: ResourcesCache
     private let attachmentsRepository: AttachmentsRepository
     private let languagesRepository: LanguagesRepository
     private let userDefaultsCache: UserDefaultsCacheInterface
     
-    init(api: MobileContentResourcesApi, realmDatabase: RealmDatabase, cache: RealmResourcesCache, attachmentsRepository: AttachmentsRepository, languagesRepository: LanguagesRepository, userDefaultsCache: UserDefaultsCacheInterface) {
+    init(api: MobileContentResourcesApi, realmDatabase: RealmDatabase, cache: ResourcesCache, attachmentsRepository: AttachmentsRepository, languagesRepository: LanguagesRepository, userDefaultsCache: UserDefaultsCacheInterface) {
         
         self.api = api
         self.cache = cache

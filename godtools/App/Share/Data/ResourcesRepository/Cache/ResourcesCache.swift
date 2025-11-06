@@ -1,5 +1,5 @@
 //
-//  RealmResourcesCache.swift
+//  ResourcesCache.swift
 //  godtools
 //
 //  Created by Levi Eggert on 5/28/20.
@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import Combine
 
-class RealmResourcesCache {
+class ResourcesCache {
     
     private let realmDatabase: RealmDatabase
     private let resourcesSync: RealmResourcesCacheSync
@@ -44,7 +44,7 @@ class RealmResourcesCache {
 
 // MARK: - Resources By Filter
 
-extension RealmResourcesCache {
+extension ResourcesCache {
     
     func getResourcesByFilter(filter: ResourcesFilter) -> [ResourceDataModel] {
         
@@ -112,7 +112,7 @@ extension RealmResourcesCache {
 
 // MARK: - Spotlight Tools
 
-extension RealmResourcesCache {
+extension ResourcesCache {
     
     func getSpotlightTools(sortByDefaultOrder: Bool) -> [ResourceDataModel] {
         
@@ -150,7 +150,7 @@ extension RealmResourcesCache {
 
 // MARK: - All Tools List
 
-extension RealmResourcesCache {
+extension ResourcesCache {
     
     private func getAllToolsListResults(filterByCategory: String?, filterByLanguageId: String?, sortByDefaultOrder: Bool) -> Results<RealmResource> {
         
@@ -230,7 +230,7 @@ extension RealmResourcesCache {
 
 // MARK: - Lessons
 
-extension RealmResourcesCache {
+extension ResourcesCache {
     
     func getAllLessonsResults(filterByLanguageId: String? = nil, additionalAttributeFilters: [NSPredicate]? = nil, sorted: Bool) -> Results<RealmResource> {
         var filterByAttributes: [NSPredicate] = Array()
@@ -299,7 +299,7 @@ extension RealmResourcesCache {
 
 // MARK: - Variants
 
-extension RealmResourcesCache {
+extension ResourcesCache {
     
     func getResourceVariants(resourceId: String) -> [ResourceDataModel] {
         
