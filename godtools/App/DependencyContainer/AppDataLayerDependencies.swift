@@ -99,7 +99,7 @@ class AppDataLayerDependencies {
                 urlSessionPriority: getSharedUrlSessionPriority(),
                 requestSender: getRequestSender()
             ),
-            realmDatabase: getSharedRealmDatabase(),
+            cache: AttachmentsCache(realmDatabase: getSharedRealmDatabase()),
             resourcesFileCache: getResourcesFileCache(),
             bundle: AttachmentsBundleCache()
         )

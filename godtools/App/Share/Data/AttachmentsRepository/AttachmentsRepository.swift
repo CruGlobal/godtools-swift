@@ -13,26 +13,20 @@ import RequestOperation
 class AttachmentsRepository: RepositorySync<AttachmentDataModel, MobileContentAttachmentsApi> {
     
     private let api: MobileContentAttachmentsApi
-    private let realmPersistence: RealmRepositorySyncPersistence<AttachmentDataModel, AttachmentCodable, RealmAttachment>
+    private let cache: AttachmentsCache
     private let resourcesFileCache: ResourcesSHA256FileCache
     private let bundle: AttachmentsBundleCache
     
-    init(api: MobileContentAttachmentsApi, realmDatabase: RealmDatabase, resourcesFileCache: ResourcesSHA256FileCache, bundle: AttachmentsBundleCache) {
+    init(api: MobileContentAttachmentsApi, cache: AttachmentsCache, resourcesFileCache: ResourcesSHA256FileCache, bundle: AttachmentsBundleCache) {
         
         self.api = api
+        self.cache = cache
         self.resourcesFileCache = resourcesFileCache
         self.bundle = bundle
         
-        let realmPersistence = RealmRepositorySyncPersistence<AttachmentDataModel, AttachmentCodable, RealmAttachment>(
-            realmDatabase: realmDatabase,
-            dataModelMapping: RealmAttachmentDataModelMapping()
-        )
-        
-        self.realmPersistence = realmPersistence
-        
         super.init(
             externalDataFetch: api,
-            persistence: realmPersistence
+            persistence: cache.getPersistence()
         )
     }
 }
