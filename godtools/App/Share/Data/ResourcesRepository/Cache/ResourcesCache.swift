@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import Combine
 
-class ResourcesCache {
+class ResourcesCache: SwiftElseRealmPersistence<ResourceDataModel, ResourceCodable, RealmResource> {
     
     private let realmDatabase: RealmDatabase
     private let resourcesSync: RealmResourcesCacheSync
@@ -19,6 +19,11 @@ class ResourcesCache {
         
         self.realmDatabase = realmDatabase
         self.resourcesSync = resourcesSync
+        
+        super.init(
+            realmDatabase: realmDatabase,
+            realmDataModelMapping: RealmResourceDataModelMapping()
+        )
     }
     
     func getResources(sorted: Bool = false) -> [ResourceDataModel] {
