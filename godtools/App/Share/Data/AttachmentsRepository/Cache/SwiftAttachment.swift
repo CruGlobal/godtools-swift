@@ -33,10 +33,6 @@ enum SwiftAttachmentV1 {
             
         }
         
-        var resourceDataModel: ResourceDataModel? {
-            return nil
-        }
-        
         func mapFrom(interface: AttachmentDataModelInterface) {
             file = interface.file
             fileFilename = interface.fileFilename
@@ -50,6 +46,15 @@ enum SwiftAttachmentV1 {
             let attachment = SwiftAttachment()
             attachment.mapFrom(interface: interface)
             return attachment
+        }
+        
+        var resourceDataModel: ResourceDataModel? {
+            
+            guard let swiftResource = resource else {
+                return nil
+            }
+            
+            return ResourceDataModel(interface: swiftResource)
         }
     }
 }
