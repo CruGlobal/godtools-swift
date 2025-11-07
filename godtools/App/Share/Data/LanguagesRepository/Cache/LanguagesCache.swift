@@ -54,18 +54,22 @@ extension LanguagesCache {
     func getCachedLanguage(code: BCP47LanguageIdentifier) -> LanguageDataModel? {
         
         if #available(iOS 17, *), let swiftPersistence = getSwiftPersistence() {
-            
+                        
             let filter = #Predicate<SwiftLanguage> { object in
-                object.code.localizedStandardContains(code)
+                object.code == code
             }
                     
-            return swiftPersistence.getObjects(query: SwiftDatabaseQuery.filter(filter: filter)).first
+            return swiftPersistence
+                .getObjects(query: SwiftDatabaseQuery.filter(filter: filter))
+                .first
         }
         else {
             
             let filter = NSPredicate(format: "\(#keyPath(RealmLanguage.code)) == [c] %@", code.lowercased())
             
-            return super.getRealmPersistence().getObjects(query: RealmDatabaseQuery.filter(filter: filter)).first
+            return super.getRealmPersistence()
+                .getObjects(query: RealmDatabaseQuery.filter(filter: filter))
+                .first
         }
     }
     
