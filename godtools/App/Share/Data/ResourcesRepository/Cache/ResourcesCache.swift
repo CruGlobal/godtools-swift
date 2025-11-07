@@ -13,12 +13,12 @@ import Combine
 class ResourcesCache: SwiftElseRealmPersistence<ResourceDataModel, ResourceCodable, RealmResource> {
     
     private let realmDatabase: RealmDatabase
-    private let resourcesSync: RealmResourcesCacheSync
+    private let trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository
         
-    init(realmDatabase: RealmDatabase, resourcesSync: RealmResourcesCacheSync) {
+    init(realmDatabase: RealmDatabase, trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository) {
         
         self.realmDatabase = realmDatabase
-        self.resourcesSync = resourcesSync
+        self.trackDownloadedTranslationsRepository = trackDownloadedTranslationsRepository
         
         super.init(
             realmDatabase: realmDatabase,
@@ -56,10 +56,30 @@ class ResourcesCache: SwiftElseRealmPersistence<ResourceDataModel, ResourceCodab
     
     func syncResources(resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable, shouldRemoveDataThatNoLongerExists: Bool) -> AnyPublisher<ResourcesCacheSyncResult, Error> {
         
-        return resourcesSync.syncResources(
-            resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments,
-            shouldRemoveDataThatNoLongerExists: shouldRemoveDataThatNoLongerExists
-        )
+        if #available(iOS 17, *), let swiftDatabase = TempSharedSwiftDatabase.shared.swiftDatabase {
+            
+            return SwiftResourcesCacheSync(
+                swiftDatabase: swiftDatabase,
+                trackDownloadedTranslationsRepository: trackDownloadedTranslationsRepository
+            )
+            .syncResources(
+                resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments,
+                shouldRemoveDataThatNoLongerExists: shouldRemoveDataThatNoLongerExists
+            )
+            .eraseToAnyPublisher()
+        }
+        else {
+            
+            return RealmResourcesCacheSync(
+                realmDatabase: realmDatabase,
+                trackDownloadedTranslationsRepository: trackDownloadedTranslationsRepository
+            )
+            .syncResources(
+                resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments,
+                shouldRemoveDataThatNoLongerExists: shouldRemoveDataThatNoLongerExists
+            )
+            .eraseToAnyPublisher()
+        }
     }
 }
 

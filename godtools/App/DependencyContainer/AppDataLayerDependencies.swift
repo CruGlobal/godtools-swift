@@ -259,11 +259,6 @@ class AppDataLayerDependencies {
     
     func getResourcesRepository() -> ResourcesRepository {
         
-        let sync = RealmResourcesCacheSync(
-            realmDatabase: sharedRealmDatabase,
-            trackDownloadedTranslationsRepository: getTrackDownloadedTranslationsRepository()
-        )
-        
         let api = MobileContentResourcesApi(
             config: getAppConfig(),
             urlSessionPriority: getSharedUrlSessionPriority(),
@@ -272,7 +267,7 @@ class AppDataLayerDependencies {
         
         let cache = ResourcesCache(
             realmDatabase: sharedRealmDatabase,
-            resourcesSync: sync
+            trackDownloadedTranslationsRepository: getTrackDownloadedTranslationsRepository()
         )
         
         return ResourcesRepository(

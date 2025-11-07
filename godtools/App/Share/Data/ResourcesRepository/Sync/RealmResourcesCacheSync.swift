@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import Combine
 
-class RealmResourcesCacheSync: ResourcesCacheSyncInterface {
+class RealmResourcesCacheSync {
     
     typealias SHA256PlusPathExtension = String
     typealias ResourceId = String

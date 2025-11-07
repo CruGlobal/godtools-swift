@@ -11,7 +11,7 @@ import Combine
 import SwiftData
 
 @available(iOS 17, *)
-class SwiftResourcesCacheSync: ResourcesCacheSyncInterface {
+class SwiftResourcesCacheSync {
     
     typealias SHA256PlusPathExtension = String
     typealias ResourceId = String
