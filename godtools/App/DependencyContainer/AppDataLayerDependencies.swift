@@ -390,7 +390,7 @@ class AppDataLayerDependencies {
                 requestSender: getRequestSender()
             ),
             realmDatabase: getSharedRealmDatabase(),
-            cache: RealmTranslationsCache(realmDatabase: getSharedRealmDatabase()),
+            cache: TranslationsCache(realmDatabase: getSharedRealmDatabase()),
             resourcesFileCache: getResourcesFileCache(),
             trackDownloadedTranslationsRepository: getTrackDownloadedTranslationsRepository(),
             remoteConfigRepository: getRemoteConfigRepository()

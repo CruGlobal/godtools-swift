@@ -1,5 +1,5 @@
 //
-//  RealmTranslationsCache.swift
+//  TranslationsCache.swift
 //  godtools
 //
 //  Created by Levi Eggert on 7/17/22.
@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class RealmTranslationsCache {
+class TranslationsCache {
     
     private let realmDatabase: RealmDatabase
         
