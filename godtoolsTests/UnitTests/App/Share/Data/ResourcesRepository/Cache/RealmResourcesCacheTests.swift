@@ -19,11 +19,8 @@ class RealmResourcesCacheTests: XCTestCase {
         
         return ResourcesCache(
             realmDatabase: realmDatabase,
-            resourcesSync: RealmResourcesCacheSync(
-                realmDatabase: realmDatabase,
-                trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository(
-                    cache: TrackDownloadedTranslationsCache(realmDatabase: realmDatabase)
-                )
+            trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository(
+                cache: TrackDownloadedTranslationsCache(realmDatabase: realmDatabase)
             )
         )
     }()
