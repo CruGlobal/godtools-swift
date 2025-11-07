@@ -314,6 +314,6 @@ extension SwiftRepositorySyncPersistenceTests {
         
         let swiftDatabase: SwiftDatabase = Self.getSwiftDatabase(name: name)
         
-        swiftDatabase.deleteAllData()
+        swiftDatabase.deleteAllObjects()
     }
 }

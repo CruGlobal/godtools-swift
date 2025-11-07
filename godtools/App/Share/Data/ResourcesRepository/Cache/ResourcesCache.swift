@@ -114,7 +114,7 @@ extension ResourcesCache {
         }
     }
     
-    func getResources(sortByDefaultOrder: Bool) -> [ResourceDataModel] {
+    func getResources(sortByDefaultOrder: Bool = false) -> [ResourceDataModel] {
         
         if #available(iOS 17, *), let swiftPersistence = getSwiftPersistence() {
             

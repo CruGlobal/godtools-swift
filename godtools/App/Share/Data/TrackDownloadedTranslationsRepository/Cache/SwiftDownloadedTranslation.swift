@@ -16,7 +16,7 @@ typealias SwiftDownloadedTranslation = SwiftDownloadedTranslationV1.SwiftDownloa
 enum SwiftDownloadedTranslationV1 {
  
     @Model
-    class SwiftDownloadedTranslation: IdentifiableSwiftDataObject {
+    class SwiftDownloadedTranslation: IdentifiableSwiftDataObject, DownloadedTranslationDataModelInterface {
         
         var languageId: String = ""
         var manifestAndRelatedFilesPersistedToDevice: Bool = false
@@ -28,6 +28,20 @@ enum SwiftDownloadedTranslationV1 {
         
         init() {
             
+        }
+        
+        func mapFrom(interface: DownloadedTranslationDataModelInterface) {
+            languageId = interface.languageId
+            manifestAndRelatedFilesPersistedToDevice = interface.manifestAndRelatedFilesPersistedToDevice
+            resourceId = interface.resourceId
+            translationId = interface.translationId
+            version = interface.version
+        }
+        
+        static func createNewFrom(interface: DownloadedTranslationDataModelInterface) -> SwiftDownloadedTranslation {
+            let downloadedTranslation = SwiftDownloadedTranslation()
+            downloadedTranslation.mapFrom(interface: interface)
+            return downloadedTranslation
         }
     }
 }

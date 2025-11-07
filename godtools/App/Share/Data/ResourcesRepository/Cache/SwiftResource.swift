@@ -84,21 +84,80 @@ enum SwiftResourceV1 {
             resource.mapFrom(interface: interface)
             return resource
         }
+    }
+}
+
+// MARK: - Attachments
+
+@available(iOS 17, *)
+extension SwiftResource {
+    
+    func getAttachmentIds() -> [String] {
+        return Array(attachmentIds)
+    }
+}
+
+// MARK: - Languages
+
+@available(iOS 17, *)
+extension SwiftResource {
+    
+    func addLanguage(language: SwiftLanguage) {
         
-        func getAttachmentIds() -> [String] {
-            return attachmentIds
+        if !languages.contains(language) {
+            languages.append(language)
         }
+    }
+    
+    func getLanguageIds() -> [String] {
+        return languages.map({$0.id})
+    }
+}
+
+// MARK: - Latest Translations
+
+@available(iOS 17, *)
+extension SwiftResource {
+    
+    func addLatestTranslation(translation: SwiftTranslation) {
         
-        func getLanguageIds() -> [String] {
-            return languageIds
+        if !latestTranslations.contains(translation) {
+            latestTranslations.append(translation)
         }
+    }
+    
+    func getLatestTranslationIds() -> [String] {
+        return Array(latestTranslationIds)
+    }
+}
+
+// MARK: - Variants
+
+@available(iOS 17, *)
+extension SwiftResource {
+    
+    func getDefaultVariant() -> SwiftResource? {
+        return defaultVariant
+    }
+    
+    func setDefaultVariant(variant: SwiftResource?) {
         
-        func getLatestTranslationIds() -> [String] {
-            return latestTranslationIds
-        }
+        variant?.isVariant = true
         
-        func getVariantIds() -> [String] {
-            return variantIds
+        defaultVariant = variant
+    }
+    
+    func addVariant(variant: SwiftResource) {
+        
+        variant.metatool = self
+        variant.isVariant = true
+        
+        if !variants.contains(variant) {
+            variants.append(variant)
         }
+    }
+    
+    func getVariantIds() -> [String] {
+        return Array(variantIds)
     }
 }

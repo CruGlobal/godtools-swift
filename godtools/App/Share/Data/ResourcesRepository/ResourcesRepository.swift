@@ -45,6 +45,15 @@ class ResourcesRepository: RepositorySync<ResourceDataModel, MobileContentResour
         return cache.getResourcesByFilterPublisher(filter: filter)
             .eraseToAnyPublisher()
     }
+}
+
+// MARK: - Sync
+
+extension ResourcesRepository {
+    
+    private var resourcesHaveBeenSynced: Bool {
+        return languagesRepository.persistence.getObjectCount() > 0 && persistence.getObjectCount() > 0
+    }
     
     func syncResourceAndLatestTranslationsPublisher(resourceId: String, requestPriority: RequestPriority) -> AnyPublisher<Void, Error> {
         
@@ -81,9 +90,7 @@ class ResourcesRepository: RepositorySync<ResourceDataModel, MobileContentResour
     }
     
     func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsPublisher(requestPriority: RequestPriority, forceFetchFromRemote: Bool) -> AnyPublisher<ResourcesCacheSyncResult, Error> {
-        
-        let resourcesHaveBeenSynced: Bool = getResourcesHaveBeenSynced()
-        
+                
         if !resourcesHaveBeenSynced {
             
             return syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFile()
@@ -110,9 +117,7 @@ class ResourcesRepository: RepositorySync<ResourceDataModel, MobileContentResour
     }
     
     func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFile() -> AnyPublisher<ResourcesCacheSyncResult?, Error> {
-                
-        let resourcesHaveBeenSynced: Bool = getResourcesHaveBeenSynced()
-        
+                        
         guard !resourcesHaveBeenSynced else {
             
             return Just(nil)
@@ -144,10 +149,6 @@ class ResourcesRepository: RepositorySync<ResourceDataModel, MobileContentResour
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
-    }
-    
-    private func getResourcesHaveBeenSynced() -> Bool {
-        return languagesRepository.persistence.getObjectCount() > 0 && persistence.getObjectCount() > 0
     }
     
     private func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote(requestPriority: RequestPriority, forceFetchFromRemote: Bool) -> AnyPublisher<ResourcesCacheSyncResult, Error> {
@@ -248,15 +249,5 @@ extension ResourcesRepository {
     
     func getAllLessonLanguageIds() -> [String] {
         return cache.getAllLessonLanguageIds()
-    }
-}
-
-// MARK: - Variants
-
-extension ResourcesRepository {
-    
-    func getResourceVariants(resourceId: String) -> [ResourceDataModel] {
-        
-        return cache.getResourceVariants(resourceId: resourceId)
     }
 }
