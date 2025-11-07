@@ -83,9 +83,60 @@ class ResourcesCache: SwiftElseRealmPersistence<ResourceDataModel, ResourceCodab
     }
 }
 
+// MARK: - Lessons
+
+extension ResourcesCache {
+    
+    func getLessons(sorted: Bool = false) -> [ResourceDataModel] {
+        
+        if #available(iOS 17, *), let swiftPersistence = getSwiftPersistence() {
+                        
+            let lessonType: String = ResourceType.lesson.rawValue
+            
+            let filter = #Predicate<SwiftResource> { object in
+                !object.isHidden && object.resourceType == lessonType
+            }
+            
+            return swiftPersistence
+                .getObjects(
+                    query: SwiftDatabaseQuery(
+                        filter: filter,
+                        sortBy: sorted ? getSwiftSortByDefaultOrder() : nil
+                    )
+                )
+        }
+        else {
+
+            let filterIsNotHidden = NSPredicate(format: "\(#keyPath(RealmResource.isHidden)) == %@", NSNumber(value: false))
+            
+            let filterIsLessonType = NSPredicate(format: "\(#keyPath(RealmResource.resourceType)) == [c] %@", ResourceType.lesson.rawValue)
+            
+            return super.getRealmPersistence()
+                .getObjects(
+                    query: RealmDatabaseQuery(
+                        filter: NSCompoundPredicate(type: .and, subpredicates: [filterIsNotHidden, filterIsLessonType]),
+                        sortByKeyPath: sorted ? getRealmSortByDefaultOrder() : nil
+                    )
+                )
+        }
+    }
+}
+
 // MARK: - Query
 
 extension ResourcesCache {
+    
+    @available(iOS 17, *)
+    private func getSwiftSortByDefaultOrder() -> [Foundation.SortDescriptor<SwiftResource>] {
+        return [SortDescriptor(\SwiftResource.attrDefaultOrder, order: .forward)]
+    }
+    
+    private func getRealmSortByDefaultOrder() -> SortByKeyPath {
+        return SortByKeyPath(
+            keyPath: #keyPath(RealmResource.attrDefaultOrder),
+            ascending: true
+        )
+    }
     
     func getResource(abbreviation: String) -> ResourceDataModel? {
         
@@ -134,50 +185,27 @@ extension ResourcesCache {
         }
     }
     
-    func getResources(sortByDefaultOrder: Bool = false) -> [ResourceDataModel] {
+    func getResources(sorted: Bool = false) -> [ResourceDataModel] {
         
         if #available(iOS 17, *), let swiftPersistence = getSwiftPersistence() {
             
-            let query: SwiftDatabaseQuery<SwiftResource>?
-            
-            if sortByDefaultOrder {
-                
-                query = SwiftDatabaseQuery(
-                    filter: nil,
-                    sortBy: [
-                        SortDescriptor(\SwiftResource.attrDefaultOrder, order: .forward)
-                    ]
-                )
-            }
-            else {
-                
-                query = nil
-            }
-            
             return swiftPersistence
-                .getObjects(query: query)
+                .getObjects(
+                    query: SwiftDatabaseQuery(
+                        filter: nil,
+                        sortBy: sorted ? getSwiftSortByDefaultOrder() : nil
+                    )
+                )
         }
         else {
             
-            let query: RealmDatabaseQuery?
-            
-            if sortByDefaultOrder {
-                
-                query = RealmDatabaseQuery(
-                    filter: nil,
-                    sortByKeyPath: SortByKeyPath(
-                        keyPath: #keyPath(RealmResource.attrDefaultOrder),
-                        ascending: true
+            return super.getRealmPersistence()
+                .getObjects(
+                    query: RealmDatabaseQuery(
+                        filter: nil,
+                        sortByKeyPath: sorted ? getRealmSortByDefaultOrder() : nil
                     )
                 )
-            }
-            else {
-                
-                query = nil
-            }
-            
-            return super.getRealmPersistence()
-                .getObjects(query: query)
         }
     }
 }
@@ -373,6 +401,7 @@ extension ResourcesCache {
 extension ResourcesCache {
     
     func getAllLessonsResults(filterByLanguageId: String? = nil, additionalAttributeFilters: [NSPredicate]? = nil, sorted: Bool) -> Results<RealmResource> {
+        
         var filterByAttributes: [NSPredicate] = Array()
         
         if let filterByLanguageId = filterByLanguageId {
