@@ -26,7 +26,7 @@ class DetermineDeepLinkedToolTranslationsToDownload: DetermineToolTranslationsTo
     }
     
     func getResource() -> ResourceDataModel? {
-        return resourcesRepository.getResource(abbreviation: toolDeepLink.resourceAbbreviation)
+        return resourcesRepository.cache.getResource(abbreviation: toolDeepLink.resourceAbbreviation)
     }
     
     func determineToolTranslationsToDownload() -> Result<DetermineToolTranslationsToDownloadResult, DetermineToolTranslationsToDownloadError> {
