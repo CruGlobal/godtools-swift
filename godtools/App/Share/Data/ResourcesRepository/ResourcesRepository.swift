@@ -15,11 +15,11 @@ class ResourcesRepository: RepositorySync<ResourceDataModel, MobileContentResour
     private static let syncInvalidatorIdForResourcesPlustLatestTranslationsAndAttachments: String = "resourcesPlusLatestTranslationAttachments.syncInvalidator.id"
     
     private let api: MobileContentResourcesApi
-    private let realmPersistence: RealmRepositorySyncPersistence<ResourceDataModel, ResourceCodable, RealmResource>
-    private let cache: ResourcesCache
     private let attachmentsRepository: AttachmentsRepository
     private let languagesRepository: LanguagesRepository
     private let userDefaultsCache: UserDefaultsCacheInterface
+    
+    let cache: ResourcesCache
     
     init(api: MobileContentResourcesApi, realmDatabase: RealmDatabase, cache: ResourcesCache, attachmentsRepository: AttachmentsRepository, languagesRepository: LanguagesRepository, userDefaultsCache: UserDefaultsCacheInterface) {
         
@@ -28,27 +28,11 @@ class ResourcesRepository: RepositorySync<ResourceDataModel, MobileContentResour
         self.attachmentsRepository = attachmentsRepository
         self.languagesRepository = languagesRepository
         self.userDefaultsCache = userDefaultsCache
-        
-        let realmPersistence = RealmRepositorySyncPersistence<ResourceDataModel, ResourceCodable, RealmResource>(
-            realmDatabase: realmDatabase,
-            dataModelMapping: RealmResourceDataModelMapping()
-        )
-        
-        self.realmPersistence = realmPersistence
-        
+                        
         super.init(
             externalDataFetch: api,
-            persistence: realmPersistence
+            persistence: cache.getPersistence()
         )
-    }
-    
-    func getResource(abbreviation: String) -> ResourceDataModel? {
-        return realmPersistence.getObjects(
-            query: RealmDatabaseQuery.filter(
-                filter: NSPredicate(format: "\(#keyPath(RealmResource.abbreviation)) = '\(abbreviation)'")
-            )
-        )
-        .first
     }
     
     func getCachedResourcesByFilter(filter: ResourcesFilter) -> [ResourceDataModel] {

@@ -54,18 +54,6 @@ class ResourcesCache: SwiftElseRealmPersistence<ResourceDataModel, ResourceCodab
         )
     }
     
-    func getResources(sorted: Bool = false) -> [ResourceDataModel] {
-            
-        var realmResources = realmDatabase.openRealm()
-            .objects(RealmResource.self)
-        
-        if sorted {
-            realmResources = realmResources.sorted(byKeyPath: #keyPath(RealmResource.attrDefaultOrder), ascending: true)
-        }
-        
-        return realmResources.map({ResourceDataModel(interface: $0)})
-    }
-    
     func syncResources(resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel, shouldRemoveDataThatNoLongerExists: Bool) -> AnyPublisher<ResourcesCacheSyncResult, Error> {
         
         return resourcesSync.syncResources(
@@ -79,12 +67,34 @@ class ResourcesCache: SwiftElseRealmPersistence<ResourceDataModel, ResourceCodab
 
 extension ResourcesCache {
     
+    func getResource(abbreviation: String) -> ResourceDataModel? {
+        
+        if #available(iOS 17, *), let swiftPersistence = getSwiftPersistence() {
+            
+            let filter = #Predicate<SwiftResource> { object in
+                object.abbreviation == abbreviation
+            }
+            
+            return swiftPersistence
+                .getObjects(query: SwiftDatabaseQuery.filter(filter: filter))
+                .first
+        }
+        else {
+            
+            let filter = NSPredicate(format: "\(#keyPath(RealmResource.abbreviation)) = '\(abbreviation)'")
+            
+            return super.getRealmPersistence()
+                .getObjects(query: RealmDatabaseQuery.filter(filter: filter))
+                .first
+        }
+    }
+    
     func getResourceVariants(resourceId: String) -> [ResourceDataModel] {
         
         if #available(iOS 17, *), let swiftPersistence = getSwiftPersistence() {
             
             let filter = #Predicate<SwiftResource> { object in
-                object.metatoolIdElseEmpty.localizedStandardContains(resourceId) && !object.isHidden
+                object.metatoolId == resourceId && !object.isHidden
             }
             
             return swiftPersistence.getObjects(query: SwiftDatabaseQuery.filter(filter: filter))
@@ -101,6 +111,53 @@ extension ResourcesCache {
                 .filter(filterPredicate).map {
                     ResourceDataModel(interface: $0)
                 }
+        }
+    }
+    
+    func getResources(sortByDefaultOrder: Bool) -> [ResourceDataModel] {
+        
+        if #available(iOS 17, *), let swiftPersistence = getSwiftPersistence() {
+            
+            let query: SwiftDatabaseQuery<SwiftResource>?
+            
+            if sortByDefaultOrder {
+                
+                query = SwiftDatabaseQuery(
+                    filter: nil,
+                    sortBy: [
+                        SortDescriptor(\SwiftResource.attrDefaultOrder, order: .forward)
+                    ]
+                )
+            }
+            else {
+                
+                query = nil
+            }
+            
+            return swiftPersistence
+                .getObjects(query: query)
+        }
+        else {
+            
+            let query: RealmDatabaseQuery?
+            
+            if sortByDefaultOrder {
+                
+                query = RealmDatabaseQuery(
+                    filter: nil,
+                    sortByKeyPath: SortByKeyPath(
+                        keyPath: #keyPath(RealmResource.attrDefaultOrder),
+                        ascending: true
+                    )
+                )
+            }
+            else {
+                
+                query = nil
+            }
+            
+            return super.getRealmPersistence()
+                .getObjects(query: query)
         }
     }
 }
