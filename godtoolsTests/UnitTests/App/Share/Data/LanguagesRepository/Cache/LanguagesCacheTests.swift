@@ -30,6 +30,10 @@ struct LanguagesCacheTests {
         TestArgument(
             queryByLanguageCodes: [LanguageCodeDomainModel.spanish],
             expectedLanguageIds: ["i"]
+        ),
+        TestArgument(
+            queryByLanguageCodes: [LanguageCodeDomainModel.finnish],
+            expectedLanguageIds: ["l"]
         )
     ])
     func queryLanguageByCode(argument: TestArgument) async throws {
@@ -84,7 +88,9 @@ extension LanguagesCacheTests {
             TestLanguage(id: "g", code: LanguageCodeDomainModel.portuguese),
             TestLanguage(id: "h", code: LanguageCodeDomainModel.russian),
             TestLanguage(id: "i", code: LanguageCodeDomainModel.spanish),
-            TestLanguage(id: "j", code: LanguageCodeDomainModel.vietnamese)
+            TestLanguage(id: "j", code: LanguageCodeDomainModel.vietnamese),
+            TestLanguage(id: "k", code: LanguageCodeDomainModel.filipino),
+            TestLanguage(id: "l", code: LanguageCodeDomainModel.finnish)
         ]
     }
     
