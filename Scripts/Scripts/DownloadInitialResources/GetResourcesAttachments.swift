@@ -11,7 +11,7 @@ import Combine
 
 class GetResourcesAttachments {
     
-    static func getResourceAttachments(resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<[AttachmentCodable], Never> {
+    static func getResourceAttachments(resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable) -> AnyPublisher<[AttachmentCodable], Never> {
         
         let attachmentIds: [String] = resourcesPlusLatestTranslationsAndAttachments.resources.map({$0.attrBanner})
                 

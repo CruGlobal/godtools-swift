@@ -40,7 +40,7 @@ class MobileContentResourcesApi {
         )
     }
     
-    func getResourcePlusLatestTranslationsAndAttachmentsPublisher(id: String, requestPriority: RequestPriority) -> AnyPublisher<ResourcesPlusLatestTranslationsAndAttachmentsModel, Error> {
+    func getResourcePlusLatestTranslationsAndAttachmentsPublisher(id: String, requestPriority: RequestPriority) -> AnyPublisher<ResourcesPlusLatestTranslationsAndAttachmentsCodable, Error> {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
@@ -48,9 +48,9 @@ class MobileContentResourcesApi {
         
         return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
             .decodeRequestDataResponseForSuccessOrFailureCodable()
-            .map { (response: RequestCodableResponse<ResourcesPlusLatestTranslationsAndAttachmentsModel, NoResponseCodable>) in
+            .map { (response: RequestCodableResponse<ResourcesPlusLatestTranslationsAndAttachmentsCodable, NoResponseCodable>) in
                 
-                let resources: ResourcesPlusLatestTranslationsAndAttachmentsModel = response.successCodable ?? ResourcesPlusLatestTranslationsAndAttachmentsModel.emptyModel
+                let resources: ResourcesPlusLatestTranslationsAndAttachmentsCodable = response.successCodable ?? ResourcesPlusLatestTranslationsAndAttachmentsCodable.emptyModel
                 return resources
             }
             .eraseToAnyPublisher()
@@ -70,7 +70,7 @@ class MobileContentResourcesApi {
         )
     }
     
-    func getResourcePlusLatestTranslationsAndAttachmentsPublisher(abbreviation: String, requestPriority: RequestPriority) -> AnyPublisher<ResourcesPlusLatestTranslationsAndAttachmentsModel, Error> {
+    func getResourcePlusLatestTranslationsAndAttachmentsPublisher(abbreviation: String, requestPriority: RequestPriority) -> AnyPublisher<ResourcesPlusLatestTranslationsAndAttachmentsCodable, Error> {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
@@ -78,9 +78,9 @@ class MobileContentResourcesApi {
         
         return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
             .decodeRequestDataResponseForSuccessOrFailureCodable()
-            .map { (response: RequestCodableResponse<ResourcesPlusLatestTranslationsAndAttachmentsModel, NoResponseCodable>) in
+            .map { (response: RequestCodableResponse<ResourcesPlusLatestTranslationsAndAttachmentsCodable, NoResponseCodable>) in
                 
-                let resources: ResourcesPlusLatestTranslationsAndAttachmentsModel = response.successCodable ?? ResourcesPlusLatestTranslationsAndAttachmentsModel.emptyModel
+                let resources: ResourcesPlusLatestTranslationsAndAttachmentsCodable = response.successCodable ?? ResourcesPlusLatestTranslationsAndAttachmentsCodable.emptyModel
                 return resources
             }
             .eraseToAnyPublisher()
@@ -102,7 +102,7 @@ class MobileContentResourcesApi {
         )
     }
     
-    func getResourcesPlusLatestTranslationsAndAttachments(requestPriority: RequestPriority) -> AnyPublisher<ResourcesPlusLatestTranslationsAndAttachmentsModel, Error> {
+    func getResourcesPlusLatestTranslationsAndAttachments(requestPriority: RequestPriority) -> AnyPublisher<ResourcesPlusLatestTranslationsAndAttachmentsCodable, Error> {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
@@ -110,9 +110,9 @@ class MobileContentResourcesApi {
         
         return requestSender.sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
             .decodeRequestDataResponseForSuccessCodable()
-            .map { (response: RequestCodableResponse<ResourcesPlusLatestTranslationsAndAttachmentsModel, NoResponseCodable>) in
+            .map { (response: RequestCodableResponse<ResourcesPlusLatestTranslationsAndAttachmentsCodable, NoResponseCodable>) in
                 
-                let resources: ResourcesPlusLatestTranslationsAndAttachmentsModel = response.successCodable ?? ResourcesPlusLatestTranslationsAndAttachmentsModel.emptyModel
+                let resources: ResourcesPlusLatestTranslationsAndAttachmentsCodable = response.successCodable ?? ResourcesPlusLatestTranslationsAndAttachmentsCodable.emptyModel
                 return resources
             }
             .eraseToAnyPublisher()

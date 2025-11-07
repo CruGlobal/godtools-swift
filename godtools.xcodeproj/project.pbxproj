@@ -668,7 +668,7 @@
 				"$(SRCROOT)/godtools/App/Share/Data/AttachmentsRepository/AttachmentDataModelInterface.swift",
 				"$(SRCROOT)/godtools/App/Share/Data/LanguagesRepository/Api/Models/LanguageCodable.swift",
 				"$(SRCROOT)/godtools/App/Share/Data/LanguagesRepository/LanguageDataModelInterface.swift",
-				"$(SRCROOT)/godtools/App/Share/Data/ResourcesRepository/Api/Models/ResourcesPlusLatestTranslationsAndAttachmentsModel.swift",
+				"$(SRCROOT)/godtools/App/Share/Data/ResourcesRepository/Api/Models/ResourcesPlusLatestTranslationsAndAttachmentsCodable.swift",
 				"$(SRCROOT)/godtools/App/Share/Common/SharedAppleExtensions/Foundation/Error/NSError+WithDescription.swift",
 				"$(SRCROOT)/Scripts/Scripts/DownloadInitialResources/GetResourcesAndLanguagesData.swift",
 				"$(SRCROOT)/Scripts/Scripts/DownloadInitialResources/GetResourcesAttachments.swift",

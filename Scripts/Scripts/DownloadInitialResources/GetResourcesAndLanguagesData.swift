@@ -11,11 +11,11 @@ import Combine
 
 class GetResourcesAndLanguagesData {
 
-    static func parseResourcePlusLatestTranslationsAndAttachmentsModel(resourcesData: Data) -> AnyPublisher<ResourcesPlusLatestTranslationsAndAttachmentsModel, Error> {
+    static func parseResourcePlusLatestTranslationsAndAttachmentsModel(resourcesData: Data) -> AnyPublisher<ResourcesPlusLatestTranslationsAndAttachmentsCodable, Error> {
                 
         do {
             
-            let resources: ResourcesPlusLatestTranslationsAndAttachmentsModel = try JSONDecoder().decode(ResourcesPlusLatestTranslationsAndAttachmentsModel.self, from: resourcesData)
+            let resources: ResourcesPlusLatestTranslationsAndAttachmentsCodable = try JSONDecoder().decode(ResourcesPlusLatestTranslationsAndAttachmentsCodable.self, from: resourcesData)
             
             return Just(resources).setFailureType(to: Error.self)
                 .eraseToAnyPublisher()
