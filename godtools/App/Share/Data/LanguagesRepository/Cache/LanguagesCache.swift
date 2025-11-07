@@ -49,12 +49,15 @@ class LanguagesCache: SwiftElseRealmPersistence<LanguageDataModel, LanguageCodab
             dataModelMapping: SwiftLanguageDataModelMapping()
         )
     }
-    
-    // MARK: - Query
+}
+
+// MARK: - Query
+
+extension LanguagesCache {
     
     func getCachedLanguage(code: BCP47LanguageIdentifier) -> LanguageDataModel? {
         
-        if #available(iOS 17, *),let swiftPersistence = getSwiftPersistence() {
+        if #available(iOS 17, *), let swiftPersistence = getSwiftPersistence() {
             
             let filter = #Predicate<SwiftLanguage> { object in
                 object.code.localizedStandardContains(code)
