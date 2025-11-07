@@ -36,6 +36,9 @@ enum SwiftResourceV1 {
         var latestTranslationIds: [String] = Array<String>()
         var manifest: String = ""
         var metatoolId: String?
+        var metatoolIdElseEmpty: String {
+            return metatoolId ?? ""
+        }
         var name: String = ""
         var oneskyProjectId: Int = -1
         var resourceDescription: String = ""

@@ -26,6 +26,34 @@ class ResourcesCache: SwiftElseRealmPersistence<ResourceDataModel, ResourceCodab
         )
     }
     
+    @available(iOS 17, *)
+    override func getAnySwiftPersistence(swiftDatabase: SwiftDatabase) -> (any RepositorySyncPersistence<ResourceDataModel, ResourceCodable>)? {
+        return getSwiftPersistence(swiftDatabase: swiftDatabase)
+    }
+    
+    @available(iOS 17, *)
+    private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<ResourceDataModel, ResourceCodable, SwiftResource>? {
+        
+        guard let swiftDatabase = super.getSwiftDatabase() else {
+            return nil
+        }
+        
+        return getSwiftPersistence(swiftDatabase: swiftDatabase)
+    }
+    
+    @available(iOS 17, *)
+    private func getSwiftPersistence(swiftDatabase: SwiftDatabase) -> SwiftRepositorySyncPersistence<ResourceDataModel, ResourceCodable, SwiftResource>? {
+        
+        guard let swiftDatabase = super.getSwiftDatabase() else {
+            return nil
+        }
+        
+        return SwiftRepositorySyncPersistence(
+            swiftDatabase: swiftDatabase,
+            dataModelMapping: SwiftResourceDataModelMapping()
+        )
+    }
+    
     func getResources(sorted: Bool = false) -> [ResourceDataModel] {
             
         var realmResources = realmDatabase.openRealm()
@@ -44,6 +72,36 @@ class ResourcesCache: SwiftElseRealmPersistence<ResourceDataModel, ResourceCodab
             resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments,
             shouldRemoveDataThatNoLongerExists: shouldRemoveDataThatNoLongerExists
         )
+    }
+}
+
+// MARK: - Query
+
+extension ResourcesCache {
+    
+    func getResourceVariants(resourceId: String) -> [ResourceDataModel] {
+        
+        if #available(iOS 17, *), let swiftPersistence = getSwiftPersistence() {
+            
+            let filter = #Predicate<SwiftResource> { object in
+                object.metatoolIdElseEmpty.localizedStandardContains(resourceId) && !object.isHidden
+            }
+            
+            return swiftPersistence.getObjects(query: SwiftDatabaseQuery.filter(filter: filter))
+        }
+        else {
+            
+            let filterByMetaToolId = NSPredicate(format: "\(#keyPath(RealmResource.metatoolId).appending(" = [c] %@"))", resourceId)
+            let filterIsNotHidden = NSPredicate(format: "\(#keyPath(RealmResource.isHidden)) == %@", NSNumber(value: false))
+            let filterPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [filterByMetaToolId, filterIsNotHidden])
+            
+            let realm: Realm = realmDatabase.openRealm()
+            
+            return realm.objects(RealmResource.self)
+                .filter(filterPredicate).map {
+                    ResourceDataModel(interface: $0)
+                }
+        }
     }
 }
 
@@ -299,23 +357,5 @@ extension ResourcesCache {
         let filterIsSpotlight = NSPredicate(format: "\(#keyPath(RealmResource.attrSpotlight)) == %@", NSNumber(value: true))
         
         return getAllLessons(additionalAttributeFilters: [filterIsSpotlight], sorted: sorted)
-    }
-}
-
-// MARK: - Variants
-
-extension ResourcesCache {
-    
-    func getResourceVariants(resourceId: String) -> [ResourceDataModel] {
-        
-        let filterByMetaToolId = NSPredicate(format: "\(#keyPath(RealmResource.metatoolId).appending(" = [c] %@"))", resourceId)
-        let filterIsNotHidden = NSPredicate(format: "\(#keyPath(RealmResource.isHidden)) == %@", NSNumber(value: false))
-        let filterPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [filterByMetaToolId, filterIsNotHidden])
-        
-        let realm: Realm = realmDatabase.openRealm()
-        
-        return realm.objects(RealmResource.self).filter(filterPredicate).map {
-            ResourceDataModel(interface: $0)
-        }
     }
 }
