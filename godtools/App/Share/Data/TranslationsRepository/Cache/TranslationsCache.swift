@@ -7,18 +7,64 @@
 //
 
 import Foundation
-import RealmSwift
 
-class TranslationsCache {
-    
+class TranslationsCache: SwiftElseRealmPersistence<TranslationDataModel, TranslationCodable, RealmTranslation> {
+         
     private let realmDatabase: RealmDatabase
-        
+    
     init(realmDatabase: RealmDatabase) {
         
         self.realmDatabase = realmDatabase
+        
+        super.init(
+            realmDatabase: realmDatabase,
+            realmDataModelMapping: RealmTranslationDataModelMapping()
+        )
     }
     
+    @available(iOS 17, *)
+    override func getAnySwiftPersistence(swiftDatabase: SwiftDatabase) -> (any RepositorySyncPersistence<TranslationDataModel, TranslationCodable>)? {
+        return getSwiftPersistence(swiftDatabase: swiftDatabase)
+    }
+    
+    @available(iOS 17, *)
+    private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<TranslationDataModel, TranslationCodable, SwiftTranslation>? {
+        
+        guard let swiftDatabase = super.getSwiftDatabase() else {
+            return nil
+        }
+        
+        return getSwiftPersistence(swiftDatabase: swiftDatabase)
+    }
+    
+    @available(iOS 17, *)
+    private func getSwiftPersistence(swiftDatabase: SwiftDatabase) -> SwiftRepositorySyncPersistence<TranslationDataModel, TranslationCodable, SwiftTranslation>? {
+        
+        guard let swiftDatabase = super.getSwiftDatabase() else {
+            return nil
+        }
+        
+        return SwiftRepositorySyncPersistence(
+            swiftDatabase: swiftDatabase,
+            dataModelMapping: SwiftTranslationDataModelMapping()
+        )
+    }
+}
+
+// MARK: - Query
+
+extension TranslationsCache {
+    
     func getTranslationsSortedByLatestVersion(resourceId: String, languageId: String) -> [TranslationDataModel] {
+        
+        // TODO: Add query for swiftdata. ~Levi
+        
+        if #available(iOS 17, *), let swiftPersistence = getSwiftPersistence() {
+            
+        }
+        else {
+            
+        }
         
         guard let realmResource = realmDatabase.openRealm()
             .object(ofType: RealmResource.self, forPrimaryKey: resourceId) else {
@@ -34,6 +80,15 @@ class TranslationsCache {
     }
     
     func getTranslationsSortedByLatestVersion(resourceId: String, languageCode: String) -> [TranslationDataModel] {
+        
+        // TODO: Add query for swiftdata. ~Levi
+        
+        if #available(iOS 17, *), let swiftPersistence = getSwiftPersistence() {
+            
+        }
+        else {
+            
+        }
         
         guard let realmResource = realmDatabase.openRealm()
             .object(ofType: RealmResource.self, forPrimaryKey: resourceId) else {
