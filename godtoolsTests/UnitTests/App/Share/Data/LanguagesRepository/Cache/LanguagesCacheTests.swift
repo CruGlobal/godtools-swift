@@ -67,7 +67,7 @@ struct LanguagesCacheTests {
         
         let languageCodes: [String] = argument.queryByLanguageCodes.map { $0.rawValue }
         
-        let languages: [LanguageDataModel] = languagesCache.getCachedLanguages(languageCodes: languageCodes)
+        let languages: [LanguageDataModel] = languagesCache.getCachedLanguages(codes: languageCodes)
         
         let languageIds: [String] = languages.map { $0.id }
 
