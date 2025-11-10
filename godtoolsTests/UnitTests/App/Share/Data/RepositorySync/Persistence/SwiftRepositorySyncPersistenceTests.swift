@@ -22,7 +22,7 @@ struct SwiftRepositorySyncPersistenceTests {
     
     // MARK: - Read Tests
     
-    @available(iOS, introduced: 17.0)
+    @available(iOS, introduced: 17.4)
     @Test()
     @MainActor func returnsCorrectNumberOfObjects() async {
         
@@ -42,7 +42,7 @@ struct SwiftRepositorySyncPersistenceTests {
         #expect(count == initialPersistedObjectsIds.count)
     }
     
-    @available(iOS, introduced: 17.0)
+    @available(iOS, introduced: 17.4)
     @Test()
     @MainActor func fetchesObjectById() async {
         
@@ -64,7 +64,7 @@ struct SwiftRepositorySyncPersistenceTests {
         #expect(dataModel?.id == objectIdToFetch)
     }
     
-    @available(iOS, introduced: 17.0)
+    @available(iOS, introduced: 17.4)
     @Test()
     @MainActor func fetchesAllObjects() async {
         
@@ -86,7 +86,7 @@ struct SwiftRepositorySyncPersistenceTests {
         #expect(sortedDataModelIds == ["0", "1", "2", "3", "4", "5", "6"])
     }
     
-    @available(iOS, introduced: 17.0)
+    @available(iOS, introduced: 17.4)
     @Test()
     @MainActor func fetchesObjectsByIds() async {
         
@@ -112,7 +112,7 @@ struct SwiftRepositorySyncPersistenceTests {
     
     // MARK: - Write Tests
     
-    @available(iOS, introduced: 17.0)
+    @available(iOS, introduced: 17.4)
     @Test(arguments: [
         TestArgument(
             initialPersistedObjectsIds: ["5", "3", "2", "1", "4", "0", "6"],
@@ -157,7 +157,7 @@ struct SwiftRepositorySyncPersistenceTests {
         Self.deleteSwiftDatabase(name: argument.swiftDatabaseName)
     }
     
-    @available(iOS, introduced: 17.0)
+    @available(iOS, introduced: 17.4)
     @Test(arguments: [
         TestArgument(
             initialPersistedObjectsIds: ["5", "3", "2", "1", "4", "0", "6"],
@@ -205,7 +205,7 @@ struct SwiftRepositorySyncPersistenceTests {
     
     // MARK: - Delete Tests
     
-    @available(iOS, introduced: 17.0)
+    @available(iOS, introduced: 17.4)
     @Test()
     @MainActor func allObjectsDeleted() async {
         
