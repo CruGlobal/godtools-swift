@@ -47,7 +47,7 @@ extension AttachmentsRepository {
         
         let imageData: Data?
         
-        if let bundleImageData = bundle.getAttachmentData(resource: cachedAttachment.sha256)  {
+        if let bundleImageData = bundle.getBundledAttachment(resource: cachedAttachment.sha256)  {
             
             imageData = bundleImageData
         }
