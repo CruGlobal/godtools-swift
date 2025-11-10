@@ -9,6 +9,7 @@
 import Foundation
 import RealmSwift
 import Combine
+import SwiftData
 
 class ResourcesCache: SwiftElseRealmPersistence<ResourceDataModel, ResourceCodable, RealmResource> {
     
@@ -26,12 +27,12 @@ class ResourcesCache: SwiftElseRealmPersistence<ResourceDataModel, ResourceCodab
         )
     }
     
-    @available(iOS 17, *)
+    @available(iOS 17.4, *)
     override func getAnySwiftPersistence(swiftDatabase: SwiftDatabase) -> (any RepositorySyncPersistence<ResourceDataModel, ResourceCodable>)? {
         return getSwiftPersistence(swiftDatabase: swiftDatabase)
     }
     
-    @available(iOS 17, *)
+    @available(iOS 17.4, *)
     private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<ResourceDataModel, ResourceCodable, SwiftResource>? {
         
         guard let swiftDatabase = super.getSwiftDatabase() else {
@@ -41,7 +42,7 @@ class ResourcesCache: SwiftElseRealmPersistence<ResourceDataModel, ResourceCodab
         return getSwiftPersistence(swiftDatabase: swiftDatabase)
     }
     
-    @available(iOS 17, *)
+    @available(iOS 17.4, *)
     private func getSwiftPersistence(swiftDatabase: SwiftDatabase) -> SwiftRepositorySyncPersistence<ResourceDataModel, ResourceCodable, SwiftResource>? {
         
         guard let swiftDatabase = super.getSwiftDatabase() else {
@@ -56,7 +57,7 @@ class ResourcesCache: SwiftElseRealmPersistence<ResourceDataModel, ResourceCodab
     
     func syncResources(resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable, shouldRemoveDataThatNoLongerExists: Bool) -> AnyPublisher<ResourcesCacheSyncResult, Error> {
         
-        if #available(iOS 17, *), let swiftDatabase = TempSharedSwiftDatabase.shared.swiftDatabase {
+        if #available(iOS 17.4, *), let swiftDatabase = TempSharedSwiftDatabase.shared.swiftDatabase {
             
             return SwiftResourcesCacheSync(
                 swiftDatabase: swiftDatabase,
@@ -83,64 +84,234 @@ class ResourcesCache: SwiftElseRealmPersistence<ResourceDataModel, ResourceCodab
     }
 }
 
+// MARK: - Filter Predicates
+
+extension ResourcesCache {
+    
+    @available(iOS 17.4, *)
+    private var isSpotlightPredicate: Predicate<SwiftResource> {
+        let predicate = #Predicate<SwiftResource> { object in
+            object.attrSpotlight == true
+        }
+        return predicate
+    }
+    
+    private var isSpotlightNSPredicate: NSPredicate {
+        return NSPredicate(format: "\(#keyPath(RealmResource.attrSpotlight)) == %@", NSNumber(value: true))
+    }
+    
+    @available(iOS 17.4, *)
+    private func getLessonsPredicate(filterByLanguageId: String? = nil) -> Predicate<SwiftResource> {
+        
+        let lessonType: String = ResourceType.lesson.rawValue
+        let filterByLanguageId: String = filterByLanguageId ?? ""
+        
+        let notHidden = #Predicate<SwiftResource> { object in
+            !object.isHidden
+        }
+        
+        let isLesson = #Predicate<SwiftResource> { object in
+            object.resourceType == lessonType
+        }
+                
+        let byLanguage = #Predicate<SwiftResource> { object in
+            return object.languageIds.contains(filterByLanguageId)
+        }
+        
+        let filter = #Predicate<SwiftResource> { object in
+            notHidden.evaluate(object)
+            && isLesson.evaluate(object)
+            && !filterByLanguageId.isEmpty ? byLanguage.evaluate(object) : true
+        }
+        
+        return filter
+    }
+    
+    private func getLessonsNSPredicate(filterByLanguageId: String? = nil) -> NSPredicate {
+        
+        var filterByAttributes: [NSPredicate] = Array()
+        
+        let filterIsLessonType = NSPredicate(format: "\(#keyPath(RealmResource.resourceType)) == [c] %@", ResourceType.lesson.rawValue)
+        let filterIsNotHidden = NSPredicate(format: "\(#keyPath(RealmResource.isHidden)) == %@", NSNumber(value: false))
+        
+        filterByAttributes.append(filterIsLessonType)
+        filterByAttributes.append(filterIsNotHidden)
+        
+        if let filterByLanguageId = filterByLanguageId, !filterByLanguageId.isEmpty {
+            
+            let filterByLanguage = NSPredicate(format: "SUBQUERY(languages, $language, $language.id == [c] \"\(filterByLanguageId)\").@count > 0")
+            
+            filterByAttributes.append(filterByLanguage)
+        }
+        
+        let filterPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: filterByAttributes)
+        
+        return filterPredicate
+    }
+}
+
+// MARK: - Sort Descriptors
+
+extension ResourcesCache {
+    
+    @available(iOS 17.4, *)
+    private func getSortByDefaultOrderDescriptor() -> [Foundation.SortDescriptor<SwiftResource>] {
+        return [SortDescriptor(\SwiftResource.attrDefaultOrder, order: .forward)]
+    }
+    
+    private func getSortByDefaultOrderKeyPath() -> SortByKeyPath {
+        return SortByKeyPath(
+            keyPath: #keyPath(RealmResource.attrDefaultOrder),
+            ascending: true
+        )
+    }
+}
+
 // MARK: - Lessons
 
 extension ResourcesCache {
     
-    func getLessons(sorted: Bool = false) -> [ResourceDataModel] {
+    @available(iOS 17.4, *)
+    private func getLessonsSwiftQuery(filterByLanguageId: String?, sorted: Bool) -> SwiftDatabaseQuery<SwiftResource> {
+        return SwiftDatabaseQuery(
+            filter: getLessonsPredicate(filterByLanguageId: filterByLanguageId),
+            sortBy: sorted ? getSortByDefaultOrderDescriptor() : nil
+        )
+    }
+    
+    private func getLessonsRealmQuery(filterByLanguageId: String?, sorted: Bool) -> RealmDatabaseQuery {
+        return RealmDatabaseQuery(
+            filter: getLessonsNSPredicate(filterByLanguageId: filterByLanguageId),
+            sortByKeyPath: sorted ? getSortByDefaultOrderKeyPath() : nil
+        )
+    }
+    
+    func getLessonsCount(filterByLanguageId: String? = nil) -> Int {
         
-        if #available(iOS 17, *), let swiftPersistence = getSwiftPersistence() {
-                        
-            let lessonType: String = ResourceType.lesson.rawValue
+        if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
+            
+            return swiftPersistence
+                .getObjectCount(
+                    query: getLessonsSwiftQuery(
+                        filterByLanguageId: filterByLanguageId,
+                        sorted: false
+                    )
+                )
+        }
+        else {
+            
+            return super.getRealmPersistence()
+                .getNumberObjects(
+                    query: getLessonsRealmQuery(
+                        filterByLanguageId: filterByLanguageId,
+                        sorted: false
+                    )
+                )
+        }
+    }
+    
+    func getLessons(filterByLanguageId: String? = nil, sorted: Bool = false) -> [ResourceDataModel] {
+        
+        if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
+            
+            return swiftPersistence
+                .getObjects(
+                    query: getLessonsSwiftQuery(
+                        filterByLanguageId: filterByLanguageId,
+                        sorted: sorted
+                    )
+                )
+        }
+        else {
+            
+            return super.getRealmPersistence()
+                .getObjects(
+                    query: getLessonsRealmQuery(
+                        filterByLanguageId: filterByLanguageId,
+                        sorted: sorted
+                    )
+                )
+        }
+    }
+    
+    func getFeaturedLessons(sorted: Bool = false) -> [ResourceDataModel] {
+        
+        if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
+            
+            let lessonsPredicate = getLessonsPredicate()
             
             let filter = #Predicate<SwiftResource> { object in
-                !object.isHidden && object.resourceType == lessonType
+                lessonsPredicate.evaluate(object)
+                && isSpotlightPredicate.evaluate(object)
             }
             
             return swiftPersistence
                 .getObjects(
                     query: SwiftDatabaseQuery(
                         filter: filter,
-                        sortBy: sorted ? getSwiftSortByDefaultOrder() : nil
+                        sortBy: sorted ? getSortByDefaultOrderDescriptor() : nil
                     )
                 )
         }
         else {
-
-            let filterIsNotHidden = NSPredicate(format: "\(#keyPath(RealmResource.isHidden)) == %@", NSNumber(value: false))
-            
-            let filterIsLessonType = NSPredicate(format: "\(#keyPath(RealmResource.resourceType)) == [c] %@", ResourceType.lesson.rawValue)
+                        
+            let filter = NSCompoundPredicate(
+                andPredicateWithSubpredicates: [getLessonsNSPredicate(), isSpotlightNSPredicate]
+            )
             
             return super.getRealmPersistence()
                 .getObjects(
                     query: RealmDatabaseQuery(
-                        filter: NSCompoundPredicate(type: .and, subpredicates: [filterIsNotHidden, filterIsLessonType]),
-                        sortByKeyPath: sorted ? getRealmSortByDefaultOrder() : nil
+                        filter: filter,
+                        sortByKeyPath: sorted ? getSortByDefaultOrderKeyPath() : nil
                     )
                 )
         }
     }
+    
+    func getLessonsLanguageIds() -> [String] {
+        
+        let languageIds: [String]
+        
+        if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
+            
+            let lessons: [SwiftResource] = swiftPersistence
+                .swiftDatabase
+                .getObjects(
+                    context: swiftPersistence.swiftDatabase.openContext(),
+                    query: getLessonsSwiftQuery(filterByLanguageId: nil, sorted: false)
+                )
+            
+            languageIds = lessons
+                .flatMap { $0.getLanguageIds() }
+        }
+        else {
+            
+            let realm: Realm = super.getRealmPersistence().realmDatabase.openRealm()
+            
+            let lessons: Results<RealmResource> = super.getRealmPersistence()
+                .getPersistedObjects(
+                    realm: realm,
+                    query: getLessonsRealmQuery(filterByLanguageId: nil, sorted: false)
+                )
+            
+            languageIds = lessons
+                .flatMap { $0.getLanguageIds() }
+        }
+        
+        let uniqueLanguageIds = Set(languageIds)
+        
+        return Array(uniqueLanguageIds)
+    }
 }
 
-// MARK: - Query
+// MARK: - Resources
 
 extension ResourcesCache {
     
-    @available(iOS 17, *)
-    private func getSwiftSortByDefaultOrder() -> [Foundation.SortDescriptor<SwiftResource>] {
-        return [SortDescriptor(\SwiftResource.attrDefaultOrder, order: .forward)]
-    }
-    
-    private func getRealmSortByDefaultOrder() -> SortByKeyPath {
-        return SortByKeyPath(
-            keyPath: #keyPath(RealmResource.attrDefaultOrder),
-            ascending: true
-        )
-    }
-    
     func getResource(abbreviation: String) -> ResourceDataModel? {
         
-        if #available(iOS 17, *), let swiftPersistence = getSwiftPersistence() {
+        if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
             
             let filter = #Predicate<SwiftResource> { object in
                 object.abbreviation == abbreviation
@@ -162,7 +333,7 @@ extension ResourcesCache {
     
     func getResourceVariants(resourceId: String) -> [ResourceDataModel] {
         
-        if #available(iOS 17, *), let swiftPersistence = getSwiftPersistence() {
+        if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
             
             let filter = #Predicate<SwiftResource> { object in
                 object.metatoolId == resourceId && !object.isHidden
@@ -187,13 +358,13 @@ extension ResourcesCache {
     
     func getResources(sorted: Bool = false) -> [ResourceDataModel] {
         
-        if #available(iOS 17, *), let swiftPersistence = getSwiftPersistence() {
+        if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
             
             return swiftPersistence
                 .getObjects(
                     query: SwiftDatabaseQuery(
                         filter: nil,
-                        sortBy: sorted ? getSwiftSortByDefaultOrder() : nil
+                        sortBy: sorted ? getSortByDefaultOrderDescriptor() : nil
                     )
                 )
         }
@@ -203,7 +374,7 @@ extension ResourcesCache {
                 .getObjects(
                     query: RealmDatabaseQuery(
                         filter: nil,
-                        sortByKeyPath: sorted ? getRealmSortByDefaultOrder() : nil
+                        sortByKeyPath: sorted ? getSortByDefaultOrderKeyPath() : nil
                     )
                 )
         }
@@ -393,75 +564,5 @@ extension ResourcesCache {
         let uniqueLanguageIds = Set(allLanguageIds)
 
         return Array(uniqueLanguageIds)
-    }
-}
-
-// MARK: - Lessons
-
-extension ResourcesCache {
-    
-    func getAllLessonsResults(filterByLanguageId: String? = nil, additionalAttributeFilters: [NSPredicate]? = nil, sorted: Bool) -> Results<RealmResource> {
-        
-        var filterByAttributes: [NSPredicate] = Array()
-        
-        if let filterByLanguageId = filterByLanguageId {
-            filterByAttributes.append(ResourcesFilter.getLanguageModelIdPredicate(languageModelId: filterByLanguageId))
-        }
-        
-        if let additionalAttributeFilters = additionalAttributeFilters, !additionalAttributeFilters.isEmpty {
-            filterByAttributes.append(contentsOf: additionalAttributeFilters)
-        }
-        
-        let filterIsLessonType = NSPredicate(format: "\(#keyPath(RealmResource.resourceType)) == [c] %@", ResourceType.lesson.rawValue)
-        let filterIsNotHidden = NSPredicate(format: "\(#keyPath(RealmResource.isHidden)) == %@", NSNumber(value: false))
-        
-        filterByAttributes.append(filterIsLessonType)
-        filterByAttributes.append(filterIsNotHidden)
-        
-        let filterPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: filterByAttributes)
-             
-        let realm: Realm = realmDatabase.openRealm()
-        
-        let allLessons: Results<RealmResource>
-        
-        if sorted {
-            allLessons = realm.objects(RealmResource.self).filter(filterPredicate).sorted(byKeyPath: #keyPath(RealmResource.attrDefaultOrder), ascending: true)
-        }
-        else {
-            allLessons = realm.objects(RealmResource.self).filter(filterPredicate)
-        }
-        
-        return allLessons
-    }
-    
-    func getAllLessons(filterByLanguageId: String? = nil, additionalAttributeFilters: [NSPredicate]? = nil, sorted: Bool) -> [ResourceDataModel] {
-        
-        return getAllLessonsResults(filterByLanguageId: filterByLanguageId, additionalAttributeFilters: additionalAttributeFilters, sorted: sorted)
-            .map {
-                ResourceDataModel(interface: $0)
-            }
-    }
-    
-    func getAllLessonsCount(filterByLanguageId: String?) -> Int {
-                
-        return getAllLessonsResults(filterByLanguageId: filterByLanguageId, sorted: false).count
-    }
-    
-    func getAllLessonLanguageIds() -> [String] {
-        
-        let allLessonIds = getAllLessonsResults(sorted: false)
-            .flatMap { $0.getLanguages() }
-            .map { $0.id }
-        
-        let uniqueLanguageIds = Set(allLessonIds)
-        
-        return Array(uniqueLanguageIds)
-    }
-    
-    func getFeaturedLessons(sorted: Bool) -> [ResourceDataModel] {
-        
-        let filterIsSpotlight = NSPredicate(format: "\(#keyPath(RealmResource.attrSpotlight)) == %@", NSNumber(value: true))
-        
-        return getAllLessons(additionalAttributeFilters: [filterIsSpotlight], sorted: sorted)
     }
 }

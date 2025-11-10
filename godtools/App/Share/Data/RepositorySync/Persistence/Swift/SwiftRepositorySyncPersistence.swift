@@ -13,11 +13,12 @@ import Combine
 @available(iOS 17.4, *)
 class SwiftRepositorySyncPersistence<DataModelType, ExternalObjectType, PersistObjectType: IdentifiableSwiftDataObject>: RepositorySyncPersistence {
     
-    private let swiftDatabase: SwiftDatabase
     private let dataModelMapping: any RepositorySyncMapping<DataModelType, ExternalObjectType, PersistObjectType>
     private let userInfoKeyPrependNotification: String = "RepositorySync.notificationKey.prepend"
     private let userInfoKeyEntityName: String = "RepositorySync.notificationKey.entityName"
     private let entityName: String
+    
+    let swiftDatabase: SwiftDatabase
     
     init(swiftDatabase: SwiftDatabase, dataModelMapping: any RepositorySyncMapping<DataModelType, ExternalObjectType, PersistObjectType>) {
         
@@ -142,6 +143,10 @@ extension SwiftRepositorySyncPersistence {
                 fetchDescriptor: FetchDescriptor<PersistObjectType>()
             )
         )
+    }
+    
+    func getObjectCount(query: SwiftDatabaseQuery<PersistObjectType>?) -> Int {
+        return swiftDatabase.getObjectCount(query: query)
     }
     
     func getObject(id: String) -> DataModelType? {

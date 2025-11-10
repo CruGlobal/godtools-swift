@@ -227,27 +227,3 @@ extension ResourcesRepository {
         return cache.getAllToolLanguageIds(filteredByCategoryId: filteredByCategoryId)
     }
 }
-
-// MARK: - Lessons
-
-extension ResourcesRepository {
-    
-    func getAllLessons(filterByLanguageId: String? = nil, sorted: Bool) -> [ResourceDataModel] {
-        return cache.getAllLessons(
-            filterByLanguageId: filterByLanguageId,
-            sorted: sorted
-        )
-    }
-    
-    func getAllLessonsCount(filterByLanguageId: String?) -> Int {
-        return cache.getAllLessonsCount(filterByLanguageId: filterByLanguageId)
-    }
-    
-    func getFeaturedLessons(sorted: Bool) -> [ResourceDataModel] {
-        return cache.getFeaturedLessons(sorted: sorted)
-    }
-    
-    func getAllLessonLanguageIds() -> [String] {
-        return cache.getAllLessonLanguageIds()
-    }
-}
