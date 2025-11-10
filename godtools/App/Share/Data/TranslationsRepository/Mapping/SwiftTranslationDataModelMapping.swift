@@ -8,7 +8,7 @@
 
 import Foundation
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 class SwiftTranslationDataModelMapping: RepositorySyncMapping {
     
     func toDataModel(externalObject: TranslationCodable) -> TranslationDataModel? {

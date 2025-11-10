@@ -9,10 +9,10 @@
 import Foundation
 import SwiftData
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 typealias SwiftUserCounter = SwiftUserCounterV1.SwiftUserCounter
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 enum SwiftUserCounterV1 {
     
     @Model

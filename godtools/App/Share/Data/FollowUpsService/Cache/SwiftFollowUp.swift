@@ -9,10 +9,10 @@
 import Foundation
 import SwiftData
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 typealias SwiftFollowUp = SwiftFollowUpV1.SwiftFollowUp
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 enum SwiftFollowUpV1 {
  
     @Model

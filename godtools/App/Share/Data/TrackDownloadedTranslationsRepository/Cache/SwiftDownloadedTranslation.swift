@@ -9,10 +9,10 @@
 import Foundation
 import SwiftData
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 typealias SwiftDownloadedTranslation = SwiftDownloadedTranslationV1.SwiftDownloadedTranslation
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 enum SwiftDownloadedTranslationV1 {
  
     @Model

@@ -9,7 +9,7 @@
 import Foundation
 import SwiftData
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 enum MockSwiftDataSchemaV1: VersionedSchema {
     
     static let versionIdentifier = Schema.Version(1, 0, 0)

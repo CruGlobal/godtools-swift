@@ -8,7 +8,7 @@
 
 import Foundation
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 class SwiftAttachmentDataModelMapping: RepositorySyncMapping {
     
     func toDataModel(externalObject: AttachmentCodable) -> AttachmentDataModel? {

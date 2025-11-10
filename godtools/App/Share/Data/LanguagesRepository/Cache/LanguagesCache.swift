@@ -18,12 +18,12 @@ class LanguagesCache: SwiftElseRealmPersistence<LanguageDataModel, LanguageCodab
         )
     }
     
-    @available(iOS 17, *)
+    @available(iOS 17.4, *)
     override func getAnySwiftPersistence(swiftDatabase: SwiftDatabase) -> (any RepositorySyncPersistence<LanguageDataModel, LanguageCodable>)? {
         return getSwiftPersistence(swiftDatabase: swiftDatabase)
     }
     
-    @available(iOS 17, *)
+    @available(iOS 17.4, *)
     private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<LanguageDataModel, LanguageCodable, SwiftLanguage>? {
         
         guard let swiftDatabase = super.getSwiftDatabase() else {
@@ -33,7 +33,7 @@ class LanguagesCache: SwiftElseRealmPersistence<LanguageDataModel, LanguageCodab
         return getSwiftPersistence(swiftDatabase: swiftDatabase)
     }
     
-    @available(iOS 17, *)
+    @available(iOS 17.4, *)
     private func getSwiftPersistence(swiftDatabase: SwiftDatabase) -> SwiftRepositorySyncPersistence<LanguageDataModel, LanguageCodable, SwiftLanguage>? {
         
         guard let swiftDatabase = super.getSwiftDatabase() else {
@@ -53,7 +53,7 @@ extension LanguagesCache {
     
     func getCachedLanguage(code: BCP47LanguageIdentifier) -> LanguageDataModel? {
         
-        if #available(iOS 17, *), let swiftPersistence = getSwiftPersistence() {
+        if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
                         
             let filter = #Predicate<SwiftLanguage> { object in
                 object.code == code

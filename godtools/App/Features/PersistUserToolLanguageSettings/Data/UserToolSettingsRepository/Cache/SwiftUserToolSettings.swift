@@ -9,10 +9,10 @@
 import Foundation
 import SwiftData
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 typealias SwiftUserToolSettings = SwiftUserToolSettingsV1.SwiftUserToolSettings
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 enum SwiftUserToolSettingsV1 {
     
     @Model

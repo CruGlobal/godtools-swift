@@ -10,7 +10,7 @@ import Foundation
 import Combine
 import SwiftData
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 class SwiftResourcesCacheSync {
     
     typealias SHA256PlusPathExtension = String

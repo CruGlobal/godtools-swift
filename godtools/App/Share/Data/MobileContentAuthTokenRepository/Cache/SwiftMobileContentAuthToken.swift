@@ -9,10 +9,10 @@
 import Foundation
 import SwiftData
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 typealias SwiftMobileContentAuthToken = SwiftMobileContentAuthTokenV1.SwiftMobileContentAuthToken
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 enum SwiftMobileContentAuthTokenV1 {
  
     @Model

@@ -9,10 +9,10 @@
 import Foundation
 import SwiftData
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 typealias SwiftFavoritedResource = SwiftFavoritedResourceV1.SwiftFavoritedResource
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 enum SwiftFavoritedResourceV1 {
 
     @Model

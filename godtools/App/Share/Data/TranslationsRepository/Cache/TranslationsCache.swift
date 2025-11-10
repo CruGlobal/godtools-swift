@@ -22,12 +22,12 @@ class TranslationsCache: SwiftElseRealmPersistence<TranslationDataModel, Transla
         )
     }
     
-    @available(iOS 17, *)
+    @available(iOS 17.4, *)
     override func getAnySwiftPersistence(swiftDatabase: SwiftDatabase) -> (any RepositorySyncPersistence<TranslationDataModel, TranslationCodable>)? {
         return getSwiftPersistence(swiftDatabase: swiftDatabase)
     }
     
-    @available(iOS 17, *)
+    @available(iOS 17.4, *)
     private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<TranslationDataModel, TranslationCodable, SwiftTranslation>? {
         
         guard let swiftDatabase = super.getSwiftDatabase() else {
@@ -37,7 +37,7 @@ class TranslationsCache: SwiftElseRealmPersistence<TranslationDataModel, Transla
         return getSwiftPersistence(swiftDatabase: swiftDatabase)
     }
     
-    @available(iOS 17, *)
+    @available(iOS 17.4, *)
     private func getSwiftPersistence(swiftDatabase: SwiftDatabase) -> SwiftRepositorySyncPersistence<TranslationDataModel, TranslationCodable, SwiftTranslation>? {
         
         guard let swiftDatabase = super.getSwiftDatabase() else {
@@ -59,7 +59,7 @@ extension TranslationsCache {
         
         // TODO: Add query for swiftdata. ~Levi
         
-        if #available(iOS 17, *), let swiftPersistence = getSwiftPersistence() {
+        if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
             
         }
         else {
@@ -83,7 +83,7 @@ extension TranslationsCache {
         
         // TODO: Add query for swiftdata. ~Levi
         
-        if #available(iOS 17, *), let swiftPersistence = getSwiftPersistence() {
+        if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
             
         }
         else {

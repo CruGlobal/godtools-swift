@@ -22,12 +22,12 @@ class AttachmentsCache: SwiftElseRealmPersistence<AttachmentDataModel, Attachmen
         )
     }
     
-    @available(iOS 17, *)
+    @available(iOS 17.4, *)
     override func getAnySwiftPersistence(swiftDatabase: SwiftDatabase) -> (any RepositorySyncPersistence<AttachmentDataModel, AttachmentCodable>)? {
         return getSwiftPersistence(swiftDatabase: swiftDatabase)
     }
     
-    @available(iOS 17, *)
+    @available(iOS 17.4, *)
     private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<AttachmentDataModel, AttachmentCodable, SwiftAttachment>? {
         
         guard let swiftDatabase = super.getSwiftDatabase() else {
@@ -37,7 +37,7 @@ class AttachmentsCache: SwiftElseRealmPersistence<AttachmentDataModel, Attachmen
         return getSwiftPersistence(swiftDatabase: swiftDatabase)
     }
     
-    @available(iOS 17, *)
+    @available(iOS 17.4, *)
     private func getSwiftPersistence(swiftDatabase: SwiftDatabase) -> SwiftRepositorySyncPersistence<AttachmentDataModel, AttachmentCodable, SwiftAttachment>? {
         
         guard let swiftDatabase = super.getSwiftDatabase() else {

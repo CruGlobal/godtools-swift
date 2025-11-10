@@ -10,10 +10,10 @@
 import Foundation
 import SwiftData
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 typealias SwiftResource = SwiftResourceV1.SwiftResource
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 enum SwiftResourceV1 {
  
     @Model
@@ -89,7 +89,7 @@ enum SwiftResourceV1 {
 
 // MARK: - Attachments
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 extension SwiftResource {
     
     func getAttachmentIds() -> [String] {
@@ -99,7 +99,7 @@ extension SwiftResource {
 
 // MARK: - Languages
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 extension SwiftResource {
     
     func addLanguage(language: SwiftLanguage) {
@@ -116,7 +116,7 @@ extension SwiftResource {
 
 // MARK: - Latest Translations
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 extension SwiftResource {
     
     func addLatestTranslation(translation: SwiftTranslation) {
@@ -133,7 +133,7 @@ extension SwiftResource {
 
 // MARK: - Variants
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 extension SwiftResource {
     
     func getDefaultVariant() -> SwiftResource? {

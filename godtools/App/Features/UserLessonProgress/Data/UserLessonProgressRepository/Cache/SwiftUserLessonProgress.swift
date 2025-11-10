@@ -9,10 +9,10 @@
 import Foundation
 import SwiftData
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 typealias SwiftUserLessonProgress = SwiftUserLessonProgressV1.SwiftUserLessonProgress
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 enum SwiftUserLessonProgressV1 {
     
     @Model

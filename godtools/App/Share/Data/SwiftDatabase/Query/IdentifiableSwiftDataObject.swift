@@ -9,13 +9,13 @@
 import Foundation
 import SwiftData
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 public protocol IdentifiableSwiftDataObject: PersistentModel {
     
     var id: String { get set }
 }
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 extension IdentifiableSwiftDataObject {
     
     // TODO: Can remove this method once supporting min iOS 18 and up in place of Schema.entityName(for: ~Levi

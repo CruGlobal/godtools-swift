@@ -10,7 +10,7 @@ import Foundation
 import SwiftData
 import Combine
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 class SwiftRepositorySyncPersistence<DataModelType, ExternalObjectType, PersistObjectType: IdentifiableSwiftDataObject>: RepositorySyncPersistence {
     
     private let swiftDatabase: SwiftDatabase
@@ -36,7 +36,7 @@ class SwiftRepositorySyncPersistence<DataModelType, ExternalObjectType, PersistO
 
 // MARK: - Observe
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 extension SwiftRepositorySyncPersistence {
     
     func observeCollectionChangesPublisher() -> AnyPublisher<Void, Never> {
@@ -133,7 +133,7 @@ extension SwiftRepositorySyncPersistence {
 
 // MARK: Read
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 extension SwiftRepositorySyncPersistence {
     
     func getObjectCount() -> Int {
@@ -198,7 +198,7 @@ extension SwiftRepositorySyncPersistence {
 
 // MARK: - Write
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 extension SwiftRepositorySyncPersistence {
     
     func writeObjects(externalObjects: [ExternalObjectType], deleteObjectsNotFoundInExternalObjects: Bool = false) -> [DataModelType] {
@@ -254,7 +254,7 @@ extension SwiftRepositorySyncPersistence {
 
 // MARK: - Delete
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 extension SwiftRepositorySyncPersistence {
     
     func deleteAllObjects() {

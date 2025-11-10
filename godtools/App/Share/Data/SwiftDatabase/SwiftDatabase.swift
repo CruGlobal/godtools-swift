@@ -9,7 +9,7 @@
 import Foundation
 import SwiftData
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 class SwiftDatabase {
     
     private let container: ModelContainer
@@ -56,7 +56,7 @@ class SwiftDatabase {
     }
 }
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 extension SwiftDatabase {
     
     func getFetchDescriptor<T: IdentifiableSwiftDataObject>(query: SwiftDatabaseQuery<T>?) -> FetchDescriptor<T> {

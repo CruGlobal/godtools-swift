@@ -230,7 +230,7 @@ struct SwiftRepositorySyncPersistenceTests {
 
 // MARK: - Persistence
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 extension SwiftRepositorySyncPersistenceTests {
     
     static func getPersistence(swiftDatabaseName: String, addObjectsByIds: [String]) -> SwiftRepositorySyncPersistence<MockRepositorySyncDataModel, MockRepositorySyncDataModel, MockRepositorySyncSwiftDataObject> {
@@ -264,7 +264,7 @@ extension SwiftRepositorySyncPersistenceTests {
 
 // MARK: - SwiftDatabase
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 extension SwiftRepositorySyncPersistenceTests {
     
     static func getSwiftDatabaseConfiguration(name: String) -> SwiftDatabaseConfiguration {
