@@ -13,7 +13,8 @@ import RequestOperation
 class AttachmentsRepository: RepositorySync<AttachmentDataModel, MobileContentAttachmentsApi> {
     
     private let api: MobileContentAttachmentsApi
-    private let cache: AttachmentsCache
+    
+    let cache: AttachmentsCache
     
     init(api: MobileContentAttachmentsApi, cache: AttachmentsCache) {
         

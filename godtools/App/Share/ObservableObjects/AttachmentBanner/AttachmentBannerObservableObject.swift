@@ -19,7 +19,7 @@ class AttachmentBannerObservableObject: ObservableObject {
         
         getBannerImageCancellable = nil
                 
-        if let cachedAttachment = attachmentsRepository.getCachedAttachment(id: attachmentId),
+        if let cachedAttachment = attachmentsRepository.cache.getAttachment(id: attachmentId),
            let cachedImage = cachedAttachment.getImage() {
             
             bannerImageData = OptionalImageData(image: cachedImage, imageIdForAnimationChange: attachmentId)
