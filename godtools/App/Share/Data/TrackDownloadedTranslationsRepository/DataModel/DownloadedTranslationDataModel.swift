@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct DownloadedTranslationDataModel: DownloadedTranslationDataModelType {
+struct DownloadedTranslationDataModel: DownloadedTranslationDataModelInterface {
     
     let languageId: String
     let manifestAndRelatedFilesPersistedToDevice: Bool
@@ -16,7 +16,7 @@ struct DownloadedTranslationDataModel: DownloadedTranslationDataModelType {
     let translationId: String
     let version: Int
     
-    init(model: DownloadedTranslationDataModelType) {
+    init(model: DownloadedTranslationDataModelInterface) {
         
         languageId = model.languageId
         manifestAndRelatedFilesPersistedToDevice = model.manifestAndRelatedFilesPersistedToDevice

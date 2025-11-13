@@ -18,12 +18,12 @@ class ResourcesJsonFileCache {
         self.jsonServices = jsonServices
     }
     
-    func getResourcesPlusLatestTranslationsAndAttachments() -> Result<ResourcesPlusLatestTranslationsAndAttachmentsModel, Error> {
+    func getResourcesPlusLatestTranslationsAndAttachments() -> Result<ResourcesPlusLatestTranslationsAndAttachmentsCodable, Error> {
         
         return parseResourcesJsonFromBundle(fileName: "resources")
     }
     
-    func parseResourcesJsonFromBundle(fileName: String) -> Result<ResourcesPlusLatestTranslationsAndAttachmentsModel, Error> {
+    func parseResourcesJsonFromBundle(fileName: String) -> Result<ResourcesPlusLatestTranslationsAndAttachmentsCodable, Error> {
         
         let result: Result<Data?, Error> = jsonServices.getJsonData(fileName: fileName)
         
@@ -36,7 +36,7 @@ class ResourcesJsonFileCache {
             }
             
             do {
-                let object: ResourcesPlusLatestTranslationsAndAttachmentsModel = try JSONDecoder().decode(ResourcesPlusLatestTranslationsAndAttachmentsModel.self, from: data)
+                let object: ResourcesPlusLatestTranslationsAndAttachmentsCodable = try JSONDecoder().decode(ResourcesPlusLatestTranslationsAndAttachmentsCodable.self, from: data)
                 return .success(object)
             }
             catch let error {

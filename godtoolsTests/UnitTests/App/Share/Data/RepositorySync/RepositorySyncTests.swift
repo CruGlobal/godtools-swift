@@ -47,7 +47,7 @@ struct RepositorySyncTests {
             expectedNumberOfChanges: 1
         )
         
-        if #available(iOS 17, *) {
+        if #available(iOS 17.4, *) {
             
             await runSwiftTest(
                 argument: argument,
@@ -95,7 +95,7 @@ struct RepositorySyncTests {
             expectedNumberOfChanges: 1
         )
         
-        if #available(iOS 17, *) {
+        if #available(iOS 17.4, *) {
             
             await runSwiftTest(
                 argument: argument,
@@ -149,7 +149,7 @@ struct RepositorySyncTests {
             expectedNumberOfChanges: 1
         )
         
-        if #available(iOS 17, *) {
+        if #available(iOS 17.4, *) {
             
             await runSwiftTest(
                 argument: argument,
@@ -197,7 +197,7 @@ struct RepositorySyncTests {
             expectedNumberOfChanges: 1
         )
         
-        if #available(iOS 17, *) {
+        if #available(iOS 17.4, *) {
             
             await runSwiftTest(
                 argument: argument,
@@ -232,7 +232,7 @@ struct RepositorySyncTests {
             triggerSecondaryExternalDataFetchWithIds: ["8", "1", "0"]
         )
         
-        if #available(iOS 17, *) {
+        if #available(iOS 17.4, *) {
             
             await runSwiftTest(
                 argument: argument,
@@ -287,7 +287,7 @@ struct RepositorySyncTests {
             expectedNumberOfChanges: 1
         )
         
-        if #available(iOS 17, *) {
+        if #available(iOS 17.4, *) {
             
             await runSwiftTest(
                 argument: argument,
@@ -322,7 +322,7 @@ struct RepositorySyncTests {
             triggerSecondaryExternalDataFetchWithIds: ["8", "1", "0"]
         )
         
-        if #available(iOS 17, *) {
+        if #available(iOS 17.4, *) {
             
             await runSwiftTest(
                 argument: argument,
@@ -359,7 +359,7 @@ struct RepositorySyncTests {
             expectedNumberOfChanges: 1
         )
         
-        if #available(iOS 17, *) {
+        if #available(iOS 17.4, *) {
             
             await runSwiftTest(
                 argument: argument,
@@ -387,7 +387,7 @@ struct RepositorySyncTests {
             expectedNumberOfChanges: 1
         )
         
-        if #available(iOS 17, *) {
+        if #available(iOS 17.4, *) {
             
             await runSwiftTest(
                 argument: argument,
@@ -415,7 +415,7 @@ struct RepositorySyncTests {
             expectedNumberOfChanges: 2
         )
         
-        if #available(iOS 17, *) {
+        if #available(iOS 17.4, *) {
             
             await runSwiftTest(
                 argument: argument,
@@ -444,7 +444,7 @@ struct RepositorySyncTests {
             triggerSecondaryExternalDataFetchWithIds: ["9", "7"]
         )
         
-        if #available(iOS 17, *) {
+        if #available(iOS 17.4, *) {
             
             await runSwiftTest(
                 argument: argument,
@@ -474,7 +474,7 @@ struct RepositorySyncTests {
             triggerSecondaryExternalDataFetchWithIds: ["9", "7"]
         )
         
-        if #available(iOS 17, *) {
+        if #available(iOS 17.4, *) {
             
             await runSwiftTest(
                 argument: argument,
@@ -511,7 +511,7 @@ struct RepositorySyncTests {
             expectedNumberOfChanges: 1
         )
         
-        if #available(iOS 17, *) {
+        if #available(iOS 17.4, *) {
             
             await runSwiftTest(
                 argument: argument,
@@ -539,7 +539,7 @@ struct RepositorySyncTests {
             expectedNumberOfChanges: 1
         )
         
-        if #available(iOS 17, *) {
+        if #available(iOS 17.4, *) {
             
             await runSwiftTest(
                 argument: argument,
@@ -567,7 +567,7 @@ struct RepositorySyncTests {
             expectedNumberOfChanges: 2
         )
         
-        if #available(iOS 17, *) {
+        if #available(iOS 17.4, *) {
             
             await runSwiftTest(
                 argument: argument,
@@ -596,7 +596,7 @@ struct RepositorySyncTests {
             triggerSecondaryExternalDataFetchWithIds: ["9", "7"]
         )
         
-        if #available(iOS 17, *) {
+        if #available(iOS 17.4, *) {
             
             await runSwiftTest(
                 argument: argument,
@@ -626,7 +626,7 @@ struct RepositorySyncTests {
             triggerSecondaryExternalDataFetchWithIds: ["1", "7"]
         )
         
-        if #available(iOS 17, *) {
+        if #available(iOS 17.4, *) {
             
             await runSwiftTest(
                 argument: argument,
@@ -663,7 +663,7 @@ struct RepositorySyncTests {
             expectedNumberOfChanges: 1
         )
         
-        if #available(iOS 17, *) {
+        if #available(iOS 17.4, *) {
             
             await runSwiftTest(
                 argument: argument,
@@ -697,7 +697,7 @@ struct RepositorySyncTests {
             expectedNumberOfChanges: 2
         )
         
-        if #available(iOS 17, *) {
+        if #available(iOS 17.4, *) {
             
             await runSwiftTest(
                 argument: argument,
@@ -732,7 +732,7 @@ struct RepositorySyncTests {
             triggerSecondaryExternalDataFetchWithIds: ["9", "5"]
         )
         
-        if #available(iOS 17, *) {
+        if #available(iOS 17.4, *) {
             
             await runSwiftTest(
                 argument: argument,
@@ -763,7 +763,7 @@ struct RepositorySyncTests {
             expectedNumberOfChanges: 2
         )
         
-        if #available(iOS 17, *) {
+        if #available(iOS 17.4, *) {
             
             await runSwiftTest(
                 argument: argument,
@@ -798,7 +798,7 @@ struct RepositorySyncTests {
             triggerSecondaryExternalDataFetchWithIds: ["3"]
         )
         
-        if #available(iOS 17, *) {
+        if #available(iOS 17.4, *) {
             
             await runSwiftTest(
                 argument: argument,
@@ -974,7 +974,7 @@ struct RepositorySyncTests {
     
     // MARK: - Run Swift Test
     
-    @available(iOS 17, *)
+    @available(iOS 17.4, *)
     @MainActor private func runSwiftTest(argument: TestArgument, getObjectsType: RepositorySyncGetObjectsType, cachePolicy: RepositorySyncCachePolicy, expectedNumberOfChanges: Int, triggerSecondaryExternalDataFetchWithIds: [String] = Array(), loggingEnabled: Bool = false) async {
         
         await runSwiftTest(
@@ -991,7 +991,7 @@ struct RepositorySyncTests {
         )
     }
     
-    @available(iOS 17, *)
+    @available(iOS 17.4, *)
     @MainActor private func runSwiftTest(swiftDatabaseName: String, initialPersistedObjectsIds: [String], externalDataModelIds: [String], expectedCachedResponseDataModelIds: [String]?, expectedResponseDataModelIds: [String], getObjectsType: RepositorySyncGetObjectsType, cachePolicy: RepositorySyncCachePolicy, expectedNumberOfChanges: Int, triggerSecondaryExternalDataFetchWithIds: [String], loggingEnabled: Bool) async {
         
         if loggingEnabled {

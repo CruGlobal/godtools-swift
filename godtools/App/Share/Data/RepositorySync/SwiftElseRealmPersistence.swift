@@ -23,9 +23,9 @@ open class SwiftElseRealmPersistence<DataModelType, ExternalObjectType, RealmObj
     
     func getPersistence() -> any RepositorySyncPersistence<DataModelType, ExternalObjectType> {
         
-        if #available(iOS 17, *),
-           let swiftDatabase = TempSharedSwiftDatabase.shared.swiftDatabase,
-           let swiftPersistence = getSwiftPersistence(swiftDatabase: swiftDatabase) {
+        if #available(iOS 17.4, *),
+           let swiftDatabase = getSwiftDatabase(),
+           let swiftPersistence = getAnySwiftPersistence(swiftDatabase: swiftDatabase) {
             
             return swiftPersistence
         }
@@ -37,20 +37,15 @@ open class SwiftElseRealmPersistence<DataModelType, ExternalObjectType, RealmObj
             )
         }
     }
-    
-    @available(iOS 17, *)
-    func getSwiftPersistence() -> SwiftRepositorySyncPersistence<DataModelType, ExternalObjectType, SwiftLanguage>? {
-        
-        guard let swiftDatabase = TempSharedSwiftDatabase.shared.swiftDatabase else {
-            return nil
-        }
-        
-        return getSwiftPersistence(swiftDatabase: swiftDatabase)
+
+    @available(iOS 17.4, *)
+    func getSwiftDatabase() -> SwiftDatabase? {
+        return TempSharedSwiftDatabase.shared.swiftDatabase
     }
     
-    @available(iOS 17, *)
-    func getSwiftPersistence(swiftDatabase: SwiftDatabase) -> SwiftRepositorySyncPersistence<DataModelType, ExternalObjectType, SwiftLanguage>? {
-        
+    @available(iOS 17.4, *)
+    func getAnySwiftPersistence(swiftDatabase: SwiftDatabase) -> (any RepositorySyncPersistence<DataModelType, ExternalObjectType>)? {
+        // NOTE: Subclasses should override and return a SwiftRepositorySyncPersistence. ~Levi
         return nil
     }
     

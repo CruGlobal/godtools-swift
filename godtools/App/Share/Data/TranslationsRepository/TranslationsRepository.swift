@@ -16,12 +16,12 @@ class TranslationsRepository: RepositorySync<TranslationDataModel, MobileContent
     private let infoPlist: InfoPlist
     private let api: MobileContentTranslationsApi
     private let realmPersistence: RealmRepositorySyncPersistence<TranslationDataModel, TranslationCodable, RealmTranslation>
-    private let cache: RealmTranslationsCache
+    private let cache: TranslationsCache
     private let resourcesFileCache: ResourcesSHA256FileCache
     private let trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository
     private let remoteConfigRepository: RemoteConfigRepository
     
-    init(infoPlist: InfoPlist, api: MobileContentTranslationsApi, realmDatabase: RealmDatabase, cache: RealmTranslationsCache, resourcesFileCache: ResourcesSHA256FileCache, trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository, remoteConfigRepository: RemoteConfigRepository) {
+    init(infoPlist: InfoPlist, api: MobileContentTranslationsApi, realmDatabase: RealmDatabase, cache: TranslationsCache, resourcesFileCache: ResourcesSHA256FileCache, trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository, remoteConfigRepository: RemoteConfigRepository) {
         
         self.infoPlist = infoPlist
         self.api = api
