@@ -11,9 +11,8 @@ import Combine
 
 class LessonEvaluationViewModel: ObservableObject {
     
-    private static var evaluateLessonInBackgroundCancellable: AnyCancellable?
-    private static var cancelLessonEvaluationInBackgroundCancellable: AnyCancellable?
-    
+    private static var backgroundCancellables: Set<AnyCancellable> = Set()
+        
     private let lessonId: String
     private let pageIndexReached: Int
     private let evaluateLesson: EvaluateLesson
@@ -87,12 +86,13 @@ extension LessonEvaluationViewModel {
     
     func closeTapped() {
         
-        LessonEvaluationViewModel.cancelLessonEvaluationInBackgroundCancellable = cancelLessonEvaluation
+        cancelLessonEvaluation
             .execute(lessonId: lessonId)
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { _ in
                 
             })
+            .store(in: &Self.backgroundCancellables)
         
         flowDelegate?.navigate(step: .closeTappedFromLessonEvaluation)
     }
@@ -129,12 +129,13 @@ extension LessonEvaluationViewModel {
             pageIndexReached: pageIndexReached
         )
         
-        LessonEvaluationViewModel.evaluateLessonInBackgroundCancellable = evaluateLesson
+        evaluateLesson
             .execute(lessonId: lessonId, feedback: feedback)
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { _ in
                 
             })
+            .store(in: &Self.backgroundCancellables)
         
         flowDelegate?.navigate(step: .sendFeedbackTappedFromLessonEvaluation)
     }
