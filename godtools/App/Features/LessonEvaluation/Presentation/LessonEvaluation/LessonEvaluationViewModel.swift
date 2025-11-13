@@ -16,7 +16,6 @@ class LessonEvaluationViewModel: ObservableObject {
     
     private let lessonId: String
     private let pageIndexReached: Int
-    private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let evaluateLesson: EvaluateLesson
     private let cancelLessonEvaluation: CancelLessonEvaluation
             
@@ -44,7 +43,6 @@ class LessonEvaluationViewModel: ObservableObject {
         self.flowDelegate = flowDelegate
         self.lessonId = lessonId
         self.pageIndexReached = pageIndexReached
-        self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.evaluateLesson = evaluateLesson
         self.cancelLessonEvaluation = cancelLessonEvaluation
         
