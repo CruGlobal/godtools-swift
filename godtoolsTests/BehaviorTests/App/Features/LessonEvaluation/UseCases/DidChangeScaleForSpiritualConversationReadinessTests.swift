@@ -1,5 +1,5 @@
 //
-//  GetSpiritualConversationReadinessScaleTests.swift
+//  DidChangeScaleForSpiritualConversationReadinessTests.swift
 //  godtoolsTests
 //
 //  Created by Levi Eggert on 4/26/24.
@@ -10,7 +10,7 @@ import Testing
 @testable import godtools
 import Combine
 
-struct GetSpiritualConversationReadinessScaleTests {
+struct DidChangeScaleForSpiritualConversationReadinessTests {
     
     @Test(
         """
@@ -21,17 +21,17 @@ struct GetSpiritualConversationReadinessScaleTests {
     )
     @MainActor func confirmReadinessScaleMinAndMaxValuesAreCorrect() async {
         
-        let getSpiritualConversationReadinessScale = Self.getSpiritualConversationReadinessScale()
+        let didChangeSpiritualConversationReadinessScale = Self.getDidChangeScaleForSpiritualConversationReadiness()
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
+        var readinessScaleRef: SpiritualConversationReadinessScale?
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            getSpiritualConversationReadinessScale
-                .getScalePublisher(scale: 5, translateInAppLanguage: LanguageCodeDomainModel.english.rawValue)
-                .sink { (readinessScale: SpiritualConversationReadinessScaleDomainModel) in
+            didChangeSpiritualConversationReadinessScale
+                .execute(scale: 5, translateInAppLanguage: LanguageCodeDomainModel.english.rawValue)
+                .sink { (readinessScale: SpiritualConversationReadinessScale) in
                     
                     readinessScaleRef = readinessScale
                     
@@ -53,17 +53,17 @@ struct GetSpiritualConversationReadinessScaleTests {
     )
     @MainActor func readinessScaleIsTranslatedInEnglish() async {
         
-        let getSpiritualConversationReadinessScale = Self.getSpiritualConversationReadinessScale()
+        let didChangeSpiritualConversationReadinessScale = Self.getDidChangeScaleForSpiritualConversationReadiness()
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
+        var readinessScaleRef: SpiritualConversationReadinessScale?
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            getSpiritualConversationReadinessScale
-                .getScalePublisher(scale: 5, translateInAppLanguage: LanguageCodeDomainModel.english.rawValue)
-                .sink { (readinessScale: SpiritualConversationReadinessScaleDomainModel) in
+            didChangeSpiritualConversationReadinessScale
+                .execute(scale: 5, translateInAppLanguage: LanguageCodeDomainModel.english.rawValue)
+                .sink { (readinessScale: SpiritualConversationReadinessScale) in
                     
                     readinessScaleRef = readinessScale
                     
@@ -86,17 +86,17 @@ struct GetSpiritualConversationReadinessScaleTests {
     )
     @MainActor func readinessScaleIsTranslatedInArabic() async {
         
-        let getSpiritualConversationReadinessScale = Self.getSpiritualConversationReadinessScale()
+        let didChangeSpiritualConversationReadinessScale = Self.getDidChangeScaleForSpiritualConversationReadiness()
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
+        var readinessScaleRef: SpiritualConversationReadinessScale?
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            getSpiritualConversationReadinessScale
-                .getScalePublisher(scale: 5, translateInAppLanguage: LanguageCodeDomainModel.arabic.rawValue)
-                .sink { (readinessScale: SpiritualConversationReadinessScaleDomainModel) in
+            didChangeSpiritualConversationReadinessScale
+                .execute(scale: 5, translateInAppLanguage: LanguageCodeDomainModel.arabic.rawValue)
+                .sink { (readinessScale: SpiritualConversationReadinessScale) in
                     
                     readinessScaleRef = readinessScale
                     
@@ -128,17 +128,17 @@ struct GetSpiritualConversationReadinessScaleTests {
     )
     @MainActor func readinessScaleIsTranslatedInEasternArabic() async {
         
-        let getSpiritualConversationReadinessScale = Self.getSpiritualConversationReadinessScale()
+        let didChangeSpiritualConversationReadinessScale = Self.getDidChangeScaleForSpiritualConversationReadiness()
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
+        var readinessScaleRef: SpiritualConversationReadinessScale?
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            getSpiritualConversationReadinessScale
-                .getScalePublisher(scale: 5, translateInAppLanguage: "ar_SA")
-                .sink { (readinessScale: SpiritualConversationReadinessScaleDomainModel) in
+            didChangeSpiritualConversationReadinessScale
+                .execute(scale: 5, translateInAppLanguage: "ar_SA")
+                .sink { (readinessScale: SpiritualConversationReadinessScale) in
                     
                     readinessScaleRef = readinessScale
                     
@@ -170,19 +170,17 @@ struct GetSpiritualConversationReadinessScaleTests {
     )
     @MainActor func readinessScaleIsClampedToMin(argument: TestClampingScale) async {
         
-        let getSpiritualConversationReadinessScale = GetSpiritualConversationReadinessScale(
-            getTranslatedNumberCount: GetTranslatedNumberCount()
-        )
+        let didChangeSpiritualConversationReadinessScale = Self.getDidChangeScaleForSpiritualConversationReadiness()
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
+        var readinessScaleRef: SpiritualConversationReadinessScale?
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            getSpiritualConversationReadinessScale
-                .getScalePublisher(scale: argument.scaleValue, translateInAppLanguage: LanguageCodeDomainModel.english.rawValue)
-                .sink { (readinessScale: SpiritualConversationReadinessScaleDomainModel) in
+            didChangeSpiritualConversationReadinessScale
+                .execute(scale: argument.scaleValue, translateInAppLanguage: LanguageCodeDomainModel.english.rawValue)
+                .sink { (readinessScale: SpiritualConversationReadinessScale) in
                     
                     readinessScaleRef = readinessScale
                     
@@ -207,17 +205,17 @@ struct GetSpiritualConversationReadinessScaleTests {
     )
     @MainActor func readinessScaleIsClampedToMax(argument: TestClampingScale) async {
         
-        let getSpiritualConversationReadinessScale = Self.getSpiritualConversationReadinessScale()
+        let didChangeSpiritualConversationReadinessScale = Self.getDidChangeScaleForSpiritualConversationReadiness()
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
+        var readinessScaleRef: SpiritualConversationReadinessScale?
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            getSpiritualConversationReadinessScale
-                .getScalePublisher(scale: argument.scaleValue, translateInAppLanguage: LanguageCodeDomainModel.english.rawValue)
-                .sink { (readinessScale: SpiritualConversationReadinessScaleDomainModel) in
+            didChangeSpiritualConversationReadinessScale
+                .execute(scale: argument.scaleValue, translateInAppLanguage: LanguageCodeDomainModel.english.rawValue)
+                .sink { (readinessScale: SpiritualConversationReadinessScale) in
                     
                     readinessScaleRef = readinessScale
                     
@@ -230,11 +228,11 @@ struct GetSpiritualConversationReadinessScaleTests {
     }
 }
 
-extension GetSpiritualConversationReadinessScaleTests {
+extension DidChangeScaleForSpiritualConversationReadinessTests {
     
-    private static func getSpiritualConversationReadinessScale() -> GetSpiritualConversationReadinessScale {
+    private static func getDidChangeScaleForSpiritualConversationReadiness() -> DidChangeScaleForSpiritualConversationReadiness {
         
-        return GetSpiritualConversationReadinessScale(
+        return DidChangeScaleForSpiritualConversationReadiness(
             getTranslatedNumberCount: GetTranslatedNumberCount()
         )
     }

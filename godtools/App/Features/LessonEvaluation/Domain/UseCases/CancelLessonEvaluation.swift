@@ -1,5 +1,5 @@
 //
-//  EvaluateLessonRepository.swift
+//  CancelLessonEvaluation.swift
 //  godtools
 //
 //  Created by Levi Eggert on 10/25/23.
@@ -9,20 +9,18 @@
 import Foundation
 import Combine
 
-class EvaluateLessonRepository: EvaluateLessonRepositoryInterface {
-    
+class CancelLessonEvaluation {
+        
     private let resourcesRepository: ResourcesRepository
     private let lessonEvaluationRepository: LessonEvaluationRepository
-    private let lessonFeedbackAnalytics: LessonFeedbackAnalytics
     
-    init(resourcesRepository: ResourcesRepository, lessonEvaluationRepository: LessonEvaluationRepository, lessonFeedbackAnalytics: LessonFeedbackAnalytics) {
+    init(resourcesRepository: ResourcesRepository, lessonEvaluationRepository: LessonEvaluationRepository) {
         
         self.resourcesRepository = resourcesRepository
         self.lessonEvaluationRepository = lessonEvaluationRepository
-        self.lessonFeedbackAnalytics = lessonFeedbackAnalytics
     }
     
-    func evaluateLessonPublisher(lessonId: String, feedback: TrackLessonFeedbackDomainModel) -> AnyPublisher<Void, Never> {
+    func execute(lessonId: String) -> AnyPublisher<Void, Never> {
         
         guard let lessonResource = resourcesRepository.persistence.getObject(id: lessonId) else {
             return Just(Void())
@@ -31,12 +29,7 @@ class EvaluateLessonRepository: EvaluateLessonRepositoryInterface {
         
         lessonEvaluationRepository.storeLessonEvaluation(
             lesson: lessonResource,
-            lessonEvaluated: true
-        )
-        
-        lessonFeedbackAnalytics.trackLessonFeedback(
-            lesson: lessonResource,
-            feedback: feedback
+            lessonEvaluated: false
         )
         
         return Just(Void())

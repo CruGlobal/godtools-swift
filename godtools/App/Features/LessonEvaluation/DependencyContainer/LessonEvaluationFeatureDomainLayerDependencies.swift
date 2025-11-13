@@ -19,33 +19,36 @@ class LessonEvaluationFeatureDomainLayerDependencies {
         self.coreDataLayer = coreDataLayer
     }
     
-    func getCancelLessonEvaluationUseCase() -> CancelLessonEvaluationUseCase {
-        return CancelLessonEvaluationUseCase(
-            cancelLessonEvaluationRepositoryInterface: dataLayer.getCancelLessonEvaluationRepositoryInterface()
+    func getCancelLessonEvaluation() -> CancelLessonEvaluation {
+        return CancelLessonEvaluation(
+            resourcesRepository: coreDataLayer.getResourcesRepository(),
+            lessonEvaluationRepository: dataLayer.getLessonEvaluationRepository()
         )
     }
     
-    func getDidChangeScaleForSpiritualConversationReadinessUseCase() -> DidChangeScaleForSpiritualConversationReadinessUseCase {
-        return DidChangeScaleForSpiritualConversationReadinessUseCase(
-            getReadinessScale: dataLayer.getSpiritualConversationReadinessScale()
+    func getDidChangeScaleForSpiritualConversationReadiness() -> DidChangeScaleForSpiritualConversationReadiness {
+        return DidChangeScaleForSpiritualConversationReadiness(
+            getTranslatedNumberCount: coreDataLayer.getTranslatedNumberCount()
         )
     }
     
-    func getEvaluateLessonUseCase() -> EvaluateLessonUseCase {
-        return EvaluateLessonUseCase(
-            evaluateLessonRepositoryInterface: dataLayer.getEvaluateLessonRepositoryInterface()
+    func getEvaluateLesson() -> EvaluateLesson {
+        return EvaluateLesson(
+            resourcesRepository: coreDataLayer.getResourcesRepository(),
+            lessonEvaluationRepository: dataLayer.getLessonEvaluationRepository(),
+            lessonFeedbackAnalytics: dataLayer.getLessonFeedbackAnalytics()
         )
     }
     
-    func getLessonEvaluatedUseCase() -> GetLessonEvaluatedUseCase {
-        return GetLessonEvaluatedUseCase(
-            getLessonEvaluatedRepositoryInterface: dataLayer.getLessonEvaluatedRepositoryInterface()
+    func getLessonEvaluated() -> GetLessonEvaluated {
+        return GetLessonEvaluated(
+            lessonEvaluationRepository: dataLayer.getLessonEvaluationRepository()
         )
     }
     
-    func getLessonEvaluationInterfaceStringsUseCase() -> GetLessonEvaluationInterfaceStringsUseCase {
-        return GetLessonEvaluationInterfaceStringsUseCase(
-            getLessonEvaluationInterfaceStringsRepositoryInterface: dataLayer.getLessonEvaluationInterfaceStringsRepositoryInterface()
+    func getLessonEvaluationStrings() -> GetLessonEvaluationStrings {
+        return GetLessonEvaluationStrings(
+            localizationServices: coreDataLayer.getLocalizationServices()
         )
     }
 }

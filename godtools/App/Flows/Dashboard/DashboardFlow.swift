@@ -250,9 +250,9 @@ class DashboardFlow: Flow, ToolNavigationFlow {
             
             case .userClosedLesson(let lessonId, let highestPageNumberViewed):
                 
-                let getLessonEvaluatedUseCase: GetLessonEvaluatedUseCase = appDiContainer.feature.lessonEvaluation.domainLayer.getLessonEvaluatedUseCase()
+                let getLessonEvaluated: GetLessonEvaluated = appDiContainer.feature.lessonEvaluation.domainLayer.getLessonEvaluated()
                 
-                getLessonEvaluatedUseCase.getEvaluatedPublisher(lessonId: lessonId)
+                getLessonEvaluated.execute(lessonId: lessonId)
                     .receive(on: DispatchQueue.main)
                     .sink { [weak self] (lessonEvaluated: Bool) in
                         
@@ -464,10 +464,10 @@ extension DashboardFlow {
             lessonId: lessonId,
             pageIndexReached: pageIndexReached,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            getLessonEvaluationInterfaceStringsUseCase: appDiContainer.feature.lessonEvaluation.domainLayer.getLessonEvaluationInterfaceStringsUseCase(),
-            didChangeScaleForSpiritualConversationReadinessUseCase: appDiContainer.feature.lessonEvaluation.domainLayer.getDidChangeScaleForSpiritualConversationReadinessUseCase(),
-            evaluateLessonUseCase: appDiContainer.feature.lessonEvaluation.domainLayer.getEvaluateLessonUseCase(),
-            cancelLessonEvaluationUseCase: appDiContainer.feature.lessonEvaluation.domainLayer.getCancelLessonEvaluationUseCase()
+            getLessonEvaluationStrings: appDiContainer.feature.lessonEvaluation.domainLayer.getLessonEvaluationStrings(),
+            didChangeScaleForSpiritualConversationReadiness: appDiContainer.feature.lessonEvaluation.domainLayer.getDidChangeScaleForSpiritualConversationReadiness(),
+            evaluateLesson: appDiContainer.feature.lessonEvaluation.domainLayer.getEvaluateLesson(),
+            cancelLessonEvaluation: appDiContainer.feature.lessonEvaluation.domainLayer.getCancelLessonEvaluation()
         )
         
         let view = LessonEvaluationView(

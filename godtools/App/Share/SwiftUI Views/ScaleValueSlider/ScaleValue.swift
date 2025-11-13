@@ -19,7 +19,7 @@ struct ScaleValue {
         self.displayValue = displayValue
     }
     
-    init(lessonEvaluationScale: LessonEvaluationScaleDomainModel) {
+    init(lessonEvaluationScale: LessonEvaluationScale) {
         
         integerValue = lessonEvaluationScale.integerValue
         displayValue = lessonEvaluationScale.valueTranslatedInAppLanguage

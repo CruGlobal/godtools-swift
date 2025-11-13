@@ -24,7 +24,7 @@ class LessonFeedbackAnalytics {
         self.firebaseAnalytics = firebaseAnalytics
     }
     
-    func trackLessonFeedback(lesson: ResourceDataModel, feedback: TrackLessonFeedbackDomainModel) {
+    func trackLessonFeedback(lesson: ResourceDataModel, feedback: TrackLessonFeedback) {
             
         var data: [String: String] = Dictionary()
         

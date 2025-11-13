@@ -17,38 +17,36 @@ class LessonEvaluationViewModel: ObservableObject {
     private let lessonId: String
     private let pageIndexReached: Int
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
-    private let getLessonEvaluationInterfaceStringsUseCase: GetLessonEvaluationInterfaceStringsUseCase
-    private let didChangeScaleForSpiritualConversationReadinessUseCase: DidChangeScaleForSpiritualConversationReadinessUseCase
-    private let evaluateLessonUseCase: EvaluateLessonUseCase
-    private let cancelLessonEvaluationUseCase: CancelLessonEvaluationUseCase
-    
-    private var cancellables: Set<AnyCancellable> = Set()
-        
+    private let evaluateLesson: EvaluateLesson
+    private let cancelLessonEvaluation: CancelLessonEvaluation
+            
     private weak var flowDelegate: FlowDelegate?
             
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     
-    @Published var title: String = ""
-    @Published var wasThisHelpful: String = ""
+    @Published private(set) var strings = LessonEvaluationStrings.emptyValue
+    @Published private(set) var readyToShareFaithScale = SpiritualConversationReadinessScale.emptyValue
+    
     @Published var yesIsSelected: Bool = false
     @Published var noIsSelected: Bool = false
-    @Published var yesButtonTitle: String = ""
-    @Published var noButtonTitle: String = ""
-    @Published var shareFaithReadiness: String = ""
-    @Published var sendFeedbackButtonTitle: String = ""
-    @Published var readyToShareFaithScale: SpiritualConversationReadinessScaleDomainModel?
     @Published var readyToShareFaithScaleIntValue: Int = 6
     
-    init(flowDelegate: FlowDelegate, lessonId: String, pageIndexReached: Int, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getLessonEvaluationInterfaceStringsUseCase: GetLessonEvaluationInterfaceStringsUseCase, didChangeScaleForSpiritualConversationReadinessUseCase: DidChangeScaleForSpiritualConversationReadinessUseCase, evaluateLessonUseCase: EvaluateLessonUseCase, cancelLessonEvaluationUseCase: CancelLessonEvaluationUseCase) {
+    init(
+        flowDelegate: FlowDelegate,
+        lessonId: String, pageIndexReached: Int,
+        getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
+        getLessonEvaluationStrings: GetLessonEvaluationStrings,
+        didChangeScaleForSpiritualConversationReadiness: DidChangeScaleForSpiritualConversationReadiness,
+        evaluateLesson: EvaluateLesson,
+        cancelLessonEvaluation: CancelLessonEvaluation
+    ) {
         
         self.flowDelegate = flowDelegate
         self.lessonId = lessonId
         self.pageIndexReached = pageIndexReached
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
-        self.getLessonEvaluationInterfaceStringsUseCase = getLessonEvaluationInterfaceStringsUseCase
-        self.didChangeScaleForSpiritualConversationReadinessUseCase = didChangeScaleForSpiritualConversationReadinessUseCase
-        self.evaluateLessonUseCase = evaluateLessonUseCase
-        self.cancelLessonEvaluationUseCase = cancelLessonEvaluationUseCase
+        self.evaluateLesson = evaluateLesson
+        self.cancelLessonEvaluation = cancelLessonEvaluation
         
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
@@ -59,38 +57,25 @@ class LessonEvaluationViewModel: ObservableObject {
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
                 
-                getLessonEvaluationInterfaceStringsUseCase
-                    .getStringsPublisher(appLanguage: appLanguage)
+                getLessonEvaluationStrings
+                    .execute(translateInAppLanguage: appLanguage)
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (interfaceStrings: LessonEvaluationInterfaceStringsDomainModel) in
-                
-                self?.title = interfaceStrings.title
-                self?.wasThisHelpful = interfaceStrings.wasThisHelpful
-                self?.yesButtonTitle = interfaceStrings.yesButtonTitle
-                self?.noButtonTitle = interfaceStrings.noButtonTitle
-                self?.shareFaithReadiness = interfaceStrings.shareFaith
-                self?.sendFeedbackButtonTitle = interfaceStrings.sendButtonTitle
-            }
-            .store(in: &cancellables)
+            .assign(to: &$strings)
         
         Publishers.CombineLatest(
             $appLanguage.dropFirst(),
             $readyToShareFaithScaleIntValue
         )
         .map { (appLanguage: AppLanguageDomainModel, scale: Int) in
-                
-            didChangeScaleForSpiritualConversationReadinessUseCase
-                .changeScalePublisher(scale: scale, translateInAppLanguage: appLanguage)
+            
+            didChangeScaleForSpiritualConversationReadiness
+                .execute(scale: scale, translateInAppLanguage: appLanguage)
         }
         .switchToLatest()
         .receive(on: DispatchQueue.main)
-        .sink { [weak self] (domainModel: SpiritualConversationReadinessScaleDomainModel) in
-            
-            self?.readyToShareFaithScale = domainModel
-        }
-        .store(in: &cancellables)
+        .assign(to: &$readyToShareFaithScale)
     }
     
     deinit {
@@ -104,8 +89,8 @@ extension LessonEvaluationViewModel {
     
     func closeTapped() {
         
-        LessonEvaluationViewModel.cancelLessonEvaluationInBackgroundCancellable = cancelLessonEvaluationUseCase
-            .cancelPublisher(lessonId: lessonId)
+        LessonEvaluationViewModel.cancelLessonEvaluationInBackgroundCancellable = cancelLessonEvaluation
+            .execute(lessonId: lessonId)
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { _ in
                 
@@ -128,7 +113,7 @@ extension LessonEvaluationViewModel {
     
     func sendFeedbackTapped() {
              
-        let feedbackHelpful: TrackLessonFeedbackDomainModel.FeedbackHelpful?
+        let feedbackHelpful: TrackLessonFeedback.FeedbackHelpful?
         
         if yesIsSelected {
             feedbackHelpful = .yes
@@ -140,14 +125,14 @@ extension LessonEvaluationViewModel {
             feedbackHelpful = nil
         }
         
-        let feedback = TrackLessonFeedbackDomainModel(
+        let feedback = TrackLessonFeedback(
             feedbackHelpful: feedbackHelpful,
             readinessScaleValue: readyToShareFaithScaleIntValue,
             pageIndexReached: pageIndexReached
         )
         
-        LessonEvaluationViewModel.evaluateLessonInBackgroundCancellable = evaluateLessonUseCase
-            .evaluateLessonPublisher(lessonId: lessonId, feedback: feedback)
+        LessonEvaluationViewModel.evaluateLessonInBackgroundCancellable = evaluateLesson
+            .execute(lessonId: lessonId, feedback: feedback)
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { _ in
                 
