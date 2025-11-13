@@ -10,8 +10,8 @@ import UIKit
 import GodToolsShared
 import Combine
 
-class LessonFlow: ToolNavigationFlow, Flow {
-
+class LessonFlow: ToolNavigationFlow, Flow, ToolSharer {
+    
     private let toolTranslations: ToolTranslationsDomainModel
     private let appLanguage: AppLanguageDomainModel
     private let trainingTipsEnabled: Bool
@@ -119,6 +119,33 @@ class LessonFlow: ToolNavigationFlow, Flow {
         case .continueTappedFromResumeLessonModal:
             navigateToLesson(isNavigatingFromResumeLessonModal: true, initialPage: userLessonProgressPage, initialPageSubIndex: initialPageSubIndex, animated: false)
             navigationController.dismissPresented(animated: true, completion: nil)
+            
+            
+        case .shareLessonTappedFromLesson(let pageNumber, let languageId):
+             
+            let getViewShareToolUseCase = appDiContainer.feature.shareTool.domainLayer.getViewShareToolUseCase()
+            
+            getViewShareToolUseCase.viewPublisher(
+                toolId: lesson.id,
+                toolLanguageId: languageId,
+                pageNumber: pageNumber,
+                appLanguage: appLanguage
+            )
+            .first()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] viewShareToolDomainModel in
+            
+                guard let self = self else { return }
+                            
+                let shareToolView = getShareToolView(
+                    viewShareToolDomainModel: viewShareToolDomainModel,
+                    toolId: self.lesson.id,
+                    toolAnalyticsAbbreviation: self.lesson.abbreviation,
+                    pageNumber: pageNumber)
+                
+                self.navigationController.present(shareToolView, animated: true)
+            }
+            .store(in: &cancellables)
             
         case .closeTappedFromLesson(let lessonId, let highestPageNumberViewed):
             closeTool(lessonId: lessonId, highestPageNumberViewed: highestPageNumberViewed)

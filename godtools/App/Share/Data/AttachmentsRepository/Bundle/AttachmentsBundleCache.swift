@@ -14,12 +14,12 @@ class AttachmentsBundleCache {
         
     }
     
-    func getAttachmentData(attachment: AttachmentDataModel) -> Data? {
+    func getBundledAttachment(attachment: AttachmentDataModel) -> Data? {
         
-        return getAttachmentData(resource: attachment.sha256)
+        return getBundledAttachment(resource: attachment.sha256)
     }
     
-    func getAttachmentData(resource: String) -> Data? {
+    func getBundledAttachment(resource: String) -> Data? {
                                 
         guard let filePath = Bundle.main.path(forResource: resource, ofType: nil) else {
             return nil

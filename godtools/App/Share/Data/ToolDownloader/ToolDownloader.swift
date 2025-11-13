@@ -41,15 +41,15 @@ class ToolDownloader {
             
             if let resource = resourcesRepository.persistence.getObject(id: tool.toolId) {
                 
-                if let resourceBanner = attachmentsRepository.getCachedAttachment(id: resource.attrBanner) {
+                if let resourceBanner = attachmentsRepository.cache.getAttachment(id: resource.attrBanner) {
                     attachments.append(resourceBanner)
                 }
                 
-                if let resourceBannerAbout = attachmentsRepository.getCachedAttachment(id: resource.attrBannerAbout) {
+                if let resourceBannerAbout = attachmentsRepository.cache.getAttachment(id: resource.attrBannerAbout) {
                     attachments.append(resourceBannerAbout)
                 }
                 
-                if let resourceAboutBannerAnimation = attachmentsRepository.getCachedAttachment(id: resource.attrAboutBannerAnimation) {
+                if let resourceAboutBannerAnimation = attachmentsRepository.cache.getAttachment(id: resource.attrAboutBannerAnimation) {
                     attachments.append(resourceAboutBannerAnimation)
                 }
                 

@@ -98,7 +98,7 @@ class GetToolDetailsRepository: GetToolDetailsRepositoryInterface {
         let resourceVariants: [ResourceDataModel]
         
         if let metatoolId = toolDataModel.metatoolId, !metatoolId.isEmpty {
-            resourceVariants = resourcesRepository.getResourceVariants(resourceId: metatoolId)
+            resourceVariants = resourcesRepository.cache.getResourceVariants(resourceId: metatoolId)
         }
         else {
             resourceVariants = []

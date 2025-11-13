@@ -9,7 +9,7 @@
 import Foundation
 import SwiftData
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 public class SwiftDatabaseQuery<T: IdentifiableSwiftDataObject> {
     
     public let fetchDescriptor: FetchDescriptor<T>

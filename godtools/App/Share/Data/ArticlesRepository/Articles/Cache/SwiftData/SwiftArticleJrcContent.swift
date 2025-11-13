@@ -9,10 +9,10 @@
 import Foundation
 import SwiftData
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 typealias SwiftArticleJrcContent = SwiftArticleJrcContentV1.SwiftArticleJrcContent
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 enum SwiftArticleJrcContentV1 {
  
     @Model

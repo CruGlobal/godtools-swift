@@ -10,14 +10,14 @@
 import Foundation
 import SwiftData
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 typealias SwiftResource = SwiftResourceV1.SwiftResource
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 enum SwiftResourceV1 {
  
     @Model
-    class SwiftResource: IdentifiableSwiftDataObject {
+    class SwiftResource: IdentifiableSwiftDataObject, ResourceDataModelInterface {
         
         var abbreviation: String = ""
         var attachmentIds: [String] = Array<String>()
@@ -56,20 +56,108 @@ enum SwiftResourceV1 {
             
         }
         
-        func getAttachmentIds() -> [String] {
-            return attachmentIds
+        func mapFrom(interface: ResourceDataModelInterface) {
+            abbreviation = interface.abbreviation
+            attrAboutBannerAnimation = interface.attrAboutBannerAnimation
+            attrAboutOverviewVideoYoutube = interface.attrAboutOverviewVideoYoutube
+            attrBanner = interface.attrBanner
+            attrBannerAbout = interface.attrBannerAbout
+            attrCategory = interface.attrCategory
+            attrDefaultLocale = interface.attrDefaultLocale
+            attrDefaultOrder = interface.attrDefaultOrder
+            attrSpotlight = interface.attrSpotlight
+            defaultVariantId = interface.defaultVariantId
+            id = interface.id
+            isHidden = interface.isHidden
+            manifest = interface.manifest
+            metatoolId = interface.metatoolId
+            name = interface.name
+            oneskyProjectId = interface.oneskyProjectId
+            resourceDescription = interface.resourceDescription
+            resourceType = interface.resourceType
+            totalViews = interface.totalViews
+            type = interface.type
         }
         
-        func getLanguageIds() -> [String] {
-            return languageIds
+        static func createNewFrom(interface: ResourceDataModelInterface) -> SwiftResource {
+            let resource = SwiftResource()
+            resource.mapFrom(interface: interface)
+            return resource
         }
+    }
+}
+
+// MARK: - Attachments
+
+@available(iOS 17.4, *)
+extension SwiftResource {
+    
+    func getAttachmentIds() -> [String] {
+        return Array(attachmentIds)
+    }
+}
+
+// MARK: - Languages
+
+@available(iOS 17.4, *)
+extension SwiftResource {
+    
+    func addLanguage(language: SwiftLanguage) {
         
-        func getLatestTranslationIds() -> [String] {
-            return latestTranslationIds
+        if !languages.contains(language) {
+            languages.append(language)
         }
+    }
+    
+    func getLanguageIds() -> [String] {
+        return languages.map({$0.id})
+    }
+}
+
+// MARK: - Latest Translations
+
+@available(iOS 17.4, *)
+extension SwiftResource {
+    
+    func addLatestTranslation(translation: SwiftTranslation) {
         
-        func getVariantIds() -> [String] {
-            return variantIds
+        if !latestTranslations.contains(translation) {
+            latestTranslations.append(translation)
         }
+    }
+    
+    func getLatestTranslationIds() -> [String] {
+        return Array(latestTranslationIds)
+    }
+}
+
+// MARK: - Variants
+
+@available(iOS 17.4, *)
+extension SwiftResource {
+    
+    func getDefaultVariant() -> SwiftResource? {
+        return defaultVariant
+    }
+    
+    func setDefaultVariant(variant: SwiftResource?) {
+        
+        variant?.isVariant = true
+        
+        defaultVariant = variant
+    }
+    
+    func addVariant(variant: SwiftResource) {
+        
+        variant.metatool = self
+        variant.isVariant = true
+        
+        if !variants.contains(variant) {
+            variants.append(variant)
+        }
+    }
+    
+    func getVariantIds() -> [String] {
+        return Array(variantIds)
     }
 }

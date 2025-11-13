@@ -1,5 +1,5 @@
 //
-//  ResourcesPlusLatestTranslationsAndAttachmentsModel.swift
+//  ResourcesPlusLatestTranslationsAndAttachmentsCodable.swift
 //  godtools
 //
 //  Created by Levi Eggert on 6/10/20.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ResourcesPlusLatestTranslationsAndAttachmentsModel: Codable {
+struct ResourcesPlusLatestTranslationsAndAttachmentsCodable: Codable {
     
     let resources: [ResourceCodable]
     let attachments: [AttachmentCodable]
@@ -23,8 +23,8 @@ struct ResourcesPlusLatestTranslationsAndAttachmentsModel: Codable {
         case type = "type"
     }
     
-    static var emptyModel: ResourcesPlusLatestTranslationsAndAttachmentsModel {
-        return ResourcesPlusLatestTranslationsAndAttachmentsModel(resources: [], attachments: [], translations: [])
+    static var emptyModel: ResourcesPlusLatestTranslationsAndAttachmentsCodable {
+        return ResourcesPlusLatestTranslationsAndAttachmentsCodable(resources: [], attachments: [], translations: [])
     }
     
     init(resources: [ResourceCodable], attachments: [AttachmentCodable], translations: [TranslationCodable]) {
@@ -68,7 +68,7 @@ struct ResourcesPlusLatestTranslationsAndAttachmentsModel: Codable {
         self.translations = translations
     }
     
-    private static func decodeResources(container: KeyedDecodingContainer<ResourcesPlusLatestTranslationsAndAttachmentsModel.RootKeys>) -> [ResourceCodable] {
+    private static func decodeResources(container: KeyedDecodingContainer<ResourcesPlusLatestTranslationsAndAttachmentsCodable.RootKeys>) -> [ResourceCodable] {
                 
         do {
             let resources: [ResourceCodable] = try container.decode([ResourceCodable].self, forKey: .data)

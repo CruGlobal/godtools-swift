@@ -1,5 +1,5 @@
 //
-//  DownloadedTranslationDataModelType.swift
+//  DownloadedTranslationDataModelInterface.swift
 //  godtools
 //
 //  Created by Levi Eggert on 9/26/22.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol DownloadedTranslationDataModelType {
+protocol DownloadedTranslationDataModelInterface {
     
     var languageId: String { get }
     var manifestAndRelatedFilesPersistedToDevice: Bool { get }

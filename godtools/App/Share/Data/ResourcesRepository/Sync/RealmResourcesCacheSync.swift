@@ -25,16 +25,16 @@ class RealmResourcesCacheSync {
         self.trackDownloadedTranslationsRepository = trackDownloadedTranslationsRepository
     }
     
-    func syncResources(resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel, shouldRemoveDataThatNoLongerExists: Bool) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> {
+    func syncResources(resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable, shouldRemoveDataThatNoLongerExists: Bool) -> AnyPublisher<ResourcesCacheSyncResult, Error> {
              
         return Future() { promise in
 
             self.realmDatabase.background { (realm: Realm) in
                 
-                var newRealmObjectsToStore: [Object] = Array()
+                var newObjectsToStore: [Object] = Array()
                 
-                var realmResourcesDictionary: [ResourceId: RealmResource] = Dictionary()
-                var realmTranslationsDictionary: [TranslationId: RealmTranslation] = Dictionary()
+                var resourcesDictionary: [ResourceId: RealmResource] = Dictionary()
+                var translationsDictionary: [TranslationId: RealmTranslation] = Dictionary()
                                 
                 // sync new resourecs
                 
@@ -51,10 +51,10 @@ class RealmResourcesCacheSync {
                     
                     for newResource in resourcesPlusLatestTranslationsAndAttachments.resources {
                         
-                        let realmResource = RealmResource.createNewFrom(interface: newResource)
-                        realmResourcesDictionary[realmResource.id] = realmResource
+                        let resource = RealmResource.createNewFrom(interface: newResource)
+                        resourcesDictionary[resource.id] = resource
                         
-                        newRealmObjectsToStore.append(realmResource)
+                        newObjectsToStore.append(resource)
                         
                         if let index = existingResourcesMinusNewlyAddedResources.firstIndex(where: { $0.id == newResource.id }) {
                             
@@ -82,19 +82,19 @@ class RealmResourcesCacheSync {
                     
                     for newTranslation in resourcesPlusLatestTranslationsAndAttachments.translations {
                         
-                        let realmTranslation = RealmTranslation.createNewFrom(interface: newTranslation)
+                        let translation = RealmTranslation.createNewFrom(interface: newTranslation)
                         
                         if let resourceId = newTranslation.resource?.id {
-                            realmTranslation.resource = realmResourcesDictionary[resourceId]
+                            translation.resource = resourcesDictionary[resourceId]
                         }
                         
                         if let languageId = newTranslation.language?.id {
-                            realmTranslation.language = realm.object(ofType: RealmLanguage.self, forPrimaryKey: languageId)
+                            translation.language = realm.object(ofType: RealmLanguage.self, forPrimaryKey: languageId)
                         }
                         
-                        realmTranslationsDictionary[realmTranslation.id] = realmTranslation
+                        translationsDictionary[translation.id] = translation
                         
-                        newRealmObjectsToStore.append(realmTranslation)
+                        newObjectsToStore.append(translation)
                         
                         if let indexOfNewTranslation = existingTranslationsMinusNewlyAddedTranslations.firstIndex(where: { $0.id == newTranslation.id }) {
                             
@@ -122,13 +122,13 @@ class RealmResourcesCacheSync {
                     
                     for newAttachment in resourcesPlusLatestTranslationsAndAttachments.attachments {
                         
-                        let realmAttachment = RealmAttachment.createNewFrom(interface: newAttachment)
+                        let attachment = RealmAttachment.createNewFrom(interface: newAttachment)
                         
                         if let resourceId = newAttachment.resource?.id {
-                            realmAttachment.resource = realmResourcesDictionary[resourceId]
+                            attachment.resource = resourcesDictionary[resourceId]
                         }
                         
-                        newRealmObjectsToStore.append(realmAttachment)
+                        newObjectsToStore.append(attachment)
                         
                         if let indexOfNewAttachment = existingAttachmentsMinusNewlyAddedAttachments.firstIndex(where: { $0.id == newAttachment.id }) {
                             
@@ -144,25 +144,25 @@ class RealmResourcesCacheSync {
                 // attach variants and default variant, added variants will backlink to metatool
                 // attach latest translations and attach languages to newly added resources
                 
-                for ( _, realmResource) in realmResourcesDictionary {
+                for ( _, realmResource) in resourcesDictionary {
                     
                     for variantId in realmResource.getVariantIds() {
                         
-                        guard let variant = realmResourcesDictionary[variantId] else {
+                        guard let variant = resourcesDictionary[variantId] else {
                             continue
                         }
                         
                         realmResource.addVariant(variant: variant)
                     }
                     
-                    if let defaultVarientId = realmResource.defaultVariantId, let defaultVariant = realmResourcesDictionary[defaultVarientId] {
+                    if let defaultVarientId = realmResource.defaultVariantId, let defaultVariant = resourcesDictionary[defaultVarientId] {
                         
                         realmResource.setDefaultVariant(variant: defaultVariant)
                     }
                     
                     for translationId in realmResource.getLatestTranslationIds() {
                         
-                        guard let realmTranslation = realmTranslationsDictionary[translationId] else {
+                        guard let realmTranslation = translationsDictionary[translationId] else {
                             continue
                         }
                         
@@ -209,21 +209,21 @@ class RealmResourcesCacheSync {
                 let downloadedTranslationsRemoved: [DownloadedTranslationDataModel] = downloadedTranslationsToRemove.map({DownloadedTranslationDataModel(model: $0)})
                 
                 // delete realm objects that no longer exist
-                var realmObjectsToRemove: [Object] = Array()
+                var objectsToRemove: [Object] = Array()
                                 
-                realmObjectsToRemove.append(contentsOf: existingResourcesMinusNewlyAddedResources)
-                realmObjectsToRemove.append(contentsOf: existingTranslationsMinusNewlyAddedTranslations)
-                realmObjectsToRemove.append(contentsOf: existingAttachmentsMinusNewlyAddedAttachments)
-                realmObjectsToRemove.append(contentsOf: downloadedTranslationsToRemove)
+                objectsToRemove.append(contentsOf: existingResourcesMinusNewlyAddedResources)
+                objectsToRemove.append(contentsOf: existingTranslationsMinusNewlyAddedTranslations)
+                objectsToRemove.append(contentsOf: existingAttachmentsMinusNewlyAddedAttachments)
+                objectsToRemove.append(contentsOf: downloadedTranslationsToRemove)
                 
                 do {
                     
                     try realm.write {
-                        realm.add(newRealmObjectsToStore, update: .all)
-                        realm.delete(realmObjectsToRemove)
+                        realm.add(newObjectsToStore, update: .all)
+                        realm.delete(objectsToRemove)
                     }
                     
-                    let syncResult = RealmResourcesCacheSyncResult(
+                    let syncResult = ResourcesCacheSyncResult(
                         resourcesRemoved: resourcesRemoved,
                         translationsRemoved: translationsRemoved,
                         attachmentsRemoved: attachmentsRemoved,

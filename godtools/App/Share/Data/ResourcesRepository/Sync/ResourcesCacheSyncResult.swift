@@ -1,5 +1,5 @@
 //
-//  RealmResourcesCacheSyncResult.swift
+//  ResourcesCacheSyncResult.swift
 //  godtools
 //
 //  Created by Levi Eggert on 7/26/22.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct RealmResourcesCacheSyncResult {
+struct ResourcesCacheSyncResult {
     
     let resourcesRemoved: [ResourceDataModel]
     let translationsRemoved: [TranslationDataModel]
@@ -16,10 +16,10 @@ struct RealmResourcesCacheSyncResult {
     let downloadedTranslationsRemoved: [DownloadedTranslationDataModel]
 }
 
-extension RealmResourcesCacheSyncResult {
+extension ResourcesCacheSyncResult {
     
-    static func emptyResult() -> RealmResourcesCacheSyncResult {
-        return RealmResourcesCacheSyncResult(
+    static func emptyResult() -> ResourcesCacheSyncResult {
+        return ResourcesCacheSyncResult(
             resourcesRemoved: [],
             translationsRemoved: [],
             attachmentsRemoved: [],

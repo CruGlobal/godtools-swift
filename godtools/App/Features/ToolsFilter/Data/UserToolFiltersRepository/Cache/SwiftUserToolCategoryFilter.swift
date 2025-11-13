@@ -9,10 +9,10 @@
 import Foundation
 import SwiftData
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 typealias SwiftUserToolCategoryFilter = SwiftUserToolCategoryFilterV1.SwiftUserToolCategoryFilter
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 enum SwiftUserToolCategoryFilterV1 {
     
     @Model

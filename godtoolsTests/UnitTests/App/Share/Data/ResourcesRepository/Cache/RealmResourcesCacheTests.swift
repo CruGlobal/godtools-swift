@@ -13,17 +13,14 @@ import Combine
 
 class RealmResourcesCacheTests: XCTestCase {
     
-    private lazy var realmResourcesCache: RealmResourcesCache = {
+    private lazy var realmResourcesCache: ResourcesCache = {
         
         let realmDatabase = getNewTestDatabase()
         
-        return RealmResourcesCache(
+        return ResourcesCache(
             realmDatabase: realmDatabase,
-            resourcesSync: RealmResourcesCacheSync(
-                realmDatabase: realmDatabase,
-                trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository(
-                    cache: TrackDownloadedTranslationsCache(realmDatabase: realmDatabase)
-                )
+            trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository(
+                cache: TrackDownloadedTranslationsCache(realmDatabase: realmDatabase)
             )
         )
     }()

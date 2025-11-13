@@ -12,8 +12,9 @@ import Combine
 
 class RealmRepositorySyncPersistence<DataModelType, ExternalObjectType, PersistObjectType: IdentifiableRealmObject>: RepositorySyncPersistence {
     
-    private let realmDatabase: RealmDatabase
     private let dataModelMapping: any RepositorySyncMapping<DataModelType, ExternalObjectType, PersistObjectType>
+    
+    let realmDatabase: RealmDatabase
     
     init(realmDatabase: RealmDatabase, dataModelMapping: any RepositorySyncMapping<DataModelType, ExternalObjectType, PersistObjectType>) {
         
@@ -94,7 +95,7 @@ extension RealmRepositorySyncPersistence {
         return getObjects(query: query)
     }
     
-    private func getNumberObjects(query: RealmDatabaseQuery?) -> Int {
+    func getNumberObjects(query: RealmDatabaseQuery?) -> Int {
         
         return getPersistedObjects(realm: realmDatabase.openRealm(), query: query).count
     }
@@ -103,7 +104,7 @@ extension RealmRepositorySyncPersistence {
         return NSPredicate(format: "id IN %@", ids)
     }
     
-    private func getPersistedObjects(realm: Realm, query: RealmDatabaseQuery?) -> Results<PersistObjectType> {
+    func getPersistedObjects(realm: Realm, query: RealmDatabaseQuery?) -> Results<PersistObjectType> {
         
         let results = realm.objects(PersistObjectType.self)
         
