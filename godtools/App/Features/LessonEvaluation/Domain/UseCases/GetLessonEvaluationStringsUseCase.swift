@@ -1,5 +1,5 @@
 //
-//  GetLessonEvaluationStrings.swift
+//  GetLessonEvaluationStringsUseCase.swift
 //  godtools
 //
 //  Created by Levi Eggert on 10/25/23.
@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class GetLessonEvaluationStrings {
+class GetLessonEvaluationStringsUseCase {
     
     private let localizationServices: LocalizationServicesInterface
     

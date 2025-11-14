@@ -21,7 +21,7 @@ struct DidChangeScaleForSpiritualConversationReadinessTests {
     )
     @MainActor func confirmReadinessScaleMinAndMaxValuesAreCorrect() async {
         
-        let didChangeSpiritualConversationReadinessScale = Self.getDidChangeScaleForSpiritualConversationReadiness()
+        let didChangeSpiritualConversationReadinessScaleUseCase = Self.getDidChangeScaleForSpiritualConversationReadinessUseCase()
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -29,7 +29,7 @@ struct DidChangeScaleForSpiritualConversationReadinessTests {
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            didChangeSpiritualConversationReadinessScale
+            didChangeSpiritualConversationReadinessScaleUseCase
                 .execute(scale: 5, translateInAppLanguage: LanguageCodeDomainModel.english.rawValue)
                 .sink { (readinessScale: SpiritualConversationReadinessScale) in
                     
@@ -53,7 +53,7 @@ struct DidChangeScaleForSpiritualConversationReadinessTests {
     )
     @MainActor func readinessScaleIsTranslatedInEnglish() async {
         
-        let didChangeSpiritualConversationReadinessScale = Self.getDidChangeScaleForSpiritualConversationReadiness()
+        let didChangeSpiritualConversationReadinessScaleUseCase = Self.getDidChangeScaleForSpiritualConversationReadinessUseCase()
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -61,7 +61,7 @@ struct DidChangeScaleForSpiritualConversationReadinessTests {
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            didChangeSpiritualConversationReadinessScale
+            didChangeSpiritualConversationReadinessScaleUseCase
                 .execute(scale: 5, translateInAppLanguage: LanguageCodeDomainModel.english.rawValue)
                 .sink { (readinessScale: SpiritualConversationReadinessScale) in
                     
@@ -86,7 +86,7 @@ struct DidChangeScaleForSpiritualConversationReadinessTests {
     )
     @MainActor func readinessScaleIsTranslatedInArabic() async {
         
-        let didChangeSpiritualConversationReadinessScale = Self.getDidChangeScaleForSpiritualConversationReadiness()
+        let didChangeSpiritualConversationReadinessScaleUseCase = Self.getDidChangeScaleForSpiritualConversationReadinessUseCase()
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -94,7 +94,7 @@ struct DidChangeScaleForSpiritualConversationReadinessTests {
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            didChangeSpiritualConversationReadinessScale
+            didChangeSpiritualConversationReadinessScaleUseCase
                 .execute(scale: 5, translateInAppLanguage: LanguageCodeDomainModel.arabic.rawValue)
                 .sink { (readinessScale: SpiritualConversationReadinessScale) in
                     
@@ -128,7 +128,7 @@ struct DidChangeScaleForSpiritualConversationReadinessTests {
     )
     @MainActor func readinessScaleIsTranslatedInEasternArabic() async {
         
-        let didChangeSpiritualConversationReadinessScale = Self.getDidChangeScaleForSpiritualConversationReadiness()
+        let didChangeSpiritualConversationReadinessScaleUseCase = Self.getDidChangeScaleForSpiritualConversationReadinessUseCase()
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -136,7 +136,7 @@ struct DidChangeScaleForSpiritualConversationReadinessTests {
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            didChangeSpiritualConversationReadinessScale
+            didChangeSpiritualConversationReadinessScaleUseCase
                 .execute(scale: 5, translateInAppLanguage: "ar_SA")
                 .sink { (readinessScale: SpiritualConversationReadinessScale) in
                     
@@ -170,7 +170,7 @@ struct DidChangeScaleForSpiritualConversationReadinessTests {
     )
     @MainActor func readinessScaleIsClampedToMin(argument: TestClampingScale) async {
         
-        let didChangeSpiritualConversationReadinessScale = Self.getDidChangeScaleForSpiritualConversationReadiness()
+        let didChangeSpiritualConversationReadinessScaleUseCase = Self.getDidChangeScaleForSpiritualConversationReadinessUseCase()
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -178,7 +178,7 @@ struct DidChangeScaleForSpiritualConversationReadinessTests {
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            didChangeSpiritualConversationReadinessScale
+            didChangeSpiritualConversationReadinessScaleUseCase
                 .execute(scale: argument.scaleValue, translateInAppLanguage: LanguageCodeDomainModel.english.rawValue)
                 .sink { (readinessScale: SpiritualConversationReadinessScale) in
                     
@@ -205,7 +205,7 @@ struct DidChangeScaleForSpiritualConversationReadinessTests {
     )
     @MainActor func readinessScaleIsClampedToMax(argument: TestClampingScale) async {
         
-        let didChangeSpiritualConversationReadinessScale = Self.getDidChangeScaleForSpiritualConversationReadiness()
+        let didChangeSpiritualConversationReadinessScaleUseCase = Self.getDidChangeScaleForSpiritualConversationReadinessUseCase()
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -213,7 +213,7 @@ struct DidChangeScaleForSpiritualConversationReadinessTests {
         
         await confirmation(expectedCount: 1) { confirmation in
             
-            didChangeSpiritualConversationReadinessScale
+            didChangeSpiritualConversationReadinessScaleUseCase
                 .execute(scale: argument.scaleValue, translateInAppLanguage: LanguageCodeDomainModel.english.rawValue)
                 .sink { (readinessScale: SpiritualConversationReadinessScale) in
                     
@@ -230,9 +230,9 @@ struct DidChangeScaleForSpiritualConversationReadinessTests {
 
 extension DidChangeScaleForSpiritualConversationReadinessTests {
     
-    private static func getDidChangeScaleForSpiritualConversationReadiness() -> DidChangeScaleForSpiritualConversationReadiness {
+    private static func getDidChangeScaleForSpiritualConversationReadinessUseCase() -> DidChangeScaleForSpiritualConversationReadinessUseCase {
         
-        return DidChangeScaleForSpiritualConversationReadiness(
+        return DidChangeScaleForSpiritualConversationReadinessUseCase(
             getTranslatedNumberCount: GetTranslatedNumberCount()
         )
     }

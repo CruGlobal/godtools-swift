@@ -1,5 +1,5 @@
 //
-//  CancelLessonEvaluation.swift
+//  CancelLessonEvaluationUseCase.swift
 //  godtools
 //
 //  Created by Levi Eggert on 10/25/23.
@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class CancelLessonEvaluation {
+class CancelLessonEvaluationUseCase {
         
     private let resourcesRepository: ResourcesRepository
     private let lessonEvaluationRepository: LessonEvaluationRepository

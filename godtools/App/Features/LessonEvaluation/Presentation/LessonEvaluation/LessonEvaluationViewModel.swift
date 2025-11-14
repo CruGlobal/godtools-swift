@@ -15,8 +15,8 @@ class LessonEvaluationViewModel: ObservableObject {
         
     private let lessonId: String
     private let pageIndexReached: Int
-    private let evaluateLesson: EvaluateLesson
-    private let cancelLessonEvaluation: CancelLessonEvaluation
+    private let evaluateLessonUseCase: EvaluateLessonUseCase
+    private let cancelLessonEvaluationUseCase: CancelLessonEvaluationUseCase
             
     private weak var flowDelegate: FlowDelegate?
             
@@ -33,17 +33,17 @@ class LessonEvaluationViewModel: ObservableObject {
         flowDelegate: FlowDelegate,
         lessonId: String, pageIndexReached: Int,
         getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
-        getLessonEvaluationStrings: GetLessonEvaluationStrings,
-        didChangeScaleForSpiritualConversationReadiness: DidChangeScaleForSpiritualConversationReadiness,
-        evaluateLesson: EvaluateLesson,
-        cancelLessonEvaluation: CancelLessonEvaluation
+        getLessonEvaluationStringsUseCase: GetLessonEvaluationStringsUseCase,
+        didChangeScaleForSpiritualConversationReadinessUseCase: DidChangeScaleForSpiritualConversationReadinessUseCase,
+        evaluateLessonUseCase: EvaluateLessonUseCase,
+        cancelLessonEvaluationUseCase: CancelLessonEvaluationUseCase
     ) {
         
         self.flowDelegate = flowDelegate
         self.lessonId = lessonId
         self.pageIndexReached = pageIndexReached
-        self.evaluateLesson = evaluateLesson
-        self.cancelLessonEvaluation = cancelLessonEvaluation
+        self.evaluateLessonUseCase = evaluateLessonUseCase
+        self.cancelLessonEvaluationUseCase = cancelLessonEvaluationUseCase
         
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
@@ -54,7 +54,7 @@ class LessonEvaluationViewModel: ObservableObject {
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
                 
-                getLessonEvaluationStrings
+                getLessonEvaluationStringsUseCase
                     .execute(translateInAppLanguage: appLanguage)
             }
             .switchToLatest()
@@ -67,7 +67,7 @@ class LessonEvaluationViewModel: ObservableObject {
         )
         .map { (appLanguage: AppLanguageDomainModel, scale: Int) in
             
-            didChangeScaleForSpiritualConversationReadiness
+            didChangeScaleForSpiritualConversationReadinessUseCase
                 .execute(scale: scale, translateInAppLanguage: appLanguage)
         }
         .switchToLatest()
@@ -86,7 +86,7 @@ extension LessonEvaluationViewModel {
     
     func closeTapped() {
         
-        cancelLessonEvaluation
+        cancelLessonEvaluationUseCase
             .execute(lessonId: lessonId)
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { _ in
@@ -129,7 +129,7 @@ extension LessonEvaluationViewModel {
             pageIndexReached: pageIndexReached
         )
         
-        evaluateLesson
+        evaluateLessonUseCase
             .execute(lessonId: lessonId, feedback: feedback)
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { _ in

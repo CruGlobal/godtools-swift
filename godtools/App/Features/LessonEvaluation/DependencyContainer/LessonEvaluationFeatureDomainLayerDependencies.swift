@@ -19,35 +19,35 @@ class LessonEvaluationFeatureDomainLayerDependencies {
         self.coreDataLayer = coreDataLayer
     }
     
-    func getCancelLessonEvaluation() -> CancelLessonEvaluation {
-        return CancelLessonEvaluation(
+    func getCancelLessonEvaluationUseCase() -> CancelLessonEvaluationUseCase {
+        return CancelLessonEvaluationUseCase(
             resourcesRepository: coreDataLayer.getResourcesRepository(),
             lessonEvaluationRepository: dataLayer.getLessonEvaluationRepository()
         )
     }
     
-    func getDidChangeScaleForSpiritualConversationReadiness() -> DidChangeScaleForSpiritualConversationReadiness {
-        return DidChangeScaleForSpiritualConversationReadiness(
+    func getDidChangeScaleForSpiritualConversationReadinessUseCase() -> DidChangeScaleForSpiritualConversationReadinessUseCase {
+        return DidChangeScaleForSpiritualConversationReadinessUseCase(
             getTranslatedNumberCount: coreDataLayer.getTranslatedNumberCount()
         )
     }
     
-    func getEvaluateLesson() -> EvaluateLesson {
-        return EvaluateLesson(
+    func getEvaluateLessonUseCase() -> EvaluateLessonUseCase {
+        return EvaluateLessonUseCase(
             resourcesRepository: coreDataLayer.getResourcesRepository(),
             lessonEvaluationRepository: dataLayer.getLessonEvaluationRepository(),
             lessonFeedbackAnalytics: dataLayer.getLessonFeedbackAnalytics()
         )
     }
     
-    func getLessonEvaluated() -> GetLessonEvaluated {
-        return GetLessonEvaluated(
+    func getLessonEvaluatedUseCase() -> GetLessonEvaluatedUseCase {
+        return GetLessonEvaluatedUseCase(
             lessonEvaluationRepository: dataLayer.getLessonEvaluationRepository()
         )
     }
     
-    func getLessonEvaluationStrings() -> GetLessonEvaluationStrings {
-        return GetLessonEvaluationStrings(
+    func getLessonEvaluationStringsUseCase() -> GetLessonEvaluationStringsUseCase {
+        return GetLessonEvaluationStringsUseCase(
             localizationServices: coreDataLayer.getLocalizationServices()
         )
     }

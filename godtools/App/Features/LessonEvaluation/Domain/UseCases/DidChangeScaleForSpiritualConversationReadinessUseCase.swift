@@ -1,5 +1,5 @@
 //
-//  DidChangeScaleForSpiritualConversationReadiness.swift
+//  DidChangeScaleForSpiritualConversationReadinessUseCase.swift
 //  godtools
 //
 //  Created by Levi Eggert on 4/26/24.
@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class DidChangeScaleForSpiritualConversationReadiness {
+class DidChangeScaleForSpiritualConversationReadinessUseCase {
     
     private static let minScaleValue: Int = 1
     private static let maxScaleValue: Int = 10
