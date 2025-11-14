@@ -11,16 +11,12 @@ import Foundation
 class PersonalizedToolsDiContainer {
         
     private let dataLayer: PersonalizedToolsDataLayerDependencies
-    private let domainInterfaceLayer: PersonalizedToolsDomainInterfaceDependencies
     
     let domainLayer: PersonalizedToolsDomainLayerDependencies
     
     init(coreDataLayer: AppDataLayerDependencies) {
         
-        let dataLayer = PersonalizedToolsDataLayerDependencies(coreDataLayer: coreDataLayer)
-        
-        self.dataLayer = dataLayer
-        self.domainInterfaceLayer = PersonalizedToolsDomainInterfaceDependencies(coreDataLayer: coreDataLayer, dataLayer: dataLayer)
-        domainLayer = PersonalizedToolsDomainLayerDependencies(domainInterfaceLayer: domainInterfaceLayer)
+        self.dataLayer = PersonalizedToolsDataLayerDependencies(coreDataLayer: coreDataLayer)
+        self.domainLayer = PersonalizedToolsDomainLayerDependencies(coreDataLayer: coreDataLayer, dataLayer: dataLayer)
     }
 }
