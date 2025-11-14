@@ -22,7 +22,7 @@ class EvaluateLessonUseCase {
         self.lessonFeedbackAnalytics = lessonFeedbackAnalytics
     }
     
-    func execute(lessonId: String, feedback: TrackLessonFeedback) -> AnyPublisher<Void, Never> {
+    func execute(lessonId: String, feedback: TrackLessonFeedbackDomainModel) -> AnyPublisher<Void, Never> {
         
         guard let lessonResource = resourcesRepository.persistence.getObject(id: lessonId) else {
             return Just(Void())

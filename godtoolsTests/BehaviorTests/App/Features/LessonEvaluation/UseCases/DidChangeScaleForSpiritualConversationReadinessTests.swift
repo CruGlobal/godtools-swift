@@ -25,13 +25,13 @@ struct DidChangeScaleForSpiritualConversationReadinessTests {
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        var readinessScaleRef: SpiritualConversationReadinessScale?
+        var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
         
         await confirmation(expectedCount: 1) { confirmation in
             
             didChangeSpiritualConversationReadinessScaleUseCase
                 .execute(scale: 5, translateInAppLanguage: LanguageCodeDomainModel.english.rawValue)
-                .sink { (readinessScale: SpiritualConversationReadinessScale) in
+                .sink { (readinessScale: SpiritualConversationReadinessScaleDomainModel) in
                     
                     readinessScaleRef = readinessScale
                     
@@ -57,13 +57,13 @@ struct DidChangeScaleForSpiritualConversationReadinessTests {
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        var readinessScaleRef: SpiritualConversationReadinessScale?
+        var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
         
         await confirmation(expectedCount: 1) { confirmation in
             
             didChangeSpiritualConversationReadinessScaleUseCase
                 .execute(scale: 5, translateInAppLanguage: LanguageCodeDomainModel.english.rawValue)
-                .sink { (readinessScale: SpiritualConversationReadinessScale) in
+                .sink { (readinessScale: SpiritualConversationReadinessScaleDomainModel) in
                     
                     readinessScaleRef = readinessScale
                     
@@ -90,13 +90,13 @@ struct DidChangeScaleForSpiritualConversationReadinessTests {
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        var readinessScaleRef: SpiritualConversationReadinessScale?
+        var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
         
         await confirmation(expectedCount: 1) { confirmation in
             
             didChangeSpiritualConversationReadinessScaleUseCase
                 .execute(scale: 5, translateInAppLanguage: LanguageCodeDomainModel.arabic.rawValue)
-                .sink { (readinessScale: SpiritualConversationReadinessScale) in
+                .sink { (readinessScale: SpiritualConversationReadinessScaleDomainModel) in
                     
                     readinessScaleRef = readinessScale
                     
@@ -132,13 +132,13 @@ struct DidChangeScaleForSpiritualConversationReadinessTests {
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        var readinessScaleRef: SpiritualConversationReadinessScale?
+        var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
         
         await confirmation(expectedCount: 1) { confirmation in
             
             didChangeSpiritualConversationReadinessScaleUseCase
                 .execute(scale: 5, translateInAppLanguage: "ar_SA")
-                .sink { (readinessScale: SpiritualConversationReadinessScale) in
+                .sink { (readinessScale: SpiritualConversationReadinessScaleDomainModel) in
                     
                     readinessScaleRef = readinessScale
                     
@@ -174,13 +174,13 @@ struct DidChangeScaleForSpiritualConversationReadinessTests {
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        var readinessScaleRef: SpiritualConversationReadinessScale?
+        var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
         
         await confirmation(expectedCount: 1) { confirmation in
             
             didChangeSpiritualConversationReadinessScaleUseCase
                 .execute(scale: argument.scaleValue, translateInAppLanguage: LanguageCodeDomainModel.english.rawValue)
-                .sink { (readinessScale: SpiritualConversationReadinessScale) in
+                .sink { (readinessScale: SpiritualConversationReadinessScaleDomainModel) in
                     
                     readinessScaleRef = readinessScale
                     
@@ -209,13 +209,13 @@ struct DidChangeScaleForSpiritualConversationReadinessTests {
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        var readinessScaleRef: SpiritualConversationReadinessScale?
+        var readinessScaleRef: SpiritualConversationReadinessScaleDomainModel?
         
         await confirmation(expectedCount: 1) { confirmation in
             
             didChangeSpiritualConversationReadinessScaleUseCase
                 .execute(scale: argument.scaleValue, translateInAppLanguage: LanguageCodeDomainModel.english.rawValue)
-                .sink { (readinessScale: SpiritualConversationReadinessScale) in
+                .sink { (readinessScale: SpiritualConversationReadinessScaleDomainModel) in
                     
                     readinessScaleRef = readinessScale
                     

@@ -18,11 +18,11 @@ class GetLessonEvaluationStringsUseCase {
         self.localizationServices = localizationServices
     }
     
-    func execute(translateInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<LessonEvaluationStrings, Never> {
+    func execute(translateInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<LessonEvaluationStringsDomainModel, Never> {
         
         let localeId: String = translateInAppLanguage
         
-        let interfaceStrings = LessonEvaluationStrings(
+        let interfaceStrings = LessonEvaluationStringsDomainModel(
             title: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: "lesson_evaluation.title"),
             wasThisHelpful: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: "lesson_evaluation.wasThisHelpful"),
             yesActionTitle: localizationServices.stringForLocaleElseSystemElseEnglish(localeIdentifier: localeId, key: "yes"),

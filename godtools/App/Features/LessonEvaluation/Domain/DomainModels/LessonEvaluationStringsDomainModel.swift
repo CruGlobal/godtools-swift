@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct LessonEvaluationStrings {
+struct LessonEvaluationStringsDomainModel {
     
     let title: String
     let wasThisHelpful: String
@@ -17,7 +17,7 @@ struct LessonEvaluationStrings {
     let shareFaithReadiness: String
     let sendFeedbackActionTitle: String
     
-    static var emptyValue: LessonEvaluationStrings {
-        return LessonEvaluationStrings(title: "", wasThisHelpful: "", yesActionTitle: "", noActionTitle: "", shareFaithReadiness: "", sendFeedbackActionTitle: "")
+    static var emptyValue: LessonEvaluationStringsDomainModel {
+        return LessonEvaluationStringsDomainModel(title: "", wasThisHelpful: "", yesActionTitle: "", noActionTitle: "", shareFaithReadiness: "", sendFeedbackActionTitle: "")
     }
 }

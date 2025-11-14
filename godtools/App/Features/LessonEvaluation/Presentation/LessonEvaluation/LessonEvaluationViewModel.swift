@@ -22,8 +22,8 @@ class LessonEvaluationViewModel: ObservableObject {
             
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     
-    @Published private(set) var strings = LessonEvaluationStrings.emptyValue
-    @Published private(set) var readyToShareFaithScale = SpiritualConversationReadinessScale.emptyValue
+    @Published private(set) var strings = LessonEvaluationStringsDomainModel.emptyValue
+    @Published private(set) var readyToShareFaithScale = SpiritualConversationReadinessScaleDomainModel.emptyValue
     
     @Published var yesIsSelected: Bool = false
     @Published var noIsSelected: Bool = false
@@ -111,7 +111,7 @@ extension LessonEvaluationViewModel {
     
     func sendFeedbackTapped() {
              
-        let feedbackHelpful: TrackLessonFeedback.FeedbackHelpful?
+        let feedbackHelpful: TrackLessonFeedbackDomainModel.FeedbackHelpful?
         
         if yesIsSelected {
             feedbackHelpful = .yes
@@ -123,7 +123,7 @@ extension LessonEvaluationViewModel {
             feedbackHelpful = nil
         }
         
-        let feedback = TrackLessonFeedback(
+        let feedback = TrackLessonFeedbackDomainModel(
             feedbackHelpful: feedbackHelpful,
             readinessScaleValue: readyToShareFaithScaleIntValue,
             pageIndexReached: pageIndexReached

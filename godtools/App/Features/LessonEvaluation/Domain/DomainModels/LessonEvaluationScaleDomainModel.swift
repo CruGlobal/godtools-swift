@@ -8,12 +8,12 @@
 
 import Foundation
 
-struct LessonEvaluationScale {
+struct LessonEvaluationScaleDomainModel {
     
     let integerValue: Int
     let valueTranslatedInAppLanguage: String
     
-    static var emptyValue: LessonEvaluationScale {
-        return LessonEvaluationScale(integerValue: 0, valueTranslatedInAppLanguage: "")
+    static var emptyValue: LessonEvaluationScaleDomainModel {
+        return LessonEvaluationScaleDomainModel(integerValue: 0, valueTranslatedInAppLanguage: "")
     }
 }
