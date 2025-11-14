@@ -15,13 +15,15 @@ class ToolSettingsObserver: ObservableObject {
     
     let toolId: String
     let pageNumber: Int
+    let resourceType: ResourceType
     
-    init(toolId: String, languages: ToolSettingsLanguages, pageNumber: Int, trainingTipsEnabled: Bool) {
+    init(toolId: String, languages: ToolSettingsLanguages, pageNumber: Int, trainingTipsEnabled: Bool, resourceType: ResourceType) {
         
         self.toolId = toolId
         self.languages = languages
         self.pageNumber = pageNumber
         self.trainingTipsEnabled = trainingTipsEnabled
+        self.resourceType = resourceType
     }
 }
 

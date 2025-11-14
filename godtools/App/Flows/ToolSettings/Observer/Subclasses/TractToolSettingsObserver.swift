@@ -20,7 +20,8 @@ class TractToolSettingsObserver: ToolSettingsObserver, RemoteShareable, LinkShar
             toolId: toolId,
             languages: languages,
             pageNumber: pageNumber,
-            trainingTipsEnabled: trainingTipsEnabled
+            trainingTipsEnabled: trainingTipsEnabled,
+            resourceType: .tract
         )
     }
 }

@@ -129,7 +129,8 @@ class LessonFlow: ToolNavigationFlow, Flow, ToolSharer {
                 toolId: lesson.id,
                 toolLanguageId: languageId,
                 pageNumber: pageNumber,
-                appLanguage: appLanguage
+                appLanguage: appLanguage,
+                resourceType: .lesson
             )
             .first()
             .receive(on: DispatchQueue.main)
