@@ -10,17 +10,29 @@ import Foundation
 import Combine
 
 class CancelLessonEvaluationUseCase {
-    
-    private let cancelLessonEvaluationRepositoryInterface: CancelLessonEvaluationRepositoryInterface
-    
-    init(cancelLessonEvaluationRepositoryInterface: CancelLessonEvaluationRepositoryInterface) {
         
-        self.cancelLessonEvaluationRepositoryInterface = cancelLessonEvaluationRepositoryInterface
+    private let resourcesRepository: ResourcesRepository
+    private let lessonEvaluationRepository: LessonEvaluationRepository
+    
+    init(resourcesRepository: ResourcesRepository, lessonEvaluationRepository: LessonEvaluationRepository) {
+        
+        self.resourcesRepository = resourcesRepository
+        self.lessonEvaluationRepository = lessonEvaluationRepository
     }
     
-    func cancelPublisher(lessonId: String) -> AnyPublisher<Void, Never> {
+    func execute(lessonId: String) -> AnyPublisher<Void, Never> {
         
-        return cancelLessonEvaluationRepositoryInterface.cancelPublisher(lessonId: lessonId)
+        guard let lessonResource = resourcesRepository.persistence.getObject(id: lessonId) else {
+            return Just(Void())
+                .eraseToAnyPublisher()
+        }
+        
+        lessonEvaluationRepository.storeLessonEvaluation(
+            lesson: lessonResource,
+            lessonEvaluated: false
+        )
+        
+        return Just(Void())
             .eraseToAnyPublisher()
     }
 }

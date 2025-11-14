@@ -16,53 +16,16 @@ class LessonEvaluationFeatureDataLayerDependencies {
         
         self.coreDataLayer = coreDataLayer
     }
-    
-    // MARK: - Data Layer Classes
-    
-    private func getLessonEvaluationRepository() -> LessonEvaluationRepository {
+        
+    func getLessonEvaluationRepository() -> LessonEvaluationRepository {
         return LessonEvaluationRepository(
             cache: LessonEvaluationRealmCache(realmDatabase: coreDataLayer.getSharedRealmDatabase())
         )
     }
     
-    private func getLessonFeedbackAnalytics() -> LessonFeedbackAnalytics {
+    func getLessonFeedbackAnalytics() -> LessonFeedbackAnalytics {
         return LessonFeedbackAnalytics(
             firebaseAnalytics: coreDataLayer.getAnalytics().firebaseAnalytics
-        )
-    }
-    
-    // MARK: - Domain Interface
-    
-    func getCancelLessonEvaluationRepositoryInterface() -> CancelLessonEvaluationRepositoryInterface {
-        return CancelLessonEvaluationRepository(
-            resourcesRepository: coreDataLayer.getResourcesRepository(),
-            lessonEvaluationRepository: getLessonEvaluationRepository()
-        )
-    }
-    
-    func getEvaluateLessonRepositoryInterface() -> EvaluateLessonRepositoryInterface {
-        return EvaluateLessonRepository(
-            resourcesRepository: coreDataLayer.getResourcesRepository(),
-            lessonEvaluationRepository: getLessonEvaluationRepository(),
-            lessonFeedbackAnalytics: getLessonFeedbackAnalytics()
-        )
-    }
-    
-    func getLessonEvaluatedRepositoryInterface() -> GetLessonEvaluatedRepositoryInterface {
-        return GetLessonEvaluatedRepository(
-            lessonEvaluationRepository: getLessonEvaluationRepository()
-        )
-    }
-    
-    func getLessonEvaluationInterfaceStringsRepositoryInterface() -> GetLessonEvaluationInterfaceStringsRepositoryInterface {
-        return GetLessonEvaluationInterfaceStringsRepository(
-            localizationServices: coreDataLayer.getLocalizationServices()
-        )
-    }
-    
-    func getSpiritualConversationReadinessScale() -> GetSpiritualConversationReadinessScaleInterface {
-        return GetSpiritualConversationReadinessScale(
-            getTranslatedNumberCount: coreDataLayer.getTranslatedNumberCount()
         )
     }
 }

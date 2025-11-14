@@ -1,5 +1,5 @@
 //
-//  LessonEvaluationScaleDomainModel.swift
+//  LessonEvaluationScale.swift
 //  godtools
 //
 //  Created by Levi Eggert on 4/26/24.
@@ -12,4 +12,8 @@ struct LessonEvaluationScaleDomainModel {
     
     let integerValue: Int
     let valueTranslatedInAppLanguage: String
+    
+    static var emptyValue: LessonEvaluationScaleDomainModel {
+        return LessonEvaluationScaleDomainModel(integerValue: 0, valueTranslatedInAppLanguage: "")
+    }
 }

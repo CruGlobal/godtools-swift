@@ -11,16 +11,23 @@ import Combine
 
 class GetLessonEvaluatedUseCase {
     
-    private let getLessonEvaluatedRepositoryInterface: GetLessonEvaluatedRepositoryInterface
+    private let lessonEvaluationRepository: LessonEvaluationRepository
     
-    init(getLessonEvaluatedRepositoryInterface: GetLessonEvaluatedRepositoryInterface) {
+    init(lessonEvaluationRepository: LessonEvaluationRepository) {
         
-        self.getLessonEvaluatedRepositoryInterface = getLessonEvaluatedRepositoryInterface
+        self.lessonEvaluationRepository = lessonEvaluationRepository
     }
     
-    func getEvaluatedPublisher(lessonId: String) -> AnyPublisher<Bool, Never> {
+    func execute(lessonId: String) -> AnyPublisher<Bool, Never> {
         
-        return getLessonEvaluatedRepositoryInterface.getLessonEvaluatedPublisher(lessonId: lessonId)
+        guard let lessonEvaluation = lessonEvaluationRepository.getLessonEvaluation(lessonId: lessonId) else {
+            return Just(false)
+                .eraseToAnyPublisher()
+        }
+        
+        let lessonEvaluated: Bool = lessonEvaluation.lessonEvaluated || lessonEvaluation.numberOfEvaluationAttempts > 0
+        
+        return Just(lessonEvaluated)
             .eraseToAnyPublisher()
     }
 }
