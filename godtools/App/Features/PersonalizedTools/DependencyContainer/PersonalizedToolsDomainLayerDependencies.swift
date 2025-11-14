@@ -10,10 +10,12 @@ import Foundation
 
 class PersonalizedToolsDomainLayerDependencies {
     
-    private let domainInterfaceLayer: PersonalizedToolsDomainInterfaceDependencies
+    private let coreDataLayer: AppDataLayerDependencies
+    private let dataLayer: PersonalizedToolsDataLayerDependencies
     
-    init(domainInterfaceLayer: PersonalizedToolsDomainInterfaceDependencies) {
+    init(coreDataLayer: AppDataLayerDependencies, dataLayer: PersonalizedToolsDataLayerDependencies) {
         
-        self.domainInterfaceLayer = domainInterfaceLayer
+        self.coreDataLayer = coreDataLayer
+        self.dataLayer = dataLayer
     }
 }
