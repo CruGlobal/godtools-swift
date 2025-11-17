@@ -37,6 +37,7 @@ class DeepLinkingServiceTests: XCTestCase {
         case legacyKnowgodTractTeachMeToShareEnglishPage4 = "https://knowgod.com/en/teachmetoshare/4"
         case legacyKnowgodTractTeachMeToShareEnglishWithLiveShareStream = "https://knowgod.com/en/teachmetoshare?icid=gtshare&primaryLanguage=en&liveShareStream=acd9bee66b6057476cee-1612666248"
         case legacyKnowgodTractTeachMeToShareSpanishAndRussian = "https://knowgod.com/es/teachmetoshare?primaryLanguage=es&parallelLanguage=ru"
+        case legacyKnowgodLessonListen = "https://knowgod.com/en/lessonlisten/2"
         case knowgodTractKpgEnglish = "https://knowgod.com/en/tool/v1/kgp"
         case knowgodTractKpgEnglishPage1 = "https://knowgod.com/en/tool/v1/kgp/1"
         case knowgodLessonLessonConvoEnglish = "https://knowgod.com/lessons/lessonconvo/en"
@@ -369,6 +370,28 @@ class DeepLinkingServiceTests: XCTestCase {
         )
         
         let parsedDeepLink: ParsedDeepLinkType? = deepLinkingService.parseDeepLink(incomingDeepLink: DeepLinkUrl.legacyKnowgodTractTeachMeToShareSpanishAndRussian.incomingDeepLinkUrl)
+        
+        XCTAssertTrue(parsedDeepLink == tract)
+    }
+    
+    func testLegacyLessonListenFromKnowGod() {
+        
+        let primaryLanguageIndex: Int = 0
+        
+        let tract: ParsedDeepLinkType = .tool(
+            toolDeepLink: ToolDeepLink(
+                resourceAbbreviation: "lessonlisten",
+                primaryLanguageCodes: ["en"],
+                parallelLanguageCodes: [],
+                liveShareStream: nil,
+                page: 2,
+                pageId: nil,
+                pageSubIndex: nil,
+                selectedLanguageIndex: primaryLanguageIndex
+            )
+        )
+        
+        let parsedDeepLink: ParsedDeepLinkType? = deepLinkingService.parseDeepLink(incomingDeepLink: DeepLinkUrl.legacyKnowgodLessonListen.incomingDeepLinkUrl)
         
         XCTAssertTrue(parsedDeepLink == tract)
     }
