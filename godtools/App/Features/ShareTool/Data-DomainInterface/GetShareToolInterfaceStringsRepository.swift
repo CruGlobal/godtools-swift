@@ -11,23 +11,6 @@ import Combine
 
 class GetShareToolInterfaceStringsRepository: GetShareToolInterfaceStringsRepositoryInterface {
     
-    enum ToolURLPath: String {
-        case tract = "tool/v1"
-        case cyoa = "tool/v2"
-        case lesson = "lesson"
-        
-        init(resourceType: ResourceType) {
-            switch resourceType {
-            case .chooseYourOwnAdventure:
-                self = .cyoa
-            case .lesson:
-                self = .lesson
-            default:
-                self = .tract
-            }
-        }
-    }
-    
     private let resourcesRepository: ResourcesRepository
     private let languagesRepository: LanguagesRepository
     private let localizationServices: LocalizationServicesInterface
@@ -49,7 +32,7 @@ class GetShareToolInterfaceStringsRepository: GetShareToolInterfaceStringsReposi
                 .eraseToAnyPublisher()
         }
         
-        let path = ToolURLPath(resourceType: resourceType)
+        let path = ShareToolURLPath(resourceType: resourceType)
         var toolUrl: String = "https://knowgod.com/\(toolLanguage.code)/\(path.rawValue)/\(resource.abbreviation)"
 
         if pageNumber > 0 {
