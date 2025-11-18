@@ -142,7 +142,8 @@ class LessonFlow: ToolNavigationFlow, Flow, ToolSharer {
                     viewShareToolDomainModel: viewShareToolDomainModel,
                     toolId: self.lesson.id,
                     toolAnalyticsAbbreviation: self.lesson.abbreviation,
-                    pageNumber: pageNumber)
+                    pageNumber: pageNumber
+                )
                 
                 self.navigationController.present(shareToolView, animated: true)
             }

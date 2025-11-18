@@ -413,6 +413,13 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
         return pageRenderer.getVisiblePageModels()
     }
     
+    func getCurrentPageNumberWithHiddenPagesIncluded() -> Int? {
+        
+        guard let currentPageId = getCurrentPage()?.id else { return nil }
+        
+        return currentPageRenderer.value.getAllPageModels().firstIndex(where: { $0.id == currentPageId })
+    }
+    
     func getPagesFromPageRendererMatchingPages(pages: [Page], pagesFromPageRenderer: MobileContentPageRenderer) -> [Page] {
             
         var matchingPagesFromPageRenderer: [Page] = Array()
