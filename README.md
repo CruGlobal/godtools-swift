@@ -27,9 +27,8 @@ The GodTools app architecture consists of 3 layers (Presentation Layer, Domain L
 
 #### Clean Architecture Pattern:
 - Presentation Layer: (View and ViewModel)
-- Domain Layer: (Use Cases, Domain Models, and Data Layer Interfaces)
-- Data Layer: (Implements domain layer interfaces and consists of Repositories, Networking, Peristence, and other Data Connectivity)
-- Data-DomainInterface: (In GodTools we have this additional layer which holds all the business logic.  These classes will implement the domain layer interfaces and operate on the raw data layer classes and apply business rules)
+- Domain Layer: (Use Cases and Domain Models)
+- Data Layer: (Repositories, Networking, Peristence, and other Data Connectivity)
 
 #### Purpose of this Architecture:
 - Creates a clear separation of concerns and responsibilities.
@@ -60,38 +59,28 @@ The GodTools app architecture consists of 3 layers (Presentation Layer, Domain L
 
 #### Domain Layer
 
-- Makes up the business aspect of the app  by utilizing Use Cases, Domain Models, and Data Layer Interfaces.
-- Use Cases define user related actions in the app.  Implementing Use Cases gives us a high level description of how the app behaves (Screaming Architecture).
+- Makes up the business aspect of the app by utilizing Use Cases and Domain Models.
+- Use Cases define user related actions in the app and will also encapsulate business logic.  Implementing Use Cases gives us a high level description of how the app behaves (Screaming Architecture).
 - Domain Models will encapsulate business related attributes visually seen and used in the app.
-- Interfaces define how UseCases interact with the DataLayer.  The purpose of the interface is to accomplish the dependency inversion principle. 
 
 ##### UseCase  Responsibilities
 - Defines a business scenario in most cases on behalf of a specific user.  Naming should reflect some type of user action in the app.  This aids in Screaming Architecture.  An example in GodTools could be a user viewing a particular screen, or a user searching for an app language in the app languages list, or a user authenticating.
 - Splits the responsibilities of the ViewModel into readable UseCases which reduces ViewModel complexity and also provides better app behaviour readability (Screaming Architecture).
 - Should be responsible for a single task and named to reflect that task.
-- Operates on the data layer utilizing dependency inversion.  This means UseCases should only point to interfaces. 
+- Operates on the data layer. Note, we are no longer using dependency inversion due to the overhead.  Instead UseCases point directly to the data layer.
 - Should define inputs needed to produce the output of the UseCase.  UseCases should typically produce a DomainModel output that encapsulates the business requirements.
-- Once a UseCase is defined, it is then composed of 1 or more interfaces (dependency inversion principle) to complete the UseCase DomainModel.
-- By using dependency inversion, concrete implementations can isolate the business rules keeping the data layer free from such responsibilities. 
 
 ##### Use Cases (Best Practices)
 
 - Should have a single exposed method (public, internal) that takes zero or more inputs and produces a single output that is an AnyPublisher. 
-- UseCases can have private methods, however, as we move to dependency inversion I think private methods will become less and less.
-- Inputs should not be publisher types. Instead the ViewModel should react to changes which then triggers the UseCase.
-- Should not reference or depend on other UseCases.  Should only depend on interfaces.  There may be situations where a UseCase_A requires some data from the result of UseCase_B in order to complete UseCase_A.  In these situations UseCase_A should have already defined the inputs it needs to complete UseCase_A and the ViewModel should reference both UseCase_A and UseCase_B and inject data from UseCase_B into UseCase_A.
-- Should depend only on interfaces. Most of the time we depend on some type of Repository Interface where a Repository is simply a data storage and data access.
+- The single use case method should be named execute.
+- UseCases can have private methods to help break up the business logic.
+- Inputs should not be publisher types. Instead the ViewModel should react to changes which then triggers the UseCase.  This simplifies testing.
+- If possible, try not to depend on other UseCases as it increases testing complexity.  There may be situations where a UseCase_A requires some data from the result of UseCase_B.  In these situations UseCase_A should have already defined the inputs it needs to complete UseCase_A and the ViewModel should reference both UseCase_A and UseCase_B and inject data from UseCase_B into UseCase_A.
 - Would prefer that UseCases return a non Swift type and instead some type of DomainModel that encapsulates attributes related to the business requirements.
 
-##### Interfaces
-- All use cases will be composed of 1 or more interfaces to accomplish dependency inversion.  In most situations these interfaces will be some type of repository interface for fetching data or an interface to perform some sort of service on the data layer.
-- Interfaces should define any clear inputs to accomplish the intent and produce a single AnyPublisher output.  In most situations the AnyPublisher should produce a DomainModel.  
-
 ##### Domain Models
-- These will model app specific data or business specific data.  This is typically data users will visually see and interact with.
-
-#### Data-DomainInterface
-- Consists of classes that implement the domain layer interfaces to achieve dependency inversion.  These classes operate on the raw data layer classes and these classes contain all the business formatting, logic, and rules.  The purpose is to isolate the business rules keeping the data layer free from such responsibilities.
+- These will model app specific data or business specific data.  This is typically data users will visually see and interact with. 
 
 #### Data Layer
 
@@ -296,7 +285,7 @@ The DependencyContainer will consist of a FeatureDiContainer, FeatureDataLayerCo
 
 ##### Features Folder - Domain
 
-The Domain folder will consist of the following folders (Entities, Interface, UseCases).  Entities is where DomainModels should live.  Interfaces is where all the UseCase defined interfaces should live for dependency inversion.  UseCases is were all UseCases for the feature should live.
+The Domain folder will consist of the following folders (DomainModels and UseCases).
 
 ##### Features Folder - Presentation
 
@@ -310,7 +299,7 @@ This folder will contain the domain interface implementation code needed for the
 
 ###### App/Feature/DependencyContainer Folder
 
-This folder will contain the dependency container, data layer container, and domain layer container classes for creating the dependencies (dependency injection) needed for the feature.
+This folder will contain the dependency container for the data layer and domain layer. 
 
 ###### App/Feature/Domain Folder
 
