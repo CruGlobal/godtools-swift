@@ -9,10 +9,10 @@
 import Foundation
 import SwiftData
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 typealias SwiftEmailSignUp = SwiftEmailSignUpV1.SwiftEmailSignUp
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 enum SwiftEmailSignUpV1 {
  
     @Model

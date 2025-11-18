@@ -10,7 +10,7 @@ import Foundation
 import SwiftData
 
 // TODO: GT-2753 Can be removed and moved to AppDataLayerDependencies once RealmSwift is removed and supporting iOS 17 and up. ~Levi
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 class TempSharedSwiftDatabase {
     
     private static let swiftDatabaseEnabled: Bool = false

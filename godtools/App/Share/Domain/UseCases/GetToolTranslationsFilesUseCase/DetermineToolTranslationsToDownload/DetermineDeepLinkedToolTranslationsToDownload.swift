@@ -26,7 +26,7 @@ class DetermineDeepLinkedToolTranslationsToDownload: DetermineToolTranslationsTo
     }
     
     func getResource() -> ResourceDataModel? {
-        return resourcesRepository.getResource(abbreviation: toolDeepLink.resourceAbbreviation)
+        return resourcesRepository.cache.getResource(abbreviation: toolDeepLink.resourceAbbreviation)
     }
     
     func determineToolTranslationsToDownload() -> Result<DetermineToolTranslationsToDownloadResult, DetermineToolTranslationsToDownloadError> {
@@ -87,7 +87,7 @@ class DetermineDeepLinkedToolTranslationsToDownload: DetermineToolTranslationsTo
     
     private func getSupportedLanguageIds(resource: ResourceDataModel, languageCodes: [String]) -> [String] {
         
-        let languages: [LanguageDataModel] = languagesRepository.cache.getCachedLanguages(languageCodes: languageCodes)
+        let languages: [LanguageDataModel] = languagesRepository.cache.getCachedLanguages(codes: languageCodes)
         let languageIds: [String] = languages.map({$0.id})
         let supportedLanguageIds: [String] = languageIds.filter({resource.supportsLanguage(languageId: $0)})
         

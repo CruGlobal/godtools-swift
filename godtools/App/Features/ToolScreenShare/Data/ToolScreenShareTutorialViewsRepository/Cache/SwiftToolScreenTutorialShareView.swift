@@ -9,10 +9,10 @@
 import Foundation
 import SwiftData
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 typealias SwiftToolScreenTutorialShareView = SwiftToolScreenTutorialShareViewV1.SwiftToolScreenTutorialShareView
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 enum SwiftToolScreenTutorialShareViewV1 {
  
     @Model

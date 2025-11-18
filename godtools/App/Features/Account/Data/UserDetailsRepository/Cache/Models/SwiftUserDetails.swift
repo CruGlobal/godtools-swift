@@ -9,10 +9,10 @@
 import Foundation
 import SwiftData
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 typealias SwiftUserDetails = SwiftUserDetailsV1.SwiftUserDetails
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 enum SwiftUserDetailsV1 {
     
     @Model

@@ -256,7 +256,7 @@ extension AppFlow {
         
         resourcesRepository
             .syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsPublisher(requestPriority: .medium, forceFetchFromRemote: false)
-            .flatMap({ (result: RealmResourcesCacheSyncResult) -> AnyPublisher<Void, Error> in
+            .flatMap({ (result: ResourcesCacheSyncResult) -> AnyPublisher<Void, Error> in
                 
                 return toolLanguageDownloader
                     .syncDownloadedLanguagesPublisher()

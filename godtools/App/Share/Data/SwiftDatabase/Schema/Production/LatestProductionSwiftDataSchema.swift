@@ -6,5 +6,5 @@
 //  Copyright © 2025 Cru. All rights reserved.
 //
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 typealias LatestProductionSwiftDataSchema = ProductionSwiftDataSchemaV1

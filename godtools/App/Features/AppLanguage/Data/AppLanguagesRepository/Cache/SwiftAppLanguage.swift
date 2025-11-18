@@ -9,10 +9,10 @@
 import Foundation
 import SwiftData
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 typealias SwiftAppLanguage = SwiftAppLanguageV1.SwiftAppLanguage
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 enum SwiftAppLanguageV1 {
  
     @Model

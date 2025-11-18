@@ -9,10 +9,10 @@
 import Foundation
 import SwiftData
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 typealias SwiftCompletedTrainingTip = SwiftCompletedTrainingTipV1.SwiftCompletedTrainingTip
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 enum SwiftCompletedTrainingTipV1 {
     
     @Model
