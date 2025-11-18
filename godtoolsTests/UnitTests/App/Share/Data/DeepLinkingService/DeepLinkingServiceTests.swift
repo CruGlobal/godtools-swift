@@ -41,6 +41,7 @@ class DeepLinkingServiceTests: XCTestCase {
         case knowgodTractKpgEnglish = "https://knowgod.com/en/tool/v1/kgp"
         case knowgodTractKpgEnglishPage1 = "https://knowgod.com/en/tool/v1/kgp/1"
         case knowgodLessonLessonConvoEnglish = "https://knowgod.com/lessons/lessonconvo/en"
+        case knowgodLessonLessonListenEnglish = "https://knowgod.com/en/lesson/lessonlisten/7"
         
         case knowgodCyoaOpenersEnglish = "https://knowgod.com/en/tool/v2/openers"
         case knowgodCyoaOpenersEnglishPageCulture = "https://knowgod.com/en/tool/v2/openers/culture"
@@ -452,6 +453,26 @@ class DeepLinkingServiceTests: XCTestCase {
         )
         
         let parsedDeepLink: ParsedDeepLinkType? = deepLinkingService.parseDeepLink(incomingDeepLink: DeepLinkUrl.knowgodLessonLessonConvoEnglish.incomingDeepLinkUrl)
+        
+        XCTAssertTrue(parsedDeepLink == tract)
+    }
+    
+    func testLessonLessonListenEnglishFromKnowGod() {
+        
+        let tract: ParsedDeepLinkType = .tool(
+            toolDeepLink: ToolDeepLink(
+                resourceAbbreviation: "lessonlisten",
+                primaryLanguageCodes: ["en"],
+                parallelLanguageCodes: [],
+                liveShareStream: nil,
+                page: 7,
+                pageId: nil,
+                pageSubIndex: nil,
+                selectedLanguageIndex: nil
+            )
+        )
+        
+        let parsedDeepLink: ParsedDeepLinkType? = deepLinkingService.parseDeepLink(incomingDeepLink: DeepLinkUrl.knowgodLessonLessonListenEnglish.incomingDeepLinkUrl)
         
         XCTAssertTrue(parsedDeepLink == tract)
     }
