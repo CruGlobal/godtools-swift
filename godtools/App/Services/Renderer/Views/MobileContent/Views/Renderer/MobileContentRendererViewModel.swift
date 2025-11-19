@@ -162,8 +162,7 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
             toolId: renderer.value.resource.id,
             languages: toolSettingsLanguages,
             pageNumber: currentPageNumber,
-            trainingTipsEnabled: trainingTipsEnabled,
-            resourceType: .tract
+            trainingTipsEnabled: trainingTipsEnabled
         )
         
         return toolSettingsObserver

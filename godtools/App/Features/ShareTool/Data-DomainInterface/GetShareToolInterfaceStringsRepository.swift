@@ -22,8 +22,10 @@ class GetShareToolInterfaceStringsRepository: GetShareToolInterfaceStringsReposi
         self.localizationServices = localizationServices
     }
     
-    func getStringsPublisher(toolId: String, toolLanguageId: String, pageNumber: Int, translateInLanguage: AppLanguageDomainModel, resourceType: ResourceType) -> AnyPublisher<ShareToolInterfaceStringsDomainModel, Never> {
+    func getStringsPublisher(toolId: String, toolLanguageId: String, pageNumber: Int, translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<ShareToolInterfaceStringsDomainModel, Never> {
         
+        let resourceType = resourcesRepository.persistence.getObject(id: toolId)?.resourceTypeEnum ?? .unknown
+
         let localizedShareToolMessage: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "tract_share_message")
         
         guard let resource = resourcesRepository.persistence.getObject(id: toolId), let toolLanguage = languagesRepository.persistence.getObject(id: toolLanguageId) else {

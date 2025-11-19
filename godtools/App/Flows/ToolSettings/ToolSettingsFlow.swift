@@ -57,8 +57,7 @@ class ToolSettingsFlow: Flow, ToolSharer {
                         toolId: toolSettingsObserver.toolId,
                         toolLanguageId: toolSettingsObserver.languages.selectedLanguageId,
                         pageNumber: toolSettingsObserver.pageNumber,
-                        appLanguage: appLanguage,
-                        resourceType: toolSettingsObserver.resourceType
+                        appLanguage: appLanguage
                     )
             }
             .switchToLatest()

@@ -199,8 +199,7 @@ class ChooseYourOwnAdventureViewModel: MobileContentRendererViewModel {
             toolId: renderer.value.resource.id,
             languages: toolSettingsLanguages,
             pageNumber: currentPageNumber,
-            trainingTipsEnabled: trainingTipsEnabled,
-            resourceType: .chooseYourOwnAdventure
+            trainingTipsEnabled: trainingTipsEnabled
         )
         
         return cyoaToolSettingsObserver
