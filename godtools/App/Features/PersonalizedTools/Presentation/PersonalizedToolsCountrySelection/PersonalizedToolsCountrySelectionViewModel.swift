@@ -47,6 +47,7 @@ class PersonalizedToolsCountrySelectionViewModel: ObservableObject {
         
         // TODO: - get real data
         countriesList = countryDummyData
+        countrySearchResults = countryDummyData
         
         // TODO: - set up search bar
     }
@@ -60,7 +61,7 @@ class PersonalizedToolsCountrySelectionViewModel: ObservableObject {
 extension PersonalizedToolsCountrySelectionViewModel {
     
     @objc func backTapped() {
-        
+        flowDelegate?.navigate(step: .backTappedFromLocalizationSettings)
     }
     
     func countryTapped(country: PersonalizedToolsCountryDomainModel) {
