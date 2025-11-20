@@ -33,6 +33,7 @@ class AccessibilityStrings {
         case onboardingTutorial = "Onboarding Tutorial Screen"
         case onboardingTutorialPage = "Onboarding Tutorial Page"
         case menu = "Menu"
+        case personalizedToolCountrySelection = "Personalized Tool Country Selection"
         case privacyPolicy = "Privacy Policy"
         case reportABug = "Report A Bug"
         case sendFeedback = "Send Feedback"
@@ -84,6 +85,7 @@ class AccessibilityStrings {
         case login = "Login"
         case logout = "Logout"
         case openTool = "Open Tool"
+        case personalizedToolCountryListItem = "Personalized Tool Country List Item"
         case privacyPolicy = "Privacy Policy"
         case reportABug = "Report A Bug"
         case sendFeedback
