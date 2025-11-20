@@ -1,5 +1,5 @@
 //
-//  PersonalizedToolsCountryDomainModel.swift
+//  LocalizationSettingsCountryDomainModel.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 11/20/25.
@@ -8,13 +8,13 @@
 
 import Foundation
 
-struct PersonalizedToolsCountryDomainModel {
+struct LocalizationSettingsCountryDomainModel {
     
     let countryNameTranslatedInOwnLanguage: String
     let countryNameTranslatedInCurrentAppLanguage: String
 }
 
-extension PersonalizedToolsCountryDomainModel: StringSearchable {
+extension LocalizationSettingsCountryDomainModel: StringSearchable {
     
     var searchableStrings: [String] {
         return [
@@ -24,7 +24,7 @@ extension PersonalizedToolsCountryDomainModel: StringSearchable {
     }
 }
 
-extension PersonalizedToolsCountryDomainModel: Identifiable {
+extension LocalizationSettingsCountryDomainModel: Identifiable {
     var id: String {
         // TODO: - make this a real value
         return countryNameTranslatedInCurrentAppLanguage

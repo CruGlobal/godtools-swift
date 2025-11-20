@@ -350,13 +350,13 @@ extension MenuFlow {
     
     private func getLocalizationSettingsView() -> UIViewController {
         
-        let viewModel = PersonalizedToolsCountrySelectionViewModel(
+        let viewModel = LocalizationSettingsViewModel(
             flowDelegate: self,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             viewSearchBarUseCase: appDiContainer.domainLayer.getViewSearchBarUseCase()
         )
         
-        let view = PersonalizedToolsCountrySelectionView(viewModel: viewModel)
+        let view = LocalizationSettingsView(viewModel: viewModel)
         
         let backButton = AppBackBarItem(
             target: viewModel,
@@ -364,7 +364,7 @@ extension MenuFlow {
             accessibilityIdentifier: nil
         )
         
-        let hostingView = AppHostingController<PersonalizedToolsCountrySelectionView>(
+        let hostingView = AppHostingController<LocalizationSettingsView>(
             rootView: view,
             navigationBar: AppNavigationBar(
                 appearance: nil,

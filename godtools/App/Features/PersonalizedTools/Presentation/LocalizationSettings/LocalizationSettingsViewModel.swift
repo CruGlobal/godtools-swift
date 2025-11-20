@@ -1,5 +1,5 @@
 //
-//  PersonalizedToolsCountrySelectionViewModel.swift
+//  LocalizationSettingsViewModel.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 11/19/25.
@@ -9,14 +9,14 @@
 import UIKit
 import Combine
 
-class PersonalizedToolsCountrySelectionViewModel: ObservableObject {
+class LocalizationSettingsViewModel: ObservableObject {
     
     private let countryDummyData = [
-        PersonalizedToolsCountryDomainModel(countryNameTranslatedInOwnLanguage: "US", countryNameTranslatedInCurrentAppLanguage: "US"),
-        PersonalizedToolsCountryDomainModel(countryNameTranslatedInOwnLanguage: "Ngola", countryNameTranslatedInCurrentAppLanguage: "Angola"),
-        PersonalizedToolsCountryDomainModel(countryNameTranslatedInOwnLanguage: "Argentina", countryNameTranslatedInCurrentAppLanguage: "Argentina"),
-        PersonalizedToolsCountryDomainModel(countryNameTranslatedInOwnLanguage: "Hayastan", countryNameTranslatedInCurrentAppLanguage: "Armenia"),
-        PersonalizedToolsCountryDomainModel(countryNameTranslatedInOwnLanguage: "Osterreich", countryNameTranslatedInCurrentAppLanguage: "Austria")
+        LocalizationSettingsCountryDomainModel(countryNameTranslatedInOwnLanguage: "US", countryNameTranslatedInCurrentAppLanguage: "US"),
+        LocalizationSettingsCountryDomainModel(countryNameTranslatedInOwnLanguage: "Ngola", countryNameTranslatedInCurrentAppLanguage: "Angola"),
+        LocalizationSettingsCountryDomainModel(countryNameTranslatedInOwnLanguage: "Argentina", countryNameTranslatedInCurrentAppLanguage: "Argentina"),
+        LocalizationSettingsCountryDomainModel(countryNameTranslatedInOwnLanguage: "Hayastan", countryNameTranslatedInCurrentAppLanguage: "Armenia"),
+        LocalizationSettingsCountryDomainModel(countryNameTranslatedInOwnLanguage: "Osterreich", countryNameTranslatedInCurrentAppLanguage: "Austria")
     ]
     
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
@@ -28,10 +28,10 @@ class PersonalizedToolsCountrySelectionViewModel: ObservableObject {
     private lazy var searchBarViewModel = SearchBarViewModel(getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, viewSearchBarUseCase: viewSearchBarUseCase)
 
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
-    @Published private var countriesList: [PersonalizedToolsCountryDomainModel] = Array()
+    @Published private var countriesList: [LocalizationSettingsCountryDomainModel] = Array()
     
     @Published var searchText: String = ""
-    @Published var countrySearchResults: [PersonalizedToolsCountryDomainModel] = Array()
+    @Published var countrySearchResults: [LocalizationSettingsCountryDomainModel] = Array()
     @Published var navTitle: String = ""
 
     init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewSearchBarUseCase: ViewSearchBarUseCase) {
@@ -58,13 +58,13 @@ class PersonalizedToolsCountrySelectionViewModel: ObservableObject {
 
 // MARK: - Inputs
 
-extension PersonalizedToolsCountrySelectionViewModel {
+extension LocalizationSettingsViewModel {
     
     @objc func backTapped() {
         flowDelegate?.navigate(step: .backTappedFromLocalizationSettings)
     }
     
-    func countryTapped(country: PersonalizedToolsCountryDomainModel) {
+    func countryTapped(country: LocalizationSettingsCountryDomainModel) {
         
         // TODO
     }

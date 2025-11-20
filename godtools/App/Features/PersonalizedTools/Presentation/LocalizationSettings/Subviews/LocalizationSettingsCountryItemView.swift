@@ -1,5 +1,5 @@
 //
-//  PersonalizedToolsCountryItemView.swift
+//  LocalizationSettingsCountryItemView.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 11/19/25.
@@ -8,15 +8,15 @@
 
 import SwiftUI
 
-struct PersonalizedToolsCountryItemView: View {
+struct LocalizationSettingsCountryItemView: View {
     
     private static let lightGrey = Color.getColorWithRGB(red: 151, green: 151, blue: 151, opacity: 1)
     
-    private let country: PersonalizedToolsCountryDomainModel
+    private let country: LocalizationSettingsCountryDomainModel
     private let tappedClosure: (() -> Void)?
     private let accessibility: AccessibilityStrings.Button = .personalizedToolCountryListItem
     
-    init(country: PersonalizedToolsCountryDomainModel, tappedClosure: (() -> Void)?) {
+    init(country: LocalizationSettingsCountryDomainModel, tappedClosure: (() -> Void)?) {
         
         self.country = country
         self.tappedClosure = tappedClosure
@@ -40,7 +40,7 @@ struct PersonalizedToolsCountryItemView: View {
                         
                         Text(country.countryNameTranslatedInCurrentAppLanguage)
                             .font(FontLibrary.sfProTextRegular.font(size: 15))
-                            .foregroundColor(PersonalizedToolsCountryItemView.lightGrey)
+                            .foregroundColor(LocalizationSettingsCountryItemView.lightGrey)
                     }
                 }
                 .padding(.vertical, 3)

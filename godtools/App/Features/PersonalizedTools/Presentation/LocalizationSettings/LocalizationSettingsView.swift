@@ -1,5 +1,5 @@
 //
-//  PersonalizedToolsCountrySelectionView.swift
+//  LocalizationSettingsView.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 11/19/25.
@@ -8,11 +8,11 @@
 
 import SwiftUI
 
-struct PersonalizedToolsCountrySelectionView: View {
+struct LocalizationSettingsView: View {
     
-    @ObservedObject private var viewModel: PersonalizedToolsCountrySelectionViewModel
+    @ObservedObject private var viewModel: LocalizationSettingsViewModel
     
-    init(viewModel: PersonalizedToolsCountrySelectionViewModel) {
+    init(viewModel: LocalizationSettingsViewModel) {
         self.viewModel = viewModel
     }
     
@@ -27,7 +27,7 @@ struct PersonalizedToolsCountrySelectionView: View {
             List {
                 ForEach(viewModel.countrySearchResults) { country in
                     
-                    PersonalizedToolsCountryItemView(country: country) {
+                    LocalizationSettingsCountryItemView(country: country) {
                         
                         viewModel.countryTapped(country: country)
                     }
