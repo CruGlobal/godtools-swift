@@ -10,6 +10,8 @@ import SwiftUI
 
 struct LocalizationSettingsView: View {
     
+    private static let lightBlue = Color.getColorWithRGB(red: 223, green: 240, blue: 249, opacity: 1)
+    
     @ObservedObject private var viewModel: LocalizationSettingsViewModel
     
     init(viewModel: LocalizationSettingsViewModel) {
@@ -20,9 +22,24 @@ struct LocalizationSettingsView: View {
         
         VStack(spacing: 0) {
             
-            AccessibilityScreenElementView(screenAccessibility: .personalizedToolCountrySelection)
+            AccessibilityScreenElementView(screenAccessibility: .localizationSettings)
                         
             SearchBarView(viewModel: viewModel.getSearchBarViewModel(), searchText: $viewModel.searchText)
+            
+            ZStack(alignment: .leading) {
+                Rectangle()
+                    .fill(LocalizationSettingsView.lightBlue)
+                
+                VStack(alignment: .leading) {
+                    Text(viewModel.localizationHeaderTitle)
+                        .font(FontLibrary.sfProTextSemibold.font(size: 16))
+                    Text(viewModel.localizationHeaderText)
+                        .font(FontLibrary.sfProTextRegular.font(size: 12))
+                }
+                .multilineTextAlignment(.leading)
+                .padding(25)
+            }
+            .fixedSize(horizontal: false, vertical: true)
             
             List {
                 ForEach(viewModel.countrySearchResults) { country in

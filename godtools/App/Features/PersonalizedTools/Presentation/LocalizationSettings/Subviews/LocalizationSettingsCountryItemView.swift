@@ -14,7 +14,7 @@ struct LocalizationSettingsCountryItemView: View {
     
     private let country: LocalizationSettingsCountryDomainModel
     private let tappedClosure: (() -> Void)?
-    private let accessibility: AccessibilityStrings.Button = .personalizedToolCountryListItem
+    private let accessibility: AccessibilityStrings.Button = .localizationSettingsCountryListItem
     
     init(country: LocalizationSettingsCountryDomainModel, tappedClosure: (() -> Void)?) {
         

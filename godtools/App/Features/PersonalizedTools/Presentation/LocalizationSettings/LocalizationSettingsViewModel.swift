@@ -11,6 +11,7 @@ import Combine
 
 class LocalizationSettingsViewModel: ObservableObject {
     
+    // TODO: - remove this
     private let countryDummyData = [
         LocalizationSettingsCountryDomainModel(countryNameTranslatedInOwnLanguage: "US", countryNameTranslatedInCurrentAppLanguage: "US"),
         LocalizationSettingsCountryDomainModel(countryNameTranslatedInOwnLanguage: "Ngola", countryNameTranslatedInCurrentAppLanguage: "Angola"),
@@ -33,6 +34,8 @@ class LocalizationSettingsViewModel: ObservableObject {
     @Published var searchText: String = ""
     @Published var countrySearchResults: [LocalizationSettingsCountryDomainModel] = Array()
     @Published var navTitle: String = ""
+    @Published var localizationHeaderTitle: String = ""
+    @Published var localizationHeaderText: String = ""
 
     init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewSearchBarUseCase: ViewSearchBarUseCase) {
         
@@ -48,6 +51,8 @@ class LocalizationSettingsViewModel: ObservableObject {
         // TODO: - get real data
         countriesList = countryDummyData
         countrySearchResults = countryDummyData
+        localizationHeaderTitle = "Select your localization"
+        localizationHeaderText = "Choose from a country below to set your localization and see prioritized content and recommendations based on your location."
         
         // TODO: - set up search bar
     }
@@ -66,7 +71,7 @@ extension LocalizationSettingsViewModel {
     
     func countryTapped(country: LocalizationSettingsCountryDomainModel) {
         
-        // TODO
+        // TODO: -
     }
     
     func getSearchBarViewModel() -> SearchBarViewModel {
