@@ -12,9 +12,7 @@ import GodToolsShared
 import RequestOperation
 
 class GetToolTranslationsFilesUseCase {
-        
-    private static let defaultRequestPriority: RequestPriority = .high
-    
+            
     private let resourcesRepository: ResourcesRepository
     private let translationsRepository: TranslationsRepository
     private let languagesRepository: LanguagesRepository
@@ -31,6 +29,7 @@ class GetToolTranslationsFilesUseCase {
     
     func getToolTranslationsFilesPublisher(filter: GetToolTranslationsFilesFilter, determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadInterface, downloadStarted: (() -> Void)?) -> AnyPublisher<ToolTranslationsDomainModel, Error> {
                 
+        let requestPriority: RequestPriority = .high
         let manifestParserType: TranslationManifestParserType
         let includeRelatedFiles: Bool
         
@@ -54,6 +53,7 @@ class GetToolTranslationsFilesUseCase {
                 case .failedToFetchResourceFromCache(let resourceNeeded):
                     
                     return self.downloadResourcesFromJsonFileCacheAndDetermineTranslationsToDownloadPublisher(
+                        requestPriority: requestPriority,
                         resourceNeeded: resourceNeeded,
                         determineToolTranslationsToDownload: determineToolTranslationsToDownload
                     )
@@ -71,7 +71,7 @@ class GetToolTranslationsFilesUseCase {
                         
                         self.initiateDownloadStarted(downloadStarted: downloadStarted)
                             
-                        return self.translationsRepository.getTranslationManifestsFromRemote(translations: translations, manifestParserType: manifestParserType, requestPriority: Self.defaultRequestPriority, includeRelatedFiles: includeRelatedFiles, shouldFallbackToLatestDownloadedTranslationIfRemoteFails: true)
+                        return self.translationsRepository.getTranslationManifestsFromRemote(translations: translations, manifestParserType: manifestParserType, requestPriority: requestPriority, includeRelatedFiles: includeRelatedFiles, shouldFallbackToLatestDownloadedTranslationIfRemoteFails: true)
                             .eraseToAnyPublisher()
                     })
                     .eraseToAnyPublisher()
@@ -146,7 +146,7 @@ class GetToolTranslationsFilesUseCase {
         return sortedLanguageTranslationManifests
     }
     
-    private func downloadResourcesFromJsonFileCacheAndDetermineTranslationsToDownloadPublisher(resourceNeeded: DetermineToolTranslationsResourceNeeded, determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadInterface) -> AnyPublisher<DetermineToolTranslationsToDownloadResult, Error> {
+    private func downloadResourcesFromJsonFileCacheAndDetermineTranslationsToDownloadPublisher(requestPriority: RequestPriority, resourceNeeded: DetermineToolTranslationsResourceNeeded, determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadInterface) -> AnyPublisher<DetermineToolTranslationsToDownloadResult, Error> {
         
         return resourcesRepository
             .syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFile()
@@ -169,6 +169,7 @@ class GetToolTranslationsFilesUseCase {
                     case .failedToFetchResourceFromCache(let resourceNeeded):
                         
                         return self.downloadResourcesFromRemoteAndDetermineTranslationsToDownloadPublisher(
+                            requestPriority: requestPriority,
                             resourceNeeded: resourceNeeded,
                             determineToolTranslationsToDownload: determineToolTranslationsToDownload
                         )
@@ -179,13 +180,13 @@ class GetToolTranslationsFilesUseCase {
             .eraseToAnyPublisher()
     }
     
-    private func downloadResourcesFromRemoteAndDetermineTranslationsToDownloadPublisher(resourceNeeded: DetermineToolTranslationsResourceNeeded, determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadInterface) -> AnyPublisher<DetermineToolTranslationsToDownloadResult, Error> {
+    private func downloadResourcesFromRemoteAndDetermineTranslationsToDownloadPublisher(requestPriority: RequestPriority, resourceNeeded: DetermineToolTranslationsResourceNeeded, determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadInterface) -> AnyPublisher<DetermineToolTranslationsToDownloadResult, Error> {
         
         return languagesRepository
-            .syncLanguagesFromRemote(requestPriority: Self.defaultRequestPriority)
+            .syncLanguagesFromRemote(requestPriority: requestPriority)
             .flatMap({ (languagesResponse: RepositorySyncResponse<LanguageDataModel>) -> AnyPublisher<Void, Error> in
                 
-                self.syncResourcesPublisher(resourceNeeded: resourceNeeded)
+                self.syncResourcesPublisher(requestPriority: requestPriority, resourceNeeded: resourceNeeded)
                     .eraseToAnyPublisher()
             })
             .flatMap({ (didSyncResources: Void) -> AnyPublisher<DetermineToolTranslationsToDownloadResult, Error> in
@@ -217,18 +218,18 @@ class GetToolTranslationsFilesUseCase {
             .eraseToAnyPublisher()
     }
     
-    private func syncResourcesPublisher(resourceNeeded: DetermineToolTranslationsResourceNeeded) -> AnyPublisher<Void, Error> {
+    private func syncResourcesPublisher(requestPriority: RequestPriority, resourceNeeded: DetermineToolTranslationsResourceNeeded) -> AnyPublisher<Void, Error> {
         
         switch resourceNeeded {
         
         case .abbreviation(let value):
             return resourcesRepository
-                .syncResourceAndLatestTranslationsPublisher(resourceAbbreviation: value, requestPriority: Self.defaultRequestPriority)
+                .syncResourceAndLatestTranslationsPublisher(resourceAbbreviation: value, requestPriority: requestPriority)
                 .eraseToAnyPublisher()
             
         case .id(let value):
             return resourcesRepository
-                .syncResourceAndLatestTranslationsPublisher(resourceId: value, requestPriority: Self.defaultRequestPriority)
+                .syncResourceAndLatestTranslationsPublisher(resourceId: value, requestPriority: requestPriority)
                 .eraseToAnyPublisher()
         }
     }
