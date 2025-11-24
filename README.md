@@ -64,11 +64,11 @@ The GodTools app architecture consists of 3 layers (Presentation Layer, Domain L
 - Domain Models will encapsulate business related attributes visually seen and used in the app.
 
 ##### UseCase  Responsibilities
-- Defines a business scenario in most cases on behalf of a specific user.  Naming should reflect some type of user action in the app.  This aids in Screaming Architecture.  An example in GodTools could be a user viewing a particular screen, or a user searching for an app language in the app languages list, or a user authenticating.
+- Defines a business scenario in most cases on behalf of a specific user.  Naming should reflect some type of user action in the app.  This aids in Screaming Architecture.  An example in GodTools could be a user searching for an app language in the app languages list or a user authenticating.
 - Splits the responsibilities of the ViewModel into readable UseCases which reduces ViewModel complexity and also provides better app behaviour readability (Screaming Architecture).
 - Should be responsible for a single task and named to reflect that task.
-- Operates on the data layer. Note, we are no longer using dependency inversion due to the overhead.  Instead UseCases point directly to the data layer.
-- Should define inputs needed to produce the output of the UseCase.  UseCases should typically produce a DomainModel output that encapsulates the business requirements.
+- Operates on the data layer. Note, we are no longer using dependency inversion due to the overhead.  Instead UseCases point directly to the data layer and will encapsulate the business logic.
+- Should define inputs needed to produce the output of the UseCase.  UseCases should typically produce a DomainModel output that encapsulates the business attributes.
 
 ##### Use Cases (Best Practices)
 
@@ -78,6 +78,7 @@ The GodTools app architecture consists of 3 layers (Presentation Layer, Domain L
 - Inputs should not be publisher types. Instead the ViewModel should react to changes which then triggers the UseCase.  This simplifies testing.
 - If possible, try not to depend on other UseCases as it increases testing complexity.  There may be situations where a UseCase_A requires some data from the result of UseCase_B.  In these situations UseCase_A should have already defined the inputs it needs to complete UseCase_A and the ViewModel should reference both UseCase_A and UseCase_B and inject data from UseCase_B into UseCase_A.
 - Would prefer that UseCases return a non Swift type and instead some type of DomainModel that encapsulates attributes related to the business requirements.
+- It helps to keep UseCases smaller that group related data.  This keeps the logic smaller and more isolated which also helps in testing.
 
 ##### Domain Models
 - These will model app specific data or business specific data.  This is typically data users will visually see and interact with. 
@@ -275,10 +276,6 @@ Think of a feature folder as its own module.  A feature really should be indepen
 
 The Data folder should contain additional directories for the raw data layer classes.  This will typically be repositories and other services for operating on the raw data layer. 
 
-##### Features Folder - Data-DomainInterface
-
-The Data-DomainInterface folder will contain the implementations for the domain layer interfaces.
-
 ##### Features Folder - DependencyContainer
 
 The DependencyContainer will consist of a FeatureDiContainer, FeatureDataLayerContainer, and FeatureDomainLayerContainer.  These classes support the Coordinator (Flow) when injecting dependencies into ViewModels.
@@ -292,10 +289,6 @@ The Domain folder will consist of the following folders (DomainModels and UseCas
 ###### App/Feature/Data Folder
 
 This folder will contain the data layer specific code needed for the feature. 
-
-###### App/Feature/Data-DomainInterface Folder
-
-This folder will contain the domain interface implementation code needed for the feature. 
 
 ###### App/Feature/DependencyContainer Folder
 
