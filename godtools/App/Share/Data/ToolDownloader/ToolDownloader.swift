@@ -62,7 +62,7 @@ class ToolDownloader {
             
             for language in tool.languages {
                 
-                guard let translation = translationsRepository.getCachedLatestTranslation(resourceId: tool.toolId, languageCode: language) else {
+                guard let translation = translationsRepository.cache.getLatestTranslation(resourceId: tool.toolId, languageCode: language) else {
                     continue
                 }
                 

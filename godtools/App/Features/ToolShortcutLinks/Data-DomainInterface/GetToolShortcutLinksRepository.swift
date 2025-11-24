@@ -57,11 +57,11 @@ class GetToolShortcutLinksRepository: GetToolShortcutLinksRepositoryInterface {
         
         let toolTranslation: TranslationDataModel?
         
-        if let appLanguageTranslation = translationsRepository.getCachedLatestTranslation(resourceId: resource.id, languageCode: appLanguage) {
+        if let appLanguageTranslation = translationsRepository.cache.getLatestTranslation(resourceId: resource.id, languageCode: appLanguage) {
             
             toolTranslation = appLanguageTranslation
         }
-        else if let englishTranslation = translationsRepository.getCachedLatestTranslation(resourceId: resource.id, languageCode: LanguageCodeDomainModel.english.value) {
+        else if let englishTranslation = translationsRepository.cache.getLatestTranslation(resourceId: resource.id, languageCode: LanguageCodeDomainModel.english.value) {
             
             toolTranslation = englishTranslation
         }
