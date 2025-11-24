@@ -13,7 +13,7 @@ import SwiftData
 @available(iOS 17.4, *)
 class TempSharedSwiftDatabase {
     
-    private static let swiftDatabaseEnabled: Bool = false
+    static let swiftDatabaseEnabled: Bool = false
     
     static let shared: TempSharedSwiftDatabase = TempSharedSwiftDatabase()
     
