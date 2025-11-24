@@ -64,7 +64,7 @@ The GodTools app architecture consists of 3 layers (Presentation Layer, Domain L
 - Domain Models will encapsulate business related attributes visually seen and used in the app.
 
 ##### UseCase  Responsibilities
-- Defines a business scenario in most cases on behalf of a specific user.  Naming should reflect some type of user action in the app.  This aids in Screaming Architecture.  An example in GodTools could be a user searching for an app language in the app languages list or a user authenticating.
+- Defines a business scenario in most cases on behalf of a specific user and will encapsulate business logic.  Naming typically will reflect some type of user related story in the app.  This naming aids in Screaming Architecture.  An example in GodTools could be a user searching for an app language in the app languages list, a user authenticating, or a user viewing spotlight tools.
 - Splits the responsibilities of the ViewModel into readable UseCases which reduces ViewModel complexity and also provides better app behaviour readability (Screaming Architecture).
 - Should be responsible for a single task and named to reflect that task.
 - Operates on the data layer. Note, we are no longer using dependency inversion due to the overhead.  Instead UseCases point directly to the data layer and will encapsulate the business logic.
