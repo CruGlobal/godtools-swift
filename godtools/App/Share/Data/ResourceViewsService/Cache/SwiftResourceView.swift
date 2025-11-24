@@ -9,10 +9,10 @@
 import Foundation
 import SwiftData
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 typealias SwiftResourceView = SwiftResourceViewV1.SwiftResourceView
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 enum SwiftResourceViewV1 {
  
     @Model

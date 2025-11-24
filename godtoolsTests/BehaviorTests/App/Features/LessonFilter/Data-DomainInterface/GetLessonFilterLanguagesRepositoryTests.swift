@@ -263,7 +263,7 @@ extension GetLessonFilterLanguagesRepositoryTests {
     
     private static func getRealmLanguage(languageCode: LanguageCodeDomainModel) -> RealmLanguage {
         
-        return MockRealmLanguage.getLanguage(
+        return MockRealmLanguage.createLanguage(
             language: languageCode,
             name: languageCode.rawValue + " Name",
             id: languageCode.rawValue

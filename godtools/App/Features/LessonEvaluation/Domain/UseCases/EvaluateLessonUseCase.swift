@@ -11,16 +11,35 @@ import Combine
 
 class EvaluateLessonUseCase {
     
-    private let evaluateLessonRepositoryInterface: EvaluateLessonRepositoryInterface
+    private let resourcesRepository: ResourcesRepository
+    private let lessonEvaluationRepository: LessonEvaluationRepository
+    private let lessonFeedbackAnalytics: LessonFeedbackAnalytics
     
-    init(evaluateLessonRepositoryInterface: EvaluateLessonRepositoryInterface) {
+    init(resourcesRepository: ResourcesRepository, lessonEvaluationRepository: LessonEvaluationRepository, lessonFeedbackAnalytics: LessonFeedbackAnalytics) {
         
-        self.evaluateLessonRepositoryInterface = evaluateLessonRepositoryInterface
+        self.resourcesRepository = resourcesRepository
+        self.lessonEvaluationRepository = lessonEvaluationRepository
+        self.lessonFeedbackAnalytics = lessonFeedbackAnalytics
     }
     
-    func evaluateLessonPublisher(lessonId: String, feedback: TrackLessonFeedbackDomainModel) -> AnyPublisher<Void, Never> {
+    func execute(lessonId: String, feedback: TrackLessonFeedbackDomainModel) -> AnyPublisher<Void, Never> {
         
-        return evaluateLessonRepositoryInterface.evaluateLessonPublisher(lessonId: lessonId, feedback: feedback)
+        guard let lessonResource = resourcesRepository.persistence.getObject(id: lessonId) else {
+            return Just(Void())
+                .eraseToAnyPublisher()
+        }
+        
+        lessonEvaluationRepository.storeLessonEvaluation(
+            lesson: lessonResource,
+            lessonEvaluated: true
+        )
+        
+        lessonFeedbackAnalytics.trackLessonFeedback(
+            lesson: lessonResource,
+            feedback: feedback
+        )
+        
+        return Just(Void())
             .eraseToAnyPublisher()
     }
 }

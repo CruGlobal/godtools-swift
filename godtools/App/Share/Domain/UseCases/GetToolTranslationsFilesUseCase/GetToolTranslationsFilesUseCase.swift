@@ -150,7 +150,7 @@ class GetToolTranslationsFilesUseCase {
         
         return resourcesRepository
             .syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFile()
-            .flatMap({ (didSyncResources: RealmResourcesCacheSyncResult?) -> AnyPublisher<DetermineToolTranslationsToDownloadResult, Error> in
+            .flatMap({ (didSyncResources: ResourcesCacheSyncResult?) -> AnyPublisher<DetermineToolTranslationsToDownloadResult, Error> in
                 
                 let determineResult: Result<DetermineToolTranslationsToDownloadResult, DetermineToolTranslationsToDownloadError> = determineToolTranslationsToDownload.determineToolTranslationsToDownload()
                 

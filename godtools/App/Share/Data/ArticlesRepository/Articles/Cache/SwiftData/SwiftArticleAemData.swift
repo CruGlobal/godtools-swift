@@ -9,10 +9,10 @@
 import Foundation
 import SwiftData
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 typealias SwiftArticleAemData = SwiftArticleAemDataV1.SwiftArticleAemData
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 enum SwiftArticleAemDataV1 {
 
     @Model

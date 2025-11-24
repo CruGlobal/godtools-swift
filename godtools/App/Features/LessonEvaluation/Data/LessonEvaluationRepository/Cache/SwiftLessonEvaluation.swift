@@ -9,10 +9,10 @@
 import Foundation
 import SwiftData
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 typealias SwiftLessonEvaluation = SwiftLessonEvaluationV1.SwiftLessonEvaluation
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 enum SwiftLessonEvaluationV1 {
  
     @Model

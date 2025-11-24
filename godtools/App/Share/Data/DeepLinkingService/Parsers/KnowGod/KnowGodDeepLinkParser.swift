@@ -16,7 +16,7 @@ class KnowGodDeepLinkParser: DeepLinkUrlParserInterface {
     
     func parse(url: URL, pathComponents: [String], queryParameters: [String: Any]) -> ParsedDeepLinkType? {
         
-        if pathComponents[safe: 0] == "lessons" {
+        if pathComponents[safe: 1] == "lesson" {
             return parseLesson(url: url, pathComponents: pathComponents, queryParameters: queryParameters)
         }
         else if pathComponents[safe: 1] == "tool" {
@@ -28,25 +28,34 @@ class KnowGodDeepLinkParser: DeepLinkUrlParserInterface {
     
     private func parseLesson(url: URL, pathComponents: [String], queryParameters: [String: Any]) -> ParsedDeepLinkType? {
         
-        guard let resourceAbbreviation = pathComponents[safe: 1] else {
+        guard let resourceAbbreviation = pathComponents[safe: 2] else {
             return nil
         }
         
         let primaryLanguageCodes: [String]
         
-        if let language = pathComponents[safe: 2] {
+        if let language = pathComponents[safe: 0] {
             primaryLanguageCodes = [language]
         }
         else {
             primaryLanguageCodes = Array()
         }
         
+        let pageNumber: Int?
+        
+        if let pageStringFromUrlPath = pathComponents[safe: 3] {
+            pageNumber = Int(pageStringFromUrlPath)
+        }
+        else {
+            pageNumber = nil
+        }
+                
         let toolDeepLink = ToolDeepLink(
             resourceAbbreviation: resourceAbbreviation,
             primaryLanguageCodes: primaryLanguageCodes,
             parallelLanguageCodes: [],
             liveShareStream: nil,
-            page: nil,
+            page: pageNumber,
             pageId: nil,
             pageSubIndex: nil,
             selectedLanguageIndex: nil

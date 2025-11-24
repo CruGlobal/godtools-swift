@@ -33,8 +33,8 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
             getLessonListItemProgressRepository.getLessonListItemProgressChanged()
         )
         .flatMap({ (resourcesDidChange: Void, lessonProgressDidChange: Void) -> AnyPublisher<[LessonListItemDomainModel], Never> in
-            
-            let lessons: [ResourceDataModel] = self.resourcesRepository.getAllLessons(filterByLanguageId: filterLessonsByLanguage?.languageId, sorted: true)
+                        
+            let lessons: [ResourceDataModel] = self.resourcesRepository.cache.getLessons(filterByLanguageId: filterLessonsByLanguage?.languageId, sorted: true)
             
             let lessonListItems: [LessonListItemDomainModel] = lessons.map { (resource: ResourceDataModel) in
                 

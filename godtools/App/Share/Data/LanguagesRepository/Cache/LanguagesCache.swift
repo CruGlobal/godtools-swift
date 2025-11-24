@@ -9,49 +9,131 @@
 import Foundation
 
 class LanguagesCache: SwiftElseRealmPersistence<LanguageDataModel, LanguageCodable, RealmLanguage> {
-    
-    private let realmDatabase: RealmDatabase
-    
-    init(realmDatabase: RealmDatabase) {
         
-        self.realmDatabase = realmDatabase
-        
+    init(realmDatabase: RealmDatabase, swiftPersistenceIsEnabled: Bool? = nil) {
+                
         super.init(
             realmDatabase: realmDatabase,
-            realmDataModelMapping: RealmLanguageDataModelMapping()
+            realmDataModelMapping: RealmLanguageDataModelMapping(),
+            swiftPersistenceIsEnabled: swiftPersistenceIsEnabled
         )
     }
     
-    @available(iOS 17, *)
-    override func getSwiftPersistence(swiftDatabase: SwiftDatabase) -> SwiftRepositorySyncPersistence<LanguageDataModel, LanguageCodable, SwiftLanguage>? {
+    @available(iOS 17.4, *)
+    override func getAnySwiftPersistence(swiftDatabase: SwiftDatabase) -> (any RepositorySyncPersistence<LanguageDataModel, LanguageCodable>)? {
+        return getSwiftPersistence(swiftDatabase: swiftDatabase)
+    }
+    
+    @available(iOS 17.4, *)
+    private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<LanguageDataModel, LanguageCodable, SwiftLanguage>? {
+        
+        guard let swiftDatabase = super.getSwiftDatabase() else {
+            return nil
+        }
+        
+        return getSwiftPersistence(swiftDatabase: swiftDatabase)
+    }
+    
+    @available(iOS 17.4, *)
+    private func getSwiftPersistence(swiftDatabase: SwiftDatabase) -> SwiftRepositorySyncPersistence<LanguageDataModel, LanguageCodable, SwiftLanguage>? {
+        
+        guard let swiftDatabase = super.getSwiftDatabase() else {
+            return nil
+        }
         
         return SwiftRepositorySyncPersistence(
             swiftDatabase: swiftDatabase,
             dataModelMapping: SwiftLanguageDataModelMapping()
         )
     }
+}
+
+// MARK: - Predicates
+
+extension LanguagesCache {
     
-    // MARK: - Query
+    @available(iOS 17.4, *)
+    private func getLanguageByCodePredicate(code: String) -> Predicate<SwiftLanguage> {
+     
+        let filter = #Predicate<SwiftLanguage> { object in
+            object.code == code
+        }
+        
+        return filter
+    }
+    
+    private func getLanguageByCodeNSPredicate(code: String) -> NSPredicate {
+        
+        let filter = NSPredicate(format: "\(#keyPath(RealmLanguage.code)) == [c] %@", code.lowercased())
+        
+        return filter
+    }
+    
+    @available(iOS 17.4, *)
+    private func getLanguagesByCodesPredicate(codes: [String]) -> Predicate<SwiftLanguage> {
+     
+        let filter = #Predicate<SwiftLanguage> { object in
+            codes.contains(object.code)
+        }
+        
+        return filter
+    }
+    
+    private func getLanguagesByCodesNSPredicate(codes: [String]) -> NSPredicate {
+        
+        let filter = NSPredicate(format: "\(#keyPath(RealmLanguage.code)) IN %@", codes)
+        
+        return filter
+    }
+}
+
+// MARK: - Languages
+
+extension LanguagesCache {
     
     func getCachedLanguage(code: BCP47LanguageIdentifier) -> LanguageDataModel? {
         
-        if #available(iOS 17, *), let swiftPersistence = super.getSwiftPersistence() {
+        if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
             
-            let filter = #Predicate<SwiftLanguage> { object in
-                object.code.localizedStandardContains(code)
-            }
-                    
-            return swiftPersistence.getObjects(query: SwiftDatabaseQuery.filter(filter: filter)).first
+            return swiftPersistence
+                .getObjects(
+                    query: SwiftDatabaseQuery.filter(
+                        filter: getLanguageByCodePredicate(code: code)
+                    )
+                )
+                .first
         }
         else {
-            
-            let filter = NSPredicate(format: "\(#keyPath(RealmLanguage.code)) == [c] %@", code.lowercased())
-            
-            return super.getRealmPersistence().getObjects(query: RealmDatabaseQuery.filter(filter: filter)).first
+                        
+            return super.getRealmPersistence()
+                .getObjects(
+                    query: RealmDatabaseQuery.filter(
+                        filter: getLanguageByCodeNSPredicate(code: code)
+                    )
+                )
+                .first
         }
     }
     
-    func getCachedLanguages(languageCodes: [String]) -> [LanguageDataModel] {
-        return languageCodes.compactMap({ getCachedLanguage(code: $0) })
+    func getCachedLanguages(codes: [BCP47LanguageIdentifier]) -> [LanguageDataModel] {
+        
+        if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
+                            
+            return swiftPersistence
+                .getObjects(
+                    query: SwiftDatabaseQuery.filter(
+                        filter: getLanguagesByCodesPredicate(codes: codes)
+                    )
+                )
+        }
+        else {
+            
+            return super.getRealmPersistence()
+                .getObjects(
+                    query: RealmDatabaseQuery.filter(
+                        filter: getLanguagesByCodesNSPredicate(codes: codes)
+                    )
+                )
+        }
     }
 }

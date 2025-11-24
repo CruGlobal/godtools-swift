@@ -15,6 +15,8 @@ enum LanguageCodeDomainModel: String {
     case chinese = "zh"
     case czech = "cs"
     case english = "en"
+    case filipino = "fil"
+    case finnish = "fi"
     case french = "fr"
     case hebrew = "he"
     case latvian = "lv"

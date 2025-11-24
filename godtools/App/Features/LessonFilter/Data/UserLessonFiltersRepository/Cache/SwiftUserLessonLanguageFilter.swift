@@ -9,10 +9,10 @@
 import Foundation
 import SwiftData
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 typealias SwiftUserLessonLanguageFilter = SwiftUserLessonLanguageFilterV1.SwiftUserLessonLanguageFilter
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 enum SwiftUserLessonLanguageFilterV1 {
     
     @Model

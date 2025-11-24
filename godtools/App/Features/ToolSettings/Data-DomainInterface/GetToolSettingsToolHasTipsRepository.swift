@@ -20,7 +20,7 @@ class GetToolSettingsToolHasTipsRepository: GetToolSettingsToolHasTipsRepository
     
     func getHasTipsPublisher(toolId: String, toolLanguageId: String) -> AnyPublisher<Bool, Never> {
         
-        guard let translation = translationsRepository.getCachedLatestTranslation(resourceId: toolId, languageId: toolLanguageId) else {
+        guard let translation = translationsRepository.cache.getLatestTranslation(resourceId: toolId, languageId: toolLanguageId) else {
             return Just(false)
                 .eraseToAnyPublisher()
         }

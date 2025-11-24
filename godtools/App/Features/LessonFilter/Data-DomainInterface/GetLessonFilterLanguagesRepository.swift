@@ -32,7 +32,7 @@ class GetLessonFilterLanguagesRepository: GetLessonFilterLanguagesRepositoryInte
             .observeCollectionChangesPublisher()
             .flatMap { _ in
                 
-                let languageIds = self.resourcesRepository.getAllLessonLanguageIds()
+                let languageIds = self.resourcesRepository.cache.getLessonsLanguageIds()
                 
                 let languages = self.createLessonLanguageFilterDomainModelList(from: languageIds, translatedInAppLanguage: translatedInAppLanguage)
                 
@@ -71,7 +71,7 @@ extension GetLessonFilterLanguagesRepository {
         let languages: [LessonFilterLanguageDomainModel] = languagesRepository.persistence.getObjects(ids: languageIds)
             .compactMap { (languageModel: LanguageDataModel) in
                 
-                let lessonsAvailableCount: Int = resourcesRepository.getAllLessonsCount(filterByLanguageId: languageModel.id)
+                let lessonsAvailableCount: Int = resourcesRepository.cache.getLessonsCount(filterByLanguageId: languageModel.id)
                 
                 guard lessonsAvailableCount > 0 else {
                     return nil
@@ -92,7 +92,7 @@ extension GetLessonFilterLanguagesRepository {
     
     private func createLessonLanguageFilterDomainModel(with languageModel: LanguageDataModel, translatedInAppLanguage: AppLanguageDomainModel) -> LessonFilterLanguageDomainModel? {
         
-        let lessonsAvailableCount: Int = resourcesRepository.getAllLessonsCount(filterByLanguageId: languageModel.id)
+        let lessonsAvailableCount: Int = resourcesRepository.cache.getLessonsCount(filterByLanguageId: languageModel.id)
 
         let languageNameTranslatedInLanguage = getTranslatedLanguageName.getLanguageName(language: languageModel.code, translatedInLanguage: languageModel.code)
         let languageNameTranslatedInAppLanguage = getTranslatedLanguageName.getLanguageName(language: languageModel.code, translatedInLanguage: translatedInAppLanguage)

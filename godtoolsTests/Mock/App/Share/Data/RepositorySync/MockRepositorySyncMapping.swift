@@ -9,7 +9,7 @@
 import Foundation
 @testable import godtools
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 class MockRepositorySyncMapping: RepositorySyncMapping {
 
     func toDataModel(externalObject: MockRepositorySyncDataModel) -> MockRepositorySyncDataModel? {

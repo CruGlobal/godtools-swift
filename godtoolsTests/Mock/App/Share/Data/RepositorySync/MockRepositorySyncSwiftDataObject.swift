@@ -10,7 +10,7 @@ import Foundation
 @testable import godtools
 import SwiftData
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 @Model
 class MockRepositorySyncSwiftDataObject: IdentifiableSwiftDataObject {
     
