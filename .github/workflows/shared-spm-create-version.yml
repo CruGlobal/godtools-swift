@@ -39,7 +39,7 @@ jobs:
       version: ${{ steps.version.outputs.version }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: Set Version Output
         id: version
         run: grep version VERSION | sed "s/'//g" | sed 's/ //g' >> $GITHUB_OUTPUT
@@ -146,7 +146,7 @@ jobs:
     needs: [ current_version, new_version ]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: Set New Version Number
         run: |
           sed -i "s/version = '${{ needs.current_version.outputs.version }}'/version = '${{ needs.new_version.outputs.version }}'/g" VERSION

@@ -13,7 +13,7 @@ jobs:
       version: ${{ steps.version.outputs.version }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: Set Version Output
         id: version
         run: grep version VERSION | sed "s/'//g" | sed 's/ //g' >> $GITHUB_OUTPUT
@@ -39,7 +39,7 @@ jobs:
       tag: ${{ steps.tag_name.outputs.tag }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: Generate Tag Name
         id: tag_name
         run: echo tag=$TAG_NAME >> $GITHUB_OUTPUT
@@ -57,7 +57,7 @@ jobs:
     needs: [ check_version, current_version ]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: Create Tag
         env:
           TAG_NAME: ${{ needs.current_version.outputs.version }}
