@@ -252,7 +252,8 @@ class DashboardFlow: Flow, ToolNavigationFlow {
                 
                 let getLessonEvaluatedUseCase: GetLessonEvaluatedUseCase = appDiContainer.feature.lessonEvaluation.domainLayer.getLessonEvaluatedUseCase()
                 
-                getLessonEvaluatedUseCase.getEvaluatedPublisher(lessonId: lessonId)
+                getLessonEvaluatedUseCase
+                    .execute(lessonId: lessonId)
                     .receive(on: DispatchQueue.main)
                     .sink { [weak self] (lessonEvaluated: Bool) in
                         
@@ -464,7 +465,7 @@ extension DashboardFlow {
             lessonId: lessonId,
             pageIndexReached: pageIndexReached,
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            getLessonEvaluationInterfaceStringsUseCase: appDiContainer.feature.lessonEvaluation.domainLayer.getLessonEvaluationInterfaceStringsUseCase(),
+            getLessonEvaluationStringsUseCase: appDiContainer.feature.lessonEvaluation.domainLayer.getLessonEvaluationStringsUseCase(),
             didChangeScaleForSpiritualConversationReadinessUseCase: appDiContainer.feature.lessonEvaluation.domainLayer.getDidChangeScaleForSpiritualConversationReadinessUseCase(),
             evaluateLessonUseCase: appDiContainer.feature.lessonEvaluation.domainLayer.getEvaluateLessonUseCase(),
             cancelLessonEvaluationUseCase: appDiContainer.feature.lessonEvaluation.domainLayer.getCancelLessonEvaluationUseCase()

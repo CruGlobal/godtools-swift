@@ -9,14 +9,14 @@
 import Foundation
 import SwiftData
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 typealias SwiftAttachment = SwiftAttachmentV1.SwiftAttachment
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 enum SwiftAttachmentV1 {
  
     @Model
-    class SwiftAttachment: IdentifiableSwiftDataObject {
+    class SwiftAttachment: IdentifiableSwiftDataObject, AttachmentDataModelInterface {
         
         var file: String = ""
         var fileFilename: String = ""
@@ -31,6 +31,30 @@ enum SwiftAttachmentV1 {
         
         init() {
             
+        }
+        
+        func mapFrom(interface: AttachmentDataModelInterface) {
+            file = interface.file
+            fileFilename = interface.fileFilename
+            id = interface.id
+            isZipped = interface.isZipped
+            sha256 = interface.sha256
+            type = interface.type
+        }
+        
+        static func createNewFrom(interface: AttachmentDataModelInterface) -> SwiftAttachment {
+            let attachment = SwiftAttachment()
+            attachment.mapFrom(interface: interface)
+            return attachment
+        }
+        
+        var resourceDataModel: ResourceDataModel? {
+            
+            guard let swiftResource = resource else {
+                return nil
+            }
+            
+            return ResourceDataModel(interface: swiftResource)
         }
     }
 }

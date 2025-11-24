@@ -9,10 +9,10 @@
 import Foundation
 import SwiftData
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 typealias SwiftGlobalAnalytics = SwiftGlobalAnalyticsV1.SwiftGlobalAnalytics
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 enum SwiftGlobalAnalyticsV1 {
  
     @Model

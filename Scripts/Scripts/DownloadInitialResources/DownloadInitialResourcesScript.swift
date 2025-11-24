@@ -36,7 +36,7 @@ enum DownloadInitialResourcesScript {
                     languagesData: result.languagesData
                 )
             })
-            .flatMap({ result -> AnyPublisher<ResourcesPlusLatestTranslationsAndAttachmentsModel, Error> in
+            .flatMap({ result -> AnyPublisher<ResourcesPlusLatestTranslationsAndAttachmentsCodable, Error> in
                 
                 return GetResourcesAndLanguagesData.parseResourcePlusLatestTranslationsAndAttachmentsModel(resourcesData: result.resourcesData)
             })
@@ -102,7 +102,7 @@ extension DownloadInitialResourcesScript {
 
 extension DownloadInitialResourcesScript {
         
-    private static func saveResourceAttachmentsToBundle(resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<[Bool], Error> {
+    private static func saveResourceAttachmentsToBundle(resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable) -> AnyPublisher<[Bool], Error> {
                       
         return GetResourcesAttachments.getResourceAttachments(resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments)
             .flatMap({ attachments -> AnyPublisher<[Bool], Error> in

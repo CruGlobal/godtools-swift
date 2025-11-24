@@ -12,16 +12,17 @@ import GodToolsShared
 import RequestOperation
 
 class TranslationsRepository: RepositorySync<TranslationDataModel, MobileContentTranslationsApi> {
-        
+    
     private let infoPlist: InfoPlist
     private let api: MobileContentTranslationsApi
     private let realmPersistence: RealmRepositorySyncPersistence<TranslationDataModel, TranslationCodable, RealmTranslation>
-    private let cache: RealmTranslationsCache
     private let resourcesFileCache: ResourcesSHA256FileCache
     private let trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository
     private let remoteConfigRepository: RemoteConfigRepository
     
-    init(infoPlist: InfoPlist, api: MobileContentTranslationsApi, realmDatabase: RealmDatabase, cache: RealmTranslationsCache, resourcesFileCache: ResourcesSHA256FileCache, trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository, remoteConfigRepository: RemoteConfigRepository) {
+    let cache: TranslationsCache
+    
+    init(infoPlist: InfoPlist, api: MobileContentTranslationsApi, realmDatabase: RealmDatabase, cache: TranslationsCache, resourcesFileCache: ResourcesSHA256FileCache, trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository, remoteConfigRepository: RemoteConfigRepository) {
         
         self.infoPlist = infoPlist
         self.api = api
@@ -41,19 +42,6 @@ class TranslationsRepository: RepositorySync<TranslationDataModel, MobileContent
             externalDataFetch: api,
             persistence: realmPersistence
         )
-    }
-}
-
-// MARK: - Cache
-
-extension TranslationsRepository {
-    
-    func getCachedLatestTranslation(resourceId: String, languageId: String) -> TranslationDataModel? {
-        return cache.getTranslationsSortedByLatestVersion(resourceId: resourceId, languageId: languageId).first
-    }
-    
-    func getCachedLatestTranslation(resourceId: String, languageCode: BCP47LanguageIdentifier) -> TranslationDataModel? {
-        return cache.getTranslationsSortedByLatestVersion(resourceId: resourceId, languageCode: languageCode).first
     }
 }
 

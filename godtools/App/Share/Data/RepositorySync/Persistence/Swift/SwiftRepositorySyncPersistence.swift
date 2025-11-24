@@ -10,14 +10,15 @@ import Foundation
 import SwiftData
 import Combine
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 class SwiftRepositorySyncPersistence<DataModelType, ExternalObjectType, PersistObjectType: IdentifiableSwiftDataObject>: RepositorySyncPersistence {
     
-    private let swiftDatabase: SwiftDatabase
     private let dataModelMapping: any RepositorySyncMapping<DataModelType, ExternalObjectType, PersistObjectType>
     private let userInfoKeyPrependNotification: String = "RepositorySync.notificationKey.prepend"
     private let userInfoKeyEntityName: String = "RepositorySync.notificationKey.entityName"
     private let entityName: String
+    
+    let swiftDatabase: SwiftDatabase
     
     init(swiftDatabase: SwiftDatabase, dataModelMapping: any RepositorySyncMapping<DataModelType, ExternalObjectType, PersistObjectType>) {
         
@@ -36,7 +37,7 @@ class SwiftRepositorySyncPersistence<DataModelType, ExternalObjectType, PersistO
 
 // MARK: - Observe
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 extension SwiftRepositorySyncPersistence {
     
     func observeCollectionChangesPublisher() -> AnyPublisher<Void, Never> {
@@ -133,12 +134,19 @@ extension SwiftRepositorySyncPersistence {
 
 // MARK: Read
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 extension SwiftRepositorySyncPersistence {
     
     func getObjectCount() -> Int {
-        
-        return getNumberOfObjects(query: nil)
+        return swiftDatabase.getObjectCount(
+            query: SwiftDatabaseQuery<PersistObjectType>(
+                fetchDescriptor: FetchDescriptor<PersistObjectType>()
+            )
+        )
+    }
+    
+    func getObjectCount(query: SwiftDatabaseQuery<PersistObjectType>?) -> Int {
+        return swiftDatabase.getObjectCount(query: query)
     }
     
     func getObject(id: String) -> DataModelType? {
@@ -161,7 +169,7 @@ extension SwiftRepositorySyncPersistence {
         
         let context: ModelContext = swiftDatabase.openContext()
         
-        let objects: [PersistObjectType] = getPersistedObjects(
+        let objects: [PersistObjectType] = swiftDatabase.getObjects(
             context: context,
             query: query
         )
@@ -182,22 +190,7 @@ extension SwiftRepositorySyncPersistence {
     
     private func getNumberOfObjects(query: SwiftDatabaseQuery<PersistObjectType>?) -> Int {
         
-        do {
-            return try swiftDatabase
-                .openContext()
-                .fetchCount(
-                    getFetchDescriptor(query: query)
-                )
-        }
-        catch let error {
-            assertionFailure(error.localizedDescription)
-            return 0
-        }
-    }
-    
-    private func getFetchDescriptor(query: SwiftDatabaseQuery<PersistObjectType>?) -> FetchDescriptor<PersistObjectType> {
-        
-        return query?.fetchDescriptor ?? FetchDescriptor<PersistObjectType>()
+        return swiftDatabase.getObjectCount(query: query)
     }
     
     private func getObjectsByIdsFilter(ids: [String]) -> Predicate<PersistObjectType> {
@@ -206,26 +199,11 @@ extension SwiftRepositorySyncPersistence {
         }
         return filter
     }
-    
-    private func getPersistedObjects(context: ModelContext, query: SwiftDatabaseQuery<PersistObjectType>?) -> [PersistObjectType] {
-        
-        let objects: [PersistObjectType]
-        
-        do {
-            objects = try context.fetch(getFetchDescriptor(query: query))
-        }
-        catch let error {
-            assertionFailure(error.localizedDescription)
-            objects = Array()
-        }
-        
-        return objects
-    }
 }
 
 // MARK: - Write
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 extension SwiftRepositorySyncPersistence {
     
     func writeObjects(externalObjects: [ExternalObjectType], deleteObjectsNotFoundInExternalObjects: Bool = false) -> [DataModelType] {
@@ -241,7 +219,7 @@ extension SwiftRepositorySyncPersistence {
         
         if deleteObjectsNotFoundInExternalObjects {
             // store all objects in the collection
-            objectsToRemove = getPersistedObjects(context: context, query: nil)
+            objectsToRemove = swiftDatabase.getObjects(context: context, query: nil)
         }
         else {
             objectsToRemove = Array()
@@ -264,45 +242,28 @@ extension SwiftRepositorySyncPersistence {
             }
         }
         
-        updateObjectsInSwiftDatabase(
-            context: context,
-            objectsToAdd: objectsToAdd,
-            objectsToRemove: objectsToRemove
-        )
-        
-        return dataModels
-    }
-    
-    private func updateObjectsInSwiftDatabase(context: ModelContext, objectsToAdd: [PersistObjectType], objectsToRemove: [PersistObjectType]) {
-        
-        for object in objectsToAdd {
-            context.insert(object)
-        }
-        
-        for object in objectsToRemove {
-            context.delete(object)
-        }
-        
-        guard context.hasChanges else {
-            return
-        }
-                
         do {
-            try context.save()
+            try swiftDatabase.saveObjects(
+                context: context,
+                objectsToAdd: objectsToAdd,
+                objectsToRemove: objectsToRemove
+            )
         }
         catch let error {
             assertionFailure("Failed to save SwiftData context with error: \(error.localizedDescription)")
         }
+        
+        return dataModels
     }
 }
 
 // MARK: - Delete
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 extension SwiftRepositorySyncPersistence {
     
     func deleteAllObjects() {
         
-        swiftDatabase.deleteAllData()
+        swiftDatabase.deleteAllObjects()
     }
 }

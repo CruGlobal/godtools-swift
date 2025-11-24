@@ -99,9 +99,11 @@ class AppDataLayerDependencies {
                 urlSessionPriority: getSharedUrlSessionPriority(),
                 requestSender: getRequestSender()
             ),
-            realmDatabase: getSharedRealmDatabase(),
-            resourcesFileCache: getResourcesFileCache(),
-            bundle: AttachmentsBundleCache()
+            cache: AttachmentsCache(
+                resourcesFileCache: getResourcesFileCache(),
+                bundle: AttachmentsBundleCache(),
+                realmDatabase: getSharedRealmDatabase()
+            )
         )
     }
     
@@ -259,20 +261,15 @@ class AppDataLayerDependencies {
     
     func getResourcesRepository() -> ResourcesRepository {
         
-        let sync = RealmResourcesCacheSync(
-            realmDatabase: sharedRealmDatabase,
-            trackDownloadedTranslationsRepository: getTrackDownloadedTranslationsRepository()
-        )
-        
         let api = MobileContentResourcesApi(
             config: getAppConfig(),
             urlSessionPriority: getSharedUrlSessionPriority(),
             requestSender: getRequestSender()
         )
         
-        let cache = RealmResourcesCache(
+        let cache = ResourcesCache(
             realmDatabase: sharedRealmDatabase,
-            resourcesSync: sync
+            trackDownloadedTranslationsRepository: getTrackDownloadedTranslationsRepository()
         )
         
         return ResourcesRepository(
@@ -390,7 +387,7 @@ class AppDataLayerDependencies {
                 requestSender: getRequestSender()
             ),
             realmDatabase: getSharedRealmDatabase(),
-            cache: RealmTranslationsCache(realmDatabase: getSharedRealmDatabase()),
+            cache: TranslationsCache(realmDatabase: getSharedRealmDatabase()),
             resourcesFileCache: getResourcesFileCache(),
             trackDownloadedTranslationsRepository: getTrackDownloadedTranslationsRepository(),
             remoteConfigRepository: getRemoteConfigRepository()

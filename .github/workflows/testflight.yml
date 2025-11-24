@@ -18,7 +18,7 @@ jobs:
       FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT: 60
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Bundle Install
         uses: ./.github/actions/bundle-install

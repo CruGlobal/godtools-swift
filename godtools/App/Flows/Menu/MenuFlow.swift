@@ -89,8 +89,7 @@ class MenuFlow: Flow {
             navigateToLocalizationSettings()
             
         case .backTappedFromLocalizationSettings:
-            // TODO: GT-2733 implement in collections work. ~Levi
-            break
+            navigationController.popViewController(animated: true)
             
         case .tutorialTappedFromMenu:
             navigateToTutorial()
@@ -344,14 +343,38 @@ extension MenuFlow {
     
     private func navigateToLocalizationSettings() {
         
-        // TODO: GT-2733 implement in collections work. ~Levi
+        let view = getLocalizationSettingsView()
+        
+        navigationController.pushViewController(view, animated: true)
     }
     
     private func getLocalizationSettingsView() -> UIViewController {
         
-        // TODO: GT-2733 implement in collections work. ~Levi
+        let viewModel = LocalizationSettingsViewModel(
+            flowDelegate: self,
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            viewSearchBarUseCase: appDiContainer.domainLayer.getViewSearchBarUseCase()
+        )
         
-        return UIViewController()
+        let view = LocalizationSettingsView(viewModel: viewModel)
+        
+        let backButton = AppBackBarItem(
+            target: viewModel,
+            action: #selector(viewModel.backTapped),
+            accessibilityIdentifier: nil
+        )
+        
+        let hostingView = AppHostingController<LocalizationSettingsView>(
+            rootView: view,
+            navigationBar: AppNavigationBar(
+                appearance: nil,
+                backButton: backButton,
+                leadingItems: [],
+                trailingItems: []
+            )
+        )
+        
+        return hostingView
     }
 }
 

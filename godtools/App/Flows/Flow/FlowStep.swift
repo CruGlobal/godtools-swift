@@ -44,7 +44,7 @@ enum FlowStep {
     case closeLessonSwipeTutorial
     case startOverTappedFromResumeLessonModal
     case continueTappedFromResumeLessonModal
-    case shareLessonTappedFromLesson(lessonId: String)
+    case shareLessonTappedFromLesson(pageNumber: Int, languageId: String)
     case closeTappedFromLesson(lessonId: String, highestPageNumberViewed: Int)
     case lessonFlowCompleted(state: LessonFlowCompletedState)
     

@@ -11,12 +11,13 @@ import Foundation
 
 class MockRealmTranslation {
     
-    static func createTranslation(translatedName: String, id: String = UUID().uuidString) -> RealmTranslation {
+    static func createTranslation(translatedName: String, id: String = UUID().uuidString, version: Int = -1) -> RealmTranslation {
         
         let realmTranslation = RealmTranslation()
         
         realmTranslation.id = id
         realmTranslation.translatedName = translatedName
+        realmTranslation.version = version
         
         return realmTranslation
     }

@@ -45,14 +45,14 @@ struct LessonEvaluationView: View {
                         .padding([.trailing], 5)
                     }
 
-                    Text(viewModel.title)
+                    Text(viewModel.strings.title)
                         .font(FontLibrary.sfProTextSemibold.font(size: 22))
                         .foregroundColor(ColorPalette.gtGrey.color)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding([.top], 30 - closeButtonSize - closeButtonTop)
                         .padding([.leading], contentInsets.leading)
                         
-                    Text(viewModel.wasThisHelpful)
+                    Text(viewModel.strings.wasThisHelpful)
                         .font(FontLibrary.sfProTextRegular.font(size: 18))
                         .foregroundColor(ColorPalette.gtGrey.color)
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -62,7 +62,7 @@ struct LessonEvaluationView: View {
                     HStack(alignment: .center, spacing: 10) {
                         
                         EvaluationOptionButton(
-                            title: viewModel.yesButtonTitle,
+                            title: viewModel.strings.yesActionTitle,
                             isSelected: $viewModel.yesIsSelected,
                             action: {
                                 
@@ -71,7 +71,7 @@ struct LessonEvaluationView: View {
                         )
                         
                         EvaluationOptionButton(
-                            title: viewModel.noButtonTitle,
+                            title: viewModel.strings.noActionTitle,
                             isSelected: $viewModel.noIsSelected,
                             action: {
                                 
@@ -81,34 +81,25 @@ struct LessonEvaluationView: View {
                     }
                     .padding([.top], 14)
                     
-                    Text(viewModel.shareFaithReadiness)
+                    Text(viewModel.strings.shareFaithReadiness)
                         .font(FontLibrary.sfProTextRegular.font(size: 18))
                         .foregroundColor(ColorPalette.gtGrey.color)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding([.top], 30)
                         .padding([.leading], contentInsets.leading)
                     
-                    if let readyToShareFaithScale = viewModel.readyToShareFaithScale {
-                        
-                        ScaleValueSliderView(
-                            viewWidth: geometry.size.width - viewInsets.leading - viewInsets.trailing,
-                            tintColor: ColorPalette.gtBlue.color,
-                            minScale: ScaleValue(lessonEvaluationScale: readyToShareFaithScale.minScale),
-                            maxScale: ScaleValue(lessonEvaluationScale: readyToShareFaithScale.maxScale),
-                            scaleIntValue: $viewModel.readyToShareFaithScaleIntValue,
-                            scaleDisplayValue: readyToShareFaithScale.scale.valueTranslatedInAppLanguage
-                        )
-                        .padding([.top], 14)
-                    }
-                    else {
-                        
-                        Rectangle()
-                            .fill(Color.clear)
-                            .frame(width: geometry.size.width, height: ScaleValueSliderView.scrubberSize)
-                    }
+                    ScaleValueSliderView(
+                        viewWidth: geometry.size.width - viewInsets.leading - viewInsets.trailing,
+                        tintColor: ColorPalette.gtBlue.color,
+                        minScale: ScaleValue(lessonEvaluationScale: viewModel.readyToShareFaithScale.minScale),
+                        maxScale: ScaleValue(lessonEvaluationScale: viewModel.readyToShareFaithScale.maxScale),
+                        scaleIntValue: $viewModel.readyToShareFaithScaleIntValue,
+                        scaleDisplayValue: viewModel.readyToShareFaithScale.scale.valueTranslatedInAppLanguage
+                    )
+                    .padding([.top], 14)
                     
                     GTBlueButton(
-                        title: viewModel.sendFeedbackButtonTitle,
+                        title: viewModel.strings.sendFeedbackActionTitle,
                         fontSize: 18,
                         width: 248,
                         height: 50,

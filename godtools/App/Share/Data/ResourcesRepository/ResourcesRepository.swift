@@ -15,40 +15,24 @@ class ResourcesRepository: RepositorySync<ResourceDataModel, MobileContentResour
     private static let syncInvalidatorIdForResourcesPlustLatestTranslationsAndAttachments: String = "resourcesPlusLatestTranslationAttachments.syncInvalidator.id"
     
     private let api: MobileContentResourcesApi
-    private let realmPersistence: RealmRepositorySyncPersistence<ResourceDataModel, ResourceCodable, RealmResource>
-    private let cache: RealmResourcesCache
     private let attachmentsRepository: AttachmentsRepository
     private let languagesRepository: LanguagesRepository
     private let userDefaultsCache: UserDefaultsCacheInterface
     
-    init(api: MobileContentResourcesApi, realmDatabase: RealmDatabase, cache: RealmResourcesCache, attachmentsRepository: AttachmentsRepository, languagesRepository: LanguagesRepository, userDefaultsCache: UserDefaultsCacheInterface) {
+    let cache: ResourcesCache
+    
+    init(api: MobileContentResourcesApi, realmDatabase: RealmDatabase, cache: ResourcesCache, attachmentsRepository: AttachmentsRepository, languagesRepository: LanguagesRepository, userDefaultsCache: UserDefaultsCacheInterface) {
         
         self.api = api
         self.cache = cache
         self.attachmentsRepository = attachmentsRepository
         self.languagesRepository = languagesRepository
         self.userDefaultsCache = userDefaultsCache
-        
-        let realmPersistence = RealmRepositorySyncPersistence<ResourceDataModel, ResourceCodable, RealmResource>(
-            realmDatabase: realmDatabase,
-            dataModelMapping: RealmResourceDataModelMapping()
-        )
-        
-        self.realmPersistence = realmPersistence
-        
+                        
         super.init(
             externalDataFetch: api,
-            persistence: realmPersistence
+            persistence: cache.getPersistence()
         )
-    }
-    
-    func getResource(abbreviation: String) -> ResourceDataModel? {
-        return realmPersistence.getObjects(
-            query: RealmDatabaseQuery.filter(
-                filter: NSPredicate(format: "\(#keyPath(RealmResource.abbreviation)) = '\(abbreviation)'")
-            )
-        )
-        .first
     }
     
     func getCachedResourcesByFilter(filter: ResourcesFilter) -> [ResourceDataModel] {
@@ -61,11 +45,20 @@ class ResourcesRepository: RepositorySync<ResourceDataModel, MobileContentResour
         return cache.getResourcesByFilterPublisher(filter: filter)
             .eraseToAnyPublisher()
     }
+}
+
+// MARK: - Sync
+
+extension ResourcesRepository {
+    
+    private var resourcesHaveBeenSynced: Bool {
+        return languagesRepository.persistence.getObjectCount() > 0 && persistence.getObjectCount() > 0
+    }
     
     func syncResourceAndLatestTranslationsPublisher(resourceId: String, requestPriority: RequestPriority) -> AnyPublisher<Void, Error> {
         
         return api.getResourcePlusLatestTranslationsAndAttachmentsPublisher(id: resourceId, requestPriority: requestPriority)
-            .flatMap({ (resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<Void, Error> in
+            .flatMap({ (resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable) -> AnyPublisher<Void, Error> in
                                 
                 return self.cache.syncResources(
                     resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments,
@@ -82,7 +75,7 @@ class ResourcesRepository: RepositorySync<ResourceDataModel, MobileContentResour
     func syncResourceAndLatestTranslationsPublisher(resourceAbbreviation: String, requestPriority: RequestPriority) -> AnyPublisher<Void, Error> {
         
         return api.getResourcePlusLatestTranslationsAndAttachmentsPublisher(abbreviation: resourceAbbreviation, requestPriority: requestPriority)
-            .flatMap({ (resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<Void, Error> in
+            .flatMap({ (resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable) -> AnyPublisher<Void, Error> in
                                 
                 return self.cache.syncResources(
                     resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments,
@@ -96,15 +89,13 @@ class ResourcesRepository: RepositorySync<ResourceDataModel, MobileContentResour
             .eraseToAnyPublisher()
     }
     
-    func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsPublisher(requestPriority: RequestPriority, forceFetchFromRemote: Bool) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> {
-        
-        let resourcesHaveBeenSynced: Bool = getResourcesHaveBeenSynced()
-        
+    func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsPublisher(requestPriority: RequestPriority, forceFetchFromRemote: Bool) -> AnyPublisher<ResourcesCacheSyncResult, Error> {
+                
         if !resourcesHaveBeenSynced {
             
             return syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFile()
                 .map{ _ in
-                    return RealmResourcesCacheSyncResult.emptyResult()
+                    return ResourcesCacheSyncResult.emptyResult()
                 }
                 .catch { _ in
                     return self.syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote(
@@ -125,10 +116,8 @@ class ResourcesRepository: RepositorySync<ResourceDataModel, MobileContentResour
         }
     }
     
-    func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFile() -> AnyPublisher<RealmResourcesCacheSyncResult?, Error> {
-                
-        let resourcesHaveBeenSynced: Bool = getResourcesHaveBeenSynced()
-        
+    func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFile() -> AnyPublisher<ResourcesCacheSyncResult?, Error> {
+                        
         guard !resourcesHaveBeenSynced else {
             
             return Just(nil)
@@ -145,7 +134,7 @@ class ResourcesRepository: RepositorySync<ResourceDataModel, MobileContentResour
                     .getResourcesPlusLatestTranslationsAndAttachments()
                     .publisher
             )
-            .flatMap({ (languagesResponse: RepositorySyncResponse<LanguageDataModel>, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> in
+            .flatMap({ (languagesResponse: RepositorySyncResponse<LanguageDataModel>, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable) -> AnyPublisher<ResourcesCacheSyncResult, Error> in
                 
                 return self.cache.syncResources(
                     resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments,
@@ -153,7 +142,7 @@ class ResourcesRepository: RepositorySync<ResourceDataModel, MobileContentResour
                 )
                 .eraseToAnyPublisher()
             })
-            .flatMap({ resourcesCacheResult -> AnyPublisher<RealmResourcesCacheSyncResult?, Error> in
+            .flatMap({ resourcesCacheResult -> AnyPublisher<ResourcesCacheSyncResult?, Error> in
                 
                 return Just(resourcesCacheResult)
                     .setFailureType(to: Error.self)
@@ -162,11 +151,7 @@ class ResourcesRepository: RepositorySync<ResourceDataModel, MobileContentResour
             .eraseToAnyPublisher()
     }
     
-    private func getResourcesHaveBeenSynced() -> Bool {
-        return languagesRepository.persistence.getObjectCount() > 0 && persistence.getObjectCount() > 0
-    }
-    
-    private func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote(requestPriority: RequestPriority, forceFetchFromRemote: Bool) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> {
+    private func syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromRemote(requestPriority: RequestPriority, forceFetchFromRemote: Bool) -> AnyPublisher<ResourcesCacheSyncResult, Error> {
         
         let syncInvalidator = SyncInvalidator(
             id: Self.syncInvalidatorIdForResourcesPlustLatestTranslationsAndAttachments,
@@ -177,7 +162,7 @@ class ResourcesRepository: RepositorySync<ResourceDataModel, MobileContentResour
         let shouldFetchFromRemote: Bool = forceFetchFromRemote || syncInvalidator.shouldSync
 
         guard shouldFetchFromRemote else {
-            return Just(RealmResourcesCacheSyncResult.emptyResult())
+            return Just(ResourcesCacheSyncResult.emptyResult())
                 .setFailureType(to: Error.self)
                 .eraseToAnyPublisher()
         }
@@ -189,13 +174,13 @@ class ResourcesRepository: RepositorySync<ResourceDataModel, MobileContentResour
                     .setFailureType(to: Error.self),
                 api.getResourcesPlusLatestTranslationsAndAttachments(requestPriority: requestPriority)
             )
-            .flatMap({ (languagesResponse: RepositorySyncResponse<LanguageDataModel>, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) -> AnyPublisher<RealmResourcesCacheSyncResult, Error> in
+            .flatMap({ (languagesResponse: RepositorySyncResponse<LanguageDataModel>, resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable) -> AnyPublisher<ResourcesCacheSyncResult, Error> in
                 
                 return self.cache.syncResources(
                     resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments,
                     shouldRemoveDataThatNoLongerExists: true
                 )
-                .map { (cacheResult: RealmResourcesCacheSyncResult) in
+                .map { (cacheResult: ResourcesCacheSyncResult) in
                     syncInvalidator.didSync()
                     return cacheResult
                 }
@@ -240,39 +225,5 @@ extension ResourcesRepository {
     func getAllToolLanguageIds(filteredByCategoryId: String?) -> [String] {
         
         return cache.getAllToolLanguageIds(filteredByCategoryId: filteredByCategoryId)
-    }
-}
-
-// MARK: - Lessons
-
-extension ResourcesRepository {
-    
-    func getAllLessons(filterByLanguageId: String? = nil, sorted: Bool) -> [ResourceDataModel] {
-        return cache.getAllLessons(
-            filterByLanguageId: filterByLanguageId,
-            sorted: sorted
-        )
-    }
-    
-    func getAllLessonsCount(filterByLanguageId: String?) -> Int {
-        return cache.getAllLessonsCount(filterByLanguageId: filterByLanguageId)
-    }
-    
-    func getFeaturedLessons(sorted: Bool) -> [ResourceDataModel] {
-        return cache.getFeaturedLessons(sorted: sorted)
-    }
-    
-    func getAllLessonLanguageIds() -> [String] {
-        return cache.getAllLessonLanguageIds()
-    }
-}
-
-// MARK: - Variants
-
-extension ResourcesRepository {
-    
-    func getResourceVariants(resourceId: String) -> [ResourceDataModel] {
-        
-        return cache.getResourceVariants(resourceId: resourceId)
     }
 }

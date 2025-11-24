@@ -1,5 +1,9 @@
-"deferredDeepLinkModal.title" = "Izskatās, ka jūs noklikšķinājāt uz saites, kas ved uz GodTools.";
-"deferredDeepLinkModal.message" = "Pieskarieties tālāk redzamajai pogai, lai mēs varētu jūs novirzīt uz pieprasīto saturu.";
+"deferredDeepLinkModal.title" = "Izskatās, ka tu noklikšķināji uz saites, kas ved uz 'GodTools'.";
+"deferredDeepLinkModal.message" = "Nospied uz pogu zemāk, lai varētu pāriet uz pieprasīto saturu.";
+
+"toolScreenShare.qrCode.closeButtonTitle" = "Aizvērt";
+"toolScreenShare.qrCode.description" = "Nolasi šo QR kodu, lai pievienotos";
+"toolScreenShare.qrCode.title" = "QR kods";
 
 "optInNotification.notificationSettings" = "Paziņojumu iestatījumi";
 "lessons.swipeTutorial.title" = "Velc, lai apskatītu citas lapas";
@@ -329,6 +333,7 @@ Lietotni var lejupielādēt savā tālrunī šeit: https://ej.uz/GodTools";
 
 // Alerts
 "error" = "Kļūda";
+"OK" = "OK";
 "cancel" = "Atcelt";
 "required_field_missing" = "Lauks \"%@\" aizpildāms obligāti!";
 
@@ -389,3 +394,5 @@ Lai iegūtu vairāk informācijas, nospied pogu \"Apraksts\".";
 // OnboardingTutorial
 "accountActivity.globalAnalytics.countries.title" = "Valstis";
 "onboardingTutorial.showMoreButton.title" = "Vairāk";
+
+"screenShareTutorial.generateQRCodeButton.title" = "Izveidot QR kodu";

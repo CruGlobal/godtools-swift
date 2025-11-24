@@ -169,7 +169,7 @@ extension LessonsViewModel {
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completed in
 
-            }, receiveValue: { (result: RealmResourcesCacheSyncResult) in
+            }, receiveValue: { (result: ResourcesCacheSyncResult) in
                 
             })
             .store(in: &cancellables)

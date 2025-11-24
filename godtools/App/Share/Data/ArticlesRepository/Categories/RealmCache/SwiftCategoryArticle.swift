@@ -9,10 +9,10 @@
 import Foundation
 import SwiftData
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 typealias SwiftCategoryArticle = SwiftCategoryArticleV1.SwiftCategoryArticle
 
-@available(iOS 17, *)
+@available(iOS 17.4, *)
 enum SwiftCategoryArticleV1 {
  
     @Model
