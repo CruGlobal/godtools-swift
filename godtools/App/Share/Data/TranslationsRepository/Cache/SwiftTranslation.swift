@@ -39,6 +39,7 @@ enum SwiftTranslationV1 {
         }
         
         func mapFrom(interface: TranslationDataModelInterface) {
+            id = interface.id
             isPublished = interface.isPublished
             manifestName = interface.manifestName
             toolDetailsBibleReferences = interface.toolDetailsBibleReferences
