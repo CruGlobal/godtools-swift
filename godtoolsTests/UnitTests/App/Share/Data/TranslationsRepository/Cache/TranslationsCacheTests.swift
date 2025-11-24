@@ -36,7 +36,7 @@ struct TranslationsCacheTests {
     }
     
     @Test()
-    @MainActor func getRealmEnglishTranslation() async throws {
+    func getRealmEnglishTranslation() async throws {
         
         let translationsCache = getTranslationsCache(swiftPersistenceIsEnabled: false)
         
@@ -50,7 +50,7 @@ struct TranslationsCacheTests {
     }
     
     @Test()
-    @MainActor func getSwiftEnglishTranslation() async throws {
+    func getSwiftEnglishTranslation() async throws {
         
         let translationsCache = getTranslationsCache(swiftPersistenceIsEnabled: true)
         
@@ -71,7 +71,7 @@ struct TranslationsCacheTests {
         TestArgument(expectedVersion: 122, swiftPersistenceIsEnabled: true, languageId: spanishLanguageId),
         TestArgument(expectedVersion: 20, swiftPersistenceIsEnabled: true, languageId: vietnameseLanguageId)
     ])
-    @MainActor func getLatestTranslationByLanguageId(argument: TestArgument) async throws {
+    func getLatestTranslationByLanguageId(argument: TestArgument) async throws {
              
         let translationsCache = getTranslationsCache(swiftPersistenceIsEnabled: false)
         
@@ -146,7 +146,7 @@ extension TranslationsCacheTests {
         ]
     }
     
-    private func getRealmResources() -> [RealmResource] {
+    private func getRealmDatabaseObjects() -> [Object] {
         
         let english: RealmLanguage = getEnglishLanguage()
         let spanish: RealmLanguage = getSpanishLanguage()
@@ -185,7 +185,7 @@ extension TranslationsCacheTests {
     
     private func getRealmDatabase() -> RealmDatabase {
         return TestsInMemoryRealmDatabase(
-            addObjectsToDatabase: getRealmResources()
+            addObjectsToDatabase: getRealmDatabaseObjects()
         )
     }
 }
@@ -195,7 +195,7 @@ extension TranslationsCacheTests {
 extension TranslationsCacheTests {
     
     @available(iOS 17.4, *)
-    private func getSwiftResources() -> [any IdentifiableSwiftDataObject] {
+    private func getSwiftDatabaseObjects() -> [any IdentifiableSwiftDataObject] {
         
         let english = SwiftLanguage.createNewFrom(interface: getEnglishLanguage())
         let spanish = SwiftLanguage.createNewFrom(interface: getSpanishLanguage())
@@ -245,7 +245,7 @@ extension TranslationsCacheTests {
     @available(iOS 17.4, *)
     private func getSwiftDatabase() -> SwiftDatabase {
         return TestsInMemorySwiftDatabase(
-            addObjectsToDatabase: getSwiftResources()
+            addObjectsToDatabase: getSwiftDatabaseObjects()
         )
     }
 }
