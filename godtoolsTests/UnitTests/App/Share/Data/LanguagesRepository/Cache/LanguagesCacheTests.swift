@@ -149,17 +149,17 @@ extension LanguagesCacheTests {
     
     private func getLanguagesCache(swiftPersistenceIsEnabled: Bool) -> LanguagesCache {
         
-        if swiftPersistenceIsEnabled {
-            
-        }
-        else {
-            
+        if #available(iOS 17.4, *), swiftPersistenceIsEnabled {
+            TempSharedSwiftDatabase.shared.setDatabase(
+                swiftDatabase: getSwiftDatabase()
+            )
         }
         
         return LanguagesCache(
             realmDatabase: TestsInMemoryRealmDatabase(
-                addObjectsToDatabase: allRealmLanguages
-            )
+                addObjectsToDatabase: allRealmLanguages,
+            ),
+            swiftPersistenceIsEnabled: swiftPersistenceIsEnabled
         )
     }
 }
