@@ -76,3 +76,25 @@ enum SwiftTranslationV1 {
         }
     }
 }
+
+@available(iOS 17.4, *)
+extension Array where Element == SwiftTranslation {
+    
+    func filterByLanguageId(languageId: String) -> [SwiftTranslation] {
+        return filter {
+            $0.language?.id == languageId
+        }
+    }
+    
+    func filterByLanguageCode(languageCode: BCP47LanguageIdentifier) -> [SwiftTranslation] {
+        return filter {
+            $0.language?.code == languageCode
+        }
+    }
+    
+    func sortByLatestVersionFirst() -> [SwiftTranslation] {
+        sorted(by: {
+            $0.version > $1.version
+        })
+    }
+}
