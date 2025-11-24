@@ -24,7 +24,11 @@ class ResourcesSHA256FileCache {
         self.fileCache = FileCache(rootDirectory: ResourcesSHA256FileCache.rootDirectoryName)
         self.realmDatabase = realmDatabase
     }
-    
+
+    func getRootDirectory() -> Result<URL, Error> {
+        return fileCache.getRootDirectory()
+    }
+
     func getFileExists(location: FileCacheLocation) -> Result<Bool, Error> {
         return fileCache.getFileExists(location: location)
     }
