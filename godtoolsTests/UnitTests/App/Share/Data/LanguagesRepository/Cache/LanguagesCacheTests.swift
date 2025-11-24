@@ -96,7 +96,7 @@ extension LanguagesCacheTests {
     
     private static var allRealmLanguages: [RealmLanguage] {
         return Self.allTestLanguages.map {
-            MockRealmLanguage.getLanguage(
+            MockRealmLanguage.createLanguage(
                 language: $0.code,
                 name: $0.code.rawValue,
                 id: $0.id
