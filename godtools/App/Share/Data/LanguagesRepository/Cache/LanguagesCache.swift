@@ -14,7 +14,8 @@ class LanguagesCache: SwiftElseRealmPersistence<LanguageDataModel, LanguageCodab
                 
         super.init(
             realmDatabase: realmDatabase,
-            realmDataModelMapping: RealmLanguageDataModelMapping()
+            realmDataModelMapping: RealmLanguageDataModelMapping(),
+            swiftPersistenceIsEnabled: nil
         )
     }
     

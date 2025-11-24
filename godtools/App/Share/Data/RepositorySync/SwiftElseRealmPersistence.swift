@@ -15,15 +15,19 @@ open class SwiftElseRealmPersistence<DataModelType, ExternalObjectType, RealmObj
     private let realmDatabase: RealmDatabase
     private let realmDataModelMapping: any RepositorySyncMapping<DataModelType, ExternalObjectType, RealmObjectType>
     
-    init(realmDatabase: RealmDatabase, realmDataModelMapping: any RepositorySyncMapping<DataModelType, ExternalObjectType, RealmObjectType>) {
+    let swiftPersistenceIsEnabled: Bool
+    
+    init(realmDatabase: RealmDatabase, realmDataModelMapping: any RepositorySyncMapping<DataModelType, ExternalObjectType, RealmObjectType>, swiftPersistenceIsEnabled: Bool?) {
         
         self.realmDatabase = realmDatabase
         self.realmDataModelMapping = realmDataModelMapping
+        self.swiftPersistenceIsEnabled = swiftPersistenceIsEnabled ?? SwiftDatabaseEnabled.isEnabled
     }
     
     func getPersistence() -> any RepositorySyncPersistence<DataModelType, ExternalObjectType> {
         
         if #available(iOS 17.4, *),
+           swiftPersistenceIsEnabled,
            let swiftDatabase = getSwiftDatabase(),
            let swiftPersistence = getAnySwiftPersistence(swiftDatabase: swiftDatabase) {
             
@@ -40,7 +44,12 @@ open class SwiftElseRealmPersistence<DataModelType, ExternalObjectType, RealmObj
 
     @available(iOS 17.4, *)
     func getSwiftDatabase() -> SwiftDatabase? {
-        return TempSharedSwiftDatabase.shared.swiftDatabase
+        
+        guard swiftPersistenceIsEnabled else {
+            return nil
+        }
+        
+        return TempSharedSwiftDatabase.shared.getDatabase()
     }
     
     @available(iOS 17.4, *)

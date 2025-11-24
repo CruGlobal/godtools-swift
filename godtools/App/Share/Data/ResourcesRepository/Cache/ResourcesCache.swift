@@ -23,7 +23,8 @@ class ResourcesCache: SwiftElseRealmPersistence<ResourceDataModel, ResourceCodab
         
         super.init(
             realmDatabase: realmDatabase,
-            realmDataModelMapping: RealmResourceDataModelMapping()
+            realmDataModelMapping: RealmResourceDataModelMapping(),
+            swiftPersistenceIsEnabled: nil
         )
     }
     
@@ -57,7 +58,7 @@ class ResourcesCache: SwiftElseRealmPersistence<ResourceDataModel, ResourceCodab
     
     func syncResources(resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable, shouldRemoveDataThatNoLongerExists: Bool) -> AnyPublisher<ResourcesCacheSyncResult, Error> {
         
-        if #available(iOS 17.4, *), let swiftDatabase = TempSharedSwiftDatabase.shared.swiftDatabase {
+        if #available(iOS 17.4, *), let swiftDatabase = super.getSwiftDatabase() {
             
             return SwiftResourcesCacheSync(
                 swiftDatabase: swiftDatabase,

@@ -13,13 +13,14 @@ class TranslationsCache: SwiftElseRealmPersistence<TranslationDataModel, Transla
          
     private let realmDatabase: RealmDatabase
     
-    init(realmDatabase: RealmDatabase) {
+    init(realmDatabase: RealmDatabase, swiftPersistenceIsEnabled: Bool? = nil) {
         
         self.realmDatabase = realmDatabase
         
         super.init(
             realmDatabase: realmDatabase,
-            realmDataModelMapping: RealmTranslationDataModelMapping()
+            realmDataModelMapping: RealmTranslationDataModelMapping(),
+            swiftPersistenceIsEnabled: swiftPersistenceIsEnabled
         )
     }
     
@@ -58,9 +59,9 @@ extension TranslationsCache {
     
     func getLatestTranslation(resourceId: String, languageId: String) -> TranslationDataModel? {
                 
-        if #available(iOS 17.4, *), TempSharedSwiftDatabase.swiftDatabaseEnabled {
+        if #available(iOS 17.4, *), let swiftDatabase = super.getSwiftDatabase() {
             
-            guard let translation = getSwiftTranslationsSortedByLatestVersion(resourceId: resourceId, languageId: languageId).first else {
+            guard let translation = getSwiftTranslationsSortedByLatestVersion(swiftDatabase: swiftDatabase, resourceId: resourceId, languageId: languageId).first else {
                 return nil
             }
             
@@ -76,9 +77,9 @@ extension TranslationsCache {
     
     func getLatestTranslation(resourceId: String, languageCode: BCP47LanguageIdentifier) -> TranslationDataModel? {
         
-        if #available(iOS 17.4, *), TempSharedSwiftDatabase.swiftDatabaseEnabled {
+        if #available(iOS 17.4, *), let swiftDatabase = super.getSwiftDatabase() {
             
-            guard let translation = getSwiftTranslationsSortedByLatestVersion(resourceId: resourceId, languageCode: languageCode).first else {
+            guard let translation = getSwiftTranslationsSortedByLatestVersion(swiftDatabase: swiftDatabase, resourceId: resourceId, languageCode: languageCode).first else {
                 return nil
             }
             
@@ -93,11 +94,7 @@ extension TranslationsCache {
     }
     
     @available(iOS 17.4, *)
-    private func getResourceLatestTranslations(resourceId: String) -> [SwiftTranslation] {
-        
-        guard let swiftDatabase = super.getSwiftDatabase() else {
-            return Array()
-        }
+    private func getResourceLatestTranslations(swiftDatabase: SwiftDatabase, resourceId: String) -> [SwiftTranslation] {
         
         let resource: SwiftResource? = swiftDatabase.getObject(context: swiftDatabase.openContext(), id: resourceId)
         
@@ -111,17 +108,17 @@ extension TranslationsCache {
     }
     
     @available(iOS 17.4, *)
-    private func getSwiftTranslationsSortedByLatestVersion(resourceId: String, languageId: String) -> [SwiftTranslation] {
+    private func getSwiftTranslationsSortedByLatestVersion(swiftDatabase: SwiftDatabase, resourceId: String, languageId: String) -> [SwiftTranslation] {
         
-        return getResourceLatestTranslations(resourceId: resourceId)
+        return getResourceLatestTranslations(swiftDatabase: swiftDatabase, resourceId: resourceId)
             .filterByLanguageId(languageId: languageId)
             .sortByLatestVersionFirst()
     }
     
     @available(iOS 17.4, *)
-    private func getSwiftTranslationsSortedByLatestVersion(resourceId: String, languageCode: BCP47LanguageIdentifier) -> [SwiftTranslation] {
+    private func getSwiftTranslationsSortedByLatestVersion(swiftDatabase: SwiftDatabase, resourceId: String, languageCode: BCP47LanguageIdentifier) -> [SwiftTranslation] {
         
-        return getResourceLatestTranslations(resourceId: resourceId)
+        return getResourceLatestTranslations(swiftDatabase: swiftDatabase, resourceId: resourceId)
             .filterByLanguageCode(languageCode: languageCode)
             .sortByLatestVersionFirst()
     }
