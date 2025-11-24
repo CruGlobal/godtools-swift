@@ -10,11 +10,12 @@ import Foundation
 
 class LanguagesCache: SwiftElseRealmPersistence<LanguageDataModel, LanguageCodable, RealmLanguage> {
         
-    init(realmDatabase: RealmDatabase) {
+    init(realmDatabase: RealmDatabase, swiftPersistenceIsEnabled: Bool? = nil) {
                 
         super.init(
             realmDatabase: realmDatabase,
-            realmDataModelMapping: RealmLanguageDataModelMapping()
+            realmDataModelMapping: RealmLanguageDataModelMapping(),
+            swiftPersistenceIsEnabled: swiftPersistenceIsEnabled
         )
     }
     

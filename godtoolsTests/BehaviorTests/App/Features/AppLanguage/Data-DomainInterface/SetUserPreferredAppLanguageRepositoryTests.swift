@@ -89,7 +89,7 @@ extension SetUserPreferredAppLanguageRepositoryTests {
     
     private static func getRealmLanguage(languageCode: LanguageCodeDomainModel) -> RealmLanguage {
         
-        return MockRealmLanguage.getLanguage(language: languageCode, name: languageCode.rawValue + " Name")
+        return MockRealmLanguage.createLanguage(language: languageCode, name: languageCode.rawValue + " Name")
     }
     
     private static func getLocalizationServices() -> MockLocalizationServices {

@@ -39,6 +39,7 @@ enum SwiftTranslationV1 {
         }
         
         func mapFrom(interface: TranslationDataModelInterface) {
+            id = interface.id
             isPublished = interface.isPublished
             manifestName = interface.manifestName
             toolDetailsBibleReferences = interface.toolDetailsBibleReferences
@@ -74,5 +75,27 @@ enum SwiftTranslationV1 {
             
             return LanguageDataModel(interface: swiftLanguage)
         }
+    }
+}
+
+@available(iOS 17.4, *)
+extension Array where Element == SwiftTranslation {
+    
+    func filterByLanguageId(languageId: String) -> [SwiftTranslation] {
+        return filter {
+            $0.language?.id == languageId
+        }
+    }
+    
+    func filterByLanguageCode(languageCode: BCP47LanguageIdentifier) -> [SwiftTranslation] {
+        return filter {
+            $0.language?.code == languageCode
+        }
+    }
+    
+    func sortByLatestVersionFirst() -> [SwiftTranslation] {
+        sorted(by: {
+            $0.version > $1.version
+        })
     }
 }

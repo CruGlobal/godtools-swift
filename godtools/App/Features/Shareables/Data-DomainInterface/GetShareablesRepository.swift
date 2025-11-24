@@ -21,7 +21,7 @@ class GetShareablesRepository: GetShareablesRepositoryInterface {
     
     func getShareablesPublisher(toolId: String, toolLanguageId: String) -> AnyPublisher<[ShareableDomainModel], Never> {
         
-        guard let translation = translationsRepository.getCachedLatestTranslation(resourceId: toolId, languageId: toolLanguageId) else {
+        guard let translation = translationsRepository.cache.getLatestTranslation(resourceId: toolId, languageId: toolLanguageId) else {
             return Just([])
                 .eraseToAnyPublisher()
         }
