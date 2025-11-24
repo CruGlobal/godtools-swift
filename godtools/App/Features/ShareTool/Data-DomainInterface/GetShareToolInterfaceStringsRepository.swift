@@ -14,7 +14,7 @@ class GetShareToolInterfaceStringsRepository: GetShareToolInterfaceStringsReposi
     private let resourcesRepository: ResourcesRepository
     private let languagesRepository: LanguagesRepository
     private let localizationServices: LocalizationServicesInterface
-    
+        
     init(resourcesRepository: ResourcesRepository, languagesRepository: LanguagesRepository, localizationServices: LocalizationServicesInterface) {
         
         self.resourcesRepository = resourcesRepository
@@ -24,6 +24,8 @@ class GetShareToolInterfaceStringsRepository: GetShareToolInterfaceStringsReposi
     
     func getStringsPublisher(toolId: String, toolLanguageId: String, pageNumber: Int, translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<ShareToolInterfaceStringsDomainModel, Never> {
         
+        let resourceType = resourcesRepository.persistence.getObject(id: toolId)?.resourceTypeEnum ?? .unknown
+
         let localizedShareToolMessage: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "tract_share_message")
         
         guard let resource = resourcesRepository.persistence.getObject(id: toolId), let toolLanguage = languagesRepository.persistence.getObject(id: toolLanguageId) else {
@@ -32,7 +34,8 @@ class GetShareToolInterfaceStringsRepository: GetShareToolInterfaceStringsReposi
                 .eraseToAnyPublisher()
         }
         
-        var toolUrl: String = "https://knowgod.com/\(toolLanguage.code)/\(resource.abbreviation)"
+        let path = ShareToolURLPath(resourceType: resourceType)
+        var toolUrl: String = "https://knowgod.com/\(toolLanguage.code)/\(path.rawValue)/\(resource.abbreviation)"
 
         if pageNumber > 0 {
             toolUrl = toolUrl.appending("/").appending("\(pageNumber)")

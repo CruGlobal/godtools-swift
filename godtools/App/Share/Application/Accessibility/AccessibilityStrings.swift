@@ -29,6 +29,7 @@ class AccessibilityStrings {
         case learnToShareTool
         case languageSettings = "Language Settings"
         case leaveAReview = "Leave A Review"
+        case localizationSettings = "Localization Settings"
         case login = "Login"
         case onboardingTutorial = "Onboarding Tutorial Screen"
         case onboardingTutorialPage = "Onboarding Tutorial Page"
@@ -78,6 +79,7 @@ class AccessibilityStrings {
         case getStarted = "Get Started"
         case languageSettings = "Language Settings"
         case localizationSettings = "Localization Settings"
+        case localizationSettingsCountryListItem = "Localization Settings Country List Item"
         case learnToShare = "Learn To Share"
         case leaveAReview = "Leave A Review"
         case lessonsLanguageFilter = "Lessons Language Filter"

@@ -88,8 +88,9 @@ extension LessonViewModel {
     
     func shareTapped() {
         guard let languageId = renderer.value.pageRenderers.first?.language.id else { return }
+        let pageNumber = getCurrentPageNumberWithHiddenPagesIncluded() ?? currentPageNumber
         
-        flowDelegate?.navigate(step: .shareLessonTappedFromLesson(pageNumber: currentPageNumber, languageId: languageId))
+        flowDelegate?.navigate(step: .shareLessonTappedFromLesson(pageNumber: pageNumber, languageId: languageId))
     }
     
     func closeTapped() {

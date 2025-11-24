@@ -60,11 +60,11 @@ class DetermineDeepLinkedToolTranslationsToDownload: DetermineToolTranslationsTo
             
             return primaryTranslation
         }
-        else if let appLanguage = userAppLanguageRepository.getCachedLanguage(), let appLanguageTranslation = translationsRepository.getCachedLatestTranslation(resourceId: resource.id, languageCode: appLanguage.languageId) {
+        else if let appLanguage = userAppLanguageRepository.getCachedLanguage(), let appLanguageTranslation = translationsRepository.cache.getLatestTranslation(resourceId: resource.id, languageCode: appLanguage.languageId) {
             
             return appLanguageTranslation
         }
-        else if let englishTranslation = translationsRepository.getCachedLatestTranslation(resourceId: resource.id, languageCode: LanguageCodeDomainModel.english.value) {
+        else if let englishTranslation = translationsRepository.cache.getLatestTranslation(resourceId: resource.id, languageCode: LanguageCodeDomainModel.english.value) {
             
             return englishTranslation
         }
@@ -98,7 +98,7 @@ class DetermineDeepLinkedToolTranslationsToDownload: DetermineToolTranslationsTo
         
         for languageId in languageIds {
             
-            guard let translation = translationsRepository.getCachedLatestTranslation(resourceId: resourceId, languageId: languageId) else {
+            guard let translation = translationsRepository.cache.getLatestTranslation(resourceId: resourceId, languageId: languageId) else {
                 continue
             }
             

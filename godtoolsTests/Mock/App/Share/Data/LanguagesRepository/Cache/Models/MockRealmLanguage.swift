@@ -11,7 +11,7 @@ import Foundation
 
 class MockRealmLanguage {
     
-    static func getLanguage(language: LanguageCodeDomainModel, name: String, id: String = UUID().uuidString) -> RealmLanguage {
+    static func createLanguage(language: LanguageCodeDomainModel, name: String, id: String = UUID().uuidString) -> RealmLanguage {
         
         let realmLanguage = RealmLanguage()
         realmLanguage.id = id
