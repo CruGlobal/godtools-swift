@@ -56,27 +56,9 @@ class TranslationsCache: SwiftElseRealmPersistence<TranslationDataModel, Transla
 
 extension TranslationsCache {
     
-    @available(iOS 17.4, *)
-    private func getResourceLatestTranslations(resourceId: String) -> [SwiftTranslation] {
-        
-        guard let swiftDatabase = super.getSwiftDatabase() else {
-            return Array()
-        }
-        
-        let resource: SwiftResource? = swiftDatabase.getObject(context: swiftDatabase.openContext(), id: resourceId)
-        
-        guard let resource = resource else {
-            return Array()
-        }
-        
-        let translations: [SwiftTranslation] = resource.latestTranslations
-        
-        return translations
-    }
-    
     func getLatestTranslation(resourceId: String, languageId: String) -> TranslationDataModel? {
                 
-        if #available(iOS 17.4, *) {
+        if #available(iOS 17.4, *), TempSharedSwiftDatabase.swiftDatabaseEnabled {
             
             guard let translation = getSwiftTranslationsSortedByLatestVersion(resourceId: resourceId, languageId: languageId).first else {
                 return nil
@@ -94,7 +76,7 @@ extension TranslationsCache {
     
     func getLatestTranslation(resourceId: String, languageCode: BCP47LanguageIdentifier) -> TranslationDataModel? {
         
-        if #available(iOS 17.4, *) {
+        if #available(iOS 17.4, *), TempSharedSwiftDatabase.swiftDatabaseEnabled {
             
             guard let translation = getSwiftTranslationsSortedByLatestVersion(resourceId: resourceId, languageCode: languageCode).first else {
                 return nil
@@ -110,48 +92,22 @@ extension TranslationsCache {
         return nil
     }
     
-    private func getTranslationsSortedByLatestVersion(resourceId: String, languageId: String) -> [TranslationDataModel] {
-                
-        if #available(iOS 17.4, *) {
-            
-            return getSwiftTranslationsSortedByLatestVersion(
-                resourceId: resourceId,
-                languageId: languageId
-            )
-            .map {
-                TranslationDataModel(interface: $0)
-            }
+    @available(iOS 17.4, *)
+    private func getResourceLatestTranslations(resourceId: String) -> [SwiftTranslation] {
+        
+        guard let swiftDatabase = super.getSwiftDatabase() else {
+            return Array()
         }
-        else {
-            
-            guard let results = getRealmTranslationsSortedByLatestVersion(resourceId: resourceId, languageId: languageId) else {
-                return Array()
-            }
-            
-            return results.map({ TranslationDataModel(interface: $0 )})
+        
+        let resource: SwiftResource? = swiftDatabase.getObject(context: swiftDatabase.openContext(), id: resourceId)
+        
+        guard let resource = resource else {
+            return Array()
         }
-    }
-    
-    private func getTranslationsSortedByLatestVersion(resourceId: String, languageCode: BCP47LanguageIdentifier) -> [TranslationDataModel] {
-                
-        if #available(iOS 17.4, *) {
-            
-            return getSwiftTranslationsSortedByLatestVersion(
-                resourceId: resourceId,
-                languageCode: languageCode
-            )
-            .map {
-                TranslationDataModel(interface: $0)
-            }
-        }
-        else {
-         
-            guard let results = getRealmTranslationsSortedByLatestVersion(resourceId: resourceId, languageCode: languageCode) else {
-                return Array()
-            }
-            
-            return results.map({ TranslationDataModel(interface: $0 )})
-        }
+        
+        let translations: [SwiftTranslation] = resource.latestTranslations
+        
+        return translations
     }
     
     @available(iOS 17.4, *)
@@ -177,7 +133,7 @@ extension TranslationsCache {
             
             return nil
         }
-        
+                
         return realmResource.getLatestTranslations()
             .filter("\(#keyPath(RealmTranslation.language.id)) = '\(languageId)'")
             .sorted(byKeyPath: #keyPath(RealmTranslation.version), ascending: false)
