@@ -21,6 +21,7 @@ class DownloadableLanguageItemViewModel: ObservableObject {
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
     
     private let downloadToolLanguageUseCase: DownloadToolLanguageUseCase
+    private let getDownloadToolLanguageProgressUseCase: GetDownloadToolLanguageProgressUseCase
     private let removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase
     
     private var cancellables: Set<AnyCancellable> = Set()
@@ -30,14 +31,17 @@ class DownloadableLanguageItemViewModel: ObservableObject {
     let downloadableLanguage: DownloadableLanguageListItemDomainModel
     let recycleState: DownloadableLanguageItemRecycleState
     
+    @Published private(set) var downloadState: DownloadableLanguageDownloadState
     @Published private(set) var iconState: LanguageDownloadIconState = .notDownloaded
     
-    init(flowDelegate: FlowDelegate, downloadableLanguage: DownloadableLanguageListItemDomainModel, downloadToolLanguageUseCase: DownloadToolLanguageUseCase, removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase) {
+    init(flowDelegate: FlowDelegate, downloadableLanguage: DownloadableLanguageListItemDomainModel, downloadToolLanguageUseCase: DownloadToolLanguageUseCase, getDownloadToolLanguageProgressUseCase: GetDownloadToolLanguageProgressUseCase, removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase) {
         
         self.flowDelegate = flowDelegate
         self.downloadableLanguage = downloadableLanguage
         self.downloadToolLanguageUseCase = downloadToolLanguageUseCase
+        self.getDownloadToolLanguageProgressUseCase = getDownloadToolLanguageProgressUseCase
         self.removeDownloadedToolLanguageUseCase = removeDownloadedToolLanguageUseCase
+        self.downloadState = Self.getInitialDownloadState(downloadableLanguage: downloadableLanguage)
         
         let languageId: String = downloadableLanguage.languageId
         
@@ -45,12 +49,12 @@ class DownloadableLanguageItemViewModel: ObservableObject {
             recycleState = existingRecycleState
         }
         else {
-            recycleState = DownloadableLanguageItemRecycleState(downloadableLanguage: downloadableLanguage)
+            recycleState = DownloadableLanguageItemRecycleState()
             Self.inMemoryStateForRecycle[languageId] = recycleState
         }
              
         Publishers.CombineLatest(
-            recycleState.$downloadState,
+            $downloadState,
             recycleState.$isMarkedForRemoval
         )
         .flatMap { (downloadState: DownloadableLanguageDownloadState, isMarkedForRemoval: Bool) -> AnyPublisher<LanguageDownloadIconState, Never>  in
@@ -77,14 +81,39 @@ class DownloadableLanguageItemViewModel: ObservableObject {
         }
         .assign(to: &$iconState)
         
-        recycleState
-            .$downloadError
-            .sink(receiveValue: { [weak self] (downloadError: Error?) in
-                if let downloadError = downloadError {
-                    self?.flowDelegate?.navigate(step: .languageDownloadFailedFromDownloadedLanguages(error: downloadError))
+        getDownloadToolLanguageProgressUseCase
+            .getProgressPublisher(languageId: languageId)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (domainModel: DownloadToolLanguageProgressDomainModel) in
+                
+                guard let weakSelf = self, !weakSelf.downloadState.isDownloaded else {
+                    return
                 }
-            })
+                
+                self?.downloadState = .downloading(progress: domainModel.progress)
+            }
             .store(in: &cancellables)
+        
+        
+        // TODO: Implement back in. ~Levi
+//        recycleState
+//            .$downloadError
+//            .sink(receiveValue: { [weak self] (downloadError: Error?) in
+//                if let downloadError = downloadError {
+//                    self?.flowDelegate?.navigate(step: .languageDownloadFailedFromDownloadedLanguages(error: downloadError))
+//                }
+//            })
+//            .store(in: &cancellables)
+    }
+    
+    private static func getInitialDownloadState(downloadableLanguage: DownloadableLanguageListItemDomainModel) -> DownloadableLanguageDownloadState {
+        
+        switch downloadableLanguage.downloadStatus {
+        case .downloaded( _):
+            return .downloaded
+        case .notDownloaded:
+            return .notDownloaded
+        }
     }
     
     private var languageId: String {
@@ -106,7 +135,7 @@ extension DownloadableLanguageItemViewModel {
     
     private func removeDownloadedLanguage() {
         
-        recycleState.downloadState = .notDownloaded
+        downloadState = .notDownloaded
         
         removeDownloadedToolLanguageUseCase
             .removeDownloadedToolLanguage(languageId)
@@ -122,38 +151,21 @@ extension DownloadableLanguageItemViewModel {
 
 extension DownloadableLanguageItemViewModel {
     
-    private static func startLanguageDownload(downloadToolLanguageUseCase: DownloadToolLanguageUseCase, recycleState: DownloadableLanguageItemRecycleState, languageId: String, flowDelegate: FlowDelegate?) {
+    private static func startLanguageDownload(downloadToolLanguageUseCase: DownloadToolLanguageUseCase, languageId: String) {
                   
-        let isDownloading: Bool = recycleState.downloadState.isDownloading
-
-        guard !isDownloading else {
-            return
-        }
-        
         let languageDownloadWithAnimateDownloadProgress = AnimateDownloadProgress()
         
-        recycleState.downloadState = .downloading(progress: 0)
         Self.languageDownloads[languageId] = languageDownloadWithAnimateDownloadProgress
         
         languageDownloadWithAnimateDownloadProgress
             .start(downloadProgressPublisher: downloadToolLanguageUseCase.downloadToolLanguage(languageId: languageId))
             .receive(on: DispatchQueue.main)
-            .sink { completion in
+            .sink { _ in
                 
                 Self.languageDownloads[languageId] = nil
                 
-                switch completion {
-                case .finished:
-                    recycleState.downloadState = .downloaded
-                case .failure(let error):
-                    recycleState.downloadError = error
-                    recycleState.downloadError = nil
-                    recycleState.downloadState = .notDownloaded
-                }
+            } receiveValue: { _ in
                 
-            } receiveValue: { (progress: Double) in
-                
-                recycleState.downloadState = .downloading(progress: progress)
             }
             .store(in: &backgroundCancellables)
     }
@@ -195,7 +207,7 @@ extension DownloadableLanguageItemViewModel {
     
     func languageTapped() {
         
-        switch recycleState.downloadState {
+        switch downloadState {
             
         case .downloaded:
             
@@ -215,11 +227,16 @@ extension DownloadableLanguageItemViewModel {
             break
             
         case .notDownloaded:
+            
+            let isDownloading: Bool = downloadState.isDownloading
+
+            guard !isDownloading else {
+                return
+            }
+            
             Self.startLanguageDownload(
                 downloadToolLanguageUseCase: downloadToolLanguageUseCase,
-                recycleState: recycleState,
-                languageId: languageId,
-                flowDelegate: flowDelegate
+                languageId: languageId
             )
         }
     }
