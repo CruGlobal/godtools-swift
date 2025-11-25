@@ -1,3 +1,7 @@
+"localizationSettings.navBar.title" = "Select a country";
+"localizationSettings.localizationHeader.title" = "Select your localization";
+"localizationSettings.localizationHeader.description" = "Choose from a country below to set your localization and see prioritized content and recommendations based on your location.";
+
 "deferredDeepLinkModal.title" = "It looks like you clicked a link for GodTools";
 "deferredDeepLinkModal.message" = "Tap the button below so we can take you to the content you requested.";
 

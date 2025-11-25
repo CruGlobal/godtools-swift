@@ -11,16 +11,9 @@ import Combine
 
 class LocalizationSettingsViewModel: ObservableObject {
     
-    // TODO: - remove this
-    private let countryDummyData = [
-        LocalizationSettingsCountryDomainModel(countryNameTranslatedInOwnLanguage: "US", countryNameTranslatedInCurrentAppLanguage: "US"),
-        LocalizationSettingsCountryDomainModel(countryNameTranslatedInOwnLanguage: "Ngola", countryNameTranslatedInCurrentAppLanguage: "Angola"),
-        LocalizationSettingsCountryDomainModel(countryNameTranslatedInOwnLanguage: "Argentina", countryNameTranslatedInCurrentAppLanguage: "Argentina"),
-        LocalizationSettingsCountryDomainModel(countryNameTranslatedInOwnLanguage: "Hayastan", countryNameTranslatedInCurrentAppLanguage: "Armenia"),
-        LocalizationSettingsCountryDomainModel(countryNameTranslatedInOwnLanguage: "Osterreich", countryNameTranslatedInCurrentAppLanguage: "Austria")
-    ]
-    
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
+    private let getCountryListUseCase: GetLocalizationSettingsCountryListUseCase
+    private let viewLocalizationSettingsUseCase: ViewLocalizationSettingsUseCase
     private let viewSearchBarUseCase: ViewSearchBarUseCase
 
     private var cancellables: Set<AnyCancellable> = Set()
@@ -35,12 +28,14 @@ class LocalizationSettingsViewModel: ObservableObject {
     @Published var countrySearchResults: [LocalizationSettingsCountryDomainModel] = Array()
     @Published var navTitle: String = ""
     @Published var localizationHeaderTitle: String = ""
-    @Published var localizationHeaderText: String = ""
+    @Published var localizationHeaderDescription: String = ""
 
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewSearchBarUseCase: ViewSearchBarUseCase) {
+    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getCountryListUseCase: GetLocalizationSettingsCountryListUseCase, viewLocalizationSettingsUseCase: ViewLocalizationSettingsUseCase, viewSearchBarUseCase: ViewSearchBarUseCase) {
         
         self.flowDelegate = flowDelegate
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
+        self.getCountryListUseCase = getCountryListUseCase
+        self.viewLocalizationSettingsUseCase = viewLocalizationSettingsUseCase
         self.viewSearchBarUseCase = viewSearchBarUseCase
         
         getCurrentAppLanguageUseCase
@@ -48,13 +43,33 @@ class LocalizationSettingsViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .assign(to: &$appLanguage)
         
-        // TODO: - get real data
-        countriesList = countryDummyData
-        countrySearchResults = countryDummyData
-        localizationHeaderTitle = "Select your localization"
-        localizationHeaderText = "Choose from a country below to set your localization and see prioritized content and recommendations based on your location."
+        $appLanguage
+            .dropFirst()
+            .map { appLanguage in
+                getCountryListUseCase.execute(appLanguage: appLanguage)
+            }
+            .switchToLatest()
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$countriesList)
+        
+        $appLanguage
+            .dropFirst()
+            .map { appLanguage in
+                viewLocalizationSettingsUseCase.execute(appLanguage: appLanguage)
+            }
+            .switchToLatest()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] domainModel in
+                
+                self?.navTitle = domainModel.navTitle
+                self?.localizationHeaderTitle = domainModel.localizationHeaderTitle
+                self?.localizationHeaderDescription = domainModel.localizationHeaderDescription
+            }
+            .store(in: &cancellables)
         
         // TODO: - set up search bar
+        $countriesList
+            .assign(to: &$countrySearchResults)
     }
     deinit {
         print("x deinit: \(type(of: self))")

@@ -33,7 +33,7 @@ struct LocalizationSettingsView: View {
                 VStack(alignment: .leading) {
                     Text(viewModel.localizationHeaderTitle)
                         .font(FontLibrary.sfProTextSemibold.font(size: 16))
-                    Text(viewModel.localizationHeaderText)
+                    Text(viewModel.localizationHeaderDescription)
                         .font(FontLibrary.sfProTextRegular.font(size: 12))
                 }
                 .multilineTextAlignment(.leading)

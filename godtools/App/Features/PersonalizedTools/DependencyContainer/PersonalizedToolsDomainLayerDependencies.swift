@@ -18,4 +18,16 @@ class PersonalizedToolsDomainLayerDependencies {
         self.coreDataLayer = coreDataLayer
         self.dataLayer = dataLayer
     }
+    
+    func getLocalizationSettingsCountryListUseCase() -> GetLocalizationSettingsCountryListUseCase {
+        
+        return GetLocalizationSettingsCountryListUseCase()
+    }
+    
+    func getViewLocalizationSettingsUseCase() -> ViewLocalizationSettingsUseCase {
+        
+        return ViewLocalizationSettingsUseCase(
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
 }
