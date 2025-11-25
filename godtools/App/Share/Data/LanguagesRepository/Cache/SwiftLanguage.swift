@@ -24,7 +24,9 @@ enum SwiftLanguageV1 {
         var name: String = ""
         var type: String = ""
         var forceLanguageName: Bool = false
-                
+        
+        @Relationship(deleteRule: .noAction, inverse: \SwiftResource.languages) var resources: [SwiftResource] = Array<SwiftResource>()
+                        
         init() {
             
         }

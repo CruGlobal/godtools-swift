@@ -107,23 +107,6 @@ extension ResourcesCache {
     }
     
     @available(iOS 17.4, *)
-    private func getContainsLanguageIdPredicate(languageId: String?) -> Predicate<SwiftResource> {
-        
-        let languageId: String = languageId ?? ""
-    
-        guard !languageId.isEmpty else {
-            
-            return #Predicate<SwiftResource> { object in
-                return true
-            }
-        }
-        
-        return #Predicate<SwiftResource> { object in
-            return object.languageIds.contains(languageId)
-        }
-    }
-    
-    @available(iOS 17.4, *)
     private var isSpotlightPredicate: Predicate<SwiftResource> {
         return #Predicate<SwiftResource> { object in
             object.attrSpotlight == true
@@ -138,16 +121,24 @@ extension ResourcesCache {
     private func getLessonsPredicate(filterByLanguageId: String? = nil) -> Predicate<SwiftResource> {
         
         let filterByLanguageId: String = filterByLanguageId ?? ""
-    
-        let containsLanguage: Predicate<SwiftResource> = getContainsLanguageIdPredicate(
-            languageId: filterByLanguageId
-        )
-              
-        let filter = #Predicate<SwiftResource> { object in
-            notHiddenPredicate.evaluate(object) && isLessonPredicate.evaluate(object) && containsLanguage.evaluate(object)
+
+        let containsLanguagePredicate = #Predicate<SwiftResource> { resource in
+            
+            if !filterByLanguageId.isEmpty {
+                return resource.languages.contains { language in
+                    language.id == filterByLanguageId
+                }
+            }
+            else {
+                return true
+            }
         }
-        
-        return filter
+
+        return #Predicate<SwiftResource> { object in
+            notHiddenPredicate.evaluate(object) &&
+            isLessonPredicate.evaluate(object) &&
+            containsLanguagePredicate.evaluate(object)
+        }
     }
     
     private func getLessonsNSPredicate(filterByLanguageId: String? = nil) -> NSPredicate {

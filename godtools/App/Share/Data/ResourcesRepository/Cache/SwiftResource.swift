@@ -32,7 +32,6 @@ enum SwiftResourceV1 {
         var defaultVariantId: String?
         var isHidden: Bool = false
         var isVariant: Bool = false
-        var languageIds: [String] = Array<String>()
         var latestTranslationIds: [String] = Array<String>()
         var manifest: String = ""
         var metatoolId: String?
@@ -106,6 +105,7 @@ extension SwiftResource {
         
         if !languages.contains(language) {
             languages.append(language)
+            language.resources.append(self)
         }
     }
     

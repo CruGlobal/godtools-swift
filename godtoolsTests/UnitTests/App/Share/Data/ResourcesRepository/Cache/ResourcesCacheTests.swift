@@ -14,6 +14,8 @@ import SwiftData
 
 struct ResourcesCacheTests {
 
+    private let spanishLanguageId: Int = 1
+    
     @Test()
     func getLessonCount() async {
         
@@ -48,6 +50,31 @@ struct ResourcesCacheTests {
         
         let resourcesCache = getResourcesCache(swiftPersistenceIsEnabled: true)
         let lessons = resourcesCache.getLessons(filterByLanguageId: nil, sorted: false)
+        
+        #expect(lessons.map {$0.id}.sorted() == expectedLessonIds)
+    }
+    
+    @Test()
+    func getLessonsByLanguageId() async {
+        
+        let expectedLessonIds: [String] = [
+            getLessonId(id: 2),
+            getLessonId(id: 6)
+        ]
+        
+        let realmResourcesCache = getResourcesCache(swiftPersistenceIsEnabled: false)
+        let realmLessons = realmResourcesCache.getLessons(
+            filterByLanguageId: getLanguageId(id: spanishLanguageId),
+            sorted: false
+        )
+        
+        #expect(realmLessons.map {$0.id}.sorted() == expectedLessonIds)
+        
+        let resourcesCache = getResourcesCache(swiftPersistenceIsEnabled: true)
+        let lessons = resourcesCache.getLessons(
+            filterByLanguageId: getLanguageId(id: spanishLanguageId),
+            sorted: false
+        )
         
         #expect(lessons.map {$0.id}.sorted() == expectedLessonIds)
     }
@@ -115,7 +142,7 @@ extension ResourcesCacheTests {
     }
     
     private func getSpanishLanguage() -> MockLanguage {
-        return MockLanguage.createLanguage(language: .spanish, name: "spanish", id: getLanguageId(id: 1))
+        return MockLanguage.createLanguage(language: .spanish, name: "spanish", id: getLanguageId(id: spanishLanguageId))
     }
     
     private func getVietnameseLanguage() -> MockLanguage {
@@ -150,6 +177,7 @@ extension ResourcesCacheTests {
     private func getRealmLessons() -> [RealmResource] {
         
         let english = getRealmLanguage(language: .english)
+        let spanish = getRealmLanguage(language: .spanish)
         
         let lesson_0 = RealmResource.createNewFrom(interface: MockResource.createResource(resourceType: .lesson, id: getLessonId(id: 0)))
         MockRealmResource.addLanguagesToResource(resource: lesson_0, addLanguages: [.english], fromLanguages: [english])
@@ -158,21 +186,21 @@ extension ResourcesCacheTests {
         MockRealmResource.addLanguagesToResource(resource: lesson_1, addLanguages: [.english], fromLanguages: [english])
         
         let lesson_2 = RealmResource.createNewFrom(interface: MockResource.createResource(resourceType: .lesson, id: getLessonId(id: 2)))
-        MockRealmResource.addLanguagesToResource(resource: lesson_2, addLanguages: [.english], fromLanguages: [english])
+        MockRealmResource.addLanguagesToResource(resource: lesson_2, addLanguages: [.english, .spanish], fromLanguages: [english, spanish])
         
         let lesson_3 = RealmResource.createNewFrom(interface: MockResource.createResource(resourceType: .lesson, id: getLessonId(id: 3)))
         MockRealmResource.addLanguagesToResource(resource: lesson_3, addLanguages: [.english], fromLanguages: [english])
                 
         // hidden
         let lesson_4 = RealmResource.createNewFrom(interface: MockResource.createResource(resourceType: .lesson, id: getLessonId(id: 4), isHidden: true))
-        MockRealmResource.addLanguagesToResource(resource: lesson_4, addLanguages: [.english], fromLanguages: [english])
+        MockRealmResource.addLanguagesToResource(resource: lesson_4, addLanguages: [.english, .spanish], fromLanguages: [english, spanish])
         
         let lesson_5 = RealmResource.createNewFrom(interface: MockResource.createResource(resourceType: .lesson, id: getLessonId(id: 5), isHidden: true))
         MockRealmResource.addLanguagesToResource(resource: lesson_5, addLanguages: [.english], fromLanguages: [english])
         
         // featured
         let lesson_6 = RealmResource.createNewFrom(interface: MockResource.createResource(resourceType: .lesson, id: getLessonId(id: 6), attrSpotlight: true))
-        MockRealmResource.addLanguagesToResource(resource: lesson_6, addLanguages: [.english], fromLanguages: [english])
+        MockRealmResource.addLanguagesToResource(resource: lesson_6, addLanguages: [.english, .spanish], fromLanguages: [english, spanish])
         
         let lesson_7 = RealmResource.createNewFrom(interface: MockResource.createResource(resourceType: .lesson, id: getLessonId(id: 7), attrSpotlight: true))
         MockRealmResource.addLanguagesToResource(resource: lesson_7, addLanguages: [.english], fromLanguages: [english])
@@ -239,35 +267,39 @@ extension ResourcesCacheTests {
     private func getLessons() -> [SwiftResource] {
         
         let english = getSwiftLanguage(language: .english)
+        let spanish = getSwiftLanguage(language: .spanish)
         
         let lesson_0 = SwiftResource.createNewFrom(interface: MockResource.createResource(resourceType: .lesson, id: getLessonId(id: 0)))
-        MockSwiftResource.addLanguagesToResource(resource: lesson_0, addLanguages: [.english], fromLanguages: [english])
+        lesson_0.addLanguage(language: english)
         
         let lesson_1 = SwiftResource.createNewFrom(interface: MockResource.createResource(resourceType: .lesson, id: getLessonId(id: 1)))
-        MockSwiftResource.addLanguagesToResource(resource: lesson_1, addLanguages: [.english], fromLanguages: [english])
+        lesson_1.addLanguage(language: english)
         
         let lesson_2 = SwiftResource.createNewFrom(interface: MockResource.createResource(resourceType: .lesson, id: getLessonId(id: 2)))
-        MockSwiftResource.addLanguagesToResource(resource: lesson_2, addLanguages: [.english], fromLanguages: [english])
+        lesson_2.addLanguage(language: english)
+        lesson_2.addLanguage(language: spanish)
         
         let lesson_3 = SwiftResource.createNewFrom(interface: MockResource.createResource(resourceType: .lesson, id: getLessonId(id: 3)))
-        MockSwiftResource.addLanguagesToResource(resource: lesson_3, addLanguages: [.english], fromLanguages: [english])
+        lesson_3.addLanguage(language: english)
                 
         // hidden
         let lesson_4 = SwiftResource.createNewFrom(interface: MockResource.createResource(resourceType: .lesson, id: getLessonId(id: 4), isHidden: true))
-        MockSwiftResource.addLanguagesToResource(resource: lesson_4, addLanguages: [.english], fromLanguages: [english])
+        lesson_4.addLanguage(language: english)
+        lesson_4.addLanguage(language: spanish)
         
         let lesson_5 = SwiftResource.createNewFrom(interface: MockResource.createResource(resourceType: .lesson, id: getLessonId(id: 5), isHidden: true))
-        MockSwiftResource.addLanguagesToResource(resource: lesson_5, addLanguages: [.english], fromLanguages: [english])
+        lesson_5.addLanguage(language: english)
         
         // featured
         let lesson_6 = SwiftResource.createNewFrom(interface: MockResource.createResource(resourceType: .lesson, id: getLessonId(id: 6), attrSpotlight: true))
-        MockSwiftResource.addLanguagesToResource(resource: lesson_6, addLanguages: [.english], fromLanguages: [english])
+        lesson_6.addLanguage(language: english)
+        lesson_6.addLanguage(language: spanish)
         
         let lesson_7 = SwiftResource.createNewFrom(interface: MockResource.createResource(resourceType: .lesson, id: getLessonId(id: 7), attrSpotlight: true))
-        MockSwiftResource.addLanguagesToResource(resource: lesson_7, addLanguages: [.english], fromLanguages: [english])
+        lesson_7.addLanguage(language: english)
         
         let lesson_8 = SwiftResource.createNewFrom(interface: MockResource.createResource(resourceType: .lesson, id: getLessonId(id: 8), attrSpotlight: true))
-        MockSwiftResource.addLanguagesToResource(resource: lesson_8, addLanguages: [.english], fromLanguages: [english])
+        lesson_8.addLanguage(language: english)
         
         return [lesson_0, lesson_1, lesson_2, lesson_3, lesson_4, lesson_5, lesson_6, lesson_7, lesson_8]
     }
@@ -278,22 +310,22 @@ extension ResourcesCacheTests {
         let english = getSwiftLanguage(language: .english)
         
         let tract_0 = SwiftResource.createNewFrom(interface: MockResource.createResource(resourceType: .tract, id: getTractId(id: 0)))
-        MockSwiftResource.addLanguagesToResource(resource: tract_0, addLanguages: [.english], fromLanguages: [english])
+        tract_0.addLanguage(language: english)
         
         let tract_1 = SwiftResource.createNewFrom(interface: MockResource.createResource(resourceType: .tract, id: getTractId(id: 1)))
-        MockSwiftResource.addLanguagesToResource(resource: tract_1, addLanguages: [.english], fromLanguages: [english])
+        tract_1.addLanguage(language: english)
         
         let tract_2 = SwiftResource.createNewFrom(interface: MockResource.createResource(resourceType: .tract, id: getTractId(id: 2)))
-        MockSwiftResource.addLanguagesToResource(resource: tract_2, addLanguages: [.english], fromLanguages: [english])
+        tract_2.addLanguage(language: english)
         
         let tract_3 = SwiftResource.createNewFrom(interface: MockResource.createResource(resourceType: .tract, id: getTractId(id: 3)))
-        MockSwiftResource.addLanguagesToResource(resource: tract_3, addLanguages: [.english], fromLanguages: [english])
+        tract_3.addLanguage(language: english)
         
         let tract_4 = SwiftResource.createNewFrom(interface: MockResource.createResource(resourceType: .tract, id: getTractId(id: 4)))
-        MockSwiftResource.addLanguagesToResource(resource: tract_4, addLanguages: [.english], fromLanguages: [english])
+        tract_4.addLanguage(language: english)
         
         let tract_5 = SwiftResource.createNewFrom(interface: MockResource.createResource(resourceType: .tract, id: getTractId(id: 5)))
-        MockSwiftResource.addLanguagesToResource(resource: tract_5, addLanguages: [.english], fromLanguages: [english])
+        tract_5.addLanguage(language: english)
     
         return [tract_0, tract_1, tract_2, tract_3, tract_4, tract_5]
     }
