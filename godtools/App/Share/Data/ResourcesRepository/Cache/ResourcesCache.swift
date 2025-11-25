@@ -16,7 +16,7 @@ class ResourcesCache: SwiftElseRealmPersistence<ResourceDataModel, ResourceCodab
     private let realmDatabase: RealmDatabase
     private let trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository
         
-    init(realmDatabase: RealmDatabase, trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository) {
+    init(realmDatabase: RealmDatabase, trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository, swiftPersistenceIsEnabled: Bool? = nil) {
         
         self.realmDatabase = realmDatabase
         self.trackDownloadedTranslationsRepository = trackDownloadedTranslationsRepository
@@ -24,7 +24,7 @@ class ResourcesCache: SwiftElseRealmPersistence<ResourceDataModel, ResourceCodab
         super.init(
             realmDatabase: realmDatabase,
             realmDataModelMapping: RealmResourceDataModelMapping(),
-            swiftPersistenceIsEnabled: nil
+            swiftPersistenceIsEnabled: swiftPersistenceIsEnabled
         )
     }
     

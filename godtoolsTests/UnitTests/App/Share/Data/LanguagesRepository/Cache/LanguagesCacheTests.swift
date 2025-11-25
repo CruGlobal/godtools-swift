@@ -156,9 +156,7 @@ extension LanguagesCacheTests {
         }
         
         return LanguagesCache(
-            realmDatabase: TestsInMemoryRealmDatabase(
-                addObjectsToDatabase: allRealmLanguages,
-            ),
+            realmDatabase: getRealmDatabase(),
             swiftPersistenceIsEnabled: swiftPersistenceIsEnabled
         )
     }
