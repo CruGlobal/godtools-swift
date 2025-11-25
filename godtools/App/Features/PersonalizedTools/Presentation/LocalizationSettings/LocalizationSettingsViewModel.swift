@@ -13,6 +13,7 @@ class LocalizationSettingsViewModel: ObservableObject {
     
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getCountryListUseCase: GetLocalizationSettingsCountryListUseCase
+    private let searchCountriesUseCase: SearchCountriesInLocalizationSettingsCountriesListUseCase
     private let viewLocalizationSettingsUseCase: ViewLocalizationSettingsUseCase
     private let viewSearchBarUseCase: ViewSearchBarUseCase
 
@@ -30,11 +31,12 @@ class LocalizationSettingsViewModel: ObservableObject {
     @Published var localizationHeaderTitle: String = ""
     @Published var localizationHeaderDescription: String = ""
 
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getCountryListUseCase: GetLocalizationSettingsCountryListUseCase, viewLocalizationSettingsUseCase: ViewLocalizationSettingsUseCase, viewSearchBarUseCase: ViewSearchBarUseCase) {
+    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getCountryListUseCase: GetLocalizationSettingsCountryListUseCase, searchCountriesUseCase: SearchCountriesInLocalizationSettingsCountriesListUseCase, viewLocalizationSettingsUseCase: ViewLocalizationSettingsUseCase, viewSearchBarUseCase: ViewSearchBarUseCase) {
         
         self.flowDelegate = flowDelegate
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getCountryListUseCase = getCountryListUseCase
+        self.searchCountriesUseCase = searchCountriesUseCase
         self.viewLocalizationSettingsUseCase = viewLocalizationSettingsUseCase
         self.viewSearchBarUseCase = viewSearchBarUseCase
         
@@ -67,10 +69,18 @@ class LocalizationSettingsViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        // TODO: - set up search bar
-        $countriesList
-            .assign(to: &$countrySearchResults)
+        Publishers.CombineLatest(
+            $searchText,
+            $countriesList.dropFirst()
+        )
+        .flatMap { (searchText, countriesList) in
+            
+            searchCountriesUseCase.execute(searchText: searchText, in: countriesList)
+        }
+        .receive(on: DispatchQueue.main)
+        .assign(to: &$countrySearchResults)
     }
+    
     deinit {
         print("x deinit: \(type(of: self))")
     }
