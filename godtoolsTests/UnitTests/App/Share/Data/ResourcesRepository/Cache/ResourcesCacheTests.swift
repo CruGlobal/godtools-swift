@@ -15,9 +15,9 @@ import SwiftData
 struct ResourcesCacheTests {
 
     @Test()
-    func getLessons() async throws {
+    func getLessonCount() async {
         
-        let expectedLessonCount: Int = 4
+        let expectedLessonCount: Int = 7
         
         let realmResourcesCache = getResourcesCache(swiftPersistenceIsEnabled: false)
         
@@ -26,6 +26,50 @@ struct ResourcesCacheTests {
         let resourcesCache = getResourcesCache(swiftPersistenceIsEnabled: true)
         
         #expect(resourcesCache.getLessonsCount() == expectedLessonCount)
+    }
+    
+    @Test()
+    func getLessons() async {
+        
+        let expectedLessonIds: [String] = [
+            getLessonId(id: 0),
+            getLessonId(id: 1),
+            getLessonId(id: 2),
+            getLessonId(id: 3),
+            getLessonId(id: 6),
+            getLessonId(id: 7),
+            getLessonId(id: 8)
+        ]
+                
+        let realmResourcesCache = getResourcesCache(swiftPersistenceIsEnabled: false)
+        let realmLessons = realmResourcesCache.getLessons(filterByLanguageId: nil, sorted: false)
+        
+        #expect(realmLessons.map {$0.id}.sorted() == expectedLessonIds)
+        
+        let resourcesCache = getResourcesCache(swiftPersistenceIsEnabled: true)
+        let lessons = resourcesCache.getLessons(filterByLanguageId: nil, sorted: false)
+        
+        #expect(lessons.map {$0.id}.sorted() == expectedLessonIds)
+    }
+    
+    @Test()
+    func getFeaturedLessons() async {
+        
+        let expectedLessonIds: [String] = [
+            getLessonId(id: 6),
+            getLessonId(id: 7),
+            getLessonId(id: 8)
+        ]
+                
+        let realmResourcesCache = getResourcesCache(swiftPersistenceIsEnabled: false)
+        let realmLessons = realmResourcesCache.getFeaturedLessons(sorted: false)
+        
+        #expect(realmLessons.map {$0.id}.sorted() == expectedLessonIds)
+        
+        let resourcesCache = getResourcesCache(swiftPersistenceIsEnabled: true)
+        let lessons = resourcesCache.getFeaturedLessons(sorted: false)
+        
+        #expect(lessons.map {$0.id}.sorted() == expectedLessonIds)
     }
 }
 
@@ -65,19 +109,47 @@ extension ResourcesCacheTests {
     private func getLanguageId(id: Int) -> String {
         return "language_" + "\(id)"
     }
+    
+    private func getEnglishLanguage() -> MockLanguage {
+        return MockLanguage.createLanguage(language: .english, name: "english", id: getLanguageId(id: 0))
+    }
+    
+    private func getSpanishLanguage() -> MockLanguage {
+        return MockLanguage.createLanguage(language: .spanish, name: "spanish", id: getLanguageId(id: 1))
+    }
+    
+    private func getVietnameseLanguage() -> MockLanguage {
+        return MockLanguage.createLanguage(language: .vietnamese, name: "vietnamese", id: getLanguageId(id: 2))
+    }
+    
+    private func getMockLanguage(language: LanguageCodeDomainModel) -> MockLanguage {
+        switch language {
+        case .english:
+            return getEnglishLanguage()
+        case .spanish:
+            return getSpanishLanguage()
+        case .vietnamese:
+            return getVietnameseLanguage()
+        default:
+            assertionFailure("Mock language not supported: \(language)")
+            return getEnglishLanguage()
+        }
+    }
 }
 
 // MARK: - RealmDatabase
 
 extension ResourcesCacheTests {
     
-    private func getRealmEnglishLanguage() -> RealmLanguage {
-        return MockRealmLanguage.createLanguage(language: .english, name: "english", id: getLanguageId(id: 0))
+    private func getRealmLanguage(language: LanguageCodeDomainModel) -> RealmLanguage {
+        return RealmLanguage.createNewFrom(
+            interface: getMockLanguage(language: language)
+        )
     }
     
     private func getRealmLessons() -> [RealmResource] {
         
-        let english = getRealmEnglishLanguage()
+        let english = getRealmLanguage(language: .english)
         
         let lesson_0 = RealmResource.createNewFrom(interface: MockResource.createResource(resourceType: .lesson, id: getLessonId(id: 0)))
         MockRealmResource.addLanguagesToResource(resource: lesson_0, addLanguages: [.english], fromLanguages: [english])
@@ -98,12 +170,22 @@ extension ResourcesCacheTests {
         let lesson_5 = RealmResource.createNewFrom(interface: MockResource.createResource(resourceType: .lesson, id: getLessonId(id: 5), isHidden: true))
         MockRealmResource.addLanguagesToResource(resource: lesson_5, addLanguages: [.english], fromLanguages: [english])
         
-        return [lesson_0, lesson_1, lesson_2, lesson_3, lesson_4, lesson_5]
+        // featured
+        let lesson_6 = RealmResource.createNewFrom(interface: MockResource.createResource(resourceType: .lesson, id: getLessonId(id: 6), attrSpotlight: true))
+        MockRealmResource.addLanguagesToResource(resource: lesson_6, addLanguages: [.english], fromLanguages: [english])
+        
+        let lesson_7 = RealmResource.createNewFrom(interface: MockResource.createResource(resourceType: .lesson, id: getLessonId(id: 7), attrSpotlight: true))
+        MockRealmResource.addLanguagesToResource(resource: lesson_7, addLanguages: [.english], fromLanguages: [english])
+        
+        let lesson_8 = RealmResource.createNewFrom(interface: MockResource.createResource(resourceType: .lesson, id: getLessonId(id: 8), attrSpotlight: true))
+        MockRealmResource.addLanguagesToResource(resource: lesson_8, addLanguages: [.english], fromLanguages: [english])
+        
+        return [lesson_0, lesson_1, lesson_2, lesson_3, lesson_4, lesson_5, lesson_6, lesson_7, lesson_8]
     }
     
     private func getRealmTracts() -> [RealmResource] {
         
-        let english = getRealmEnglishLanguage()
+        let english = getRealmLanguage(language: .english)
         
         let tract_0 = RealmResource.createNewFrom(interface: MockResource.createResource(resourceType: .tract, id: getTractId(id: 0)))
         MockRealmResource.addLanguagesToResource(resource: tract_0, addLanguages: [.english], fromLanguages: [english])
@@ -147,16 +229,16 @@ extension ResourcesCacheTests {
 extension ResourcesCacheTests {
     
     @available(iOS 17.4, *)
-    private func getEnglishLanguage() -> SwiftLanguage {
+    private func getSwiftLanguage(language: LanguageCodeDomainModel) -> SwiftLanguage {
         return SwiftLanguage.createNewFrom(
-            interface: getRealmEnglishLanguage()
+            interface: getMockLanguage(language: language)
         )
     }
     
     @available(iOS 17.4, *)
     private func getLessons() -> [SwiftResource] {
         
-        let english = getEnglishLanguage()
+        let english = getSwiftLanguage(language: .english)
         
         let lesson_0 = SwiftResource.createNewFrom(interface: MockResource.createResource(resourceType: .lesson, id: getLessonId(id: 0)))
         MockSwiftResource.addLanguagesToResource(resource: lesson_0, addLanguages: [.english], fromLanguages: [english])
@@ -177,13 +259,23 @@ extension ResourcesCacheTests {
         let lesson_5 = SwiftResource.createNewFrom(interface: MockResource.createResource(resourceType: .lesson, id: getLessonId(id: 5), isHidden: true))
         MockSwiftResource.addLanguagesToResource(resource: lesson_5, addLanguages: [.english], fromLanguages: [english])
         
-        return [lesson_0, lesson_1, lesson_2, lesson_3, lesson_4, lesson_5]
+        // featured
+        let lesson_6 = SwiftResource.createNewFrom(interface: MockResource.createResource(resourceType: .lesson, id: getLessonId(id: 6), attrSpotlight: true))
+        MockSwiftResource.addLanguagesToResource(resource: lesson_6, addLanguages: [.english], fromLanguages: [english])
+        
+        let lesson_7 = SwiftResource.createNewFrom(interface: MockResource.createResource(resourceType: .lesson, id: getLessonId(id: 7), attrSpotlight: true))
+        MockSwiftResource.addLanguagesToResource(resource: lesson_7, addLanguages: [.english], fromLanguages: [english])
+        
+        let lesson_8 = SwiftResource.createNewFrom(interface: MockResource.createResource(resourceType: .lesson, id: getLessonId(id: 8), attrSpotlight: true))
+        MockSwiftResource.addLanguagesToResource(resource: lesson_8, addLanguages: [.english], fromLanguages: [english])
+        
+        return [lesson_0, lesson_1, lesson_2, lesson_3, lesson_4, lesson_5, lesson_6, lesson_7, lesson_8]
     }
     
     @available(iOS 17.4, *)
     private func getTracts() -> [SwiftResource] {
         
-        let english = getEnglishLanguage()
+        let english = getSwiftLanguage(language: .english)
         
         let tract_0 = SwiftResource.createNewFrom(interface: MockResource.createResource(resourceType: .tract, id: getTractId(id: 0)))
         MockSwiftResource.addLanguagesToResource(resource: tract_0, addLanguages: [.english], fromLanguages: [english])

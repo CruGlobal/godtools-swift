@@ -90,11 +90,44 @@ class ResourcesCache: SwiftElseRealmPersistence<ResourceDataModel, ResourceCodab
 extension ResourcesCache {
     
     @available(iOS 17.4, *)
+    private var notHiddenPredicate: Predicate<SwiftResource> {
+        return #Predicate<SwiftResource> { object in
+            !object.isHidden
+        }
+    }
+    
+    @available(iOS 17.4, *)
+    private var isLessonPredicate: Predicate<SwiftResource> {
+        
+        let lessonType: String = ResourceType.lesson.rawValue
+        
+        return #Predicate<SwiftResource> { object in
+            object.resourceType == lessonType
+        }
+    }
+    
+    @available(iOS 17.4, *)
+    private func getContainsLanguageIdPredicate(languageId: String?) -> Predicate<SwiftResource> {
+        
+        let languageId: String = languageId ?? ""
+    
+        guard !languageId.isEmpty else {
+            
+            return #Predicate<SwiftResource> { object in
+                return true
+            }
+        }
+        
+        return #Predicate<SwiftResource> { object in
+            return object.languageIds.contains(languageId)
+        }
+    }
+    
+    @available(iOS 17.4, *)
     private var isSpotlightPredicate: Predicate<SwiftResource> {
-        let predicate = #Predicate<SwiftResource> { object in
+        return #Predicate<SwiftResource> { object in
             object.attrSpotlight == true
         }
-        return predicate
     }
     
     private var isSpotlightNSPredicate: NSPredicate {
@@ -104,32 +137,14 @@ extension ResourcesCache {
     @available(iOS 17.4, *)
     private func getLessonsPredicate(filterByLanguageId: String? = nil) -> Predicate<SwiftResource> {
         
-        let lessonType: String = ResourceType.lesson.rawValue
         let filterByLanguageId: String = filterByLanguageId ?? ""
-        
-        let notHidden = #Predicate<SwiftResource> { object in
-            !object.isHidden
-        }
-        
-        let isLesson = #Predicate<SwiftResource> { object in
-            object.resourceType == lessonType
-        }
-        
-        let containsLanguage: Predicate<SwiftResource>
-        
-        if !filterByLanguageId.isEmpty {
-            containsLanguage = #Predicate<SwiftResource> { object in
-                return object.languageIds.contains(filterByLanguageId)
-            }
-        }
-        else {
-            containsLanguage = #Predicate<SwiftResource> { object in
-                return true
-            }
-        }
-                
+    
+        let containsLanguage: Predicate<SwiftResource> = getContainsLanguageIdPredicate(
+            languageId: filterByLanguageId
+        )
+              
         let filter = #Predicate<SwiftResource> { object in
-            notHidden.evaluate(object) && isLesson.evaluate(object) && containsLanguage.evaluate(object)
+            notHiddenPredicate.evaluate(object) && isLessonPredicate.evaluate(object) && containsLanguage.evaluate(object)
         }
         
         return filter
