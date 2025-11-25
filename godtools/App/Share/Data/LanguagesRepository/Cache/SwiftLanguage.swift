@@ -24,7 +24,7 @@ enum SwiftLanguageV1 {
         var name: String = ""
         var type: String = ""
         var forceLanguageName: Bool = false
-        
+                
         init() {
             
         }

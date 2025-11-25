@@ -114,15 +114,22 @@ extension ResourcesCache {
         let isLesson = #Predicate<SwiftResource> { object in
             object.resourceType == lessonType
         }
-                
-        let byLanguage = #Predicate<SwiftResource> { object in
-            return object.languageIds.contains(filterByLanguageId)
-        }
         
+        let containsLanguage: Predicate<SwiftResource>
+        
+        if !filterByLanguageId.isEmpty {
+            containsLanguage = #Predicate<SwiftResource> { object in
+                return object.languageIds.contains(filterByLanguageId)
+            }
+        }
+        else {
+            containsLanguage = #Predicate<SwiftResource> { object in
+                return true
+            }
+        }
+                
         let filter = #Predicate<SwiftResource> { object in
-            notHidden.evaluate(object)
-            && isLesson.evaluate(object)
-            && !filterByLanguageId.isEmpty ? byLanguage.evaluate(object) : true
+            notHidden.evaluate(object) && isLesson.evaluate(object) && containsLanguage.evaluate(object)
         }
         
         return filter
