@@ -33,6 +33,7 @@ enum SwiftResourceV1 {
         var isHidden: Bool = false
         var isVariant: Bool = false
         var latestTranslationIds: [String] = Array<String>()
+        var languageIds: [String] = Array()
         var manifest: String = ""
         var metatoolId: String?
         var name: String = ""
@@ -57,6 +58,7 @@ enum SwiftResourceV1 {
         
         func mapFrom(interface: ResourceDataModelInterface) {
             abbreviation = interface.abbreviation
+            attachmentIds = interface.getAttachmentIds()
             attrAboutBannerAnimation = interface.attrAboutBannerAnimation
             attrAboutOverviewVideoYoutube = interface.attrAboutOverviewVideoYoutube
             attrBanner = interface.attrBanner
@@ -68,6 +70,7 @@ enum SwiftResourceV1 {
             defaultVariantId = interface.defaultVariantId
             id = interface.id
             isHidden = interface.isHidden
+            languageIds = interface.getLanguageIds()
             manifest = interface.manifest
             metatoolId = interface.metatoolId
             name = interface.name
@@ -92,7 +95,7 @@ enum SwiftResourceV1 {
 extension SwiftResource {
     
     func getAttachmentIds() -> [String] {
-        return Array(attachmentIds)
+        return attachmentIds
     }
 }
 
@@ -110,7 +113,7 @@ extension SwiftResource {
     }
     
     func getLanguageIds() -> [String] {
-        return languages.map({$0.id})
+        return languageIds
     }
 }
 
