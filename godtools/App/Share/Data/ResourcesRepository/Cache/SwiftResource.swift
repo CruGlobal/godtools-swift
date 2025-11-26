@@ -33,7 +33,7 @@ enum SwiftResourceV1 {
         var isHidden: Bool = false
         var isVariant: Bool = false
         var latestTranslationIds: [String] = Array<String>()
-        var languageIds: [String] = Array()
+        var languageIds: [String] = Array<String>()
         var manifest: String = ""
         var metatoolId: String?
         var name: String = ""
@@ -71,6 +71,7 @@ enum SwiftResourceV1 {
             id = interface.id
             isHidden = interface.isHidden
             languageIds = interface.getLanguageIds()
+            latestTranslationIds = interface.getLatestTranslationIds()
             manifest = interface.manifest
             metatoolId = interface.metatoolId
             name = interface.name
@@ -79,6 +80,7 @@ enum SwiftResourceV1 {
             resourceType = interface.resourceType
             totalViews = interface.totalViews
             type = interface.type
+            variantIds = interface.getVariantIds()
         }
         
         static func createNewFrom(interface: ResourceDataModelInterface) -> SwiftResource {
@@ -113,7 +115,7 @@ extension SwiftResource {
     }
     
     func getLanguageIds() -> [String] {
-        return languageIds
+        return languages.map({$0.id})
     }
 }
 
@@ -130,7 +132,7 @@ extension SwiftResource {
     }
     
     func getLatestTranslationIds() -> [String] {
-        return Array(latestTranslationIds)
+        return latestTranslationIds
     }
 }
 
@@ -161,6 +163,6 @@ extension SwiftResource {
     }
     
     func getVariantIds() -> [String] {
-        return Array(variantIds)
+        return variantIds
     }
 }

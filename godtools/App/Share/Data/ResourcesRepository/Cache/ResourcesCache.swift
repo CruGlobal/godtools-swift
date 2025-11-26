@@ -283,7 +283,7 @@ extension ResourcesCache {
         }
     }
     
-    func getLessonsLanguageIds() -> [String] {
+    func getLessonsSupportedLanguageIds() -> [String] {
         
         let languageIds: [String]
         
