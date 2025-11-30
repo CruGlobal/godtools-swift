@@ -264,6 +264,7 @@ Jika Anda tidak menerima pesan ini hingga nanti, tautannya mungkin masih belum b
 "menu_share" = "Berbagi";
 "menu_legal" = "Resmi";
 "language_settings" = "Pengaturan bahasa";
+"menu.tutorial" = "Tutorial";
 "menu.my_account" = "Akun saya";
 
 // Login

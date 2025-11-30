@@ -262,6 +262,7 @@ Se você receber esta mensagem demasiado tarde, a ligação poderá não estar a
 "menu_share" = "Partilhar";
 "menu_legal" = "Aviso legal";
 "language_settings" = "Definições de idioma";
+"menu.tutorial" = "Tutorial";
 "menu.my_account" = "A minha conta";
 
 // Login

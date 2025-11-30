@@ -257,6 +257,7 @@
 "menu_share" = "Teilen";
 "menu_legal" = "Rechtliche Hinweise";
 "language_settings" = "Spracheinstellungen";
+"menu.tutorial" = "Tutorial";
 "menu.my_account" = "Mein Konto";
 
 // Login

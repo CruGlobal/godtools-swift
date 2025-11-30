@@ -259,6 +259,7 @@ Si no recibes este mensaje en un tiempo, puede que el enlace ya no funcione. Pod
 "menu_account" = "Cuenta";
 "menu_share" = "Compartir";
 "language_settings" = "Ajustes de idioma";
+"menu.tutorial" = "Tutorial";
 "menu.my_account" = "Mi cuenta";
 
 // Login
