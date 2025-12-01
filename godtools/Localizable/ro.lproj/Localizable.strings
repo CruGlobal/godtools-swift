@@ -261,6 +261,7 @@ Dacă ai primit acest mesaj prea târziu, este posibil ca linkul să nu funcțio
 "menu_share" = "Distribuie";
 "menu_legal" = "Juridic";
 "language_settings" = "Setări de limbă";
+"menu.tutorial" = "Tutorial";
 "menu.my_account" = "Contul meu";
 
 // Login
