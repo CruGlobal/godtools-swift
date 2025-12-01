@@ -32,7 +32,7 @@ class GetLessonFilterLanguagesRepository: GetLessonFilterLanguagesRepositoryInte
             .observeCollectionChangesPublisher()
             .flatMap { _ in
                 
-                let languageIds = self.resourcesRepository.cache.getLessonsLanguageIds()
+                let languageIds = self.resourcesRepository.cache.getLessonsSupportedLanguageIds()
                 
                 let languages = self.createLessonLanguageFilterDomainModelList(from: languageIds, translatedInAppLanguage: translatedInAppLanguage)
                 

@@ -16,7 +16,7 @@ class ResourcesCache: SwiftElseRealmPersistence<ResourceDataModel, ResourceCodab
     private let realmDatabase: RealmDatabase
     private let trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository
         
-    init(realmDatabase: RealmDatabase, trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository) {
+    init(realmDatabase: RealmDatabase, trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository, swiftPersistenceIsEnabled: Bool? = nil) {
         
         self.realmDatabase = realmDatabase
         self.trackDownloadedTranslationsRepository = trackDownloadedTranslationsRepository
@@ -24,7 +24,7 @@ class ResourcesCache: SwiftElseRealmPersistence<ResourceDataModel, ResourceCodab
         super.init(
             realmDatabase: realmDatabase,
             realmDataModelMapping: RealmResourceDataModelMapping(),
-            swiftPersistenceIsEnabled: nil
+            swiftPersistenceIsEnabled: swiftPersistenceIsEnabled
         )
     }
     
@@ -90,11 +90,27 @@ class ResourcesCache: SwiftElseRealmPersistence<ResourceDataModel, ResourceCodab
 extension ResourcesCache {
     
     @available(iOS 17.4, *)
+    private var notHiddenPredicate: Predicate<SwiftResource> {
+        return #Predicate<SwiftResource> { object in
+            !object.isHidden
+        }
+    }
+    
+    @available(iOS 17.4, *)
+    private var isLessonPredicate: Predicate<SwiftResource> {
+        
+        let lessonType: String = ResourceType.lesson.rawValue
+        
+        return #Predicate<SwiftResource> { object in
+            object.resourceType == lessonType
+        }
+    }
+    
+    @available(iOS 17.4, *)
     private var isSpotlightPredicate: Predicate<SwiftResource> {
-        let predicate = #Predicate<SwiftResource> { object in
+        return #Predicate<SwiftResource> { object in
             object.attrSpotlight == true
         }
-        return predicate
     }
     
     private var isSpotlightNSPredicate: NSPredicate {
@@ -104,28 +120,25 @@ extension ResourcesCache {
     @available(iOS 17.4, *)
     private func getLessonsPredicate(filterByLanguageId: String? = nil) -> Predicate<SwiftResource> {
         
-        let lessonType: String = ResourceType.lesson.rawValue
         let filterByLanguageId: String = filterByLanguageId ?? ""
-        
-        let notHidden = #Predicate<SwiftResource> { object in
-            !object.isHidden
+
+        let containsLanguagePredicate = #Predicate<SwiftResource> { resource in
+            
+            if !filterByLanguageId.isEmpty {
+                return resource.languages.contains { language in
+                    language.id == filterByLanguageId
+                }
+            }
+            else {
+                return true
+            }
         }
-        
-        let isLesson = #Predicate<SwiftResource> { object in
-            object.resourceType == lessonType
+
+        return #Predicate<SwiftResource> { object in
+            notHiddenPredicate.evaluate(object) &&
+            isLessonPredicate.evaluate(object) &&
+            containsLanguagePredicate.evaluate(object)
         }
-                
-        let byLanguage = #Predicate<SwiftResource> { object in
-            return object.languageIds.contains(filterByLanguageId)
-        }
-        
-        let filter = #Predicate<SwiftResource> { object in
-            notHidden.evaluate(object)
-            && isLesson.evaluate(object)
-            && !filterByLanguageId.isEmpty ? byLanguage.evaluate(object) : true
-        }
-        
-        return filter
     }
     
     private func getLessonsNSPredicate(filterByLanguageId: String? = nil) -> NSPredicate {
@@ -270,7 +283,7 @@ extension ResourcesCache {
         }
     }
     
-    func getLessonsLanguageIds() -> [String] {
+    func getLessonsSupportedLanguageIds() -> [String] {
         
         let languageIds: [String]
         
