@@ -32,8 +32,8 @@ enum SwiftResourceV1 {
         var defaultVariantId: String?
         var isHidden: Bool = false
         var isVariant: Bool = false
-        var languageIds: [String] = Array<String>()
         var latestTranslationIds: [String] = Array<String>()
+        var languageIds: [String] = Array<String>()
         var manifest: String = ""
         var metatoolId: String?
         var name: String = ""
@@ -58,6 +58,7 @@ enum SwiftResourceV1 {
         
         func mapFrom(interface: ResourceDataModelInterface) {
             abbreviation = interface.abbreviation
+            attachmentIds = interface.getAttachmentIds()
             attrAboutBannerAnimation = interface.attrAboutBannerAnimation
             attrAboutOverviewVideoYoutube = interface.attrAboutOverviewVideoYoutube
             attrBanner = interface.attrBanner
@@ -69,6 +70,8 @@ enum SwiftResourceV1 {
             defaultVariantId = interface.defaultVariantId
             id = interface.id
             isHidden = interface.isHidden
+            languageIds = interface.getLanguageIds()
+            latestTranslationIds = interface.getLatestTranslationIds()
             manifest = interface.manifest
             metatoolId = interface.metatoolId
             name = interface.name
@@ -77,6 +80,7 @@ enum SwiftResourceV1 {
             resourceType = interface.resourceType
             totalViews = interface.totalViews
             type = interface.type
+            variantIds = interface.getVariantIds()
         }
         
         static func createNewFrom(interface: ResourceDataModelInterface) -> SwiftResource {
@@ -93,7 +97,7 @@ enum SwiftResourceV1 {
 extension SwiftResource {
     
     func getAttachmentIds() -> [String] {
-        return Array(attachmentIds)
+        return attachmentIds
     }
 }
 
@@ -106,6 +110,7 @@ extension SwiftResource {
         
         if !languages.contains(language) {
             languages.append(language)
+            language.resources.append(self)
         }
     }
     
@@ -127,7 +132,7 @@ extension SwiftResource {
     }
     
     func getLatestTranslationIds() -> [String] {
-        return Array(latestTranslationIds)
+        return latestTranslationIds
     }
 }
 
@@ -158,6 +163,6 @@ extension SwiftResource {
     }
     
     func getVariantIds() -> [String] {
-        return Array(variantIds)
+        return variantIds
     }
 }

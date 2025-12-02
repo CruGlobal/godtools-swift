@@ -20,11 +20,14 @@ enum SwiftLanguageV1 {
         
         var code: BCP47LanguageIdentifier = ""
         var directionString: String = ""
-        @Attribute(.unique) var id: String = ""
         var name: String = ""
         var type: String = ""
         var forceLanguageName: Bool = false
         
+        @Attribute(.unique) var id: String = ""
+        
+        @Relationship(deleteRule: .noAction, inverse: \SwiftResource.languages) var resources: [SwiftResource] = Array<SwiftResource>()
+                        
         init() {
             
         }
