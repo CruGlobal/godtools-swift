@@ -17,13 +17,15 @@ class LessonEvaluationViewModel: ObservableObject {
     private let pageIndexReached: Int
     private let evaluateLessonUseCase: EvaluateLessonUseCase
     private let cancelLessonEvaluationUseCase: CancelLessonEvaluationUseCase
+    
+    private var cancellables: Set<AnyCancellable> = Set()
             
     private weak var flowDelegate: FlowDelegate?
             
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     
     @Published private(set) var strings = LessonEvaluationStringsDomainModel.emptyValue
-    @Published private(set) var readyToShareFaithScale = SpiritualConversationReadinessScaleDomainModel.emptyValue
+    @Published private(set) var readyToShareFaithScale: SpiritualConversationReadinessScaleDomainModel?
     
     @Published var yesIsSelected: Bool = false
     @Published var noIsSelected: Bool = false
@@ -72,7 +74,10 @@ class LessonEvaluationViewModel: ObservableObject {
         }
         .switchToLatest()
         .receive(on: DispatchQueue.main)
-        .assign(to: &$readyToShareFaithScale)
+        .sink { [weak self] (domainModel: SpiritualConversationReadinessScaleDomainModel) in
+            self?.readyToShareFaithScale = domainModel
+        }
+        .store(in: &cancellables)
     }
     
     deinit {
