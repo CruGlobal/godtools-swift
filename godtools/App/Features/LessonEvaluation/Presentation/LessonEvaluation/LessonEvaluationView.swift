@@ -11,7 +11,7 @@ import SwiftUI
 struct LessonEvaluationView: View {
     
     private let viewInsets: EdgeInsets = EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10)
-    private let contentInsets: EdgeInsets = EdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 30)
+    private let contentInsets: EdgeInsets = EdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 10)
     private let closeButtonSize: CGFloat = 44
     private let closeButtonTop: CGFloat = 5
     
@@ -51,6 +51,7 @@ struct LessonEvaluationView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding([.top], 30 - closeButtonSize - closeButtonTop)
                         .padding([.leading], contentInsets.leading)
+                        .padding([.trailing], contentInsets.trailing)
                         
                     Text(viewModel.strings.wasThisHelpful)
                         .font(FontLibrary.sfProTextRegular.font(size: 18))
@@ -58,6 +59,7 @@ struct LessonEvaluationView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding([.top], 20)
                         .padding([.leading], contentInsets.leading)
+                        .padding([.trailing], contentInsets.trailing)
                     
                     HStack(alignment: .center, spacing: 10) {
                         
@@ -87,16 +89,26 @@ struct LessonEvaluationView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding([.top], 30)
                         .padding([.leading], contentInsets.leading)
+                        .padding([.trailing], contentInsets.trailing)
                     
-                    ScaleValueSliderView(
-                        viewWidth: geometry.size.width - viewInsets.leading - viewInsets.trailing,
-                        tintColor: ColorPalette.gtBlue.color,
-                        minScale: ScaleValue(lessonEvaluationScale: viewModel.readyToShareFaithScale.minScale),
-                        maxScale: ScaleValue(lessonEvaluationScale: viewModel.readyToShareFaithScale.maxScale),
-                        scaleIntValue: $viewModel.readyToShareFaithScaleIntValue,
-                        scaleDisplayValue: viewModel.readyToShareFaithScale.scale.valueTranslatedInAppLanguage
-                    )
-                    .padding([.top], 14)
+                    if let readyToShareFaithScale = viewModel.readyToShareFaithScale {
+                                            
+                        ScaleValueSliderView(
+                            viewWidth: geometry.size.width - viewInsets.leading - viewInsets.trailing,
+                            tintColor: ColorPalette.gtBlue.color,
+                            minScale: ScaleValue(lessonEvaluationScale: readyToShareFaithScale.minScale),
+                            maxScale: ScaleValue(lessonEvaluationScale: readyToShareFaithScale.maxScale),
+                            scaleIntValue: $viewModel.readyToShareFaithScaleIntValue,
+                            scaleDisplayValue: readyToShareFaithScale.scale.valueTranslatedInAppLanguage
+                        )
+                        .padding([.top], 14)
+                    }
+                    else {
+                        
+                        Rectangle()
+                            .fill(Color.clear)
+                            .frame(width: geometry.size.width, height: ScaleValueSliderView.scrubberSize)
+                    }
                     
                     GTBlueButton(
                         title: viewModel.strings.sendFeedbackActionTitle,

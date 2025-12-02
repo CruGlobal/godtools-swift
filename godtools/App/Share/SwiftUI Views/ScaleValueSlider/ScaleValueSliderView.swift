@@ -38,11 +38,11 @@ struct ScaleValueSliderView: View {
         self.scrubberBarWidth = viewWidth - (textBoundsWidth * 2)
         
         if minScale.integerValue < 0 {
-            assertionFailure("minScaleValue must be greater than or equal to zero.")
+            assertionFailure("minScaleValue \(minScale.integerValue) must be greater than or equal to zero.")
         }
         
         if minScale.integerValue >= maxScale.integerValue {
-            assertionFailure("minScaleValue must be less than maxScaleValue.")
+            assertionFailure("minScaleValue \(minScale.integerValue) must be less than maxScaleValue \(maxScale.integerValue).")
         }
                 
         self.minScale = minScale

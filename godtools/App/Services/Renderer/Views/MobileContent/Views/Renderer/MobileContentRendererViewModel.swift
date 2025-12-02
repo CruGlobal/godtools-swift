@@ -438,9 +438,7 @@ class MobileContentRendererViewModel: MobileContentPagesViewModel {
     }
     
     func getPagesWalkingUpParent(fromPage: Page, pagesFromPageRenderer: MobileContentPageRenderer, includeFromPage: Bool = true) -> [Page] {
-        
-        let allPages: [Page] = pagesFromPageRenderer.getAllPageModels()
-        
+                
         var pages: [Page] = Array()
         
         if includeFromPage {
