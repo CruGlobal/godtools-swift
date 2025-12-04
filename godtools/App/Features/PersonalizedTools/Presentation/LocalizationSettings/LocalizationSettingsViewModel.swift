@@ -26,10 +26,8 @@ class LocalizationSettingsViewModel: ObservableObject {
     @Published private var countriesList: [LocalizationSettingsCountryDomainModel] = Array()
     
     @Published var searchText: String = ""
-    @Published var countrySearchResults: [LocalizationSettingsCountryDomainModel] = Array()
-    @Published var navTitle: String = ""
-    @Published var localizationHeaderTitle: String = ""
-    @Published var localizationHeaderDescription: String = ""
+    @Published private(set) var countrySearchResults: [LocalizationSettingsCountryDomainModel] = Array()
+    @Published private(set) var strings = LocalizationSettingsInterfaceStringsDomainModel.emptyValue
 
     init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getCountryListUseCase: GetLocalizationSettingsCountryListUseCase, searchCountriesUseCase: SearchCountriesInLocalizationSettingsCountriesListUseCase, viewLocalizationSettingsUseCase: ViewLocalizationSettingsUseCase, viewSearchBarUseCase: ViewSearchBarUseCase) {
         
@@ -61,13 +59,7 @@ class LocalizationSettingsViewModel: ObservableObject {
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] domainModel in
-                
-                self?.navTitle = domainModel.navTitle
-                self?.localizationHeaderTitle = domainModel.localizationHeaderTitle
-                self?.localizationHeaderDescription = domainModel.localizationHeaderDescription
-            }
-            .store(in: &cancellables)
+            .assign(to: &$strings)
         
         Publishers.CombineLatest(
             $searchText,
