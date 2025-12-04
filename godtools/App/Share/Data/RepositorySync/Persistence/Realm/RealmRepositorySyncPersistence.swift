@@ -117,6 +117,10 @@ extension RealmRepositorySyncPersistence {
             return results
                 .filter(filter)
         }
+        else if let sortByKeyPath = query?.sortByKeyPath {
+            return results
+                .sorted(byKeyPath: sortByKeyPath.keyPath, ascending: sortByKeyPath.ascending)
+        }
         
         return results
     }
