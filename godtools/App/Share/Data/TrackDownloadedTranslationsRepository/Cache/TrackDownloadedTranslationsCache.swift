@@ -9,61 +9,145 @@
 import Foundation
 import RealmSwift
 import Combine
+import SwiftData
 
-class TrackDownloadedTranslationsCache {
+class TrackDownloadedTranslationsCache: SwiftElseRealmPersistence<DownloadedTranslationDataModel, DownloadedTranslationDataModel, RealmDownloadedTranslation> {
     
     private let realmDatabase: RealmDatabase
         
-    init(realmDatabase: RealmDatabase) {
+    init(realmDatabase: RealmDatabase, swiftPersistenceIsEnabled: Bool? = nil) {
         
         self.realmDatabase = realmDatabase
+        
+        super.init(
+            realmDatabase: realmDatabase,
+            realmDataModelMapping: RealmDownloadedTranslationDataModelMapping(),
+            swiftPersistenceIsEnabled: swiftPersistenceIsEnabled
+        )
     }
     
-    private func getDownloadedTranslationsSortedByLatestVersion(resourceId: String, languageId: String) -> [DownloadedTranslationDataModel] {
+    @available(iOS 17.4, *)
+    override func getAnySwiftPersistence(swiftDatabase: SwiftDatabase) -> (any RepositorySyncPersistence<DownloadedTranslationDataModel, DownloadedTranslationDataModel>)? {
+        return getSwiftPersistence(swiftDatabase: swiftDatabase)
+    }
+    
+    @available(iOS 17.4, *)
+    private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<DownloadedTranslationDataModel, DownloadedTranslationDataModel, SwiftDownloadedTranslation>? {
         
-        let realm: Realm = realmDatabase.openRealm()
+        guard let swiftDatabase = super.getSwiftDatabase() else {
+            return nil
+        }
         
-        let resourceIdPredicate = NSPredicate(format: "\(#keyPath(RealmDownloadedTranslation.resourceId)) == %@", resourceId)
-        let languageIdPredicate = NSPredicate(format: "\(#keyPath(RealmDownloadedTranslation.languageId)) == %@", languageId)
-        let filterPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [resourceIdPredicate, languageIdPredicate])
-                
-        let latestTranslations: [DownloadedTranslationDataModel] = realm.objects(RealmDownloadedTranslation.self)
-            .filter(filterPredicate)
-            .sorted(byKeyPath: #keyPath(RealmDownloadedTranslation.version), ascending: false)
-            .map({ DownloadedTranslationDataModel(model: $0) })
+        return getSwiftPersistence(swiftDatabase: swiftDatabase)
+    }
+    
+    @available(iOS 17.4, *)
+    private func getSwiftPersistence(swiftDatabase: SwiftDatabase) -> SwiftRepositorySyncPersistence<DownloadedTranslationDataModel, DownloadedTranslationDataModel, SwiftDownloadedTranslation>? {
         
-        return latestTranslations
+        guard let swiftDatabase = super.getSwiftDatabase() else {
+            return nil
+        }
+        
+        return SwiftRepositorySyncPersistence(
+            swiftDatabase: swiftDatabase,
+            dataModelMapping: SwiftDownloadedTranslationDataModelMapping()
+        )
+    }
+}
+
+// MARK: - Sort Descriptors
+
+extension TrackDownloadedTranslationsCache {
+    
+    @available(iOS 17.4, *)
+    private func getSortByLatestVersionDescriptor() -> [Foundation.SortDescriptor<SwiftDownloadedTranslation>] {
+        return [SortDescriptor(\SwiftDownloadedTranslation.version, order: .reverse)]
+    }
+    
+    private func getSortByLatestVersionKeyPath() -> SortByKeyPath {
+        return SortByKeyPath(
+            keyPath: #keyPath(RealmDownloadedTranslation.version),
+            ascending: false
+        )
+    }
+}
+
+// MARK: - Query
+
+extension TrackDownloadedTranslationsCache {
+    
+    func getLatestDownloadedTranslations(resourceId: String, languageId: String) -> [DownloadedTranslationDataModel] {
+        
+        if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
+            
+            let filter = #Predicate<SwiftDownloadedTranslation> { downloadedTranslation in
+                downloadedTranslation.resourceId == resourceId && downloadedTranslation.languageId == languageId
+            }
+            
+            let query = SwiftDatabaseQuery(
+                filter: filter,
+                sortBy: getSortByLatestVersionDescriptor()
+            )
+            
+            return swiftPersistence
+                .getObjects(query: query)
+        }
+        else {
+            
+            let resourceIdPredicate = NSPredicate(format: "\(#keyPath(RealmDownloadedTranslation.resourceId)) == %@", resourceId)
+            let languageIdPredicate = NSPredicate(format: "\(#keyPath(RealmDownloadedTranslation.languageId)) == %@", languageId)
+            let filterPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [resourceIdPredicate, languageIdPredicate])
+                    
+            let query = RealmDatabaseQuery(
+                filter: filterPredicate,
+                sortByKeyPath: getSortByLatestVersionKeyPath()
+            )
+            
+            return super.getRealmPersistence()
+                .getObjects(query: query)
+        }
     }
     
     func getLatestDownloadedTranslation(resourceId: String, languageId: String) -> DownloadedTranslationDataModel? {
         
-        return getDownloadedTranslationsSortedByLatestVersion(resourceId: resourceId, languageId: languageId).first
+        return getLatestDownloadedTranslations(resourceId: resourceId, languageId: languageId).first
     }
+}
+
+// MARK: - Track Downloads
+
+extension TrackDownloadedTranslationsCache {
     
     func trackTranslationDownloaded(translation: TranslationDataModel) -> AnyPublisher<[DownloadedTranslationDataModel], Error> {
         
-        return realmDatabase.writeObjectsPublisher { (realm: Realm) -> [RealmDownloadedTranslation] in
-        
-            let downloadedTranslation: RealmDownloadedTranslation = RealmDownloadedTranslation()
-            
-            guard let languageId = translation.languageDataModel?.id, !languageId.isEmpty, let resourceId = translation.resourceDataModel?.id, !resourceId.isEmpty else {
-                
-                return []
-            }
-            
-            downloadedTranslation.languageId = languageId
-            downloadedTranslation.manifestAndRelatedFilesPersistedToDevice = true
-            downloadedTranslation.resourceId = resourceId
-            downloadedTranslation.translationId = translation.id
-            downloadedTranslation.version = translation.version
-            
-            let objects: [RealmDownloadedTranslation] = [downloadedTranslation]
-            
-            return objects
-            
-        } mapInBackgroundClosure: { (objects: [RealmDownloadedTranslation]) -> [DownloadedTranslationDataModel] in
-            return objects.map({DownloadedTranslationDataModel(model: $0)})
+        guard let resourceId = translation.resourceDataModel?.id, let languageId = translation.languageDataModel?.id else {
+            let error: Error = NSError.errorWithDescription(description: "Failed to get resourceId and languageId for tracked downloaded translation.")
+            return Fail(error: error)
+                .eraseToAnyPublisher()
         }
-        .eraseToAnyPublisher()
+        
+        let downloadedTranslation = DownloadedTranslationDataModel(
+            id: translation.id,
+            languageId: languageId,
+            manifestAndRelatedFilesPersistedToDevice: true,
+            resourceId: resourceId,
+            translationId: translation.id,
+            version: translation.version
+        )
+        
+        if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
+            
+            _ = swiftPersistence
+                .writeObjects(externalObjects: [downloadedTranslation])
+        }
+        else {
+            
+            _ = super.getRealmPersistence()
+                .writeObjects(externalObjects: [downloadedTranslation], deleteObjectsNotFoundInExternalObjects: false)
+        }
+        
+        return Just([downloadedTranslation])
+            .setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
     }
 }

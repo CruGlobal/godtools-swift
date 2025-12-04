@@ -10,6 +10,7 @@ import Foundation
 
 protocol DownloadedTranslationDataModelInterface {
     
+    var id: String { get }
     var languageId: String { get }
     var manifestAndRelatedFilesPersistedToDevice: Bool { get }
     var resourceId: String { get }

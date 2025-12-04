@@ -11,18 +11,10 @@ import Combine
 
 class TrackDownloadedTranslationsRepository {
     
-    private let cache: TrackDownloadedTranslationsCache
+    let cache: TrackDownloadedTranslationsCache
     
     init(cache: TrackDownloadedTranslationsCache) {
         
         self.cache = cache
-    }
-    
-    func getLatestDownloadedTranslation(resourceId: String, languageId: String) -> DownloadedTranslationDataModel? {
-        return cache.getLatestDownloadedTranslation(resourceId: resourceId, languageId: languageId)
-    }
-    
-    func trackTranslationDownloaded(translation: TranslationDataModel) -> AnyPublisher<[DownloadedTranslationDataModel], Error> {
-        return cache.trackTranslationDownloaded(translation: translation)
     }
 }

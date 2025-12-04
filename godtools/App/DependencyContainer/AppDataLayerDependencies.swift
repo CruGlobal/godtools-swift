@@ -334,7 +334,9 @@ class AppDataLayerDependencies {
     
     func getTrackDownloadedTranslationsRepository() -> TrackDownloadedTranslationsRepository {
         return TrackDownloadedTranslationsRepository(
-            cache: TrackDownloadedTranslationsCache(realmDatabase: sharedRealmDatabase)
+            cache: TrackDownloadedTranslationsCache(
+                realmDatabase: sharedRealmDatabase
+            )
         )
     }
     

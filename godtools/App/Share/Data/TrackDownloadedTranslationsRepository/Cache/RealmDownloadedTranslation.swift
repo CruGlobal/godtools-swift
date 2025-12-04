@@ -9,8 +9,9 @@
 import Foundation
 import RealmSwift
 
-class RealmDownloadedTranslation: Object, DownloadedTranslationDataModelInterface {
+class RealmDownloadedTranslation: Object, IdentifiableRealmObject, DownloadedTranslationDataModelInterface {
     
+    @objc dynamic var id: String = ""
     @objc dynamic var languageId: String = ""
     @objc dynamic var manifestAndRelatedFilesPersistedToDevice: Bool = false
     @objc dynamic var resourceId: String = ""
@@ -22,6 +23,7 @@ class RealmDownloadedTranslation: Object, DownloadedTranslationDataModelInterfac
     }
     
     func mapFrom(interface: DownloadedTranslationDataModelInterface) {
+        id = interface.id
         languageId = interface.languageId
         manifestAndRelatedFilesPersistedToDevice = interface.manifestAndRelatedFilesPersistedToDevice
         resourceId = interface.resourceId
