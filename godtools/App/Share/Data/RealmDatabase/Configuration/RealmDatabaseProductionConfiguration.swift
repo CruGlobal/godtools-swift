@@ -13,7 +13,7 @@ class RealmDatabaseProductionConfiguration: RealmDatabaseConfiguration {
     
     private static let diskFileName: String = "godtools_realm"
     
-    static let schemaVersion: UInt64 = 36
+    static let schemaVersion: UInt64 = 37
     
     init() {
         
