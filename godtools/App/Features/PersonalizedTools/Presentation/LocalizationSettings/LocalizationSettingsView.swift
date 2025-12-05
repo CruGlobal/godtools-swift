@@ -31,9 +31,9 @@ struct LocalizationSettingsView: View {
                     .fill(LocalizationSettingsView.lightBlue)
                 
                 VStack(alignment: .leading) {
-                    Text(viewModel.localizationHeaderTitle)
+                    Text(viewModel.strings.localizationHeaderTitle)
                         .font(FontLibrary.sfProTextSemibold.font(size: 16))
-                    Text(viewModel.localizationHeaderText)
+                    Text(viewModel.strings.localizationHeaderDescription)
                         .font(FontLibrary.sfProTextRegular.font(size: 12))
                 }
                 .multilineTextAlignment(.leading)
@@ -53,7 +53,7 @@ struct LocalizationSettingsView: View {
             .listStyle(.inset)
         }
         .navigationBarBackButtonHidden(true)
-        .navigationTitle(viewModel.navTitle)
+        .navigationTitle(viewModel.strings.navTitle)
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
         
     }
