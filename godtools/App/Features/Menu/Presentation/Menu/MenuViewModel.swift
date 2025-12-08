@@ -95,7 +95,7 @@ class MenuViewModel: ObservableObject {
                 self?.versionSectionTitle = interfaceStrings.versionTitle
                 self?.tutorialOptionTitle = interfaceStrings.tutorialOptionTitle
                 self?.languageSettingsOptionTitle = interfaceStrings.languageSettingsOptionTitle
-                self?.localizationSettingsOptionTitle = "FPO Localization Settings" // TODO: GT-2733 implement in collections work. ~Levi
+                self?.localizationSettingsOptionTitle = interfaceStrings.localizationSettingsOptionTitle
                 self?.loginOptionTitle = interfaceStrings.loginOptionTitle
                 self?.createAccountOptionTitle = interfaceStrings.createAccountOptionTitle
                 self?.activityOptionTitle = interfaceStrings.activityOptionTitle

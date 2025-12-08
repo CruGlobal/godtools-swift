@@ -275,6 +275,7 @@ If you don't receive this message until later, the link may not still work. We c
 "language_settings" = "Language settings";
 "menu.tutorial" = "Tutorial";
 "menu.my_account" = "My Account";
+"menu.localization_settings" = "Localization settings";
 
 // Login
 "login" = "Login";
