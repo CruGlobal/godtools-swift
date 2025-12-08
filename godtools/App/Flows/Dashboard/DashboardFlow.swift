@@ -375,7 +375,7 @@ extension DashboardFlow {
     
     private func configureNavBarForDashboard() {
         
-        GodToolsSceneDelegate.setWindowBackgroundColorForStatusBarColor(color: ColorPalette.gtBlue.uiColor)
+        GodToolsSceneDelegate.setWindowBackgroundColorForStatusBarColor(color: AppFlow.defaultNavBarColor)
                 
         navigationController.resetNavigationBarAppearance()
         

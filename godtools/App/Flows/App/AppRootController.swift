@@ -11,6 +11,6 @@ import UIKit
 class AppRootController: UIViewController {
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        return AppFlow.defaultNavBarStatusBarStyle
     }
 }
