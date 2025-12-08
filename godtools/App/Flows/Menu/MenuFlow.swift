@@ -31,10 +31,10 @@ class MenuFlow: Flow {
         self.appDiContainer = appDiContainer
                 
         let navigationBarAppearance = AppNavigationBarAppearance(
-            backgroundColor: ColorPalette.gtBlue.uiColor,
-            controlColor: .white,
+            backgroundColor: AppFlow.defaultNavBarColor,
+            controlColor: AppFlow.defaultNavBarControlColor,
             titleFont: FontLibrary.systemUIFont(size: 17, weight: .semibold),
-            titleColor: .white,
+            titleColor: AppFlow.defaultNavBarControlColor,
             isTranslucent: false
         )
         

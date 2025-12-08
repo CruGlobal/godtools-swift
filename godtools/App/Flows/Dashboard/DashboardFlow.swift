@@ -354,7 +354,7 @@ extension DashboardFlow {
         let view = DashboardView(viewModel: viewModel)
         
         let menuButton = AppMenuBarItem(
-            color: .white,
+            color: AppFlow.defaultNavBarControlColor,
             target: viewModel,
             action: #selector(viewModel.menuTapped),
             accessibilityIdentifier: AccessibilityStrings.Button.dashboardMenu.id
