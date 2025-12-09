@@ -354,7 +354,7 @@ extension DashboardFlow {
         let view = DashboardView(viewModel: viewModel)
         
         let menuButton = AppMenuBarItem(
-            color: .white,
+            color: AppFlow.defaultNavBarControlColor,
             target: viewModel,
             action: #selector(viewModel.menuTapped),
             accessibilityIdentifier: AccessibilityStrings.Button.dashboardMenu.id
@@ -375,7 +375,7 @@ extension DashboardFlow {
     
     private func configureNavBarForDashboard() {
         
-        GodToolsSceneDelegate.setWindowBackgroundColorForStatusBarColor(color: ColorPalette.gtBlue.uiColor)
+        GodToolsSceneDelegate.setWindowBackgroundColorForStatusBarColor(color: AppFlow.defaultNavBarColor)
                 
         navigationController.resetNavigationBarAppearance()
         
