@@ -27,6 +27,7 @@ class MenuViewModel: ObservableObject {
     
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.value
     
+    @Published private(set) var showsLocalizationSettingsOption: Bool = false
     @Published private(set) var hidesDebugSection: Bool = true
     @Published private(set) var navTitle: String = ""
     @Published private(set) var getStartedSectionTitle: String = ""
@@ -69,6 +70,7 @@ class MenuViewModel: ObservableObject {
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.hidesDebugSection = !appConfig.isDebug
+        self.showsLocalizationSettingsOption = appConfig.isDebug
         
         getCurrentAppLanguageUseCase
             .getLanguagePublisher()
@@ -95,7 +97,7 @@ class MenuViewModel: ObservableObject {
                 self?.versionSectionTitle = interfaceStrings.versionTitle
                 self?.tutorialOptionTitle = interfaceStrings.tutorialOptionTitle
                 self?.languageSettingsOptionTitle = interfaceStrings.languageSettingsOptionTitle
-                self?.localizationSettingsOptionTitle = "FPO Localization Settings" // TODO: GT-2733 implement in collections work. ~Levi
+                self?.localizationSettingsOptionTitle = interfaceStrings.localizationSettingsOptionTitle
                 self?.loginOptionTitle = interfaceStrings.loginOptionTitle
                 self?.createAccountOptionTitle = interfaceStrings.createAccountOptionTitle
                 self?.activityOptionTitle = interfaceStrings.activityOptionTitle

@@ -38,6 +38,7 @@ class GetMenuInterfaceStringsRepository: GetMenuInterfaceStringsRepositoryInterf
             getStartedTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.SectionTitles.getStarted.rawValue),
             tutorialOptionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.ItemTitles.tutorial.rawValue),
             languageSettingsOptionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.ItemTitles.languageSettings.rawValue),
+            localizationSettingsOptionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.ItemTitles.localizationSettings.rawValue),
             accountTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.SectionTitles.account.rawValue),
             loginOptionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.ItemTitles.login.rawValue),
             createAccountOptionTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: MenuStringKeys.ItemTitles.createAccount.rawValue),
