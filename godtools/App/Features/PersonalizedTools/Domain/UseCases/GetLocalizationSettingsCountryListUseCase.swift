@@ -11,18 +11,28 @@ import Combine
 
 class GetLocalizationSettingsCountryListUseCase {
     
+    private let countriesRepository: LocalizationSettingsCountriesRepository
+    
+    init(countriesRepository: LocalizationSettingsCountriesRepository) {
+        self.countriesRepository = countriesRepository
+    }
+    
     func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[LocalizationSettingsCountryDomainModel], Never> {
         
-        // TODO: - remove this
-        let countryDummyData = [
-            LocalizationSettingsCountryDomainModel(countryNameTranslatedInOwnLanguage: "US", countryNameTranslatedInCurrentAppLanguage: "US"),
-            LocalizationSettingsCountryDomainModel(countryNameTranslatedInOwnLanguage: "Ngola", countryNameTranslatedInCurrentAppLanguage: "Angola"),
-            LocalizationSettingsCountryDomainModel(countryNameTranslatedInOwnLanguage: "Argentina", countryNameTranslatedInCurrentAppLanguage: "Argentina"),
-            LocalizationSettingsCountryDomainModel(countryNameTranslatedInOwnLanguage: "Hayastan", countryNameTranslatedInCurrentAppLanguage: "Armenia"),
-            LocalizationSettingsCountryDomainModel(countryNameTranslatedInOwnLanguage: "Osterreich", countryNameTranslatedInCurrentAppLanguage: "Austria")
-        ]
-        
-        return Just(countryDummyData)
+        return countriesRepository.getCountriesPublisher()
+            .flatMap { (countries: [LocalizationSettingsCountryDataModel]) in
+                
+                let countryDomainModels = countries.map { country in
+                    
+                    return LocalizationSettingsCountryDomainModel(
+                        countryNameTranslatedInOwnLanguage: country.countryNameTranslatedInOwnLanguage,
+                        countryNameTranslatedInCurrentAppLanguage: country.countryNameTranslatedInCurrentAppLanguage
+                    )
+                }
+                
+                return Just(countryDomainModels)
+                    .eraseToAnyPublisher()
+            }
             .eraseToAnyPublisher()
     }
 }
