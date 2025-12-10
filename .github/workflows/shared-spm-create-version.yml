@@ -151,7 +151,7 @@ jobs:
         run: |
           sed -i "s/version = '${{ needs.current_version.outputs.version }}'/version = '${{ needs.new_version.outputs.version }}'/g" VERSION
       - name: Create Version Branch and PR
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           branch: "versions/${{ needs.new_version.outputs.version }}"
           title: "Version ${{needs.new_version.outputs.version}}"
