@@ -21,7 +21,8 @@ class PersonalizedToolsDomainLayerDependencies {
     
     func getLocalizationSettingsCountryListUseCase() -> GetLocalizationSettingsCountryListUseCase {
         
-        return GetLocalizationSettingsCountryListUseCase()
+        return GetLocalizationSettingsCountryListUseCase(
+            countriesRepository: dataLayer.getLocalizationSettingsCountriesRepository())
     }
     
     func getSearchCountriesInLocalizationSettingsCountriesListUseCase() -> SearchCountriesInLocalizationSettingsCountriesListUseCase {

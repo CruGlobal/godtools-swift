@@ -14,6 +14,7 @@ struct MenuInterfaceStringsDomainModel {
     let getStartedTitle: String
     let tutorialOptionTitle: String
     let languageSettingsOptionTitle: String
+    let localizationSettingsOptionTitle: String
     let accountTitle: String
     let loginOptionTitle: String
     let createAccountOptionTitle: String

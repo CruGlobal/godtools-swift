@@ -275,6 +275,7 @@ If you don't receive this message until later, the link may not still work. We c
 "language_settings" = "Language settings";
 "menu.tutorial" = "Tutorial";
 "menu.my_account" = "My Account";
+"menu.localization_settings" = "Localization settings";
 
 // Login
 "login" = "Login";
@@ -320,11 +321,7 @@ An online version can be found at https://knowgod.com/";
 "no" = "No";
 
 // Tract - Sharing
-"tract_share_message" ="This link will take you to a web version of what we were talking about today: %@.
-
-Let's talk more!
-
-The app can be downloaded from https://godtoolsapp.com";
+"tract_share_message" ="%@";
 
 // Buttons
 "download" = "Download";
