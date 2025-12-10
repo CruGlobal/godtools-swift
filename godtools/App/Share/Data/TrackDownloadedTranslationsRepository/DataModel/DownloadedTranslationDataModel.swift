@@ -10,18 +10,30 @@ import Foundation
 
 struct DownloadedTranslationDataModel: DownloadedTranslationDataModelInterface {
     
+    let id: String
     let languageId: String
     let manifestAndRelatedFilesPersistedToDevice: Bool
     let resourceId: String
     let translationId: String
     let version: Int
     
-    init(model: DownloadedTranslationDataModelInterface) {
+    init(id: String, languageId: String, manifestAndRelatedFilesPersistedToDevice: Bool, resourceId: String, translationId: String, version: Int) {
         
-        languageId = model.languageId
-        manifestAndRelatedFilesPersistedToDevice = model.manifestAndRelatedFilesPersistedToDevice
-        resourceId = model.resourceId
-        translationId = model.translationId
-        version = model.version
+        self.id = id
+        self.languageId = languageId
+        self.manifestAndRelatedFilesPersistedToDevice = manifestAndRelatedFilesPersistedToDevice
+        self.resourceId = resourceId
+        self.translationId = translationId
+        self.version = version
+    }
+    
+    init(interface: DownloadedTranslationDataModelInterface) {
+        
+        id = interface.id
+        languageId = interface.languageId
+        manifestAndRelatedFilesPersistedToDevice = interface.manifestAndRelatedFilesPersistedToDevice
+        resourceId = interface.resourceId
+        translationId = interface.translationId
+        version = interface.version
     }
 }

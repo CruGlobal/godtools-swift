@@ -108,13 +108,17 @@ extension RealmRepositorySyncPersistence {
         
         let results = realm.objects(PersistObjectType.self)
         
-        if let filter = query?.filter {
+        if let filter = query?.filter, let sortByKeyPath = query?.sortByKeyPath {
+            return results
+                .filter(filter)
+                .sorted(byKeyPath: sortByKeyPath.keyPath, ascending: sortByKeyPath.ascending)
+        }
+        else if let filter = query?.filter {
             return results
                 .filter(filter)
         }
-        else if let filter = query?.filter, let sortByKeyPath = query?.sortByKeyPath {
+        else if let sortByKeyPath = query?.sortByKeyPath {
             return results
-                .filter(filter)
                 .sorted(byKeyPath: sortByKeyPath.keyPath, ascending: sortByKeyPath.ascending)
         }
         
