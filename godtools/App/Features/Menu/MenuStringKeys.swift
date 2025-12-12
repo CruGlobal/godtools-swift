@@ -22,6 +22,7 @@ class MenuStringKeys {
     enum ItemTitles: String {
         case tutorial = "menu.tutorial"
         case languageSettings = "language_settings"
+        case localizationSettings = "menu.localization_settings"
         case login = "login"
         case activity = "account.activity.title"
         case createAccount = "create_account"

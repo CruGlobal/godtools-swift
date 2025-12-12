@@ -31,6 +31,7 @@ enum SwiftDownloadedTranslationV1 {
         }
         
         func mapFrom(interface: DownloadedTranslationDataModelInterface) {
+            id = interface.id
             languageId = interface.languageId
             manifestAndRelatedFilesPersistedToDevice = interface.manifestAndRelatedFilesPersistedToDevice
             resourceId = interface.resourceId

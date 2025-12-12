@@ -1,0 +1,38 @@
+//
+//  GetLocalizationSettingsCountryListUseCase.swift
+//  godtools
+//
+//  Created by Rachael Skeath on 11/25/25.
+//  Copyright © 2025 Cru. All rights reserved.
+//
+
+import Foundation
+import Combine
+
+class GetLocalizationSettingsCountryListUseCase {
+    
+    private let countriesRepository: LocalizationSettingsCountriesRepository
+    
+    init(countriesRepository: LocalizationSettingsCountriesRepository) {
+        self.countriesRepository = countriesRepository
+    }
+    
+    func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[LocalizationSettingsCountryDomainModel], Never> {
+        
+        return countriesRepository.getCountriesPublisher()
+            .flatMap { (countries: [LocalizationSettingsCountryDataModel]) in
+                
+                let countryDomainModels = countries.map { country in
+                    
+                    return LocalizationSettingsCountryDomainModel(
+                        countryNameTranslatedInOwnLanguage: country.countryNameTranslatedInOwnLanguage,
+                        countryNameTranslatedInCurrentAppLanguage: country.countryNameTranslatedInCurrentAppLanguage
+                    )
+                }
+                
+                return Just(countryDomainModels)
+                    .eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
+    }
+}

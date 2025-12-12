@@ -244,7 +244,7 @@ extension TranslationsRepository {
                 
                 let latestDownloadedTranslation: TranslationDataModel?
                 
-                if shouldFallbackToLatestDownloadedTranslation, let resourceId = translation.resourceDataModel?.id, let languageId = translation.languageDataModel?.id, let latestTrackedDownloadedTranslation = self.trackDownloadedTranslationsRepository.getLatestDownloadedTranslation(resourceId: resourceId, languageId: languageId) {
+                if shouldFallbackToLatestDownloadedTranslation, let resourceId = translation.resourceDataModel?.id, let languageId = translation.languageDataModel?.id, let latestTrackedDownloadedTranslation = self.trackDownloadedTranslationsRepository.cache.getLatestDownloadedTranslation(resourceId: resourceId, languageId: languageId) {
                     
                     latestDownloadedTranslation = self.persistence.getObject(id: latestTrackedDownloadedTranslation.translationId)
                 }
@@ -441,7 +441,7 @@ extension TranslationsRepository {
     
     private func didDownloadTranslationAndRelatedFiles(translation: TranslationDataModel, files: [FileCacheLocation]) -> AnyPublisher<TranslationFilesDataModel, Error> {
         
-        return trackDownloadedTranslationsRepository.trackTranslationDownloaded(translation: translation)
+        return trackDownloadedTranslationsRepository.cache.trackTranslationDownloaded(translation: translation)
             .flatMap({ translationId -> AnyPublisher<TranslationFilesDataModel, Error> in
                 
                 return Just(TranslationFilesDataModel(files: files, translation: translation)).setFailureType(to: Error.self)
