@@ -67,7 +67,7 @@
 "no" = "Jo";
 
 // Tract - Sharing
-"tract_share_message" = "Ky link do t`ju çojë në versionin e uebit të faqes ku ishim së fundi duke kërkuar bashkë sot:%@. Le të flasim më shumë!";
+"tract_share_message" = "%@";
 
 // Buttons
 "download" = "Shkarko";

@@ -166,9 +166,7 @@
 "no" = "ไม่";
 
 // Tract - Sharing
-"tract_share_message" = "ลิงก์นี้จะนำคุณไปยังหน้าเพจที่เราดูด้วยกันวันนี้: %@. มาคุยกันอีก!
-
-สามารถดาวน์โหลดแอปได้ที่ https://godtoolsapp.com";
+"tract_share_message" = "%@";
 
 // Buttons
 "download" = "ดาวน์โหลด";

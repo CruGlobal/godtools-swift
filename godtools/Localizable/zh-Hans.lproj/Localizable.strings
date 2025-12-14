@@ -312,9 +312,7 @@
 "no" = "否";
 
 // Tract - Sharing
-"tract_share_message" = "点击这个链接，您就会看到我们今天谈论内容的网页版：%@。让我们畅谈吧！
-
-应用下载地址： https://godtoolsapp.com";
+"tract_share_message" = "%@";
 
 // Buttons
 "download" = "下载";

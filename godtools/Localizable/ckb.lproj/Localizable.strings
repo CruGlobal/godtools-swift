@@ -1,3 +1,6 @@
+// Tract - Sharing
+"tract_share_message" = "%@";
+
 // Navigation - this is an abbreviation for the word "Previous" meaning go back to the card that was previous to this one.
 "card_status1" = "گەڕانەوە";
 "card_status2" = "دواتر";

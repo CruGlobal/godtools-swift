@@ -174,9 +174,7 @@ https://godtoolsapp.com
 "no" = "خیر";
 
 // Tract - Sharing
-"tract_share_message" = "این پیوند شما را به نسخه اینترنتی صفحه‌ای می‌برد که امروز آخرین بار آن را مشاهده می‌کردیم: %@. بیایید بیشتر صحبت کنیم!
-
-می‌توان برنامه را از https://godtoolsapp.com دانلود کنید";
+"tract_share_message" = "%@";
 
 // Buttons
 "download" = "دانلود";
