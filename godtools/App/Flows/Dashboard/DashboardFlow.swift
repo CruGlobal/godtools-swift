@@ -8,6 +8,7 @@
 
 import UIKit
 import Combine
+import SwiftUI
 
 class DashboardFlow: Flow, ToolNavigationFlow {
     
@@ -360,14 +361,26 @@ extension DashboardFlow {
             accessibilityIdentifier: AccessibilityStrings.Button.dashboardMenu.id
         )
         
+        let toggleView = PersonalizedToolToggle(items: ["Personalized", "All Tools"])
+        let toggleHostingController = UIHostingController(rootView: toggleView)
+        toggleHostingController.view.backgroundColor = .clear
+        
+        toggleHostingController.view.invalidateIntrinsicContentSize()
+        let size = toggleHostingController.view.intrinsicContentSize
+        toggleHostingController.view.frame = CGRect(origin: .zero, size: size)
+        
+        let navigationBar = AppNavigationBar(
+            appearance: nil,
+            backButton: nil,
+            leadingItems: [menuButton],
+            trailingItems: []
+        )
+        
+        navigationBar.setTitleView(titleView: toggleHostingController.view)
+        
         let hostingController = AppHostingController<DashboardView>(
             rootView: view,
-            navigationBar: AppNavigationBar(
-                appearance: nil,
-                backButton: nil,
-                leadingItems: [menuButton],
-                trailingItems: []
-            )
+            navigationBar: navigationBar
         )
     
         return hostingController

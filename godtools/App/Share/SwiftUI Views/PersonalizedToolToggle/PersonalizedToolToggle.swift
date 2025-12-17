@@ -48,7 +48,6 @@ struct PersonalizedToolToggle: View {
             RoundedRectangle(cornerRadius: 20)
                 .stroke(ColorPalette.gtBlue.color, lineWidth: 1)
         )
-        .padding(1)
     }
 }
 
