@@ -7,32 +7,26 @@
 //
 
 import SwiftUI
-  
-enum ViewMode: String, CaseIterable, Identifiable {
-    case personalized = "Personalized"
-    case allTools = "Al"
-
-    var id: String { rawValue }
-}
 
 struct PersonalizedToolToggle: View {
-    @State var selectedIndex: Int = 0
+    
+    @ObservedObject var viewModel: PersonalizedToolToggleViewModel
+    
     @State private var segmentWidth: CGFloat = 0
-    let items: [String]
 
     var body: some View {
         HStack(spacing: 0) {
-            ForEach(items.indices, id: \.self) { index in
+            ForEach(viewModel.items.indices, id: \.self) { index in
                 Button {
-                    selectedIndex = index
+                    viewModel.selectedIndex = index
                 } label: {
-                    Text(items[index])
+                    Text(viewModel.items[index])
                         .font(FontLibrary.sfProTextRegular.font(size: 12))
-                        .foregroundColor(selectedIndex == index ? .white : ColorPalette.gtBlue.color)
+                        .foregroundColor(viewModel.selectedIndex == index ? .white : ColorPalette.gtBlue.color)
                         .padding(.vertical, 8)
                         .padding(.horizontal, 16)
                         .frame(width: segmentWidth > 0 ? segmentWidth : nil)
-                        .background(selectedIndex == index ? ColorPalette.gtBlue.color : Color.clear)
+                        .background(viewModel.selectedIndex == index ? ColorPalette.gtBlue.color : Color.clear)
                         .background(
                             GeometryReader { geometry in
                                 Color.clear.onAppear {
@@ -49,8 +43,4 @@ struct PersonalizedToolToggle: View {
                 .stroke(ColorPalette.gtBlue.color, lineWidth: 1)
         )
     }
-}
-
-#Preview {
-    PersonalizedToolToggle(items: ViewMode.allCases.map { $0.rawValue })
 }

@@ -18,6 +18,7 @@ class DashboardFlow: Flow, ToolNavigationFlow {
     
     private var tutorialFlow: TutorialFlow?
     private var learnToShareToolFlow: LearnToShareToolFlow?
+    private var toggleViewHostingController: UIHostingController<PersonalizedToolToggle>?
     private var cancellables: Set<AnyCancellable> = Set()
     
     let appDiContainer: AppDiContainer
@@ -43,6 +44,13 @@ class DashboardFlow: Flow, ToolNavigationFlow {
             .getCurrentAppLanguageUseCase()
             .getLanguagePublisher()
             .assign(to: &$appLanguage)
+        
+        dashboardTabObserver
+            .sink { [weak self] currentTab in
+            
+                self?.showOrHideToggleView(currentTab: currentTab)
+            }
+            .store(in: &cancellables)
     }
     
     func navigate(step: FlowStep) {
@@ -361,13 +369,14 @@ extension DashboardFlow {
             accessibilityIdentifier: AccessibilityStrings.Button.dashboardMenu.id
         )
         
-        let toggleView = PersonalizedToolToggle(items: ["Personalized", "All Tools"])
-        let toggleHostingController = UIHostingController(rootView: toggleView)
+        let toggleView = PersonalizedToolToggle(viewModel: PersonalizedToolToggleViewModel(dashboardTabObserver: dashboardTabObserver))
+        let toggleHostingController = UIHostingController<PersonalizedToolToggle>(rootView: toggleView)
         toggleHostingController.view.backgroundColor = .clear
-        
+
         toggleHostingController.view.invalidateIntrinsicContentSize()
         let size = toggleHostingController.view.intrinsicContentSize
         toggleHostingController.view.frame = CGRect(origin: .zero, size: size)
+        toggleViewHostingController = toggleHostingController
         
         let navigationBar = AppNavigationBar(
             appearance: nil,
@@ -426,6 +435,17 @@ extension DashboardFlow {
             animated: animateDismissingPresentedView,
             completion: didCompleteDismissingPresentedView
         )
+    }
+    
+    private func showOrHideToggleView(currentTab: DashboardTabTypeDomainModel) {
+        switch currentTab {
+        case .favorites:
+            toggleViewHostingController?.view.isHidden = true
+        case .lessons:
+            toggleViewHostingController?.view.isHidden = false
+        case .tools:
+            toggleViewHostingController?.view.isHidden = false
+        }
     }
 }
 
