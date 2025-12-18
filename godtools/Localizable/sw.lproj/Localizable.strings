@@ -312,11 +312,7 @@ Toleo la mtandao linaweza kupatikana kwenye https://knowgod.com/";
 "no" = "La";
 
 // Tract - Sharing
-"tract_share_message" = "Kiungo hiki kitakupeleka kwenye toleo la wavuti la ukurasa tuliokuwa tukiangalia kwa pamoja leo: %@. 
-
-Hebu tuzungumze zaidi!
-
-Programu inaweza kupakuliwa kwenye https://godtoolsapp.com";
+"tract_share_message" = "%@";
 
 // Buttons
 "download" = "Pakua";

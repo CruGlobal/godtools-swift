@@ -310,11 +310,7 @@
 "no" = "いいえ";
 
 // Tract - Sharing
-"tract_share_message" = "このリンクは私たちが今日最後に見ていたウェブ版のページに移動します: %@。
-
-もっと話しましょう！
-
-アプリはこちらからダウンロードできます: https://godtoolsapp.com";
+"tract_share_message" = "%@";
 
 // Buttons
 "download" = "ダウンロード";

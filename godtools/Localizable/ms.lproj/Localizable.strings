@@ -173,9 +173,7 @@ Versi dalam talian boleh ditemui di https://knowgod.com/";
 "no" = "Tidak";
 
 // Tract - Sharing
-"tract_share_message" = "Pautan ini akan membawa anda ke halaman versi web yang kali terakhir kita lihat bersama hari ini: %@. Ayuh bercakap lebih banyak!
-
-Aplikasi boleh dimuat turun daripada https://godtoolsapp.com";
+"tract_share_message" = "%@";
 
 // Buttons
 "download" = "Muat Turun";

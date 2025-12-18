@@ -316,7 +316,7 @@
 "no" = "አይደለም";
 
 // Tract - Sharing
-"tract_share_message" = "ዛሬ ስንመለከተዉ የነበረዉ መተግብሪያ(App) በዚህ መስፈንጠሪያ በኩል ማግኘት ይችላሉ: %@ ይህን መተግበሪያ ዌብ ላይ ለመጠቀም መስፈንጠሪያ: https://godtoolsapp.com\n\n ተጨማሪ እንነጋገር !";
+"tract_share_message" = "%@";
 
 // Buttons
 "download" = "ያዉርዱ";

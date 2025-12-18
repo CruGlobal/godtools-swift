@@ -305,11 +305,7 @@ Puedes acceer a una versión online en https://knowgod.com/";
 "yes" = "Sí";
 
 // Tract - Sharing
-"tract_share_message" = "Este enlace te llevará a una versión web de la página que la que hablábamos juntos hoy: %@.
-
-¡Conversemos más!
-
-La aplicación se puede descargar en https://godtoolsapp.com";
+"tract_share_message" = "%@";
 
 // Buttons
 "download" = "Descargar";

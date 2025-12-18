@@ -168,11 +168,7 @@
 "no" = "Hayır";
 
 // Tract - Sharing
-"tract_share_message" = "Bu bağlantı, sizi bugün en son birlikte baktığımız sayfanın web sürümüne götürecek: %@. 
-
-Daha çok konuşalım!
-
-Uygulama http://godtoolsapp.com adresinden indirilebilir";
+"tract_share_message" = "%@";
 
 // Buttons
 "download" = "İndir";

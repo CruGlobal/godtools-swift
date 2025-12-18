@@ -169,11 +169,7 @@ On-line verzi naleznete na https://knowgod.com/";
 "no" = "Ne";
 
 // Tract - Sharing
-"tract_share_message" = "Tento odkaz vás přivede na webovou verzi stránky, na kterou jsme se dnes již spolu dívali: %@ 
-
-Pojďme si o tom ještě povykládat!
-
-Aplikaci si můžete stáhnout z https://godtoolsapp.com";
+"tract_share_message" = "%@";
 
 // Buttons
 "download" = "Stáhnout";

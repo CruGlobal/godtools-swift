@@ -313,8 +313,7 @@ http://godtoolsapp.com";
 "no" = "না";
 
 // Tract - Sharing
-"tract_share_message" = "এই লিঙ্কটি আপনাকে পৃষ্ঠাটির ওয়েব সংস্করণে নিয়ে যাবে যা আমরা আজ একসাথে অন্তিমে দেখছিলাম: %@.
-আসুন আমরা আরো আলোচনা করি!";
+"tract_share_message" = "%@";
 
 // Buttons
 "download" = "ডাউনলোড";

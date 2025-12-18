@@ -316,11 +316,7 @@ Rīku tīmekļa versijas ir pieejamas: https://KnowGod.com/lv";
 "no" = "Nē";
 
 // Tract - Sharing
-"tract_share_message" = "Šī saite atvērs tīmekļa lapu par to, ko šodien apspriedām: %@. 
-
-Turpināsim sarunu!
-
-Lietotni var lejupielādēt savā tālrunī šeit: https://ej.uz/GodTools";
+"tract_share_message" = "%@";
 
 // Buttons
 "download" = "Lejupielādēt";

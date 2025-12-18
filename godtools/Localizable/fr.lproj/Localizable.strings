@@ -301,11 +301,7 @@ Une version en ligne est disponible sur https://knowgod.com";
 "no" = "Non";
 
 // Tract - Sharing
-"tract_share_message" = "Ce lien vous redirigera vers une version web de ce dont nous parlions aujourd'hui : %@. 
-
-Continuons la discussion !
-
-L'application est téléchargeable depuis https://godtoolsapp.com";
+"tract_share_message" = "%@";
 
 // Buttons
 "download" = "Télécharger";

@@ -3,6 +3,9 @@
 "privacy_policy" = "Нууцлалын бодлого";
 
 "the_tool_you_requested_is_loading" = "Татан авалт үргэлжилж байна";
+
+// Tract - Sharing
+"tract_share_message" = "%@";
 /* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
 "toolinfo_opentool" = "Нээлттэй";
 // Downloads

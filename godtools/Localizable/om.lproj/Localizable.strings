@@ -297,11 +297,7 @@ Marsariitii https://knowgod.com/ irrattis argachuu ni dandeessa.";
 "no" = "Lakki";
 
 // Tract - Sharing
-"tract_share_message" = "Liinkiin kun: %@ gara marsariitii wanta nuti sila haasa'aa turreetti si geessa.
-
-Kana caalaa irratti haa dubbannu!
-
-App isaa https://godtoolsapp.com irraa buufachuu ni dandeessa.";
+"tract_share_message" = "%@";
 "dismiss" = "Cufii dhisii";
 "done" = "Xumureera";
 "clear" = "Haqi";
