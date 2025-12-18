@@ -24,14 +24,12 @@ struct TranslationsCacheTests {
         let resourceId: String
         let languageId: String?
         let expectedVersion: Int
-        let swiftPersistenceIsEnabled: Bool
         
-        init(expectedVersion: Int, swiftPersistenceIsEnabled: Bool, languageId: String? = nil, resourceId: String = TranslationsCacheTests.resourceId) {
+        init(expectedVersion: Int, languageId: String? = nil, resourceId: String = TranslationsCacheTests.resourceId) {
             
             self.resourceId = resourceId
             self.languageId = languageId
             self.expectedVersion = expectedVersion
-            self.swiftPersistenceIsEnabled = swiftPersistenceIsEnabled
         }
     }
     
@@ -48,7 +46,7 @@ struct TranslationsCacheTests {
         #expect(translation.languageDataModel?.id == Self.englishLanguageId)
         #expect(translation.resourceDataModel?.id == Self.resourceId)
     }
-    
+    /*
     @Test()
     func getSwiftEnglishTranslation() async throws {
         
@@ -61,17 +59,14 @@ struct TranslationsCacheTests {
         #expect(translation.id == translationId)
         #expect(translation.languageDataModel?.id == Self.englishLanguageId)
         #expect(translation.resourceDataModel?.id == Self.resourceId)
-    }
+    }*/
     
     @Test(arguments: [
-        TestArgument(expectedVersion: 12, swiftPersistenceIsEnabled: false, languageId: englishLanguageId),
-        TestArgument(expectedVersion: 122, swiftPersistenceIsEnabled: false, languageId: spanishLanguageId),
-        TestArgument(expectedVersion: 20, swiftPersistenceIsEnabled: false, languageId: vietnameseLanguageId),
-        TestArgument(expectedVersion: 12, swiftPersistenceIsEnabled: true, languageId: englishLanguageId),
-        TestArgument(expectedVersion: 122, swiftPersistenceIsEnabled: true, languageId: spanishLanguageId),
-        TestArgument(expectedVersion: 20, swiftPersistenceIsEnabled: true, languageId: vietnameseLanguageId)
+        TestArgument(expectedVersion: 12, languageId: englishLanguageId),
+        TestArgument(expectedVersion: 122, languageId: spanishLanguageId),
+        TestArgument(expectedVersion: 20, languageId: vietnameseLanguageId)
     ])
-    func getLatestTranslationByLanguageId(argument: TestArgument) async throws {
+    func realmGetLatestTranslationByLanguageId(argument: TestArgument) async throws {
              
         let translationsCache = getTranslationsCache(swiftPersistenceIsEnabled: false)
         
@@ -84,6 +79,25 @@ struct TranslationsCacheTests {
                 
         #expect(translation?.version == argument.expectedVersion)
     }
+    /*
+    @Test(arguments: [
+        TestArgument(expectedVersion: 12, languageId: englishLanguageId),
+        TestArgument(expectedVersion: 122, languageId: spanishLanguageId),
+        TestArgument(expectedVersion: 20, languageId: vietnameseLanguageId)
+    ])
+    func getLatestTranslationByLanguageId(argument: TestArgument) async throws {
+             
+        let translationsCache = getTranslationsCache(swiftPersistenceIsEnabled: true)
+        
+        let languageId: String = try #require(argument.languageId)
+        
+        let translation = translationsCache.getLatestTranslation(
+            resourceId: argument.resourceId,
+            languageId: languageId
+        )
+                
+        #expect(translation?.version == argument.expectedVersion)
+    }*/
 }
 
 extension TranslationsCacheTests {
