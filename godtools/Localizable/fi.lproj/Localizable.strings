@@ -157,7 +157,7 @@
 "yes" = "Kyllä";
 
 // Tract - Sharing
-"tract_share_message" = "Tämä linkki siirtää sinut tämänpäiväisen puheenaiheemme verkkoversioon: %@ \n\n Sovelluksen voi ladata osoitteesta https://godtoolsapp.com \n\n Jutellaan asiasta lisää!";
+"tract_share_message" = "%@";
 
 // Buttons
 "download" = "Lataa";

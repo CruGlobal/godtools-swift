@@ -170,11 +170,7 @@ Makikita ang online na bersyon sa https://knowgod.com/";
 "no" = "Hindi";
 
 // Tract - Sharing
-"tract_share_message" = "Dadalhin ka ng link na ito sa web na bersyon ng page na huli nating tiningnan ngayong araw: %@. 
-
-Mag-usap pa tayo!
-
-Maaaring ma-download ang app mula sa https://godtoolsapp.com";
+"tract_share_message" = "%@";
 
 // Buttons
 "download" = "I-download";

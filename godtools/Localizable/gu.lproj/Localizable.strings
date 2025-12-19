@@ -119,7 +119,7 @@ http://godtoolsapp.com";
 "no" = "ના";
 
 // Tract - Sharing
-"tract_share_message" = "આ લીંક તમને વેબ વર્ઝનના એ પાન પર લઇ જશે જે આજે આપણે સાથે જોઈ રહ્યા હતા. %@ ચાલો આગળ વાત કરીએ.";
+"tract_share_message" = "%@";
 
 // Buttons
 "download" = "ડાઉનલોડ";

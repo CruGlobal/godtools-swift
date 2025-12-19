@@ -166,7 +166,7 @@
 "no" = "नाही";
 
 // Tract - Sharing
-"tract_share_message" = "हे लिंक तुम्हाला वेब आवृत्तीकडे नेईल ज्यावर आपण आज बोल होतो: %@ \n\n app इथून डाऊनलोड करा: https://godtoolsapp.com \n\n आपण आणखी बोलू या!";
+"tract_share_message" = "%@";
 
 // Buttons
 "download" = "टीपा

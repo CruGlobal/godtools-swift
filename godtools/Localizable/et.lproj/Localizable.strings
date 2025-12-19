@@ -162,9 +162,7 @@ Veebiversioon on saadaval lehel https://knowgod.com";
 "no" = "Ei";
 
 // Tract - Sharing
-"tract_share_message" = "Link %@ viib sind täna viimati koos vaadatud lehe veebiversioonile. Räägime jälle!
-
-Rakenduse saab alla laadida lehelt godtoolsapp.com";
+"tract_share_message" = "%@";
 
 // Buttons
 "download" = "Laadi alla";

@@ -313,11 +313,7 @@
 "no" = "不好";
 
 // Tract - Sharing
-"tract_share_message" = "點擊此連結可看到我們今天談論內容的網路版本：%@。
-
-讓我們更深入討論吧！
-
-前往這裡下載應用程式：https://godtoolsapp.com";
+"tract_share_message" = "%@";
 
 // Buttons
 "download" = "下載";

@@ -308,11 +308,7 @@ Găsești versiunea online aici https://knowgod.com/";
 "no" = "Nu";
 
 // Tract - Sharing
-"tract_share_message" = "Link-ul te va conduce la versiunea web a paginii pe care am vizionat-o împreună azi: %@. 
-
-Să discutăm mai multe!
-
-Aplicația poate fi descărcată de pe https://godtoolsapp.com";
+"tract_share_message" = "%@";
 
 // Buttons
 "download" = "Descarcă";

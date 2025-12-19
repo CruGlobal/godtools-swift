@@ -308,11 +308,7 @@ Một phiên bản trực tuyến có thể tìm thấy ở https://knowgod.com/
 "no" = "Không";
 
 // Tract - Sharing
-"tract_share_message" = "Liên kết này sẽ đưa bạn đến phiên bản web của những gì chúng ta đã thảo luận hôm nay: %@. 
-
-Hãy thảo luận thêm!
-
-Có thể tải xuống ứng dụng từ https://godtoolsapp.com";
+"tract_share_message" = "%@";
 
 // Buttons
 "download" = "Tải về";

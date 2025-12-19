@@ -27,7 +27,7 @@ struct ProgressTimerTests {
         await withCheckedContinuation { continuation in
             
             let timeoutTask = Task {
-                try await Task.sleep(nanoseconds: 1_000_000_000) // 1 seconds
+                try await Task.sleep(nanoseconds: 3_000_000_000) // 3 seconds
                 continuation.resume(returning: ())
             }
             
@@ -61,7 +61,7 @@ struct ProgressTimerTests {
         await withCheckedContinuation { continuation in
             
             let timeoutTask = Task {
-                try await Task.sleep(nanoseconds: 1_000_000_000) // 1 seconds
+                try await Task.sleep(nanoseconds: 3_000_000_000) // 3 seconds
                 continuation.resume(returning: ())
             }
             

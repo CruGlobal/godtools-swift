@@ -172,11 +172,7 @@ Spletna različica je na voljo na https://knowgod.com/";
 "no" = "Ne";
 
 // Tract - Sharing
-"tract_share_message" = "S klikom te povezave se bo odprla spletna različica, ki sva si jo danes nazadnje ogledala skupaj: %@. 
-
-Pogovoriva se več o tem!
-
-Aplikacijo lahko preneseš na https://godtoolsapp.com";
+"tract_share_message" = "%@";
 
 // Buttons
 "download" = "Naloži";
