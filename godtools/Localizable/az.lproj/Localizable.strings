@@ -162,10 +162,7 @@ https://godtoolsapp.com";
 "no" = "Xeyr";
 
 // Tract - Sharing
-"tract_share_message" = "Bu link sizi dünən birlikdə baxdığımız səhifənin veb versiyasına aparacaq: %@ Gəlin daha çox danışaq!
-
-Tətbiqi buradan yükləyə bilərsiniz: 
-https://godtoolsapp.com";
+"tract_share_message" = "%@";
 
 // Buttons
 "download" = "Yüklə";

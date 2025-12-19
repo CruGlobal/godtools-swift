@@ -286,11 +286,7 @@
 "no" = "A'a";
 
 // Tract - Sharing
-"tract_share_message" = "Wannan hanyar haɗin zai kai ku zuwa sigar yanar gizo ta abin da muke magana akai a yau:  %@
-
-Zaku  iya saukar da app din zuwa wayar ku daga https://godtoolsapp.com.
-
-Bari mu kara magana!";
+"tract_share_message" = "%@";
 "dismiss" = "Sallama";
 "done" = "Ya yi";
 "clear" = "Share";

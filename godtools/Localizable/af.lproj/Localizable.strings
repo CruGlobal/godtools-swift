@@ -315,12 +315,7 @@ https://knowgod.com/";
 "no" = "Nee";
 
 // Tract - Sharing
-"tract_share_message" = "Hierdie skakel sal jou na die webweergawe neem van die bladsy waarna ons vandag saam gekyk het: %@ 
-
-Kom ons gesels nog!
-
-Hierdie app kan afgelaai word vanaf 
-https://godtoolsapp.com";
+"tract_share_message" = "%@";
 
 // Buttons
 "download" = "Laai af";

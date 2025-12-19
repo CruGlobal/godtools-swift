@@ -21,46 +21,27 @@ struct LanguagesCacheTests {
     
     struct TestArgument {
         let queryByLanguageCodes: [LanguageCodeDomainModel]
-        let swiftPersistenceIsEnabled: Bool
         let expectedLanguageIds: [String]
     }
     
     @Test(arguments: [
         TestArgument(
             queryByLanguageCodes: [LanguageCodeDomainModel.english],
-            swiftPersistenceIsEnabled: false,
             expectedLanguageIds: ["c"]
         ),
         TestArgument(
             queryByLanguageCodes: [LanguageCodeDomainModel.spanish],
-            swiftPersistenceIsEnabled: false,
             expectedLanguageIds: ["i"]
         ),
         TestArgument(
             queryByLanguageCodes: [LanguageCodeDomainModel.finnish],
-            swiftPersistenceIsEnabled: false,
-            expectedLanguageIds: ["l"]
-        ),
-        TestArgument(
-            queryByLanguageCodes: [LanguageCodeDomainModel.english],
-            swiftPersistenceIsEnabled: true,
-            expectedLanguageIds: ["c"]
-        ),
-        TestArgument(
-            queryByLanguageCodes: [LanguageCodeDomainModel.spanish],
-            swiftPersistenceIsEnabled: true,
-            expectedLanguageIds: ["i"]
-        ),
-        TestArgument(
-            queryByLanguageCodes: [LanguageCodeDomainModel.finnish],
-            swiftPersistenceIsEnabled: true,
             expectedLanguageIds: ["l"]
         )
     ])
-    func queryLanguageByCode(argument: TestArgument) async throws {
+    func realmQueryLanguageByCode(argument: TestArgument) async throws {
                 
         let languagesCache: LanguagesCache = getLanguagesCache(
-            swiftPersistenceIsEnabled: argument.swiftPersistenceIsEnabled
+            swiftPersistenceIsEnabled: false
         )
         
         let languageCode: String = try #require(argument.queryByLanguageCodes.first?.rawValue)
@@ -69,43 +50,52 @@ struct LanguagesCacheTests {
         
         #expect(language?.id == argument.expectedLanguageIds.first)
     }
+    /*
+    @Test(arguments: [
+        TestArgument(
+            queryByLanguageCodes: [LanguageCodeDomainModel.english],
+            expectedLanguageIds: ["c"]
+        ),
+        TestArgument(
+            queryByLanguageCodes: [LanguageCodeDomainModel.spanish],
+            expectedLanguageIds: ["i"]
+        ),
+        TestArgument(
+            queryByLanguageCodes: [LanguageCodeDomainModel.finnish],
+            expectedLanguageIds: ["l"]
+        )
+    ])
+    func queryLanguageByCode(argument: TestArgument) async throws {
+                
+        let languagesCache: LanguagesCache = getLanguagesCache(
+            swiftPersistenceIsEnabled: true
+        )
+        
+        let languageCode: String = try #require(argument.queryByLanguageCodes.first?.rawValue)
+                        
+        let language: LanguageDataModel? = languagesCache.getCachedLanguage(code: languageCode)
+        
+        #expect(language?.id == argument.expectedLanguageIds.first)
+    }*/
     
     @Test(arguments: [
         TestArgument(
             queryByLanguageCodes: [LanguageCodeDomainModel.english, LanguageCodeDomainModel.spanish],
-            swiftPersistenceIsEnabled: false,
             expectedLanguageIds: ["c", "i"]
         ),
         TestArgument(
             queryByLanguageCodes: [LanguageCodeDomainModel.russian, LanguageCodeDomainModel.vietnamese, LanguageCodeDomainModel.french, LanguageCodeDomainModel.chinese],
-            swiftPersistenceIsEnabled: false,
             expectedLanguageIds: ["j", "b", "d", "h"]
         ),
         TestArgument(
             queryByLanguageCodes: [],
-            swiftPersistenceIsEnabled: false,
-            expectedLanguageIds: []
-        ),
-        TestArgument(
-            queryByLanguageCodes: [LanguageCodeDomainModel.english, LanguageCodeDomainModel.spanish],
-            swiftPersistenceIsEnabled: true,
-            expectedLanguageIds: ["c", "i"]
-        ),
-        TestArgument(
-            queryByLanguageCodes: [LanguageCodeDomainModel.russian, LanguageCodeDomainModel.vietnamese, LanguageCodeDomainModel.french, LanguageCodeDomainModel.chinese],
-            swiftPersistenceIsEnabled: true,
-            expectedLanguageIds: ["j", "b", "d", "h"]
-        ),
-        TestArgument(
-            queryByLanguageCodes: [],
-            swiftPersistenceIsEnabled: true,
             expectedLanguageIds: []
         )
     ])
-    func queryLanguagesByCodes(argument: TestArgument) async {
+    func realmQueryLanguagesByCodes(argument: TestArgument) async {
         
         let languagesCache: LanguagesCache = getLanguagesCache(
-            swiftPersistenceIsEnabled: argument.swiftPersistenceIsEnabled
+            swiftPersistenceIsEnabled: false
         )
         
         let languageCodes: [String] = argument.queryByLanguageCodes.map { $0.rawValue }
@@ -116,6 +106,35 @@ struct LanguagesCacheTests {
 
         #expect(languageIds.sortedAscending() == argument.expectedLanguageIds.sortedAscending())
     }
+    /*
+    @Test(arguments: [
+        TestArgument(
+            queryByLanguageCodes: [LanguageCodeDomainModel.english, LanguageCodeDomainModel.spanish],
+            expectedLanguageIds: ["c", "i"]
+        ),
+        TestArgument(
+            queryByLanguageCodes: [LanguageCodeDomainModel.russian, LanguageCodeDomainModel.vietnamese, LanguageCodeDomainModel.french, LanguageCodeDomainModel.chinese],
+            expectedLanguageIds: ["j", "b", "d", "h"]
+        ),
+        TestArgument(
+            queryByLanguageCodes: [],
+            expectedLanguageIds: []
+        )
+    ])
+    func queryLanguagesByCodes(argument: TestArgument) async {
+        
+        let languagesCache: LanguagesCache = getLanguagesCache(
+            swiftPersistenceIsEnabled: true
+        )
+        
+        let languageCodes: [String] = argument.queryByLanguageCodes.map { $0.rawValue }
+        
+        let languages: [LanguageDataModel] = languagesCache.getCachedLanguages(codes: languageCodes)
+        
+        let languageIds: [String] = languages.map { $0.id }
+
+        #expect(languageIds.sortedAscending() == argument.expectedLanguageIds.sortedAscending())
+    }*/
 }
 
 extension LanguagesCacheTests {

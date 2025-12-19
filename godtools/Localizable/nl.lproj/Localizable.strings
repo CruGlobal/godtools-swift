@@ -170,11 +170,7 @@ Een onlineversie is te vinden op https://knowgod.com/";
 "no" = "Nee";
 
 // Tract - Sharing
-"tract_share_message" = "Deze link brengt je naar de webversie van de laatste pagina die we vandaag samen hebben bekeken: %@. 
-
-Laten we verder praten!
-
-De app is te downloaden vanaf https://godtoolsapp.com";
+"tract_share_message" = "%@";
 "dismiss" = "Verbergen";
 "done" = "Klaar";
 "remove" = "Verwijderen";

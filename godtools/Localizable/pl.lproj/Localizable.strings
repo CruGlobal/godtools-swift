@@ -172,11 +172,7 @@ Wersję online można znaleźć na https://knowgod.com/";
 "no" = "Nie";
 
 // Tract - Sharing
-"tract_share_message" = "Ten link kieruje do webowej wersji strony, którą razem ostatnio omawialiśmy:%@. 
-
-Bądźmy w kontakcie!
-
-Możesz pobrać tę aplikację z https://godtoolsapp.com";
+"tract_share_message" = "%@";
 
 // Buttons
 "download" = "Pobierz";
