@@ -105,14 +105,14 @@ class GodToolsAppConfig: AppConfigInterface {
         return Self.getMobileContentApiBaseUrlByScheme(environment: environment)
     }
     
-    func getRealmDatabase() -> RealmDatabase {
+    func getRealmDatabase() -> LegacyRealmDatabase {
         
         switch appBuild.environment {
         
         case .staging:
-            return RealmDatabase(databaseConfiguration: RealmDatabaseStagingConfiguration())
+            return LegacyRealmDatabase(databaseConfiguration: RealmDatabaseStagingConfiguration())
         case .production:
-            return RealmDatabase(databaseConfiguration: RealmDatabaseProductionConfiguration())
+            return LegacyRealmDatabase(databaseConfiguration: RealmDatabaseProductionConfiguration())
         }
     }
     

@@ -43,7 +43,7 @@ struct StoreInitialAppLanguageTests {
         
         let testsDiContainer = TestsDiContainer()
         
-        let testsRealmDatabase: RealmDatabase = testsDiContainer.dataLayer.getSharedRealmDatabase()
+        let testsRealmDatabase: LegacyRealmDatabase = testsDiContainer.dataLayer.getSharedRealmDatabase()
         
         let appLanguages: [AppLanguageCodable] = [
             AppLanguageCodable(languageCode: "ar", languageDirection: .rightToLeft, languageScriptCode: nil),
@@ -119,7 +119,7 @@ struct StoreInitialAppLanguageTests {
         
         let testsDiContainer = TestsDiContainer()
         
-        let testsRealmDatabase: RealmDatabase = testsDiContainer.dataLayer.getSharedRealmDatabase()
+        let testsRealmDatabase: LegacyRealmDatabase = testsDiContainer.dataLayer.getSharedRealmDatabase()
         
         let appLanguages: [AppLanguageCodable] = [
             AppLanguageCodable(languageCode: "ar", languageDirection: .rightToLeft, languageScriptCode: nil),
@@ -190,7 +190,7 @@ struct StoreInitialAppLanguageTests {
         
         let testsDiContainer = TestsDiContainer()
         
-        let testsRealmDatabase: RealmDatabase = testsDiContainer.dataLayer.getSharedRealmDatabase()
+        let testsRealmDatabase: LegacyRealmDatabase = testsDiContainer.dataLayer.getSharedRealmDatabase()
         
         let appLanguages: [AppLanguageCodable] = [
             AppLanguageCodable(languageCode: "ar", languageDirection: .rightToLeft, languageScriptCode: nil),

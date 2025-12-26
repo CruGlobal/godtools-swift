@@ -21,7 +21,7 @@ class ResourcesRepository: RepositorySync<ResourceDataModel, MobileContentResour
     
     let cache: ResourcesCache
     
-    init(api: MobileContentResourcesApi, realmDatabase: RealmDatabase, cache: ResourcesCache, attachmentsRepository: AttachmentsRepository, languagesRepository: LanguagesRepository, userDefaultsCache: UserDefaultsCacheInterface) {
+    init(api: MobileContentResourcesApi, realmDatabase: LegacyRealmDatabase, cache: ResourcesCache, attachmentsRepository: AttachmentsRepository, languagesRepository: LanguagesRepository, userDefaultsCache: UserDefaultsCacheInterface) {
         
         self.api = api
         self.cache = cache

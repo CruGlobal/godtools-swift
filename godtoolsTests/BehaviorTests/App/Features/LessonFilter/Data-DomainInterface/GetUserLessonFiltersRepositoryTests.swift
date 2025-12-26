@@ -209,7 +209,7 @@ struct GetUserLessonFiltersRepositoryTests {
 
 extension GetUserLessonFiltersRepositoryTests {
     
-    private static func getRealmDatabase(addRealmObjects: [Object]) -> RealmDatabase {
+    private static func getRealmDatabase(addRealmObjects: [Object]) -> LegacyRealmDatabase {
         return TestsInMemoryRealmDatabase(
             addObjectsToDatabase: addRealmObjects
         )

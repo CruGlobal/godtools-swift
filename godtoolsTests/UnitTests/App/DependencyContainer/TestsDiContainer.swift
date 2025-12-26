@@ -11,7 +11,7 @@ import Foundation
 
 class TestsDiContainer: AppDiContainer {
     
-    init(realmDatabase: RealmDatabase = TestsInMemoryRealmDatabase()) {
+    init(realmDatabase: LegacyRealmDatabase = TestsInMemoryRealmDatabase()) {
    
         super.init(
             appConfig: TestsAppConfig(realmDatabase: realmDatabase)

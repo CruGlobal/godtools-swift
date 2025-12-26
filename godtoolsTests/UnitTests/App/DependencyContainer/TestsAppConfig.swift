@@ -12,9 +12,9 @@ import SocialAuthentication
 
 class TestsAppConfig: AppConfigInterface {
     
-    private let realmDatabase: RealmDatabase
+    private let realmDatabase: LegacyRealmDatabase
     
-    init(realmDatabase: RealmDatabase) {
+    init(realmDatabase: LegacyRealmDatabase) {
         self.realmDatabase = realmDatabase
     }
     
@@ -66,7 +66,7 @@ class TestsAppConfig: AppConfigInterface {
         return "\(scheme)://mobile-content-api.cru.org"
     }
     
-    func getRealmDatabase() -> RealmDatabase {
+    func getRealmDatabase() -> LegacyRealmDatabase {
         return realmDatabase
     }
     

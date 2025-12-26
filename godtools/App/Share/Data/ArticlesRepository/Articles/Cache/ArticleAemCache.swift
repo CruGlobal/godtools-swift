@@ -16,10 +16,10 @@ class ArticleAemCache {
     typealias AemUri = String
     
     private let fileCache: ArticleAemWebArchiveFileCache = ArticleAemWebArchiveFileCache()
-    private let realmDatabase: RealmDatabase
+    private let realmDatabase: LegacyRealmDatabase
     private let articleWebArchiver: ArticleWebArchiver
     
-    init(realmDatabase: RealmDatabase, articleWebArchiver: ArticleWebArchiver) {
+    init(realmDatabase: LegacyRealmDatabase, articleWebArchiver: ArticleWebArchiver) {
         
         self.realmDatabase = realmDatabase
         self.articleWebArchiver = articleWebArchiver
