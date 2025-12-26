@@ -15,7 +15,7 @@ class AppDataLayerDependencies {
         
     private let sharedAppConfig: AppConfigInterface
     private let sharedUrlSessionPriority: URLSessionPriority = URLSessionPriority()
-    private let sharedRealmDatabase: RealmDatabase
+    private let sharedRealmDatabase: LegacyRealmDatabase
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
     private let sharedAnalytics: AnalyticsContainer
     
@@ -308,7 +308,7 @@ class AppDataLayerDependencies {
         return sharedUrlSessionPriority
     }
     
-    func getSharedRealmDatabase() -> RealmDatabase {
+    func getSharedRealmDatabase() -> LegacyRealmDatabase {
         return sharedRealmDatabase
     }
     

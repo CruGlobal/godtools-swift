@@ -13,10 +13,10 @@ import RealmSwift
 
 class MockAppLanguagesRepositorySync: AppLanguagesRepositorySyncInterface {
     
-    private let realmDatabase: RealmDatabase
+    private let realmDatabase: LegacyRealmDatabase
     private let appLanguages: [AppLanguageCodable]
     
-    init(realmDatabase: RealmDatabase, appLanguages: [AppLanguageCodable]) {
+    init(realmDatabase: LegacyRealmDatabase, appLanguages: [AppLanguageCodable]) {
         
         self.realmDatabase = realmDatabase
         self.appLanguages = appLanguages

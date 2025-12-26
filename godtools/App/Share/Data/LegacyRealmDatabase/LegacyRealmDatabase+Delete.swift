@@ -1,5 +1,5 @@
 //
-//  RealmDatabase+Delete.swift
+//  LegacyRealmDatabase+Delete.swift
 //  godtools
 //
 //  Created by Levi Eggert on 5/17/23.
@@ -12,7 +12,7 @@ import Combine
 
 // MARK: - Delete Objects By Primary Keys
 
-extension RealmDatabase {
+extension LegacyRealmDatabase {
     
     func deleteObjects<Element: RealmFetchable>(realm: Realm, type: Element.Type, primaryKeyPath: String, primaryKeys: [String]) -> Error? {
         
@@ -68,7 +68,7 @@ extension RealmDatabase {
 
 // MARK: - Delete Objects
 
-extension RealmDatabase {
+extension LegacyRealmDatabase {
  
     func deleteObjects(realm: Realm, objects: [ObjectBase]) -> Error? {
         
@@ -88,7 +88,7 @@ extension RealmDatabase {
 
 // MARK: - Delete All Objects
 
-extension RealmDatabase {
+extension LegacyRealmDatabase {
     
     func deleteAllObjects(realm: Realm) -> Error? {
                 

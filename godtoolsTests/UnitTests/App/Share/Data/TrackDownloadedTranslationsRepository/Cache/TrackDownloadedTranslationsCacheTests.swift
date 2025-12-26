@@ -198,7 +198,7 @@ extension TrackDownloadedTranslationsCacheTests {
             }
     }
     
-    private func getRealmDatabase() -> RealmDatabase {
+    private func getRealmDatabase() -> LegacyRealmDatabase {
         return TestsInMemoryRealmDatabase(
             addObjectsToDatabase: getRealmDatabaseObjects()
         )

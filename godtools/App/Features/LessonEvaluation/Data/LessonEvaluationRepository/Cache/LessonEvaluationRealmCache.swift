@@ -11,9 +11,9 @@ import RealmSwift
 
 class LessonEvaluationRealmCache {
     
-    private let realmDatabase: RealmDatabase
+    private let realmDatabase: LegacyRealmDatabase
     
-    init(realmDatabase: RealmDatabase) {
+    init(realmDatabase: LegacyRealmDatabase) {
         
         self.realmDatabase = realmDatabase
     }

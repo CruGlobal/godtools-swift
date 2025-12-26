@@ -133,7 +133,7 @@ extension GetDownloadToolProgressInterfaceStringsRepositoryTests {
         
         let realmObjectsToAdd: [Object] = [resource_1, favoritedResource_1, resource_2, resource_3]
         
-        let realmDatabase: RealmDatabase = TestsInMemoryRealmDatabase(addObjectsToDatabase: realmObjectsToAdd)
+        let realmDatabase: LegacyRealmDatabase = TestsInMemoryRealmDatabase(addObjectsToDatabase: realmObjectsToAdd)
         
         let testsDiContainer = TestsDiContainer(realmDatabase: realmDatabase)
         

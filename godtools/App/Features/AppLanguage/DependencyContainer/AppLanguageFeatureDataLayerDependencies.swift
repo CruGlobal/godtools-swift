@@ -19,7 +19,7 @@ class AppLanguageFeatureDataLayerDependencies {
     
     // MARK: - Data Layer Classes
     
-    func getAppLanguagesRepository(realmDatabase: RealmDatabase? = nil, sync: AppLanguagesRepositorySyncInterface? = nil) -> AppLanguagesRepository {
+    func getAppLanguagesRepository(realmDatabase: LegacyRealmDatabase? = nil, sync: AppLanguagesRepositorySyncInterface? = nil) -> AppLanguagesRepository {
         
         let cache = RealmAppLanguagesCache(
             realmDatabase: realmDatabase ?? coreDataLayer.getSharedRealmDatabase()

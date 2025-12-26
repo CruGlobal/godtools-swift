@@ -14,7 +14,7 @@ class AttachmentsCache: SwiftElseRealmPersistence<AttachmentDataModel, Attachmen
     private let resourcesFileCache: ResourcesSHA256FileCache
     private let bundle: AttachmentsBundleCache
     
-    init(resourcesFileCache: ResourcesSHA256FileCache, bundle: AttachmentsBundleCache, realmDatabase: RealmDatabase) {
+    init(resourcesFileCache: ResourcesSHA256FileCache, bundle: AttachmentsBundleCache, realmDatabase: LegacyRealmDatabase) {
         
         self.resourcesFileCache = resourcesFileCache
         self.bundle = bundle

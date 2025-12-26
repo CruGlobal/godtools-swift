@@ -134,11 +134,11 @@ class RealmResourcesCacheTests: XCTestCase {
         XCTAssertEqual(toolsExcludingVariants.count, allTools.count - variants.count)
     }
     
-    private func getNewTestDatabase() -> RealmDatabase {
+    private func getNewTestDatabase() -> LegacyRealmDatabase {
         
         let config = RealmDatabaseConfiguration(cacheType: .inMemory(identifier: UUID().uuidString), schemaVersion: 1)
         
-        let realmDatabase = RealmDatabase(databaseConfiguration: config)
+        let realmDatabase = LegacyRealmDatabase(databaseConfiguration: config)
         
         let realm: Realm = realmDatabase.openRealm()
                 

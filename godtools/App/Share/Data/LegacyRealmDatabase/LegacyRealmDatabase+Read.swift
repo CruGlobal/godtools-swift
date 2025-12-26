@@ -1,5 +1,5 @@
 //
-//  RealmDatabase+Read.swift
+//  LegacyRealmDatabase+Read.swift
 //  godtools
 //
 //  Created by Levi Eggert on 5/17/23.
@@ -12,7 +12,7 @@ import Combine
 
 // MARK: - Read Object
 
-extension RealmDatabase {
+extension LegacyRealmDatabase {
     
     func readObjectElseCreateNew<T: IdentifiableRealmObject>(realm: Realm, primaryKey: String) -> T {
         
@@ -70,7 +70,7 @@ extension RealmDatabase {
 
 // MARK: - Read Objects
 
-extension RealmDatabase {
+extension LegacyRealmDatabase {
     
     func readObjects<T: Object>(realm: Realm) -> Results<T> {
         return realm.objects(T.self)
