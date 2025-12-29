@@ -197,7 +197,7 @@ extension TranslationsCacheTests {
         return [resource]
     }
     
-    private func getRealmDatabase() -> RealmDatabase {
+    private func getRealmDatabase() -> LegacyRealmDatabase {
         return TestsInMemoryRealmDatabase(
             addObjectsToDatabase: getRealmDatabaseObjects()
         )

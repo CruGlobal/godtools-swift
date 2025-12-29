@@ -193,7 +193,7 @@ extension GetLanguageSettingsInterfaceStringsRepositoryTests {
         
         let testsDiContainer = TestsDiContainer()
         
-        let testsRealmDatabase: RealmDatabase = testsDiContainer.dataLayer.getSharedRealmDatabase()
+        let testsRealmDatabase: LegacyRealmDatabase = testsDiContainer.dataLayer.getSharedRealmDatabase()
         
         let appLanguages: [AppLanguageCodable] = Self.getAppLanguages()
         

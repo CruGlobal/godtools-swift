@@ -26,7 +26,7 @@ struct SetUserPreferredAppLanguageRepositoryTests {
         
         let allLanguages: [RealmLanguage] = SetUserPreferredAppLanguageRepositoryTests.getAllLanguages()
         
-        let realmDatabase: RealmDatabase = TestsInMemoryRealmDatabase(
+        let realmDatabase: LegacyRealmDatabase = TestsInMemoryRealmDatabase(
             addObjectsToDatabase: allLanguages
         )
         

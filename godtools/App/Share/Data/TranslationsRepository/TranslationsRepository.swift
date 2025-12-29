@@ -22,7 +22,7 @@ class TranslationsRepository: RepositorySync<TranslationDataModel, MobileContent
     
     let cache: TranslationsCache
     
-    init(infoPlist: InfoPlist, api: MobileContentTranslationsApi, realmDatabase: RealmDatabase, cache: TranslationsCache, resourcesFileCache: ResourcesSHA256FileCache, trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository, remoteConfigRepository: RemoteConfigRepository) {
+    init(infoPlist: InfoPlist, api: MobileContentTranslationsApi, realmDatabase: LegacyRealmDatabase, cache: TranslationsCache, resourcesFileCache: ResourcesSHA256FileCache, trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository, remoteConfigRepository: RemoteConfigRepository) {
         
         self.infoPlist = infoPlist
         self.api = api

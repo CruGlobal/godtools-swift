@@ -270,9 +270,9 @@ extension RealmRepositorySyncPersistenceTests {
         )
     }
     
-    static func getRealmDatabase(fileName: String, addObjects: [Object]) -> RealmDatabase {
+    static func getRealmDatabase(fileName: String, addObjects: [Object]) -> LegacyRealmDatabase {
         
-        let realmDatabase: RealmDatabase = RealmDatabase(
+        let realmDatabase: LegacyRealmDatabase = LegacyRealmDatabase(
             databaseConfiguration: Self.getRealmDatabaseConfiguration(fileName: fileName)
         )
                 

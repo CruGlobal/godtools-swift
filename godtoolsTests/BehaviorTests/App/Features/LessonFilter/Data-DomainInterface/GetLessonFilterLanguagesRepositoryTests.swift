@@ -226,7 +226,7 @@ extension GetLessonFilterLanguagesRepositoryTests {
             MockRealmResource.createLesson(addLanguages: [.english], fromLanguages: allLanguages)
         ]
                         
-        let realmDatabase: RealmDatabase = TestsInMemoryRealmDatabase(
+        let realmDatabase: LegacyRealmDatabase = TestsInMemoryRealmDatabase(
             addObjectsToDatabase: allLanguages + tracts + lessons
         )
         

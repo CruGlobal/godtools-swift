@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class UITestsRealmDatabase: RealmDatabase {
+class UITestsRealmDatabase: LegacyRealmDatabase {
     
     private static let diskFileName: String = "godtools_uitests_realm"
     
