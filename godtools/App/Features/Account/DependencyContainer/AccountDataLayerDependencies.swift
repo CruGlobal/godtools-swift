@@ -25,7 +25,7 @@ class AccountDataLayerDependencies {
                 mobileContentApiAuthSession: coreDataLayer.getMobileContentApiAuthSession()
             ),
             cache: RealmUserDetailsCache(
-                realmDatabase: coreDataLayer.getSharedRealmDatabase(),
+                realmDatabase: coreDataLayer.getSharedLegacyRealmDatabase(),
                 authTokenRepository: coreDataLayer.getMobileContentAuthTokenRepository()
             )
         )

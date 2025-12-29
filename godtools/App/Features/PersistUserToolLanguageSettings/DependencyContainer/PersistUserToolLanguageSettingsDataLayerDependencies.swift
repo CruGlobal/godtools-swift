@@ -21,7 +21,7 @@ class PersistUserToolLanguageSettingsDataLayerDependencies {
     
     func getUserToolSettingsRepository() -> UserToolSettingsRepository {
         return UserToolSettingsRepository(
-            cache: RealmUserToolSettingsCache(realmDatabase: coreDataLayer.getSharedRealmDatabase())
+            cache: RealmUserToolSettingsCache(realmDatabase: coreDataLayer.getSharedLegacyRealmDatabase())
         )
     }
     

@@ -181,7 +181,7 @@ extension TrackDownloadedTranslationsCacheTests {
         }
         
         return TrackDownloadedTranslationsCache(
-            realmDatabase: getRealmDatabase(),
+            realmDatabase: getLegacyRealmDatabase(),
             swiftPersistenceIsEnabled: swiftPersistenceIsEnabled
         )
     }
@@ -198,7 +198,7 @@ extension TrackDownloadedTranslationsCacheTests {
             }
     }
     
-    private func getRealmDatabase() -> LegacyRealmDatabase {
+    private func getLegacyRealmDatabase() -> LegacyRealmDatabase {
         return TestsInMemoryRealmDatabase(
             addObjectsToDatabase: getRealmDatabaseObjects()
         )

@@ -12,7 +12,7 @@ import Combine
 
 struct GetLessonsListRepositoryTests {
     
-    private static let realmDatabase: LegacyRealmDatabase = getRealmDatabase()
+    private static let realmDatabase: LegacyRealmDatabase = getLegacyRealmDatabase()
     
     private static let spanishLanguageId: String = LanguageCodeDomainModel.spanish.rawValue
     
@@ -191,7 +191,7 @@ struct GetLessonsListRepositoryTests {
 
 extension GetLessonsListRepositoryTests {
  
-    private static func getRealmDatabase() -> LegacyRealmDatabase {
+    private static func getLegacyRealmDatabase() -> LegacyRealmDatabase {
         
         let afrikaansLanguage: RealmLanguage = Self.getRealmLanguage(languageCode: .afrikaans)
         let arabicLanguage: RealmLanguage =  Self.getRealmLanguage(languageCode: .arabic)
