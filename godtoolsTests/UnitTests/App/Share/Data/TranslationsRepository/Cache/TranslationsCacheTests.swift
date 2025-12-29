@@ -111,7 +111,7 @@ extension TranslationsCacheTests {
         }
         
         return TranslationsCache(
-            realmDatabase: getRealmDatabase(),
+            realmDatabase: getLegacyRealmDatabase(),
             swiftPersistenceIsEnabled: swiftPersistenceIsEnabled
         )
     }
@@ -197,7 +197,7 @@ extension TranslationsCacheTests {
         return [resource]
     }
     
-    private func getRealmDatabase() -> LegacyRealmDatabase {
+    private func getLegacyRealmDatabase() -> LegacyRealmDatabase {
         return TestsInMemoryRealmDatabase(
             addObjectsToDatabase: getRealmDatabaseObjects()
         )

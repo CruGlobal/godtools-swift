@@ -130,7 +130,7 @@ extension ResourcesCacheTests {
             )
         }
         
-        let realmDatabase: LegacyRealmDatabase = getRealmDatabase()
+        let realmDatabase: LegacyRealmDatabase = getLegacyRealmDatabase()
         
         let trackDownloadedTranslationsRepository = TrackDownloadedTranslationsRepository(
             cache: TrackDownloadedTranslationsCache(
@@ -286,7 +286,7 @@ extension ResourcesCacheTests {
         return getRealmResources()
     }
     
-    private func getRealmDatabase() -> LegacyRealmDatabase {
+    private func getLegacyRealmDatabase() -> LegacyRealmDatabase {
         return TestsInMemoryRealmDatabase(
             addObjectsToDatabase: getRealmDatabaseObjects()
         )
