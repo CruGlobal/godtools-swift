@@ -22,7 +22,7 @@ class ToolScreenShareFeatureDataLayerDependencies {
     private func getToolScreenShareTutorialViewsRepository() -> ToolScreenShareTutorialViewsRepository {
         return ToolScreenShareTutorialViewsRepository(
             cache: RealmToolScreenShareTutorialViewsCache(
-                realmDatabase: coreDataLayer.getSharedRealmDatabase()
+                realmDatabase: coreDataLayer.getSharedLegacyRealmDatabase()
             )
         )
     }

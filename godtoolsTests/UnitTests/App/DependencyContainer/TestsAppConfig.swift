@@ -66,7 +66,7 @@ class TestsAppConfig: AppConfigInterface {
         return "\(scheme)://mobile-content-api.cru.org"
     }
     
-    func getRealmDatabase() -> LegacyRealmDatabase {
+    func getLegacyRealmDatabase() -> LegacyRealmDatabase {
         return realmDatabase
     }
     

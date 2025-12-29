@@ -60,7 +60,7 @@ class UITestsAppConfig: AppConfigInterface {
         return GodToolsAppConfig.getMobileContentApiBaseUrlByScheme(environment: environment, scheme: "https")
     }
     
-    func getRealmDatabase() -> LegacyRealmDatabase {
+    func getLegacyRealmDatabase() -> LegacyRealmDatabase {
         return UITestsRealmDatabase()
     }
     

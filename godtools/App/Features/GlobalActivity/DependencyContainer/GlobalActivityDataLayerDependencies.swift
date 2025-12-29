@@ -28,7 +28,7 @@ class GlobalActivityDataLayerDependencies {
                 requestSender: coreDataLayer.getRequestSender()
             ),
             cache: RealmGlobalAnalyticsCache(
-                realmDatabase: coreDataLayer.getSharedRealmDatabase()
+                realmDatabase: coreDataLayer.getSharedLegacyRealmDatabase()
             )
         )
     }

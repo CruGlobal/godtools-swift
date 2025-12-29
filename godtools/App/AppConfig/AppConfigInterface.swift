@@ -23,6 +23,6 @@ protocol AppConfigInterface {
     func getFirebaseGoogleServiceFileName() -> String
     func getGoogleAuthenticationConfiguration() -> GoogleAuthenticationConfiguration?
     func getMobileContentApiBaseUrl() -> String
-    func getRealmDatabase() -> LegacyRealmDatabase
+    func getLegacyRealmDatabase() -> LegacyRealmDatabase
     func getTractRemoteShareConnectionUrl() -> String
 }

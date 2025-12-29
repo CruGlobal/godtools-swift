@@ -101,7 +101,7 @@ class AppDiContainer {
             userActivity: userActivityDiContainer
         )
                                                                 
-        failedFollowUpsCache = FailedFollowUpsCache(realmDatabase: dataLayer.getSharedRealmDatabase())
+        failedFollowUpsCache = FailedFollowUpsCache(realmDatabase: dataLayer.getSharedLegacyRealmDatabase())
     }
     
     static func createUITestsDiContainer() -> AppDiContainer {
