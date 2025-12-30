@@ -10,6 +10,7 @@ import Foundation
 import Combine
 import GodToolsShared
 import RequestOperation
+import RepositorySync
 
 class TranslationsRepository: RepositorySync<TranslationDataModel, MobileContentTranslationsApi> {
     

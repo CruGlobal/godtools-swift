@@ -11,6 +11,7 @@ import Combine
 import RealmSwift
 import RequestOperation
 import SwiftData
+import RepositorySync
 
 class LanguagesRepository: RepositorySync<LanguageDataModel, MobileContentLanguagesApi> {
     

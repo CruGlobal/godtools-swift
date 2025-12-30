@@ -9,6 +9,7 @@
 import Foundation
 import Combine
 import RequestOperation
+import RepositorySync
 
 class AttachmentsRepository: RepositorySync<AttachmentDataModel, MobileContentAttachmentsApi> {
     

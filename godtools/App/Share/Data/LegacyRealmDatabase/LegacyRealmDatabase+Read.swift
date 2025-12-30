@@ -9,6 +9,7 @@
 import Foundation
 import RealmSwift
 import Combine
+import RepositorySync
 
 // MARK: - Read Object
 

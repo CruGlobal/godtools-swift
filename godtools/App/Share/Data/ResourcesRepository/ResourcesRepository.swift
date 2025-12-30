@@ -9,6 +9,7 @@
 import Foundation
 import Combine
 import RequestOperation
+import RepositorySync
 
 class ResourcesRepository: RepositorySync<ResourceDataModel, MobileContentResourcesApi> {
             
