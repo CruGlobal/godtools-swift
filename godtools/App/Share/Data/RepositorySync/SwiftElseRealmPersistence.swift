@@ -8,23 +8,24 @@
 
 import Foundation
 import SwiftData
+import RepositorySync
 
 // TODO: This class can be removed once RealmSwift is removed in place of SwiftData for iOS 17 minimum and up. ~Levi
 open class SwiftElseRealmPersistence<DataModelType, ExternalObjectType, RealmObjectType: IdentifiableRealmObject> {
     
-    private let realmDatabase: LegacyRealmDatabase
-    private let realmDataModelMapping: any RepositorySyncMapping<DataModelType, ExternalObjectType, RealmObjectType>
+    private let realmDatabase: RealmDatabase
+    private let realmDataModelMapping: any Mapping<DataModelType, ExternalObjectType, RealmObjectType>
     
     let swiftPersistenceIsEnabled: Bool
     
-    init(realmDatabase: LegacyRealmDatabase, realmDataModelMapping: any RepositorySyncMapping<DataModelType, ExternalObjectType, RealmObjectType>, swiftPersistenceIsEnabled: Bool?) {
+    init(realmDatabase: RealmDatabase, realmDataModelMapping: any Mapping<DataModelType, ExternalObjectType, RealmObjectType>, swiftPersistenceIsEnabled: Bool?) {
         
         self.realmDatabase = realmDatabase
         self.realmDataModelMapping = realmDataModelMapping
-        self.swiftPersistenceIsEnabled = swiftPersistenceIsEnabled ?? SwiftDatabaseEnabled.isEnabled
+        self.swiftPersistenceIsEnabled = false
     }
     
-    func getPersistence() -> any RepositorySyncPersistence<DataModelType, ExternalObjectType> {
+    func getPersistence() -> any Persistence<DataModelType, ExternalObjectType> {
         
         if #available(iOS 17.4, *),
            swiftPersistenceIsEnabled,
@@ -36,7 +37,7 @@ open class SwiftElseRealmPersistence<DataModelType, ExternalObjectType, RealmObj
         else {
             
             return RealmRepositorySyncPersistence<DataModelType, ExternalObjectType, RealmObjectType>(
-                realmDatabase: realmDatabase,
+                database: realmDatabase,
                 dataModelMapping: realmDataModelMapping
             )
         }
@@ -49,11 +50,11 @@ open class SwiftElseRealmPersistence<DataModelType, ExternalObjectType, RealmObj
             return nil
         }
         
-        return TempSharedSwiftDatabase.shared.getDatabase()
+        return nil
     }
     
     @available(iOS 17.4, *)
-    func getAnySwiftPersistence(swiftDatabase: SwiftDatabase) -> (any RepositorySyncPersistence<DataModelType, ExternalObjectType>)? {
+    func getAnySwiftPersistence(swiftDatabase: SwiftDatabase) -> (any Persistence<DataModelType, ExternalObjectType>)? {
         // NOTE: Subclasses should override and return a SwiftRepositorySyncPersistence. ~Levi
         return nil
     }
@@ -61,7 +62,7 @@ open class SwiftElseRealmPersistence<DataModelType, ExternalObjectType, RealmObj
     func getRealmPersistence() -> RealmRepositorySyncPersistence<DataModelType, ExternalObjectType, RealmObjectType> {
         
         return RealmRepositorySyncPersistence<DataModelType, ExternalObjectType, RealmObjectType>(
-            realmDatabase: realmDatabase,
+            database: realmDatabase,
             dataModelMapping: realmDataModelMapping
         )
     }
