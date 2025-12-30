@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		452556442C383C3F00AA0046 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 452556432C383C3F00AA0046 /* RealmSwift */; };
 		452556452C383C3F00AA0046 /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 452556432C383C3F00AA0046 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		454483342F040916000BE01E /* RepositorySync in Frameworks */ = {isa = PBXBuildFile; productRef = 454483332F040916000BE01E /* RepositorySync */; };
 		4581EAA32BFBE194008115FF /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4581EAA22BFBE194008115FF /* RealmSwift */; };
 		4581EAA52BFBE257008115FF /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4581EAA42BFBE257008115FF /* RealmSwift */; };
 		4581EAA72BFBE2B9008115FF /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 4581EAA22BFBE194008115FF /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -303,6 +304,7 @@
 				45F671932C33440E0017C8C2 /* LocalizationServices in Frameworks */,
 				4593DF002EABFD93004E1C8D /* GodToolsShared in Frameworks */,
 				4581EAA52BFBE257008115FF /* RealmSwift in Frameworks */,
+				454483342F040916000BE01E /* RepositorySync in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -472,6 +474,7 @@
 				4581EAA42BFBE257008115FF /* RealmSwift */,
 				45F671922C33440E0017C8C2 /* LocalizationServices */,
 				4593DEFF2EABFD93004E1C8D /* GodToolsShared */,
+				454483332F040916000BE01E /* RepositorySync */,
 			);
 			productName = godtoolsTests;
 			productReference = 684328F11EB7CF66005E9131 /* godtoolsTests.xctest */;
@@ -1930,6 +1933,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4581EAA12BFBE194008115FF /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
+		};
+		454483332F040916000BE01E /* RepositorySync */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 458966422F03328C000EA237 /* XCRemoteSwiftPackageReference "repository-sync-ios" */;
+			productName = RepositorySync;
 		};
 		4581EAA22BFBE194008115FF /* RealmSwift */ = {
 			isa = XCSwiftPackageProductDependency;
