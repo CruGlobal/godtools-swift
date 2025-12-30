@@ -11,5 +11,5 @@ import Combine
 
 protocol GetDownloadableLanguagesListRepositoryInterface {
     
-    func getDownloadableLanguagesPublisher(currentAppLanguage: AppLanguageDomainModel) -> AnyPublisher<[DownloadableLanguageListItemDomainModel], Never>
+    @MainActor func getDownloadableLanguagesPublisher(currentAppLanguage: AppLanguageDomainModel) -> AnyPublisher<[DownloadableLanguageListItemDomainModel], Never>
 }

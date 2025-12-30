@@ -29,15 +29,19 @@ class GetDownloadableLanguagesListRepository: GetDownloadableLanguagesListReposi
         self.stringWithLocaleCount = stringWithLocaleCount
     }
     
-    func getDownloadableLanguagesPublisher(currentAppLanguage: AppLanguageDomainModel) -> AnyPublisher<[DownloadableLanguageListItemDomainModel], Never> {
+    @MainActor func getDownloadableLanguagesPublisher(currentAppLanguage: AppLanguageDomainModel) -> AnyPublisher<[DownloadableLanguageListItemDomainModel], Never> {
         
         return Publishers.CombineLatest(
-            languagesRepository.getObjectsPublisher(getObjectsType: .allObjects, cachePolicy: .returnCacheDataElseFetch(requestPriority: .high, observeChanges: true)),
+            languagesRepository.fetchObjectsPublisher(
+                fetchType: .observe(cachePolicy: .returnCacheDataElseFetch),
+                getObjectsType: .allObjects,
+                context: RequestOperationFetchContext(requestPriority: .high)
+            ).catch { _ in return Just([]) },
             downloadedLanguagesRepository.getDownloadedLanguagesChangedPublisher()
         )
-        .map { (languagesResponse: RepositorySyncResponse<LanguageDataModel>, downloadLanguagesChanged: Void) in
+        .map { (languages: [LanguageDataModel], downloadLanguagesChanged: Void) in
             
-            return languagesResponse.objects
+            return languages
                 .compactMap { language in
                     
                     let numberToolsAvailable = self.getNumberToolsAvailable(for: language.code)
