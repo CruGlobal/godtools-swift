@@ -7,9 +7,10 @@
 //
 
 import Foundation
+import RepositorySync
 
 @available(iOS 17.4, *)
-class SwiftLanguageDataModelMapping: RepositorySyncMapping {
+final class SwiftLanguageDataModelMapping: Mapping {
     
     func toDataModel(externalObject: LanguageCodable) -> LanguageDataModel? {
         return LanguageDataModel(interface: externalObject)

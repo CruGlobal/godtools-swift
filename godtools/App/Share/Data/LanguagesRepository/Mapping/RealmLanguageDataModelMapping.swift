@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import RepositorySync
 
-class RealmLanguageDataModelMapping: RepositorySyncMapping {
+final class RealmLanguageDataModelMapping: Mapping {
     
     func toDataModel(externalObject: LanguageCodable) -> LanguageDataModel? {
         return LanguageDataModel(interface: externalObject)
