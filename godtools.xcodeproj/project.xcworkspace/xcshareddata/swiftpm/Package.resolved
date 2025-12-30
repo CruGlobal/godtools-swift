@@ -1,5 +1,5 @@
 {
-  "originHash" : "3c0d377f3165f0b7e165071c5ac6c3707f7d27431f5280e86a998b98520ba16c",
+  "originHash" : "676b24781d165b94c23386f8cef65e036ff976bbd97c675a33e46339a7049df4",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -204,8 +204,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/CruGlobal/repository-sync-ios.git",
       "state" : {
-        "revision" : "0de35fcdf6038ff259529191be4b26196658ca55",
-        "version" : "0.6.0"
+        "revision" : "2531123731c5145f17d883abae413654f5e12ce0",
+        "version" : "0.6.1"
       }
     },
     {
