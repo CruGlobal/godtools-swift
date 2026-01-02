@@ -44,7 +44,7 @@ struct GetTranslatedToolLanguageAvailabilityTests {
             )
         ]
     )
-    func testTranslateLanguageAvailabilityByToolIdAndLanguageModelIsAvailable(argument: TestArgument) {
+    @MainActor func testTranslateLanguageAvailabilityByToolIdAndLanguageModelIsAvailable(argument: TestArgument) {
         
         let testsDiContainer: TestsDiContainer = Self.getTestsDiContainer()
         let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability = Self.getTranslatedToolLanguageAvailability(testsDiContainer: testsDiContainer)
@@ -91,7 +91,7 @@ struct GetTranslatedToolLanguageAvailabilityTests {
             )
         ]
     )
-    func testTranslateLanguageAvailabilityByToolIdAndLanguageModelIsNotAvailable(argument: TestArgument) {
+    @MainActor func testTranslateLanguageAvailabilityByToolIdAndLanguageModelIsNotAvailable(argument: TestArgument) {
         
         let testsDiContainer: TestsDiContainer = Self.getTestsDiContainer()
         let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability = Self.getTranslatedToolLanguageAvailability(testsDiContainer: testsDiContainer)
@@ -132,7 +132,7 @@ struct GetTranslatedToolLanguageAvailabilityTests {
             )
         ]
     )
-    func testTranslateLanguageAvailabilityByToolIdAndAppLanguageIsAvailable(argument: TestArgument) {
+    @MainActor func testTranslateLanguageAvailabilityByToolIdAndAppLanguageIsAvailable(argument: TestArgument) {
         
         let testsDiContainer: TestsDiContainer = Self.getTestsDiContainer()
         let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability = Self.getTranslatedToolLanguageAvailability(testsDiContainer: testsDiContainer)
@@ -177,7 +177,7 @@ struct GetTranslatedToolLanguageAvailabilityTests {
             )
         ]
     )
-    func testTranslateLanguageAvailabilityByToolIdAndAppLanguageIsNotAvailable(argument: TestArgument) {
+    @MainActor func testTranslateLanguageAvailabilityByToolIdAndAppLanguageIsNotAvailable(argument: TestArgument) {
         
         let testsDiContainer: TestsDiContainer = Self.getTestsDiContainer()
         let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability = Self.getTranslatedToolLanguageAvailability(testsDiContainer: testsDiContainer)
@@ -198,13 +198,13 @@ struct GetTranslatedToolLanguageAvailabilityTests {
 
 extension GetTranslatedToolLanguageAvailabilityTests {
     
-    private static func getTestsDiContainer() -> TestsDiContainer {
+    @MainActor private static func getTestsDiContainer() -> TestsDiContainer {
         return TestsDiContainer(
             realmDatabase: getConfiguredRealmDatabase()
         )
     }
     
-    private static func getTranslatedToolLanguageAvailability(testsDiContainer: TestsDiContainer) -> GetTranslatedToolLanguageAvailability {
+    @MainActor private static func getTranslatedToolLanguageAvailability(testsDiContainer: TestsDiContainer) -> GetTranslatedToolLanguageAvailability {
         return GetTranslatedToolLanguageAvailability(
             localizationServices: Self.getLocalizationServices(),
             resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),
@@ -293,11 +293,11 @@ extension GetTranslatedToolLanguageAvailabilityTests {
         )
     }
     
-    private static func queryResource(id: String, testsDiContainer: TestsDiContainer) -> ResourceDataModel? {
+    @MainActor private static func queryResource(id: String, testsDiContainer: TestsDiContainer) -> ResourceDataModel? {
         return testsDiContainer.dataLayer.getResourcesRepository().persistence.getObject(id: id)
     }
     
-    private static func queryLanguage(id: String, testsDiContainer: TestsDiContainer) -> LanguageDataModel? {
+    @MainActor private static func queryLanguage(id: String, testsDiContainer: TestsDiContainer) -> LanguageDataModel? {
         return testsDiContainer.dataLayer.getLanguagesRepository().persistence.getObject(id: id)
     }
     

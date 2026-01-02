@@ -39,12 +39,12 @@ struct GetUserLessonFiltersRepositoryTests {
         let realmObjectsToAdd: [Object] = [spanishLanguage, spanishLesson_0]
         
         let testsDiContainer = TestsDiContainer(
-            realmDatabase: Self.getRealmDatabase(addRealmObjects: realmObjectsToAdd)
+            realmDatabase: getRealmDatabase(addRealmObjects: realmObjectsToAdd)
         )
         
         let getUserLessonFiltersRepository = GetUserLessonFiltersRepository(
-            userLessonFiltersRepository: Self.getUserLessonFiltersRepository(testsDiContainer: testsDiContainer),
-            getLessonFilterLanguagesRepository: Self.getLessonFilterLanguagesRepository(testsDiContainer: testsDiContainer)
+            userLessonFiltersRepository: getUserLessonFiltersRepository(testsDiContainer: testsDiContainer),
+            getLessonFilterLanguagesRepository: getLessonFilterLanguagesRepository(testsDiContainer: testsDiContainer)
         )
         
         var lessonLanguageFilterRef: LessonFilterLanguageDomainModel?
@@ -102,12 +102,12 @@ struct GetUserLessonFiltersRepositoryTests {
         let realmObjectsToAdd: [Object] = [spanishLanguage, frenchLanguage, spanishLesson_0, frenchTract_0]
         
         let testsDiContainer = TestsDiContainer(
-            realmDatabase: Self.getRealmDatabase(addRealmObjects: realmObjectsToAdd)
+            realmDatabase: getRealmDatabase(addRealmObjects: realmObjectsToAdd)
         )
         
         let getUserLessonFiltersRepository = GetUserLessonFiltersRepository(
-            userLessonFiltersRepository: Self.getUserLessonFiltersRepository(testsDiContainer: testsDiContainer),
-            getLessonFilterLanguagesRepository: Self.getLessonFilterLanguagesRepository(testsDiContainer: testsDiContainer)
+            userLessonFiltersRepository: getUserLessonFiltersRepository(testsDiContainer: testsDiContainer),
+            getLessonFilterLanguagesRepository: getLessonFilterLanguagesRepository(testsDiContainer: testsDiContainer)
         )
         
         var lessonLanguageFilterRef: LessonFilterLanguageDomainModel?
@@ -153,14 +153,14 @@ struct GetUserLessonFiltersRepositoryTests {
         frenchLanguage.name = "French Name"
         
         let testsDiContainer = TestsDiContainer(
-            realmDatabase: Self.getRealmDatabase(addRealmObjects: [spanishLanguage, frenchLanguage])
+            realmDatabase: getRealmDatabase(addRealmObjects: [spanishLanguage, frenchLanguage])
         )
         
-        let userLessonFiltersRepository: UserLessonFiltersRepository = Self.getUserLessonFiltersRepository(testsDiContainer: testsDiContainer)
+        let userLessonFiltersRepository: UserLessonFiltersRepository = getUserLessonFiltersRepository(testsDiContainer: testsDiContainer)
         
         let getUserLessonFiltersRepository = GetUserLessonFiltersRepository(
             userLessonFiltersRepository: userLessonFiltersRepository,
-            getLessonFilterLanguagesRepository: Self.getLessonFilterLanguagesRepository(testsDiContainer: testsDiContainer)
+            getLessonFilterLanguagesRepository: getLessonFilterLanguagesRepository(testsDiContainer: testsDiContainer)
         )
         
         var originalLessonLanguageFilterRef: LessonFilterLanguageDomainModel?
@@ -209,29 +209,29 @@ struct GetUserLessonFiltersRepositoryTests {
 
 extension GetUserLessonFiltersRepositoryTests {
     
-    private static func getRealmDatabase(addRealmObjects: [Object]) -> LegacyRealmDatabase {
+    private func getRealmDatabase(addRealmObjects: [Object]) -> LegacyRealmDatabase {
         return TestsInMemoryRealmDatabase(
             addObjectsToDatabase: addRealmObjects
         )
     }
     
-    private static func getUserLessonFiltersRepository(testsDiContainer: TestsDiContainer) -> UserLessonFiltersRepository {
+    @MainActor private func getUserLessonFiltersRepository(testsDiContainer: TestsDiContainer) -> UserLessonFiltersRepository {
         
         return testsDiContainer.dataLayer.getUserLessonFiltersRepository()
     }
     
-    private static func getLessonFilterLanguagesRepository(testsDiContainer: TestsDiContainer) -> GetLessonFilterLanguagesRepository {
+    @MainActor private func getLessonFilterLanguagesRepository(testsDiContainer: TestsDiContainer) -> GetLessonFilterLanguagesRepository {
         
         return GetLessonFilterLanguagesRepository(
             resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),
             languagesRepository: testsDiContainer.dataLayer.getLanguagesRepository(),
-            getTranslatedLanguageName: Self.getTranslatedLanguageName(),
-            localizationServices: Self.getLocalizationServices(),
-            stringWithLocaleCount: Self.getStringWithLocaleCount()
+            getTranslatedLanguageName: getTranslatedLanguageName(),
+            localizationServices: getLocalizationServices(),
+            stringWithLocaleCount: getStringWithLocaleCount()
         )
     }
     
-    private static func getLocalizationServices() -> MockLocalizationServices {
+    private func getLocalizationServices() -> MockLocalizationServices {
         
         let localizableStrings: [MockLocalizationServices.LocaleId: [MockLocalizationServices.StringKey: String]] = [
             LanguageCodeDomainModel.spanish.value: [
@@ -242,10 +242,10 @@ extension GetUserLessonFiltersRepositoryTests {
         return MockLocalizationServices(localizableStrings: localizableStrings)
     }
 
-    private static func getTranslatedLanguageName() -> GetTranslatedLanguageName {
+    private func getTranslatedLanguageName() -> GetTranslatedLanguageName {
         
         let getTranslatedLanguageName = GetTranslatedLanguageName(
-            localizationLanguageNameRepository: MockLocalizationLanguageNameRepository(localizationServices: Self.getLocalizationServices()),
+            localizationLanguageNameRepository: MockLocalizationLanguageNameRepository(localizationServices: getLocalizationServices()),
             localeLanguageName: MockLocaleLanguageName.defaultMockLocaleLanguageName(),
             localeRegionName: MockLocaleLanguageRegionName(regionNames: [:]),
             localeScriptName: MockLocaleLanguageScriptName(scriptNames: [:])
@@ -254,7 +254,7 @@ extension GetUserLessonFiltersRepositoryTests {
         return getTranslatedLanguageName
     }
     
-    private static func getStringWithLocaleCount() -> StringWithLocaleCountInterface {
+    private func getStringWithLocaleCount() -> StringWithLocaleCountInterface {
         
         return MockStringWithLocaleCount()
     }
