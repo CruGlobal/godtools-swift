@@ -11,7 +11,7 @@ import UIKit
 import SwiftUI
 import Combine
 
-class ReviewShareShareableViewModel: ObservableObject {
+@MainActor class ReviewShareShareableViewModel: ObservableObject {
     
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
     

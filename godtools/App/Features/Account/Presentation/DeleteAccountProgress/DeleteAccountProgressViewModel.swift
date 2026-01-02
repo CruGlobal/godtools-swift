@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class DeleteAccountProgressViewModel: ObservableObject {
+@MainActor class DeleteAccountProgressViewModel: ObservableObject {
     
     private let deleteAccountUseCase: DeleteAccountUseCase
     private let minimumSecondsToDisplayDeleteAccountProgress: TimeInterval = 2

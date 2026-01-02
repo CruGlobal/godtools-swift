@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class LessonFilterLanguageSelectionViewModel: ObservableObject {
+@MainActor class LessonFilterLanguageSelectionViewModel: ObservableObject {
     
     private static var staticCancellables: Set<AnyCancellable> = Set()
     

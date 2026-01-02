@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class ToolScreenShareQRCodeViewModel: ObservableObject {
+@MainActor class ToolScreenShareQRCodeViewModel: ObservableObject {
     
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let viewToolScreenShareQRCodeUseCase: ViewToolScreenShareQRCodeUseCase

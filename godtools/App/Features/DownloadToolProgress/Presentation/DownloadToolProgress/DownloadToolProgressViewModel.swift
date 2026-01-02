@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class DownloadToolProgressViewModel: ObservableObject {
+@MainActor class DownloadToolProgressViewModel: ObservableObject {
     
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getDownloadToolProgressInterfaceStringsUseCase: GetDownloadToolProgressInterfaceStringsUseCase

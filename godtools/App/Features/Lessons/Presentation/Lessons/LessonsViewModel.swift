@@ -10,7 +10,7 @@ import Foundation
 import Combine
 import SwiftUI
 
-class LessonsViewModel: ObservableObject {
+@MainActor class LessonsViewModel: ObservableObject {
         
     private let resourcesRepository: ResourcesRepository
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase

@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class ToolFilterLanguageSelectionViewModel: ObservableObject {
+@MainActor class ToolFilterLanguageSelectionViewModel: ObservableObject {
     
     private let viewToolFilterLanguagesUseCase: ViewToolFilterLanguagesUseCase
     private let searchToolFilterLanguagesUseCase: SearchToolFilterLanguagesUseCase

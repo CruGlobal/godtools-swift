@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 import Combine
 
-class ToolsViewModel: ObservableObject {
+@MainActor class ToolsViewModel: ObservableObject {
     
     typealias ToolId = String
     

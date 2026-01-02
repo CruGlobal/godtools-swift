@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class TractRemoteSharePublisher: NSObject {
+final class TractRemoteSharePublisher: NSObject {
         
     private static let timeoutIntervalSeconds: TimeInterval = 10
     

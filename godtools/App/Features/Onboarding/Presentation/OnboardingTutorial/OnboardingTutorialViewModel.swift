@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class OnboardingTutorialViewModel: ObservableObject {
+@MainActor class OnboardingTutorialViewModel: ObservableObject {
     
     private static let tutorialPages: [OnboardingTutorialPage] = [.readyForEveryConversation, .talkAboutGodWithAnyone, .prepareForTheMomentsThatMatter, .helpSomeoneDiscoverJesus]
     private static let continueButtonContinueAccessibility: AccessibilityStrings.Button = .continueForward

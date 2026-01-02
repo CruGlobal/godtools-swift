@@ -37,7 +37,7 @@ struct GetUserAccountDetailsRepositoryTests {
     )
     @MainActor func testGetUserAccountDetailsInAppLanguage(argument: TestArgument) async {
         
-        let getUserAccountDetailsRepository = Self.getUserDetailsRepository()
+        let getUserAccountDetailsRepository = getUserDetailsRepository()
         
         var cancellables: Set<AnyCancellable> = Set()
         var userAccountDetails: UserAccountDetailsDomainModel?
@@ -53,7 +53,7 @@ struct GetUserAccountDetailsRepositoryTests {
                 .store(in: &cancellables)
             
             let locale = Locale(identifier: argument.appLanguage.rawValue)
-            let createdAtDateString = Self.getDateFormatter(locale: locale).string(from: Self.userCreatedAt)
+            let createdAtDateString = getDateFormatter(locale: locale).string(from: Self.userCreatedAt)
             let joinedOnStringExpected = "\(argument.joinedOnString) \(createdAtDateString)"
             
             #expect(userAccountDetails?.name == Self.userFullName)
@@ -70,7 +70,7 @@ struct GetUserAccountDetailsRepositoryTests {
     )
     @MainActor func testGetNilUserDetails() async {
         
-        let getUserAccountDetailsRepository = Self.getUserDetailsRepository(emptyRealm: true)
+        let getUserAccountDetailsRepository = getUserDetailsRepository(emptyRealm: true)
         
         var cancellables: Set<AnyCancellable> = Set()
         var userAccountDetails: UserAccountDetailsDomainModel?
@@ -99,7 +99,7 @@ struct GetUserAccountDetailsRepositoryTests {
     )
     @MainActor func testGetUserDetailsWithNilName() async {
         
-        let getUserAccountDetailsRepository = Self.getUserDetailsRepository(name: nil)
+        let getUserAccountDetailsRepository = getUserDetailsRepository(name: nil)
         
         var cancellables: Set<AnyCancellable> = Set()
         var userAccountDetails: UserAccountDetailsDomainModel?
@@ -127,7 +127,7 @@ struct GetUserAccountDetailsRepositoryTests {
     )
     @MainActor func testGetUserDetailsWithNilFamilyAndFullNames() async {
         
-        let getUserAccountDetailsRepository = Self.getUserDetailsRepository(familyName: nil, name: nil)
+        let getUserAccountDetailsRepository = getUserDetailsRepository(familyName: nil, name: nil)
         
         var cancellables: Set<AnyCancellable> = Set()
         var userAccountDetails: UserAccountDetailsDomainModel?
@@ -155,7 +155,7 @@ struct GetUserAccountDetailsRepositoryTests {
     )
     @MainActor func testGetUserDetailsWithAllNilNames() async {
         
-        let getUserAccountDetailsRepository = Self.getUserDetailsRepository(familyName: nil, givenName: nil, name: nil)
+        let getUserAccountDetailsRepository = getUserDetailsRepository(familyName: nil, givenName: nil, name: nil)
         
         var cancellables: Set<AnyCancellable> = Set()
         var userAccountDetails: UserAccountDetailsDomainModel?
@@ -183,7 +183,7 @@ struct GetUserAccountDetailsRepositoryTests {
     )
     @MainActor func testGetUserDetailsWithNilJoinedOn() async {
         
-        let getUserAccountDetailsRepository = Self.getUserDetailsRepository(createdAt: nil)
+        let getUserAccountDetailsRepository = getUserDetailsRepository(createdAt: nil)
         
         var cancellables: Set<AnyCancellable> = Set()
         var userAccountDetails: UserAccountDetailsDomainModel?
@@ -207,21 +207,21 @@ struct GetUserAccountDetailsRepositoryTests {
 
 extension GetUserAccountDetailsRepositoryTests {
     
-    private static func getConfiguredRealmDatabase(emptyRealm: Bool, familyName: String?, givenName: String?, name: String?, createdAt: Date?) -> TestsInMemoryRealmDatabase {
+    private func getConfiguredRealmDatabase(emptyRealm: Bool, familyName: String?, givenName: String?, name: String?, createdAt: Date?) -> TestsInMemoryRealmDatabase {
         
         if emptyRealm {
             return TestsInMemoryRealmDatabase()
         }
         
         let userDetails = RealmUserDetails()
-        userDetails.id = userId
+        userDetails.id = Self.userId
         userDetails.familyName = familyName
         userDetails.givenName = givenName
         userDetails.name = name
         userDetails.createdAt = createdAt
         
         let realmAuthTokenData = RealmMobileContentAuthToken()
-        realmAuthTokenData.userId = userId
+        realmAuthTokenData.userId = Self.userId
         
         let realmDatabase = TestsInMemoryRealmDatabase(
             addObjectsToDatabase: [userDetails, realmAuthTokenData]
@@ -230,7 +230,7 @@ extension GetUserAccountDetailsRepositoryTests {
         return realmDatabase
     }
 
-    private static func getLocalizationServices() -> MockLocalizationServices {
+    private func getLocalizationServices() -> MockLocalizationServices {
         
         let accountJoinedOn = "account.joinedOn"
         
@@ -247,12 +247,12 @@ extension GetUserAccountDetailsRepositoryTests {
     }
 
     
-    private static func getUserDetailsRepository(emptyRealm: Bool = false, familyName: String? = Self.userFamilyName, givenName: String? = Self.userGivenName, name: String? = Self.userFullName, createdAt: Date? = Self.userCreatedAt) -> GetUserAccountDetailsRepository {
+    private func getUserDetailsRepository(emptyRealm: Bool = false, familyName: String? = userFamilyName, givenName: String? = userGivenName, name: String? = userFullName, createdAt: Date? = userCreatedAt) -> GetUserAccountDetailsRepository {
         
         let realmDatabase = getConfiguredRealmDatabase(emptyRealm: emptyRealm, familyName: familyName, givenName: givenName, name: name, createdAt: createdAt)
         
         let mockMobileContentAuthTokenKeychainAccessor = MockMobileContentAuthTokenKeychainAccessor()
-        mockMobileContentAuthTokenKeychainAccessor.setUserId(userId)
+        mockMobileContentAuthTokenKeychainAccessor.setUserId(Self.userId)
         
         let mobileContentAuthTokenCache = MobileContentAuthTokenCache(
             mobileContentAuthTokenKeychainAccessor: mockMobileContentAuthTokenKeychainAccessor,
@@ -278,7 +278,7 @@ extension GetUserAccountDetailsRepositoryTests {
         return getUserAccountDetailsRepository
     }
     
-    private static func getDateFormatter(locale: Locale) -> DateFormatter {
+    private func getDateFormatter(locale: Locale) -> DateFormatter {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = locale
         dateFormatter.dateStyle = .medium

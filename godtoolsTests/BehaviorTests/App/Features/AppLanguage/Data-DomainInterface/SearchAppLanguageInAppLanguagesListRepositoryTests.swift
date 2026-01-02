@@ -21,8 +21,8 @@ struct SearchAppLanguageInAppLanguagesListRepositoryTests {
     )
     func searchingAppLanguagesWithSingleLetterSearchString() async {
         
-        let searchAppLanguageList: SearchAppLanguageInAppLanguagesListRepository = Self.getSearchAppLanguageInAppLanguagesListRepository()
-        let appLanguagesList: [AppLanguageListItemDomainModel] = Self.getAppLanguagesList()
+        let searchAppLanguageList: SearchAppLanguageInAppLanguagesListRepository = getSearchAppLanguageInAppLanguagesListRepository()
+        let appLanguagesList: [AppLanguageListItemDomainModel] = getAppLanguagesList()
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -57,8 +57,8 @@ struct SearchAppLanguageInAppLanguagesListRepositoryTests {
     )
     func searchingAppLanguagesWithMultiLetterSearchString() async {
         
-        let searchAppLanguageList: SearchAppLanguageInAppLanguagesListRepository = Self.getSearchAppLanguageInAppLanguagesListRepository()
-        let appLanguagesList: [AppLanguageListItemDomainModel] = Self.getAppLanguagesList()
+        let searchAppLanguageList: SearchAppLanguageInAppLanguagesListRepository = getSearchAppLanguageInAppLanguagesListRepository()
+        let appLanguagesList: [AppLanguageListItemDomainModel] = getAppLanguagesList()
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -86,7 +86,7 @@ struct SearchAppLanguageInAppLanguagesListRepositoryTests {
 
 extension SearchAppLanguageInAppLanguagesListRepositoryTests {
     
-    private static func getSearchAppLanguageInAppLanguagesListRepository() -> SearchAppLanguageInAppLanguagesListRepository {
+    private func getSearchAppLanguageInAppLanguagesListRepository() -> SearchAppLanguageInAppLanguagesListRepository {
         
         let searchAppLanguageList = SearchAppLanguageInAppLanguagesListRepository(
             stringSearcher: StringSearcher()
@@ -95,7 +95,7 @@ extension SearchAppLanguageInAppLanguagesListRepositoryTests {
         return searchAppLanguageList
     }
     
-    private static func getAppLanguagesList() -> [AppLanguageListItemDomainModel] {
+    private func getAppLanguagesList() -> [AppLanguageListItemDomainModel] {
         
         let appLanguagesList: [AppLanguageListItemDomainModel] = [
             AppLanguageListItemDomainModel(

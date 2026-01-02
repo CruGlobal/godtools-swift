@@ -11,7 +11,7 @@ import Combine
 import UIKit
 import SwiftUI
 
-class ApplicationLayout: ObservableObject {
+@MainActor class ApplicationLayout: ObservableObject {
         
     static let shared: ApplicationLayout = ApplicationLayout()
     

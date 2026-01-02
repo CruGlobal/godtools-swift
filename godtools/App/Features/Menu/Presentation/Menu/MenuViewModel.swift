@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class MenuViewModel: ObservableObject {
+@MainActor class MenuViewModel: ObservableObject {
         
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getMenuInterfaceStringsUseCase: GetMenuInterfaceStringsUseCase

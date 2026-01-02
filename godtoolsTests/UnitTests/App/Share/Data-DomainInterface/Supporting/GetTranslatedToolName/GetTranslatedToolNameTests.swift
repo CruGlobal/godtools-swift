@@ -34,7 +34,7 @@ struct GetTranslatedToolNameTests {
             TestArgument(translateInLanguage: LanguageCodeDomainModel.vietnamese.rawValue, expectedToolName: Self.toolNameInVietnamese)
         ]
     )
-    func testToolNameIsTranslated(argument: TestArgument) {
+    @MainActor func testToolNameIsTranslated(argument: TestArgument) {
         
         let testsDiContainer: TestsDiContainer = Self.getTestsDiContainer()
         
@@ -62,7 +62,7 @@ struct GetTranslatedToolNameTests {
             TestArgument(translateInLanguage: LanguageCodeDomainModel.latvian.rawValue, expectedToolName: Self.toolNameInSpanish)
         ]
     )
-    func testToolNameIsTranslatedInDefaultLocale(argument: TestArgument) {
+    @MainActor func testToolNameIsTranslatedInDefaultLocale(argument: TestArgument) {
         
         let testsDiContainer: TestsDiContainer = Self.getTestsDiContainer()
         
@@ -81,13 +81,13 @@ struct GetTranslatedToolNameTests {
 
 extension GetTranslatedToolNameTests {
     
-    private static func getTestsDiContainer() -> TestsDiContainer {
+    @MainActor private static func getTestsDiContainer() -> TestsDiContainer {
         return TestsDiContainer(
             realmDatabase: getConfiguredRealmDatabase()
         )
     }
     
-    private static func getTranslatedToolName(testsDiContainer: TestsDiContainer) -> GetTranslatedToolName {
+    @MainActor private static func getTranslatedToolName(testsDiContainer: TestsDiContainer) -> GetTranslatedToolName {
         return GetTranslatedToolName(
             resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),
             translationsRepository: testsDiContainer.dataLayer.getTranslationsRepository()

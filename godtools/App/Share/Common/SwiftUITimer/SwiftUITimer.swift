@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class SwiftUITimer: ObservableObject {
+@MainActor class SwiftUITimer: ObservableObject {
     
     private static let defaultRunLoop: RunLoop = .main
     private static let defaultRunLoopMode: RunLoop.Mode = .common
@@ -33,7 +33,7 @@ class SwiftUITimer: ObservableObject {
         self.repeats = repeats
     }
     
-    deinit {
+    @MainActor deinit {
         invalidate()
     }
     
