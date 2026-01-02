@@ -8,6 +8,7 @@
 
 import Foundation
 import SocialAuthentication
+import RepositorySync
 
 class GodToolsAppConfig: AppConfigInterface {
     
@@ -113,6 +114,39 @@ class GodToolsAppConfig: AppConfigInterface {
             return LegacyRealmDatabase(databaseConfiguration: RealmDatabaseStagingConfiguration())
         case .production:
             return LegacyRealmDatabase(databaseConfiguration: RealmDatabaseProductionConfiguration())
+        }
+    }
+    
+    func getRealmDatabase() -> RealmDatabase {
+        
+        let config: RealmDatabaseConfig
+        
+        switch appBuild.environment {
+        case .staging:
+            config = RealmStagingConfig().createConfig()
+        case .production:
+            config = RealmProductionConfig().createConfig()
+        }
+        
+        return RealmDatabase(databaseConfig: config)
+    }
+    
+    @available(iOS 17.4, *)
+    func getSwiftDatabase() -> SwiftDatabase? {
+        // TODO: Return database once SwiftDatabase can be enabled. ~Levi
+        return nil
+        
+        do {
+            
+            let database = SwiftDatabase(
+                container: try SwiftDataProductionContainer().createContainer()
+            )
+            
+            return database
+        }
+        catch let error {
+            assertionFailure("\n Failed to create swift database: \(error)")
+            return nil
         }
     }
     
