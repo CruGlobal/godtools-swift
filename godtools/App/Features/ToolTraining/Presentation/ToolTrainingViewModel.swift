@@ -10,7 +10,7 @@ import UIKit
 import GodToolsShared
 import Combine
 
-class ToolTrainingViewModel: NSObject {
+@MainActor class ToolTrainingViewModel: NSObject {
     
     private let pageRenderer: MobileContentPageRenderer
     private let renderedPageContext: MobileContentRenderedPageContext

@@ -34,7 +34,7 @@ struct GetTranslatedToolCategoryTests {
             TestArgument(translateInLanguage: LanguageCodeDomainModel.vietnamese.rawValue, expectedToolCategory: Self.toolCategoryInVietnamese)
         ]
     )
-    func testToolNameIsTranslated(argument: TestArgument) {
+    @MainActor func testToolNameIsTranslated(argument: TestArgument) {
         
         let testsDiContainer: TestsDiContainer = Self.getTestsDiContainer()
         
@@ -53,13 +53,13 @@ struct GetTranslatedToolCategoryTests {
 
 extension GetTranslatedToolCategoryTests {
     
-    private static func getTestsDiContainer() -> TestsDiContainer {
+    @MainActor private static func getTestsDiContainer() -> TestsDiContainer {
         return TestsDiContainer(
             realmDatabase: getConfiguredRealmDatabase()
         )
     }
     
-    private static func getTranslatedToolCategory(testsDiContainer: TestsDiContainer) -> GetTranslatedToolCategory {
+    @MainActor private static func getTranslatedToolCategory(testsDiContainer: TestsDiContainer) -> GetTranslatedToolCategory {
         return GetTranslatedToolCategory(
             localizationServices: getLocalizationServices(),
             resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository()

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class DashboardPresentationLayerDependencies {
+@MainActor class DashboardPresentationLayerDependencies {
     
     private let appDiContainer: AppDiContainer
     

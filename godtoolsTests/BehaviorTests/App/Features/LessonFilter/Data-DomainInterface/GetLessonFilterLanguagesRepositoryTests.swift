@@ -12,7 +12,7 @@ import Combine
 
 struct GetLessonFilterLanguagesRepositoryTests {
     
-    private static let englishLessonsAvailableText: String = "lessons available"
+    private let englishLessonsAvailableText: String = "lessons available"
     
     @Test(
         """
@@ -25,7 +25,7 @@ struct GetLessonFilterLanguagesRepositoryTests {
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        let lessonFilterLanguagesRepository: GetLessonFilterLanguagesRepository = Self.getLessonFilterLanguagesRepository()
+        let lessonFilterLanguagesRepository: GetLessonFilterLanguagesRepository = getLessonFilterLanguagesRepository()
         
         let appLanguageRussian: AppLanguageDomainModel = LanguageCodeDomainModel.russian.rawValue
         
@@ -97,7 +97,7 @@ struct GetLessonFilterLanguagesRepositoryTests {
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        let lessonFilterLanguagesRepository: GetLessonFilterLanguagesRepository = Self.getLessonFilterLanguagesRepository()
+        let lessonFilterLanguagesRepository: GetLessonFilterLanguagesRepository = getLessonFilterLanguagesRepository()
                 
         var languagesRef: [LessonFilterLanguageDomainModel] = Array()
         
@@ -140,7 +140,7 @@ struct GetLessonFilterLanguagesRepositoryTests {
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        let lessonFilterLanguagesRepository: GetLessonFilterLanguagesRepository = Self.getLessonFilterLanguagesRepository()
+        let lessonFilterLanguagesRepository: GetLessonFilterLanguagesRepository = getLessonFilterLanguagesRepository()
         
         let appLanguageEnglish: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
         
@@ -191,19 +191,19 @@ struct GetLessonFilterLanguagesRepositoryTests {
         let frenchLanguage: LessonFilterLanguageDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.french.rawValue})
         let spanishLanguage: LessonFilterLanguageDomainModel? = languagesRef.first(where: {$0.id == LanguageCodeDomainModel.spanish.rawValue})
 
-        #expect(afrikaansLanguage?.lessonsAvailableText == "\(Self.englishLessonsAvailableText) 1")
-        #expect(czechLanguage?.lessonsAvailableText == "\(Self.englishLessonsAvailableText) 1")
-        #expect(englishLanguage?.lessonsAvailableText == "\(Self.englishLessonsAvailableText) 5")
-        #expect(frenchLanguage?.lessonsAvailableText == "\(Self.englishLessonsAvailableText) 2")
-        #expect(spanishLanguage?.lessonsAvailableText == "\(Self.englishLessonsAvailableText) 3")
+        #expect(afrikaansLanguage?.lessonsAvailableText == "\(englishLessonsAvailableText) 1")
+        #expect(czechLanguage?.lessonsAvailableText == "\(englishLessonsAvailableText) 1")
+        #expect(englishLanguage?.lessonsAvailableText == "\(englishLessonsAvailableText) 5")
+        #expect(frenchLanguage?.lessonsAvailableText == "\(englishLessonsAvailableText) 2")
+        #expect(spanishLanguage?.lessonsAvailableText == "\(englishLessonsAvailableText) 3")
     }
 }
 
 extension GetLessonFilterLanguagesRepositoryTests {
     
-    private static func getLessonFilterLanguagesRepository() -> GetLessonFilterLanguagesRepository {
+    @MainActor private func getLessonFilterLanguagesRepository() -> GetLessonFilterLanguagesRepository {
         
-        let allLanguages: [RealmLanguage] = Self.getAllLanguages()
+        let allLanguages: [RealmLanguage] = getAllLanguages()
         
         let tracts = [
             MockRealmResource.createTract(addLanguages: [.english, .arabic, .czech, .spanish], fromLanguages: allLanguages),
@@ -235,15 +235,15 @@ extension GetLessonFilterLanguagesRepositoryTests {
         let getLessonFilterLanguagesRepository = GetLessonFilterLanguagesRepository(
             resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),
             languagesRepository: testsDiContainer.dataLayer.getLanguagesRepository(),
-            getTranslatedLanguageName: Self.getTranslatedLanguageName(),
-            localizationServices: Self.getLocalizationServices(),
-            stringWithLocaleCount: Self.getStringWithLocaleCount()
+            getTranslatedLanguageName: getTranslatedLanguageName(),
+            localizationServices: getLocalizationServices(),
+            stringWithLocaleCount: getStringWithLocaleCount()
         )
         
         return getLessonFilterLanguagesRepository
     }
     
-    private static func getAllLanguages() -> [RealmLanguage] {
+    private func getAllLanguages() -> [RealmLanguage] {
         
         return [
             getRealmLanguage(languageCode: .afrikaans),
@@ -261,7 +261,7 @@ extension GetLessonFilterLanguagesRepositoryTests {
         ]
     }
     
-    private static func getRealmLanguage(languageCode: LanguageCodeDomainModel) -> RealmLanguage {
+    private func getRealmLanguage(languageCode: LanguageCodeDomainModel) -> RealmLanguage {
         
         return MockRealmLanguage.createLanguage(
             language: languageCode,
@@ -270,10 +270,10 @@ extension GetLessonFilterLanguagesRepositoryTests {
         )
     }
     
-    private static func getLocalizationServices() -> MockLocalizationServices {
+    private func getLocalizationServices() -> MockLocalizationServices {
         
         let localizableStrings: [MockLocalizationServices.LocaleId: [MockLocalizationServices.StringKey: String]] = [
-            LanguageCodeDomainModel.english.rawValue: [LessonFilterStringKeys.lessonsAvailableText.rawValue: Self.englishLessonsAvailableText]
+            LanguageCodeDomainModel.english.rawValue: [LessonFilterStringKeys.lessonsAvailableText.rawValue: englishLessonsAvailableText]
         ]
         
         return MockLocalizationServices.createLanguageNamesLocalizationServices(
@@ -281,10 +281,10 @@ extension GetLessonFilterLanguagesRepositoryTests {
         )
     }
     
-    private static func getTranslatedLanguageName() -> GetTranslatedLanguageName {
+    private func getTranslatedLanguageName() -> GetTranslatedLanguageName {
         
         let getTranslatedLanguageName = GetTranslatedLanguageName(
-            localizationLanguageNameRepository: MockLocalizationLanguageNameRepository(localizationServices: GetLessonFilterLanguagesRepositoryTests.getLocalizationServices()),
+            localizationLanguageNameRepository: MockLocalizationLanguageNameRepository(localizationServices: getLocalizationServices()),
             localeLanguageName: MockLocaleLanguageName.defaultMockLocaleLanguageName(),
             localeRegionName: MockLocaleLanguageRegionName(regionNames: [:]),
             localeScriptName: MockLocaleLanguageScriptName(scriptNames: [:])
@@ -293,7 +293,7 @@ extension GetLessonFilterLanguagesRepositoryTests {
         return getTranslatedLanguageName
     }
     
-    private static func getStringWithLocaleCount() -> StringWithLocaleCountInterface {
+    private func getStringWithLocaleCount() -> StringWithLocaleCountInterface {
         
         return MockStringWithLocaleCount()
     }

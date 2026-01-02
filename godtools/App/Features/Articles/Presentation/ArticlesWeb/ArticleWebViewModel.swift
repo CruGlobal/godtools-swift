@@ -10,7 +10,7 @@ import Foundation
 import WebKit
 import Combine
 
-class ArticleWebViewModel: NSObject, ObservableObject {
+@MainActor class ArticleWebViewModel: NSObject, ObservableObject {
     
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
     
@@ -56,7 +56,7 @@ class ArticleWebViewModel: NSObject, ObservableObject {
             .store(in: &cancellables)
     }
     
-    deinit {
+    @MainActor deinit {
         print("x deinit: \(type(of: self))")
         stopDisplayArticleTimer()
         stopLoadWebPage(webView: loadingCurrentWebView)

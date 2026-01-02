@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class ToolFilterCategorySelectionViewModel: ObservableObject {
+@MainActor class ToolFilterCategorySelectionViewModel: ObservableObject {
     
     private let viewToolFilterCategoriesUseCase: ViewToolFilterCategoriesUseCase
     private let searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase

@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class TutorialViewModel: ObservableObject {
+@MainActor class TutorialViewModel: ObservableObject {
         
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getTutorialUseCase: GetTutorialUseCase

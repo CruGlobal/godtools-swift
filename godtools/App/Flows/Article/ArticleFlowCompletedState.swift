@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum ArticleFlowCompletedState {
+enum ArticleFlowCompletedState: Sendable {
     
     case userClosedArticle
 }
