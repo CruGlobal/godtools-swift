@@ -10,48 +10,33 @@ import Foundation
 import RealmSwift
 import Combine
 import SwiftData
+import RepositorySync
 
-class TrackDownloadedTranslationsCache: SwiftElseRealmPersistence<DownloadedTranslationDataModel, DownloadedTranslationDataModel, RealmDownloadedTranslation> {
+class TrackDownloadedTranslationsCache {
     
-    private let realmDatabase: LegacyRealmDatabase
+    private let persistence: any Persistence<DownloadedTranslationDataModel, DownloadedTranslationDataModel>
         
-    init(realmDatabase: LegacyRealmDatabase, swiftPersistenceIsEnabled: Bool? = nil) {
+    init(persistence: any Persistence<DownloadedTranslationDataModel, DownloadedTranslationDataModel>) {
         
-        self.realmDatabase = realmDatabase
-        
-        super.init(
-            realmDatabase: realmDatabase,
-            realmDataModelMapping: RealmDownloadedTranslationDataModelMapping(),
-            swiftPersistenceIsEnabled: swiftPersistenceIsEnabled
-        )
+        self.persistence = persistence
     }
     
     @available(iOS 17.4, *)
-    override func getAnySwiftPersistence(swiftDatabase: SwiftDatabase) -> (any RepositorySyncPersistence<DownloadedTranslationDataModel, DownloadedTranslationDataModel>)? {
-        return getSwiftPersistence(swiftDatabase: swiftDatabase)
+    var swiftDatabase: SwiftDatabase? {
+        return getSwiftPersistence()?.database
     }
     
     @available(iOS 17.4, *)
-    private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<DownloadedTranslationDataModel, DownloadedTranslationDataModel, SwiftDownloadedTranslation>? {
-        
-        guard let swiftDatabase = super.getSwiftDatabase() else {
-            return nil
-        }
-        
-        return getSwiftPersistence(swiftDatabase: swiftDatabase)
+    func getSwiftPersistence() -> SwiftRepositorySyncPersistence<DownloadedTranslationDataModel, DownloadedTranslationDataModel, SwiftDownloadedTranslation>? {
+        return persistence as? SwiftRepositorySyncPersistence<DownloadedTranslationDataModel, DownloadedTranslationDataModel, SwiftDownloadedTranslation>
     }
     
-    @available(iOS 17.4, *)
-    private func getSwiftPersistence(swiftDatabase: SwiftDatabase) -> SwiftRepositorySyncPersistence<DownloadedTranslationDataModel, DownloadedTranslationDataModel, SwiftDownloadedTranslation>? {
-        
-        guard let swiftDatabase = super.getSwiftDatabase() else {
-            return nil
-        }
-        
-        return SwiftRepositorySyncPersistence(
-            swiftDatabase: swiftDatabase,
-            dataModelMapping: SwiftDownloadedTranslationDataModelMapping()
-        )
+    var realmDatabase: RealmDatabase? {
+        return getRealmPersistence()?.database
+    }
+    
+    func getRealmPersistence() -> RealmRepositorySyncPersistence<DownloadedTranslationDataModel, DownloadedTranslationDataModel, RealmDownloadedTranslation>? {
+        return persistence as? RealmRepositorySyncPersistence<DownloadedTranslationDataModel, DownloadedTranslationDataModel, RealmDownloadedTranslation>
     }
 }
 
@@ -76,7 +61,7 @@ extension TrackDownloadedTranslationsCache {
 
 extension TrackDownloadedTranslationsCache {
     
-    func getLatestDownloadedTranslations(resourceId: String, languageId: String) -> [DownloadedTranslationDataModel] {
+    func getLatestDownloadedTranslations(resourceId: String, languageId: String) async throws -> [DownloadedTranslationDataModel] {
         
         if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
             
@@ -89,10 +74,9 @@ extension TrackDownloadedTranslationsCache {
                 sortBy: getSortByLatestVersionDescriptor()
             )
             
-            return swiftPersistence
-                .getObjects(query: query)
+            return try await swiftPersistence.getDataModelsAsync(getOption: .allObjects, query: query)
         }
-        else {
+        else if let realmPersistence = getRealmPersistence() {
             
             let resourceIdPredicate = NSPredicate(format: "\(#keyPath(RealmDownloadedTranslation.resourceId)) == %@", resourceId)
             let languageIdPredicate = NSPredicate(format: "\(#keyPath(RealmDownloadedTranslation.languageId)) == %@", languageId)
@@ -103,14 +87,16 @@ extension TrackDownloadedTranslationsCache {
                 sortByKeyPath: getSortByLatestVersionKeyPath()
             )
             
-            return super.getRealmPersistence()
-                .getObjects(query: query)
+            return try await realmPersistence.getDataModelsAsync(getOption: .allObjects, query: query)
+        }
+        else {
+            return Array()
         }
     }
     
-    func getLatestDownloadedTranslation(resourceId: String, languageId: String) -> DownloadedTranslationDataModel? {
+    func getLatestDownloadedTranslation(resourceId: String, languageId: String) async throws -> DownloadedTranslationDataModel? {
         
-        return getLatestDownloadedTranslations(resourceId: resourceId, languageId: languageId).first
+        return try await getLatestDownloadedTranslations(resourceId: resourceId, languageId: languageId).first
     }
 }
 
@@ -118,7 +104,7 @@ extension TrackDownloadedTranslationsCache {
 
 extension TrackDownloadedTranslationsCache {
     
-    func trackTranslationDownloaded(translation: TranslationDataModel) -> AnyPublisher<[DownloadedTranslationDataModel], Error> {
+    @MainActor func trackTranslationDownloaded(translation: TranslationDataModel) -> AnyPublisher<[DownloadedTranslationDataModel], Error> {
         
         guard let resourceId = translation.resourceDataModel?.id, let languageId = translation.languageDataModel?.id else {
             let error: Error = NSError.errorWithDescription(description: "Failed to get resourceId and languageId for tracked downloaded translation.")
@@ -137,17 +123,27 @@ extension TrackDownloadedTranslationsCache {
         
         if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
             
-            _ = swiftPersistence
-                .writeObjects(externalObjects: [downloadedTranslation])
+            return swiftPersistence
+                .writeObjectsPublisher(externalObjects: [downloadedTranslation], writeOption: nil, getOption: nil)
+                .map { _ in
+                    return [downloadedTranslation]
+                }
+                .eraseToAnyPublisher()
+        }
+        else if let realmPersistence = getRealmPersistence() {
+            
+            return realmPersistence
+                .writeObjectsPublisher(externalObjects: [downloadedTranslation], writeOption: nil, getOption: nil)
+                .map { _ in
+                    return [downloadedTranslation]
+                }
+                .eraseToAnyPublisher()
         }
         else {
             
-            _ = super.getRealmPersistence()
-                .writeObjects(externalObjects: [downloadedTranslation], deleteObjectsNotFoundInExternalObjects: false)
+            return Just([downloadedTranslation])
+                .setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
         }
-        
-        return Just([downloadedTranslation])
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
     }
 }

@@ -10,50 +10,35 @@ import Foundation
 import RealmSwift
 import Combine
 import SwiftData
+import RepositorySync
 
-class ResourcesCache: SwiftElseRealmPersistence<ResourceDataModel, ResourceCodable, RealmResource> {
+class ResourcesCache {
     
-    private let realmDatabase: LegacyRealmDatabase
+    private let persistence: any Persistence<ResourceDataModel, ResourceCodable>
     private let trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository
         
-    init(realmDatabase: LegacyRealmDatabase, trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository, swiftPersistenceIsEnabled: Bool? = nil) {
+    init(persistence: any Persistence<ResourceDataModel, ResourceCodable>, trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository) {
         
-        self.realmDatabase = realmDatabase
+        self.persistence = persistence
         self.trackDownloadedTranslationsRepository = trackDownloadedTranslationsRepository
-        
-        super.init(
-            realmDatabase: realmDatabase,
-            realmDataModelMapping: RealmResourceDataModelMapping(),
-            swiftPersistenceIsEnabled: swiftPersistenceIsEnabled
-        )
+    }
+
+    @available(iOS 17.4, *)
+    var swiftDatabase: SwiftDatabase? {
+        return getSwiftPersistence()?.database
     }
     
     @available(iOS 17.4, *)
-    override func getAnySwiftPersistence(swiftDatabase: SwiftDatabase) -> (any RepositorySyncPersistence<ResourceDataModel, ResourceCodable>)? {
-        return getSwiftPersistence(swiftDatabase: swiftDatabase)
+    func getSwiftPersistence() -> SwiftRepositorySyncPersistence<ResourceDataModel, ResourceCodable, SwiftResource>? {
+        return persistence as? SwiftRepositorySyncPersistence<ResourceDataModel, ResourceCodable, SwiftResource>
     }
     
-    @available(iOS 17.4, *)
-    private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<ResourceDataModel, ResourceCodable, SwiftResource>? {
-        
-        guard let swiftDatabase = super.getSwiftDatabase() else {
-            return nil
-        }
-        
-        return getSwiftPersistence(swiftDatabase: swiftDatabase)
+    var realmDatabase: RealmDatabase? {
+        return getRealmPersistence()?.database
     }
     
-    @available(iOS 17.4, *)
-    private func getSwiftPersistence(swiftDatabase: SwiftDatabase) -> SwiftRepositorySyncPersistence<ResourceDataModel, ResourceCodable, SwiftResource>? {
-        
-        guard let swiftDatabase = super.getSwiftDatabase() else {
-            return nil
-        }
-        
-        return SwiftRepositorySyncPersistence(
-            swiftDatabase: swiftDatabase,
-            dataModelMapping: SwiftResourceDataModelMapping()
-        )
+    func getRealmPersistence() -> RealmRepositorySyncPersistence<ResourceDataModel, ResourceCodable, RealmResource>? {
+        return persistence as? RealmRepositorySyncPersistence<ResourceDataModel, ResourceCodable, RealmResource>
     }
     
     func syncResources(resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable, shouldRemoveDataThatNoLongerExists: Bool) -> AnyPublisher<ResourcesCacheSyncResult, Error> {

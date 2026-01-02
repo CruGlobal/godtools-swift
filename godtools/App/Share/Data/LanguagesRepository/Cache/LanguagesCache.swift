@@ -8,44 +8,33 @@
 
 import Foundation
 import RepositorySync
+import Combine
 
-class LanguagesCache: SwiftElseRealmPersistence<LanguageDataModel, LanguageCodable, RealmLanguage> {
+class LanguagesCache {
         
-    init(realmDatabase: LegacyRealmDatabase, swiftPersistenceIsEnabled: Bool? = nil) {
+    private let persistence: any Persistence<LanguageDataModel, LanguageCodable>
+    
+    init(persistence: any Persistence<LanguageDataModel, LanguageCodable>) {
                 
-        super.init(
-            realmDatabase: realmDatabase,
-            realmDataModelMapping: RealmLanguageDataModelMapping(),
-            swiftPersistenceIsEnabled: swiftPersistenceIsEnabled
-        )
+        self.persistence = persistence
     }
     
     @available(iOS 17.4, *)
-    override func getAnySwiftPersistence(swiftDatabase: SwiftDatabase) -> (any RepositorySyncPersistence<LanguageDataModel, LanguageCodable>)? {
-        return getSwiftPersistence(swiftDatabase: swiftDatabase)
+    var swiftDatabase: SwiftDatabase? {
+        return getSwiftPersistence()?.database
     }
     
     @available(iOS 17.4, *)
-    private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<LanguageDataModel, LanguageCodable, SwiftLanguage>? {
-        
-        guard let swiftDatabase = super.getSwiftDatabase() else {
-            return nil
-        }
-        
-        return getSwiftPersistence(swiftDatabase: swiftDatabase)
+    func getSwiftPersistence() -> SwiftRepositorySyncPersistence<LanguageDataModel, LanguageCodable, SwiftLanguage>? {
+        return persistence as? SwiftRepositorySyncPersistence<LanguageDataModel, LanguageCodable, SwiftLanguage>
     }
     
-    @available(iOS 17.4, *)
-    private func getSwiftPersistence(swiftDatabase: SwiftDatabase) -> SwiftRepositorySyncPersistence<LanguageDataModel, LanguageCodable, SwiftLanguage>? {
-        
-        guard let swiftDatabase = super.getSwiftDatabase() else {
-            return nil
-        }
-        
-        return SwiftRepositorySyncPersistence(
-            swiftDatabase: swiftDatabase,
-            dataModelMapping: SwiftLanguageDataModelMapping()
-        )
+    var realmDatabase: RealmDatabase? {
+        return getRealmPersistence()?.database
+    }
+    
+    func getRealmPersistence() -> RealmRepositorySyncPersistence<LanguageDataModel, LanguageCodable, RealmLanguage>? {
+        return persistence as? RealmRepositorySyncPersistence<LanguageDataModel, LanguageCodable, RealmLanguage>
     }
 }
 
@@ -92,49 +81,87 @@ extension LanguagesCache {
 
 extension LanguagesCache {
     
-    func getCachedLanguage(code: BCP47LanguageIdentifier) -> LanguageDataModel? {
+    func getCachedLanguage(code: BCP47LanguageIdentifier) async throws -> LanguageDataModel? {
         
         if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
             
-            return swiftPersistence
-                .getObjects(
-                    query: SwiftDatabaseQuery.filter(
-                        filter: getLanguageByCodePredicate(code: code)
-                    )
-                )
-                .first
+            let query = SwiftDatabaseQuery<SwiftLanguage>.filter(
+                filter: getLanguageByCodePredicate(code: code)
+            )
+            
+            return try await swiftPersistence.getDataModelsAsync(getOption: .allObjects, query: query).first
+        }
+        else if let realmPersistence = getRealmPersistence() {
+            
+            let query = RealmDatabaseQuery.filter(
+                filter: getLanguageByCodeNSPredicate(code: code)
+            )
+            
+            return try await realmPersistence.getDataModelsAsync(getOption: .allObjects, query: query).first
         }
         else {
-                        
-            return super.getRealmPersistence()
-                .getObjects(
-                    query: RealmDatabaseQuery.filter(
-                        filter: getLanguageByCodeNSPredicate(code: code)
-                    )
-                )
-                .first
+            
+            return nil
         }
     }
     
-    func getCachedLanguages(codes: [BCP47LanguageIdentifier]) -> [LanguageDataModel] {
+    @MainActor func getCachedLanguagePublisher(code: BCP47LanguageIdentifier) -> AnyPublisher<LanguageDataModel?, Error> {
+       
+        return Future { promise in
+        
+            Task {
+               
+                do {
+                   
+                    promise(.success(try await self.getCachedLanguage(code: code)))
+                }
+                catch let error {
+                    
+                    promise(.failure(error))
+                }
+            }
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    func getCachedLanguages(codes: [BCP47LanguageIdentifier]) async throws -> [LanguageDataModel] {
         
         if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
-                            
-            return swiftPersistence
-                .getObjects(
-                    query: SwiftDatabaseQuery.filter(
-                        filter: getLanguagesByCodesPredicate(codes: codes)
-                    )
-                )
+                      
+            let query = SwiftDatabaseQuery<SwiftLanguage>.filter(
+                filter: getLanguagesByCodesPredicate(codes: codes)
+            )
+            
+            return try await swiftPersistence.getDataModelsAsync(getOption: .allObjects, query: query)
+        }
+        else if let realmPersistence = getRealmPersistence() {
+            
+            let query = RealmDatabaseQuery.filter(
+                filter: getLanguagesByCodesNSPredicate(codes: codes)
+            )
+            
+            return try await realmPersistence.getDataModelsAsync(getOption:.allObjects, query: query)
         }
         else {
             
-            return super.getRealmPersistence()
-                .getObjects(
-                    query: RealmDatabaseQuery.filter(
-                        filter: getLanguagesByCodesNSPredicate(codes: codes)
-                    )
-                )
+            return []
         }
+    }
+    
+    @MainActor func getCachedLanguagesPublisher(codes: [BCP47LanguageIdentifier]) -> AnyPublisher<[LanguageDataModel], Error> {
+       
+        return Future { promise in
+        
+            Task {
+
+                do {
+                    promise(.success(try await self.getCachedLanguages(codes: codes)))
+                }
+                catch let error {
+                    promise(.failure(error))
+                }
+            }
+        }
+        .eraseToAnyPublisher()
     }
 }

@@ -15,33 +15,23 @@ import RepositorySync
 class TranslationsRepository: RepositorySync<TranslationDataModel, MobileContentTranslationsApi> {
     
     private let infoPlist: InfoPlist
-    private let api: MobileContentTranslationsApi
-    private let realmPersistence: RealmRepositorySyncPersistence<TranslationDataModel, TranslationCodable, RealmTranslation>
     private let resourcesFileCache: ResourcesSHA256FileCache
     private let trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository
     private let remoteConfigRepository: RemoteConfigRepository
     
     let cache: TranslationsCache
     
-    init(infoPlist: InfoPlist, api: MobileContentTranslationsApi, realmDatabase: LegacyRealmDatabase, cache: TranslationsCache, resourcesFileCache: ResourcesSHA256FileCache, trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository, remoteConfigRepository: RemoteConfigRepository) {
+    init(externalDataFetch: MobileContentTranslationsApi, persistence: any Persistence<TranslationDataModel, TranslationCodable>, cache: TranslationsCache, infoPlist: InfoPlist, resourcesFileCache: ResourcesSHA256FileCache, trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository, remoteConfigRepository: RemoteConfigRepository) {
         
-        self.infoPlist = infoPlist
-        self.api = api
         self.cache = cache
+        self.infoPlist = infoPlist
         self.resourcesFileCache = resourcesFileCache
         self.trackDownloadedTranslationsRepository = trackDownloadedTranslationsRepository
         self.remoteConfigRepository = remoteConfigRepository
         
-        let realmPersistence = RealmRepositorySyncPersistence<TranslationDataModel, TranslationCodable, RealmTranslation>(
-            realmDatabase: realmDatabase,
-            dataModelMapping: RealmTranslationDataModelMapping()
-        )
-        
-        self.realmPersistence = realmPersistence
-        
         super.init(
-            externalDataFetch: api,
-            persistence: realmPersistence
+            externalDataFetch: externalDataFetch,
+            persistence: persistence
         )
     }
 }
@@ -405,7 +395,7 @@ extension TranslationsRepository {
     
     private func getTranslationFileFromRemote(translation: TranslationDataModel, fileName: String, requestPriority: RequestPriority) -> AnyPublisher<FileCacheLocation, Error> {
         
-        return api.getTranslationFile(fileName: fileName, requestPriority: requestPriority)
+        return externalDataFetch.getTranslationFile(fileName: fileName, requestPriority: requestPriority)
             .flatMap({ (response: RequestDataResponse) -> AnyPublisher<FileCacheLocation, Error> in
                 
                 return self.resourcesFileCache.storeTranslationFile(translationId: translation.id, fileName: fileName, fileData: response.data)
@@ -421,7 +411,7 @@ extension TranslationsRepository {
     
     private func downloadAndCacheTranslationZipFiles(translation: TranslationDataModel, requestPriority: RequestPriority) -> AnyPublisher<TranslationFilesDataModel, Error> {
         
-        return api.getTranslationZipFile(translationId: translation.id, requestPriority: requestPriority)
+        return externalDataFetch.getTranslationZipFile(translationId: translation.id, requestPriority: requestPriority)
             .flatMap({ (response: RequestDataResponse) -> AnyPublisher<TranslationFilesDataModel, Error> in
                 
                 return self.resourcesFileCache.storeTranslationZipFile(translationId: translation.id, zipFileData: response.data)
