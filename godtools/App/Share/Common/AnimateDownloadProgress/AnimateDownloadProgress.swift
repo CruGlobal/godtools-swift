@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class AnimateDownloadProgress {
+@MainActor class AnimateDownloadProgress {
         
     static let defaultAnimationInterval: TimeInterval = 0.2
     static let defaultAnimateProgressIncrement: TimeInterval = 0.1
@@ -19,9 +19,11 @@ class AnimateDownloadProgress {
     
     private var cancellable: AnyCancellable?
     
-    init(animationInterval: TimeInterval = AnimateDownloadProgress.defaultAnimationInterval) {
+    init(animationInterval: TimeInterval? = nil) {
         
-        timer = SwiftUITimer(intervalSeconds: animationInterval)
+        timer = SwiftUITimer(
+            intervalSeconds: animationInterval ?? AnimateDownloadProgress.defaultAnimationInterval
+        )
     }
     
     func start(downloadProgressPublisher: AnyPublisher<Double, Error>) -> AnyPublisher<Double, Error> {

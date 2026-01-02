@@ -9,7 +9,7 @@
 import UIKit
 import GodToolsShared
 
-class MobileContentPagesViewModel: NSObject, ObservableObject {
+@MainActor class MobileContentPagesViewModel: NSObject, ObservableObject {
         
     private(set) var safeArea: UIEdgeInsets?
     private(set) var pageModels: [Page] = Array()

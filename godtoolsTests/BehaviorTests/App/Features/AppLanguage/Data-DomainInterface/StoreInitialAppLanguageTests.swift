@@ -39,7 +39,7 @@ struct StoreInitialAppLanguageTests {
             )
         ]
     )
-    func noAppLanguageSetDefaultsToDeviceLanguageWhenSupported(argument: TestArgument) async {
+    @MainActor func noAppLanguageSetDefaultsToDeviceLanguageWhenSupported(argument: TestArgument) async {
         
         let testsDiContainer = TestsDiContainer()
         
@@ -115,7 +115,7 @@ struct StoreInitialAppLanguageTests {
             )
         ]
     )
-    func appLanguageSetAndSupportedShowsMyAppLanguage(argument: TestArgument) async {
+    @MainActor func appLanguageSetAndSupportedShowsMyAppLanguage(argument: TestArgument) async {
         
         let testsDiContainer = TestsDiContainer()
         
@@ -186,7 +186,7 @@ struct StoreInitialAppLanguageTests {
             )
         ]
     )
-    func noAppLanguageSetAndDeviceLanguageIsNotASupportedAppLanguage(argument: TestArgument) async {
+    @MainActor func noAppLanguageSetAndDeviceLanguageIsNotASupportedAppLanguage(argument: TestArgument) async {
         
         let testsDiContainer = TestsDiContainer()
         

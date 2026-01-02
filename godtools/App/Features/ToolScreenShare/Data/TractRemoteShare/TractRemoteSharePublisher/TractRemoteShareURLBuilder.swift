@@ -10,7 +10,7 @@ import Foundation
 
 // Example url: https: //knowgod.com/de/kgp?icid=gtshare&primaryLanguage=en&parallelLanguage=de&liveShareStream=9cae02af93e1d510c3e0-1597355635
 
-class TractRemoteShareURLBuilder {
+final class TractRemoteShareURLBuilder {
     
     private let resourcesRepository: ResourcesRepository
     private let languagesRepository: LanguagesRepository

@@ -10,7 +10,7 @@ import UIKit
 import GodToolsShared
 import Combine
 
-class MobileContentRendererViewModel: MobileContentPagesViewModel {
+@MainActor class MobileContentRendererViewModel: MobileContentPagesViewModel {
     
     private let resourcesRepository: ResourcesRepository
     private let translationsRepository: TranslationsRepository
