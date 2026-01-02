@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 import Combine
 
-class ToolCardViewModel: ObservableObject {
+@MainActor class ToolCardViewModel: ObservableObject {
         
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
     private let attachmentsRepository: AttachmentsRepository

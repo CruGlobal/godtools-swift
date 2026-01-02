@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class AttachmentBannerObservableObject: ObservableObject {
+@MainActor class AttachmentBannerObservableObject: ObservableObject {
     
     private var getBannerImageCancellable: AnyCancellable?
     

@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class DownloadableLanguageItemViewModel: ObservableObject {
+@MainActor class DownloadableLanguageItemViewModel: ObservableObject {
     
     typealias LanguageId = String
     

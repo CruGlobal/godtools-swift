@@ -10,7 +10,7 @@ import Foundation
 import Combine
 import SwiftUI
 
-class AllYourFavoriteToolsViewModel: ObservableObject {
+@MainActor class AllYourFavoriteToolsViewModel: ObservableObject {
         
     private let viewAllYourFavoritedToolsUseCase: ViewAllYourFavoritedToolsUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase

@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 import Combine
 
-class ToolSettingsViewModel: ObservableObject {
+@MainActor class ToolSettingsViewModel: ObservableObject {
         
     private let toolSettingsObserver: ToolSettingsObserver
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
