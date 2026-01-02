@@ -8,6 +8,7 @@
 
 import Foundation
 import Combine
+import RepositorySync
 
 class GetShareToolInterfaceStringsRepository: GetShareToolInterfaceStringsRepositoryInterface {
     
@@ -22,34 +23,72 @@ class GetShareToolInterfaceStringsRepository: GetShareToolInterfaceStringsReposi
         self.localizationServices = localizationServices
     }
     
-    func getStringsPublisher(toolId: String, toolLanguageId: String, pageNumber: Int, translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<ShareToolInterfaceStringsDomainModel, Never> {
+    @MainActor func getStringsPublisher(toolId: String, toolLanguageId: String, pageNumber: Int, translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<ShareToolInterfaceStringsDomainModel, Error> {
         
-        let resourceType = resourcesRepository.persistence.getObject(id: toolId)?.resourceTypeEnum ?? .unknown
-
-        let localizedShareToolMessage: String = localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "tract_share_message")
-        
-        guard let resource = resourcesRepository.persistence.getObject(id: toolId), let toolLanguage = languagesRepository.persistence.getObject(id: toolLanguageId) else {
-            
-            return Just(ShareToolInterfaceStringsDomainModel(shareMessage: localizedShareToolMessage))
-                .eraseToAnyPublisher()
-        }
-        
-        let path = ShareToolURLPath(resourceType: resourceType)
-        var toolUrl: String = "https://knowgod.com/\(toolLanguage.code)/\(path.rawValue)/\(resource.abbreviation)"
-
-        if pageNumber > 0 {
-            toolUrl = toolUrl.appending("/").appending("\(pageNumber)")
-        }
-        
-        toolUrl = toolUrl.replacingOccurrences(of: " ", with: "").appending("?icid=gtshare ")
-        
-        let shareMessageWithToolUrl = String.localizedStringWithFormat(localizedShareToolMessage, toolUrl)
-
-        let interfaceStrings = ShareToolInterfaceStringsDomainModel(
-            shareMessage: shareMessageWithToolUrl
+        let localizedShareToolMessage: String = localizationServices.stringForLocaleElseEnglish(
+            localeIdentifier: translateInLanguage, key: "tract_share_message"
         )
         
-        return Just(interfaceStrings)
+        let defaultStrings = ShareToolInterfaceStringsDomainModel(
+            shareMessage: localizedShareToolMessage
+        )
+        
+        return getToolLanguagePublisher(
+            toolId: toolId,
+            toolLanguageId: toolLanguageId
+        )
+        .map { (tuple: (resource: ResourceDataModel, language: LanguageDataModel)?) in
+            
+            guard let tuple = tuple else {
+                return defaultStrings
+            }
+            
+            let resource: ResourceDataModel = tuple.resource
+            let toolLanguage: LanguageDataModel = tuple.language
+            
+            let resourceType: ResourceType = resource.resourceTypeEnum
+            
+            let path = ShareToolURLPath(resourceType: resourceType)
+            var toolUrl: String = "https://knowgod.com/\(toolLanguage.code)/\(path.rawValue)/\(resource.abbreviation)"
+
+            if pageNumber > 0 {
+                toolUrl = toolUrl.appending("/").appending("\(pageNumber)")
+            }
+            
+            toolUrl = toolUrl.replacingOccurrences(of: " ", with: "").appending("?icid=gtshare ")
+            
+            let shareMessageWithToolUrl = String.localizedStringWithFormat(localizedShareToolMessage, toolUrl)
+
+            let interfaceStrings = ShareToolInterfaceStringsDomainModel(
+                shareMessage: shareMessageWithToolUrl
+            )
+            
+            return interfaceStrings
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    @MainActor private func getToolLanguagePublisher(toolId: String, toolLanguageId: String) -> AnyPublisher<(ResourceDataModel, LanguageDataModel)?, Error> {
+        
+        return resourcesRepository
+            .persistence
+            .getDataModelsPublisher(getOption: .object(id: toolId))
+            .asyncMap { (resources: [ResourceDataModel]) in
+                
+                guard let resource = resources.first else {
+                    return nil
+                }
+                
+                let language: LanguageDataModel? = try await self.languagesRepository.persistence.getDataModelsAsync(
+                    getOption: .object(id: toolLanguageId)
+                ).first
+                
+                guard let language = language else {
+                    return nil
+                }
+                
+                return (resource, language)
+            }
             .eraseToAnyPublisher()
     }
 }
