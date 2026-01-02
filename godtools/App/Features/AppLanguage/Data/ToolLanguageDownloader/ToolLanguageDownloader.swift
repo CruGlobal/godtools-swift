@@ -24,11 +24,25 @@ class ToolLanguageDownloader {
         self.downloadedLanguagesRepository = downloadedLanguagesRepository
     }
     
-    func downloadToolLanguagePublisher(languageId: String) -> AnyPublisher<ToolDownloaderDataModel, Error> {
+    @MainActor func downloadToolLanguagePublisher(languageId: String) -> AnyPublisher<ToolDownloaderDataModel, Error> {
         
-        guard let languageModel = languagesRepository.persistence.getObject(id: languageId) else {
+        let languageModel: LanguageDataModel?
+        
+        do {
+            languageModel = try languagesRepository.persistence.getDataModel(id: languageId)
+        }
+        catch let error {
+            return Fail(error: error)
+                .eraseToAnyPublisher()
+        }
+        
+        guard let languageModel = languageModel else {
             
-            let error: Error = NSError.errorWithDomain(domain: "ToolLanguageDownloader", code: -1, description: "Internal Error in ToolLanguageDownloader.  Failed to fetch language with language id: \(languageId)")
+            let error: Error = NSError.errorWithDomain(
+                domain: "ToolLanguageDownloader",
+                code: -1,
+                description: "Internal Error in ToolLanguageDownloader.  Failed to fetch language with language id: \(languageId)"
+            )
             
             return Fail(error: error)
                 .eraseToAnyPublisher()
@@ -44,11 +58,14 @@ class ToolLanguageDownloader {
             DownloadToolDataModel(toolId: $0.id, languages: [languageModel.code])
         })
                 
-        return toolDownloader.downloadToolsPublisher(tools: downloadTools, requestPriority: .low)
-            .eraseToAnyPublisher()
+        return toolDownloader.downloadToolsPublisher(
+            tools: downloadTools,
+            requestPriority: .low
+        )
+        .eraseToAnyPublisher()
     }
     
-    func syncDownloadedLanguagesPublisher() -> AnyPublisher<Void, Error> {
+    @MainActor func syncDownloadedLanguagesPublisher() -> AnyPublisher<Void, Error> {
         
         downloadedLanguagesRepository.markAllDownloadsAsCompleted()
         

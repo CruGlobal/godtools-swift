@@ -22,14 +22,27 @@ class SetUserPreferredAppLanguageRepository: SetUserPreferredAppLanguageReposito
         self.languagesRepository = languagesRepository
     }
     
-    @MainActor func setLanguagePublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<AppLanguageDomainModel, Never> {
+    @MainActor func setLanguagePublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<AppLanguageDomainModel, Error> {
         
-        if let languageModelId = languagesRepository.cache.getCachedLanguage(code: appLanguage)?.id {
+        do {
             
-            userLessonFiltersRepository.storeUserLessonLanguageFilter(with: languageModelId)
+            if let languageModelId = try languagesRepository.cache.getCachedLanguage(code: appLanguage)?.id {
+                
+                userLessonFiltersRepository.storeUserLessonLanguageFilter(with: languageModelId)
+            }
+            
+        }
+        catch let error {
+            
+            return Fail(error: error)
+                .eraseToAnyPublisher()
         }
         
-        return userAppLanguageRepository.storeLanguagePublisher(appLanguageId: appLanguage)
+       
+        
+        return userAppLanguageRepository
+            .storeLanguagePublisher(appLanguageId: appLanguage)
+            .setFailureType(to: Error.self)
             .map { _ in
                 return appLanguage
             }

@@ -52,9 +52,9 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
                 filterLanguage = nil
             }
             
-            let lessonListItems: [LessonListItemDomainModel] = lessons.map { (resource: ResourceDataModel) in
+            let lessonListItems: [LessonListItemDomainModel] = try lessons.map { (resource: ResourceDataModel) in
                 
-                let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel = self.getToolLanguageAvailability(
+                let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel = try self.getToolLanguageAvailability(
                     appLanguage: appLanguage,
                     filterLanguageModel: filterLanguage,
                     resource: resource
@@ -98,9 +98,9 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
 
 extension GetLessonsListRepository {
     
-    private func getToolLanguageAvailability(appLanguage: AppLanguageDomainModel, filterLanguageModel: LanguageDataModel?, resource: ResourceDataModel) async throws -> ToolLanguageAvailabilityDomainModel {
+    private func getToolLanguageAvailability(appLanguage: AppLanguageDomainModel, filterLanguageModel: LanguageDataModel?, resource: ResourceDataModel) throws -> ToolLanguageAvailabilityDomainModel {
 
-        let appLanguageModel: LanguageDataModel? = try await languagesRepository.cache.getCachedLanguage(code: appLanguage)
+        let appLanguageModel: LanguageDataModel? = try languagesRepository.cache.getCachedLanguage(code: appLanguage)
         
         guard let appLanguageModel = appLanguageModel else {
             return ToolLanguageAvailabilityDomainModel.empty

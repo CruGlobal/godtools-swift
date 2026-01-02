@@ -25,7 +25,7 @@ class GetLessonFilterLanguagesRepository: GetLessonFilterLanguagesRepositoryInte
         self.stringWithLocaleCount = stringWithLocaleCount
     }
     
-    func getLessonFilterLanguagesPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<[LessonFilterLanguageDomainModel], Never> {
+    @MainActor func getLessonFilterLanguagesPublisher(translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<[LessonFilterLanguageDomainModel], Error> {
         
         return resourcesRepository
             .persistence
@@ -34,73 +34,77 @@ class GetLessonFilterLanguagesRepository: GetLessonFilterLanguagesRepositoryInte
                 
                 let languageIds = self.resourcesRepository.cache.getLessonsSupportedLanguageIds()
                 
-                let languages = self.createLessonLanguageFilterDomainModelList(from: languageIds, translatedInAppLanguage: translatedInAppLanguage)
-                
-                return Just(languages)
+                return self.createLessonLanguageFilterDomainModelList(
+                    from: languageIds,
+                    translatedInAppLanguage: translatedInAppLanguage
+                )
             }
             .eraseToAnyPublisher()
     }
     
-    func getLessonLanguageFilterFromLanguageCode(languageCode: String?, translatedInAppLanguage: AppLanguageDomainModel) -> LessonFilterLanguageDomainModel? {
+    @MainActor func getLessonLanguageFilterFromLanguageCode(languageCode: String?, translatedInAppLanguage: AppLanguageDomainModel) throws -> LessonFilterLanguageDomainModel? {
         
         guard let languageCode = languageCode,
-              let language = languagesRepository.cache.getCachedLanguage(code: languageCode)
+              let language = try languagesRepository.cache.getCachedLanguage(code: languageCode)
         else {
             return nil
         }
         
-        return createLessonLanguageFilterDomainModel(with: language, translatedInAppLanguage: translatedInAppLanguage)
+        return try createLessonLanguageFilterDomainModel(language: language, translatedInAppLanguage: translatedInAppLanguage)
     }
     
-    func getLessonLanguageFilterFromLanguageId(languageId: String?, translatedInAppLanguage: AppLanguageDomainModel) -> LessonFilterLanguageDomainModel? {
+    @MainActor func getLessonLanguageFilterFromLanguageId(languageId: String?, translatedInAppLanguage: AppLanguageDomainModel) throws -> LessonFilterLanguageDomainModel? {
         
         guard let languageId = languageId,
-              let language = languagesRepository.persistence.getObject(id: languageId)
+              let language = try languagesRepository.persistence.getDataModel(id: languageId)
         else {
             return nil
         }
         
-        return createLessonLanguageFilterDomainModel(with: language, translatedInAppLanguage: translatedInAppLanguage)
+        return try createLessonLanguageFilterDomainModel(language: language, translatedInAppLanguage: translatedInAppLanguage)
     }
 }
 
 extension GetLessonFilterLanguagesRepository {
     
-    private func createLessonLanguageFilterDomainModelList(from languageIds: [String], translatedInAppLanguage: AppLanguageDomainModel) -> [LessonFilterLanguageDomainModel] {
+    @MainActor private func createLessonLanguageFilterDomainModelList(from languageIds: [String], translatedInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<[LessonFilterLanguageDomainModel], Error> {
         
-        let languages: [LessonFilterLanguageDomainModel] = languagesRepository.persistence.getObjects(ids: languageIds)
-            .compactMap { (languageModel: LanguageDataModel) in
+        return languagesRepository
+            .persistence
+            .getDataModelsPublisher(getOption: .objectsByIds(ids: languageIds))
+            .tryMap { (languages: [LanguageDataModel]) in
                 
-                let lessonsAvailableCount: Int = resourcesRepository.cache.getLessonsCount(filterByLanguageId: languageModel.id)
-                
-                guard lessonsAvailableCount > 0 else {
-                    return nil
+                let domainModels: [LessonFilterLanguageDomainModel] = try languages.compactMap { (language: LanguageDataModel) in
+                    
+                    return try self.createLessonLanguageFilterDomainModel(
+                        language: language,
+                        translatedInAppLanguage: translatedInAppLanguage
+                    )
                 }
                 
-                return self.createLessonLanguageFilterDomainModel(
-                    with: languageModel,
-                    translatedInAppLanguage: translatedInAppLanguage
-                )
+                return domainModels.sorted { (language1: LessonFilterLanguageDomainModel, language2: LessonFilterLanguageDomainModel) in
+                    
+                    return language1.languageNameTranslatedInAppLanguage.lowercased() < language2.languageNameTranslatedInAppLanguage.lowercased()
+                }
             }
-            .sorted { (language1: LessonFilterLanguageDomainModel, language2: LessonFilterLanguageDomainModel) in
-                
-                return language1.languageNameTranslatedInAppLanguage.lowercased() < language2.languageNameTranslatedInAppLanguage.lowercased()
-            }
-        
-        return languages
+            .eraseToAnyPublisher()
     }
     
-    private func createLessonLanguageFilterDomainModel(with languageModel: LanguageDataModel, translatedInAppLanguage: AppLanguageDomainModel) -> LessonFilterLanguageDomainModel? {
+    private func createLessonLanguageFilterDomainModel(language: LanguageDataModel, translatedInAppLanguage: AppLanguageDomainModel) throws -> LessonFilterLanguageDomainModel? {
         
-        let lessonsAvailableCount: Int = resourcesRepository.cache.getLessonsCount(filterByLanguageId: languageModel.id)
+        let lessonsAvailableCount: Int = try resourcesRepository.cache.getLessonsCount(filterByLanguageId: language.id)
 
-        let languageNameTranslatedInLanguage = getTranslatedLanguageName.getLanguageName(language: languageModel.code, translatedInLanguage: languageModel.code)
-        let languageNameTranslatedInAppLanguage = getTranslatedLanguageName.getLanguageName(language: languageModel.code, translatedInLanguage: translatedInAppLanguage)
+        guard lessonsAvailableCount > 0 else {
+            return nil
+        }
+        
+        let languageNameTranslatedInLanguage = getTranslatedLanguageName.getLanguageName(language: language.code, translatedInLanguage: language.code)
+        let languageNameTranslatedInAppLanguage = getTranslatedLanguageName.getLanguageName(language: language.code, translatedInLanguage: translatedInAppLanguage)
         
         let lessonsAvailableText: String = getLessonsAvailableText(lessonsAvailableCount: lessonsAvailableCount, translatedInAppLanguage: translatedInAppLanguage)
         
         return LessonFilterLanguageDomainModel(
-            languageId: languageModel.id,
+            languageId: language.id,
             languageNameTranslatedInLanguage: languageNameTranslatedInLanguage,
             languageNameTranslatedInAppLanguage: languageNameTranslatedInAppLanguage,
             lessonsAvailableText: lessonsAvailableText

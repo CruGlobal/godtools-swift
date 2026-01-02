@@ -26,22 +26,35 @@ class GetYourFavoritedToolsRepository: GetYourFavoritedToolsRepositoryInterface 
         self.getToolListItemInterfaceStringsRepository = getToolListItemInterfaceStringsRepository
     }
     
-    @MainActor func getToolsPublisher(translateInLanguage: AppLanguageDomainModel, maxCount: Int?) -> AnyPublisher<[YourFavoritedToolDomainModel], Never> {
+    @MainActor func getToolsPublisher(translateInLanguage: AppLanguageDomainModel, maxCount: Int?) -> AnyPublisher<[YourFavoritedToolDomainModel], Error> {
         
         return Publishers.CombineLatest3(
-            resourcesRepository.persistence.observeCollectionChangesPublisher(),
-            getToolListItemInterfaceStringsRepository.getStringsPublisher(translateInLanguage: translateInLanguage),
-            favoritedResourcesRepository.getFavoritedResourcesSortedByPositionPublisher()
+            resourcesRepository.persistence
+                .observeCollectionChangesPublisher(),
+            getToolListItemInterfaceStringsRepository
+                .getStringsPublisher(translateInLanguage: translateInLanguage)
+                .setFailureType(to: Error.self),
+            favoritedResourcesRepository
+                .getFavoritedResourcesSortedByPositionPublisher()
+                .setFailureType(to: Error.self)
         )
-        .flatMap({ (resourcesChanged: Void, interfaceStrings: ToolListItemInterfaceStringsDomainModel, favoritedResourceModels: [FavoritedResourceDataModel]) -> AnyPublisher<[YourFavoritedToolDomainModel], Never> in
+        .flatMap({ (resourcesChanged: Void, interfaceStrings: ToolListItemInterfaceStringsDomainModel, favoritedResourceModels: [FavoritedResourceDataModel]) -> AnyPublisher<[YourFavoritedToolDomainModel], Error> in
           
             let numberOfFavoritedTools: Int = self.favoritedResourcesRepository.getNumberOfFavoritedResources()
             
-            let favoritedResources: [ResourceDataModel] = favoritedResourceModels
-                .prefix(maxCount ?? numberOfFavoritedTools)
-                .compactMap({
-                    self.resourcesRepository.persistence.getObject(id: $0.id)
-                })
+            let favoritedResources: [ResourceDataModel]
+            
+            do {
+                favoritedResources = try favoritedResourceModels
+                    .prefix(maxCount ?? numberOfFavoritedTools)
+                    .compactMap({
+                        try self.resourcesRepository.persistence.getDataModel(id: $0.id)
+                    })
+            }
+            catch let error {
+                return Fail(error: error)
+                    .eraseToAnyPublisher()
+            }
             
             let yourFavoritedTools: [YourFavoritedToolDomainModel] = favoritedResources
                 .map({
@@ -58,6 +71,7 @@ class GetYourFavoritedToolsRepository: GetYourFavoritedToolsRepositoryInterface 
                 })
             
             return Just(yourFavoritedTools)
+                .setFailureType(to: Error.self)
                 .eraseToAnyPublisher()
         })
         .eraseToAnyPublisher()

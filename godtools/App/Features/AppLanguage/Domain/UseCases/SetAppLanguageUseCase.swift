@@ -18,7 +18,7 @@ class SetAppLanguageUseCase {
         self.setUserPreferredAppLanguageRepositoryInterface = setUserPreferredAppLanguageRepositoryInterface
     }
     
-    func setLanguagePublisher(language: AppLanguageDomainModel) -> AnyPublisher<AppLanguageDomainModel, Never> {
+    @MainActor func setLanguagePublisher(language: AppLanguageDomainModel) -> AnyPublisher<AppLanguageDomainModel, Error> {
         
         setUserPreferredAppLanguageRepositoryInterface.setLanguagePublisher(appLanguage: language)
             .eraseToAnyPublisher()

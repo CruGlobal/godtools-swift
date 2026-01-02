@@ -33,62 +33,41 @@ class GetShareToolInterfaceStringsRepository: GetShareToolInterfaceStringsReposi
             shareMessage: localizedShareToolMessage
         )
         
-        return getToolLanguagePublisher(
-            toolId: toolId,
-            toolLanguageId: toolLanguageId
-        )
-        .map { (tuple: (resource: ResourceDataModel, language: LanguageDataModel)?) in
+        return Future { promise in
             
-            guard let tuple = tuple else {
-                return defaultStrings
-            }
-            
-            let resource: ResourceDataModel = tuple.resource
-            let toolLanguage: LanguageDataModel = tuple.language
-            
-            let resourceType: ResourceType = resource.resourceTypeEnum
-            
-            let path = ShareToolURLPath(resourceType: resourceType)
-            var toolUrl: String = "https://knowgod.com/\(toolLanguage.code)/\(path.rawValue)/\(resource.abbreviation)"
+            do {
+                
+                let resource: ResourceDataModel? = try self.resourcesRepository.persistence.getDataModel(id: toolId)
+                let toolLanguage: LanguageDataModel? = try self.languagesRepository.persistence.getDataModel(id: toolLanguageId)
+                
+                guard let resource = resource, let toolLanguage = toolLanguage else {
+                    return promise(.success(defaultStrings))
+                }
+                
+                let resourceType: ResourceType = resource.resourceTypeEnum
+                
+                let path = ShareToolURLPath(resourceType: resourceType)
+                var toolUrl: String = "https://knowgod.com/\(toolLanguage.code)/\(path.rawValue)/\(resource.abbreviation)"
 
-            if pageNumber > 0 {
-                toolUrl = toolUrl.appending("/").appending("\(pageNumber)")
-            }
-            
-            toolUrl = toolUrl.replacingOccurrences(of: " ", with: "").appending("?icid=gtshare ")
-            
-            let shareMessageWithToolUrl = String.localizedStringWithFormat(localizedShareToolMessage, toolUrl)
+                if pageNumber > 0 {
+                    toolUrl = toolUrl.appending("/").appending("\(pageNumber)")
+                }
+                
+                toolUrl = toolUrl.replacingOccurrences(of: " ", with: "").appending("?icid=gtshare ")
+                
+                let shareMessageWithToolUrl = String.localizedStringWithFormat(localizedShareToolMessage, toolUrl)
 
-            let interfaceStrings = ShareToolInterfaceStringsDomainModel(
-                shareMessage: shareMessageWithToolUrl
-            )
-            
-            return interfaceStrings
+                let interfaceStrings = ShareToolInterfaceStringsDomainModel(
+                    shareMessage: shareMessageWithToolUrl
+                )
+                
+                return promise(.success(interfaceStrings))
+                
+            }
+            catch let error {
+                promise(.failure(error))
+            }
         }
         .eraseToAnyPublisher()
-    }
-    
-    @MainActor private func getToolLanguagePublisher(toolId: String, toolLanguageId: String) -> AnyPublisher<(ResourceDataModel, LanguageDataModel)?, Error> {
-        
-        return resourcesRepository
-            .persistence
-            .getDataModelsPublisher(getOption: .object(id: toolId))
-            .asyncMap { (resources: [ResourceDataModel]) in
-                
-                guard let resource = resources.first else {
-                    return nil
-                }
-                
-                let language: LanguageDataModel? = try await self.languagesRepository.persistence.getDataModelsAsync(
-                    getOption: .object(id: toolLanguageId)
-                ).first
-                
-                guard let language = language else {
-                    return nil
-                }
-                
-                return (resource, language)
-            }
-            .eraseToAnyPublisher()
     }
 }

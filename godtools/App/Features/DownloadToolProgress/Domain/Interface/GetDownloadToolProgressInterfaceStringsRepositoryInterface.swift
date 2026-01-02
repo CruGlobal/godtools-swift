@@ -11,5 +11,5 @@ import Combine
 
 protocol GetDownloadToolProgressInterfaceStringsRepositoryInterface {
         
-    func getStringsPublisher(toolId: String?, translateInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<DownloadToolProgressInterfaceStringsDomainModel, Never>
+    @MainActor func getStringsPublisher(toolId: String?, translateInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<DownloadToolProgressInterfaceStringsDomainModel, Error>
 }

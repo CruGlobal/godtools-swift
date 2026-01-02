@@ -185,27 +185,27 @@ extension ResourcesCache {
         )
     }
     
-    func getLessonsCount(filterByLanguageId: String? = nil) -> Int {
+    func getLessonsCount(filterByLanguageId: String? = nil) throws -> Int {
         
         if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
             
-            return swiftPersistence
-                .getObjectCount(
-                    query: getLessonsSwiftQuery(
-                        filterByLanguageId: filterByLanguageId,
-                        sorted: false
-                    )
-                )
+            let query = getLessonsSwiftQuery(filterByLanguageId: filterByLanguageId, sorted: false)
+            
+            let count: Int = try swiftPersistence.database.openContextAndRead.objectCount(query: query)
+            
+            return count
+        }
+        else if let realmPersistence = getRealmPersistence() {
+            
+            let query = getLessonsRealmQuery(filterByLanguageId: filterByLanguageId, sorted: false)
+            
+            let results: Results<RealmResource> = try realmPersistence.database.openRealmAndRead.results(query: query)
+            
+            return results.count
         }
         else {
             
-            return super.getRealmPersistence()
-                .getNumberObjects(
-                    query: getLessonsRealmQuery(
-                        filterByLanguageId: filterByLanguageId,
-                        sorted: false
-                    )
-                )
+            return 0
         }
     }
     

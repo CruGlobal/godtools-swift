@@ -81,7 +81,7 @@ extension LanguagesCache {
 
 extension LanguagesCache {
     
-    func getCachedLanguage(code: BCP47LanguageIdentifier) async throws -> LanguageDataModel? {
+    func getCachedLanguage(code: BCP47LanguageIdentifier) throws -> LanguageDataModel? {
         
         if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
             
@@ -89,7 +89,14 @@ extension LanguagesCache {
                 filter: getLanguageByCodePredicate(code: code)
             )
             
-            return try await swiftPersistence.getDataModelsAsync(getOption: .allObjects, query: query).first
+            let swiftLanguage: SwiftLanguage? = try swiftPersistence.database.openContextAndRead.objects(query: query).first
+            
+            if let swiftLanguage = swiftLanguage {
+                return LanguageDataModel(interface: swiftLanguage)
+            }
+            else {
+                return nil
+            }
         }
         else if let realmPersistence = getRealmPersistence() {
             
@@ -97,31 +104,19 @@ extension LanguagesCache {
                 filter: getLanguageByCodeNSPredicate(code: code)
             )
             
-            return try await realmPersistence.getDataModelsAsync(getOption: .allObjects, query: query).first
+            let realmLanguage: RealmLanguage? = try realmPersistence.database.openRealmAndRead.objects(query: query).first
+            
+            if let realmLanguage = realmLanguage {
+                return LanguageDataModel(interface: realmLanguage)
+            }
+            else {
+                return nil
+            }
         }
         else {
             
             return nil
         }
-    }
-    
-    @MainActor func getCachedLanguagePublisher(code: BCP47LanguageIdentifier) -> AnyPublisher<LanguageDataModel?, Error> {
-       
-        return Future { promise in
-        
-            Task {
-               
-                do {
-                   
-                    promise(.success(try await self.getCachedLanguage(code: code)))
-                }
-                catch let error {
-                    
-                    promise(.failure(error))
-                }
-            }
-        }
-        .eraseToAnyPublisher()
     }
     
     func getCachedLanguages(codes: [BCP47LanguageIdentifier]) async throws -> [LanguageDataModel] {

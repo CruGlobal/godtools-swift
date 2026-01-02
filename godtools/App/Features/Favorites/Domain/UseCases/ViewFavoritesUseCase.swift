@@ -20,11 +20,14 @@ class ViewFavoritesUseCase {
         self.getFavoritedToolsRepository = getFavoritedToolsRepository
     }
     
-    @MainActor func viewPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewFavoritesDomainModel, Never> {
+    @MainActor func viewPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewFavoritesDomainModel, Error> {
         
         return Publishers.CombineLatest(
-            getInterfaceStringsRepository.getStringsPublisher(translateInLanguage: appLanguage),
-            getFavoritedToolsRepository.getToolsPublisher(translateInLanguage: appLanguage, maxCount: 5)
+            getInterfaceStringsRepository
+                .getStringsPublisher(translateInLanguage: appLanguage)
+                .setFailureType(to: Error.self),
+            getFavoritedToolsRepository
+                .getToolsPublisher(translateInLanguage: appLanguage, maxCount: 5)
         )
         .map {
             

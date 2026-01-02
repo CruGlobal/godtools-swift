@@ -18,7 +18,7 @@ class ViewShareToolUseCase {
         self.getInterfaceStringsRepository = getInterfaceStringsRepository
     }
     
-    func viewPublisher(toolId: String, toolLanguageId: String, pageNumber: Int, appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewShareToolDomainModel, Never> {
+    @MainActor func viewPublisher(toolId: String, toolLanguageId: String, pageNumber: Int, appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewShareToolDomainModel, Error> {
         
         return getInterfaceStringsRepository
             .getStringsPublisher(toolId: toolId, toolLanguageId: toolLanguageId, pageNumber: pageNumber, translateInLanguage: appLanguage)

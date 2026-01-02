@@ -22,17 +22,24 @@ class GetDownloadToolProgressInterfaceStringsRepository: GetDownloadToolProgress
         self.favoritedResourcesRepository = favoritedResourcesRepository
     }
     
-    func getStringsPublisher(toolId: String?, translateInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<DownloadToolProgressInterfaceStringsDomainModel, Never> {
+    @MainActor func getStringsPublisher(toolId: String?, translateInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<DownloadToolProgressInterfaceStringsDomainModel, Error> {
                         
         let localeId: String = translateInAppLanguage
         
         let resource: ResourceDataModel?
         
-        if let toolId = toolId, let resourceModel = resourcesRepository.persistence.getObject(id: toolId) {
-            resource = resourceModel
+        do {
+            if let toolId = toolId, let resourceModel = try resourcesRepository.persistence.getDataModel(id: toolId) {
+                resource = resourceModel
+            }
+            else {
+                resource = nil
+            }
         }
-        else {
-            resource = nil
+        catch let error {
+            
+            return Fail(error: error)
+                .eraseToAnyPublisher()
         }
         
         let toolCanBeFavorited: Bool = (resource?.resourceTypeEnum == .article || resource?.resourceTypeEnum == .tract || resource?.resourceTypeEnum == .chooseYourOwnAdventure)
@@ -59,6 +66,7 @@ class GetDownloadToolProgressInterfaceStringsRepository: GetDownloadToolProgress
         )
         
         return Just(interfaceStrings)
+            .setFailureType(to: Error.self)
             .eraseToAnyPublisher()
     }
 }
