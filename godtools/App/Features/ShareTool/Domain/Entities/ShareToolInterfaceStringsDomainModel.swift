@@ -11,4 +11,8 @@ import Foundation
 struct ShareToolInterfaceStringsDomainModel {
     
     let shareMessage: String
+    
+    static var empty: ShareToolInterfaceStringsDomainModel {
+        return ShareToolInterfaceStringsDomainModel(shareMessage: "")
+    }
 }
