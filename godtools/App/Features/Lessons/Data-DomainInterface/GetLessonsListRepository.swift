@@ -26,35 +26,56 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
         self.getLessonListItemProgressRepository = getLessonListItemProgressRepository
     }
     
-    func getLessonsListPublisher(appLanguage: AppLanguageDomainModel, filterLessonsByLanguage: LessonFilterLanguageDomainModel?) -> AnyPublisher<[LessonListItemDomainModel], Never> {
+    @MainActor func getLessonsListPublisher(appLanguage: AppLanguageDomainModel, filterLessonsByLanguage: LessonFilterLanguageDomainModel?) -> AnyPublisher<[LessonListItemDomainModel], Error> {
                 
         return Publishers.CombineLatest(
-            resourcesRepository.persistence.observeCollectionChangesPublisher(),
-            getLessonListItemProgressRepository.getLessonListItemProgressChanged()
+            resourcesRepository
+                .persistence
+                .observeCollectionChangesPublisher(),
+            getLessonListItemProgressRepository
+                .getLessonListItemProgressChanged()
+                .setFailureType(to: Error.self)
         )
-        .flatMap({ (resourcesDidChange: Void, lessonProgressDidChange: Void) -> AnyPublisher<[LessonListItemDomainModel], Never> in
+        .asyncMap({ (resourcesDidChange: Void, lessonProgressDidChange: Void) in
                         
-            let lessons: [ResourceDataModel] = self.resourcesRepository.cache.getLessons(filterByLanguageId: filterLessonsByLanguage?.languageId, sorted: true)
+            let lessons: [ResourceDataModel] = self.resourcesRepository.cache.getLessons(
+                filterByLanguageId: filterLessonsByLanguage?.languageId,
+                sorted: true
+            )
+            
+            let filterLanguage: LanguageDataModel?
+            
+            if let filterLanguageId = filterLessonsByLanguage?.languageId {
+                filterLanguage = try await self.languagesRepository.persistence.getDataModelsAsync(getOption: .object(id: filterLanguageId)).first
+            }
+            else {
+                filterLanguage = nil
+            }
             
             let lessonListItems: [LessonListItemDomainModel] = lessons.map { (resource: ResourceDataModel) in
                 
-                let filterLanguageModel: LanguageDataModel?
-                if let filterLanguageId = filterLessonsByLanguage?.languageId {
-                    
-                    filterLanguageModel = self.languagesRepository.persistence.getObject(id: filterLanguageId)
-                } else {
-                    filterLanguageModel = nil
-                }
+                let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel = self.getToolLanguageAvailability(
+                    appLanguage: appLanguage,
+                    filterLanguageModel: filterLanguage,
+                    resource: resource
+                )
                 
-                let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel = self.getToolLanguageAvailability(appLanguage: appLanguage, filterLanguageModel: filterLanguageModel, resource: resource)
-                let lessonName: String = self.getTranslatedToolName.getToolName(resource: resource, translateInLanguage: filterLanguageModel?.code ?? appLanguage)
+                let lessonName: String = self.getTranslatedToolName.getToolName(
+                    resource: resource,
+                    translateInLanguage: filterLanguage?.code ?? appLanguage
+                )
                 
-                let lessonProgress: LessonListItemProgressDomainModel = self.getLessonListItemProgressRepository.getLessonProgress(lesson: resource, appLanguage: appLanguage)
+                let lessonProgress: LessonListItemProgressDomainModel = self.getLessonListItemProgressRepository.getLessonProgress(
+                    lesson: resource,
+                    appLanguage: appLanguage
+                )
                 
                 let nameLanguageDirection: LanguageDirectionDomainModel
-                if let filterLanguageModel = filterLanguageModel {
+                
+                if let filterLanguageModel = filterLanguage {
                     nameLanguageDirection = filterLanguageModel.languageDirectionDomainModel
-                } else {
+                }
+                else {
                     nameLanguageDirection = .leftToRight
                 }
                 
@@ -69,32 +90,34 @@ class GetLessonsListRepository: GetLessonsListRepositoryInterface {
                 )
             }
             
-            return Just(lessonListItems)
-                .eraseToAnyPublisher()
+            return lessonListItems
         })
         .eraseToAnyPublisher()
-
     }
 }
 
 extension GetLessonsListRepository {
     
-    private func getToolLanguageAvailability(appLanguage: AppLanguageDomainModel, filterLanguageModel: LanguageDataModel?, resource: ResourceDataModel) -> ToolLanguageAvailabilityDomainModel {
+    private func getToolLanguageAvailability(appLanguage: AppLanguageDomainModel, filterLanguageModel: LanguageDataModel?, resource: ResourceDataModel) async throws -> ToolLanguageAvailabilityDomainModel {
 
-        if let appLanguageModel = languagesRepository.cache.getCachedLanguage(code: appLanguage) {
-            
-            let language: LanguageDataModel
-            
-            if let filterLanguageModel = filterLanguageModel {
-                language = filterLanguageModel
-            } else {
-                language = appLanguageModel
-            }
-            
-            return self.getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(resource: resource, language: language, translateInLanguage: appLanguageModel)
+        let appLanguageModel: LanguageDataModel? = try await languagesRepository.cache.getCachedLanguage(code: appLanguage)
+        
+        guard let appLanguageModel = appLanguageModel else {
+            return ToolLanguageAvailabilityDomainModel.empty
         }
-        else {
-            return ToolLanguageAvailabilityDomainModel(availabilityString: "", isAvailable: false)
+        
+        let language: LanguageDataModel
+        
+        if let filterLanguageModel = filterLanguageModel {
+            language = filterLanguageModel
+        } else {
+            language = appLanguageModel
         }
+        
+        return self.getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(
+            resource: resource,
+            language: language,
+            translateInLanguage: appLanguageModel
+        )
     }
 }

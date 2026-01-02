@@ -20,7 +20,7 @@ class ViewAllYourFavoritedToolsUseCase {
         self.getFavoritedToolsRepository = getFavoritedToolsRepository
     }
     
-    func viewPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewAllYourFavoritedToolsDomainModel, Never> {
+    @MainActor func viewPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewAllYourFavoritedToolsDomainModel, Never> {
         
         return Publishers.CombineLatest(
             getInterfaceStringsRepository.getStringsPublisher(translateInLanguage: appLanguage),

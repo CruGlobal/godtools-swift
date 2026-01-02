@@ -8,7 +8,7 @@
 
 import Foundation
 
-class AccountGlobalActivityAnalyticsItemViewModel: ObservableObject {
+@MainActor class AccountGlobalActivityAnalyticsItemViewModel: ObservableObject {
     
     let label: String
     let count: String

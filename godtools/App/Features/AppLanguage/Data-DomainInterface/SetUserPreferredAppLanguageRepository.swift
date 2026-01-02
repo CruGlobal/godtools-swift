@@ -22,7 +22,7 @@ class SetUserPreferredAppLanguageRepository: SetUserPreferredAppLanguageReposito
         self.languagesRepository = languagesRepository
     }
     
-    func setLanguagePublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<AppLanguageDomainModel, Never> {
+    @MainActor func setLanguagePublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<AppLanguageDomainModel, Never> {
         
         if let languageModelId = languagesRepository.cache.getCachedLanguage(code: appLanguage)?.id {
             

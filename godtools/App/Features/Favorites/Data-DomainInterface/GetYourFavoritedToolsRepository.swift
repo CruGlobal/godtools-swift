@@ -26,7 +26,7 @@ class GetYourFavoritedToolsRepository: GetYourFavoritedToolsRepositoryInterface 
         self.getToolListItemInterfaceStringsRepository = getToolListItemInterfaceStringsRepository
     }
     
-    func getToolsPublisher(translateInLanguage: AppLanguageDomainModel, maxCount: Int?) -> AnyPublisher<[YourFavoritedToolDomainModel], Never> {
+    @MainActor func getToolsPublisher(translateInLanguage: AppLanguageDomainModel, maxCount: Int?) -> AnyPublisher<[YourFavoritedToolDomainModel], Never> {
         
         return Publishers.CombineLatest3(
             resourcesRepository.persistence.observeCollectionChangesPublisher(),

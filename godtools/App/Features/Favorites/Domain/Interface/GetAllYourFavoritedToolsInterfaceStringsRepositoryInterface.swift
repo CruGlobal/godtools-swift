@@ -11,5 +11,5 @@ import Combine
 
 protocol GetAllYourFavoritedToolsInterfaceStringsRepositoryInterface {
     
-    func getStringsPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<AllYourFavoritedToolsInterfaceStringsDomainModel, Never>
+    @MainActor func getStringsPublisher(translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<AllYourFavoritedToolsInterfaceStringsDomainModel, Never>
 }

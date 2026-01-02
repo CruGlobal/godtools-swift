@@ -12,4 +12,8 @@ struct ToolLanguageAvailabilityDomainModel {
     
     let availabilityString: String
     let isAvailable: Bool
+    
+    static var empty: ToolLanguageAvailabilityDomainModel {
+        return ToolLanguageAvailabilityDomainModel(availabilityString: "", isAvailable: false)
+    }
 }

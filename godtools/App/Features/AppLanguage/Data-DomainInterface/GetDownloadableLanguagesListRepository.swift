@@ -32,7 +32,7 @@ class GetDownloadableLanguagesListRepository: GetDownloadableLanguagesListReposi
     @MainActor func getDownloadableLanguagesPublisher(currentAppLanguage: AppLanguageDomainModel) -> AnyPublisher<[DownloadableLanguageListItemDomainModel], Never> {
         
         return Publishers.CombineLatest(
-            languagesRepository.fetchObjectsPublisher(
+            languagesRepository.syncObjectsPublisher(
                 fetchType: .observe(cachePolicy: .returnCacheDataElseFetch),
                 getObjectsType: .allObjects,
                 context: RequestOperationFetchContext(requestPriority: .high)

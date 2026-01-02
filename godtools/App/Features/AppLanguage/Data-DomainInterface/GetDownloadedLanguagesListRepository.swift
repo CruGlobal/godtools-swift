@@ -25,16 +25,20 @@ class GetDownloadedLanguagesListRepository: GetDownloadedLanguagesListRepository
     func getDownloadedLanguagesPublisher(currentAppLanguage: AppLanguageDomainModel) -> AnyPublisher<[DownloadedLanguageListItemDomainModel], Never> {
         
         return Publishers.CombineLatest(
-            languagesRepository.getObjectsPublisher(getObjectsType: .allObjects, cachePolicy: .returnCacheDataElseFetch(requestPriority: .high, observeChanges: true)),
+            languagesRepository.syncObjectsPublisher(
+                fetchType: .observe(cachePolicy: .returnCacheDataElseFetch),
+                getObjectsType: .allObjects,
+                context: RequestOperationFetchContext(requestPriority: .high)
+            ).catch { _ in return Just([]) },
             downloadedLanguagesRepository.getDownloadedLanguagesChangedPublisher()
         )
-        .flatMap { _ in
+        .flatMap { (languages: [LanguageDataModel], downloadedLanguagesChanged: Void) -> AnyPublisher<[DownloadedLanguageDataModel], Never> in
             
             return self.downloadedLanguagesRepository.getDownloadedLanguagesPublisher(completedDownloadsOnly: true)
         }
-        .map { downloadedLanguageDataModels in
+        .map { (downloadedLanguageDataModels: [DownloadedLanguageDataModel]) in
             
-            let downloadedLanguageIds = downloadedLanguageDataModels.map { $0.languageId }
+            let downloadedLanguageIds: [String] = downloadedLanguageDataModels.map { $0.languageId }
             
             return self.languagesRepository.persistence.getObjects(ids: downloadedLanguageIds).map { language in
                 

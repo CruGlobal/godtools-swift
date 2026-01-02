@@ -11,7 +11,7 @@ import SwiftUI
 import Combine
 import RequestOperation
 
-class ToolDetailsVersionsCardViewModel: ObservableObject {
+@MainActor class ToolDetailsVersionsCardViewModel: ObservableObject {
     
     private let toolVersion: ToolVersionDomainModel
     private let attachmentsRepository: AttachmentsRepository
