@@ -25,6 +25,13 @@ class PersonalizedToolsDomainLayerDependencies {
             countriesRepository: dataLayer.getLocalizationSettingsCountriesRepository())
     }
     
+    func getPersonalizedToolToggleInterfaceStringsUseCase() -> GetPersonalizedToolToggleInterfaceStringsUseCase {
+        
+        return GetPersonalizedToolToggleInterfaceStringsUseCase(
+            localizationServices: coreDataLayer.getLocalizationServices()
+        )
+    }
+    
     func getSearchCountriesInLocalizationSettingsCountriesListUseCase() -> SearchCountriesInLocalizationSettingsCountriesListUseCase {
         
         return SearchCountriesInLocalizationSettingsCountriesListUseCase(

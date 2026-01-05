@@ -9,10 +9,14 @@
 import SwiftUI
 
 struct PersonalizedToolToggle: View {
-    
+
     @ObservedObject var viewModel: PersonalizedToolToggleViewModel
-    
-    @State private var segmentWidth: CGFloat = 0
+
+    @State private var segmentWidths: [String: CGFloat] = [:]
+
+    private var maxWidth: CGFloat {
+        segmentWidths.values.max() ?? 0
+    }
 
     var body: some View {
         HStack(spacing: 0) {
@@ -25,18 +29,34 @@ struct PersonalizedToolToggle: View {
                         .foregroundColor(viewModel.selectedIndex == index ? .white : ColorPalette.gtBlue.color)
                         .padding(.vertical, 8)
                         .padding(.horizontal, 16)
-                        .frame(width: segmentWidth > 0 ? segmentWidth : nil)
+                        .frame(width: maxWidth > 0 ? maxWidth : nil)
                         .background(viewModel.selectedIndex == index ? ColorPalette.gtBlue.color : Color.clear)
+                }
+            }
+        }
+        .background(
+            HStack(spacing: 0) {
+                ForEach(viewModel.items.indices, id: \.self) { index in
+                    Text(viewModel.items[index])
+                        .font(FontLibrary.sfProTextRegular.font(size: 12))
+                        .padding(.vertical, 8)
+                        .padding(.horizontal, 16)
                         .background(
                             GeometryReader { geometry in
-                                Color.clear.onAppear {
-                                    segmentWidth = max(segmentWidth, geometry.size.width)
-                                }
+                                Color.clear
+                                    .onAppear {
+                                        let key = viewModel.items[index]
+                                        if segmentWidths[key] == nil {
+                                            segmentWidths[key] = geometry.size.width
+                                        }
+                                    }
                             }
                         )
                 }
             }
-        }
+            .opacity(0)
+        )
+        .animation(.none, value: maxWidth)
         .cornerRadius(20)
         .overlay(
             RoundedRectangle(cornerRadius: 20)

@@ -369,13 +369,7 @@ extension DashboardFlow {
             accessibilityIdentifier: AccessibilityStrings.Button.dashboardMenu.id
         )
         
-        let toggleView = PersonalizedToolToggle(viewModel: PersonalizedToolToggleViewModel(dashboardTabObserver: dashboardTabObserver))
-        let toggleHostingController = UIHostingController<PersonalizedToolToggle>(rootView: toggleView)
-        toggleHostingController.view.backgroundColor = .clear
-
-        toggleHostingController.view.invalidateIntrinsicContentSize()
-        let size = toggleHostingController.view.intrinsicContentSize
-        toggleHostingController.view.frame = CGRect(origin: .zero, size: size)
+        let toggleHostingController = getToggleViewForDashboard()
         toggleViewHostingController = toggleHostingController
         
         let navigationBar = AppNavigationBar(
@@ -393,6 +387,25 @@ extension DashboardFlow {
         )
     
         return hostingController
+    }
+    
+    private func getToggleViewForDashboard() -> UIHostingController<PersonalizedToolToggle> {
+        
+        let toggleViewModel = PersonalizedToolToggleViewModel(
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
+            getPersonalizedToolToggleInterfaceStringsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getPersonalizedToolToggleInterfaceStringsUseCase(),
+            dashboardTabObserver: dashboardTabObserver
+        )
+        
+        let toggleView = PersonalizedToolToggle(viewModel: toggleViewModel)
+        let toggleHostingController = UIHostingController<PersonalizedToolToggle>(rootView: toggleView)
+        toggleHostingController.view.backgroundColor = .clear
+
+        toggleHostingController.view.invalidateIntrinsicContentSize()
+        let size = toggleHostingController.view.intrinsicContentSize
+        toggleHostingController.view.frame = CGRect(origin: .zero, size: size)
+        
+        return toggleHostingController
     }
     
     private func configureNavBarForDashboard() {
