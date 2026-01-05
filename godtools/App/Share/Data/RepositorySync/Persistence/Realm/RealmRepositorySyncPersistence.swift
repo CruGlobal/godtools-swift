@@ -9,6 +9,7 @@
 import Foundation
 import RealmSwift
 import Combine
+import RepositorySync
 
 class RealmRepositorySyncPersistence<DataModelType, ExternalObjectType, PersistObjectType: IdentifiableRealmObject>: RepositorySyncPersistence {
     

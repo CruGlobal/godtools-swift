@@ -8,6 +8,7 @@
 
 import Foundation
 import RealmSwift
+import RepositorySync
 
 class RealmAttachment: Object, IdentifiableRealmObject, AttachmentDataModelInterface {
     

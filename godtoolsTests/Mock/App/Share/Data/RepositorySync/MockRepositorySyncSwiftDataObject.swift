@@ -9,6 +9,7 @@
 import Foundation
 @testable import godtools
 import SwiftData
+import RepositorySync
 
 @available(iOS 17.4, *)
 @Model

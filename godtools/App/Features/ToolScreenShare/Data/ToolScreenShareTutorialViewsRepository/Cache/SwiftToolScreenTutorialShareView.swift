@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftData
+import RepositorySync
 
 @available(iOS 17.4, *)
 typealias SwiftToolScreenTutorialShareView = SwiftToolScreenTutorialShareViewV1.SwiftToolScreenTutorialShareView

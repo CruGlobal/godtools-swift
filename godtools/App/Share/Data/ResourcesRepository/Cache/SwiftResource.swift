@@ -9,6 +9,7 @@
 
 import Foundation
 import SwiftData
+import RepositorySync
 
 @available(iOS 17.4, *)
 typealias SwiftResource = SwiftResourceV1.SwiftResource
