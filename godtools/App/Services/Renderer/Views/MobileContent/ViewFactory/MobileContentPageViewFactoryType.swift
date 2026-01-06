@@ -9,7 +9,7 @@
 import Foundation
 import GodToolsShared
 
-protocol MobileContentPageViewFactoryType {
+@MainActor protocol MobileContentPageViewFactoryType {
         
     func viewForRenderableModel(renderableModel: AnyObject, renderableModelParent: AnyObject?, renderedPageContext: MobileContentRenderedPageContext) -> MobileContentView?
 }

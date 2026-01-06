@@ -12,10 +12,10 @@ import Combine
 
 class RealmUserCountersCache {
     
-    private let realmDatabase: RealmDatabase
+    private let realmDatabase: LegacyRealmDatabase
     private let userCountersSync: RealmUserCountersCacheSync
     
-    init(realmDatabase: RealmDatabase, userCountersSync: RealmUserCountersCacheSync) {
+    init(realmDatabase: LegacyRealmDatabase, userCountersSync: RealmUserCountersCacheSync) {
         
         self.realmDatabase = realmDatabase
         self.userCountersSync = userCountersSync

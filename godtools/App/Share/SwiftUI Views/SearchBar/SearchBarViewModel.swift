@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class SearchBarViewModel: ObservableObject {
+@MainActor class SearchBarViewModel: ObservableObject {
     
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let viewSearchBarUseCase: ViewSearchBarUseCase

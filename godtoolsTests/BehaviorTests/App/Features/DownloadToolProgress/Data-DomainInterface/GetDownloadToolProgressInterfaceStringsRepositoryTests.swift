@@ -13,11 +13,11 @@ import RealmSwift
 
 struct GetDownloadToolProgressInterfaceStringsRepositoryTests {
     
-    private static let favoritedToolId: String = "1"
-    private static let unFavoritedToolId: String = "2"
-    private static let unFavoritableToolId: String = "3"
-    private static let downloadToolMessage: String = "Downloading tool."
-    private static let favoriteThisToolForOfflineUseMessage: String = "Downloading tool. Favorite this tool for offline use."
+    private let favoritedToolId: String = "1"
+    private let unFavoritedToolId: String = "2"
+    private let unFavoritableToolId: String = "3"
+    private let downloadToolMessage: String = "Downloading tool."
+    private let favoriteThisToolForOfflineUseMessage: String = "Downloading tool. Favorite this tool for offline use."
     
     @Test(
         """
@@ -26,9 +26,9 @@ struct GetDownloadToolProgressInterfaceStringsRepositoryTests {
         Then: The message should be the downloading tool message.
         """
     )
-    func correctMessageShowsWhenDownloadingAFavoritedTool() async {
+    @MainActor func correctMessageShowsWhenDownloadingAFavoritedTool() async {
         
-        let downloadToolProgressInterfaceStringsRepository: GetDownloadToolProgressInterfaceStringsRepository = Self.getDownloadToolProgressInterfaceStringsRepository()
+        let downloadToolProgressInterfaceStringsRepository: GetDownloadToolProgressInterfaceStringsRepository = getDownloadToolProgressInterfaceStringsRepository()
         
         var cancellables: Set<AnyCancellable> = Set()
                 
@@ -37,7 +37,7 @@ struct GetDownloadToolProgressInterfaceStringsRepositoryTests {
         await confirmation(expectedCount: 1) { confirmation in
             
             downloadToolProgressInterfaceStringsRepository
-                .getStringsPublisher(toolId: Self.favoritedToolId, translateInAppLanguage: LanguageCodeDomainModel.english.value)
+                .getStringsPublisher(toolId: favoritedToolId, translateInAppLanguage: LanguageCodeDomainModel.english.value)
                 .sink { (interfaceStrings: DownloadToolProgressInterfaceStringsDomainModel) in
                     
                     confirmation()
@@ -47,7 +47,7 @@ struct GetDownloadToolProgressInterfaceStringsRepositoryTests {
                 .store(in: &cancellables)
         }
         
-        #expect(interfaceStringsRef?.downloadMessage == Self.downloadToolMessage)
+        #expect(interfaceStringsRef?.downloadMessage == downloadToolMessage)
     }
     
     @Test(
@@ -57,9 +57,9 @@ struct GetDownloadToolProgressInterfaceStringsRepositoryTests {
         Then: The message should be the downloading tool message with favorite this tool for offline use messaging.
         """
     )
-    func correctMessageShowsWhenDownloadingAToolThatIsNotFavoritedButCanBeFavorited() async {
+    @MainActor func correctMessageShowsWhenDownloadingAToolThatIsNotFavoritedButCanBeFavorited() async {
         
-        let downloadToolProgressInterfaceStringsRepository: GetDownloadToolProgressInterfaceStringsRepository = Self.getDownloadToolProgressInterfaceStringsRepository()
+        let downloadToolProgressInterfaceStringsRepository: GetDownloadToolProgressInterfaceStringsRepository = getDownloadToolProgressInterfaceStringsRepository()
         
         var cancellables: Set<AnyCancellable> = Set()
                 
@@ -68,7 +68,7 @@ struct GetDownloadToolProgressInterfaceStringsRepositoryTests {
         await confirmation(expectedCount: 1) { confirmation in
             
             downloadToolProgressInterfaceStringsRepository
-                .getStringsPublisher(toolId: Self.unFavoritedToolId, translateInAppLanguage: LanguageCodeDomainModel.english.value)
+                .getStringsPublisher(toolId: unFavoritedToolId, translateInAppLanguage: LanguageCodeDomainModel.english.value)
                 .sink { (interfaceStrings: DownloadToolProgressInterfaceStringsDomainModel) in
                     
                     confirmation()
@@ -78,7 +78,7 @@ struct GetDownloadToolProgressInterfaceStringsRepositoryTests {
                 .store(in: &cancellables)
         }
         
-        #expect(interfaceStringsRef?.downloadMessage == Self.favoriteThisToolForOfflineUseMessage)
+        #expect(interfaceStringsRef?.downloadMessage == favoriteThisToolForOfflineUseMessage)
     }
     
     @Test(
@@ -88,9 +88,9 @@ struct GetDownloadToolProgressInterfaceStringsRepositoryTests {
         Then: The message should be the downloading tool message.
         """
     )
-    func correctMessageShowsWhenDownloadingAToolThatCantBeFavorited() async {
+    @MainActor func correctMessageShowsWhenDownloadingAToolThatCantBeFavorited() async {
         
-        let downloadToolProgressInterfaceStringsRepository: GetDownloadToolProgressInterfaceStringsRepository = Self.getDownloadToolProgressInterfaceStringsRepository()
+        let downloadToolProgressInterfaceStringsRepository: GetDownloadToolProgressInterfaceStringsRepository = getDownloadToolProgressInterfaceStringsRepository()
         
         var cancellables: Set<AnyCancellable> = Set()
                 
@@ -99,7 +99,7 @@ struct GetDownloadToolProgressInterfaceStringsRepositoryTests {
         await confirmation(expectedCount: 1) { confirmation in
             
             downloadToolProgressInterfaceStringsRepository
-                .getStringsPublisher(toolId: Self.unFavoritableToolId, translateInAppLanguage: LanguageCodeDomainModel.english.value)
+                .getStringsPublisher(toolId: unFavoritableToolId, translateInAppLanguage: LanguageCodeDomainModel.english.value)
                 .sink { (interfaceStrings: DownloadToolProgressInterfaceStringsDomainModel) in
                     
                     confirmation()
@@ -109,31 +109,31 @@ struct GetDownloadToolProgressInterfaceStringsRepositoryTests {
                 .store(in: &cancellables)
         }
         
-        #expect(interfaceStringsRef?.downloadMessage == Self.downloadToolMessage)
+        #expect(interfaceStringsRef?.downloadMessage == downloadToolMessage)
     }
 }
 
 extension GetDownloadToolProgressInterfaceStringsRepositoryTests {
     
-    private static func getDownloadToolProgressInterfaceStringsRepository() -> GetDownloadToolProgressInterfaceStringsRepository {
+    @MainActor private func getDownloadToolProgressInterfaceStringsRepository() -> GetDownloadToolProgressInterfaceStringsRepository {
         
         let resource_1 = RealmResource()
         let favoritedResource_1 = RealmFavoritedResource()
-        resource_1.id = Self.favoritedToolId
+        resource_1.id = favoritedToolId
         resource_1.resourceType = ResourceType.tract.rawValue
         favoritedResource_1.resourceId = favoritedToolId
         
         let resource_2 = RealmResource()
-        resource_2.id = Self.unFavoritedToolId
+        resource_2.id = unFavoritedToolId
         resource_2.resourceType = ResourceType.tract.rawValue
         
         let resource_3 = RealmResource()
-        resource_3.id = Self.unFavoritableToolId
+        resource_3.id = unFavoritableToolId
         resource_3.resourceType = ResourceType.lesson.rawValue
         
         let realmObjectsToAdd: [Object] = [resource_1, favoritedResource_1, resource_2, resource_3]
         
-        let realmDatabase: RealmDatabase = TestsInMemoryRealmDatabase(addObjectsToDatabase: realmObjectsToAdd)
+        let realmDatabase: LegacyRealmDatabase = TestsInMemoryRealmDatabase(addObjectsToDatabase: realmObjectsToAdd)
         
         let testsDiContainer = TestsDiContainer(realmDatabase: realmDatabase)
         

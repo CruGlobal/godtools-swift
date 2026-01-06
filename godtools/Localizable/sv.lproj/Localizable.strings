@@ -124,7 +124,7 @@ Om du får detta meddelande försent fungerar kanske inte länken. I så fall ka
 "yes" = "Ja";
 
 // Tract - Sharing
-"tract_share_message" = "Den här länken tar dig till en webbversion av det vi pratade om idag:  %@ Appen kan laddas ner från https://godtoolsapp.com. Vi tar och pratar mer!";
+"tract_share_message" = "%@";
 "dismiss" = "Avfärda";
 "done" = "Gjort";
 /* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */

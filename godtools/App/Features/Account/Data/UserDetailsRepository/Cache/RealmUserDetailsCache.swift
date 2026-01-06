@@ -12,10 +12,10 @@ import Combine
 
 class RealmUserDetailsCache {
     
-    private let realmDatabase: RealmDatabase
+    private let realmDatabase: LegacyRealmDatabase
     private let authTokenRepository: MobileContentAuthTokenRepository
     
-    init(realmDatabase: RealmDatabase, authTokenRepository: MobileContentAuthTokenRepository) {
+    init(realmDatabase: LegacyRealmDatabase, authTokenRepository: MobileContentAuthTokenRepository) {
         
         self.realmDatabase = realmDatabase
         self.authTokenRepository = authTokenRepository

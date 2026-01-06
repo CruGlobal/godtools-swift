@@ -170,9 +170,7 @@
 "no" = "לא";
 
 // Tract - Sharing
-"tract_share_message" = "קישור זה יעביר אתכם לגרסת הדפדפן של של הדף האחרון שהסתכלנו עליו ביחד: %@. בואו נדבר יותר! 
-
-ניתן להוריד אפליקציה זו דרך https://godtoolsapp.com";
+"tract_share_message" = "%@";
 
 // Buttons
 "download" = "הורד";

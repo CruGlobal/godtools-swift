@@ -8,26 +8,23 @@
 
 import Foundation
 import SwiftData
+import RepositorySync
 
 // TODO: This class can be removed once RealmSwift is removed in place of SwiftData for iOS 17 minimum and up. ~Levi
 open class SwiftElseRealmPersistence<DataModelType, ExternalObjectType, RealmObjectType: IdentifiableRealmObject> {
     
-    private let realmDatabase: RealmDatabase
+    private let realmDatabase: LegacyRealmDatabase
     private let realmDataModelMapping: any RepositorySyncMapping<DataModelType, ExternalObjectType, RealmObjectType>
-    
-    let swiftPersistenceIsEnabled: Bool
-    
-    init(realmDatabase: RealmDatabase, realmDataModelMapping: any RepositorySyncMapping<DataModelType, ExternalObjectType, RealmObjectType>, swiftPersistenceIsEnabled: Bool?) {
+        
+    init(realmDatabase: LegacyRealmDatabase, realmDataModelMapping: any RepositorySyncMapping<DataModelType, ExternalObjectType, RealmObjectType>) {
         
         self.realmDatabase = realmDatabase
         self.realmDataModelMapping = realmDataModelMapping
-        self.swiftPersistenceIsEnabled = swiftPersistenceIsEnabled ?? SwiftDatabaseEnabled.isEnabled
     }
     
     func getPersistence() -> any RepositorySyncPersistence<DataModelType, ExternalObjectType> {
         
         if #available(iOS 17.4, *),
-           swiftPersistenceIsEnabled,
            let swiftDatabase = getSwiftDatabase(),
            let swiftPersistence = getAnySwiftPersistence(swiftDatabase: swiftDatabase) {
             
@@ -44,12 +41,7 @@ open class SwiftElseRealmPersistence<DataModelType, ExternalObjectType, RealmObj
 
     @available(iOS 17.4, *)
     func getSwiftDatabase() -> SwiftDatabase? {
-        
-        guard swiftPersistenceIsEnabled else {
-            return nil
-        }
-        
-        return TempSharedSwiftDatabase.shared.getDatabase()
+        return nil
     }
     
     @available(iOS 17.4, *)

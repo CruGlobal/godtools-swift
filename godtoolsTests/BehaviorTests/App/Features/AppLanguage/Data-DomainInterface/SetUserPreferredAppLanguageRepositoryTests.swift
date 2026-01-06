@@ -24,9 +24,9 @@ struct SetUserPreferredAppLanguageRepositoryTests {
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        let allLanguages: [RealmLanguage] = SetUserPreferredAppLanguageRepositoryTests.getAllLanguages()
+        let allLanguages: [RealmLanguage] = getAllLanguages()
         
-        let realmDatabase: RealmDatabase = TestsInMemoryRealmDatabase(
+        let realmDatabase: LegacyRealmDatabase = TestsInMemoryRealmDatabase(
             addObjectsToDatabase: allLanguages
         )
         
@@ -66,7 +66,7 @@ struct SetUserPreferredAppLanguageRepositoryTests {
         #expect(lessonLanguageFilterRef?.languageId == realmLanguageSpanish?.id)
     }
     
-    private static func getAllLanguages() -> [RealmLanguage] {
+    private func getAllLanguages() -> [RealmLanguage] {
         
         return [
             getRealmLanguage(languageCode: .afrikaans),
@@ -87,12 +87,12 @@ struct SetUserPreferredAppLanguageRepositoryTests {
 
 extension SetUserPreferredAppLanguageRepositoryTests {
     
-    private static func getRealmLanguage(languageCode: LanguageCodeDomainModel) -> RealmLanguage {
+    private func getRealmLanguage(languageCode: LanguageCodeDomainModel) -> RealmLanguage {
         
         return MockRealmLanguage.createLanguage(language: languageCode, name: languageCode.rawValue + " Name")
     }
     
-    private static func getLocalizationServices() -> MockLocalizationServices {
+    private func getLocalizationServices() -> MockLocalizationServices {
         
         let localizableStrings: [MockLocalizationServices.LocaleId: [MockLocalizationServices.StringKey: String]] = [
             LanguageCodeDomainModel.english.rawValue: [LessonFilterStringKeys.lessonsAvailableText.rawValue: "lessons available"]
@@ -103,10 +103,10 @@ extension SetUserPreferredAppLanguageRepositoryTests {
         )
     }
     
-    private static func getTranslatedLanguageName() -> GetTranslatedLanguageName {
+    private func getTranslatedLanguageName() -> GetTranslatedLanguageName {
         
         let getTranslatedLanguageName = GetTranslatedLanguageName(
-            localizationLanguageNameRepository: MockLocalizationLanguageNameRepository(localizationServices: SetUserPreferredAppLanguageRepositoryTests.getLocalizationServices()),
+            localizationLanguageNameRepository: MockLocalizationLanguageNameRepository(localizationServices: getLocalizationServices()),
             localeLanguageName: MockLocaleLanguageName.defaultMockLocaleLanguageName(),
             localeRegionName: MockLocaleLanguageRegionName(regionNames: [:]),
             localeScriptName: MockLocaleLanguageScriptName(scriptNames: [:])
@@ -115,7 +115,7 @@ extension SetUserPreferredAppLanguageRepositoryTests {
         return getTranslatedLanguageName
     }
     
-    private static func getStringWithLocaleCount() -> StringWithLocaleCountInterface {
+    private func getStringWithLocaleCount() -> StringWithLocaleCountInterface {
         
         return MockStringWithLocaleCount()
     }

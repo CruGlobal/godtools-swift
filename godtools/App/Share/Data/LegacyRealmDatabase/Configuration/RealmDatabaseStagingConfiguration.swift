@@ -10,9 +10,7 @@ import Foundation
 import RealmSwift
 
 class RealmDatabaseStagingConfiguration: RealmDatabaseConfiguration {
-    
-    private static let diskFileName: String = "godtools_realm_staging"
-    
+        
     init() {
         
         let migrationBlock = { @Sendable (migration: Migration, oldSchemaVersion: UInt64) in
@@ -25,8 +23,8 @@ class RealmDatabaseStagingConfiguration: RealmDatabaseConfiguration {
         }
         
         super.init(
-            cacheType: .disk(fileName: RealmDatabaseStagingConfiguration.diskFileName, migrationBlock: migrationBlock),
-            schemaVersion: RealmDatabaseProductionConfiguration.schemaVersion
+            cacheType: .disk(fileName: RealmStagingConfig.diskFileName, migrationBlock: migrationBlock),
+            schemaVersion: RealmProductionConfig.schemaVersion
         )
     }
 }

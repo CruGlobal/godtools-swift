@@ -7,15 +7,15 @@
 //
 
 import Foundation
+import RepositorySync
 
 class LanguagesCache: SwiftElseRealmPersistence<LanguageDataModel, LanguageCodable, RealmLanguage> {
         
-    init(realmDatabase: RealmDatabase, swiftPersistenceIsEnabled: Bool? = nil) {
+    init(realmDatabase: LegacyRealmDatabase) {
                 
         super.init(
             realmDatabase: realmDatabase,
-            realmDataModelMapping: RealmLanguageDataModelMapping(),
-            swiftPersistenceIsEnabled: swiftPersistenceIsEnabled
+            realmDataModelMapping: RealmLanguageDataModelMapping()
         )
     }
     

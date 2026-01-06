@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 import Combine
 
-class LearnToShareToolItemViewModel: ObservableObject {
+@MainActor class LearnToShareToolItemViewModel: ObservableObject {
     
     let assetContent: LearnToShareToolItemAssetContent
     let title: String

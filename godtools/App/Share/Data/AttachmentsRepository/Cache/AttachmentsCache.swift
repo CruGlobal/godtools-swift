@@ -8,21 +8,21 @@
 
 import Foundation
 import Combine
+import RepositorySync
 
 class AttachmentsCache: SwiftElseRealmPersistence<AttachmentDataModel, AttachmentCodable, RealmAttachment> {
     
     private let resourcesFileCache: ResourcesSHA256FileCache
     private let bundle: AttachmentsBundleCache
     
-    init(resourcesFileCache: ResourcesSHA256FileCache, bundle: AttachmentsBundleCache, realmDatabase: RealmDatabase) {
+    init(resourcesFileCache: ResourcesSHA256FileCache, bundle: AttachmentsBundleCache, realmDatabase: LegacyRealmDatabase) {
         
         self.resourcesFileCache = resourcesFileCache
         self.bundle = bundle
         
         super.init(
             realmDatabase: realmDatabase,
-            realmDataModelMapping: RealmAttachmentDataModelMapping(),
-            swiftPersistenceIsEnabled: nil
+            realmDataModelMapping: RealmAttachmentDataModelMapping()
         )
     }
     

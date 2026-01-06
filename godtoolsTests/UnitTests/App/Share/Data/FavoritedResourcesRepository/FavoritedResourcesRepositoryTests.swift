@@ -162,7 +162,7 @@ struct FavoritedResourcesRepositoryTests {
 
 extension FavoritedResourcesRepositoryTests {
     
-    private func getConfiguredRealmDatabase(with resources: [String: Int]) -> RealmDatabase {
+    private func getConfiguredRealmDatabase(with resources: [String: Int]) -> LegacyRealmDatabase {
         
         var resourceObjects = [RealmFavoritedResource]()
         

@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class ToolScreenShareTutorialViewModel: ObservableObject {
+@MainActor class ToolScreenShareTutorialViewModel: ObservableObject {
     
     private static var backgroundCancellables: Set<AnyCancellable> = Set()
         

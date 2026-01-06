@@ -172,11 +172,7 @@ Internetinę versiją galima rasti adresu https://knowgod.com/";
 "no" = "Ne";
 
 // Tract - Sharing
-"tract_share_message" = "Ši nuoroda nukreips jus į puslapio, kurį šiandien paskutinį kartą peržiūrėjome kartu, žiniatinklio versiją: %@. 
-
-Pakalbėkime daugiau!
-
-Programėlę galima atsisiųsti adresu https://godtoolsapp.com";
+"tract_share_message" = "%@";
 
 // Buttons
 "download" = "Parsisiųsti";

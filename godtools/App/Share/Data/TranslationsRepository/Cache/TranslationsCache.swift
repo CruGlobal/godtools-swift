@@ -8,19 +8,20 @@
 
 import Foundation
 import RealmSwift
+import SwiftData
+import RepositorySync
 
 class TranslationsCache: SwiftElseRealmPersistence<TranslationDataModel, TranslationCodable, RealmTranslation> {
          
-    private let realmDatabase: RealmDatabase
+    private let realmDatabase: LegacyRealmDatabase
     
-    init(realmDatabase: RealmDatabase, swiftPersistenceIsEnabled: Bool? = nil) {
+    init(realmDatabase: LegacyRealmDatabase) {
         
         self.realmDatabase = realmDatabase
         
         super.init(
             realmDatabase: realmDatabase,
-            realmDataModelMapping: RealmTranslationDataModelMapping(),
-            swiftPersistenceIsEnabled: swiftPersistenceIsEnabled
+            realmDataModelMapping: RealmTranslationDataModelMapping()
         )
     }
     
@@ -96,7 +97,8 @@ extension TranslationsCache {
     @available(iOS 17.4, *)
     private func getResourceLatestTranslations(swiftDatabase: SwiftDatabase, resourceId: String) -> [SwiftTranslation] {
         
-        let resource: SwiftResource? = swiftDatabase.getObject(context: swiftDatabase.openContext(), id: resourceId)
+        let context: ModelContext = swiftDatabase.openContext()
+        let resource: SwiftResource? = swiftDatabase.read.objectNonThrowing(context: context, id: resourceId)
         
         guard let resource = resource else {
             return Array()

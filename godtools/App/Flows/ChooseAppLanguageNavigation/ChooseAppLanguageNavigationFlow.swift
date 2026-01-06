@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-protocol ChooseAppLanguageNavigationFlow: Flow {
+@MainActor protocol ChooseAppLanguageNavigationFlow: Flow {
     
     var chooseAppLanguageFlow: ChooseAppLanguageFlow? { get set }
 }

@@ -17,9 +17,9 @@ class ResourcesSHA256FileCache {
     private static let rootDirectoryName: String = "godtools_resources_files"
     
     private let fileCache: FileCache
-    private let realmDatabase: RealmDatabase
+    private let realmDatabase: LegacyRealmDatabase
     
-    init(realmDatabase: RealmDatabase) {
+    init(realmDatabase: LegacyRealmDatabase) {
         
         self.fileCache = FileCache(rootDirectory: ResourcesSHA256FileCache.rootDirectoryName)
         self.realmDatabase = realmDatabase

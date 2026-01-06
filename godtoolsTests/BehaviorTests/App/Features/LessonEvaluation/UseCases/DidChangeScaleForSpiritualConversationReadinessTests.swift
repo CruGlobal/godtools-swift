@@ -21,7 +21,7 @@ struct DidChangeScaleForSpiritualConversationReadinessTests {
     )
     @MainActor func confirmReadinessScaleMinAndMaxValuesAreCorrect() async {
         
-        let didChangeSpiritualConversationReadinessScaleUseCase = Self.getDidChangeScaleForSpiritualConversationReadinessUseCase()
+        let didChangeSpiritualConversationReadinessScaleUseCase = getDidChangeScaleForSpiritualConversationReadinessUseCase()
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -53,7 +53,7 @@ struct DidChangeScaleForSpiritualConversationReadinessTests {
     )
     @MainActor func readinessScaleIsTranslatedInEnglish() async {
         
-        let didChangeSpiritualConversationReadinessScaleUseCase = Self.getDidChangeScaleForSpiritualConversationReadinessUseCase()
+        let didChangeSpiritualConversationReadinessScaleUseCase = getDidChangeScaleForSpiritualConversationReadinessUseCase()
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -86,7 +86,7 @@ struct DidChangeScaleForSpiritualConversationReadinessTests {
     )
     @MainActor func readinessScaleIsTranslatedInArabic() async {
         
-        let didChangeSpiritualConversationReadinessScaleUseCase = Self.getDidChangeScaleForSpiritualConversationReadinessUseCase()
+        let didChangeSpiritualConversationReadinessScaleUseCase = getDidChangeScaleForSpiritualConversationReadinessUseCase()
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -128,7 +128,7 @@ struct DidChangeScaleForSpiritualConversationReadinessTests {
     )
     @MainActor func readinessScaleIsTranslatedInEasternArabic() async {
         
-        let didChangeSpiritualConversationReadinessScaleUseCase = Self.getDidChangeScaleForSpiritualConversationReadinessUseCase()
+        let didChangeSpiritualConversationReadinessScaleUseCase = getDidChangeScaleForSpiritualConversationReadinessUseCase()
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -170,7 +170,7 @@ struct DidChangeScaleForSpiritualConversationReadinessTests {
     )
     @MainActor func readinessScaleIsClampedToMin(argument: TestClampingScale) async {
         
-        let didChangeSpiritualConversationReadinessScaleUseCase = Self.getDidChangeScaleForSpiritualConversationReadinessUseCase()
+        let didChangeSpiritualConversationReadinessScaleUseCase = getDidChangeScaleForSpiritualConversationReadinessUseCase()
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -205,7 +205,7 @@ struct DidChangeScaleForSpiritualConversationReadinessTests {
     )
     @MainActor func readinessScaleIsClampedToMax(argument: TestClampingScale) async {
         
-        let didChangeSpiritualConversationReadinessScaleUseCase = Self.getDidChangeScaleForSpiritualConversationReadinessUseCase()
+        let didChangeSpiritualConversationReadinessScaleUseCase = getDidChangeScaleForSpiritualConversationReadinessUseCase()
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -230,7 +230,7 @@ struct DidChangeScaleForSpiritualConversationReadinessTests {
 
 extension DidChangeScaleForSpiritualConversationReadinessTests {
     
-    private static func getDidChangeScaleForSpiritualConversationReadinessUseCase() -> DidChangeScaleForSpiritualConversationReadinessUseCase {
+    private func getDidChangeScaleForSpiritualConversationReadinessUseCase() -> DidChangeScaleForSpiritualConversationReadinessUseCase {
         
         return DidChangeScaleForSpiritualConversationReadinessUseCase(
             getTranslatedNumberCount: GetTranslatedNumberCount()

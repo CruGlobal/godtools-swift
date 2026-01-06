@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class AppBackgroundState {
+@MainActor class AppBackgroundState {
     
     static let shared: AppBackgroundState = AppBackgroundState()
         

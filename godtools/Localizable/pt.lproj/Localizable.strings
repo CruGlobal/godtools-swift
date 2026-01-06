@@ -309,11 +309,7 @@ Pode encontrar uma versão online em https://knowgod.com/";
 "no" = "Não";
 
 // Tract - Sharing
-"tract_share_message" = "Esta ligação irá direcioná-lo para uma versão Web do que estávamos a falar hoje: %@.
-
-Vamos falar mais!
-
-Pode baixar o aplicativo em https://godtoolsapp.com";
+"tract_share_message" = "%@";
 
 // Buttons
 "download" = "Transferir";

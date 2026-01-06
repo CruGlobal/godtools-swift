@@ -13,7 +13,7 @@ import Combine
 
 class RealmDatabaseDeleteTests: XCTestCase {
     
-    private let realmDatabase: RealmDatabase = RealmDatabase(
+    private let realmDatabase: LegacyRealmDatabase = LegacyRealmDatabase(
         databaseConfiguration: RealmDatabaseConfiguration(
             cacheType: .disk(
                 fileName: "RealmDatabaseDeleteTests",

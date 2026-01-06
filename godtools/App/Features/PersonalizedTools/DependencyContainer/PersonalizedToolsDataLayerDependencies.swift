@@ -19,6 +19,6 @@ class PersonalizedToolsDataLayerDependencies {
     
     func getLocalizationSettingsCountriesRepository() -> LocalizationSettingsCountriesRepository {
         
-        return LocalizationSettingsCountriesRepository(cache: RealmLocalizationSettingsCountriesCache(realmDatabase: coreDataLayer.getSharedRealmDatabase()))
+        return LocalizationSettingsCountriesRepository(cache: RealmLocalizationSettingsCountriesCache(realmDatabase: coreDataLayer.getSharedLegacyRealmDatabase()))
     }
 }

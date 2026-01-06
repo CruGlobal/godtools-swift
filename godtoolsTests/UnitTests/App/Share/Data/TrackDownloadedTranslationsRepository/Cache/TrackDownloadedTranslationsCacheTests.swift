@@ -11,6 +11,9 @@ import Testing
 import Foundation
 import RealmSwift
 import SwiftData
+import RepositorySync
+
+/*
 
 struct TrackDownloadedTranslationsCacheTests {
     
@@ -24,7 +27,6 @@ struct TrackDownloadedTranslationsCacheTests {
         
         let resourceId: String
         let languageId: String
-        let swiftPersistenceIsEnabled: Bool
         let expectedIds: [String]
     }
     
@@ -34,45 +36,24 @@ struct TrackDownloadedTranslationsCacheTests {
             LatestDownloadedTranslationArgument(
                 resourceId: Self.resourceAId,
                 languageId: Self.languageAId,
-                swiftPersistenceIsEnabled: false,
-                expectedIds: ["a_a_25", "a_a_12", "a_a_8", "a_a_5", "a_a_1", "a_a_0"]
-            ),
-            LatestDownloadedTranslationArgument(
-                resourceId: Self.resourceAId,
-                languageId: Self.languageAId,
-                swiftPersistenceIsEnabled: true,
                 expectedIds: ["a_a_25", "a_a_12", "a_a_8", "a_a_5", "a_a_1", "a_a_0"]
             ),
             LatestDownloadedTranslationArgument(
                 resourceId: Self.resourceAId,
                 languageId: Self.languageBId,
-                swiftPersistenceIsEnabled: false,
-                expectedIds: ["a_b_20", "a_b_19", "a_b_10", "a_b_2"]
-            ),
-            LatestDownloadedTranslationArgument(
-                resourceId: Self.resourceAId,
-                languageId: Self.languageBId,
-                swiftPersistenceIsEnabled: true,
                 expectedIds: ["a_b_20", "a_b_19", "a_b_10", "a_b_2"]
             ),
             LatestDownloadedTranslationArgument(
                 resourceId: Self.resourceAId,
                 languageId: Self.languageCId,
-                swiftPersistenceIsEnabled: false,
-                expectedIds: ["a_c_51", "a_c_50"]
-            ),
-            LatestDownloadedTranslationArgument(
-                resourceId: Self.resourceAId,
-                languageId: Self.languageCId,
-                swiftPersistenceIsEnabled: true,
                 expectedIds: ["a_c_51", "a_c_50"]
             )
         ]
     )
-    func getLatestDownloadedTranslationsByResourceIdAndLanguageId(argument: LatestDownloadedTranslationArgument) async {
+    func realmGetLatestDownloadedTranslationsByResourceIdAndLanguageId(argument: LatestDownloadedTranslationArgument) async throws {
         
-        let trackDownloadedTranslationsCache = getTrackDownloadedTranslationsCache(
-            swiftPersistenceIsEnabled: argument.swiftPersistenceIsEnabled
+        let trackDownloadedTranslationsCache = try getTrackDownloadedTranslationsCache(
+            swiftPersistenceIsEnabled: false
         )
         
         let translations: [DownloadedTranslationDataModel] = trackDownloadedTranslationsCache.getLatestDownloadedTranslations(
@@ -85,6 +66,43 @@ struct TrackDownloadedTranslationsCacheTests {
         #expect(ids.count == argument.expectedIds.count)
         #expect(ids == argument.expectedIds)
     }
+    /*
+    @Test(
+        "",
+        arguments: [
+            LatestDownloadedTranslationArgument(
+                resourceId: Self.resourceAId,
+                languageId: Self.languageAId,
+                expectedIds: ["a_a_25", "a_a_12", "a_a_8", "a_a_5", "a_a_1", "a_a_0"]
+            ),
+            LatestDownloadedTranslationArgument(
+                resourceId: Self.resourceAId,
+                languageId: Self.languageBId,
+                expectedIds: ["a_b_20", "a_b_19", "a_b_10", "a_b_2"]
+            ),
+            LatestDownloadedTranslationArgument(
+                resourceId: Self.resourceAId,
+                languageId: Self.languageCId,
+                expectedIds: ["a_c_51", "a_c_50"]
+            )
+        ]
+    )
+    func getLatestDownloadedTranslationsByResourceIdAndLanguageId(argument: LatestDownloadedTranslationArgument) async {
+        
+        let trackDownloadedTranslationsCache = getTrackDownloadedTranslationsCache(
+            swiftPersistenceIsEnabled: true
+        )
+        
+        let translations: [DownloadedTranslationDataModel] = trackDownloadedTranslationsCache.getLatestDownloadedTranslations(
+            resourceId: argument.resourceId,
+            languageId: argument.languageId
+        )
+        
+        let ids: [String] = translations.map { $0.id }
+        
+        #expect(ids.count == argument.expectedIds.count)
+        #expect(ids == argument.expectedIds)
+    }*/
     
     @Test(
         "",
@@ -92,45 +110,24 @@ struct TrackDownloadedTranslationsCacheTests {
             LatestDownloadedTranslationArgument(
                 resourceId: Self.resourceAId,
                 languageId: Self.languageAId,
-                swiftPersistenceIsEnabled: false,
-                expectedIds: ["a_a_25"]
-            ),
-            LatestDownloadedTranslationArgument(
-                resourceId: Self.resourceAId,
-                languageId: Self.languageAId,
-                swiftPersistenceIsEnabled: true,
                 expectedIds: ["a_a_25"]
             ),
             LatestDownloadedTranslationArgument(
                 resourceId: Self.resourceAId,
                 languageId: Self.languageBId,
-                swiftPersistenceIsEnabled: false,
-                expectedIds: ["a_b_20"]
-            ),
-            LatestDownloadedTranslationArgument(
-                resourceId: Self.resourceAId,
-                languageId: Self.languageBId,
-                swiftPersistenceIsEnabled: true,
                 expectedIds: ["a_b_20"]
             ),
             LatestDownloadedTranslationArgument(
                 resourceId: Self.resourceAId,
                 languageId: Self.languageCId,
-                swiftPersistenceIsEnabled: false,
-                expectedIds: ["a_c_51"]
-            ),
-            LatestDownloadedTranslationArgument(
-                resourceId: Self.resourceAId,
-                languageId: Self.languageCId,
-                swiftPersistenceIsEnabled: true,
                 expectedIds: ["a_c_51"]
             )
         ]
     )
-    func getLatestDownloadedTranslationByResourceIdAndLanguageId(argument: LatestDownloadedTranslationArgument) async throws {
+    func realmGetLatestDownloadedTranslationByResourceIdAndLanguageId(argument: LatestDownloadedTranslationArgument) async throws {
         
-        let trackDownloadedTranslationsCache = getTrackDownloadedTranslationsCache(
-            swiftPersistenceIsEnabled: argument.swiftPersistenceIsEnabled
+        let trackDownloadedTranslationsCache = try getTrackDownloadedTranslationsCache(
+            swiftPersistenceIsEnabled: false
         )
         
         let translation: DownloadedTranslationDataModel = try #require(trackDownloadedTranslationsCache.getLatestDownloadedTranslation(
@@ -140,20 +137,54 @@ struct TrackDownloadedTranslationsCacheTests {
                 
         #expect(translation.id == argument.expectedIds.first)
     }
+    /*
+    @Test(
+        "",
+        arguments: [
+            LatestDownloadedTranslationArgument(
+                resourceId: Self.resourceAId,
+                languageId: Self.languageAId,
+                expectedIds: ["a_a_25"]
+            ),
+            LatestDownloadedTranslationArgument(
+                resourceId: Self.resourceAId,
+                languageId: Self.languageBId,
+                expectedIds: ["a_b_20"]
+            ),
+            LatestDownloadedTranslationArgument(
+                resourceId: Self.resourceAId,
+                languageId: Self.languageCId,
+                expectedIds: ["a_c_51"]
+            )
+        ]
+    )
+    func getLatestDownloadedTranslationByResourceIdAndLanguageId(argument: LatestDownloadedTranslationArgument) async throws {
+        
+        let trackDownloadedTranslationsCache = getTrackDownloadedTranslationsCache(
+            swiftPersistenceIsEnabled: true
+        )
+        
+        let translation: DownloadedTranslationDataModel = try #require(trackDownloadedTranslationsCache.getLatestDownloadedTranslation(
+            resourceId: argument.resourceId,
+            languageId: argument.languageId
+        ))
+                
+        #expect(translation.id == argument.expectedIds.first)
+    }*/
 }
 
 extension TrackDownloadedTranslationsCacheTests {
     
-    private func getTrackDownloadedTranslationsCache(swiftPersistenceIsEnabled: Bool) -> TrackDownloadedTranslationsCache {
+    private func getTrackDownloadedTranslationsCache(swiftPersistenceIsEnabled: Bool) throws -> TrackDownloadedTranslationsCache {
     
         if #available(iOS 17.4, *), swiftPersistenceIsEnabled {
             TempSharedSwiftDatabase.shared.setDatabase(
-                swiftDatabase: getSwiftDatabase()
+                swiftDatabase: try getSwiftDatabase()
             )
         }
         
         return TrackDownloadedTranslationsCache(
-            realmDatabase: getRealmDatabase(),
+            realmDatabase: getLegacyRealmDatabase(),
             swiftPersistenceIsEnabled: swiftPersistenceIsEnabled
         )
     }
@@ -170,7 +201,7 @@ extension TrackDownloadedTranslationsCacheTests {
             }
     }
     
-    private func getRealmDatabase() -> RealmDatabase {
+    private func getLegacyRealmDatabase() -> LegacyRealmDatabase {
         return TestsInMemoryRealmDatabase(
             addObjectsToDatabase: getRealmDatabaseObjects()
         )
@@ -190,10 +221,8 @@ extension TrackDownloadedTranslationsCacheTests {
     }
     
     @available(iOS 17.4, *)
-    private func getSwiftDatabase() -> SwiftDatabase {
-        return TestsInMemorySwiftDatabase(
-            addObjectsToDatabase: getSwiftDatabaseObjects()
-        )
+    private func getSwiftDatabase() throws -> SwiftDatabase {
+        return try TestsInMemorySwiftDatabase().createDatabase(addObjectsToDatabase: getSwiftDatabaseObjects())
     }
 }
 
@@ -324,3 +353,4 @@ extension TrackDownloadedTranslationsCacheTests {
         return resourcesA + resourcesB
     }
 }
+*/

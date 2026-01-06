@@ -15,14 +15,14 @@ class AppDataLayerDependencies {
         
     private let sharedAppConfig: AppConfigInterface
     private let sharedUrlSessionPriority: URLSessionPriority = URLSessionPriority()
-    private let sharedRealmDatabase: RealmDatabase
+    private let sharedLegacyRealmDatabase: LegacyRealmDatabase
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
     private let sharedAnalytics: AnalyticsContainer
     
     init(appConfig: AppConfigInterface) {
         
         sharedAppConfig = appConfig
-        sharedRealmDatabase = appConfig.getRealmDatabase()
+        sharedLegacyRealmDatabase = appConfig.getLegacyRealmDatabase()
         
         sharedAnalytics = AnalyticsContainer(
             firebaseAnalytics: Self.getFirebaseAnalytics(appConfig: appConfig)
@@ -59,7 +59,7 @@ class AppDataLayerDependencies {
     
     private func getArticleAemCache() -> ArticleAemCache {
         return ArticleAemCache(
-            realmDatabase: sharedRealmDatabase,
+            realmDatabase: getSharedLegacyRealmDatabase(),
             articleWebArchiver: ArticleWebArchiver(
                 urlSessionPriority: getSharedUrlSessionPriority(),
                 requestSender: getRequestSender()
@@ -86,7 +86,7 @@ class AppDataLayerDependencies {
             downloader: getArticleAemDownloader(),
             cache: getArticleAemCache(),
             categoryArticlesCache: RealmCategoryArticlesCache(
-                realmDatabase: sharedRealmDatabase
+                realmDatabase: getSharedLegacyRealmDatabase()
             ),
             userDefaultsCache: getUserDefaultsCache()
         )
@@ -102,14 +102,14 @@ class AppDataLayerDependencies {
             cache: AttachmentsCache(
                 resourcesFileCache: getResourcesFileCache(),
                 bundle: AttachmentsBundleCache(),
-                realmDatabase: getSharedRealmDatabase()
+                realmDatabase: getSharedLegacyRealmDatabase()
             )
         )
     }
     
     func getCompletedTrainingTipRepository() -> CompletedTrainingTipRepository {
         return CompletedTrainingTipRepository(
-            cache: RealmCompletedTrainingTipCache(realmDatabase: sharedRealmDatabase)
+            cache: RealmCompletedTrainingTipCache(realmDatabase: getSharedLegacyRealmDatabase())
         )
     }
     
@@ -129,13 +129,13 @@ class AppDataLayerDependencies {
                 urlSessionPriority: getSharedUrlSessionPriority(),
                 requestSender: getRequestSender()
             ),
-            cache: RealmEmailSignUpsCache(realmDatabase: sharedRealmDatabase)
+            cache: RealmEmailSignUpsCache(realmDatabase: getSharedLegacyRealmDatabase())
         )
     }
     
     func getFavoritedResourcesRepository() -> FavoritedResourcesRepository {
         return FavoritedResourcesRepository(
-            cache: RealmFavoritedResourcesCache(realmDatabase: sharedRealmDatabase)
+            cache: RealmFavoritedResourcesCache(realmDatabase: getSharedLegacyRealmDatabase())
         )
     }
     
@@ -160,7 +160,7 @@ class AppDataLayerDependencies {
         )
         
         let cache = FailedFollowUpsCache(
-            realmDatabase: sharedRealmDatabase
+            realmDatabase: getSharedLegacyRealmDatabase()
         )
         
         return FollowUpsService(
@@ -183,7 +183,7 @@ class AppDataLayerDependencies {
                 
         return LanguagesRepository(
             api: api,
-            cache: LanguagesCache(realmDatabase: sharedRealmDatabase)
+            cache: LanguagesCache(realmDatabase: getSharedLegacyRealmDatabase())
         )
     }
     
@@ -226,7 +226,7 @@ class AppDataLayerDependencies {
             ),
             cache: MobileContentAuthTokenCache(
                 mobileContentAuthTokenKeychainAccessor: getMobileContentAuthTokenKeychainAccessor(),
-                realmCache: RealmMobileContentAuthTokenCache(realmDatabase: sharedRealmDatabase)
+                realmCache: RealmMobileContentAuthTokenCache(realmDatabase: getSharedLegacyRealmDatabase())
             )
         )
     }
@@ -256,7 +256,7 @@ class AppDataLayerDependencies {
     }
     
     func getResourcesFileCache() -> ResourcesSHA256FileCache {
-        return ResourcesSHA256FileCache(realmDatabase: sharedRealmDatabase)
+        return ResourcesSHA256FileCache(realmDatabase: getSharedLegacyRealmDatabase())
     }
     
     func getResourcesRepository() -> ResourcesRepository {
@@ -268,13 +268,13 @@ class AppDataLayerDependencies {
         )
         
         let cache = ResourcesCache(
-            realmDatabase: sharedRealmDatabase,
+            realmDatabase: getSharedLegacyRealmDatabase(),
             trackDownloadedTranslationsRepository: getTrackDownloadedTranslationsRepository()
         )
         
         return ResourcesRepository(
             api: api,
-            realmDatabase: getSharedRealmDatabase(),
+            realmDatabase: getSharedLegacyRealmDatabase(),
             cache: cache,
             attachmentsRepository: getAttachmentsRepository(),
             languagesRepository: getLanguagesRepository(),
@@ -290,7 +290,7 @@ class AppDataLayerDependencies {
                 urlSessionPriority: getSharedUrlSessionPriority(),
                 requestSender: getRequestSender()
             ),
-            failedResourceViewsCache: FailedResourceViewsCache(realmDatabase: sharedRealmDatabase)
+            failedResourceViewsCache: FailedResourceViewsCache(realmDatabase: getSharedLegacyRealmDatabase())
         )
     }
     
@@ -308,8 +308,8 @@ class AppDataLayerDependencies {
         return sharedUrlSessionPriority
     }
     
-    func getSharedRealmDatabase() -> RealmDatabase {
-        return sharedRealmDatabase
+    func getSharedLegacyRealmDatabase() -> LegacyRealmDatabase {
+        return sharedLegacyRealmDatabase
     }
     
     func getStringWithLocaleCount() -> StringWithLocaleCountInterface {
@@ -335,7 +335,7 @@ class AppDataLayerDependencies {
     func getTrackDownloadedTranslationsRepository() -> TrackDownloadedTranslationsRepository {
         return TrackDownloadedTranslationsRepository(
             cache: TrackDownloadedTranslationsCache(
-                realmDatabase: sharedRealmDatabase
+                realmDatabase: getSharedLegacyRealmDatabase()
             )
         )
     }
@@ -388,8 +388,8 @@ class AppDataLayerDependencies {
                 urlSessionPriority: getSharedUrlSessionPriority(),
                 requestSender: getRequestSender()
             ),
-            realmDatabase: getSharedRealmDatabase(),
-            cache: TranslationsCache(realmDatabase: getSharedRealmDatabase()),
+            realmDatabase: getSharedLegacyRealmDatabase(),
+            cache: TranslationsCache(realmDatabase: getSharedLegacyRealmDatabase()),
             resourcesFileCache: getResourcesFileCache(),
             trackDownloadedTranslationsRepository: getTrackDownloadedTranslationsRepository(),
             remoteConfigRepository: getRemoteConfigRepository()
@@ -436,8 +436,8 @@ class AppDataLayerDependencies {
         )
         
         let cache = RealmUserCountersCache(
-            realmDatabase: sharedRealmDatabase,
-            userCountersSync: RealmUserCountersCacheSync(realmDatabase: sharedRealmDatabase)
+            realmDatabase: getSharedLegacyRealmDatabase(),
+            userCountersSync: RealmUserCountersCacheSync(realmDatabase: getSharedLegacyRealmDatabase())
         )
         
         return UserCountersRepository(
@@ -454,7 +454,7 @@ class AppDataLayerDependencies {
     func getUserLessonFiltersRepository() -> UserLessonFiltersRepository {
         return UserLessonFiltersRepository(
             cache: RealmUserLessonFiltersCache(
-                realmDatabase: sharedRealmDatabase
+                realmDatabase: getSharedLegacyRealmDatabase()
             )
         )
     }
@@ -462,7 +462,7 @@ class AppDataLayerDependencies {
     func getUserLessonProgressRepository() -> UserLessonProgressRepository {
         return UserLessonProgressRepository(
             cache: RealmUserLessonProgressCache(
-                realmDatabase: sharedRealmDatabase
+                realmDatabase: getSharedLegacyRealmDatabase()
             )
         )
     }

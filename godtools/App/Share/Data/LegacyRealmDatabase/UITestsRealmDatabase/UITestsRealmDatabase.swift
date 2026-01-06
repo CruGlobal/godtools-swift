@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class UITestsRealmDatabase: RealmDatabase {
+class UITestsRealmDatabase: LegacyRealmDatabase {
     
     private static let diskFileName: String = "godtools_uitests_realm"
     
@@ -51,7 +51,7 @@ class UITestsRealmDatabase: RealmDatabase {
         
         return RealmDatabaseConfiguration(
             cacheType: .disk(fileName: UITestsRealmDatabase.diskFileName, migrationBlock: migrationBlock),
-            schemaVersion: RealmDatabaseProductionConfiguration.schemaVersion
+            schemaVersion: RealmProductionConfig.schemaVersion
         )
     }
 }

@@ -171,11 +171,7 @@ A https://knowgod.com/ címen egy online verzió található";
 "no" = "Nem";
 
 // Tract - Sharing
-"tract_share_message" = "A hivatkozás elvezet az oldal webes verziójára, amelyet ma együtt néztünk: %@. 
-
-Beszélgessünk még!
-
-Az alkalmazás a https://godtoolsapp.com címről tölthető le";
+"tract_share_message" = "%@";
 
 // Buttons
 "download" = "Letöltés";

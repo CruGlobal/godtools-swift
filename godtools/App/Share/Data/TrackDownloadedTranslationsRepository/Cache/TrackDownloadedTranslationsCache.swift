@@ -10,19 +10,19 @@ import Foundation
 import RealmSwift
 import Combine
 import SwiftData
+import RepositorySync
 
 class TrackDownloadedTranslationsCache: SwiftElseRealmPersistence<DownloadedTranslationDataModel, DownloadedTranslationDataModel, RealmDownloadedTranslation> {
     
-    private let realmDatabase: RealmDatabase
+    private let realmDatabase: LegacyRealmDatabase
         
-    init(realmDatabase: RealmDatabase, swiftPersistenceIsEnabled: Bool? = nil) {
+    init(realmDatabase: LegacyRealmDatabase) {
         
         self.realmDatabase = realmDatabase
         
         super.init(
             realmDatabase: realmDatabase,
-            realmDataModelMapping: RealmDownloadedTranslationDataModelMapping(),
-            swiftPersistenceIsEnabled: swiftPersistenceIsEnabled
+            realmDataModelMapping: RealmDownloadedTranslationDataModelMapping()
         )
     }
     

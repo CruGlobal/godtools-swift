@@ -1,5 +1,5 @@
 //
-//  RealmDatabase.swift
+//  LegacyRealmDatabase.swift
 //  godtools
 //
 //  Created by Levi Eggert on 3/20/20.
@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import Combine
 
-class RealmDatabase {
+class LegacyRealmDatabase {
     
     private let databaseConfiguration: RealmDatabaseConfiguration
     private let config: Realm.Configuration

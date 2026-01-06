@@ -39,11 +39,11 @@ struct StoreInitialAppLanguageTests {
             )
         ]
     )
-    func noAppLanguageSetDefaultsToDeviceLanguageWhenSupported(argument: TestArgument) async {
+    @MainActor func noAppLanguageSetDefaultsToDeviceLanguageWhenSupported(argument: TestArgument) async {
         
         let testsDiContainer = TestsDiContainer()
         
-        let testsRealmDatabase: RealmDatabase = testsDiContainer.dataLayer.getSharedRealmDatabase()
+        let testsRealmDatabase: LegacyRealmDatabase = testsDiContainer.dataLayer.getSharedLegacyRealmDatabase()
         
         let appLanguages: [AppLanguageCodable] = [
             AppLanguageCodable(languageCode: "ar", languageDirection: .rightToLeft, languageScriptCode: nil),
@@ -115,11 +115,11 @@ struct StoreInitialAppLanguageTests {
             )
         ]
     )
-    func appLanguageSetAndSupportedShowsMyAppLanguage(argument: TestArgument) async {
+    @MainActor func appLanguageSetAndSupportedShowsMyAppLanguage(argument: TestArgument) async {
         
         let testsDiContainer = TestsDiContainer()
         
-        let testsRealmDatabase: RealmDatabase = testsDiContainer.dataLayer.getSharedRealmDatabase()
+        let testsRealmDatabase: LegacyRealmDatabase = testsDiContainer.dataLayer.getSharedLegacyRealmDatabase()
         
         let appLanguages: [AppLanguageCodable] = [
             AppLanguageCodable(languageCode: "ar", languageDirection: .rightToLeft, languageScriptCode: nil),
@@ -186,11 +186,11 @@ struct StoreInitialAppLanguageTests {
             )
         ]
     )
-    func noAppLanguageSetAndDeviceLanguageIsNotASupportedAppLanguage(argument: TestArgument) async {
+    @MainActor func noAppLanguageSetAndDeviceLanguageIsNotASupportedAppLanguage(argument: TestArgument) async {
         
         let testsDiContainer = TestsDiContainer()
         
-        let testsRealmDatabase: RealmDatabase = testsDiContainer.dataLayer.getSharedRealmDatabase()
+        let testsRealmDatabase: LegacyRealmDatabase = testsDiContainer.dataLayer.getSharedLegacyRealmDatabase()
         
         let appLanguages: [AppLanguageCodable] = [
             AppLanguageCodable(languageCode: "ar", languageDirection: .rightToLeft, languageScriptCode: nil),

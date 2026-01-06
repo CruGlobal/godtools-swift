@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum DashboardTabTypeDomainModel: String {
+enum DashboardTabTypeDomainModel: String, Sendable {
     
     case lessons
     case favorites

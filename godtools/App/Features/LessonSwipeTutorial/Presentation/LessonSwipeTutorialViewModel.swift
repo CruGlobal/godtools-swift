@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class LessonSwipeTutorialViewModel: ObservableObject {
+@MainActor class LessonSwipeTutorialViewModel: ObservableObject {
     
     private weak var flowDelegate: FlowDelegate?
     private let getInterfaceStringsUseCase: GetLessonSwipeTutorialInterfaceStringsUseCase

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AppDiContainer {
+@MainActor class AppDiContainer {
         
     private let failedFollowUpsCache: FailedFollowUpsCache
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
@@ -101,7 +101,7 @@ class AppDiContainer {
             userActivity: userActivityDiContainer
         )
                                                                 
-        failedFollowUpsCache = FailedFollowUpsCache(realmDatabase: dataLayer.getSharedRealmDatabase())
+        failedFollowUpsCache = FailedFollowUpsCache(realmDatabase: dataLayer.getSharedLegacyRealmDatabase())
     }
     
     static func createUITestsDiContainer() -> AppDiContainer {

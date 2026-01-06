@@ -1,5 +1,5 @@
 //
-//  RealmDatabase+Write.swift
+//  LegacyRealmDatabase+Write.swift
 //  godtools
 //
 //  Created by Levi Eggert on 5/17/23.
@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import Combine
 
-extension RealmDatabase {
+extension LegacyRealmDatabase {
     
     func writeObjects<T: Object>(realm: Realm, shouldAddObjectsToRealm: Bool = true, updatePolicy: Realm.UpdatePolicy = .all, writeClosure: @escaping ((_ realm: Realm) -> [T])) -> Result<[T], Error> {
         

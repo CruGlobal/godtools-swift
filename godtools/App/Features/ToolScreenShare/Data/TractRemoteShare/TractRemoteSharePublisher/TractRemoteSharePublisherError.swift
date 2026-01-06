@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum TractRemoteSharePublisherError: Error {
+enum TractRemoteSharePublisherError: Error, Sendable {
     
     case timedOut
 }

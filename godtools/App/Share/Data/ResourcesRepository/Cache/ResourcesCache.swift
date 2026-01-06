@@ -10,21 +10,21 @@ import Foundation
 import RealmSwift
 import Combine
 import SwiftData
+import RepositorySync
 
 class ResourcesCache: SwiftElseRealmPersistence<ResourceDataModel, ResourceCodable, RealmResource> {
     
-    private let realmDatabase: RealmDatabase
+    private let realmDatabase: LegacyRealmDatabase
     private let trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository
         
-    init(realmDatabase: RealmDatabase, trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository, swiftPersistenceIsEnabled: Bool? = nil) {
+    init(realmDatabase: LegacyRealmDatabase, trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository) {
         
         self.realmDatabase = realmDatabase
         self.trackDownloadedTranslationsRepository = trackDownloadedTranslationsRepository
         
         super.init(
             realmDatabase: realmDatabase,
-            realmDataModelMapping: RealmResourceDataModelMapping(),
-            swiftPersistenceIsEnabled: swiftPersistenceIsEnabled
+            realmDataModelMapping: RealmResourceDataModelMapping()
         )
     }
     
@@ -291,7 +291,7 @@ extension ResourcesCache {
             
             let lessons: [SwiftResource] = swiftPersistence
                 .swiftDatabase
-                .getObjects(
+                .read.objectsNonThrowing(
                     context: swiftPersistence.swiftDatabase.openContext(),
                     query: getLessonsSwiftQuery(filterByLanguageId: nil, sorted: false)
                 )

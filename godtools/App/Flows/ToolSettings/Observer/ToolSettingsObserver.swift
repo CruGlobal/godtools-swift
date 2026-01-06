@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ToolSettingsObserver: ObservableObject {
+@MainActor class ToolSettingsObserver: ObservableObject {
     
     @Published var languages: ToolSettingsLanguages
     @Published var trainingTipsEnabled: Bool
