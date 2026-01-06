@@ -69,25 +69,25 @@ extension SearchLessonFilterLanguagesRepositoryTests {
     
     private var allLessonFilterLanguages: [LessonFilterLanguageDomainModel] {
         return [
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "blAnd", lessonsAvailableText: ""),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "bran", lessonsAvailableText: ""),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Canned", lessonsAvailableText: ""),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Church", lessonsAvailableText: ""),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "church", lessonsAvailableText: ""),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "food", lessonsAvailableText: ""),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Food", lessonsAvailableText: ""),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "foody", lessonsAvailableText: ""),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "land", lessonsAvailableText: ""),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "may", lessonsAvailableText: ""),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "pAnda", lessonsAvailableText: ""),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "sanded", lessonsAvailableText: ""),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "soccer", lessonsAvailableText: ""),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "soCCer", lessonsAvailableText: ""),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Tan", lessonsAvailableText: ""),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Tanned", lessonsAvailableText: ""),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "WAND", lessonsAvailableText: ""),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "wander", lessonsAvailableText: ""),
-            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Yellow", lessonsAvailableText: "")
+            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "blAnd", lessonsAvailableText: "", lessonsAvailableCount: 0),
+            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "bran", lessonsAvailableText: "", lessonsAvailableCount: 0),
+            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Canned", lessonsAvailableText: "", lessonsAvailableCount: 0),
+            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Church", lessonsAvailableText: "", lessonsAvailableCount: 0),
+            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "church", lessonsAvailableText: "", lessonsAvailableCount: 0),
+            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "food", lessonsAvailableText: "", lessonsAvailableCount: 0),
+            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Food", lessonsAvailableText: "", lessonsAvailableCount: 0),
+            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "foody", lessonsAvailableText: "", lessonsAvailableCount: 0),
+            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "land", lessonsAvailableText: "", lessonsAvailableCount: 0),
+            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "may", lessonsAvailableText: "", lessonsAvailableCount: 0),
+            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "pAnda", lessonsAvailableText: "", lessonsAvailableCount: 0),
+            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "sanded", lessonsAvailableText: "", lessonsAvailableCount: 0),
+            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "soccer", lessonsAvailableText: "", lessonsAvailableCount: 0),
+            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "soCCer", lessonsAvailableText: "", lessonsAvailableCount: 0),
+            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Tan", lessonsAvailableText: "", lessonsAvailableCount: 0),
+            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Tanned", lessonsAvailableText: "", lessonsAvailableCount: 0),
+            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "WAND", lessonsAvailableText: "", lessonsAvailableCount: 0),
+            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "wander", lessonsAvailableText: "", lessonsAvailableCount: 0),
+            LessonFilterLanguageDomainModel(languageId: "",  languageNameTranslatedInLanguage: "", languageNameTranslatedInAppLanguage: "Yellow", lessonsAvailableText: "", lessonsAvailableCount: 0)
         ]
     }
 }

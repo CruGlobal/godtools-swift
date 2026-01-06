@@ -71,16 +71,16 @@ extension GetLessonFilterLanguagesRepository {
         let languages: [LessonFilterLanguageDomainModel] = languagesRepository.persistence.getObjects(ids: languageIds)
             .compactMap { (languageModel: LanguageDataModel) in
                 
-                let lessonsAvailableCount: Int = resourcesRepository.cache.getLessonsCount(filterByLanguageId: languageModel.id)
-                
-                guard lessonsAvailableCount > 0 else {
-                    return nil
-                }
-                
-                return self.createLessonLanguageFilterDomainModel(
+                let domainModel: LessonFilterLanguageDomainModel = self.createLessonLanguageFilterDomainModel(
                     with: languageModel,
                     translatedInAppLanguage: translatedInAppLanguage
                 )
+                
+                guard domainModel.lessonsAvailableCount > 0 else {
+                    return nil
+                }
+                
+                return domainModel
             }
             .sorted { (language1: LessonFilterLanguageDomainModel, language2: LessonFilterLanguageDomainModel) in
                 
@@ -90,7 +90,7 @@ extension GetLessonFilterLanguagesRepository {
         return languages
     }
     
-    private func createLessonLanguageFilterDomainModel(with languageModel: LanguageDataModel, translatedInAppLanguage: AppLanguageDomainModel) -> LessonFilterLanguageDomainModel? {
+    private func createLessonLanguageFilterDomainModel(with languageModel: LanguageDataModel, translatedInAppLanguage: AppLanguageDomainModel) -> LessonFilterLanguageDomainModel {
         
         let lessonsAvailableCount: Int = resourcesRepository.cache.getLessonsCount(filterByLanguageId: languageModel.id)
 
@@ -103,7 +103,8 @@ extension GetLessonFilterLanguagesRepository {
             languageId: languageModel.id,
             languageNameTranslatedInLanguage: languageNameTranslatedInLanguage,
             languageNameTranslatedInAppLanguage: languageNameTranslatedInAppLanguage,
-            lessonsAvailableText: lessonsAvailableText
+            lessonsAvailableText: lessonsAvailableText,
+            lessonsAvailableCount: lessonsAvailableCount
         )
     }
     
