@@ -37,7 +37,7 @@ struct TranslationsCacheTests {
     @Test()
     func getRealmEnglishTranslation() async throws {
         
-        let translationsCache = getTranslationsCache(swiftPersistenceIsEnabled: false)
+        let translationsCache = try getTranslationsCache(swiftPersistenceIsEnabled: false)
         
         let translationId: String = "e0"
         
@@ -69,7 +69,7 @@ struct TranslationsCacheTests {
     ])
     func realmGetLatestTranslationByLanguageId(argument: TestArgument) async throws {
              
-        let translationsCache = getTranslationsCache(swiftPersistenceIsEnabled: false)
+        let translationsCache = try getTranslationsCache(swiftPersistenceIsEnabled: false)
         
         let languageId: String = try #require(argument.languageId)
         
@@ -103,11 +103,11 @@ struct TranslationsCacheTests {
 
 extension TranslationsCacheTests {
     
-    private func getTranslationsCache(swiftPersistenceIsEnabled: Bool) -> TranslationsCache {
+    private func getTranslationsCache(swiftPersistenceIsEnabled: Bool) throws -> TranslationsCache {
         
         if #available(iOS 17.4, *), swiftPersistenceIsEnabled {
             TempSharedSwiftDatabase.shared.setDatabase(
-                swiftDatabase: getSwiftDatabase()
+                swiftDatabase: try getSwiftDatabase()
             )
         }
         
@@ -258,9 +258,7 @@ extension TranslationsCacheTests {
     }
     
     @available(iOS 17.4, *)
-    private func getSwiftDatabase() -> godtools.SwiftDatabase {
-        return TestsInMemorySwiftDatabase(
-            addObjectsToDatabase: getSwiftDatabaseObjects()
-        )
+    private func getSwiftDatabase() throws -> SwiftDatabase {
+        return try TestsInMemorySwiftDatabase().createDatabase(addObjectsToDatabase: getSwiftDatabaseObjects())
     }
 }

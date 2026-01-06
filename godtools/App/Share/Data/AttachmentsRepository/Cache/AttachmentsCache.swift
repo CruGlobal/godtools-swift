@@ -8,6 +8,7 @@
 
 import Foundation
 import Combine
+import RepositorySync
 
 class AttachmentsCache: SwiftElseRealmPersistence<AttachmentDataModel, AttachmentCodable, RealmAttachment> {
     

@@ -48,9 +48,9 @@ struct TrackDownloadedTranslationsCacheTests {
             )
         ]
     )
-    func realmGetLatestDownloadedTranslationsByResourceIdAndLanguageId(argument: LatestDownloadedTranslationArgument) async {
+    func realmGetLatestDownloadedTranslationsByResourceIdAndLanguageId(argument: LatestDownloadedTranslationArgument) async throws {
         
-        let trackDownloadedTranslationsCache = getTrackDownloadedTranslationsCache(
+        let trackDownloadedTranslationsCache = try getTrackDownloadedTranslationsCache(
             swiftPersistenceIsEnabled: false
         )
         
@@ -124,7 +124,7 @@ struct TrackDownloadedTranslationsCacheTests {
     )
     func realmGetLatestDownloadedTranslationByResourceIdAndLanguageId(argument: LatestDownloadedTranslationArgument) async throws {
         
-        let trackDownloadedTranslationsCache = getTrackDownloadedTranslationsCache(
+        let trackDownloadedTranslationsCache = try getTrackDownloadedTranslationsCache(
             swiftPersistenceIsEnabled: false
         )
         
@@ -173,11 +173,11 @@ struct TrackDownloadedTranslationsCacheTests {
 
 extension TrackDownloadedTranslationsCacheTests {
     
-    private func getTrackDownloadedTranslationsCache(swiftPersistenceIsEnabled: Bool) -> TrackDownloadedTranslationsCache {
+    private func getTrackDownloadedTranslationsCache(swiftPersistenceIsEnabled: Bool) throws -> TrackDownloadedTranslationsCache {
     
         if #available(iOS 17.4, *), swiftPersistenceIsEnabled {
             TempSharedSwiftDatabase.shared.setDatabase(
-                swiftDatabase: getSwiftDatabase()
+                swiftDatabase: try getSwiftDatabase()
             )
         }
         
@@ -219,10 +219,8 @@ extension TrackDownloadedTranslationsCacheTests {
     }
     
     @available(iOS 17.4, *)
-    private func getSwiftDatabase() -> godtools.SwiftDatabase {
-        return TestsInMemorySwiftDatabase(
-            addObjectsToDatabase: getSwiftDatabaseObjects()
-        )
+    private func getSwiftDatabase() throws -> SwiftDatabase {
+        return try TestsInMemorySwiftDatabase().createDatabase(addObjectsToDatabase: getSwiftDatabaseObjects())
     }
 }
 

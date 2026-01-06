@@ -10,6 +10,7 @@ import Foundation
 import RealmSwift
 import Combine
 import SwiftData
+import RepositorySync
 
 class ResourcesCache: SwiftElseRealmPersistence<ResourceDataModel, ResourceCodable, RealmResource> {
     
@@ -291,7 +292,7 @@ extension ResourcesCache {
             
             let lessons: [SwiftResource] = swiftPersistence
                 .swiftDatabase
-                .getObjects(
+                .read.objectsNonThrowing(
                     context: swiftPersistence.swiftDatabase.openContext(),
                     query: getLessonsSwiftQuery(filterByLanguageId: nil, sorted: false)
                 )
