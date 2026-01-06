@@ -12,26 +12,29 @@ import SwiftData
 import RepositorySync
 
 @available(iOS 17.4, *)
-class TestsInMemorySwiftDatabase: godtools.SwiftDatabase {
+class TestsInMemorySwiftDatabase {
     
-    init(addObjectsToDatabase: [any IdentifiableSwiftDataObject] = Array()) {
+    init() {
+
+    }
+    
+    func createDatabase(addObjectsToDatabase: [any IdentifiableSwiftDataObject] = Array()) throws -> SwiftDatabase {
         
-        super.init(
-            config: InMemorySwiftDatabaseConfig(),
-            schema: Schema(versionedSchema: LatestProductionSwiftDataSchema.self),
-            migrationPlan: nil
+        let database = SwiftDatabase(
+            container: try SwiftDataContainer.createInMemoryContainer(
+                schema: Schema(versionedSchema: LatestProductionSwiftDataSchema.self)
+            )
         )
         
-        do {
-            try super.saveObjects(
-                context: super.openContext(),
-                objectsToAdd: addObjectsToDatabase,
-                objectsToRemove: []
+        let context: ModelContext = database.openContext()
+        
+        try database
+            .write
+            .objects(
+                context: context,
+                writeObjects: WriteSwiftObjects(deleteObjects: nil, insertObjects: addObjectsToDatabase)
             )
-        }
-        catch let error {
-            print("\n WARNING: TestsInMemorySwiftDatabase failed to add objects to database with error: \(error)")
-            assertionFailure(error.localizedDescription)
-        }
+        
+        return database
     }
 }

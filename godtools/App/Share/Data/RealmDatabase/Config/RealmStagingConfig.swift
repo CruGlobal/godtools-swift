@@ -1,17 +1,20 @@
 //
-//  RealmDatabaseStagingConfiguration.swift
+//  RealmStagingConfig.swift
 //  godtools
 //
-//  Created by Levi Eggert on 8/23/25.
-//  Copyright © 2025 Cru. All rights reserved.
+//  Created by Levi Eggert on 1/6/26.
+//  Copyright © 2026 Cru. All rights reserved.
 //
 
 import Foundation
 import RealmSwift
+import RepositorySync
 
-class RealmDatabaseStagingConfiguration: RealmDatabaseConfiguration {
-        
-    init() {
+final class RealmStagingConfig {
+    
+    static let diskFileName: String = "godtools_realm_staging"
+    
+    func createConfig() -> RealmDatabaseConfig {
         
         let migrationBlock = { @Sendable (migration: Migration, oldSchemaVersion: UInt64) in
                                     
@@ -22,9 +25,10 @@ class RealmDatabaseStagingConfiguration: RealmDatabaseConfiguration {
             }
         }
         
-        super.init(
-            cacheType: .disk(fileName: RealmStagingConfig.diskFileName, migrationBlock: migrationBlock),
-            schemaVersion: RealmProductionConfig.schemaVersion
+        return RealmDatabaseConfig(
+            fileName: Self.diskFileName,
+            schemaVersion: RealmProductionConfig.schemaVersion,
+            migrationBlock: migrationBlock
         )
     }
 }

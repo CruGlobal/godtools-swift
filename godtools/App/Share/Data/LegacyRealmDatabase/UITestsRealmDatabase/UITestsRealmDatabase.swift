@@ -51,7 +51,7 @@ class UITestsRealmDatabase: LegacyRealmDatabase {
         
         return RealmDatabaseConfiguration(
             cacheType: .disk(fileName: UITestsRealmDatabase.diskFileName, migrationBlock: migrationBlock),
-            schemaVersion: RealmDatabaseProductionConfiguration.schemaVersion
+            schemaVersion: RealmProductionConfig.schemaVersion
         )
     }
 }

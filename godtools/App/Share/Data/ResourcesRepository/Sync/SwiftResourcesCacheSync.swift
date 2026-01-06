@@ -9,6 +9,7 @@
 import Foundation
 import Combine
 import SwiftData
+import RepositorySync
 
 @available(iOS 17.4, *)
 class SwiftResourcesCacheSync {
@@ -34,7 +35,7 @@ class SwiftResourcesCacheSync {
             
             let context = swiftDatabase.openContext()
             
-            var newObjectsToStore: [any PersistentModel] = Array()
+            var newObjectsToStore: [any IdentifiableSwiftDataObject] = Array()
             
             var resourcesDictionary: [ResourceId: SwiftResource] = Dictionary()
             var translationsDictionary: [TranslationId: SwiftTranslation] = Dictionary()
@@ -44,7 +45,7 @@ class SwiftResourcesCacheSync {
             var existingResourcesMinusNewlyAddedResources: [SwiftResource]
             
             if shouldRemoveDataThatNoLongerExists {
-                let allResources: [SwiftResource] = swiftDatabase.getObjects(context: context, query: nil)
+                let allResources: [SwiftResource] = swiftDatabase.read.objectsNonThrowing(context: context, query: nil)
                 existingResourcesMinusNewlyAddedResources = allResources
             }
             else {
@@ -76,7 +77,7 @@ class SwiftResourcesCacheSync {
             var existingTranslationsMinusNewlyAddedTranslations: [SwiftTranslation]
             
             if shouldRemoveDataThatNoLongerExists {
-                let allTranslations: [SwiftTranslation] = swiftDatabase.getObjects(context: context, query: nil)
+                let allTranslations: [SwiftTranslation] = swiftDatabase.read.objectsNonThrowing(context: context, query: nil)
                 existingTranslationsMinusNewlyAddedTranslations = allTranslations
             }
             else {
@@ -94,7 +95,7 @@ class SwiftResourcesCacheSync {
                     }
                     
                     if let languageId = newTranslation.language?.id {
-                        translation.language = swiftDatabase.getObject(context: context, id: languageId)
+                        translation.language = swiftDatabase.read.objectNonThrowing(context: context, id: languageId)
                     }
                     
                     translationsDictionary[translation.id] = translation
@@ -117,7 +118,7 @@ class SwiftResourcesCacheSync {
             var existingAttachmentsMinusNewlyAddedAttachments: [SwiftAttachment]
             
             if shouldRemoveDataThatNoLongerExists {
-                let allAttachments: [SwiftAttachment] = swiftDatabase.getObjects(context: context, query: nil)
+                let allAttachments: [SwiftAttachment] = swiftDatabase.read.objectsNonThrowing(context: context, query: nil)
                 existingAttachmentsMinusNewlyAddedAttachments = allAttachments
             }
             else {
@@ -207,7 +208,7 @@ class SwiftResourcesCacheSync {
             //
             
             let translationIdsToRemove: [String] = existingTranslationsMinusNewlyAddedTranslations.map({$0.id})
-            let downloadedTranslationsToRemove: [SwiftDownloadedTranslation] = swiftDatabase.getObjects(context: context, ids: translationIdsToRemove)
+            let downloadedTranslationsToRemove: [SwiftDownloadedTranslation] = swiftDatabase.read.objectsNonThrowing(context: context, ids: translationIdsToRemove, sortBy: nil)
 
             let resourcesRemoved: [ResourceDataModel] = existingResourcesMinusNewlyAddedResources.map({ResourceDataModel(interface: $0)})
             let translationsRemoved: [TranslationDataModel] = existingTranslationsMinusNewlyAddedTranslations.map({TranslationDataModel(interface: $0)})
@@ -215,7 +216,7 @@ class SwiftResourcesCacheSync {
             let downloadedTranslationsRemoved: [DownloadedTranslationDataModel] = downloadedTranslationsToRemove.map({DownloadedTranslationDataModel(interface: $0)})
             
             // delete realm objects that no longer exist
-            var objectsToRemove: [any PersistentModel] = Array()
+            var objectsToRemove: [any IdentifiableSwiftDataObject] = Array()
                             
             objectsToRemove.append(contentsOf: existingResourcesMinusNewlyAddedResources)
             objectsToRemove.append(contentsOf: existingTranslationsMinusNewlyAddedTranslations)
@@ -224,11 +225,15 @@ class SwiftResourcesCacheSync {
             
             do {
                 
-                try swiftDatabase.saveObjects(
-                    context: context,
-                    objectsToAdd: newObjectsToStore,
-                    objectsToRemove: objectsToRemove
-                )
+                try swiftDatabase
+                    .write
+                    .objects(
+                        context: context,
+                        writeObjects: WriteSwiftObjects(
+                            deleteObjects: objectsToRemove,
+                            insertObjects: newObjectsToStore
+                        )
+                    )
                 
                 let syncResult = ResourcesCacheSyncResult(
                     resourcesRemoved: resourcesRemoved,

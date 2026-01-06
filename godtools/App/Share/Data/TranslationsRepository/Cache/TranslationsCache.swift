@@ -8,6 +8,8 @@
 
 import Foundation
 import RealmSwift
+import SwiftData
+import RepositorySync
 
 class TranslationsCache: SwiftElseRealmPersistence<TranslationDataModel, TranslationCodable, RealmTranslation> {
          
@@ -96,7 +98,8 @@ extension TranslationsCache {
     @available(iOS 17.4, *)
     private func getResourceLatestTranslations(swiftDatabase: SwiftDatabase, resourceId: String) -> [SwiftTranslation] {
         
-        let resource: SwiftResource? = swiftDatabase.getObject(context: swiftDatabase.openContext(), id: resourceId)
+        let context: ModelContext = swiftDatabase.openContext()
+        let resource: SwiftResource? = swiftDatabase.read.objectNonThrowing(context: context, id: resourceId)
         
         guard let resource = resource else {
             return Array()

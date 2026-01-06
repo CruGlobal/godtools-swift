@@ -10,6 +10,7 @@ import Foundation
 import RealmSwift
 import Combine
 import SwiftData
+import RepositorySync
 
 class TrackDownloadedTranslationsCache: SwiftElseRealmPersistence<DownloadedTranslationDataModel, DownloadedTranslationDataModel, RealmDownloadedTranslation> {
     

@@ -19,21 +19,21 @@ struct ResourcesCacheTests {
     private let spanishLanguageId: Int = 1
     
     @Test()
-    func getLessonCount() async {
+    func getLessonCount() async throws {
         
         let expectedLessonCount: Int = 7
         
-        let realmResourcesCache = getResourcesCache(swiftPersistenceIsEnabled: false)
+        let realmResourcesCache = try getResourcesCache(swiftPersistenceIsEnabled: false)
         
         #expect(realmResourcesCache.getLessonsCount() == expectedLessonCount)
         
-        let resourcesCache = getResourcesCache(swiftPersistenceIsEnabled: true)
+        let resourcesCache = try getResourcesCache(swiftPersistenceIsEnabled: true)
         
         #expect(resourcesCache.getLessonsCount() == expectedLessonCount)
     }
     
     @Test()
-    func getLessons() async {
+    func getLessons() async throws {
         
         let expectedLessonIds: [String] = [
             getLessonId(id: 0),
@@ -45,26 +45,26 @@ struct ResourcesCacheTests {
             getLessonId(id: 8)
         ]
                 
-        let realmResourcesCache = getResourcesCache(swiftPersistenceIsEnabled: false)
+        let realmResourcesCache = try getResourcesCache(swiftPersistenceIsEnabled: false)
         let realmLessons = realmResourcesCache.getLessons(filterByLanguageId: nil, sorted: false)
         
         #expect(realmLessons.map {$0.id}.sorted() == expectedLessonIds)
         
-        let resourcesCache = getResourcesCache(swiftPersistenceIsEnabled: true)
+        let resourcesCache = try getResourcesCache(swiftPersistenceIsEnabled: true)
         let lessons = resourcesCache.getLessons(filterByLanguageId: nil, sorted: false)
         
         #expect(lessons.map {$0.id}.sorted() == expectedLessonIds)
     }
     
     @Test()
-    func getLessonsByLanguageId() async {
+    func getLessonsByLanguageId() async throws {
         
         let expectedLessonIds: [String] = [
             getLessonId(id: 2),
             getLessonId(id: 6)
         ]
         
-        let realmResourcesCache = getResourcesCache(swiftPersistenceIsEnabled: false)
+        let realmResourcesCache = try getResourcesCache(swiftPersistenceIsEnabled: false)
         let realmLessons = realmResourcesCache.getLessons(
             filterByLanguageId: getLanguageId(id: spanishLanguageId),
             sorted: false
@@ -72,7 +72,7 @@ struct ResourcesCacheTests {
         
         #expect(realmLessons.map {$0.id}.sorted() == expectedLessonIds)
         
-        let resourcesCache = getResourcesCache(swiftPersistenceIsEnabled: true)
+        let resourcesCache = try getResourcesCache(swiftPersistenceIsEnabled: true)
         let lessons = resourcesCache.getLessons(
             filterByLanguageId: getLanguageId(id: spanishLanguageId),
             sorted: false
@@ -82,7 +82,7 @@ struct ResourcesCacheTests {
     }
     
     @Test()
-    func getFeaturedLessons() async {
+    func getFeaturedLessons() async throws {
         
         let expectedLessonIds: [String] = [
             getLessonId(id: 6),
@@ -90,31 +90,31 @@ struct ResourcesCacheTests {
             getLessonId(id: 8)
         ]
                 
-        let realmResourcesCache = getResourcesCache(swiftPersistenceIsEnabled: false)
+        let realmResourcesCache = try getResourcesCache(swiftPersistenceIsEnabled: false)
         let realmLessons = realmResourcesCache.getFeaturedLessons(sorted: false)
         
         #expect(realmLessons.map {$0.id}.sorted() == expectedLessonIds)
         
-        let resourcesCache = getResourcesCache(swiftPersistenceIsEnabled: true)
+        let resourcesCache = try getResourcesCache(swiftPersistenceIsEnabled: true)
         let lessons = resourcesCache.getFeaturedLessons(sorted: false)
         
         #expect(lessons.map {$0.id}.sorted() == expectedLessonIds)
     }
     
     @Test()
-    func getLessonsSupportedLanguageIds() async {
+    func getLessonsSupportedLanguageIds() async throws {
         
         let expectedLanguageIds: [String] = [
             getLanguageId(id: englishLanguageId),
             getLanguageId(id: spanishLanguageId)
         ]
         
-        let realmResourcesCache = getResourcesCache(swiftPersistenceIsEnabled: false)
+        let realmResourcesCache = try getResourcesCache(swiftPersistenceIsEnabled: false)
         let realmLessonLanguageIds = realmResourcesCache.getLessonsSupportedLanguageIds()
         
         #expect(realmLessonLanguageIds.sorted() == expectedLanguageIds.sorted())
         
-        let resourcesCache = getResourcesCache(swiftPersistenceIsEnabled: true)
+        let resourcesCache = try getResourcesCache(swiftPersistenceIsEnabled: true)
         let lessonLanguageIds = resourcesCache.getLessonsSupportedLanguageIds()
         
         #expect(lessonLanguageIds.sorted() == expectedLanguageIds.sorted())
@@ -123,11 +123,11 @@ struct ResourcesCacheTests {
 
 extension ResourcesCacheTests {
     
-    private func getResourcesCache(swiftPersistenceIsEnabled: Bool) -> ResourcesCache {
+    private func getResourcesCache(swiftPersistenceIsEnabled: Bool) throws -> ResourcesCache {
         
         if #available(iOS 17.4, *), swiftPersistenceIsEnabled {
             TempSharedSwiftDatabase.shared.setDatabase(
-                swiftDatabase: getSwiftDatabase()
+                swiftDatabase: try getSwiftDatabase()
             )
         }
         
@@ -396,9 +396,7 @@ extension ResourcesCacheTests {
     }
     
     @available(iOS 17.4, *)
-    private func getSwiftDatabase() -> godtools.SwiftDatabase {
-        return TestsInMemorySwiftDatabase(
-            addObjectsToDatabase: getSwiftDatabaseObjects()
-        )
+    private func getSwiftDatabase() throws -> SwiftDatabase {
+        return try TestsInMemorySwiftDatabase().createDatabase(addObjectsToDatabase: getSwiftDatabaseObjects())
     }
 }
