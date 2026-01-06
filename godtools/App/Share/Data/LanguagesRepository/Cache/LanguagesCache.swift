@@ -11,12 +11,11 @@ import RepositorySync
 
 class LanguagesCache: SwiftElseRealmPersistence<LanguageDataModel, LanguageCodable, RealmLanguage> {
         
-    init(realmDatabase: LegacyRealmDatabase, swiftPersistenceIsEnabled: Bool? = nil) {
+    init(realmDatabase: LegacyRealmDatabase) {
                 
         super.init(
             realmDatabase: realmDatabase,
-            realmDataModelMapping: RealmLanguageDataModelMapping(),
-            swiftPersistenceIsEnabled: swiftPersistenceIsEnabled
+            realmDataModelMapping: RealmLanguageDataModelMapping()
         )
     }
     
