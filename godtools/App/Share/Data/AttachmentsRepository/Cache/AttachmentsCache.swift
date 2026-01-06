@@ -22,8 +22,7 @@ class AttachmentsCache: SwiftElseRealmPersistence<AttachmentDataModel, Attachmen
         
         super.init(
             realmDatabase: realmDatabase,
-            realmDataModelMapping: RealmAttachmentDataModelMapping(),
-            swiftPersistenceIsEnabled: nil
+            realmDataModelMapping: RealmAttachmentDataModelMapping()
         )
     }
     
