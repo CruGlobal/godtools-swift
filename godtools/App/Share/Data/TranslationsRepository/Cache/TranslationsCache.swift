@@ -15,14 +15,13 @@ class TranslationsCache: SwiftElseRealmPersistence<TranslationDataModel, Transla
          
     private let realmDatabase: LegacyRealmDatabase
     
-    init(realmDatabase: LegacyRealmDatabase, swiftPersistenceIsEnabled: Bool? = nil) {
+    init(realmDatabase: LegacyRealmDatabase) {
         
         self.realmDatabase = realmDatabase
         
         super.init(
             realmDatabase: realmDatabase,
-            realmDataModelMapping: RealmTranslationDataModelMapping(),
-            swiftPersistenceIsEnabled: swiftPersistenceIsEnabled
+            realmDataModelMapping: RealmTranslationDataModelMapping()
         )
     }
     

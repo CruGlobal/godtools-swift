@@ -16,14 +16,13 @@ class TrackDownloadedTranslationsCache: SwiftElseRealmPersistence<DownloadedTran
     
     private let realmDatabase: LegacyRealmDatabase
         
-    init(realmDatabase: LegacyRealmDatabase, swiftPersistenceIsEnabled: Bool? = nil) {
+    init(realmDatabase: LegacyRealmDatabase) {
         
         self.realmDatabase = realmDatabase
         
         super.init(
             realmDatabase: realmDatabase,
-            realmDataModelMapping: RealmDownloadedTranslationDataModelMapping(),
-            swiftPersistenceIsEnabled: swiftPersistenceIsEnabled
+            realmDataModelMapping: RealmDownloadedTranslationDataModelMapping()
         )
     }
     

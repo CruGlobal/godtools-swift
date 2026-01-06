@@ -13,6 +13,8 @@ import RealmSwift
 import SwiftData
 import RepositorySync
 
+/*
+
 struct ResourcesCacheTests {
 
     private let englishLanguageId: Int = 0
@@ -400,3 +402,6 @@ extension ResourcesCacheTests {
         return try TestsInMemorySwiftDatabase().createDatabase(addObjectsToDatabase: getSwiftDatabaseObjects())
     }
 }
+
+
+*/

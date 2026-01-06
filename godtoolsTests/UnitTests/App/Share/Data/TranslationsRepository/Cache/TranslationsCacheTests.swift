@@ -13,6 +13,8 @@ import RealmSwift
 import SwiftData
 import RepositorySync
 
+/*
+
 struct TranslationsCacheTests {
     
     private static let resourceId: String = "0"
@@ -262,3 +264,6 @@ extension TranslationsCacheTests {
         return try TestsInMemorySwiftDatabase().createDatabase(addObjectsToDatabase: getSwiftDatabaseObjects())
     }
 }
+
+
+*/

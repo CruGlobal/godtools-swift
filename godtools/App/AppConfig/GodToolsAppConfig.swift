@@ -136,8 +136,9 @@ class GodToolsAppConfig: AppConfigInterface {
         
         // TODO: Remove optional SwiftDatabase? once enabled. ~Levi
         // TODO: Return database once SwiftDatabase can be enabled. ~Levi
-        //return nil
+        return nil
         
+        /*
         let database: SwiftDatabase
         
         switch appBuild.environment {
@@ -153,7 +154,7 @@ class GodToolsAppConfig: AppConfigInterface {
             )
         }
         
-        return database
+        return database*/
     }
     
     func getTractRemoteShareConnectionUrl() -> String {
