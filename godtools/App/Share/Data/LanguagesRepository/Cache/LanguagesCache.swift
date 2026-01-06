@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RepositorySync
 
 class LanguagesCache: SwiftElseRealmPersistence<LanguageDataModel, LanguageCodable, RealmLanguage> {
         
