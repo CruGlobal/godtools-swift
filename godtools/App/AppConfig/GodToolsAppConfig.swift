@@ -8,6 +8,7 @@
 
 import Foundation
 import SocialAuthentication
+import RepositorySync
 
 class GodToolsAppConfig: AppConfigInterface {
     
@@ -114,6 +115,45 @@ class GodToolsAppConfig: AppConfigInterface {
         case .production:
             return LegacyRealmDatabase(databaseConfiguration: RealmDatabaseProductionConfiguration())
         }
+    }
+    
+    func getRealmDatabase() -> RealmDatabase {
+        
+        let config: RealmDatabaseConfig
+        
+        switch appBuild.environment {
+        case .staging:
+            config = RealmStagingConfig().createConfig()
+        case .production:
+            config = RealmProductionConfig().createConfig()
+        }
+        
+        return RealmDatabase(databaseConfig: config)
+    }
+    
+    @available(iOS 17.4, *)
+    func getSwiftDatabase() throws -> SwiftDatabase? {
+        
+        // TODO: Remove optional SwiftDatabase? once enabled. ~Levi
+        // TODO: Return database once SwiftDatabase can be enabled. ~Levi
+        //return nil
+        
+        let database: SwiftDatabase
+        
+        switch appBuild.environment {
+       
+        case .staging:
+            database = SwiftDatabase(
+                container: try SwiftDataStagingContainer().createContainer()
+            )
+            
+        case .production:
+            database = SwiftDatabase(
+                container: try SwiftDataProductionContainer().createContainer()
+            )
+        }
+        
+        return database
     }
     
     func getTractRemoteShareConnectionUrl() -> String {

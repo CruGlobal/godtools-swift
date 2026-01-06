@@ -69,7 +69,7 @@ extension SwiftRepositorySyncPersistence {
             .prepend(prependNotification)
             .compactMap { (notification: Notification) in
                                                 
-                let swiftDatabaseConfigName: String = swiftDatabaseRef.configName
+                let swiftDatabaseConfigName: String = swiftDatabaseRef.container.configName
                 let fromContextConfigurations: Set<ModelConfiguration> = (notification.object as? ModelContext)?.container.configurations ?? Set<ModelConfiguration>()
                 let fromConfigNames: [String] = fromContextConfigurations.map { $0.name }
                 let isSameContainer: Bool = fromConfigNames.contains(swiftDatabaseConfigName)
@@ -139,15 +139,11 @@ extension SwiftRepositorySyncPersistence {
 extension SwiftRepositorySyncPersistence {
     
     func getObjectCount() -> Int {
-        return swiftDatabase.getObjectCount(
-            query: SwiftDatabaseQuery<PersistObjectType>(
-                fetchDescriptor: FetchDescriptor<PersistObjectType>()
-            )
-        )
+        return getNumberOfObjects(query: nil)
     }
     
     func getObjectCount(query: SwiftDatabaseQuery<PersistObjectType>?) -> Int {
-        return swiftDatabase.getObjectCount(query: query)
+        return getNumberOfObjects(query: query)
     }
     
     func getObject(id: String) -> DataModelType? {
@@ -170,7 +166,7 @@ extension SwiftRepositorySyncPersistence {
         
         let context: ModelContext = swiftDatabase.openContext()
         
-        let objects: [PersistObjectType] = swiftDatabase.getObjects(
+        let objects: [PersistObjectType] = swiftDatabase.read.objectsNonThrowing(
             context: context,
             query: query
         )
@@ -191,7 +187,12 @@ extension SwiftRepositorySyncPersistence {
     
     private func getNumberOfObjects(query: SwiftDatabaseQuery<PersistObjectType>?) -> Int {
         
-        return swiftDatabase.getObjectCount(query: query)
+        let query: SwiftDatabaseQuery<PersistObjectType> = query ?? SwiftDatabaseQuery<PersistObjectType>(fetchDescriptor: FetchDescriptor<PersistObjectType>())
+        
+        return swiftDatabase.read.objectCountNonThrowing(
+            context: swiftDatabase.openContext(),
+            query: query
+        )
     }
     
     private func getObjectsByIdsFilter(ids: [String]) -> Predicate<PersistObjectType> {
@@ -220,7 +221,7 @@ extension SwiftRepositorySyncPersistence {
         
         if deleteObjectsNotFoundInExternalObjects {
             // store all objects in the collection
-            objectsToRemove = swiftDatabase.getObjects(context: context, query: nil)
+            objectsToRemove = swiftDatabase.read.objectsNonThrowing(context: context, query: nil)
         }
         else {
             objectsToRemove = Array()
@@ -244,10 +245,9 @@ extension SwiftRepositorySyncPersistence {
         }
         
         do {
-            try swiftDatabase.saveObjects(
+            try swiftDatabase.write.objects(
                 context: context,
-                objectsToAdd: objectsToAdd,
-                objectsToRemove: objectsToRemove
+                writeObjects: WriteSwiftObjects(deleteObjects: objectsToRemove, insertObjects: objectsToAdd)
             )
         }
         catch let error {
@@ -264,7 +264,19 @@ extension SwiftRepositorySyncPersistence {
 extension SwiftRepositorySyncPersistence {
     
     func deleteAllObjects() {
+                
+        let context: ModelContext = swiftDatabase.openContext()
         
-        swiftDatabase.deleteAllObjects()
+        let objectsToRemove: [PersistObjectType] = swiftDatabase.read.objectsNonThrowing(context: context, query: nil)
+        
+        do {
+            try swiftDatabase.write.objects(
+                context: context,
+                writeObjects: WriteSwiftObjects(deleteObjects: objectsToRemove, insertObjects: nil)
+            )
+        }
+        catch let error {
+            assertionFailure("Failed to save SwiftData context with error: \(error.localizedDescription)")
+        }
     }
 }

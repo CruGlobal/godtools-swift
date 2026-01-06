@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftData
+import RepositorySync
 
 // TODO: GT-2753 Can be removed and moved to AppDataLayerDependencies once RealmSwift is removed and supporting iOS 17 and up. ~Levi
 @available(iOS 17.4, *)
@@ -36,11 +37,16 @@ class TempSharedSwiftDatabase {
         self.database = swiftDatabase
     }
     
-    private func getProductionDatabase() -> SwiftDatabase {
-        return SwiftDatabase(
-            config: ProductionSwiftDatabaseConfig(),
-            schema: Schema(versionedSchema: LatestProductionSwiftDataSchema.self),
-            migrationPlan: nil
-        )
+    private func getProductionDatabase() -> SwiftDatabase? {
+        
+        do {
+            return SwiftDatabase(
+                container: try SwiftDataProductionContainer().createContainer()
+            )
+        }
+        catch let error {
+            assertionFailure("Failed to create swift database")
+            return nil
+        }
     }
 }

@@ -41,7 +41,7 @@ struct LanguagesCacheTests {
     ])
     func realmQueryLanguageByCode(argument: TestArgument) async throws {
                 
-        let languagesCache: LanguagesCache = getLanguagesCache(
+        let languagesCache: LanguagesCache = try getLanguagesCache(
             swiftPersistenceIsEnabled: false
         )
         
@@ -68,7 +68,7 @@ struct LanguagesCacheTests {
     ])
     func queryLanguageByCode(argument: TestArgument) async throws {
                 
-        let languagesCache: LanguagesCache = getLanguagesCache(
+        let languagesCache: LanguagesCache = try getLanguagesCache(
             swiftPersistenceIsEnabled: true
         )
         
@@ -93,9 +93,9 @@ struct LanguagesCacheTests {
             expectedLanguageIds: []
         )
     ])
-    func realmQueryLanguagesByCodes(argument: TestArgument) async {
+    func realmQueryLanguagesByCodes(argument: TestArgument) async  throws {
         
-        let languagesCache: LanguagesCache = getLanguagesCache(
+        let languagesCache: LanguagesCache = try getLanguagesCache(
             swiftPersistenceIsEnabled: false
         )
         
@@ -122,9 +122,9 @@ struct LanguagesCacheTests {
             expectedLanguageIds: []
         )
     ])
-    func queryLanguagesByCodes(argument: TestArgument) async {
+    func queryLanguagesByCodes(argument: TestArgument) async  throws {
         
-        let languagesCache: LanguagesCache = getLanguagesCache(
+        let languagesCache: LanguagesCache = try getLanguagesCache(
             swiftPersistenceIsEnabled: true
         )
         
@@ -167,11 +167,11 @@ extension LanguagesCacheTests {
         }
     }
     
-    private func getLanguagesCache(swiftPersistenceIsEnabled: Bool) -> LanguagesCache {
+    private func getLanguagesCache(swiftPersistenceIsEnabled: Bool) throws -> LanguagesCache {
         
         if #available(iOS 17.4, *), swiftPersistenceIsEnabled {
             TempSharedSwiftDatabase.shared.setDatabase(
-                swiftDatabase: getSwiftDatabase()
+                swiftDatabase: try getSwiftDatabase()
             )
         }
         
@@ -211,9 +211,7 @@ extension LanguagesCacheTests {
     }
     
     @available(iOS 17.4, *)
-    private func getSwiftDatabase() -> godtools.SwiftDatabase {
-        return TestsInMemorySwiftDatabase(
-            addObjectsToDatabase: getSwiftDatabaseObjects()
-        )
+    private func getSwiftDatabase() throws -> SwiftDatabase {
+        return try TestsInMemorySwiftDatabase().createDatabase(addObjectsToDatabase: getSwiftDatabaseObjects())
     }
 }
