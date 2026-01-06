@@ -29,7 +29,8 @@ struct GetLessonsListRepositoryTests {
             languageId: spanishLanguageId,
             languageNameTranslatedInLanguage: "",
             languageNameTranslatedInAppLanguage: "",
-            lessonsAvailableText: ""
+            lessonsAvailableText: "",
+            lessonsAvailableCount: 0
         )
         
         let getLessonsListRepository: GetLessonsListRepository = getLessonsListRepository()
@@ -141,7 +142,8 @@ struct GetLessonsListRepositoryTests {
             languageId: LanguageCodeDomainModel.spanish.rawValue,
             languageNameTranslatedInLanguage: "",
             languageNameTranslatedInAppLanguage: "",
-            lessonsAvailableText: ""
+            lessonsAvailableText: "",
+            lessonsAvailableCount: 0
         )
                                 
         let getLessonsListRepository: GetLessonsListRepository = getLessonsListRepository()

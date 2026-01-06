@@ -10,10 +10,9 @@ import UIKit
 import Combine
 
 class DashboardFlow: Flow, ToolNavigationFlow {
-    
-    private static let startingTab: DashboardTabTypeDomainModel = .favorites
-    
-    private let dashboardTabObserver = CurrentValueSubject<DashboardTabTypeDomainModel, Never>(DashboardFlow.startingTab)
+        
+    private let dashboardTabObserver: CurrentValueSubject<DashboardTabTypeDomainModel, Never>
+    private let startingTab: DashboardTabTypeDomainModel = .favorites
     
     private var tutorialFlow: TutorialFlow?
     private var learnToShareToolFlow: LearnToShareToolFlow?
@@ -37,6 +36,8 @@ class DashboardFlow: Flow, ToolNavigationFlow {
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController
         self.rootController = rootController
+        
+        dashboardTabObserver = CurrentValueSubject(startingTab)
         
         appDiContainer.feature.appLanguage.domainLayer
             .getCurrentAppLanguageUseCase()
@@ -340,7 +341,7 @@ extension DashboardFlow {
     private func getNewDashboardView(startingTab: DashboardTabTypeDomainModel?) -> UIViewController {
                 
         let viewModel = DashboardViewModel(
-            startingTab: startingTab ?? Self.startingTab,
+            startingTab: startingTab ?? self.startingTab,
             flowDelegate: self,
             dashboardPresentationLayerDependencies: DashboardPresentationLayerDependencies(
                 appDiContainer: appDiContainer,
@@ -384,7 +385,9 @@ extension DashboardFlow {
         navigationController.setLayoutDirectionPublisherToApplicationLayout()
     }
     
-    func navigateToDashboard(startingTab: DashboardTabTypeDomainModel = DashboardFlow.startingTab, animatePopToToolsMenu: Bool = false, animateDismissingPresentedView: Bool = false, didCompleteDismissingPresentedView: (() -> Void)? = nil) {
+    func navigateToDashboard(startingTab: DashboardTabTypeDomainModel? = nil, animatePopToToolsMenu: Bool = false, animateDismissingPresentedView: Bool = false, didCompleteDismissingPresentedView: (() -> Void)? = nil) {
+        
+        let startingTab: DashboardTabTypeDomainModel = startingTab ?? self.startingTab
         
         if let dashboard = getDashboardInNavigationStack() {
             

@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftData
+import RepositorySync
 
 // TODO: This class can be removed once RealmSwift is removed in place of SwiftData for iOS 17 minimum and up. ~Levi
 open class SwiftElseRealmPersistence<DataModelType, ExternalObjectType, RealmObjectType: IdentifiableRealmObject> {

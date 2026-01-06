@@ -11,6 +11,7 @@ import Testing
 import Foundation
 import RealmSwift
 import SwiftData
+import RepositorySync
 
 struct LanguagesCacheTests {
         
@@ -210,7 +211,7 @@ extension LanguagesCacheTests {
     }
     
     @available(iOS 17.4, *)
-    private func getSwiftDatabase() -> SwiftDatabase {
+    private func getSwiftDatabase() -> godtools.SwiftDatabase {
         return TestsInMemorySwiftDatabase(
             addObjectsToDatabase: getSwiftDatabaseObjects()
         )

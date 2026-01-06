@@ -9,6 +9,7 @@
 import Foundation
 import SwiftData
 import Combine
+import RepositorySync
 
 @available(iOS 17.4, *)
 class SwiftRepositorySyncPersistence<DataModelType, ExternalObjectType, PersistObjectType: IdentifiableSwiftDataObject>: RepositorySyncPersistence {

@@ -9,6 +9,7 @@
 import Foundation
 import RealmSwift
 @testable import godtools
+import RepositorySync
 
 class TestRealmObject: Object, IdentifiableRealmObject {
     

@@ -10,6 +10,7 @@ import Testing
 @testable import godtools
 import Foundation
 import SwiftData
+import RepositorySync
 
 struct SwiftRepositorySyncPersistenceTests {
     
@@ -233,7 +234,7 @@ struct SwiftRepositorySyncPersistenceTests {
 @available(iOS 17.4, *)
 extension SwiftRepositorySyncPersistenceTests {
     
-    static func getPersistence(swiftDatabaseName: String, addObjectsByIds: [String]) -> SwiftRepositorySyncPersistence<MockRepositorySyncDataModel, MockRepositorySyncDataModel, MockRepositorySyncSwiftDataObject> {
+    static func getPersistence(swiftDatabaseName: String, addObjectsByIds: [String]) -> godtools.SwiftRepositorySyncPersistence<MockRepositorySyncDataModel, MockRepositorySyncDataModel, MockRepositorySyncSwiftDataObject> {
         
         return SwiftRepositorySyncPersistence(
             swiftDatabase: getSwiftDatabase(
@@ -279,7 +280,7 @@ extension SwiftRepositorySyncPersistenceTests {
         ))
     }
     
-    private static func getSwiftDatabase(name: String) -> SwiftDatabase {
+    private static func getSwiftDatabase(name: String) -> godtools.SwiftDatabase {
         
         let swiftDatabase = SwiftDatabase(
             config: getSwiftDatabaseConfiguration(name: name),
@@ -290,9 +291,9 @@ extension SwiftRepositorySyncPersistenceTests {
         return swiftDatabase
     }
     
-    static func getSwiftDatabase(name: String, addObjects: [any IdentifiableSwiftDataObject]) -> SwiftDatabase {
+    static func getSwiftDatabase(name: String, addObjects: [any IdentifiableSwiftDataObject]) -> godtools.SwiftDatabase {
         
-        let swiftDatabase: SwiftDatabase = Self.getSwiftDatabase(name: name)
+        let swiftDatabase: godtools.SwiftDatabase = Self.getSwiftDatabase(name: name)
         
         let context: ModelContext = swiftDatabase.openContext()
         
@@ -312,7 +313,7 @@ extension SwiftRepositorySyncPersistenceTests {
     
     static func deleteSwiftDatabase(name: String) {
         
-        let swiftDatabase: SwiftDatabase = Self.getSwiftDatabase(name: name)
+        let swiftDatabase: godtools.SwiftDatabase = Self.getSwiftDatabase(name: name)
         
         swiftDatabase.deleteAllObjects()
     }

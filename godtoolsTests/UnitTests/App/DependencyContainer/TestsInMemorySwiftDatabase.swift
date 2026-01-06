@@ -9,9 +9,10 @@
 import Foundation
 @testable import godtools
 import SwiftData
+import RepositorySync
 
 @available(iOS 17.4, *)
-class TestsInMemorySwiftDatabase: SwiftDatabase {
+class TestsInMemorySwiftDatabase: godtools.SwiftDatabase {
     
     init(addObjectsToDatabase: [any IdentifiableSwiftDataObject] = Array()) {
         
