@@ -8,7 +8,8 @@
 
 import Foundation
 import SocialAuthentication
-import RealmSwift
+import RepositorySync
+import SwiftData
 
 class UITestsAppConfig: AppConfigInterface {
     
@@ -62,6 +63,23 @@ class UITestsAppConfig: AppConfigInterface {
     
     func getLegacyRealmDatabase() -> LegacyRealmDatabase {
         return UITestsRealmDatabase()
+    }
+    
+    func getRealmDatabase() -> RealmDatabase {
+        return RealmDatabase(databaseConfig: RealmDatabaseConfig.createInMemoryConfig())
+    }
+    
+    @available(iOS 17.4, *)
+    func getSwiftDatabase() throws -> SwiftDatabase? {
+       
+        let database = SwiftDatabase(
+            container: try SwiftDataContainer.createInMemoryContainer(
+                name: "godtools_swiftdata_ui_tests",
+                schema: Schema(versionedSchema: LatestProductionSwiftDataSchema.self)
+            )
+        )
+        
+        return database
     }
     
     func getTractRemoteShareConnectionUrl() -> String {

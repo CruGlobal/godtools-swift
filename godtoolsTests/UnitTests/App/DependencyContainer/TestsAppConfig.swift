@@ -9,6 +9,8 @@
 import Foundation
 import SocialAuthentication
 @testable import godtools
+import RepositorySync
+import SwiftData
 
 class TestsAppConfig: AppConfigInterface {
     
@@ -68,6 +70,15 @@ class TestsAppConfig: AppConfigInterface {
     
     func getLegacyRealmDatabase() -> LegacyRealmDatabase {
         return realmDatabase
+    }
+    
+    func getRealmDatabase() -> RealmDatabase {
+        return RealmDatabase(databaseConfig: RealmDatabaseConfig.createInMemoryConfig())
+    }
+    
+    @available(iOS 17.4, *)
+    func getSwiftDatabase() throws -> SwiftDatabase? {
+        return nil
     }
     
     func getTractRemoteShareConnectionUrl() -> String {
