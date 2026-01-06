@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftData
+import RepositorySync
 
 @available(iOS 17.4, *)
 public class SwiftDatabaseQuery<T: IdentifiableSwiftDataObject> {

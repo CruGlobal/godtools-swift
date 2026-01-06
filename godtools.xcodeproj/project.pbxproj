@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		452556442C383C3F00AA0046 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 452556432C383C3F00AA0046 /* RealmSwift */; };
 		452556452C383C3F00AA0046 /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 452556432C383C3F00AA0046 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4548320B2F0C4EFC00CF9CF0 /* RepositorySync in Frameworks */ = {isa = PBXBuildFile; productRef = 4548320A2F0C4EFC00CF9CF0 /* RepositorySync */; };
+		4548320D2F0C4F0900CF9CF0 /* RepositorySync in Frameworks */ = {isa = PBXBuildFile; productRef = 4548320C2F0C4F0900CF9CF0 /* RepositorySync */; };
 		4581EAA32BFBE194008115FF /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4581EAA22BFBE194008115FF /* RealmSwift */; };
 		4581EAA52BFBE257008115FF /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4581EAA42BFBE257008115FF /* RealmSwift */; };
 		4581EAA72BFBE2B9008115FF /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 4581EAA22BFBE194008115FF /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -287,6 +289,7 @@
 				45E7D4C42977430A008C7503 /* ZipArchive in Frameworks */,
 				45B0F6A72DBBCC300011FF1D /* FirebaseMessaging in Frameworks */,
 				D4997E0E28D4CED800205B4C /* YouTubeiOSPlayerHelper in Frameworks */,
+				4548320B2F0C4EFC00CF9CF0 /* RepositorySync in Frameworks */,
 				45E39EDC27457E0C006A59E4 /* Lottie in Frameworks */,
 				45DF964B2D386C1C00C6AE68 /* FirebaseCrashlytics in Frameworks */,
 				45D48C8629F81324004E92B1 /* SocialAuthentication in Frameworks */,
@@ -301,6 +304,7 @@
 				45F671932C33440E0017C8C2 /* LocalizationServices in Frameworks */,
 				4593DF002EABFD93004E1C8D /* GodToolsShared in Frameworks */,
 				4581EAA52BFBE257008115FF /* RealmSwift in Frameworks */,
+				4548320D2F0C4F0900CF9CF0 /* RepositorySync in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -442,6 +446,7 @@
 				45DF96502D386C1C00C6AE68 /* FirebaseRemoteConfig */,
 				45B0F6A62DBBCC300011FF1D /* FirebaseMessaging */,
 				4593DEFD2EABFD45004E1C8D /* GodToolsShared */,
+				4548320A2F0C4EFC00CF9CF0 /* RepositorySync */,
 			);
 			productName = godtools;
 			productReference = 4F5732891EA69CF00082035C /* godtools.app */;
@@ -469,6 +474,7 @@
 				4581EAA42BFBE257008115FF /* RealmSwift */,
 				45F671922C33440E0017C8C2 /* LocalizationServices */,
 				4593DEFF2EABFD93004E1C8D /* GodToolsShared */,
+				4548320C2F0C4F0900CF9CF0 /* RepositorySync */,
 			);
 			productName = godtoolsTests;
 			productReference = 684328F11EB7CF66005E9131 /* godtoolsTests.xctest */;
@@ -600,6 +606,7 @@
 				45F6718F2C3343ED0017C8C2 /* XCRemoteSwiftPackageReference "localization-services-ios" */,
 				45DF96472D386C1C00C6AE68 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				4593DEFC2EABFD45004E1C8D /* XCRemoteSwiftPackageReference "godtools-shared-swift" */,
+				454832092F0C4EFC00CF9CF0 /* XCRemoteSwiftPackageReference "repository-sync-ios" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 4F57328A1EA69CF00082035C /* Products */;
@@ -1831,6 +1838,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		454832092F0C4EFC00CF9CF0 /* XCRemoteSwiftPackageReference "repository-sync-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/CruGlobal/repository-sync-ios";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 0.7.4;
+			};
+		};
 		4581EAA12BFBE194008115FF /* XCRemoteSwiftPackageReference "realm-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/realm-swift.git";
@@ -1918,6 +1933,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4581EAA12BFBE194008115FF /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
+		};
+		4548320A2F0C4EFC00CF9CF0 /* RepositorySync */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 454832092F0C4EFC00CF9CF0 /* XCRemoteSwiftPackageReference "repository-sync-ios" */;
+			productName = RepositorySync;
+		};
+		4548320C2F0C4F0900CF9CF0 /* RepositorySync */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 454832092F0C4EFC00CF9CF0 /* XCRemoteSwiftPackageReference "repository-sync-ios" */;
+			productName = RepositorySync;
 		};
 		4581EAA22BFBE194008115FF /* RealmSwift */ = {
 			isa = XCSwiftPackageProductDependency;
