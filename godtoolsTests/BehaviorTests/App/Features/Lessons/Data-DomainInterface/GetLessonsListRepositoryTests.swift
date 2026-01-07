@@ -36,9 +36,7 @@ struct GetLessonsListRepositoryTests {
         let getLessonsListRepository: GetLessonsListRepository = getLessonsListRepository()
         
         var lessonsRef: [LessonListItemDomainModel] = Array()
-        
-        var sinkCount: Int = 0
-        
+                
         await withCheckedContinuation { continuation in
             
             let timeoutTask = Task {
@@ -51,18 +49,15 @@ struct GetLessonsListRepositoryTests {
                     appLanguage: appLanguageEnglish,
                     filterLessonsByLanguage: spanishLanguageFilter
                 )
-                .sink { (lessons: [LessonListItemDomainModel]) in
-                                        
-                    sinkCount += 1
+                .sink(receiveCompletion: { _ in
                     
-                    if sinkCount == 1 {
-                        
-                        lessonsRef = lessons
-                        
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    }
-                }
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
+                    
+                }, receiveValue: { (lessons: [LessonListItemDomainModel]) in
+                    
+                    lessonsRef = lessons
+                })
                 .store(in: &cancellables)
         }
         
@@ -89,9 +84,7 @@ struct GetLessonsListRepositoryTests {
         let getLessonsListRepository: GetLessonsListRepository = getLessonsListRepository()
         
         var lessonsRef: [LessonListItemDomainModel] = Array()
-        
-        var sinkCount: Int = 0
-        
+                
         await withCheckedContinuation { continuation in
             
             let timeoutTask = Task {
@@ -104,18 +97,15 @@ struct GetLessonsListRepositoryTests {
                     appLanguage: appLanguageArabic,
                     filterLessonsByLanguage: nil
                 )
-                .sink { (lessons: [LessonListItemDomainModel]) in
-                                        
-                    sinkCount += 1
+                .sink(receiveCompletion: { _ in
                     
-                    if sinkCount == 1 {
-                        
-                        lessonsRef = lessons
-                        
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    }
-                }
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
+                    
+                }, receiveValue: { (lessons: [LessonListItemDomainModel]) in
+                    
+                    lessonsRef = lessons
+                })
                 .store(in: &cancellables)
         }
         
@@ -149,9 +139,7 @@ struct GetLessonsListRepositoryTests {
         let getLessonsListRepository: GetLessonsListRepository = getLessonsListRepository()
         
         var lessonsRef: [LessonListItemDomainModel] = Array()
-        
-        var sinkCount: Int = 0
-        
+                
         await withCheckedContinuation { continuation in
             
             let timeoutTask = Task {
@@ -164,18 +152,15 @@ struct GetLessonsListRepositoryTests {
                     appLanguage: appLanguageEnglish,
                     filterLessonsByLanguage: spanishLanguageFilter
                 )
-                .sink { (lessons: [LessonListItemDomainModel]) in
-                                        
-                    sinkCount += 1
+                .sink(receiveCompletion: { _ in
                     
-                    if sinkCount == 1 {
-                        
-                        lessonsRef = lessons
-                        
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    }
-                }
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
+                    
+                }, receiveValue: { (lessons: [LessonListItemDomainModel]) in
+                    
+                    lessonsRef = lessons
+                })
                 .store(in: &cancellables)
         }
         

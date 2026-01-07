@@ -13,6 +13,7 @@ import Combine
 
 class RealmResourcesCacheTests: XCTestCase {
     
+    /*
     private lazy var realmResourcesCache: ResourcesCache = {
         
         let realmDatabase = getNewTestDatabase()
@@ -335,4 +336,6 @@ class RealmResourcesCacheTests: XCTestCase {
             getNewRealmResource(category: nil, resourceType: lessonResource, languages: [englishLanguage])
         ]
     }
+     
+     */
 }

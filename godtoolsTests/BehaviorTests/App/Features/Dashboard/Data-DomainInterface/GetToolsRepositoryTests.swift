@@ -52,12 +52,14 @@ struct GetToolsRepositoryTests {
                     filterToolsByCategory: nil,
                     filterToolsByLanguage: nil
                 )
-                .sink { (tools: [ToolListItemDomainModel]) in
+                .sink(receiveCompletion: { _ in
                     
-                    confirmation()
+                }, receiveValue: { (tools: [ToolListItemDomainModel]) in
                     
                     toolsListRef = tools
-                }
+                    
+                    confirmation()
+                })
                 .store(in: &cancellables)
         }
         
@@ -91,7 +93,8 @@ struct GetToolsRepositoryTests {
         
         let anyLanguageFilter = ToolFilterAnyLanguageDomainModel(
             text: "",
-            toolsAvailableText: ""
+            toolsAvailableText: "",
+            numberOfToolsAvailable: 0
         )
         
         await confirmation(expectedCount: 1) { confirmation in
@@ -103,12 +106,14 @@ struct GetToolsRepositoryTests {
                     filterToolsByCategory: growthCategoryFilter,
                     filterToolsByLanguage: anyLanguageFilter
                 )
-                .sink { (tools: [ToolListItemDomainModel]) in
+                .sink(receiveCompletion: { _ in
                     
-                    confirmation()
+                }, receiveValue: { (tools: [ToolListItemDomainModel]) in
                     
                     toolsListRef = tools
-                }
+                    
+                    confirmation()
+                })
                 .store(in: &cancellables)
         }
         
@@ -144,7 +149,8 @@ struct GetToolsRepositoryTests {
             translatedName: "",
             toolsAvailableText: "",
             languageId: russianLanguageId,
-            languageLocaleId: ""
+            languageLocaleId: "",
+            numberOfToolsAvailable: 0
         )
         
         await confirmation(expectedCount: 1) { confirmation in
@@ -156,12 +162,14 @@ struct GetToolsRepositoryTests {
                     filterToolsByCategory: anyCategoryFilter,
                     filterToolsByLanguage: russianLanguageFilter
                 )
-                .sink { (tools: [ToolListItemDomainModel]) in
+                .sink(receiveCompletion: { _ in
                     
-                    confirmation()
+                }, receiveValue: { (tools: [ToolListItemDomainModel]) in
                     
                     toolsListRef = tools
-                }
+                    
+                    confirmation()
+                })
                 .store(in: &cancellables)
         }
         
@@ -197,7 +205,8 @@ struct GetToolsRepositoryTests {
             translatedName: "",
             toolsAvailableText: "",
             languageId: spanishLanguageId,
-            languageLocaleId: ""
+            languageLocaleId: "",
+            numberOfToolsAvailable: 0
         )
         
         await confirmation(expectedCount: 1) { confirmation in
@@ -209,12 +218,14 @@ struct GetToolsRepositoryTests {
                     filterToolsByCategory: anyCategoryFilter,
                     filterToolsByLanguage: spanishLanguageFilter
                 )
-                .sink { (tools: [ToolListItemDomainModel]) in
+                .sink(receiveCompletion: { _ in
                     
-                    confirmation()
+                }, receiveValue: { (tools: [ToolListItemDomainModel]) in
                     
                     toolsListRef = tools
-                }
+                    
+                    confirmation()
+                })
                 .store(in: &cancellables)
         }
         

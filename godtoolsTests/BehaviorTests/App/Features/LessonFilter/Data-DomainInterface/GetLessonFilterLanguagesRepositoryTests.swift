@@ -42,15 +42,17 @@ struct GetLessonFilterLanguagesRepositoryTests {
                 
                 lessonFilterLanguagesRepository
                     .getLessonFilterLanguagesPublisher(translatedInAppLanguage: appLanguageRussian)
-                    .sink { (languages: [LessonFilterLanguageDomainModel]) in
-
-                        confirmation()
-                        
-                        languagesRef = languages
+                    .sink(receiveCompletion: { _ in
                         
                         timeoutTask.cancel()
                         continuation.resume(returning: ())
-                    }
+                        
+                    }, receiveValue: { (languages: [LessonFilterLanguageDomainModel]) in
+                        
+                        languagesRef = languages
+                        
+                        confirmation()
+                    })
                     .store(in: &cancellables)
             }
         }
@@ -112,15 +114,17 @@ struct GetLessonFilterLanguagesRepositoryTests {
                 
                 lessonFilterLanguagesRepository
                     .getLessonFilterLanguagesPublisher(translatedInAppLanguage: argument.appLanguage.rawValue)
-                    .sink { (languages: [LessonFilterLanguageDomainModel]) in
-                        
-                        confirmation()
-                        
-                        languagesRef = languages
+                    .sink(receiveCompletion: { _ in
                         
                         timeoutTask.cancel()
                         continuation.resume(returning: ())
-                    }
+                        
+                    }, receiveValue: { (languages: [LessonFilterLanguageDomainModel]) in
+                        
+                        languagesRef = languages
+                        
+                        confirmation()
+                    })
                     .store(in: &cancellables)
             }
         }
@@ -157,15 +161,17 @@ struct GetLessonFilterLanguagesRepositoryTests {
                 
                 lessonFilterLanguagesRepository
                     .getLessonFilterLanguagesPublisher(translatedInAppLanguage: appLanguageEnglish)
-                    .sink { (languages: [LessonFilterLanguageDomainModel]) in
-
-                        confirmation()
-                        
-                        languagesRef = languages
+                    .sink(receiveCompletion: { _ in
                         
                         timeoutTask.cancel()
                         continuation.resume(returning: ())
-                    }
+                        
+                    }, receiveValue: { (languages: [LessonFilterLanguageDomainModel]) in
+                        
+                        languagesRef = languages
+                        
+                        confirmation()
+                    })
                     .store(in: &cancellables)
             }
         }
@@ -174,12 +180,14 @@ struct GetLessonFilterLanguagesRepositoryTests {
             
             lessonFilterLanguagesRepository
                 .getLessonFilterLanguagesPublisher(translatedInAppLanguage: appLanguageEnglish)
-                .sink { (languages: [LessonFilterLanguageDomainModel]) in
-
-                    confirmation()
+                .sink(receiveCompletion: { _ in
+                    
+                }, receiveValue: { (languages: [LessonFilterLanguageDomainModel]) in
                     
                     languagesRef = languages
-                }
+                    
+                    confirmation()
+                })
                 .store(in: &cancellables)
             
             try? await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
