@@ -18,7 +18,7 @@ class GetToolDetailsMediaUseCase {
         self.getToolDetailsMediaRepository = getToolDetailsMediaRepository
     }
     
-    func getMediaPublisher(toolId: String) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> {
+    @MainActor func getMediaPublisher(toolId: String) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> {
         
         return self.getToolDetailsMediaRepository.getMediaPublisher(toolId: toolId)
             .eraseToAnyPublisher()

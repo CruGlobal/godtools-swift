@@ -18,7 +18,7 @@ class GetShareablesUseCase {
         self.getShareablesRepository = getShareablesRepository
     }
     
-    func getShareablesPublisher(toolId: String, toolLanguageId: String) -> AnyPublisher<[ShareableDomainModel], Never> {
+    @MainActor func getShareablesPublisher(toolId: String, toolLanguageId: String) -> AnyPublisher<[ShareableDomainModel], Error> {
         
         return getShareablesRepository
             .getShareablesPublisher(toolId: toolId, toolLanguageId: toolLanguageId)

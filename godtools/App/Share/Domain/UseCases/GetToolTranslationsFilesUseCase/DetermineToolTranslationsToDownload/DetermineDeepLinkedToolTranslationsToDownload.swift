@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 class DetermineDeepLinkedToolTranslationsToDownload: DetermineToolTranslationsToDownloadInterface {
     
@@ -25,73 +26,130 @@ class DetermineDeepLinkedToolTranslationsToDownload: DetermineToolTranslationsTo
         self.userAppLanguageRepository = userAppLanguageRepository
     }
     
-    func getResource() -> ResourceDataModel? {
+    private var resourceNeededDownloading: DetermineToolTranslationsResourceNeeded {
+        return DetermineToolTranslationsResourceNeeded.abbreviation(value: toolDeepLink.resourceAbbreviation)
+    }
+    
+    @MainActor func getResource() -> ResourceDataModel? {
         return resourcesRepository.cache.getResource(abbreviation: toolDeepLink.resourceAbbreviation)
     }
     
-    func determineToolTranslationsToDownload() -> Result<DetermineToolTranslationsToDownloadResult, DetermineToolTranslationsToDownloadError> {
+    @MainActor func determineToolTranslationsToDownloadPublisher() -> AnyPublisher<DetermineToolTranslationsToDownloadResult, DetermineToolTranslationsToDownloadError> {
         
         guard let resource = getResource() else {
-            return .failure(.failedToFetchResourceFromCache(resourceNeeded: .abbreviation(value: toolDeepLink.resourceAbbreviation)))
+            return Fail(error: .failedToFetchResourceFromCache(resourceNeeded: resourceNeededDownloading))
+                .eraseToAnyPublisher()
         }
         
-        guard let primaryTranslation = getPrimaryTranslation(toolDeepLink: toolDeepLink, resource: resource) else {
-            return .failure(.failedToFetchResourceFromCache(resourceNeeded: .abbreviation(value: toolDeepLink.resourceAbbreviation)))
+        return getTranslationsPublisher(
+            toolDeepLink: toolDeepLink,
+            resource: resource
+        )
+        .map { (translations: [TranslationDataModel]) in
+            
+            let result = DetermineToolTranslationsToDownloadResult(
+                translations: translations
+            )
+            
+            return result
         }
-        
-        var translations: [TranslationDataModel] = [primaryTranslation]
-        
-        if let parallelTranslation = getParallelTranslation(toolDeepLink: toolDeepLink, resource: resource) {
-            translations.append(parallelTranslation)
-        }
-        
-        let result = DetermineToolTranslationsToDownloadResult(translations: translations)
-        
-        return .success(result)
+        .eraseToAnyPublisher()
     }
     
-    private func getPrimaryTranslation(toolDeepLink: ToolDeepLink, resource: ResourceDataModel) -> TranslationDataModel? {
+    @MainActor private func getTranslationsPublisher(toolDeepLink: ToolDeepLink, resource: ResourceDataModel) -> AnyPublisher<[TranslationDataModel], DetermineToolTranslationsToDownloadError> {
         
-        let supportedPrimaryLanguageIds: [String] = getSupportedLanguageIds(resource: resource, languageCodes: toolDeepLink.primaryLanguageCodes)
-        
-        let primaryTranslation: TranslationDataModel? = getFirstAvailableTranslation(resourceId: resource.id, languageIds: supportedPrimaryLanguageIds)
-        
-        if let primaryTranslation = primaryTranslation {
+        return Publishers.CombineLatest(
+            getPrimaryTranslationPublisher(toolDeepLink: toolDeepLink, resource: resource),
+            getParallelTranslationPublisher(toolDeepLink: toolDeepLink, resource: resource)
+        )
+        .flatMap { (primaryTranslation: TranslationDataModel?, parallelTranslation: TranslationDataModel?) -> AnyPublisher<[TranslationDataModel], DetermineToolTranslationsToDownloadError> in
             
-            return primaryTranslation
-        }
-        else if let appLanguage = userAppLanguageRepository.getCachedLanguage(), let appLanguageTranslation = translationsRepository.cache.getLatestTranslation(resourceId: resource.id, languageCode: appLanguage.languageId) {
+            guard let primaryTranslation = primaryTranslation else {
+                let error: DetermineToolTranslationsToDownloadError = .failedToFetchResourceFromCache(resourceNeeded: self.resourceNeededDownloading)
+                return Fail(error: error)
+                    .eraseToAnyPublisher()
+            }
             
-            return appLanguageTranslation
-        }
-        else if let englishTranslation = translationsRepository.cache.getLatestTranslation(resourceId: resource.id, languageCode: LanguageCodeDomainModel.english.value) {
+            var translations: [TranslationDataModel] = [primaryTranslation]
             
-            return englishTranslation
+            if let parallelTranslation = parallelTranslation{
+                translations.append(parallelTranslation)
+            }
+            
+            return Just(translations)
+                .setFailureType(to: DetermineToolTranslationsToDownloadError.self)
+                .eraseToAnyPublisher()
         }
-        
-        return nil
+        .eraseToAnyPublisher()
     }
     
-    private func getParallelTranslation(toolDeepLink: ToolDeepLink, resource: ResourceDataModel) -> TranslationDataModel? {
+    @MainActor private func getPrimaryTranslationPublisher(toolDeepLink: ToolDeepLink, resource: ResourceDataModel) -> AnyPublisher<TranslationDataModel?, Never> {
         
-        let supportedParallelLanguageIds: [String] = getSupportedLanguageIds(resource: resource, languageCodes: toolDeepLink.parallelLanguageCodes)
+        return getSupportedLanguageIdsPublisher(
+            resource: resource,
+            languageCodes: toolDeepLink.primaryLanguageCodes
+        )
+        .map { (supportedPrimaryLanguageIds: [String]) in
+            
+            let primaryTranslation: TranslationDataModel? = self.getFirstAvailableTranslation(
+                resourceId: resource.id,
+                languageIds: supportedPrimaryLanguageIds
+            )
+            
+            if let primaryTranslation = primaryTranslation {
+                
+                return primaryTranslation
+            }
+            else if let appLanguage = self.userAppLanguageRepository.getCachedLanguage(),
+                    let appLanguageTranslation = self.translationsRepository.cache.getLatestTranslation(resourceId: resource.id, languageCode: appLanguage.languageId) {
+                
+                return appLanguageTranslation
+            }
+            else if let englishTranslation = self.translationsRepository.cache.getLatestTranslation(resourceId: resource.id, languageCode: LanguageCodeDomainModel.english.value) {
+                
+                return englishTranslation
+            }
+            
+            return nil
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    @MainActor private func getParallelTranslationPublisher(toolDeepLink: ToolDeepLink, resource: ResourceDataModel) -> AnyPublisher<TranslationDataModel?, Never> {
         
-        let parallelTranslation: TranslationDataModel? = getFirstAvailableTranslation(resourceId: resource.id, languageIds: supportedParallelLanguageIds)
-        
-        if let parallelTranslation = parallelTranslation {
+        return getSupportedLanguageIdsPublisher(
+            resource: resource,
+            languageCodes: toolDeepLink.parallelLanguageCodes
+        )
+        .map { (supportedParallelLanguageIds: [String]) in
+            
+            let parallelTranslation: TranslationDataModel? = self.getFirstAvailableTranslation(
+                resourceId: resource.id,
+                languageIds: supportedParallelLanguageIds
+            )
+            
             return parallelTranslation
         }
-        
-        return nil
+        .eraseToAnyPublisher()
     }
     
-    private func getSupportedLanguageIds(resource: ResourceDataModel, languageCodes: [String]) -> [String] {
+    @MainActor private func getSupportedLanguageIdsPublisher(resource: ResourceDataModel, languageCodes: [String]) -> AnyPublisher<[String], Never> {
         
-        let languages: [LanguageDataModel] = languagesRepository.cache.getCachedLanguages(codes: languageCodes)
-        let languageIds: [String] = languages.map({$0.id})
-        let supportedLanguageIds: [String] = languageIds.filter({resource.supportsLanguage(languageId: $0)})
-        
-        return supportedLanguageIds
+        return languagesRepository
+            .cache
+            .getCachedLanguagesPublisher(codes: languageCodes)
+            .map { (languages: [LanguageDataModel]) in
+                
+                let languageIds: [String] = languages.map({$0.id})
+                let supportedLanguageIds: [String] = languageIds.filter({resource.supportsLanguage(languageId: $0)})
+                
+                return supportedLanguageIds
+            }
+            .catch { _ in
+                return Just([])
+                    .eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
     }
     
     private func getFirstAvailableTranslation(resourceId: String, languageIds: [String]) -> TranslationDataModel? {

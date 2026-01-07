@@ -11,5 +11,5 @@ import Combine
 
 protocol TrackShareShareableTapInterface {
     
-    func trackShareShareableTapPublisher(toolId: String, shareableId: String) -> AnyPublisher<Void, Never>
+    @MainActor func trackShareShareableTapPublisher(toolId: String, shareableId: String) -> AnyPublisher<Void, Never>
 }

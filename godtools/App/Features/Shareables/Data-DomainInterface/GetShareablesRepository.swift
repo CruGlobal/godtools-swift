@@ -19,10 +19,11 @@ class GetShareablesRepository: GetShareablesRepositoryInterface {
         self.translationsRepository = translationsRepository
     }
     
-    func getShareablesPublisher(toolId: String, toolLanguageId: String) -> AnyPublisher<[ShareableDomainModel], Never> {
+    @MainActor func getShareablesPublisher(toolId: String, toolLanguageId: String) -> AnyPublisher<[ShareableDomainModel], Error> {
         
         guard let translation = translationsRepository.cache.getLatestTranslation(resourceId: toolId, languageId: toolLanguageId) else {
             return Just([])
+                .setFailureType(to: Error.self)
                 .eraseToAnyPublisher()
         }
         
@@ -52,10 +53,6 @@ class GetShareablesRepository: GetShareablesRepositoryInterface {
             }
             
             return shareables
-        }
-        .catch { _ in
-            return Just([])
-                .eraseToAnyPublisher()
         }
         .eraseToAnyPublisher()
     }

@@ -133,7 +133,9 @@ import Combine
         }
         .switchToLatest()
         .receive(on: DispatchQueue.main)
-        .sink(receiveValue: { [weak self] (domainModel: ViewToolDetailsDomainModel) in
+        .sink(receiveCompletion: { _ in
+            
+        }, receiveValue: { [weak self] (domainModel: ViewToolDetailsDomainModel) in
             
             self?.analyticsToolAbbreviation = domainModel.toolDetails.analyticsToolAbbreviation
             

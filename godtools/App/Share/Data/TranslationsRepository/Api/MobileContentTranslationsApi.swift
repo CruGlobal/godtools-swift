@@ -9,6 +9,7 @@
 import Foundation
 import RequestOperation
 import Combine
+import RepositorySync
 
 class MobileContentTranslationsApi {
     
@@ -79,15 +80,15 @@ class MobileContentTranslationsApi {
     }
 }
 
-// MARK: - RepositorySyncExternalDataFetchInterface
+// MARK: - ExternalDataFetchInterface
 
-extension MobileContentTranslationsApi: RepositorySyncExternalDataFetchInterface {
+extension MobileContentTranslationsApi: ExternalDataFetchInterface {
     
-    func getObjectPublisher(id: String, requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<TranslationCodable>, Never> {
+    func getObjectPublisher(id: String, context: RequestOperationFetchContext) -> AnyPublisher<[TranslationCodable], Error> {
         return emptyResponsePublisher()
     }
     
-    func getObjectsPublisher(requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<TranslationCodable>, Never> {
+    func getObjectsPublisher(context: RequestOperationFetchContext) -> AnyPublisher<[TranslationCodable], Error> {
         return emptyResponsePublisher()
     }
 }

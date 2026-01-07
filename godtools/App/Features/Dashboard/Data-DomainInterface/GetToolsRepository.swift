@@ -30,21 +30,21 @@ class GetToolsRepository: GetToolsRepositoryInterface {
         self.getTranslatedToolLanguageAvailability = getTranslatedToolLanguageAvailability
     }
     
-    func getToolsPublisher(translatedInAppLanguage: AppLanguageDomainModel, languageIdForAvailabilityText: String?, filterToolsByCategory: ToolFilterCategoryDomainModel?, filterToolsByLanguage: ToolFilterLanguageDomainModel?) -> AnyPublisher<[ToolListItemDomainModel], Never> {
+    @MainActor func getToolsPublisher(translatedInAppLanguage: AppLanguageDomainModel, languageIdForAvailabilityText: String?, filterToolsByCategory: ToolFilterCategoryDomainModel?, filterToolsByLanguage: ToolFilterLanguageDomainModel?) -> AnyPublisher<[ToolListItemDomainModel], Error> {
         
         let languageForAvailabilityTextModel: LanguageDataModel? 
         
         if let languageForAvailabilityTextId = languageIdForAvailabilityText {
-            languageForAvailabilityTextModel = languagesRepository.persistence.getObject(id: languageForAvailabilityTextId)
+            languageForAvailabilityTextModel = languagesRepository.persistence.getDataModelNonThrowing(id: languageForAvailabilityTextId)
         } else {
             languageForAvailabilityTextModel = nil
         }
         
         return Publishers.CombineLatest(
             resourcesRepository.persistence.observeCollectionChangesPublisher().prepend(Void()),
-            getToolListItemInterfaceStringsRepository.getStringsPublisher(translateInLanguage: translatedInAppLanguage)
+            getToolListItemInterfaceStringsRepository.getStringsPublisher(translateInLanguage: translatedInAppLanguage).setFailureType(to: Error.self)
         )
-        .flatMap({ (resourcesChanged: Void, interfaceStrings: ToolListItemInterfaceStringsDomainModel) -> AnyPublisher<[ToolListItemDomainModel], Never> in
+        .flatMap({ (resourcesChanged: Void, interfaceStrings: ToolListItemInterfaceStringsDomainModel) -> AnyPublisher<[ToolListItemDomainModel], Error> in
         
             let tools: [ResourceDataModel] = self.resourcesRepository.getAllToolsList(
                 filterByCategory: filterToolsByCategory?.id,
@@ -77,6 +77,7 @@ class GetToolsRepository: GetToolsRepositoryInterface {
                 })
             
             return Just(toolListItems)
+                .setFailureType(to: Error.self)
                 .eraseToAnyPublisher()
         })
         .eraseToAnyPublisher()

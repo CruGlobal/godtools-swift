@@ -9,6 +9,7 @@
 import Foundation
 import Combine
 import RequestOperation
+import RepositorySync
 
 class MobileContentAttachmentsApi {
     
@@ -35,15 +36,15 @@ class MobileContentAttachmentsApi {
     }
 }
 
-// MARK: - RepositorySyncExternalDataFetchInterface
+// MARK: - ExternalDataFetchInterface
 
-extension MobileContentAttachmentsApi: RepositorySyncExternalDataFetchInterface {
+extension MobileContentAttachmentsApi: ExternalDataFetchInterface {
     
-    func getObjectPublisher(id: String, requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<AttachmentCodable>, Never> {
+    func getObjectPublisher(id: String, context: RequestOperationFetchContext) -> AnyPublisher<[AttachmentCodable], Error> {
         return emptyResponsePublisher()
     }
     
-    func getObjectsPublisher(requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<AttachmentCodable>, Never> {
+    func getObjectsPublisher(context: RequestOperationFetchContext) -> AnyPublisher<[AttachmentCodable], Error> {
         return emptyResponsePublisher()
     }
 }

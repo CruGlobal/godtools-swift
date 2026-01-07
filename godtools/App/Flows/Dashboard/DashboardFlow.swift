@@ -167,7 +167,7 @@ class DashboardFlow: Flow, ToolNavigationFlow {
             let primaryLanguage: AppLanguageDomainModel?
             let parallelLanguage: AppLanguageDomainModel?
             
-            if let toolResource = resourcesRepository.persistence.getObject(id: tool.dataModelId),
+            if let toolResource = resourcesRepository.persistence.getDataModelNonThrowing(id: tool.dataModelId),
                toolResource.resourceTypeEnum == .article {
                 
                 parallelLanguage = nil

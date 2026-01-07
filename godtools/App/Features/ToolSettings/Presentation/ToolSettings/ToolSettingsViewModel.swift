@@ -115,7 +115,13 @@ import Combine
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .assign(to: &$shareables)
+            .sink(receiveCompletion: { _ in
+                
+            }, receiveValue: { [weak self] (shareables: [ShareableDomainModel]) in
+                
+                self?.shareables = shareables
+            })
+            .store(in: &cancellables)
     }
     
     deinit {

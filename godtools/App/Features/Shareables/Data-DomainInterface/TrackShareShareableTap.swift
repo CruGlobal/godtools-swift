@@ -20,9 +20,9 @@ class TrackShareShareableTap: TrackShareShareableTapInterface {
         self.resourcesRepository = resourcesRepository
     }
     
-    func trackShareShareableTapPublisher(toolId: String, shareableId: String) -> AnyPublisher<Void, Never> {
+    @MainActor func trackShareShareableTapPublisher(toolId: String, shareableId: String) -> AnyPublisher<Void, Never> {
         
-        let resource: ResourceDataModel? = resourcesRepository.persistence.getObject(id: toolId)
+        let resource: ResourceDataModel? = resourcesRepository.persistence.getDataModelNonThrowing(id: toolId)
         
         let action = TrackActionModel(
             screenName: "",

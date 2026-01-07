@@ -20,9 +20,9 @@ class GetToolSettingsParallelLanguageRepository: GetToolSettingsParallelLanguage
         self.getTranslatedLanguageName = getTranslatedLanguageName
     }
     
-    func getLanguagePublisher(parallelLanguageId: String?, translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolSettingsToolLanguageDomainModel?, Never> {
+    @MainActor func getLanguagePublisher(parallelLanguageId: String?, translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolSettingsToolLanguageDomainModel?, Never> {
         
-        guard let languageId = parallelLanguageId, let language = languagesRepository.persistence.getObject(id: languageId) else {
+        guard let languageId = parallelLanguageId, let language = languagesRepository.persistence.getDataModelNonThrowing(id: languageId) else {
             return Just(nil)
                 .eraseToAnyPublisher()
         }

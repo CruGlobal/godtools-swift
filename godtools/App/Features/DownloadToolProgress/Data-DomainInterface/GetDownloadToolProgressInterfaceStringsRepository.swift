@@ -22,13 +22,13 @@ class GetDownloadToolProgressInterfaceStringsRepository: GetDownloadToolProgress
         self.favoritedResourcesRepository = favoritedResourcesRepository
     }
     
-    func getStringsPublisher(toolId: String?, translateInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<DownloadToolProgressInterfaceStringsDomainModel, Never> {
+    @MainActor func getStringsPublisher(toolId: String?, translateInAppLanguage: AppLanguageDomainModel) -> AnyPublisher<DownloadToolProgressInterfaceStringsDomainModel, Never> {
                         
         let localeId: String = translateInAppLanguage
         
         let resource: ResourceDataModel?
         
-        if let toolId = toolId, let resourceModel = resourcesRepository.persistence.getObject(id: toolId) {
+        if let toolId = toolId, let resourceModel = resourcesRepository.persistence.getDataModelNonThrowing(id: toolId) {
             resource = resourceModel
         }
         else {

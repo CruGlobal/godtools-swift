@@ -11,5 +11,5 @@ import Combine
 
 protocol GetToolDetailsMediaRepositoryInterface {
     
-    func getMediaPublisher(toolId: String) -> AnyPublisher<ToolDetailsMediaDomainModel, Never>
+    @MainActor func getMediaPublisher(toolId: String) -> AnyPublisher<ToolDetailsMediaDomainModel, Never>
 }

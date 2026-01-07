@@ -20,7 +20,7 @@ class GetConfirmRemoveToolFromFavoritesInterfaceStringsRepository: GetConfirmRem
         self.getTranslatedToolName = getTranslatedToolName
     }
     
-    func getStringsPublisher(toolId: String, translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<ConfirmRemoveToolFromFavoritesInterfaceStringsDomainModel, Never> {
+    @MainActor func getStringsPublisher(toolId: String, translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<ConfirmRemoveToolFromFavoritesInterfaceStringsDomainModel, Never> {
         
         let interfaceStrings = ConfirmRemoveToolFromFavoritesInterfaceStringsDomainModel(
             title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "remove_from_favorites_title"),

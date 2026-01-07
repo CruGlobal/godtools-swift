@@ -23,7 +23,7 @@ class GetToolShortcutLinksRepository: GetToolShortcutLinksRepositoryInterface {
         self.translationsRepository = translationsRepository
     }
     
-    func getLinksPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[ToolShortcutLinkDomainModel], Never> {
+    @MainActor func getLinksPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[ToolShortcutLinkDomainModel], Never> {
         
         return favoritedResourcesRepository.getFavoritedResourcesSortedByPositionPublisher()
             .flatMap({ (favoritedResources: [FavoritedResourceDataModel]) -> AnyPublisher<[ToolShortcutLinkDomainModel], Never> in
@@ -32,7 +32,7 @@ class GetToolShortcutLinksRepository: GetToolShortcutLinksRepositoryInterface {
                     .prefix(self.maxNumberOfToolShortcutLinks)
                     .compactMap({ (favoritedResource: FavoritedResourceDataModel) in
                     
-                        guard let resource = self.resourcesRepository.persistence.getObject(id: favoritedResource.id) else {
+                        guard let resource = self.resourcesRepository.persistence.getDataModelNonThrowing(id: favoritedResource.id) else {
                             return nil
                         }
                                             

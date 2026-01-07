@@ -9,42 +9,47 @@
 import Foundation
 import Combine
 import RequestOperation
+import RepositorySync
 
 class AttachmentsRepository: RepositorySync<AttachmentDataModel, MobileContentAttachmentsApi> {
-    
-    private let api: MobileContentAttachmentsApi
-    
+        
     let cache: AttachmentsCache
     
-    init(api: MobileContentAttachmentsApi, cache: AttachmentsCache) {
+    init(externalDataFetch: MobileContentAttachmentsApi, persistence: any Persistence<AttachmentDataModel, AttachmentCodable>, cache: AttachmentsCache) {
         
-        self.api = api
         self.cache = cache
         
         super.init(
-            externalDataFetch: api,
-            persistence: cache.getPersistence()
+            externalDataFetch: externalDataFetch,
+            persistence: persistence
         )
     }
 }
 
 extension AttachmentsRepository {
     
-    func getAttachmentFromCacheElseRemotePublisher(id: String, requestPriority: RequestPriority) -> AnyPublisher<AttachmentDataModel?, Never> {
+    @MainActor func getAttachmentFromCacheElseRemotePublisher(id: String, requestPriority: RequestPriority) -> AnyPublisher<AttachmentDataModel?, Error> {
         
-        guard let cachedAttachment = cache.getAttachment(id: id) else {
-            return Just(nil)
+        return cache.getAttachmentPublisher(id: id)
+            .flatMap { (cachedAttachment: AttachmentDataModel?) -> AnyPublisher<AttachmentDataModel?, Error> in
+                
+                guard let cachedAttachment = cachedAttachment else {
+                    return Just(nil)
+                        .setFailureType(to: Error.self)
+                        .eraseToAnyPublisher()
+                }
+                
+                return self.getAttachmentWithDataFromCacheElseRemotePublisher(
+                    attachment: cachedAttachment,
+                    requestPriority: requestPriority
+                )
                 .eraseToAnyPublisher()
-        }
-        
-        return getAttachmentWithDataFromCacheElseRemotePublisher(
-            attachment: cachedAttachment,
-            requestPriority: requestPriority
-        )
-        .eraseToAnyPublisher()
+                
+            }
+            .eraseToAnyPublisher()
     }
     
-    func downloadAndCacheAttachmentDataIfNeededPublisher(attachment: AttachmentDataModel, requestPriority: RequestPriority) -> AnyPublisher<AttachmentDataModel?, Never> {
+    @MainActor func downloadAndCacheAttachmentDataIfNeededPublisher(attachment: AttachmentDataModel, requestPriority: RequestPriority) -> AnyPublisher<AttachmentDataModel?, Error> {
         
         return getAttachmentWithDataFromCacheElseRemotePublisher(
             attachment: attachment,
@@ -53,7 +58,7 @@ extension AttachmentsRepository {
         .eraseToAnyPublisher()
     }
     
-    private func getAttachmentWithDataFromCacheElseRemotePublisher(attachment: AttachmentDataModel, requestPriority: RequestPriority) -> AnyPublisher<AttachmentDataModel?, Never> {
+    @MainActor private func getAttachmentWithDataFromCacheElseRemotePublisher(attachment: AttachmentDataModel, requestPriority: RequestPriority) -> AnyPublisher<AttachmentDataModel?, Error> {
         
         return cache.getAttachmentPublisher(id: attachment.id)
             .flatMap({ (cachedAttachment: AttachmentDataModel?) -> AnyPublisher<AttachmentDataModel?, Never> in
@@ -94,7 +99,7 @@ extension AttachmentsRepository {
                 .eraseToAnyPublisher()
         }
         
-        return api.getAttachmentFile(url: remoteUrl, requestPriority: requestPriority)
+        return externalDataFetch.getAttachmentFile(url: remoteUrl, requestPriority: requestPriority)
             .flatMap({ (response: RequestDataResponse) -> AnyPublisher<StoredAttachmentDataModel?, Never> in
                 
                 return self.cache.storeAttachmentDataPublisher(

@@ -34,7 +34,7 @@ import Combine
 
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     @Published private var toolFilterCategorySelection: ToolFilterCategoryDomainModel = ToolFilterAnyCategoryDomainModel(text: "", toolsAvailableText: "")
-    @Published private var toolFilterLanguageSelection: ToolFilterLanguageDomainModel = ToolFilterAnyLanguageDomainModel(text: "", toolsAvailableText: "")
+    @Published private var toolFilterLanguageSelection: ToolFilterLanguageDomainModel = ToolFilterAnyLanguageDomainModel(text: "", toolsAvailableText: "", numberOfToolsAvailable: 0)
     
     @Published var favoritingToolBannerMessage: String = ""
     @Published var showsFavoritingToolBanner: Bool = false
@@ -91,8 +91,10 @@ import Combine
         }
         .switchToLatest()
         .receive(on: DispatchQueue.main)
-        .sink { [weak self] (domainModel: ViewToolsDomainModel, spotlightTools: [SpotlightToolListItemDomainModel]) in
-                
+        .sink(receiveCompletion: { _ in
+            
+        }, receiveValue: { [weak self] (domainModel: ViewToolsDomainModel, spotlightTools: [SpotlightToolListItemDomainModel]) in
+            
             self?.favoritingToolBannerMessage = domainModel.interfaceStrings.favoritingToolBannerMessage
             self?.toolSpotlightTitle = domainModel.interfaceStrings.toolSpotlightTitle
             self?.toolSpotlightSubtitle = domainModel.interfaceStrings.toolSpotlightSubtitle
@@ -102,7 +104,7 @@ import Combine
             
             self?.allTools = domainModel.tools
             self?.isLoadingAllTools = false
-        }
+        })
         .store(in: &cancellables)
         
         $appLanguage

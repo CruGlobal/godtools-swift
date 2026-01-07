@@ -19,14 +19,14 @@ class ToolTrainingTipsOnboardingViewsUserDefaultsCache {
         self.getTranslatedToolName = getTranslatedToolName
     }
     
-    private func getNumberOfViewsKey(toolId: String, primaryLanguage: AppLanguageDomainModel) -> String {
+    @MainActor private func getNumberOfViewsKey(toolId: String, primaryLanguage: AppLanguageDomainModel) -> String {
         
         let toolName: String = getTranslatedToolName.getToolName(toolId: toolId, translateInLanguage: primaryLanguage)
         
         return "ToolTrainingTipsOnboardingViewsService." + toolName + "_" + toolId
     }
     
-    func getNumberOfToolTrainingTipViews(toolId: String, primaryLanguage: AppLanguageDomainModel) -> Int {
+    @MainActor func getNumberOfToolTrainingTipViews(toolId: String, primaryLanguage: AppLanguageDomainModel) -> Int {
         
         if let number = userDefaultsCache.getValue(key: getNumberOfViewsKey(toolId: toolId, primaryLanguage: primaryLanguage)) as? NSNumber {
             return number.intValue
@@ -35,7 +35,7 @@ class ToolTrainingTipsOnboardingViewsUserDefaultsCache {
         return 0
     }
     
-    func storeToolTrainingTipViewed(toolId: String, primaryLanguage: AppLanguageDomainModel) {
+    @MainActor func storeToolTrainingTipViewed(toolId: String, primaryLanguage: AppLanguageDomainModel) {
         
         let numberOfViews: Int = getNumberOfToolTrainingTipViews(toolId: toolId, primaryLanguage: primaryLanguage)
         

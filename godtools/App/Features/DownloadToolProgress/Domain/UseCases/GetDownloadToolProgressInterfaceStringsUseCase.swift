@@ -18,7 +18,7 @@ class GetDownloadToolProgressInterfaceStringsUseCase {
         self.getInterfaceStringsRepositoryInterface = getInterfaceStringsRepositoryInterface
     }
     
-    func getStringsPublisher(toolId: String?, appLanguage: AppLanguageDomainModel) -> AnyPublisher<DownloadToolProgressInterfaceStringsDomainModel, Never> {
+    @MainActor func getStringsPublisher(toolId: String?, appLanguage: AppLanguageDomainModel) -> AnyPublisher<DownloadToolProgressInterfaceStringsDomainModel, Never> {
         
         return getInterfaceStringsRepositoryInterface
             .getStringsPublisher(toolId: toolId, translateInAppLanguage: appLanguage)

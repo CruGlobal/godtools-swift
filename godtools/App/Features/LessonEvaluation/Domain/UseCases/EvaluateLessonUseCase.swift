@@ -22,9 +22,9 @@ class EvaluateLessonUseCase {
         self.lessonFeedbackAnalytics = lessonFeedbackAnalytics
     }
     
-    func execute(lessonId: String, feedback: TrackLessonFeedbackDomainModel) -> AnyPublisher<Void, Never> {
+    @MainActor func execute(lessonId: String, feedback: TrackLessonFeedbackDomainModel) -> AnyPublisher<Void, Never> {
         
-        guard let lessonResource = resourcesRepository.persistence.getObject(id: lessonId) else {
+        guard let lessonResource = resourcesRepository.persistence.getDataModelNonThrowing(id: lessonId) else {
             return Just(Void())
                 .eraseToAnyPublisher()
         }

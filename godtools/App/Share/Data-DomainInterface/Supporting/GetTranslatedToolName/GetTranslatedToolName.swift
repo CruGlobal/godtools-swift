@@ -19,9 +19,9 @@ class GetTranslatedToolName {
         self.translationsRepository = translationsRepository
     }
     
-    func getToolName(toolId: String, translateInLanguage: BCP47LanguageIdentifier) -> String {
+    @MainActor func getToolName(toolId: String, translateInLanguage: BCP47LanguageIdentifier) -> String {
         
-        guard let resource = resourcesRepository.persistence.getObject(id: toolId) else {
+        guard let resource = resourcesRepository.persistence.getDataModelNonThrowing(id: toolId) else {
             return ""
         }
         

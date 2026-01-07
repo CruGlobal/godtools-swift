@@ -19,7 +19,7 @@ class GetToolDetailsLearnToShareToolIsAvailableRepository: GetToolDetailsLearnTo
         self.translationsRepository = translationsRepository
     }
     
-    func getIsAvailablePublisher(toolId: String, primaryLanguage: BCP47LanguageIdentifier, parallelLanguage: BCP47LanguageIdentifier?) -> AnyPublisher<Bool, Never> {
+    @MainActor func getIsAvailablePublisher(toolId: String, primaryLanguage: BCP47LanguageIdentifier, parallelLanguage: BCP47LanguageIdentifier?) -> AnyPublisher<Bool, Never> {
         
         return Publishers.CombineLatest(
             getTranslationHasTipsPublisher(toolId: toolId, language: primaryLanguage),
@@ -32,7 +32,7 @@ class GetToolDetailsLearnToShareToolIsAvailableRepository: GetToolDetailsLearnTo
         .eraseToAnyPublisher()
     }
     
-    private func getTranslationHasTipsPublisher(toolId: String, language: BCP47LanguageIdentifier?) -> AnyPublisher<Bool, Never> {
+    @MainActor private func getTranslationHasTipsPublisher(toolId: String, language: BCP47LanguageIdentifier?) -> AnyPublisher<Bool, Never> {
         
         guard let language = language, let translation = translationsRepository.cache.getLatestTranslation(resourceId: toolId, languageCode: language) else {
             return Just(false)

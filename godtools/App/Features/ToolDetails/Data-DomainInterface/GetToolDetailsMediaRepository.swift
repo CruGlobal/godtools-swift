@@ -20,9 +20,9 @@ class GetToolDetailsMediaRepository: GetToolDetailsMediaRepositoryInterface {
         self.attachmentsRepository = attachmentsRepository
     }
     
-    func getMediaPublisher(toolId: String) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> {
+    @MainActor func getMediaPublisher(toolId: String) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> {
                 
-        guard let resource = resourcesRepository.persistence.getObject(id: toolId) else {
+        guard let resource = resourcesRepository.persistence.getDataModelNonThrowing(id: toolId) else {
             return Just(.empty)
                 .eraseToAnyPublisher()
         }
@@ -34,10 +34,20 @@ class GetToolDetailsMediaRepository: GetToolDetailsMediaRepositoryInterface {
         else if !resource.attrAboutBannerAnimation.isEmpty {
             
             return getAnimatedMediaElseImage(resource: resource)
+                .catch { _ in
+                    return Just(.empty)
+                        .eraseToAnyPublisher()
+                }
+                .eraseToAnyPublisher()
         }
         else {
             
             return getImageMediaElseEmpty(resource: resource)
+                .catch { _ in
+                    return Just(.empty)
+                        .eraseToAnyPublisher()
+                }
+                .eraseToAnyPublisher()
         }
     }
     
@@ -50,10 +60,10 @@ class GetToolDetailsMediaRepository: GetToolDetailsMediaRepositoryInterface {
             .eraseToAnyPublisher()
     }
     
-    private func getAnimatedMediaElseImage(resource: ResourceDataModel) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> {
+    @MainActor private func getAnimatedMediaElseImage(resource: ResourceDataModel) -> AnyPublisher<ToolDetailsMediaDomainModel, Error> {
         
         return attachmentsRepository.getAttachmentFromCacheElseRemotePublisher(id: resource.attrAboutBannerAnimation, requestPriority: .high)
-            .flatMap({ (attachment: AttachmentDataModel?) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> in
+            .flatMap({ (attachment: AttachmentDataModel?) -> AnyPublisher<ToolDetailsMediaDomainModel, Error> in
                 
                 guard let diskFileUrl = attachment?.storedAttachment?.diskFileUrl else {
                     return self.getImageMediaElseEmpty(resource: resource)
@@ -63,22 +73,26 @@ class GetToolDetailsMediaRepository: GetToolDetailsMediaRepositoryInterface {
                 let viewModel = AnimatedViewModel(animationDataResource: resource, autoPlay: true, loop: true)
                 
                 return Just(.animation(viewModel: viewModel))
+                    .setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
 
             })
             .eraseToAnyPublisher()
     }
     
-    private func getImageMediaElseEmpty(resource: ResourceDataModel) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> {
+    @MainActor private func getImageMediaElseEmpty(resource: ResourceDataModel) -> AnyPublisher<ToolDetailsMediaDomainModel, Error> {
         
         return attachmentsRepository.getAttachmentFromCacheElseRemotePublisher(id: resource.attrBannerAbout, requestPriority: .high)
-            .flatMap({ (attachment: AttachmentDataModel?) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> in
+            .flatMap({ (attachment: AttachmentDataModel?) -> AnyPublisher<ToolDetailsMediaDomainModel, Error> in
                 
                 guard let image = attachment?.getImage() else {
                     return self.getEmptyMedia()
+                        .setFailureType(to: Error.self)
+                        .eraseToAnyPublisher()
                 }
                 
                 return Just(.image(image: image))
+                    .setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()

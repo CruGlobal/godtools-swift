@@ -11,5 +11,5 @@ import Combine
 
 protocol GetToolSettingsParallelLanguageRepositoryInterface {
     
-    func getLanguagePublisher(parallelLanguageId: String?, translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolSettingsToolLanguageDomainModel?, Never>
+    @MainActor func getLanguagePublisher(parallelLanguageId: String?, translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<ToolSettingsToolLanguageDomainModel?, Never>
 }

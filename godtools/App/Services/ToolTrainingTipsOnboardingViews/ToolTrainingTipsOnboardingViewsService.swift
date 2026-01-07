@@ -8,28 +8,28 @@
 
 import Foundation
 
-class ToolTrainingTipsOnboardingViewsService {
+final class ToolTrainingTipsOnboardingViewsService {
     
     private let cache: ToolTrainingTipsOnboardingViewsUserDefaultsCache
     
-    required init(cache: ToolTrainingTipsOnboardingViewsUserDefaultsCache) {
+    init(cache: ToolTrainingTipsOnboardingViewsUserDefaultsCache) {
         
         self.cache = cache
     }
     
-    func getToolTrainingTipReachedMaximumViews(toolId: String, primaryLanguage: AppLanguageDomainModel) -> Bool {
+    @MainActor func getToolTrainingTipReachedMaximumViews(toolId: String, primaryLanguage: AppLanguageDomainModel) -> Bool {
         
         let numberOfViews: Int = getNumberOfToolTrainingTipViews(toolId: toolId, primaryLanguage: primaryLanguage)
         
         return numberOfViews >= 3
     }
     
-    func getNumberOfToolTrainingTipViews(toolId: String, primaryLanguage: AppLanguageDomainModel) -> Int {
+    @MainActor func getNumberOfToolTrainingTipViews(toolId: String, primaryLanguage: AppLanguageDomainModel) -> Int {
         
         return cache.getNumberOfToolTrainingTipViews(toolId: toolId, primaryLanguage: primaryLanguage)
     }
     
-    func storeToolTrainingTipViewed(toolId: String, primaryLanguage: AppLanguageDomainModel) {
+    @MainActor func storeToolTrainingTipViewed(toolId: String, primaryLanguage: AppLanguageDomainModel) {
         
         cache.storeToolTrainingTipViewed(toolId: toolId, primaryLanguage: primaryLanguage)
     }

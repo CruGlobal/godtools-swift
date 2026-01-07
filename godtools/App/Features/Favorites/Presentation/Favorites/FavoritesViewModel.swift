@@ -73,7 +73,9 @@ import Combine
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (domainModel: ViewFavoritesDomainModel, featuredLessons: [FeaturedLessonDomainModel]) in
+            .sink(receiveCompletion: { _ in
+                
+            }, receiveValue: { [weak self] (domainModel: ViewFavoritesDomainModel, featuredLessons: [FeaturedLessonDomainModel]) in
                 
                 self?.openTutorialBannerMessage = domainModel.interfaceStrings.tutorialMessage
                 self?.openTutorialBannerButtonTitle = domainModel.interfaceStrings.openTutorialActionTitle
@@ -89,7 +91,7 @@ import Combine
                 self?.yourFavoritedTools = domainModel.yourFavoritedTools
                 
                 self?.isLoadingYourFavoritedTools = false
-            }
+            })
             .store(in: &cancellables)
         
         $appLanguage

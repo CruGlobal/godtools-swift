@@ -11,5 +11,5 @@ import Combine
 
 protocol GetConfirmRemoveToolFromFavoritesInterfaceStringsRepositoryInterface {
     
-    func getStringsPublisher(toolId: String, translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<ConfirmRemoveToolFromFavoritesInterfaceStringsDomainModel, Never>
+    @MainActor func getStringsPublisher(toolId: String, translateInLanguage: AppLanguageDomainModel) -> AnyPublisher<ConfirmRemoveToolFromFavoritesInterfaceStringsDomainModel, Never>
 }

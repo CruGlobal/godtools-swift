@@ -28,7 +28,7 @@ class ToolDownloader {
         self.articleManifestAemRepository = articleManifestAemRepository
     }
     
-    func downloadToolsPublisher(tools: [DownloadToolDataModel], requestPriority: RequestPriority) -> AnyPublisher<ToolDownloaderDataModel, Error> {
+    @MainActor func downloadToolsPublisher(tools: [DownloadToolDataModel], requestPriority: RequestPriority) -> AnyPublisher<ToolDownloaderDataModel, Error> {
             
         var nonArticleTranslations: [TranslationDataModel] = Array()
         var articleTranslations: [TranslationDataModel] = Array()
@@ -39,7 +39,7 @@ class ToolDownloader {
             
             let isArticle: Bool
             
-            if let resource = resourcesRepository.persistence.getObject(id: tool.toolId) {
+            if let resource = resourcesRepository.persistence.getDataModelNonThrowing(id: tool.toolId) {
                 
                 if let resourceBanner = attachmentsRepository.cache.getAttachment(id: resource.attrBanner) {
                     attachments.append(resourceBanner)
@@ -109,7 +109,7 @@ class ToolDownloader {
             .eraseToAnyPublisher()
     }
     
-    private func getDownloadToolTranslationsPublishers(translations: [TranslationDataModel], requestPriority: RequestPriority) -> [AnyPublisher<Void, Error>] {
+    @MainActor private func getDownloadToolTranslationsPublishers(translations: [TranslationDataModel], requestPriority: RequestPriority) -> [AnyPublisher<Void, Error>] {
             
         let downloadTranslationsRequests: [AnyPublisher<Void, Error>] = translations.map { (translation: TranslationDataModel) in
             self.translationsRepository.downloadAndCacheTranslationFiles(translation: translation, requestPriority: requestPriority)
@@ -122,7 +122,7 @@ class ToolDownloader {
         return downloadTranslationsRequests
     }
     
-    private func getDownloadAttachmentsPublishers(attachments: [AttachmentDataModel], requestPriority: RequestPriority) -> [AnyPublisher<Void, Error>] {
+    @MainActor private func getDownloadAttachmentsPublishers(attachments: [AttachmentDataModel], requestPriority: RequestPriority) -> [AnyPublisher<Void, Error>] {
         
         let downloadAttachmentsRequests: [AnyPublisher<Void, Error>] = attachments
             .map { (attachment: AttachmentDataModel) in
@@ -130,14 +130,13 @@ class ToolDownloader {
                     .map { _ in
                         return Void()
                     }
-                    .setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             }
         
         return downloadAttachmentsRequests
     }
     
-    private func getDownloadArticlesPublishers(translations: [TranslationDataModel], requestPriority: RequestPriority) -> [AnyPublisher<Void, Error>] {
+    @MainActor private func getDownloadArticlesPublishers(translations: [TranslationDataModel], requestPriority: RequestPriority) -> [AnyPublisher<Void, Error>] {
         
         let downloadArticlesRequests: [AnyPublisher<Void, Error>] = translations.compactMap { (translation: TranslationDataModel) in
             

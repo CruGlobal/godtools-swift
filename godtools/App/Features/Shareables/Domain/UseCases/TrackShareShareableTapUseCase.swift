@@ -18,7 +18,7 @@ class TrackShareShareableTapUseCase {
         self.trackTap = trackTap
     }
     
-    func trackPublisher(toolId: String, shareableId: String) -> AnyPublisher<Void, Never> {
+    @MainActor func trackPublisher(toolId: String, shareableId: String) -> AnyPublisher<Void, Never> {
         
         return trackTap
             .trackShareShareableTapPublisher(toolId: toolId, shareableId: shareableId)

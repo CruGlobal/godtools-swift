@@ -8,43 +8,33 @@
 
 import Foundation
 import RepositorySync
+import Combine
 
-class LanguagesCache: SwiftElseRealmPersistence<LanguageDataModel, LanguageCodable, RealmLanguage> {
+class LanguagesCache {
         
-    init(realmDatabase: LegacyRealmDatabase) {
+    private let persistence: any Persistence<LanguageDataModel, LanguageCodable>
+    
+    init(persistence: any Persistence<LanguageDataModel, LanguageCodable>) {
                 
-        super.init(
-            realmDatabase: realmDatabase,
-            realmDataModelMapping: RealmLanguageDataModelMapping()
-        )
+        self.persistence = persistence
     }
     
     @available(iOS 17.4, *)
-    override func getAnySwiftPersistence(swiftDatabase: SwiftDatabase) -> (any RepositorySyncPersistence<LanguageDataModel, LanguageCodable>)? {
-        return getSwiftPersistence(swiftDatabase: swiftDatabase)
+    var swiftDatabase: SwiftDatabase? {
+        return getSwiftPersistence()?.database
     }
     
     @available(iOS 17.4, *)
-    private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<LanguageDataModel, LanguageCodable, SwiftLanguage>? {
-        
-        guard let swiftDatabase = super.getSwiftDatabase() else {
-            return nil
-        }
-        
-        return getSwiftPersistence(swiftDatabase: swiftDatabase)
+    func getSwiftPersistence() -> SwiftRepositorySyncPersistence<LanguageDataModel, LanguageCodable, SwiftLanguage>? {
+        return persistence as? SwiftRepositorySyncPersistence<LanguageDataModel, LanguageCodable, SwiftLanguage>
     }
     
-    @available(iOS 17.4, *)
-    private func getSwiftPersistence(swiftDatabase: SwiftDatabase) -> SwiftRepositorySyncPersistence<LanguageDataModel, LanguageCodable, SwiftLanguage>? {
-        
-        guard let swiftDatabase = super.getSwiftDatabase() else {
-            return nil
-        }
-        
-        return SwiftRepositorySyncPersistence(
-            swiftDatabase: swiftDatabase,
-            dataModelMapping: SwiftLanguageDataModelMapping()
-        )
+    var realmDatabase: RealmDatabase? {
+        return getRealmPersistence()?.database
+    }
+    
+    func getRealmPersistence() -> RealmRepositorySyncPersistence<LanguageDataModel, LanguageCodable, RealmLanguage>? {
+        return persistence as? RealmRepositorySyncPersistence<LanguageDataModel, LanguageCodable, RealmLanguage>
     }
 }
 
@@ -95,45 +85,68 @@ extension LanguagesCache {
         
         if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
             
-            return swiftPersistence
-                .getObjects(
-                    query: SwiftDatabaseQuery.filter(
-                        filter: getLanguageByCodePredicate(code: code)
-                    )
-                )
-                .first
+            let query = SwiftDatabaseQuery<SwiftLanguage>.filter(
+                filter: getLanguageByCodePredicate(code: code)
+            )
+            
+            let swiftLanguage: SwiftLanguage? = swiftPersistence.database.read.objectsNonThrowing(context: swiftPersistence.database.openContext(), query: query).first
+            
+            if let swiftLanguage = swiftLanguage {
+                return LanguageDataModel(interface: swiftLanguage)
+            }
+            else {
+                return nil
+            }
         }
-        else {
-                        
-            return super.getRealmPersistence()
-                .getObjects(
-                    query: RealmDatabaseQuery.filter(
-                        filter: getLanguageByCodeNSPredicate(code: code)
-                    )
-                )
-                .first
-        }
-    }
-    
-    func getCachedLanguages(codes: [BCP47LanguageIdentifier]) -> [LanguageDataModel] {
-        
-        if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
-                            
-            return swiftPersistence
-                .getObjects(
-                    query: SwiftDatabaseQuery.filter(
-                        filter: getLanguagesByCodesPredicate(codes: codes)
-                    )
-                )
+        else if let realmPersistence = getRealmPersistence(), let realm = realmPersistence.database.openRealmNonThrowing() {
+            
+            let query = RealmDatabaseQuery.filter(
+                filter: getLanguageByCodeNSPredicate(code: code)
+            )
+            
+            let realmLanguage: RealmLanguage? = realmPersistence.database.read.objects(realm: realm, query: query).first
+            
+            if let realmLanguage = realmLanguage {
+                return LanguageDataModel(interface: realmLanguage)
+            }
+            else {
+                return nil
+            }
         }
         else {
             
-            return super.getRealmPersistence()
-                .getObjects(
-                    query: RealmDatabaseQuery.filter(
-                        filter: getLanguagesByCodesNSPredicate(codes: codes)
-                    )
-                )
+            return nil
+        }
+    }
+    
+    @MainActor func getCachedLanguagesPublisher(codes: [BCP47LanguageIdentifier]) -> AnyPublisher<[LanguageDataModel], Error> {
+        
+        if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
+                      
+            let query = SwiftDatabaseQuery<SwiftLanguage>.filter(
+                filter: getLanguagesByCodesPredicate(codes: codes)
+            )
+            
+            return swiftPersistence
+                .getDataModelsPublisher(getOption: .allObjects, query: query)
+                .eraseToAnyPublisher()
+        }
+        else if let realmPersistence = getRealmPersistence() {
+            
+            let query = RealmDatabaseQuery.filter(
+                filter: getLanguagesByCodesNSPredicate(codes: codes)
+            )
+            
+            return realmPersistence
+                .getDataModelsPublisher(getOption: .allObjects, query: query)
+                .eraseToAnyPublisher()
+        }
+        else {
+            
+            return Just([])
+                .setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
         }
     }
 }
+

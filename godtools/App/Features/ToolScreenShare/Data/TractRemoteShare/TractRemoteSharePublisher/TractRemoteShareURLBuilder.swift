@@ -21,10 +21,10 @@ final class TractRemoteShareURLBuilder {
         self.languagesRepository = languagesRepository
     }
     
-    func buildRemoteShareURL(toolId: String, primaryLanguageId: String, parallelLanguageId: String?, selectedLanguageId: String, page: Int?, subscriberChannelId: String) -> String? {
+    @MainActor func buildRemoteShareURL(toolId: String, primaryLanguageId: String, parallelLanguageId: String?, selectedLanguageId: String, page: Int?, subscriberChannelId: String) -> String? {
                 
-        let resource: ResourceDataModel? = resourcesRepository.persistence.getObject(id: toolId)
-        let selectedLanguage: LanguageDataModel? = languagesRepository.persistence.getObject(id: selectedLanguageId)
+        let resource: ResourceDataModel? = resourcesRepository.persistence.getDataModelNonThrowing(id: toolId)
+        let selectedLanguage: LanguageDataModel? = languagesRepository.persistence.getDataModelNonThrowing(id: selectedLanguageId)
         
         var urlPath: String = ""
         
@@ -48,13 +48,13 @@ final class TractRemoteShareURLBuilder {
         
         var queryItems: [URLQueryItem] = Array()
         
-        if let parallelLanguageId = parallelLanguageId, let parallelLanguage = languagesRepository.persistence.getObject(id: parallelLanguageId) {
+        if let parallelLanguageId = parallelLanguageId, let parallelLanguage = languagesRepository.persistence.getDataModelNonThrowing(id: parallelLanguageId) {
             queryItems.append(URLQueryItem(name: "parallelLanguage", value: parallelLanguage.code))
         }
         
         queryItems.append(URLQueryItem(name: "icid", value: "gtshare"))
         
-        if let primaryLanguage = languagesRepository.persistence.getObject(id: primaryLanguageId) {
+        if let primaryLanguage = languagesRepository.persistence.getDataModelNonThrowing(id: primaryLanguageId) {
             queryItems.append(URLQueryItem(name: "primaryLanguage", value: primaryLanguage.code))
         }
         

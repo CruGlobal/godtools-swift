@@ -27,7 +27,7 @@ class GetToolTranslationsFilesUseCase {
         self.languagesRepository = languagesRepository
     }
     
-    func getToolTranslationsFilesPublisher(filter: GetToolTranslationsFilesFilter, determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadInterface, downloadStarted: (() -> Void)?) -> AnyPublisher<ToolTranslationsDomainModel, Error> {
+    @MainActor func getToolTranslationsFilesPublisher(filter: GetToolTranslationsFilesFilter, determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadInterface, downloadStarted: (() -> Void)?) -> AnyPublisher<ToolTranslationsDomainModel, Error> {
                 
         let requestPriority: RequestPriority = .high
         let manifestParserType: TranslationManifestParserType
@@ -44,7 +44,7 @@ class GetToolTranslationsFilesUseCase {
             includeRelatedFiles = false
         }
         
-        return determineToolTranslationsToDownload.determineToolTranslationsToDownload().publisher
+        return determineToolTranslationsToDownload.determineToolTranslationsToDownloadPublisher()
             .catch({ (error: DetermineToolTranslationsToDownloadError) -> AnyPublisher<DetermineToolTranslationsToDownloadResult, Error> in
                 
                 self.initiateDownloadStarted(downloadStarted: downloadStarted)
@@ -146,79 +146,71 @@ class GetToolTranslationsFilesUseCase {
         return sortedLanguageTranslationManifests
     }
     
-    private func downloadResourcesFromJsonFileCacheAndDetermineTranslationsToDownloadPublisher(requestPriority: RequestPriority, resourceNeeded: DetermineToolTranslationsResourceNeeded, determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadInterface) -> AnyPublisher<DetermineToolTranslationsToDownloadResult, Error> {
+    @MainActor private func downloadResourcesFromJsonFileCacheAndDetermineTranslationsToDownloadPublisher(requestPriority: RequestPriority, resourceNeeded: DetermineToolTranslationsResourceNeeded, determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadInterface) -> AnyPublisher<DetermineToolTranslationsToDownloadResult, Error> {
         
         return resourcesRepository
             .syncLanguagesAndResourcesPlusLatestTranslationsAndLatestAttachmentsFromJsonFile()
             .flatMap({ (didSyncResources: ResourcesCacheSyncResult?) -> AnyPublisher<DetermineToolTranslationsToDownloadResult, Error> in
                 
-                let determineResult: Result<DetermineToolTranslationsToDownloadResult, DetermineToolTranslationsToDownloadError> = determineToolTranslationsToDownload.determineToolTranslationsToDownload()
-                
-                switch determineResult {
-                
-                case .success(let translationsResult):
-                   
-                    return Just(translationsResult)
-                        .setFailureType(to: Error.self)
-                        .eraseToAnyPublisher()
-               
-                case .failure(let determineTranslationsError):
-                    
-                    switch determineTranslationsError {
-                    
-                    case .failedToFetchResourceFromCache(let resourceNeeded):
+                return determineToolTranslationsToDownload
+                    .determineToolTranslationsToDownloadPublisher()
+                    .map { (downloadResult: DetermineToolTranslationsToDownloadResult) in
                         
-                        return self.downloadResourcesFromRemoteAndDetermineTranslationsToDownloadPublisher(
-                            requestPriority: requestPriority,
-                            resourceNeeded: resourceNeeded,
-                            determineToolTranslationsToDownload: determineToolTranslationsToDownload
-                        )
-                        .eraseToAnyPublisher()
+                        return downloadResult
                     }
-                }
+                    .catch { (determineTranslationsError: DetermineToolTranslationsToDownloadError) in
+                        
+                        switch determineTranslationsError {
+                        
+                        case .failedToFetchResourceFromCache(let resourceNeeded):
+                            
+                            return self.downloadResourcesFromRemoteAndDetermineTranslationsToDownloadPublisher(
+                                requestPriority: requestPriority,
+                                resourceNeeded: resourceNeeded,
+                                determineToolTranslationsToDownload: determineToolTranslationsToDownload
+                            )
+                            .eraseToAnyPublisher()
+                        }
+                    }
+                    .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
     }
     
-    private func downloadResourcesFromRemoteAndDetermineTranslationsToDownloadPublisher(requestPriority: RequestPriority, resourceNeeded: DetermineToolTranslationsResourceNeeded, determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadInterface) -> AnyPublisher<DetermineToolTranslationsToDownloadResult, Error> {
+    @MainActor private func downloadResourcesFromRemoteAndDetermineTranslationsToDownloadPublisher(requestPriority: RequestPriority, resourceNeeded: DetermineToolTranslationsResourceNeeded, determineToolTranslationsToDownload: DetermineToolTranslationsToDownloadInterface) -> AnyPublisher<DetermineToolTranslationsToDownloadResult, Error> {
         
         return languagesRepository
             .syncLanguagesFromRemote(requestPriority: requestPriority)
-            .flatMap({ (languagesResponse: RepositorySyncResponse<LanguageDataModel>) -> AnyPublisher<Void, Error> in
+            .flatMap({ (languages: [LanguageDataModel]) -> AnyPublisher<Void, Error> in
                 
                 self.syncResourcesPublisher(requestPriority: requestPriority, resourceNeeded: resourceNeeded)
                     .eraseToAnyPublisher()
             })
             .flatMap({ (didSyncResources: Void) -> AnyPublisher<DetermineToolTranslationsToDownloadResult, Error> in
                 
-                let determineResult: Result<DetermineToolTranslationsToDownloadResult, DetermineToolTranslationsToDownloadError> = determineToolTranslationsToDownload.determineToolTranslationsToDownload()
-                
-                switch determineResult {
-                
-                case .success(let translationsResult):
-                   
-                    return Just(translationsResult)
-                        .setFailureType(to: Error.self)
-                        .eraseToAnyPublisher()
-               
-                case .failure(let determineTranslationsError):
-                    
-                    switch determineTranslationsError {
-                    
-                    case .failedToFetchResourceFromCache( _):
-                       
-                        let error: Error = NSError.errorWithDescription(description: "Failed to fetch resources needed.")
-                       
-                        return Fail(error: error)
-                            .eraseToAnyPublisher()
+                return determineToolTranslationsToDownload
+                    .determineToolTranslationsToDownloadPublisher()
+                    .map { (downloadResult: DetermineToolTranslationsToDownloadResult) in
+                        
+                        return downloadResult
                     }
-                    
-                }
+                    .mapError { (determineTranslationsError: DetermineToolTranslationsToDownloadError) in
+                        
+                        switch determineTranslationsError {
+                        
+                        case .failedToFetchResourceFromCache( _):
+                            
+                            let error: Error = NSError.errorWithDescription(description: "Failed to fetch resources needed.")
+                           
+                            return error
+                        }
+                    }
+                    .eraseToAnyPublisher()
             })
             .eraseToAnyPublisher()
     }
     
-    private func syncResourcesPublisher(requestPriority: RequestPriority, resourceNeeded: DetermineToolTranslationsResourceNeeded) -> AnyPublisher<Void, Error> {
+    @MainActor private func syncResourcesPublisher(requestPriority: RequestPriority, resourceNeeded: DetermineToolTranslationsResourceNeeded) -> AnyPublisher<Void, Error> {
         
         switch resourceNeeded {
         

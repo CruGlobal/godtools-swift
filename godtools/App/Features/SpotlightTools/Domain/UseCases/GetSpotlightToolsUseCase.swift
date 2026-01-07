@@ -17,7 +17,7 @@ class GetSpotlightToolsUseCase {
         self.getSpotlightToolsRepository = getSpotlightToolsRepository
     }
     
-    func getSpotlightToolsPublisher(translatedInAppLanguage: AppLanguageDomainModel, languageIdForAvailabilityText: String?) -> AnyPublisher<[SpotlightToolListItemDomainModel], Never> {
+    @MainActor func getSpotlightToolsPublisher(translatedInAppLanguage: AppLanguageDomainModel, languageIdForAvailabilityText: String?) -> AnyPublisher<[SpotlightToolListItemDomainModel], Error> {
         
         return getSpotlightToolsRepository
             .getSpotlightToolsPublisher(translatedInAppLanguage: translatedInAppLanguage, languageIdForAvailabilityText: languageIdForAvailabilityText)

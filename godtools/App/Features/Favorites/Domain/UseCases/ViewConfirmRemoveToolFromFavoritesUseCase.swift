@@ -18,7 +18,7 @@ class ViewConfirmRemoveToolFromFavoritesUseCase {
         self.interfaceStringsRepository = interfaceStringsRepository
     }
     
-    func viewPublisher(toolId: String, appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewConfirmRemoveToolFromFavoritesDomainModel, Never> {
+    @MainActor func viewPublisher(toolId: String, appLanguage: AppLanguageDomainModel) -> AnyPublisher<ViewConfirmRemoveToolFromFavoritesDomainModel, Never> {
         
         return interfaceStringsRepository
             .getStringsPublisher(toolId: toolId, translateInLanguage: appLanguage)

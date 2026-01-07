@@ -9,6 +9,7 @@
 import Foundation
 import RequestOperation
 import Combine
+import RepositorySync
 
 class MobileContentLanguagesApi {
     
@@ -89,13 +90,13 @@ class MobileContentLanguagesApi {
     }
 }
 
-// MARK: - RepositorySyncExternalDataFetchInterface
+// MARK: - ExternalDataFetchInterface
 
-extension MobileContentLanguagesApi: RepositorySyncExternalDataFetchInterface {
+extension MobileContentLanguagesApi: ExternalDataFetchInterface {
     
-    func getObjectPublisher(id: String, requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<LanguageCodable>, Never> {
+    func getObjectPublisher(id: String, context: RequestOperationFetchContext) -> AnyPublisher<[LanguageCodable], Error> {
         
-        return getLanguage(requestPriority: requestPriority, languageId: id)
+        return getLanguage(requestPriority: context.requestPriority, languageId: id)
             .map { (language: LanguageCodable?) in
                 
                 let objects: [LanguageCodable]
@@ -106,24 +107,16 @@ extension MobileContentLanguagesApi: RepositorySyncExternalDataFetchInterface {
                     objects = []
                 }
                 
-                return RepositorySyncResponse(objects: objects, errors: [])
-            }
-            .catch { (error: Error) in
-                return Just(RepositorySyncResponse(objects: [], errors: [error]))
-                    .eraseToAnyPublisher()
+                return objects
             }
             .eraseToAnyPublisher()
     }
     
-    func getObjectsPublisher(requestPriority: RequestPriority) -> AnyPublisher<RepositorySyncResponse<LanguageCodable>, Never> {
+    func getObjectsPublisher(context: RequestOperationFetchContext) -> AnyPublisher<[LanguageCodable], Error> {
         
-        return getLanguages(requestPriority: requestPriority)
+        return getLanguages(requestPriority: context.requestPriority)
             .map { (languages: [LanguageCodable]) in
-                return RepositorySyncResponse(objects: languages, errors: [])
-            }
-            .catch { (error: Error) in
-                return Just(RepositorySyncResponse(objects: [], errors: [error]))
-                    .eraseToAnyPublisher()
+                return languages
             }
             .eraseToAnyPublisher()
     }

@@ -27,7 +27,7 @@ class SwiftResourcesCacheSync {
         self.trackDownloadedTranslationsRepository = trackDownloadedTranslationsRepository
     }
     
-    func syncResources(resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable, shouldRemoveDataThatNoLongerExists: Bool) -> AnyPublisher<ResourcesCacheSyncResult, Error> {
+    @MainActor func syncResources(resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsCodable, shouldRemoveDataThatNoLongerExists: Bool) -> AnyPublisher<ResourcesCacheSyncResult, Error> {
      
         return Future() { promise in
             
