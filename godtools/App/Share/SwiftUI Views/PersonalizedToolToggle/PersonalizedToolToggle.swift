@@ -10,7 +10,11 @@ import SwiftUI
 
 struct PersonalizedToolToggle<ViewModel: PersonalizedToolToggleViewModelProtocol>: View {
 
-    @ObservedObject var viewModel: ViewModel
+    @ObservedObject private var viewModel: ViewModel
+    
+    init(viewModel: ViewModel) {
+        self.viewModel = viewModel
+    }
 
     var body: some View {
         

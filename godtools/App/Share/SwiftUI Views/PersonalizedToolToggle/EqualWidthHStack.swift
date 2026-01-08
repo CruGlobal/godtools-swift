@@ -8,7 +8,6 @@
 
 import SwiftUI
 
-@available(iOS 16.0, *)
 struct EqualWidthHStack: Layout {
     
     var spacing: CGFloat = 0

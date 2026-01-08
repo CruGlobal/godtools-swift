@@ -63,7 +63,7 @@ import Combine
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.attachmentsRepository = attachmentsRepository
-                
+        
         showsFavoritingToolBanner = !favoritingToolMessageCache.favoritingToolMessageDisabled
         
         getCurrentAppLanguageUseCase
