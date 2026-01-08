@@ -26,7 +26,7 @@ struct ToolsView: View {
         GeometryReader { geometry in
               
             AccessibilityScreenElementView(screenAccessibility: .dashboardTools)
-            
+                        
             if viewModel.isLoadingAllTools {
                 CenteredCircularProgressView(
                     progressColor: ColorPalette.gtGrey.color
@@ -34,6 +34,13 @@ struct ToolsView: View {
             }
             
             VStack(alignment: .leading, spacing: 0) {
+                
+                HStack {
+                    Spacer()
+                    PersonalizedToolToggle(viewModel: viewModel)
+                    Spacer()
+                }
+                .padding(.top, 5)
                 
                 if viewModel.showsFavoritingToolBanner {
                     

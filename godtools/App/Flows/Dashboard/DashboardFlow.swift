@@ -17,7 +17,6 @@ class DashboardFlow: Flow, ToolNavigationFlow {
     
     private var tutorialFlow: TutorialFlow?
     private var learnToShareToolFlow: LearnToShareToolFlow?
-    private var toggleViewHostingController: UIHostingController<PersonalizedToolToggle>?
     private var cancellables: Set<AnyCancellable> = Set()
     
     let appDiContainer: AppDiContainer
@@ -45,13 +44,6 @@ class DashboardFlow: Flow, ToolNavigationFlow {
             .getCurrentAppLanguageUseCase()
             .getLanguagePublisher()
             .assign(to: &$appLanguage)
-        
-        dashboardTabObserver
-            .sink { [weak self] currentTab in
-            
-                self?.showOrHideToggleView(currentTab: currentTab)
-            }
-            .store(in: &cancellables)
     }
     
     func navigate(step: FlowStep) {
@@ -370,43 +362,19 @@ extension DashboardFlow {
             accessibilityIdentifier: AccessibilityStrings.Button.dashboardMenu.id
         )
         
-        let toggleHostingController = getToggleViewForDashboard()
-        toggleViewHostingController = toggleHostingController
-        
         let navigationBar = AppNavigationBar(
             appearance: nil,
             backButton: nil,
             leadingItems: [menuButton],
             trailingItems: []
         )
-        
-        navigationBar.setTitleView(titleView: toggleHostingController.view)
-        
+                
         let hostingController = AppHostingController<DashboardView>(
             rootView: view,
             navigationBar: navigationBar
         )
     
         return hostingController
-    }
-    
-    private func getToggleViewForDashboard() -> UIHostingController<PersonalizedToolToggle> {
-        
-        let toggleViewModel = PersonalizedToolToggleViewModel(
-            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            getPersonalizedToolToggleInterfaceStringsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getPersonalizedToolToggleInterfaceStringsUseCase(),
-            dashboardTabObserver: dashboardTabObserver
-        )
-        
-        let toggleView = PersonalizedToolToggle(viewModel: toggleViewModel)
-        let toggleHostingController = UIHostingController<PersonalizedToolToggle>(rootView: toggleView)
-        toggleHostingController.view.backgroundColor = .clear
-
-        toggleHostingController.view.invalidateIntrinsicContentSize()
-        let size = toggleHostingController.view.intrinsicContentSize
-        toggleHostingController.view.frame = CGRect(origin: .zero, size: size)
-        
-        return toggleHostingController
     }
     
     private func configureNavBarForDashboard() {
@@ -451,17 +419,6 @@ extension DashboardFlow {
             animated: animateDismissingPresentedView,
             completion: didCompleteDismissingPresentedView
         )
-    }
-    
-    private func showOrHideToggleView(currentTab: DashboardTabTypeDomainModel) {
-        switch currentTab {
-        case .favorites:
-            toggleViewHostingController?.view.isHidden = true
-        case .lessons:
-            toggleViewHostingController?.view.isHidden = false
-        case .tools:
-            toggleViewHostingController?.view.isHidden = false
-        }
     }
 }
 
