@@ -6,6 +6,153 @@
 //  Copyright © 2023 Cru. All rights reserved.
 //
 
+import Foundation
+import Testing
+@testable import godtools
+import Combine
+import RepositorySync
+/*
+struct UserCountersRepositoryTests {
+        
+    @Test()
+    @MainActor func incrementUserCounter() async throws {
+        
+        // Setup
+        
+        var cancellables: Set<AnyCancellable> = Set()
+        
+        let userCountersRepository = try getUserCountersRepository()
+        
+        let counterId = "counter_1"
+        
+        var updatedUserCounterRef: UserCounterDataModel?
+        var errorRef: Error?
+
+        // Perform
+        
+        await confirmation(expectedCount: 1) { confirmation in
+            
+            await withCheckedContinuation { continuation in
+                
+                let timeoutTask = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
+                }
+                
+                userCountersRepository.incrementCachedUserCounterBy1(id: counterId)
+                    .sink { completion in
+
+                        switch completion {
+                        case .finished:
+                            break
+
+                        case .failure(let encounteredError):
+                            errorRef = encounteredError
+                        }
+
+                        // Place inside a sink or other async closure:
+                        confirmation()
+                        
+                        // When finished be sure to call:
+                        timeoutTask.cancel()
+                        continuation.resume(returning: ())
+
+                    } receiveValue: { (userCounters: [UserCounterDataModel]) in
+
+                        updatedUserCounterRef = userCounters.first
+                    }
+                    .store(in: &cancellables)
+            }
+        }
+        
+        // Assert
+        
+        let updatedUserCounter: UserCounterDataModel = try #require(updatedUserCounterRef)
+        
+        #expect(errorRef == nil)
+        #expect(updatedUserCounter.id == counterId)
+        #expect(updatedUserCounter.incrementValue == 1)
+        #expect(updatedUserCounter.latestCountFromAPI == 0)
+    }
+    
+    @Test()
+    @MainActor func getUserCounter() async throws {
+        
+        // Setup
+        
+        var cancellables: Set<AnyCancellable> = Set()
+                
+        let userCountersRepository = try getUserCountersRepository()
+        
+        let counter1 = UserCounterDomainModel(id: "counter_1", count: 1)
+        let counter2 = UserCounterDomainModel(id: "counter_2", count: 2)
+                                
+        await confirmation(expectedCount: 1) { confirmation in
+            
+            await withCheckedContinuation { continuation in
+                
+                let timeoutTask = Task {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    continuation.resume(returning: ())
+                }
+                
+                Publishers.CombineLatest(
+                    userCountersRepository.incrementCachedUserCounterBy1(id: counter1.id),
+                    userCountersRepository.incrementCachedUserCounterBy1(id: counter2.id)
+                )
+                .sink { _ in
+                                                
+                } receiveValue: { (counters1Increment: [UserCounterDataModel], counters2Increment: [UserCounterDataModel]) in
+                    
+                    confirmation()
+                    
+                    // When finished be sure to call:
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
+                }
+                .store(in: &cancellables)
+            }
+        }
+        
+        // Perform
+        
+        let cachedCounter1: UserCounterDomainModel = try #require(userCountersRepository.getUserCounter(id: counter1.id))
+        let cachedCounter2: UserCounterDomainModel = try #require(userCountersRepository.getUserCounter(id: counter2.id))
+        
+        // Assert
+
+        #expect(cachedCounter1.id == counter1.id)
+        #expect(cachedCounter1.count == counter1.count)
+        #expect(cachedCounter2.id == counter2.id)
+        #expect(cachedCounter2.count == counter2.count)
+    }
+}
+
+extension UserCountersRepositoryTests {
+    
+    private func getUserCountersRepository() throws -> UserCountersRepository {
+        
+        let testsDiContainer = try TestsDiContainer(addRealmObjects: [])
+        
+        let realmDatabase: LegacyRealmDatabase = testsDiContainer.dataLayer.getSharedLegacyRealmDatabase()
+        let userCountersApi = UserCountersAPIMock()
+        let userCountersCacheSync = RealmUserCountersCacheSync(realmDatabase: realmDatabase)
+        let userCountersCache = RealmUserCountersCache(realmDatabase: realmDatabase, userCountersSync: userCountersCacheSync)
+        
+        let remoteUserCountersSync = RemoteUserCountersSync(api: userCountersApi, cache: userCountersCache)
+        
+        return UserCountersRepository(
+            api: userCountersApi,
+            cache: userCountersCache,
+            remoteUserCountersSync: remoteUserCountersSync
+        )
+    }
+}
+ 
+ */
+
+/*
+
 import XCTest
 @testable import godtools
 import Combine
@@ -22,7 +169,9 @@ final class UserCountersRepositoryTests: XCTestCase {
         userCountersApi = UserCountersAPIMock()
         cancellables = Set<AnyCancellable>()
         
-        let realmDatabase = TestsInMemoryRealmDatabase()
+        let testsDiContainer = try TestsDiContainer(addRealmObjects: [])
+        
+        let realmDatabase: LegacyRealmDatabase = testsDiContainer.dataLayer.getSharedLegacyRealmDatabase()
         let userCountersCacheSync = RealmUserCountersCacheSync(realmDatabase: realmDatabase)
         let userCountersCache = RealmUserCountersCache(realmDatabase: realmDatabase, userCountersSync: userCountersCacheSync)
         
@@ -315,3 +464,4 @@ extension UserCountersRepositoryTests {
         XCTAssertNil(userCountersRepository.getUserCounter(id: id))
     }
 }
+*/

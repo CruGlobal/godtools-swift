@@ -10,6 +10,7 @@ import Testing
 import Foundation
 @testable import godtools
 import Combine
+import RepositorySync
 
 struct ToggleToolFavoritedRepositoryTests {
     
@@ -32,11 +33,12 @@ struct ToggleToolFavoritedRepositoryTests {
         TestArgument(resourcesInRealmIdsAtPositions: ["A": 0], resourceIdToToggle: "A", expectedUpdatedIdsAtPositions: [:])
        ]
     )
-    @MainActor func testToggleToolFavorited(argument: TestArgument) async {
+    @MainActor func testToggleToolFavorited(argument: TestArgument) async throws {
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        let realmDatabase = getConfiguredRealmDatabase(with: argument.resourcesInRealmIdsAtPositions)
+        let testsDiContainer = try TestsDiContainer(addRealmObjects: getRealmObjects(with: argument.resourcesInRealmIdsAtPositions))
+        let realmDatabase: LegacyRealmDatabase = testsDiContainer.dataLayer.getSharedLegacyRealmDatabase()
         let toggleToolFavoritedRepository = ToggleToolFavoritedRepository(favoritedResourcesRepository: FavoritedResourcesRepository(cache: RealmFavoritedResourcesCache(realmDatabase: realmDatabase)))
         
         var favoritedResources: [FavoritedResourceDataModel] = Array()
@@ -64,7 +66,13 @@ struct ToggleToolFavoritedRepositoryTests {
         }
     }
     
-    private func getConfiguredRealmDatabase(with resources: [String: Int]) -> LegacyRealmDatabase {
+    
+}
+
+extension ToggleToolFavoritedRepositoryTests {
+    
+    private func getRealmObjects(with resources: [String: Int]) -> [IdentifiableRealmObject] {
+        
         var resourceObjects = [RealmFavoritedResource]()
         
         for (resourceId, resourcePosition) in resources {
@@ -72,7 +80,6 @@ struct ToggleToolFavoritedRepositoryTests {
             resourceObjects.append(resource)
         }
         
-        return TestsInMemoryRealmDatabase(addObjectsToDatabase: resourceObjects)
+        return resourceObjects
     }
 }
-

@@ -10,6 +10,7 @@ import Testing
 import Foundation
 @testable import godtools
 import Combine
+import RepositorySync
 
 struct ReorderFavoritedToolRepositoryTests {
 
@@ -33,11 +34,14 @@ struct ReorderFavoritedToolRepositoryTests {
         TestArgument(resourcesInRealmIdsAtPositions: ["A": 0, "B": 1, "C": 2, "D": 3, "E": 4], resourceIdToReorder: "E", originalPosition: 4, newPosition: 2, expectedUpdatedIdsAtPositions: ["A": 0, "B": 1, "E": 2, "C": 3, "D": 4])
        ]
     )
-    @MainActor func testReorderFavorites(argument: TestArgument) async {
+    @MainActor func testReorderFavorites(argument: TestArgument) async throws {
         
         var cancellables: Set<AnyCancellable> = Set()
+        
+        let testsDiContainer = try TestsDiContainer(addRealmObjects: getRealmObjects(with: argument.resourcesInRealmIdsAtPositions))
              
-        let realmDatabase = getConfiguredRealmDatabase(with: argument.resourcesInRealmIdsAtPositions)
+        let realmDatabase: LegacyRealmDatabase = testsDiContainer.dataLayer.getSharedLegacyRealmDatabase()
+        
         let favoritedResourcesRepo = FavoritedResourcesRepository(
             cache: RealmFavoritedResourcesCache(realmDatabase: realmDatabase)
         )
@@ -70,8 +74,12 @@ struct ReorderFavoritedToolRepositoryTests {
             )
         }
     }
+}
+
+extension ReorderFavoritedToolRepositoryTests {
     
-    private func getConfiguredRealmDatabase(with resources: [String: Int]) -> LegacyRealmDatabase {
+    private func getRealmObjects(with resources: [String: Int]) -> [IdentifiableRealmObject] {
+        
         var resourceObjects = [RealmFavoritedResource]()
         
         for (resourceId, resourcePosition) in resources {
@@ -79,6 +87,6 @@ struct ReorderFavoritedToolRepositoryTests {
             resourceObjects.append(resource)
         }
         
-        return TestsInMemoryRealmDatabase(addObjectsToDatabase: resourceObjects)
+        return resourceObjects
     }
 }

@@ -10,6 +10,7 @@ import Testing
 import Foundation
 @testable import godtools
 import Combine
+import RepositorySync
 
 struct FavoritedResourcesRepositoryTests {
     
@@ -26,11 +27,12 @@ struct FavoritedResourcesRepositoryTests {
             StoreTestArgument(resourcesInRealmIdsAtPositions: [:], resourceIdsToAdd: ["A", "B", "C"], expectedUpdatedIdsAtPositions: ["A": 0, "B": 1, "C": 2]),
         ]
     )
-    @MainActor func testStoreFavoritedResources(argument: StoreTestArgument) async {
+    @MainActor func testStoreFavoritedResources(argument: StoreTestArgument) async throws {
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        let realmDatabase = getConfiguredRealmDatabase(with: argument.resourcesInRealmIdsAtPositions)
+        let testsDiContainer = try TestsDiContainer(addRealmObjects: getRealmObjects(with: argument.resourcesInRealmIdsAtPositions))
+        let realmDatabase: LegacyRealmDatabase = testsDiContainer.dataLayer.getSharedLegacyRealmDatabase()
         let favoritedResourcesRepository = FavoritedResourcesRepository(cache: RealmFavoritedResourcesCache(realmDatabase: realmDatabase))
         
         var favoritedResources: [FavoritedResourceDataModel] = Array()
@@ -74,10 +76,11 @@ struct FavoritedResourcesRepositoryTests {
             DeleteTestArgument(resourcesInRealmIdsAtPositions: ["A": 0], resourceIdToDelete: "B", expectedUpdatedIdsAtPositions: ["A": 0])
         ]
     )
-    @MainActor func testDeleteFavoritedResource(argument: DeleteTestArgument) async {
+    @MainActor func testDeleteFavoritedResource(argument: DeleteTestArgument) async throws {
         var cancellables: Set<AnyCancellable> = Set()
         
-        let realmDatabase = getConfiguredRealmDatabase(with: argument.resourcesInRealmIdsAtPositions)
+        let testsDiContainer = try TestsDiContainer(addRealmObjects: getRealmObjects(with: argument.resourcesInRealmIdsAtPositions))
+        let realmDatabase: LegacyRealmDatabase = testsDiContainer.dataLayer.getSharedLegacyRealmDatabase()
         let favoritedResourcesRepository = FavoritedResourcesRepository(cache: RealmFavoritedResourcesCache(realmDatabase: realmDatabase))
         
         var remainingResources: [FavoritedResourceDataModel] = Array()
@@ -125,10 +128,11 @@ struct FavoritedResourcesRepositoryTests {
             ReorderTestArgument(resourcesInRealmIdsAtPositions: ["A": 0, "B": 1, "C": 2, "D": 3], resourceIdToReorder: "E", originalPosition: 1, newPosition: 2, expectedUpdatedIdsAtPositions: ["A": 0, "B": 1, "C": 2, "D": 3])
         ]
     )
-    @MainActor func testReorderFavoritedResources(argument: ReorderTestArgument) async {
+    @MainActor func testReorderFavoritedResources(argument: ReorderTestArgument) async throws {
         var cancellables: Set<AnyCancellable> = Set()
         
-        let realmDatabase = getConfiguredRealmDatabase(with: argument.resourcesInRealmIdsAtPositions)
+        let testsDiContainer = try TestsDiContainer(addRealmObjects: getRealmObjects(with: argument.resourcesInRealmIdsAtPositions))
+        let realmDatabase: LegacyRealmDatabase = testsDiContainer.dataLayer.getSharedLegacyRealmDatabase()
         let favoritedResourcesRepository = FavoritedResourcesRepository(cache: RealmFavoritedResourcesCache(realmDatabase: realmDatabase))
         
         var favoritedResources: [FavoritedResourceDataModel] = Array()
@@ -162,7 +166,7 @@ struct FavoritedResourcesRepositoryTests {
 
 extension FavoritedResourcesRepositoryTests {
     
-    private func getConfiguredRealmDatabase(with resources: [String: Int]) -> LegacyRealmDatabase {
+    private func getRealmObjects(with resources: [String: Int]) -> [IdentifiableRealmObject] {
         
         var resourceObjects = [RealmFavoritedResource]()
         
@@ -171,7 +175,7 @@ extension FavoritedResourcesRepositoryTests {
             resourceObjects.append(resource)
         }
         
-        return TestsInMemoryRealmDatabase(addObjectsToDatabase: resourceObjects)
+        return resourceObjects
     }
 }
 
