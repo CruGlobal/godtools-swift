@@ -20,7 +20,7 @@ class LessonPageViewFactory: MobileContentPageViewFactoryType {
         self.mobileContentAnalytics = mobileContentAnalytics
     }
     
-    func viewForRenderableModel(renderableModel: AnyObject, renderableModelParent: AnyObject?, renderedPageContext: MobileContentRenderedPageContext) -> MobileContentView? {
+    @MainActor func viewForRenderableModel(renderableModel: AnyObject, renderableModelParent: AnyObject?, renderedPageContext: MobileContentRenderedPageContext) -> MobileContentView? {
         
         if let pageModel = renderableModel as? Page {
                      

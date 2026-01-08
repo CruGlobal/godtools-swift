@@ -95,7 +95,7 @@ class MobileContentRendererPageViewFactories: MobileContentPageViewFactoryType {
         self.factories = pageViewFactories
     }
     
-    func viewForRenderableModel(renderableModel: AnyObject, renderableModelParent: AnyObject?, renderedPageContext: MobileContentRenderedPageContext) -> MobileContentView? {
+    @MainActor func viewForRenderableModel(renderableModel: AnyObject, renderableModelParent: AnyObject?, renderedPageContext: MobileContentRenderedPageContext) -> MobileContentView? {
         
         for pageViewFactory in factories {
             if let view = pageViewFactory.viewForRenderableModel(renderableModel: renderableModel, renderableModelParent: renderableModelParent, renderedPageContext: renderedPageContext) {

@@ -9,7 +9,7 @@
 import UIKit
 import GodToolsShared
 
-@MainActor class MobileContentPageRenderer {
+class MobileContentPageRenderer {
     
     private let navigation: MobileContentRendererNavigation
     
@@ -107,7 +107,7 @@ import GodToolsShared
         return renderedPageContext
     }
     
-    func renderPageModel(pageModel: Page, page: Int, numberOfPages: Int, parentPageParams: MobileContentParentPageParams?, window: UIViewController, safeArea: UIEdgeInsets, trainingTipsEnabled: Bool, userInfo: [String: Any]?) -> Result<MobileContentView, Error> {
+    @MainActor func renderPageModel(pageModel: Page, page: Int, numberOfPages: Int, parentPageParams: MobileContentParentPageParams?, window: UIViewController, safeArea: UIEdgeInsets, trainingTipsEnabled: Bool, userInfo: [String: Any]?) -> Result<MobileContentView, Error> {
         
         let renderedPageContext: MobileContentRenderedPageContext = getRenderedPageContext(
             pageModel: pageModel,

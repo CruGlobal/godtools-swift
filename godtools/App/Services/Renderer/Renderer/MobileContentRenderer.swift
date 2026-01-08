@@ -9,7 +9,7 @@
 import UIKit
 import GodToolsShared
 
-@MainActor class MobileContentRenderer {
+class MobileContentRenderer {
             
     private let sharedState: State
     private let pageViewFactories: MobileContentRendererPageViewFactories

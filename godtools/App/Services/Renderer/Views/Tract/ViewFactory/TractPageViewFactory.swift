@@ -26,7 +26,7 @@ class TractPageViewFactory: MobileContentPageViewFactoryType {
         self.followUpService = followUpService
     }
     
-    func viewForRenderableModel(renderableModel: AnyObject, renderableModelParent: AnyObject?, renderedPageContext: MobileContentRenderedPageContext) -> MobileContentView? {
+    @MainActor func viewForRenderableModel(renderableModel: AnyObject, renderableModelParent: AnyObject?, renderedPageContext: MobileContentRenderedPageContext) -> MobileContentView? {
         
         if let cardModel = renderableModel as? MultiplatformCard {
             
@@ -152,7 +152,7 @@ class TractPageViewFactory: MobileContentPageViewFactoryType {
         return nil
     }
     
-    func getCallToActionView(callToActionModel: CallToAction?, renderedPageContext: MobileContentRenderedPageContext) -> TractPageCallToActionView {
+    @MainActor func getCallToActionView(callToActionModel: CallToAction?, renderedPageContext: MobileContentRenderedPageContext) -> TractPageCallToActionView {
         
         let viewModel = TractPageCallToActionViewModel(
             callToActionModel: callToActionModel,

@@ -8,7 +8,7 @@
 
 import UIKit
 
-@MainActor class AppDiContainer {
+class AppDiContainer {
         
     private let failedFollowUpsCache: FailedFollowUpsCache
     private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()

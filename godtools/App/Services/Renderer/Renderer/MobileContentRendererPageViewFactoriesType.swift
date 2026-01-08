@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum MobileContentRendererPageViewFactoriesType {
+enum MobileContentRendererPageViewFactoriesType: Sendable {
     
     case chooseYourOwnAdventure
     case lesson

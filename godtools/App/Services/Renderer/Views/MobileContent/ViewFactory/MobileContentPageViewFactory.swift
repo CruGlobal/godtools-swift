@@ -21,7 +21,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
     }
     
-    func viewForRenderableModel(renderableModel: AnyObject, renderableModelParent: AnyObject?, renderedPageContext: MobileContentRenderedPageContext) -> MobileContentView? {
+    @MainActor func viewForRenderableModel(renderableModel: AnyObject, renderableModelParent: AnyObject?, renderedPageContext: MobileContentRenderedPageContext) -> MobileContentView? {
         
         if let paragraphModel = renderableModel as? Paragraph {
         
@@ -341,7 +341,7 @@ class MobileContentPageViewFactory: MobileContentPageViewFactoryType {
         return nil
     }
     
-    func getContentText(textModel: GodToolsShared.Text, renderedPageContext: MobileContentRenderedPageContext, viewType: MobileContentTextView.ViewType?, additionalLabelAttributes: MobileContentTextLabelAttributes?) -> MobileContentTextView {
+    @MainActor func getContentText(textModel: GodToolsShared.Text, renderedPageContext: MobileContentRenderedPageContext, viewType: MobileContentTextView.ViewType?, additionalLabelAttributes: MobileContentTextLabelAttributes?) -> MobileContentTextView {
         
         let viewModel = MobileContentTextViewModel(
             textModel: textModel,

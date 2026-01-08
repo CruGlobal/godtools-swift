@@ -8,7 +8,7 @@
 
 import Foundation
 
-@MainActor class MobileContentViewRenderer {
+class MobileContentViewRenderer {
     
     let pageViewFactories: MobileContentRendererPageViewFactories
     
@@ -17,7 +17,7 @@ import Foundation
         self.pageViewFactories = pageViewFactories
     }
     
-    func recurseAndRender(renderableModel: AnyObject, renderableModelParent: AnyObject?, renderedPageContext: MobileContentRenderedPageContext) -> MobileContentView? {
+    @MainActor func recurseAndRender(renderableModel: AnyObject, renderableModelParent: AnyObject?, renderedPageContext: MobileContentRenderedPageContext) -> MobileContentView? {
                    
         let mobileContentView: MobileContentView? = pageViewFactories.viewForRenderableModel(
             renderableModel: renderableModel,

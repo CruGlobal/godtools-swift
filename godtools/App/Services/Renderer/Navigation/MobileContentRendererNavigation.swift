@@ -9,13 +9,13 @@
 import UIKit
 import GodToolsShared
 
-@MainActor protocol MobileContentRendererNavigationDelegate: AnyObject {
+protocol MobileContentRendererNavigationDelegate: AnyObject {
     
-    func mobileContentRendererNavigationDismissRenderer(navigation: MobileContentRendererNavigation, event: DismissToolEvent)
-    func mobileContentRendererNavigationDeepLink(navigation: MobileContentRendererNavigation, deepLink: MobileContentRendererNavigationDeepLinkType)
+    @MainActor func mobileContentRendererNavigationDismissRenderer(navigation: MobileContentRendererNavigation, event: DismissToolEvent)
+    @MainActor func mobileContentRendererNavigationDeepLink(navigation: MobileContentRendererNavigation, deepLink: MobileContentRendererNavigationDeepLinkType)
 }
 
-@MainActor final class MobileContentRendererNavigation {
+final class MobileContentRendererNavigation {
     
     private let appDiContainer: AppDiContainer
     private let appLanguage: AppLanguageDomainModel
@@ -38,7 +38,7 @@ import GodToolsShared
         print("x deinit: \(type(of: self))")
     }
     
-    func buttonWithUrlTapped(url: URL, analyticsScreenName: String, analyticsSiteSection: String, analyticsSiteSubSection: String, languages: MobileContentRendererLanguages) {
+    @MainActor func buttonWithUrlTapped(url: URL, analyticsScreenName: String, analyticsSiteSection: String, analyticsSiteSubSection: String, languages: MobileContentRendererLanguages) {
         
         let deepLinkingService: DeepLinkingService = appDiContainer.dataLayer.getDeepLinkingService()
         let deepLink: ParsedDeepLinkType? = deepLinkingService.parseDeepLink(incomingDeepLink: .url(incomingUrl: IncomingDeepLinkUrl(url: url)))
@@ -73,29 +73,29 @@ import GodToolsShared
         }
     }
     
-    func dismissTool(event: DismissToolEvent) {
+    @MainActor func dismissTool(event: DismissToolEvent) {
         
         delegate?.mobileContentRendererNavigationDismissRenderer(navigation: self, event: event)
     }
     
-    func presentError(error: Error, appLanguage: AppLanguageDomainModel) {
+    @MainActor func presentError(error: Error, appLanguage: AppLanguageDomainModel) {
         
         parentFlow?.presentError(appLanguage: appLanguage, error: error)
     }
     
-    func errorOccurred(error: MobileContentErrorViewModel) {
+    @MainActor func errorOccurred(error: MobileContentErrorViewModel) {
         
         let view = MobileContentErrorView(viewModel: error)
         
         parentFlow?.navigationController.present(view.controller, animated: true, completion: nil)
     }
     
-    func trainingTipTapped(event: TrainingTipEvent) {
+    @MainActor func trainingTipTapped(event: TrainingTipEvent) {
                 
         presentToolTraining(event: event)
     }
     
-    func downloadToolLanguages(toolId: String, languageIds: [String], completion: @escaping ((_ result: Result<ToolTranslationsDomainModel, Error>) -> Void)) {
+    @MainActor func downloadToolLanguages(toolId: String, languageIds: [String], completion: @escaping ((_ result: Result<ToolTranslationsDomainModel, Error>) -> Void)) {
              
         guard let flow = parentFlow else {
             completion(.failure(NSError.errorWithDescription(description: "Failed to download tool languages.  Parent flow is null.")))
@@ -120,7 +120,7 @@ import GodToolsShared
         )
     }
     
-    private func presentToolTraining(event: TrainingTipEvent) {
+    @MainActor private func presentToolTraining(event: TrainingTipEvent) {
         
         guard let parentFlow = parentFlow else {
             return
@@ -176,7 +176,7 @@ import GodToolsShared
         self.toolTraining = view
     }
     
-    private func dismissToolTraining() {
+    @MainActor private func dismissToolTraining() {
         
         guard toolTraining != nil else {
             return
@@ -189,11 +189,11 @@ import GodToolsShared
 
 extension MobileContentRendererNavigation: MobileContentRendererNavigationDelegate {
     
-    func mobileContentRendererNavigationDismissRenderer(navigation: MobileContentRendererNavigation, event: DismissToolEvent) {
+    @MainActor func mobileContentRendererNavigationDismissRenderer(navigation: MobileContentRendererNavigation, event: DismissToolEvent) {
         dismissToolTraining()
     }
     
-    func mobileContentRendererNavigationDeepLink(navigation: MobileContentRendererNavigation, deepLink: MobileContentRendererNavigationDeepLinkType) {
+    @MainActor func mobileContentRendererNavigationDeepLink(navigation: MobileContentRendererNavigation, deepLink: MobileContentRendererNavigationDeepLinkType) {
         
     }
 }
