@@ -39,9 +39,9 @@ struct StoreInitialAppLanguageTests {
             )
         ]
     )
-    @MainActor func noAppLanguageSetDefaultsToDeviceLanguageWhenSupported(argument: TestArgument) async {
+    @MainActor func noAppLanguageSetDefaultsToDeviceLanguageWhenSupported(argument: TestArgument) async throws {
         
-        let testsDiContainer = TestsDiContainer()
+        let testsDiContainer = try TestsDiContainer(addRealmObjects: [])
         
         let testsRealmDatabase: LegacyRealmDatabase = testsDiContainer.dataLayer.getSharedLegacyRealmDatabase()
         
@@ -115,9 +115,9 @@ struct StoreInitialAppLanguageTests {
             )
         ]
     )
-    @MainActor func appLanguageSetAndSupportedShowsMyAppLanguage(argument: TestArgument) async {
+    @MainActor func appLanguageSetAndSupportedShowsMyAppLanguage(argument: TestArgument) async throws {
         
-        let testsDiContainer = TestsDiContainer()
+        let testsDiContainer = try TestsDiContainer(addRealmObjects: [])
         
         let testsRealmDatabase: LegacyRealmDatabase = testsDiContainer.dataLayer.getSharedLegacyRealmDatabase()
         
@@ -186,9 +186,9 @@ struct StoreInitialAppLanguageTests {
             )
         ]
     )
-    @MainActor func noAppLanguageSetAndDeviceLanguageIsNotASupportedAppLanguage(argument: TestArgument) async {
+    @MainActor func noAppLanguageSetAndDeviceLanguageIsNotASupportedAppLanguage(argument: TestArgument) async throws {
         
-        let testsDiContainer = TestsDiContainer()
+        let testsDiContainer = try TestsDiContainer(addRealmObjects: [])
         
         let testsRealmDatabase: LegacyRealmDatabase = testsDiContainer.dataLayer.getSharedLegacyRealmDatabase()
         

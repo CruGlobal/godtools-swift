@@ -10,6 +10,7 @@ import Testing
 @testable import godtools
 import Combine
 import RealmSwift
+import RepositorySync
 
 struct GetDownloadToolProgressInterfaceStringsRepositoryTests {
     
@@ -26,9 +27,9 @@ struct GetDownloadToolProgressInterfaceStringsRepositoryTests {
         Then: The message should be the downloading tool message.
         """
     )
-    @MainActor func correctMessageShowsWhenDownloadingAFavoritedTool() async {
+    @MainActor func correctMessageShowsWhenDownloadingAFavoritedTool() async throws {
         
-        let downloadToolProgressInterfaceStringsRepository: GetDownloadToolProgressInterfaceStringsRepository = getDownloadToolProgressInterfaceStringsRepository()
+        let downloadToolProgressInterfaceStringsRepository: GetDownloadToolProgressInterfaceStringsRepository = try getDownloadToolProgressInterfaceStringsRepository()
         
         var cancellables: Set<AnyCancellable> = Set()
                 
@@ -57,9 +58,9 @@ struct GetDownloadToolProgressInterfaceStringsRepositoryTests {
         Then: The message should be the downloading tool message with favorite this tool for offline use messaging.
         """
     )
-    @MainActor func correctMessageShowsWhenDownloadingAToolThatIsNotFavoritedButCanBeFavorited() async {
+    @MainActor func correctMessageShowsWhenDownloadingAToolThatIsNotFavoritedButCanBeFavorited() async throws {
         
-        let downloadToolProgressInterfaceStringsRepository: GetDownloadToolProgressInterfaceStringsRepository = getDownloadToolProgressInterfaceStringsRepository()
+        let downloadToolProgressInterfaceStringsRepository: GetDownloadToolProgressInterfaceStringsRepository = try getDownloadToolProgressInterfaceStringsRepository()
         
         var cancellables: Set<AnyCancellable> = Set()
                 
@@ -88,9 +89,9 @@ struct GetDownloadToolProgressInterfaceStringsRepositoryTests {
         Then: The message should be the downloading tool message.
         """
     )
-    @MainActor func correctMessageShowsWhenDownloadingAToolThatCantBeFavorited() async {
+    @MainActor func correctMessageShowsWhenDownloadingAToolThatCantBeFavorited() async throws {
         
-        let downloadToolProgressInterfaceStringsRepository: GetDownloadToolProgressInterfaceStringsRepository = getDownloadToolProgressInterfaceStringsRepository()
+        let downloadToolProgressInterfaceStringsRepository: GetDownloadToolProgressInterfaceStringsRepository = try getDownloadToolProgressInterfaceStringsRepository()
         
         var cancellables: Set<AnyCancellable> = Set()
                 
@@ -115,7 +116,7 @@ struct GetDownloadToolProgressInterfaceStringsRepositoryTests {
 
 extension GetDownloadToolProgressInterfaceStringsRepositoryTests {
     
-    @MainActor private func getDownloadToolProgressInterfaceStringsRepository() -> GetDownloadToolProgressInterfaceStringsRepository {
+    private func getRealmObjects() -> [IdentifiableRealmObject] {
         
         let resource_1 = RealmResource()
         let favoritedResource_1 = RealmFavoritedResource()
@@ -131,11 +132,14 @@ extension GetDownloadToolProgressInterfaceStringsRepositoryTests {
         resource_3.id = unFavoritableToolId
         resource_3.resourceType = ResourceType.lesson.rawValue
         
-        let realmObjectsToAdd: [Object] = [resource_1, favoritedResource_1, resource_2, resource_3]
+        let realmObjects: [IdentifiableRealmObject] = [resource_1, favoritedResource_1, resource_2, resource_3]
         
-        let realmDatabase: LegacyRealmDatabase = TestsInMemoryRealmDatabase(addObjectsToDatabase: realmObjectsToAdd)
+        return realmObjects
+    }
+ 
+    private func getDownloadToolProgressInterfaceStringsRepository() throws -> GetDownloadToolProgressInterfaceStringsRepository {
         
-        let testsDiContainer = TestsDiContainer(realmDatabase: realmDatabase)
+        let testsDiContainer = try TestsDiContainer(addRealmObjects: getRealmObjects())
         
         let localizableStrings: [MockLocalizationServices.LocaleId: [MockLocalizationServices.StringKey: String]] = [
             LanguageCodeDomainModel.english.value: [

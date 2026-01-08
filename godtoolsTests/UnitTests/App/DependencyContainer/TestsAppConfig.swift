@@ -12,11 +12,13 @@ import SocialAuthentication
 import RepositorySync
 import SwiftData
 
-class TestsAppConfig: AppConfigInterface {
+final class TestsAppConfig: AppConfigInterface {
     
-    private let realmDatabase: LegacyRealmDatabase
+    private let legacyRealmDatabase: LegacyRealmDatabase
+    private let realmDatabase: RealmDatabase
     
-    init(realmDatabase: LegacyRealmDatabase) {
+    init(legacyRealmDatabase: LegacyRealmDatabase, realmDatabase: RealmDatabase) {
+        self.legacyRealmDatabase = legacyRealmDatabase
         self.realmDatabase = realmDatabase
     }
     
@@ -69,11 +71,11 @@ class TestsAppConfig: AppConfigInterface {
     }
     
     func getLegacyRealmDatabase() -> LegacyRealmDatabase {
-        return realmDatabase
+        return legacyRealmDatabase
     }
     
     func getRealmDatabase() -> RealmDatabase {
-        return RealmDatabase(databaseConfig: RealmDatabaseConfig.createInMemoryConfig())
+        return realmDatabase
     }
     
     @available(iOS 17.4, *)

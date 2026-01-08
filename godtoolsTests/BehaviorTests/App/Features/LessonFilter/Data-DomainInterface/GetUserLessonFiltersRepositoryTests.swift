@@ -10,6 +10,7 @@ import Testing
 @testable import godtools
 import Combine
 import RealmSwift
+import RepositorySync
 
 struct GetUserLessonFiltersRepositoryTests {
     
@@ -20,7 +21,7 @@ struct GetUserLessonFiltersRepositoryTests {
         Then: The lesson language filter should default to the current app language when lessons exist in the current app language.
         """
     )
-    @MainActor func lessonsLanguageFilterDefaultsToAppLanguageWhenLessonsExistInAppLanguage() async {
+    @MainActor func lessonsLanguageFilterDefaultsToAppLanguageWhenLessonsExistInAppLanguage() async throws {
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -36,11 +37,9 @@ struct GetUserLessonFiltersRepositoryTests {
         spanishLesson_0.resourceType = ResourceType.lesson.rawValue
         spanishLesson_0.addLanguage(language: spanishLanguage)
         
-        let realmObjectsToAdd: [Object] = [spanishLanguage, spanishLesson_0]
+        let realmObjectsToAdd: [IdentifiableRealmObject] = [spanishLanguage, spanishLesson_0]
         
-        let testsDiContainer = TestsDiContainer(
-            realmDatabase: getRealmDatabase(addRealmObjects: realmObjectsToAdd)
-        )
+        let testsDiContainer = try TestsDiContainer(addRealmObjects: realmObjectsToAdd)
         
         let getUserLessonFiltersRepository = GetUserLessonFiltersRepository(
             userLessonFiltersRepository: getUserLessonFiltersRepository(testsDiContainer: testsDiContainer),
@@ -73,7 +72,7 @@ struct GetUserLessonFiltersRepositoryTests {
         Then: The lesson language filter should default to the current app language even when lessons don't exist in the current app language.
         """
     )
-    @MainActor func lessonsLanguageFilterDefaultsToAppLanguageWhenLessonsDontExistInAppLanguage() async {
+    @MainActor func lessonsLanguageFilterDefaultsToAppLanguageWhenLessonsDontExistInAppLanguage() async throws {
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -99,11 +98,9 @@ struct GetUserLessonFiltersRepositoryTests {
         frenchTract_0.resourceType = ResourceType.tract.rawValue
         frenchTract_0.addLanguage(language: frenchLanguage)
         
-        let realmObjectsToAdd: [Object] = [spanishLanguage, frenchLanguage, spanishLesson_0, frenchTract_0]
+        let realmObjectsToAdd: [IdentifiableRealmObject] = [spanishLanguage, frenchLanguage, spanishLesson_0, frenchTract_0]
         
-        let testsDiContainer = TestsDiContainer(
-            realmDatabase: getRealmDatabase(addRealmObjects: realmObjectsToAdd)
-        )
+        let testsDiContainer = try TestsDiContainer(addRealmObjects: realmObjectsToAdd)
         
         let getUserLessonFiltersRepository = GetUserLessonFiltersRepository(
             userLessonFiltersRepository: getUserLessonFiltersRepository(testsDiContainer: testsDiContainer),
@@ -136,7 +133,7 @@ struct GetUserLessonFiltersRepositoryTests {
         Then: The lesson language filter should be spanish.
         """
     )
-    @MainActor func lessonsLanguageFilterIsTheSelectedLanguageFilterAndNotDefaultingAppLanguage() async {
+    @MainActor func lessonsLanguageFilterIsTheSelectedLanguageFilterAndNotDefaultingAppLanguage() async throws {
         
         var cancellables: Set<AnyCancellable> = Set()
         
@@ -152,9 +149,9 @@ struct GetUserLessonFiltersRepositoryTests {
         frenchLanguage.code = LanguageCodeDomainModel.french.rawValue
         frenchLanguage.name = "French Name"
         
-        let testsDiContainer = TestsDiContainer(
-            realmDatabase: getRealmDatabase(addRealmObjects: [spanishLanguage, frenchLanguage])
-        )
+        let realmObjectsToAdd: [IdentifiableRealmObject] = [spanishLanguage, frenchLanguage]
+        
+        let testsDiContainer = try TestsDiContainer(addRealmObjects: realmObjectsToAdd)
         
         let userLessonFiltersRepository: UserLessonFiltersRepository = getUserLessonFiltersRepository(testsDiContainer: testsDiContainer)
         
@@ -215,12 +212,12 @@ extension GetUserLessonFiltersRepositoryTests {
         )
     }
     
-    @MainActor private func getUserLessonFiltersRepository(testsDiContainer: TestsDiContainer) -> UserLessonFiltersRepository {
+    private func getUserLessonFiltersRepository(testsDiContainer: TestsDiContainer) -> UserLessonFiltersRepository {
         
         return testsDiContainer.dataLayer.getUserLessonFiltersRepository()
     }
     
-    @MainActor private func getLessonFilterLanguagesRepository(testsDiContainer: TestsDiContainer) -> GetLessonFilterLanguagesRepository {
+    private func getLessonFilterLanguagesRepository(testsDiContainer: TestsDiContainer) -> GetLessonFilterLanguagesRepository {
         
         return GetLessonFilterLanguagesRepository(
             resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),

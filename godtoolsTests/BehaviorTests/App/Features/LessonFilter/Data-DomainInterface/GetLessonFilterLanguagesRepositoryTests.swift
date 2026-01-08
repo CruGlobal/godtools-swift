@@ -9,6 +9,7 @@
 import Testing
 @testable import godtools
 import Combine
+import RepositorySync
 
 struct GetLessonFilterLanguagesRepositoryTests {
     
@@ -21,11 +22,11 @@ struct GetLessonFilterLanguagesRepositoryTests {
         Then: I expect to see languages translated in my app language and translated in their original language.
         """
     )
-    @MainActor func lessonFilterLanguagesAreTranslatedInMyAppLanguageAndTheirOriginalLanguage() async {
+    @MainActor func lessonFilterLanguagesAreTranslatedInMyAppLanguageAndTheirOriginalLanguage() async throws {
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        let lessonFilterLanguagesRepository: GetLessonFilterLanguagesRepository = getLessonFilterLanguagesRepository()
+        let lessonFilterLanguagesRepository: GetLessonFilterLanguagesRepository = try getLessonFilterLanguagesRepository()
         
         let appLanguageRussian: AppLanguageDomainModel = LanguageCodeDomainModel.russian.rawValue
         
@@ -95,11 +96,11 @@ struct GetLessonFilterLanguagesRepositoryTests {
             TestSortingArgument(appLanguage: .spanish, expectedValue: ["africaans", "Checo", "Español", "Francés", "Inglés"])
         ]
     )
-    @MainActor func lessonFilterLanguagesAreSortedByLanguageNameTranslatedInMyAppLanguage(argument: TestSortingArgument) async {
+    @MainActor func lessonFilterLanguagesAreSortedByLanguageNameTranslatedInMyAppLanguage(argument: TestSortingArgument) async throws {
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        let lessonFilterLanguagesRepository: GetLessonFilterLanguagesRepository = getLessonFilterLanguagesRepository()
+        let lessonFilterLanguagesRepository: GetLessonFilterLanguagesRepository = try getLessonFilterLanguagesRepository()
                 
         var languagesRef: [LessonFilterLanguageDomainModel] = Array()
         
@@ -139,12 +140,12 @@ struct GetLessonFilterLanguagesRepositoryTests {
         Then: I expect to see the number of lessons available per language translated in my app language.
         """
     )
-    @MainActor func lessonFilterLanguagesShowNumberOfLessonsPerLanguageTranslatedInMyAppLanguage() async {
+    @MainActor func lessonFilterLanguagesShowNumberOfLessonsPerLanguageTranslatedInMyAppLanguage() async throws {
         
         
         var cancellables: Set<AnyCancellable> = Set()
         
-        let lessonFilterLanguagesRepository: GetLessonFilterLanguagesRepository = getLessonFilterLanguagesRepository()
+        let lessonFilterLanguagesRepository: GetLessonFilterLanguagesRepository = try getLessonFilterLanguagesRepository()
         
         let appLanguageEnglish: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
         
@@ -209,7 +210,7 @@ struct GetLessonFilterLanguagesRepositoryTests {
 
 extension GetLessonFilterLanguagesRepositoryTests {
     
-    @MainActor private func getLessonFilterLanguagesRepository() -> GetLessonFilterLanguagesRepository {
+    private func getRealmObjects() -> [IdentifiableRealmObject] {
         
         let allLanguages: [RealmLanguage] = getAllLanguages()
         
@@ -233,12 +234,13 @@ extension GetLessonFilterLanguagesRepositoryTests {
             MockRealmResource.createLesson(addLanguages: [.english], fromLanguages: allLanguages),
             MockRealmResource.createLesson(addLanguages: [.english], fromLanguages: allLanguages)
         ]
-                        
-        let realmDatabase: LegacyRealmDatabase = TestsInMemoryRealmDatabase(
-            addObjectsToDatabase: allLanguages + tracts + lessons
-        )
         
-        let testsDiContainer = TestsDiContainer(realmDatabase: realmDatabase)
+        return allLanguages + tracts + lessons
+    }
+    
+    private func getLessonFilterLanguagesRepository() throws -> GetLessonFilterLanguagesRepository {
+        
+        let testsDiContainer = try TestsDiContainer(addRealmObjects: getRealmObjects())
         
         let getLessonFilterLanguagesRepository = GetLessonFilterLanguagesRepository(
             resourcesRepository: testsDiContainer.dataLayer.getResourcesRepository(),

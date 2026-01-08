@@ -10,6 +10,8 @@ import Testing
 @testable import godtools
 import Combine
 import Foundation
+import RealmSwift
+import RepositorySync
 
 struct GetUserAccountDetailsRepositoryTests {
     
@@ -35,9 +37,9 @@ struct GetUserAccountDetailsRepositoryTests {
             TestArgument(appLanguage: .spanish, joinedOnString: "Unirse")
         ]
     )
-    @MainActor func testGetUserAccountDetailsInAppLanguage(argument: TestArgument) async {
+    @MainActor func testGetUserAccountDetailsInAppLanguage(argument: TestArgument) async throws {
         
-        let getUserAccountDetailsRepository = getUserDetailsRepository()
+        let getUserAccountDetailsRepository = try getUserDetailsRepository()
         
         var cancellables: Set<AnyCancellable> = Set()
         var userAccountDetails: UserAccountDetailsDomainModel?
@@ -68,9 +70,9 @@ struct GetUserAccountDetailsRepositoryTests {
         Then: Activity page should populate with empty strings
         """
     )
-    @MainActor func testGetNilUserDetails() async {
+    @MainActor func testGetNilUserDetails() async throws {
         
-        let getUserAccountDetailsRepository = getUserDetailsRepository(emptyRealm: true)
+        let getUserAccountDetailsRepository = try getUserDetailsRepository(emptyRealm: true)
         
         var cancellables: Set<AnyCancellable> = Set()
         var userAccountDetails: UserAccountDetailsDomainModel?
@@ -97,9 +99,9 @@ struct GetUserAccountDetailsRepositoryTests {
         Then: Activity page should populate the user's name using given and family names.
         """
     )
-    @MainActor func testGetUserDetailsWithNilName() async {
+    @MainActor func testGetUserDetailsWithNilName() async throws {
         
-        let getUserAccountDetailsRepository = getUserDetailsRepository(name: nil)
+        let getUserAccountDetailsRepository = try getUserDetailsRepository(name: nil)
         
         var cancellables: Set<AnyCancellable> = Set()
         var userAccountDetails: UserAccountDetailsDomainModel?
@@ -125,9 +127,9 @@ struct GetUserAccountDetailsRepositoryTests {
         Then: Activity page should populate the user's name with the user's given name.
         """
     )
-    @MainActor func testGetUserDetailsWithNilFamilyAndFullNames() async {
+    @MainActor func testGetUserDetailsWithNilFamilyAndFullNames() async throws {
         
-        let getUserAccountDetailsRepository = getUserDetailsRepository(familyName: nil, name: nil)
+        let getUserAccountDetailsRepository = try getUserDetailsRepository(familyName: nil, name: nil)
         
         var cancellables: Set<AnyCancellable> = Set()
         var userAccountDetails: UserAccountDetailsDomainModel?
@@ -153,9 +155,9 @@ struct GetUserAccountDetailsRepositoryTests {
         Then: Activity page should populate the user's name with an empty string
         """
     )
-    @MainActor func testGetUserDetailsWithAllNilNames() async {
+    @MainActor func testGetUserDetailsWithAllNilNames() async throws {
         
-        let getUserAccountDetailsRepository = getUserDetailsRepository(familyName: nil, givenName: nil, name: nil)
+        let getUserAccountDetailsRepository = try getUserDetailsRepository(familyName: nil, givenName: nil, name: nil)
         
         var cancellables: Set<AnyCancellable> = Set()
         var userAccountDetails: UserAccountDetailsDomainModel?
@@ -181,9 +183,9 @@ struct GetUserAccountDetailsRepositoryTests {
         Then: Activity page should populate the "joined on" string with an empty string
         """
     )
-    @MainActor func testGetUserDetailsWithNilJoinedOn() async {
+    @MainActor func testGetUserDetailsWithNilJoinedOn() async throws {
         
-        let getUserAccountDetailsRepository = getUserDetailsRepository(createdAt: nil)
+        let getUserAccountDetailsRepository = try getUserDetailsRepository(createdAt: nil)
         
         var cancellables: Set<AnyCancellable> = Set()
         var userAccountDetails: UserAccountDetailsDomainModel?
@@ -207,11 +209,7 @@ struct GetUserAccountDetailsRepositoryTests {
 
 extension GetUserAccountDetailsRepositoryTests {
     
-    private func getConfiguredRealmDatabase(emptyRealm: Bool, familyName: String?, givenName: String?, name: String?, createdAt: Date?) -> TestsInMemoryRealmDatabase {
-        
-        if emptyRealm {
-            return TestsInMemoryRealmDatabase()
-        }
+    private func getRealmObjects(emptyRealm: Bool, familyName: String?, givenName: String?, name: String?, createdAt: Date?) throws -> [IdentifiableRealmObject] {
         
         let userDetails = RealmUserDetails()
         userDetails.id = Self.userId
@@ -223,11 +221,9 @@ extension GetUserAccountDetailsRepositoryTests {
         let realmAuthTokenData = RealmMobileContentAuthToken()
         realmAuthTokenData.userId = Self.userId
         
-        let realmDatabase = TestsInMemoryRealmDatabase(
-            addObjectsToDatabase: [userDetails, realmAuthTokenData]
-        )
+        let objects: [IdentifiableRealmObject] = !emptyRealm ? [userDetails, realmAuthTokenData] : Array()
         
-        return realmDatabase
+        return objects
     }
 
     private func getLocalizationServices() -> MockLocalizationServices {
@@ -245,11 +241,20 @@ extension GetUserAccountDetailsRepositoryTests {
         
         return MockLocalizationServices(localizableStrings: localizableStrings)
     }
-
     
-    private func getUserDetailsRepository(emptyRealm: Bool = false, familyName: String? = userFamilyName, givenName: String? = userGivenName, name: String? = userFullName, createdAt: Date? = userCreatedAt) -> GetUserAccountDetailsRepository {
+    private func getUserDetailsRepository(emptyRealm: Bool = false, familyName: String? = userFamilyName, givenName: String? = userGivenName, name: String? = userFullName, createdAt: Date? = userCreatedAt) throws -> GetUserAccountDetailsRepository {
         
-        let realmDatabase = getConfiguredRealmDatabase(emptyRealm: emptyRealm, familyName: familyName, givenName: givenName, name: name, createdAt: createdAt)
+        let realmObjects = try getRealmObjects(
+            emptyRealm: emptyRealm,
+            familyName: familyName,
+            givenName: givenName,
+            name: name,
+            createdAt: createdAt
+        )
+        
+        let testsDiContainer: TestsDiContainer = try TestsDiContainer(addRealmObjects: realmObjects)
+                
+        let realmDatabase: LegacyRealmDatabase = testsDiContainer.dataLayer.getSharedLegacyRealmDatabase()
         
         let mockMobileContentAuthTokenKeychainAccessor = MockMobileContentAuthTokenKeychainAccessor()
         mockMobileContentAuthTokenKeychainAccessor.setUserId(Self.userId)
