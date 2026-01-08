@@ -34,61 +34,68 @@ struct LessonsView: View {
                 )
             }
             
-            PullToRefreshScrollView(showsIndicators: true) {
+            VStack(alignment: .center, spacing: 0) {
                 
-                VStack(alignment: .leading, spacing: 0) {
-                                            
-                    LessonsHeaderView(
-                        viewModel: viewModel
-                    )
-                    .padding([.top], 24)
-                    .padding(.horizontal, contentHorizontalInsets)
+                PersonalizedToolToggle(viewModel: viewModel)
+                    .padding(.top, 5)
+                
+                PullToRefreshScrollView(showsIndicators: true) {
                     
-                    SeparatorView()
-                        .padding(.vertical, 15)
+                    VStack(alignment: .leading, spacing: 0) {
+                        
+                        LessonsHeaderView(
+                            viewModel: viewModel
+                        )
+                        .padding([.top], 24)
                         .padding(.horizontal, contentHorizontalInsets)
-                    
-                    HStack(spacing: 0) {
-                        Text(viewModel.languageFilterTitle)
-                            .font(FontLibrary.sfProTextBold.font(size: 18))
-                            .foregroundColor(ColorPalette.gtGrey.color)
                         
-                        FixedHorizontalSpacer(width: 30)
+                        SeparatorView()
+                            .padding(.vertical, 15)
+                            .padding(.horizontal, contentHorizontalInsets)
                         
-                        ToolFilterButtonView(title: viewModel.languageFilterButtonTitle, accessibility: .lessonsLanguageFilter) {
-                            viewModel.lessonLanguageFilterTapped()
+                        HStack(spacing: 0) {
+                            Text(viewModel.languageFilterTitle)
+                                .font(FontLibrary.sfProTextBold.font(size: 18))
+                                .foregroundColor(ColorPalette.gtGrey.color)
+                            
+                            FixedHorizontalSpacer(width: 30)
+                            
+                            ToolFilterButtonView(title: viewModel.languageFilterButtonTitle, accessibility: .lessonsLanguageFilter) {
+                                viewModel.lessonLanguageFilterTapped()
+                            }
                         }
-                    }
-                    .padding(.bottom, 15)
-                    .padding(.horizontal, contentHorizontalInsets)
-                    
-                    LazyVStack(alignment: .center, spacing: lessonCardSpacing) {
+                        .padding(.bottom, 15)
+                        .padding(.horizontal, contentHorizontalInsets)
                         
-                        ForEach(viewModel.lessons) { (lessonListItem: LessonListItemDomainModel) in
-                                                        
-                            LessonCardView(
-                                viewModel: viewModel.getLessonViewModel(lessonListItem: lessonListItem),
-                                geometry: geometry,
-                                cardTappedClosure: {
+                        LazyVStack(alignment: .center, spacing: lessonCardSpacing) {
+                            
+                            ForEach(viewModel.lessons) { (lessonListItem: LessonListItemDomainModel) in
                                 
-                                    viewModel.lessonCardTapped(lessonListItem: lessonListItem)
-                                }
-                            )
+                                LessonCardView(
+                                    viewModel: viewModel.getLessonViewModel(lessonListItem: lessonListItem),
+                                    geometry: geometry,
+                                    cardTappedClosure: {
+                                        
+                                        viewModel.lessonCardTapped(lessonListItem: lessonListItem)
+                                    }
+                                )
+                            }
                         }
+                        .padding([.top], lessonCardSpacing)
                     }
-                    .padding([.top], lessonCardSpacing)
+                    .padding([.bottom], DashboardView.scrollViewBottomSpacingToTabBar)
+                    
+                } refreshHandler: {
+                    viewModel.pullToRefresh()
                 }
-                .padding([.bottom], DashboardView.scrollViewBottomSpacingToTabBar)
-                
-            } refreshHandler: {
-                viewModel.pullToRefresh()
+                .opacity(viewModel.isLoadingLessons ? 0 : 1)
+                .animation(.easeOut, value: !viewModel.isLoadingLessons)
             }
-            .opacity(viewModel.isLoadingLessons ? 0 : 1)
-            .animation(.easeOut, value: !viewModel.isLoadingLessons)
+            .onAppear {
+                viewModel.pageViewed()
+            }
         }
-        .onAppear {
-            viewModel.pageViewed()
-        }
+            
     }
 }
 

@@ -13,4 +13,6 @@ struct LessonsInterfaceStringsDomainModel {
     let title: String
     let subtitle: String
     let languageFilterTitle: String
+    let personalizedToolToggleTitle: String
+    let allLessonsToggleTitle: String
 }

@@ -33,14 +33,10 @@ struct ToolsView: View {
                 )
             }
             
-            VStack(alignment: .leading, spacing: 0) {
-                
-                HStack {
-                    Spacer()
-                    PersonalizedToolToggle(viewModel: viewModel)
-                    Spacer()
-                }
-                .padding(.top, 5)
+            VStack(alignment: .center, spacing: 0) {
+
+                PersonalizedToolToggle(viewModel: viewModel)
+                    .padding(.top, 5)
                 
                 if viewModel.showsFavoritingToolBanner {
                     

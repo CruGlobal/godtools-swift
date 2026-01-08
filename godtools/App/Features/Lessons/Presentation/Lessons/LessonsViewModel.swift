@@ -10,7 +10,7 @@ import Foundation
 import Combine
 import SwiftUI
 
-@MainActor class LessonsViewModel: ObservableObject {
+@MainActor class LessonsViewModel: ObservableObject, @MainActor PersonalizedToolToggleViewModelProtocol {
         
     private let resourcesRepository: ResourcesRepository
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
@@ -27,6 +27,8 @@ import SwiftUI
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     @Published private var lessonFilterLanguageSelection: LessonFilterLanguageDomainModel?
     
+    @Published var selectedIndexForToggle: Int = 0
+    @Published private(set) var toggleItems: [String] = []
     @Published var sectionTitle: String = ""
     @Published var subtitle: String = ""
     @Published var languageFilterTitle: String = ""
@@ -64,9 +66,12 @@ import SwiftUI
         .receive(on: DispatchQueue.main)
         .sink { [weak self] (domainModel: ViewLessonsDomainModel) in
                             
-            self?.sectionTitle = domainModel.interfaceStrings.title
-            self?.subtitle = domainModel.interfaceStrings.subtitle
-            self?.languageFilterTitle = domainModel.interfaceStrings.languageFilterTitle
+            let interfaceStrings = domainModel.interfaceStrings
+            
+            self?.sectionTitle = interfaceStrings.title
+            self?.subtitle = interfaceStrings.subtitle
+            self?.languageFilterTitle = interfaceStrings.languageFilterTitle
+            self?.toggleItems = [interfaceStrings.personalizedToolToggleTitle, interfaceStrings.allLessonsToggleTitle]
             
             self?.lessons = domainModel.lessons
             self?.isLoadingLessons = false
