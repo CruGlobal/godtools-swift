@@ -62,24 +62,49 @@ class UITestsAppConfig: AppConfigInterface {
     }
     
     func getLegacyRealmDatabase() -> LegacyRealmDatabase {
-        return UITestsRealmDatabase()
+        
+        // TODO: Use throws on method here. ~Levi
+        
+        do {
+            
+            return try UITestsRealmDatabase().legacyRealmDatabase
+        }
+        catch let error {
+            assertionFailure("Failed to create legacy realm database with error: \(error.localizedDescription)")
+            return LegacyRealmDatabase(
+                databaseConfiguration: RealmDatabaseConfiguration(cacheType: .inMemory(identifier: "legacy_realm"), schemaVersion: 1),
+                realmInstanceCreationType: .usesASingleSharedRealmInstance
+            )
+        }
     }
     
     func getRealmDatabase() -> RealmDatabase {
-        return RealmDatabase(databaseConfig: RealmDatabaseConfig.createInMemoryConfig())
+        
+        // TODO: Use throws on method here. ~Levi
+        
+        do {
+            
+            return try UITestsRealmDatabase().realmDatabase
+        }
+        catch let error {
+            assertionFailure("Failed to create realm database with error: \(error.localizedDescription)")
+            return RealmDatabase(databaseConfig: RealmDatabaseConfig.createInMemoryConfig())
+        }
     }
     
     @available(iOS 17.4, *)
     func getSwiftDatabase() throws -> SwiftDatabase? {
        
-        let database = SwiftDatabase(
-            container: try SwiftDataContainer.createInMemoryContainer(
-                name: "godtools_swiftdata_ui_tests",
-                schema: Schema(versionedSchema: LatestProductionSwiftDataSchema.self)
-            )
-        )
+        // TODO: Return database once SwiftDatabase can be enabled. ~Levi
         
-        return database
+//        let database = SwiftDatabase(
+//            container: try SwiftDataContainer.createInMemoryContainer(
+//                name: "godtools_swiftdata_ui_tests",
+//                schema: Schema(versionedSchema: LatestProductionSwiftDataSchema.self)
+//            )
+//        )
+        
+        return nil
     }
     
     func getTractRemoteShareConnectionUrl() -> String {

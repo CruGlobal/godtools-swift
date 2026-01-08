@@ -12,17 +12,20 @@ import Combine
 
 class LegacyRealmDatabase {
     
-    private let databaseConfiguration: RealmDatabaseConfiguration
     private let config: Realm.Configuration
     private let realmInstanceCreator: RealmInstanceCreator
     
-    init(databaseConfiguration: RealmDatabaseConfiguration, realmInstanceCreationType: RealmInstanceCreationType = .alwaysCreatesANewRealmInstance) {
+    init(config: Realm.Configuration, realmInstanceCreationType: RealmInstanceCreationType = .alwaysCreatesANewRealmInstance) {
         
-        self.databaseConfiguration = databaseConfiguration
-        config = databaseConfiguration.getRealmConfig()
-        realmInstanceCreator = RealmInstanceCreator(config: config, creationType: realmInstanceCreationType)
+        self.config = config
+        self.realmInstanceCreator = RealmInstanceCreator(config: config, creationType: realmInstanceCreationType)
         
         _ = checkForUnsupportedFileFormatVersionAndDeleteRealmFilesIfNeeded(config: config)
+    }
+    
+    convenience init(databaseConfiguration: RealmDatabaseConfiguration, realmInstanceCreationType: RealmInstanceCreationType = .alwaysCreatesANewRealmInstance) {
+        
+        self.init(config: databaseConfiguration.getRealmConfig(), realmInstanceCreationType: realmInstanceCreationType)
     }
     
     private func checkForUnsupportedFileFormatVersionAndDeleteRealmFilesIfNeeded(config: Realm.Configuration) -> Error? {

@@ -1,73 +1,31 @@
 //
-//  UITestsRealmDatabase.swift
+//  UITestsRealmObjects.swift
 //  godtools
 //
-//  Created by Levi Eggert on 8/23/25.
-//  Copyright © 2025 Cru. All rights reserved.
+//  Created by Levi Eggert on 1/8/26.
+//  Copyright © 2026 Cru. All rights reserved.
 //
 
 import Foundation
 import RealmSwift
+import RepositorySync
 
-class UITestsRealmDatabase: LegacyRealmDatabase {
-    
-    private static let diskFileName: String = "godtools_uitests_realm"
+final class UITestsRealmObjects {
     
     init() {
         
-        super.init(databaseConfiguration: UITestsRealmDatabase.getConfig())
-        
-        // TODO: Will comment out for now until url requests are disabled in UITestsAppConfig.swift. ~Levi
-        //addInitialObjects()
     }
     
-    private func addInitialObjects() {
-        
-        let objects: [Object] = Self.getResources() + Self.getLanguages()
-        
-        let realm: Realm = openRealm()
-        
-        do {
-            
-            try realm.write {
-                realm.add(objects)
-            }
-        }
-        catch let error {
-            
-            assertionFailure("Failed to add objects to UITestsRealmDatabase.\n  error: \(error)")
-        }
-    }
-    
-    private static func getConfig() -> RealmDatabaseConfiguration {
-        let migrationBlock = { @Sendable (migration: Migration, oldSchemaVersion: UInt64) in
-                                    
-            if (oldSchemaVersion < 1) {
-                // Nothing to do!
-                // Realm will automatically detect new properties and removed properties
-                // And will update the schema on disk automatically
-            }
-        }
-        
-        return RealmDatabaseConfiguration(
-            cacheType: .disk(fileName: UITestsRealmDatabase.diskFileName, migrationBlock: migrationBlock),
-            schemaVersion: RealmProductionConfig.schemaVersion
-        )
-    }
-}
-
-extension UITestsRealmDatabase {
-    
-    private static func getResources() -> [RealmResource] {
+    func getResources() -> [RealmResource] {
         
         return [
-            Self.getKgpTool(),
-            Self.getTeachMeToShareTool(),
-            Self.getFourSpiritualLawsTool()
+            getKgpTool(),
+            getTeachMeToShareTool(),
+            getFourSpiritualLawsTool()
         ]
     }
     
-    private static func getLanguages() -> [RealmLanguage] {
+    func getLanguages() -> [RealmLanguage] {
      
         let english = RealmLanguage()
         
@@ -79,7 +37,7 @@ extension UITestsRealmDatabase {
         return [english]
     }
     
-    private static func getKgpTool() -> RealmResource {
+    private func getKgpTool() -> RealmResource {
         
         let resource = RealmResource()
         
@@ -94,7 +52,7 @@ extension UITestsRealmDatabase {
         return resource
     }
     
-    private static func getTeachMeToShareTool() -> RealmResource {
+    private func getTeachMeToShareTool() -> RealmResource {
         
         let resource = RealmResource()
         
@@ -109,7 +67,7 @@ extension UITestsRealmDatabase {
         return resource
     }
     
-    private static func getFourSpiritualLawsTool() -> RealmResource {
+    private func getFourSpiritualLawsTool() -> RealmResource {
         
         let resource = RealmResource()
         
