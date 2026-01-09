@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 import Combine
 
-@MainActor class ToolsViewModel: ObservableObject, @MainActor PersonalizedToolToggleViewModelProtocol {
+@MainActor class ToolsViewModel: ObservableObject {
     
     typealias ToolId = String
     

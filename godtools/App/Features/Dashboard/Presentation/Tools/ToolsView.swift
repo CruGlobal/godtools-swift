@@ -35,7 +35,7 @@ struct ToolsView: View {
             
             VStack(alignment: .center, spacing: 0) {
 
-                PersonalizedToolToggle(viewModel: viewModel)
+                PersonalizedToolToggle(selectedIndex: $viewModel.selectedIndexForToggle, items: viewModel.toggleItems)
                     .padding(.top, 5)
                 
                 if viewModel.showsFavoritingToolBanner {

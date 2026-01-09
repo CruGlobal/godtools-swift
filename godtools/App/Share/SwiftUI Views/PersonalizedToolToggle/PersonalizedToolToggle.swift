@@ -8,31 +8,34 @@
 
 import SwiftUI
 
-struct PersonalizedToolToggle<ViewModel: PersonalizedToolToggleViewModelProtocol>: View {
+struct PersonalizedToolToggle: View {
 
-    @ObservedObject private var viewModel: ViewModel
-    
-    init(viewModel: ViewModel) {
-        self.viewModel = viewModel
+    @Binding private var selectedIndex: Int
+    private let items: [String]
+
+    init(selectedIndex: Binding<Int>, items: [String]) {
+        
+        self._selectedIndex = selectedIndex
+        self.items = items
     }
 
     var body: some View {
-        
+
         EqualWidthHStack(spacing: 0) {
-            
-            ForEach(viewModel.toggleItems.indices, id: \.self) { index in
-                
+
+            ForEach(items.indices, id: \.self) { index in
+
                 Button {
-                    viewModel.selectedIndexForToggle = index
+                    selectedIndex = index
                 } label: {
-                    
-                    Text(viewModel.toggleItems[index])
+
+                    Text(items[index])
                         .font(FontLibrary.sfProTextRegular.font(size: 12))
-                        .foregroundColor(viewModel.selectedIndexForToggle == index ? .white : ColorPalette.gtBlue.color)
+                        .foregroundColor(selectedIndex == index ? .white : ColorPalette.gtBlue.color)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 8)
                         .padding(.horizontal, 16)
-                        .background(viewModel.selectedIndexForToggle == index ? ColorPalette.gtBlue.color : Color.clear)
+                        .background(selectedIndex == index ? ColorPalette.gtBlue.color : Color.clear)
                 }
             }
         }
