@@ -12,6 +12,12 @@ import Combine
 
 final class PersonalizedToolsApi {
     
+    enum QueryName: String {
+        case country = "country"
+        case language = "lang"
+        case resourceType = "resource_type"
+    }
+    
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let urlSessionPriority: URLSessionPriority
     private let requestSender: RequestSender
@@ -24,7 +30,15 @@ final class PersonalizedToolsApi {
         baseUrl = config.getMobileContentApiBaseUrl()
     }
     
-    private func getAllRankedResourcesUrlRequest(urlSession: URLSession) -> URLRequest {
+    private func getAllRankedResourcesUrlRequest(urlSession: URLSession, country: String?, language: String?, resouceType: ResourceType?) -> URLRequest {
+        
+        let queryItems: [URLQueryItem]? = JsonApiFilter.buildQueryItems(
+            nameValues: [
+                QueryName.country.rawValue: [country],
+                QueryName.language.rawValue: [language],
+                QueryName.resourceType.rawValue: [resouceType?.rawValue]
+            ]
+        )
         
         return requestBuilder
             .build(
@@ -34,16 +48,21 @@ final class PersonalizedToolsApi {
                     method: .get,
                     headers: nil,
                     httpBody: nil,
-                    queryItems: nil
+                    queryItems: queryItems
                 )
             )
     }
     
-    func getAllRankedResourcesPublisher(requestPriority: RequestPriority) -> AnyPublisher<[ResourceCodable], Error> {
+    func getAllRankedResourcesPublisher(requestPriority: RequestPriority, country: String?, language: String?, resouceType: ResourceType?) -> AnyPublisher<[ResourceCodable], Error> {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
-        let urlRequest: URLRequest = getAllRankedResourcesUrlRequest(urlSession: urlSession)
+        let urlRequest: URLRequest = getAllRankedResourcesUrlRequest(
+            urlSession: urlSession,
+            country: country,
+            language: language,
+            resouceType: resouceType
+        )
         
         return requestSender
             .sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
