@@ -50,7 +50,7 @@ class AppFlow: NSObject, Flow {
         )
         
         self.appDiContainer = appDiContainer
-        self.navigationController = AppNavigationController(navigationBarAppearance: navigationBarAppearance)
+        self.navigationController = AppNavigationController(navigationBarAppearance: navigationBarAppearance, hidesNavigationBar: true)
         self.rootView = AppRootView(appRootController: rootController)
         self.deepLinkingService = appDeepLinkingService
         self.appMessaging = appDiContainer.dataLayer.getAppMessaging()
