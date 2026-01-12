@@ -776,6 +776,8 @@ extension DashboardFlow {
             )
         )
         
+        navigationController.setNavigationBarHidden(false, animated: false)
+        
         return hostingView
     }
 }
