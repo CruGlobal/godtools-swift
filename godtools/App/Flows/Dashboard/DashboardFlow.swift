@@ -353,24 +353,10 @@ extension DashboardFlow {
         )
                 
         let view = DashboardView(viewModel: viewModel)
-        
-        let menuButton = AppMenuBarItem(
-            color: AppFlow.defaultNavBarControlColor,
-            target: viewModel,
-            action: #selector(viewModel.menuTapped),
-            accessibilityIdentifier: AccessibilityStrings.Button.dashboardMenu.id
-        )
-        
-        let navigationBar = AppNavigationBar(
-            appearance: nil,
-            backButton: nil,
-            leadingItems: [menuButton],
-            trailingItems: []
-        )
-                
+            
         let hostingController = AppHostingController<DashboardView>(
             rootView: view,
-            navigationBar: navigationBar
+            navigationBar: nil
         )
     
         return hostingController
