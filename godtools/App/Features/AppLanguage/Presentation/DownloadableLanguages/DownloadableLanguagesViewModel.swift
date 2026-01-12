@@ -16,6 +16,7 @@ import Combine
     private let viewSearchBarUseCase: ViewSearchBarUseCase
     private let searchLanguageInDownloadableLanguagesUseCase: SearchLanguageInDownloadableLanguagesUseCase
     private let downloadToolLanguageUseCase: DownloadToolLanguageUseCase
+    private let getDownloadToolLanguageProgressUseCase: GetDownloadToolLanguageProgressUseCase
     private let removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase
     
     private lazy var searchBarViewModel = SearchBarViewModel(getCurrentAppLanguageUseCase: getCurrentAppLanguageUseCase, viewSearchBarUseCase: viewSearchBarUseCase)
@@ -32,7 +33,7 @@ import Combine
     
     @Published var searchText: String = ""
     
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewDownloadableLanguagesUseCase: ViewDownloadableLanguagesUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, searchLanguageInDownloadableLanguagesUseCase: SearchLanguageInDownloadableLanguagesUseCase, downloadToolLanguageUseCase: DownloadToolLanguageUseCase, removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase) {
+    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, viewDownloadableLanguagesUseCase: ViewDownloadableLanguagesUseCase, viewSearchBarUseCase: ViewSearchBarUseCase, searchLanguageInDownloadableLanguagesUseCase: SearchLanguageInDownloadableLanguagesUseCase, downloadToolLanguageUseCase: DownloadToolLanguageUseCase, getDownloadToolLanguageProgressUseCase: GetDownloadToolLanguageProgressUseCase, removeDownloadedToolLanguageUseCase: RemoveDownloadedToolLanguageUseCase) {
         
         self.flowDelegate = flowDelegate
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
@@ -40,6 +41,7 @@ import Combine
         self.viewSearchBarUseCase = viewSearchBarUseCase
         self.searchLanguageInDownloadableLanguagesUseCase = searchLanguageInDownloadableLanguagesUseCase
         self.downloadToolLanguageUseCase = downloadToolLanguageUseCase
+        self.getDownloadToolLanguageProgressUseCase = getDownloadToolLanguageProgressUseCase
         self.removeDownloadedToolLanguageUseCase = removeDownloadedToolLanguageUseCase
         
         getCurrentAppLanguageUseCase
@@ -92,6 +94,7 @@ import Combine
             flowDelegate: flowDelegate!,
             downloadableLanguage: downloadableLanguage,
             downloadToolLanguageUseCase: downloadToolLanguageUseCase,
+            getDownloadToolLanguageProgressUseCase: getDownloadToolLanguageProgressUseCase,
             removeDownloadedToolLanguageUseCase: removeDownloadedToolLanguageUseCase
         )
     }

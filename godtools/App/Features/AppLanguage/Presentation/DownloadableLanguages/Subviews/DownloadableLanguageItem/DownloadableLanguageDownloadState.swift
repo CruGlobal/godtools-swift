@@ -9,9 +9,20 @@
 import Foundation
 
 enum DownloadableLanguageDownloadState {
+    
     case downloaded
     case downloading(progress: Double)
     case notDownloaded
+    
+    var isDownloaded: Bool {
+        
+        switch self {
+        case .downloaded:
+            return true
+        default:
+            return false
+        }
+    }
     
     var isDownloading: Bool {
         switch self {
