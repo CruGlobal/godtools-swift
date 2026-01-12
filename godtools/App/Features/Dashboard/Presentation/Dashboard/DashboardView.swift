@@ -24,45 +24,52 @@ struct DashboardView: View {
     var body: some View {
         
         GeometryReader { geometry in
-            
-            VStack(alignment: .center, spacing: 0) {
+            ZStack(alignment: .topLeading) {
                 
-                if viewModel.tabs.count > 0 {
-                 
-                    TabView(selection: $viewModel.currentTab) {
+                VStack(alignment: .center, spacing: 0) {
+                    
+                    if viewModel.tabs.count > 0 {
                         
-                        Group {
+                        TabView(selection: $viewModel.currentTab) {
                             
-                            if ApplicationLayout.shared.layoutDirection == .rightToLeft {
+                            Group {
                                 
-                                ForEach((0 ..< viewModel.tabs.count).reversed(), id: \.self) { index in
+                                if ApplicationLayout.shared.layoutDirection == .rightToLeft {
                                     
-                                    getDashboardPageView(index: index)
-                                        .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
-                                        .tag(index)
+                                    ForEach((0 ..< viewModel.tabs.count).reversed(), id: \.self) { index in
+                                        
+                                        getDashboardPageView(index: index)
+                                            .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
+                                            .tag(index)
+                                    }
                                 }
-                            }
-                            else {
-                                
-                                ForEach(0 ..< viewModel.tabs.count, id: \.self) { index in
+                                else {
                                     
-                                    getDashboardPageView(index: index)
-                                        .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
-                                        .tag(index)
+                                    ForEach(0 ..< viewModel.tabs.count, id: \.self) { index in
+                                        
+                                        getDashboardPageView(index: index)
+                                            .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
+                                            .tag(index)
+                                    }
                                 }
                             }
                         }
+                        .environment(\.layoutDirection, .leftToRight)
+                        .tabViewStyle(.page(indexDisplayMode: .never))
+                        .animation(.easeOut, value: viewModel.currentTab)
+                        
+                        DashboardTabBarView(
+                            viewModel: viewModel
+                        )
                     }
-                    .environment(\.layoutDirection, .leftToRight)
-                    .tabViewStyle(.page(indexDisplayMode: .never))
-                    .animation(.easeOut, value: viewModel.currentTab)
-                    
-                    DashboardTabBarView(
-                        viewModel: viewModel
-                    )
+                }//end VStack
+                
+                NavMenuView {
+                    viewModel.menuTapped()
                 }
-            }
-        }
+                .padding([.leading], 20)
+            }//end ZStack
+        }//end GeometryReader
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
     }
     
