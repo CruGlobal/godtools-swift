@@ -53,6 +53,28 @@ final class PersonalizedToolsApi {
             )
     }
     
+    private func getDefaultOrderResourcesUrlRequest(urlSession: URLSession, language: String?, resouceType: ResourceType?) -> URLRequest {
+        
+        let queryItems: [URLQueryItem]? = JsonApiFilter.buildQueryItems(
+            nameValues: [
+                QueryName.language.rawValue: [language],
+                QueryName.resourceType.rawValue: [resouceType?.rawValue]
+            ]
+        )
+        
+        return requestBuilder
+            .build(
+                parameters: RequestBuilderParameters(
+                    configuration: urlSession.configuration,
+                    urlString: baseUrl + "/resources/default_order",
+                    method: .get,
+                    headers: nil,
+                    httpBody: nil,
+                    queryItems: queryItems
+                )
+            )
+    }
+    
     func getAllRankedResourcesPublisher(requestPriority: RequestPriority, country: String?, language: String?, resouceType: ResourceType?) -> AnyPublisher<[ResourceCodable], Error> {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
@@ -60,6 +82,27 @@ final class PersonalizedToolsApi {
         let urlRequest: URLRequest = getAllRankedResourcesUrlRequest(
             urlSession: urlSession,
             country: country,
+            language: language,
+            resouceType: resouceType
+        )
+        
+        return requestSender
+            .sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
+            .decodeRequestDataResponseForSuccessCodable()
+            .map { (response: RequestCodableResponse<JsonApiResponseDataArray<ResourceCodable>, NoResponseCodable>) in
+                
+                let resources: [ResourceCodable] = response.successCodable?.dataArray ?? []
+                return resources
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    func getDefaultOrderResourcesPublisher(requestPriority: RequestPriority, language: String?, resouceType: ResourceType?) -> AnyPublisher<[ResourceCodable], Error> {
+        
+        let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
+        
+        let urlRequest: URLRequest = getDefaultOrderResourcesUrlRequest(
+            urlSession: urlSession,
             language: language,
             resouceType: resouceType
         )

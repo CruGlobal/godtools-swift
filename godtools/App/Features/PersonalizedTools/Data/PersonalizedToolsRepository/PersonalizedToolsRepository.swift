@@ -33,4 +33,19 @@ final class PersonalizedToolsRepository {
             }
             .eraseToAnyPublisher()
     }
+    
+    func getDefaultOrderResourcesPublisher(requestPriority: RequestPriority, language: String?, resouceType: ResourceType?) -> AnyPublisher<[ResourceDataModel], Error> {
+        
+        return api
+            .getDefaultOrderResourcesPublisher(requestPriority: requestPriority, language: language, resouceType: resouceType)
+            .map { (resourceCodables: [ResourceCodable]) in
+                
+                let dataModels: [ResourceDataModel] = resourceCodables.map {
+                    ResourceDataModel(interface: $0)
+                }
+                
+                return dataModels
+            }
+            .eraseToAnyPublisher()
+    }
 }
