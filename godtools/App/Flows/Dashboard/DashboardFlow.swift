@@ -361,14 +361,16 @@ extension DashboardFlow {
             accessibilityIdentifier: AccessibilityStrings.Button.dashboardMenu.id
         )
         
+        let navigationBar = AppNavigationBar(
+            appearance: nil,
+            backButton: nil,
+            leadingItems: [menuButton],
+            trailingItems: []
+        )
+                
         let hostingController = AppHostingController<DashboardView>(
             rootView: view,
-            navigationBar: AppNavigationBar(
-                appearance: nil,
-                backButton: nil,
-                leadingItems: [menuButton],
-                trailingItems: []
-            )
+            navigationBar: navigationBar
         )
     
         return hostingController

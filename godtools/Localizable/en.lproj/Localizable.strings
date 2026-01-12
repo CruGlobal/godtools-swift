@@ -1,3 +1,7 @@
+"dashboard.personalizedToolToggle.personalizedTitle" = "Personalized";
+"dashboard.personalizedToolToggle.allToolsTitle" = "All Tools";
+"dashboard.personalizedToolToggle.allLessonsTitle" = "All Lessons";
+
 "localizationSettings.navBar.title" = "Select a country";
 "localizationSettings.localizationHeader.title" = "Select your localization";
 "localizationSettings.localizationHeader.description" = "Choose from a country below to set your localization and see prioritized content and recommendations based on your location.";

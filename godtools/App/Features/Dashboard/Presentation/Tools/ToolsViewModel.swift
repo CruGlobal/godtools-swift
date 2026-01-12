@@ -36,6 +36,8 @@ import Combine
     @Published private var toolFilterCategorySelection: ToolFilterCategoryDomainModel = ToolFilterAnyCategoryDomainModel(text: "", toolsAvailableText: "")
     @Published private var toolFilterLanguageSelection: ToolFilterLanguageDomainModel = ToolFilterAnyLanguageDomainModel(text: "", toolsAvailableText: "")
     
+    @Published var selectedIndexForToggle: Int = 0
+    @Published private(set) var toggleItems: [String] = []
     @Published var favoritingToolBannerMessage: String = ""
     @Published var showsFavoritingToolBanner: Bool = false
     @Published var toolSpotlightTitle: String = ""
@@ -93,10 +95,13 @@ import Combine
         .receive(on: DispatchQueue.main)
         .sink { [weak self] (domainModel: ViewToolsDomainModel, spotlightTools: [SpotlightToolListItemDomainModel]) in
                 
-            self?.favoritingToolBannerMessage = domainModel.interfaceStrings.favoritingToolBannerMessage
-            self?.toolSpotlightTitle = domainModel.interfaceStrings.toolSpotlightTitle
-            self?.toolSpotlightSubtitle = domainModel.interfaceStrings.toolSpotlightSubtitle
-            self?.filterTitle = domainModel.interfaceStrings.filterTitle
+            let interfaceStrings = domainModel.interfaceStrings
+            
+            self?.favoritingToolBannerMessage = interfaceStrings.favoritingToolBannerMessage
+            self?.toolSpotlightTitle = interfaceStrings.toolSpotlightTitle
+            self?.toolSpotlightSubtitle = interfaceStrings.toolSpotlightSubtitle
+            self?.filterTitle = interfaceStrings.filterTitle
+            self?.toggleItems = [interfaceStrings.personalizedToolToggleTitle, interfaceStrings.allToolsToggleTitle]
             
             self?.spotlightTools = spotlightTools
             

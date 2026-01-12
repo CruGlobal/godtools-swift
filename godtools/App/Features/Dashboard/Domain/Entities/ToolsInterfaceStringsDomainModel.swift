@@ -14,4 +14,6 @@ struct ToolsInterfaceStringsDomainModel {
     let toolSpotlightTitle: String
     let toolSpotlightSubtitle: String
     let filterTitle: String
+    let personalizedToolToggleTitle: String
+    let allToolsToggleTitle: String
 }

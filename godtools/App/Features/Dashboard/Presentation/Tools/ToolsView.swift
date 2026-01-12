@@ -33,7 +33,10 @@ struct ToolsView: View {
                 )
             }
             
-            VStack(alignment: .leading, spacing: 0) {
+            VStack(alignment: .center, spacing: 0) {
+
+                PersonalizedToolToggle(selectedIndex: $viewModel.selectedIndexForToggle, items: viewModel.toggleItems)
+                    .padding(.top, 5)
                 
                 if viewModel.showsFavoritingToolBanner {
                     
