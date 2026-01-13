@@ -15,6 +15,7 @@ struct ToolsView: View {
 
     @ObservedObject private var viewModel: ToolsViewModel
     @State private var footerHeight: CGFloat = 0
+    @State private var showFooter: Bool = true
     
     init(viewModel: ToolsViewModel, contentHorizontalInsets: CGFloat = DashboardView.contentHorizontalInsets) {
         
@@ -92,7 +93,7 @@ struct ToolsView: View {
                                 }
                             }
                         }
-                        .padding([.bottom], footerHeight + DashboardView.scrollViewBottomSpacingToTabBar)
+                        .padding([.bottom], (viewModel.selectedIndexForToggle == 0 ? footerHeight : 0) + DashboardView.scrollViewBottomSpacingToTabBar)
 
                     } refreshHandler: {
 
@@ -100,6 +101,7 @@ struct ToolsView: View {
                     }
                     .opacity(viewModel.isLoadingAllTools ? 0 : 1)
                     .animation(.easeOut, value: !viewModel.isLoadingAllTools)
+                    .animation(.spring(response: 0.5, dampingFraction: 0.75), value: viewModel.selectedIndexForToggle)
                 }
 
                 PersonalizedToolFooterView(
@@ -113,10 +115,17 @@ struct ToolsView: View {
                         // Button action
                     }
                 )
+                .offset(y: showFooter ? 0 : footerHeight)
+                .animation(.spring(response: 0.5, dampingFraction: 0.75), value: showFooter)
+            }
+        }
+        .onChange(of: viewModel.selectedIndexForToggle) { newIndex in
+            withAnimation(.spring(response: 0.5, dampingFraction: 0.75)) {
+                showFooter = newIndex == 0
             }
         }
         .onAppear {
-
+            showFooter = viewModel.selectedIndexForToggle == 0
             viewModel.pageViewed()
         }
     }

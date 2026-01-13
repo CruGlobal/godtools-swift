@@ -15,6 +15,7 @@ struct LessonsView: View {
 
     @ObservedObject private var viewModel: LessonsViewModel
     @State private var footerHeight: CGFloat = 0
+    @State private var showFooter: Bool = true
     
     init(viewModel: LessonsViewModel, contentHorizontalInsets: CGFloat = DashboardView.contentHorizontalInsets, lessonCardSpacing: CGFloat = DashboardView.toolCardVerticalSpacing) {
         
@@ -86,13 +87,14 @@ struct LessonsView: View {
                         }
                         .padding([.top], lessonCardSpacing)
                     }
-                    .padding([.bottom], footerHeight + DashboardView.scrollViewBottomSpacingToTabBar)
+                    .padding([.bottom], (viewModel.selectedIndexForToggle == 0 ? footerHeight : 0) + DashboardView.scrollViewBottomSpacingToTabBar)
                     
                 } refreshHandler: {
                     viewModel.pullToRefresh()
                 }
                 .opacity(viewModel.isLoadingLessons ? 0 : 1)
                 .animation(.easeOut, value: !viewModel.isLoadingLessons)
+                .animation(.spring(response: 0.5, dampingFraction: 0.75), value: viewModel.selectedIndexForToggle)
                 }
                 .onAppear {
                     viewModel.pageViewed()
@@ -109,9 +111,19 @@ struct LessonsView: View {
                         // Button action
                     }
                 )
+                .offset(y: showFooter ? 0 : footerHeight)
+                .animation(.spring(response: 0.5, dampingFraction: 0.75), value: showFooter)
             }
         }
-            
+        .onChange(of: viewModel.selectedIndexForToggle) { newIndex in
+            withAnimation(.spring(response: 0.5, dampingFraction: 0.75)) {
+                showFooter = newIndex == 0
+            }
+        }
+        .onAppear {
+            showFooter = viewModel.selectedIndexForToggle == 0
+        }
+
     }
 }
 
