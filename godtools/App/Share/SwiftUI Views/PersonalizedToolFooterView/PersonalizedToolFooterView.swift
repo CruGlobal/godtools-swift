@@ -9,18 +9,20 @@
 import SwiftUI
 
 struct PersonalizedToolFooterView: View {
-    
+
     private static let lightBlue = Color.getColorWithRGB(red: 223, green: 240, blue: 249, opacity: 1)
 
     private let title: String
     private let subtitle: String
     private let buttonTitle: String
     private let buttonAction: () -> Void
-    
-    init(title: String, subtitle: String, buttonTitle: String, buttonAction: @escaping () -> Void) {
+    private let onHeightChanged: (CGFloat) -> Void
+
+    init(title: String, subtitle: String, buttonTitle: String, onHeightChanged: @escaping (CGFloat) -> Void = { _ in }, buttonAction: @escaping () -> Void) {
         self.title = title
         self.subtitle = subtitle
         self.buttonTitle = buttonTitle
+        self.onHeightChanged = onHeightChanged
         self.buttonAction = buttonAction
     }
     
@@ -32,7 +34,7 @@ struct PersonalizedToolFooterView: View {
                 .font(FontLibrary.sfProDisplayRegular.font(size: 16))
                 .foregroundColor(.black)
                 .padding(.bottom, 2)
-            
+
             Text(subtitle)
                 .font(FontLibrary.sfProTextLight.font(size: 12))
                 .foregroundColor(.black)
@@ -40,7 +42,7 @@ struct PersonalizedToolFooterView: View {
 
             HStack {
                 Spacer()
-                
+
                 GTBlueButton(
                     title: buttonTitle,
                     fontSize: 14,
@@ -49,7 +51,7 @@ struct PersonalizedToolFooterView: View {
                     cornerRadius: 20,
                     action: buttonAction
                 )
-                
+
                 Spacer()
             }
         }
@@ -57,5 +59,15 @@ struct PersonalizedToolFooterView: View {
         .padding(.horizontal, 30)
         .padding(.vertical, 27)
         .background(PersonalizedToolFooterView.lightBlue)
+        .background(
+            GeometryReader { geometry in
+                Color.clear.onAppear {
+                    onHeightChanged(geometry.size.height)
+                }
+                .onChange(of: geometry.size.height) { newHeight in
+                    onHeightChanged(newHeight)
+                }
+            }
+        )
     }
 }

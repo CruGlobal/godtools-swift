@@ -9,11 +9,12 @@
 import SwiftUI
 
 struct LessonsView: View {
-        
+
     private let contentHorizontalInsets: CGFloat
     private let lessonCardSpacing: CGFloat
-    
+
     @ObservedObject private var viewModel: LessonsViewModel
+    @State private var footerHeight: CGFloat = 0
     
     init(viewModel: LessonsViewModel, contentHorizontalInsets: CGFloat = DashboardView.contentHorizontalInsets, lessonCardSpacing: CGFloat = DashboardView.toolCardVerticalSpacing) {
         
@@ -33,11 +34,13 @@ struct LessonsView: View {
                     progressColor: ColorPalette.gtGrey.color
                 )
             }
-            
-            VStack(alignment: .center, spacing: 0) {
 
-                PersonalizedToolToggle(selectedIndex: $viewModel.selectedIndexForToggle, items: viewModel.toggleItems)
-                    .padding(.top, 5)
+            ZStack(alignment: .bottom) {
+
+                VStack(alignment: .center, spacing: 0) {
+
+                    PersonalizedToolToggle(selectedIndex: $viewModel.selectedIndexForToggle, items: viewModel.toggleItems)
+                        .padding(.top, 5)
                 
                 PullToRefreshScrollView(showsIndicators: true) {
                     
@@ -83,16 +86,29 @@ struct LessonsView: View {
                         }
                         .padding([.top], lessonCardSpacing)
                     }
-                    .padding([.bottom], DashboardView.scrollViewBottomSpacingToTabBar)
+                    .padding([.bottom], footerHeight + DashboardView.scrollViewBottomSpacingToTabBar)
                     
                 } refreshHandler: {
                     viewModel.pullToRefresh()
                 }
                 .opacity(viewModel.isLoadingLessons ? 0 : 1)
                 .animation(.easeOut, value: !viewModel.isLoadingLessons)
-            }
-            .onAppear {
-                viewModel.pageViewed()
+                }
+                .onAppear {
+                    viewModel.pageViewed()
+                }
+
+                PersonalizedToolFooterView(
+                    title: "Displaying localized Lesson list",
+                    subtitle: "The lessons shown in your personalized Lesson page are selected based on your app language and localization setting.  You can alter this by editing your setting.",
+                    buttonTitle: "Change settings",
+                    onHeightChanged: { height in
+                        footerHeight = height
+                    },
+                    buttonAction: {
+                        // Button action
+                    }
+                )
             }
         }
             

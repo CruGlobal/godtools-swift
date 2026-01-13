@@ -9,11 +9,12 @@
 import SwiftUI
 
 struct ToolsView: View {
-        
+
     private let contentHorizontalInsets: CGFloat
     private let toolCardSpacing: CGFloat = 15
-        
+
     @ObservedObject private var viewModel: ToolsViewModel
+    @State private var footerHeight: CGFloat = 0
     
     init(viewModel: ToolsViewModel, contentHorizontalInsets: CGFloat = DashboardView.contentHorizontalInsets) {
         
@@ -91,7 +92,7 @@ struct ToolsView: View {
                                 }
                             }
                         }
-                        .padding([.bottom], 200)
+                        .padding([.bottom], footerHeight + DashboardView.scrollViewBottomSpacingToTabBar)
 
                     } refreshHandler: {
 
@@ -104,14 +105,18 @@ struct ToolsView: View {
                 PersonalizedToolFooterView(
                     title: "Displaying localized Tools list",
                     subtitle: "The tools shown in your personalized Tool page are selected based on your app language and localization setting.  You can alter this by editing your setting.",
-                    buttonTitle: "Change settings"
-                ) {
-                    // Button action
-                }
+                    buttonTitle: "Change settings",
+                    onHeightChanged: { height in
+                        footerHeight = height
+                    },
+                    buttonAction: {
+                        // Button action
+                    }
+                )
             }
         }
         .onAppear {
-            
+
             viewModel.pageViewed()
         }
     }
