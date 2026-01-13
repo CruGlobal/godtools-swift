@@ -32,71 +32,82 @@ struct ToolsView: View {
                     progressColor: ColorPalette.gtGrey.color
                 )
             }
-            
-            VStack(alignment: .center, spacing: 0) {
 
-                PersonalizedToolToggle(selectedIndex: $viewModel.selectedIndexForToggle, items: viewModel.toggleItems)
-                    .padding(.top, 5)
-                
-                if viewModel.showsFavoritingToolBanner {
-                    
-                    FavoritingToolBannerView(
-                        viewModel: viewModel
-                    )
-                    .transition(.move(edge: .top))
-                }
-                
-                PullToRefreshScrollView(showsIndicators: true) {
-                    
-                    VStack(alignment: .leading, spacing: 0) {
-                        
-                        ToolSpotlightView(
-                            viewModel: viewModel,
-                            geometry: geometry,
-                            contentHorizontalInsets: contentHorizontalInsets
+            ZStack(alignment: .bottom) {
+
+                VStack(alignment: .center, spacing: 0) {
+
+                    PersonalizedToolToggle(selectedIndex: $viewModel.selectedIndexForToggle, items: viewModel.toggleItems)
+                        .padding(.top, 5)
+
+                    if viewModel.showsFavoritingToolBanner {
+
+                        FavoritingToolBannerView(
+                            viewModel: viewModel
                         )
-                        .padding([.top], 24)
-                                    
-                        SeparatorView()
-                            .padding([.top], 15)
-                            .padding([.bottom], 11)
-                            .padding([.leading, .trailing], contentHorizontalInsets)
-                        
-                        ToolsFilterSectionView(viewModel: viewModel, contentHorizontalInsets: contentHorizontalInsets, width: geometry.size.width)
-                            .padding([.bottom], 18)
-                        
-                        LazyVStack(alignment: .center, spacing: toolCardSpacing) {
-                            
-                            ForEach(viewModel.allTools) { (tool: ToolListItemDomainModel) in
-                                                                
-                                ToolCardView(
-                                    viewModel: viewModel.getToolItemViewModel(tool: tool),
-                                    geometry: geometry,
-                                    layout: .landscape,
-                                    showsCategory: true,
-                                    navButtonTitleHorizontalPadding: nil,
-                                    favoriteTappedClosure: {
-                                        
-                                        viewModel.toolFavoriteTapped(tool: tool)
-                                    },
-                                    toolDetailsTappedClosure: nil,
-                                    openToolTappedClosure: nil,
-                                    toolTappedClosure: {
-                                        
-                                        viewModel.toolTapped(tool: tool)
-                                    }
-                                )
+                        .transition(.move(edge: .top))
+                    }
+
+                    PullToRefreshScrollView(showsIndicators: true) {
+
+                        VStack(alignment: .leading, spacing: 0) {
+
+                            ToolSpotlightView(
+                                viewModel: viewModel,
+                                geometry: geometry,
+                                contentHorizontalInsets: contentHorizontalInsets
+                            )
+                            .padding([.top], 24)
+
+                            SeparatorView()
+                                .padding([.top], 15)
+                                .padding([.bottom], 11)
+                                .padding([.leading, .trailing], contentHorizontalInsets)
+
+                            ToolsFilterSectionView(viewModel: viewModel, contentHorizontalInsets: contentHorizontalInsets, width: geometry.size.width)
+                                .padding([.bottom], 18)
+
+                            LazyVStack(alignment: .center, spacing: toolCardSpacing) {
+
+                                ForEach(viewModel.allTools) { (tool: ToolListItemDomainModel) in
+
+                                    ToolCardView(
+                                        viewModel: viewModel.getToolItemViewModel(tool: tool),
+                                        geometry: geometry,
+                                        layout: .landscape,
+                                        showsCategory: true,
+                                        navButtonTitleHorizontalPadding: nil,
+                                        favoriteTappedClosure: {
+
+                                            viewModel.toolFavoriteTapped(tool: tool)
+                                        },
+                                        toolDetailsTappedClosure: nil,
+                                        openToolTappedClosure: nil,
+                                        toolTappedClosure: {
+
+                                            viewModel.toolTapped(tool: tool)
+                                        }
+                                    )
+                                }
                             }
                         }
+                        .padding([.bottom], 200)
+
+                    } refreshHandler: {
+
+                        viewModel.pullToRefresh()
                     }
-                    .padding([.bottom], DashboardView.scrollViewBottomSpacingToTabBar)
-                    
-                } refreshHandler: {
-                    
-                    viewModel.pullToRefresh()
+                    .opacity(viewModel.isLoadingAllTools ? 0 : 1)
+                    .animation(.easeOut, value: !viewModel.isLoadingAllTools)
                 }
-                .opacity(viewModel.isLoadingAllTools ? 0 : 1)
-                .animation(.easeOut, value: !viewModel.isLoadingAllTools)
+
+                PersonalizedToolFooterView(
+                    title: "Displaying localized Tools list",
+                    subtitle: "The tools shown in your personalized Tool page are selected based on your app language and localization setting.  You can alter this by editing your setting.",
+                    buttonTitle: "Change settings"
+                ) {
+                    // Button action
+                }
             }
         }
         .onAppear {
