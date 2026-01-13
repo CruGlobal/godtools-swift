@@ -193,9 +193,14 @@ extension LessonsViewModel {
     }
     
     func lessonCardTapped(lessonListItem: LessonListItemDomainModel) {
-        
+
         flowDelegate?.navigate(step: .lessonTappedFromLessonsList(lessonListItem: lessonListItem, languageFilter: lessonFilterLanguageSelection))
-        
+
         trackLessonTappedAnalytics(lessonListItem: lessonListItem)
+    }
+
+    func localizationSettingsTapped() {
+
+        flowDelegate?.navigate(step: .localizationSettingsTappedFromLessons)
     }
 }

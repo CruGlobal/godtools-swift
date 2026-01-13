@@ -286,9 +286,14 @@ extension ToolsViewModel {
     }
     
     func toolTapped(tool: ToolListItemDomainModel) {
-        
+
         trackToolTappedAnalytics(tool: tool)
-        
+
         flowDelegate?.navigate(step: .toolTappedFromTools(tool: tool, toolFilterLanguage: toolFilterLanguageSelection))
+    }
+
+    func localizationSettingsTapped() {
+
+        flowDelegate?.navigate(step: .localizationSettingsTappedFromTools)
     }
 }

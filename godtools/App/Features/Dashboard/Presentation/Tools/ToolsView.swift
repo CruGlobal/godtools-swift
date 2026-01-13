@@ -112,7 +112,7 @@ struct ToolsView: View {
                         footerHeight = height
                     },
                     buttonAction: {
-                        // Button action
+                        viewModel.localizationSettingsTapped()
                     }
                 )
                 .offset(y: showFooter ? 0 : footerHeight)
