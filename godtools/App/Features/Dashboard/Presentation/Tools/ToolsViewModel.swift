@@ -36,8 +36,8 @@ import Combine
     @Published private var toolFilterCategorySelection: ToolFilterCategoryDomainModel = ToolFilterAnyCategoryDomainModel(text: "", toolsAvailableText: "")
     @Published private var toolFilterLanguageSelection: ToolFilterLanguageDomainModel = ToolFilterAnyLanguageDomainModel(text: "", toolsAvailableText: "")
     
-    @Published var selectedIndexForToggle: Int = 0
-    @Published private(set) var toggleItems: [String] = []
+    @Published var selectedToggle: PersonalizationToggleOptionValue = .personalized
+    @Published private(set) var toggleOptions: [PersonalizationToggleOption] = []
     @Published var favoritingToolBannerMessage: String = ""
     @Published var showsFavoritingToolBanner: Bool = false
     @Published var toolSpotlightTitle: String = ""
@@ -101,8 +101,11 @@ import Combine
             self?.toolSpotlightTitle = interfaceStrings.toolSpotlightTitle
             self?.toolSpotlightSubtitle = interfaceStrings.toolSpotlightSubtitle
             self?.filterTitle = interfaceStrings.filterTitle
-            self?.toggleItems = [interfaceStrings.personalizedToolToggleTitle, interfaceStrings.allToolsToggleTitle]
-            
+            self?.toggleOptions = [
+                PersonalizationToggleOption(title: interfaceStrings.personalizedToolToggleTitle, selection: .personalized),
+                PersonalizationToggleOption(title: interfaceStrings.allToolsToggleTitle, selection: .all)
+            ]
+
             self?.spotlightTools = spotlightTools
             
             self?.allTools = domainModel.tools

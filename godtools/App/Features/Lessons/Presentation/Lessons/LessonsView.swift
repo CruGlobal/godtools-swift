@@ -40,7 +40,7 @@ struct LessonsView: View {
 
                 VStack(alignment: .center, spacing: 0) {
 
-                    PersonalizedToolToggle(selectedIndex: $viewModel.selectedIndexForToggle, items: viewModel.toggleItems)
+                    PersonalizedToolToggle(selectedToggle: $viewModel.selectedToggle, toggleOptions: viewModel.toggleOptions)
                         .padding(.top, 5)
                 
                 PullToRefreshScrollView(showsIndicators: true) {
@@ -87,14 +87,14 @@ struct LessonsView: View {
                         }
                         .padding([.top], lessonCardSpacing)
                     }
-                    .padding([.bottom], (viewModel.selectedIndexForToggle == 0 ? footerHeight : 0) + DashboardView.scrollViewBottomSpacingToTabBar)
+                    .padding([.bottom], (viewModel.selectedToggle == .personalized ? footerHeight : 0) + DashboardView.scrollViewBottomSpacingToTabBar)
                     
                 } refreshHandler: {
                     viewModel.pullToRefresh()
                 }
                 .opacity(viewModel.isLoadingLessons ? 0 : 1)
                 .animation(.easeOut, value: !viewModel.isLoadingLessons)
-                .animation(.spring(response: 0.5, dampingFraction: 0.75), value: viewModel.selectedIndexForToggle)
+                .animation(.spring(response: 0.5, dampingFraction: 0.75), value: viewModel.selectedToggle)
                 }
                 .onAppear {
                     viewModel.pageViewed()
@@ -115,13 +115,13 @@ struct LessonsView: View {
                 .animation(.spring(response: 0.5, dampingFraction: 0.75), value: showFooter)
             }
         }
-        .onChange(of: viewModel.selectedIndexForToggle) { newIndex in
+        .onChange(of: viewModel.selectedToggle) { newSelection in
             withAnimation(.spring(response: 0.5, dampingFraction: 0.75)) {
-                showFooter = newIndex == 0
+                showFooter = newSelection == .personalized
             }
         }
         .onAppear {
-            showFooter = viewModel.selectedIndexForToggle == 0
+            showFooter = viewModel.selectedToggle == .personalized
         }
 
     }

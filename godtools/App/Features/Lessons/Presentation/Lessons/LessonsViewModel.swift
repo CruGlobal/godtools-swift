@@ -27,8 +27,8 @@ import SwiftUI
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     @Published private var lessonFilterLanguageSelection: LessonFilterLanguageDomainModel?
     
-    @Published var selectedIndexForToggle: Int = 0
-    @Published private(set) var toggleItems: [String] = []
+    @Published var selectedToggle: PersonalizationToggleOptionValue = .personalized
+    @Published private(set) var toggleOptions: [PersonalizationToggleOption] = []
     @Published var sectionTitle: String = ""
     @Published var subtitle: String = ""
     @Published var languageFilterTitle: String = ""
@@ -71,8 +71,11 @@ import SwiftUI
             self?.sectionTitle = interfaceStrings.title
             self?.subtitle = interfaceStrings.subtitle
             self?.languageFilterTitle = interfaceStrings.languageFilterTitle
-            self?.toggleItems = [interfaceStrings.personalizedToolToggleTitle, interfaceStrings.allLessonsToggleTitle]
-            
+            self?.toggleOptions = [
+                PersonalizationToggleOption(title: interfaceStrings.personalizedToolToggleTitle, selection: .personalized),
+                PersonalizationToggleOption(title: interfaceStrings.allLessonsToggleTitle, selection: .all)
+            ]
+
             self?.lessons = domainModel.lessons
             self?.isLoadingLessons = false
         }

@@ -39,7 +39,7 @@ struct ToolsView: View {
 
                 VStack(alignment: .center, spacing: 0) {
 
-                    PersonalizedToolToggle(selectedIndex: $viewModel.selectedIndexForToggle, items: viewModel.toggleItems)
+                    PersonalizedToolToggle(selectedToggle: $viewModel.selectedToggle, toggleOptions: viewModel.toggleOptions)
                         .padding(.top, 5)
 
                     if viewModel.showsFavoritingToolBanner {
@@ -93,7 +93,7 @@ struct ToolsView: View {
                                 }
                             }
                         }
-                        .padding([.bottom], (viewModel.selectedIndexForToggle == 0 ? footerHeight : 0) + DashboardView.scrollViewBottomSpacingToTabBar)
+                        .padding([.bottom], (viewModel.selectedToggle == .personalized ? footerHeight : 0) + DashboardView.scrollViewBottomSpacingToTabBar)
 
                     } refreshHandler: {
 
@@ -101,7 +101,7 @@ struct ToolsView: View {
                     }
                     .opacity(viewModel.isLoadingAllTools ? 0 : 1)
                     .animation(.easeOut, value: !viewModel.isLoadingAllTools)
-                    .animation(.spring(response: 0.5, dampingFraction: 0.75), value: viewModel.selectedIndexForToggle)
+                    .animation(.spring(response: 0.5, dampingFraction: 0.75), value: viewModel.selectedToggle)
                 }
 
                 PersonalizedToolFooterView(
@@ -119,13 +119,13 @@ struct ToolsView: View {
                 .animation(.spring(response: 0.5, dampingFraction: 0.75), value: showFooter)
             }
         }
-        .onChange(of: viewModel.selectedIndexForToggle) { newIndex in
+        .onChange(of: viewModel.selectedToggle) { newSelection in
             withAnimation(.spring(response: 0.5, dampingFraction: 0.75)) {
-                showFooter = newIndex == 0
+                showFooter = newSelection == .personalized
             }
         }
         .onAppear {
-            showFooter = viewModel.selectedIndexForToggle == 0
+            showFooter = viewModel.selectedToggle == .personalized
             viewModel.pageViewed()
         }
     }
