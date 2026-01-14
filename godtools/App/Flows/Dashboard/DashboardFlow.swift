@@ -9,7 +9,7 @@
 import UIKit
 import Combine
 
-class DashboardFlow: Flow, ToolNavigationFlow {
+class DashboardFlow: NSObject, Flow, ToolNavigationFlow {
         
     private let dashboardTabObserver: CurrentValueSubject<DashboardTabTypeDomainModel, Never>
     private let startingTab: DashboardTabTypeDomainModel = .favorites
@@ -39,6 +39,8 @@ class DashboardFlow: Flow, ToolNavigationFlow {
         
         dashboardTabObserver = CurrentValueSubject(startingTab)
         
+        super.init()
+        
         appDiContainer.feature.appLanguage.domainLayer
             .getCurrentAppLanguageUseCase()
             .getLanguagePublisher()
@@ -47,6 +49,8 @@ class DashboardFlow: Flow, ToolNavigationFlow {
     
     func navigate(step: FlowStep) {
      
+        navigationController.delegate = self
+        
         switch step {
                         
         case .menuTappedFromTools:
@@ -208,7 +212,6 @@ class DashboardFlow: Flow, ToolNavigationFlow {
             }
             
         case .backTappedFromToolDetails:
-            configureNavBarForDashboard()
             navigationController.popViewController(animated: true)
             
         case .urlLinkTappedFromToolDetails(let url, let screenName, let siteSection, let siteSubSection, let contentLanguage, let contentLanguageSecondary):
@@ -286,12 +289,10 @@ class DashboardFlow: Flow, ToolNavigationFlow {
             }
             else if let dashboardInNavigationStack = getDashboardInNavigationStack() {
                 
-                configureNavBarForDashboard()
                 navigationController.popToViewController(dashboardInNavigationStack, animated: true)
             }
             else {
                 
-                configureNavBarForDashboard()
                 _ = navigationController.popViewController(animated: true)
             }
             
@@ -305,12 +306,10 @@ class DashboardFlow: Flow, ToolNavigationFlow {
                 
                 if let dashboardInNavigationStack = getDashboardInNavigationStack() {
                     
-                    configureNavBarForDashboard()
                     navigationController.popToViewController(dashboardInNavigationStack, animated: true)
                 }
                 else {
                     
-                    configureNavBarForDashboard()
                     _ = navigationController.popViewController(animated: true)
                 }
                 
@@ -320,6 +319,23 @@ class DashboardFlow: Flow, ToolNavigationFlow {
         default:
             break
         }
+    }
+}
+
+// MARK: - UINavigationControllerDelegate
+
+extension DashboardFlow: UINavigationControllerDelegate {
+    
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        
+        let isDashboard: Bool = viewController is AppHostingController<DashboardView>
+        let hidesNavigationBar: Bool = isDashboard
+        
+        if isDashboard {
+            configureNavBarForDashboard()
+        }
+        
+        navigationController.setNavigationBarHidden(hidesNavigationBar, animated: false)
     }
 }
 
@@ -353,24 +369,10 @@ extension DashboardFlow {
         )
                 
         let view = DashboardView(viewModel: viewModel)
-        
-        let menuButton = AppMenuBarItem(
-            color: AppFlow.defaultNavBarControlColor,
-            target: viewModel,
-            action: #selector(viewModel.menuTapped),
-            accessibilityIdentifier: AccessibilityStrings.Button.dashboardMenu.id
-        )
-        
-        let navigationBar = AppNavigationBar(
-            appearance: nil,
-            backButton: nil,
-            leadingItems: [menuButton],
-            trailingItems: []
-        )
-                
+            
         let hostingController = AppHostingController<DashboardView>(
             rootView: view,
-            navigationBar: navigationBar
+            navigationBar: nil
         )
     
         return hostingController
@@ -401,9 +403,7 @@ extension DashboardFlow {
             
             navigationController.setViewControllers([dashboard], animated: false)
         }
-        
-        configureNavBarForDashboard()
-        
+                
         closeMenu(animated: false)
         
         learnToShareToolFlow = nil
