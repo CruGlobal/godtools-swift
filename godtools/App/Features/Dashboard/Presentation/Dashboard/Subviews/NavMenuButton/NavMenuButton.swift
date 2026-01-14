@@ -1,5 +1,5 @@
 //
-//  NavMenuView.swift
+//  NavMenuButton.swift
 //  godtools
 //
 //  Created by Levi Eggert on 1/12/26.
@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct NavMenuView: View {
+struct NavMenuButton: View {
     
     let tappedClosure: (() -> Void)?
     

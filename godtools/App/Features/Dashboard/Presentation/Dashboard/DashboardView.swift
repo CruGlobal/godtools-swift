@@ -64,7 +64,7 @@ struct DashboardView: View {
                     }
                 }//end VStack
                 
-                NavMenuView {
+                NavMenuButton {
                     viewModel.menuTapped()
                 }
                 .padding([.leading], 20)
