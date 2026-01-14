@@ -36,8 +36,10 @@ import Combine
     @Published private var toolFilterCategorySelection: ToolFilterCategoryDomainModel = ToolFilterAnyCategoryDomainModel(text: "", toolsAvailableText: "")
     @Published private var toolFilterLanguageSelection: ToolFilterLanguageDomainModel = ToolFilterAnyLanguageDomainModel(text: "", toolsAvailableText: "")
     
-    @Published var selectedToggle: PersonalizationToggleOptionValue = .personalized
     @Published private(set) var toggleOptions: [PersonalizationToggleOption] = []
+    @Published private(set) var strings: ToolsInterfaceStringsDomainModel = .emptyValue
+    
+    @Published var selectedToggle: PersonalizationToggleOptionValue = .personalized
     @Published var favoritingToolBannerMessage: String = ""
     @Published var showsFavoritingToolBanner: Bool = false
     @Published var toolSpotlightTitle: String = ""
@@ -96,7 +98,8 @@ import Combine
         .sink { [weak self] (domainModel: ViewToolsDomainModel, spotlightTools: [SpotlightToolListItemDomainModel]) in
                 
             let interfaceStrings = domainModel.interfaceStrings
-            
+
+            self?.strings = interfaceStrings
             self?.favoritingToolBannerMessage = interfaceStrings.favoritingToolBannerMessage
             self?.toolSpotlightTitle = interfaceStrings.toolSpotlightTitle
             self?.toolSpotlightSubtitle = interfaceStrings.toolSpotlightSubtitle

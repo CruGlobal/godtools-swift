@@ -33,7 +33,7 @@ struct PersonalizedToolFooterView: View {
             Text(title)
                 .font(FontLibrary.sfProDisplayRegular.font(size: 16))
                 .foregroundColor(.black)
-                .padding(.bottom, 2)
+                .padding(.bottom, 4)
 
             Text(subtitle)
                 .font(FontLibrary.sfProTextLight.font(size: 12))

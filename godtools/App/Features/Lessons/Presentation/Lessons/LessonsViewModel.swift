@@ -27,8 +27,10 @@ import SwiftUI
     @Published private var appLanguage: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
     @Published private var lessonFilterLanguageSelection: LessonFilterLanguageDomainModel?
     
-    @Published var selectedToggle: PersonalizationToggleOptionValue = .personalized
     @Published private(set) var toggleOptions: [PersonalizationToggleOption] = []
+    @Published private(set) var strings: LessonsInterfaceStringsDomainModel = .emptyValue
+    
+    @Published var selectedToggle: PersonalizationToggleOptionValue = .personalized
     @Published var sectionTitle: String = ""
     @Published var subtitle: String = ""
     @Published var languageFilterTitle: String = ""
@@ -67,7 +69,8 @@ import SwiftUI
         .sink { [weak self] (domainModel: ViewLessonsDomainModel) in
                             
             let interfaceStrings = domainModel.interfaceStrings
-            
+
+            self?.strings = interfaceStrings
             self?.sectionTitle = interfaceStrings.title
             self?.subtitle = interfaceStrings.subtitle
             self?.languageFilterTitle = interfaceStrings.languageFilterTitle

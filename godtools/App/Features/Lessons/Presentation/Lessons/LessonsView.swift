@@ -101,9 +101,9 @@ struct LessonsView: View {
                 }
 
                 PersonalizedToolFooterView(
-                    title: "Displaying localized Lesson list",
-                    subtitle: "The lessons shown in your personalized Lesson page are selected based on your app language and localization setting.  You can alter this by editing your setting.",
-                    buttonTitle: "Change settings",
+                    title: viewModel.strings.personalizedLessonFooterTitle,
+                    subtitle: viewModel.strings.personalizedLessonFooterSubtitle,
+                    buttonTitle: viewModel.strings.personalizedLessonFooterButtonTitle,
                     onHeightChanged: { height in
                         footerHeight = height
                     },

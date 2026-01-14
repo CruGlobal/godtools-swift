@@ -105,9 +105,9 @@ struct ToolsView: View {
                 }
 
                 PersonalizedToolFooterView(
-                    title: "Displaying localized Tools list",
-                    subtitle: "The tools shown in your personalized Tool page are selected based on your app language and localization setting.  You can alter this by editing your setting.",
-                    buttonTitle: "Change settings",
+                    title: viewModel.strings.personalizedToolFooterTitle,
+                    subtitle: viewModel.strings.personalizedToolFooterSubtitle,
+                    buttonTitle: viewModel.strings.personalizedToolFooterButtonTitle,
                     onHeightChanged: { height in
                         footerHeight = height
                     },
