@@ -10,9 +10,12 @@ import SwiftUI
 
 struct DashboardView: View {
         
+    static let navHeight: CGFloat = 44
     static let contentHorizontalInsets: CGFloat = 16
     static let toolCardVerticalSpacing: CGFloat = 15
     static let scrollViewBottomSpacingToTabBar: CGFloat = 30
+    
+    private let navBarColor: Color = Color.white
         
     @ObservedObject private var viewModel: DashboardViewModel
     
@@ -25,6 +28,12 @@ struct DashboardView: View {
         
         GeometryReader { geometry in
             ZStack(alignment: .topLeading) {
+                
+                ZStack(alignment: .topLeading) {
+                    navBarColor
+                }
+                .frame(height: Self.navHeight)
+                .allowsHitTesting(false)
                 
                 VStack(alignment: .center, spacing: 0) {
                     
@@ -39,6 +48,7 @@ struct DashboardView: View {
                                     ForEach((0 ..< viewModel.tabs.count).reversed(), id: \.self) { index in
                                         
                                         getDashboardPageView(index: index)
+                                            .padding([.top], Self.navHeight)
                                             .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
                                             .tag(index)
                                     }
@@ -48,6 +58,7 @@ struct DashboardView: View {
                                     ForEach(0 ..< viewModel.tabs.count, id: \.self) { index in
                                         
                                         getDashboardPageView(index: index)
+                                            .padding([.top], Self.navHeight)
                                             .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
                                             .tag(index)
                                     }
@@ -64,10 +75,13 @@ struct DashboardView: View {
                     }
                 }//end VStack
                 
+                let navButtonTopPadding: CGFloat = (Self.navHeight / 2) - (NavMenuButton.size / 2)
+                
                 NavMenuButton {
                     viewModel.menuTapped()
                 }
                 .padding([.leading], 20)
+                .padding([.top], navButtonTopPadding)
             }//end ZStack
         }//end GeometryReader
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)

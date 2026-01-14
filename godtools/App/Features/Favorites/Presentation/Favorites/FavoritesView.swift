@@ -86,7 +86,7 @@ struct FavoritesView: View {
                 .opacity(viewModel.isLoadingYourFavoritedTools ? 0 : 1)
                 .animation(.easeOut, value: !viewModel.isLoadingYourFavoritedTools)
             }
-        }
+        }//end GeometryReader
         .onAppear {
             
             viewModel.pageViewed()

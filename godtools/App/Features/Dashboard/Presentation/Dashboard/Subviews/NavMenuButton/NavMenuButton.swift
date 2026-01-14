@@ -10,6 +10,9 @@ import SwiftUI
 
 struct NavMenuButton: View {
     
+    static let size: CGFloat = 32
+    static let iconSize: CGFloat = 22
+    
     let tappedClosure: (() -> Void)?
     
     init(tappedClosure: (() -> Void)?) {
@@ -20,7 +23,7 @@ struct NavMenuButton: View {
     var body: some View {
         
         CustomButton(
-            attributes: CustomButtonAttributes(width: 32, height: 32, color: .clear),
+            attributes: CustomButtonAttributes(width: Self.size, height: Self.size, color: .clear),
             accessibilityId: AccessibilityStrings.Button.dashboardMenu.id,
             highlightContent: {
                 ImageCatalog
@@ -30,7 +33,7 @@ struct NavMenuButton: View {
                     .renderingMode(.template)
                     .tint(ColorPalette.gtBlue.color)
                     .scaledToFit()
-                    .frame(width: 22, height: 22)
+                    .frame(width: Self.iconSize, height: Self.iconSize)
                     
             },
             nonHighlightContent: {

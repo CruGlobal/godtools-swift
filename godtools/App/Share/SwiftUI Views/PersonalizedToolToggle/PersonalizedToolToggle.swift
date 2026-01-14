@@ -10,8 +10,11 @@ import SwiftUI
 
 struct PersonalizedToolToggle: View {
 
+    static let height: CGFloat = 38
+    
     private let items: [String]
     private let font: Font = FontLibrary.sfProTextRegular.font(size: 14)
+    private let borderWidth: CGFloat = 1
     
     @Binding private var selectedIndex: Int
 
@@ -35,7 +38,7 @@ struct PersonalizedToolToggle: View {
                         .font(font)
                         .foregroundColor(selectedIndex == index ? .white : ColorPalette.gtBlue.color)
                         .frame(maxWidth: .infinity)
-                        .padding(.vertical, 8)
+                        .frame(height: Self.height - (borderWidth * 1))
                         .padding(.horizontal, 16)
                         .background(selectedIndex == index ? ColorPalette.gtBlue.color : Color.clear)
                 }
@@ -44,7 +47,7 @@ struct PersonalizedToolToggle: View {
         .cornerRadius(20)
         .overlay(
             RoundedRectangle(cornerRadius: 20)
-                .stroke(ColorPalette.gtBlue.color, lineWidth: 1)
+                .stroke(ColorPalette.gtBlue.color, lineWidth: borderWidth)
         )
     }
 }

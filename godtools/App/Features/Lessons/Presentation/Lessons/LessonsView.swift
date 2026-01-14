@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct LessonsView: View {
-        
+    
     private let contentHorizontalInsets: CGFloat
     private let lessonCardSpacing: CGFloat
     
@@ -36,8 +36,11 @@ struct LessonsView: View {
             
             VStack(alignment: .center, spacing: 0) {
 
-                PersonalizedToolToggle(selectedIndex: $viewModel.selectedIndexForToggle, items: viewModel.toggleItems)
-                    .padding(.top, 5)
+                PersonalizedToolToggle(
+                    selectedIndex: $viewModel.selectedIndexForToggle,
+                    items: viewModel.toggleItems
+                )
+                .padding([.top], ToolsView.personalizedToggleTopPadding)
                 
                 PullToRefreshScrollView(showsIndicators: true) {
                     
@@ -90,12 +93,11 @@ struct LessonsView: View {
                 }
                 .opacity(viewModel.isLoadingLessons ? 0 : 1)
                 .animation(.easeOut, value: !viewModel.isLoadingLessons)
-            }
-            .onAppear {
-                viewModel.pageViewed()
-            }
+            }//end VStack
+        }//end GeometryReader
+        .onAppear {
+            viewModel.pageViewed()
         }
-            
     }
 }
 
