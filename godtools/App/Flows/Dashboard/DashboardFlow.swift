@@ -331,11 +331,6 @@ extension DashboardFlow: UINavigationControllerDelegate {
         let isDashboard: Bool = viewController is AppHostingController<DashboardView>
         let hidesNavigationBar: Bool = isDashboard
         
-        print("\n navigation controller WILL SHOW")
-        print("  viewController: \(viewController)")
-        print("  isDashboard: \(isDashboard)")
-        print("  hidesNavigationBar: \(hidesNavigationBar)")
-        
         if isDashboard {
             configureNavBarForDashboard()
         }
