@@ -10,8 +10,10 @@ import SwiftUI
 
 struct PersonalizedToolToggle: View {
 
-    @Binding private var selectedIndex: Int
     private let items: [String]
+    private let font: Font = FontLibrary.sfProTextRegular.font(size: 14)
+    
+    @Binding private var selectedIndex: Int
 
     init(selectedIndex: Binding<Int>, items: [String]) {
         
@@ -30,7 +32,7 @@ struct PersonalizedToolToggle: View {
                 } label: {
 
                     Text(items[index])
-                        .font(FontLibrary.sfProTextRegular.font(size: 12))
+                        .font(font)
                         .foregroundColor(selectedIndex == index ? .white : ColorPalette.gtBlue.color)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 8)
