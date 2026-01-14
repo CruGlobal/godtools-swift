@@ -14,9 +14,7 @@ struct ToolsView: View {
     private let toolCardSpacing: CGFloat = 15
 
     @ObservedObject private var viewModel: ToolsViewModel
-    @State private var footerHeight: CGFloat = 0
-    @State private var showFooter: Bool = true
-    
+
     init(viewModel: ToolsViewModel, contentHorizontalInsets: CGFloat = DashboardView.contentHorizontalInsets) {
         
         self.viewModel = viewModel
@@ -35,97 +33,86 @@ struct ToolsView: View {
                 )
             }
 
-            ZStack(alignment: .bottom) {
+            VStack(alignment: .center, spacing: 0) {
 
-                VStack(alignment: .center, spacing: 0) {
+                PersonalizedToolToggle(selectedToggle: $viewModel.selectedToggle, toggleOptions: viewModel.toggleOptions)
+                    .padding(.top, 5)
 
-                    PersonalizedToolToggle(selectedToggle: $viewModel.selectedToggle, toggleOptions: viewModel.toggleOptions)
-                        .padding(.top, 5)
+                if viewModel.showsFavoritingToolBanner {
 
-                    if viewModel.showsFavoritingToolBanner {
-
-                        FavoritingToolBannerView(
-                            viewModel: viewModel
-                        )
-                        .transition(.move(edge: .top))
-                    }
-
-                    PullToRefreshScrollView(showsIndicators: true) {
-
-                        VStack(alignment: .leading, spacing: 0) {
-
-                            ToolSpotlightView(
-                                viewModel: viewModel,
-                                geometry: geometry,
-                                contentHorizontalInsets: contentHorizontalInsets
-                            )
-                            .padding([.top], 24)
-
-                            SeparatorView()
-                                .padding([.top], 15)
-                                .padding([.bottom], 11)
-                                .padding([.leading, .trailing], contentHorizontalInsets)
-
-                            ToolsFilterSectionView(viewModel: viewModel, contentHorizontalInsets: contentHorizontalInsets, width: geometry.size.width)
-                                .padding([.bottom], 18)
-
-                            LazyVStack(alignment: .center, spacing: toolCardSpacing) {
-
-                                ForEach(viewModel.allTools) { (tool: ToolListItemDomainModel) in
-
-                                    ToolCardView(
-                                        viewModel: viewModel.getToolItemViewModel(tool: tool),
-                                        geometry: geometry,
-                                        layout: .landscape,
-                                        showsCategory: true,
-                                        navButtonTitleHorizontalPadding: nil,
-                                        favoriteTappedClosure: {
-
-                                            viewModel.toolFavoriteTapped(tool: tool)
-                                        },
-                                        toolDetailsTappedClosure: nil,
-                                        openToolTappedClosure: nil,
-                                        toolTappedClosure: {
-
-                                            viewModel.toolTapped(tool: tool)
-                                        }
-                                    )
-                                }
-                            }
-                        }
-                        .padding([.bottom], (viewModel.selectedToggle == .personalized ? footerHeight : 0) + DashboardView.scrollViewBottomSpacingToTabBar)
-
-                    } refreshHandler: {
-
-                        viewModel.pullToRefresh()
-                    }
-                    .opacity(viewModel.isLoadingAllTools ? 0 : 1)
-                    .animation(.easeOut, value: !viewModel.isLoadingAllTools)
-                    .animation(.spring(response: 0.5, dampingFraction: 0.75), value: viewModel.selectedToggle)
+                    FavoritingToolBannerView(
+                        viewModel: viewModel
+                    )
+                    .transition(.move(edge: .top))
                 }
 
-                PersonalizedToolFooterView(
-                    title: viewModel.strings.personalizedToolFooterTitle,
-                    subtitle: viewModel.strings.personalizedToolFooterSubtitle,
-                    buttonTitle: viewModel.strings.personalizedToolFooterButtonTitle,
-                    onHeightChanged: { height in
-                        footerHeight = height
-                    },
-                    buttonAction: {
-                        viewModel.localizationSettingsTapped()
+                PullToRefreshScrollView(showsIndicators: true) {
+
+                    VStack(alignment: .leading, spacing: 0) {
+
+                        ToolSpotlightView(
+                            viewModel: viewModel,
+                            geometry: geometry,
+                            contentHorizontalInsets: contentHorizontalInsets
+                        )
+                        .padding([.top], 24)
+
+                        SeparatorView()
+                            .padding([.top], 15)
+                            .padding([.bottom], 11)
+                            .padding([.leading, .trailing], contentHorizontalInsets)
+
+                        ToolsFilterSectionView(viewModel: viewModel, contentHorizontalInsets: contentHorizontalInsets, width: geometry.size.width)
+                            .padding([.bottom], 18)
+
+                        LazyVStack(alignment: .center, spacing: toolCardSpacing) {
+
+                            ForEach(viewModel.allTools) { (tool: ToolListItemDomainModel) in
+
+                                ToolCardView(
+                                    viewModel: viewModel.getToolItemViewModel(tool: tool),
+                                    geometry: geometry,
+                                    layout: .landscape,
+                                    showsCategory: true,
+                                    navButtonTitleHorizontalPadding: nil,
+                                    favoriteTappedClosure: {
+
+                                        viewModel.toolFavoriteTapped(tool: tool)
+                                    },
+                                    toolDetailsTappedClosure: nil,
+                                    openToolTappedClosure: nil,
+                                    toolTappedClosure: {
+
+                                        viewModel.toolTapped(tool: tool)
+                                    }
+                                )
+                            }
+                        }
+
+                        if viewModel.selectedToggle == .personalized {
+                            PersonalizedToolFooterView(
+                                title: viewModel.strings.personalizedToolFooterTitle,
+                                subtitle: viewModel.strings.personalizedToolFooterSubtitle,
+                                buttonTitle: viewModel.strings.personalizedToolFooterButtonTitle,
+                                buttonAction: {
+                                    viewModel.localizationSettingsTapped()
+                                }
+                            )
+                            .padding(.top, toolCardSpacing)
+                        }
                     }
-                )
-                .offset(y: showFooter ? 0 : footerHeight)
-                .animation(.spring(response: 0.5, dampingFraction: 0.75), value: showFooter)
+                    .padding([.bottom], DashboardView.scrollViewBottomSpacingToTabBar)
+
+                } refreshHandler: {
+
+                    viewModel.pullToRefresh()
+                }
+                .opacity(viewModel.isLoadingAllTools ? 0 : 1)
+                .animation(.easeOut, value: !viewModel.isLoadingAllTools)
             }
-        }
-        .onChange(of: viewModel.selectedToggle) { newSelection in
-            withAnimation(.spring(response: 0.5, dampingFraction: 0.75)) {
-                showFooter = newSelection == .personalized
-            }
+            .animation(.spring(response: 0.5, dampingFraction: 0.75), value: viewModel.selectedToggle)
         }
         .onAppear {
-            showFooter = viewModel.selectedToggle == .personalized
             viewModel.pageViewed()
         }
     }
