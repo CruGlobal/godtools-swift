@@ -27,9 +27,9 @@ class GetToolsInterfaceStringsRepository: GetToolsInterfaceStringsRepositoryInte
             filterTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: ToolStringKeys.ToolFilter.filterSectionTitle.rawValue),
             personalizedToolToggleTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "dashboard.personalizedToolToggle.personalizedTitle"),
             allToolsToggleTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "dashboard.personalizedToolToggle.allToolsTitle"),
-            personalizedToolFooterTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "dashboard.personalizedToolFooter.title"),
-            personalizedToolFooterSubtitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "dashboard.personalizedToolFooter.subtitle"),
-            personalizedToolFooterButtonTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "dashboard.personalizedToolFooter.buttonTitle")
+            personalizedToolExplanationTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "dashboard.personalizedToolFooter.title"),
+            personalizedToolExplanationSubtitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "dashboard.personalizedToolFooter.subtitle"),
+            changePersonalizedToolSettingsActionLabel: localizationServices.stringForLocaleElseEnglish(localeIdentifier: translateInLanguage, key: "dashboard.personalizedToolFooter.buttonTitle")
         )
         
         return Just(interfaceStrings)

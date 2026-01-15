@@ -91,9 +91,9 @@ struct ToolsView: View {
 
                         if viewModel.selectedToggle == .personalized {
                             PersonalizedToolFooterView(
-                                title: viewModel.strings.personalizedToolFooterTitle,
-                                subtitle: viewModel.strings.personalizedToolFooterSubtitle,
-                                buttonTitle: viewModel.strings.personalizedToolFooterButtonTitle,
+                                title: viewModel.strings.personalizedToolExplanationTitle,
+                                subtitle: viewModel.strings.personalizedToolExplanationSubtitle,
+                                buttonTitle: viewModel.strings.changePersonalizedToolSettingsActionLabel,
                                 buttonAction: {
                                     viewModel.localizationSettingsTapped()
                                 }

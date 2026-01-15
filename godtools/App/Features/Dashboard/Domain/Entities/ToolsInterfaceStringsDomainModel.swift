@@ -16,11 +16,11 @@ struct ToolsInterfaceStringsDomainModel {
     let filterTitle: String
     let personalizedToolToggleTitle: String
     let allToolsToggleTitle: String
-    let personalizedToolFooterTitle: String
-    let personalizedToolFooterSubtitle: String
-    let personalizedToolFooterButtonTitle: String
-    
+    let personalizedToolExplanationTitle: String
+    let personalizedToolExplanationSubtitle: String
+    let changePersonalizedToolSettingsActionLabel: String
+
     static var emptyValue: ToolsInterfaceStringsDomainModel {
-        ToolsInterfaceStringsDomainModel(favoritingToolBannerMessage: "", toolSpotlightTitle: "", toolSpotlightSubtitle: "", filterTitle: "", personalizedToolToggleTitle: "", allToolsToggleTitle: "", personalizedToolFooterTitle: "", personalizedToolFooterSubtitle: "", personalizedToolFooterButtonTitle: "")
+        ToolsInterfaceStringsDomainModel(favoritingToolBannerMessage: "", toolSpotlightTitle: "", toolSpotlightSubtitle: "", filterTitle: "", personalizedToolToggleTitle: "", allToolsToggleTitle: "", personalizedToolExplanationTitle: "", personalizedToolExplanationSubtitle: "", changePersonalizedToolSettingsActionLabel: "")
     }
 }

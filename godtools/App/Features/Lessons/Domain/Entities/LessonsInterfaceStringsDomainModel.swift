@@ -15,11 +15,11 @@ struct LessonsInterfaceStringsDomainModel {
     let languageFilterTitle: String
     let personalizedToolToggleTitle: String
     let allLessonsToggleTitle: String
-    let personalizedLessonFooterTitle: String
-    let personalizedLessonFooterSubtitle: String
-    let personalizedLessonFooterButtonTitle: String
+    let personalizedLessonExplanationTitle: String
+    let personalizedLessonExplanationSubtitle: String
+    let changePersonalizedLessonSettingsActionLabel: String
 
     static var emptyValue: LessonsInterfaceStringsDomainModel {
-        LessonsInterfaceStringsDomainModel(title: "", subtitle: "", languageFilterTitle: "", personalizedToolToggleTitle: "", allLessonsToggleTitle: "", personalizedLessonFooterTitle: "", personalizedLessonFooterSubtitle: "", personalizedLessonFooterButtonTitle: "")
+        LessonsInterfaceStringsDomainModel(title: "", subtitle: "", languageFilterTitle: "", personalizedToolToggleTitle: "", allLessonsToggleTitle: "", personalizedLessonExplanationTitle: "", personalizedLessonExplanationSubtitle: "", changePersonalizedLessonSettingsActionLabel: "")
     }
 }

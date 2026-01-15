@@ -85,9 +85,9 @@ struct LessonsView: View {
 
                         if viewModel.selectedToggle == .personalized {
                             PersonalizedToolFooterView(
-                                title: viewModel.strings.personalizedLessonFooterTitle,
-                                subtitle: viewModel.strings.personalizedLessonFooterSubtitle,
-                                buttonTitle: viewModel.strings.personalizedLessonFooterButtonTitle,
+                                title: viewModel.strings.personalizedLessonExplanationTitle,
+                                subtitle: viewModel.strings.personalizedLessonExplanationSubtitle,
+                                buttonTitle: viewModel.strings.changePersonalizedLessonSettingsActionLabel,
                                 buttonAction: {
                                     viewModel.localizationSettingsTapped()
                                 }
