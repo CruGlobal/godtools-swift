@@ -14,6 +14,7 @@ import Combine
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getCountryListUseCase: GetLocalizationSettingsCountryListUseCase
     private let searchCountriesUseCase: SearchCountriesInLocalizationSettingsCountriesListUseCase
+    private let setLocalizationSettingUseCase: SetLocalizationSettingUseCase
     private let viewLocalizationSettingsUseCase: ViewLocalizationSettingsUseCase
     private let viewSearchBarUseCase: ViewSearchBarUseCase
 
@@ -29,12 +30,13 @@ import Combine
     @Published private(set) var countrySearchResults: [LocalizationSettingsCountryDomainModel] = Array()
     @Published private(set) var strings = LocalizationSettingsInterfaceStringsDomainModel.emptyValue
 
-    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getCountryListUseCase: GetLocalizationSettingsCountryListUseCase, searchCountriesUseCase: SearchCountriesInLocalizationSettingsCountriesListUseCase, viewLocalizationSettingsUseCase: ViewLocalizationSettingsUseCase, viewSearchBarUseCase: ViewSearchBarUseCase) {
-        
+    init(flowDelegate: FlowDelegate, getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase, getCountryListUseCase: GetLocalizationSettingsCountryListUseCase, searchCountriesUseCase: SearchCountriesInLocalizationSettingsCountriesListUseCase, setLocalizationSettingUseCase: SetLocalizationSettingUseCase, viewLocalizationSettingsUseCase: ViewLocalizationSettingsUseCase, viewSearchBarUseCase: ViewSearchBarUseCase) {
+
         self.flowDelegate = flowDelegate
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getCountryListUseCase = getCountryListUseCase
         self.searchCountriesUseCase = searchCountriesUseCase
+        self.setLocalizationSettingUseCase = setLocalizationSettingUseCase
         self.viewLocalizationSettingsUseCase = viewLocalizationSettingsUseCase
         self.viewSearchBarUseCase = viewSearchBarUseCase
         
@@ -87,8 +89,10 @@ extension LocalizationSettingsViewModel {
     }
     
     func countryTapped(country: LocalizationSettingsCountryDomainModel) {
-        
-        // TODO: -
+
+        setLocalizationSettingUseCase.execute(countryName: country.countryNameTranslatedInCurrentAppLanguage)
+            .sink { _ in }
+            .store(in: &cancellables)
     }
     
     func getSearchBarViewModel() -> SearchBarViewModel {

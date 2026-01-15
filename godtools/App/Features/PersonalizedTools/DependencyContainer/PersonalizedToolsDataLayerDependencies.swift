@@ -23,15 +23,22 @@ class PersonalizedToolsDataLayerDependencies {
     }
     
     func getPersonalizedToolsRepository() -> PersonalizedToolsRepository {
-        
+
         let api = PersonalizedToolsApi(
             config: coreDataLayer.getAppConfig(),
             urlSessionPriority: coreDataLayer.getSharedUrlSessionPriority(),
             requestSender: coreDataLayer.getRequestSender()
         )
-        
+
         return PersonalizedToolsRepository(
             api: api
+        )
+    }
+
+    func getUserLocalizationSettingRepository() -> UserLocalizationSettingRepository {
+
+        return UserLocalizationSettingRepository(
+            cache: RealmUserLocalizationSettingCache(realmDatabase: coreDataLayer.getSharedLegacyRealmDatabase())
         )
     }
 }
