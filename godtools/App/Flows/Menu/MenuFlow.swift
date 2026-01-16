@@ -12,9 +12,7 @@ import SwiftUI
 import Combine
 
 class MenuFlow: Flow {
-    
-    private let initialNavigationStep: FlowStep?
-    
+        
     private var tutorialFlow: TutorialFlow?
     private var languageSettingsFlow: LanguageSettingsFlow?
     private var cancellables: Set<AnyCancellable> = Set()
@@ -31,7 +29,6 @@ class MenuFlow: Flow {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
-        self.initialNavigationStep = initialNavigationStep
                 
         let navigationBarAppearance = AppNavigationBarAppearance(
             backgroundColor: AppFlow.defaultNavBarColor,
