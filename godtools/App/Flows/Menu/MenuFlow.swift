@@ -13,6 +13,8 @@ import Combine
 
 class MenuFlow: Flow {
     
+    private let initialNavigationStep: FlowStep?
+    
     private var tutorialFlow: TutorialFlow?
     private var languageSettingsFlow: LanguageSettingsFlow?
     private var cancellables: Set<AnyCancellable> = Set()
@@ -25,10 +27,11 @@ class MenuFlow: Flow {
     let appDiContainer: AppDiContainer
     let navigationController: AppNavigationController
     
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, initialNavigationStep: FlowStep? = nil) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
+        self.initialNavigationStep = initialNavigationStep
                 
         let navigationBarAppearance = AppNavigationBarAppearance(
             backgroundColor: AppFlow.defaultNavBarColor,
@@ -65,6 +68,10 @@ class MenuFlow: Flow {
                 self?.viewShareGodToolsDomainModel = domainModel
             }
             .store(in: &cancellables)
+        
+        if let initialNavigationStep = initialNavigationStep {
+            navigate(step: initialNavigationStep)
+        }
     }
     
     deinit {

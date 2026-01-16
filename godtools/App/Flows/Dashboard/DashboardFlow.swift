@@ -65,8 +65,7 @@ class DashboardFlow: Flow, ToolNavigationFlow {
             navigationController.popViewController(animated: true)
 
         case .localizationSettingsTappedFromLessons:
-            navigateToMenu(animated: true)
-            menuFlow?.navigate(step: .localizationSettingsTappedFromMenu)
+            navigateToMenu(animated: true, initialNavigationStep: .localizationSettingsTappedFromMenu)
 
         case .languageTappedFromLessonLanguageFilter:
             navigationController.popViewController(animated: true)
@@ -202,8 +201,7 @@ class DashboardFlow: Flow, ToolNavigationFlow {
             navigationController.pushViewController(toolDetails, animated: true)
 
         case .localizationSettingsTappedFromTools:
-            navigateToMenu(animated: true)
-            menuFlow?.navigate(step: .localizationSettingsTappedFromMenu)
+            navigateToMenu(animated: true, initialNavigationStep: .localizationSettingsTappedFromMenu)
 
         case .openToolTappedFromToolDetails(let toolId, let primaryLanguage, let parallelLanguage, let selectedLanguageIndex):
             
