@@ -18,18 +18,19 @@ class GetLocalizationSettingsCountryListUseCase {
     }
     
     func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[LocalizationSettingsCountryDomainModel], Never> {
-        
-        return countriesRepository.getCountriesPublisher()
+
+        return countriesRepository.getCountriesPublisher(appLanguage: appLanguage)
             .flatMap { (countries: [LocalizationSettingsCountryDataModel]) in
-                
+
                 let countryDomainModels = countries.map { country in
-                    
+
                     return LocalizationSettingsCountryDomainModel(
+                        isoRegionCode: country.isoRegionCode,
                         countryNameTranslatedInOwnLanguage: country.countryNameTranslatedInOwnLanguage,
                         countryNameTranslatedInCurrentAppLanguage: country.countryNameTranslatedInCurrentAppLanguage
                     )
                 }
-                
+
                 return Just(countryDomainModels)
                     .eraseToAnyPublisher()
             }

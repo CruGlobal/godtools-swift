@@ -10,15 +10,43 @@ import Foundation
 import Combine
 
 class LocalizationSettingsCountriesRepository {
-    
-    private let cache: RealmLocalizationSettingsCountriesCache
-    
-    init(cache: RealmLocalizationSettingsCountriesCache) {
-        self.cache = cache
+
+    init() {
+    }
+
+    func getCountriesPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[LocalizationSettingsCountryDataModel], Never> {
+
+        let appLocale = Locale(identifier: appLanguage)
+
+        let countries = Locale.Region.isoRegions.compactMap { region -> LocalizationSettingsCountryDataModel? in
+
+            let regionLocale = findLocaleId(for: region)
+
+            guard let nameInAppLanguage = appLocale.localizedString(forRegionCode: region.identifier),
+                  let nameInOwnLanguage = regionLocale.localizedString(forRegionCode: region.identifier)
+            else {
+                return nil
+            }
+
+            return LocalizationSettingsCountryDataModel(
+                isoRegionCode: region.identifier,
+                countryNameTranslatedInOwnLanguage: nameInOwnLanguage,
+                countryNameTranslatedInCurrentAppLanguage: nameInAppLanguage
+            )
+        }
+        .sorted { $0.countryNameTranslatedInCurrentAppLanguage < $1.countryNameTranslatedInCurrentAppLanguage }
+
+        return Just(countries)
+            .eraseToAnyPublisher()
     }
     
-    func getCountriesPublisher() -> AnyPublisher<[LocalizationSettingsCountryDataModel], Never> {
+    private func findLocaleId(for region: Locale.Region) -> Locale {
         
-        return cache.getCountriesPublisher()
+        let regionAndLanguageLocaleId = Locale.availableIdentifiers.first(where: { identifier in
+            
+            return identifier.hasSuffix("_\(region.identifier)") || identifier == region.identifier.lowercased()
+        })
+        
+        return Locale(identifier: regionAndLanguageLocaleId ?? region.identifier)
     }
 }

@@ -90,7 +90,7 @@ extension LocalizationSettingsViewModel {
     
     func countryTapped(country: LocalizationSettingsCountryDomainModel) {
 
-        setLocalizationSettingUseCase.execute(countryName: country.countryNameTranslatedInCurrentAppLanguage)
+        setLocalizationSettingUseCase.execute(isoRegionCode: country.isoRegionCode)
             .sink { _ in }
             .store(in: &cancellables)
     }

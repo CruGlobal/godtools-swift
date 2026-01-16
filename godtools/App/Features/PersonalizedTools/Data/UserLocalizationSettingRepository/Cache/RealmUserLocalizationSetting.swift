@@ -15,7 +15,7 @@ class RealmUserLocalizationSetting: Object {
 
     @Persisted var id: String = RealmUserLocalizationSetting.primaryKeyValue
     @Persisted var createdAt: Date = Date()
-    @Persisted var selectedCountryName: String = ""
+    @Persisted var selectedCountryIsoRegionCode: String = ""
 
     override static func primaryKey() -> String? {
         return "id"
@@ -24,6 +24,6 @@ class RealmUserLocalizationSetting: Object {
     func mapFrom(dataModel: UserLocalizationSettingDataModel) {
         id = dataModel.id
         createdAt = dataModel.createdAt
-        selectedCountryName = dataModel.selectedCountryName
+        selectedCountryIsoRegionCode = dataModel.selectedCountryIsoRegionCode
     }
 }

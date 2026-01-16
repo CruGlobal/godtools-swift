@@ -12,17 +12,17 @@ struct UserLocalizationSettingDataModel {
 
     let id: String
     let createdAt: Date
-    let selectedCountryName: String
+    let selectedCountryIsoRegionCode: String
 
-    init(selectedCountryName: String) {
+    init(selectedCountryIsoRegionCode: String) {
         self.id = RealmUserLocalizationSetting.primaryKeyValue
         self.createdAt = Date()
-        self.selectedCountryName = selectedCountryName
+        self.selectedCountryIsoRegionCode = selectedCountryIsoRegionCode
     }
 
     init(realmObject: RealmUserLocalizationSetting) {
         self.id = realmObject.id
         self.createdAt = realmObject.createdAt
-        self.selectedCountryName = realmObject.selectedCountryName
+        self.selectedCountryIsoRegionCode = realmObject.selectedCountryIsoRegionCode
     }
 }
