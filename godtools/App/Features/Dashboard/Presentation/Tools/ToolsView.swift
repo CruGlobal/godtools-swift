@@ -9,12 +9,12 @@
 import SwiftUI
 
 struct ToolsView: View {
-        
+
     private let contentHorizontalInsets: CGFloat
     private let toolCardSpacing: CGFloat = 15
-        
+
     @ObservedObject private var viewModel: ToolsViewModel
-    
+
     init(viewModel: ToolsViewModel, contentHorizontalInsets: CGFloat = DashboardView.contentHorizontalInsets) {
         
         self.viewModel = viewModel
@@ -32,43 +32,43 @@ struct ToolsView: View {
                     progressColor: ColorPalette.gtGrey.color
                 )
             }
-            
+
             VStack(alignment: .center, spacing: 0) {
 
-                PersonalizedToolToggle(selectedIndex: $viewModel.selectedIndexForToggle, items: viewModel.toggleItems)
+                PersonalizedToolToggle(selectedToggle: $viewModel.selectedToggle, toggleOptions: viewModel.toggleOptions)
                     .padding(.top, 5)
-                
+
                 if viewModel.showsFavoritingToolBanner {
-                    
+
                     FavoritingToolBannerView(
                         viewModel: viewModel
                     )
                     .transition(.move(edge: .top))
                 }
-                
+
                 PullToRefreshScrollView(showsIndicators: true) {
-                    
+
                     VStack(alignment: .leading, spacing: 0) {
-                        
+
                         ToolSpotlightView(
                             viewModel: viewModel,
                             geometry: geometry,
                             contentHorizontalInsets: contentHorizontalInsets
                         )
                         .padding([.top], 24)
-                                    
+
                         SeparatorView()
                             .padding([.top], 15)
                             .padding([.bottom], 11)
                             .padding([.leading, .trailing], contentHorizontalInsets)
-                        
+
                         ToolsFilterSectionView(viewModel: viewModel, contentHorizontalInsets: contentHorizontalInsets, width: geometry.size.width)
                             .padding([.bottom], 18)
-                        
+
                         LazyVStack(alignment: .center, spacing: toolCardSpacing) {
-                            
+
                             ForEach(viewModel.allTools) { (tool: ToolListItemDomainModel) in
-                                                                
+
                                 ToolCardView(
                                     viewModel: viewModel.getToolItemViewModel(tool: tool),
                                     geometry: geometry,
@@ -76,31 +76,43 @@ struct ToolsView: View {
                                     showsCategory: true,
                                     navButtonTitleHorizontalPadding: nil,
                                     favoriteTappedClosure: {
-                                        
+
                                         viewModel.toolFavoriteTapped(tool: tool)
                                     },
                                     toolDetailsTappedClosure: nil,
                                     openToolTappedClosure: nil,
                                     toolTappedClosure: {
-                                        
+
                                         viewModel.toolTapped(tool: tool)
                                     }
                                 )
                             }
                         }
+
+                        if viewModel.selectedToggle == .personalized {
+                            PersonalizedToolFooterView(
+                                title: viewModel.strings.personalizedToolExplanationTitle,
+                                subtitle: viewModel.strings.personalizedToolExplanationSubtitle,
+                                buttonTitle: viewModel.strings.changePersonalizedToolSettingsActionLabel,
+                                buttonAction: {
+                                    viewModel.localizationSettingsTapped()
+                                }
+                            )
+                            .padding(.top, toolCardSpacing)
+                        }
                     }
                     .padding([.bottom], DashboardView.scrollViewBottomSpacingToTabBar)
-                    
+
                 } refreshHandler: {
-                    
+
                     viewModel.pullToRefresh()
                 }
                 .opacity(viewModel.isLoadingAllTools ? 0 : 1)
                 .animation(.easeOut, value: !viewModel.isLoadingAllTools)
             }
+            .animation(.spring(response: 0.5, dampingFraction: 0.75), value: viewModel.selectedToggle)
         }
         .onAppear {
-            
             viewModel.pageViewed()
         }
     }

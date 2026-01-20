@@ -36,8 +36,10 @@ import Combine
     @Published private var toolFilterCategorySelection: ToolFilterCategoryDomainModel = ToolFilterAnyCategoryDomainModel(text: "", toolsAvailableText: "")
     @Published private var toolFilterLanguageSelection: ToolFilterLanguageDomainModel = ToolFilterAnyLanguageDomainModel(text: "", toolsAvailableText: "")
     
-    @Published var selectedIndexForToggle: Int = 0
-    @Published private(set) var toggleItems: [String] = []
+    @Published private(set) var toggleOptions: [PersonalizationToggleOption] = []
+    @Published private(set) var strings: ToolsInterfaceStringsDomainModel = .emptyValue
+    
+    @Published var selectedToggle: PersonalizationToggleOptionValue = .personalized
     @Published var favoritingToolBannerMessage: String = ""
     @Published var showsFavoritingToolBanner: Bool = false
     @Published var toolSpotlightTitle: String = ""
@@ -96,13 +98,17 @@ import Combine
         .sink { [weak self] (domainModel: ViewToolsDomainModel, spotlightTools: [SpotlightToolListItemDomainModel]) in
                 
             let interfaceStrings = domainModel.interfaceStrings
-            
+
+            self?.strings = interfaceStrings
             self?.favoritingToolBannerMessage = interfaceStrings.favoritingToolBannerMessage
             self?.toolSpotlightTitle = interfaceStrings.toolSpotlightTitle
             self?.toolSpotlightSubtitle = interfaceStrings.toolSpotlightSubtitle
             self?.filterTitle = interfaceStrings.filterTitle
-            self?.toggleItems = [interfaceStrings.personalizedToolToggleTitle, interfaceStrings.allToolsToggleTitle]
-            
+            self?.toggleOptions = [
+                PersonalizationToggleOption(title: interfaceStrings.personalizedToolToggleTitle, selection: .personalized),
+                PersonalizationToggleOption(title: interfaceStrings.allToolsToggleTitle, selection: .all)
+            ]
+
             self?.spotlightTools = spotlightTools
             
             self?.allTools = domainModel.tools
@@ -283,9 +289,14 @@ extension ToolsViewModel {
     }
     
     func toolTapped(tool: ToolListItemDomainModel) {
-        
+
         trackToolTappedAnalytics(tool: tool)
-        
+
         flowDelegate?.navigate(step: .toolTappedFromTools(tool: tool, toolFilterLanguage: toolFilterLanguageSelection))
+    }
+
+    func localizationSettingsTapped() {
+
+        flowDelegate?.navigate(step: .localizationSettingsTappedFromTools)
     }
 }

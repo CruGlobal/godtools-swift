@@ -67,7 +67,10 @@ class DashboardFlow: NSObject, Flow, ToolNavigationFlow {
             
         case .backTappedFromLessonLanguageFilter:
             navigationController.popViewController(animated: true)
-            
+
+        case .localizationSettingsTappedFromLessons:
+            navigateToMenu(animated: true, initialNavigationStep: .localizationSettingsTappedFromMenu)
+
         case .languageTappedFromLessonLanguageFilter:
             navigationController.popViewController(animated: true)
             
@@ -200,7 +203,10 @@ class DashboardFlow: NSObject, Flow, ToolNavigationFlow {
             )
             
             navigationController.pushViewController(toolDetails, animated: true)
-            
+
+        case .localizationSettingsTappedFromTools:
+            navigateToMenu(animated: true, initialNavigationStep: .localizationSettingsTappedFromMenu)
+
         case .openToolTappedFromToolDetails(let toolId, let primaryLanguage, let parallelLanguage, let selectedLanguageIndex):
             
             if dashboardTabObserver.value == .favorites {
