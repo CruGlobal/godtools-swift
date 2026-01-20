@@ -1,5 +1,5 @@
 {
-  "originHash" : "bb0d30b3d968b58f6922bbcd7d62f3b35899ea3140881a27fdd6132cea81a593",
+  "originHash" : "71a9cb9d59cb588de3c8c9711914b1416aedb6ead366e9238e1df9031aa137ab",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -204,8 +204,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/CruGlobal/repository-sync-ios",
       "state" : {
-        "revision" : "b60f7a3d42cd69bb38d41e288ce3aa24fa418932",
-        "version" : "0.7.4"
+        "revision" : "d6330e4c82c7d1eba69595e742373593786956c7",
+        "version" : "0.8.0"
       }
     },
     {
@@ -213,8 +213,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/CruGlobal/request-operation-ios.git",
       "state" : {
-        "revision" : "5983ddc73af1956d32f0138c699d1c59eaa451d1",
-        "version" : "1.12.3"
+        "revision" : "6f92a3caf62deca98a0f24008f3f586999e9e667",
+        "version" : "1.13.3"
       }
     },
     {

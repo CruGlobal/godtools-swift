@@ -30,7 +30,7 @@ class TestsInMemorySwiftDatabase {
         
         try database
             .write
-            .objects(
+            .context(
                 context: context,
                 writeObjects: WriteSwiftObjects(deleteObjects: nil, insertObjects: addObjectsToDatabase)
             )
