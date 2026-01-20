@@ -1845,7 +1845,7 @@
 			repositoryURL = "https://github.com/CruGlobal/repository-sync-ios";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.7.4;
+				minimumVersion = 0.8.0;
 			};
 		};
 		4581EAA12BFBE194008115FF /* XCRemoteSwiftPackageReference "realm-swift" */ = {
@@ -1869,7 +1869,7 @@
 			repositoryURL = "https://github.com/CruGlobal/request-operation-ios.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 1.12.6;
+				minimumVersion = 1.13.3;
 			};
 		};
 		45D40C692A5315D500E8E4AE /* XCRemoteSwiftPackageReference "Fuzi" */ = {
