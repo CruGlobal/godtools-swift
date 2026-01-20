@@ -10,8 +10,13 @@ import SwiftUI
 
 struct PersonalizedToolToggle: View {
 
-    @Binding private var selectedToggle: PersonalizationToggleOptionValue
+    static let height: CGFloat = 38
+    
     private let toggleOptions: [PersonalizationToggleOption]
+    private let font: Font = FontLibrary.sfProTextRegular.font(size: 14)
+    private let borderWidth: CGFloat = 1
+    
+    @Binding private var selectedToggle: PersonalizationToggleOptionValue
 
     init(selectedToggle: Binding<PersonalizationToggleOptionValue>, toggleOptions: [PersonalizationToggleOption]) {
 
@@ -30,10 +35,10 @@ struct PersonalizedToolToggle: View {
                 } label: {
 
                     Text(toggleOptions[index].title)
-                        .font(FontLibrary.sfProTextRegular.font(size: 12))
+                        .font(font)
                         .foregroundColor(selectedToggle == toggleOptions[index].selection ? .white : ColorPalette.gtBlue.color)
                         .frame(maxWidth: .infinity)
-                        .padding(.vertical, 8)
+                        .frame(height: Self.height - (borderWidth * 1))
                         .padding(.horizontal, 16)
                         .background(selectedToggle == toggleOptions[index].selection ? ColorPalette.gtBlue.color : Color.clear)
                 }

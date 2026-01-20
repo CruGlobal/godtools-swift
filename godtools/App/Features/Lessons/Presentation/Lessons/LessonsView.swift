@@ -36,8 +36,11 @@ struct LessonsView: View {
 
             VStack(alignment: .center, spacing: 0) {
 
-                PersonalizedToolToggle(selectedToggle: $viewModel.selectedToggle, toggleOptions: viewModel.toggleOptions)
-                    .padding(.top, 5)
+                PersonalizedToolToggle(
+                    selectedToggle: $viewModel.selectedToggle,
+                    toggleOptions: viewModel.toggleOptions
+                )
+                .padding([.top], ToolsView.personalizedToggleTopPadding)
 
                 PullToRefreshScrollView(showsIndicators: true) {
 
@@ -95,7 +98,7 @@ struct LessonsView: View {
                             .padding(.top, lessonCardSpacing * 2)
                         }
                     }
-                    .padding([.bottom], DashboardView.scrollViewBottomSpacingToTabBar)
+                    .padding([.bottom], 0)
 
                 } refreshHandler: {
                     viewModel.pullToRefresh()

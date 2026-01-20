@@ -10,6 +10,8 @@ import SwiftUI
 
 struct ToolsView: View {
 
+    static let personalizedToggleTopPadding: CGFloat = (DashboardView.navHeight * -1) + (DashboardView.navHeight / 2) - (PersonalizedToolToggle.height / 2)
+    
     private let contentHorizontalInsets: CGFloat
     private let toolCardSpacing: CGFloat = 15
 
@@ -35,8 +37,11 @@ struct ToolsView: View {
 
             VStack(alignment: .center, spacing: 0) {
 
-                PersonalizedToolToggle(selectedToggle: $viewModel.selectedToggle, toggleOptions: viewModel.toggleOptions)
-                    .padding(.top, 5)
+                PersonalizedToolToggle(
+                    selectedToggle: $viewModel.selectedToggle,
+                    toggleOptions: viewModel.toggleOptions,
+                )
+                .padding([.top], Self.personalizedToggleTopPadding)
 
                 if viewModel.showsFavoritingToolBanner {
 
@@ -101,7 +106,7 @@ struct ToolsView: View {
                             .padding(.top, toolCardSpacing)
                         }
                     }
-                    .padding([.bottom], DashboardView.scrollViewBottomSpacingToTabBar)
+                    .padding([.bottom], 0)
 
                 } refreshHandler: {
 

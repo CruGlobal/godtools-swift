@@ -31,29 +31,29 @@ struct PersonalizedToolFooterView: View {
         VStack(alignment: .leading, spacing: 0) {
 
             Text(title)
-                .font(FontLibrary.sfProDisplayRegular.font(size: 16))
+                .font(FontLibrary.sfProTextSemibold.font(size: 18))
                 .foregroundColor(.black)
-                .padding(.bottom, 4)
 
             Text(subtitle)
-                .font(FontLibrary.sfProTextLight.font(size: 12))
+                .font(FontLibrary.sfProTextRegular.font(size: 14))
                 .foregroundColor(.black)
-                .padding(.bottom, 15)
+                .padding(.top, 5)
 
             HStack {
                 Spacer()
 
                 GTBlueButton(
                     title: buttonTitle,
-                    fontSize: 14,
-                    width: 147,
-                    height: 28,
-                    cornerRadius: 20,
+                    font: FontLibrary.sfProTextSemibold.font(size: 16),
+                    width: 200,
+                    height: 40,
+                    cornerRadius: 22,
                     action: buttonAction
                 )
 
                 Spacer()
             }
+            .padding(.top, 20)
         }
         .frame(maxWidth: .infinity)
         .padding(.horizontal, 30)
