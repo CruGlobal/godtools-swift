@@ -245,7 +245,7 @@ extension SwiftRepositorySyncPersistence {
         }
         
         do {
-            try swiftDatabase.write.objects(
+            try swiftDatabase.write.context(
                 context: context,
                 writeObjects: WriteSwiftObjects(deleteObjects: objectsToRemove, insertObjects: objectsToAdd)
             )
@@ -270,7 +270,7 @@ extension SwiftRepositorySyncPersistence {
         let objectsToRemove: [PersistObjectType] = swiftDatabase.read.objectsNonThrowing(context: context, query: nil)
         
         do {
-            try swiftDatabase.write.objects(
+            try swiftDatabase.write.context(
                 context: context,
                 writeObjects: WriteSwiftObjects(deleteObjects: objectsToRemove, insertObjects: nil)
             )
