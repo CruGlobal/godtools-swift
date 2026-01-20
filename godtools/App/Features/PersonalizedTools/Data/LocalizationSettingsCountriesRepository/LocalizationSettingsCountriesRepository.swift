@@ -12,13 +12,16 @@ import Combine
 class LocalizationSettingsCountriesRepository {
 
     init() {
+        
     }
 
     func getCountriesPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[LocalizationSettingsCountryDataModel], Never> {
 
         let appLocale = Locale(identifier: appLanguage)
 
-        let countries = Locale.Region.isoRegions.compactMap { region -> LocalizationSettingsCountryDataModel? in
+        let countries = Locale.Region.isoRegions
+            .filter { isCountryCode(region: $0) }
+            .compactMap { region -> LocalizationSettingsCountryDataModel? in
 
             let regionLocale = findLocaleId(for: region)
 
@@ -40,13 +43,33 @@ class LocalizationSettingsCountriesRepository {
             .eraseToAnyPublisher()
     }
     
+    private func isCountryCode(region: Locale.Region) -> Bool {
+        return region.identifier.count == 2 && region.identifier.allSatisfy { $0.isUppercase && $0.isLetter }
+    }
+    
     private func findLocaleId(for region: Locale.Region) -> Locale {
-        
-        let regionAndLanguageLocaleId = Locale.availableIdentifiers.first(where: { identifier in
+        // format: language_REGION, like ja_JP
+
+        let lowercasedRegion = region.identifier.lowercased()
+
+        let localeWhereLanguageMatchesRegion = "\(lowercasedRegion)_\(region.identifier)"
+        if Locale.availableIdentifiers.contains(localeWhereLanguageMatchesRegion) {
             
-            return identifier.hasSuffix("_\(region.identifier)") || identifier == region.identifier.lowercased()
-        })
-        
-        return Locale(identifier: regionAndLanguageLocaleId ?? region.identifier)
+            return Locale(identifier: localeWhereLanguageMatchesRegion)
+        }
+
+        let allLocalesInRegion = Locale.availableIdentifiers.filter { identifier in
+            return identifier.hasSuffix("_\(region.identifier)")
+        }
+
+        for localeId in allLocalesInRegion {
+            
+            let locale = Locale(identifier: localeId)
+            if let translation = locale.localizedString(forRegionCode: region.identifier), !translation.isEmpty {
+                return locale
+            }
+        }
+
+        return Locale(identifier: region.identifier)
     }
 }
