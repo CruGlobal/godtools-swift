@@ -8,7 +8,6 @@
 
 import Foundation
 import RequestOperation
-import Combine
 
 final class PersonalizedToolsApi {
     
@@ -75,7 +74,7 @@ final class PersonalizedToolsApi {
             )
     }
     
-    func getAllRankedResourcesPublisher(requestPriority: RequestPriority, country: String?, language: String?, resouceType: ResourceType?) -> AnyPublisher<[ResourceCodable], Error> {
+    func getAllRankedResources(requestPriority: RequestPriority, country: String?, language: String?, resouceType: ResourceType?) async throws -> [ResourceCodable] {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
@@ -86,18 +85,14 @@ final class PersonalizedToolsApi {
             resouceType: resouceType
         )
         
-        return requestSender
-            .sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
-            .decodeRequestDataResponseForSuccessCodable()
-            .map { (response: RequestCodableResponse<JsonApiResponseDataArray<ResourceCodable>, NoResponseCodable>) in
-                
-                let resources: [ResourceCodable] = response.successCodable?.dataArray ?? []
-                return resources
-            }
-            .eraseToAnyPublisher()
+        let response: RequestDataResponse = try await requestSender.sendDataTask(urlRequest: urlRequest, urlSession: urlSession)
+        
+        let codableResponse: RequestCodableResponse<JsonApiResponseDataArray<ResourceCodable>, NoResponseCodable> = try response.decodeRequestDataResponseForSuccessCodable()
+        
+        return codableResponse.successCodable?.dataArray ?? []
     }
     
-    func getDefaultOrderResourcesPublisher(requestPriority: RequestPriority, language: String?, resouceType: ResourceType?) -> AnyPublisher<[ResourceCodable], Error> {
+    func getDefaultOrderResources(requestPriority: RequestPriority, language: String?, resouceType: ResourceType?) async throws -> [ResourceCodable] {
         
         let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
         
@@ -107,14 +102,10 @@ final class PersonalizedToolsApi {
             resouceType: resouceType
         )
         
-        return requestSender
-            .sendDataTaskPublisher(urlRequest: urlRequest, urlSession: urlSession)
-            .decodeRequestDataResponseForSuccessCodable()
-            .map { (response: RequestCodableResponse<JsonApiResponseDataArray<ResourceCodable>, NoResponseCodable>) in
-                
-                let resources: [ResourceCodable] = response.successCodable?.dataArray ?? []
-                return resources
-            }
-            .eraseToAnyPublisher()
+        let response: RequestDataResponse = try await requestSender.sendDataTask(urlRequest: urlRequest, urlSession: urlSession)
+        
+        let codableResponse: RequestCodableResponse<JsonApiResponseDataArray<ResourceCodable>, NoResponseCodable> = try response.decodeRequestDataResponseForSuccessCodable()
+        
+        return codableResponse.successCodable?.dataArray ?? []
     }
 }

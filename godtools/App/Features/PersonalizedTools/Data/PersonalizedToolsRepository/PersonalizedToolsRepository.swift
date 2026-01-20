@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 import RequestOperation
 
 final class PersonalizedToolsRepository {
@@ -19,33 +18,30 @@ final class PersonalizedToolsRepository {
         self.api = api
     }
     
-    func getAllRankedResourcesPublisher(requestPriority: RequestPriority, country: String?, language: String?, resouceType: ResourceType?) -> AnyPublisher<[ResourceDataModel], Error> {
+    func getAllRankedResources(requestPriority: RequestPriority, country: String?, language: String?, resouceType: ResourceType?) async throws -> [ResourceDataModel] {
         
-        return api
-            .getAllRankedResourcesPublisher(requestPriority: requestPriority, country: country, language: language, resouceType: resouceType)
-            .map { (resourceCodables: [ResourceCodable]) in
-                
-                let dataModels: [ResourceDataModel] = resourceCodables.map {
-                    ResourceDataModel(interface: $0)
-                }
-                
-                return dataModels
-            }
-            .eraseToAnyPublisher()
+        let resources: [ResourceCodable] = try await api.getAllRankedResources(
+            requestPriority: requestPriority,
+            country: country,
+            language: language,
+            resouceType: resouceType
+        )
+        
+        return resources.map {
+            ResourceDataModel(interface: $0)
+        }
     }
     
-    func getDefaultOrderResourcesPublisher(requestPriority: RequestPriority, language: String?, resouceType: ResourceType?) -> AnyPublisher<[ResourceDataModel], Error> {
+    func getDefaultOrderResources(requestPriority: RequestPriority, language: String?, resouceType: ResourceType?) async throws -> [ResourceDataModel] {
         
-        return api
-            .getDefaultOrderResourcesPublisher(requestPriority: requestPriority, language: language, resouceType: resouceType)
-            .map { (resourceCodables: [ResourceCodable]) in
-                
-                let dataModels: [ResourceDataModel] = resourceCodables.map {
-                    ResourceDataModel(interface: $0)
-                }
-                
-                return dataModels
-            }
-            .eraseToAnyPublisher()
+        let resources: [ResourceCodable] = try await api.getDefaultOrderResources(
+            requestPriority: requestPriority,
+            language: language,
+            resouceType: resouceType
+        )
+        
+        return resources.map {
+            ResourceDataModel(interface: $0)
+        }
     }
 }
