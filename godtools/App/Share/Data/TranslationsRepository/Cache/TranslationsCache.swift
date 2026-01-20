@@ -26,12 +26,12 @@ class TranslationsCache: SwiftElseRealmPersistence<TranslationDataModel, Transla
     }
     
     @available(iOS 17.4, *)
-    override func getAnySwiftPersistence(swiftDatabase: SwiftDatabase) -> (any RepositorySyncPersistence<TranslationDataModel, TranslationCodable>)? {
+    override func getAnySwiftPersistence(swiftDatabase: SwiftDatabase) -> (any GTRepositorySyncPersistence<TranslationDataModel, TranslationCodable>)? {
         return getSwiftPersistence(swiftDatabase: swiftDatabase)
     }
     
     @available(iOS 17.4, *)
-    private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<TranslationDataModel, TranslationCodable, SwiftTranslation>? {
+    private func getSwiftPersistence() -> GTSwiftRepositorySyncPersistence<TranslationDataModel, TranslationCodable, SwiftTranslation>? {
         
         guard let swiftDatabase = super.getSwiftDatabase() else {
             return nil
@@ -41,13 +41,13 @@ class TranslationsCache: SwiftElseRealmPersistence<TranslationDataModel, Transla
     }
     
     @available(iOS 17.4, *)
-    private func getSwiftPersistence(swiftDatabase: SwiftDatabase) -> SwiftRepositorySyncPersistence<TranslationDataModel, TranslationCodable, SwiftTranslation>? {
+    private func getSwiftPersistence(swiftDatabase: SwiftDatabase) -> GTSwiftRepositorySyncPersistence<TranslationDataModel, TranslationCodable, SwiftTranslation>? {
         
         guard let swiftDatabase = super.getSwiftDatabase() else {
             return nil
         }
         
-        return SwiftRepositorySyncPersistence(
+        return GTSwiftRepositorySyncPersistence(
             swiftDatabase: swiftDatabase,
             dataModelMapping: SwiftTranslationDataModelMapping()
         )

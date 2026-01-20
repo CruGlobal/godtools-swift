@@ -1,5 +1,5 @@
 //
-//  RepositorySyncMapping.swift
+//  GTRepositorySyncMapping.swift
 //  godtools
 //
 //  Created by Levi Eggert on 7/30/25.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol RepositorySyncMapping<DataModelType, ExternalObjectType, PersistObjectType> {
+protocol GTRepositorySyncMapping<DataModelType, ExternalObjectType, PersistObjectType> {
         
     associatedtype DataModelType
     associatedtype ExternalObjectType

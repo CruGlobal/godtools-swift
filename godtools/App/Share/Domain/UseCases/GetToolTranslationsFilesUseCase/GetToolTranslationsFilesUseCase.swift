@@ -184,7 +184,7 @@ class GetToolTranslationsFilesUseCase {
         
         return languagesRepository
             .syncLanguagesFromRemote(requestPriority: requestPriority)
-            .flatMap({ (languagesResponse: RepositorySyncResponse<LanguageDataModel>) -> AnyPublisher<Void, Error> in
+            .flatMap({ (languagesResponse: GTRepositorySyncResponse<LanguageDataModel>) -> AnyPublisher<Void, Error> in
                 
                 self.syncResourcesPublisher(requestPriority: requestPriority, resourceNeeded: resourceNeeded)
                     .eraseToAnyPublisher()

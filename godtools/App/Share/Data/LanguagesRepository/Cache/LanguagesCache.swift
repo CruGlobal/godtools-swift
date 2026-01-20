@@ -20,12 +20,12 @@ class LanguagesCache: SwiftElseRealmPersistence<LanguageDataModel, LanguageCodab
     }
     
     @available(iOS 17.4, *)
-    override func getAnySwiftPersistence(swiftDatabase: SwiftDatabase) -> (any RepositorySyncPersistence<LanguageDataModel, LanguageCodable>)? {
+    override func getAnySwiftPersistence(swiftDatabase: SwiftDatabase) -> (any GTRepositorySyncPersistence<LanguageDataModel, LanguageCodable>)? {
         return getSwiftPersistence(swiftDatabase: swiftDatabase)
     }
     
     @available(iOS 17.4, *)
-    private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<LanguageDataModel, LanguageCodable, SwiftLanguage>? {
+    private func getSwiftPersistence() -> GTSwiftRepositorySyncPersistence<LanguageDataModel, LanguageCodable, SwiftLanguage>? {
         
         guard let swiftDatabase = super.getSwiftDatabase() else {
             return nil
@@ -35,13 +35,13 @@ class LanguagesCache: SwiftElseRealmPersistence<LanguageDataModel, LanguageCodab
     }
     
     @available(iOS 17.4, *)
-    private func getSwiftPersistence(swiftDatabase: SwiftDatabase) -> SwiftRepositorySyncPersistence<LanguageDataModel, LanguageCodable, SwiftLanguage>? {
+    private func getSwiftPersistence(swiftDatabase: SwiftDatabase) -> GTSwiftRepositorySyncPersistence<LanguageDataModel, LanguageCodable, SwiftLanguage>? {
         
         guard let swiftDatabase = super.getSwiftDatabase() else {
             return nil
         }
         
-        return SwiftRepositorySyncPersistence(
+        return GTSwiftRepositorySyncPersistence(
             swiftDatabase: swiftDatabase,
             dataModelMapping: SwiftLanguageDataModelMapping()
         )

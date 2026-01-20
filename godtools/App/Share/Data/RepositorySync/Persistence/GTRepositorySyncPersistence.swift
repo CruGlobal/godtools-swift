@@ -1,5 +1,5 @@
 //
-//  RepositorySyncPersistence.swift
+//  GTRepositorySyncPersistence.swift
 //  godtools
 //
 //  Created by Levi Eggert on 9/23/25.
@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-public protocol RepositorySyncPersistence<DataModelType, ExternalObjectType> {
+public protocol GTRepositorySyncPersistence<DataModelType, ExternalObjectType> {
     
     associatedtype DataModelType
     associatedtype ExternalObjectType

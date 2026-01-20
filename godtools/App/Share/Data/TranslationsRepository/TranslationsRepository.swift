@@ -11,11 +11,11 @@ import Combine
 import GodToolsShared
 import RequestOperation
 
-class TranslationsRepository: RepositorySync<TranslationDataModel, MobileContentTranslationsApi> {
+class TranslationsRepository: GTRepositorySync<TranslationDataModel, MobileContentTranslationsApi> {
     
     private let infoPlist: InfoPlist
     private let api: MobileContentTranslationsApi
-    private let realmPersistence: RealmRepositorySyncPersistence<TranslationDataModel, TranslationCodable, RealmTranslation>
+    private let realmPersistence: GTRealmRepositorySyncPersistence<TranslationDataModel, TranslationCodable, RealmTranslation>
     private let resourcesFileCache: ResourcesSHA256FileCache
     private let trackDownloadedTranslationsRepository: TrackDownloadedTranslationsRepository
     private let remoteConfigRepository: RemoteConfigRepository
@@ -31,7 +31,7 @@ class TranslationsRepository: RepositorySync<TranslationDataModel, MobileContent
         self.trackDownloadedTranslationsRepository = trackDownloadedTranslationsRepository
         self.remoteConfigRepository = remoteConfigRepository
         
-        let realmPersistence = RealmRepositorySyncPersistence<TranslationDataModel, TranslationCodable, RealmTranslation>(
+        let realmPersistence = GTRealmRepositorySyncPersistence<TranslationDataModel, TranslationCodable, RealmTranslation>(
             realmDatabase: realmDatabase,
             dataModelMapping: RealmTranslationDataModelMapping()
         )

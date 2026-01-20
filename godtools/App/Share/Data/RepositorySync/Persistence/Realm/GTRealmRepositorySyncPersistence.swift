@@ -1,5 +1,5 @@
 //
-//  RealmRepositorySyncPersistence.swift
+//  GTRealmRepositorySyncPersistence.swift
 //  godtools
 //
 //  Created by Levi Eggert on 9/23/25.
@@ -11,13 +11,13 @@ import RealmSwift
 import Combine
 import RepositorySync
 
-class RealmRepositorySyncPersistence<DataModelType, ExternalObjectType, PersistObjectType: IdentifiableRealmObject>: RepositorySyncPersistence {
+class GTRealmRepositorySyncPersistence<DataModelType, ExternalObjectType, PersistObjectType: IdentifiableRealmObject>: GTRepositorySyncPersistence {
     
-    private let dataModelMapping: any RepositorySyncMapping<DataModelType, ExternalObjectType, PersistObjectType>
+    private let dataModelMapping: any GTRepositorySyncMapping<DataModelType, ExternalObjectType, PersistObjectType>
     
     let realmDatabase: LegacyRealmDatabase
     
-    init(realmDatabase: LegacyRealmDatabase, dataModelMapping: any RepositorySyncMapping<DataModelType, ExternalObjectType, PersistObjectType>) {
+    init(realmDatabase: LegacyRealmDatabase, dataModelMapping: any GTRepositorySyncMapping<DataModelType, ExternalObjectType, PersistObjectType>) {
         
         self.realmDatabase = realmDatabase
         self.dataModelMapping = dataModelMapping
@@ -26,7 +26,7 @@ class RealmRepositorySyncPersistence<DataModelType, ExternalObjectType, PersistO
 
 // MARK: - Observe
 
-extension RealmRepositorySyncPersistence {
+extension GTRealmRepositorySyncPersistence {
     
     func observeCollectionChangesPublisher() -> AnyPublisher<Void, Never> {
         
@@ -49,7 +49,7 @@ extension RealmRepositorySyncPersistence {
 
 // MARK: Read
 
-extension RealmRepositorySyncPersistence {
+extension GTRealmRepositorySyncPersistence {
     
     func getObjectCount() -> Int {
         
@@ -129,7 +129,7 @@ extension RealmRepositorySyncPersistence {
 
 // MARK: - Write
 
-extension RealmRepositorySyncPersistence {
+extension GTRealmRepositorySyncPersistence {
     
     func writeObjects(externalObjects: [ExternalObjectType], deleteObjectsNotFoundInExternalObjects: Bool) -> [DataModelType] {
                 
@@ -202,7 +202,7 @@ extension RealmRepositorySyncPersistence {
 
 // MARK: - Delete
 
-extension RealmRepositorySyncPersistence {
+extension GTRealmRepositorySyncPersistence {
     
     func deleteAllObjects() {
         

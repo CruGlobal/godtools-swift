@@ -27,12 +27,12 @@ class TrackDownloadedTranslationsCache: SwiftElseRealmPersistence<DownloadedTran
     }
     
     @available(iOS 17.4, *)
-    override func getAnySwiftPersistence(swiftDatabase: SwiftDatabase) -> (any RepositorySyncPersistence<DownloadedTranslationDataModel, DownloadedTranslationDataModel>)? {
+    override func getAnySwiftPersistence(swiftDatabase: SwiftDatabase) -> (any GTRepositorySyncPersistence<DownloadedTranslationDataModel, DownloadedTranslationDataModel>)? {
         return getSwiftPersistence(swiftDatabase: swiftDatabase)
     }
     
     @available(iOS 17.4, *)
-    private func getSwiftPersistence() -> SwiftRepositorySyncPersistence<DownloadedTranslationDataModel, DownloadedTranslationDataModel, SwiftDownloadedTranslation>? {
+    private func getSwiftPersistence() -> GTSwiftRepositorySyncPersistence<DownloadedTranslationDataModel, DownloadedTranslationDataModel, SwiftDownloadedTranslation>? {
         
         guard let swiftDatabase = super.getSwiftDatabase() else {
             return nil
@@ -42,13 +42,13 @@ class TrackDownloadedTranslationsCache: SwiftElseRealmPersistence<DownloadedTran
     }
     
     @available(iOS 17.4, *)
-    private func getSwiftPersistence(swiftDatabase: SwiftDatabase) -> SwiftRepositorySyncPersistence<DownloadedTranslationDataModel, DownloadedTranslationDataModel, SwiftDownloadedTranslation>? {
+    private func getSwiftPersistence(swiftDatabase: SwiftDatabase) -> GTSwiftRepositorySyncPersistence<DownloadedTranslationDataModel, DownloadedTranslationDataModel, SwiftDownloadedTranslation>? {
         
         guard let swiftDatabase = super.getSwiftDatabase() else {
             return nil
         }
         
-        return SwiftRepositorySyncPersistence(
+        return GTSwiftRepositorySyncPersistence(
             swiftDatabase: swiftDatabase,
             dataModelMapping: SwiftDownloadedTranslationDataModelMapping()
         )
