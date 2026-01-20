@@ -9,11 +9,18 @@
 import Foundation
 
 struct ToolsInterfaceStringsDomainModel {
-    
+
     let favoritingToolBannerMessage: String
     let toolSpotlightTitle: String
     let toolSpotlightSubtitle: String
     let filterTitle: String
     let personalizedToolToggleTitle: String
     let allToolsToggleTitle: String
+    let personalizedToolExplanationTitle: String
+    let personalizedToolExplanationSubtitle: String
+    let changePersonalizedToolSettingsActionLabel: String
+
+    static var emptyValue: ToolsInterfaceStringsDomainModel {
+        ToolsInterfaceStringsDomainModel(favoritingToolBannerMessage: "", toolSpotlightTitle: "", toolSpotlightSubtitle: "", filterTitle: "", personalizedToolToggleTitle: "", allToolsToggleTitle: "", personalizedToolExplanationTitle: "", personalizedToolExplanationSubtitle: "", changePersonalizedToolSettingsActionLabel: "")
+    }
 }

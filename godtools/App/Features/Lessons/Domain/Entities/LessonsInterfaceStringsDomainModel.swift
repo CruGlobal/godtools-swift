@@ -9,10 +9,17 @@
 import Foundation
 
 struct LessonsInterfaceStringsDomainModel {
-    
+
     let title: String
     let subtitle: String
     let languageFilterTitle: String
     let personalizedToolToggleTitle: String
     let allLessonsToggleTitle: String
+    let personalizedLessonExplanationTitle: String
+    let personalizedLessonExplanationSubtitle: String
+    let changePersonalizedLessonSettingsActionLabel: String
+
+    static var emptyValue: LessonsInterfaceStringsDomainModel {
+        LessonsInterfaceStringsDomainModel(title: "", subtitle: "", languageFilterTitle: "", personalizedToolToggleTitle: "", allLessonsToggleTitle: "", personalizedLessonExplanationTitle: "", personalizedLessonExplanationSubtitle: "", changePersonalizedLessonSettingsActionLabel: "")
+    }
 }

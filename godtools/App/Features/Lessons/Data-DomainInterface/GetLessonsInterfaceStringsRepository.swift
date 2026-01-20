@@ -24,10 +24,13 @@ class GetLessonsInterfaceStringsRepository: GetLessonsInterfaceStringsRepository
         
         let interfaceStrings = LessonsInterfaceStringsDomainModel(
             title: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "lessons.pageTitle"),
-            subtitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "lessons.pageSubtitle"), 
+            subtitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "lessons.pageSubtitle"),
             languageFilterTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "lessons.languageFilter.title"),
             personalizedToolToggleTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "dashboard.personalizedToolToggle.personalizedTitle"),
-            allLessonsToggleTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "dashboard.personalizedToolToggle.allLessonsTitle")
+            allLessonsToggleTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "dashboard.personalizedToolToggle.allLessonsTitle"),
+            personalizedLessonExplanationTitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "dashboard.personalizedLessonFooter.title"),
+            personalizedLessonExplanationSubtitle: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "dashboard.personalizedLessonFooter.subtitle"),
+            changePersonalizedLessonSettingsActionLabel: localizationServices.stringForLocaleElseEnglish(localeIdentifier: localeId, key: "dashboard.personalizedToolFooter.buttonTitle")
         )
         
         return Just(interfaceStrings)

@@ -77,7 +77,7 @@ struct FavoritesView: View {
                         )
                         .padding([.top], 45)
                     }
-                    .padding([.bottom], DashboardView.scrollViewBottomSpacingToTabBar)
+                    .padding([.bottom], 30)
 
                 } refreshHandler: {
                     

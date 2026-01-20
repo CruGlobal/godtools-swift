@@ -13,7 +13,6 @@ struct DashboardView: View {
     static let navHeight: CGFloat = 44
     static let contentHorizontalInsets: CGFloat = 16
     static let toolCardVerticalSpacing: CGFloat = 15
-    static let scrollViewBottomSpacingToTabBar: CGFloat = 30
     
     private let navBarColor: Color = Color.white
         
