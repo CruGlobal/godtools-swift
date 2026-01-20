@@ -16,7 +16,7 @@ public protocol GTRepositorySyncPersistence<DataModelType, ExternalObjectType> {
     
     func observeCollectionChangesPublisher() -> AnyPublisher<Void, Never>
     func getObjectCount() -> Int
-    func getObject(id: String) -> DataModelType?
+    func getDataModelNonThrowing(id: String) -> DataModelType?
     func getObjects() -> [DataModelType]
     func getObjects(ids: [String]) -> [DataModelType]
     func writeObjects(externalObjects: [ExternalObjectType], deleteObjectsNotFoundInExternalObjects: Bool) -> [DataModelType]

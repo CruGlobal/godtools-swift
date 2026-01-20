@@ -56,7 +56,7 @@ extension GTRealmRepositorySyncPersistence {
         getNumberObjects(query: nil)
     }
     
-    func getObject(id: String) -> DataModelType? {
+    func getDataModelNonThrowing(id: String) -> DataModelType? {
         
         let realm: Realm = realmDatabase.openRealm()
         let realmObject: PersistObjectType? = realm.object(ofType: PersistObjectType.self, forPrimaryKey: id)

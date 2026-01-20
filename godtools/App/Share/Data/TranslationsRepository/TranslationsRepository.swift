@@ -246,7 +246,7 @@ extension TranslationsRepository {
                 
                 if shouldFallbackToLatestDownloadedTranslation, let resourceId = translation.resourceDataModel?.id, let languageId = translation.languageDataModel?.id, let latestTrackedDownloadedTranslation = self.trackDownloadedTranslationsRepository.cache.getLatestDownloadedTranslation(resourceId: resourceId, languageId: languageId) {
                     
-                    latestDownloadedTranslation = self.persistence.getObject(id: latestTrackedDownloadedTranslation.translationId)
+                    latestDownloadedTranslation = self.persistence.getDataModelNonThrowing(id: latestTrackedDownloadedTranslation.translationId)
                 }
                 else {
                     latestDownloadedTranslation = nil

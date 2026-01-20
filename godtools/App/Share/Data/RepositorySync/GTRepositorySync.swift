@@ -92,7 +92,7 @@ extension GTRepositorySync {
             dataModels = persistence.getObjects()
             
         case .object(let id):
-            if let dataModel = persistence.getObject(id: id) {
+            if let dataModel = persistence.getDataModelNonThrowing(id: id) {
                 dataModels = [dataModel]
             }
             else {

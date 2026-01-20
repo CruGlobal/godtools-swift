@@ -146,7 +146,7 @@ extension GTSwiftRepositorySyncPersistence {
         return getNumberOfObjects(query: query)
     }
     
-    func getObject(id: String) -> DataModelType? {
+    func getDataModelNonThrowing(id: String) -> DataModelType? {
         
         let idPredicate = #Predicate<PersistObjectType> { object in
             object.id == id

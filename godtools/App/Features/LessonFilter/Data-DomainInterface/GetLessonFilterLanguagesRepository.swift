@@ -55,7 +55,7 @@ class GetLessonFilterLanguagesRepository: GetLessonFilterLanguagesRepositoryInte
     func getLessonLanguageFilterFromLanguageId(languageId: String?, translatedInAppLanguage: AppLanguageDomainModel) -> LessonFilterLanguageDomainModel? {
         
         guard let languageId = languageId,
-              let language = languagesRepository.persistence.getObject(id: languageId)
+              let language = languagesRepository.persistence.getDataModelNonThrowing(id: languageId)
         else {
             return nil
         }

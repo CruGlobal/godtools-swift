@@ -39,7 +39,7 @@ class ToolDownloader {
             
             let isArticle: Bool
             
-            if let resource = resourcesRepository.persistence.getObject(id: tool.toolId) {
+            if let resource = resourcesRepository.persistence.getDataModelNonThrowing(id: tool.toolId) {
                 
                 if let resourceBanner = attachmentsRepository.cache.getAttachment(id: resource.attrBanner) {
                     attachments.append(resourceBanner)
@@ -130,7 +130,6 @@ class ToolDownloader {
                     .map { _ in
                         return Void()
                     }
-                    .setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             }
         
