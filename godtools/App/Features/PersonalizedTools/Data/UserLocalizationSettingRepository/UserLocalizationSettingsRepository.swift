@@ -1,5 +1,5 @@
 //
-//  UserLocalizationSettingRepository.swift
+//  UserLocalizationSettingsRepository.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 1/15/26.
@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class UserLocalizationSettingRepository {
+class UserLocalizationSettingsRepository {
 
     private let cache: RealmUserLocalizationSettingCache
 
