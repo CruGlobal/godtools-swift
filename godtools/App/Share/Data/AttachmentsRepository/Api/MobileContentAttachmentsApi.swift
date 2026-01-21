@@ -24,7 +24,19 @@ class MobileContentAttachmentsApi {
         baseUrl = config.getMobileContentApiBaseUrl()
     }
     
-    func getAttachmentFile(url: URL, requestPriority: RequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
+    func getAttachmentFile(url: URL, requestPriority: RequestPriority) async throws -> RequestDataResponse {
+        
+        let urlRequest: URLRequest = URLRequest(url: url)
+        
+        let urlSession: URLSession = urlSessionPriority.getURLSession(priority: requestPriority)
+        
+        return try await requestSender.sendDataTask(
+            urlRequest: urlRequest,
+            urlSession: urlSession
+        )
+    }
+    
+    func getAttachmentFilePublisher(url: URL, requestPriority: RequestPriority) -> AnyPublisher<RequestDataResponse, Error> {
         
         let urlRequest: URLRequest = URLRequest(url: url)
         
