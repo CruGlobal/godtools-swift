@@ -14,26 +14,23 @@ import UIKit
 @Suite(.serialized)
 class FileCacheTests {
     
-    private static let testsFileCacheRootDirectory: String = "tests_file_cache"
-    private static let tempDirectoryName: String = "temp_directory"
+    private let testsFileCacheRootDirectory: String = "tests_file_cache"
+    private let tempDirectoryName: String = "temp_directory"
     
     @Test("")
     func returnsRootDirectoryUrl() async throws {
         
-        let fileCache = Self.getTestsFileCache()
+        let fileCache = try getTestsFileCache()
         
-        switch fileCache.getRootDirectory() {
-        case .success(let url):
-            #expect(url.absoluteString.contains(Self.testsFileCacheRootDirectory))
-        case .failure(let error):
-            throw error
-        }
+        let url = try fileCache.getRootDirectory()
+        
+        #expect(url.absoluteString.contains(testsFileCacheRootDirectory))
     }
     
     @Test("")
     func returnsDirectoryUrl() async throws {
         
-        let fileCache = Self.getTestsFileCache()
+        let fileCache = try getTestsFileCache()
         let location = FileCacheLocation(relativeUrlString: Self.testsFileCacheRootDirectory)
         
         switch fileCache.getDirectory(location: location) {
@@ -47,7 +44,7 @@ class FileCacheTests {
     @Test("")
     func isDirectory() async throws {
         
-        let fileCache = Self.getTestsFileCache()
+        let fileCache = try getTestsFileCache()
         let rootDirectoryUrl: URL
         
         switch fileCache.getRootDirectory() {
@@ -74,7 +71,7 @@ class FileCacheTests {
     @Test("")
     func isNotDirectory() async throws {
         
-        let fileCache = Self.getTestsFileCache()
+        let fileCache = try getTestsFileCache()
         let rootDirectoryUrl: URL
         
         switch fileCache.getRootDirectory() {
@@ -94,7 +91,7 @@ class FileCacheTests {
     @Test("")
     func isFile() async throws {
         
-        let fileCache = Self.getTestsFileCache()
+        let fileCache = try getTestsFileCache()
         
         switch fileCache.getRootDirectory() {
         case .success( _):
@@ -137,7 +134,7 @@ class FileCacheTests {
     @Test("")
     func removeDirectory() async throws {
         
-        let fileCache = Self.getTestsFileCache()
+        let fileCache = try getTestsFileCache()
         let rootDirectoryUrl: URL
         
         switch fileCache.getRootDirectory() {
@@ -168,7 +165,7 @@ class FileCacheTests {
     @Test("")
     func removeFile() async throws {
         
-        let fileCache = Self.getTestsFileCache()
+        let fileCache = try getTestsFileCache()
         
         switch fileCache.getRootDirectory() {
         case .success( _):
@@ -211,7 +208,7 @@ class FileCacheTests {
     @Test("")
     func getData() async throws {
         
-        let fileCache = Self.getTestsFileCache()
+        let fileCache = try getTestsFileCache()
         
         switch fileCache.getRootDirectory() {
         case .success( _):
@@ -243,7 +240,7 @@ class FileCacheTests {
     @Test("")
     func moveContentsOfDirectoryToDirectory() async throws {
         
-        let fileCache = Self.getTestsFileCache()
+        let fileCache = try getTestsFileCache()
         let rootDirectoryUrl: URL
         
         switch fileCache.getRootDirectory() {
@@ -343,7 +340,7 @@ class FileCacheTests {
     @Test("")
     func moveContentsOfChildDirectoryToParentDirectory() async throws {
         
-        let fileCache = Self.getTestsFileCache()
+        let fileCache = try getTestsFileCache()
         let rootDirectoryUrl: URL
         
         switch fileCache.getRootDirectory() {
@@ -451,7 +448,7 @@ class FileCacheTests {
     @Test("")
     func moveContentsOfChildDirectoryToParentDirectoryFailsWhenMoreContentsThanSingleDirectory() async throws {
         
-        let fileCache = Self.getTestsFileCache()
+        let fileCache = try getTestsFileCache()
         let rootDirectoryUrl: URL
         
         switch fileCache.getRootDirectory() {
@@ -572,7 +569,7 @@ class FileCacheTests {
     @Test("")
     func getUIImage() async throws {
         
-        let fileCache = Self.getTestsFileCache()
+        let fileCache = try getTestsFileCache()
         
         switch fileCache.getRootDirectory() {
         case .success( _):
@@ -606,7 +603,7 @@ class FileCacheTests {
     @Test("")
     func getImage() async throws {
         
-        let fileCache = Self.getTestsFileCache()
+        let fileCache = try getTestsFileCache()
         
         switch fileCache.getRootDirectory() {
         case .success( _):
@@ -640,12 +637,12 @@ class FileCacheTests {
 
 extension FileCacheTests {
     
-    private static func getTestsFileCache() -> FileCache {
-        Self.clearTestsFileCache()
-        return FileCache(rootDirectory: Self.testsFileCacheRootDirectory)
-    }
-    
-    private static func clearTestsFileCache() {
-        _ = FileCache(rootDirectory: Self.testsFileCacheRootDirectory).removeRootDirectory()
+    private func getTestsFileCache() throws -> FileCache {
+        
+        try FileCache(rootDirectory: testsFileCacheRootDirectory).removeRootDirectory()
+        
+        return FileCache(
+            rootDirectory: testsFileCacheRootDirectory
+        )
     }
 }

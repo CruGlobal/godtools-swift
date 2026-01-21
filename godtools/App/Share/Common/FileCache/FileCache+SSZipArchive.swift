@@ -12,82 +12,69 @@ import Combine
 
 extension FileCache {
     
-    func decompressZipFileAndStoreFileContents(zipFileData: Data) -> Result<[FileCacheLocation], Error> {
+    func decompressZipFileAndStoreFileContents(zipFileData: Data) throws -> [FileCacheLocation] {
         
-        switch getRootDirectory() {
+        let rootDirectory = try getRootDirectory()
         
-        case .success(let rootDirectory):
-            return decompressZipFileAndStoreFileContentsAtDirectory(directory: rootDirectory, zipFileData: zipFileData)
-        
-        case .failure(let error):
-            return .failure(error)
-        }
+        return try decompressZipFileAndStoreFileContentsAtDirectory(
+            directory: rootDirectory,
+            zipFileData: zipFileData
+        )
     }
     
-    func decompressZipFileAndStoreFileContentsPublisher(zipFileData: Data) -> AnyPublisher<[FileCacheLocation], Error> {
-        
-        switch decompressZipFileAndStoreFileContents(zipFileData: zipFileData) {
-        
-        case .success(let fileCacheLocations):
-            return Just(fileCacheLocations).setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
-        
-        case .failure(let error):
-            return Fail(error: error)
-                .eraseToAnyPublisher()
-        }
-    }
-    
-    func decompressZipFileAndStoreFileContentsAtDirectory(directory: URL, zipFileData: Data) -> Result<[FileCacheLocation], Error> {
+    func decompressZipFileAndStoreFileContentsAtDirectory(directory: URL, zipFileData: Data) throws -> [FileCacheLocation] {
         
         let contentsTempDirectory: URL = directory.appendingPathComponent("temp_directory_" + UUID().uuidString)
                 
-        switch createDirectoryIfNotExists(directoryUrl: contentsTempDirectory) {
-        case .success( _):
-            break
-        case .failure(let error):
-            return .failure(error)
-        }
+        _ = try createDirectoryIfNotExists(directoryUrl: contentsTempDirectory)
         
         let zipFile: URL = contentsTempDirectory.appendingPathComponent("contents.zip")
                                              
         // create zip file inside contents temp directory
         if !fileManager.createFile(atPath: zipFile.path, contents: zipFileData, attributes: nil) {
-            return .failure(NSError(domain: errorDomain, code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to create zip file at url: \(zipFile.absoluteString)"]))
+            
+            let error = NSError(
+                domain: errorDomain,
+                code: -1,
+                userInfo: [NSLocalizedDescriptionKey: "Failed to create zip file at url: \(zipFile.absoluteString)"]
+            )
+            
+            throw error
         }
          
         // unzip contents of zipfile into contents temp directory
         if !SSZipArchive.unzipFile(atPath: zipFile.path, toDestination: contentsTempDirectory.path) {
-            return .failure(NSError(domain: errorDomain, code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to unzip file at url: \(zipFile.absoluteString)"]))
+        
+            let error = NSError(
+                domain: errorDomain,
+                code: -1,
+                userInfo: [NSLocalizedDescriptionKey: "Failed to unzip file at url: \(zipFile.absoluteString)"]
+            )
+            
+            throw error
         }
         
         // delete zipfile inside contents directory because contents were unzipped and it is no longer needed
-        do {
-            try fileManager.removeItem(at: zipFile)
-        }
-        catch let error {
-            return .failure(error)
-        }
+        try fileManager.removeItem(at: zipFile)
         
         // check if unzipped contents contains single directory and move those items up
-        let moveError: Error? = moveChildDirectoryContentsIntoParent(parentDirectory: contentsTempDirectory)
-        if let moveError = moveError {
-            return .failure(moveError)
-        }
+        try moveChildDirectoryContentsIntoParent(parentDirectory: contentsTempDirectory)
         
         // get zipfile contents
         let zipFileContents: [URL]
         
-        do {
-            let contents: [String] = try fileManager.contentsOfDirectory(atPath: contentsTempDirectory.path)
-            zipFileContents = contents.compactMap({URL(string: $0)})
-        }
-        catch let error {
-            return .failure(error)
-        }
+        let contents: [String] = try fileManager.contentsOfDirectory(atPath: contentsTempDirectory.path)
+        zipFileContents = contents.compactMap({URL(string: $0)})
         
         guard !zipFileContents.isEmpty else {
-            return .failure(NSError(domain: errorDomain, code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to unzip contents because no files exist."]))
+            
+            let error = NSError(
+                domain: errorDomain,
+                code: -1,
+                userInfo: [NSLocalizedDescriptionKey: "Failed to unzip contents because no files exist."]
+            )
+            
+            throw error
         }
         
         var storedFileLocations: [FileCacheLocation] = Array()
@@ -104,25 +91,15 @@ extension FileCache {
             let relativeUrlString: String = fileUrl.path
             
             let location: FileCacheLocation = FileCacheLocation(relativeUrlString: relativeUrlString)
-                    
-            switch storeFile(location: location, data: data) {
             
-            case .success( _):
-                storedFileLocations.append(location)
+            _ = try storeFile(location: location, data: data)
             
-            case .failure(let error):
-                return .failure(error)
-            }
+            storedFileLocations.append(location)
         }
         
         // delete zipFile temp directory
-        do {
-            try fileManager.removeItem(at: contentsTempDirectory)
-        }
-        catch let error {
-            return .failure(error)
-        }
+        try fileManager.removeItem(at: contentsTempDirectory)
         
-        return .success(storedFileLocations)
+        return storedFileLocations
     }
 }
