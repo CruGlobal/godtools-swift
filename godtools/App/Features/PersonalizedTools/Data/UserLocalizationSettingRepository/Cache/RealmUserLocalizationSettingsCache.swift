@@ -1,5 +1,5 @@
 //
-//  RealmUserLocalizationSettingCache.swift
+//  RealmUserLocalizationSettingsCache.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 1/15/26.
@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import Combine
 
-class RealmUserLocalizationSettingCache {
+class RealmUserLocalizationSettingsCache {
 
     private let realmDatabase: LegacyRealmDatabase
 
@@ -18,11 +18,11 @@ class RealmUserLocalizationSettingCache {
         self.realmDatabase = realmDatabase
     }
 
-    func storeUserLocalizationSetting(dataModel: UserLocalizationSettingDataModel) {
+    func storeUserLocalizationSetting(dataModel: UserLocalizationSettingsDataModel) {
 
         let realm: Realm = realmDatabase.openRealm()
 
-        let realmSetting = RealmUserLocalizationSetting()
+        let realmSetting = RealmUserLocalizationSettings()
         realmSetting.mapFrom(dataModel: dataModel)
 
         do {
@@ -35,18 +35,18 @@ class RealmUserLocalizationSettingCache {
         }
     }
 
-    func getUserLocalizationSetting() -> UserLocalizationSettingDataModel? {
+    func getUserLocalizationSetting() -> UserLocalizationSettingsDataModel? {
 
         let realm: Realm = realmDatabase.openRealm()
 
-        guard let realmSetting = realm.object(ofType: RealmUserLocalizationSetting.self, forPrimaryKey: RealmUserLocalizationSetting.primaryKeyValue) else {
+        guard let realmSetting = realm.object(ofType: RealmUserLocalizationSettings.self, forPrimaryKey: RealmUserLocalizationSettings.primaryKeyValue) else {
             return nil
         }
 
-        return UserLocalizationSettingDataModel(realmObject: realmSetting)
+        return UserLocalizationSettingsDataModel(realmObject: realmSetting)
     }
 
-    func getUserLocalizationSettingPublisher() -> AnyPublisher<UserLocalizationSettingDataModel?, Never> {
+    func getUserLocalizationSettingPublisher() -> AnyPublisher<UserLocalizationSettingsDataModel?, Never> {
 
         return Just(getUserLocalizationSetting())
             .eraseToAnyPublisher()

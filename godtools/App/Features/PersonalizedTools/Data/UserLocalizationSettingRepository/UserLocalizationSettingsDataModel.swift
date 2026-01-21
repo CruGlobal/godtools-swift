@@ -1,5 +1,5 @@
 //
-//  UserLocalizationSettingDataModel.swift
+//  UserLocalizationSettingsDataModel.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 1/15/26.
@@ -8,19 +8,19 @@
 
 import Foundation
 
-struct UserLocalizationSettingDataModel {
+struct UserLocalizationSettingsDataModel {
 
     let id: String
     let createdAt: Date
     let selectedCountryIsoRegionCode: String
 
     init(selectedCountryIsoRegionCode: String) {
-        self.id = RealmUserLocalizationSetting.primaryKeyValue
+        self.id = RealmUserLocalizationSettings.primaryKeyValue
         self.createdAt = Date()
         self.selectedCountryIsoRegionCode = selectedCountryIsoRegionCode
     }
 
-    init(realmObject: RealmUserLocalizationSetting) {
+    init(realmObject: RealmUserLocalizationSettings) {
         self.id = realmObject.id
         self.createdAt = realmObject.createdAt
         self.selectedCountryIsoRegionCode = realmObject.selectedCountryIsoRegionCode

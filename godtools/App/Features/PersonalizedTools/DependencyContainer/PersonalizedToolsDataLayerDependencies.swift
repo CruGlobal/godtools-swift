@@ -38,7 +38,7 @@ class PersonalizedToolsDataLayerDependencies {
     func getUserLocalizationSettingsRepository() -> UserLocalizationSettingsRepository {
 
         return UserLocalizationSettingsRepository(
-            cache: RealmUserLocalizationSettingCache(realmDatabase: coreDataLayer.getSharedLegacyRealmDatabase())
+            cache: RealmUserLocalizationSettingsCache(realmDatabase: coreDataLayer.getSharedLegacyRealmDatabase())
         )
     }
 }

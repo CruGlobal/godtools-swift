@@ -11,22 +11,22 @@ import Combine
 
 class UserLocalizationSettingsRepository {
 
-    private let cache: RealmUserLocalizationSettingCache
+    private let cache: RealmUserLocalizationSettingsCache
 
-    init(cache: RealmUserLocalizationSettingCache) {
+    init(cache: RealmUserLocalizationSettingsCache) {
         self.cache = cache
     }
 
     func setCountryPublisher(isoRegionCode: String) -> AnyPublisher<String, Never> {
 
-        let dataModel = UserLocalizationSettingDataModel(selectedCountryIsoRegionCode: isoRegionCode)
+        let dataModel = UserLocalizationSettingsDataModel(selectedCountryIsoRegionCode: isoRegionCode)
         cache.storeUserLocalizationSetting(dataModel: dataModel)
 
         return Just(isoRegionCode)
             .eraseToAnyPublisher()
     }
 
-    func getUserLocalizationSettingPublisher() -> AnyPublisher<UserLocalizationSettingDataModel?, Never> {
+    func getUserLocalizationSettingPublisher() -> AnyPublisher<UserLocalizationSettingsDataModel?, Never> {
         return cache.getUserLocalizationSettingPublisher()
     }
 }

@@ -1,5 +1,5 @@
 //
-//  RealmUserLocalizationSetting.swift
+//  RealmUserLocalizationSettings.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 1/15/26.
@@ -9,11 +9,11 @@
 import Foundation
 import RealmSwift
 
-class RealmUserLocalizationSetting: Object {
+class RealmUserLocalizationSettings: Object {
 
     static let primaryKeyValue: String = "user"
 
-    @Persisted var id: String = RealmUserLocalizationSetting.primaryKeyValue
+    @Persisted var id: String = RealmUserLocalizationSettings.primaryKeyValue
     @Persisted var createdAt: Date = Date()
     @Persisted var selectedCountryIsoRegionCode: String = ""
 
@@ -21,7 +21,7 @@ class RealmUserLocalizationSetting: Object {
         return "id"
     }
 
-    func mapFrom(dataModel: UserLocalizationSettingDataModel) {
+    func mapFrom(dataModel: UserLocalizationSettingsDataModel) {
         id = dataModel.id
         createdAt = dataModel.createdAt
         selectedCountryIsoRegionCode = dataModel.selectedCountryIsoRegionCode
