@@ -10,32 +10,37 @@ import SwiftUI
 
 struct PersonalizedToolToggle: View {
 
-    @Binding private var selectedIndex: Int
-    private let items: [String]
+    static let height: CGFloat = 38
+    
+    private let toggleOptions: [PersonalizationToggleOption]
+    private let font: Font = FontLibrary.sfProTextRegular.font(size: 14)
+    private let borderWidth: CGFloat = 1
+    
+    @Binding private var selectedToggle: PersonalizationToggleOptionValue
 
-    init(selectedIndex: Binding<Int>, items: [String]) {
-        
-        self._selectedIndex = selectedIndex
-        self.items = items
+    init(selectedToggle: Binding<PersonalizationToggleOptionValue>, toggleOptions: [PersonalizationToggleOption]) {
+
+        self._selectedToggle = selectedToggle
+        self.toggleOptions = toggleOptions
     }
 
     var body: some View {
 
         EqualWidthHStack(spacing: 0) {
 
-            ForEach(items.indices, id: \.self) { index in
+            ForEach(toggleOptions.indices, id: \.self) { index in
 
                 Button {
-                    selectedIndex = index
+                    selectedToggle = toggleOptions[index].selection
                 } label: {
 
-                    Text(items[index])
-                        .font(FontLibrary.sfProTextRegular.font(size: 12))
-                        .foregroundColor(selectedIndex == index ? .white : ColorPalette.gtBlue.color)
+                    Text(toggleOptions[index].title)
+                        .font(font)
+                        .foregroundColor(selectedToggle == toggleOptions[index].selection ? .white : ColorPalette.gtBlue.color)
                         .frame(maxWidth: .infinity)
-                        .padding(.vertical, 8)
+                        .frame(height: Self.height - (borderWidth * 1))
                         .padding(.horizontal, 16)
-                        .background(selectedIndex == index ? ColorPalette.gtBlue.color : Color.clear)
+                        .background(selectedToggle == toggleOptions[index].selection ? ColorPalette.gtBlue.color : Color.clear)
                 }
             }
         }

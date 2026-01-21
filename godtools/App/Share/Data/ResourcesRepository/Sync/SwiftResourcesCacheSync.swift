@@ -227,7 +227,7 @@ class SwiftResourcesCacheSync {
                 
                 try swiftDatabase
                     .write
-                    .objects(
+                    .context(
                         context: context,
                         writeObjects: WriteSwiftObjects(
                             deleteObjects: objectsToRemove,

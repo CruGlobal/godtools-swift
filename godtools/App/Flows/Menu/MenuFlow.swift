@@ -12,7 +12,7 @@ import SwiftUI
 import Combine
 
 class MenuFlow: Flow {
-    
+        
     private var tutorialFlow: TutorialFlow?
     private var languageSettingsFlow: LanguageSettingsFlow?
     private var cancellables: Set<AnyCancellable> = Set()
@@ -25,7 +25,7 @@ class MenuFlow: Flow {
     let appDiContainer: AppDiContainer
     let navigationController: AppNavigationController
     
-    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer) {
+    init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, initialNavigationStep: FlowStep? = nil) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
@@ -65,6 +65,10 @@ class MenuFlow: Flow {
                 self?.viewShareGodToolsDomainModel = domainModel
             }
             .store(in: &cancellables)
+        
+        if let initialNavigationStep = initialNavigationStep {
+            navigate(step: initialNavigationStep)
+        }
     }
     
     deinit {
