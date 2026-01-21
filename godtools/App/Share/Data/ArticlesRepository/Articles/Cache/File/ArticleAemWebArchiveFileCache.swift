@@ -16,19 +16,22 @@ class ArticleAemWebArchiveFileCache: FileCache {
                 
         super.init(rootDirectory: ArticleAemWebArchiveFileCache.rootDirectoryName)
         
-        deleteLegacyArticlesDirectory()
+        do {
+            try deleteLegacyArticlesDirectory()
+        }
+        catch let error {
+            assertionFailure("Failed to delete legacy articles directory.")
+        }
     }
     
-    private func deleteLegacyArticlesDirectory() {
+    private func deleteLegacyArticlesDirectory() throws {
                 
         let legacyDirectoryName: String = "articles_webarchives"
         
-        switch getUserDocumentsDirectory() {
-        case .success(let documentsDirectory):
-            let legacyDirectory: URL = documentsDirectory.appendingPathComponent(legacyDirectoryName)
-            _ = removeItem(url: legacyDirectory)
-        case .failure( _):
-            break
-        }
+        let documentsDirectory = try getUserDocumentsDirectory()
+        
+        let legacyDirectory: URL = documentsDirectory.appendingPathComponent(legacyDirectoryName)
+        
+        _ = try removeItem(url: legacyDirectory)
     }
 }
