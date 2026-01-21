@@ -22,7 +22,8 @@ class GetToolDetailsMediaRepository: GetToolDetailsMediaRepositoryInterface {
     
     func getMediaPublisher(toolId: String) -> AnyPublisher<ToolDetailsMediaDomainModel, Never> {
                 
-        guard let resource = resourcesRepository.persistence.getObject(id: toolId) else {
+        guard let resource = resourcesRepository.persistence.getDataModelNonThrowing(id: toolId) else {
+            
             return Just(.empty)
                 .eraseToAnyPublisher()
         }

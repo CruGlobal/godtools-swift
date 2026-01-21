@@ -126,10 +126,13 @@ class ToolDownloader {
         
         let downloadAttachmentsRequests: [AnyPublisher<Void, Error>] = attachments
             .map { (attachment: AttachmentDataModel) in
-                self.attachmentsRepository.downloadAndCacheAttachmentDataIfNeededPublisher(attachment: attachment, requestPriority: requestPriority)
+                
+                self.attachmentsRepository
+                    .downloadAndCacheAttachmentDataIfNeededPublisher(attachment: attachment, requestPriority: requestPriority)
                     .map { _ in
                         return Void()
                     }
+                    .setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             }
         
