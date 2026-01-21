@@ -98,7 +98,7 @@ extension AttachmentsRepository {
                 .eraseToAnyPublisher()
         }
         
-        return externalDataFetch.getAttachmentFile(url: remoteUrl, requestPriority: requestPriority)
+        return externalDataFetch.getAttachmentFilePublisher(url: remoteUrl, requestPriority: requestPriority)
             .flatMap({ (response: RequestDataResponse) -> AnyPublisher<StoredAttachmentDataModel?, Never> in
                 
                 return self.cache.storeAttachmentDataPublisher(
