@@ -11,9 +11,9 @@ import Combine
 
 class GetLocalizationSettingsCountryListUseCase {
     
-    private let countriesRepository: LocalizationSettingsCountriesRepository
-    
-    init(countriesRepository: LocalizationSettingsCountriesRepository) {
+    private let countriesRepository: LocalizationSettingsCountriesRepositoryInterface
+
+    init(countriesRepository: LocalizationSettingsCountriesRepositoryInterface) {
         self.countriesRepository = countriesRepository
     }
     

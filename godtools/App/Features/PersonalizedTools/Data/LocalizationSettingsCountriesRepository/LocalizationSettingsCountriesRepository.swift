@@ -9,10 +9,10 @@
 import Foundation
 import Combine
 
-class LocalizationSettingsCountriesRepository {
+class LocalizationSettingsCountriesRepository: LocalizationSettingsCountriesRepositoryInterface {
 
     init() {
-        
+
     }
 
     func getCountriesPublisher(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[LocalizationSettingsCountryDataModel], Never> {

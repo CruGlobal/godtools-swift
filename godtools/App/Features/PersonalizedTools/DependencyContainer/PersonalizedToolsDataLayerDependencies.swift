@@ -17,7 +17,7 @@ class PersonalizedToolsDataLayerDependencies {
         self.coreDataLayer = coreDataLayer
     }
     
-    func getLocalizationSettingsCountriesRepository() -> LocalizationSettingsCountriesRepository {
+    func getLocalizationSettingsCountriesRepository() -> LocalizationSettingsCountriesRepositoryInterface {
 
         return LocalizationSettingsCountriesRepository()
     }
