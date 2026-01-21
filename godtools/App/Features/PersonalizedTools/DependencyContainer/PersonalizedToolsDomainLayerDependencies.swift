@@ -38,6 +38,13 @@ class PersonalizedToolsDomainLayerDependencies {
             localizationServices: coreDataLayer.getLocalizationServices()
         )
     }
+    
+    func getGetLocalizationSettingsUseCase() -> GetLocalizationSettingsUseCase {
+
+        return GetLocalizationSettingsUseCase(
+            userLocalizationSettingsRepository: dataLayer.getUserLocalizationSettingsRepository()
+        )
+    }
 
     func getSetLocalizationSettingsUseCase() -> SetLocalizationSettingsUseCase {
 
