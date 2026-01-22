@@ -350,8 +350,11 @@ extension TranslationsRepository {
                     .collect()
                     .flatMap({ (files: [FileCacheLocation]) -> AnyPublisher<TranslationFilesDataModel, Error> in
                         
-                        return self.didDownloadTranslationAndRelatedFiles(translation: translation, files: files)
-                            .eraseToAnyPublisher()
+                        return self.didDownloadTranslationAndRelatedFilesPublisher(
+                            translation: translation,
+                            files: files
+                        )
+                        .eraseToAnyPublisher()
                     })
                     .eraseToAnyPublisher()
             })
@@ -410,8 +413,12 @@ extension TranslationsRepository {
         return api.getTranslationFile(fileName: fileName, requestPriority: requestPriority)
             .flatMap({ (response: RequestDataResponse) -> AnyPublisher<FileCacheLocation, Error> in
                 
-                return self.resourcesFileCache.storeTranslationFile(translationId: translation.id, fileName: fileName, fileData: response.data)
-                    .eraseToAnyPublisher()
+                return self.resourcesFileCache.storeTranslationFilePublisher(
+                    translationId: translation.id,
+                    fileName: fileName,
+                    fileData: response.data
+                )
+                .eraseToAnyPublisher()
             })
             .flatMap({ fileLocation -> AnyPublisher<FileCacheLocation, Error> in
                 
@@ -426,11 +433,18 @@ extension TranslationsRepository {
         return api.getTranslationZipFile(translationId: translation.id, requestPriority: requestPriority)
             .flatMap({ (response: RequestDataResponse) -> AnyPublisher<TranslationFilesDataModel, Error> in
                 
-                return self.resourcesFileCache.storeTranslationZipFile(translationId: translation.id, zipFileData: response.data)
-                    .flatMap({ files -> AnyPublisher<TranslationFilesDataModel, Error> in
+                return self.resourcesFileCache
+                    .storeTranslationZipFilePublisher(
+                        translationId: translation.id,
+                        zipFileData: response.data
+                    )
+                    .flatMap({ (files: [FileCacheLocation]) -> AnyPublisher<TranslationFilesDataModel, Error> in
                         
-                        return self.didDownloadTranslationAndRelatedFiles(translation: translation, files: files)
-                            .eraseToAnyPublisher()
+                        return self.didDownloadTranslationAndRelatedFilesPublisher(
+                            translation: translation,
+                            files: files
+                        )
+                        .eraseToAnyPublisher()
                     })
                     .eraseToAnyPublisher()
             })
@@ -442,7 +456,7 @@ extension TranslationsRepository {
 
 extension TranslationsRepository {
     
-    private func didDownloadTranslationAndRelatedFiles(translation: TranslationDataModel, files: [FileCacheLocation]) -> AnyPublisher<TranslationFilesDataModel, Error> {
+    private func didDownloadTranslationAndRelatedFilesPublisher(translation: TranslationDataModel, files: [FileCacheLocation]) -> AnyPublisher<TranslationFilesDataModel, Error> {
         
         return trackDownloadedTranslationsRepository.cache.trackTranslationDownloaded(translation: translation)
             .flatMap({ translationId -> AnyPublisher<TranslationFilesDataModel, Error> in

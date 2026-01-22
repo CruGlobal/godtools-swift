@@ -76,21 +76,14 @@ extension AttachmentsCache {
         }
         else {
             
-            switch resourcesFileCache.getData(location: fileCacheLocation) {
-            
-            case .success(let data):
-                imageData = data
-            
-            case .failure( _):
-                imageData = nil
-            }
+            imageData = try resourcesFileCache.getData(location: fileCacheLocation)
         }
         
         let storedAttachment: StoredAttachmentDataModel?
         
         if let imageData = imageData {
             
-            storedAttachment = StoredAttachmentDataModel(
+            storedAttachment = try StoredAttachmentDataModel(
                 data: imageData,
                 fileCacheLocation: fileCacheLocation,
                 resourcesFileCache: resourcesFileCache
@@ -107,15 +100,24 @@ extension AttachmentsCache {
         )
     }
     
-    func getAttachmentPublisher(id: String) -> AnyPublisher<AttachmentDataModel?, Never> {
+    func getAttachmentPublisher(id: String) -> AnyPublisher<AttachmentDataModel?, Error> {
         
-        let attachment: AttachmentDataModel? = getAttachment(id: id)
+        let attachment: AttachmentDataModel?
+        
+        do {
+            attachment = try getAttachment(id: id)
+        }
+        catch let error {
+            return Fail(error: error)
+                .eraseToAnyPublisher()
+        }
         
         return Just(attachment)
+            .setFailureType(to: Error.self)
             .eraseToAnyPublisher()
     }
     
-    func storeAttachmentDataPublisher(attachment: AttachmentDataModel, data: Data) -> AnyPublisher<StoredAttachmentDataModel?, Never> {
+    func storeAttachmentDataPublisher(attachment: AttachmentDataModel, data: Data) -> AnyPublisher<StoredAttachmentDataModel, Error> {
         
         let resourcesFileCache: ResourcesSHA256FileCache = self.resourcesFileCache
         
@@ -124,18 +126,13 @@ extension AttachmentsCache {
             fileName: attachment.sha256,
             fileData: data
         )
-        .map { (location: FileCacheLocation) in
+        .tryMap { (location: FileCacheLocation) in
             
-            StoredAttachmentDataModel(
+            return try StoredAttachmentDataModel(
                 data: data,
                 fileCacheLocation: location,
                 resourcesFileCache: resourcesFileCache
             )
-        }
-        .catch { _ in
-            
-            return Just(nil)
-                .eraseToAnyPublisher()
         }
         .eraseToAnyPublisher()
     }
