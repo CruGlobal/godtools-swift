@@ -17,12 +17,12 @@ class UserLocalizationSettingsRepository {
         self.cache = cache
     }
 
-    func setCountryPublisher(isoRegionCode: String) -> AnyPublisher<String, Never> {
+    func setCountryPublisher(isoRegionCode: String) -> AnyPublisher<UserLocalizationSettingsDataModel, Never> {
 
         let dataModel = UserLocalizationSettingsDataModel(selectedCountryIsoRegionCode: isoRegionCode)
         cache.storeUserLocalizationSetting(dataModel: dataModel)
 
-        return Just(isoRegionCode)
+        return Just(dataModel)
             .eraseToAnyPublisher()
     }
 
