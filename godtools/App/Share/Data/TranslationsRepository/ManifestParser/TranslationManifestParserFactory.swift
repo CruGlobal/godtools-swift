@@ -23,15 +23,17 @@ class TranslationManifestParserFactory: IosXmlPullParserFactory {
     override func openFile(fileName: String) -> Data? {
                 
         let location = FileCacheLocation(relativeUrlString: fileName)
-                
-        let result = resourcesFileCache.getData(location: location)
         
-        switch result {
+        do {
         
-        case .success(let data):
-            return data
+            let data: Data? = try resourcesFileCache.getData(location: location)
             
-        case .failure( _):
+            return data
+        }
+        catch let error {
+            
+            assertionFailure("TranslationManifestParserFactory Failed to open file with error: \(error)")
+            
             return nil
         }
     }

@@ -44,7 +44,7 @@ class AttachmentsCache {
 
 extension AttachmentsCache {
     
-    func getAttachment(id: String) -> AttachmentDataModel? {
+    func getAttachment(id: String) throws -> AttachmentDataModel? {
             
         let cachedAttachment: AttachmentDataModelInterface?
         

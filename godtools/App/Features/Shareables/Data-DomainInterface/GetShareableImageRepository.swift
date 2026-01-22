@@ -20,7 +20,7 @@ class GetShareableImageRepository {
         self.resourcesFileCache = resourcesFileCache
     }
     
-    func getImagePublisher(shareable: ShareableDomainModel) throws -> ShareableImageDomainModel? {
+    func getImageDomainModel(shareable: ShareableDomainModel) throws -> ShareableImageDomainModel? {
         
         guard !shareable.imageName.isEmpty else {
             return nil

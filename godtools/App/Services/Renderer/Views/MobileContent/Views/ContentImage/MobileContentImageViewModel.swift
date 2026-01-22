@@ -23,12 +23,12 @@ class MobileContentImageViewModel: MobileContentViewModel {
         self.imageModel = imageModel
         self.mobileContentAnalytics = mobileContentAnalytics
         self.imageWidth = MobileContentViewWidth(dimension: imageModel.width)
-                
-        if let resource = imageModel.resource, let cachedImage = renderedPageContext.resourcesCache.getUIImage(resource: resource) {
-            self.image = cachedImage
+             
+        if let resource = imageModel.resource, let cachedImage = renderedPageContext.resourcesCache.getNonThrowingUIImage(resource: resource) {
+            image = cachedImage
         }
         else {
-            self.image = nil
+            image = nil
         }
         
         super.init(baseModel: imageModel, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics)

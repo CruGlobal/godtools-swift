@@ -388,16 +388,19 @@ extension TranslationsRepository {
                 
         let fileCacheLocation = FileCacheLocation(relativeUrlString: fileName)
         
-        switch resourcesFileCache.getFileExists(location: fileCacheLocation) {
+        do {
             
-        case .success(let fileExists):
+            let fileExists = try resourcesFileCache.getFileExists(location: fileCacheLocation)
+            
             if fileExists {
                 return .success(fileCacheLocation)
             }
             else {
                 return .failure(NSError.errorWithDescription(description: "Failed to get translation file.  File does not exist in the cache."))
             }
-        case .failure(let error):
+        }
+        catch let error {
+            
             return .failure(error)
         }
     }

@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 import RealmSwift
 import SwiftUI
 import UIKit
@@ -48,7 +47,7 @@ class ResourcesSHA256FileCache {
         
     // MARK: - Attachment Files
     
-    func storeAttachmentFilePublisher(attachmentId: String, fileName: String, fileData: Data) async throws -> FileCacheLocation {
+    func storeAttachmentFile(attachmentId: String, fileName: String, fileData: Data) async throws -> FileCacheLocation {
         
         let fileCacheLocation: FileCacheLocation = FileCacheLocation(relativeUrlString: fileName)
         
